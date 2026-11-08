@@ -289,7 +289,7 @@ export class L8BossArenas {
   private advanceMove(e: EntitySnapshot, arena: L8ArenaState): void {
     const w = this.w, b = e.infected!, a = b.specialAttack!, boss = b.arenaBoss!;
     if (a.stage === 'telegraph') {
-      if (a.projectile) w.infected!.props.holdSpecial(a);
+      if (a.projectile) w.infected!.props.holdSpecial(e, a);
       if (a.move === 'gorilla.roar') boss.exposedUntil = a.activeTick;
       if (w.tick < a.activeTick) return;
       a.stage = 'active'; if (a.projectile) w.events.emit({ type: 'infected.prop-thrown', tick: w.tick, sourceId: e.id, propId: a.projectile.objectId, attackId: a.attackId }); w.events.emit({ type: 'infected.special', tick: w.tick, sourceId: e.id, attackId: a.attackId, move: a.move, stage: 'active' });

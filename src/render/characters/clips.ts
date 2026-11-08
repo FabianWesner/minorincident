@@ -16,9 +16,9 @@ export const strides: Record<string, number> = { walk: .9, run: 1.17, shamble: .
  * chibi legs and reads as scurrying/vibration); raw strides before the rig's leg proportion. */
 export const skinGait: Record<string, { stride: number; stance: number; lift: number }> = { walk: { stride: .9, stance: .52, lift: .05 }, run: { stride: 1.45, stance: .27, lift: .095 } };
 /** Keep short authored strides from buzzing at speed; longer strides preserve planted feet as speed rises. */
-export function cadenceStride(name: string, scale: number, speed: number): number {
+export function cadenceStride(name: string, scale: number, speed: number, cycleRate?: number): number {
   const authored = (strides[name] ?? 0) * scale;
-  const cyclesPerSecond = name.startsWith('corgi-') ? name === 'corgi-walk' ? 2 : 2.7 : crowdRunCadence[name] ?? (name === 'run' ? 2.7 : 2);
+  const cyclesPerSecond = cycleRate ?? (name.startsWith('corgi-') ? name === 'corgi-walk' ? 2 : 2.7 : crowdRunCadence[name] ?? (name === 'run' ? 2.7 : 2));
   // Crowd walks also keep a minimum cadence: a slow figure takes shorter steps instead of over-long strides its legs cannot plant.
   const slowest = minimumCadence[name];
   const stride = slowest ? Math.min(authored, Math.max(.35 * scale, Math.max(0, speed) / slowest)) : authored;

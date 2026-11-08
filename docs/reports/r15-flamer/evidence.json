@@ -1,0 +1,404 @@
+{
+  "browser": "one pooled headless Metal WebGL2 context",
+  "game": [
+    {
+      "zoom": 1,
+      "pose": "hold",
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          0,
+          0,
+          0
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          10.869166653536002,
+          11.16791979355699,
+          10.869166653536004
+        ],
+        "spot": "scene-lab"
+      },
+      "backend": "webgl",
+      "effectiveZoom": 1.0000000000000002,
+      "attachments": [
+        {
+          "side": "LEFT",
+          "actionId": "weapon.flamethrower",
+          "visible": true,
+          "iconUrl": "data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3e%3crect%20width='64'%20height='64'%20rx='12'%20fill='%23293447'/%3e%3cg%20stroke='%23ffd166'%20stroke-width='4'%20fill='none'%20stroke-linecap='round'%20stroke-linejoin='round'%3e%3cpath%20d='M7%2023h24l5%204h9v6h-9l-5%204H7z'/%3e%3crect%20x='12'%20y='39'%20width='22'%20height='12'%20rx='5'/%3e%3cpath%20d='M17%2037v3M29%2037v3M34%2045c8%200%208-8%207-12'/%3e%3cpath%20d='M45%2024c4-3%204-7%202-10%206%203%208%208%205%2012%205-1%207-4%207-7%204%208%200%2016-8%2017h-7'/%3e%3c/g%3e%3cpath%20d='M47%2031c1-4%204-5%207-7%200%205-2%208-7%209'%20fill='%23ff8c42'%20stroke='%23ffd166'%20stroke-width='2'%20stroke-linejoin='round'/%3e%3c/svg%3e",
+          "barrel": [
+            0.9838436927881214,
+            -0.17902957342582418,
+            8.324802119614521e-17
+          ],
+          "up": [
+            0.1790295734258241,
+            0.9838436927881214,
+            1.664960423922904e-16
+          ],
+          "muzzle": [
+            0.7244743400065096,
+            0.8425685434271597,
+            0.16178040505324587
+          ],
+          "socket": "weaponSocketR",
+          "holstered": false,
+          "handDistance": 0.04501011140290508,
+          "gripDistance": 2.7755575615628914e-17,
+          "attached": true,
+          "source": "glb",
+          "sockets": [
+            "grip",
+            "muzzle"
+          ]
+        }
+      ],
+      "supportHandGap": 6.487680635086898e-9,
+      "particles": 0,
+      "attacks": []
+    },
+    {
+      "zoom": 1,
+      "pose": "fire",
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          0,
+          0,
+          0
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          10.869166653536002,
+          11.16791979355699,
+          10.869166653536004
+        ],
+        "spot": "scene-lab"
+      },
+      "backend": "webgl",
+      "effectiveZoom": 1.0000000000000002,
+      "attachments": [
+        {
+          "side": "LEFT",
+          "actionId": "weapon.flamethrower",
+          "visible": true,
+          "iconUrl": "data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3e%3crect%20width='64'%20height='64'%20rx='12'%20fill='%23293447'/%3e%3cg%20stroke='%23ffd166'%20stroke-width='4'%20fill='none'%20stroke-linecap='round'%20stroke-linejoin='round'%3e%3cpath%20d='M7%2023h24l5%204h9v6h-9l-5%204H7z'/%3e%3crect%20x='12'%20y='39'%20width='22'%20height='12'%20rx='5'/%3e%3cpath%20d='M17%2037v3M29%2037v3M34%2045c8%200%208-8%207-12'/%3e%3cpath%20d='M45%2024c4-3%204-7%202-10%206%203%208%208%205%2012%205-1%207-4%207-7%204%208%200%2016-8%2017h-7'/%3e%3c/g%3e%3cpath%20d='M47%2031c1-4%204-5%207-7%200%205-2%208-7%209'%20fill='%23ff8c42'%20stroke='%23ffd166'%20stroke-width='2'%20stroke-linejoin='round'/%3e%3c/svg%3e",
+          "barrel": [
+            0.9999999775536733,
+            -3.364607523344202e-16,
+            0.00021187886367834277
+          ],
+          "up": [
+            2.670874013376326e-16,
+            1,
+            5.549868079743014e-17
+          ],
+          "muzzle": [
+            0.7298802310076933,
+            0.9802027812517623,
+            0.18304470354532387
+          ],
+          "socket": "weaponSocketR",
+          "holstered": false,
+          "handDistance": 0.04501011140290516,
+          "gripDistance": 2.7755575615628914e-17,
+          "attached": true,
+          "source": "glb",
+          "sockets": [
+            "grip",
+            "muzzle"
+          ]
+        }
+      ],
+      "supportHandGap": 6.677609370103482e-9,
+      "particles": 18,
+      "attacks": [
+        {
+          "type": "combat.attack",
+          "tick": 37,
+          "attackId": 1,
+          "actionId": "weapon.flamethrower",
+          "combo": 0,
+          "sourceId": 1,
+          "side": "LEFT",
+          "position": {
+            "x": 0,
+            "y": 0.7049999833106995,
+            "z": 0,
+            "yaw": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          }
+        }
+      ]
+    },
+    {
+      "zoom": 1.5,
+      "pose": "hold",
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          0,
+          0,
+          0
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          16.303749980304,
+          16.751879690335485,
+          16.303749980304005
+        ],
+        "spot": "scene-lab"
+      },
+      "backend": "webgl",
+      "effectiveZoom": 1.5,
+      "attachments": [
+        {
+          "side": "LEFT",
+          "actionId": "weapon.flamethrower",
+          "visible": true,
+          "iconUrl": "data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3e%3crect%20width='64'%20height='64'%20rx='12'%20fill='%23293447'/%3e%3cg%20stroke='%23ffd166'%20stroke-width='4'%20fill='none'%20stroke-linecap='round'%20stroke-linejoin='round'%3e%3cpath%20d='M7%2023h24l5%204h9v6h-9l-5%204H7z'/%3e%3crect%20x='12'%20y='39'%20width='22'%20height='12'%20rx='5'/%3e%3cpath%20d='M17%2037v3M29%2037v3M34%2045c8%200%208-8%207-12'/%3e%3cpath%20d='M45%2024c4-3%204-7%202-10%206%203%208%208%205%2012%205-1%207-4%207-7%204%208%200%2016-8%2017h-7'/%3e%3c/g%3e%3cpath%20d='M47%2031c1-4%204-5%207-7%200%205-2%208-7%209'%20fill='%23ff8c42'%20stroke='%23ffd166'%20stroke-width='2'%20stroke-linejoin='round'/%3e%3c/svg%3e",
+          "barrel": [
+            0.9838436927881214,
+            -0.17902957342582418,
+            8.324802119614521e-17
+          ],
+          "up": [
+            0.1790295734258241,
+            0.9838436927881214,
+            1.664960423922904e-16
+          ],
+          "muzzle": [
+            0.7244743400065096,
+            0.8425685434271597,
+            0.16178040505324587
+          ],
+          "socket": "weaponSocketR",
+          "holstered": false,
+          "handDistance": 0.04501011140290508,
+          "gripDistance": 2.7755575615628914e-17,
+          "attached": true,
+          "source": "glb",
+          "sockets": [
+            "grip",
+            "muzzle"
+          ]
+        }
+      ],
+      "supportHandGap": 6.487680635086898e-9,
+      "particles": 0,
+      "attacks": []
+    },
+    {
+      "zoom": 1.5,
+      "pose": "fire",
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          0,
+          0,
+          0
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          16.303749980304,
+          16.751879690335485,
+          16.303749980304005
+        ],
+        "spot": "scene-lab"
+      },
+      "backend": "webgl",
+      "effectiveZoom": 1.5,
+      "attachments": [
+        {
+          "side": "LEFT",
+          "actionId": "weapon.flamethrower",
+          "visible": true,
+          "iconUrl": "data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3e%3crect%20width='64'%20height='64'%20rx='12'%20fill='%23293447'/%3e%3cg%20stroke='%23ffd166'%20stroke-width='4'%20fill='none'%20stroke-linecap='round'%20stroke-linejoin='round'%3e%3cpath%20d='M7%2023h24l5%204h9v6h-9l-5%204H7z'/%3e%3crect%20x='12'%20y='39'%20width='22'%20height='12'%20rx='5'/%3e%3cpath%20d='M17%2037v3M29%2037v3M34%2045c8%200%208-8%207-12'/%3e%3cpath%20d='M45%2024c4-3%204-7%202-10%206%203%208%208%205%2012%205-1%207-4%207-7%204%208%200%2016-8%2017h-7'/%3e%3c/g%3e%3cpath%20d='M47%2031c1-4%204-5%207-7%200%205-2%208-7%209'%20fill='%23ff8c42'%20stroke='%23ffd166'%20stroke-width='2'%20stroke-linejoin='round'/%3e%3c/svg%3e",
+          "barrel": [
+            0.9999999775536733,
+            -3.364607523344202e-16,
+            0.00021187886367834277
+          ],
+          "up": [
+            2.670874013376326e-16,
+            1,
+            5.549868079743014e-17
+          ],
+          "muzzle": [
+            0.7298802310076933,
+            0.9802027812517623,
+            0.18304470354532387
+          ],
+          "socket": "weaponSocketR",
+          "holstered": false,
+          "handDistance": 0.04501011140290516,
+          "gripDistance": 2.7755575615628914e-17,
+          "attached": true,
+          "source": "glb",
+          "sockets": [
+            "grip",
+            "muzzle"
+          ]
+        }
+      ],
+      "supportHandGap": 6.677609370103482e-9,
+      "particles": 18,
+      "attacks": [
+        {
+          "type": "combat.attack",
+          "tick": 37,
+          "attackId": 1,
+          "actionId": "weapon.flamethrower",
+          "combo": 0,
+          "sourceId": 1,
+          "side": "LEFT",
+          "position": {
+            "x": 0,
+            "y": 0.7049999833106995,
+            "z": 0,
+            "yaw": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          }
+        }
+      ]
+    }
+  ],
+  "lods": [
+    {
+      "lod": 0,
+      "placeholder": false,
+      "drawCalls": 9,
+      "triangles": 1259,
+      "nodes": [
+        "Scene",
+        "root",
+        "body",
+        "mesh_0",
+        "flameOrigin",
+        "front",
+        "grip",
+        "muzzle",
+        "pilot_light",
+        "mesh_1",
+        "mesh_2",
+        "mesh_2_1",
+        "mesh_2_2",
+        "mesh_2_3",
+        "mesh_2_4",
+        "mesh_2_5"
+      ],
+      "events": []
+    },
+    {
+      "lod": 1,
+      "placeholder": false,
+      "drawCalls": 8,
+      "triangles": 477,
+      "nodes": [
+        "Scene",
+        "root",
+        "body",
+        "mesh_0",
+        "flameOrigin",
+        "front",
+        "grip",
+        "muzzle",
+        "pilot_light",
+        "mesh_1",
+        "mesh_2",
+        "mesh_2_1",
+        "mesh_2_2",
+        "mesh_2_3",
+        "mesh_2_4"
+      ],
+      "events": []
+    },
+    {
+      "lod": 2,
+      "placeholder": false,
+      "drawCalls": 7,
+      "triangles": 189,
+      "nodes": [
+        "Scene",
+        "root",
+        "body",
+        "mesh_0",
+        "flameOrigin",
+        "front",
+        "grip",
+        "muzzle",
+        "pilot_light",
+        "mesh_1",
+        "mesh_2",
+        "mesh_2_1",
+        "mesh_2_2",
+        "mesh_2_3"
+      ],
+      "events": []
+    }
+  ],
+  "consoleErrors": []
+}

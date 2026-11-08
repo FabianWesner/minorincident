@@ -44,7 +44,7 @@ export function districtAssetUrls(id: string, definition: (id: string) => import
 }
 /** Shared presentation cache owns source geometry; per-level instance batches borrow it. */
 /** Enterable unique buildings: the roof is batched separately and lifted while the player is inside (DistrictView.updateRoofs). */
-export const ROOFED = new Set(['bld.garage-detached', 'bld.courier-depot', 'bld.clinic-annex', 'bld.cafe-corner', 'bld.fire-station', 'bld.pharmacy', 'bld.supermarket', 'bld.gym', 'int.basement-cellar']);
+export const ROOFED = new Set(['bld.garage-detached', 'bld.courier-depot', 'bld.clinic-annex', 'bld.cafe-corner', 'bld.fire-station', 'bld.pharmacy', 'bld.supermarket', 'bld.gym', 'bld.cure-motor-shelter', 'int.basement-cellar']);
 /** QA #50 (L3 supermarket, L5 pharmacy): "the building reads as a black hollow box with a lit rim". Their flat roof deck was authored
  * in the near-black UI token, so from the game camera the deck inside the light parapet cap read as an empty shell. Draw the deck
  * like every other flat roof (asphalt); the GLBs stay unchanged. */
@@ -85,14 +85,14 @@ export class DistrictAssets {
       this.loader.setKTX2Loader(this.ktx);
     }
   }
-  private remember(root: Group): Group {
+  private remember(root: Group, keepRgb = false): Group {
     root.traverse((o) => {
       if (o instanceof Mesh) {
         // World batches sample _palette; their decoded RGB copy is unused.
         // Drop it before instance wrappers borrow the arrays (large L7 bodies
         // otherwise retain another 32 MB apiece). Figure/color graphs keep it.
         // Offline registries preserve the lossless bake format, including RGB.
-        if (this.renderer && !Array.isArray(o.material) && o.material.userData.worldPaletteOnly) o.geometry.deleteAttribute('color');
+        if (this.renderer && !keepRgb && !Array.isArray(o.material) && o.material.userData.worldPaletteOnly) o.geometry.deleteAttribute('color');
         this.geometries.add(o.geometry);
       }
     });
@@ -210,7 +210,7 @@ export class DistrictAssets {
         try {
           const response = await fetch(url); if (!response.ok) throw Error(`Static bake ${response.status}`);
           const root = decodeStaticBake(await decompressCivilianBake(await response.arrayBuffer()), this.materials, anchorsFor(id).length > 0, this.batchMaterialCache);
-          return this.finishBatch(id, this.remember(root));
+          return this.finishBatch(id, this.remember(root, id === 'veg.corn-block'));
         } catch { /* Source loading remains the quality-preserving fallback. */ }
       }
       const asset = await this.assets.loadAsset(productionId, canonical, decay);
@@ -245,7 +245,9 @@ export class DistrictAssets {
       // and foreground loads). Slice the same batch work instead of blocking a frame.
       const paced = loadGate.paced;
       const pause = () => paced ? loadGate.wait() : new Promise<void>(resolve => setTimeout(resolve, 0));
-      const root = this.remember(paced || canonical === 'lod0' ? await staticBatchAsync(asset, true, this.materials, pause, 4, this.batchMaterialCache) : staticBatch(asset, true, this.materials, false, this.batchMaterialCache));
+      // The crop shader consumes authored RGB; retain it before finishBatch replaces
+      // the ordinary palette-only batch material with that graph.
+      const root = this.remember(paced || canonical === 'lod0' ? await staticBatchAsync(asset, true, this.materials, pause, 4, this.batchMaterialCache) : staticBatch(asset, true, this.materials, false, this.batchMaterialCache), id === 'veg.corn-block');
       if (muzzleLocal) {
         const gun = root.children.find(n => n.userData.door === 'gun');
         if (gun) { gun.name = 'gun'; const socket = new Object3D(); socket.name = 'muzzle'; socket.position.copy(muzzleLocal); gun.add(socket); }

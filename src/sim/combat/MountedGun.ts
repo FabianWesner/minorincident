@@ -21,6 +21,8 @@ export class MountedGun {
   mounted = false;
   /** Unit aim direction on the ground plane (sim axes: x forward, z; yaw = -atan2(z, x)). */
   readonly aim: Vec2;
+  /** Barrel pitch in radians, derived from the target under the aimed yaw. */
+  elevation = 0;
   private trigger = false;
   /** Where the gunner stood when she mounted: the dismount steps back there (a spot she reached on foot, so it is free). */
   private readonly from = { x: 0, y: 0, z: 0 };
@@ -52,7 +54,9 @@ export class MountedGun {
   }
   /** Muzzle in world metres for the current aim (sim origin of every round). */
   muzzle(out = { x: 0, y: 0, z: 0 }): { x: number; y: number; z: number } {
-    out.x = this.placement.x + this.aim.x * minigun.muzzleForwardM; out.z = this.placement.z + this.aim.z * minigun.muzzleForwardM; out.y = this.placement.y + minigun.muzzleHeightM;
+    const reach = Math.cos(this.elevation) * minigun.muzzleForwardM;
+    out.x = this.placement.x + this.aim.x * reach; out.z = this.placement.z + this.aim.z * reach;
+    out.y = this.placement.y + minigun.muzzleHeightM + Math.sin(this.elevation) * minigun.muzzleForwardM;
     return out;
   }
   /**
@@ -129,19 +133,23 @@ export class MountedGun {
   update(): void {
     const w = this.world, rounds = this.gun.step(this.mounted && this.trigger && !w.missions?.state.states['cure-released']);
     if (!rounds) return;
-    const def = action(minigun.actionId), muzzle = this.muzzle(this.origin), combat = w.combat;
+    const def = action(minigun.actionId), combat = w.combat;
     if (!combat) return;
     const spread = def.spread * Math.PI / 180, angle = Math.atan2(this.aim.z, this.aim.x) + (this.rng.next() - .5) * spread;
-    const direction = { x: Math.cos(angle), z: Math.sin(angle) }, id = ++this.attackId, p = w.entities.get(1)!;
+    const direction = { x: Math.cos(angle), y: 0, z: Math.sin(angle) }, id = ++this.attackId, p = w.entities.get(1)!;
+    const pivot = { x: this.placement.x, y: this.placement.y + minigun.muzzleHeightM, z: this.placement.z };
+    const aimed = combat.query.ray(1, pivot, direction, def.range + minigun.muzzleForwardM, undefined, true);
+    this.elevation = aimed ? Math.atan2(aimed.transform.y - pivot.y, Math.hypot(aimed.transform.x - pivot.x, aimed.transform.z - pivot.z)) : 0;
+    direction.y = Math.tan(this.elevation);
+    const muzzle = this.muzzle(this.origin), target = combat.query.ray(1, muzzle, direction, def.range);
+    const reach = target ? Math.max(0, Math.hypot(target.transform.x - muzzle.x, target.transform.z - muzzle.z) - (target.combat?.radius ?? .4)) : def.range;
+    if (w.destruction?.strike(def.id, def.damage * (p.combat?.damageMultiplier ?? 1), muzzle, direction, reach)) return;
     w.events.emit({ type: 'combat.attack', tick: w.tick, attackId: id, actionId: def.id, combo: 0, sourceId: 1, side: 'LEFT', position: { x: muzzle.x, y: muzzle.y, z: muzzle.z, yaw: -angle }, direction });
     // One audible report per two rounds: the noise service plays one voice per event.
     if (id % 2 === 0) combat.effects.noise({ x: muzzle.x, z: muzzle.z }, def.noiseRadius, 'weapon.machine-gun', 1, 'ranged');
-    const ray = { x: muzzle.x, y: p.transform.y + .45, z: muzzle.z }, target = combat.query.ray(1, ray, direction, def.range);
-    const reach = target ? Math.max(0, Math.hypot(target.transform.x-ray.x,target.transform.z-ray.z)-(target.combat?.radius??.4)) : def.range;
-    if (w.destruction?.strike(def.id,def.damage*(p.combat?.damageMultiplier??1),ray,{...direction,y:0},reach)) return;
     if (!target) return;
     const dx = target.transform.x - muzzle.x, dz = target.transform.z - muzzle.z, distance = Math.hypot(dx, dz) || 1;
-    combat.damage.apply({ attackId: id, actionId: def.id, sourceId: 1, targetId: target.id, origin: { x: muzzle.x, z: muzzle.z }, direction: { x: dx / distance, z: dz / distance }, base: def.damage, multiplier: p.combat?.damageMultiplier ?? 1, type: 'bullet', radius: def.range, spread: def.spread, knockback: def.knockback, stagger: def.stagger });
+    combat.damage.apply({ attackId: id, actionId: def.id, sourceId: 1, targetId: target.id, origin: { x: muzzle.x, z: muzzle.z }, direction: { x: dx / distance, z: dz / distance }, base: def.damage, multiplier: p.combat?.damageMultiplier ?? 1, type: 'bullet', permanent: true, radius: def.range, spread: def.spread, knockback: def.knockback, stagger: def.stagger });
   }
   snapshot(): MountedGunSnapshot { return { ...this.gun.snapshot(), mounted: this.mounted }; }
   /** Checkpoint reload: heat comes back, the player is not on the gun (the checkpoint position owns where she stands). */

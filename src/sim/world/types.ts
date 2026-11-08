@@ -44,7 +44,7 @@ export interface EntitySnapshot {
   /** L1 v2 transformation of a bitten pedestrian (0 to 1); removed when the same entity rises infected. */
   infection?: import('../outbreak/types').InfectionState;
   noiseTarget?: { id: number; until: number };
-  pickup?: import('../interact/Pickups').Pickup | { actionId: string; armed: boolean; arenaAmmo?: import('../../data/l8Bosses').L8BossId; /** Existing L5 street firearms belong to the group, not the courier loadout. */ survivorOnly?: boolean; dropped?: boolean; /** Authored shelf top in world metres; absent means the drawn ground. */ surfaceY?: number; retain?: boolean; interactTicks?: number; progress?: number };
+  pickup?: import('../interact/Pickups').Pickup | { actionId: string; armed: boolean; arenaAmmo?: import('../../data/l8Bosses').L8BossId; /** Existing L5 street firearms belong to the group, not the courier loadout. */ survivorOnly?: boolean; dropped?: boolean; /** Authored shelf top in world metres; absent means the drawn ground. */ surfaceY?: number; retain?: boolean; interactTicks?: number; /** Collection range for route-critical story finds. */ reachM?: number; progress?: number };
   speedBuff?: { multiplier: number; until: number };
   hidden?: boolean;
   /** Scripted walk out of a house door (HouseEmergence): body separation leaves the body (position and height) alone. */
@@ -134,7 +134,7 @@ export type GameEvent = import('../lighting/LightPower').LightPowerEvent | impor
   | { tick: number; type: 'ai.alerted'; sourceId: number; targetId: number; cause: 'noise' | 'sight' | 'hearing'; position: Transform }
   | { tick: number; type: 'combat.effect'; sourceId: number; actionId: string; kind: import('../../data/actions/schema').ActionEffect['kind']; position: { x: number; y: number; z: number }; radius: number; expires: number }
   | { tick: number; type: 'pickup.collected'; sourceId: number; pickupId: number; side: import('../../data/actions/schema').Side; actionId: string; replaced: string | null }
-  | { tick: number; type: 'combat.attack'; attackId: number; actionId: string; combo?: number; sourceId: number; side: import('../../data/actions/schema').Side; position: Transform; direction: { x: number; z: number }; style?: 'roundhouse' }
+  | { tick: number; type: 'combat.attack'; attackId: number; actionId: string; combo?: number; sourceId: number; side: import('../../data/actions/schema').Side; position: Transform; direction: { x: number; y?: number; z: number }; style?: 'roundhouse' }
   | { tick: number; type: 'combat.hit' | 'combat.kill'; attackId: number; actionId: string; sourceId: number; targetId: number; position: Transform; amount: number; direction?: { x: number; z: number }; knockback?: number; cause?: 'vehicle' | 'prop'; damageType?: import('../combat/Damage').DamageEvent['type']; blocked?: boolean; shieldGlance?: boolean; shieldBreak?: boolean; /** combat.kill of an infected that only went down (PO "Infected recover"): it gets up at this tick. */ downed?: number }
   | { tick: number; type: 'combat.hit-stop'; sourceId: number; durationMs: number }
   | { tick: number; type: 'loadout.switched'; sourceId: number; side: import('../../data/actions/schema').Side; actionId: string }

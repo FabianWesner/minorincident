@@ -79,7 +79,7 @@ export class ActionView extends Group {
   }
   muzzle(out: Vector3): Vector3 | null {
     const held = this.held[this.world.combat?.runner.loadout.state.selectedSide ?? this.selected];
-    const muzzle = held?.model.getObjectByName('muzzle');
+    const muzzle = held?.model.getObjectByName(held.id === 'weapon.flamethrower' ? 'flameOrigin' : 'muzzle');
     if (!muzzle || !held?.holder.visible) return null;
     muzzle.updateWorldMatrix(true, false); return muzzle.getWorldPosition(out);
   }
@@ -204,7 +204,7 @@ export class ActionView extends Group {
     // spans the crash landing as well as the later crawl clip.
     const animation = player.survivor?.animation;
     const crashPhase = this.world.missions?.l9?.state.phase;
-    const crawling = player.survivor?.scriptedClip === 'crawl';
+    const crawling = player.survivor?.scriptedClip === 'crawl' || crashPhase === 'crawl';
     const downed = player.health.current <= 0 || !!player.survivor?.knockdown && this.world.tick < player.survivor.knockdown.until
       || ['fall', 'impact', 'crawl'].includes(String(crashPhase))
       || ['knockdown', 'get-up', 'die'].includes(String(animation)) || crawling;
@@ -265,9 +265,9 @@ export class ActionView extends Group {
         clone.traverse(node => { if (node instanceof Mesh) node.material = Array.isArray(node.material) ? node.material.map(m => this.heldMaterials.get(m) ?? m) : this.heldMaterials.get(node.material) ?? node.material; });
         holder.add(clone); held = { id: def.id, model: clone, holder, tilt: 0 }; this.held[side] = held; }
       const prop = def.category === 'melee' || def.category === 'ranged' || (def.category === 'throwable' && held.model.userData.placeholder !== true);
-      const inHand = side === selectedSide, mount = inHand ? this.character.socket('RIGHT')?.socket ?? null : this.holsterMount(def.category);
+      const inHand = side === selectedSide, crawlAxe = crawling && def.id === 'weapon.fire-axe' && inHand, mount = crawlAxe ? this.holsterMount('melee') : inHand ? this.character.socket('RIGHT')?.socket ?? null : this.holsterMount(def.category);
       if (mount && held.holder.parent !== mount) mount.add(held.holder);
-      const pose = inHand ? null : holsters[def.category === 'ranged' ? 'hip' : 'back'];
+      const pose = crawlAxe ? holsters.back : inHand ? null : holsters[def.category === 'ranged' ? 'hip' : 'back'];
       if (pose) { held.holder.rotation.set(pose.rot[0], pose.rot[1], pose.rot[2]); held.holder.position.set(pose.pos[0], pose.pos[1], pose.pos[2]); }
       else {
         // Melee rests tilted away from the body; gun pitch belongs to the arm pose.
@@ -276,7 +276,7 @@ export class ActionView extends Group {
         held.holder.rotation.set(0, 0, held.tilt); held.holder.position.set(0, 0, 0);
       }
       held.holder.scale.setScalar(inHand ? (longGunHolds[def.viewAssetId]?.scale ?? heldActionScale(def.id)) : 1);
-      held.holder.visible = !downed && !gunner && inHand && !!mount && prop && !player.riding && this.character.rideWeight === 0 && !['weapon.fists', 'weapon.kick'].includes(def.id) && !(held.model.userData.placeholder === true && def.category === 'ability');
+      held.holder.visible = (crawlAxe || !downed) && !gunner && inHand && !!mount && prop && !player.riding && this.character.rideWeight === 0 && !['weapon.fists', 'weapon.kick'].includes(def.id) && !(held.model.userData.placeholder === true && def.category === 'ability');
     }
     this.selected = loadout.state.selectedSide; const state = loadout.state[this.selected], def = action(loadout.current(this.selected).id), origin = player.transform;
     this.cue = null; this.shape = def.aimIndicator; this.offset = 0; this.maxHeight = 0; this.material.color.set(this.selected === 'LEFT' ? '#ffd166' : '#44ffe0'); this.material.transparent = true; this.material.opacity = def.aimIndicator === 'line' ? .18 * Math.max(0, (this.gunUntil - this.world.tick) / 24) : 1;
@@ -342,6 +342,7 @@ export class ActionView extends Group {
         if (!entity.pickup.survivorOnly) {
           const marker = new Mesh(this.pickupRingGeometry, this.pickupRingMaterial);
           marker.renderOrder = 94; marker.position.y = .018;
+          if (entity.pickup.reachM) marker.scale.setScalar(2.4);
           if (entity.pickup.surfaceY !== undefined && entity.pickup.surfaceY > support + .05) marker.scale.setScalar(.5);
           group.add(marker);
         }

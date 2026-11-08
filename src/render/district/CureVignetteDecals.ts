@@ -1,4 +1,4 @@
-import { Group, InstancedBufferAttribute, InstancedMesh, MeshBasicNodeMaterial, Object3D, PlaneGeometry, SRGBColorSpace, TextureLoader, type Texture } from 'three/webgpu';
+import { Group, InstancedBufferAttribute, InstancedMesh, Mesh, MeshBasicNodeMaterial, Object3D, PlaneGeometry, SRGBColorSpace, TextureLoader, type Texture } from 'three/webgpu';
 import { attribute, texture, uv } from 'three/tsl';
 import { groundDepth, groundLayers } from '../GroundLayers';
 import type { CureVignetteDecal } from '../../levels/L10/vignettes';
@@ -11,6 +11,7 @@ export class CureVignetteDecals extends Group {
   private focus=[Infinity,Infinity];
   private low=false;
   private shown:string[]=[];
+  private readonly roofs:Mesh[]=[];
   static async load(rows:readonly CureVignetteDecal[]):Promise<CureVignetteDecals>{
     const atlas=await new TextureLoader().loadAsync('/assets/decals/l10-stories.png');atlas.colorSpace=SRGBColorSpace;
     return new CureVignetteDecals(rows,atlas);
@@ -23,6 +24,10 @@ export class CureVignetteDecals extends Group {
     material.colorNode=sample.rgb.mul(.72);material.opacityNode=sample.a;
     groundDepth(material,groundLayers.footprint);
     this.mesh=new InstancedMesh(geometry,material,rows.length);this.mesh.frustumCulled=false;this.mesh.count=0;this.add(this.mesh);
+    for(const row of rows.filter(r=>r.roof)){
+      const roof=new Mesh(new PlaneGeometry(row.size[0]+.4,row.size[1]+.4),new MeshBasicNodeMaterial({color:0x493c2d}));
+      roof.rotation.x=-Math.PI/2;roof.position.fromArray(row.position);roof.position.y-=.02;this.roofs.push(roof);this.add(roof);
+    }
   }
   update(focus:{x:number;z:number},low:boolean):void{
     if(low===this.low&&Math.hypot(focus.x-this.focus[0],focus.z-this.focus[1])<3)return;
@@ -38,5 +43,5 @@ export class CureVignetteDecals extends Group {
   }
   /** Native QA can inspect selection without launching a renderer. */
   visibleIds():readonly string[]{return this.shown;}
-  dispose():void{this.mesh.geometry.dispose();(this.mesh.material as MeshBasicNodeMaterial).dispose();this.mesh.dispose();this.atlas.dispose();this.clear();}
+  dispose():void{this.mesh.geometry.dispose();(this.mesh.material as MeshBasicNodeMaterial).dispose();this.mesh.dispose();for(const roof of this.roofs){roof.geometry.dispose();(roof.material as MeshBasicNodeMaterial).dispose();}this.atlas.dispose();this.clear();}
 }

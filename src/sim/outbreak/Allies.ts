@@ -45,8 +45,8 @@ const runBudget = 48_000;
  * hits one target with a distance-dependent chance (deterministic per shooter and shot). Returns false when the ordinary
  * calm routine should run instead.
  */
-export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: number; z: number }, b: { x: number; z: number }, id: number) => boolean): boolean {
-  if (e.passengerOf !== undefined) return true;
+export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: number; z: number }, b: { x: number; z: number }, id: number) => boolean, hatch = false): boolean {
+  if (e.passengerOf !== undefined && !hatch) return true;
   const c = e.civilian!, a = c.ally!, tick = world.tick, ai = world.infected!, npcs = world.npcs!;
   if (e.health.current <= 0 || tick < c.knockedUntil) { a.strikeAt = 0; return true; }
   const shooter = a.role !== 'firefighter' && !(a.role === 'civilian' && !a.gun);

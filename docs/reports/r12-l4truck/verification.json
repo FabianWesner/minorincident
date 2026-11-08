@@ -1,0 +1,33 @@
+{
+  "target": "E22",
+  "epics": [
+    "E22"
+  ],
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "status": 0,
+      "seconds": 23.748
+    },
+    {
+      "command": "npm run lint",
+      "status": 0,
+      "seconds": 18.289
+    },
+    {
+      "command": "npm test",
+      "status": 0,
+      "seconds": 39.368
+    }
+  ],
+  "revision": "fc9204e1eab1b38ae23d496b3c68d9b630046788",
+  "main": "08149d1a",
+  "unitTests": {
+    "passed": 107,
+    "files": 27
+  },
+  "focusedL4Invariant": {
+    "passed": 1,
+    "skipped": 4
+  }
+}

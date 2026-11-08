@@ -542,7 +542,7 @@ export class SceneLab {
         entity = world.npcs!.civilians.spawn(a.species ?? 'dog', at, { ...(a.pet ? { pet: a.pet } : { zooAnimal: a.species }), waypoints: [at] });
         world.entities.get(entity)!.transform.yaw = yaw;
       } else if (a.kind === 'infected') {
-        entity = world.infected!.spawn(a.archetype ?? 'infected.runner', at, { yaw, state: 'idle', ...(a.look?.model ? { variant: a.look.model } : {}), ...(a.look?.tier ? { tier: a.look.tier } : {}) });
+        entity = world.infected!.spawn(a.archetype ?? 'infected.runner', at, { yaw, state: 'idle', ...(a.alphaType ? { alphaType: a.alphaType } : {}), ...(a.look?.model ? { variant: a.look.model } : {}), ...(a.look?.tier ? { tier: a.look.tier } : {}) });
         // A named Mega look is drawn exactly (the shipped Mega variant otherwise takes a look by entity id, CrowdView.alphaKey).
         if (a.look?.model && alphaLooks['inf.mega-alpha'].includes(a.look.model)) world.entities.get(entity)!.infected!.model = a.look.model;
         // L3 layout fixtures have no mission controller to apply the corridor's contact damage.

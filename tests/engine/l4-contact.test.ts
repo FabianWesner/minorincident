@@ -2,7 +2,9 @@ import { expect, test, vi } from 'vitest';
 import { emptyInput } from '../../src/input/InputFrame';
 import { Box3, PerspectiveCamera, Vector3 } from 'three/webgpu';
 import { ColliderDesc, Ray, ShapeType } from '@dimforge/rapier3d-compat';
-import { l4InfectedArchetypes } from '../../src/data/l4';
+import { l4, l4InfectedArchetypes, l4Route, l4RoutePose, l4ConvoyStations, l4RearTruckParkOffset } from '../../src/data/l4';
+import physicsAssets from '../../src/data/physicsAssets';
+import { l4BreachSite, l4PerimeterWalls } from '../../src/data/l4Perimeter';
 import { infectedDef } from '../../src/data/infected';
 import { barEligible, followerBarsAlwaysMax, followerPipSize, HealthBars } from '../../src/render/HealthBars';
 import { pickBodies } from '../../src/render/characters/PickBodies';
@@ -13,6 +15,7 @@ import { loadLevel } from '../../tools/sim-runner/levels';
 import type { SimWorld } from '../../src/sim/world/SimWorld';
 import type { EntitySnapshot } from '../../src/sim/world/types';
 import type { Refuge } from '../../src/sim/outbreak/Outbreak';
+import { obbHitsAabb } from '../qa/invariants/oracles';
 
 type RefugeInternals = {
   refugeSpot: (person: EntitySnapshot, door: Refuge) => { x: number; z: number } | null;
@@ -238,6 +241,22 @@ async function scriptedPartyEngagement() {
 }
 
 test('L4: every contact archetype interrupts approach/lure and attacks within 3 s; soldiers remain biteable and corgi protected', async () => {
+  const cameraCheck = await loadLevel('L4', 1);
+  try {
+    expect(Object.keys(cameraCheck.missions!.def.cinematics).filter(id => id.startsWith('l4-'))).toEqual([]);
+    expect(cameraCheck.missions!.def.anchors['l4-breach-west']).toBeDefined();
+  } finally { cameraCheck.dispose(); }
+  const route = l4Route(), stations = l4ConvoyStations(route.length), violations: string[] = [];
+  for (const [index, vehicle] of l4.convoy.vehicles.entries()) {
+    if (vehicle.asset !== 'veh.military-truck') continue;
+    const pose = l4RoutePose(route, stations.end[index]);
+    if (vehicle.id === 'truck-2') { pose.x += l4RearTruckParkOffset.x; pose.z += l4RearTruckParkOffset.z; }
+    for (const [boxIndex, box] of physicsAssets['veh.military-truck'].boxes.entries()) for (const wall of l4PerimeterWalls) {
+      const aabb = { min: [wall.x - wall.halfX, wall.y - wall.halfY, wall.z - wall.halfZ], max: [wall.x + wall.halfX, wall.y + wall.halfY, wall.z + wall.halfZ] };
+      if (obbHitsAabb(pose.x, pose.z, pose.yaw, (box.max[0] - box.min[0]) / 2, (box.max[2] - box.min[2]) / 2, box.min[1] + .7, box.max[1] + .7, aabb)) violations.push(`${vehicle.id} collider ${boxIndex} overlaps ${wall.id}`);
+    }
+  }
+  expect(violations, 'PO 2026-11-08: parked army cargo trucks do not cross the perimeter').toEqual([]);
   checkCompactFollowerOverlap();
   expect(followerBarsAlwaysMax, 'five-person groups retain full bars').toBe(5);
   expect(followerPipSize, 'larger groups use thin, short pips').toEqual({ width: 18, height: 3 });
@@ -292,9 +311,19 @@ test('L4: every contact archetype interrupts approach/lure and attacks within 3 
     expect(distantRiot.combat?.shield, 'riot actor carries its authored shield').toBeTruthy();
     expect(barEligible(distantRiot, courier.transform, infectedDef(distantRiot.archetype).bar === true), 'healthy riot at 16 m keeps its health bar').toBe(true);
     ai.release(distantRiot);
+    const contactOrigin = { ...courier.transform };
+    const distantAlpha = world.entities.get(ai.spawn('infected.alpha', { x: courier.transform.x + 16, z: courier.transform.z }))!;
+    const distantRunner = world.entities.get(ai.spawn('infected.runner', { x: courier.transform.x + 16, z: courier.transform.z }))!;
+    expect(barEligible(distantAlpha, courier.transform, infectedDef(distantAlpha.archetype).bar === true), 'healthy Alpha follows the shared 15 m cutoff').toBe(false);
+    distantAlpha.health.current--;
+    expect(barEligible(distantAlpha, courier.transform, infectedDef(distantAlpha.archetype).bar === true), 'damaged Alpha keeps its bar beyond 15 m').toBe(true);
+    expect(barEligible(distantRunner, courier.transform, infectedDef(distantRunner.archetype).bar === true), 'healthy ordinary infected follows the 15 m cutoff').toBe(false);
+    ai.release(distantAlpha); ai.release(distantRunner);
     for (const archetype of [...l4InfectedArchetypes, 'infected.alpha']) for (const state of ['attracted', 'attack', 'stagger'] as const) {
+      // New Alpha grabs throw the courier. Each independent contact probe starts at the same position.
+      world.solids.relocate(courier, contactOrigin, 'scripted.teleport');
       courier.health.current = courier.health.max;
-      const e = world.entities.get(ai.spawn(archetype, { x: -17, z: 3.8 }, { yaw: Math.PI }))!;
+      const e = world.entities.get(ai.spawn(archetype, { x: -17, z: 3.8 }, { yaw: Math.PI, ...(archetype === 'infected.alpha' ? { alphaType: 'brute' as const } : {}) }))!;
       expect(barEligible(e, courier.transform, infectedDef(archetype).bar === true), `${archetype}: hostile live L4 spawn has a bar`).toBe(true);
       expect(e.health.max, `${archetype}: positive health`).toBeGreaterThan(0);
       const flankDamage = world.combat!.damage.apply({ attackId: world.tick + e.id, actionId: 'weapon.army-mg', sourceId: 1, targetId: e.id,
@@ -314,6 +343,33 @@ test('L4: every contact archetype interrupts approach/lure and attacks within 3 
       expect(hit!.tick - before).toBeLessThanOrEqual(180);
       expect(courier.health.current).toBeLessThan(courier.health.max);
       ai.release(e);
+    }
+    // The L4 job director must hand non-Brutes to their own brains instead of requesting rejected charge/slam moves.
+    {
+      const state = mission.state.l4!, savedIds = state.alphaIds, savedJobs = state.director.alphaJobs;
+      const controller = (mission.l4! as unknown as { director: { alphaJobs(): void } }).director;
+      const orders = vi.spyOn(ai, 'startSpecial'), pressure = vi.spyOn(ai, 'press');
+      try {
+        for (const alphaType of ['thrower', 'armoured'] as const) {
+          const alpha = world.entities.get(ai.spawn('infected.alpha', { x: 0, z: 0 }, { alphaType }))!;
+          state.alphaIds = [alpha.id]; state.director.alphaJobs = [{ alphaId: alpha.id, job: 'line', stage: 'charge', startedAt: world.tick }];
+          controller.alphaJobs();
+          expect(pressure.mock.calls.some(call => call[0] === alpha.id), alphaType).toBe(true);
+          expect(orders.mock.calls.some(call => call[0] === alpha.id && (call[1] === 'alpha.charge' || call[1] === 'alpha.ground-slam')), alphaType).toBe(false);
+          ai.release(alpha);
+        }
+        const site = l4BreachSite('west');
+        const alpha = world.entities.get(ai.spawn('infected.alpha', site.stage, { alphaType: 'brute' }))!;
+        Object.assign(alpha.transform, site.stage);
+        state.alphaIds = [alpha.id]; state.director.alphaJobs = [{ alphaId: alpha.id, job: 'west', breach: 'west', stage: 'charge', startedAt: world.tick }];
+        const visible = vi.spyOn(ai.director, 'inPlayerView').mockReturnValue(false);
+        try {
+          controller.alphaJobs();
+          const approach = alpha.infected!.scripted;
+          expect(approach, 'offscreen Brute approaches the wire instead of retrying a hidden windup').toBeDefined();
+          expect(Math.hypot(approach!.x - site.centre.x, approach!.z - site.centre.z)).toBeLessThan(3);
+        } finally { visible.mockRestore(); ai.release(alpha); }
+      } finally { state.alphaIds = savedIds; state.director.alphaJobs = savedJobs; orders.mockRestore(); pressure.mockRestore(); }
     }
     for (const actor of world.entities.iterate()) if (actor.companion) actor.hidden = true;
     Object.assign(courier.transform, { x: -25, z: 3 });

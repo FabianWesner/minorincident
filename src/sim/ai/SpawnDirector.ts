@@ -1,6 +1,7 @@
 import { megaAlpha } from '../../data/megaAlpha';
 import { l4 } from '../../data/l4';
 import { l3 } from '../../data/l3';
+import { cameraFraming, rocketZoomLimit } from '../../data/cameraFraming';
 import { cureAlphaPopulation, cureAlphaCap, cureRegularAlphaCount } from '../../levels/L10/alphaContracts';
 import { moveAgent } from '../locomotion/AgentMotion';
 import { infectedDef } from '../../data/infected';
@@ -9,7 +10,7 @@ import type { EntitySnapshot } from '../world/types';
 import type { CoverWall } from '../combat/HitQuery';
 /** Conservative ground camera footprint, authored with the gameplay camera. Expanded 10% at query time. */
 export interface CameraEnvelope { x: number; z: number; halfWidth: number; halfDepth: number; yaw: number }
-interface Request { archetype: string; position: { x: number; z: number }; options: InfectedSpawn; turning?: boolean; migration?: { group: Migration; index: number } }
+interface Request { archetype: string; position: { x: number; y?: number; z: number }; options: InfectedSpawn; turning?: boolean; migration?: { group: Migration; index: number } }
 const silhouetteOffsets = [-.5, .5], silhouetteHeights = [.1, 1.9];
 const silhouetteAxes = ['x', 'y', 'z'] as const;
 export interface Migration {
@@ -66,6 +67,10 @@ export class SpawnDirector {
     return this.visiblePoint(position.x, position.y ?? .7, position.z);
   }
   private visiblePoint(x: number, y: number, z: number): boolean {
+    // Dilate the follow frustum about its focus to the widest legal radius.
+    // Scaling clip X/Y alone misses bodies behind a zoomed-in camera eye.
+    const frameScale = this.widestScale(), p = this.ai.world.entities.get(1)?.transform;
+    if (p && frameScale > 1) { x = p.x + (x - p.x) / frameScale; y = p.y - .72 + (y - p.y + .72) / frameScale; z = p.z + (z - p.z) / frameScale; }
     if (this.hasFrustum) {
       const m = this.frustum;
       const cx = m[0] * x + m[4] * y + m[8] * z + m[12], cy = m[1] * x + m[5] * y + m[9] * z + m[13];
@@ -82,6 +87,11 @@ export class SpawnDirector {
     const marginM = this.ai.world.scenario === 'L4' ? 6 : 0;
     return Math.abs(dx * Math.cos(c.yaw) + dz * Math.sin(c.yaw)) <= c.halfWidth * 1.1 + marginM && Math.abs(-dx * Math.sin(c.yaw) + dz * Math.cos(c.yaw)) <= c.halfDepth * 1.1 + marginM;
   }
+  private widestScale(): number {
+    if (this.ai.world.scenario !== 'L10') return 1;
+    const p = this.ai.world.entities.get(1)?.transform, c = this.cameraPosition;
+    return p && c ? Math.max(1, cameraFraming.radiusM * rocketZoomLimit / Math.hypot(c.x - p.x, c.y - p.y + .72, c.z - p.z)) : 3;
+  }
   /**
    * Ally fire rule (PO 2026-10-13: "visibility range of soldiers is so high, that they kill all Zombies before i see them myself"):
    * the chest of `position` lies inside the player's sim-camera frame, inset by `inset` (an infected walks into view before anyone
@@ -97,9 +107,12 @@ export class SpawnDirector {
     return w > 0 && Math.abs(cx) <= w * inset + padX && Math.abs(cy) <= w * inset + padY;
   }
   /** True only with a camera volume and `position` inside its frame (no distance cap); headless worlds without a frustum: false. */
-  inFrame(position: { x: number; z: number; y?: number }, inset = 1): boolean {
+  inFrame(position: { x: number; z: number; y?: number }, inset = 1, widest = false): boolean {
     if (!this.hasFrustum) return false;
-    const m = this.frustum, x = position.x, y = (position.y ?? .7) + .35, z = position.z;
+    const m = this.frustum, scale = widest ? this.widestScale() : 1, p = this.ai.world.entities.get(1)?.transform;
+    const x = p && scale > 1 ? p.x + (position.x - p.x) / scale : position.x;
+    const y = p && scale > 1 ? p.y - .72 + ((position.y ?? .7) + .35 - p.y + .72) / scale : (position.y ?? .7) + .35;
+    const z = p && scale > 1 ? p.z + (position.z - p.z) / scale : position.z;
     const cx = m[0] * x + m[4] * y + m[8] * z + m[12], cy = m[1] * x + m[5] * y + m[9] * z + m[13], w = m[3] * x + m[7] * y + m[11] * z + m[15];
     return w > 0 && Math.abs(cx) <= w * inset && Math.abs(cy) <= w * inset;
   }
@@ -161,7 +174,7 @@ export class SpawnDirector {
     const player = this.ai.world.entities.get(1)!;
     return Math.hypot(target.x - player.transform.x, target.z - player.transform.z) >= 18 && (this.offscreen(target) || this.occluded(target)) && this.ai.infectedNav.clear(target.x, target.z, infectedDef(id).radius);
   }
-  request(archetype: string, position: { x: number; z: number }, options: InfectedSpawn = {}): void {
+  request(archetype: string, position: { x: number; y?: number; z: number }, options: InfectedSpawn = {}): void {
     infectedDef(archetype);
     if (this.ai.world.scenario === 'L10' && archetype === 'infected.alpha' && options.variant !== megaAlpha.asset && !options.cureRegion) throw new RangeError('L10 regular Alpha requires an authored cure region');
     if (options.cureRegion) cureAlphaCap(options.cureRegion, this.tier);

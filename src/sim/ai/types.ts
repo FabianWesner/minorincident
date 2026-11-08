@@ -6,6 +6,10 @@ export interface InfectedState {
   thrownBy?: number;
   arenaBoss?: { arena: import('../../data/l8Bosses').L8BossId; slot: number; engaged: boolean; exposedUntil: number; readyAt: number; scattered?: boolean; shakeHits?: number; scavengeId?: number; smashId?: string; roof?: boolean; leaderEntered?: boolean; followUpThrow?: boolean; approach?: 'gorilla.roar' | 'gorilla.pound'; barrage?: number; hunt?: { x: number; z: number; until: number; flank: boolean }; traversal?: { start: number; from: { x: number; y: number; z: number }; to: { x: number; y: number; z: number }; roof: boolean } };
   arenaCarrier?: number;
+  /** Data-driven E07 Alpha identity; absent on legacy saves, where Brute is the default. */
+  alphaType?: import('../../data/alphaTypes').AlphaType;
+  /** Entity-owned start time keeps the shared one-second admission limit checkpoint-safe. */
+  alphaSpecialStarted?: number;
   /** L10 authored regular Alpha ownership, serialized with the entity. */
   cureRegion?: import('../../levels/L10/alphaContracts').CureRegion;
   /** Entity-owned timers survive checkpoints and chunk serialization. */
@@ -40,6 +44,11 @@ export interface InfectedState {
   /** Mega hit bookkeeping is bounded, serializable and shared by every weapon/status. */
   megaStaggerReady?: number;
   megaRocketIds?: number[];
+  /** L10 finale state travels with the one stalker through phase checkpoints. */
+  megaPhase?: 1 | 2 | 3;
+  megaWeakTicks?: number;
+  megaBurnTicks?: number;
+  megaArmourBroken?: boolean;
   /** Courier/companion hit memory, refreshed on damage. Archetype brains pursue the source; vision brains receive one hit-time move. */
   provoked?: { id: number; until: number };
   /** Finite authored pressure for archetypes that do not use the pedestrian brain. */
@@ -80,5 +89,8 @@ export interface InfectedSpecialAttack {
   grabbedId?: number; grabReleaseTick?: number;
   destination?: { x: number; z: number };
   bait?: { x: number; z: number };
-  projectile?: { objectId: number; corpse: boolean; living?: boolean; started: number; x: number; z: number; dx: number; dz: number; distance: number; range: number; speed?: number; fromY?: number; toY?: number };
+  projectile?: { objectId: number; corpse: boolean; living?: boolean; physics?: boolean; radius?: number; restoreVelocity?: boolean; y?: number; damping?: number; lastX?: number; lastZ?: number; started: number; x: number; z: number; dx: number; dz: number; distance: number; range: number; speed?: number; fromY?: number; toY?: number };
+  pickup?: { objectId: number; corpse: boolean; living?: boolean };
+  barrageProjectiles?: NonNullable<InfectedSpecialAttack['projectile']>[];
+  barrageRemaining?: number; barrageNextTick?: number;
 }

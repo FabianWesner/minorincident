@@ -26,7 +26,7 @@ export class Combat {
   readonly effects: ActionEffects;
   readonly pickups: Pickups;
   private readonly pelletHits = new Map<EntitySnapshot, number>();
-  private readonly pelletDirection = { x: 1, z: 0 };
+  private readonly pelletDirection = { x: 1, y: 0, z: 0 };
   readonly assist: AimAssist;
   rackCapacity = 3;
   actionDefinitions: Record<string,ActionDef> | null = null;
@@ -78,7 +78,8 @@ export class Combat {
     if (!player.weapons) return;
     const loadout = this.runner.loadout;
     const emptySide = (['LEFT', 'RIGHT'] as const).find(side => frame[side === 'LEFT' ? 'left' : 'right'].down && !loadout.hasAmmo(loadout.current(side)));
-    if (emptySide && player.health.current > 0 && this.world.vehicles?.active == null && !this.world.mountedGun?.mounted && !Status.stunned(player, this.world.tick)) {
+    const canUseCarriedWeapon = (this.world.vehicles?.active == null || !!this.world.missions?.l9?.driving.hatch) && this.world.missions?.l9?.state.phase !== 'crawl';
+    if (emptySide && player.health.current > 0 && canUseCarriedWeapon && !this.world.mountedGun?.mounted && !Status.stunned(player, this.world.tick)) {
       this.world.events.emit({ type: 'combat.empty', tick: this.world.tick, sourceId: 1, actionId: loadout.current(emptySide).id, position: { ...player.transform } });
       const best = loadout.activeEntries().filter(e => weaponKey(e.id) !== undefined && (e.index === -1 || loadout.hasAmmo(loadout.state[e.side].rack[e.index])))
         .sort((a, b) => weaponKey(b.id)! - weaponKey(a.id)!)[0]!;
@@ -86,7 +87,7 @@ export class Combat {
       this.world.controls.reset();
       frame = { ...frame, left: { down: false, held: false, up: false }, right: { down: false, held: false, up: false } };
     }
-    this.runner.update(frame, this.world.tick, player.health.current > 0 && !this.world.missions?.state.states['cure-released'] && this.world.vehicles?.active == null && !this.world.mountedGun?.mounted && !Status.stunned(player, this.world.tick), this.started, this.resolve, this.crowd, this.canFire);
+    this.runner.update(frame, this.world.tick, player.health.current > 0 && !this.world.missions?.state.states['cure-released'] && canUseCarriedWeapon && !this.world.mountedGun?.mounted && !Status.stunned(player, this.world.tick), this.started, this.resolve, this.crowd, this.canFire);
     this.updateProjectiles();
     this.effects.update(); this.pickups.update();
   }
@@ -167,15 +168,31 @@ export class Combat {
     const id = actionExplosions[attack.def.id];
     if (id && attack.def.id !== 'weapon.rocket-launcher') this.world.explosions?.blast(id, at, { sourceId: attack.sourceId, actionId: attack.def.id, radius: attack.def.splash!.radius, damage: false });
   }
-  private environment(attack: Attack, origin: Vec2 & { y: number }, direction: Vec2, range: number, target: EntitySnapshot | null = null, scale = 1): boolean {
+  private environment(attack: Attack, origin: Vec2 & { y: number }, direction: Vec2 & { y?: number }, range: number, target: EntitySnapshot | null = null, scale = 1): boolean {
     if (target) {
       const dx = target.transform.x-origin.x, dz = target.transform.z-origin.z, along = dx*direction.x+dz*direction.z;
       range = Math.min(range, Math.max(0, along-Math.sqrt(Math.max(0,(target.combat?.radius??.4)**2-(dx*dx+dz*dz-along*along)))));
     }
-    return this.world.destruction?.strike(attack.def.id, attack.def.damage*scale*(this.world.entities.get(attack.sourceId)?.combat?.damageMultiplier??1), origin, { ...direction, y: 0 }, range) ?? false;
+    return this.world.destruction?.strike(attack.def.id, attack.def.damage*scale*(this.world.entities.get(attack.sourceId)?.combat?.damageMultiplier??1), origin, { ...direction, y: direction.y ?? 0 }, range) ?? false;
   }
   private readonly resolve = (attack: Attack): void => {
     const source = this.world.entities.get(attack.sourceId)!, def = attack.def;
+    if (def.category === 'ranged' && source.id === 1 && this.world.missions?.l9?.driving.hatch) {
+      // Like the deck gun, an elevated hatch aims down at the first visible
+      // body on its bearing. A horizontal round passes over ground enemies.
+      const muzzle = { ...source.transform, y: source.transform.y + .45 };
+      let nearest = def.range + 1; attack.aim.y = 0;
+      for (const id of this.query.nearby(muzzle, def.range)) {
+        const candidate = this.world.entities.get(id);
+        if (!candidate?.infected || candidate.health.current <= 0 || candidate.hidden || candidate.infected.hidden) continue;
+        const dx = candidate.transform.x - muzzle.x, dz = candidate.transform.z - muzzle.z;
+        const along = dx * attack.aim.x + dz * attack.aim.z, cross = Math.abs(dx * attack.aim.z - dz * attack.aim.x);
+        if (along <= 0 || along >= nearest || cross > (candidate.combat?.radius ?? .4) + .15) continue;
+        const centre = { ...candidate.transform, y: candidate.transform.y + .45 };
+        if (!this.query.visible(muzzle, centre, id)) continue;
+        nearest = along; attack.aim.y = (centre.y - muzzle.y) / Math.max(.1, along);
+      }
+    }
     if (def.category === 'ranged') this.attackEvent(attack);
     if (def.effect && def.category === 'ability') { this.effects.create(attack, source.transform); return; }
     if (def.category === 'throwable' || def.projectile) {
@@ -209,12 +226,18 @@ export class Combat {
       const count = def.pellets!, angle = Math.atan2(attack.aim.z, attack.aim.x);
       for (let i = 0; i < count; i++) {
         const direction = angle + (i / (count - 1) - 0.5) * def.spread * Math.PI / 180;
-        this.pelletDirection.x = Math.cos(direction); this.pelletDirection.z = Math.sin(direction);
+        this.pelletDirection.x = Math.cos(direction); this.pelletDirection.y = attack.aim.y ?? 0; this.pelletDirection.z = Math.sin(direction);
         const target = this.query.ray(source.id, { ...source.transform, y: source.transform.y + .45 }, this.pelletDirection, def.range);
         const blocked = this.environment(attack, { ...source.transform, y: source.transform.y+.45 }, this.pelletDirection, def.range, target, 1/count);
         if (target && !blocked) this.pelletHits.set(target, (this.pelletHits.get(target) ?? 0) + 1);
       }
       for (const [target, hits] of this.pelletHits) this.hit(attack, target, source.transform, 'bullet', hits / count);
+      if (def.id === 'weapon.flamethrower') {
+        const origin = { ...source.transform, y: source.transform.y + .45 };
+        const cover = this.world.destruction?.trace(origin, { ...attack.aim, y: 0 }, def.range)?.distance ?? def.range;
+        const distance = Math.max(0, Math.min(cover, this.query.clearDistance(origin, attack.aim, def.range)) - .08);
+        this.world.hazards?.ignitePatch({ x: origin.x + attack.aim.x * distance, z: origin.z + attack.aim.z * distance }, .65, 3);
+      }
     } else {
       const target = this.query.ray(source.id, { ...source.transform, y: source.transform.y + .45 }, attack.aim, def.range);
       const blocked = this.environment(attack, { ...source.transform, y: source.transform.y+.45 }, attack.aim, def.range, target);
@@ -300,7 +323,7 @@ export class Combat {
           target = this.query.ray(p.attack.sourceId, this.origin, p.attack.aim, step, p.attack.hit);
         }
         p.x += p.attack.aim.x * wall; p.z += p.attack.aim.z * wall; p.travelled += wall;
-        p.y -= def.projectile!.gravity * (age - 0.5) / 3600;
+        p.y += (p.attack.aim.y ?? 0) * wall - def.projectile!.gravity * (age - 0.5) / 3600;
         if (wall < step || p.travelled >= def.range || p.y < 0 || p.attack.hit.size > def.projectile!.pierce || p.attack.hit.size >= def.maxTargets) this.projectiles.splice(i, 1);
       }
     }

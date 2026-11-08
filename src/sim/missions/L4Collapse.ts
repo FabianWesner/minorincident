@@ -140,9 +140,9 @@ export class L4Collapse {
     const inside = world.infected!.active.filter(e => e.health.current > 0 && !e.hidden && this.h.insideRing(e.transform)).length;
     const survivors = line.soldierIds.filter(id => this.soldier(id));
     world.events.emit({ type: 'l4.beat', tick, beat: line.id, cause, soldiers: survivors.length, inside });
-    if (i === 0) { this.h.mission.radio('L4.line1'); this.fallTo(survivors, D.fallback1.map(pt), d.lines[1]); this.camera('l4-line-1'); }
+    if (i === 0) { this.h.mission.radio('L4.line1'); this.fallTo(survivors, D.fallback1.map(pt), d.lines[1]); }
     if (i === 1) { this.h.mission.radio('L4.nests'); this.fallTo(survivors, D.fallback2.map(pt), d.lines[2]); }
-    if (i === 2) { this.silenceTank(); this.h.mission.radio('L4.armor'); this.retreat(survivors); this.camera('l4-armor'); }
+    if (i === 2) { this.silenceTank(); this.h.mission.radio('L4.armor'); this.retreat(survivors); }
   }
   /** Survivors run back (shooting on the move) to the next line's posts and hold there; the next line counts them. */
   private fallTo(ids: number[], posts: Point[], next: L4Line): void {
@@ -193,8 +193,6 @@ export class L4Collapse {
       this.world.infected!.press(id, victim.id, this.world.tick + ticks(dist(at, victim.transform) / 1.6 + 20), 30);
     }
   }
-  /** Short camera beat on the collapse (mission cinematic: <= 2 s, the sim pauses, skippable after 0.5 s). Skipped while another one runs. */
-  private camera(id: string): void { if (this.h.mission.def.cinematics[id]) this.h.mission.cinematic(id); }
 
   // ------------------------------------------------------------------------------------------------ the Alphas
   /**
@@ -249,8 +247,18 @@ export class L4Collapse {
       // The wall first (PO 10-23 "so Zombies or alphas can tear them down"): announced, it runs up from outside the breach site and
       // charges the wire again and again (300 per contacted charge, E26 HP) until a segment falls; then its job goes on through the gap.
       if (job.breach && !this.h.breachOpen(job.breach) && !this.inside(e.transform)) {
-        const site = l4BreachSite(job.breach), out = l4Breaches[job.breach].out, stage = this.h.snap(site.stage, .55);
+        const site = l4BreachSite(job.breach), out = l4Breaches[job.breach].out;
+        // A special needs a visible windup. Approach the wire when the old
+        // run-up point is offscreen instead of retrying there indefinitely.
+        const stage = this.h.snap(ai.director.inPlayerView(site.stage, 32) ? site.stage
+          : { x: site.centre.x + out.x * 1.2, z: site.centre.z + out.z * 1.2 }, .55);
         this.h.announceBreach(job.breach, e.id);
+        if ((b.alphaType && b.alphaType !== 'brute') || !ai.director.inPlayerView(e.transform, 32)) {
+          const segment = this.h.breachSegments(job.breach).find(seg => world.barricades!.withinReach(e, seg));
+          if (segment) { delete b.scripted; ai.attackObstacle(e.id, segment.id); }
+          else b.scripted = this.h.snap({ x: site.centre.x + out.x * 1.2, z: site.centre.z + out.z * 1.2 }, .55);
+          continue;
+        }
         // Back off to the run-up point (unless already at the wire), then charge straight at the breach.
         const atWire = Math.abs((e.transform.x - site.centre.x) * out.x + (e.transform.z - site.centre.z) * out.z) < 1.8;
         if (!atWire && dist(e.transform, stage) > 1.2) { b.scripted = stage; continue; }
@@ -266,6 +274,16 @@ export class L4Collapse {
       if (job.breach && this.h.breachOpen(job.breach) && !this.inside(e.transform)) {
         const { centre } = l4BreachSite(job.breach), out = l4Breaches[job.breach].out;
         b.scripted = this.h.snap({ x: centre.x - out.x * 3, z: centre.z - out.z * 3 }, .55);
+        continue;
+      }
+      // The authored entrance/beat still owns staging. Inside, each other type uses its own move set against the crew.
+      if (b.alphaType && b.alphaType !== 'brute') {
+        if (Object.keys(b.specialCooldowns ?? {}).length) { job.stage = 'tank'; delete b.scripted; }
+        else {
+          ai.press(e.id, nearest.id, tick + ticks(20));
+          if (dist(e.transform, nearest.transform) > 11 || !world.combat!.query.visible(e.transform, nearest.transform)) b.scripted = this.h.snap(nearest.transform, .55);
+          else delete b.scripted;
+        }
         continue;
       }
       // On a move cooldown it keeps closing in; at arm's length its own brain swipes at the crew in reach.

@@ -6,7 +6,7 @@ export function epilogueSurvivorLines(escapedKeys: readonly string[] | undefined
   const safe = l5Survivors.filter(s => escapedKeys.includes(s.key)).map(s => s.name);
   const lost = l5Survivors.filter(s => !escapedKeys.includes(s.key)).map(s => s.name);
   const lines: string[] = [];
-  if (safe.length) lines.push(`${safe.join(', ')}: safe at the evacuation point, waiting for the cure.`);
+  if (safe.length) lines.push(`${safe.join(', ')}: safe at the evacuation point.`);
   if (lost.length) lines.push(`Remembered: ${lost.join(', ')}.`);
   return lines;
 }

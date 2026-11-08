@@ -1,8 +1,14 @@
 # eg-l8-bosses — L8 animal arenas
 
-**Goal met: six L8 animal boss arenas are playable and natively verified.**
+**Original lane goal met. Post-merge verification is in progress.**
 
 Runtime source: `dea0efbb`. Later commits contain this report and evidence only. The binding design is `docs/design/boss-and-alpha-moves.md` (L8 table/common rules), `docs/design/story-script.md` L8 beat 3, and the lane brief.
+
+## Main integration — in progress
+
+Merged main `1141d078` into the L8 arena branch. Conflict resolution preserves Alpha type moves and Rapier throws, moving-hit lead/glancing and height guards, Mega lope and animal gaits, Alpha range eligibility and engaged arena bars, L10 layout/story changes, and paced zoo evacuees alongside the arena story actors. L8 elevated throws retain their trajectory/landing owner while Alpha throws retain Rapier and object reservation. Nearby evacuees use courier-relative pacing; distant catch-up retains the arena branch's 6.4 m/s cap.
+
+**Open:** post-merge typecheck, lint, unit tests and six-arena matrix on runners. The receipts below describe the original lane source until the post-merge results are committed. **Browser QA needed** remains open; no browsers are launched.
 
 ## Done and open items
 

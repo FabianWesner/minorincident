@@ -1,0 +1,74 @@
+{
+  "status": "Incomplete; final gameplay fix awaits qualification",
+  "gameplayRevisionAwaitingQualification": "3d1785b2",
+  "lastCompletedBatch": {
+    "gameplayRevision": "49a6d414",
+    "runnerSnapshotRevision": "9e2d0b078271dd645124c8f064e2d19edef3636b",
+    "sourceHash": "ffde227a96e23caa00b6c0b9662f8e24e98ec53d8c4f215d2e7ffc6bd834c94e",
+    "observerHash": "f87ed6b1f8a9094194147936d72d2e9053866f57a043532741d512789b6bf568",
+    "checks": {
+      "typecheck": 0,
+      "lint": 0,
+      "story": 1,
+      "course": 0
+    },
+    "story": {
+      "passed": false,
+      "method": "Explicit native phase fixtures with initial vehicle placements and courier HP refill; civilians retain ordinary mortality. Covers mechanics, not difficulty or route completion.",
+      "failure": "Evacuation timed out: Rosa and corgi personal-space separation blocked the hug approach. Actual paired distance was about 1.265 m; required approach distance was 1.2 m. Subsequent fix 3d1785b2 is unverified.",
+      "rawSha256": "153a5d1e9a0a7978257b92be57aa6df992048103e8322c0269bb3b4ac366eff0"
+    },
+    "course": {
+      "method": "Initial-pose native Rapier fixtures, then ordinary drive input; high-speed jump and low-speed blockage on each authored ramp.",
+      "rows": [
+        {
+          "ramp": "overpass",
+          "fast": true,
+          "initialSpeed": 14,
+          "maxY": 3.698411226272583,
+          "airTicks": 49,
+          "cleared": true,
+          "passed": true
+        },
+        {
+          "ramp": "overpass",
+          "fast": false,
+          "initialSpeed": 3,
+          "maxY": 2.2994649410247803,
+          "airTicks": 0,
+          "cleared": false,
+          "passed": true
+        },
+        {
+          "ramp": "ditch",
+          "fast": true,
+          "initialSpeed": 14,
+          "maxY": 3.468078136444092,
+          "airTicks": 34,
+          "cleared": true,
+          "passed": true
+        },
+        {
+          "ramp": "ditch",
+          "fast": false,
+          "initialSpeed": 3,
+          "maxY": 2.2994654178619385,
+          "airTicks": 0,
+          "cleared": false,
+          "passed": true
+        }
+      ],
+      "rawSha256": "ff5125fa2a92595471a83642cca60ea4f181f293360ea5c1169a6c5ddf5ef50c"
+    }
+  },
+  "rawLocalArtifacts": "test-results/eg-l9-pre-approach/ (failed story) and test-results/eg-l9/ (latest batch)",
+  "browser": "Not run: QA lane only, per orchestrator",
+  "finalRerun": {
+    "status": "Cancelled before remote admission",
+    "cancelledAt": "2026-11-08T20:03:10Z",
+    "queueWaitSecondsApprox": 578,
+    "reason": "Orchestrator requested timeboxed wrap-up; FIFO remained blocked ahead of this lane. No local fallback and no browser were used.",
+    "exitCode": 130,
+    "commandsExecuted": false
+  }
+}

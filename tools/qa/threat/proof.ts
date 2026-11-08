@@ -63,8 +63,8 @@ export async function proveThreatAudit(): Promise<void> {
     let clearRetreat = true, device = emptyInput();
     const receipt = { kitingSeconds: 0, attacks: 0, attacksPerMinute: 0, samples: 0 };
     const world = { tick: 0, events,
-      entities: new Map([[1, { transform: { x: 0, z: 0 }, health: { current: 100 }, weapons: { selectedSide: 'RIGHT' } }]]),
-      infected: { active: [5, 6, 7].map(x => ({ health: { current: 100 }, infected: { state: 'chase' }, transform: { x, z: 0 } })),
+      entities: new Map([[1, { transform: { x: 0, y: .7, z: 0 }, survivor: { velocity: { x: -2, z: 0 } }, health: { current: 100 }, weapons: { selectedSide: 'RIGHT' } }]]),
+      infected: { active: [5, 6, 7].map(x => ({ health: { current: 100 }, infected: { state: 'chase' }, transform: { x, y: .7, z: 0 } })),
         nav: { visible: (_from: { x: number; z: number }, to: { x: number; z: number }) => clearRetreat || to.x >= -.5 } },
       combat: { query: { visible: () => true }, runner: { loadout: { current: () => ({ id: 'weapon.handgun' }) } } },
       get deviceInput() { return device; },
@@ -73,6 +73,12 @@ export async function proveThreatAudit(): Promise<void> {
       applyInput: (frame: InputFrame) => { device = frame; frames.push(frame); },
     } as unknown as SimWorld;
     const kitingComplete = installKitingPolicy(world, receipt, 'L1');
+    const third = world.infected!.active.pop()!;
+    world.setInput(emptyInput());
+    assert.equal(receipt.samples, 0, 'a lone/pair opening is not a pressing horde sample');
+    third.transform.y = 4.7; world.infected!.active.push(third); world.setInput(emptyInput());
+    assert.equal(receipt.samples, 0, 'an enemy on another floor cannot fill the horde denominator');
+    third.transform.y = .7; frames.length = 0;
     world.setInput(emptyInput());
     assert(frames[0].move.x < 0 && frames[0].aim!.x > 0 && frames[0].left.held, 'retreat while aiming and firing back');
     const resolved = new ControlIntent(world).resolve(frames[0]);
@@ -80,22 +86,33 @@ export async function proveThreatAudit(): Promise<void> {
     events.emit({ type: 'combat.attack', tick: 0, sourceId: 1, actionId: 'weapon.handgun', attackId: 1, side: 'LEFT', position: { x: 0, y: 0, z: 0, yaw: 0 }, direction: { x: 1, z: 0 } });
     assert.equal(receipt.attacks, 0, 'courier shots cannot satisfy the threat floor');
     events.emit({ type: 'telegraph', tick: 0, sourceId: 2, attackId: 1, special: 'lunge', duration: .35, target: { id: 1, x: 0, z: 0 } });
-    events.emit({ type: 'civilian.grabbed', tick: 0, sourceId: 3, targetId: 4, variant: '', rescueUntil: 90 });
-    assert.equal(receipt.attacks, 1, 'only infected attempts targeting the kiting courier count');
+    events.emit({ type: 'infected.attack', tick: 1, sourceId: 2, attackId: 1, targetId: 1, special: 'lunge', amount: 10 });
+    events.emit({ type: 'infected.attack', tick: 1, sourceId: 3, attackId: 2, targetId: 4, special: 'bite', amount: 10 });
+    events.emit({ type: 'infected.attack', tick: 1, sourceId: 2, attackId: 4, targetId: 1, special: 'lunge', amount: 0 });
+    world.previousPlayer = { ...world.entities.get(1)!.transform };
+    world.entities.get(1)!.transform.x -= 2 / 60; events.emit({ type: 'sim.tick', tick: 1 });
+    assert.equal(receipt.attacks, 1, 'only infected windups targeting the courier count as attack starts');
+    assert.equal(finishKitingReceipt(receipt).hits, 1, 'landed hits have their own moving-courier counter');
+    world.tick = 1; world.previousPlayer = { ...world.entities.get(1)!.transform }; world.setInput(emptyInput());
+    events.emit({ type: 'infected.attack', tick: 2, sourceId: 2, attackId: 3, targetId: 1, special: 'lunge', amount: 10 });
+    events.emit({ type: 'sim.tick', tick: 2 });
+    assert.equal(finishKitingReceipt(receipt).hits, 1, 'blocked movement intent and rejected damage cannot satisfy the moving hit floor');
+    assert.equal(finishKitingReceipt(receipt).stationaryHits, 1);
+    world.entities.get(1)!.transform.x = 0;
     world.entities.get(1)!.health.current = 0; world.setInput(emptyInput());
-    assert.equal(receipt.samples, 1, 'dead courier frames cannot count as active kiting');
+    assert.equal(receipt.samples, 2, 'dead courier frames cannot count as active kiting');
     world.entities.get(1)!.health.current = 100;
-    for (world.tick = 1; world.tick <= 1200; world.tick++) {
-      clearRetreat = world.tick !== 1;
-      const pursuers = world.tick === 2 ? world.infected!.active.splice(0) : [];
+    for (world.tick = 2; world.tick <= 1200; world.tick++) {
+      clearRetreat = world.tick !== 2;
+      const pursuers = world.tick === 3 ? world.infected!.active.splice(0) : [];
       world.applyInput(emptyInput(), 'mouse-keyboard');
-      if (world.tick === 2) {
+      if (world.tick === 3) {
         const frame = frames.at(-1)!;
         assert(Number.isFinite(frame.aim!.x) && Number.isFinite(frame.aim!.z) && Number.isFinite(frame.aimPoint!.x) && Number.isFinite(frame.aimPoint!.z), 'losing the live pursuer query keeps fallback aim finite');
         world.infected!.active.push(...pursuers);
       }
       if (world.tick === 1199) assert(!kitingComplete(), '1,200 input frames cannot end the encounter clock early');
-      if (world.tick === 1) assert(Math.abs(frames.at(-1)!.move.x) < .01 && Math.abs(frames.at(-1)!.move.z) > .9, 'a blocked backpedal stays on clear ground along a tangent');
+      if (world.tick === 2) assert(Math.abs(frames.at(-1)!.move.x) < .01 && Math.abs(frames.at(-1)!.move.z) > .9, 'a blocked backpedal stays on clear ground along a tangent');
     }
     assert(kitingComplete(), 'the elapsed encounter clock ends the disposable route');
     assert(Math.abs(receipt.kitingSeconds - 20) < 1e-8, 'sustain a full twenty-second chase');
@@ -103,8 +120,51 @@ export async function proveThreatAudit(): Promise<void> {
     assert(Math.abs(finishKitingReceipt(receipt).attacksPerMinute - 3) < 1e-8);
     world.clearInput(); world.setInput({ move: { x: 0, z: 0 } });
     assert(!world.deviceInput.mouseAttack && !world.deviceInput.left.held, 'L1 partial inputs do not retain injected fire after the sample');
+    const circleReceipt = { kitingSeconds: 0, attacks: 0, attacksPerMinute: 0, samples: 0 };
+    installKitingPolicy(world, circleReceipt, 'L1', 'circles');
+    world.setInput({ ...emptyInput(), navigation: true });
+    assert(frames.at(-1)!.move.x < -.99 && Math.abs(frames.at(-1)!.move.z) < .01 && !frames.at(-1)!.walk && frames.at(-1)!.navigation === false, 'circle starts along the current physical heading with direct running input');
+    Object.assign(world.entities.get(1)!.transform, { x: -4, z: -4 });
+    world.tick++;
+    world.setInput(emptyInput());
+    assert(Math.abs(frames.at(-1)!.move.x) < .01 && frames.at(-1)!.move.z < -.99, 'circle input follows physical position around the same centre');
+    world.districts = { groundBelow: (x: number, z: number) => Math.abs(x + 4) < .75 && Math.abs(z + 4) < .75 ? 0 : 3 } as unknown as NonNullable<SimWorld['districts']>;
+    const ledgeReceipt = { kitingSeconds: 0, attacks: 0, attacksPerMinute: 0, samples: 0 };
+    installKitingPolicy(world, ledgeReceipt, 'L1', 'circles'); world.setInput(emptyInput());
+    assert.equal(ledgeReceipt.samples, 0, 'a clear 2D circle cannot cross an unwalkable height step');
   }
 
+  {
+    const receipt = { kitingSeconds: 0, attacks: 0, attacksPerMinute: 0, samples: 0 };
+    const active = [25, 26, 27].map(x => ({ health: { current: 100 }, infected: { state: 'wander', heardTargetId: 1 }, transform: { x, y: .7, z: 0 } }));
+    const world = { tick: 0, events: new EventBus<GameEvent>(),
+      entities: new Map([[1, { transform: { x: 0, y: .7, z: 0 }, survivor: { velocity: { x: -2, z: 0 } }, health: { current: 100 }, weapons: { selectedSide: 'RIGHT' } }]]),
+      infected: { active }, combat: { query: { visible: () => true }, runner: { loadout: { current: () => ({ id: 'weapon.handgun' }) } } },
+      applyInput: () => {},
+    } as unknown as SimWorld;
+    installKitingPolicy(world, receipt, 'L8');
+    world.applyInput(emptyInput(), 'mouse-keyboard');
+    assert.equal(receipt.samples, 0, 'wandering L8 residents are not a pursuing horde');
+    for (const e of active) e.infected.state = 'chase';
+    world.applyInput(emptyInput(), 'mouse-keyboard');
+    assert.equal(receipt.samples, 0, 'a distant L8 horde must approach before the moving encounter starts');
+    for (const [i, e] of active.entries()) { e.transform.x = 5 + i; e.infected.heardTargetId = 99; }
+    world.applyInput(emptyInput(), 'mouse-keyboard');
+    assert.equal(receipt.samples, 0, 'infected pursuing another human cannot fill the courier horde denominator');
+    active[0].infected.heardTargetId = 1;
+    world.applyInput(emptyInput(), 'mouse-keyboard');
+    assert.equal(receipt.samples, 1, 'one courier pursuer among a nearby mixed-target horde starts the same moving sample');
+    const policeReceipt = { kitingSeconds: 0, attacks: 0, attacksPerMinute: 0, samples: 0 };
+    const policeWorld = { ...world, events: new EventBus<GameEvent>(), applyInput: () => {},
+      missions: { def: { steps: [{ id: 'defend', text: 'Police hold' }] }, state: { steps: { defend: { status: 'active' } }, l3: { phase: 'attack' } } },
+    } as unknown as SimWorld;
+    installKitingPolicy(policeWorld, policeReceipt, 'L3');
+    policeWorld.applyInput(emptyInput(), 'mouse-keyboard');
+    assert.equal(policeReceipt.samples, 0, 'police-focused attackers in the protected L3 hold cannot fill the courier horde');
+    for (const e of active) e.infected.heardTargetId = 1;
+    policeWorld.applyInput(emptyInput(), 'mouse-keyboard');
+    assert.equal(policeReceipt.samples, 1, 'a courier-directed L3 horde starts the same complete encounter window');
+  }
   {
     const events = new EventBus<GameEvent>(), starts: number[] = [];
     observeAttackStarts({ events } as unknown as SimWorld, (_source, target) => starts.push(target));

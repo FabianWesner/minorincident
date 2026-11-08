@@ -1,0 +1,31 @@
+{
+  "sourceHash": "6afb8b065df77af661c6e3025bf197772e264fdde476c3533d51dbeb9729010d",
+  "observerHash": "cb2538310b9a403a72f0f6452d5cb52b358af6b7971ffec04cb5f1ad9dbae1ea",
+  "revision": "manifest-only",
+  "checks": [
+    {
+      "tier": "low",
+      "name": "controlled fixtures execute",
+      "pass": false,
+      "observed": "Error: interactable cure-terminal not walkable\ninteractable cure-canister not walkable"
+    },
+    {
+      "tier": "high",
+      "name": "controlled fixtures execute",
+      "pass": false,
+      "observed": "Error: interactable cure-terminal not walkable\ninteractable cure-canister not walkable"
+    }
+  ],
+  "rows": [
+    {
+      "tier": "low",
+      "method": "Controlled production-world fixtures; placements/objective advances are explicitly injected. Native route below uses inputs only.",
+      "error": "Error: interactable cure-terminal not walkable\ninteractable cure-canister not walkable"
+    },
+    {
+      "tier": "high",
+      "method": "Controlled production-world fixtures; placements/objective advances are explicitly injected. Native route below uses inputs only.",
+      "error": "Error: interactable cure-terminal not walkable\ninteractable cure-canister not walkable"
+    }
+  ]
+}

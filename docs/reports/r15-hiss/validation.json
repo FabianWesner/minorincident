@@ -1,0 +1,58 @@
+{
+  "baseRevision": "78219de9f94a822dcb92d27c43e94d60cfa3541c",
+  "verify": {
+    "target": "E16",
+    "epics": [
+      "E16"
+    ],
+    "checks": [
+      {
+        "command": "npm run typecheck",
+        "status": 0,
+        "seconds": 33.718
+      },
+      {
+        "command": "npm run lint",
+        "status": 0,
+        "seconds": 11.42
+      },
+      {
+        "command": "npm test",
+        "status": 0,
+        "seconds": 49.187
+      }
+    ]
+  },
+  "finalTypecheckAndLint": "passed after all QA tools were added",
+  "defaultSuite": {
+    "passedTests": 107,
+    "passedFiles": 27
+  },
+  "nativeGraph": {
+    "suppressedCues": 41,
+    "outputPeak": 0,
+    "positiveProbes": 5
+  },
+  "liveCaptureCount": 8,
+  "levels": [
+    "L1",
+    "L4",
+    "L7",
+    "L10"
+  ],
+  "decodedScoreFiles": 50,
+  "decodedMusicSpriteSlices": 66,
+  "spriteTableAndAssetsUnchanged": true,
+  "rawCleanup": {
+    "deletedFiles": 8,
+    "deletedBytes": 230359392,
+    "remainingWavs": 0,
+    "path": "/tmp/r15-hiss-audio"
+  },
+  "sourceHashes": {
+    "src/audio/AudioGraph.ts": "ecfef22878d76f31c4d93638eed5d58d754e1d7df441db663cc0ed8c12665b0c",
+    "src/data/audioCues.ts": "8671aef2499d0e7aef15a2c5adb37247537f1ee25ed107a34338ccf1f5e09ce8",
+    "tests/engine/core.test.ts": "ca311e098d642013eeae5b9c68b808aa9207cee6f751b1cf425f7c5cd2183ab0"
+  },
+  "noDeployOrPush": true
+}

@@ -1,0 +1,1026 @@
+{
+  "sourceHash": "2ca25a09ed03635c07e31a970fb23efe46d432775f3d7fa679076e05fedccfcf",
+  "observerHash": "09ae397363ddb8aa1891a5debb7cc195e1494039772a83ba40d7274c91cba819",
+  "revision": "b3382b531f743081e6986ca006eb6896e08c5418",
+  "rows": [
+    {
+      "seed": 1,
+      "valid": true,
+      "companions": [
+        20
+      ],
+      "phases": [
+        {
+          "key": "step/rocket",
+          "followerSpeeds": [],
+          "followerMedian": null
+        },
+        {
+          "key": "phase/pickup",
+          "followerSpeeds": [],
+          "followerMedian": null
+        },
+        {
+          "key": "step/corridor",
+          "followerSpeeds": [
+            {
+              "id": 20,
+              "samples": 99,
+              "median": 4.49981689453125
+            },
+            {
+              "id": 51,
+              "samples": 137,
+              "median": 4.501854099345585
+            },
+            {
+              "id": 52,
+              "samples": 4,
+              "median": 5.2560492947403255
+            },
+            {
+              "id": 53,
+              "samples": 106,
+              "median": 4.50370427201802
+            },
+            {
+              "id": 54,
+              "samples": 4,
+              "median": 5.196340749286088
+            },
+            {
+              "id": 55,
+              "samples": 132,
+              "median": 4.503606538339752
+            },
+            {
+              "id": 56,
+              "samples": 135,
+              "median": 4.501396668996282
+            },
+            {
+              "id": 57,
+              "samples": 6,
+              "median": 4.569759728268522
+            },
+            {
+              "id": 58,
+              "samples": 7,
+              "median": 4.122375388482611
+            },
+            {
+              "id": 59,
+              "samples": 138,
+              "median": 4.501394736914529
+            },
+            {
+              "id": 60,
+              "samples": 11,
+              "median": 1.8763508949945287
+            },
+            {
+              "id": 61,
+              "samples": 139,
+              "median": 4.502830862451168
+            },
+            {
+              "id": 62,
+              "samples": 138,
+              "median": 4.504127765611127
+            },
+            {
+              "id": 63,
+              "samples": 9,
+              "median": 5.077001463655614
+            },
+            {
+              "id": 64,
+              "samples": 142,
+              "median": 4.501771395879841
+            },
+            {
+              "id": 65,
+              "samples": 140,
+              "median": 4.503793258289992
+            },
+            {
+              "id": 66,
+              "samples": 138,
+              "median": 4.502399805217948
+            },
+            {
+              "id": 67,
+              "samples": 11,
+              "median": 3.35539810513697
+            },
+            {
+              "id": 68,
+              "samples": 143,
+              "median": 4.503580967451452
+            },
+            {
+              "id": 69,
+              "samples": 144,
+              "median": 4.501789038500705
+            },
+            {
+              "id": 70,
+              "samples": 145,
+              "median": 4.502521304546924
+            },
+            {
+              "id": 71,
+              "samples": 144,
+              "median": 4.504686351458309
+            },
+            {
+              "id": 72,
+              "samples": 145,
+              "median": 4.503136441617341
+            },
+            {
+              "id": 73,
+              "samples": 10,
+              "median": 4.138140638070617
+            },
+            {
+              "id": 74,
+              "samples": 9,
+              "median": 4.790170262713373
+            }
+          ],
+          "followerMedian": 4.502399805217948
+        },
+        {
+          "key": "phase/encounters",
+          "followerSpeeds": [
+            {
+              "id": 20,
+              "samples": 123,
+              "median": 4.49981689453125
+            },
+            {
+              "id": 51,
+              "samples": 161,
+              "median": 4.501854099345585
+            },
+            {
+              "id": 52,
+              "samples": 4,
+              "median": 5.2560492947403255
+            },
+            {
+              "id": 53,
+              "samples": 106,
+              "median": 4.50370427201802
+            },
+            {
+              "id": 54,
+              "samples": 4,
+              "median": 5.196340749286088
+            },
+            {
+              "id": 55,
+              "samples": 156,
+              "median": 4.5037637898715275
+            },
+            {
+              "id": 56,
+              "samples": 159,
+              "median": 4.501613154679092
+            },
+            {
+              "id": 57,
+              "samples": 6,
+              "median": 4.569759728268522
+            },
+            {
+              "id": 58,
+              "samples": 7,
+              "median": 4.122375388482611
+            },
+            {
+              "id": 59,
+              "samples": 162,
+              "median": 4.501588048429462
+            },
+            {
+              "id": 60,
+              "samples": 11,
+              "median": 1.8763508949945287
+            },
+            {
+              "id": 61,
+              "samples": 163,
+              "median": 4.503837738462938
+            },
+            {
+              "id": 62,
+              "samples": 162,
+              "median": 4.50443146888735
+            },
+            {
+              "id": 63,
+              "samples": 9,
+              "median": 5.077001463655614
+            },
+            {
+              "id": 64,
+              "samples": 166,
+              "median": 4.501980196744676
+            },
+            {
+              "id": 65,
+              "samples": 164,
+              "median": 4.503257162084635
+            },
+            {
+              "id": 66,
+              "samples": 162,
+              "median": 4.502213555913997
+            },
+            {
+              "id": 67,
+              "samples": 11,
+              "median": 3.35539810513697
+            },
+            {
+              "id": 68,
+              "samples": 150,
+              "median": 4.50360455651078
+            },
+            {
+              "id": 69,
+              "samples": 168,
+              "median": 4.501789038500705
+            },
+            {
+              "id": 70,
+              "samples": 169,
+              "median": 4.503098156073882
+            },
+            {
+              "id": 71,
+              "samples": 168,
+              "median": 4.504744213148253
+            },
+            {
+              "id": 72,
+              "samples": 166,
+              "median": 4.50340267122728
+            },
+            {
+              "id": 73,
+              "samples": 10,
+              "median": 4.138140638070617
+            },
+            {
+              "id": 74,
+              "samples": 9,
+              "median": 4.790170262713373
+            }
+          ],
+          "followerMedian": 4.502213555913997
+        },
+        {
+          "key": "step/departure",
+          "followerSpeeds": [
+            {
+              "id": 20,
+              "samples": 26,
+              "median": 4.4981917050641895
+            },
+            {
+              "id": 51,
+              "samples": 26,
+              "median": 4.551383009208056
+            },
+            {
+              "id": 55,
+              "samples": 26,
+              "median": 4.512454665044974
+            },
+            {
+              "id": 56,
+              "samples": 26,
+              "median": 4.599999999999836
+            },
+            {
+              "id": 59,
+              "samples": 26,
+              "median": 4.600000000000008
+            },
+            {
+              "id": 61,
+              "samples": 26,
+              "median": 4.599999999999968
+            },
+            {
+              "id": 62,
+              "samples": 26,
+              "median": 4.599996751461482
+            },
+            {
+              "id": 64,
+              "samples": 26,
+              "median": 4.586198557326336
+            },
+            {
+              "id": 65,
+              "samples": 26,
+              "median": 4.405872205075671
+            },
+            {
+              "id": 66,
+              "samples": 26,
+              "median": 4.423751610076801
+            },
+            {
+              "id": 68,
+              "samples": 7,
+              "median": 4.599999999999983
+            },
+            {
+              "id": 69,
+              "samples": 26,
+              "median": 4.552074053984487
+            },
+            {
+              "id": 70,
+              "samples": 26,
+              "median": 4.599999999999861
+            },
+            {
+              "id": 71,
+              "samples": 26,
+              "median": 4.558542335743225
+            },
+            {
+              "id": 72,
+              "samples": 23,
+              "median": 4.551361040578941
+            }
+          ],
+          "followerMedian": 4.555308194863857
+        },
+        {
+          "key": "phase/boarding",
+          "followerSpeeds": [
+            {
+              "id": 20,
+              "samples": 2,
+              "median": 4.500127017058988
+            },
+            {
+              "id": 51,
+              "samples": 2,
+              "median": 4.601471121525412
+            },
+            {
+              "id": 55,
+              "samples": 2,
+              "median": 4.601484519788807
+            },
+            {
+              "id": 56,
+              "samples": 2,
+              "median": 4.5996606566368685
+            },
+            {
+              "id": 59,
+              "samples": 2,
+              "median": 2.630345686530081
+            },
+            {
+              "id": 61,
+              "samples": 2,
+              "median": 4.601717691955846
+            },
+            {
+              "id": 62,
+              "samples": 2,
+              "median": 4.631638255400679
+            },
+            {
+              "id": 64,
+              "samples": 2,
+              "median": 4.622103512413556
+            },
+            {
+              "id": 65,
+              "samples": 2,
+              "median": 4.601804097913517
+            },
+            {
+              "id": 66,
+              "samples": 2,
+              "median": 4.482884753382727
+            },
+            {
+              "id": 69,
+              "samples": 2,
+              "median": 4.653113969183655
+            },
+            {
+              "id": 70,
+              "samples": 2,
+              "median": 4.57125754238713
+            },
+            {
+              "id": 71,
+              "samples": 2,
+              "median": 4.546764136952751
+            },
+            {
+              "id": 72,
+              "samples": 2,
+              "median": 4.5913105567593835
+            }
+          ],
+          "followerMedian": null
+        },
+        {
+          "key": "phase/departing",
+          "followerSpeeds": [],
+          "followerMedian": null
+        },
+        {
+          "key": "phase/done",
+          "followerSpeeds": [],
+          "followerMedian": null
+        }
+      ],
+      "nativeStateHash": "ecc5feea",
+      "outcome": "complete",
+      "time": 116.51666666666667
+    },
+    {
+      "seed": 2,
+      "valid": false,
+      "companions": [
+        20
+      ],
+      "phases": [
+        {
+          "key": "step/rocket",
+          "followerSpeeds": [],
+          "followerMedian": null
+        },
+        {
+          "key": "phase/pickup",
+          "followerSpeeds": [],
+          "followerMedian": null
+        },
+        {
+          "key": "step/corridor",
+          "followerSpeeds": [
+            {
+              "id": 20,
+              "samples": 29,
+              "median": 4.49981689409497
+            },
+            {
+              "id": 51,
+              "samples": 6,
+              "median": 4.770570820688324
+            },
+            {
+              "id": 52,
+              "samples": 4,
+              "median": 5.2560492947403255
+            },
+            {
+              "id": 53,
+              "samples": 5,
+              "median": 5.0216251604763675
+            },
+            {
+              "id": 54,
+              "samples": 4,
+              "median": 5.196340749286088
+            },
+            {
+              "id": 55,
+              "samples": 4,
+              "median": 5.196658917319866
+            },
+            {
+              "id": 56,
+              "samples": 36,
+              "median": 4.50153207818593
+            },
+            {
+              "id": 57,
+              "samples": 6,
+              "median": 4.552884888105973
+            },
+            {
+              "id": 58,
+              "samples": 37,
+              "median": 4.5363927035600975
+            },
+            {
+              "id": 59,
+              "samples": 43,
+              "median": 4.500941956386213
+            },
+            {
+              "id": 60,
+              "samples": 37,
+              "median": 4.652517395392826
+            },
+            {
+              "id": 61,
+              "samples": 7,
+              "median": 5.056010532925082
+            },
+            {
+              "id": 62,
+              "samples": 47,
+              "median": 4.501996737982574
+            },
+            {
+              "id": 63,
+              "samples": 8,
+              "median": 4.855619353042269
+            },
+            {
+              "id": 64,
+              "samples": 10,
+              "median": 3.1461207284851014
+            },
+            {
+              "id": 65,
+              "samples": 53,
+              "median": 4.501844211248132
+            },
+            {
+              "id": 66,
+              "samples": 52,
+              "median": 4.502207508541615
+            },
+            {
+              "id": 67,
+              "samples": 47,
+              "median": 4.501426420684488
+            },
+            {
+              "id": 68,
+              "samples": 52,
+              "median": 4.502140566754258
+            },
+            {
+              "id": 69,
+              "samples": 59,
+              "median": 4.500524728698897
+            },
+            {
+              "id": 70,
+              "samples": 9,
+              "median": 4.724118192667385
+            },
+            {
+              "id": 71,
+              "samples": 51,
+              "median": 4.50067756801738
+            },
+            {
+              "id": 72,
+              "samples": 55,
+              "median": 4.501152779436932
+            },
+            {
+              "id": 73,
+              "samples": 12,
+              "median": 3.843119433677044
+            },
+            {
+              "id": 74,
+              "samples": 11,
+              "median": 3.5995570070037664
+            }
+          ],
+          "followerMedian": 4.50128960006071
+        },
+        {
+          "key": "phase/encounters",
+          "followerSpeeds": [
+            {
+              "id": 20,
+              "samples": 29,
+              "median": 4.49981689409497
+            },
+            {
+              "id": 51,
+              "samples": 6,
+              "median": 4.770570820688324
+            },
+            {
+              "id": 52,
+              "samples": 4,
+              "median": 5.2560492947403255
+            },
+            {
+              "id": 53,
+              "samples": 5,
+              "median": 5.0216251604763675
+            },
+            {
+              "id": 54,
+              "samples": 4,
+              "median": 5.196340749286088
+            },
+            {
+              "id": 55,
+              "samples": 4,
+              "median": 5.196658917319866
+            },
+            {
+              "id": 56,
+              "samples": 36,
+              "median": 4.50153207818593
+            },
+            {
+              "id": 57,
+              "samples": 6,
+              "median": 4.552884888105973
+            },
+            {
+              "id": 58,
+              "samples": 37,
+              "median": 4.5363927035600975
+            },
+            {
+              "id": 59,
+              "samples": 43,
+              "median": 4.500941956386213
+            },
+            {
+              "id": 60,
+              "samples": 37,
+              "median": 4.652517395392826
+            },
+            {
+              "id": 61,
+              "samples": 7,
+              "median": 5.056010532925082
+            },
+            {
+              "id": 62,
+              "samples": 47,
+              "median": 4.501996737982574
+            },
+            {
+              "id": 63,
+              "samples": 8,
+              "median": 4.855619353042269
+            },
+            {
+              "id": 64,
+              "samples": 10,
+              "median": 3.1461207284851014
+            },
+            {
+              "id": 65,
+              "samples": 53,
+              "median": 4.501844211248132
+            },
+            {
+              "id": 66,
+              "samples": 52,
+              "median": 4.502207508541615
+            },
+            {
+              "id": 67,
+              "samples": 47,
+              "median": 4.501426420684488
+            },
+            {
+              "id": 68,
+              "samples": 52,
+              "median": 4.502140566754258
+            },
+            {
+              "id": 69,
+              "samples": 59,
+              "median": 4.500524728698897
+            },
+            {
+              "id": 70,
+              "samples": 9,
+              "median": 4.724118192667385
+            },
+            {
+              "id": 71,
+              "samples": 51,
+              "median": 4.50067756801738
+            },
+            {
+              "id": 72,
+              "samples": 55,
+              "median": 4.501152779436932
+            },
+            {
+              "id": 73,
+              "samples": 12,
+              "median": 3.843119433677044
+            },
+            {
+              "id": 74,
+              "samples": 11,
+              "median": 3.5995570070037664
+            }
+          ],
+          "followerMedian": 4.50128960006071
+        }
+      ],
+      "nativeStateHash": "c1c1a29c",
+      "outcome": "mission-failed",
+      "time": 70.58333333333333
+    },
+    {
+      "seed": 3,
+      "valid": false,
+      "companions": [
+        20
+      ],
+      "phases": [
+        {
+          "key": "step/rocket",
+          "followerSpeeds": [],
+          "followerMedian": null
+        },
+        {
+          "key": "phase/pickup",
+          "followerSpeeds": [],
+          "followerMedian": null
+        },
+        {
+          "key": "step/corridor",
+          "followerSpeeds": [
+            {
+              "id": 20,
+              "samples": 25,
+              "median": 4.49981689453125
+            },
+            {
+              "id": 51,
+              "samples": 4,
+              "median": 5.1456458196388475
+            },
+            {
+              "id": 52,
+              "samples": 5,
+              "median": 5.199899711142161
+            },
+            {
+              "id": 53,
+              "samples": 34,
+              "median": 4.503308713027406
+            },
+            {
+              "id": 54,
+              "samples": 49,
+              "median": 4.531990786268897
+            },
+            {
+              "id": 55,
+              "samples": 30,
+              "median": 5.199967839667247
+            },
+            {
+              "id": 56,
+              "samples": 34,
+              "median": 4.501109463816257
+            },
+            {
+              "id": 57,
+              "samples": 42,
+              "median": 4.50343681671505
+            },
+            {
+              "id": 58,
+              "samples": 43,
+              "median": 4.491657630807685
+            },
+            {
+              "id": 59,
+              "samples": 40,
+              "median": 4.503756949154569
+            },
+            {
+              "id": 60,
+              "samples": 35,
+              "median": 4.502388936907332
+            },
+            {
+              "id": 61,
+              "samples": 7,
+              "median": 4.911620266272494
+            },
+            {
+              "id": 62,
+              "samples": 7,
+              "median": 4.5443192326921515
+            },
+            {
+              "id": 63,
+              "samples": 45,
+              "median": 4.500409495347887
+            },
+            {
+              "id": 64,
+              "samples": 8,
+              "median": 5.020581948858593
+            },
+            {
+              "id": 65,
+              "samples": 10,
+              "median": 4.574510258590446
+            },
+            {
+              "id": 66,
+              "samples": 43,
+              "median": 4.501354006523152
+            },
+            {
+              "id": 67,
+              "samples": 43,
+              "median": 4.502395881759026
+            },
+            {
+              "id": 68,
+              "samples": 49,
+              "median": 4.502721370048323
+            },
+            {
+              "id": 69,
+              "samples": 48,
+              "median": 4.501789038165122
+            },
+            {
+              "id": 70,
+              "samples": 44,
+              "median": 4.507955662290243
+            },
+            {
+              "id": 71,
+              "samples": 42,
+              "median": 4.504632523517804
+            },
+            {
+              "id": 72,
+              "samples": 51,
+              "median": 4.501657330181844
+            },
+            {
+              "id": 73,
+              "samples": 48,
+              "median": 4.5003794373344475
+            },
+            {
+              "id": 74,
+              "samples": 43,
+              "median": 4.500990577702195
+            }
+          ],
+          "followerMedian": 4.502392409333179
+        },
+        {
+          "key": "phase/encounters",
+          "followerSpeeds": [
+            {
+              "id": 20,
+              "samples": 25,
+              "median": 4.49981689453125
+            },
+            {
+              "id": 51,
+              "samples": 4,
+              "median": 5.1456458196388475
+            },
+            {
+              "id": 52,
+              "samples": 5,
+              "median": 5.199899711142161
+            },
+            {
+              "id": 53,
+              "samples": 34,
+              "median": 4.503308713027406
+            },
+            {
+              "id": 54,
+              "samples": 49,
+              "median": 4.531990786268897
+            },
+            {
+              "id": 55,
+              "samples": 30,
+              "median": 5.199967839667247
+            },
+            {
+              "id": 56,
+              "samples": 34,
+              "median": 4.501109463816257
+            },
+            {
+              "id": 57,
+              "samples": 42,
+              "median": 4.50343681671505
+            },
+            {
+              "id": 58,
+              "samples": 43,
+              "median": 4.491657630807685
+            },
+            {
+              "id": 59,
+              "samples": 40,
+              "median": 4.503756949154569
+            },
+            {
+              "id": 60,
+              "samples": 35,
+              "median": 4.502388936907332
+            },
+            {
+              "id": 61,
+              "samples": 7,
+              "median": 4.911620266272494
+            },
+            {
+              "id": 62,
+              "samples": 7,
+              "median": 4.5443192326921515
+            },
+            {
+              "id": 63,
+              "samples": 45,
+              "median": 4.500409495347887
+            },
+            {
+              "id": 64,
+              "samples": 8,
+              "median": 5.020581948858593
+            },
+            {
+              "id": 65,
+              "samples": 10,
+              "median": 4.574510258590446
+            },
+            {
+              "id": 66,
+              "samples": 43,
+              "median": 4.501354006523152
+            },
+            {
+              "id": 67,
+              "samples": 43,
+              "median": 4.502395881759026
+            },
+            {
+              "id": 68,
+              "samples": 49,
+              "median": 4.502721370048323
+            },
+            {
+              "id": 69,
+              "samples": 48,
+              "median": 4.501789038165122
+            },
+            {
+              "id": 70,
+              "samples": 44,
+              "median": 4.507955662290243
+            },
+            {
+              "id": 71,
+              "samples": 42,
+              "median": 4.504632523517804
+            },
+            {
+              "id": 72,
+              "samples": 51,
+              "median": 4.501657330181844
+            },
+            {
+              "id": 73,
+              "samples": 48,
+              "median": 4.5003794373344475
+            },
+            {
+              "id": 74,
+              "samples": 43,
+              "median": 4.500990577702195
+            }
+          ],
+          "followerMedian": 4.502392409333179
+        }
+      ],
+      "nativeStateHash": "7d15244b",
+      "outcome": "mission-failed",
+      "time": 66.46666666666667
+    }
+  ]
+}

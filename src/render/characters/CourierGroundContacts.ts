@@ -31,6 +31,14 @@ export interface GaitStyle {
   drag?: number;
   /** Longest gait swing (s): an early (out-of-reach) release lands in time instead of hanging for the rest of the cycle. */
   maxSwing?: number;
+  /** Locomotion cycles/s; phase and contacts use the same distance-derived stride. */
+  stepRate?: number;
+  /** Swing clearance ceiling in world metres for large, heavy figures. */
+  maxLift?: number;
+  /** Stable hip height above the actor's ground, in metres (heavy locomotion). */
+  pelvisHeight?: number;
+  /** Heel strike/toe-off roll gain; broad creature soles plant flat. */
+  footRoll?: number;
 }
 export class CourierGroundContacts {
   private readonly feet: Foot[];
@@ -131,7 +139,7 @@ export class CourierGroundContacts {
     const drag = (foot: Foot): number => style?.drag && this.feet.indexOf(foot) === style.dragFoot ? style.drag : 0;
     const peakKnee = (gait: boolean, foot: Foot): number => (gait ? (68 + 17 * run) * (style?.knee ?? 1) * (1 - .55 * drag(foot)) : 50) * DEG;
     // Heel-off/strike angles shrink at run: its stance lasts ~0.1 s, so the rolls would otherwise snap.
-    const heelOff = (24 - 8 * run) * DEG * alignment, heelStrike = (10 - 4 * run) * DEG * alignment, strikeWindow = stance * (.18 + .22 * run);
+    const heelOff = (24 - 8 * run) * DEG * alignment * (style?.footRoll ?? 1), heelStrike = (10 - 4 * run) * DEG * alignment * (style?.footRoll ?? 1), strikeWindow = stance * (.18 + .22 * run);
     const neutralOf = (foot: Foot, out: Vector3): Vector3 => {
       out.set(foot.rest.x, 0, foot.rest.z).multiplyScalar(s).applyQuaternion(this.frame).add(this.origin); out.y = ground; return out;
     };
@@ -337,7 +345,9 @@ export class CourierGroundContacts {
     if (height === Infinity) height = this.pelvisHeight === undefined ? this.joint.setFromMatrixPosition(rig.hip.matrixWorld).y : this.origin.y + this.pelvisHeight;
     // Settle down quickly (heel strike), rise smoothly.
     const current = this.pelvisHeight === undefined ? height : this.origin.y + this.pelvisHeight;
-    const filtered = current + (height - current) * (1 - Math.exp(-dt / (height < current ? .03 : .05)));
+    const filtered = style?.pelvisHeight === undefined
+      ? current + (height - current) * (1 - Math.exp(-dt / (height < current ? .03 : .05)))
+      : this.origin.y + style.pelvisHeight;
     height = locked.length ? Math.min(maximumHeight, Math.max(minimumHeight, filtered)) : filtered;
     this.pelvisHeight = height - this.origin.y;
     this.joint.setFromMatrixPosition(rig.hip.matrixWorld);
@@ -373,7 +383,7 @@ export class CourierGroundContacts {
         const length = legLength(foot, knee);
         foot.target.y = Math.max(floor + clearance, this.joint.y - Math.sqrt(Math.max(0, length * length - dx * dx - dz * dz)));
         // Crowds: a foot the leg cannot reach trails low (the reach clamp below) instead of kicking up towards the hip.
-        if (style?.maxSwing) foot.target.y = Math.min(foot.target.y, floor + Math.max(clearance, .15 * s));
+        if (style?.maxSwing) foot.target.y = Math.min(foot.target.y, floor + Math.max(clearance, style.maxLift ?? .15 * s));
         // Out of reach (fast toe-off at a run): the foot trails closer under the body at this height,
         // folding the shin, instead of being pulled up the leg line (which snapped the knee when it let go).
         const dy = foot.target.y - this.joint.y, limit = legLength(foot, 14 * DEG), horizontal = Math.hypot(dx, dz);
@@ -389,7 +399,7 @@ export class CourierGroundContacts {
     // height but the partially slerped legs fold less than that, so the soles dipped 2-3 cm under the floor (QA: infected
     // feet under the floor). Lift the pelvis by whatever a heel or toe is below the ground. Crowds (maxSwing) always:
     // their instance frame can drop under feet locked in world space (a hit pop), dipping the soles up to 5 cm.
-    if (weight < 1 || style?.maxSwing) {
+    if ((weight < 1 || style?.maxSwing) && style?.pelvisHeight === undefined) {
       let deficit = 0;
       for (const foot of this.feet) {
         const end = foot.ik.end; this.joint.setFromMatrixPosition(end.matrixWorld); end.getWorldQuaternion(this.footFrame);

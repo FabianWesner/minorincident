@@ -1,0 +1,19 @@
+{
+  "name": "r15-flamethrower",
+  "ground": "asphalt",
+  "size": 30,
+  "time": "L1",
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [0, 0], "look": { "model": "female" }, "loadout": ["weapon.flamethrower", "weapon.fire-axe"] },
+    { "id": "target", "kind": "infected", "at": [7, 0], "state": "idle" }
+  ],
+  "camera": { "mode": "game", "target": "courier", "zoom": 1 },
+  "script": [
+    { "frame": 0, "actor": "courier", "do": { "select": "LEFT" } },
+    { "frame": 0, "actor": "courier", "do": { "aim": "target", "seconds": 2 } },
+    { "frame": 30, "actor": "courier", "do": { "attack": "target", "seconds": 1, "move": [0, 0] } }
+  ],
+  "frames": 60,
+  "shots": [24, 45],
+  "expect": { "consoleErrors": 0 }
+}

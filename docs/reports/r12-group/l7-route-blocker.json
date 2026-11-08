@@ -1,0 +1,64 @@
+[
+  {
+    "audit": "threat-main",
+    "revision": "78219de9",
+    "outcome": "mission-failed",
+    "time": 43.8,
+    "failure": {
+      "mission-failed": 1
+    },
+    "blockerObjective": "bus-departure",
+    "busPhase": "waiting",
+    "followingRoster": 24,
+    "seedOutcomes": [
+      {
+        "seed": 1,
+        "valid": false,
+        "outcome": "mission-failed"
+      },
+      {
+        "seed": 2,
+        "valid": false,
+        "outcome": "mission-failed"
+      },
+      {
+        "seed": 3,
+        "valid": false,
+        "outcome": "mission-failed"
+      }
+    ],
+    "courierHp": 0,
+    "hpSource": "tools/sim-runner/levels.ts:280, world.entities.get(1).health.current"
+  },
+  {
+    "audit": "threat-followers-fixed",
+    "revision": "ff834fdc",
+    "outcome": "mission-failed",
+    "time": 92.46666666666667,
+    "failure": {
+      "mission-failed": 1
+    },
+    "blockerObjective": "bus-departure",
+    "busPhase": "boarding",
+    "followingRoster": 24,
+    "seedOutcomes": [
+      {
+        "seed": 1,
+        "valid": false,
+        "outcome": "mission-failed"
+      },
+      {
+        "seed": 2,
+        "valid": false,
+        "outcome": "mission-failed"
+      },
+      {
+        "seed": 3,
+        "valid": false,
+        "outcome": "mission-failed"
+      }
+    ],
+    "courierHp": 0,
+    "hpSource": "tools/sim-runner/levels.ts:280, world.entities.get(1).health.current"
+  }
+]

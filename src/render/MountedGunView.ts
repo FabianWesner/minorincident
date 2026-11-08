@@ -1,4 +1,4 @@
-import { Group, Vector3, type Object3D, type WebGPURenderer } from 'three/webgpu';
+import { BoxGeometry, Color, Mesh, Group, Vector3, type Object3D, type WebGPURenderer } from 'three/webgpu';
 import { AssetRegistry } from '../assets/registry';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { Materials } from './Materials';
@@ -12,13 +12,15 @@ export class MountedGunView extends Group {
   private readonly registry: AssetRegistry;
   private model: Object3D | null = null;
   private yawNode: Object3D | null = null;
+  private elevation: Object3D | null = null;
   private barrels: Object3D | null = null;
   private glow: Object3D | null = null;
   private muzzleNode: Object3D | null = null;
   private loading: Promise<void> | null = null;
   private disposed = false;
+  private shieldGeometry: BoxGeometry | null = null;
   private readonly scratch = new Vector3();
-  constructor(private readonly world: SimWorld, private readonly low: boolean, materials: Materials, renderer: WebGPURenderer, private readonly warm?: (model: Object3D) => Promise<void>) {
+  constructor(private readonly world: SimWorld, private readonly low: boolean, private readonly materials: Materials, renderer: WebGPURenderer, private readonly warm?: (model: Object3D) => Promise<void>) {
     super();
     this.registry = new AssetRegistry(() => undefined, { renderer, materials });
     this.visible = false;
@@ -29,10 +31,17 @@ export class MountedGunView extends Group {
       if (this.disposed) return;
       // Streaming may bring the gun into residency after the level's loading
       // warm-up. Keep it hidden until its gameplay HDR programs are ready too.
+      if (this.world.scenario === 'L10') {
+        const shield = new Mesh(this.shieldGeometry = new BoxGeometry(.12, 1.1, 1.6), this.materials.fromColor('minigun:shield', new Color('#657764')));
+        shield.position.set(.38, 1.05, 0); shield.castShadow = true;
+        (model.getObjectByName('pivot') ?? model).add(shield);
+      }
       await this.warm?.(model);
       if (this.disposed) return;
       this.model = model; this.add(model);
+
       this.yawNode = model.getObjectByName('pivot') ?? null; this.barrels = model.getObjectByName('barrels') ?? null;
+      this.elevation = model.getObjectByName('elevation') ?? null;
       this.glow = model.getObjectByName('heatGlow') ?? null; this.muzzleNode = model.getObjectByName('muzzle') ?? null;
     });
   }
@@ -46,17 +55,19 @@ export class MountedGunView extends Group {
     // Layout convention: a positive placement yaw (degrees) turns the asset's +x front towards -z, like three's rotation.y.
     this.rotation.y = placement.yaw * Math.PI / 180;
     if (this.yawNode) this.yawNode.rotation.y = -Math.atan2(gun.aim.z, gun.aim.x) - this.rotation.y;
+    if (this.elevation) this.elevation.rotation.z = gun.elevation;
     if (this.barrels) this.barrels.rotation.x = gun.gun.angle;
     if (this.glow) this.glow.visible = gun.gun.heat >= .6 || gun.gun.locked;
   }
   /** Muzzle at the shot tick for an aim direction (the event precedes the render frame). */
-  muzzle(direction: { x: number; z: number }): Vector3 | null {
+  muzzle(direction: { x: number; y?: number; z: number }): Vector3 | null {
     const gun = this.world.mountedGun;
     if (!gun || !this.model || !this.yawNode || !this.muzzleNode) return null;
     this.update();
     this.yawNode.rotation.y = -Math.atan2(direction.z, direction.x) - this.rotation.y;
+    if (this.elevation && direction.y !== undefined) this.elevation.rotation.z = Math.atan(direction.y);
     this.updateWorldMatrix(true, true);
     return this.muzzleNode.getWorldPosition(this.scratch);
   }
-  dispose(): void { this.disposed = true; this.removeFromParent(); void this.registry.dispose(); }
+  dispose(): void { this.disposed = true; this.shieldGeometry?.dispose(); this.removeFromParent(); void this.registry.dispose(); }
 }

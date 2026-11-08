@@ -40,6 +40,14 @@ export interface GraphVoice {
 /** The same graph is used for live playback and OfflineAudioContext acceptance renders. */
 /** Master ceiling about -1.4 dBFS: with the 4x oversampled shaper the true peak stays under -1 dBTP. */
 const CEILING = 0.85;
+/** Repeated scenery placeholders all synthesize the same decaying random-noise puff.
+ * Keep their sprite declarations/offsets; real combat, prop and weather events use
+ * their own short cues. Wind changes still drive the visual/physics simulation. */
+const BACKGROUND_NOISE_CUES = new Set([
+    'weather.gust', 'ambient.sprinkler', 'ambient.lawnmower', 'ambient.basketball',
+    'ambient.news', 'ambient.megaphone', 'ambient.radio', 'ambient.glass',
+    'ambient.power', 'ambient.automatic', 'ambient.collapse', 'ambient.debris',
+]);
 export class AudioGraph {
     readonly limiter: VoiceLimiter;
     readonly buses = {} as Record<AudioBus, GainNode>;
@@ -208,6 +216,13 @@ export class AudioGraph {
         return slot.node;
     }
     play(cue: AudioCue, buffer: AudioBuffer, options: PlayOptions = {}): GraphVoice | null {
+        if (BACKGROUND_NOISE_CUES.has(cue.id))
+            return null;
+        // Ambient loops (including procedural horde/rain beds) add a continuous
+        // noise floor under every score. Keep short ambient events and event-bound
+        // weapon/prop loops; retain cue declarations to preserve sprite offsets.
+        if ((options.loop ?? cue.loop) && (cue.bus === 'ambience' || cue.id === 'vehicle.fire' || cue.id === 'vehicle.sputter'))
+            return null;
         if (!this.limiter.canAdd(options.priority ?? cue.priority))
             return null;
         const t = options.time ?? this.context.currentTime, source = this.context.createBufferSource(), gain = this.context.createGain(), filter = this.context.createBiquadFilter(), send = this.context.createGain();

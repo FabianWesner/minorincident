@@ -209,6 +209,7 @@ export class Outbreak {
       if (e.infection) { this.transform(e); continue; }
       if (c.state === 'grabbed') { this.held(e); continue; }
       if (c.state === 'finished' || c.state === 'infected') continue;
+      if (e.combat?.statuses.some(status => status.kind === 'stunned' && status.expires > tick)) continue;
       // L7 travel and kerb-yield orders must not walk a knocked-down evacuee
       // across the street while its displayed body is still on the ground.
       if (world.scenario === 'L7' && c.survivor?.mode === 'follow' && tick < c.knockedUntil) continue;
@@ -220,6 +221,7 @@ export class Outbreak {
         continue;
       }
       if (c.vehicleYield && c.vehicleYield.until <= tick) delete c.vehicleYield;
+      if (world.missions?.l9?.driving.claims(e)) continue;
       if (world.scenario === 'L5') world.combat?.pickups.armSurvivor(e);
       // Metro ingress, L6 evacuation and L8 boarding own the following column. Self-defence
       // otherwise holds armed walkers back or scatters unarmed evacuees before

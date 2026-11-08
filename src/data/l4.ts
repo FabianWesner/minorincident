@@ -162,8 +162,6 @@ export const l4 = {
     alphaHold: { north: [-39, -25] as P, south: [-21, 38] as P },
     /** The armour beat: infected swarm the tank; it goes silent once `swarm` infected are within `swarmM`. */
     swarm: 6, swarmM: 6.5, cutOff: { high: 6, low: 3 },
-    /** Readability: short camera beats (sim pauses, <= 2 s, skippable after 0.5 s) at the line-1 overrun and the swarmed tank. */
-    cameraS: 1.6,
     /** The escape window: at "Fall back!" (and on a respawn in the collapse) infected farther than `nearM` from the courier ignore her for `s` (busy with the army). */
     escape: {
       /** First street point beyond the east camp perimeter: the escape checkpoint after Fall back. */
@@ -240,9 +238,10 @@ export const l4 = {
   bots: { seeds: 20, completeMedianS: [245, 460] as P, newbieMedianS: [275, 490] as P, newbieMinSeeds: 18, newbieMaxMedianDeaths: 2 },
 } as const;
 
-/** Convoy parking: the column ends along the plaza at x = -11, head (APC) in the north. See `l4Route`. */
-// Stop 15 cm before the old endpoint so the APC's nose clears the storefront steps by >0.3 m.
+/** Convoy route and column stop geometry are unchanged. See `l4Route`. */
 export const l4Convoy = { endX: -11, endZ: -20.85 } as const;
+/** PO 2026-11-08: move only the rear cargo truck inside the east wall, clear of the sign and adjacent bus. */
+export const l4RearTruckParkOffset = { x: -6.5, z: 2.5 } as const;
 /** The wider blast wreck turns and settles west of the intact truck, clear of the frontage. */
 export const l4FuelCrater = { x: l4.fuelTruck.x - .8, z: l4.fuelTruck.z, yaw: -Math.PI / 2 };
 
@@ -431,7 +430,7 @@ export function l4RoutePose(route: ReturnType<typeof l4Route>, s: number): { x: 
 }
 /**
  * Arc length of each convoy vehicle at the start (the tail inside the army gate) and when parked (head at the route end, the others
- * behind it, `gapM` apart). Every vehicle drives the same distance, so the column keeps its shape.
+ * behind it, `gapM` apart). Base stations preserve the column spacing; `l4ConvoyPose` adds the rear truck's parking approach.
  */
 export function l4ConvoyStations(length: number): { start: number[]; end: number[]; travel: number } {
   const v = l4.convoy.vehicles, end: number[] = [];
@@ -439,6 +438,19 @@ export function l4ConvoyStations(length: number): { start: number[]; end: number
   for (let i = 0; i < v.length; i++) { if (i) at -= v[i - 1].len / 2 + v[i].len / 2 + l4.convoy.gapM; end.push(at); }
   const tailStart = v[v.length - 1].len / 2 + 1, travel = end[v.length - 1] - tailStart;
   return { start: end.map(e => e - travel), end, travel };
+}
+/** Rear truck clears the unloading bus's tail before drawing into its bay, with no arrival teleport. */
+export function l4ConvoyPose(pts: ReturnType<typeof l4Route>, at: number, index: number, stop: number): ReturnType<typeof l4RoutePose> {
+  const pose = l4RoutePose(pts, at);
+  if (l4.convoy.vehicles[index].id === 'truck-2') {
+    const xT = Math.max(0, Math.min(1, 1 - (stop - at) / 5)), zT = Math.max(0, Math.min(1, 1 - (stop - at) / 12));
+    pose.x += l4RearTruckParkOffset.x * xT * xT * (3 - 2 * xT);
+    pose.z += l4RearTruckParkOffset.z * zT * zT * (3 - 2 * zT);
+    const dx = Math.cos(pose.yaw) + l4RearTruckParkOffset.x * 6 * xT * (1 - xT) / 5;
+    const dz = -Math.sin(pose.yaw) + l4RearTruckParkOffset.z * 6 * zT * (1 - zT) / 12;
+    pose.yaw = -Math.atan2(dz, dx);
+  }
+  return pose;
 }
 /** Remaining street-route distance, including the approach to its nearest leg; optionally writes the next turn for the minimap. */
 export function l4CellarDistance(p: { x: number; z: number }, next?: { x: number; z: number }): number {

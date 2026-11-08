@@ -24,9 +24,11 @@ function validCivilian(e: unknown): e is EntitySnapshot {
 const legacyL3=new Set(['weapon.smg','weapon.hunting-rifle']);
 function dropLegacyL3Weapons(raw:unknown):unknown {
   if(!record(raw)||!Array.isArray(raw.ownedActions))return raw;
-  const swap=(ids:unknown):unknown=>Array.isArray(ids)?[...new Set(ids.map(id=>legacyL3.has(id)?'weapon.handgun':id))]:ids;
+  // The hunting rifle is a legitimate farm discovery in L10 (PO 2026-11-08).
+  const retired=(id:unknown)=>legacyL3.has(String(id))&&!(id==='weapon.hunting-rifle'&&Number(raw.unlockedLevel)>=10);
+  const swap=(ids:unknown):unknown=>Array.isArray(ids)?[...new Set(ids.map(id=>retired(id)?'weapon.handgun':id))]:ids;
   const owned=swap(raw.ownedActions) as string[],out:Record<string,unknown>={...raw,ownedActions:owned};
-  if(typeof raw.selectedAction==='string'&&legacyL3.has(raw.selectedAction))out.selectedAction='weapon.handgun';
+  if(typeof raw.selectedAction==='string'&&retired(raw.selectedAction))out.selectedAction='weapon.handgun';
   if(record(raw.racks))out.racks={...raw.racks,LEFT:swap(raw.racks.LEFT),RIGHT:swap(raw.racks.RIGHT)};
   if(record(raw.pending)){const pending={...raw.pending};delete pending.weaponChosen;out.pending=pending;}
   return out;
@@ -51,6 +53,7 @@ function validCrash(raw: unknown): boolean {
   const s = raw.state, p = raw.player, car = raw.vehicle;
   const pose = (v: unknown): boolean => record(v) && ['x', 'y', 'z', 'yaw'].every(k => Number.isFinite(v[k]));
   const health = (v: unknown, alive: boolean): boolean => record(v) && Number.isFinite(v.current) && Number.isFinite(v.max) && Number(v.max) > 0 && Number(v.current) >= (alive ? 1 : 0) && Number(v.current) <= Number(v.max);
+  if (raw.actors !== undefined && (!Array.isArray(raw.actors) || raw.actors.length > 2000 || !raw.actors.every(e => record(e) && Number.isSafeInteger(e.id) && Number(e.id) > 1 && e.id !== s.carId && pose(e.transform) && health(e.health, false)) || new Set(raw.actors.map(e => (e as Record<string, unknown>).id)).size !== raw.actors.length)) return false;
   return Number.isSafeInteger(raw.tick) && Number(raw.tick) >= 0 && Number.isSafeInteger(s.startedAt) && Number(s.startedAt) <= Number(raw.tick)
     && ['driving', 'approach', 'fall', 'impact', 'crawl', 'done'].includes(String(s.phase)) && Number.isSafeInteger(s.carId) && Number(s.carId) > 1
     && Number.isFinite(s.preCrashDurability) && Number(s.preCrashDurability) >= 0 && pose(s.from)
@@ -106,6 +109,10 @@ export function validateSave(raw:unknown):raw is CampaignSave {
   if (raw.crossingHandover !== undefined) {
     const h = raw.crossingHandover;
     if (record(h) && h.corgi !== undefined && !validCorgi(h.corgi)) return false;
+    if (record(h) && h.researchCompanion !== undefined) {
+      const e = h.researchCompanion;
+      if (!record(e) || !Number.isSafeInteger(e.id) || Number(e.id) <= 1 || e.infected || e.infection || !record(e.civilian) || !record(e.civilian.survivor) || !['sam', 'reyes'].includes(String(e.civilian.survivor.key)) || !record(e.health) || !Number.isFinite(e.health.current) || !Number.isFinite(e.health.max) || Number(e.health.current) <= 0 || Number(e.health.current) > Number(e.health.max) || !record(e.transform) || !['x', 'y', 'z', 'yaw'].every(k => Number.isFinite((e.transform as Record<string, unknown>)[k]))) return false;
+    }
     if (!record(h) || h.applied !== true || h.checkpoint !== 'cure-crash' || !record(h.anchor) || !['x','y','z','yaw'].every(k => Number.isFinite((h.anchor as Record<string, unknown>)[k])) || !Number.isFinite(h.preCrashDurability) || Number(h.preCrashDurability) < 0 || !strings(h.lostWeapons) || h.lostWeapons.some(id => !Object.hasOwn(catalog,id) || catalog[id].category === 'ability' || id === 'weapon.fire-axe') || !Array.isArray(h.shelteredPassengers) || !h.shelteredPassengers.every(e => record(e) && Number.isSafeInteger(e.id) && Number(e.id) > 1 && ['civilian','escort'].includes(String(e.kind)) && record(e.health) && Number(e.health.current) > 0 && Number(e.health.current) <= Number(e.health.max) && record(e.transform) && ['x','y','z','yaw'].every(k => Number.isFinite((e.transform as Record<string, unknown>)[k]))) || new Set(h.shelteredPassengers.map(e => e.id)).size !== h.shelteredPassengers.length || save.completedLevels < 9 || save.unlockedLevel !== 10 || save.l9Crash || save.transport || save.pending || !save.ownedActions.includes('weapon.fire-axe')) return false;
   }
 
@@ -121,7 +128,7 @@ export function validateSave(raw:unknown):raw is CampaignSave {
   if(Object.entries(save.usage).some(([id,n])=>!Object.hasOwn(catalog,id)||!Number.isSafeInteger(n)||n<0))return false;
   if (save.world?.infectionCleared !== undefined) {
     const cleared = save.world.infectionCleared;
-    if (!record(cleared) || cleared.level !== 10 || !Number.isSafeInteger(cleared.releasedAt) || cleared.releasedAt < 0) return false;
+    if (!record(cleared) || cleared.level !== 10 || !Number.isSafeInteger(cleared.releasedAt) || cleared.releasedAt < 0 || cleared.epilogueSeen !== undefined && typeof cleared.epilogueSeen !== 'boolean') return false;
   }
   if (save.cureResume !== undefined) {
     const resume = save.cureResume;

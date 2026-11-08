@@ -7,9 +7,11 @@ import type { ActionDef, Side } from '../../src/data/actions/schema';
 import { comboDefinition } from '../../src/data/meleeCombos';
 import { riotShieldResponse } from '../../src/data/infected';
 import { Status } from '../../src/sim/combat/Status';
+import { Explosions } from '../../src/sim/combat/Explosions';
 import type { CoverWall } from '../../src/sim/combat/HitQuery';
 import { SimWorld } from '../../src/sim/world/SimWorld';
 import { checkRocketCadence, checkRocketEndpoints } from '../helpers/l7Uat';
+import { emptyInput } from '../../src/input/InputFrame';
 
 const worlds: SimWorld[] = [];
 afterEach(() => { for (const w of worlds) w.dispose(); worlds.length = 0; });
@@ -26,6 +28,51 @@ const health = (w: SimWorld, id: number) => w.entities.get(id)!.health.current;
 const walls = (w: SimWorld) => w.combat!.query.walls as CoverWall[];
 const attacks = (w: SimWorld) => w.events.events().filter(e => e.type === 'combat.attack');
 const forehand = () => comboDefinition(rosterAction('weapon.bat'), 0);
+
+/** Fuel is a real, cover-clipped hazard that persists after trigger release. */
+async function checkFlamethrowerFuel(): Promise<void> {
+  const w = await arena(); equip(w, ['weapon.flamethrower']);
+  walls(w).push({ x: 3, y: 1, z: 0, halfX: .1, halfY: 1, halfZ: 4 });
+  fire(w);
+  const patch = [...w.entities.iterate()].find(e => e.hazard?.fuelPatch)!;
+  expect(attacks(w)).toHaveLength(1);
+  expect(patch).toBeDefined();
+  expect(patch.transform.x).toBeGreaterThan(2.6);
+  expect(patch.transform.x).toBeLessThan(2.9);
+  const enemy = dummy(w, patch.transform.x, patch.transform.z);
+  step(w, 60);
+  expect(health(w, enemy)).toBeLessThan(100);
+  expect(patch.hazard!.activeUntil).toBeGreaterThan(w.tick);
+  step(w, 180);
+  expect(patch.hazard!.activeUntil).toBeLessThanOrEqual(w.tick);
+}
+
+async function checkFuelPool(): Promise<void> {
+  const w = await arena(), hazards = w.hazards!;
+  const first = hazards.ignitePatch({ x: 10, z: 0 }, .65, 3)!;
+  step(w, 60);
+  expect(hazards.ignitePatch({ x: 10.1, z: 0 }, .65, 3)).toBe(first);
+  expect(w.entities.get(first)!.hazard!.activeUntil).toBe(w.tick + 180);
+  step(w, 181);
+  expect(hazards.ignitePatch({ x: 12, z: 0 }, .65, 3)).toBe(first);
+  for (let i = 1; i < Explosions.maxFires; i++) hazards.spawn('fire', { x: 30 + i * 3, z: 30 });
+  expect(hazards.ignitePatch({ x: -12, z: 0 }, .65, 3)).toBeNull();
+}
+
+async function checkRaisedMountedGun(): Promise<void> {
+  for (const covered of [false, true]) {
+    const w = await arena(), p = w.entities.get(1)!;
+    p.transform.y = 3.7;
+    const target = dummy(w, 10), gun = w.installMountedGun({ x: 0, y: 3, z: 0, yaw: 0 });
+    if (covered) walls(w).push({ x: 5, y: 2.5, z: 0, halfX: .5, halfY: 2.5, halfZ: 2 });
+    const input = emptyInput(); input.interact = true; input.aim = { x: 1, z: 0 }; input.right.held = true;
+    gun.intent(input, input);
+    expect(gun.mounted).toBe(true);
+    for (let tick = 0; tick < 90; tick++) gun.update();
+    expect(health(w, target), covered ? 'wall blocks the downhill shot' : 'gunner can defend the street below').toBe(covered ? 100 : 0);
+    expect(attacks(w).some(event => event.type === 'combat.attack' && (event.direction.y ?? 0) < 0), 'shot presentation carries the barrel pitch').toBe(!covered);
+  }
+}
 
 test('loadout: both sides keep independent aims, racks wrap both ways with a switch lock, a cooling gun does not steal selection', async () => {
   const w = await arena(); equip(w, ['weapon.machine-gun']);
@@ -282,6 +329,9 @@ test('damage modifiers: front shield ±60°, armor and multipliers, stun/slow/to
 });
 
 test('every weapon category fires and hits; swept projectiles never tunnel; full cover stops melee, hitscan and projectiles', async () => {
+  await checkFlamethrowerFuel();
+  await checkFuelPool();
+  await checkRaisedMountedGun();
   await checkRocketEndpoints();
   await checkRocketSafety();
   {

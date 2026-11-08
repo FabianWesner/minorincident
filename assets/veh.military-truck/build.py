@@ -282,7 +282,8 @@ for row,x,indent in [(0,-3.30,.08),(CANVAS_SPANS,-.02,-.08)]:
     for j in range(13):
         face=(center,row*13+j,row*13+(j+1)%13)
         faces.append(tuple(reversed(face)) if row==CANVAS_SPANS else face)
-mesh('folded canvas',verts,faces,'khakiSeam')
+# Smooth the continuous cloth surface so each triangulated fold shares a stable normal instead of reading as bright triangular shards.
+mesh('folded canvas',verts,faces,'khakiSeam',smooth=True)
 # Narrow stitched seam arches are proud of the cloth; scalloped hem is folded outward.
 for x in [-3.30,-2.48,-1.66,-.84,-.02]:
     for j in range(12):

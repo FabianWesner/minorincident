@@ -1,0 +1,94 @@
+[
+  {
+    "trial": "narrow-sway",
+    "sourceHash": "4d92bf960e9caaeae9ab3c8fa862abf48034e124d45c51851b24dc8a97ff7308",
+    "diagnosticOnly": true,
+    "selected": false,
+    "cases": [
+      {
+        "passive": false,
+        "outcome": "complete",
+        "time": 233.41666666666666,
+        "wait": 3.2437700125295836,
+        "coverage": [
+          "phase/breached:SLOW_FOLLOWER:354",
+          "phase/breached:SLOW_FOLLOWER:363"
+        ],
+        "rawSlow": [
+          "step/escape:SLOW_FOLLOWER:354",
+          "step/escape:SLOW_FOLLOWER:357",
+          "step/escape:SLOW_FOLLOWER:358",
+          "step/escape:SLOW_FOLLOWER:363",
+          "phase/breached:SLOW_FOLLOWER:354",
+          "phase/breached:SLOW_FOLLOWER:357",
+          "phase/breached:SLOW_FOLLOWER:358",
+          "phase/breached:SLOW_FOLLOWER:363"
+        ]
+      },
+      {
+        "passive": true,
+        "outcome": "tick-budget",
+        "time": 150,
+        "wait": 22.088502129235327,
+        "coverage": [
+          "phase/breached:FOLLOWER_PACE_UNOBSERVED:354",
+          "phase/breached:FOLLOWER_PACE_UNOBSERVED:359",
+          "phase/breached:FOLLOWER_PACE_UNOBSERVED:362",
+          "phase/breached:FOLLOWER_PACE_UNOBSERVED:363",
+          "phase/breached:FOLLOWER_PACE_UNOBSERVED:364",
+          "phase/breached:FOLLOWER_PACE_UNOBSERVED:365",
+          "phase/breached:FOLLOWER_PACE_UNOBSERVED:366"
+        ],
+        "rawSlow": []
+      }
+    ]
+  },
+  {
+    "trial": "combat-sway",
+    "sourceHash": "4354ec93d171bf1eea52f06c0a8fa2492fc1a301734d2c3948ba5e99f4fa2e30",
+    "diagnosticOnly": true,
+    "selected": false,
+    "cases": [
+      {
+        "passive": false,
+        "outcome": "complete",
+        "time": 198.11666666666667,
+        "wait": 10.623703940022333,
+        "coverage": [
+          "phase/breached:SLOW_FOLLOWER:354",
+          "phase/breached:SLOW_FOLLOWER:359"
+        ],
+        "rawSlow": [
+          "step/escape:SLOW_FOLLOWER:354",
+          "step/escape:SLOW_FOLLOWER:355",
+          "step/escape:SLOW_FOLLOWER:356",
+          "step/escape:SLOW_FOLLOWER:358",
+          "step/escape:SLOW_FOLLOWER:359",
+          "step/escape:SLOW_FOLLOWER:361",
+          "phase/breached:SLOW_FOLLOWER:354",
+          "phase/breached:SLOW_FOLLOWER:355",
+          "phase/breached:SLOW_FOLLOWER:356",
+          "phase/breached:SLOW_FOLLOWER:358",
+          "phase/breached:SLOW_FOLLOWER:359",
+          "phase/breached:SLOW_FOLLOWER:361"
+        ]
+      },
+      {
+        "passive": true,
+        "outcome": "tick-budget",
+        "time": 150,
+        "wait": 23.384558415108312,
+        "coverage": [
+          "phase/breached:FOLLOWER_PACE_UNOBSERVED:354",
+          "phase/breached:FOLLOWER_PACE_UNOBSERVED:359",
+          "phase/breached:FOLLOWER_PACE_UNOBSERVED:362",
+          "phase/breached:FOLLOWER_PACE_UNOBSERVED:363",
+          "phase/breached:FOLLOWER_PACE_UNOBSERVED:364",
+          "phase/breached:FOLLOWER_PACE_UNOBSERVED:365",
+          "phase/breached:FOLLOWER_PACE_UNOBSERVED:366"
+        ],
+        "rawSlow": []
+      }
+    ]
+  }
+]

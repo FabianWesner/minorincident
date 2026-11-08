@@ -133,7 +133,7 @@ export async function runLevel(level: RunnerLevel, policy: CompletionPolicy, see
       runL2(world, mission, policy, { seed, maxSeconds });
     } else if (level === 'L9') {
       const bot = new LevelNineBot(world, 'road', true);
-      for (let i = 0; i < maxSeconds * 60 && !mission.l9!.state.finished; i++) { world.applyInput(bot.sample(), 'keyboard'); world.update(); }
+      for (let i = 0; i < maxSeconds * 60 && mission.state.phase !== 'result' && mission.state.phase !== 'progression'; i++) { world.applyInput(bot.sample(), 'keyboard'); world.update(); }
     } else if (level === 'L8') {
       const bot = new LevelEightBot(world, hooks?.passive ? 'threat-passive' : policy);
       for (let i=0;i<maxSeconds*60&&!bot.finished;i++){followFrustum(world);world.applyInput(bot.sample(),'keyboard');world.update();}

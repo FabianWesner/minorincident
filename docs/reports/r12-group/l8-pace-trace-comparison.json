@@ -1,0 +1,68 @@
+[
+  {
+    "label": "lane-ff834fdc",
+    "sourceHash": "6b2594804f64d3b297636a55b0115dd610e3a1b77c2a8da024ac52899be505ed",
+    "rawSha256": "5bc2b5257a20c1d3f22d047c92e92dfaddfe611be2358b45a3231e7b170f7afa",
+    "diagnosticOnly": true,
+    "outcome": "complete",
+    "rows": [
+      {
+        "id": 355,
+        "samples": 83,
+        "below3_4": 44,
+        "medianDistance": 3.1705688681917037,
+        "maxDistance": 5.575983751849164,
+        "slowSpeedToLeaderMedian": 1.0003438788739707,
+        "bodyBlockedSamples": 0,
+        "statusSpeedScales": [
+          1
+        ]
+      },
+      {
+        "id": 361,
+        "samples": 78,
+        "below3_4": 39,
+        "medianDistance": 5.808249329215784,
+        "maxDistance": 9.484772677444003,
+        "slowSpeedToLeaderMedian": 1.0011139819776862,
+        "bodyBlockedSamples": 0,
+        "statusSpeedScales": [
+          1
+        ]
+      }
+    ]
+  },
+  {
+    "label": "main-78219de9",
+    "sourceHash": "c8b497264c1f13387e34b0b87fc9528a8767a64b48229fc9921b187f695c55c0",
+    "rawSha256": "d5c97ac985f7c057c022fadab850788ba47857324b935d72805093b799310087",
+    "diagnosticOnly": true,
+    "outcome": "tick-budget",
+    "rows": [
+      {
+        "id": 355,
+        "samples": 82,
+        "below3_4": 40,
+        "medianDistance": 4.4223062643217155,
+        "maxDistance": 8.42143063806663,
+        "slowSpeedToLeaderMedian": 1.0000044736110618,
+        "bodyBlockedSamples": 0,
+        "statusSpeedScales": [
+          1
+        ]
+      },
+      {
+        "id": 361,
+        "samples": 82,
+        "below3_4": 35,
+        "medianDistance": 6.7733380426462375,
+        "maxDistance": 9.201024897263684,
+        "slowSpeedToLeaderMedian": 1.0007135487828749,
+        "bodyBlockedSamples": 0,
+        "statusSpeedScales": [
+          1
+        ]
+      }
+    ]
+  }
+]

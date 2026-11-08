@@ -1,0 +1,75 @@
+[test-budget] 150/150 test cases ({"vitest":129,"e2e":9,"invariantsBrowser":12}), 43/45 files
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/eg-l10-story-5a79b3-38164-1794166453[39m
+
+ [32m✓[39m [30m[42m default [49m[39m tests/shared/render-contracts.test.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 1748[2mms[22m[39m
+   [33m[2m✓[22m[39m corpse pages: bodies persist past the old cap, bounds stay conservative, culling restores identity/pose/tint, normals survive vec4 padding[33m 1249[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/l4-contact.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 12482[2mms[22m[39m
+   [33m[2m✓[22m[39m L4: every contact archetype interrupts approach/lure and attacks within 3 s; soldiers remain biteable and corgi protected[33m 12480[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/missions.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 34777[2mms[22m[39m
+   [33m[2m✓[22m[39m every objective type completes through the real sim exactly once[33m 355[2mms[22m[39m
+   [33m[2m✓[22m[39m graph timing: parallel tasks join in any order; a timeout fires exactly at 120 s, retry restores the timer, completion cancels it[33m 1211[2mms[22m[39m
+   [33m[2m✓[22m[39m interactions: ring, input and view predicates agree for every interact step of every level[33m 20505[2mms[22m[39m
+   [33m[2m✓[22m[39m interactions: only the open L6 gate the group is heading for offers its prompt[33m 9217[2mms[22m[39m
+   [33m[2m✓[22m[39m checkpoints: death restores objectives, HP, charges and escorts; a boss killed before or after C stays dead[33m 3483[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/world-systems.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 15074[2mms[22m[39m
+   [33m[2m✓[22m[39m explosions: every class follows its damage curve, full cover shields, rails take damage, chains are paced and capped, fires burn out[33m 5278[2mms[22m[39m
+   [33m[2m✓[22m[39m look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables match the layout without it, a re-preparation adds none, L9 has none; L10 crossing scenes stay clear and grounded[33m 9437[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/combat.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 786[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/npcs.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 10245[2mms[22m[39m
+   [33m[2m✓[22m[39m civilians: seeded grab → bite → down → glowing eyes → rising → infected cycle in place; panic flees; a kill during the grab saves[33m 1402[2mms[22m[39m
+   [33m[2m✓[22m[39m escort: shared combat pace, follows through a maze, a 2 s stand revives to 50 %, unattended 20 s down fails the mission[33m 903[2mms[22m[39m
+   [33m[2m✓[22m[39m corgi: warns of an offscreen threat within 18 m with a unit direction[33m 7938[2mms[22m[39m
+[90mstdout[2m | tests/shared/asset-contract.test.ts[2m > [22m[2mthe asset validator rejects every contract violation, and every production asset passes it
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/shared/asset-contract.test.ts[2m > [22m[2mthe asset validator rejects every contract violation, and every production asset passes it
+[22m[39mprune: Removed types... Accessor (2)
+
+ [32m✓[39m [30m[42m default [49m[39m tests/shared/asset-contract.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 9050[2mms[22m[39m
+   [33m[2m✓[22m[39m crowd atlas cleanup preserves enclosed eye paint and its authored alpha class[33m 458[2mms[22m[39m
+   [33m[2m✓[22m[39m uniform and civilian faces and yellow bare arms share the per-person skin class[33m 489[2mms[22m[39m
+   [33m[2m✓[22m[39m the asset validator rejects every contract violation, and every production asset passes it[33m 8100[2mms[22m[39m
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+ [31m❯[39m [30m[42m default [49m[39m tests/tools/gate-tools.test.ts [2m([22m[2m8 tests[22m[2m | [22m[31m1 failed[39m[2m | [22m[33m1 skipped[39m[2m)[22m[33m 10104[2mms[22m[39m
+   [2m[90m↓[39m[22m e2e-lock legacy fallback (E2E_LEGACY=1): units are reserved across concurrent jobs, never exceed two GPU browsers, and invalid reservations are refused
+[31m   [31m×[31m browser pool admission backs off under WindowServer pressure, keeps a one-context floor, recovers only after three cool samples[39m[32m 32[2mms[22m[39m
+   [33m[2m✓[22m[39m scene gate resume requires identical rows, revision and backend identities[33m 2010[2mms[22m[39m
+   [33m[2m✓[22m[39m scene gate rejects stale, failed, malformed and incomplete child results[33m 2483[2mms[22m[39m
+   [33m[2m✓[22m[39m scene gate rejects invalid arguments and empty selections before running children[33m 4579[2mms[22m[39m
+   [32m✓[39m build-cache honors custom output arguments on repeated clean invocations[32m 109[2mms[22m[39m
+   [33m[2m✓[22m[39m build-cache publication never leaves an interrupted copy looking complete[33m 856[2mms[22m[39m
+   [32m✓[39m remote runner cache GC removes inactive caches while keeping the current cache and live jobs[32m 33[2mms[22m[39m
+[90mstdout[2m | tests/engine/save-progression.test.ts[2m > [22m[2mL1–L10 starts clamp progressed saves and fresh handovers to story weapons, keeping eligible carry-over and selection
+[22m[39m[campaign] selected action weapon.handgun unavailable (not in destination rack); falling back to weapon.fists
+[campaign] selected action weapon.handgun unavailable (not in destination rack); falling back to weapon.bat
+[campaign] selected action weapon.handgun unavailable (not in destination rack); falling back to weapon.fire-axe
+[campaign] selected action weapon.handgun unavailable (not in destination rack); falling back to weapon.fire-axe
+
+[90mstdout[2m | tests/engine/save-progression.test.ts[2m > [22m[2mselection fallback: lost or empty weapons fall back to the best usable owned weapon, never an empty finite gun
+[22m[39m[campaign] selected action weapon.shotgun unavailable (not in destination rack); falling back to weapon.rocket-launcher
+
+[90mstdout[2m | tests/engine/save-progression.test.ts[2m > [22m[2mbare hands are innate: key 1 selects fists without them entering the carried racks
+[22m[39m[campaign] selected action weapon.fists unavailable (not in destination rack); falling back to weapon.rocket-launcher
+
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/save-progression.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 324[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/infected-ai.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 3600[2mms[22m[39m
+   [33m[2m✓[22m[39m every human and animal role validates and spawns with its catalog health and speed; every attack is telegraphed[33m 982[2mms[22m[39m
+   [33m[2m✓[22m[39m perception: sight cone, facing-independent gunshots, silent melee misses, bounded kill noise, screamer radius[33m 2080[2mms[22m[39m
+   [33m[2m✓[22m[39m melee knocks down for a seeded 10-20 s, respects the L2 recovery pool, then up at full HP; explosives and burns kill for good[33m 353[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/vehicles.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 7070[2mms[22m[39m
+   [33m[2m✓[22m[39m handling: deterministic scripted drives, speed-dependent steering for every vehicle, braking before reverse, flip recovery[33m 351[2mms[22m[39m
+   [33m[2m✓[22m[39m enter, drive and exit: door dwell, input ownership (no attacks while driving), capsule-safe exit on the free side; bike stand-to-mount needs an approach[33m 6717[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/collision.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 1745[2mms[22m[39m
+   [33m[2m✓[22m[39m admission: parked vehicle hulls exclude bodies, coincident spawns separate, a thin wall never admits a body through it[33m 1450[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/navigation.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 20613[2mms[22m[39m
+   [33m[2m✓[22m[39m A*: budgeted search resumes across ticks within its expansion budget; connectivity tells a long route from an enclosed yard[33m 20344[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/input.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 42[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/tools/qa-drivers.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 78[2mms[22m[39m
+Browser reservation reached its 145s batch limit (10-minute maximum including cleanup); split the batch into smaller commands.
+[test-budget] test-l10-story: 150.7 s (budget 150 s)
+[test-budget] FAIL: test-l10-story failed (exit 124)
+[test-budget] FAIL: test-l10-story took 150.7 s, over the 150 s budget
+[test-budget] See docs/qa/test-strategy.md: merge into an existing test or delete one before adding another.

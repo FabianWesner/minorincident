@@ -30,9 +30,9 @@ export class CrowdFigureProbe {
       this.animalSoles = Object.entries(declared).map(([part, points]) => ({ part, heel: new Vector3().fromArray(points[0]), toe: new Vector3().fromArray(points.at(-1)!) }));
       return;
     }
-    // Zoo bipeds retain humanoid ankle aliases. Their fitted sole bounds,
-    // rather than the old dummy ankle height, describe the drawn feet.
-    const biped = model.getObjectByName('root')?.userData.crowdQuadruped === true ? authoredSoles(model) : undefined;
+    // Reconstructed bipeds retain humanoid ankle aliases. Their fitted sole
+    // bounds describe the broad drawn shoes, including asymmetric Mega feet.
+    const biped = model.getObjectByName('root')?.userData.meshSoles === true ? authoredSoles(model) : undefined;
     if (biped) {
       this.animalSoles = biped.map((points, side) => ({ part: side ? 'footR' : 'footL', heel: points[0], toe: points.at(-1)! })); return;
     }

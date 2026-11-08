@@ -56,6 +56,10 @@ for (const [move, caption, duration] of [['monkey.grab', 'Monkey reaching: melee
   telegraphCues[move] = `telegraph.${move}`;
   cue(`telegraph.${move}`, 'telegraph', move === 'gorilla.roar' || move === 'zebra.stampede' ? 'step' : 'vocal', duration, 140, { gain: .6, caption, rateSpread: 0, antiSpam: 0 });
 }
+// Reuse shipped telegraph recordings for the new humanoid Alpha moves.
+for (const move of ['alpha.grab-human', 'alpha.living-missile', 'alpha.barrage']) telegraphCues[move] = telegraphCues['alpha.grab-throw'];
+telegraphCues['alpha.pounce'] = telegraphCues['lion.pounce'];
+telegraphCues['alpha.shield-bash'] = telegraphCues['infected.riot'];
 cue('screamer.scream', 'telegraph', 'vocal', 1.2, 700, { gain: 0.65, caption: 'Screamer shrieking', antiSpam: 0.3, rateSpread: 0 });
 telegraphCues.zebra = 'telegraph.zebra';
 for (const name of ['civilian', 'explosive']) {

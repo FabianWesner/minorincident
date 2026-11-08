@@ -306,7 +306,8 @@ export class LevelEightZoo {
     const mega = this.w.entities.get(this.state.megaId)!, dx = x - mega.transform.x, dz = z - mega.transform.z;
     Object.assign(mega.transform, { x, y, z });
     if (Math.hypot(dx, dz) > .001) mega.transform.yaw = -Math.atan2(dz, dx);
-    mega.motion = { velocity: { x: dx / FIXED_DT, z: dz / FIXED_DT }, speed: Math.hypot(dx, dz) / FIXED_DT, moving: Math.hypot(dx, dz) > .001, distance: (mega.motion?.distance ?? 0) + Math.hypot(dx, dz) };
+    // AgentMotion publishes the resolved displacement in cleanup. Incrementing
+    // gait distance here as well doubled the Mega's scripted running cadence.
     this.w.spatial.set(mega.id, x, z);
   }
   /** The departure camera retains both the APC and the pursuing silhouette. */
@@ -536,7 +537,11 @@ export class LevelEightZoo {
       // board-up; a stale carried injury flag must not leave passengers behind.
       // A follower displaced from its assigned slot catches up, then settles
       // back to courier pace. This avoids making the courier stop for it.
-      const speed = Math.min(6.4, 4.5 + Math.max(0, distance(e.transform, target) - 2) * .6);
+      // Nearby evacuees walk with the courier instead of repeatedly sprinting into their slots.
+      // Keep R13's full catch-up outside the band and its boarding approach unchanged.
+      const courierSpeed = Math.hypot(velocity.x, velocity.z);
+      const cap = !boarding && courierSpeed > .8 && distance(e.transform, p.transform) <= 10 ? courierSpeed * 1.05 : 6.4;
+      const speed = Math.min(cap, 4.5 + Math.max(0, distance(e.transform, target) - 2) * .6);
       if (!boarding || !this.approachBoardingSpot(e, target, speed)) w.npcs!.move(e, target, speed, c, boarding ? .2 : 0, 2400);
     }
     if (c.ally && !boarding) {

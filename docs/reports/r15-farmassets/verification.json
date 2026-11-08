@@ -1,0 +1,54 @@
+{
+  "host": "mi-runner-2",
+  "checks": [
+    {
+      "name": "pack",
+      "command": [
+        "node",
+        "--import",
+        "tsx/esm",
+        "tools/assets/pack-l10-farm.ts",
+        "--report",
+        "docs/reports/r15-farmassets"
+      ],
+      "exitCode": 0,
+      "seconds": 1.9,
+      "outputTail": "prune: Removed types... Accessor (3)\nprune: Removed types... Accessor (2)\nprune: Removed types... Accessor (4)\nprune: Removed types... Accessor (3)\nprune: Removed types... Accessor (2)\nprune: Removed types... Accessor (4)\nprune: Removed types... Accessor (3)\nprune: Removed types... Accessor (2)\nprune: Removed types... Accessor (4)\nprune: Removed types... Accessor (3)\nprune: Removed types... Accessor (2)\nprune: Removed types... Accessor (4)\nprune: Removed types... Accessor (3)\nprune: Removed types... Accessor (2)\nprune: Removed types... Accessor (4)\nprune: Removed types... Accessor (3)\nprune: Removed types... Accessor (2)\nprune: Removed types... Accessor (4)\nprune: Removed types... Accessor (3)\nprune: Removed types... Accessor (2)\nprune: Removed types... Accessor (4)\nprune: Removed types... Accessor (3)\nprune: Removed types... Accessor (2)\nprune: Removed types... Accessor (4)\nprune: Removed types... Accessor (3)\nprune: Removed types... Accessor (6)\nprune: Removed types... Accessor (9)\nprune: Removed types... Accessor (15)\nprune: Removed types... Accessor (6)\nprune: Removed types... Accessor (9)\nprune: Removed types... Accessor (15)\nprune: Removed types... Accessor (4)\nprune: Removed types... Accessor (6)\nprune: Removed types... Accessor (10)\nPacked 42 farm asset tiers"
+    },
+    {
+      "name": "farm-assets-native",
+      "command": [
+        "node",
+        "--import",
+        "tsx/esm",
+        "tools/qa/r15-farmassets.ts"
+      ],
+      "exitCode": 0,
+      "seconds": 9.89,
+      "outputTail": "Farm rebuild: unchanged placement, all shipped tiers valid, one crop draw, walls block and both doorways pass at high/low"
+    },
+    {
+      "name": "E32-gate",
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E32"
+      ],
+      "exitCode": 0,
+      "seconds": 185.82,
+      "outputTail": " \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/spawn-director.test.ts \u001b[2m(\u001b[22m\u001b[2m4 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 10158\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m a 150-infected migration follows its spline on time and fans out at the goal\u001b[33m 1350\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m pooling: spawn/kill cycles reuse prewarmed records, keep every corpse, and refresh borrowed collision radii\u001b[33m 8417\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/aim-assist.test.ts \u001b[2m(\u001b[22m\u001b[2m3 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 457\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m keyboard fire at all eight facings: Off shoots along the facing, Default lands on the zombie in front\u001b[33m 414\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/director-pressure.test.ts \u001b[2m(\u001b[22m\u001b[2m3 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 1155\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m director pressure brings every native role to its human without replacing its combat role\u001b[33m 382\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m native routing clears thin doorways and yields failed shared searches\u001b[33m 765\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/input-log-codec.test.ts \u001b[2m(\u001b[22m\u001b[2m2 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 1753\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[32m\u2713\u001b[39m input log codec \u001b[2m(2)\u001b[22m\n     \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m round-trips every InputFrame field and scheme exactly, with float64 precision and commands at their sample index\u001b[33m 656\u001b[2mms\u001b[22m\u001b[39m\n     \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m cuts independent chunks under the upload cap, decodes them in order, survives gzip and rejects gaps and garbage\u001b[33m 1094\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/player.test.ts \u001b[2m(\u001b[22m\u001b[2m3 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 2827\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m walls: a 72-direction capsule sweep never penetrates the wall ring; sliding keeps 60 % tangential speed; head-on corners slip\u001b[33m 2570\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/core.test.ts \u001b[2m(\u001b[22m\u001b[2m4 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 128\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/l10-camera-framing.test.ts \u001b[2m(\u001b[22m\u001b[2m3 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 258\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/determinism.test.ts \u001b[2m(\u001b[22m\u001b[2m4 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 19871\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m a serialized recording replays the identical state hash at every tick; snapshots are copies; reset frees everything\u001b[33m 699\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m real levels replay deterministically: same seed and script give the same hash on L1, L4 and L10\u001b[33m 18896\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/tools/browser-pool-client.test.ts \u001b[2m(\u001b[22m\u001b[2m1 test\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 10\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/shared/architecture.test.ts \u001b[2m(\u001b[22m\u001b[2m2 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 2879\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m the sim import graph never reaches renderer, UI, debug or DOM code (Three math, synchronous save codecs and Rapier)\u001b[33m 2108\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m lint rejects unseeded randomness, DOM and renderer imports in the sim\u001b[33m 769\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/tools/playtest-finale-retreat.test.ts \u001b[2m(\u001b[22m\u001b[2m1 test\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 3\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/navigation.test.ts \u001b[2m(\u001b[22m\u001b[2m4 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 27314\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m A*: budgeted search resumes across ticks within its expansion budget; connectivity tells a long route from an enclosed yard\u001b[33m 27002\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/tools/test-budget-tools.test.ts \u001b[2m(\u001b[22m\u001b[2m1 test\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 19941\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m test budget collection is passive, rejects missing counts and bounds collection with child cleanup\u001b[33m 19939\u001b[2mms\u001b[22m\u001b[39m\n\n\u001b[2m Test Files \u001b[22m \u001b[1m\u001b[32m27 passed\u001b[39m\u001b[22m\u001b[90m (27)\u001b[39m\n\u001b[2m      Tests \u001b[22m \u001b[1m\u001b[32m106 passed\u001b[39m\u001b[22m\u001b[2m | \u001b[22m\u001b[33m1 skipped\u001b[39m\u001b[90m (107)\u001b[39m\n\u001b[2m   Start at \u001b[22m 20:56:45\n\u001b[2m   Duration \u001b[22m 79.91s\u001b[2m (tests 88%, transform 7%, import 4%, setup 1%)\u001b[22m\n\n[test-budget] test: 85.5 s (budget 240 s)"
+    }
+  ],
+  "sourceSha256": {
+    "tools/blender/build_l10_farm.py": "023ed3088706e323c9a2264bf42f6b5882a6c055447c75925c6c7b7ba2994cd2",
+    "tools/blender/sslib/farm_assets.py": "8c0c37189d0c50fc17983e655cc9db5f8d6360d3e9aa8f412f1f9b124ba22c7f",
+    "src/assets/manifest.json": "d4ad44cde58a92991e3bb7eec918fb1edd9c5f78b142eb859b3f11942a8251ba",
+    "src/levels/L10/farmLayout.ts": "8c3f39fdd17db65301d2400dab78a7ac9ee00953c358c1701502b47dd222e4d2",
+    "src/render/Corn.ts": "f93520531797645738624e22f62c70733a44e7759a2c76ecedefb37dce69f678",
+    "src/assets/DistrictAssets.ts": "edaf3a652858f789a7980d4929a7c65824bc6d1e1c10877611d75cd5a71c418f",
+    "tools/assets/pack-l10-farm.ts": "9abc1811d01f6167a3342cc08009cac07125d56f5efc129f63aaf64dda26d717"
+  },
+  "snapshot": "048b94f01707359d79f7fecc5fc42c575b6fb80f"
+}

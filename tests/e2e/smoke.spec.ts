@@ -215,7 +215,7 @@ test('L1 handover + outbreak: no shader builds after warm-up and no frame over 2
   expect(l8.boarded, 'L8 APC boarding exercised after warm-up').toBe(true);
   expect(lateVehicleBuilds, 'courier, weapon, or vehicle builds after L8 warm-up and APC boarding').toEqual([]);
   // Q-227: L10 grants its guns through mission arsenal transactions, long after loading, rather than ground entities.
-  // Exercise every authored weapon checkpoint in this existing freeze guard; every held graph must already be warm.
+  // Reach the authored hangar arsenal restoration, then exercise each gun's held graph.
   const l10 = await page.evaluate(async () => {
     const a = window.__SS__!;
     await a.loadLevel('L10', { seed: 1 }); a.pause(); a.missions.begin(); a.cheats.god(true);
@@ -225,15 +225,18 @@ test('L1 handover + outbreak: no shader builds after warm-up and no frame over 2
     const disabledPages = a.getState().render.crowd!.staticCorpsePages;
     a.settings.set({ vfx: true });
     const restoredPages = a.getState().render.crowd!.staticCorpsePages;
-    for (const step of ['crash', 'residential-fringe', 'industrial-area', 'military-zone', 'research-campus', 'research', 'cure', 'research-exit', 'destroyed-corridor']) {
+    for (const step of ['crash', 'farmstead', 'restricted-zone', 'research-hangar', 'research', 'cure', 'research-exit', 'delivery-corridor']) {
       a.cheats.completeObjective(step); await a.step(1); await a.screenshotReady();
+    }
+    for (const gun of ['weapon.handgun', 'weapon.shotgun', 'weapon.army-mg', 'weapon.rocket-launcher', 'weapon.flamethrower']) {
+      a.setLoadout(['weapon.fire-axe'], [gun]); await a.step(1); await a.screenshotReady();
     }
     return { loaded, warmedPages, disabledPages, restoredPages, after: { ...a.perf().nodeBuildMaterials }, pickups: a.events(0).filter(e => e.type === 'pickup.collected' && 'actionId' in e).map(e => 'actionId' in e ? e.actionId : '') };
   });
   expect(l10.warmedPages, 'L10 corpse pages were prepared during loading').toBeGreaterThan(0);
   expect(l10.disabledPages, 'disabling VFX retains warmed corpse pages').toBe(l10.warmedPages);
   expect(l10.restoredPages, 'enabling VFX retains warmed corpse pages').toBe(l10.warmedPages);
-  expect(l10.pickups, 'L10 checkpoint weapons were collected').toEqual(expect.arrayContaining(['weapon.pistol', 'weapon.shotgun', 'weapon.army-mg', 'weapon.rocket-launcher']));
+  expect(l10.pickups, 'L10 checkpoint weapons were collected').toEqual(expect.arrayContaining(['weapon.handgun', 'weapon.shotgun', 'weapon.army-mg', 'weapon.rocket-launcher', 'weapon.flamethrower']));
   expect(heldBuilds(l10.loaded, l10.after), 'L10 carried-weapon builds after level warm-up (all checkpoint pickups)').toEqual([]);
 });
 

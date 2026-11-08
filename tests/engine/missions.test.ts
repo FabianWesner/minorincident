@@ -91,6 +91,15 @@ test('interactions: ring, input and view predicates agree for every interact ste
     const levelWorld = await loadLevel(level, 1);
     try {
       const mission = levelWorld.missions!, player = levelWorld.entities.get(1)!;
+      if (level === 'L7') {
+        levelWorld.l7Encounters!.prepare();
+        const terrace = levelWorld.infected!.active.filter(e => e.transform.x > 200);
+        expect(terrace.length, 'Northgate street residents are present on their authored terrace').toBeGreaterThan(0);
+        for (const e of terrace) {
+          expect(e.transform.y, 'street residents cannot spawn beneath the raised road').toBeGreaterThan(2);
+          expect(e.transform.y).toBeCloseTo(.7 + levelWorld.districts!.pavingHeight(e.transform.x, e.transform.z));
+        }
+      }
       if (level === 'L1') {
         mission.begin();
         missionControls(levelWorld).teleport(1, mission.def.anchors['parcel-counter']);

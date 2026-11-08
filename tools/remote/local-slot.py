@@ -181,18 +181,37 @@ def enqueue(owner, wt):
 
 
 def live_tickets():
-    for path in sorted(QUEUE.glob('*.json')):
+    live = []
+    for path in QUEUE.glob('*.json'):
         try:
             data = json.loads(path.read_text())
             os.kill(data['pid'], 0)
-            yield path, data
+            live.append((path, data))
         except (ProcessLookupError, ValueError, FileNotFoundError): path.unlink(missing_ok=True)
-        except PermissionError: yield path, data
+        except PermissionError: live.append((path, data))
+    yield from sorted(live, key=lambda item: (item[1].get('dispatchNs', item[1]['queuedNs']), item[0].name))
 
 
 def first(ticket):
     with mutex():
-        return next(iter(live_tickets()), (None, None))[0] == ticket
+        live = list(live_tickets())
+        if not live: return False
+        now = time.time_ns()
+        head, data = live[0]
+        since = data.get('headSinceNs', now)
+        if 'headSinceNs' not in data:
+            data['headSinceNs'] = now
+            head.write_text(json.dumps(data))
+        if len(live) > 1 and now - since >= 60_000_000_000:
+            # Keep the ticket path and original wait receipt, but yield this
+            # unsuccessful turn. Any waiter can advance a stalled head.
+            data['dispatchNs'] = now
+            del data['headSinceNs']
+            head.write_text(json.dumps(data))
+            head, data = live[1]
+            data['headSinceNs'] = now
+            head.write_text(json.dumps(data))
+        return head == ticket
 
 
 def record_wait(ticket, kind):
@@ -207,20 +226,22 @@ def record_wait(ticket, kind):
 
 
 def remote_pick():
-    result = subprocess.run([sys.executable, '-I', str(HERE / 'pool.py'), 'try'], capture_output=True, text=True)
+    try:
+        result = subprocess.run([sys.executable, '-I', str(HERE / 'pool.py'), 'try'], capture_output=True, text=True, timeout=45)
+    except (OSError, subprocess.TimeoutExpired): return ''
     return result.stdout.strip() if result.returncode == 0 else ''
 
 
 def choose(ticket, wt, command):
     if not first(ticket): return None
     remote = remote_pick()
-    if remote: return remote
+    if remote: return remote if first(ticket) else None
     if os.environ.get('MI_LOCAL_FALLBACK', '1') == '0' or sys.platform != 'darwin': return None
     if cpu_command(wt, command) is None or not admitted()[0]: return None
     f = slot_lock()
     if f is None: return None
     f.close()
-    return 'local'
+    return 'local' if first(ticket) else None
 
 
 def run_local(ticket, wt, command):

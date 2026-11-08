@@ -59,7 +59,14 @@ export class CourierPresenter {
       striking && survivor.attack!.style === 'roundhouse' ? roundhouseSpin(survivor.attack!, (stopped ? this.hitStopTick : this.world.tick) + (stopped ? 1 : alpha) - 1) : 0, resumeWalking);
     // E19 courier: the bicycle sim (lane F) marks the rider; the bike's crank/steer drive the pose.
     const bike = riding === undefined ? undefined : (this.world.entities.get(riding) as { bicycle?: { pedal: number; steer: number } } | undefined)?.bicycle;
-    character.update(carPose?.pose ?? (stopped && this.frozenPose ? this.frozenPose : survivor), stopped ? this.hitStopTick : this.world.tick, stopped ? 1 : alpha,
+    const ending = this.world.missions?.state;
+    const closing = ending?.epilogue && ending.counters['epilogue-ticks'] >= 45 * 60;
+    const closingPose = closing ? { ...survivor, scriptedClip: 'npc-sit' as const, animation: 'idle' as const, velocity: { x: 0, z: 0 } } : undefined;
+    if (closing) {
+      const console = this.world.missions!.def.anchors['cure-console'];
+      character.position.set(console.x - .5, .5, console.z - 6); character.rotation.y = 0;
+    }
+    character.update(closingPose ?? carPose?.pose ?? (stopped && this.frozenPose ? this.frozenPose : survivor), stopped ? this.hitStopTick : this.world.tick, stopped ? 1 : alpha,
       riding === undefined ? undefined : { pedal: bicycle?.presentedRide?.pedal ?? bike?.pedal ?? this.world.tick * .12, steer: bicycle?.presentedRide?.steer ?? bike?.steer ?? 0 }, !!input.strafe && !carPose && riding === undefined);
     const cureCollected = this.world.missions?.state?.id === 'L10' && this.world.missions.state.items.includes('cure-canister');
     character.showCure(!!cureCollected && !!this.world.missions?.state?.states['cure-carried'] && !this.world.missions?.state?.states['cure-installed']);

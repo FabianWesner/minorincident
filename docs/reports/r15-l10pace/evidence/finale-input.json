@@ -1,0 +1,4629 @@
+{
+  "sourceHash": "7dbddeae431839a80a6e1e88f8d2caf7a8e3f66e32d1ba6f746fc72d795219ea",
+  "observerHash": "eb2b14f2b5068a1879af293ba827c041a3b2dabc208000d77eec3ca7a32ab8f1",
+  "revision": "manifest-only",
+  "checks": [
+    {
+      "tier": "low",
+      "name": "optional house toy is collected once without a weapon slot",
+      "pass": true
+    },
+    {
+      "tier": "low",
+      "name": "farmhouse-rifle is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 698,
+          "y": 0.15,
+          "z": 25,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "low",
+      "name": "barn-machete is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 940,
+          "y": 0.15,
+          "z": -12,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "low",
+      "name": "shed-molotov is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 1165,
+          "y": 0.15,
+          "z": -12,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "low",
+      "name": "workshop-nailgun is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 1397,
+          "y": 0.15,
+          "z": 16,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "low",
+      "name": "guard-tower-rifle is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 1960,
+          "y": 0.15,
+          "z": 16,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "low",
+      "name": "checkpoint-flashbang is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 2077,
+          "y": 0.15,
+          "z": -2,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "low",
+      "name": "gap 937 fits courier and excludes Mega",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 937,
+          "z": 80
+        },
+        "courierClear": true,
+        "megaClear": false,
+        "courierRoute": {
+          "connected": true,
+          "metres": 5.5
+        },
+        "megaRoute": {
+          "connected": true,
+          "metres": 136.5
+        }
+      }
+    },
+    {
+      "tier": "low",
+      "name": "gap 2137 fits courier and excludes Mega",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 2137,
+          "z": -75
+        },
+        "courierClear": true,
+        "megaClear": false,
+        "courierRoute": {
+          "connected": true,
+          "metres": 5.5
+        },
+        "megaRoute": {
+          "connected": true,
+          "metres": 78.5
+        }
+      }
+    },
+    {
+      "tier": "low",
+      "name": "gap 3317 fits courier and excludes Mega",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 3317,
+          "z": 95
+        },
+        "courierClear": true,
+        "megaClear": false,
+        "courierRoute": {
+          "connected": true,
+          "metres": 5.5
+        },
+        "megaRoute": {
+          "connected": true,
+          "metres": 109.5
+        }
+      }
+    },
+    {
+      "tier": "low",
+      "name": "gap 925 fits courier and excludes Mega",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 925,
+          "z": -12
+        },
+        "courierClear": true,
+        "megaClear": false,
+        "courierRoute": {
+          "connected": true,
+          "metres": 5.5
+        },
+        "megaRoute": {
+          "connected": true,
+          "metres": 77.5
+        }
+      }
+    },
+    {
+      "tier": "low",
+      "name": "gap 2110 fits courier and excludes Mega",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 2110,
+          "z": -2
+        },
+        "courierClear": true,
+        "megaClear": false,
+        "courierRoute": {
+          "connected": true,
+          "metres": 5.5
+        },
+        "megaRoute": {
+          "connected": true,
+          "metres": 77.5
+        }
+      }
+    },
+    {
+      "tier": "low",
+      "name": "hangar conversation completes in order with Reyes fallback",
+      "pass": true,
+      "observed": [
+        "L10.voss-intro",
+        "L10.voss-sample",
+        "L10.courier-carried",
+        "L10.voss-cure",
+        "L10.voss-delivery",
+        "L10.ruiz",
+        "L10.voss-prototype",
+        "L10.sam-coming.reyes",
+        "L10.voss-stay",
+        "L10.sam-delivery.reyes"
+      ]
+    },
+    {
+      "tier": "low",
+      "name": "six living researchers, guards and continuity speaker are present",
+      "pass": true,
+      "observed": [
+        {
+          "key": "hangar-voss",
+          "id": 149,
+          "model": "npc.lab-tech-b",
+          "hp": 100
+        },
+        {
+          "key": "hangar-ruiz",
+          "id": 150,
+          "model": "npc.national-guard",
+          "hp": 100
+        },
+        {
+          "key": "hangar-researcher",
+          "id": 151,
+          "model": "npc.lab-tech-a",
+          "hp": 100
+        },
+        {
+          "key": "hangar-sam",
+          "id": 152,
+          "model": "npc.national-guard",
+          "hp": 40
+        },
+        {
+          "key": "hangar-guard-west",
+          "id": 153,
+          "model": "npc.lab-guard",
+          "hp": 100
+        },
+        {
+          "key": "hangar-guard-east",
+          "id": 154,
+          "model": "npc.lab-guard",
+          "hp": 100
+        }
+      ]
+    },
+    {
+      "tier": "low",
+      "name": "hangar entrance connects to indoor handoff",
+      "pass": true,
+      "observed": {
+        "cells": 56
+      }
+    },
+    {
+      "tier": "low",
+      "name": "cure handoff restores every campaign weapon and the prototype into selectable racks",
+      "pass": true,
+      "observed": [
+        "weapon.fire-axe",
+        "weapon.fists",
+        "weapon.kick",
+        "weapon.bat",
+        "weapon.machete",
+        "weapon.fire-axe",
+        "weapon.molotov",
+        "weapon.handgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher",
+        "weapon.pipe-bomb",
+        "weapon.shotgun",
+        "ability.corgi-lure",
+        "weapon.hunting-rifle",
+        "weapon.nail-gun",
+        "weapon.assault-rifle",
+        "weapon.flashbang",
+        "weapon.flamethrower"
+      ]
+    },
+    {
+      "tier": "low",
+      "name": "full hangar inventory and conversation survive save validation and codec",
+      "pass": true
+    },
+    {
+      "tier": "low",
+      "name": "walk Mega cannot be killed even by repeated direct rockets",
+      "pass": true,
+      "observed": {
+        "initialHp": 3000,
+        "hp": 3000
+      }
+    },
+    {
+      "tier": "low",
+      "name": "hangar boundary protects courier from outside attacks",
+      "pass": true
+    },
+    {
+      "tier": "low",
+      "name": "every damaging carried weapon can hurt the finale Mega",
+      "pass": true,
+      "observed": {
+        "weapon.bat": 22,
+        "weapon.fire-axe": 56,
+        "weapon.handgun": 20,
+        "weapon.army-mg": 14,
+        "weapon.shotgun": 240,
+        "weapon.rocket-launcher": 300,
+        "weapon.pipe-bomb": 150,
+        "weapon.hunting-rifle": 90,
+        "weapon.nail-gun": 14,
+        "weapon.machete": 32,
+        "weapon.molotov": 10,
+        "weapon.assault-rifle": 26,
+        "weapon.flamethrower": 4
+      }
+    },
+    {
+      "tier": "low",
+      "name": "arena has both fuel hazards and an accessible gate switch",
+      "pass": true
+    },
+    {
+      "tier": "low",
+      "name": "powered gate damages and interrupts the finale Mega once",
+      "pass": true,
+      "observed": {
+        "beforeGate": 2996,
+        "after": 2096,
+        "staggerUntil": 3754
+      }
+    },
+    {
+      "tier": "low",
+      "name": "reinforcements continue after charge-ready",
+      "pass": true,
+      "observed": {
+        "before": 42,
+        "after": 48,
+        "assaultTicks": 1200
+      }
+    },
+    {
+      "tier": "low",
+      "name": "mounted platform rejects ground melee without stunlock",
+      "pass": true
+    },
+    {
+      "tier": "low",
+      "name": "stair climber can contest the gun from behind with reduced damage",
+      "pass": true,
+      "observed": 8.75
+    },
+    {
+      "tier": "low",
+      "name": "infected reaches the manned raised platform by its stair",
+      "pass": true,
+      "observed": {
+        "entered": {
+          "x": 3999.0930182895086,
+          "y": 1.5999999999999999,
+          "z": -33,
+          "yaw": -3.1415927259385557
+        },
+        "reachedDeck": true,
+        "climb": [
+          {
+            "x": 4002.2,
+            "y": 0.7,
+            "z": -33,
+            "yaw": -0.23333333333333334
+          },
+          {
+            "x": 4002.1734444444437,
+            "y": 0.7,
+            "z": -33,
+            "yaw": -0.7933333333333333
+          },
+          {
+            "x": 4002.0028888888883,
+            "y": 0.7,
+            "z": -33,
+            "yaw": -1.21
+          },
+          {
+            "x": 4001.6692582394785,
+            "y": 0.7,
+            "z": -33,
+            "yaw": -1.9183333333333332
+          },
+          {
+            "x": 4001.2289945921502,
+            "y": 0.7,
+            "z": -33,
+            "yaw": -2.668333333333335
+          },
+          {
+            "x": 4000.783014735033,
+            "y": 0.7,
+            "z": -33,
+            "yaw": -3.268333333333335
+          },
+          {
+            "x": 4000.4050171414983,
+            "y": 0.7,
+            "z": -33,
+            "yaw": -3.535000000000001
+          },
+          {
+            "x": 4000.127547220474,
+            "y": 0.7999999999999996,
+            "z": -33,
+            "yaw": -3.468333333333334
+          },
+          {
+            "x": 3999.9312248638835,
+            "y": 0.9999999999999998,
+            "z": -33,
+            "yaw": -3.191592653589793
+          },
+          {
+            "x": 3999.7788146299404,
+            "y": 0.9999999999999998,
+            "z": -33,
+            "yaw": -3.1456693265294247
+          },
+          {
+            "x": 3999.651242185576,
+            "y": 1.1999999999999995,
+            "z": -33,
+            "yaw": -3.1422510590291592
+          },
+          {
+            "x": 3999.532755597712,
+            "y": 1.1999999999999995,
+            "z": -33,
+            "yaw": -3.1416989897440555
+          },
+          {
+            "x": 3999.418589687029,
+            "y": 1.1999999999999995,
+            "z": -33,
+            "yaw": -3.141609827472369
+          },
+          {
+            "x": 3999.3114514086715,
+            "y": 1.3999999999999997,
+            "z": -33,
+            "yaw": -3.1415954272677094
+          },
+          {
+            "x": 3999.1990059257046,
+            "y": 1.3999999999999997,
+            "z": -33,
+            "yaw": -3.1415931015542617
+          },
+          {
+            "x": 3999.0930182895086,
+            "y": 1.5999999999999999,
+            "z": -33,
+            "yaw": -3.1415927259385557
+          },
+          {
+            "x": 3998.985881153584,
+            "y": 1.5999999999999999,
+            "z": -33,
+            "yaw": -3.1415926652745227
+          },
+          {
+            "x": 3998.875961098317,
+            "y": 1.5999999999999999,
+            "z": -33,
+            "yaw": -3.141592655476942
+          },
+          {
+            "x": 3998.772808951169,
+            "y": 1.7999999999999998,
+            "z": -33,
+            "yaw": -3.141592653894578
+          },
+          {
+            "x": 3998.663109553044,
+            "y": 1.7999999999999998,
+            "z": -33,
+            "yaw": -3.1415926536390173
+          },
+          {
+            "x": 3998.55618922356,
+            "y": 1.9999999999999998,
+            "z": -33,
+            "yaw": -3.141592653597743
+          },
+          {
+            "x": 3998.4508303509506,
+            "y": 1.9999999999999998,
+            "z": -33,
+            "yaw": -3.141592653591077
+          },
+          {
+            "x": 3998.3398722762554,
+            "y": 1.9999999999999998,
+            "z": -33,
+            "yaw": -3.1415926535900005
+          },
+          {
+            "x": 3998.2355901875676,
+            "y": 2.1999999999999997,
+            "z": -33,
+            "yaw": -3.141592653589827
+          },
+          {
+            "x": 3998.1265060700516,
+            "y": 2.1999999999999997,
+            "z": -33,
+            "yaw": -3.1415926535897984
+          },
+          {
+            "x": 3998.0171948009624,
+            "y": 2.1999999999999997,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3997.912809059898,
+            "y": 2.3999999999999995,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3997.801682779109,
+            "y": 2.3999999999999995,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3997.6960057103524,
+            "y": 2.5999999999999996,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3997.5885485734875,
+            "y": 2.5999999999999996,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3997.477996416626,
+            "y": 2.5999999999999996,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3997.3741363143927,
+            "y": 2.8,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3997.2638030787866,
+            "y": 2.8,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3997.156397919793,
+            "y": 3,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3997.050721934172,
+            "y": 3,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3996.939597345487,
+            "y": 3,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3996.829716922785,
+            "y": 3.2,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3996.6172731926376,
+            "y": 3.2,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3996.2385247219318,
+            "y": 3.5999999999999996,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3995.6935451420813,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3995.003340556762,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3994.2219021741316,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3993.3931563127876,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3992.6111629615243,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3991.9268751130903,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3990.7602084464224,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3989.920970703125,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3989.920970703125,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3989.920970703125,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3989.920970703125,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3989.9007367346503,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3989.9106792516363,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3989.915962182306,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3989.9035618435682,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3989.91728835084,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3989.91728835084,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3989.91728835084,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3989.91728835084,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3989.91728835084,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3989.91728835084,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          }
+        ]
+      }
+    },
+    {
+      "tier": "low",
+      "name": "production resume restores indoor cast, completed dialogue, cure and every selectable weapon",
+      "pass": true
+    },
+    {
+      "tier": "low",
+      "name": "living post-crash Sam keeps his radio lines and identity model",
+      "pass": true,
+      "observed": [
+        "L10.farmstead"
+      ]
+    },
+    {
+      "tier": "low",
+      "name": "green tide restores living infected as healthy same-ID people",
+      "pass": true,
+      "observed": {
+        "humanId": 162,
+        "archetype": "npc.resident",
+        "hp": 100
+      }
+    },
+    {
+      "tier": "low",
+      "name": "courier can walk among recovering people during release",
+      "pass": true
+    },
+    {
+      "tier": "low",
+      "name": "title starts within 65 seconds after delivery and compressed panorama",
+      "pass": true,
+      "observed": {
+        "phase": "title",
+        "elapsed": 3900
+      }
+    },
+    {
+      "tier": "low",
+      "name": "readable credits remain for at least 89 seconds",
+      "pass": true,
+      "observed": {
+        "phase": "credits",
+        "phaseTicks": 5340,
+        "survivors": [
+          166,
+          167,
+          168
+        ],
+        "approaching": [
+          163,
+          164,
+          165
+        ],
+        "groupsAuthored": true
+      }
+    },
+    {
+      "tier": "low",
+      "name": "credits finish through thanks and record a skippable repeat view",
+      "pass": true
+    },
+    {
+      "tier": "low",
+      "name": "native ordinary-input route reaches credits",
+      "pass": true,
+      "observed": {
+        "outcome": "complete",
+        "blocker": null,
+        "time": 134.28333333333333,
+        "deaths": 0
+      }
+    },
+    {
+      "tier": "low",
+      "name": "competent finale uses mounted gun to shred crowds",
+      "pass": true,
+      "observed": {
+        "mounts": 4,
+        "minigunKills": 11
+      }
+    },
+    {
+      "tier": "low",
+      "name": "no close-range ground rocket exploit",
+      "pass": true,
+      "observed": {
+        "shortestTarget": "no rockets",
+        "closeRocketBlasts": 0
+      }
+    },
+    {
+      "tier": "low",
+      "name": "competent final fight wins without deaths",
+      "pass": true,
+      "observed": {
+        "deaths": 0,
+        "outcome": "complete"
+      }
+    },
+    {
+      "tier": "high",
+      "name": "optional house toy is collected once without a weapon slot",
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "name": "farmhouse-rifle is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 698,
+          "y": 0.15,
+          "z": 25,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "high",
+      "name": "barn-machete is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 940,
+          "y": 0.15,
+          "z": -12,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "high",
+      "name": "shed-molotov is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 1165,
+          "y": 0.15,
+          "z": -12,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "high",
+      "name": "workshop-nailgun is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 1397,
+          "y": 0.15,
+          "z": 16,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "high",
+      "name": "guard-tower-rifle is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 1960,
+          "y": 0.15,
+          "z": 16,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "high",
+      "name": "checkpoint-flashbang is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 2077,
+          "y": 0.15,
+          "z": -2,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "high",
+      "name": "gap 937 fits courier and excludes Mega",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 937,
+          "z": 80
+        },
+        "courierClear": true,
+        "megaClear": false,
+        "courierRoute": {
+          "connected": true,
+          "metres": 5.5
+        },
+        "megaRoute": {
+          "connected": true,
+          "metres": 136.5
+        }
+      }
+    },
+    {
+      "tier": "high",
+      "name": "gap 2137 fits courier and excludes Mega",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 2137,
+          "z": -75
+        },
+        "courierClear": true,
+        "megaClear": false,
+        "courierRoute": {
+          "connected": true,
+          "metres": 5.5
+        },
+        "megaRoute": {
+          "connected": true,
+          "metres": 78.5
+        }
+      }
+    },
+    {
+      "tier": "high",
+      "name": "gap 3317 fits courier and excludes Mega",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 3317,
+          "z": 95
+        },
+        "courierClear": true,
+        "megaClear": false,
+        "courierRoute": {
+          "connected": true,
+          "metres": 5.5
+        },
+        "megaRoute": {
+          "connected": true,
+          "metres": 109.5
+        }
+      }
+    },
+    {
+      "tier": "high",
+      "name": "gap 925 fits courier and excludes Mega",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 925,
+          "z": -12
+        },
+        "courierClear": true,
+        "megaClear": false,
+        "courierRoute": {
+          "connected": true,
+          "metres": 5.5
+        },
+        "megaRoute": {
+          "connected": true,
+          "metres": 77.5
+        }
+      }
+    },
+    {
+      "tier": "high",
+      "name": "gap 2110 fits courier and excludes Mega",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 2110,
+          "z": -2
+        },
+        "courierClear": true,
+        "megaClear": false,
+        "courierRoute": {
+          "connected": true,
+          "metres": 5.5
+        },
+        "megaRoute": {
+          "connected": true,
+          "metres": 77.5
+        }
+      }
+    },
+    {
+      "tier": "high",
+      "name": "hangar conversation completes in order with Reyes fallback",
+      "pass": true,
+      "observed": [
+        "L10.voss-intro",
+        "L10.voss-sample",
+        "L10.courier-carried",
+        "L10.voss-cure",
+        "L10.voss-delivery",
+        "L10.ruiz",
+        "L10.voss-prototype",
+        "L10.sam-coming.reyes",
+        "L10.voss-stay",
+        "L10.sam-delivery.reyes"
+      ]
+    },
+    {
+      "tier": "high",
+      "name": "six living researchers, guards and continuity speaker are present",
+      "pass": true,
+      "observed": [
+        {
+          "key": "hangar-voss",
+          "id": 163,
+          "model": "npc.lab-tech-b",
+          "hp": 100
+        },
+        {
+          "key": "hangar-ruiz",
+          "id": 164,
+          "model": "npc.national-guard",
+          "hp": 100
+        },
+        {
+          "key": "hangar-researcher",
+          "id": 165,
+          "model": "npc.lab-tech-a",
+          "hp": 100
+        },
+        {
+          "key": "hangar-sam",
+          "id": 166,
+          "model": "npc.national-guard",
+          "hp": 40
+        },
+        {
+          "key": "hangar-guard-west",
+          "id": 167,
+          "model": "npc.lab-guard",
+          "hp": 100
+        },
+        {
+          "key": "hangar-guard-east",
+          "id": 168,
+          "model": "npc.lab-guard",
+          "hp": 100
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "name": "hangar entrance connects to indoor handoff",
+      "pass": true,
+      "observed": {
+        "cells": 56
+      }
+    },
+    {
+      "tier": "high",
+      "name": "cure handoff restores every campaign weapon and the prototype into selectable racks",
+      "pass": true,
+      "observed": [
+        "weapon.fire-axe",
+        "weapon.fists",
+        "weapon.kick",
+        "weapon.bat",
+        "weapon.machete",
+        "weapon.fire-axe",
+        "weapon.molotov",
+        "weapon.handgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher",
+        "weapon.pipe-bomb",
+        "weapon.shotgun",
+        "ability.corgi-lure",
+        "weapon.hunting-rifle",
+        "weapon.nail-gun",
+        "weapon.assault-rifle",
+        "weapon.flashbang",
+        "weapon.flamethrower"
+      ]
+    },
+    {
+      "tier": "high",
+      "name": "full hangar inventory and conversation survive save validation and codec",
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "name": "walk Mega cannot be killed even by repeated direct rockets",
+      "pass": true,
+      "observed": {
+        "initialHp": 3000,
+        "hp": 3000
+      }
+    },
+    {
+      "tier": "high",
+      "name": "hangar boundary protects courier from outside attacks",
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "name": "every damaging carried weapon can hurt the finale Mega",
+      "pass": true,
+      "observed": {
+        "weapon.bat": 22,
+        "weapon.fire-axe": 56,
+        "weapon.handgun": 20,
+        "weapon.army-mg": 14,
+        "weapon.shotgun": 240,
+        "weapon.rocket-launcher": 300,
+        "weapon.pipe-bomb": 150,
+        "weapon.hunting-rifle": 90,
+        "weapon.nail-gun": 14,
+        "weapon.machete": 32,
+        "weapon.molotov": 10,
+        "weapon.assault-rifle": 26,
+        "weapon.flamethrower": 4
+      }
+    },
+    {
+      "tier": "high",
+      "name": "arena has both fuel hazards and an accessible gate switch",
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "name": "powered gate damages and interrupts the finale Mega once",
+      "pass": true,
+      "observed": {
+        "beforeGate": 2996,
+        "after": 2096,
+        "staggerUntil": 3754
+      }
+    },
+    {
+      "tier": "high",
+      "name": "reinforcements continue after charge-ready",
+      "pass": true,
+      "observed": {
+        "before": 54,
+        "after": 63,
+        "assaultTicks": 1200
+      }
+    },
+    {
+      "tier": "high",
+      "name": "mounted platform rejects ground melee without stunlock",
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "name": "stair climber can contest the gun from behind with reduced damage",
+      "pass": true,
+      "observed": 8.75
+    },
+    {
+      "tier": "high",
+      "name": "infected reaches the manned raised platform by its stair",
+      "pass": true,
+      "observed": {
+        "entered": {
+          "x": 3999.0930182895086,
+          "y": 1.5999999999999999,
+          "z": -33,
+          "yaw": -3.1415927259385557
+        },
+        "reachedDeck": true,
+        "climb": [
+          {
+            "x": 4002.2,
+            "y": 0.7,
+            "z": -33,
+            "yaw": -0.23333333333333334
+          },
+          {
+            "x": 4002.1734444444437,
+            "y": 0.7,
+            "z": -33,
+            "yaw": -0.7933333333333333
+          },
+          {
+            "x": 4002.0028888888883,
+            "y": 0.7,
+            "z": -33,
+            "yaw": -1.21
+          },
+          {
+            "x": 4001.6692582394785,
+            "y": 0.7,
+            "z": -33,
+            "yaw": -1.9183333333333332
+          },
+          {
+            "x": 4001.2289945921502,
+            "y": 0.7,
+            "z": -33,
+            "yaw": -2.668333333333335
+          },
+          {
+            "x": 4000.783014735033,
+            "y": 0.7,
+            "z": -33,
+            "yaw": -3.268333333333335
+          },
+          {
+            "x": 4000.4050171414983,
+            "y": 0.7,
+            "z": -33,
+            "yaw": -3.535000000000001
+          },
+          {
+            "x": 4000.127547220474,
+            "y": 0.7999999999999996,
+            "z": -33,
+            "yaw": -3.468333333333334
+          },
+          {
+            "x": 3999.9312248638835,
+            "y": 0.9999999999999998,
+            "z": -33,
+            "yaw": -3.191592653589793
+          },
+          {
+            "x": 3999.7788146299404,
+            "y": 0.9999999999999998,
+            "z": -33,
+            "yaw": -3.1456693265294247
+          },
+          {
+            "x": 3999.651242185576,
+            "y": 1.1999999999999995,
+            "z": -33,
+            "yaw": -3.1422510590291592
+          },
+          {
+            "x": 3999.532755597712,
+            "y": 1.1999999999999995,
+            "z": -33,
+            "yaw": -3.1416989897440555
+          },
+          {
+            "x": 3999.418589687029,
+            "y": 1.1999999999999995,
+            "z": -33,
+            "yaw": -3.141609827472369
+          },
+          {
+            "x": 3999.3114514086715,
+            "y": 1.3999999999999997,
+            "z": -33,
+            "yaw": -3.1415954272677094
+          },
+          {
+            "x": 3999.1990059257046,
+            "y": 1.3999999999999997,
+            "z": -33,
+            "yaw": -3.1415931015542617
+          },
+          {
+            "x": 3999.0930182895086,
+            "y": 1.5999999999999999,
+            "z": -33,
+            "yaw": -3.1415927259385557
+          },
+          {
+            "x": 3998.985881153584,
+            "y": 1.5999999999999999,
+            "z": -33,
+            "yaw": -3.1415926652745227
+          },
+          {
+            "x": 3998.875961098317,
+            "y": 1.5999999999999999,
+            "z": -33,
+            "yaw": -3.141592655476942
+          },
+          {
+            "x": 3998.772808951169,
+            "y": 1.7999999999999998,
+            "z": -33,
+            "yaw": -3.141592653894578
+          },
+          {
+            "x": 3998.663109553044,
+            "y": 1.7999999999999998,
+            "z": -33,
+            "yaw": -3.1415926536390173
+          },
+          {
+            "x": 3998.55618922356,
+            "y": 1.9999999999999998,
+            "z": -33,
+            "yaw": -3.141592653597743
+          },
+          {
+            "x": 3998.4508303509506,
+            "y": 1.9999999999999998,
+            "z": -33,
+            "yaw": -3.141592653591077
+          },
+          {
+            "x": 3998.3398722762554,
+            "y": 1.9999999999999998,
+            "z": -33,
+            "yaw": -3.1415926535900005
+          },
+          {
+            "x": 3998.2355901875676,
+            "y": 2.1999999999999997,
+            "z": -33,
+            "yaw": -3.141592653589827
+          },
+          {
+            "x": 3998.1265060700516,
+            "y": 2.1999999999999997,
+            "z": -33,
+            "yaw": -3.1415926535897984
+          },
+          {
+            "x": 3998.0171948009624,
+            "y": 2.1999999999999997,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3997.912809059898,
+            "y": 2.3999999999999995,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3997.801682779109,
+            "y": 2.3999999999999995,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3997.6960057103524,
+            "y": 2.5999999999999996,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3997.5885485734875,
+            "y": 2.5999999999999996,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3997.477996416626,
+            "y": 2.5999999999999996,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3997.3741363143927,
+            "y": 2.8,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3997.2638030787866,
+            "y": 2.8,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3997.156397919793,
+            "y": 3,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3997.050721934172,
+            "y": 3,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3996.939597345487,
+            "y": 3,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3996.829716922785,
+            "y": 3.2,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3996.6172731926376,
+            "y": 3.2,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3996.2385247219318,
+            "y": 3.5999999999999996,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3995.6935451420813,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3995.003340556762,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3994.2219021741316,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589794
+          },
+          {
+            "x": 3993.3931563127876,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3992.6111629615243,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3991.9268751130903,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3990.7602084464224,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3989.920970703125,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3989.920970703125,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3989.920970703125,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3989.920970703125,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3989.9007367346503,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3989.9106792516363,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3989.915962182306,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3989.9035618435682,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3989.91728835084,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3989.91728835084,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3989.91728835084,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3989.91728835084,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3989.91728835084,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          },
+          {
+            "x": 3989.91728835084,
+            "y": 3.7800000000000002,
+            "z": -33,
+            "yaw": -3.141592653589793
+          }
+        ]
+      }
+    },
+    {
+      "tier": "high",
+      "name": "production resume restores indoor cast, completed dialogue, cure and every selectable weapon",
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "name": "living post-crash Sam keeps his radio lines and identity model",
+      "pass": true,
+      "observed": [
+        "L10.farmstead"
+      ]
+    },
+    {
+      "tier": "high",
+      "name": "green tide restores living infected as healthy same-ID people",
+      "pass": true,
+      "observed": {
+        "humanId": 177,
+        "archetype": "npc.resident",
+        "hp": 100
+      }
+    },
+    {
+      "tier": "high",
+      "name": "courier can walk among recovering people during release",
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "name": "title starts within 65 seconds after delivery and compressed panorama",
+      "pass": true,
+      "observed": {
+        "phase": "title",
+        "elapsed": 3900
+      }
+    },
+    {
+      "tier": "high",
+      "name": "readable credits remain for at least 89 seconds",
+      "pass": true,
+      "observed": {
+        "phase": "credits",
+        "phaseTicks": 5340,
+        "survivors": [
+          184,
+          185,
+          186,
+          187,
+          188,
+          189
+        ],
+        "approaching": [
+          178,
+          179,
+          180,
+          181,
+          182,
+          183
+        ],
+        "groupsAuthored": true
+      }
+    },
+    {
+      "tier": "high",
+      "name": "credits finish through thanks and record a skippable repeat view",
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "name": "native ordinary-input route reaches credits",
+      "pass": true,
+      "observed": {
+        "outcome": "complete",
+        "blocker": null,
+        "time": 135.01666666666668,
+        "deaths": 0
+      }
+    },
+    {
+      "tier": "high",
+      "name": "competent finale uses mounted gun to shred crowds",
+      "pass": true,
+      "observed": {
+        "mounts": 4,
+        "minigunKills": 14
+      }
+    },
+    {
+      "tier": "high",
+      "name": "no close-range ground rocket exploit",
+      "pass": true,
+      "observed": {
+        "shortestTarget": "no rockets",
+        "closeRocketBlasts": 0
+      }
+    },
+    {
+      "tier": "high",
+      "name": "competent final fight wins without deaths",
+      "pass": true,
+      "observed": {
+        "deaths": 0,
+        "outcome": "complete"
+      }
+    }
+  ],
+  "rows": [
+    {
+      "tier": "low",
+      "method": "Controlled production-world fixtures; placements/objective advances are explicitly injected. Native route below uses inputs only.",
+      "pickups": [
+        {
+          "id": "farmhouse-rifle",
+          "action": "weapon.hunting-rifle",
+          "at": {
+            "x": 698,
+            "y": 0.15,
+            "z": 25,
+            "yaw": 0
+          }
+        },
+        {
+          "id": "barn-machete",
+          "action": "weapon.machete",
+          "at": {
+            "x": 940,
+            "y": 0.15,
+            "z": -12,
+            "yaw": 0
+          }
+        },
+        {
+          "id": "shed-molotov",
+          "action": "weapon.molotov",
+          "at": {
+            "x": 1165,
+            "y": 0.15,
+            "z": -12,
+            "yaw": 0
+          }
+        },
+        {
+          "id": "workshop-nailgun",
+          "action": "weapon.nail-gun",
+          "at": {
+            "x": 1397,
+            "y": 0.15,
+            "z": 16,
+            "yaw": 0
+          }
+        },
+        {
+          "id": "guard-tower-rifle",
+          "action": "weapon.assault-rifle",
+          "at": {
+            "x": 1960,
+            "y": 0.15,
+            "z": 16,
+            "yaw": 0
+          }
+        },
+        {
+          "id": "checkpoint-flashbang",
+          "action": "weapon.flashbang",
+          "at": {
+            "x": 2077,
+            "y": 0.15,
+            "z": -2,
+            "yaw": 0
+          }
+        }
+      ],
+      "gaps": [
+        {
+          "at": {
+            "x": 937,
+            "z": 80
+          },
+          "courierClear": true,
+          "megaClear": false,
+          "courierRoute": {
+            "connected": true,
+            "metres": 5.5
+          },
+          "megaRoute": {
+            "connected": true,
+            "metres": 136.5
+          }
+        },
+        {
+          "at": {
+            "x": 2137,
+            "z": -75
+          },
+          "courierClear": true,
+          "megaClear": false,
+          "courierRoute": {
+            "connected": true,
+            "metres": 5.5
+          },
+          "megaRoute": {
+            "connected": true,
+            "metres": 78.5
+          }
+        },
+        {
+          "at": {
+            "x": 3317,
+            "z": 95
+          },
+          "courierClear": true,
+          "megaClear": false,
+          "courierRoute": {
+            "connected": true,
+            "metres": 5.5
+          },
+          "megaRoute": {
+            "connected": true,
+            "metres": 109.5
+          }
+        },
+        {
+          "at": {
+            "x": 925,
+            "z": -12
+          },
+          "courierClear": true,
+          "megaClear": false,
+          "courierRoute": {
+            "connected": true,
+            "metres": 5.5
+          },
+          "megaRoute": {
+            "connected": true,
+            "metres": 77.5
+          }
+        },
+        {
+          "at": {
+            "x": 2110,
+            "z": -2
+          },
+          "courierClear": true,
+          "megaClear": false,
+          "courierRoute": {
+            "connected": true,
+            "metres": 5.5
+          },
+          "megaRoute": {
+            "connected": true,
+            "metres": 77.5
+          }
+        }
+      ],
+      "lines": [
+        "L10.voss-intro",
+        "L10.voss-sample",
+        "L10.courier-carried",
+        "L10.voss-cure",
+        "L10.voss-delivery",
+        "L10.ruiz",
+        "L10.voss-prototype",
+        "L10.sam-coming.reyes",
+        "L10.voss-stay",
+        "L10.sam-delivery.reyes"
+      ],
+      "cast": [
+        {
+          "key": "hangar-voss",
+          "id": 149,
+          "model": "npc.lab-tech-b",
+          "hp": 100
+        },
+        {
+          "key": "hangar-ruiz",
+          "id": 150,
+          "model": "npc.national-guard",
+          "hp": 100
+        },
+        {
+          "key": "hangar-researcher",
+          "id": 151,
+          "model": "npc.lab-tech-a",
+          "hp": 100
+        },
+        {
+          "key": "hangar-sam",
+          "id": 152,
+          "model": "npc.national-guard",
+          "hp": 40
+        },
+        {
+          "key": "hangar-guard-west",
+          "id": 153,
+          "model": "npc.lab-guard",
+          "hp": 100
+        },
+        {
+          "key": "hangar-guard-east",
+          "id": 154,
+          "model": "npc.lab-guard",
+          "hp": 100
+        }
+      ],
+      "damage": {
+        "weapon.bat": 22,
+        "weapon.fire-axe": 56,
+        "weapon.handgun": 20,
+        "weapon.army-mg": 14,
+        "weapon.shotgun": 240,
+        "weapon.rocket-launcher": 300,
+        "weapon.pipe-bomb": 150,
+        "weapon.hunting-rifle": 90,
+        "weapon.nail-gun": 14,
+        "weapon.machete": 32,
+        "weapon.molotov": 10,
+        "weapon.assault-rifle": 26,
+        "weapon.flamethrower": 4
+      }
+    },
+    {
+      "tier": "low",
+      "method": "Explicit healthy full-arsenal arena setup; all subsequent fighting/movement/interaction uses ordinary inputs, no god mode or teleport.",
+      "run": {
+        "level": "L10",
+        "policy": "complete",
+        "seed": 1,
+        "completed": true,
+        "time": 134.28333333333333,
+        "deaths": 0,
+        "kills": 13,
+        "damageTaken": 0,
+        "failures": {},
+        "objectiveTimeline": [
+          {
+            "id": "crash",
+            "t": 0
+          },
+          {
+            "id": "farmstead",
+            "t": 0
+          },
+          {
+            "id": "restricted-zone",
+            "t": 0
+          },
+          {
+            "id": "research-hangar",
+            "t": 0
+          },
+          {
+            "id": "research",
+            "t": 0
+          },
+          {
+            "id": "cure",
+            "t": 0
+          },
+          {
+            "id": "research-exit",
+            "t": 0
+          },
+          {
+            "id": "delivery-corridor",
+            "t": 0
+          },
+          {
+            "id": "dispersal-complex",
+            "t": 0
+          },
+          {
+            "id": "install",
+            "t": 4.016666666666667
+          },
+          {
+            "id": "hold",
+            "t": 66.28333333333333
+          },
+          {
+            "id": "mega",
+            "t": 66.3
+          },
+          {
+            "id": "release",
+            "t": 69.28333333333333
+          },
+          {
+            "id": "epilogue",
+            "t": 134.28333333333333
+          },
+          {
+            "id": "credits",
+            "t": 235.28333333333333
+          }
+        ],
+        "furthestObjective": "credits",
+        "activeObjectives": [],
+        "outcome": "complete",
+        "blocker": null,
+        "cureReleases": 1,
+        "regions": [
+          {
+            "id": "crash-outskirts",
+            "seconds": 0.016666666666666666,
+            "travelSeconds": 0.016666666666666666,
+            "combatSeconds": 0,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 3455.0678962331062
+          },
+          {
+            "id": "residential-fringe",
+            "seconds": 0,
+            "travelSeconds": 0,
+            "combatSeconds": 0,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 0
+          },
+          {
+            "id": "industrial-area",
+            "seconds": 0,
+            "travelSeconds": 0,
+            "combatSeconds": 0,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 0
+          },
+          {
+            "id": "military-zone",
+            "seconds": 0,
+            "travelSeconds": 0,
+            "combatSeconds": 0,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 0
+          },
+          {
+            "id": "research-campus",
+            "seconds": 0,
+            "travelSeconds": 0,
+            "combatSeconds": 0,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 0
+          },
+          {
+            "id": "destroyed-corridor",
+            "seconds": 0,
+            "travelSeconds": 0,
+            "combatSeconds": 0,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 0
+          },
+          {
+            "id": "dispersal-complex",
+            "seconds": 134.26666666666566,
+            "travelSeconds": 6.949999999999981,
+            "combatSeconds": 0,
+            "interactionSeconds": 0.03333333333333333,
+            "holdSeconds": 62.28333333333108,
+            "epilogueSeconds": 64.9999999999976,
+            "otherSeconds": 0,
+            "metres": 320.4869730429067
+          }
+        ],
+        "maxConcurrentInfected": 8,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 20,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "mounts": 4,
+      "minigunKills": 11,
+      "shortestRocket": null,
+      "closeRocketBlasts": 0,
+      "mannedDamage": 0,
+      "sightings": [
+        {
+          "tick": 379,
+          "region": "8",
+          "distance": 26.601640827921365
+        },
+        {
+          "tick": 473,
+          "region": "7",
+          "distance": 16.163666699939288
+        }
+      ],
+      "firstMegaSeen": 6.316666666666666,
+      "idleEntries": [],
+      "trace": [
+        {
+          "seconds": 30,
+          "step": "hold",
+          "player": {
+            "x": 3991.66845703125,
+            "y": 3.799999952316284,
+            "z": -34.594913482666016,
+            "yaw": -0.25958407392089633,
+            "hp": 100
+          },
+          "charge": 1423,
+          "gun": {
+            "heat": 0,
+            "locked": false,
+            "mounted": false
+          },
+          "mega": {
+            "tick": 1800,
+            "id": 100,
+            "mode": "close",
+            "introducedAt": 0,
+            "introduceTick": 2700,
+            "x": 3987.2544595108657,
+            "z": -27.298475376838773,
+            "hp": 1386.0000000000027,
+            "maxHp": 3000,
+            "target": {
+              "x": 3991.7265625,
+              "z": -34.59506607055664
+            },
+            "route": [
+              "cure-route-51",
+              "cure-route-52",
+              "cure-route-53",
+              "cure-route-54"
+            ],
+            "routeAt": 1796,
+            "passed": "cure-route-51",
+            "blocked": {},
+            "breach": null,
+            "stuck": {
+              "level": 0,
+              "since": 1256,
+              "sampleAt": 1580,
+              "x": 3986.8231363736118,
+              "z": -28.84534236392568,
+              "noPath": 0,
+              "goal": null
+            },
+            "lastDamage": {
+              "tick": 1431,
+              "amount": 84,
+              "sourceId": 1
+            },
+            "coarseM": 0,
+            "audio": {
+              "next": 2885,
+              "step": 1825,
+              "index": 2,
+              "last": {
+                "x": 3987.2544595108657,
+                "z": -27.298475376838773
+              }
+            }
+          }
+        },
+        {
+          "seconds": 60,
+          "step": "hold",
+          "player": {
+            "x": 3989.2314453125,
+            "y": 3.7799999713897705,
+            "z": -32.86745834350586,
+            "yaw": 0.17075461204197984,
+            "hp": 100
+          },
+          "charge": 3223,
+          "gun": {
+            "heat": 0.01875,
+            "locked": false,
+            "mounted": true
+          },
+          "mega": {
+            "tick": 3600,
+            "id": 100,
+            "mode": "dead",
+            "introducedAt": 0,
+            "introduceTick": 2700,
+            "x": 3999.0386663530194,
+            "z": -29.70112375376401,
+            "hp": 0,
+            "maxHp": 3000,
+            "target": {
+              "x": 3989.2676361762283,
+              "z": -33.26840869887213
+            },
+            "route": [],
+            "routeAt": 3002,
+            "passed": "cure-route-51",
+            "blocked": {
+              "cure-route-51|cure-route-52": 4112
+            },
+            "breach": null,
+            "stuck": {
+              "level": 2,
+              "since": 2912,
+              "sampleAt": 3002,
+              "x": 3999.002559423679,
+              "z": -29.70057420913138,
+              "noPath": 0,
+              "goal": null
+            },
+            "lastDamage": {
+              "tick": 3012,
+              "amount": 1.8000000000051841,
+              "sourceId": 1
+            },
+            "coarseM": 0,
+            "audio": {
+              "next": 4429,
+              "step": 3025,
+              "index": 3,
+              "last": {
+                "x": 3999.0386663530194,
+                "z": -29.70112375376401
+              }
+            }
+          }
+        },
+        {
+          "seconds": 90,
+          "step": "epilogue",
+          "player": {
+            "x": 4003.2705078125,
+            "y": 0.7049999833106995,
+            "z": -28.75396156311035,
+            "yaw": 2.9788299046053464,
+            "hp": 100
+          },
+          "charge": 3600,
+          "gun": {
+            "heat": 0,
+            "locked": false,
+            "mounted": false
+          },
+          "mega": {
+            "tick": 5400,
+            "id": 100,
+            "mode": "dead",
+            "introducedAt": 0,
+            "introduceTick": 2700,
+            "x": 3999.0386663530194,
+            "z": -29.70112375376401,
+            "hp": 0,
+            "maxHp": 3000,
+            "target": {
+              "x": 3989.2676361762283,
+              "z": -33.26840869887213
+            },
+            "route": [],
+            "routeAt": 3002,
+            "passed": "cure-route-51",
+            "blocked": {
+              "cure-route-51|cure-route-52": 4112
+            },
+            "breach": null,
+            "stuck": {
+              "level": 2,
+              "since": 2912,
+              "sampleAt": 3002,
+              "x": 3999.002559423679,
+              "z": -29.70057420913138,
+              "noPath": 0,
+              "goal": null
+            },
+            "lastDamage": {
+              "tick": 3012,
+              "amount": 1.8000000000051841,
+              "sourceId": 1
+            },
+            "coarseM": 0,
+            "audio": {
+              "next": 4429,
+              "step": 3025,
+              "index": 3,
+              "last": {
+                "x": 3999.0386663530194,
+                "z": -29.70112375376401
+              }
+            }
+          }
+        },
+        {
+          "seconds": 120,
+          "step": "epilogue",
+          "player": {
+            "x": 4003.2705078125,
+            "y": 0.7049999833106995,
+            "z": -28.75396156311035,
+            "yaw": 2.9788299046053464,
+            "hp": 100
+          },
+          "charge": 3600,
+          "gun": {
+            "heat": 0,
+            "locked": false,
+            "mounted": false
+          },
+          "mega": {
+            "tick": 7200,
+            "id": 100,
+            "mode": "dead",
+            "introducedAt": 0,
+            "introduceTick": 2700,
+            "x": 3999.0386663530194,
+            "z": -29.70112375376401,
+            "hp": 0,
+            "maxHp": 3000,
+            "target": {
+              "x": 3989.2676361762283,
+              "z": -33.26840869887213
+            },
+            "route": [],
+            "routeAt": 3002,
+            "passed": "cure-route-51",
+            "blocked": {
+              "cure-route-51|cure-route-52": 4112
+            },
+            "breach": null,
+            "stuck": {
+              "level": 2,
+              "since": 2912,
+              "sampleAt": 3002,
+              "x": 3999.002559423679,
+              "z": -29.70057420913138,
+              "noPath": 0,
+              "goal": null
+            },
+            "lastDamage": {
+              "tick": 3012,
+              "amount": 1.8000000000051841,
+              "sourceId": 1
+            },
+            "coarseM": 0,
+            "audio": {
+              "next": 4429,
+              "step": 3025,
+              "index": 3,
+              "last": {
+                "x": 3999.0386663530194,
+                "z": -29.70112375376401
+              }
+            }
+          }
+        },
+        {
+          "seconds": 150,
+          "step": "credits",
+          "player": {
+            "x": 4003.2705078125,
+            "y": 0.7049999833106995,
+            "z": -28.75396156311035,
+            "yaw": 2.9788299046053464,
+            "hp": 100
+          },
+          "charge": 3600,
+          "gun": {
+            "heat": 0,
+            "locked": false,
+            "mounted": false
+          },
+          "mega": {
+            "tick": 9000,
+            "id": 100,
+            "mode": "dead",
+            "introducedAt": 0,
+            "introduceTick": 2700,
+            "x": 3999.0386663530194,
+            "z": -29.70112375376401,
+            "hp": 0,
+            "maxHp": 3000,
+            "target": {
+              "x": 3989.2676361762283,
+              "z": -33.26840869887213
+            },
+            "route": [],
+            "routeAt": 3002,
+            "passed": "cure-route-51",
+            "blocked": {
+              "cure-route-51|cure-route-52": 4112
+            },
+            "breach": null,
+            "stuck": {
+              "level": 2,
+              "since": 2912,
+              "sampleAt": 3002,
+              "x": 3999.002559423679,
+              "z": -29.70057420913138,
+              "noPath": 0,
+              "goal": null
+            },
+            "lastDamage": {
+              "tick": 3012,
+              "amount": 1.8000000000051841,
+              "sourceId": 1
+            },
+            "coarseM": 0,
+            "audio": {
+              "next": 4429,
+              "step": 3025,
+              "index": 3,
+              "last": {
+                "x": 3999.0386663530194,
+                "z": -29.70112375376401
+              }
+            }
+          }
+        },
+        {
+          "seconds": 180,
+          "step": "credits",
+          "player": {
+            "x": 4003.2705078125,
+            "y": 0.7049999833106995,
+            "z": -28.75396156311035,
+            "yaw": 2.9788299046053464,
+            "hp": 100
+          },
+          "charge": 3600,
+          "gun": {
+            "heat": 0,
+            "locked": false,
+            "mounted": false
+          },
+          "mega": {
+            "tick": 10800,
+            "id": 100,
+            "mode": "dead",
+            "introducedAt": 0,
+            "introduceTick": 2700,
+            "x": 3999.0386663530194,
+            "z": -29.70112375376401,
+            "hp": 0,
+            "maxHp": 3000,
+            "target": {
+              "x": 3989.2676361762283,
+              "z": -33.26840869887213
+            },
+            "route": [],
+            "routeAt": 3002,
+            "passed": "cure-route-51",
+            "blocked": {
+              "cure-route-51|cure-route-52": 4112
+            },
+            "breach": null,
+            "stuck": {
+              "level": 2,
+              "since": 2912,
+              "sampleAt": 3002,
+              "x": 3999.002559423679,
+              "z": -29.70057420913138,
+              "noPath": 0,
+              "goal": null
+            },
+            "lastDamage": {
+              "tick": 3012,
+              "amount": 1.8000000000051841,
+              "sourceId": 1
+            },
+            "coarseM": 0,
+            "audio": {
+              "next": 4429,
+              "step": 3025,
+              "index": 3,
+              "last": {
+                "x": 3999.0386663530194,
+                "z": -29.70112375376401
+              }
+            }
+          }
+        },
+        {
+          "seconds": 210,
+          "step": "credits",
+          "player": {
+            "x": 4003.2705078125,
+            "y": 0.7049999833106995,
+            "z": -28.75396156311035,
+            "yaw": 2.9788299046053464,
+            "hp": 100
+          },
+          "charge": 3600,
+          "gun": {
+            "heat": 0,
+            "locked": false,
+            "mounted": false
+          },
+          "mega": {
+            "tick": 12600,
+            "id": 100,
+            "mode": "dead",
+            "introducedAt": 0,
+            "introduceTick": 2700,
+            "x": 3999.0386663530194,
+            "z": -29.70112375376401,
+            "hp": 0,
+            "maxHp": 3000,
+            "target": {
+              "x": 3989.2676361762283,
+              "z": -33.26840869887213
+            },
+            "route": [],
+            "routeAt": 3002,
+            "passed": "cure-route-51",
+            "blocked": {
+              "cure-route-51|cure-route-52": 4112
+            },
+            "breach": null,
+            "stuck": {
+              "level": 2,
+              "since": 2912,
+              "sampleAt": 3002,
+              "x": 3999.002559423679,
+              "z": -29.70057420913138,
+              "noPath": 0,
+              "goal": null
+            },
+            "lastDamage": {
+              "tick": 3012,
+              "amount": 1.8000000000051841,
+              "sourceId": 1
+            },
+            "coarseM": 0,
+            "audio": {
+              "next": 4429,
+              "step": 3025,
+              "index": 3,
+              "last": {
+                "x": 3999.0386663530194,
+                "z": -29.70112375376401
+              }
+            }
+          }
+        }
+      ],
+      "deaths": [],
+      "finalState": {
+        "mission": {
+          "id": "L10",
+          "phase": "progression",
+          "completedObjectives": [
+            "crash",
+            "farmstead",
+            "restricted-zone",
+            "research-hangar",
+            "research",
+            "cure",
+            "research-exit",
+            "delivery-corridor",
+            "dispersal-complex",
+            "install",
+            "hold",
+            "mega",
+            "release",
+            "epilogue",
+            "credits"
+          ],
+          "volumes": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "killedBosses": [],
+          "deadlineTicks": null,
+          "steps": {
+            "crash": {
+              "status": "completed",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "farmstead": {
+              "status": "completed",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "restricted-zone": {
+              "status": "completed",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "research-hangar": {
+              "status": "completed",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "research": {
+              "status": "completed",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "cure": {
+              "status": "completed",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "research-exit": {
+              "status": "completed",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "delivery-corridor": {
+              "status": "completed",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "dispersal-complex": {
+              "status": "completed",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "install": {
+              "status": "completed",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 4
+            },
+            "hold": {
+              "status": "completed",
+              "started": 241,
+              "kills": [
+                104,
+                107,
+                108,
+                105,
+                109,
+                106,
+                110,
+                113,
+                111,
+                114,
+                100,
+                115,
+                112
+              ],
+              "events": {
+                "mega-phase-1:*": 1,
+                "cure-assault-started:*": 1,
+                "mega-phase-2:*": 1,
+                "combat.kill:*": 15,
+                "mega-phase-3:*": 1
+              },
+              "interaction": 0
+            },
+            "mega": {
+              "status": "completed",
+              "started": 3977,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "release": {
+              "status": "completed",
+              "started": 3978,
+              "kills": [],
+              "events": {
+                "cure-released:*": 1
+              },
+              "interaction": 2
+            },
+            "epilogue": {
+              "status": "completed",
+              "started": 4157,
+              "kills": [],
+              "events": {
+                "epilogue-title:*": 1
+              },
+              "interaction": 0
+            },
+            "credits": {
+              "status": "completed",
+              "started": 8057,
+              "kills": [],
+              "events": {
+                "epilogue-credits:*": 1,
+                "epilogue-thanks:*": 1,
+                "epilogue-done:*": 1
+              },
+              "interaction": 0
+            }
+          },
+          "actors": {
+            "arena-fuel-0": 101,
+            "arena-fuel-1": 102,
+            "arena-gate-switch": 103
+          },
+          "items": [
+            "cure-canister"
+          ],
+          "states": {
+            "charge-active": true,
+            "console-held": true,
+            "terminal-read": true,
+            "cure-carried": false,
+            "cure-installed": true,
+            "charge-ready": true,
+            "mega-dead": true,
+            "cure-released": true,
+            "epilogue-finished": true,
+            "credits-finished": true,
+            "story-initialized": true,
+            "sam-alive": false,
+            "gap-hint": false,
+            "hangar-radio": true,
+            "hangar-cast": false,
+            "hangar-dialogue-done": false,
+            "arena-equipped": true,
+            "gate-spent": false,
+            "delivery-notified": true,
+            "epilogue-rosa": true,
+            "epilogue-sam": true,
+            "found-farmhouse-rifle": true,
+            "found-barn-machete": false,
+            "found-shed-molotov": true,
+            "found-workshop-nailgun": true,
+            "found-guard-tower-rifle": true,
+            "found-checkpoint-flashbang": true,
+            "anchor-unavailable": false
+          },
+          "counters": {
+            "charge-ticks": 3600,
+            "epilogue-ticks": 3900,
+            "story-region": 4,
+            "pace-checkpoint": 0,
+            "pace-mm": 17774,
+            "hangar-line": 0,
+            "hangar-line-ticks": 0
+          },
+          "gates": {},
+          "marker": null,
+          "checkpoint": "cure-disperse-ready",
+          "tier": 0,
+          "timeOfDay": null,
+          "subtitle": null,
+          "cinematic": null,
+          "failure": null,
+          "stats": {
+            "time": 134.28333333333333,
+            "kills": 13,
+            "knockdowns": 2,
+            "damage": 0,
+            "deaths": 0,
+            "rescued": 0,
+            "optionalObjectives": []
+          },
+          "result": {
+            "time": 134.28333333333333,
+            "kills": 13,
+            "knockdowns": 2,
+            "damage": 0,
+            "deaths": 0,
+            "rescued": 0,
+            "optionalObjectives": []
+          },
+          "cureFront": {
+            "releasedAt": 4157,
+            "elapsed": 9960,
+            "radius": 20620,
+            "fronts": [
+              {
+                "x": 4002,
+                "z": -27,
+                "distance": 0
+              },
+              {
+                "x": 4002,
+                "z": -27,
+                "distance": 0
+              },
+              {
+                "x": 4004.5,
+                "z": -27,
+                "distance": 2.5
+              },
+              {
+                "x": 4004.5,
+                "z": -21,
+                "distance": 8.5
+              },
+              {
+                "x": 3978,
+                "z": -25,
+                "distance": 35.300186566514796
+              },
+              {
+                "x": 3968,
+                "z": -23,
+                "distance": 45.49822559370037
+              },
+              {
+                "x": 3955,
+                "z": -25,
+                "distance": 58.65117203166627
+              },
+              {
+                "x": 3940,
+                "z": -25,
+                "distance": 73.65117203166628
+              },
+              {
+                "x": 3897,
+                "z": -25,
+                "distance": 116.65117203166628
+              },
+              {
+                "x": 3897,
+                "z": -41,
+                "distance": 132.65117203166628
+              },
+              {
+                "x": 3797,
+                "z": -41,
+                "distance": 232.65117203166628
+              },
+              {
+                "x": 3797,
+                "z": -25,
+                "distance": 248.65117203166628
+              },
+              {
+                "x": 3697,
+                "z": -25,
+                "distance": 348.6511720316663
+              },
+              {
+                "x": 3577,
+                "z": -25,
+                "distance": 468.6511720316663
+              },
+              {
+                "x": 3577,
+                "z": 95,
+                "distance": 588.6511720316663
+              },
+              {
+                "x": 3322,
+                "z": 95,
+                "distance": 843.6511720316663
+              },
+              {
+                "x": 3322,
+                "z": 135,
+                "distance": 883.6511720316663
+              },
+              {
+                "x": 3312,
+                "z": 135,
+                "distance": 893.6511720316663
+              },
+              {
+                "x": 3312,
+                "z": 95,
+                "distance": 933.6511720316663
+              },
+              {
+                "x": 2977,
+                "z": 95,
+                "distance": 1268.6511720316662
+              },
+              {
+                "x": 2977,
+                "z": -5,
+                "distance": 1368.6511720316662
+              },
+              {
+                "x": 2917,
+                "z": -5,
+                "distance": 1428.6511720316662
+              },
+              {
+                "x": 2807,
+                "z": -5,
+                "distance": 1538.6511720316662
+              },
+              {
+                "x": 2807,
+                "z": 45,
+                "distance": 1588.6511720316662
+              },
+              {
+                "x": 2527,
+                "z": 45,
+                "distance": 1868.6511720316662
+              },
+              {
+                "x": 2527,
+                "z": -5,
+                "distance": 1918.6511720316662
+              },
+              {
+                "x": 2467,
+                "z": -5,
+                "distance": 1978.6511720316662
+              },
+              {
+                "x": 2397,
+                "z": -5,
+                "distance": 2048.651172031666
+              },
+              {
+                "x": 2397,
+                "z": -75,
+                "distance": 2118.651172031666
+              },
+              {
+                "x": 2142,
+                "z": -75,
+                "distance": 2373.651172031666
+              },
+              {
+                "x": 2142,
+                "z": -115,
+                "distance": 2413.651172031666
+              },
+              {
+                "x": 2132,
+                "z": -115,
+                "distance": 2423.651172031666
+              },
+              {
+                "x": 2132,
+                "z": -75,
+                "distance": 2463.651172031666
+              },
+              {
+                "x": 1897,
+                "z": -75,
+                "distance": 2698.651172031666
+              },
+              {
+                "x": 1897,
+                "z": 25,
+                "distance": 2798.651172031666
+              },
+              {
+                "x": 1837,
+                "z": 25,
+                "distance": 2858.651172031666
+              },
+              {
+                "x": 1747,
+                "z": 25,
+                "distance": 2948.651172031666
+              },
+              {
+                "x": 1747,
+                "z": 100,
+                "distance": 3023.651172031666
+              },
+              {
+                "x": 1517,
+                "z": 100,
+                "distance": 3253.651172031666
+              },
+              {
+                "x": 1297,
+                "z": 100,
+                "distance": 3473.651172031666
+              },
+              {
+                "x": 1297,
+                "z": 25,
+                "distance": 3548.651172031666
+              },
+              {
+                "x": 1237,
+                "z": 25,
+                "distance": 3608.651172031666
+              },
+              {
+                "x": 1057,
+                "z": 25,
+                "distance": 3788.651172031666
+              },
+              {
+                "x": 1057,
+                "z": 80,
+                "distance": 3843.651172031666
+              },
+              {
+                "x": 942,
+                "z": 80,
+                "distance": 3958.651172031666
+              },
+              {
+                "x": 942,
+                "z": 120,
+                "distance": 3998.651172031666
+              },
+              {
+                "x": 932,
+                "z": 120,
+                "distance": 4008.651172031666
+              },
+              {
+                "x": 932,
+                "z": 80,
+                "distance": 4048.651172031666
+              },
+              {
+                "x": 807,
+                "z": 80,
+                "distance": 4173.651172031667
+              },
+              {
+                "x": 807,
+                "z": 25,
+                "distance": 4228.651172031667
+              },
+              {
+                "x": 747,
+                "z": 25,
+                "distance": 4288.651172031667
+              },
+              {
+                "x": 647,
+                "z": 25,
+                "distance": 4388.651172031667
+              },
+              {
+                "x": 647,
+                "z": -12.5,
+                "distance": 4426.151172031667
+              },
+              {
+                "x": 622,
+                "z": -12.5,
+                "distance": 4451.151172031667
+              },
+              {
+                "x": 622,
+                "z": 0,
+                "distance": 4463.651172031667
+              },
+              {
+                "x": 547,
+                "z": 0,
+                "distance": 4538.651172031667
+              }
+            ],
+            "affectedIds": [
+              116,
+              117,
+              118
+            ]
+          },
+          "epilogue": {
+            "phase": "done",
+            "phaseTicks": 0,
+            "survivors": [
+              119,
+              120,
+              121
+            ],
+            "approaching": [
+              116,
+              117,
+              118
+            ],
+            "groupsAuthored": true
+          }
+        },
+        "gun": {
+          "heat": 0,
+          "locked": false,
+          "mounted": false
+        },
+        "mega": {
+          "tick": 14117,
+          "id": 100,
+          "mode": "dead",
+          "introducedAt": 0,
+          "introduceTick": 2700,
+          "x": 3999.0386663530194,
+          "z": -29.70112375376401,
+          "hp": 0,
+          "maxHp": 3000,
+          "target": {
+            "x": 3989.2676361762283,
+            "z": -33.26840869887213
+          },
+          "route": [],
+          "routeAt": 3002,
+          "passed": "cure-route-51",
+          "blocked": {
+            "cure-route-51|cure-route-52": 4112
+          },
+          "breach": null,
+          "stuck": {
+            "level": 2,
+            "since": 2912,
+            "sampleAt": 3002,
+            "x": 3999.002559423679,
+            "z": -29.70057420913138,
+            "noPath": 0,
+            "goal": null
+          },
+          "lastDamage": {
+            "tick": 3012,
+            "amount": 1.8000000000051841,
+            "sourceId": 1
+          },
+          "coarseM": 0,
+          "audio": {
+            "next": 4429,
+            "step": 3025,
+            "index": 3,
+            "last": {
+              "x": 3999.0386663530194,
+              "z": -29.70112375376401
+            }
+          }
+        },
+        "player": {
+          "x": 4003.2705078125,
+          "y": 0.7049999833106995,
+          "z": -28.75396156311035,
+          "yaw": 2.9788299046053464
+        }
+      }
+    },
+    {
+      "tier": "high",
+      "method": "Controlled production-world fixtures; placements/objective advances are explicitly injected. Native route below uses inputs only.",
+      "pickups": [
+        {
+          "id": "farmhouse-rifle",
+          "action": "weapon.hunting-rifle",
+          "at": {
+            "x": 698,
+            "y": 0.15,
+            "z": 25,
+            "yaw": 0
+          }
+        },
+        {
+          "id": "barn-machete",
+          "action": "weapon.machete",
+          "at": {
+            "x": 940,
+            "y": 0.15,
+            "z": -12,
+            "yaw": 0
+          }
+        },
+        {
+          "id": "shed-molotov",
+          "action": "weapon.molotov",
+          "at": {
+            "x": 1165,
+            "y": 0.15,
+            "z": -12,
+            "yaw": 0
+          }
+        },
+        {
+          "id": "workshop-nailgun",
+          "action": "weapon.nail-gun",
+          "at": {
+            "x": 1397,
+            "y": 0.15,
+            "z": 16,
+            "yaw": 0
+          }
+        },
+        {
+          "id": "guard-tower-rifle",
+          "action": "weapon.assault-rifle",
+          "at": {
+            "x": 1960,
+            "y": 0.15,
+            "z": 16,
+            "yaw": 0
+          }
+        },
+        {
+          "id": "checkpoint-flashbang",
+          "action": "weapon.flashbang",
+          "at": {
+            "x": 2077,
+            "y": 0.15,
+            "z": -2,
+            "yaw": 0
+          }
+        }
+      ],
+      "gaps": [
+        {
+          "at": {
+            "x": 937,
+            "z": 80
+          },
+          "courierClear": true,
+          "megaClear": false,
+          "courierRoute": {
+            "connected": true,
+            "metres": 5.5
+          },
+          "megaRoute": {
+            "connected": true,
+            "metres": 136.5
+          }
+        },
+        {
+          "at": {
+            "x": 2137,
+            "z": -75
+          },
+          "courierClear": true,
+          "megaClear": false,
+          "courierRoute": {
+            "connected": true,
+            "metres": 5.5
+          },
+          "megaRoute": {
+            "connected": true,
+            "metres": 78.5
+          }
+        },
+        {
+          "at": {
+            "x": 3317,
+            "z": 95
+          },
+          "courierClear": true,
+          "megaClear": false,
+          "courierRoute": {
+            "connected": true,
+            "metres": 5.5
+          },
+          "megaRoute": {
+            "connected": true,
+            "metres": 109.5
+          }
+        },
+        {
+          "at": {
+            "x": 925,
+            "z": -12
+          },
+          "courierClear": true,
+          "megaClear": false,
+          "courierRoute": {
+            "connected": true,
+            "metres": 5.5
+          },
+          "megaRoute": {
+            "connected": true,
+            "metres": 77.5
+          }
+        },
+        {
+          "at": {
+            "x": 2110,
+            "z": -2
+          },
+          "courierClear": true,
+          "megaClear": false,
+          "courierRoute": {
+            "connected": true,
+            "metres": 5.5
+          },
+          "megaRoute": {
+            "connected": true,
+            "metres": 77.5
+          }
+        }
+      ],
+      "lines": [
+        "L10.voss-intro",
+        "L10.voss-sample",
+        "L10.courier-carried",
+        "L10.voss-cure",
+        "L10.voss-delivery",
+        "L10.ruiz",
+        "L10.voss-prototype",
+        "L10.sam-coming.reyes",
+        "L10.voss-stay",
+        "L10.sam-delivery.reyes"
+      ],
+      "cast": [
+        {
+          "key": "hangar-voss",
+          "id": 163,
+          "model": "npc.lab-tech-b",
+          "hp": 100
+        },
+        {
+          "key": "hangar-ruiz",
+          "id": 164,
+          "model": "npc.national-guard",
+          "hp": 100
+        },
+        {
+          "key": "hangar-researcher",
+          "id": 165,
+          "model": "npc.lab-tech-a",
+          "hp": 100
+        },
+        {
+          "key": "hangar-sam",
+          "id": 166,
+          "model": "npc.national-guard",
+          "hp": 40
+        },
+        {
+          "key": "hangar-guard-west",
+          "id": 167,
+          "model": "npc.lab-guard",
+          "hp": 100
+        },
+        {
+          "key": "hangar-guard-east",
+          "id": 168,
+          "model": "npc.lab-guard",
+          "hp": 100
+        }
+      ],
+      "damage": {
+        "weapon.bat": 22,
+        "weapon.fire-axe": 56,
+        "weapon.handgun": 20,
+        "weapon.army-mg": 14,
+        "weapon.shotgun": 240,
+        "weapon.rocket-launcher": 300,
+        "weapon.pipe-bomb": 150,
+        "weapon.hunting-rifle": 90,
+        "weapon.nail-gun": 14,
+        "weapon.machete": 32,
+        "weapon.molotov": 10,
+        "weapon.assault-rifle": 26,
+        "weapon.flamethrower": 4
+      }
+    },
+    {
+      "tier": "high",
+      "method": "Explicit healthy full-arsenal arena setup; all subsequent fighting/movement/interaction uses ordinary inputs, no god mode or teleport.",
+      "run": {
+        "level": "L10",
+        "policy": "complete",
+        "seed": 1,
+        "completed": true,
+        "time": 135.01666666666668,
+        "deaths": 0,
+        "kills": 18,
+        "damageTaken": 0,
+        "failures": {},
+        "objectiveTimeline": [
+          {
+            "id": "crash",
+            "t": 0
+          },
+          {
+            "id": "farmstead",
+            "t": 0
+          },
+          {
+            "id": "restricted-zone",
+            "t": 0
+          },
+          {
+            "id": "research-hangar",
+            "t": 0
+          },
+          {
+            "id": "research",
+            "t": 0
+          },
+          {
+            "id": "cure",
+            "t": 0
+          },
+          {
+            "id": "research-exit",
+            "t": 0
+          },
+          {
+            "id": "delivery-corridor",
+            "t": 0
+          },
+          {
+            "id": "dispersal-complex",
+            "t": 0
+          },
+          {
+            "id": "install",
+            "t": 4.016666666666667
+          },
+          {
+            "id": "hold",
+            "t": 66.28333333333333
+          },
+          {
+            "id": "mega",
+            "t": 66.3
+          },
+          {
+            "id": "release",
+            "t": 70.01666666666667
+          },
+          {
+            "id": "epilogue",
+            "t": 135.01666666666668
+          },
+          {
+            "id": "credits",
+            "t": 236.01666666666668
+          }
+        ],
+        "furthestObjective": "credits",
+        "activeObjectives": [],
+        "outcome": "complete",
+        "blocker": null,
+        "cureReleases": 1,
+        "regions": [
+          {
+            "id": "crash-outskirts",
+            "seconds": 0.016666666666666666,
+            "travelSeconds": 0.016666666666666666,
+            "combatSeconds": 0,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 3455.0678962331062
+          },
+          {
+            "id": "residential-fringe",
+            "seconds": 0,
+            "travelSeconds": 0,
+            "combatSeconds": 0,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 0
+          },
+          {
+            "id": "industrial-area",
+            "seconds": 0,
+            "travelSeconds": 0,
+            "combatSeconds": 0,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 0
+          },
+          {
+            "id": "military-zone",
+            "seconds": 0,
+            "travelSeconds": 0,
+            "combatSeconds": 0,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 0
+          },
+          {
+            "id": "research-campus",
+            "seconds": 0,
+            "travelSeconds": 0,
+            "combatSeconds": 0,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 0
+          },
+          {
+            "id": "destroyed-corridor",
+            "seconds": 0,
+            "travelSeconds": 0,
+            "combatSeconds": 0,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 0
+          },
+          {
+            "id": "dispersal-complex",
+            "seconds": 134.99999999999957,
+            "travelSeconds": 5.8499999999999845,
+            "combatSeconds": 1.8499999999999983,
+            "interactionSeconds": 0.016666666666666666,
+            "holdSeconds": 62.28333333333108,
+            "epilogueSeconds": 64.9999999999976,
+            "otherSeconds": 0,
+            "metres": 357.66543084397796
+          }
+        ],
+        "maxConcurrentInfected": 11,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 32,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "mounts": 4,
+      "minigunKills": 14,
+      "shortestRocket": null,
+      "closeRocketBlasts": 0,
+      "mannedDamage": 0,
+      "sightings": [
+        {
+          "tick": 379,
+          "region": "8",
+          "distance": 26.601640827921365
+        },
+        {
+          "tick": 473,
+          "region": "7",
+          "distance": 16.163666699939288
+        }
+      ],
+      "firstMegaSeen": 6.316666666666666,
+      "idleEntries": [],
+      "trace": [
+        {
+          "seconds": 30,
+          "step": "hold",
+          "player": {
+            "x": 3991.38916015625,
+            "y": 3.799999952316284,
+            "z": -34.59489822387695,
+            "yaw": -0.2753171860083833,
+            "hp": 100
+          },
+          "charge": 1423,
+          "gun": {
+            "heat": 0,
+            "locked": false,
+            "mounted": false
+          },
+          "mega": {
+            "tick": 1800,
+            "id": 100,
+            "mode": "close",
+            "introducedAt": 0,
+            "introduceTick": 2700,
+            "x": 3994.3562722355473,
+            "z": -28.617155074425117,
+            "hp": 1398.6000000000026,
+            "maxHp": 3000,
+            "target": {
+              "x": 3991.40283203125,
+              "z": -34.58053207397461
+            },
+            "route": [
+              "cure-route-51",
+              "cure-route-52",
+              "cure-route-53",
+              "cure-route-54"
+            ],
+            "routeAt": 1796,
+            "passed": "cure-route-51",
+            "blocked": {},
+            "breach": null,
+            "stuck": {
+              "level": 0,
+              "since": 1256,
+              "sampleAt": 1701,
+              "x": 3988.2314448642637,
+              "z": -29.128966813772763,
+              "noPath": 0,
+              "goal": null
+            },
+            "lastDamage": {
+              "tick": 1432,
+              "amount": 84,
+              "sourceId": 1
+            },
+            "coarseM": 0,
+            "audio": {
+              "next": 2885,
+              "step": 1825,
+              "index": 2,
+              "last": {
+                "x": 3994.3562722355473,
+                "z": -28.617155074425117
+              }
+            }
+          }
+        },
+        {
+          "seconds": 60,
+          "step": "hold",
+          "player": {
+            "x": 3989.2373046875,
+            "y": 3.7799999713897705,
+            "z": -33.16292190551758,
+            "yaw": -0.21042331396561134,
+            "hp": 100
+          },
+          "charge": 3223,
+          "gun": {
+            "heat": 0,
+            "locked": false,
+            "mounted": true
+          },
+          "mega": {
+            "tick": 3600,
+            "id": 100,
+            "mode": "dead",
+            "introducedAt": 0,
+            "introduceTick": 2700,
+            "x": 4000.8973815499553,
+            "z": -31.36648794531118,
+            "hp": 0,
+            "maxHp": 3000,
+            "target": {
+              "x": 3989.2258214064623,
+              "z": -33.09511837523803
+            },
+            "route": [],
+            "routeAt": 2546,
+            "passed": "cure-route-51",
+            "blocked": {},
+            "breach": null,
+            "stuck": {
+              "level": 0,
+              "since": 1256,
+              "sampleAt": 2548,
+              "x": 4000.693047909514,
+              "z": -31.68621571983763,
+              "noPath": 0,
+              "goal": null
+            },
+            "lastDamage": {
+              "tick": 2573,
+              "amount": 1.8000000000051841,
+              "sourceId": 1
+            },
+            "coarseM": 0,
+            "audio": {
+              "next": 2885,
+              "step": 2593,
+              "index": 2,
+              "last": {
+                "x": 4000.8973815499553,
+                "z": -31.36648794531118
+              }
+            }
+          }
+        },
+        {
+          "seconds": 90,
+          "step": "epilogue",
+          "player": {
+            "x": 3999.967041015625,
+            "y": 0.7049999833106995,
+            "z": -29.09256935119629,
+            "yaw": 3.1253923710476794,
+            "hp": 100
+          },
+          "charge": 3600,
+          "gun": {
+            "heat": 0,
+            "locked": false,
+            "mounted": false
+          },
+          "mega": {
+            "tick": 5400,
+            "id": 100,
+            "mode": "dead",
+            "introducedAt": 0,
+            "introduceTick": 2700,
+            "x": 4000.8973815499553,
+            "z": -31.36648794531118,
+            "hp": 0,
+            "maxHp": 3000,
+            "target": {
+              "x": 3989.2258214064623,
+              "z": -33.09511837523803
+            },
+            "route": [],
+            "routeAt": 2546,
+            "passed": "cure-route-51",
+            "blocked": {},
+            "breach": null,
+            "stuck": {
+              "level": 0,
+              "since": 1256,
+              "sampleAt": 2548,
+              "x": 4000.693047909514,
+              "z": -31.68621571983763,
+              "noPath": 0,
+              "goal": null
+            },
+            "lastDamage": {
+              "tick": 2573,
+              "amount": 1.8000000000051841,
+              "sourceId": 1
+            },
+            "coarseM": 0,
+            "audio": {
+              "next": 2885,
+              "step": 2593,
+              "index": 2,
+              "last": {
+                "x": 4000.8973815499553,
+                "z": -31.36648794531118
+              }
+            }
+          }
+        },
+        {
+          "seconds": 120,
+          "step": "epilogue",
+          "player": {
+            "x": 3999.967041015625,
+            "y": 0.7049999833106995,
+            "z": -29.09256935119629,
+            "yaw": 3.1253923710476794,
+            "hp": 100
+          },
+          "charge": 3600,
+          "gun": {
+            "heat": 0,
+            "locked": false,
+            "mounted": false
+          },
+          "mega": {
+            "tick": 7200,
+            "id": 100,
+            "mode": "dead",
+            "introducedAt": 0,
+            "introduceTick": 2700,
+            "x": 4000.8973815499553,
+            "z": -31.36648794531118,
+            "hp": 0,
+            "maxHp": 3000,
+            "target": {
+              "x": 3989.2258214064623,
+              "z": -33.09511837523803
+            },
+            "route": [],
+            "routeAt": 2546,
+            "passed": "cure-route-51",
+            "blocked": {},
+            "breach": null,
+            "stuck": {
+              "level": 0,
+              "since": 1256,
+              "sampleAt": 2548,
+              "x": 4000.693047909514,
+              "z": -31.68621571983763,
+              "noPath": 0,
+              "goal": null
+            },
+            "lastDamage": {
+              "tick": 2573,
+              "amount": 1.8000000000051841,
+              "sourceId": 1
+            },
+            "coarseM": 0,
+            "audio": {
+              "next": 2885,
+              "step": 2593,
+              "index": 2,
+              "last": {
+                "x": 4000.8973815499553,
+                "z": -31.36648794531118
+              }
+            }
+          }
+        },
+        {
+          "seconds": 150,
+          "step": "credits",
+          "player": {
+            "x": 3999.967041015625,
+            "y": 0.7049999833106995,
+            "z": -29.09256935119629,
+            "yaw": 3.1253923710476794,
+            "hp": 100
+          },
+          "charge": 3600,
+          "gun": {
+            "heat": 0,
+            "locked": false,
+            "mounted": false
+          },
+          "mega": {
+            "tick": 9000,
+            "id": 100,
+            "mode": "dead",
+            "introducedAt": 0,
+            "introduceTick": 2700,
+            "x": 4000.8973815499553,
+            "z": -31.36648794531118,
+            "hp": 0,
+            "maxHp": 3000,
+            "target": {
+              "x": 3989.2258214064623,
+              "z": -33.09511837523803
+            },
+            "route": [],
+            "routeAt": 2546,
+            "passed": "cure-route-51",
+            "blocked": {},
+            "breach": null,
+            "stuck": {
+              "level": 0,
+              "since": 1256,
+              "sampleAt": 2548,
+              "x": 4000.693047909514,
+              "z": -31.68621571983763,
+              "noPath": 0,
+              "goal": null
+            },
+            "lastDamage": {
+              "tick": 2573,
+              "amount": 1.8000000000051841,
+              "sourceId": 1
+            },
+            "coarseM": 0,
+            "audio": {
+              "next": 2885,
+              "step": 2593,
+              "index": 2,
+              "last": {
+                "x": 4000.8973815499553,
+                "z": -31.36648794531118
+              }
+            }
+          }
+        },
+        {
+          "seconds": 180,
+          "step": "credits",
+          "player": {
+            "x": 3999.967041015625,
+            "y": 0.7049999833106995,
+            "z": -29.09256935119629,
+            "yaw": 3.1253923710476794,
+            "hp": 100
+          },
+          "charge": 3600,
+          "gun": {
+            "heat": 0,
+            "locked": false,
+            "mounted": false
+          },
+          "mega": {
+            "tick": 10800,
+            "id": 100,
+            "mode": "dead",
+            "introducedAt": 0,
+            "introduceTick": 2700,
+            "x": 4000.8973815499553,
+            "z": -31.36648794531118,
+            "hp": 0,
+            "maxHp": 3000,
+            "target": {
+              "x": 3989.2258214064623,
+              "z": -33.09511837523803
+            },
+            "route": [],
+            "routeAt": 2546,
+            "passed": "cure-route-51",
+            "blocked": {},
+            "breach": null,
+            "stuck": {
+              "level": 0,
+              "since": 1256,
+              "sampleAt": 2548,
+              "x": 4000.693047909514,
+              "z": -31.68621571983763,
+              "noPath": 0,
+              "goal": null
+            },
+            "lastDamage": {
+              "tick": 2573,
+              "amount": 1.8000000000051841,
+              "sourceId": 1
+            },
+            "coarseM": 0,
+            "audio": {
+              "next": 2885,
+              "step": 2593,
+              "index": 2,
+              "last": {
+                "x": 4000.8973815499553,
+                "z": -31.36648794531118
+              }
+            }
+          }
+        },
+        {
+          "seconds": 210,
+          "step": "credits",
+          "player": {
+            "x": 3999.967041015625,
+            "y": 0.7049999833106995,
+            "z": -29.09256935119629,
+            "yaw": 3.1253923710476794,
+            "hp": 100
+          },
+          "charge": 3600,
+          "gun": {
+            "heat": 0,
+            "locked": false,
+            "mounted": false
+          },
+          "mega": {
+            "tick": 12600,
+            "id": 100,
+            "mode": "dead",
+            "introducedAt": 0,
+            "introduceTick": 2700,
+            "x": 4000.8973815499553,
+            "z": -31.36648794531118,
+            "hp": 0,
+            "maxHp": 3000,
+            "target": {
+              "x": 3989.2258214064623,
+              "z": -33.09511837523803
+            },
+            "route": [],
+            "routeAt": 2546,
+            "passed": "cure-route-51",
+            "blocked": {},
+            "breach": null,
+            "stuck": {
+              "level": 0,
+              "since": 1256,
+              "sampleAt": 2548,
+              "x": 4000.693047909514,
+              "z": -31.68621571983763,
+              "noPath": 0,
+              "goal": null
+            },
+            "lastDamage": {
+              "tick": 2573,
+              "amount": 1.8000000000051841,
+              "sourceId": 1
+            },
+            "coarseM": 0,
+            "audio": {
+              "next": 2885,
+              "step": 2593,
+              "index": 2,
+              "last": {
+                "x": 4000.8973815499553,
+                "z": -31.36648794531118
+              }
+            }
+          }
+        }
+      ],
+      "deaths": [],
+      "finalState": {
+        "mission": {
+          "id": "L10",
+          "phase": "progression",
+          "completedObjectives": [
+            "crash",
+            "farmstead",
+            "restricted-zone",
+            "research-hangar",
+            "research",
+            "cure",
+            "research-exit",
+            "delivery-corridor",
+            "dispersal-complex",
+            "install",
+            "hold",
+            "mega",
+            "release",
+            "epilogue",
+            "credits"
+          ],
+          "volumes": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "killedBosses": [],
+          "deadlineTicks": null,
+          "steps": {
+            "crash": {
+              "status": "completed",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "farmstead": {
+              "status": "completed",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "restricted-zone": {
+              "status": "completed",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "research-hangar": {
+              "status": "completed",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "research": {
+              "status": "completed",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "cure": {
+              "status": "completed",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "research-exit": {
+              "status": "completed",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "delivery-corridor": {
+              "status": "completed",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "dispersal-complex": {
+              "status": "completed",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "install": {
+              "status": "completed",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 4
+            },
+            "hold": {
+              "status": "completed",
+              "started": 241,
+              "kills": [
+                104,
+                107,
+                108,
+                105,
+                111,
+                112,
+                106,
+                109,
+                110,
+                100,
+                113,
+                116,
+                117,
+                114,
+                119,
+                120,
+                121,
+                115,
+                118
+              ],
+              "events": {
+                "mega-phase-1:*": 1,
+                "cure-assault-started:*": 1,
+                "mega-phase-2:*": 1,
+                "combat.kill:*": 20,
+                "mega-phase-3:*": 1
+              },
+              "interaction": 0
+            },
+            "mega": {
+              "status": "completed",
+              "started": 3977,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "release": {
+              "status": "completed",
+              "started": 3978,
+              "kills": [],
+              "events": {
+                "cure-released:*": 1
+              },
+              "interaction": 10
+            },
+            "epilogue": {
+              "status": "completed",
+              "started": 4201,
+              "kills": [],
+              "events": {
+                "epilogue-title:*": 1
+              },
+              "interaction": 0
+            },
+            "credits": {
+              "status": "completed",
+              "started": 8101,
+              "kills": [],
+              "events": {
+                "epilogue-credits:*": 1,
+                "epilogue-thanks:*": 1,
+                "epilogue-done:*": 1
+              },
+              "interaction": 0
+            }
+          },
+          "actors": {
+            "arena-fuel-0": 101,
+            "arena-fuel-1": 102,
+            "arena-gate-switch": 103
+          },
+          "items": [
+            "cure-canister"
+          ],
+          "states": {
+            "charge-active": true,
+            "console-held": true,
+            "terminal-read": true,
+            "cure-carried": false,
+            "cure-installed": true,
+            "charge-ready": true,
+            "mega-dead": true,
+            "cure-released": true,
+            "epilogue-finished": true,
+            "credits-finished": true,
+            "story-initialized": true,
+            "sam-alive": false,
+            "gap-hint": false,
+            "hangar-radio": true,
+            "hangar-cast": false,
+            "hangar-dialogue-done": false,
+            "arena-equipped": true,
+            "gate-spent": false,
+            "delivery-notified": true,
+            "epilogue-rosa": true,
+            "epilogue-sam": true,
+            "found-farmhouse-rifle": true,
+            "found-barn-machete": false,
+            "found-shed-molotov": true,
+            "found-workshop-nailgun": true,
+            "found-guard-tower-rifle": true,
+            "found-checkpoint-flashbang": true,
+            "anchor-unavailable": false
+          },
+          "counters": {
+            "charge-ticks": 3600,
+            "epilogue-ticks": 3900,
+            "story-region": 4,
+            "pace-checkpoint": 0,
+            "pace-mm": 17774,
+            "hangar-line": 0,
+            "hangar-line-ticks": 0
+          },
+          "gates": {},
+          "marker": null,
+          "checkpoint": "cure-disperse-ready",
+          "tier": 0,
+          "timeOfDay": null,
+          "subtitle": null,
+          "cinematic": null,
+          "failure": null,
+          "stats": {
+            "time": 135.01666666666668,
+            "kills": 18,
+            "knockdowns": 2,
+            "damage": 0,
+            "deaths": 0,
+            "rescued": 0,
+            "optionalObjectives": []
+          },
+          "result": {
+            "time": 135.01666666666668,
+            "kills": 18,
+            "knockdowns": 2,
+            "damage": 0,
+            "deaths": 0,
+            "rescued": 0,
+            "optionalObjectives": []
+          },
+          "cureFront": {
+            "releasedAt": 4201,
+            "elapsed": 9960,
+            "radius": 20620,
+            "fronts": [
+              {
+                "x": 4002,
+                "z": -27,
+                "distance": 0
+              },
+              {
+                "x": 4002,
+                "z": -27,
+                "distance": 0
+              },
+              {
+                "x": 4004.5,
+                "z": -27,
+                "distance": 2.5
+              },
+              {
+                "x": 4004.5,
+                "z": -21,
+                "distance": 8.5
+              },
+              {
+                "x": 3978,
+                "z": -25,
+                "distance": 35.300186566514796
+              },
+              {
+                "x": 3968,
+                "z": -23,
+                "distance": 45.49822559370037
+              },
+              {
+                "x": 3955,
+                "z": -25,
+                "distance": 58.65117203166627
+              },
+              {
+                "x": 3940,
+                "z": -25,
+                "distance": 73.65117203166628
+              },
+              {
+                "x": 3897,
+                "z": -25,
+                "distance": 116.65117203166628
+              },
+              {
+                "x": 3897,
+                "z": -41,
+                "distance": 132.65117203166628
+              },
+              {
+                "x": 3797,
+                "z": -41,
+                "distance": 232.65117203166628
+              },
+              {
+                "x": 3797,
+                "z": -25,
+                "distance": 248.65117203166628
+              },
+              {
+                "x": 3697,
+                "z": -25,
+                "distance": 348.6511720316663
+              },
+              {
+                "x": 3577,
+                "z": -25,
+                "distance": 468.6511720316663
+              },
+              {
+                "x": 3577,
+                "z": 95,
+                "distance": 588.6511720316663
+              },
+              {
+                "x": 3322,
+                "z": 95,
+                "distance": 843.6511720316663
+              },
+              {
+                "x": 3322,
+                "z": 135,
+                "distance": 883.6511720316663
+              },
+              {
+                "x": 3312,
+                "z": 135,
+                "distance": 893.6511720316663
+              },
+              {
+                "x": 3312,
+                "z": 95,
+                "distance": 933.6511720316663
+              },
+              {
+                "x": 2977,
+                "z": 95,
+                "distance": 1268.6511720316662
+              },
+              {
+                "x": 2977,
+                "z": -5,
+                "distance": 1368.6511720316662
+              },
+              {
+                "x": 2917,
+                "z": -5,
+                "distance": 1428.6511720316662
+              },
+              {
+                "x": 2807,
+                "z": -5,
+                "distance": 1538.6511720316662
+              },
+              {
+                "x": 2807,
+                "z": 45,
+                "distance": 1588.6511720316662
+              },
+              {
+                "x": 2527,
+                "z": 45,
+                "distance": 1868.6511720316662
+              },
+              {
+                "x": 2527,
+                "z": -5,
+                "distance": 1918.6511720316662
+              },
+              {
+                "x": 2467,
+                "z": -5,
+                "distance": 1978.6511720316662
+              },
+              {
+                "x": 2397,
+                "z": -5,
+                "distance": 2048.651172031666
+              },
+              {
+                "x": 2397,
+                "z": -75,
+                "distance": 2118.651172031666
+              },
+              {
+                "x": 2142,
+                "z": -75,
+                "distance": 2373.651172031666
+              },
+              {
+                "x": 2142,
+                "z": -115,
+                "distance": 2413.651172031666
+              },
+              {
+                "x": 2132,
+                "z": -115,
+                "distance": 2423.651172031666
+              },
+              {
+                "x": 2132,
+                "z": -75,
+                "distance": 2463.651172031666
+              },
+              {
+                "x": 1897,
+                "z": -75,
+                "distance": 2698.651172031666
+              },
+              {
+                "x": 1897,
+                "z": 25,
+                "distance": 2798.651172031666
+              },
+              {
+                "x": 1837,
+                "z": 25,
+                "distance": 2858.651172031666
+              },
+              {
+                "x": 1747,
+                "z": 25,
+                "distance": 2948.651172031666
+              },
+              {
+                "x": 1747,
+                "z": 100,
+                "distance": 3023.651172031666
+              },
+              {
+                "x": 1517,
+                "z": 100,
+                "distance": 3253.651172031666
+              },
+              {
+                "x": 1297,
+                "z": 100,
+                "distance": 3473.651172031666
+              },
+              {
+                "x": 1297,
+                "z": 25,
+                "distance": 3548.651172031666
+              },
+              {
+                "x": 1237,
+                "z": 25,
+                "distance": 3608.651172031666
+              },
+              {
+                "x": 1057,
+                "z": 25,
+                "distance": 3788.651172031666
+              },
+              {
+                "x": 1057,
+                "z": 80,
+                "distance": 3843.651172031666
+              },
+              {
+                "x": 942,
+                "z": 80,
+                "distance": 3958.651172031666
+              },
+              {
+                "x": 942,
+                "z": 120,
+                "distance": 3998.651172031666
+              },
+              {
+                "x": 932,
+                "z": 120,
+                "distance": 4008.651172031666
+              },
+              {
+                "x": 932,
+                "z": 80,
+                "distance": 4048.651172031666
+              },
+              {
+                "x": 807,
+                "z": 80,
+                "distance": 4173.651172031667
+              },
+              {
+                "x": 807,
+                "z": 25,
+                "distance": 4228.651172031667
+              },
+              {
+                "x": 747,
+                "z": 25,
+                "distance": 4288.651172031667
+              },
+              {
+                "x": 647,
+                "z": 25,
+                "distance": 4388.651172031667
+              },
+              {
+                "x": 647,
+                "z": -12.5,
+                "distance": 4426.151172031667
+              },
+              {
+                "x": 622,
+                "z": -12.5,
+                "distance": 4451.151172031667
+              },
+              {
+                "x": 622,
+                "z": 0,
+                "distance": 4463.651172031667
+              },
+              {
+                "x": 547,
+                "z": 0,
+                "distance": 4538.651172031667
+              }
+            ],
+            "affectedIds": [
+              112,
+              122,
+              123,
+              125,
+              126,
+              124,
+              127
+            ]
+          },
+          "epilogue": {
+            "phase": "done",
+            "phaseTicks": 0,
+            "survivors": [
+              128,
+              129,
+              130,
+              131,
+              132,
+              133
+            ],
+            "approaching": [
+              122,
+              123,
+              124,
+              125,
+              126,
+              127
+            ],
+            "groupsAuthored": true
+          }
+        },
+        "gun": {
+          "heat": 0,
+          "locked": false,
+          "mounted": false
+        },
+        "mega": {
+          "tick": 14161,
+          "id": 100,
+          "mode": "dead",
+          "introducedAt": 0,
+          "introduceTick": 2700,
+          "x": 4000.8973815499553,
+          "z": -31.36648794531118,
+          "hp": 0,
+          "maxHp": 3000,
+          "target": {
+            "x": 3989.2258214064623,
+            "z": -33.09511837523803
+          },
+          "route": [],
+          "routeAt": 2546,
+          "passed": "cure-route-51",
+          "blocked": {},
+          "breach": null,
+          "stuck": {
+            "level": 0,
+            "since": 1256,
+            "sampleAt": 2548,
+            "x": 4000.693047909514,
+            "z": -31.68621571983763,
+            "noPath": 0,
+            "goal": null
+          },
+          "lastDamage": {
+            "tick": 2573,
+            "amount": 1.8000000000051841,
+            "sourceId": 1
+          },
+          "coarseM": 0,
+          "audio": {
+            "next": 2885,
+            "step": 2593,
+            "index": 2,
+            "last": {
+              "x": 4000.8973815499553,
+              "z": -31.36648794531118
+            }
+          }
+        },
+        "player": {
+          "x": 3999.967041015625,
+          "y": 0.7049999833106995,
+          "z": -29.09256935119629,
+          "yaw": 3.1253923710476794
+        }
+      }
+    }
+  ]
+}

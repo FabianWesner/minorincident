@@ -1,4 +1,4 @@
-import { Box3, Frustum, DataTexture, RGBAFormat, type Texture, Group, InstancedMesh, Matrix4, MeshBasicNodeMaterial, PlaneGeometry, Vector3, NoToneMapping, SRGBColorSpace, type PerspectiveCamera } from 'three/webgpu';
+import { Box3, Frustum, DataTexture, RGBAFormat, type Texture, Group, InstancedMesh, Mesh, SphereGeometry, Matrix4, MeshBasicNodeMaterial, PlaneGeometry, Vector3, NoToneMapping, SRGBColorSpace, type PerspectiveCamera } from 'three/webgpu';
 import { color as colorNode, vec4, renderOutput, uniform, texture, viewportUV, Fn, Discard } from 'three/tsl';
 import { Ray, ShapeType, type Collider } from '@dimforge/rapier3d-compat';
 import { infectedDefinitions } from '../data/infected';
@@ -18,12 +18,15 @@ export const l4InfectedBarCap = 6;
 export const infectedBarCap = l4InfectedBarCap;
 /** Shielded riot infected, Alphas and the pursuing Mega always keep their bar under the cap. */
 const mandatoryBar = (e: EntitySnapshot) => !!e.combat?.shield || e.archetype === 'infected.alpha' || !!e.infected?.pursuit || !!e.infected?.arenaBoss?.engaged;
+const megaBarAllowed = (world: SimWorld, e: EntitySnapshot) => !(world.scenario === 'L10' && e.infected?.pursuit) || !!world.missions?.state.states['cure-installed'];
 export const isFollower = (e: EntitySnapshot) => e.civilian?.survivor?.mode === 'follow' && !e.hidden && !e.infection && !['finished', 'infected'].includes(e.civilian?.state ?? '') && e.health.current > 0 && !e.corpse;
 /** `fullFollowers`: the group is small enough that healthy followers keep their bar too. */
 export function barEligible(e: EntitySnapshot, player: { x: number; z: number }, bar: boolean, fullFollowers = true): boolean {
   if (e.civilian?.survivor?.mode === 'follow') return isFollower(e) && (fullFollowers || e.health.current < e.health.max);
+  // Alpha's crowd-cap exemption does not bypass its shared 15 m/damaged
+  // eligibility rule. Healthy riots and the pursuing boss retain range exceptions.
   return bar && e.faction === 'infected' && !!e.infected && e.health.current > 0 && !e.hidden && !e.infected.hidden && !e.corpse &&
-    (e.health.current < e.health.max || mandatoryBar(e) || Math.hypot(e.transform.x - player.x, e.transform.z - player.z) <= 15);
+    (e.health.current < e.health.max || !!e.combat?.shield || !!e.infected?.pursuit || !!e.infected?.arenaBoss?.engaged || Math.hypot(e.transform.x - player.x, e.transform.z - player.z) <= 15);
 }
 export function barSize(width: number, height: number, mega = false): { width: number; height: number } {
   const phone = Math.min(width, height) <= 480;
@@ -58,9 +61,11 @@ export class HealthBars extends Group {
   private readonly l10Bars: { id: number; distance: number }[] = [];
   private readonly l10BarIds = new Set<number>();
   private readonly l4BarIds = new Set<number>();
+  private readonly megaWeakSpot = new Mesh(new SphereGeometry(.26, 8, 6), new MeshBasicNodeMaterial({ color: 0xff3322, toneMapped: false, fog: false }));
   private readonly probing = __QA_HOOKS__ && typeof location !== 'undefined' && new URLSearchParams(location.search).has('test');
   constructor(private readonly world: SimWorld, private readonly courierBounds?: (out: Box3) => boolean) {
     super(); this.name = 'infected-health-bars'; this.unoccluded.needsUpdate = true;
+    this.megaWeakSpot.visible = false; this.add(this.megaWeakSpot);
     const makeMeshes = (colors: readonly string[]) => colors.map((color, i) => {
       const material = new MeshBasicNodeMaterial({ depthTest: false, depthWrite: false, toneMapped: false, fog: false });
       // Convert each bar fragment directly; a full-screen output transform would overwrite the game image.
@@ -76,6 +81,9 @@ export class HealthBars extends Group {
     this.followerMeshes = makeMeshes([healthBarColors.survivorOutline, healthBarColors.survivorBackground, healthBarColors.survivorFill]);
   }
   update(camera: PerspectiveCamera, width: number, height: number, occluded?: (target: Vector3) => boolean, cityNight = false): void {
+    const mega = this.world.scenario === 'L10' ? this.world.megaPursuit?.entity() : null;
+    this.megaWeakSpot.visible = !!mega && mega.health.current > 0 && !mega.hidden && !mega.infected?.hidden && !!this.world.missions?.state.states['cure-installed'] && (!!mega.infected?.megaArmourBroken || (mega.infected?.megaWeakTicks ?? 0) > 0 || mega.infected?.megaPhase === 3);
+    if (mega && this.megaWeakSpot.visible) { const p = mega.transform; this.megaWeakSpot.position.set(p.x - Math.cos(p.yaw) * .55, p.y + 1.05, p.z + Math.sin(p.yaw) * .55); this.megaWeakSpot.scale.setScalar(.9 + .15 * Math.sin(this.world.tick / 6)); }
     this.outlineGain.value = cityNight ? nightHealthBarGains.outline : 1;
     this.fillGain.value = cityNight ? nightHealthBarGains.fill : 1;
     if (__QA_HOOKS__) this.probes.length = 0;
@@ -91,7 +99,7 @@ export class HealthBars extends Group {
     this.l10BarIds.clear();
     if (l10) {
       for (const e of this.world.entities.iterate()) {
-        if (e.faction !== 'infected' || !e.infected || !barEligible(e, player.transform, this.definitions.get(e.archetype)?.bar === true, full)) continue;
+        if (e.faction !== 'infected' || !e.infected || !megaBarAllowed(this.world, e) || !barEligible(e, player.transform, this.definitions.get(e.archetype)?.bar === true, full)) continue;
         this.l10Bars.push({ id: e.id, distance: Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) });
       }
       // Keep the nearest threats. This also bounds bars when several close
@@ -129,7 +137,7 @@ export class HealthBars extends Group {
     const sheltered = !!this.world.missions?.state.l5?.shutterAt;
     for (const e of this.world.entities.iterate()) {
       if (sheltered && e.civilian?.survivor) continue;
-      if (!barEligible(e, player.transform, this.definitions.get(e.archetype)?.bar === true, full)) continue;
+      if (!megaBarAllowed(this.world, e) || !barEligible(e, player.transform, this.definitions.get(e.archetype)?.bar === true, full)) continue;
       if (l10 && e.faction === 'infected' && !this.l10BarIds.has(e.id)) continue;
       // Riot/Alpha/Mega bars remain mandatory (L4-11/G-24, E32), including healthy threats.
       if (capped && e.faction === 'infected' && !mandatoryBar(e) && !this.l4BarIds.has(e.id)) continue;
@@ -200,5 +208,5 @@ export class HealthBars extends Group {
   setCourierMask(mask?: Texture): void { this.courierMask.value = mask ?? this.unoccluded; }
   get count(): number { return this.enemyMeshes[0].count + this.followerMeshes[1].count; }
   snapshot() { return { count: this.probes.length || this.count, draws: [...this.enemyMeshes, ...this.followerMeshes].filter(mesh => mesh.count).length, bars: this.probes }; }
-  dispose(): void { for (const layer of [...this.enemyMeshes, ...this.followerMeshes]) { layer.geometry.dispose(); (layer.material as MeshBasicNodeMaterial).dispose(); } this.unoccluded.dispose(); this.clear(); }
+  dispose(): void { for (const layer of [...this.enemyMeshes, ...this.followerMeshes]) { layer.geometry.dispose(); (layer.material as MeshBasicNodeMaterial).dispose(); } this.megaWeakSpot.geometry.dispose(); this.megaWeakSpot.material.dispose(); this.unoccluded.dispose(); this.clear(); }
 }

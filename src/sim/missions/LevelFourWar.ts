@@ -3,7 +3,7 @@ import type { Combat } from '../combat/Combat';
 import { survivor } from '../../data/survivor';
 import { l4PerimeterSegments, l4WallSlots, l4BreachOf, l4Breaches, l4BreachSite, type L4BreachSide } from '../../data/l4Perimeter';
 import { Rng } from '../../core/Rng';
-import { l4, l4InfectedArchetypes, l4InfectedLooks, l4FirefighterLooks, l4Anchors, l4Cars, l4CellarDistance, l4CollapseGroups, l4Crowd, l4Edges, l4Emergence, l4OffscreenMouths, l4BreachApproaches, l4Pockets, l4Posts, l4Route, l4RoutePose, l4ConvoyStations, l4ConvoyGate, type L4Weapon } from '../../data/l4';
+import { l4, l4InfectedArchetypes, l4InfectedLooks, l4FirefighterLooks, l4Anchors, l4Cars, l4CellarDistance, l4CollapseGroups, l4Crowd, l4Edges, l4Emergence, l4OffscreenMouths, l4BreachApproaches, l4Pockets, l4Posts, l4Route, l4RoutePose, l4ConvoyStations, l4ConvoyGate, l4ConvoyPose, type L4Weapon } from '../../data/l4';
 import { balancedCrowdModel } from '../../data/crowdAppearance';
 import { l4AlphaEmergence } from '../../levels/L4/layout';
 import { infectedDef } from '../../data/infected';
@@ -391,7 +391,7 @@ export class LevelFourWar {
     s.convoyV += Math.max(-c.brakeMs2 / 60, Math.min(c.accelMs2 / 60, target - s.convoyV));
     let step = Math.min(remaining, s.convoyV / 60);
     const poses = s.convoyS.map((at, i) => {
-      const p = l4RoutePose(this.route, at + step), t = world.entities.get(s.convoyIds[i])!.transform;
+      const p = l4ConvoyPose(this.route, at + step, i, this.stations.end[i]), t = world.entities.get(s.convoyIds[i])!.transform;
       const d = Math.atan2(Math.sin(p.yaw - t.yaw), Math.cos(p.yaw - t.yaw));
       return { x: p.x, y: t.y, z: p.z, yaw: t.yaw + d * .2 };
     });
@@ -515,13 +515,11 @@ export class LevelFourWar {
     const side = l4BreachOf(i), s = this.s; if (!side || s.phase !== 'war') return;
     const breaches = s.breaches ??= {}, b = breaches[side] ??= { announcedAt: 0, openAt: 0 };
     if (b.openAt) return;
-    const first = !Object.values(breaches).some(x => x && x.openAt);
     b.openAt = this.world.tick; b.arrivals = 0;
     s.perimeterAt = this.world.tick;
     // The perimeter opening admits the horde. The defense line falls on the
     // director's separate casualty/deadline beat, 50–62 seconds after the turn.
     this.mission.radio(`L4.breach-${side}`);
-    if (first && this.mission.def.cinematics[`l4-breach-${side}`]) this.mission.cinematic(`l4-breach-${side}`);
     this.mission.state.marker = `l4-breach-${side}`;
   }
   /**
@@ -682,7 +680,7 @@ export class LevelFourWar {
   /** Cheat/test completion of the ride: park the column at once. */
   private finishRide(): void {
     const { world } = this.mission, s = this.s;
-    for (let i = 0; i < s.convoyS.length; i++) { s.convoyS[i] = this.stations.end[i]; const p = l4RoutePose(this.route, s.convoyS[i]), e = world.entities.get(s.convoyIds[i]); if (e) Object.assign(e.transform, { x: p.x, z: p.z, yaw: p.yaw }); }
+    for (let i = 0; i < s.convoyS.length; i++) { s.convoyS[i] = this.stations.end[i]; const p = l4ConvoyPose(this.route, s.convoyS[i], i, this.stations.end[i]), e = world.entities.get(s.convoyIds[i]); if (e) Object.assign(e.transform, { x: p.x, z: p.z, yaw: p.yaw }); }
     s.convoyV = 0; this.arrive();
   }
   /** The machine gun joins the carried weapons (RIGHT rack, selected): no magazine, no reload, no overheat. */
@@ -808,6 +806,7 @@ export class LevelFourWar {
           if (d > 11 || !this.combat.query.visible(e.transform, target.transform)) b.scripted = this.snap(target.transform, .55);
           else {
             delete b.scripted;
+            if (b.alphaType && b.alphaType !== 'brute') { ai.press(e.id, target.id, tick + 120); continue; }
             ai.startSpecial(e.id, d <= 3.5 ? 'alpha.ground-slam' : 'alpha.charge', { id: target.id, x: target.transform.x, z: target.transform.z }, { x: e.transform.x, z: e.transform.z, radius: d <= 3.5 ? 4 : 1, dx: dx / d, dz: dz / d });
           }
           continue;
@@ -975,7 +974,7 @@ export class LevelFourWar {
       if (!spot) continue;
       const at = this.snap(spot, radius);
       if (!ai.nav.clear(at.x, at.z, radius)) continue;
-      const id = ai.spawn('infected.alpha', at, { state: 'idle', yaw: -Math.atan2(l4.map.centre.z - at.z, l4.map.centre.x - at.x) });
+      const id = ai.spawn('infected.alpha', at, { state: 'idle', alphaType: entry.job === 'armor' ? 'armoured' : entry.job === 'line' ? 'thrower' : 'brute', yaw: -Math.atan2(l4.map.centre.z - at.z, l4.map.centre.x - at.x) });
       const e = world.entities.get(id)!;
       if (!this.outsidePerimeter(e.transform) || !ok(e.transform)) { ai.release(e); continue; }
       if (e.combat) e.combat.allyResist = l4.alphas.allyResist;

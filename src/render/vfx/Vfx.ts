@@ -22,6 +22,8 @@ export interface VfxTargets {
   camera?(): import('three').Camera;
   /** Resolve and pose the rendered gun synchronously at the shot tick. */
   muzzle?(id: number, direction: { x: number; y?: number; z: number }): { x: number; y: number; z: number } | null;
+  /** Already drawn gun socket, without reposing the interpolated character. */
+  drawnMuzzle?(id: number): { x: number; y: number; z: number } | null;
   /** Drawn spout of a pouring watering can (gardener routine), null when none. */
   spout?(id: number): { x: number; y: number; z: number } | null;
   flash(id: number, strength: number): void;
@@ -75,6 +77,7 @@ export class Vfx extends Group {
   private readonly pools = [this.particles, this.decals, this.surfaceSplats, this.telegraphs, this.waves];
   private readonly landings = Array.from({ length: 384 }, () => ({ at: Infinity, x: 0, y: 0, z: 0, size: 0, color: 0 }));
   private landingCursor = 0;
+  private flameSource: { id: number; until: number; direction: { x: number; z: number } } | null = null;
   private lastSpray = { actionId: '', direction: { x: 1, z: 0 }, droplets: 0, chunks: 0, gravity: 9.81 };
   private readonly stops: (() => void)[] = [];
   private readonly tells = new Map<number, TelegraphThreat & { kind: TelegraphKind; spawned: number; sourceId?: number }>();
@@ -100,15 +103,15 @@ export class Vfx extends Group {
   lastExplosionRadius = 0;
   private readonly tracerRounds = new WeakMap<object, number>();
   readonly shots: { sourceId: number; tick: number; muzzle: number[]; tracerStart: number[]; end: number[] }[] = [];
-  private gunshot(sourceId: number, direction: { x: number; z: number }, range: number, fallback: { x: number; z: number }, targetId?: number, dust?: 'hit' | 'miss'): void {
+  private gunshot(sourceId: number, direction: { x: number; y?: number; z: number }, range: number, fallback: { x: number; z: number }, targetId?: number, dust?: 'hit' | 'miss'): void {
     const source = this.world.entities.get(sourceId), target = targetId === undefined ? undefined : this.world.entities.get(targetId);
-    const muzzle = this.targets.muzzle?.(sourceId, { ...direction, y: target && source ? (target.transform.y - source.transform.y) / range : 0 }) ?? { x: fallback.x, y: (source?.transform.y ?? .7) + .45, z: fallback.z };
+    const muzzle = this.targets.muzzle?.(sourceId, { ...direction, y: target && source ? (target.transform.y - source.transform.y) / range : direction.y ?? 0 }) ?? { x: fallback.x, y: (source?.transform.y ?? .7) + .45, z: fallback.z };
     // Descend from the actual rifle tip to the victim's torso, using the same 3D cover slabs as damage.
     if (target) {
       const dx = target.transform.x - muzzle.x, dz = target.transform.z - muzzle.z;
       range = Math.hypot(dx, dz) || 1; direction = { x: dx / range, z: dz / range };
     }
-    const slope = target ? (target.transform.y + .45 - muzzle.y) / range : 0;
+    const slope = target ? (target.transform.y + .45 - muzzle.y) / range : direction.y ?? 0;
     const ray = { ...direction, y: slope };
     if (!this.enabled) return; // The firing pose is independent of the user's particle preference.
     let distance = this.world.combat?.query.clearDistance(muzzle, ray, range) ?? range;
@@ -221,7 +224,7 @@ export class Vfx extends Group {
     } else this.targets.blood(this.gore === 'Off' ? 0 : this.coverage);
   }
   private telegraphColor(kind: TelegraphKind): number { return this.colorblind ? kind === 'bloated' ? 0xffb347 : 0xffffff : kind === 'bloated' ? 0xff682d : 0xff4824; }
-  private resetPools(preserveTelegraphs = false): void { this.blasts.reset(); for (const pool of this.pools) if (!preserveTelegraphs || pool !== this.telegraphs) pool.reset(this.time); this.gibs.reset(); if (!preserveTelegraphs) this.tells.clear(); this.hitCount = this.hitCursor = 0; this.hitStarted.clear(); }
+  private resetPools(preserveTelegraphs = false): void { this.flameSource = null; this.blasts.reset(); for (const pool of this.pools) if (!preserveTelegraphs || pool !== this.telegraphs) pool.reset(this.time); this.gibs.reset(); if (!preserveTelegraphs) this.tells.clear(); this.hitCount = this.hitCursor = 0; this.hitStarted.clear(); }
   private pulse(id: number): void {
     const started = this.hitStarted.get(id);
     if (started !== undefined && this.time - started < hitFlashRest) return;
@@ -351,6 +354,23 @@ export class Vfx extends Group {
     // Bat/axe roundhouse: a quick ground swoosh at the sweep radius under the spinning trail.
     if (event.style === 'roundhouse') this.waves.spawn(this.time, .32, event.position.x, .03, event.position.z, 0, 0, 0, (def?.roundhouse?.radius ?? 2.2) * 2, 1, 0xfff0ba, 1);
     if (def?.category === 'ranged') {
+      if (event.actionId === 'weapon.flamethrower') {
+        if (!this.enabled) return;
+        const muzzle = this.targets.muzzle?.(event.sourceId, event.direction) ?? { ...event.position, y: event.position.y + .45 };
+        const range = this.flameRange(muzzle, event.direction);
+        // Keep the flame attached across discrete attack events; Blasts renders dense, pooled cards along this clipped ray.
+        this.flameSource = { id: event.sourceId, until: this.time + 1 / def.fireRate + .08, direction: { ...event.direction } };
+        this.blasts.flameJetAt(muzzle.x, muzzle.y, muzzle.z, event.direction.x, event.direction.z, range, this.flameSource.until, event.sourceId);
+        // A few hot fragments and soot at the clipped tip add impact texture without making the jet look dotted.
+        const tipX = muzzle.x + event.direction.x * range, tipZ = muzzle.z + event.direction.z * range;
+        for (let i = 0; i < (this.quality === 'high' ? 4 : 2); i++) {
+          this.particles.spawn(this.time, .28, tipX, muzzle.y + .35, tipZ, (this.rng.next() - .5) * 1.4, .8, (this.rng.next() - .5) * 1.4,
+            .12, particleShape.spark, i % 2 ? 0xff6a24 : 0xffd66c);
+        }
+        this.particles.spawn(this.time, .5, tipX, muzzle.y + .25, tipZ, event.direction.x * .35, .55, event.direction.z * .35,
+          .2, particleShape.smoke, 0x4a3028);
+        return;
+      }
       // Rockets show their moving projectile. Keep the launch flash, without
       // an instant horizontal gun tracer continuing past the clicked endpoint.
       this.gunshot(event.sourceId, event.direction, event.actionId === 'weapon.rocket-launcher' ? 0 : def.range, event.position);
@@ -392,28 +412,28 @@ export class Vfx extends Group {
 
     const source = event.sourceId !== undefined ? this.world.entities.get(event.sourceId) : undefined;
     const kind: TelegraphKind = source?.infected?.pursuit && 'move' in event && event.move === 'alpha.grab-throw' ? 'splash' : 'kind' in event ? event.kind : event.special === 'explode' ? 'bloated' : event.special === 'charge' || event.special === 'pin' || event.special === 'alpha.grab-throw' || event.special === 'gorilla.grab-throw' || event.special === 'elephant.charge' || event.special === 'zebra.stampede' ? 'charge' : event.special === 'aura' || event.special === 'alpha.roar' || event.special === 'gorilla.roar' || event.special === 'gorilla.pound' || event.special === 'flamingo.dive' ? 'splash' : 'lunge';
-    const throwing = !source?.infected?.pursuit && 'move' in event && (event.move === 'alpha.grab-throw' || event.move === 'gorilla.grab-throw') && event.area && event.target;
+    const throwing = !source?.infected?.pursuit && 'move' in event && (['alpha.grab-throw', 'alpha.living-missile', 'alpha.barrage', 'gorilla.grab-throw'].includes(event.move ?? '')) && event.area && event.target;
     const move = 'move' in event ? event.move : undefined;
     const area = 'area' in event ? event.area : undefined;
     const target = 'target' in event ? event.target : undefined;
     const arenaThrow = !!source?.infected?.arenaBoss && (move === 'gorilla.grab-throw' || move === 'monkey.debris');
-    const directional = !arenaThrow && (!!source?.infected?.arenaBoss && (move === 'flamingo.dive' || move === 'monkey.grab') || throwing || move === 'alpha.charge' || move === 'elephant.charge' || move === 'zebra.stampede' || move === 'lion.pounce' || move === 'lion.flank');
+    const directional = !arenaThrow && (!!source?.infected?.arenaBoss && (move === 'flamingo.dive' || move === 'monkey.grab') || move === 'alpha.pounce' || move === 'alpha.charge' || move === 'elephant.charge' || move === 'zebra.stampede' || move === 'lion.pounce' || move === 'lion.flank');
     const destination = source?.infected?.specialAttack?.destination;
-    const length = throwing ? Math.min(15, Math.hypot(target!.x - area!.x, target!.z - area!.z))
+    const length = throwing ? Math.min(25, Math.hypot(target!.x - area!.x, target!.z - area!.z))
       : directional && area ? source?.infected?.pursuit ? Math.min(megaAlpha.moves['alpha.charge'].range, megaAlpha.moves['alpha.charge'].speed)
       : destination ? Math.hypot(destination.x - area.x, destination.z - area.z)
-      : move === 'elephant.charge' ? 16 : move === 'zebra.stampede' ? 15 : move === 'lion.pounce' ? Math.min(8, Math.hypot(target!.x - area.x, target!.z - area.z)) : 12 : 0;
+      : move === 'elephant.charge' ? 16 : move === 'zebra.stampede' ? 15 : move === 'lion.pounce' || move === 'alpha.pounce' ? Math.min(move === 'alpha.pounce' ? 12 : 8, Math.hypot(target!.x - area.x, target!.z - area.z)) : 12 : 0;
     const flight = arenaThrow ? source?.infected?.specialAttack?.projectile : undefined;
-    const landing = flight ? { x: flight.x + flight.dx * flight.range, z: flight.z + flight.dz * flight.range } : target;
-    const position = arenaThrow && landing ? landing : directional && area ? { x: area.x + area.dx * length / 2, z: area.z + area.dz * length / 2 } : 'position' in event ? event.position : area ?? source?.transform;
+    const landing = flight ? { x: flight.x + flight.dx * flight.range, z: flight.z + flight.dz * flight.range } : throwing && target && area ? { x: area.x + area.dx * Math.max(0, length - (move === 'alpha.living-missile' ? 1.8 : 0)), z: area.z + area.dz * Math.max(0, length - (move === 'alpha.living-missile' ? 1.8 : 0)) } : arenaThrow ? target : undefined;
+    const position = landing ?? (directional && area ? { x: area.x + area.dx * length / 2, z: area.z + area.dz * length / 2 } : 'position' in event ? event.position : area ?? source?.transform);
     if (!position) return;
-    const radius = directional ? Math.max(.1, length / 2) : 'radius' in event ? event.radius : area?.radius ?? (kind === 'bloated' || kind === 'splash' ? 3 : source ? Math.max(this.world.missions?.def.l1 ? 1 : 2, infectedDef(source.archetype).range) : 2);
+    const radius = throwing ? 1.5 : directional ? Math.max(.1, length / 2) : 'radius' in event ? event.radius : area?.radius ?? (kind === 'bloated' || kind === 'splash' ? 3 : source ? Math.max(this.world.missions?.def.l1 ? 1 : 2, infectedDef(source.archetype).range) : 2);
     const angle = area ? Math.atan2(area.dz, area.dx) : 'angle' in event ? event.angle : Math.atan2(source?.infected?.dz ?? 0, source?.infected?.dx ?? 1);
-    const shape = arenaThrow ? 1 : move === 'zebra.kick' ? 10 : move === 'elephant.swipe' ? 9 : move === 'alpha.ground-slam' || move === 'gorilla.pound' || source?.infected?.pursuit && move === 'alpha.grab-throw' ? 1 : move === 'alpha.roar' || move === 'gorilla.roar' || move === 'lion.roar' ? 8 : directional ? 2 : telegraphShapes[kind];
+    const shape = arenaThrow || throwing ? 1 : move === 'alpha.shield-bash' ? 9 : move === 'zebra.kick' ? 10 : move === 'elephant.swipe' ? 9 : move === 'alpha.ground-slam' || move === 'gorilla.pound' || source?.infected?.pursuit && move === 'alpha.grab-throw' ? 1 : move === 'alpha.roar' || move === 'gorilla.roar' || move === 'lion.roar' ? 8 : directional ? 2 : telegraphShapes[kind];
     const width = throwing ? 2 : move === 'elephant.charge' ? 3.5 : move === 'zebra.stampede' ? source?.infected?.arenaBoss ? (area?.radius ?? .75) * 2 : 1.5 : (area?.radius ?? 1) * 2;
     const ground = this.world.districts?.groundHeight(position.x, position.z) ?? 0;
     if (move === 'zebra.stampede' && source) this.burst(source.transform.x, source.transform.y - .5, source.transform.z, 0xb9ab8e, this.quality === 'low' ? 3 : 6, .5, 1, 0, particleShape.smoke, .6, .2);
-    const slot = this.telegraphs.spawn(this.time, 1e9, position.x, ground + .065, position.z, angle, 'duration' in event ? event.duration : .6, 0, radius * 2, shape, this.telegraphColor(kind), 0, arenaThrow ? 1 : directional ? width / (radius * 2) : kind === 'charge' ? .3 : 1, true);
+    const slot = this.telegraphs.spawn(this.time, 1e9, position.x, ground + .065, position.z, angle, 'duration' in event ? event.duration : .6, 0, radius * 2, shape, this.telegraphColor(kind), 0, arenaThrow || throwing ? 1 : directional ? width / (radius * 2) : kind === 'charge' ? .3 : 1, true);
     if (slot < 0) return;
     this.visible = true;
     this.tells.set(event.attackId, { slot, kind, spawned: this.time, x: position.x, z: position.z, angle, shape, radius, resolves: this.time + ('duration' in event ? event.duration : .6), ...(event.sourceId !== undefined ? { sourceId: event.sourceId } : {}) });
@@ -599,6 +619,28 @@ export class Vfx extends Group {
     if (!player) return;
     const readable = readableTelegraphs([...this.tells.values()], player, this.time);
     for (const tell of this.tells.values()) this.telegraphs.opacity(tell.slot, readable.has(tell.slot) ? 1 : .015 / Math.max(1, this.tells.size - readable.size));
+  }
+  private updateFlameJet(): void {
+    const jet = this.flameSource;
+    if (!jet) return;
+    const source = this.world.entities.get(jet.id), side = source?.weapons?.[source.weapons.selectedSide];
+    if (!this.enabled || this.time >= jet.until || !source || source.health.current <= 0 || side?.rack[side.index]?.id !== 'weapon.flamethrower') {
+      this.flameSource = null; this.blasts.clearFlameJet(); return;
+    }
+    const direction = side.aim ?? jet.direction;
+    const muzzle = this.targets.drawnMuzzle?.(jet.id) ?? this.targets.muzzle?.(jet.id, direction) ?? { ...source.transform, y: source.transform.y + .45 };
+    const range = this.flameRange(muzzle, direction);
+    this.blasts.flameJetAt(muzzle.x, muzzle.y, muzzle.z, direction.x, direction.z, range, jet.until, jet.id);
+  }
+  private flameRange(origin: { x: number; y: number; z: number }, direction: { x: number; z: number }): number {
+    const range = actions['weapon.flamethrower'].range;
+    return Math.min(this.world.combat?.query.clearDistance(origin, direction, range) ?? range,
+      this.world.destruction?.trace(origin, { ...direction, y: 0 }, range)?.distance ?? range);
+  }
+  /** Run after actor/action posing, so movement and turns cannot leave the stream one frame behind. */
+  refreshFlameJet(): void {
+    if (!this.flameSource) return;
+    this.updateFlameJet(); this.blasts.refreshFlameJet();
   }
   advance(seconds: number): void {
     if (!Number.isFinite(seconds) || seconds < 0 || seconds > 1) throw new RangeError('Render step must be 0..1 seconds');

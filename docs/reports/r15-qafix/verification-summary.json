@@ -1,0 +1,409 @@
+{
+  "scope": "Requested r15 fixes; browser inspection deferred by the brief; not whole-epic acceptance",
+  "sourceHash": "115f672aaa058f298b9c4a4477360000f354bfe3cb4ebe4e4dc1d1562b69f6c3",
+  "fixCommits": [
+    "8882ae9d",
+    "a808adfe",
+    "7202f5d8",
+    "6c0b33fd",
+    "492021c2",
+    "25fc5317",
+    "8489b207"
+  ],
+  "nativeCommandExit": 1,
+  "gateCommandExit": 0,
+  "native": [
+    {
+      "tier": "low",
+      "outcome": "complete",
+      "time": 1290.5833333333333,
+      "deaths": 0,
+      "cureReleases": 1,
+      "nativeStateHash": "f1183b5a",
+      "nativeReceipt": "native/receipts/L10-low-complete.json",
+      "nativeReceiptSha256": "e2831d75014170f460477d5c0768b1cb24e85971c78a027b71b54965ed4748b6",
+      "fixtures": {
+        "pass": 16,
+        "G-24": [
+          {
+            "id": "G-24",
+            "clause": "production enemy-bar eligibility at distance/health boundaries",
+            "value": [
+              {
+                "archetype": "infected.alpha",
+                "near": true,
+                "farHealthy": false,
+                "farDamaged": true,
+                "dead": false,
+                "healthyAnimal": false
+              },
+              {
+                "archetype": "infected.lion",
+                "near": true,
+                "farHealthy": false,
+                "farDamaged": true,
+                "dead": false,
+                "healthyAnimal": false
+              },
+              {
+                "archetype": "infected.gorilla",
+                "near": true,
+                "farHealthy": false,
+                "farDamaged": true,
+                "dead": false,
+                "healthyAnimal": false
+              },
+              {
+                "archetype": "infected.elephant",
+                "near": true,
+                "farHealthy": false,
+                "farDamaged": true,
+                "dead": false,
+                "healthyAnimal": false
+              },
+              {
+                "archetype": "infected.zebra",
+                "near": true,
+                "farHealthy": false,
+                "farDamaged": true,
+                "dead": false,
+                "healthyAnimal": false
+              },
+              {
+                "archetype": "infected.flamingo",
+                "near": true,
+                "farHealthy": false,
+                "farDamaged": true,
+                "dead": false,
+                "healthyAnimal": false
+              }
+            ],
+            "target": "near/full and far/damaged true; far/full, dead and healthy animals false",
+            "status": "PASS",
+            "tier": "low",
+            "policy": "controlled-fixture",
+            "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-fixtures.json"
+          }
+        ]
+      },
+      "checkpoints": {
+        "pass": 27,
+        "control": {
+          "observed": "f1183b5a",
+          "control": "f1183b5a",
+          "identical": true
+        }
+      }
+    },
+    {
+      "tier": "high",
+      "outcome": "complete",
+      "time": 1442.5333333333333,
+      "deaths": 4,
+      "cureReleases": 1,
+      "nativeStateHash": "93a535bb",
+      "nativeReceipt": "native/receipts/L10-high-complete.json",
+      "nativeReceiptSha256": "2f0d4a665a1dc7b5d3887bf407c1ccaa6ef6704dcbdffc02e7aa33873adf0efa",
+      "fixtures": {
+        "pass": 16,
+        "G-24": [
+          {
+            "id": "G-24",
+            "clause": "production enemy-bar eligibility at distance/health boundaries",
+            "value": [
+              {
+                "archetype": "infected.alpha",
+                "near": true,
+                "farHealthy": false,
+                "farDamaged": true,
+                "dead": false,
+                "healthyAnimal": false
+              },
+              {
+                "archetype": "infected.lion",
+                "near": true,
+                "farHealthy": false,
+                "farDamaged": true,
+                "dead": false,
+                "healthyAnimal": false
+              },
+              {
+                "archetype": "infected.gorilla",
+                "near": true,
+                "farHealthy": false,
+                "farDamaged": true,
+                "dead": false,
+                "healthyAnimal": false
+              },
+              {
+                "archetype": "infected.elephant",
+                "near": true,
+                "farHealthy": false,
+                "farDamaged": true,
+                "dead": false,
+                "healthyAnimal": false
+              },
+              {
+                "archetype": "infected.zebra",
+                "near": true,
+                "farHealthy": false,
+                "farDamaged": true,
+                "dead": false,
+                "healthyAnimal": false
+              },
+              {
+                "archetype": "infected.flamingo",
+                "near": true,
+                "farHealthy": false,
+                "farDamaged": true,
+                "dead": false,
+                "healthyAnimal": false
+              }
+            ],
+            "target": "near/full and far/damaged true; far/full, dead and healthy animals false",
+            "status": "PASS",
+            "tier": "high",
+            "policy": "controlled-fixture",
+            "receipt": "docs/reports/r15-qafix/native/receipts/L10-high-fixtures.json"
+          }
+        ]
+      },
+      "checkpoints": {
+        "pass": 27,
+        "control": {
+          "observed": "93a535bb",
+          "control": "93a535bb",
+          "identical": true
+        }
+      }
+    }
+  ],
+  "gate": {
+    "identity": {
+      "sourceHash": "115f672aaa058f298b9c4a4477360000f354bfe3cb4ebe4e4dc1d1562b69f6c3",
+      "observerHash": "2c536930d36d27fb546ce2f0ae4431df5913b794c1ea3ae24e355d457f7c11db",
+      "revision": "eba25b77219e5d10099504601443e8dfaf94fbe4"
+    },
+    "checks": [
+      {
+        "command": "npm run typecheck",
+        "status": 0,
+        "seconds": 53.364
+      },
+      {
+        "command": "npm run lint",
+        "status": 0,
+        "seconds": 32.829
+      },
+      {
+        "command": "npm test",
+        "status": 0,
+        "seconds": 84.775
+      }
+    ],
+    "filesPassed": 27,
+    "testsPassed": 106,
+    "testsSkipped": 1,
+    "logSha256": "a2519d5f533fedeeb7cdad2599bc5aa8d1fdd0641538a829b8d000944999e1d0"
+  },
+  "geometry": {
+    "clearSightlines": 9,
+    "roofOpaque": true,
+    "receipt": "apc-geometry.json"
+  },
+  "scheduler": {
+    "command": "python3 tools/remote/check.py --unit",
+    "status": 0,
+    "passed": 16,
+    "skipped": 3,
+    "logSha256": "e1e5d0d5ece27a9e12e4b81324e3c45fac3a78e96d0afd5998680faa9125b884",
+    "sourceSha256": {
+      "tools/remote/run.sh": "a1dd5aeeb46dda7b555ee85df44d2368536e793892b54053799eb94585a69606",
+      "tools/remote/local-slot.py": "2ae83cb31316b7a6291918396d1bd0e9bc8c1e3b57670ccbac83b70032b0476c",
+      "tools/remote/check.py": "299cc1aff77db1642f1ed0baf55893bff0caa0b08dcfac1b168c3ad2a4b470df"
+    },
+    "scope": "No real browser or Vitest workers started; includes fake busy-host detached launch, doubled separator, empty command, 60-second head rotation and 45-second probe timeout controls"
+  },
+  "preservedContracts": [
+    "specs",
+    "src/sim/missions/Mission.ts",
+    "src/debug/bot/LevelTenBot.ts",
+    "tools/qa/accept/fixtures.ts",
+    "package.json",
+    "package-lock.json"
+  ],
+  "chargeEvaluation": {
+    "proof": "charge-verdict-proof.json",
+    "canonicalReceiptsUnchanged": true,
+    "checks": [
+      {
+        "id": "L10-10",
+        "clause": "actual eligible charge ticks and increments",
+        "level": "L10",
+        "tier": "low",
+        "policy": "complete",
+        "status": "PASS",
+        "value": {
+          "eligibleTicks": 3600,
+          "incrementTicks": 3600,
+          "invalidIncrements": 0,
+          "outsideTicks": 0,
+          "deadTicks": 0,
+          "maximum": 3600,
+          "activeTicks": 3600
+        },
+        "target": "charge reaches3600; one increment per eligible tick across attempts; no invalid increment",
+        "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-complete.json"
+      },
+      {
+        "id": "L10-10",
+        "clause": "actual eligible charge ticks and increments",
+        "level": "L10",
+        "tier": "high",
+        "policy": "complete",
+        "status": "PASS",
+        "value": {
+          "eligibleTicks": 10620,
+          "incrementTicks": 10620,
+          "invalidIncrements": 0,
+          "outsideTicks": 0,
+          "deadTicks": 480,
+          "maximum": 3600,
+          "activeTicks": 11100
+        },
+        "target": "charge reaches3600; one increment per eligible tick across attempts; no invalid increment",
+        "receipt": "docs/reports/r15-qafix/native/receipts/L10-high-complete.json"
+      }
+    ]
+  },
+  "reevaluation": {
+    "job": "/srv/mi/jobs/r15-qafix-46b3b5-53248-1794170795",
+    "runner": "2.31.107.230",
+    "sourceHash": "115f672aaa058f298b9c4a4477360000f354bfe3cb4ebe4e4dc1d1562b69f6c3",
+    "checks": [
+      {
+        "command": "npm run typecheck",
+        "status": 0
+      },
+      {
+        "command": "npm run lint",
+        "status": 0
+      },
+      {
+        "command": "node --import tsx/esm tools/qa/r15-charge-verdict.ts",
+        "status": 0,
+        "controlsPassed": 8
+      },
+      {
+        "command": "npm run qa:accept -- --level L10 --policy complete --skip-browser --reuse",
+        "status": 1,
+        "freshFailures": [
+          "G-22",
+          "L10-03"
+        ]
+      }
+    ],
+    "staticLogSha256": "1e59de30962a1b18878488788cac5503737592c00b0fbea6e1aa7e717fb630de",
+    "evaluatorSha256": "c09b826e42cd92052854816222d9bce03a41689703fda081724e792fcf04a5a7",
+    "canonicalReceiptsUnchanged": true,
+    "liveMacTicketReleasedWhileRunning": true
+  },
+  "wholeEpicFailures": [
+    {
+      "id": "G-22",
+      "checks": [
+        {
+          "clause": "announcement cohort dispersal-assault",
+          "tier": "low",
+          "target": "\u22653 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-complete.json",
+          "value": {
+            "seconds": 359.15,
+            "spawned": 94,
+            "firstAttackSeconds": 21.316666666666666,
+            "flags": [
+              "WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "L10-03",
+      "checks": [
+        {
+          "clause": "corridor-exit regular group size",
+          "tier": "low",
+          "target": "20 \u2264 value \u2264 35",
+          "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-complete.json",
+          "value": 19
+        },
+        {
+          "clause": "destroyed-corridor concurrent dog peak",
+          "tier": "high",
+          "target": "3 \u2264 value \u2264 5",
+          "receipt": "docs/reports/r15-qafix/native/receipts/L10-high-complete.json",
+          "value": 6
+        },
+        {
+          "clause": "same-tick regional count and species composition",
+          "tier": "low",
+          "target": "Every region has one joint count/dog/Alpha witness; every local tick preserves authored upper bounds; canonical final state identical.",
+          "receipt": "docs/reports/fix72-c/L10-03/simultaneous-census.json",
+          "value": {
+            "fresh": false,
+            "regionCount": 6
+          }
+        },
+        {
+          "clause": "residential dogs follow actual handgun pickup",
+          "tier": "low",
+          "target": "Actual handgun pickup observed; first admitted fringe dog at or after pickup; zero premature ticks; canonical control identical.",
+          "receipt": "docs/reports/fix72-c/L10-03/simultaneous-census.json",
+          "value": {
+            "tier": "low",
+            "pickupTick": 3497,
+            "firstDogTick": 4950,
+            "prematureTicks": 0,
+            "nativeStateHash": "edf01875",
+            "controlIdentical": true
+          }
+        },
+        {
+          "clause": "same-tick regional count and species composition",
+          "tier": "high",
+          "target": "Every region has one joint count/dog/Alpha witness; every local tick preserves authored upper bounds; canonical final state identical.",
+          "receipt": "docs/reports/fix72-c/L10-03/simultaneous-census.json",
+          "value": {
+            "fresh": false,
+            "regionCount": 6
+          }
+        },
+        {
+          "clause": "residential dogs follow actual handgun pickup",
+          "tier": "high",
+          "target": "Actual handgun pickup observed; first admitted fringe dog at or after pickup; zero premature ticks; canonical control identical.",
+          "receipt": "docs/reports/fix72-c/L10-03/simultaneous-census.json",
+          "value": {
+            "tier": "high",
+            "pickupTick": 3497,
+            "firstDogTick": 4950,
+            "prematureTicks": 0,
+            "nativeStateHash": "586d721c",
+            "controlIdentical": true
+          }
+        }
+      ]
+    }
+  ],
+  "retainedHistoricalFailures": [
+    "G-01",
+    "G-03",
+    "G-04",
+    "G-13",
+    "G-25",
+    "G-27",
+    "L10-04",
+    "L10-11"
+  ]
+}

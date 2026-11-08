@@ -1,0 +1,1597 @@
+{
+  "rejectedGlobalBalance": {
+    "runtimeSha256": "fea7c5ea4b23b55f31870d1c9471ee6335861a12842456342c16441ad075a786",
+    "rawReceipt": "test-results/r14-moving-b/candidate-d/L10-native.json",
+    "damageTaken": 17312,
+    "deaths": 171,
+    "time": 3600,
+    "outcome": "tick-budget",
+    "furthestObjective": "hold"
+  },
+  "baseRevision": "a7b70c78",
+  "reviewedRevision": "ba586277",
+  "balancedRevision": "fbb5f530",
+  "runtimeSha256": "859e042f07b517970f08153460b25e10f472a2b357dd6e82a4e4f2da60174529",
+  "reviewedRuntimeSha256": "47c41680c208611dd0453f86998b5e1b3d0e80c71310764cb1c9382bb9fbd908",
+  "policySha256": "b7d11aa6fd16c7e118071e043b9768e2da988184dde0d845a68ad1f694ba7023",
+  "settings": {
+    "seed": 1,
+    "quality": "low",
+    "hordeAdmission": 3,
+    "movingHitFloorPerMinute": 2,
+    "minimumActiveSampleSeconds": 10,
+    "lateNativeExactMatch": true,
+    "circleMovingShareFloor": 0.95,
+    "ordinaryLungeLeadReachBudgetMetres": 1.6,
+    "movingGlanceDamageFraction": 0.1,
+    "movingGlanceSpeedMps": 0.2,
+    "glanceCampaigns": [
+      "L1",
+      "L2",
+      "L3",
+      "L4",
+      "L5"
+    ]
+  },
+  "checks": {
+    "verifyE07": {
+      "target": "E07",
+      "epics": [
+        "E07"
+      ],
+      "checks": [
+        {
+          "command": "npm run typecheck",
+          "status": 0,
+          "seconds": 54.397
+        },
+        {
+          "command": "npm run lint",
+          "status": 0,
+          "seconds": 33.734
+        },
+        {
+          "command": "npm test",
+          "status": 0,
+          "seconds": 90.726
+        }
+      ]
+    },
+    "validationLogSha256": "eb90f290516415b602863de7dc590537b83fb5df9db41e7f74df692e26fc26f5",
+    "collectedCases": 150,
+    "testFiles": 43,
+    "defaultPassed": 106,
+    "defaultSkipped": 1,
+    "damagingAttackerCases": 21
+  },
+  "rootCauseTraces": {
+    "L2": {
+      "rawReceipt": "test-results/r14-moving-b/rejected-trace/L2-native.json",
+      "totalDamage": 2167.699999999998,
+      "combatHitDamage": 2167.6999999999985,
+      "controllerMovingDamage": 1944,
+      "stillDamage": 223.69999999999837,
+      "seatedDamage": 0,
+      "buckets": {
+        "step/bridge,phase/collapse|infected.runner|moving|visible|on-foot": {
+          "hits": 59,
+          "damage": 1062,
+          "minDistance": 1.0799999999999987,
+          "maxDistance": 2.675123682060453
+        },
+        "step/bridge,phase/escape|infected.runner|still|visible|on-foot": {
+          "hits": 17,
+          "damage": 197.03333333333208,
+          "minDistance": 1.0775047895516232,
+          "maxDistance": 2.3327555949594605
+        },
+        "step/bridge,phase/collapse|infected.runner|still|visible|on-foot": {
+          "hits": 2,
+          "damage": 26.666666666666288,
+          "minDistance": 1.924947989264377,
+          "maxDistance": 2.324894289036449
+        },
+        "step/bridge,phase/escape|infected.runner|moving|visible|on-foot": {
+          "hits": 49,
+          "damage": 882,
+          "minDistance": 1.339750007731777,
+          "maxDistance": 2.683936395214264
+        }
+      }
+    },
+    "L4": {
+      "rawReceipt": "test-results/r14-moving-b/rejected-trace/L4-native.json",
+      "totalDamage": 1601.6499999999983,
+      "combatHitDamage": 1601.6499999999983,
+      "controllerMovingDamage": 1190.6,
+      "stillDamage": 411.04999999999836,
+      "seatedDamage": 0,
+      "buckets": {
+        "step/hold,phase/war|infected.hazmat|still|visible|on-foot": {
+          "hits": 7,
+          "damage": 43.24999999999905,
+          "minDistance": 1.0800000000000007,
+          "maxDistance": 5.722064793446048
+        },
+        "step/hold,phase/war|infected.hazmat|moving|visible|on-foot": {
+          "hits": 51,
+          "damage": 352.35,
+          "minDistance": 0.11195251125728597,
+          "maxDistance": 6.140784846413964
+        },
+        "step/hold,phase/war|infected.firefighter|moving|visible|on-foot": {
+          "hits": 10,
+          "damage": 110,
+          "minDistance": 1.079999999999999,
+          "maxDistance": 2.7490335866770605
+        },
+        "step/hold,phase/war|infected.runner|moving|visible|on-foot": {
+          "hits": 14,
+          "damage": 154,
+          "minDistance": 1.0747146906169653,
+          "maxDistance": 2.6844972105255223
+        },
+        "step/hold,phase/war|infected.riot|moving|visible|on-foot": {
+          "hits": 14,
+          "damage": 154,
+          "minDistance": 1.0136045622164502,
+          "maxDistance": 2.7290443070269603
+        },
+        "step/hold,phase/war|infected.crawler|moving|visible|on-foot": {
+          "hits": 10,
+          "damage": 110,
+          "minDistance": 1.7518102819727754,
+          "maxDistance": 2.3744251490819854
+        },
+        "step/hold,phase/war|infected.sprinter|still|visible|on-foot": {
+          "hits": 1,
+          "damage": 4.799999999999329,
+          "minDistance": 2.2812499999999987,
+          "maxDistance": 2.2812499999999987
+        },
+        "step/hold,phase/war|infected.sprinter|moving|visible|on-foot": {
+          "hits": 8,
+          "damage": 88,
+          "minDistance": 1.4098919613735337,
+          "maxDistance": 2.6726489206437387
+        },
+        "step/hold,phase/war|infected.runner|still|visible|on-foot": {
+          "hits": 1,
+          "damage": 11,
+          "minDistance": 1.4439188475692486,
+          "maxDistance": 1.4439188475692486
+        },
+        "step/hold,phase/war|infected.crawler|still|visible|on-foot": {
+          "hits": 1,
+          "damage": 3.3999999999999995,
+          "minDistance": 1.6213519595477082,
+          "maxDistance": 1.6213519595477082
+        },
+        "step/hide,phase/collapse|infected.runner|moving|visible|on-foot": {
+          "hits": 1,
+          "damage": 11,
+          "minDistance": 2.281249999999999,
+          "maxDistance": 2.281249999999999
+        },
+        "step/hide,phase/collapse|infected.firefighter|moving|visible|on-foot": {
+          "hits": 7,
+          "damage": 77,
+          "minDistance": 1.0470754776716344,
+          "maxDistance": 2.2482737707962333
+        },
+        "step/hide,phase/collapse|infected.hazmat|still|visible|on-foot": {
+          "hits": 32,
+          "damage": 218.6,
+          "minDistance": 0.9656304135773627,
+          "maxDistance": 7.967296247117068
+        },
+        "step/hide,phase/collapse|infected.sprinter|still|visible|on-foot": {
+          "hits": 5,
+          "damage": 45,
+          "minDistance": 1.0999999999999992,
+          "maxDistance": 1.7725853905914637
+        },
+        "step/hide,phase/collapse|infected.riot|still|visible|on-foot": {
+          "hits": 1,
+          "damage": 11,
+          "minDistance": 1.0799999999999996,
+          "maxDistance": 1.0799999999999996
+        },
+        "step/hide,phase/collapse|infected.hazmat|moving|visible|on-foot": {
+          "hits": 17,
+          "damage": 98.25,
+          "minDistance": 0.38106686479768803,
+          "maxDistance": 6.288950633699695
+        },
+        "step/hide,phase/collapse|infected.firefighter|still|visible|on-foot": {
+          "hits": 1,
+          "damage": 11,
+          "minDistance": 1.08,
+          "maxDistance": 1.08
+        },
+        "step/hide,phase/collapse|infected.alpha|moving|visible|on-foot": {
+          "hits": 1,
+          "damage": 25,
+          "minDistance": 1.5887762553572804,
+          "maxDistance": 1.5887762553572804
+        },
+        "step/hide,phase/collapse|infected.riot|moving|visible|on-foot": {
+          "hits": 1,
+          "damage": 11,
+          "minDistance": 1.0021601761110768,
+          "maxDistance": 1.0021601761110768
+        },
+        "step/hide,phase/collapse|infected.runner|still|visible|on-foot": {
+          "hits": 3,
+          "damage": 33,
+          "minDistance": 1.0999999999999974,
+          "maxDistance": 1.1000000000000005
+        },
+        "step/hide,phase/collapse|infected.alpha|still|visible|on-foot": {
+          "hits": 1,
+          "damage": 30,
+          "minDistance": 14.964187106446696,
+          "maxDistance": 14.964187106446696
+        }
+      }
+    }
+  },
+  "levels": [
+    {
+      "level": "L1",
+      "baseline": {
+        "rawReceipt": "test-results/r14-moving/focused/before/L1-native.json",
+        "runtimeSha256": "91e8a4749f2acb6b170c65a9973b432de5d0bb5d512564ba61a455bf8aba4c1e",
+        "outcome": "complete",
+        "completed": true,
+        "time": 115.06666666666666,
+        "damageTaken": 30,
+        "deaths": 0,
+        "kills": 0,
+        "furthestObjective": "firestation",
+        "phases": [
+          {
+            "key": "phase/spread",
+            "seconds": 40.63333333333333,
+            "attacks": 19,
+            "attacksPerMinute": 28.055783429040197,
+            "groupAttacks": 0,
+            "groupAttacksPerMinute": 0
+          }
+        ],
+        "flags": []
+      },
+      "rejected": {
+        "rawReceipt": "test-results/r14-moving/final-corrections/L1-native.json",
+        "runtimeSha256": "47c41680c208611dd0453f86998b5e1b3d0e80c71310764cb1c9382bb9fbd908",
+        "outcome": "complete",
+        "completed": true,
+        "time": 156.85,
+        "damageTaken": 300.06666666666683,
+        "deaths": 2,
+        "kills": 0,
+        "furthestObjective": "firestation",
+        "phases": [
+          {
+            "key": "phase/spread",
+            "seconds": 82.41666666666667,
+            "attacks": 59,
+            "attacksPerMinute": 42.95247724974722,
+            "groupAttacks": 0,
+            "groupAttacksPerMinute": 0
+          }
+        ],
+        "flags": []
+      },
+      "balanced": {
+        "rawReceipt": "test-results/r14-moving-b/final-early/L1-native.json",
+        "outcome": "complete",
+        "completed": true,
+        "time": 115.06666666666666,
+        "damageTaken": 39,
+        "deaths": 0,
+        "kills": 0,
+        "furthestObjective": "firestation",
+        "phases": [
+          {
+            "key": "phase/spread",
+            "seconds": 40.63333333333333,
+            "attacks": 23,
+            "attacksPerMinute": 33.9622641509434,
+            "groupAttacksPerMinute": 0
+          }
+        ],
+        "flags": []
+      },
+      "limits": {
+        "damage": 60,
+        "deaths": 1,
+        "verdict": "PASS"
+      },
+      "movement": {
+        "retreat": {
+          "rawReceipt": "test-results/r14-moving-b/final-early/L1-retreat.json",
+          "reviewedHitsPerMinute": 36.77221654749665,
+          "driverSha256": null,
+          "hits": 14,
+          "hitsPerMinute": 41.999999999999694,
+          "stationaryHits": 0,
+          "attacks": 26,
+          "attacksPerMinute": 77.99999999999943,
+          "kitingSeconds": 20.000000000000146,
+          "samples": 1200,
+          "minimumMoveSpeedMps": 0.05,
+          "diagnostics": {
+            "startTick": 4392,
+            "endTick": 5591,
+            "firingFrames": 1200,
+            "playerAttackStarts": 74,
+            "framesWithoutThreats": 15,
+            "movingSeconds": 20.000000000000146,
+            "immobilizedSeconds": 0,
+            "distanceMeters": 38.173747545931036,
+            "bodyAvoidanceFrames": 0,
+            "phases": [
+              "step/weapon",
+              "phase/spread"
+            ]
+          },
+          "controllableMovingShare": 1.0,
+          "flags": []
+        },
+        "circles": {
+          "rawReceipt": "test-results/r14-moving-b/final-early/L1-circles.json",
+          "reviewedHitsPerMinute": 26.999999999999805,
+          "driverSha256": null,
+          "hits": 9,
+          "hitsPerMinute": 26.999999999999805,
+          "stationaryHits": 0,
+          "attacks": 11,
+          "attacksPerMinute": 32.99999999999976,
+          "kitingSeconds": 20.000000000000146,
+          "samples": 1200,
+          "minimumMoveSpeedMps": 0.05,
+          "diagnostics": {
+            "startTick": 4392,
+            "endTick": 5591,
+            "firingFrames": 1200,
+            "playerAttackStarts": 74,
+            "framesWithoutThreats": 0,
+            "movingSeconds": 20.000000000000146,
+            "immobilizedSeconds": 0,
+            "distanceMeters": 89.70784616360544,
+            "circleRadius": 3,
+            "bodyAvoidanceFrames": 12,
+            "phases": [
+              "step/weapon",
+              "phase/spread"
+            ]
+          },
+          "controllableMovingShare": 1.0,
+          "flags": []
+        }
+      }
+    },
+    {
+      "level": "L2",
+      "baseline": {
+        "rawReceipt": "test-results/r14-moving/focused/before/L2-native.json",
+        "runtimeSha256": "91e8a4749f2acb6b170c65a9973b432de5d0bb5d512564ba61a455bf8aba4c1e",
+        "outcome": "complete",
+        "completed": true,
+        "time": 162.73333333333332,
+        "damageTaken": 18,
+        "deaths": 0,
+        "kills": 0,
+        "furthestObjective": "bridge",
+        "phases": [
+          {
+            "key": "phase/collapse",
+            "seconds": 18.583333333333332,
+            "attacks": 8,
+            "attacksPerMinute": 25.829596412556054,
+            "groupAttacks": 0,
+            "groupAttacksPerMinute": 0
+          },
+          {
+            "key": "phase/escape",
+            "seconds": 82.95,
+            "attacks": 13,
+            "attacksPerMinute": 9.403254972875226,
+            "groupAttacks": 0,
+            "groupAttacksPerMinute": 0
+          }
+        ],
+        "flags": []
+      },
+      "rejected": {
+        "rawReceipt": "test-results/r14-moving/final-corrections/L2-native.json",
+        "runtimeSha256": "47c41680c208611dd0453f86998b5e1b3d0e80c71310764cb1c9382bb9fbd908",
+        "outcome": "complete",
+        "completed": true,
+        "time": 524.2166666666667,
+        "damageTaken": 2167.699999999998,
+        "deaths": 19,
+        "kills": 0,
+        "furthestObjective": "bridge",
+        "phases": [
+          {
+            "key": "phase/collapse",
+            "seconds": 256.1333333333333,
+            "attacks": 92,
+            "attacksPerMinute": 21.5512753774076,
+            "groupAttacks": 0,
+            "groupAttacksPerMinute": 0
+          },
+          {
+            "key": "phase/escape",
+            "seconds": 206.88333333333333,
+            "attacks": 115,
+            "attacksPerMinute": 33.35213083058084,
+            "groupAttacks": 0,
+            "groupAttacksPerMinute": 0
+          }
+        ],
+        "flags": []
+      },
+      "balanced": {
+        "rawReceipt": "test-results/r14-moving-b/final-early/L2-native.json",
+        "outcome": "complete",
+        "completed": true,
+        "time": 143.58333333333334,
+        "damageTaken": 25.200000000000006,
+        "deaths": 0,
+        "kills": 0,
+        "furthestObjective": "bridge",
+        "phases": [
+          {
+            "key": "phase/collapse",
+            "seconds": 17.416666666666668,
+            "attacks": 16,
+            "attacksPerMinute": 55.119617224880386,
+            "groupAttacksPerMinute": 0
+          },
+          {
+            "key": "phase/escape",
+            "seconds": 59.96666666666667,
+            "attacks": 44,
+            "attacksPerMinute": 44.02445803224013,
+            "groupAttacksPerMinute": 0
+          }
+        ],
+        "flags": []
+      },
+      "limits": {
+        "damage": 36,
+        "deaths": 1,
+        "verdict": "PASS"
+      },
+      "movement": {
+        "retreat": {
+          "rawReceipt": "test-results/r14-moving-b/final-early/L2-retreat.json",
+          "reviewedHitsPerMinute": 2.9999999999999782,
+          "driverSha256": null,
+          "hits": 1,
+          "hitsPerMinute": 2.9999999999999782,
+          "stationaryHits": 0,
+          "attacks": 1,
+          "attacksPerMinute": 2.9999999999999782,
+          "kitingSeconds": 20.000000000000146,
+          "samples": 1200,
+          "minimumMoveSpeedMps": 0.05,
+          "diagnostics": {
+            "startTick": 3654,
+            "endTick": 4853,
+            "firingFrames": 1200,
+            "playerAttackStarts": 40,
+            "framesWithoutThreats": 30,
+            "movingSeconds": 20.000000000000146,
+            "immobilizedSeconds": 0,
+            "distanceMeters": 39.93011813665452,
+            "bodyAvoidanceFrames": 0,
+            "phases": [
+              "step/bridge",
+              "phase/collapse"
+            ]
+          },
+          "controllableMovingShare": 1.0,
+          "flags": []
+        },
+        "circles": {
+          "rawReceipt": "test-results/r14-moving-b/final-early/L2-circles.json",
+          "reviewedHitsPerMinute": 23.333333333332998,
+          "driverSha256": null,
+          "hits": 13,
+          "hitsPerMinute": 38.999999999999716,
+          "stationaryHits": 0,
+          "attacks": 44,
+          "attacksPerMinute": 131.99999999999903,
+          "kitingSeconds": 20.000000000000146,
+          "samples": 1200,
+          "minimumMoveSpeedMps": 0.05,
+          "diagnostics": {
+            "startTick": 3654,
+            "endTick": 4853,
+            "firingFrames": 1200,
+            "playerAttackStarts": 40,
+            "framesWithoutThreats": 0,
+            "movingSeconds": 20.000000000000146,
+            "immobilizedSeconds": 0,
+            "distanceMeters": 88.26422321588822,
+            "circleRadius": 2,
+            "bodyAvoidanceFrames": 135,
+            "phases": [
+              "step/bridge",
+              "phase/collapse"
+            ]
+          },
+          "controllableMovingShare": 1.0,
+          "flags": []
+        }
+      }
+    },
+    {
+      "level": "L3",
+      "baseline": {
+        "rawReceipt": "test-results/r14-moving/focused/before/L3-native.json",
+        "runtimeSha256": "91e8a4749f2acb6b170c65a9973b432de5d0bb5d512564ba61a455bf8aba4c1e",
+        "outcome": "complete",
+        "completed": true,
+        "time": 189.93333333333334,
+        "damageTaken": 22,
+        "deaths": 0,
+        "kills": 0,
+        "furthestObjective": "checkpoint",
+        "phases": [
+          {
+            "key": "step/defend",
+            "seconds": 26.2,
+            "attacks": 7,
+            "attacksPerMinute": 16.03053435114504,
+            "groupAttacks": 0,
+            "groupAttacksPerMinute": 0
+          }
+        ],
+        "flags": []
+      },
+      "rejected": {
+        "rawReceipt": "test-results/r14-moving/verified-native/L3-native.json",
+        "runtimeSha256": "47c41680c208611dd0453f86998b5e1b3d0e80c71310764cb1c9382bb9fbd908",
+        "outcome": "complete",
+        "completed": true,
+        "time": 194.78333333333333,
+        "damageTaken": 66,
+        "deaths": 0,
+        "kills": 0,
+        "furthestObjective": "checkpoint",
+        "phases": [
+          {
+            "key": "step/defend",
+            "seconds": 26.2,
+            "attacks": 7,
+            "attacksPerMinute": 16.03053435114504,
+            "groupAttacks": 0,
+            "groupAttacksPerMinute": 0
+          }
+        ],
+        "flags": []
+      },
+      "balanced": {
+        "rawReceipt": "test-results/r14-moving-b/final-early/L3-native.json",
+        "outcome": "complete",
+        "completed": true,
+        "time": 194.78333333333333,
+        "damageTaken": 36.300000000000004,
+        "deaths": 0,
+        "kills": 0,
+        "furthestObjective": "checkpoint",
+        "phases": [
+          {
+            "key": "step/defend",
+            "seconds": 26.2,
+            "attacks": 7,
+            "attacksPerMinute": 16.03053435114504,
+            "groupAttacksPerMinute": 0
+          }
+        ],
+        "flags": []
+      },
+      "limits": {
+        "damage": 44,
+        "deaths": 1,
+        "verdict": "PASS"
+      },
+      "movement": {
+        "retreat": {
+          "rawReceipt": "test-results/r14-moving-b/final-early/L3-retreat.json",
+          "reviewedHitsPerMinute": 5.9999999999999565,
+          "driverSha256": null,
+          "hits": 2,
+          "hitsPerMinute": 5.9999999999999565,
+          "stationaryHits": 0,
+          "attacks": 2,
+          "attacksPerMinute": 5.9999999999999565,
+          "kitingSeconds": 20.000000000000146,
+          "samples": 1200,
+          "minimumMoveSpeedMps": 0.05,
+          "diagnostics": {
+            "startTick": 631,
+            "endTick": 1830,
+            "firingFrames": 1200,
+            "playerAttackStarts": 60,
+            "framesWithoutThreats": 572,
+            "movingSeconds": 20.000000000000146,
+            "immobilizedSeconds": 0,
+            "distanceMeters": 39.90138366426838,
+            "bodyAvoidanceFrames": 0,
+            "phases": [
+              "step/defend",
+              "phase/attack"
+            ]
+          },
+          "controllableMovingShare": 1.0,
+          "flags": []
+        },
+        "circles": {
+          "rawReceipt": "test-results/r14-moving-b/final-early/L3-circles.json",
+          "reviewedHitsPerMinute": 2.9999999999999782,
+          "driverSha256": null,
+          "hits": 1,
+          "hitsPerMinute": 2.9999999999999782,
+          "stationaryHits": 0,
+          "attacks": 2,
+          "attacksPerMinute": 5.9999999999999565,
+          "kitingSeconds": 20.000000000000146,
+          "samples": 1200,
+          "minimumMoveSpeedMps": 0.05,
+          "diagnostics": {
+            "startTick": 631,
+            "endTick": 1830,
+            "firingFrames": 1200,
+            "playerAttackStarts": 60,
+            "framesWithoutThreats": 411,
+            "movingSeconds": 20.000000000000146,
+            "immobilizedSeconds": 0,
+            "distanceMeters": 89.74294132729598,
+            "circleRadius": 4,
+            "bodyAvoidanceFrames": 13,
+            "phases": [
+              "step/defend",
+              "phase/attack"
+            ]
+          },
+          "controllableMovingShare": 1.0,
+          "flags": []
+        }
+      }
+    },
+    {
+      "level": "L4",
+      "baseline": {
+        "rawReceipt": "test-results/r14-moving/focused/before/L4-native.json",
+        "runtimeSha256": "91e8a4749f2acb6b170c65a9973b432de5d0bb5d512564ba61a455bf8aba4c1e",
+        "outcome": "complete",
+        "completed": true,
+        "time": 299.8833333333333,
+        "damageTaken": 677.5333333333299,
+        "deaths": 6,
+        "kills": 27,
+        "furthestObjective": "wait",
+        "phases": [
+          {
+            "key": "step/hold",
+            "seconds": 184.38333333333333,
+            "attacks": 473,
+            "attacksPerMinute": 153.91846696194523,
+            "groupAttacks": 0,
+            "groupAttacksPerMinute": 0
+          }
+        ],
+        "flags": []
+      },
+      "rejected": {
+        "rawReceipt": "test-results/r14-moving/final/L4-native.json",
+        "runtimeSha256": "47c41680c208611dd0453f86998b5e1b3d0e80c71310764cb1c9382bb9fbd908",
+        "outcome": "complete",
+        "completed": true,
+        "time": 414.4166666666667,
+        "damageTaken": 1601.6499999999983,
+        "deaths": 13,
+        "kills": 46,
+        "furthestObjective": "wait",
+        "phases": [
+          {
+            "key": "step/hold",
+            "seconds": 183.81666666666666,
+            "attacks": 856,
+            "attacksPerMinute": 279.40883126303385,
+            "groupAttacks": 0,
+            "groupAttacksPerMinute": 0
+          }
+        ],
+        "flags": []
+      },
+      "balanced": {
+        "rawReceipt": "test-results/r14-moving-b/final-early/L4-native.json",
+        "outcome": "complete",
+        "completed": true,
+        "time": 327.8833333333333,
+        "damageTaken": 366.9999999999999,
+        "deaths": 3,
+        "kills": 38,
+        "furthestObjective": "wait",
+        "phases": [
+          {
+            "key": "step/hold",
+            "seconds": 190,
+            "attacks": 751,
+            "attacksPerMinute": 237.1578947368421,
+            "groupAttacksPerMinute": 0
+          }
+        ],
+        "flags": []
+      },
+      "limits": {
+        "damage": 1355.0666666666598,
+        "deaths": 7,
+        "verdict": "PASS"
+      },
+      "movement": {
+        "retreat": {
+          "rawReceipt": "test-results/r14-moving-b/final-early/L4-retreat.json",
+          "reviewedHitsPerMinute": 26.666666666666284,
+          "driverSha256": null,
+          "hits": 10,
+          "hitsPerMinute": 29.999999999999783,
+          "stationaryHits": 0,
+          "attacks": 31,
+          "attacksPerMinute": 92.99999999999932,
+          "kitingSeconds": 20.000000000000146,
+          "samples": 1200,
+          "minimumMoveSpeedMps": 0.05,
+          "diagnostics": {
+            "startTick": 2306,
+            "endTick": 3505,
+            "firingFrames": 1200,
+            "playerAttackStarts": 200,
+            "framesWithoutThreats": 33,
+            "movingSeconds": 20.000000000000146,
+            "immobilizedSeconds": 0,
+            "distanceMeters": 32.05886258516919,
+            "bodyAvoidanceFrames": 0,
+            "phases": [
+              "step/hold",
+              "phase/war"
+            ]
+          },
+          "controllableMovingShare": 1.0,
+          "flags": []
+        },
+        "circles": {
+          "rawReceipt": "test-results/r14-moving-b/final-early/L4-circles.json",
+          "reviewedHitsPerMinute": 17.99999999999987,
+          "driverSha256": null,
+          "hits": 6,
+          "hitsPerMinute": 17.99999999999987,
+          "stationaryHits": 0,
+          "attacks": 23,
+          "attacksPerMinute": 68.9999999999995,
+          "kitingSeconds": 20.000000000000146,
+          "samples": 1200,
+          "minimumMoveSpeedMps": 0.05,
+          "diagnostics": {
+            "startTick": 2306,
+            "endTick": 3505,
+            "firingFrames": 1230,
+            "playerAttackStarts": 200,
+            "framesWithoutThreats": 5,
+            "movingSeconds": 20.000000000000146,
+            "immobilizedSeconds": 0,
+            "distanceMeters": 84.75048576312373,
+            "circleRadius": 3,
+            "bodyAvoidanceFrames": 165,
+            "phases": [
+              "step/hold",
+              "phase/war"
+            ]
+          },
+          "controllableMovingShare": 1.0,
+          "flags": []
+        }
+      }
+    },
+    {
+      "level": "L5",
+      "baseline": {
+        "rawReceipt": "test-results/r14-moving/focused/before/L5-native.json",
+        "runtimeSha256": "91e8a4749f2acb6b170c65a9973b432de5d0bb5d512564ba61a455bf8aba4c1e",
+        "outcome": "complete",
+        "completed": true,
+        "time": 195.03333333333333,
+        "damageTaken": 100,
+        "deaths": 0,
+        "kills": 66,
+        "furthestObjective": "metro",
+        "phases": [
+          {
+            "key": "step/look",
+            "seconds": 139.28333333333333,
+            "attacks": 14,
+            "attacksPerMinute": 6.0308723226038055,
+            "groupAttacks": 0,
+            "groupAttacksPerMinute": 0
+          }
+        ],
+        "flags": []
+      },
+      "rejected": {
+        "rawReceipt": "test-results/r14-moving/final/L5-native.json",
+        "runtimeSha256": "47c41680c208611dd0453f86998b5e1b3d0e80c71310764cb1c9382bb9fbd908",
+        "outcome": "complete",
+        "completed": true,
+        "time": 183.81666666666666,
+        "damageTaken": 125,
+        "deaths": 0,
+        "kills": 69,
+        "furthestObjective": "metro",
+        "phases": [
+          {
+            "key": "step/look",
+            "seconds": 137.33333333333334,
+            "attacks": 27,
+            "attacksPerMinute": 11.79611650485437,
+            "groupAttacks": 0,
+            "groupAttacksPerMinute": 0
+          }
+        ],
+        "flags": []
+      },
+      "balanced": {
+        "rawReceipt": "test-results/r14-moving-b/final-early/L5-native.json",
+        "outcome": "complete",
+        "completed": true,
+        "time": 183.81666666666666,
+        "damageTaken": 125,
+        "deaths": 0,
+        "kills": 69,
+        "furthestObjective": "metro",
+        "phases": [
+          {
+            "key": "step/look",
+            "seconds": 137.33333333333334,
+            "attacks": 27,
+            "attacksPerMinute": 11.79611650485437,
+            "groupAttacksPerMinute": 0
+          }
+        ],
+        "flags": []
+      },
+      "limits": {
+        "damage": 200,
+        "deaths": 1,
+        "verdict": "PASS"
+      },
+      "movement": {
+        "retreat": {
+          "rawReceipt": "test-results/r14-moving-b/final-early/L5-retreat.json",
+          "reviewedHitsPerMinute": 2.9999999999999782,
+          "driverSha256": null,
+          "hits": 1,
+          "hitsPerMinute": 2.9999999999999782,
+          "stationaryHits": 0,
+          "attacks": 1,
+          "attacksPerMinute": 2.9999999999999782,
+          "kitingSeconds": 20.000000000000146,
+          "samples": 1200,
+          "minimumMoveSpeedMps": 0.05,
+          "diagnostics": {
+            "startTick": 523,
+            "endTick": 1722,
+            "firingFrames": 1200,
+            "playerAttackStarts": 40,
+            "framesWithoutThreats": 1043,
+            "movingSeconds": 20.000000000000146,
+            "immobilizedSeconds": 0,
+            "distanceMeters": 39.68915514389239,
+            "bodyAvoidanceFrames": 0,
+            "phases": [
+              "phase/emerged"
+            ]
+          },
+          "controllableMovingShare": 1.0,
+          "flags": []
+        },
+        "circles": {
+          "rawReceipt": "test-results/r14-moving-b/final-early/L5-circles.json",
+          "reviewedHitsPerMinute": 5.9999999999999565,
+          "driverSha256": null,
+          "hits": 2,
+          "hitsPerMinute": 5.9999999999999565,
+          "stationaryHits": 0,
+          "attacks": 2,
+          "attacksPerMinute": 5.9999999999999565,
+          "kitingSeconds": 20.000000000000146,
+          "samples": 1200,
+          "minimumMoveSpeedMps": 0.05,
+          "diagnostics": {
+            "startTick": 523,
+            "endTick": 1722,
+            "firingFrames": 1200,
+            "playerAttackStarts": 40,
+            "framesWithoutThreats": 968,
+            "movingSeconds": 20.000000000000146,
+            "immobilizedSeconds": 0,
+            "distanceMeters": 89.58217702700865,
+            "circleRadius": 4,
+            "bodyAvoidanceFrames": 19,
+            "phases": [
+              "phase/emerged"
+            ]
+          },
+          "controllableMovingShare": 1.0,
+          "flags": []
+        }
+      }
+    },
+    {
+      "level": "L6",
+      "baseline": {
+        "rawReceipt": "test-results/r14-moving/focused/before/L6-native.json",
+        "runtimeSha256": "91e8a4749f2acb6b170c65a9973b432de5d0bb5d512564ba61a455bf8aba4c1e",
+        "outcome": "complete",
+        "completed": true,
+        "time": 413.8333333333333,
+        "damageTaken": 230,
+        "deaths": 1,
+        "kills": 16,
+        "furthestObjective": "exit",
+        "phases": [
+          {
+            "key": "step/stop",
+            "seconds": 21.016666666666666,
+            "attacks": 1,
+            "attacksPerMinute": 2.8548770816812055,
+            "groupAttacks": 6,
+            "groupAttacksPerMinute": 17.129262490087232
+          }
+        ],
+        "flags": []
+      },
+      "rejected": {
+        "rawReceipt": "test-results/r14-moving/final/L6-native.json",
+        "runtimeSha256": "47c41680c208611dd0453f86998b5e1b3d0e80c71310764cb1c9382bb9fbd908",
+        "outcome": "complete",
+        "completed": true,
+        "time": 451.4,
+        "damageTaken": 358.59999999999894,
+        "deaths": 1,
+        "kills": 17,
+        "furthestObjective": "exit",
+        "phases": [
+          {
+            "key": "step/stop",
+            "seconds": 21.016666666666666,
+            "attacks": 1,
+            "attacksPerMinute": 2.8548770816812055,
+            "groupAttacks": 6,
+            "groupAttacksPerMinute": 17.129262490087232
+          }
+        ],
+        "flags": []
+      },
+      "balanced": {
+        "rawReceipt": "test-results/r14-moving-b/final-late/L6-native.json",
+        "outcome": "complete",
+        "completed": true,
+        "time": 451.4,
+        "damageTaken": 358.59999999999894,
+        "deaths": 1,
+        "kills": 17,
+        "furthestObjective": "exit",
+        "phases": [
+          {
+            "key": "step/stop",
+            "seconds": 21.016666666666666,
+            "attacks": 1,
+            "attacksPerMinute": 2.8548770816812055,
+            "groupAttacksPerMinute": 17.129262490087232
+          }
+        ],
+        "flags": []
+      },
+      "limits": {
+        "damage": 358.59999999999894,
+        "deaths": 1,
+        "verdict": "PASS"
+      },
+      "movement": {
+        "retreat": {
+          "rawReceipt": "test-results/r14-moving-b/final-late/L6-retreat.json",
+          "reviewedHitsPerMinute": 2.9999999999999782,
+          "driverSha256": null,
+          "hits": 1,
+          "hitsPerMinute": 2.9999999999999782,
+          "stationaryHits": 0,
+          "attacks": 2,
+          "attacksPerMinute": 5.9999999999999565,
+          "kitingSeconds": 20.000000000000146,
+          "samples": 1200,
+          "minimumMoveSpeedMps": 0.05,
+          "diagnostics": {
+            "startTick": 1993,
+            "endTick": 3192,
+            "firingFrames": 1200,
+            "playerAttackStarts": 181,
+            "framesWithoutThreats": 0,
+            "movingSeconds": 20.000000000000146,
+            "immobilizedSeconds": 0,
+            "distanceMeters": 29.52562955992648,
+            "bodyAvoidanceFrames": 0,
+            "phases": [
+              "step/stop",
+              "phase/first"
+            ]
+          },
+          "controllableMovingShare": 1.0,
+          "flags": []
+        },
+        "circles": {
+          "rawReceipt": "test-results/r14-moving-b/final-late/L6-circles.json",
+          "reviewedHitsPerMinute": 2.9999999999999782,
+          "driverSha256": null,
+          "hits": 1,
+          "hitsPerMinute": 2.9999999999999782,
+          "stationaryHits": 0,
+          "attacks": 2,
+          "attacksPerMinute": 5.9999999999999565,
+          "kitingSeconds": 20.000000000000146,
+          "samples": 1200,
+          "minimumMoveSpeedMps": 0.05,
+          "diagnostics": {
+            "startTick": 1993,
+            "endTick": 3192,
+            "firingFrames": 1200,
+            "playerAttackStarts": 200,
+            "framesWithoutThreats": 0,
+            "movingSeconds": 20.000000000000146,
+            "immobilizedSeconds": 0,
+            "distanceMeters": 89.74637821204283,
+            "circleRadius": 4,
+            "bodyAvoidanceFrames": 18,
+            "phases": [
+              "step/stop",
+              "phase/first"
+            ]
+          },
+          "controllableMovingShare": 1.0,
+          "flags": []
+        }
+      }
+    },
+    {
+      "level": "L7",
+      "baseline": {
+        "rawReceipt": "test-results/r14-moving/focused/before/L7-native.json",
+        "runtimeSha256": "91e8a4749f2acb6b170c65a9973b432de5d0bb5d512564ba61a455bf8aba4c1e",
+        "outcome": "complete",
+        "completed": true,
+        "time": 104.81666666666666,
+        "damageTaken": 90,
+        "deaths": 0,
+        "kills": 0,
+        "furthestObjective": "bus-departure",
+        "phases": [
+          {
+            "key": "step/corridor",
+            "seconds": 73.26666666666667,
+            "attacks": 39,
+            "attacksPerMinute": 31.938125568698815,
+            "groupAttacks": 1,
+            "groupAttacksPerMinute": 0.818926296633303
+          }
+        ],
+        "flags": []
+      },
+      "rejected": {
+        "rawReceipt": "test-results/r14-moving/final/L7-native.json",
+        "runtimeSha256": "47c41680c208611dd0453f86998b5e1b3d0e80c71310764cb1c9382bb9fbd908",
+        "outcome": "complete",
+        "completed": true,
+        "time": 105.28333333333333,
+        "damageTaken": 100,
+        "deaths": 0,
+        "kills": 0,
+        "furthestObjective": "bus-departure",
+        "phases": [
+          {
+            "key": "step/corridor",
+            "seconds": 73.13333333333334,
+            "attacks": 86,
+            "attacksPerMinute": 70.55606198723792,
+            "groupAttacks": 1,
+            "groupAttacksPerMinute": 0.8204193254329991
+          }
+        ],
+        "flags": []
+      },
+      "balanced": {
+        "rawReceipt": "test-results/r14-moving-b/final-late/L7-native.json",
+        "outcome": "complete",
+        "completed": true,
+        "time": 105.28333333333333,
+        "damageTaken": 100,
+        "deaths": 0,
+        "kills": 0,
+        "furthestObjective": "bus-departure",
+        "phases": [
+          {
+            "key": "step/corridor",
+            "seconds": 73.13333333333334,
+            "attacks": 86,
+            "attacksPerMinute": 70.55606198723792,
+            "groupAttacksPerMinute": 0.8204193254329991
+          }
+        ],
+        "flags": []
+      },
+      "limits": {
+        "damage": 100,
+        "deaths": 0,
+        "verdict": "PASS"
+      },
+      "movement": {
+        "retreat": {
+          "rawReceipt": "test-results/r14-moving-b/final-late/L7-retreat.json",
+          "reviewedHitsPerMinute": 2.9999999999999782,
+          "driverSha256": null,
+          "hits": 1,
+          "hitsPerMinute": 2.9999999999999782,
+          "stationaryHits": 0,
+          "attacks": 11,
+          "attacksPerMinute": 32.99999999999976,
+          "kitingSeconds": 20.000000000000146,
+          "samples": 1200,
+          "minimumMoveSpeedMps": 0.05,
+          "diagnostics": {
+            "startTick": 31,
+            "endTick": 1230,
+            "firingFrames": 310,
+            "playerAttackStarts": 14,
+            "framesWithoutThreats": 21,
+            "movingSeconds": 20.000000000000146,
+            "immobilizedSeconds": 0,
+            "distanceMeters": 39.578419621083334,
+            "bodyAvoidanceFrames": 0,
+            "phases": [
+              "step/corridor",
+              "phase/encounters"
+            ]
+          },
+          "controllableMovingShare": 1.0,
+          "flags": []
+        },
+        "circles": {
+          "rawReceipt": "test-results/r14-moving-b/final-late/L7-circles.json",
+          "reviewedHitsPerMinute": 40.61538461538372,
+          "driverSha256": null,
+          "hits": 11,
+          "hitsPerMinute": 40.61538461538372,
+          "stationaryHits": 0,
+          "attacks": 48,
+          "attacksPerMinute": 177.2307692307653,
+          "kitingSeconds": 16.25000000000036,
+          "samples": 975,
+          "minimumMoveSpeedMps": 0.05,
+          "diagnostics": {
+            "startTick": 31,
+            "endTick": 1005,
+            "firingFrames": 721,
+            "playerAttackStarts": 25,
+            "framesWithoutThreats": 0,
+            "movingSeconds": 16.25000000000036,
+            "immobilizedSeconds": 0,
+            "distanceMeters": 69.98230836990248,
+            "circleRadius": 4,
+            "bodyAvoidanceFrames": 100,
+            "phases": [
+              "step/corridor",
+              "phase/encounters"
+            ]
+          },
+          "controllableMovingShare": 1.0,
+          "flags": []
+        }
+      }
+    },
+    {
+      "level": "L8",
+      "baseline": {
+        "rawReceipt": "test-results/r14-moving/focused/before/L8-native.json",
+        "runtimeSha256": "91e8a4749f2acb6b170c65a9973b432de5d0bb5d512564ba61a455bf8aba4c1e",
+        "outcome": "tick-budget",
+        "completed": false,
+        "time": 1200,
+        "damageTaken": 6950,
+        "deaths": 69,
+        "kills": 0,
+        "furthestObjective": "escape",
+        "phases": [
+          {
+            "key": "step/escape",
+            "seconds": 1140,
+            "attacks": 735,
+            "attacksPerMinute": 38.68421052631579,
+            "groupAttacks": 469,
+            "groupAttacksPerMinute": 24.68421052631579
+          }
+        ],
+        "flags": [
+          "INCOMPLETE_NATIVE:tick-budget"
+        ]
+      },
+      "rejected": {
+        "rawReceipt": "test-results/r14-moving/final/L8-native.json",
+        "runtimeSha256": "47c41680c208611dd0453f86998b5e1b3d0e80c71310764cb1c9382bb9fbd908",
+        "outcome": "tick-budget",
+        "completed": false,
+        "time": 1200,
+        "damageTaken": 6370,
+        "deaths": 63,
+        "kills": 0,
+        "furthestObjective": "escape",
+        "phases": [
+          {
+            "key": "step/escape",
+            "seconds": 1140,
+            "attacks": 1017,
+            "attacksPerMinute": 53.526315789473685,
+            "groupAttacks": 490,
+            "groupAttacksPerMinute": 25.789473684210527
+          }
+        ],
+        "flags": [
+          "INCOMPLETE_NATIVE:tick-budget"
+        ]
+      },
+      "balanced": {
+        "rawReceipt": "test-results/r14-moving-b/final-late/L8-native.json",
+        "outcome": "tick-budget",
+        "completed": false,
+        "time": 1200,
+        "damageTaken": 6370,
+        "deaths": 63,
+        "kills": 0,
+        "furthestObjective": "escape",
+        "phases": [
+          {
+            "key": "step/escape",
+            "seconds": 1140,
+            "attacks": 1017,
+            "attacksPerMinute": 53.526315789473685,
+            "groupAttacksPerMinute": 25.789473684210527
+          }
+        ],
+        "flags": [
+          "INCOMPLETE_NATIVE:tick-budget"
+        ]
+      },
+      "limits": {
+        "damage": 6370,
+        "deaths": 63,
+        "verdict": "PASS"
+      },
+      "movement": {
+        "retreat": {
+          "rawReceipt": "test-results/r14-moving-b/final-late/L8-retreat.json",
+          "reviewedHitsPerMinute": 8.999999999999934,
+          "driverSha256": null,
+          "hits": 3,
+          "hitsPerMinute": 8.999999999999934,
+          "stationaryHits": 0,
+          "attacks": 7,
+          "attacksPerMinute": 20.999999999999847,
+          "kitingSeconds": 20.000000000000146,
+          "samples": 1200,
+          "minimumMoveSpeedMps": 0.05,
+          "diagnostics": {
+            "startTick": 3646,
+            "endTick": 4845,
+            "firingFrames": 1,
+            "playerAttackStarts": 1,
+            "framesWithoutThreats": 0,
+            "movingSeconds": 20.000000000000146,
+            "immobilizedSeconds": 0,
+            "distanceMeters": 39.9299440859178,
+            "bodyAvoidanceFrames": 0,
+            "phases": [
+              "step/escape",
+              "phase/breached"
+            ]
+          },
+          "controllableMovingShare": 1.0,
+          "flags": []
+        },
+        "circles": {
+          "rawReceipt": "test-results/r14-moving-b/final-late/L8-circles.json",
+          "reviewedHitsPerMinute": 23.999999999999826,
+          "driverSha256": null,
+          "hits": 8,
+          "hitsPerMinute": 23.999999999999826,
+          "stationaryHits": 0,
+          "attacks": 25,
+          "attacksPerMinute": 74.99999999999946,
+          "kitingSeconds": 20.000000000000146,
+          "samples": 1200,
+          "minimumMoveSpeedMps": 0.05,
+          "diagnostics": {
+            "startTick": 3646,
+            "endTick": 4845,
+            "firingFrames": 1,
+            "playerAttackStarts": 0,
+            "framesWithoutThreats": 0,
+            "movingSeconds": 20.000000000000146,
+            "immobilizedSeconds": 0,
+            "distanceMeters": 89.4403541753062,
+            "circleRadius": 3,
+            "bodyAvoidanceFrames": 0,
+            "phases": [
+              "step/escape",
+              "phase/breached"
+            ]
+          },
+          "controllableMovingShare": 1.0,
+          "flags": []
+        }
+      }
+    },
+    {
+      "level": "L9",
+      "baseline": {
+        "rawReceipt": "test-results/r14-moving/focused/before/L9-native.json",
+        "runtimeSha256": "91e8a4749f2acb6b170c65a9973b432de5d0bb5d512564ba61a455bf8aba4c1e",
+        "outcome": "complete",
+        "completed": true,
+        "time": 128.13333333333333,
+        "damageTaken": 0,
+        "deaths": 0,
+        "kills": 0,
+        "furthestObjective": "reach-outskirts",
+        "phases": [],
+        "flags": []
+      },
+      "rejected": {
+        "rawReceipt": "test-results/r14-moving/final/L9-native.json",
+        "runtimeSha256": "47c41680c208611dd0453f86998b5e1b3d0e80c71310764cb1c9382bb9fbd908",
+        "outcome": "complete",
+        "completed": true,
+        "time": 128.13333333333333,
+        "damageTaken": 0,
+        "deaths": 0,
+        "kills": 0,
+        "furthestObjective": "reach-outskirts",
+        "phases": [],
+        "flags": []
+      },
+      "balanced": {
+        "rawReceipt": "test-results/r14-moving-b/final-late/L9-native.json",
+        "outcome": "complete",
+        "completed": true,
+        "time": 128.13333333333333,
+        "damageTaken": 0,
+        "deaths": 0,
+        "kills": 0,
+        "furthestObjective": "reach-outskirts",
+        "phases": [],
+        "flags": []
+      },
+      "limits": {
+        "damage": 0,
+        "deaths": 0,
+        "verdict": "PASS"
+      },
+      "movement": {
+        "retreat": {
+          "rawReceipt": "test-results/r14-moving-b/final-late/L9-retreat.json",
+          "reviewedHitsPerMinute": 0,
+          "driverSha256": null,
+          "hits": 0,
+          "hitsPerMinute": 0,
+          "stationaryHits": 0,
+          "attacks": 0,
+          "attacksPerMinute": 0,
+          "kitingSeconds": 0,
+          "samples": 0,
+          "minimumMoveSpeedMps": 0.05,
+          "diagnostics": {
+            "startTick": null,
+            "endTick": null,
+            "firingFrames": 0,
+            "playerAttackStarts": 0,
+            "framesWithoutThreats": 0,
+            "movingSeconds": 0,
+            "immobilizedSeconds": 0,
+            "distanceMeters": 0,
+            "bodyAvoidanceFrames": 0,
+            "phases": []
+          },
+          "controllableMovingShare": 0.0,
+          "flags": []
+        },
+        "circles": {
+          "rawReceipt": "test-results/r14-moving-b/final-late/L9-circles.json",
+          "reviewedHitsPerMinute": 0,
+          "driverSha256": null,
+          "hits": 0,
+          "hitsPerMinute": 0,
+          "stationaryHits": 0,
+          "attacks": 0,
+          "attacksPerMinute": 0,
+          "kitingSeconds": 0,
+          "samples": 0,
+          "minimumMoveSpeedMps": 0.05,
+          "diagnostics": {
+            "startTick": null,
+            "endTick": null,
+            "firingFrames": 0,
+            "playerAttackStarts": 0,
+            "framesWithoutThreats": 0,
+            "movingSeconds": 0,
+            "immobilizedSeconds": 0,
+            "distanceMeters": 0,
+            "bodyAvoidanceFrames": 0,
+            "phases": []
+          },
+          "controllableMovingShare": 0.0,
+          "flags": []
+        }
+      }
+    },
+    {
+      "level": "L10",
+      "baseline": {
+        "rawReceipt": "test-results/r14-moving/focused/before/L10-native.json",
+        "runtimeSha256": "91e8a4749f2acb6b170c65a9973b432de5d0bb5d512564ba61a455bf8aba4c1e",
+        "outcome": "tick-budget",
+        "completed": false,
+        "time": 3600,
+        "damageTaken": 16565,
+        "deaths": 162,
+        "kills": 2291,
+        "furthestObjective": "hold",
+        "phases": [
+          {
+            "key": "step/research",
+            "seconds": 63.8,
+            "attacks": 41,
+            "attacksPerMinute": 38.557993730407524,
+            "groupAttacks": 0,
+            "groupAttacksPerMinute": 0
+          },
+          {
+            "key": "step/hold",
+            "seconds": 2650.9,
+            "attacks": 24702,
+            "attacksPerMinute": 559.100682786978,
+            "groupAttacks": 0,
+            "groupAttacksPerMinute": 0
+          }
+        ],
+        "flags": [
+          "INCOMPLETE_NATIVE:tick-budget"
+        ]
+      },
+      "rejected": {
+        "rawReceipt": "test-results/r14-moving/final/L10-native.json",
+        "runtimeSha256": "47c41680c208611dd0453f86998b5e1b3d0e80c71310764cb1c9382bb9fbd908",
+        "outcome": "tick-budget",
+        "completed": false,
+        "time": 3600,
+        "damageTaken": 2271.566666666664,
+        "deaths": 18,
+        "kills": 31,
+        "furthestObjective": "research",
+        "phases": [
+          {
+            "key": "step/research",
+            "seconds": 3046.45,
+            "attacks": 191,
+            "attacksPerMinute": 3.761755485893417,
+            "groupAttacks": 0,
+            "groupAttacksPerMinute": 0
+          }
+        ],
+        "flags": [
+          "INCOMPLETE_NATIVE:tick-budget"
+        ]
+      },
+      "balanced": {
+        "rawReceipt": "test-results/r14-moving-b/final-late/L10-native.json",
+        "outcome": "tick-budget",
+        "completed": false,
+        "time": 3600,
+        "damageTaken": 2271.566666666664,
+        "deaths": 18,
+        "kills": 31,
+        "furthestObjective": "research",
+        "phases": [
+          {
+            "key": "step/research",
+            "seconds": 3046.45,
+            "attacks": 191,
+            "attacksPerMinute": 3.761755485893417,
+            "groupAttacksPerMinute": 0
+          }
+        ],
+        "flags": [
+          "INCOMPLETE_NATIVE:tick-budget"
+        ]
+      },
+      "limits": {
+        "damage": 2271.566666666664,
+        "deaths": 18,
+        "verdict": "PASS"
+      },
+      "movement": {
+        "retreat": {
+          "rawReceipt": "test-results/r14-moving-b/final-late/L10-retreat.json",
+          "reviewedHitsPerMinute": 5.9999999999999565,
+          "driverSha256": "b09d0b00c363e659c02ac5e172e81ffe73b2e11b54a5580b8018dd16aa6803ed",
+          "hits": 2,
+          "hitsPerMinute": 5.9999999999999565,
+          "stationaryHits": 0,
+          "attacks": 3,
+          "attacksPerMinute": 8.999999999999934,
+          "kitingSeconds": 20.000000000000146,
+          "samples": 1200,
+          "minimumMoveSpeedMps": 0.05,
+          "diagnostics": {
+            "startTick": 731,
+            "endTick": 1930,
+            "firingFrames": 1200,
+            "playerAttackStarts": 40,
+            "framesWithoutThreats": 1040,
+            "movingSeconds": 20.000000000000146,
+            "immobilizedSeconds": 0,
+            "distanceMeters": 40.04186949973401,
+            "bodyAvoidanceFrames": 0,
+            "phases": [
+              "step/residential-fringe"
+            ]
+          },
+          "controllableMovingShare": 1.0,
+          "flags": []
+        },
+        "circles": {
+          "rawReceipt": "test-results/r14-moving-b/final-late/L10-circles.json",
+          "reviewedHitsPerMinute": 20.999999999999847,
+          "driverSha256": "b09d0b00c363e659c02ac5e172e81ffe73b2e11b54a5580b8018dd16aa6803ed",
+          "hits": 7,
+          "hitsPerMinute": 20.999999999999847,
+          "stationaryHits": 0,
+          "attacks": 9,
+          "attacksPerMinute": 26.999999999999805,
+          "kitingSeconds": 20.000000000000146,
+          "samples": 1200,
+          "minimumMoveSpeedMps": 0.05,
+          "diagnostics": {
+            "startTick": 731,
+            "endTick": 1930,
+            "firingFrames": 1200,
+            "playerAttackStarts": 40,
+            "framesWithoutThreats": 757,
+            "movingSeconds": 20.000000000000146,
+            "immobilizedSeconds": 0,
+            "distanceMeters": 89.54540067846919,
+            "circleRadius": 4,
+            "bodyAvoidanceFrames": 59,
+            "phases": [
+              "step/residential-fringe"
+            ]
+          },
+          "controllableMovingShare": 1.0,
+          "flags": []
+        }
+      }
+    }
+  ]
+}

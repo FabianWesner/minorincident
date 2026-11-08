@@ -88,6 +88,8 @@ for (const level of selected) {
   if (!kiting) passiveFlags.push('MISSING_KITING_POLICY_RECEIPT');
   else if (kiting.kitingSeconds === 0 && level !== 'L9') passiveFlags.push('MISSING_KITING_ON_FOOT_SAMPLE');
   else if (kiting.kitingSeconds > 0 && kiting.attacksPerMinute < 2) passiveFlags.push(`KITING_BELOW_ATTACKS_PER_MINUTE_2:${kiting.attacksPerMinute.toFixed(2)}`);
+  if (kiting && kiting.kitingSeconds > 0 && (kiting.hitsPerMinute ?? 0) < 2) passiveFlags.push(`KITING_LANDED_HITS_BELOW_2:${(kiting.hitsPerMinute ?? 0).toFixed(2)}`);
+  if (kiting?.style === 'circles' && kiting.kitingSeconds > 0 && (kiting.diagnostics?.movingSeconds ?? 0) / Math.max(1 / 60, kiting.kitingSeconds - (kiting.diagnostics?.immobilizedSeconds ?? 0)) < .95) passiveFlags.push('CIRCLES_MOVING_COVERAGE_BELOW_95_PERCENT');
   // The acceptance hard rule applies to competent combat as well as passive
   // threat potential. Interrupted windups and group grabs are real attempts.
   for (const row of observation?.phases ?? []) if (row.threat && row.attacks + row.groupAttacks === 0)

@@ -40,7 +40,7 @@
         ]
       ],
       "checkpoint": "cure-crash",
-      "minutes": 3,
+      "minutes": 2,
       "route": [
         [
           547,
@@ -81,8 +81,7 @@
         ]
       ],
       "checkpoint": "cure-residential",
-      "weapon": "weapon.pistol",
-      "minutes": 6,
+      "minutes": 3,
       "route": [
         [
           747,
@@ -123,8 +122,7 @@
         ]
       ],
       "checkpoint": "cure-industrial",
-      "weapon": "weapon.shotgun",
-      "minutes": 7,
+      "minutes": 3,
       "route": [
         [
           1237,
@@ -169,8 +167,7 @@
         ]
       ],
       "checkpoint": "cure-military",
-      "weapon": "weapon.army-mg",
-      "minutes": 7,
+      "minutes": 3,
       "route": [
         [
           1837,
@@ -215,7 +212,7 @@
         ]
       ],
       "checkpoint": "cure-research-entry",
-      "minutes": 6,
+      "minutes": 2,
       "route": [
         [
           2467,
@@ -256,8 +253,7 @@
         ]
       ],
       "checkpoint": "cure-corridor",
-      "weapon": "weapon.rocket-launcher",
-      "minutes": 8,
+      "minutes": 1,
       "route": [
         [
           2917,
@@ -302,7 +298,7 @@
         ]
       ],
       "checkpoint": "cure-complex",
-      "minutes": 10,
+      "minutes": 1,
       "route": [
         [
           3697,
@@ -436,6 +432,30 @@
       2137,
       -75
     ],
+    "farmhouse-rifle": [
+      698,
+      25
+    ],
+    "barn-machete": [
+      940,
+      -12
+    ],
+    "workshop-nailgun": [
+      1397,
+      16
+    ],
+    "shed-molotov": [
+      1165,
+      -12
+    ],
+    "guard-tower-rifle": [
+      1960,
+      16
+    ],
+    "checkpoint-flashbang": [
+      2077,
+      -2
+    ],
     "military-motor-pool": [
       2137,
       110
@@ -449,16 +469,16 @@
       -5
     ],
     "cure-research-entry": [
-      2467,
-      -5
+      2707,
+      59
     ],
     "cure-terminal": [
-      2707,
-      41.25
+      2699,
+      66
     ],
     "cure-canister": [
-      2713,
-      41
+      2705,
+      66
     ],
     "cure-research": [
       2807,
@@ -555,6 +575,10 @@
     "epilogue-camera-target": [
       4000,
       -27
+    ],
+    "river-exit": [
+      647,
+      -12.5
     ]
   },
   "detours": [
@@ -645,12 +669,12 @@
       "routeEnd": 850,
       "resident": {
         "high": [
-          12,
-          24
+          8,
+          15
         ],
         "low": [
-          8,
-          16
+          6,
+          12
         ]
       },
       "dogs": [
@@ -668,12 +692,12 @@
       "routeEnd": 1600,
       "resident": {
         "high": [
-          25,
-          45
+          8,
+          15
         ],
         "low": [
-          16,
-          28
+          6,
+          12
         ]
       },
       "dogs": [
@@ -691,12 +715,12 @@
       "routeEnd": 2400,
       "resident": {
         "high": [
-          45,
-          75
+          8,
+          15
         ],
         "low": [
-          28,
-          45
+          6,
+          12
         ]
       },
       "dogs": [
@@ -718,12 +742,12 @@
       "routeEnd": 2950,
       "resident": {
         "high": [
-          55,
-          85
+          8,
+          15
         ],
         "low": [
-          35,
-          55
+          6,
+          12
         ]
       },
       "dogs": [
@@ -741,12 +765,12 @@
       "routeEnd": 3950,
       "resident": {
         "high": [
-          80,
-          130
+          8,
+          15
         ],
         "low": [
-          50,
-          75
+          6,
+          12
         ]
       },
       "dogs": [
@@ -768,12 +792,12 @@
       "routeEnd": 4300,
       "resident": {
         "high": [
-          140,
-          190
+          40,
+          60
         ],
         "low": [
-          75,
-          95
+          25,
+          35
         ]
       },
       "alphas": [

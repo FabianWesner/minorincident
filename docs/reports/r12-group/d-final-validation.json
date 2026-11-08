@@ -1,0 +1,28 @@
+{
+  "runtimeRevision": "6fc0951870b36bc87433562f20524bb081adc514",
+  "sourceHash": "5ddd64e4b422716a8917531826b43007f9e9e2f938be10e8f586a9000774a880",
+  "mainRevision": "eb835fc1",
+  "auditSeconds": 462.975869691,
+  "mainAuditSeconds": 504.194190801,
+  "exitCode": 1,
+  "levels": [
+    "L2",
+    "L3",
+    "L5",
+    "L6",
+    "L7",
+    "L8"
+  ],
+  "flags": [
+    "L7/FOLLOWER_WAIT_UPPER_BOUND_OVER_10_PERCENT",
+    "L7/step/corridor:SLOW_FOLLOWER:71",
+    "L7/phase/encounters:FOLLOWER_PACE_UNOBSERVED:63",
+    "L7/phase/encounters:SLOW_FOLLOWER:71",
+    "L7/phase/encounters:FOLLOWER_PACE_UNOBSERVED:60",
+    "L8/wave/tunnel-breach:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+    "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+  ],
+  "noAddedFollowerFlags": true,
+  "thresholdsChanged": false,
+  "browserUsed": false
+}

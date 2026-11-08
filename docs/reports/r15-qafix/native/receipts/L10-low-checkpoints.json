@@ -1,0 +1,1912 @@
+{
+  "version": 1,
+  "level": "L10",
+  "tier": "low",
+  "sourceHash": "115f672aaa058f298b9c4a4477360000f354bfe3cb4ebe4e4dc1d1562b69f6c3",
+  "fixtureHash": "4bdfab18e8890a058182ed24d4761e157d72f51368e0ed46e15970460c1ede3c",
+  "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
+  "checks": [
+    {
+      "id": "G-21",
+      "clause": "mortal checkpoint restore at L10/cure-crash",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "cure-crash",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "ad91a085637cbfe7ae1ddaa443d7814f166dd68f1537db640e4a4e73c62f0ead",
+        "damage": 100,
+        "expected": {
+          "id": "cure-crash",
+          "anchor": {
+            "x": 547,
+            "y": 0.705,
+            "z": 0,
+            "yaw": 0.3205919885488634
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe"
+            ]
+          },
+          "followers": [],
+          "pickups": [],
+          "removedPickups": [],
+          "cure": false,
+          "bossHp": 3000,
+          "bossMode": "dormant"
+        },
+        "observed": {
+          "id": "cure-crash",
+          "position": {
+            "x": 547,
+            "z": 0
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": "dormant",
+          "bossHp": 3000
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-checkpoints.json"
+    },
+    {
+      "id": "L10-15",
+      "clause": "mortal regional checkpoint cure-crash (cure/boss comparison still partial)",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "cure-crash",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "ad91a085637cbfe7ae1ddaa443d7814f166dd68f1537db640e4a4e73c62f0ead",
+        "damage": 100,
+        "expected": {
+          "id": "cure-crash",
+          "anchor": {
+            "x": 547,
+            "y": 0.705,
+            "z": 0,
+            "yaw": 0.3205919885488634
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe"
+            ]
+          },
+          "followers": [],
+          "pickups": [],
+          "removedPickups": [],
+          "cure": false,
+          "bossHp": 3000,
+          "bossMode": "dormant"
+        },
+        "observed": {
+          "id": "cure-crash",
+          "position": {
+            "x": 547,
+            "z": 0
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": "dormant",
+          "bossHp": 3000
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-checkpoints.json"
+    },
+    {
+      "id": "L10-15",
+      "clause": "cure and boss HP/death snapshot at cure-crash",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "cure-crash",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "ad91a085637cbfe7ae1ddaa443d7814f166dd68f1537db640e4a4e73c62f0ead",
+        "damage": 100,
+        "expected": {
+          "id": "cure-crash",
+          "anchor": {
+            "x": 547,
+            "y": 0.705,
+            "z": 0,
+            "yaw": 0.3205919885488634
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe"
+            ]
+          },
+          "followers": [],
+          "pickups": [],
+          "removedPickups": [],
+          "cure": false,
+          "bossHp": 3000,
+          "bossMode": "dormant"
+        },
+        "observed": {
+          "id": "cure-crash",
+          "position": {
+            "x": 547,
+            "z": 0
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": "dormant",
+          "bossHp": 3000
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-checkpoints.json"
+    },
+    {
+      "id": "G-21",
+      "clause": "mortal checkpoint restore at L10/cure-residential",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "cure-residential",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "4407290f4a9f24bbfdb17d7d483360baa0f8306ffe5053072127095ee2101b14",
+        "damage": 100,
+        "expected": {
+          "id": "cure-residential",
+          "anchor": {
+            "x": 765.1019897460938,
+            "y": 0.7099999785423279,
+            "z": 24.9973201751709,
+            "yaw": -0.0014114016489564245
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol"
+            ]
+          },
+          "followers": [],
+          "pickups": [
+            104,
+            105
+          ],
+          "removedPickups": [],
+          "cure": false,
+          "bossHp": 3000,
+          "bossMode": "dormant"
+        },
+        "observed": {
+          "id": "cure-residential",
+          "position": {
+            "x": 765.1019897460938,
+            "z": 24.9973201751709
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": "dormant",
+          "bossHp": 3000
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-checkpoints.json"
+    },
+    {
+      "id": "L10-15",
+      "clause": "mortal regional checkpoint cure-residential (cure/boss comparison still partial)",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "cure-residential",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "4407290f4a9f24bbfdb17d7d483360baa0f8306ffe5053072127095ee2101b14",
+        "damage": 100,
+        "expected": {
+          "id": "cure-residential",
+          "anchor": {
+            "x": 765.1019897460938,
+            "y": 0.7099999785423279,
+            "z": 24.9973201751709,
+            "yaw": -0.0014114016489564245
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol"
+            ]
+          },
+          "followers": [],
+          "pickups": [
+            104,
+            105
+          ],
+          "removedPickups": [],
+          "cure": false,
+          "bossHp": 3000,
+          "bossMode": "dormant"
+        },
+        "observed": {
+          "id": "cure-residential",
+          "position": {
+            "x": 765.1019897460938,
+            "z": 24.9973201751709
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": "dormant",
+          "bossHp": 3000
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-checkpoints.json"
+    },
+    {
+      "id": "L10-15",
+      "clause": "cure and boss HP/death snapshot at cure-residential",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "cure-residential",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "4407290f4a9f24bbfdb17d7d483360baa0f8306ffe5053072127095ee2101b14",
+        "damage": 100,
+        "expected": {
+          "id": "cure-residential",
+          "anchor": {
+            "x": 765.1019897460938,
+            "y": 0.7099999785423279,
+            "z": 24.9973201751709,
+            "yaw": -0.0014114016489564245
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol"
+            ]
+          },
+          "followers": [],
+          "pickups": [
+            104,
+            105
+          ],
+          "removedPickups": [],
+          "cure": false,
+          "bossHp": 3000,
+          "bossMode": "dormant"
+        },
+        "observed": {
+          "id": "cure-residential",
+          "position": {
+            "x": 765.1019897460938,
+            "z": 24.9973201751709
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": "dormant",
+          "bossHp": 3000
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-checkpoints.json"
+    },
+    {
+      "id": "G-21",
+      "clause": "mortal checkpoint restore at L10/cure-industrial",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "cure-industrial",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "6c10ddf566d524a6649f32402734aa8d1b38ca730800fb714ea8c120cd6eec95",
+        "damage": 100,
+        "expected": {
+          "id": "cure-industrial",
+          "anchor": {
+            "x": 1256.1455078125,
+            "y": 0.7099999785423279,
+            "z": 25.00066375732422,
+            "yaw": 0.0007763323738346474
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun"
+            ]
+          },
+          "followers": [],
+          "pickups": [
+            133
+          ],
+          "removedPickups": [],
+          "cure": false,
+          "bossHp": 3000,
+          "bossMode": "coarse"
+        },
+        "observed": {
+          "id": "cure-industrial",
+          "position": {
+            "x": 1256.1455078125,
+            "z": 25.00066375732422
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": "coarse",
+          "bossHp": 3000
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-checkpoints.json"
+    },
+    {
+      "id": "L10-15",
+      "clause": "mortal regional checkpoint cure-industrial (cure/boss comparison still partial)",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "cure-industrial",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "6c10ddf566d524a6649f32402734aa8d1b38ca730800fb714ea8c120cd6eec95",
+        "damage": 100,
+        "expected": {
+          "id": "cure-industrial",
+          "anchor": {
+            "x": 1256.1455078125,
+            "y": 0.7099999785423279,
+            "z": 25.00066375732422,
+            "yaw": 0.0007763323738346474
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun"
+            ]
+          },
+          "followers": [],
+          "pickups": [
+            133
+          ],
+          "removedPickups": [],
+          "cure": false,
+          "bossHp": 3000,
+          "bossMode": "coarse"
+        },
+        "observed": {
+          "id": "cure-industrial",
+          "position": {
+            "x": 1256.1455078125,
+            "z": 25.00066375732422
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": "coarse",
+          "bossHp": 3000
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-checkpoints.json"
+    },
+    {
+      "id": "L10-15",
+      "clause": "cure and boss HP/death snapshot at cure-industrial",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "cure-industrial",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "6c10ddf566d524a6649f32402734aa8d1b38ca730800fb714ea8c120cd6eec95",
+        "damage": 100,
+        "expected": {
+          "id": "cure-industrial",
+          "anchor": {
+            "x": 1256.1455078125,
+            "y": 0.7099999785423279,
+            "z": 25.00066375732422,
+            "yaw": 0.0007763323738346474
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun"
+            ]
+          },
+          "followers": [],
+          "pickups": [
+            133
+          ],
+          "removedPickups": [],
+          "cure": false,
+          "bossHp": 3000,
+          "bossMode": "coarse"
+        },
+        "observed": {
+          "id": "cure-industrial",
+          "position": {
+            "x": 1256.1455078125,
+            "z": 25.00066375732422
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": "coarse",
+          "bossHp": 3000
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-checkpoints.json"
+    },
+    {
+      "id": "G-21",
+      "clause": "mortal checkpoint restore at L10/cure-military",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "cure-military",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "c22b4eb2a498f8cc20e4cab97045a259564a1e5d9f13a4888afb578860c6612d",
+        "damage": 100,
+        "expected": {
+          "id": "cure-military",
+          "anchor": {
+            "x": 1855.1417236328125,
+            "y": 0.7099999785423279,
+            "z": 25.002906799316406,
+            "yaw": 0.0015637813230164155
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg"
+            ]
+          },
+          "followers": [],
+          "pickups": [
+            170
+          ],
+          "removedPickups": [],
+          "cure": false,
+          "bossHp": 3000,
+          "bossMode": "coarse"
+        },
+        "observed": {
+          "id": "cure-military",
+          "position": {
+            "x": 1855.1417236328125,
+            "z": 25.002906799316406
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": "coarse",
+          "bossHp": 3000
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-checkpoints.json"
+    },
+    {
+      "id": "L10-15",
+      "clause": "mortal regional checkpoint cure-military (cure/boss comparison still partial)",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "cure-military",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "c22b4eb2a498f8cc20e4cab97045a259564a1e5d9f13a4888afb578860c6612d",
+        "damage": 100,
+        "expected": {
+          "id": "cure-military",
+          "anchor": {
+            "x": 1855.1417236328125,
+            "y": 0.7099999785423279,
+            "z": 25.002906799316406,
+            "yaw": 0.0015637813230164155
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg"
+            ]
+          },
+          "followers": [],
+          "pickups": [
+            170
+          ],
+          "removedPickups": [],
+          "cure": false,
+          "bossHp": 3000,
+          "bossMode": "coarse"
+        },
+        "observed": {
+          "id": "cure-military",
+          "position": {
+            "x": 1855.1417236328125,
+            "z": 25.002906799316406
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": "coarse",
+          "bossHp": 3000
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-checkpoints.json"
+    },
+    {
+      "id": "L10-15",
+      "clause": "cure and boss HP/death snapshot at cure-military",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "cure-military",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "c22b4eb2a498f8cc20e4cab97045a259564a1e5d9f13a4888afb578860c6612d",
+        "damage": 100,
+        "expected": {
+          "id": "cure-military",
+          "anchor": {
+            "x": 1855.1417236328125,
+            "y": 0.7099999785423279,
+            "z": 25.002906799316406,
+            "yaw": 0.0015637813230164155
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg"
+            ]
+          },
+          "followers": [],
+          "pickups": [
+            170
+          ],
+          "removedPickups": [],
+          "cure": false,
+          "bossHp": 3000,
+          "bossMode": "coarse"
+        },
+        "observed": {
+          "id": "cure-military",
+          "position": {
+            "x": 1855.1417236328125,
+            "z": 25.002906799316406
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": "coarse",
+          "bossHp": 3000
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-checkpoints.json"
+    },
+    {
+      "id": "G-21",
+      "clause": "mortal checkpoint restore at L10/cure-research-entry",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "cure-research-entry",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "f75476edf0069fcb34b5024c43c26ac3447d988c577c65931a51a57b670ef76e",
+        "damage": 100,
+        "expected": {
+          "id": "cure-research-entry",
+          "anchor": {
+            "x": 2465.0400390625,
+            "y": 0.7099999785423279,
+            "z": -5.045348167419434,
+            "yaw": 6.260051874737855
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg"
+            ]
+          },
+          "followers": [],
+          "pickups": [
+            231
+          ],
+          "removedPickups": [],
+          "cure": false,
+          "bossHp": 3000,
+          "bossMode": "coarse"
+        },
+        "observed": {
+          "id": "cure-research-entry",
+          "position": {
+            "x": 2465.0400390625,
+            "z": -5.045348167419434
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": "coarse",
+          "bossHp": 3000
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-checkpoints.json"
+    },
+    {
+      "id": "L10-15",
+      "clause": "mortal regional checkpoint cure-research-entry (cure/boss comparison still partial)",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "cure-research-entry",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "f75476edf0069fcb34b5024c43c26ac3447d988c577c65931a51a57b670ef76e",
+        "damage": 100,
+        "expected": {
+          "id": "cure-research-entry",
+          "anchor": {
+            "x": 2465.0400390625,
+            "y": 0.7099999785423279,
+            "z": -5.045348167419434,
+            "yaw": 6.260051874737855
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg"
+            ]
+          },
+          "followers": [],
+          "pickups": [
+            231
+          ],
+          "removedPickups": [],
+          "cure": false,
+          "bossHp": 3000,
+          "bossMode": "coarse"
+        },
+        "observed": {
+          "id": "cure-research-entry",
+          "position": {
+            "x": 2465.0400390625,
+            "z": -5.045348167419434
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": "coarse",
+          "bossHp": 3000
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-checkpoints.json"
+    },
+    {
+      "id": "L10-15",
+      "clause": "cure and boss HP/death snapshot at cure-research-entry",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "cure-research-entry",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "f75476edf0069fcb34b5024c43c26ac3447d988c577c65931a51a57b670ef76e",
+        "damage": 100,
+        "expected": {
+          "id": "cure-research-entry",
+          "anchor": {
+            "x": 2465.0400390625,
+            "y": 0.7099999785423279,
+            "z": -5.045348167419434,
+            "yaw": 6.260051874737855
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg"
+            ]
+          },
+          "followers": [],
+          "pickups": [
+            231
+          ],
+          "removedPickups": [],
+          "cure": false,
+          "bossHp": 3000,
+          "bossMode": "coarse"
+        },
+        "observed": {
+          "id": "cure-research-entry",
+          "position": {
+            "x": 2465.0400390625,
+            "z": -5.045348167419434
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": "coarse",
+          "bossHp": 3000
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-checkpoints.json"
+    },
+    {
+      "id": "G-21",
+      "clause": "mortal checkpoint restore at L10/cure-research",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "cure-research",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "808298b2e696d9182ef196203f99653fad7e8bf5fbf088664eaa65135daab52f",
+        "damage": 100,
+        "expected": {
+          "id": "cure-research",
+          "anchor": {
+            "x": 2805.06982421875,
+            "y": 0.7099999785423279,
+            "z": 44.92478942871094,
+            "yaw": -0.038944821563248785
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg"
+            ]
+          },
+          "followers": [],
+          "pickups": [
+            287
+          ],
+          "removedPickups": [],
+          "cure": true,
+          "bossHp": 3000,
+          "bossMode": "coarse"
+        },
+        "observed": {
+          "id": "cure-research",
+          "position": {
+            "x": 2805.06982421875,
+            "z": 44.92478942871094
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": true,
+          "bossMode": "coarse",
+          "bossHp": 3000
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-checkpoints.json"
+    },
+    {
+      "id": "L10-15",
+      "clause": "mortal regional checkpoint cure-research (cure/boss comparison still partial)",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "cure-research",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "808298b2e696d9182ef196203f99653fad7e8bf5fbf088664eaa65135daab52f",
+        "damage": 100,
+        "expected": {
+          "id": "cure-research",
+          "anchor": {
+            "x": 2805.06982421875,
+            "y": 0.7099999785423279,
+            "z": 44.92478942871094,
+            "yaw": -0.038944821563248785
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg"
+            ]
+          },
+          "followers": [],
+          "pickups": [
+            287
+          ],
+          "removedPickups": [],
+          "cure": true,
+          "bossHp": 3000,
+          "bossMode": "coarse"
+        },
+        "observed": {
+          "id": "cure-research",
+          "position": {
+            "x": 2805.06982421875,
+            "z": 44.92478942871094
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": true,
+          "bossMode": "coarse",
+          "bossHp": 3000
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-checkpoints.json"
+    },
+    {
+      "id": "L10-15",
+      "clause": "cure and boss HP/death snapshot at cure-research",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "cure-research",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "808298b2e696d9182ef196203f99653fad7e8bf5fbf088664eaa65135daab52f",
+        "damage": 100,
+        "expected": {
+          "id": "cure-research",
+          "anchor": {
+            "x": 2805.06982421875,
+            "y": 0.7099999785423279,
+            "z": 44.92478942871094,
+            "yaw": -0.038944821563248785
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg"
+            ]
+          },
+          "followers": [],
+          "pickups": [
+            287
+          ],
+          "removedPickups": [],
+          "cure": true,
+          "bossHp": 3000,
+          "bossMode": "coarse"
+        },
+        "observed": {
+          "id": "cure-research",
+          "position": {
+            "x": 2805.06982421875,
+            "z": 44.92478942871094
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": true,
+          "bossMode": "coarse",
+          "bossHp": 3000
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-checkpoints.json"
+    },
+    {
+      "id": "G-21",
+      "clause": "mortal checkpoint restore at L10/cure-corridor",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "cure-corridor",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "2e48dc38008d87b278e7fb90f8c5634f310ee4d9c985ca037e7c34d4ed8d10a9",
+        "damage": 100,
+        "expected": {
+          "id": "cure-corridor",
+          "anchor": {
+            "x": 2935.95849609375,
+            "y": 0.7099999785423279,
+            "z": -4.998665809631348,
+            "yaw": 0.0012809058928702015
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg",
+              "weapon.rocket-launcher"
+            ]
+          },
+          "followers": [],
+          "pickups": [
+            287
+          ],
+          "removedPickups": [],
+          "cure": true,
+          "bossHp": 3000,
+          "bossMode": "coarse"
+        },
+        "observed": {
+          "id": "cure-corridor",
+          "position": {
+            "x": 2935.95849609375,
+            "z": -4.998665809631348
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg",
+              "weapon.rocket-launcher"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": true,
+          "bossMode": "coarse",
+          "bossHp": 3000
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-checkpoints.json"
+    },
+    {
+      "id": "L10-15",
+      "clause": "mortal regional checkpoint cure-corridor (cure/boss comparison still partial)",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "cure-corridor",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "2e48dc38008d87b278e7fb90f8c5634f310ee4d9c985ca037e7c34d4ed8d10a9",
+        "damage": 100,
+        "expected": {
+          "id": "cure-corridor",
+          "anchor": {
+            "x": 2935.95849609375,
+            "y": 0.7099999785423279,
+            "z": -4.998665809631348,
+            "yaw": 0.0012809058928702015
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg",
+              "weapon.rocket-launcher"
+            ]
+          },
+          "followers": [],
+          "pickups": [
+            287
+          ],
+          "removedPickups": [],
+          "cure": true,
+          "bossHp": 3000,
+          "bossMode": "coarse"
+        },
+        "observed": {
+          "id": "cure-corridor",
+          "position": {
+            "x": 2935.95849609375,
+            "z": -4.998665809631348
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg",
+              "weapon.rocket-launcher"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": true,
+          "bossMode": "coarse",
+          "bossHp": 3000
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-checkpoints.json"
+    },
+    {
+      "id": "L10-15",
+      "clause": "cure and boss HP/death snapshot at cure-corridor",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "cure-corridor",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "2e48dc38008d87b278e7fb90f8c5634f310ee4d9c985ca037e7c34d4ed8d10a9",
+        "damage": 100,
+        "expected": {
+          "id": "cure-corridor",
+          "anchor": {
+            "x": 2935.95849609375,
+            "y": 0.7099999785423279,
+            "z": -4.998665809631348,
+            "yaw": 0.0012809058928702015
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg",
+              "weapon.rocket-launcher"
+            ]
+          },
+          "followers": [],
+          "pickups": [
+            287
+          ],
+          "removedPickups": [],
+          "cure": true,
+          "bossHp": 3000,
+          "bossMode": "coarse"
+        },
+        "observed": {
+          "id": "cure-corridor",
+          "position": {
+            "x": 2935.95849609375,
+            "z": -4.998665809631348
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg",
+              "weapon.rocket-launcher"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": true,
+          "bossMode": "coarse",
+          "bossHp": 3000
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-checkpoints.json"
+    },
+    {
+      "id": "G-21",
+      "clause": "mortal checkpoint restore at L10/cure-complex",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "cure-complex",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "6273d0153210c87a878268312a028d97355d6401012976e273abe18d51afa623",
+        "damage": 100,
+        "expected": {
+          "id": "cure-complex",
+          "anchor": {
+            "x": 3695.0439453125,
+            "y": 0.7099999785423279,
+            "z": -24.97415542602539,
+            "yaw": 0.0132116441097695
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg",
+              "weapon.rocket-launcher"
+            ]
+          },
+          "followers": [],
+          "pickups": [],
+          "removedPickups": [],
+          "cure": true,
+          "bossHp": 3000,
+          "bossMode": "coarse"
+        },
+        "observed": {
+          "id": "cure-complex",
+          "position": {
+            "x": 3695.0439453125,
+            "z": -24.97415542602539
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg",
+              "weapon.rocket-launcher"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": true,
+          "bossMode": "coarse",
+          "bossHp": 3000
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-checkpoints.json"
+    },
+    {
+      "id": "L10-15",
+      "clause": "mortal regional checkpoint cure-complex (cure/boss comparison still partial)",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "cure-complex",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "6273d0153210c87a878268312a028d97355d6401012976e273abe18d51afa623",
+        "damage": 100,
+        "expected": {
+          "id": "cure-complex",
+          "anchor": {
+            "x": 3695.0439453125,
+            "y": 0.7099999785423279,
+            "z": -24.97415542602539,
+            "yaw": 0.0132116441097695
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg",
+              "weapon.rocket-launcher"
+            ]
+          },
+          "followers": [],
+          "pickups": [],
+          "removedPickups": [],
+          "cure": true,
+          "bossHp": 3000,
+          "bossMode": "coarse"
+        },
+        "observed": {
+          "id": "cure-complex",
+          "position": {
+            "x": 3695.0439453125,
+            "z": -24.97415542602539
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg",
+              "weapon.rocket-launcher"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": true,
+          "bossMode": "coarse",
+          "bossHp": 3000
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-checkpoints.json"
+    },
+    {
+      "id": "L10-15",
+      "clause": "cure and boss HP/death snapshot at cure-complex",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "cure-complex",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "6273d0153210c87a878268312a028d97355d6401012976e273abe18d51afa623",
+        "damage": 100,
+        "expected": {
+          "id": "cure-complex",
+          "anchor": {
+            "x": 3695.0439453125,
+            "y": 0.7099999785423279,
+            "z": -24.97415542602539,
+            "yaw": 0.0132116441097695
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg",
+              "weapon.rocket-launcher"
+            ]
+          },
+          "followers": [],
+          "pickups": [],
+          "removedPickups": [],
+          "cure": true,
+          "bossHp": 3000,
+          "bossMode": "coarse"
+        },
+        "observed": {
+          "id": "cure-complex",
+          "position": {
+            "x": 3695.0439453125,
+            "z": -24.97415542602539
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg",
+              "weapon.rocket-launcher"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": true,
+          "bossMode": "coarse",
+          "bossHp": 3000
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-checkpoints.json"
+    },
+    {
+      "id": "G-21",
+      "clause": "mortal checkpoint restore at L10/cure-disperse-ready",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "cure-disperse-ready",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "50281c1eaf1fcbd7f6cd957e7a413fd466daa6c375308b5c0b6238c83b2adfd7",
+        "damage": 100,
+        "expected": {
+          "id": "cure-disperse-ready",
+          "anchor": {
+            "x": 4002,
+            "y": 0,
+            "z": -27,
+            "yaw": 2.4687279934515365,
+            "radius": 2
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg",
+              "weapon.rocket-launcher"
+            ]
+          },
+          "followers": [],
+          "pickups": [],
+          "removedPickups": [],
+          "cure": false,
+          "bossHp": 3000,
+          "bossMode": "coarse"
+        },
+        "observed": {
+          "id": "cure-disperse-ready",
+          "position": {
+            "x": 4002,
+            "z": -27
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg",
+              "weapon.rocket-launcher"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": "coarse",
+          "bossHp": 3000
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-checkpoints.json"
+    },
+    {
+      "id": "L10-15",
+      "clause": "mortal regional checkpoint cure-disperse-ready (cure/boss comparison still partial)",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "cure-disperse-ready",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "50281c1eaf1fcbd7f6cd957e7a413fd466daa6c375308b5c0b6238c83b2adfd7",
+        "damage": 100,
+        "expected": {
+          "id": "cure-disperse-ready",
+          "anchor": {
+            "x": 4002,
+            "y": 0,
+            "z": -27,
+            "yaw": 2.4687279934515365,
+            "radius": 2
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg",
+              "weapon.rocket-launcher"
+            ]
+          },
+          "followers": [],
+          "pickups": [],
+          "removedPickups": [],
+          "cure": false,
+          "bossHp": 3000,
+          "bossMode": "coarse"
+        },
+        "observed": {
+          "id": "cure-disperse-ready",
+          "position": {
+            "x": 4002,
+            "z": -27
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg",
+              "weapon.rocket-launcher"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": "coarse",
+          "bossHp": 3000
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-checkpoints.json"
+    },
+    {
+      "id": "L10-15",
+      "clause": "cure and boss HP/death snapshot at cure-disperse-ready",
+      "tier": "low",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "cure-disperse-ready",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "50281c1eaf1fcbd7f6cd957e7a413fd466daa6c375308b5c0b6238c83b2adfd7",
+        "damage": 100,
+        "expected": {
+          "id": "cure-disperse-ready",
+          "anchor": {
+            "x": 4002,
+            "y": 0,
+            "z": -27,
+            "yaw": 2.4687279934515365,
+            "radius": 2
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg",
+              "weapon.rocket-launcher"
+            ]
+          },
+          "followers": [],
+          "pickups": [],
+          "removedPickups": [],
+          "cure": false,
+          "bossHp": 3000,
+          "bossMode": "coarse"
+        },
+        "observed": {
+          "id": "cure-disperse-ready",
+          "position": {
+            "x": 4002,
+            "z": -27
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe"
+            ],
+            "RIGHT": [
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg",
+              "weapon.rocket-launcher"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": "coarse",
+          "bossHp": 3000
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-checkpoints.json"
+    }
+  ],
+  "errors": [],
+  "control": {
+    "observed": "f1183b5a",
+    "control": "f1183b5a",
+    "identical": true
+  }
+}

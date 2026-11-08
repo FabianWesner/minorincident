@@ -1,0 +1,405 @@
+{
+  "scope": "Native delivered GLB inspection: intact body, cab doors, tailgate, six wheels and canvas; wrecks retain body and six wheels, with damaged doors/canvas baked into the body vertex-color mesh. Source geometry and winding are identical to main at every LOD; only normals changed. Visual appearance needs browser QA.",
+  "rows": [
+    {
+      "path": "public/assets/models/veh.military-truck.glb",
+      "sha256": "806aeb2ec7dc06694f74b4466894f1d46f230712985bb61954bb45e5defc3f4d",
+      "parts": [
+        {
+          "name": "body",
+          "triangles": 33198,
+          "present": true
+        },
+        {
+          "name": "doorL",
+          "triangles": 1440,
+          "present": true
+        },
+        {
+          "name": "doorR",
+          "triangles": 1440,
+          "present": true
+        },
+        {
+          "name": "tailgate",
+          "triangles": 414,
+          "present": true
+        },
+        {
+          "name": "wheelFL",
+          "triangles": 5524,
+          "present": true
+        },
+        {
+          "name": "wheelFR",
+          "triangles": 5524,
+          "present": true
+        },
+        {
+          "name": "wheelML",
+          "triangles": 5524,
+          "present": true
+        },
+        {
+          "name": "wheelMR",
+          "triangles": 5524,
+          "present": true
+        },
+        {
+          "name": "wheelRL",
+          "triangles": 5524,
+          "present": true
+        },
+        {
+          "name": "wheelRR",
+          "triangles": 5524,
+          "present": true
+        }
+      ],
+      "canvasTriangles": 3662,
+      "sourceGeometryBefore": "ac89c344497369d5cd52003c6f4da4b89e70936490554982633edcc3b62f1f5d",
+      "sourceGeometryAfter": "ac89c344497369d5cd52003c6f4da4b89e70936490554982633edcc3b62f1f5d",
+      "geometryPreserved": true,
+      "bounds": {
+        "min": [
+          -3.4632979035377502,
+          9.906252010916106e-06,
+          -1.4499972689458318
+        ],
+        "max": [
+          3.4632978439331055,
+          3.6464868021697088,
+          1.4499972689458318
+        ]
+      },
+      "pass": true
+    },
+    {
+      "path": "public/assets/models/veh.military-truck.lod1.glb",
+      "sha256": "e6f278650847f4151d64861922b927397fbf5dc2e328edfdbcafb75376acc89f",
+      "parts": [
+        {
+          "name": "body",
+          "triangles": 1927,
+          "present": true
+        },
+        {
+          "name": "doorL",
+          "triangles": 288,
+          "present": true
+        },
+        {
+          "name": "doorR",
+          "triangles": 288,
+          "present": true
+        },
+        {
+          "name": "tailgate",
+          "triangles": 148,
+          "present": true
+        },
+        {
+          "name": "wheelFL",
+          "triangles": 132,
+          "present": true
+        },
+        {
+          "name": "wheelFR",
+          "triangles": 132,
+          "present": true
+        },
+        {
+          "name": "wheelML",
+          "triangles": 132,
+          "present": true
+        },
+        {
+          "name": "wheelMR",
+          "triangles": 132,
+          "present": true
+        },
+        {
+          "name": "wheelRL",
+          "triangles": 132,
+          "present": true
+        },
+        {
+          "name": "wheelRR",
+          "triangles": 132,
+          "present": true
+        }
+      ],
+      "canvasTriangles": 254,
+      "sourceGeometryBefore": "6683996361a09c4a709b4e26b4bfa0511172a6e022dc8383a25de0327d04ab86",
+      "sourceGeometryAfter": "6683996361a09c4a709b4e26b4bfa0511172a6e022dc8383a25de0327d04ab86",
+      "geometryPreserved": true,
+      "bounds": {
+        "min": [
+          -3.4402498602867126,
+          -6.146728992462158e-08,
+          -1.4499972689458318
+        ],
+        "max": [
+          3.4402501583099365,
+          3.570039343566762,
+          1.4499972689458318
+        ]
+      },
+      "pass": true
+    },
+    {
+      "path": "public/assets/models/veh.military-truck.lod2.glb",
+      "sha256": "cf71d45c72fbdeb2a36600c4acb341b45239f57f455e4e5c3ed8bfefb23bb9da",
+      "parts": [
+        {
+          "name": "body",
+          "triangles": 878,
+          "present": true
+        },
+        {
+          "name": "doorL",
+          "triangles": 128,
+          "present": true
+        },
+        {
+          "name": "doorR",
+          "triangles": 128,
+          "present": true
+        },
+        {
+          "name": "tailgate",
+          "triangles": 60,
+          "present": true
+        },
+        {
+          "name": "wheelFL",
+          "triangles": 28,
+          "present": true
+        },
+        {
+          "name": "wheelFR",
+          "triangles": 28,
+          "present": true
+        },
+        {
+          "name": "wheelML",
+          "triangles": 28,
+          "present": true
+        },
+        {
+          "name": "wheelMR",
+          "triangles": 28,
+          "present": true
+        },
+        {
+          "name": "wheelRL",
+          "triangles": 28,
+          "present": true
+        },
+        {
+          "name": "wheelRR",
+          "triangles": 28,
+          "present": true
+        }
+      ],
+      "canvasTriangles": 78,
+      "sourceGeometryBefore": "9b3652381c6307777ccd1fac45740aaeb6288f120c8a7ed35dac78cf3544f45c",
+      "sourceGeometryAfter": "9b3652381c6307777ccd1fac45740aaeb6288f120c8a7ed35dac78cf3544f45c",
+      "geometryPreserved": true,
+      "bounds": {
+        "min": [
+          -3.4402498602867126,
+          -6.146728992462158e-08,
+          -1.4499972689458318
+        ],
+        "max": [
+          3.4402501583099365,
+          3.5700305238301664,
+          1.4499972689458318
+        ]
+      },
+      "pass": true
+    },
+    {
+      "path": "public/assets/models/veh.military-truck.wrecked.glb",
+      "sha256": "38935828d322c7cc8415db0d6a3e167b5a7d1dbe84893faf5444dced2a330cb6",
+      "parts": [
+        {
+          "name": "body",
+          "triangles": 9315,
+          "present": true
+        },
+        {
+          "name": "wheelFL",
+          "triangles": 324,
+          "present": true
+        },
+        {
+          "name": "wheelFR",
+          "triangles": 276,
+          "present": true
+        },
+        {
+          "name": "wheelML",
+          "triangles": 276,
+          "present": true
+        },
+        {
+          "name": "wheelMR",
+          "triangles": 276,
+          "present": true
+        },
+        {
+          "name": "wheelRL",
+          "triangles": 276,
+          "present": true
+        },
+        {
+          "name": "wheelRR",
+          "triangles": 276,
+          "present": true
+        }
+      ],
+      "canvasTriangles": null,
+      "sourceGeometryBefore": "bf6cc8be6c9e7bce66835c40a5aa0375b6a511c12b4ff13f01bbf1242277e502",
+      "sourceGeometryAfter": "bf6cc8be6c9e7bce66835c40a5aa0375b6a511c12b4ff13f01bbf1242277e502",
+      "geometryPreserved": true,
+      "bounds": {
+        "min": [
+          -3.4402499198913574,
+          -6.727558049424154e-06,
+          -1.4375014866799436
+        ],
+        "max": [
+          3.049474000930786,
+          3.5216650568568086,
+          1.4477885331124387
+        ]
+      },
+      "pass": true
+    },
+    {
+      "path": "public/assets/models/veh.military-truck.wrecked.lod1.glb",
+      "sha256": "a8caaa29d4c8a01d39eb180372ebb896b4ec7f836c6386a827b1bc8bed32393c",
+      "parts": [
+        {
+          "name": "body",
+          "triangles": 2809,
+          "present": true
+        },
+        {
+          "name": "wheelFL",
+          "triangles": 132,
+          "present": true
+        },
+        {
+          "name": "wheelFR",
+          "triangles": 132,
+          "present": true
+        },
+        {
+          "name": "wheelML",
+          "triangles": 132,
+          "present": true
+        },
+        {
+          "name": "wheelMR",
+          "triangles": 132,
+          "present": true
+        },
+        {
+          "name": "wheelRL",
+          "triangles": 132,
+          "present": true
+        },
+        {
+          "name": "wheelRR",
+          "triangles": 132,
+          "present": true
+        }
+      ],
+      "canvasTriangles": null,
+      "sourceGeometryBefore": "fbc6e4daf65b99df7649ffe362d68e8cb2d49edd8701cb149c7ae2a40fb8e8c4",
+      "sourceGeometryAfter": "fbc6e4daf65b99df7649ffe362d68e8cb2d49edd8701cb149c7ae2a40fb8e8c4",
+      "geometryPreserved": true,
+      "bounds": {
+        "min": [
+          -3.4402499198913574,
+          -3.343012154266578e-06,
+          -1.4375301965330687
+        ],
+        "max": [
+          3.0502500534057617,
+          3.521904136683181,
+          1.4562261470411864
+        ]
+      },
+      "pass": true
+    },
+    {
+      "path": "public/assets/models/veh.military-truck.wrecked.lod2.glb",
+      "sha256": "16902125515a5ae34dbb9a6c21c5d9ce6e91a33fd4ef636ad72d8c2da956697a",
+      "parts": [
+        {
+          "name": "body",
+          "triangles": 1037,
+          "present": true
+        },
+        {
+          "name": "wheelFL",
+          "triangles": 28,
+          "present": true
+        },
+        {
+          "name": "wheelFR",
+          "triangles": 28,
+          "present": true
+        },
+        {
+          "name": "wheelML",
+          "triangles": 28,
+          "present": true
+        },
+        {
+          "name": "wheelMR",
+          "triangles": 28,
+          "present": true
+        },
+        {
+          "name": "wheelRL",
+          "triangles": 28,
+          "present": true
+        },
+        {
+          "name": "wheelRR",
+          "triangles": 28,
+          "present": true
+        }
+      ],
+      "canvasTriangles": null,
+      "sourceGeometryBefore": "0e72f059cd6410a47a998f699143c686048cf1d0e7f6ffe06a33ae2c7ec85e69",
+      "sourceGeometryAfter": "0e72f059cd6410a47a998f699143c686048cf1d0e7f6ffe06a33ae2c7ec85e69",
+      "geometryPreserved": true,
+      "bounds": {
+        "min": [
+          -3.417249917984009,
+          -3.343012154266578e-06,
+          -1.4375348196393618
+        ],
+        "max": [
+          3.0502500534057617,
+          3.5501939210436815,
+          1.4562307701474795
+        ]
+      },
+      "pass": true
+    }
+  ],
+  "revision": "3544bc40c5bef5942e646bdfe4708417ae95f92f",
+  "sourceHashes": {
+    "src/levels/L4/mission.ts": "0236c262494cc0f0d7f5caa8b7cd1caf21e3843637888d034516bffde59152b7",
+    "src/sim/missions/LevelFourWar.ts": "2644d52340c315c615acc198efdf8c9b280f7bf8e265acf9b81bc7ac70bbafec",
+    "src/sim/missions/L4Collapse.ts": "2d80d2ecd421979acc29e921f0afd780210c755306f0e75de261394562e3e72b",
+    "tools/qa/accept/l4-fixtures.ts": "914397004fc79755ea6162d388781f907d70686f0a2e1df0557dce9a7df3e0ac"
+  }
+}

@@ -133,6 +133,8 @@ export interface ActorSpec {
   look?: Look;
   /** Infected archetype (src/data/infected.ts), default infected.runner. */
   archetype?: string;
+  /** Explicit Alpha identity for move/counter QA; omitted legacy scenes retain the shared move fixture. */
+  alphaType?: import('../../data/alphaTypes').AlphaType;
   /** Spawn N copies on a ring of `spread` metres around `at` (ids get -1, -2 ...). */
   count?: number;
   spread?: number;

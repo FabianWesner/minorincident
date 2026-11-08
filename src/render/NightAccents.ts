@@ -5,6 +5,7 @@ import { BoxGeometry, Color, Group, InstancedMesh, Matrix4, MeshBasicNodeMateria
 import { float, luminance, vec3 } from 'three/tsl';
 import manifest from '../assets/manifest.json' with { type: 'json' };
 import { crossing } from '../levels/L9/district';
+import { l9Course } from '../data/l9';
 import { l6Camps } from '../levels/decor';
 import { cure } from '../levels/L10/district';
 import { cureEncounters } from '../levels/L10/encounters';
@@ -202,6 +203,10 @@ export function crossingAccents(placements: readonly Placement[], origin: P2 = [
       }
     }
   }
+  // The active bridgehead and marked repair bay are readable safe-space
+  // fixtures, using the existing bounded field rather than extra shadow maps.
+  for (const x of [446, 466]) for (const z of [-12, 12]) put({ kind: 'beacon', x, y: 6.8, z, yaw: 0, color: '#c9d6bd', glow: 4, flicker: 0, strobe: false, pool: { color: '#c9d6bd', intensity: 1.7, range: 16 } });
+  put({ kind: 'lantern', x: l9Course.repair.x, y: 2, z: l9Course.repair.z + 7, yaw: 0, color: '#ffd090', glow: 3, flicker: 0, strobe: false, pool: { color: '#ffd090', intensity: 1.8, range: 9 } });
   // 4c) l9-night-look: the last stretch (barricades, crash deck, crawl to the city) had no light point at all. Road flares in the
   // lane edge (as on the asphalt: they lift the route band, never the verge) mark the military stop line and the crawl, and
   // burning debris on the near verge frames the deck; the kit's gully (x 506..526) stays dark for the crash cinematic.
