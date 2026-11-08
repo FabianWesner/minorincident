@@ -86,8 +86,8 @@ export function formationBack(slot: number): number { return 2.3 + Math.floor(sl
 
 /** Three-column follower formation behind the leader, loosened per slot into a
  * cluster of pairs (r12-group: the exact 1.2 m lattice read as soldiers on parade). */
-export function formationSlot(leader: Point, heading: Point, slot: number): Point {
-  const loose = looseSlotOffset(slot), back = formationBack(slot) + loose.back, side = (slot % 3 - 1) * 1.2 + loose.side;
+export function formationSlot(leader: Point, heading: Point, slot: number, natural = true): Point {
+  const loose = natural ? looseSlotOffset(slot) : { back: 0, side: 0 }, back = formationBack(slot) + loose.back, side = (slot % 3 - 1) * 1.2 + loose.side;
   return { x: leader.x - heading.x * back - heading.z * side, z: leader.z - heading.z * back + heading.x * side };
 }
 

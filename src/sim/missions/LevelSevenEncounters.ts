@@ -88,7 +88,8 @@ export class LevelSevenEncounters {
     for (let slot = 0; slot < count; slot++) {
       const source = roster?.[slot];
       if (source && (source.health.current <= 0 || source.infected || source.infection)) continue;
-      const at = this.clearPoint(formationSlot(formation, heading, slot), .4);
+      // Preserve the authored entry clearance; loosen slots only after following starts.
+      const at = this.clearPoint(formationSlot(formation, heading, slot, false), .4);
       const e = source ? structuredClone(source) : w.entities.get(outbreak.spawnPedestrian(at, { model: slot % 2 ? 'npc.civilian-man-b.aftermath' : 'npc.civilian-woman-b.aftermath', role: 'cashier' }))!;
       if (source) {
         if (w.entities.get(e.id)) throw new Error(`L7 incoming survivor id collision: ${e.id}`);

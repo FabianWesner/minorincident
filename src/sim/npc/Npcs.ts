@@ -145,7 +145,8 @@ export class Npcs {
   /** Walking followers wander slowly to either side of their slot instead of moving on parallel rails. */
   private sway(e: EntitySnapshot, target: Point, nav: NavGrid): Point {
     const v = this.world.entities.get(1)?.survivor?.velocity, speed = v ? Math.hypot(v.x, v.z) : 0;
-    if (!v || speed <= .8) return target;
+    // L7 passes swept detour and bus queue goals through here; retain their exact clearance.
+    if (!v || speed <= .8 || this.world.scenario === 'L7') return target;
     const offset = swayOffset(e.id, this.world.tick, this.world.scenario === 'L5' ? .18 : .28);
     const swayed = { x: target.x - v.z / speed * offset, z: target.z + v.x / speed * offset };
     return nav.clear(swayed.x, swayed.z, .4) && nav.visible(e.transform, swayed, .35) ? swayed : target;
