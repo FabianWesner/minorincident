@@ -74,17 +74,17 @@ const prefixInfo = await page.evaluate(async (prefix) => {
   return { tick: a.getState().tick, steps: Object.fromEntries(Object.entries((a.missions.state() as unknown as { steps: Record<string, { status: string }> }).steps ?? {}).map(([k, v]) => [k, v.status])) };
 }, prefix);
 console.log('prefix', JSON.stringify(prefixInfo));
-await page.evaluate(() => window.__SS__!.cheats.god(true));
+await page.evaluate(enabled => window.__SS__!.cheats.god(enabled), arg('god', '1') !== '0');
 const clock = (run: boolean) => page.evaluate(r => { const c = (window.__SCENE__ as unknown as { game: { clock: { pause(): void; resume(): void } } } | undefined)?.game.clock; if (c) { if (r) c.resume(); else c.pause(); } }, run);
 await clock(false);
 let n = 0;
-type Act = { move?: string; ms?: number; wait?: number; zoom?: number; teleport?: [number, number]; shot?: string; key?: string };
+type Act = { move?: string; ms?: number; wait?: number; zoom?: number; teleport?: [number, number]; shot?: string; key?: string; attack?: boolean; appearance?: { variant: 'female' | 'male'; gear: 0 | 1 | 2 | 3 | 4 } };
 const state = async () => {
   const e = await page.evaluate(look);
   const p = e.player;
   let dir = '';
   if (e.marker) { const dx = e.marker.x - e.view.w / 2, dy = e.marker.y - e.view.h / 2; dir = ['right', 'down-right', 'down', 'down-left', 'left', 'up-left', 'up', 'up-right'][((Math.round(Math.atan2(dy, dx) / (Math.PI / 4)) % 8) + 8) % 8]; }
-  return { tick: e.tick, step: e.step, objective: e.objective, tracker: e.tracker, distance: e.distance, marker: e.marker ? { offscreen: e.marker.offscreen, dir, x: Math.round(e.marker.x), y: Math.round(e.marker.y) } : null, pos: p ? [+p.x.toFixed(1), +p.z.toFixed(1)] : null };
+  return { appearance: await page.evaluate(() => { const s = (window.__SCENE__ as unknown as { game: { world: { entities: { get(id: number): { survivor: { variant: string; gearTier: number } } } } } }).game.world.entities.get(1).survivor; return { variant: s.variant, gearTier: s.gearTier }; }), tick: e.tick, step: e.step, objective: e.objective, tracker: e.tracker, distance: e.distance, marker: e.marker ? { offscreen: e.marker.offscreen, dir, x: Math.round(e.marker.x), y: Math.round(e.marker.y) } : null, pos: p ? [+p.x.toFixed(1), +p.z.toFixed(1)] : null };
 };
 createServer((req, res) => {
   let data = '';
@@ -92,14 +92,20 @@ createServer((req, res) => {
   req.on('end', async () => {
     try {
       const a = JSON.parse(data || '{}') as Act;
+      // Appearance fixtures are visual spots, never evidence of a reachable campaign loadout.
+      if (a.appearance) {
+        const { variant, gear } = a.appearance;
+        if (!['female', 'male'].includes(variant) || ![0, 1, 2, 3, 4].includes(gear)) throw new Error('Invalid appearance');
+        await page.evaluate(async ({ variant, gear }) => { await window.__SS__!.survivor.select(variant, gear); }, { variant, gear });
+      }
       if (a.teleport) await page.evaluate(([x, z]) => { const s = window.__SS__!; s.teleport('player', { x, z }); s.camera.follow(); }, a.teleport);
       if (a.zoom) await page.evaluate(z => window.__SS__!.camera.zoom(z), a.zoom);
       if (a.key) { await clock(true); await page.keyboard.press(a.key); await hold(300); await clock(false); }
       if (a.move) {
         const keys = [...new Set([...a.move.toLowerCase()].filter(k => 'wasd'.includes(k)))].map(k => `Key${k.toUpperCase()}`);
         await clock(true);
-        try { for (const k of keys) await page.keyboard.down(k); await hold(Math.min(6000, a.ms ?? 1000)); }
-        finally { for (const k of keys.reverse()) await page.keyboard.up(k).catch(() => undefined); await clock(false); }
+        try { if (a.attack) await page.keyboard.down('Space'); for (const k of keys) await page.keyboard.down(k); await hold(Math.min(6000, a.ms ?? 1000)); }
+        finally { if (a.attack) await page.keyboard.up('Space').catch(() => undefined); for (const k of keys.reverse()) await page.keyboard.up(k).catch(() => undefined); await clock(false); }
       }
       if (a.wait) { await clock(true); await hold(a.wait); await clock(false); }
       if (a.teleport || a.zoom) { await clock(true); await hold(400); await clock(false); }

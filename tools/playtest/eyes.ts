@@ -32,7 +32,10 @@ export function visibleGroupTarget(level: string | null, player: { x: number; z:
   const group = allies.filter(a => a.drawn && a.hp > 0 && !a.corpse && a.kind !== 'companion' && (level !== 'L5' || a.following));
   if (!group.length) return null;
   const centre = group.reduce((p, a) => ({ x: p.x + a.x / group.length, z: p.z + a.z / group.length }), { x: 0, z: 0 });
-  return Math.hypot(player.x - centre.x, player.z - centre.z) > (level === 'L5' ? Math.min(leash, 5) : leash) ? centre : null;
+  // L7's eight-row column is longer than the generic 8 m escort leash.
+  // Match its HUD's 18 m group range instead of walking back into the column.
+  const range = level === 'L7' ? 18 : level === 'L5' ? Math.min(leash, 5) : leash;
+  return Math.hypot(player.x - centre.x, player.z - centre.z) > range ? centre : null;
 }
 
 /** Leave a stationary escort ring clear for a nearby follower to pass through. */

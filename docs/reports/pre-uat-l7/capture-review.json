@@ -1,0 +1,294 @@
+{
+  "reviewer": "Codex",
+  "date": "2026-11-08",
+  "images": [
+    {
+      "file": "test-results/vqa59/pre-uat-l7-low-webgpu-r2/captures/pre-uat-l7-low-webgpu-r2-L7-rocket-opening-t7.jpg",
+      "sha256": "1323c646fc598345fbd89293502a740cf4132ae08da6d8f562ae7a56d00afc47",
+      "observation": "Rejected early candidate, before the staging fix: several live followers stand inside the large launcher objective ring; the courier and corgi are distinct beside the lit truck.",
+      "qualification": "before/rejected candidate; not final-source completion evidence"
+    },
+    {
+      "file": "test-results/vqa59/pre-uat-l7-low-webgpu-r2/captures/pre-uat-l7-low-webgpu-r2-L7-rocket-t311-low-z1.jpg",
+      "sha256": "f89f3accc3a5f1c091ea7b3565b1ca2c24dcde4415c36df63e1b970642165599",
+      "observation": "Rejected early candidate: the launcher model and small pickup ring are visible, but live followers still cross the large objective ring. The courier stands between the truck and the pressing horde.",
+      "qualification": "before/rejected candidate; not final-source completion evidence"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-broad-yield-candidate/fresh-high-gl/captures/fresh-high-gl-L7-rocket-opening-t12.jpg",
+      "sha256": "d6c385a9cbfc2851dc99ed29818ad279074cc057bcc761109cf039b1dc9e4c64",
+      "observation": "Before the friendly-rocket fix, with staging already applied: the large objective ring is clear of survivor centres and bodies. The column starts to its right; the whole truck cab and wheels are readable.",
+      "qualification": "before/rejected candidate; not final-source completion evidence"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-pre-friendly-rocket/fresh-high-gl/captures/fresh-high-gl-L7-corridor-t343-high-z1.jpg",
+      "sha256": "79966df97f23f0974b1fcbadf934875b23ffdc1d63c9bd8682f911e536b2a814",
+      "observation": "Before the friendly-rocket fix: many still-living followers with teal bars are lying on their backs or tilted while the courier remains upright. The own rocket has scattered the column beside the truck.",
+      "qualification": "before/rejected candidate; not final-source completion evidence"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-pre-friendly-rocket/fresh-high-gl/captures/fresh-high-gl-L7-t4642.jpg",
+      "sha256": "23b43a461193fd91f253e9815c854c39fc03038f705d9d53a3b24fac3eec592d",
+      "observation": "Before the friendly-rocket fix: the courier is readable in a dense street fight, with two human-shaped Alphas and red attack arcs. A tall occluder is dithered; no full-frame white-out is visible.",
+      "qualification": "before/rejected candidate; not final-source completion evidence"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-pre-friendly-rocket/fresh-high-gl/captures/fresh-high-gl-L7-t5549.jpg",
+      "sha256": "6ef6399cf1c3ae544bd5be1b377f0eca68a466c080b79938de1f0d0e37b5e1f7",
+      "observation": "Before the friendly-rocket fix: 17 survivors are tightly grouped but upright on an open road with separate teal bars. The orange corgi contour is visible at right, a wrecked car at upper left, and the fixed destination remains off-screen to the left.",
+      "qualification": "before/rejected candidate; not final-source completion evidence"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-final/fresh-high-gl/captures/fresh-high-gl-L7-corridor-t331-high-z1.jpg",
+      "sha256": "94e4580f260df1a87d89623e63efedab130dd67829ddda79ba4051f107cbe4a1",
+      "observation": "After friendly-rocket fix, before the near-range route fix: full 24-person group is upright beside the courier and blast crater, with teal health bars. Courier rocket and corgi silhouettes read through orange light; dithered tree occlusion preserves the foreground route.",
+      "qualification": "friendly-rocket after; not final route completion"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-final/preset-low-gpu/captures/preset-low-gpu-L7-departure-0-5.jpg",
+      "sha256": "3da6d3903930dd829695eab423c23f98ae5c5a1a6cdb883ad993a38eca354b34",
+      "observation": "Low WebGPU departure: bus side and passenger silhouettes visible, following APC and roadside fire; cinematic camera cuts HUD as intended. Bottom/right crop is the tracked convoy framing.",
+      "qualification": "before near-range fix; completed low WebGPU run"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-final/preset-low-gpu/captures/preset-low-gpu-L7-departure-3.jpg",
+      "sha256": "b14a2b594923181f47b3bb119c055ee5da54b58649da83ba310c94c365d3bcc8",
+      "observation": "Low WebGPU departure at three seconds: bus and full army truck cab have intact opaque panels and wheels. Wrecked military vehicles and fire flank the route; ash and pink haze retain foreground contrast.",
+      "qualification": "before near-range fix; completed low WebGPU run"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-final/preset-low-gpu/captures/preset-low-gpu-L7-departure-8.jpg",
+      "sha256": "56cd37b03c2706dd1f6023480512de71e0fa3031bee8a1553c8001bcf5df40af",
+      "observation": "Low WebGPU departure at eight seconds: camera follows bus past fenced buildings and wrecked car. Riders are visible through windows; bodies at lower-right edge require motion context before diagnosing clipping. No black void or missing vehicle panel established.",
+      "qualification": "before near-range fix; single-frame view, not clearance measurement"
+    },
+    {
+      "file": "test-results/pre-uat-l7/routeB/001-opening.jpg",
+      "sha256": "5f9ffb1bfc7a7e07871ed766f6d7f638ad047b5500b50bc679e1c2014e479cdf",
+      "observation": "Final game source opening by real input: wide yellow launcher ring is free of followers; army truck chassis and cab intact, horde on its bed and left street. Courier is on the elevated road, corgi outlined nearby. Intro subtitle covers the ring centre temporarily.",
+      "qualification": "mortal manual route, before any appearance edit"
+    },
+    {
+      "file": "test-results/pre-uat-l7/routeB/002-launcher.jpg",
+      "sha256": "602bcca9110e7870403face3e1e9ed4dccf16887b9d9c0845a17ac0798333286",
+      "observation": "Real 400 ms movement collects launcher; yellow ring disappears, rocket highlighted and named in HUD, Group 24/24 nearby. Followers remain upright to right of the pickup. Red infected attack tell is distinct to the left.",
+      "qualification": "mortal manual route, before any appearance edit"
+    },
+    {
+      "file": "test-results/pre-uat-l7/routeB/003-west-advance.jpg",
+      "sha256": "d8d31605f0abdc7fad7b19d78fad8e4e56292c002389ee701aacff36fc85fe62",
+      "observation": "After reckless sustained westward movement, courier still has 100 HP, but only 11 survivors remain and 9 are nearby; explicit Survivor lost behind you warning is visible. Scorched road, blood and corpses make combat consequences legible. This is a failed escort trial, not a survival pass.",
+      "qualification": "mortal manual route; not complete"
+    },
+    {
+      "file": "test-results/pre-uat-l7/routeB/004-appearance-only-female-g0-z15.jpg",
+      "sha256": "6a52f8f1d722b243638029277774b977bdb566b1b5824f9f2b1e1357b1cac1e2",
+      "observation": "Appearance-only female gear 0, low WebGL2 zoom 1.5. Complete courier silhouette and attached launcher are visible against scorched pavement beside the corgi; no detached gear, transparency, stretched limb or black box established at game-camera scale. Combat continues around the abandoned trial, so this is not campaign or survival evidence.",
+      "qualification": "cosmetic fixture after manual trial; runtime tier logged, not reachable campaign gear proof"
+    },
+    {
+      "file": "test-results/pre-uat-l7/routeB/005-appearance-only-female-g1-z15.jpg",
+      "sha256": "2c486341d8614770daee21a11433e34b935b1cea19d839b91f5116783d58cee8",
+      "observation": "Appearance-only female gear 1, low WebGL2 zoom 1.5. Complete courier silhouette and attached launcher are visible against scorched pavement beside the corgi; no detached gear, transparency, stretched limb or black box established at game-camera scale. Combat continues around the abandoned trial, so this is not campaign or survival evidence.",
+      "qualification": "cosmetic fixture after manual trial; runtime tier logged, not reachable campaign gear proof"
+    },
+    {
+      "file": "test-results/pre-uat-l7/routeB/006-appearance-only-female-g2-z15.jpg",
+      "sha256": "af0823c041bd016091088c98064d710a51c801a5e5a8c0c9d99fd2c1df0dec07",
+      "observation": "Appearance-only female gear 2, low WebGL2 zoom 1.5. Complete courier silhouette and attached launcher are visible against scorched pavement beside the corgi; no detached gear, transparency, stretched limb or black box established at game-camera scale. Combat continues around the abandoned trial, so this is not campaign or survival evidence.",
+      "qualification": "cosmetic fixture after manual trial; runtime tier logged, not reachable campaign gear proof"
+    },
+    {
+      "file": "test-results/pre-uat-l7/routeB/007-appearance-only-female-g3-z15.jpg",
+      "sha256": "083ea1fad3f5c61b6c92f44b09aaabbbe12fb77537fcda6bd1c0cf32a82d0378",
+      "observation": "Appearance-only female gear 3, low WebGL2 zoom 1.5. Complete courier silhouette and attached launcher are visible against scorched pavement beside the corgi; no detached gear, transparency, stretched limb or black box established at game-camera scale. Combat continues around the abandoned trial, so this is not campaign or survival evidence.",
+      "qualification": "cosmetic fixture after manual trial; runtime tier logged, not reachable campaign gear proof"
+    },
+    {
+      "file": "test-results/pre-uat-l7/routeB/008-appearance-only-female-g4-z15.jpg",
+      "sha256": "64dc0d33ff90dcddd20e4123e800ba1800a39eba9fe065891057a6277ef61621",
+      "observation": "Appearance-only female gear 4, low WebGL2 zoom 1.5. Complete courier silhouette and attached launcher are visible against scorched pavement beside the corgi; no detached gear, transparency, stretched limb or black box established at game-camera scale. Combat continues around the abandoned trial, so this is not campaign or survival evidence.",
+      "qualification": "cosmetic fixture after manual trial; runtime tier logged, not reachable campaign gear proof"
+    },
+    {
+      "file": "test-results/pre-uat-l7/routeB/009-appearance-only-male-g0-z1.jpg",
+      "sha256": "9cbec983752040f7c1ca87481e366a2fd62518fa87ec220f5b1dfa049dc4ada3",
+      "observation": "Appearance-only male gear 0, low WebGL2 zoom 1. Complete bright courier silhouette, shoes, backpack and shoulder launcher beside the corgi, in a red attack ring. Orange visibility treatment covers some material detail; no detached topology established.",
+      "qualification": "cosmetic fixture; not campaign or survival evidence"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-connected-flow/fresh-high-gl/captures/fresh-high-gl-L7-departure-0-5.jpg",
+      "sha256": "6f333e55f5168000a37138beb4c78ebbec2fb61d561d802df61106318578073b",
+      "observation": "Ash-heavy high-tier convoy opening; bus intact and APC partly dithered by the occluder presentation.",
+      "qualification": "final game source; actual departure time 1.52 seconds, not filename trigger"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-connected-flow/fresh-high-gl/captures/fresh-high-gl-L7-departure-3.jpg",
+      "sha256": "5c12abce0f61d4ccea7f8b7aa5a8757b5096596034fbdc4f089ebd237822951f",
+      "observation": "High-tier convoy passes intact army truck and burning wrecks. Pink haze and dither reduce distant clarity; a distant enemy health bar remains at the left edge.",
+      "qualification": "final game source; actual departure time 3.77 seconds, not filename trigger"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-connected-flow/fresh-high-gl/captures/fresh-high-gl-L7-departure-8.jpg",
+      "sha256": "b04051f86fc83b0b2220d7cff4b96d60321c46d35c4915eec4369009b4b4e6bb",
+      "observation": "Bus remains intact while passing fence and corner building. Distant street detail is strongly pink and hazy; bus stays recognizable in the lower-right tracked frame.",
+      "qualification": "final game source; actual departure time 8.18 seconds, not filename trigger"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-connected-flow/gear1-high-gpu/captures/gear1-high-gpu-L7-corridor-t3919-high-z1-5.jpg",
+      "sha256": "6a7b6c673854079a0316224d3d67744959deb1a0d210bb682088760bc91459c9",
+      "observation": "High WebGPU, male gear 1, zoom 1.5: courier/corgi remain outlined at a fenced corner and HUD says Group 24/24. Several followers have very low, legs-forward poses; this frame prompted an additional rendered-clip/knockdown audit rather than an automatic all-upright claim.",
+      "qualification": "preceding build; pose diagnosis pending"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-connected-flow/gear1-high-gpu/captures/gear1-high-gpu-L7-corridor-t3919-high-z1.jpg",
+      "sha256": "05e68f4b460219d3fc993a1493e5e0496a834e8ceee1cd69aecc1ee7426c74d9",
+      "observation": "Same physical high WebGPU corner at zoom 1: several knees/feet project forward and body height is low, alongside upright neighbours. All nearby roster HP is 100, which alone cannot distinguish a pose from a knockdown. No detached limb topology established.",
+      "qualification": "preceding build; not proof that friendly effects are the only pose cause"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-connected-flow/preset-low-gpu/captures/preset-low-gpu-L7-corridor-t3917-low-z1.jpg",
+      "sha256": "a189e7753475a9897ba5e82ff5d9f0c5982c6406ea112f91abb8a352f1dbf625",
+      "observation": "Low WebGPU gear 4 male at zoom 1: upright, closely packed followers with individual teal bars follow the orange-highlighted courier and corgi around the same fenced street corner. Nearby foreground fence fades coherently; no black void or missing fence segment established.",
+      "qualification": "preceding build; low boarding refinement not yet applied"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-release/fresh-high-gl/captures/fresh-high-gl-L7-departure-3.jpg",
+      "sha256": "31eea9a3b8b77d854f823ffe8b1c3c182548a3932afda173fd9b3a415b4184ef",
+      "observation": "High WebGL2 departure: no health bars, intact tracked bus and truck; dense pink haze and ash soften the city.",
+      "qualification": "personally opened; 2b74/preceding frozen source, before corpse routing5dba; captions limit the claim"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-release/preset-low-gpu/captures/preset-low-gpu-L7-departure-3.jpg",
+      "sha256": "cb9186cad51a5475191eb6af46a7abfaaa83206de36bde115fa6bea42dc773b2",
+      "observation": "Low WebGPU departure: no health bars, readable whole truck/vehicles and bus passengers; clearer distant detail than high.",
+      "qualification": "personally opened; 2b74/preceding frozen source, before corpse routing5dba; captions limit the claim"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-frozen/fresh-high-gl/captures/fresh-high-gl-L7-rocket-opening-t4.jpg",
+      "sha256": "de1284feaabe702a9ba3a5cb0fac239bc854cc1c590c24ac53c713083680b082",
+      "observation": "Clear yellow launcher circle, intact truck cab/chassis, orange courier and corgi; intro subtitle covers the centre.",
+      "qualification": "personally opened; 2b74/preceding frozen source, before corpse routing5dba; captions limit the claim"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-frozen/fresh-high-gl/captures/fresh-high-gl-L7-corridor-t3948-high-z1.jpg",
+      "sha256": "9d77f2f375d23fbd0357a84700ecc097e7ec7ee98eb5744c60772755f658e101",
+      "observation": "Upright column with teal pips over visible follower heads through street fence; HUD reports 24 nearby.",
+      "qualification": "personally opened; 2b74/preceding frozen source, before corpse routing5dba; captions limit the claim"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-frozen/preset-low-gpu/captures/preset-low-gpu-L7-corridor-t3910-low-z1.jpg",
+      "sha256": "eee735b6e8cde8cfde977dd41600f5dc113604756d286f5d9e7e5e8a618d9ea8",
+      "observation": "Low-quality column upright, teal pips readable, courier and corgi distinguishable.",
+      "qualification": "personally opened; 2b74/preceding frozen source, before corpse routing5dba; captions limit the claim"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-frozen/preset-low-gpu/captures/preset-low-gpu-L7-departure-3.jpg",
+      "sha256": "524e48fb1ae5f83d07d2216dc8149d1e0ba67c19d2ba20041d8465b64444a6e8",
+      "observation": "Before cinematic UI fix: two red Alpha bars leak into the otherwise HUD-free bus departure.",
+      "qualification": "personally opened; 2b74/preceding frozen source, before corpse routing5dba; captions limit the claim"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-frozen/gear1-high-gpu/captures/gear1-high-gpu-L7-corridor-t3925-high-z1-5.jpg",
+      "sha256": "7bf4a88fba3d3c5105c580db94ef00494879566e696fb5499329586be018507f",
+      "observation": "Close zoom: compact teal pips remain legible over the dense upright column; group24 nearby; stale wait warning remains on this earlier driver.",
+      "qualification": "personally opened; 2b74/preceding frozen source, before corpse routing5dba; captions limit the claim"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-release/gear2-high-gl/captures/gear2-high-gl-L7-t9682.jpg",
+      "sha256": "c6a90c164c53b449bd4f4d85d998be7b17224675d35ad40881709df393ba57c7",
+      "observation": "Earlier part of the failed gear-2 route: courier and compact column, all24 nearby, wait warning; does not itself show the later corpse obstruction.",
+      "qualification": "personally opened; 2b74/preceding frozen source, before corpse routing5dba; captions limit the claim"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-release/gear2-high-gl/captures/gear2-high-gl-L7-t26805.jpg",
+      "sha256": "2cfd8a07b407db89047059178114e84809f4b06e691a9a4b48dea28dcdabc0b0",
+      "observation": "Late failed gear-2 route: HUD23/24nearby with19m straggler, courier beside a live Alpha and some followers; dead bodies at right. The 15-body jam is established by later position ledger, not this view.",
+      "qualification": "personally opened; 2b74/preceding frozen source, before corpse routing5dba; captions limit the claim"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-release/fresh-high-gl/captures/fresh-high-gl-L7-departure-0-5.jpg",
+      "sha256": "797ab149201a5461be79dd2fb1abc03085fb0cc44b560aa47f233a3c065c830d",
+      "observation": "fresh-high-gl, departure 0-5 requested trigger: clean HUD-free bus shot, intact lit vehicle/passengers and street fence/building; no map-edge void. Actual trigger/capture ticks are in metadata; gray body-like bus-edge form remains unclassified.",
+      "qualification": "personally opened; 2b74/preceding frozen source, before corpse routing5dba; captions limit the claim"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-release/fresh-high-gl/captures/fresh-high-gl-L7-departure-8.jpg",
+      "sha256": "b0e5b3224aff1b5645cf00f0166be39a114eda7b0d2480533915c4b555612762",
+      "observation": "fresh-high-gl, departure 8 requested trigger: clean HUD-free bus shot, intact lit vehicle/passengers and street fence/building; no map-edge void. Actual trigger/capture ticks are in metadata; gray body-like bus-edge form remains unclassified.",
+      "qualification": "personally opened; 2b74/preceding frozen source, before corpse routing5dba; captions limit the claim"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-release/preset-low-gpu/captures/preset-low-gpu-L7-departure-0-5.jpg",
+      "sha256": "e18ee5e3b5f7fe9065999a6c66a776ce73af3beb72f208a6a2b4bb0b3c60c419",
+      "observation": "preset-low-gpu, departure 0-5 requested trigger: clean HUD-free bus shot, intact lit vehicle/passengers and street fence/building; no map-edge void. Actual trigger/capture ticks are in metadata; gray body-like bus-edge form remains unclassified.",
+      "qualification": "personally opened; 2b74/preceding frozen source, before corpse routing5dba; captions limit the claim"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-release/preset-low-gpu/captures/preset-low-gpu-L7-departure-8.jpg",
+      "sha256": "a9598f3cac5709905e5155a2f78d5b6d8514bac919c6f28dc96d22f814a35a43",
+      "observation": "preset-low-gpu, departure 8 requested trigger: clean HUD-free bus shot, intact lit vehicle/passengers and street fence/building; no map-edge void. Actual trigger/capture ticks are in metadata; gray body-like bus-edge form remains unclassified.",
+      "qualification": "personally opened; 2b74/preceding frozen source, before corpse routing5dba; captions limit the claim"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-corpse-final/fresh-high-gl/captures/fresh-high-gl-L7-rocket-opening-t3.jpg",
+      "sha256": "1abef197ea93d4dcda8403bf16c031f3d0dc8d4bf1c2b4a667d68c31539a1359",
+      "observation": "Final5dba opening: launcher circle clear, courier/corgi and truck readable, subtitle partly covers the ring. QA-only Controls/Sound strip visible at top; not shipping presentation proof.",
+      "qualification": "personally opened; final game5dba, live physical run"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-corpse-final/fresh-high-gl/captures/fresh-high-gl-L7-corridor-t309-high-z1-5.jpg",
+      "sha256": "cbff5c0cbc4aec2b154a82072988aa39f7d66a7cb6b12dd8e20b8f5f54b6bfcd",
+      "observation": "Final5dba close zoom first rocket: orange cloud and soft shock disc, upright dense follower column with individual teal pips, red enemy bars distinct, HUD24/24 nearby. QA-only strip visible. This is an opening frame, not completion evidence.",
+      "qualification": "personally opened; final game5dba, live physical run"
+    },
+    {
+      "file": "test-results/pre-uat-l7/review-sheet.jpg",
+      "sha256": "08223b4be3584315ab604d54bbb8738da61135aba47b3f9a72ce335524fe96a7",
+      "observation": "Personally opened six-panel QA contact sheet: clear before/after pickup spacing, upright first-blast column, and no leaked cinematic bars; captions identify distinct runs/revisions. This is not a pixel-matched asset comparison or a completion claim.",
+      "qualification": "contact sheet; source observations and hashes retained"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-corpse-final/fresh-high-gl/captures/fresh-high-gl-L7-departure-3.jpg",
+      "sha256": "bcfb4fe6effafee6b95745d42618309ee4488822b7c09f8861c5c40630a14cf7",
+      "observation": "Final5dba high WebGL2 departure: zero world bars (metadata count0), bus passengers/windows/panels and truck/APC intact at this distance. Very dense pink haze/ash and dithered foreground. QA-only Controls/Sound strip persists; two dark ground-like discs remain visually unclassified, not asserted as a stretched-body fix.",
+      "qualification": "personally opened; completion event16/24 rescued,0 deaths; requested3s label is not exact frame timing"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-corpse-final/preset-low-gpu/captures/preset-low-gpu-L7-corridor-t3926-low-z1-5.jpg",
+      "sha256": "93a27b05e9eaaece3c94872e3ad7a16c3209ef4c8f973d2d6fff4c24792420e3",
+      "observation": "Final5dba low WebGPU close zoom: upright walking column through the fenced lane; individual teal pips over visible heads including lower edge; courier/corgi clear, HUD24/24 nearby. Some overlapping running legs are not evidence of knockdown by themselves.",
+      "qualification": "personally opened; final game5dba, preceding driver; completed24/24 rescued,0deaths"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-corpse-final/preset-low-gpu/captures/preset-low-gpu-L7-departure-3.jpg",
+      "sha256": "394c2a012f377b2bb74467c2332837b0a777a2f8fdde75ac4d2fcb179866345d",
+      "observation": "Final5dba low WebGPU departure: clean world-bar-free shot with whole truck, APC, bus windows/passengers; lower-right bus crop and dense pink haze. Gray bus-edge form remains unclassified; no causal tailgate asset fix asserted.",
+      "qualification": "personally opened; final game5dba, preceding driver; completed24/24 rescued,0deaths"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-driver-final-b/fresh-high-gl/captures/fresh-high-gl-L7-18081-stuck-navigating.jpg",
+      "sha256": "4b31cf55d2b8ff30b330ead42c719db7125860be9af735c9e3871aef9f429e46",
+      "observation": "Corrected-driver final-game near-bus pause: courierHP79 beside live Alpha and red attack ring, dense dead-body debris, followers/pips behind, HUDbus15m/aboard0. Recorded input at17982\u201318201 is zero movement with no friendly blockingBody recorded; this is a combat stand, not evidence closing the historical moving-input boxed-in jam.",
+      "qualification": "personally opened; case later completes22/24 rescued,2courier deaths, max no-progress27.15s"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-driver-final-a/gear3-low-gpu/captures/gear3-low-gpu-L7-corridor-t8012-low-z1-5.jpg",
+      "sha256": "39518e043849e2a6e012ad8bb81fd2058ad2c734a9ef366db7ae4d164ceaa3e5",
+      "observation": "Final gear3 low WebGPU close zoom: group packed by pharmacy fence, readable teal pips; HUD18/18 nearby already records six follower losses, courierHP100. Live red enemy bar among debris; this frame does not establish a friendly-boxing softlock.",
+      "qualification": "personally opened; game5dba / driver41592; case still running at review"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-driver-final-b/gear1-high-gpu/captures/gear1-high-gpu-L7-corridor-t3931-high-z1-5.jpg",
+      "sha256": "03b0aef5072bd13354247129ae529fa0401b8ffce45bf7161b69d1499baebc87",
+      "observation": "Final gear1 high WebGPU close zoom: two bright orange blast clouds and soft shock discs, dense upright followers with teal pips, HUD24/24 nearby, courierHP50. Fire/haze obscure some limbs; not a no-clipping or no-damage qualification.",
+      "qualification": "personally opened; game5dba / driver41592; case still running at review"
+    },
+    {
+      "file": "test-results/pre-uat-l7/physical-driver-final-a/gear3-low-gpu/captures/gear3-low-gpu-L7-t13888.jpg",
+      "sha256": "79867c418ff058d347f01abfab32d675d6f72d7726d7dbf599636f4c4009c725",
+      "observation": "Final failed gear3: courier and16-person column wedged along pharmacy fence/building beside armored car; teal bars remain readable; HUD16/16nearby and corridor still74m away. Real repeated+X/blockedBy53 trace, not the still alone, establishes boxing. This aligned capture seeds the isolated 3cm/5s replay.",
+      "qualification": "personally opened; unfinished final case, P1 remains open"
+    }
+  ]
+}

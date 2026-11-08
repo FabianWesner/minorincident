@@ -117,6 +117,10 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         const bodies = [...g.world.entities.iterate()].filter(e => e.health.current <= 0 && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) <= 12).slice(0, 30).map(e => ({
           id: e.id, archetype: e.archetype, at: { ...e.transform }, corpse: !!e.corpse, state: e.infected?.state,
           lod: figures.get(e.id)?.lod, clip: figures.get(e.id)?.clip, drawn: figures.get(e.id)?.drawn }));
+        const followers = (g.world.l7Encounters?.state.roster ?? []).filter(r => r.status === 'following').map(r => {
+          const e = g.world.entities.get(r.id)!, figure = figures.get(r.id);
+          return { id: e.id, hp: e.health.current, at: { ...e.transform }, state: e.civilian?.state, knockedUntil: e.civilian?.knockedUntil, clip: figure?.clip, lod: figure?.lod, drawn: figure?.drawn, joints: figure?.joints };
+        });
         const cue = document.querySelector<HTMLElement>('[data-testid=survivor-world-cue]'), box = cue?.getBoundingClientRect();
         const alarmCue = cue ? { text: cue.innerText, hidden: cue.hidden, alarm: cue.dataset.alarm, opacity: getComputedStyle(cue).opacity, box: box && { x: box.x, y: box.y, width: box.width, height: box.height } } : null;
         const marker = g.view.marker, mission = g.world.missions;
@@ -130,7 +134,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
           tracker: hud('mission-tracker'), pin: hud('mission-marker'), minimap: hud('minimap-objective'), route: hud('minimap-route') };
         const companions = [...g.world.entities.iterate()].filter(e => !!e.companion).map(e => ({ id: e.id, archetype: e.archetype, health: { ...e.health }, hidden: !!e.hidden, passengerOf: e.passengerOf, state: e.companion?.state, transform: { ...e.transform } }));
         const vehicles = [...(g.world.vehicles?.cars.values() ?? [])].filter(c => c.entity.id === g.world.vehicles?.active || c.entity.vehicle?.driver != null || (c.entity.vehicle?.attached.length ?? 0) > 0 || (c.entity.vehicle?.passengers?.length ?? 0) > 0).map(c => ({ id: c.entity.id, archetype: c.entity.archetype, transform: { ...c.entity.transform }, vehicle: c.entity.vehicle }));
-        return { tick: g.world.tick, objective, companions, vehicles, alarmCue, paused: g.clock.paused, backend: render.backend, quality: render.quality, healthBars: render.healthBars, bodies, player: { x: p.x, y: p.y, z: p.z }, camera: g.view.view.getState(), audit: g.view.districts?.seeThroughAudit(), courierForeground: g.view.courierForeground };
+        return { tick: g.world.tick, objective, companions, vehicles, alarmCue, paused: g.clock.paused, backend: render.backend, quality: render.quality, healthBars: render.healthBars, bodies, followers, player: { x: p.x, y: p.y, z: p.z }, camera: g.view.view.getState(), audit: g.view.districts?.seeThroughAudit(), courierForeground: g.view.courierForeground };
       }), null, 1));
     } catch { /* page busy */ }
     finally { if (resume) await page.evaluate(() => window.__SS__!.resume()).catch(() => undefined); }
@@ -141,7 +145,8 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     const world = (window as unknown as { __SCENE__: { game: Game } }).__SCENE__.game.world;
     const followedActors = [...world.entities.iterate()].filter(e => e.id !== 1 && !e.companion && !e.hidden && !e.infection && !e.infected && !e.corpse && e.health.current > 0 &&
       (e.civilian?.survivor?.mode === 'follow' || e.civilian?.ally?.follow?.targetId === 1 || e.escort?.state === 'follow')).map(e => ({ id: e.id, hp: e.health.current, maxHp: e.health.max }));
-    return { captureTick: world.tick, actualZoom: render.camera.zoom, targetZoom: render.camera.targetZoom, actualQuality: render.quality, healthBars: render.healthBars, followedActors };
+    const courier = world.entities.get(1)?.survivor;
+    return { captureTick: world.tick, actualZoom: render.camera.zoom, targetZoom: render.camera.targetZoom, actualQuality: render.quality, survivor: courier && { variant: courier.variant, gearTier: courier.gearTier }, healthBars: render.healthBars, followedActors };
   });
   const issue = async (severity: Issue['severity'], kind: string, text: string, shot = true, frame?: LongFrame): Promise<Issue> => {
     const e = eyes, item: Issue = { level: frame?.level ?? e?.level ?? '?', tick: frame?.tick ?? e?.tick ?? -1, x: +(frame?.x ?? e?.player?.x ?? 0).toFixed(1), z: +(frame?.z ?? e?.player?.z ?? 0).toFixed(1), severity, kind, text, captures: [], step: frame ? null : e?.step ?? null, objective: frame ? '' : e?.objective ?? '' };
@@ -161,6 +166,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   let acceptanceTick = -Infinity;
   let l6FightCaptured = false, l6RetreatFightCaptured = false;
   const l6ShieldPhotos = new Set<number>();
+  const l7DeparturePhotos = new Set<number>();
   let l6GatePhoto = false;
   let l5GuardStarted = false, l5GuardDone = false, l5MetroPhoto = false;
   let l6DeathExercise = process.env.PLAYTEST_L6_DIE_ONCE === '1';
@@ -171,6 +177,17 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   const l6GroupMemory: { rear: { x: number; z: number; tick: number } | null } = { rear: null };
   const see = async () => {
     eyes = await observeWithin(page.evaluate(look));
+    if (eyes.level === 'L7' && process.env.PLAYTEST_L7_DEPARTURE_CAPTURES === '1') {
+      const shot = await page.evaluate(() => {
+        const w = (window.__SCENE__ as unknown as { game: Game }).game.world, d = w.l7Departure?.state;
+        return d?.phase === 'departing' ? { tick: w.tick, seconds: (w.tick - d.startedAt) / 60, bus: { ...w.entities.get(d.busId)!.transform }, boarded: [...d.boarded] } : null;
+      });
+      if (shot) for (const seconds of [.5, 3, 8]) if (shot.seconds >= seconds && !l7DeparturePhotos.has(seconds)) {
+        l7DeparturePhotos.add(seconds);
+        const file = await capture(`L7-departure-${seconds}`);
+        log({ l7DeparturePhoto: { file, requestedSeconds: seconds, ...shot, ...await photoPresentation() } });
+      }
+    }
     if (process.env.PLAYTEST_L6_SHIELD_CAPTURES === '1' && eyes.level === 'L6' && eyes.phase === 'playing' && eyes.player && eyes.player.x > 50 && eyes.player.x < 115 && l6ShieldPhotos.size < 2) {
       const hit = await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'combat.hit' && e.sourceId === 1 && e.shieldBreak).at(-1));
       if (hit && eyes.tick - hit.tick < 60 && !l6ShieldPhotos.has(hit.tick)) {
@@ -540,7 +557,13 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   const finishLevel = async (e: Eyes) => {
     if (!run) return;
     run.finished = true; run.wallSeconds = Math.round((Date.now() - wallStart) / 1000); run.simSeconds = Math.round((e.tick - tickStart) / 60);
-    const deaths = await page.evaluate(level => { const m = window.__SS__!.missions.state(); return m?.id === level ? m.stats.deaths : null; }, run.level);
+    const deaths = await page.evaluate(level => {
+      // Auto-transition may already have replaced the mission by this poll.
+      // Its completion event retains deaths missed between physical samples.
+      const completed = (window as unknown as { __playtestCompleted?: { level: string; result: { deaths: number } }[] }).__playtestCompleted?.filter(row => row.level === level).at(-1);
+      if (completed) return completed.result.deaths;
+      const m = window.__SS__!.missions.state(); return m?.id === level ? m.stats.deaths : null;
+    }, run.level);
     if (deaths !== null) run.deaths = deaths;
     run.attacks = await page.evaluate(() => ({ ...(window as unknown as { __playtestAttacks: Record<string, number> }).__playtestAttacks }));
     run.weaponsEnd = e.player?.weapons ?? []; prevWeapons = run.weaponsEnd;
@@ -1218,9 +1241,12 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       if (e.level === 'L7' && process.env.PLAYTEST_L7_ROSTER_AUDIT === '1') log({ l7Roster: await page.evaluate(() => {
         const w = (window.__SCENE__ as unknown as { game: Game }).game.world, s = w.l7Encounters?.state, p = w.entities.get(1)!.transform;
         const live = s?.roster.filter(r => r.status === 'following') ?? [];
-        return { tick: w.tick, following: live.length, dead: s?.roster.filter(r => r.status === 'dead').length, turned: s?.roster.filter(r => r.status === 'turned').length,
+        return { level: w.scenario, tick: w.tick, following: live.length, dead: s?.roster.filter(r => r.status === 'dead').length, turned: s?.roster.filter(r => r.status === 'turned').length,
           near18: live.filter(r => { const f = w.entities.get(r.id); return f && Math.hypot(f.transform.x - p.x, f.transform.z - p.z) <= 18; }).length,
-          boarded: w.l7Departure?.state.boarded.length ?? 0, alarm: s?.alarm && w.tick < s.alarm.until ? s.alarm.text : null };
+          boarded: w.l7Departure?.state.boarded.length ?? 0, departure: w.l7Departure?.state.phase, blockedBy: w.solids.blockingBody(1)?.id, move: { ...w.inputFrame.move },
+          survivor: { variant: w.entities.get(1)!.survivor!.variant, gearTier: w.entities.get(1)!.survivor!.gearTier },
+          followers: live.map(r => { const f = w.entities.get(r.id)!; return { id: r.id, x: f.transform.x, z: f.transform.z, hp: f.health.current, state: f.civilian?.state, knockedUntil: f.civilian?.knockedUntil, blockedBy: w.solids.blockingBody(f.id)?.id }; }),
+          alarm: s?.alarm && w.tick < s.alarm.until ? s.alarm.text : null };
       }).catch(() => null) });
       if (e.level === 'L5' && process.env.PLAYTEST_METRO_AUDIT === '1') {
         const metro = await page.evaluate(() => {
@@ -1398,7 +1424,10 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       // group instead means the courier strayed; the column keeps walking.
       const rememberedRear = l6GroupMemory.rear && { x: Math.min(263, l6GroupMemory.rear.x + (/group waits|Bring the injured/i.test(e.objective) ? 0 : 2.2 * Math.max(0, e.tick - l6GroupMemory.rear.tick) / 60)), z: l6GroupMemory.rear.z };
       const groupTarget = coverRear && rememberedRear ? { x: rememberedRear.x + 3, z: rememberedRear.z }
-        : e.level === 'L7' && e.followerWarning && e.cue ? e.cue : visibleGroupTarget(e.level, e.player, e.allies, 8, e.step);
+        // A repeated bark can outlive the missing-member condition. Follow
+        // the objective's actual group check instead of turning back when it
+        // already says everyone is nearby (or while boarding owns the group).
+        : e.level === 'L7' && e.step === 'corridor' && /Waiting for a survivor/.test(e.objective) && e.followerWarning && e.cue ? e.cue : visibleGroupTarget(e.level, e.player, e.allies, 8, e.step);
       if (e.level === 'L6' && e.step === 'exit' && ring && !e.enemies.some(b => b.d < 3)
         && (!groupTarget || Math.hypot(groupTarget.x - ring.x, groupTarget.z - ring.z) < ringDist!)) {
         // The exit is above two visible stair runs. Clipped ground clicks can

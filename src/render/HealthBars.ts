@@ -1,4 +1,4 @@
-import { Box3, DataTexture, RGBAFormat, type Texture, Group, InstancedMesh, Matrix4, MeshBasicNodeMaterial, PlaneGeometry, Vector3, NoToneMapping, SRGBColorSpace, type PerspectiveCamera } from 'three/webgpu';
+import { Box3, Frustum, DataTexture, RGBAFormat, type Texture, Group, InstancedMesh, Matrix4, MeshBasicNodeMaterial, PlaneGeometry, Vector3, NoToneMapping, SRGBColorSpace, type PerspectiveCamera } from 'three/webgpu';
 import { color as colorNode, vec4, renderOutput, uniform, texture, viewportUV, Fn, Discard } from 'three/tsl';
 import { Ray, ShapeType, type Collider } from '@dimforge/rapier3d-compat';
 import { infectedDefinitions } from '../data/infected';
@@ -42,6 +42,7 @@ export class HealthBars extends Group {
   private readonly fillGain = uniform(1);
   private readonly bounds = new Box3();
   private readonly projection = new Matrix4();
+  private readonly frustum = new Frustum();
   private readonly point = new Vector3();
   private readonly center = new Vector3();
   private readonly barScale = new Vector3();
@@ -79,6 +80,7 @@ export class HealthBars extends Group {
     this.fillGain.value = cityNight ? nightHealthBarGains.fill : 1;
     if (__QA_HOOKS__) this.probes.length = 0;
     for (const layer of [...this.enemyMeshes, ...this.followerMeshes]) layer.count = 0;
+    if (this.world.l7Departure?.cinematic) return;
     const player = this.world.entities.get(1); if (!player) return;
     let followerCount = 0;
     for (const e of this.world.entities.iterate()) if (isFollower(e)) followerCount++;
@@ -113,6 +115,7 @@ export class HealthBars extends Group {
       for (const target of this.l10Bars) this.l4BarIds.add(target.id);
     }
     this.projection.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
+    this.frustum.setFromProjectionMatrix(this.projection);
     this.heroScreen.left = Infinity; this.heroScreen.top = Infinity; this.heroScreen.right = -Infinity; this.heroScreen.bottom = -Infinity;
     if (this.courierBounds?.(this.heroBounds) ?? !!pickBodies.bounds(player.id, this.heroBounds)) {
       for (const x of [this.heroBounds.min.x, this.heroBounds.max.x]) for (const y of [this.heroBounds.min.y, this.heroBounds.max.y]) for (const z of [this.heroBounds.min.z, this.heroBounds.max.z]) {
@@ -131,17 +134,19 @@ export class HealthBars extends Group {
       // Riot/Alpha/Mega bars remain mandatory (L4-11/G-24, E32), including healthy threats.
       if (capped && e.faction === 'infected' && !mandatoryBar(e) && !this.l4BarIds.has(e.id)) continue;
       if (!pickBodies.bounds(e.id, this.bounds)) continue;
+      const follower = isFollower(e), evacuee = follower && this.world.scenario === 'L7';
       // E32-AC09: the Mega's bar is larger; regular Alphas retain their E07 size and shared pool.
       const size = barSize(width, height, !!e.infected?.pursuit);
       // Use the actual displayed bounds, including pose blending and interpolated movement.
       this.bounds.getCenter(this.center);
       this.point.copy(this.center).project(camera);
-      if (this.point.z < -1 || this.point.z > 1 || Math.abs(this.point.x) > 1 || Math.abs(this.point.y) > 1) continue;
+      if ((this.point.z < -1 || this.point.z > 1 || Math.abs(this.point.x) > 1 || Math.abs(this.point.y) > 1) &&
+          !(evacuee && this.frustum.intersectsBox(this.bounds))) continue;
       const projectedTop = pickBodies.top(e.id, this.projection);
       if (projectedTop === null) continue;
       const top = (1 - projectedTop) * height / 2;
       let x = (this.point.x + 1) * width / 2, y = top - 2 - (size.height + 4) / 2;
-      const follower = isFollower(e), pip = follower && compactFollowers;
+      const pip = follower && compactFollowers;
       const displaySize = pip ? followerPipSize : size;
       if (pip) y = top - 2 - displaySize.height / 2;
       // A visible body can extend above the frame at close zoom. Keep its
@@ -153,7 +158,7 @@ export class HealthBars extends Group {
       // Preserve every enemy bar, but move bars crossing the courier's body
       // above her silhouette. Dense hordes previously painted red bars over it.
       if ((follower || e.faction === 'infected') && x + displaySize.width / 2 >= this.heroScreen.left - 2 && x - displaySize.width / 2 <= this.heroScreen.right + 2 && y + displaySize.height / 2 >= this.heroScreen.top - 2 && y - displaySize.height / 2 <= this.heroScreen.bottom + 2) {
-        if (pip) continue;
+        if (pip && !evacuee) continue;
         y = this.heroScreen.top - 4 - displaySize.height / 2;
       }
       if (x - displaySize.width / 2 - (pip ? 0 : 2) < 0 || x + displaySize.width / 2 + (pip ? 0 : 2) > width || y - displaySize.height / 2 < 0 || y + displaySize.height / 2 > height) continue;
@@ -165,8 +170,10 @@ export class HealthBars extends Group {
       Object.assign(this.ray.origin, camera.position); Object.assign(this.ray.dir, this.direction);
       const physics = this.world.physics.world;
       // Cuboids include solid buildings, doors, vehicles and displaced props; ignore actor capsules and sensors.
-      if (physics?.castRay(this.ray, Math.max(0, distance - .01), true, undefined, undefined, undefined, undefined, this.solidCollider)) continue;
-      if (occluded?.(this.center)) continue;
+      // The known L7 escort keeps its individual health UI through fence/wall
+      // reveals. A static head ray otherwise erases bars above visible bodies.
+      if (!evacuee && physics?.castRay(this.ray, Math.max(0, distance - .01), true, undefined, undefined, undefined, undefined, this.solidCollider)) continue;
+      if (!evacuee && occluded?.(this.center)) continue;
       this.center.copy(this.point);
       this.center.x = x / width * 2 - 1;
       this.center.y = 1 - y / height * 2;

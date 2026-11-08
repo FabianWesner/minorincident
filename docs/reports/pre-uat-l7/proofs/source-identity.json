@@ -1,0 +1,35 @@
+{
+  "baseline": "6bcc03f4",
+  "final": "5dba25b5b50e84adc86ad231d7965d5b20c8513a",
+  "files": {
+    "src/sim/combat/Damage.ts": {
+      "baselineFile": "baseline-0.txt",
+      "baselineSha256": "6fb5fe057d461f25d5687ff9e8b5d49f1815a7d545725f3db4e9843f12133421",
+      "finalSha256": "ead29f06e4ac7ac9b770540038cad7a701f286aa00e5463dc1f3e8786ca580b5"
+    },
+    "src/sim/missions/LevelSevenEncounters.ts": {
+      "baselineFile": "baseline-1.txt",
+      "baselineSha256": "2b6c34b5214fe0db0599f79018cdc953bf81e679be096447677252fcb2c6713a",
+      "finalSha256": "b22fc4504342b290a372be705957c632e2ca0a1a6452d5d93d770977b031d5dd"
+    },
+    "src/render/HealthBars.ts": {
+      "baselineFile": "baseline-2.txt",
+      "baselineSha256": "0b2595dcc81505e88bdf9a2f6d442aed99e493606c0583ae5d98d6f60825c22f",
+      "finalSha256": "7df826c9bb11950c2173bcf5c6d153014cb99462e80d9a04ae5d9fcbb902c143"
+    },
+    "src/sim/outbreak/Outbreak.ts": {
+      "baselineFile": "baseline-3.txt",
+      "baselineSha256": "09f7912ad5b3c1db36a3fc5c2e6075d5df86481fea0bead058ce262dad32937d",
+      "finalSha256": "f140e8f019d92bda3addc9c0f40b81e073b969a7d0fd6352d9691d2be562b4df"
+    }
+  },
+  "runtimeChangedFiles": [
+    "src/render/HealthBars.ts",
+    "src/sim/combat/Damage.ts",
+    "src/sim/missions/LevelSevenEncounters.ts",
+    "src/sim/outbreak/Outbreak.ts"
+  ],
+  "gameRevision": "5dba25b5b50e84adc86ad231d7965d5b20c8513a",
+  "scope": "All changed src/public runtime files covered; no asset changes.",
+  "validationToolingHead": "41592ac73e05fd2c543c27d72c6ba4746044edb9"
+}

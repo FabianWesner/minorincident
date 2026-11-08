@@ -1,14 +1,17 @@
-import { expect } from 'vitest';
+import { expect, vi } from 'vitest';
 import { loadLevel } from '../../tools/sim-runner/levels';
 import { SimWorld } from '../../src/sim/world/SimWorld';
 import { action } from '../../src/data/actions/catalog';
 import { combatArchetypes, ttkBands } from '../../src/data/balance';
-import { BoxGeometry, Group, Mesh } from 'three/webgpu';
+import { BoxGeometry, Box3, Group, Mesh, PerspectiveCamera, Vector3 } from 'three/webgpu';
+import { HealthBars } from '../../src/render/HealthBars';
+import { pickBodies } from '../../src/render/characters/PickBodies';
 import { removeL7LakeWall } from '../../src/render/district/l7LakeWall';
 import fair from '../../public/assets/layouts/D-FAIR.layout.json';
 import type { DistrictLayout } from '../../src/levels/districts/types';
 import { goalReach } from '../../src/sim/world/TrapRescue';
 import { emptyInput } from '../../src/input/InputFrame';
+import { actorRadius } from '../../src/sim/world/SolidRegistry';
 
 function checkWallGeometry() {
   const geometry = new BoxGeometry(170, .9, .5), wall = new Mesh(geometry), neighbour = new Mesh(geometry), root = new Group();
@@ -26,8 +29,22 @@ export async function checkL7Navigation() {
   await checkFollowerBites();
   await checkCorpseCatchup();
   await checkPharmacyCatchup();
+  await checkL7CourierYield();
   const w = await loadLevel('L7', 29);
   try {
+    const launcher = [...w.entities.iterate()].find(e => e.pickup && 'actionId' in e.pickup && e.pickup.actionId === 'weapon.rocket-launcher');
+    expect(launcher, 'the authored launcher remains present for the approach').toBeDefined();
+    for (const e of w.infected!.active) e.hidden = true;
+    for (let tick = 0; tick < 300; tick++) {
+      w.applyInput(emptyInput(), 'keyboard'); w.update();
+      expect(w.missions!.state.steps.rocket.status, 'the uncollected launcher stays active').toBe('active');
+      for (const row of w.l7Encounters!.state.roster) {
+        if (row.status !== 'following') continue;
+        const e = w.entities.get(row.id)!;
+        expect(Math.hypot(e.transform.x - launcher!.transform.x, e.transform.z - launcher!.transform.z), `survivor ${row.id} stays outside the 2 m objective ring plus body clearance at tick ${w.tick}`).toBeGreaterThanOrEqual(2.35);
+      }
+    }
+    checkL7FollowerBars(w);
     // The loading renderer must see the actual resident models at tick zero;
     // discovering their pedestrian looks on the first AI tick builds new
     // living/corpse shaders during the launcher pickup (L7-01).
@@ -95,11 +112,109 @@ export async function checkL7Navigation() {
   } finally { w.dispose(); }
 }
 
+/** Opening a rocket gap must not fling the escorted humans into that gap. */
+function checkFriendlyRocketReaction(w: SimWorld) {
+  const follower = w.entities.get(w.l7Encounters!.state.roster[0].id)!, before = { ...follower.transform }, health = follower.health.current;
+  const enemy = w.infected!.active.find(e => e.archetype === 'infected.runner')!;
+  const point = w.solids.find({ x: before.x + 1.3, z: before.z, y: before.y }, .35, enemy.id, 2, true)!;
+  expect(point).not.toBeNull();
+  expect(w.solids.relocate(enemy, point, 'test.rocket-target', 0)).toBe(true);
+  const enemyHealth = enemy.health.current;
+  w.explosions!.blast('explosion.rocket', before, { sourceId: 1, actionId: 'weapon.rocket-launcher', fires: false });
+  expect(follower.health.current).toBe(health);
+  expect(follower.civilian!.knockedUntil, 'friendly rocket splash keeps living followers upright').toBeLessThanOrEqual(w.tick);
+  expect(follower.transform).toEqual(before);
+  expect(enemy.health.current, 'the same rocket still damages infected').toBeLessThan(enemyHealth);
+}
+
+/** G-12: known evacuees keep individual bars through the same cut fences
+ * that reveal their bodies; enemy visibility remains covered by its own test. */
+function checkL7FollowerBars(w: SimWorld) {
+  const boxes = new Map(w.l7Encounters!.state.roster.map((r, i) => {
+    const x = (i % 6 - 2.5) * 1.2, z = (Math.floor(i / 6) - 1.5) * 1.2;
+    return [r.id, new Box3(new Vector3(x - .3, 0, z - .3), new Vector3(x + .3, 1.5, z + .3))] as const;
+  }));
+  const camera = new PerspectiveCamera(35, 1280 / 720, .1, 600);
+  camera.position.set(10, 14, 20); camera.lookAt(0, 0, 0); camera.updateMatrixWorld();
+  const bounds = vi.spyOn(pickBodies, 'bounds').mockImplementation((id, out) => boxes.has(id) ? out.copy(boxes.get(id)!) : null);
+  const top = vi.spyOn(pickBodies, 'top').mockImplementation(id => boxes.has(id) ? boxes.get(id)!.max.clone().project(camera).y : null);
+  const ray = vi.spyOn(w.physics.world!, 'castRay').mockReturnValue(null);
+  const bars = new HealthBars(w);
+  try {
+    bars.update(camera, 1280, 720, () => true);
+    expect(bars.count, 'every known evacuee retains a bar through occluders').toBe(boxes.size);
+    expect(ray).not.toHaveBeenCalled();
+    // A head still on screen cannot lose its bar when the torso centre slips
+    // below the frame. The UI keeps the existing viewport clamp.
+    camera.position.set(0, 1, 10); camera.lookAt(0, 1, 0); camera.updateMatrixWorld();
+    boxes.values().next().value!.set(new Vector3(-.3, -3.3, -.3), new Vector3(.3, -1.8, .3));
+    bars.update(camera, 1280, 720, () => true);
+    expect(bars.count, 'partially visible edge-of-frame evacuees retain their bars').toBe(boxes.size);
+    w.l7Departure!.state.phase = 'departing';
+    bars.update(camera, 1280, 720, () => true);
+    expect(bars.count, 'the HUD-free bus cinematic clears world health bars').toBe(0);
+    w.l7Departure!.state.phase = 'waiting';
+  } finally { bars.dispose(); bounds.mockRestore(); top.mockRestore(); ray.mockRestore(); }
+}
+
+/** A dense L7 column cannot hold the courier inside its own body ring. */
+async function checkL7CourierYield() {
+  const w = await loadLevel('L7', 1, undefined, 0, { quality: 'low' });
+  try {
+    const player = w.entities.get(1)!, roster = w.l7Encounters!.state.roster;
+    for (const e of w.entities.iterate()) if (e.id !== 1 && !roster.some(r => r.id === e.id)) e.hidden = true;
+    Object.assign(player.transform, { x: -30, z: 50, y: .7 });
+    w.physics.playerBody!.setTranslation(player.transform, true); w.physics.playerBody!.setNextKinematicTranslation(player.transform);
+    w.solids.remember(player, 'test.l7-courier-yield'); w.spatial.set(1, -30, 50);
+    Object.assign(player.survivor!.velocity, { x: 0, z: 0 });
+    roster.forEach((row, slot) => {
+      const e = w.entities.get(row.id)!, inner = slot < 8, count = inner ? 8 : 16, angle = (inner ? slot : slot - 8) * Math.PI * 2 / count, radius = inner ? .92 : 1.84;
+      Object.assign(e.transform, { x: -30 + Math.cos(angle) * radius, z: 50 + Math.sin(angle) * radius, y: .7 });
+      w.solids.remember(e, 'test.l7-courier-yield'); w.spatial.set(e.id, e.transform.x, e.transform.z);
+      delete e.locomotion; e.civilian!.path.length = 0; e.civilian!.goal = -1; e.civilian!.l1!.target = null;
+    });
+    const bodies = [player, ...roster.map(row => w.entities.get(row.id)!)];
+    for (let i = 0; i < bodies.length; i++) for (let j = i + 1; j < bodies.length; j++) {
+      expect(Math.hypot(bodies[i].transform.x - bodies[j].transform.x, bodies[i].transform.z - bodies[j].transform.z), 'the packed fixture starts without overlapping bodies').toBeGreaterThanOrEqual(actorRadius(bodies[i]) + actorRadius(bodies[j]));
+    }
+    const start = { x: player.transform.x, z: player.transform.z };
+    for (let tick = 0; tick < 60; tick++) { w.applyInput(emptyInput(), 'keyboard'); w.update(); }
+    expect(Math.hypot(player.transform.x - start.x, player.transform.z - start.z), 'followers yield without moving a stationary courier').toBeLessThan(.01);
+    const yielded = new Set<number>();
+    for (let tick = 0; tick < 180; tick++) {
+      const before = new Map(roster.map(row => [row.id, w.entities.get(row.id)!.transform.z]));
+      const input = emptyInput(); input.move.x = 1;
+      w.applyInput(input, 'keyboard'); w.update();
+      for (const row of roster) {
+        const e = w.entities.get(row.id)!;
+        if ((e.civilian!.vehicleYield?.until ?? -1) >= w.tick && Math.abs(e.transform.z - before.get(e.id)!) > .001) yielded.add(e.id);
+      }
+    }
+    expect(yielded.size, 'blocking followers physically step sideways through ordinary swept walking').toBeGreaterThan(0);
+    expect(Math.hypot(player.transform.x - start.x, player.transform.z - start.z), 'the courier walks through the follower column instead of remaining boxed in').toBeGreaterThan(9);
+    expect(w.solids.offenders).toEqual([]);
+    // A legitimate enemy/environment knockdown also owns an already-issued
+    // kerb-yield order. Only forced impact motion may continue during the fall.
+    const knocked = w.entities.get(roster[0].id)!, c = knocked.civilian!;
+    c.knockedUntil = w.tick + 90;
+    c.vehicleYield = { target: { x: knocked.transform.x + 2, z: knocked.transform.z }, until: w.tick + 120 };
+    const move = vi.spyOn(w.npcs!, 'move');
+    try {
+      w.npcs!.civilians.outbreak!.update();
+      expect(move.mock.calls.filter(([e]) => e.id === knocked.id), 'a knocked-down follower receives no voluntary walking order').toHaveLength(0);
+      w.tick = c.knockedUntil; move.mockClear();
+      w.npcs!.civilians.outbreak!.update();
+      expect(move.mock.calls.some(([e]) => e.id === knocked.id), 'ordinary walking resumes when the existing timer expires').toBe(true);
+    } finally { move.mockRestore(); }
+  } finally { w.dispose(); }
+}
+
 /** r5-l7 (vqa58 survivor losses): a completed bite costs an evacuee a third of its bar instead of killing it, the
  * biter reels while it tears free, and a loss inside the column never raises "Survivor lost behind you!". */
 async function checkFollowerBites() {
   const w = await loadLevel('L7', 3, undefined, 0, { quality: 'low' });
   try {
+    checkFriendlyRocketReaction(w);
     for (const e of [...w.infected!.active]) { w.solids.forget(e); w.infected!.release(e); }
     const roster = w.l7Encounters!.state.roster, follower = w.entities.get(roster[0].id)!;
     const runner = w.entities.get(w.infected!.spawn('infected.runner', { x: follower.transform.x + 1.2, z: follower.transform.z }, { state: 'chase' }))!;
@@ -150,6 +265,49 @@ async function checkCorpseCatchup() {
     }
     expect(arrived, 'two dead Alphas must not keep a living follower 66 m away forever').toBe(true);
     expect(w.solids.offenders).toEqual([]);
+    // Physical gear-2 ledger, tick 27720: the dead Alpha closes the narrow
+    // pharmacy alley. All fifteen trapped followers must walk the other way.
+    for (const body of bodies) body.hidden = true;
+    const packed = [
+      [51,41.793817507065434,41.0798327218927],[52,16.281448544559957,42.62218963769826],
+      [53,45.50307032205739,41.373689426591966],[54,41.59520020314754,41.74089084110976],
+      [55,41.14141445987243,40.885577390977446],[56,42.94188656452457,41.757334982321005],
+      [57,42.266716814362205,41.568796369655885],[58,44.24738955963119,41.75787375924492],
+      [59,45.0613226291621,40.85635174804277],[60,43.6007217312818,41.54615998359314],
+      [61,42.44839186062674,40.87826854590935],[62,46.06881303966944,41.75674456223568],
+      [63,44.418795910718615,41.09150165905051],[64,43.10689465679792,41.04863026537855],
+      [65,12.082656105900048,40.12545807835455],[66,12.944564485750599,37.59012433870597],
+      [67,43.77186896502628,40.87517398944157],[68,11.241304301137603,39.27989581887278],
+      [69,12.109540452733665,36.73986712871293],[70,11.162745683190428,37.39829005981479],
+      [71,10.641392457795545,38.1867122947813],[72,44.92913360506777,41.755884337705815],
+      [73,10.360008791969387,38.84325543763489],[74,9.974445948954338,37.585024761779124],
+    ];
+    Object.assign(player.transform, { x:17.917377471923828, y:.7049999833106995, z:44.35981369018555, yaw:-402.909257822891 });
+    w.physics.playerBody!.setTranslation(player.transform,true); w.physics.playerBody!.setNextKinematicTranslation(player.transform);
+    w.solids.remember(player,'test.packed-corpse'); w.spatial.set(1,player.transform.x,player.transform.z);
+    for (const [id,x,z] of packed) {
+      const e=w.entities.get(id)!; e.hidden=false; delete e.locomotion;
+      Object.assign(e.transform,{x,z,y:w.districts!.groundHeight(x,z)+.7});
+      e.civilian!.path.length=0; e.civilian!.pathIndex=0; e.civilian!.goal=-1; e.civilian!.l1!.target=null;
+      w.solids.remember(e,'test.packed-corpse'); w.spatial.set(id,x,z);
+    }
+    const corpse=bodies[0]; corpse.hidden=false;
+    Object.assign(corpse.transform,{x:40.251549809784215,y:.83,z:41.881619730875094});
+    w.solids.remember(corpse,'test.packed-corpse'); w.spatial.set(corpse.id,corpse.transform.x,corpse.transform.z);
+    const nav=w.infected!.nav, blocked=nav.blocked.slice();
+    for (let tick=0;tick<900;tick++) {
+      w.tick++; nav.flow(player.transform.x,player.transform.z,1500);
+      for (const [id] of packed) {
+        const e=w.entities.get(id)!,before={...e.transform}; w.l7Encounters!.follower(e);
+        expect(Math.hypot(e.transform.x-before.x,e.transform.z-before.z)).toBeLessThanOrEqual(5.2/60+.001);
+        expect(Math.hypot(e.transform.x-corpse.transform.x,e.transform.z-corpse.transform.z)).toBeGreaterThanOrEqual(1.35-.021);
+      }
+      w.solids.commit();
+    }
+    for (const [id] of packed) expect(Math.hypot(w.entities.get(id)!.transform.x-player.transform.x,w.entities.get(id)!.transform.z-player.transform.z),`follower ${id} rejoins around the closed alley`).toBeLessThan(18);
+    expect(w.infected!.nav).toBe(nav); expect(nav.blocked).toEqual(blocked);
+    expect(w.solids.offenders).toEqual([]);
+
   } finally { w.dispose(); }
 }
 
@@ -184,8 +342,77 @@ async function checkPharmacyCatchup() {
         expect(follower.id).toBe(id); expect(follower.health.current).toBe(health);
         expect(w.solids.offenders).toEqual([]);
       }
+      if (quality === 'high') checkNearRangeCatchup(w);
+      else checkLowBoardingCorner(w);
     } finally { w.dispose(); }
   }
+}
+
+/** Low quality must use the same walked boarding corner as high quality. */
+function checkLowBoardingCorner(w: SimWorld) {
+  const player = w.entities.get(1)!, follower = w.entities.get(w.l7Encounters!.state.roster[1].id)!;
+  follower.hidden = false; follower.civilian!.survivor!.slot = 0;
+  Object.assign(follower.transform, { x: -35, z: 50, y: .7 });
+  Object.assign(player.survivor!.velocity, { x: 0, z: -4.5 });
+  w.missions!.state.steps.departure.status = 'active';
+  const move = w.npcs!.move; let target = { x: 0, z: 0 };
+  w.npcs!.move = (_entity, at) => { target = { x: at.x, z: at.z }; return true; };
+  try {
+    for (const [x, z] of [[-42, 50], [-38, 50], [-34, 50], [-30, 50], [-30, 49]]) {
+      Object.assign(player.transform, { x, z }); w.l7Encounters!.follower(follower);
+    }
+    expect(target.x).toBeCloseTo(-31.3); expect(target.z).toBeCloseTo(49.5);
+  } finally { w.npcs!.move = move; }
+}
+
+/** A 19 m straggler needs a 60 m street detour. Other followers must not
+ * continually replace its unfinished shared A* search. Recorded physical run. */
+function checkNearRangeCatchup(w: SimWorld) {
+  const p = w.entities.get(1)!;
+  Object.assign(p.transform, { x: 61.269737243652344, z: 30.66730499267578, y: 1.0783395767211914, yaw: -24.347343065320896 });
+  w.physics.playerBody!.setTranslation(p.transform, true); w.physics.playerBody!.setNextKinematicTranslation(p.transform);
+  w.solids.remember(p, 'test.near-range-leader'); w.spatial.set(1, p.transform.x, p.transform.z);
+  const positions = [
+    [51, 58.78636838995762, 31.622484664300757],
+    [52, 59.66041166295788, 32.262634633568425],
+    [54, 57.743503326822115, 31.988364818021306],
+    [55, 59.276612330176555, 33.27103613008447],
+    [56, 74.68640614944597, 17.79644635219723],
+    [57, 57.10050819508396, 33.5679037897464],
+    [58, 57.61519747301161, 33.07296697791254],
+    [59, 59.03115982185737, 32.6000588572461],
+    [60, 55.76477914463052, 33.05690768545542],
+    [61, 56.649254572914984, 32.995708767909086],
+    [62, 56.24601358476257, 33.58496008942835],
+    [63, 54.239179854640895, 34.70721465739254],
+    [64, 55.198830336228355, 30.95871547701691],
+    [65, 54.53497695356237, 35.35757026335401],
+    [66, 54.370162933447375, 36.0527009646696],
+    [67, 54.57997205158804, 37.542036650766306],
+    [68, 53.38056226056749, 31.59263382444471],
+    [69, 53.69396286647524, 36.59507090183298],
+    [70, 54.4612841937558, 36.83760995103941],
+    [71, 55.22384351456861, 38.763734002309455],
+    [72, 52.86765581241363, 37.454799044588164],
+    [73, 53.723382369178935, 38.30117024055273],
+    [74, 54.58651425743357, 39.1448058624385],
+  ];
+  for (const [id, x, z] of positions) {
+    const e = w.entities.get(id)!; e.hidden = false;
+    Object.assign(e.transform, { x, z, y: w.districts!.groundHeight(x, z) + .7 }); delete e.locomotion;
+    const c = e.civilian!; c.path.length = 0; c.pathIndex = 0; c.goal = -1; c.l1!.target = null;
+    w.solids.remember(e, 'test.near-range-column'); w.spatial.set(id, x, z);
+  }
+  const follower = w.entities.get(56)!, health = follower.health.current;
+  let arrived = false;
+  for (let tick = 0; tick < 900 && !arrived; tick++) {
+    w.tick++; w.infected!.nav.flow(p.transform.x, p.transform.z, 1500);
+    for (const [id] of positions) w.l7Encounters!.follower(w.entities.get(id)!);
+    w.solids.commit();
+    arrived = Math.hypot(follower.transform.x - p.transform.x, follower.transform.z - p.transform.z) < 18;
+  }
+  expect(arrived, 'the recorded 19 m straggler rejoins without moving the waiting courier').toBe(true);
+  expect(follower.health.current).toBe(health); expect(w.solids.offenders).toEqual([]);
 }
 
 async function rockets() {
