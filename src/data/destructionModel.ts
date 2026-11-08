@@ -3,14 +3,17 @@ import { worldAssets } from '../assets/worldDefinitions';
 import { staticCollision } from '../assets/staticCollision';
 import type { Aabb, Placement } from '../levels/districts/types';
 import type { DestructionMaterial } from './destruction';
-export type DestructionClass = 'timber' | 'masonry' | 'concrete' | 'vehicle' | 'wood-prop' | 'metal-prop';
+export type DestructionClass = 'timber' | 'masonry' | 'concrete' | 'vehicle' | 'wood-prop' | 'metal-prop' | 'pillar' | 'machinery' | 'fuel-tank';
 export interface DestructionPolicy { class: DestructionClass; indestructible?: boolean }
 export interface DestructionPart { id: string; role: 'glass' | 'door' | 'roof' | 'structure'; material: DestructionMaterial; hp: number; bounds: Aabb }
-export const destructionClasses: Record<DestructionClass, { material: DestructionMaterial; hp: number; burnTicks: number; collapse: number }> = {
+export const destructionClasses: Record<DestructionClass, { material: DestructionMaterial; hp: number; burnTicks: number; collapse: number; explosion?: string }> = {
   timber: { material: 'wood', hp: 85, burnTicks: 720, collapse: .35 },
   masonry: { material: 'brick', hp: 140, burnTicks: 0, collapse: .5 },
   concrete: { material: 'concrete', hp: 260, burnTicks: 0, collapse: .7 },
-  vehicle: { material: 'metal', hp: 90, burnTicks: 300, collapse: .6 },
+  vehicle: { material: 'metal', hp: 90, burnTicks: 300, collapse: .6, explosion: 'explosion.car' },
+  pillar: { material: 'concrete', hp: 260, burnTicks: 0, collapse: 1 },
+  machinery: { material: 'metal', hp: 160, burnTicks: 0, collapse: 1 },
+  'fuel-tank': { material: 'metal', hp: 55, burnTicks: 60, collapse: .25, explosion: 'explosion.car' },
   'wood-prop': { material: 'wood', hp: 45, burnTicks: 360, collapse: 1 },
   'metal-prop': { material: 'metal', hp: 100, burnTicks: 0, collapse: 1 },
 };
@@ -50,9 +53,10 @@ export function destructionParts(p: Pick<Placement, 'assetId' | 'destruction'>):
     for (const side of [-1, 1]) for (const end of [-1, 1]) parts.push({ id: `door-${side}-${end}`, role: 'door', material: 'metal', hp: 45,
       bounds: { min: [end*d.x*.12-d.x*.12,d.y*.23,side*d.z*.4-.15], max: [end*d.x*.12+d.x*.12,d.y*.75,side*d.z*.4+.15] } });
   }
-  if (!parts.some(p => p.role === 'roof') && !policy.class.includes('prop') && policy.class !== 'vehicle') parts.push({ id: 'roof', role: 'roof', material: def.material, hp: def.hp, bounds: { min: [-d.x, d.y * .65, -d.z], max: [d.x, d.y + .2, d.z] } });
+  if (!parts.some(p => p.role === 'roof') && ['timber', 'masonry', 'concrete'].includes(policy.class)) parts.push({ id: 'roof', role: 'roof', material: def.material, hp: def.hp, bounds: { min: [-d.x, d.y * .65, -d.z], max: [d.x, d.y + .2, d.z] } });
   // A small fixed grid bounds both state and first-damage splitting cost. Each cell can breach independently.
-  const nx = policy.class === 'vehicle' ? 3 : 4, nz = policy.class === 'vehicle' ? 2 : 4;
+  const fixture = ['pillar', 'machinery', 'fuel-tank'].includes(policy.class);
+  const nx = fixture ? 1 : policy.class === 'vehicle' ? 3 : 4, nz = fixture ? 1 : policy.class === 'vehicle' ? 2 : 4;
   for (let x = 0; x < nx; x++) for (let z = 0; z < nz; z++) parts.push({ id: `shell-${x}-${z}`, role: 'structure', material: def.material, hp: def.hp,
     bounds: { min: [-d.x / 2 + d.x * x / nx, -.2, -d.z / 2 + d.z * z / nz], max: [-d.x / 2 + d.x * (x + 1) / nx, d.y + .2, -d.z / 2 + d.z * (z + 1) / nz] } });
   const occupied = new Set(partColliders(p.assetId, parts).map(c => c.part));

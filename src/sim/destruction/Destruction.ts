@@ -111,7 +111,7 @@ export class Destruction {
     const o = hit.object, state = o.state, part = o.parts[hit.part];
     if (o.protected || state.hp[hit.part] <= 0 || !Number.isFinite(amount) || amount <= 0) return;
     const fire = actionId === 'weapon.molotov' || actionId === 'weapon.flamethrower' || actionId === 'environment.fire';
-    const value = fire ? part.material === 'wood' ? amount : part.material === 'metal' && o.placement.destruction!.class === 'vehicle' ? amount * .3 : 0 : destructionDamage(actionId, part.material, amount);
+    const value = fire ? part.material === 'wood' ? amount : part.material === 'metal' && destructionClasses[o.placement.destruction!.class].explosion ? amount * .3 : 0 : destructionDamage(actionId, part.material, amount);
     state.hp[hit.part] = Math.max(0, state.hp[hit.part] - value); state.revision++;
     if (state.marks.length === 8) state.marks.shift();
     state.marks.push({ part: hit.part, at: [...hit.local], normal: [...hit.normal], kind: fire ? 'scorch' : actionId.includes('gun') || actionId.includes('pistol') || actionId.includes('rifle') ? 'hole' : 'chip' });
@@ -119,10 +119,21 @@ export class Destruction {
     if (state.hp[hit.part] === 0) this.debris(o, hit.part, hit.local);
     const structural = o.parts.map((p,i)=>({p,i})).filter(({p})=>p.role === 'structure'), broken = structural.filter(({i})=>state.hp[i]===0).length;
     if (!state.collapsed && structural.length && broken / structural.length >= destructionClasses[o.placement.destruction!.class].collapse) {
-      if (o.placement.destruction!.class === 'vehicle') this.ignite(o);
+      if (destructionClasses[o.placement.destruction!.class].explosion) this.ignite(o);
       else { state.collapsed = true; for (const [i,p] of o.parts.entries()) if (p.role === 'roof' && state.hp[i] > 0) { state.hp[i]=0; this.debris(o,i,p.bounds.min); } }
     }
     this.reconcile();
+  }
+  /** Boss lane calls after its telegraph/contact resolves; returns whether this contact broke cover. */
+  impact(id: string, actionId: 'boss.gorilla.smash' | 'boss.mega.charge', amount: number): boolean {
+    const object=this.objects.find(o=>o.id===id); if(!object||object.protected) return false;
+    let broke=false;
+    for(const [part,p] of object.parts.entries()) {
+      const before=object.state.hp[part];
+      this.damage({object,part,local:p.bounds.min,distance:0,normal:[0,1,0]},actionId,amount);
+      broke ||= before>0&&object.state.hp[part]===0;
+    }
+    return broke;
   }
   private debris(o: DestructionObject, part: number, local: number[]): void {
     const pose=this.pose(o), point=rotate(local.map((v,i)=>v*o.placement.scale[i]),pose.q);
@@ -169,10 +180,10 @@ export class Destruction {
       if(fire?.hazard?.kind==='fire') {const p=this.pose(o).p;fire.transform.x=p[0];fire.transform.z=p[2];this.world.spatial.set(fire.id,p[0],p[2]);}
       s.burning--; s.fireClock++;
       if(s.fireClock%30===0) for(const [part,p] of o.parts.entries()) if(s.hp[part]>0) this.damage({object:o,part,distance:0,local:p.bounds.min,normal:[0,1,0]},'environment.fire',8);
-      if(s.burning===0&&o.placement.destruction!.class==='vehicle'&&!s.exploded) {
+      if(s.burning===0&&destructionClasses[o.placement.destruction!.class].explosion&&!s.exploded) {
         s.exploded=true;s.collapsed=true;s.hp.fill(0);s.revision++;
         const p=this.pose(o).p; this.debris(o,0,[0,1,0]);
-        this.world.explosions?.blast('explosion.car',{x:p[0],z:p[2]});
+        this.world.explosions?.blast(destructionClasses[o.placement.destruction!.class].explosion!,{x:p[0],z:p[2]});
         const prop=this.propLinks.get(o.id); if(prop&&!prop.fixed) prop.body.applyImpulse({x:0,y:prop.mass*5,z:0},true);
       }
     }

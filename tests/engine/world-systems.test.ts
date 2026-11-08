@@ -216,6 +216,22 @@ test('explosions: every class follows its damage curve, full cover shields, rail
   expect(street.hazards!.debris.pieces.length).toBeLessThanOrEqual(32);
   street.hazards!.debris.update(street.tick+481);expect(street.hazards!.debris.snapshot()).toHaveLength(0);
   const state=destruction.snapshot(); street.setTier(street.districts!.composition.tier===6?5:6);expect(destruction.snapshot()).toEqual(state);
+  destruction.restore(pristine);
+  expect(destruction.impact(protectedObject.id,'boss.gorilla.smash',10000)).toBe(false);
+  expect(destruction.impact(house.id,'boss.gorilla.smash',150)).toBe(true);
+  expect(house.state.collapsed).toBe(true);
+  destruction.restore(pristine);
+  const vehiclePolicy=car.placement.destruction!;
+  car.placement.destruction={class:'fuel-tank'};
+  expect(destruction.impact(car.id,'boss.mega.charge',100)).toBe(true);
+  expect(car.state.burning).toBe(60);
+  for(let tick=0;tick<60;tick++){street.tick++;destruction.update();}
+  expect(car.state.exploded).toBe(true);
+  const explosionRevision=car.state.revision;
+  for(let tick=0;tick<60;tick++){street.tick++;destruction.update();}
+  expect(car.state.revision).toBe(explosionRevision);
+  car.placement.destruction=vehiclePolicy;
+
 
 });
 

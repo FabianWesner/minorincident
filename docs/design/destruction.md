@@ -6,7 +6,7 @@ L3 opts in two Oak Street `bld.house-a` placements (`407`, `457`) and its two ab
 
 A placement opts in with `destruction: { class: 'timber' }`. Classes are `timber`, `masonry`, `concrete`, `vehicle`, `wood-prop`, and `metal-prop`; material, part HP, burn duration, and collapse threshold live in `src/data/destructionModel.ts`. The system is not tied to L3 IDs. The district chooses its safe rollout set.
 
-The r12 `PropSystem` owns parked-car rigid bodies, movement, settling, and navigation. Destruction borrows those poses and never creates a second car body. `movableProps` exposes r12's wider catalog; the existing `pushableProps` catalog remains the default for layout clearance. Extra movable placements opt in explicitly, avoiding changes to other districts' parked-car clearance.
+The r12 `PropSystem` owns parked-car rigid bodies, movement, settling, and navigation. Destruction borrows those poses and never creates a second car body. The shared `pushableProps` catalog is the completed r12 catalog from main, including parked vehicles.
 
 ## Parts and weapons
 
@@ -36,3 +36,9 @@ To extend the rollout:
 4. Exercise real input, same-tick collider/nav removal, protected neighbours, checkpoint replay, and fire expiry in the existing world-system tests. Run the scene and full threat gates before expanding the district set.
 
 The model is discrete part destruction, not arbitrary continuous mesh deformation. Vehicle hull collision remains with the parked-car body after its panels break and after the burned-variant swap.
+
+## Boss integration
+
+`pillar` (concrete), `machinery` (metal), and `fuel-tank` (metal) policies use a single structural zone and no synthetic roof. They require an asset with baked static collision, just like buildings. Opt in arena placements before district construction; keep the console, gate and required arena supports protected. These policies do not place new objects in L8/L10 or implement the boss move state machines.
+
+After its telegraph and physical contact resolve, the boss lane calls `world.destruction?.impact(placementId, 'boss.gorilla.smash', damage)` or `'boss.mega.charge'`. The stable placement ID includes the district prefix. The boolean reports whether this contact broke a part; the boss controller owns stun/recovery. Damage uses the normal material table, protection rules, debris, blockers and checkpoint seam. Fuel tanks ignite on structural failure or fire, burn for 60 fixed ticks, then trigger one shared car-sized chain explosion. Their exploded flag is set before emitting the blast to prevent recursive detonation. Ordinary machinery does not explode.

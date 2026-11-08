@@ -9,6 +9,8 @@ const defaultResponse: Readonly<Record<DestructionMaterial, number>> = {
 /** Explicit rows keep the effect legible and data-driven while unlisted weapons
  * inherit a conservative response appropriate to their damage type. */
 export const weaponDestructionResponse: Readonly<Record<string, Partial<Record<DestructionMaterial, number>>>> = {
+  'boss.gorilla.smash': { glass: 4, wood: 3, metal: 2, brick: 2, concrete: 2 },
+  'boss.mega.charge': { glass: 4, wood: 3, metal: 2, brick: 2, concrete: 2 },
   'weapon.bat': { glass: .08, wood: .18, metal: .02, brick: .01, concrete: .005 },
   'weapon.fire-axe': { glass: .25, wood: .8, metal: .06, brick: .025, concrete: .01 },
   'weapon.handgun': { glass: .5, wood: .08, metal: .025, brick: .012, concrete: .006 },
