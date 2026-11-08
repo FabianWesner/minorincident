@@ -9,9 +9,10 @@ import os
 from pathlib import Path
 import shutil
 import subprocess
+import sys
 
 root = Path("test-results/pre-uat-l7/native-final")
-inputs = Path("test-results/pre-uat-l7/native-input")
+inputs = Path(sys.argv[1] if len(sys.argv) > 1 else "test-results/pre-uat-l7/native-input")
 identity = json.loads((inputs / "identity.json").read_text())
 root.mkdir(parents=True, exist_ok=True)
 original = {name: Path(name).read_bytes() for name in identity["files"]}
