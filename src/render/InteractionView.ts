@@ -47,6 +47,7 @@ export class InteractionView extends Group {
   private readonly geometries = new Set<BufferGeometry>();
   private readonly batchMaterials = new Set<Material>();
   private readonly pending = new Map<number, Promise<void>>();
+  private readonly corgiToy = new SphereGeometry(.14, 12, 8);
   private readonly box = new BoxGeometry(1, 1, 1);
   private readonly led = new SphereGeometry(.06, 8, 6);
   private readonly brush = new CylinderGeometry(.18, .18, 2.2, 8);
@@ -258,6 +259,7 @@ export class InteractionView extends Group {
     }
     if (e.toy || this.world.toys?.gateIds.includes(e.id)) { const object = this.toyObject(e); await this.attachModels(e, object); return object; }
     const pickup = e.pickup && 'kind' in e.pickup ? e.pickup : undefined, id = this.assetId(e);
+    if (pickup?.item === 'corgi-toy') { const group = new Group(), ball = new Mesh(this.corgiToy, this.materials.get('backpackTeal')); ball.position.y = .14; group.add(ball); return group; }
     if (id) return this.asset(id, lod);
     // E27 draws fire hazards (flame cards, light pools, smoke): no placeholder slab.
     if (e.hazard?.kind === 'fire' || e.hazard?.kind === 'tear-gas') return new Group();
@@ -435,7 +437,8 @@ export class InteractionView extends Group {
     const pieces = this.world.hazards?.debris.pieces ?? [];
     for (let i = 0; i < pieces.length; i++) {
       if (!this.debrisMeshes[i]) { const m = new Mesh(this.box, this.materials.get('woodWarm')); m.scale.set(.24, .2, .44); this.debrisMeshes.push(m); this.add(m); }
-      const p = pieces[i], m = this.debrisMeshes[i]; m.visible = p.until > 0;
+      const p = pieces[i], m = this.debrisMeshes[i]; m.visible = p.until > 0; m.scale.fromArray(p.half ?? [.12,.1,.22]).multiplyScalar(2);
+      m.material = this.materials.get(p.material === 'glass' ? 'windowGlow' : p.material === 'metal' ? 'sidewalk' : p.material === 'brick' ? 'brick' : p.material === 'concrete' ? 'sidewalk' : 'woodWarm');
       if (m.visible && !p.body.isSleeping()) { const t = p.body.translation(), r = p.body.rotation(); m.position.set(t.x, t.y, t.z); m.quaternion.set(r.x, r.y, r.z, r.w); }
     }
   }
@@ -443,7 +446,7 @@ export class InteractionView extends Group {
     this.disposed = true; this.panel.remove(); this.clear(); this.objects.clear(); this.lods.clear();
     for (const geometry of this.geometries) geometry.dispose(); for (const material of this.batchMaterials) material.dispose();
     this.geometries.clear(); this.batchMaterials.clear(); this.materialGraphs.clear(); this.prototypes.clear();
-    this.box.dispose(); this.led.dispose(); this.brush.dispose(); this.foam.dispose(); this.fillGeometry.dispose(); this.outlineGeometry.dispose(); this.strokeGeometry.dispose(); this.black.dispose(); this.white.dispose(); this.teal.dispose();
+    this.corgiToy.dispose(); this.box.dispose(); this.led.dispose(); this.brush.dispose(); this.foam.dispose(); this.fillGeometry.dispose(); this.outlineGeometry.dispose(); this.strokeGeometry.dispose(); this.black.dispose(); this.white.dispose(); this.teal.dispose();
     this.gasGeometry.dispose(); this.gasMaterial.dispose();
     void this.registry.dispose();
   }

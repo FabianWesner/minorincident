@@ -1,0 +1,493 @@
+{
+  "rows": [
+    {
+      "tier": "low",
+      "caseName": "early-cover",
+      "fixture": "Shared production rocket action; isolated physical input, not native mission route proof",
+      "file": "low-early-cover.jpg",
+      "aim": {
+        "x": 1066.6334140952515,
+        "y": 650.7688289403767
+      },
+      "before": {
+        "tick": 60,
+        "slot": {
+          "id": "weapon.rocket-launcher",
+          "magazine": 0,
+          "reserve": "infinite",
+          "charges": 0,
+          "nextCharge": 0,
+          "reloadUntil": 0,
+          "readyAt": 0
+        },
+        "hp": 100,
+        "enemies": [],
+        "god": false,
+        "backend": "webgl",
+        "quality": "low",
+        "zoom": 1.5
+      },
+      "after": {
+        "tick": 159,
+        "slot": {
+          "id": "weapon.rocket-launcher",
+          "magazine": 0,
+          "reserve": "infinite",
+          "charges": 0,
+          "nextCharge": 0,
+          "reloadUntil": 0,
+          "readyAt": 117
+        },
+        "hp": 100,
+        "hint": "rocket launcher",
+        "events": [
+          {
+            "type": "combat.attack",
+            "tick": 67,
+            "attackId": 1,
+            "actionId": "weapon.rocket-launcher",
+            "combo": 0,
+            "sourceId": 1,
+            "side": "RIGHT",
+            "position": {
+              "x": 0,
+              "y": 0.7049999833106995,
+              "z": 0,
+              "yaw": 7.030195129492528e-8
+            },
+            "direction": {
+              "x": 0.9999999999999976,
+              "z": -7.030195129492522e-8
+            }
+          }
+        ],
+        "enemies": [],
+        "blasts": {
+          "scheduled": [],
+          "parts": []
+        }
+      },
+      "projectileFrames": [
+        {
+          "tick": 61,
+          "projectiles": []
+        },
+        {
+          "tick": 62,
+          "projectiles": []
+        },
+        {
+          "tick": 63,
+          "projectiles": []
+        },
+        {
+          "tick": 64,
+          "projectiles": []
+        },
+        {
+          "tick": 65,
+          "projectiles": []
+        },
+        {
+          "tick": 66,
+          "projectiles": []
+        },
+        {
+          "tick": 67,
+          "projectiles": [
+            {
+              "x": 0,
+              "y": 1.1549999833106994,
+              "z": 0,
+              "travelled": 0
+            }
+          ]
+        },
+        {
+          "tick": 68,
+          "projectiles": [
+            {
+              "x": 0.2969214237759439,
+              "y": 1.1121319520651907,
+              "z": -2.0874155472716308e-8,
+              "travelled": 0.2969214237759446
+            }
+          ]
+        },
+        {
+          "tick": 69,
+          "projectiles": [
+            {
+              "x": 0.5938428475518878,
+              "y": 1.069263920819682,
+              "z": -4.1748310945432616e-8,
+              "travelled": 0.5938428475518892
+            }
+          ]
+        },
+        {
+          "tick": 70,
+          "projectiles": [
+            {
+              "x": 0.8907642713278316,
+              "y": 1.0263958895741732,
+              "z": -6.262246641814892e-8,
+              "travelled": 0.8907642713278338
+            }
+          ]
+        },
+        {
+          "tick": 71,
+          "projectiles": [
+            {
+              "x": 1.1876856951037755,
+              "y": 0.9835278583286644,
+              "z": -8.349662189086522e-8,
+              "travelled": 1.1876856951037782
+            }
+          ]
+        },
+        {
+          "tick": 72,
+          "projectiles": [
+            {
+              "x": 1.4846071188797194,
+              "y": 0.9406598270831558,
+              "z": -1.0437077736358152e-7,
+              "travelled": 1.4846071188797227
+            }
+          ]
+        },
+        {
+          "tick": 73,
+          "projectiles": [
+            {
+              "x": 1.7815285426556633,
+              "y": 0.897791795837647,
+              "z": -1.2524493283629784e-7,
+              "travelled": 1.7815285426556673
+            }
+          ]
+        },
+        {
+          "tick": 74,
+          "projectiles": [
+            {
+              "x": 2.078449966431607,
+              "y": 0.8549237645921383,
+              "z": -1.4611908830901415e-7,
+              "travelled": 2.078449966431612
+            }
+          ]
+        },
+        {
+          "tick": 75,
+          "projectiles": [
+            {
+              "x": 2.375371390207551,
+              "y": 0.8120557333466295,
+              "z": -1.6699324378173047e-7,
+              "travelled": 2.375371390207557
+            }
+          ]
+        },
+        {
+          "tick": 76,
+          "projectiles": [
+            {
+              "x": 2.672292813983495,
+              "y": 0.7691877021011208,
+              "z": -1.8786739925444678e-7,
+              "travelled": 2.6722928139835016
+            }
+          ]
+        },
+        {
+          "tick": 77,
+          "projectiles": [
+            {
+              "x": 2.969214237759439,
+              "y": 0.7263196708556121,
+              "z": -2.087415547271631e-7,
+              "travelled": 2.9692142377594464
+            }
+          ]
+        },
+        {
+          "tick": 78,
+          "projectiles": []
+        },
+        {
+          "tick": 79,
+          "projectiles": []
+        },
+        {
+          "tick": 80,
+          "projectiles": []
+        },
+        {
+          "tick": 81,
+          "projectiles": []
+        },
+        {
+          "tick": 82,
+          "projectiles": []
+        },
+        {
+          "tick": 83,
+          "projectiles": []
+        },
+        {
+          "tick": 84,
+          "projectiles": []
+        }
+      ],
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "caseName": "early-cover",
+      "fixture": "Shared production rocket action; isolated physical input, not native mission route proof",
+      "file": "high-early-cover.jpg",
+      "aim": {
+        "x": 1066.6334140952515,
+        "y": 650.7688289403767
+      },
+      "before": {
+        "tick": 60,
+        "slot": {
+          "id": "weapon.rocket-launcher",
+          "magazine": 0,
+          "reserve": "infinite",
+          "charges": 0,
+          "nextCharge": 0,
+          "reloadUntil": 0,
+          "readyAt": 0
+        },
+        "hp": 100,
+        "enemies": [],
+        "god": false,
+        "backend": "webgl",
+        "quality": "high",
+        "zoom": 1.5
+      },
+      "after": {
+        "tick": 159,
+        "slot": {
+          "id": "weapon.rocket-launcher",
+          "magazine": 0,
+          "reserve": "infinite",
+          "charges": 0,
+          "nextCharge": 0,
+          "reloadUntil": 0,
+          "readyAt": 117
+        },
+        "hp": 100,
+        "hint": "rocket launcher",
+        "events": [
+          {
+            "type": "combat.attack",
+            "tick": 67,
+            "attackId": 1,
+            "actionId": "weapon.rocket-launcher",
+            "combo": 0,
+            "sourceId": 1,
+            "side": "RIGHT",
+            "position": {
+              "x": 0,
+              "y": 0.7049999833106995,
+              "z": 0,
+              "yaw": 7.030195129492528e-8
+            },
+            "direction": {
+              "x": 0.9999999999999976,
+              "z": -7.030195129492522e-8
+            }
+          }
+        ],
+        "enemies": [],
+        "blasts": {
+          "scheduled": [],
+          "parts": []
+        }
+      },
+      "projectileFrames": [
+        {
+          "tick": 61,
+          "projectiles": []
+        },
+        {
+          "tick": 62,
+          "projectiles": []
+        },
+        {
+          "tick": 63,
+          "projectiles": []
+        },
+        {
+          "tick": 64,
+          "projectiles": []
+        },
+        {
+          "tick": 65,
+          "projectiles": []
+        },
+        {
+          "tick": 66,
+          "projectiles": []
+        },
+        {
+          "tick": 67,
+          "projectiles": [
+            {
+              "x": 0,
+              "y": 1.1549999833106994,
+              "z": 0,
+              "travelled": 0
+            }
+          ]
+        },
+        {
+          "tick": 68,
+          "projectiles": [
+            {
+              "x": 0.2969214237759439,
+              "y": 1.1121319520651907,
+              "z": -2.0874155472716308e-8,
+              "travelled": 0.2969214237759446
+            }
+          ]
+        },
+        {
+          "tick": 69,
+          "projectiles": [
+            {
+              "x": 0.5938428475518878,
+              "y": 1.069263920819682,
+              "z": -4.1748310945432616e-8,
+              "travelled": 0.5938428475518892
+            }
+          ]
+        },
+        {
+          "tick": 70,
+          "projectiles": [
+            {
+              "x": 0.8907642713278316,
+              "y": 1.0263958895741732,
+              "z": -6.262246641814892e-8,
+              "travelled": 0.8907642713278338
+            }
+          ]
+        },
+        {
+          "tick": 71,
+          "projectiles": [
+            {
+              "x": 1.1876856951037755,
+              "y": 0.9835278583286644,
+              "z": -8.349662189086522e-8,
+              "travelled": 1.1876856951037782
+            }
+          ]
+        },
+        {
+          "tick": 72,
+          "projectiles": [
+            {
+              "x": 1.4846071188797194,
+              "y": 0.9406598270831558,
+              "z": -1.0437077736358152e-7,
+              "travelled": 1.4846071188797227
+            }
+          ]
+        },
+        {
+          "tick": 73,
+          "projectiles": [
+            {
+              "x": 1.7815285426556633,
+              "y": 0.897791795837647,
+              "z": -1.2524493283629784e-7,
+              "travelled": 1.7815285426556673
+            }
+          ]
+        },
+        {
+          "tick": 74,
+          "projectiles": [
+            {
+              "x": 2.078449966431607,
+              "y": 0.8549237645921383,
+              "z": -1.4611908830901415e-7,
+              "travelled": 2.078449966431612
+            }
+          ]
+        },
+        {
+          "tick": 75,
+          "projectiles": [
+            {
+              "x": 2.375371390207551,
+              "y": 0.8120557333466295,
+              "z": -1.6699324378173047e-7,
+              "travelled": 2.375371390207557
+            }
+          ]
+        },
+        {
+          "tick": 76,
+          "projectiles": [
+            {
+              "x": 2.672292813983495,
+              "y": 0.7691877021011208,
+              "z": -1.8786739925444678e-7,
+              "travelled": 2.6722928139835016
+            }
+          ]
+        },
+        {
+          "tick": 77,
+          "projectiles": [
+            {
+              "x": 2.969214237759439,
+              "y": 0.7263196708556121,
+              "z": -2.087415547271631e-7,
+              "travelled": 2.9692142377594464
+            }
+          ]
+        },
+        {
+          "tick": 78,
+          "projectiles": []
+        },
+        {
+          "tick": 79,
+          "projectiles": []
+        },
+        {
+          "tick": 80,
+          "projectiles": []
+        },
+        {
+          "tick": 81,
+          "projectiles": []
+        },
+        {
+          "tick": 82,
+          "projectiles": []
+        },
+        {
+          "tick": 83,
+          "projectiles": []
+        },
+        {
+          "tick": 84,
+          "projectiles": []
+        }
+      ],
+      "pass": true
+    }
+  ],
+  "errors": []
+}

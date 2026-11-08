@@ -102,8 +102,8 @@ const remainingChecks: Record<string, string> = {
   'L8-06': 'The fresh low/high complete breach-phase ledgers record 3.49/3.11 player-plus-group windups per minute against the unchanged 4/min target. Investigate route pressure if small and understood; otherwise retain this measured FAIL. Stationary clocks and reachability also remain part of the row.',
   'L7-09': 'Inspect all bars and pressing-crowd body orientation; retain the measured individual human pace checks.',
   'L9-07': 'Fix wreck-objective-before-impact ordering; qualify zero-durability crash and inspect whole APC fall without floating wheels.',
-  'L10-03': 'Fix measured regional peak bounds; qualify simultaneous species counts and group sizes. Peak bounds exclude at most one Mega.',
-  'L10-04': 'Fix measured regional no-contact/low attack rates, then rerun both qualities on ordinary completion routes.',
+  'L10-03': 'PO 2026-11-08: qualify the ordered farms, restricted zone, safe hangar and delivery journey at about15 minutes; browser place/route review remains open.',
+  'L10-04': 'PO 2026-11-08: measure quiet/scare cadence, small moving route groups and no stationary widest-frame arrivals; the finale alone is a crowd fight.',
 };
 export function rowResult(source: SourceRow, checks: Clause[]): AcceptanceRow {
   const objectiveReviews: Record<string, string> = {

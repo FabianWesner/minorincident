@@ -5,6 +5,7 @@ import { l3BaseCollision } from '../../levels/L3/collision';
 import { dogModel } from '../../data/dogAppearance';
 import { cureAlphaPopulation, cureAlphaCap, cureRegularAlphaCount, type CureRegion } from '../../levels/L10/alphaContracts';
 import { megaAlpha } from '../../data/megaAlpha';
+import { cureHangar, insideCureHangar } from '../../data/l10Story';
 import { leastCrowdedModel, regularInfectedModels } from '../../data/crowdAppearance';
 import { isCorgi, isCorgiModel, storyProtected } from '../npc/storyProtection';
 import { installAgentMotion, moveAgent } from '../locomotion/AgentMotion';
@@ -23,21 +24,72 @@ import { Perception, WorldHumans } from './Perception';
 import { planSearch, searchPlan, wanderGoal, type L1Brain } from './Search';
 import { Rng } from '../../core/Rng';
 import { Status } from '../combat/Status';
+import { combatHeightReachable } from '../combat/height';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { ScenarioDefinition } from '../../levels/loader';
 import { DistrictNavigation } from './DistrictNavigation';
+import { cornSightRange, cornBlocksSight, inCorn } from '../../levels/L10/farm';
 import { AlphaSupportMoves } from './AlphaSupportMoves';
+import { alphaTypeFor, alphaTypes, type AlphaType } from '../../data/alphaTypes';
 import { PropThrows } from './PropThrows';
 import { steerFlockDive, updateFlock } from './Flock';
 import { SpawnDirector } from './SpawnDirector';
 import { NavGrid } from './NavGrid';
 import type { InfectedState } from './types';
-export interface InfectedSpawn { cureRegion?: CureRegion; state?: InfectedState['state']; yaw?: number; variant?: string; pack?: number; packIndex?: number; perched?: boolean; birds?: number; /** L1 v2 speed tier; derived from the variant when omitted. */ tier?: InfectedSpeedTier; /** E32 Mega Alpha introduced in a non-resident region (no loaded nav to validate against). */ offNav?: boolean }
+export interface InfectedSpawn { cureRegion?: CureRegion; state?: InfectedState['state']; yaw?: number; variant?: string; alphaType?: AlphaType; pack?: number; packIndex?: number; perched?: boolean; birds?: number; /** L1 v2 speed tier; derived from the variant when omitted. */ tier?: InfectedSpeedTier; /** E32 Mega Alpha introduced in a non-resident region (no loaded nav to validate against). */ offNav?: boolean }
 const l1Ticks = (seconds: number) => Math.round(seconds * 60);
 const provokeTicks = 12 * 60;
 const hearingReactionTicks = 15, hearingTurnRadS = 14;
 const armedCampaigns = new Set(['L4', 'L5', 'L6', 'L7', 'L8', 'L10']);
+type DistrictSet = NonNullable<SimWorld['districts']>;
+type WalkableCollider = DistrictSet['districts'][number]['decay']['colliders'][number];
+type HeightSupport = { district: DistrictSet['districts'][number]; collider: WalkableCollider; group: string };
+const heightSupportIndexes = new WeakMap<DistrictSet, { cells: Map<string, HeightSupport[]>; groups: Map<string, HeightSupport[]> }>();
+function heightSupportIndex(districts: DistrictSet) {
+  let index = heightSupportIndexes.get(districts);
+  if (index) return index;
+  const cells = new Map<string, HeightSupport[]>(), groups = new Map<string, HeightSupport[]>();
+  for (const district of districts.districts) for (const collider of district.decay.colliders) if (collider.walkable) {
+    const group = collider.id.replace(/\/geometry-\d+$/, ''), support = { district, collider, group };
+    const list = groups.get(group); if (list) list.push(support); else groups.set(group, [support]);
+    const a = collider.aabb, ox = district.origin[0], oz = district.origin[1];
+    for (let x = Math.floor((a.min[0] + ox) / 4); x <= Math.floor((a.max[0] + ox) / 4); x++) for (let z = Math.floor((a.min[2] + oz) / 4); z <= Math.floor((a.max[2] + oz) / 4); z++) {
+      const key = `${x},${z}`, bucket = cells.get(key); if (bucket) bucket.push(support); else cells.set(key, [support]);
+    }
+  }
+  index = { cells, groups }; heightSupportIndexes.set(districts, index); return index;
+}
+/** One support at a time, the way an actor can actually climb authored stair treads. */
+export function heightRouteWaypoint(districts: NonNullable<SimWorld['districts']>, actor: EntitySnapshot, goal: { x: number; y?: number; z: number }): { x: number; z: number } | undefined {
+  if (goal.y === undefined) return undefined;
+  const feet = actor.transform.y - .7, goalFeet = goal.y - .7, delta = goalFeet - feet;
+  if (Math.abs(delta) <= .6) return undefined;
+  const ascending = delta > 0, nextLimit = feet + Math.sign(delta) * .6;
+  const index = heightSupportIndex(districts);
+  const groupAt = (x: number, y: number, z: number): string | undefined => {
+    let group: string | undefined;
+    for (const support of index.cells.get(`${Math.floor(x / 4)},${Math.floor(z / 4)}`) ?? []) {
+      const { district, collider: c } = support, a = c.aabb;
+      if (Math.abs(a.max[1] - y) <= .25 && x - district.origin[0] >= a.min[0] && x - district.origin[0] <= a.max[0] && z - district.origin[1] >= a.min[2] && z - district.origin[1] <= a.max[2]) group = support.group;
+    }
+    return group;
+  };
+  const targetGroup = groupAt(goal.x, goalFeet, goal.z), actorGroup = groupAt(actor.transform.x, feet, actor.transform.z);
+  const findStep = (group?: string) => {
+    let chosen: { x: number; z: number; height: number; distance: number } | undefined;
+    for (const support of group ? index.groups.get(group) ?? [] : []) {
+      const { district, collider: c } = support, height = c.aabb.max[1];
+      if (ascending ? height <= feet + .02 || height > nextLimit + 1e-6 : height >= feet - .02 || height < nextLimit - 1e-6) continue;
+      const x = (c.aabb.min[0] + c.aabb.max[0]) / 2 + district.origin[0], z = (c.aabb.min[2] + c.aabb.max[2]) / 2 + district.origin[1];
+      const distance = (x - actor.transform.x) ** 2 + (z - actor.transform.z) ** 2;
+      if (!chosen || (ascending ? height < chosen.height : height > chosen.height) || height === chosen.height && distance < chosen.distance) chosen = { x, z, height, distance };
+    }
+    return chosen;
+  };
+  const chosen = findStep(targetGroup) ?? (actorGroup !== targetGroup ? findStep(actorGroup) : undefined);
+  return chosen && { x: chosen.x, z: chosen.z };
+}
 /** Fixed-step infected brain. Entities and path storage are prewarmed and reused, without Rapier bodies. */
 export class InfectedSystem {
   gore: 'Full' | 'Reduced' | 'Off' = 'Full';
@@ -73,8 +125,9 @@ export class InfectedSystem {
   tryGrabCivilian(sourceId: number, target: { id: number; adult: boolean; variant: string; position: { x: number; z: number } }): { sourceId: number; rescueUntil: number } | null {
     if (this.l1) return null; // L1 v2 bites come from the infected brain (BiteEvent), not from civilian proximity rolls.
     const source = this.world.entities.get(sourceId);
-    if (source?.archetype === 'infected.alpha' && this.world.entities.get(target.id)?.civilian?.ally?.role === 'soldier') return null;
-    if (!target.adult || !source?.infected || source.health.current <= 0 || Math.hypot(source.transform.x - target.position.x, source.transform.z - target.position.z) > 1.2 || this.rng.next() >= infectedDef(source.archetype).grabChance) return null;
+    const victim = this.world.entities.get(target.id);
+    if (source?.archetype === 'infected.alpha' && victim?.civilian?.ally?.role === 'soldier') return null;
+    if (!target.adult || !source?.infected || !victim || !combatHeightReachable(source, victim) || source.health.current <= 0 || Math.hypot(source.transform.x - target.position.x, source.transform.z - target.position.z) > 1.2 || this.rng.next() >= infectedDef(source.archetype).grabChance) return null;
     this.world.events.emit({ type: 'civilian.grabbed', tick: this.world.tick, sourceId, targetId: target.id, variant: target.variant, rescueUntil: this.world.tick + 90 });
     return { sourceId, rescueUntil: this.world.tick + 90 };
   }
@@ -100,6 +153,11 @@ export class InfectedSystem {
     // Grove porches and L4's posed convoy have body-clear passages that the
     // civilian/player bake closes. Regular infected route at their own radius.
     if (['L1', 'L2', 'L4'].includes(world.scenario ?? '')) this.excludeInfected([]);
+    if (world.scenario === 'L10') {
+      const cost = (x: number, z: number) => inCorn(world, [x, z]) ? 1 / .85 : 1;
+      this.nav.movementCost = cost;
+      for (const district of this.navigation.districts) district.grid.movementCost = cost;
+    }
     this.director = new SpawnDirector(this); if (world.scenario === 'L10') this.director.strict = true; this.props = new PropThrows(world); this.alphaSupport = new AlphaSupportMoves(this);
     for (let i = 0; i < 350; i++) {
       const brain: InfectedState = { state: 'idle', pathGrid: -1, grabNextTick: 0, combo: 0, targetId: 0, activeUntil: 0, speed: 0, until: 0, cooldown: 0, attackId: 0, special: '', hidden: false, deadAt: -1, recoverAt: -1, downs: 0, revived: false, reviveUsed: false, legLost: false, detached: false, pack: 0, packIndex: 0, birds: 0, birdPositions: new Array(60).fill(0), birdAlive: new Array(20).fill(0), scatterUntil: 0, variant: '', path: [], pathIndex: 0, goal: -1, dx: 0, dz: 0, grabHits: 0, grabUntil: 0, grabX: 0, grabZ: 0, perched: false };
@@ -126,7 +184,9 @@ export class InfectedSystem {
       if (target?.infected) {
         this.provoke(target, event.sourceId);
         target.infected.grabHits++;
-        if (target.infected.special === 'pin' && target.infected.grabHits >= 2) this.releasePin(target);
+        const special = target.infected.specialAttack;
+        if (target.infected.alphaType && special && ((special.move === 'alpha.roar' && special.stage === 'telegraph') || (special.move === 'alpha.grab-human' && special.stage !== 'recovery' && event.damageType === 'bullet'))) this.cancelSpecial(target.id);
+        if ((target.infected.special === 'pin' || target.infected.alphaType === 'leaper') && target.infected.grabHits >= 2) this.releasePin(target);
       }
     });
     world.events.on('ally.attack', event => {
@@ -137,7 +197,7 @@ export class InfectedSystem {
       if ((actionCatalog[event.actionId] ?? mountedActions[event.actionId])?.category === 'ranged') this.hearing.shot();
       for (const e of this.active) if (e.infected!.grabUntil > world.tick) {
         if (e.infected!.special === 'cling') e.infected!.grabUntil = 0;
-        else if (e.infected!.special === 'pin' && ++e.infected!.grabHits >= 2) this.releasePin(e);
+        else if ((e.infected!.special === 'pin' || e.infected!.alphaType === 'leaper') && ++e.infected!.grabHits >= 2) this.releasePin(e);
       }
     });
   }
@@ -170,7 +230,7 @@ export class InfectedSystem {
   }
   /** A conversion borrows the initialized record, then admits its existing
    * actor ID in Outbreak.rise; the temporary ID never needs a second position. */
-  spawn(id: string, position: { x: number; z: number }, opts: InfectedSpawn = {}, conversion = false): number {
+  spawn(id: string, position: { x: number; y?: number; z: number }, opts: InfectedSpawn = {}, conversion = false): number {
     const l3Human = this.world.scenario === 'L3' && (id === 'infected.runner' || id === 'infected.sprinter');
     // Count successful emergences, including turned officers and civilians. Clothes do not determine chase speed.
     if (l3Human) id = (this.l3HumanSpawns + 1) % l3.infected.sprinterEvery === 0 ? 'infected.sprinter' : 'infected.runner';
@@ -199,10 +259,11 @@ export class InfectedSystem {
     delete entity.infected!.roar; delete entity.corpseThrown; delete entity.corpseBlast; delete entity.infected!.pursuit; delete entity.infected!.megaStaggerReady; delete entity.infected!.megaRocketIds; delete entity.infected!.proximityNotice; delete entity.infected!.provoked; delete entity.infected!.pressureTarget;
     if (entity.infected!.l1) { delete entity.infected!.l1.focusId; delete entity.infected!.l1.focusUntil; }
     delete entity.infected!.knockdowns; delete entity.infected!.cureRegion; delete entity.infected!.territory; delete entity.infected!.vault; delete entity.infected!.specialAttack; delete entity.infected!.specialCooldowns; delete entity.infected!.specialRecoveryUntil;
+    delete entity.infected!.alphaType; delete entity.infected!.alphaSpecialStarted;
     entity.archetype = id;
     const hp = def.hp * INFECTED_TOUGHNESS * (this.world.scenario === 'L7' && id === 'infected.alpha' ? 1.5 : 1);
     entity.health.current = entity.health.max = hp;
-    Object.assign(entity.transform, position); entity.transform.y = perch?.y ?? .7 + (this.world.districts?.pavingHeight(position.x, position.z) ?? 0); entity.transform.yaw = opts.yaw ?? 0;
+    Object.assign(entity.transform, position); entity.transform.y = perch?.y ?? .7 + (this.world.districts?.supportBelow(position.x, position.z, (position.y ?? .7) - .7) ?? 0); entity.transform.yaw = opts.yaw ?? 0;
     Object.assign(entity.combat!, { radius: def.radius, armor: 0, shield: def.special === 'shield', staggerUntil: 0, attacking: false, damageMultiplier: 1 }); entity.combat!.statuses.length = 0; delete entity.combat!.reaction;
     delete entity.combat!.shieldStress; delete entity.combat!.shieldBrokenAt; delete entity.combat!.shieldBrokenUntil;
     Object.assign(entity.infected!, { state: opts.state ?? 'idle', heardTargetId: 0, pathGrid: -1, grabNextTick: 0, combo: 0, targetId: 0, activeUntil: 0, speed: def.speed, until: 0, cooldown: 0, attackId: 0, special: def.special, hidden: id === 'infected.cat', deadAt: -1, recoverAt: -1, downedAt: undefined, downs: 0, revived: false, reviveUsed: false, legLost: false, detached: false, pack: opts.pack ?? 0, packIndex: opts.packIndex ?? 0, birds: id === 'infected.crow' ? opts.birds ?? 20 : 0, scatterUntil: 0, variant: opts.variant ?? id, pathIndex: 0, pathRetryAt: 0, l4ArmyApproach: false, goal: -1, dx: 0, dz: 0, grabHits: 0, grabUntil: 0, grabX: 0, grabZ: 0, perched: opts.perched ?? id === 'infected.cat' }); entity.infected!.path.length = 0; if (entity.infected!.l1) entity.infected!.l1.directTick = -1; delete entity.infected!.birdMotion; delete entity.infected!.birdVertical;
@@ -210,6 +271,11 @@ export class InfectedSystem {
     if (id === 'infected.crow') entity.health.current = entity.health.max = entity.infected!.birds * INFECTED_TOUGHNESS;
     if (this.l1 && def.special === 'lunge') this.initL1(entity, opts.tier ?? l1SpeedTier(entity.infected!.variant)); else delete entity.infected!.l1;
     this.world.entities.adopt(entity);
+    if (id === 'infected.alpha' && opts.variant !== megaAlpha.asset && (opts.alphaType || ['L3', 'L4', 'L5', 'L6', 'L7', 'L9', 'L10'].includes(this.world.scenario ?? ''))) {
+      const alphaType = opts.alphaType ?? alphaTypeFor(this.world.scenario ?? undefined, entity.id);
+      entity.infected!.alphaType = alphaType;
+      if (!opts.variant) entity.infected!.variant = alphaTypes[alphaType].look;
+    }
     if (opts.cureRegion) entity.infected!.cureRegion = opts.cureRegion;
     if (id === 'infected.dog' && !opts.variant) entity.infected!.variant = dogModel(this.world.seed, entity.id, true);
     if (!opts.variant && (id === 'infected.runner' || id === 'infected.sprinter')) {
@@ -319,6 +385,7 @@ export class InfectedSystem {
       this.world.solids.wrote(e, 'infected.update');
       const b = e.infected!;
       if (this.heldOrDead(e, b, courier)) continue;
+      if (this.hangarBoundary(e, courier)) continue;
       if (this.pursuitOrVault(e, b)) continue;
       if (this.farCrowdSlot(e, b, courier)) continue;
       if (!b.specialAttack && (this.world.tick + e.id) % 3 === 0 && !e.emerging && !b.perched && !b.hidden && b.grabUntil <= this.world.tick) this.depenetrate(e);
@@ -333,6 +400,27 @@ export class InfectedSystem {
     // The player consumes borrowed transform references, never renderer state.
     for (const e of this.active) if (e.health.current > 0) this.crowd.push(this.obstacle(e));
     if (this.world.player) this.world.player.locomotion.crowd = this.crowd;
+  }
+  private readonly hangarWaypoint = { x: 0, z: 0 };
+  /** Researchers hold the sealed doorway. The hunt walks to the exterior and resumes as soon as the courier leaves. */
+  private hangarBoundary(e: EntitySnapshot, courier: EntitySnapshot): boolean {
+    if (this.world.scenario !== 'L10' || Math.hypot(e.transform.x - cureHangar.centre.x, e.transform.z - cureHangar.centre.z) > 65) return false;
+    const b = e.infected!, target = this.world.entities.get(b.targetId || b.pressureTarget?.id || 1);
+    // Guards/researchers cannot lure hunters through the doorway before the courier arrives.
+    if (!insideCureHangar(courier.transform) && !insideCureHangar(e.transform) && !(target?.civilian && insideCureHangar(target.transform))) return false;
+    const at = { x: cureHangar.outside.x + (e.id % 5 - 2) * 2, z: cureHangar.outside.z };
+    b.hidden = false;
+    if (b.pursuit && this.world.megaPursuit) this.world.megaPursuit.state.mode = 'detailed';
+    if (b.specialAttack) this.cancelSpecial(e.id);
+    b.state = 'wander'; b.grabUntil = 0; e.combat!.attacking = false;
+    const distance = Math.hypot(e.transform.x - at.x, e.transform.z - at.z);
+    let vx = 0, vz = 0;
+    if (!Status.stunned(e, this.world.tick) && distance > 1 && this.nav.steer(e.transform, at, b, e.combat!.radius, this.hangarWaypoint)) {
+      const dx = this.hangarWaypoint.x - e.transform.x, dz = this.hangarWaypoint.z - e.transform.z, d = Math.hypot(dx, dz) || 1;
+      vx = dx / d * b.speed; vz = dz / d * b.speed;
+    }
+    moveAgent(e, vx, vz, this.infectedNav, this.world.tick, e.combat!.radius, true); this.place(e);
+    return true;
   }
   /** Authored travel never disables the ordinary senses. Only the courier's party
    * interrupts a set-piece approach; distant camp defenders keep their authored battle. */
@@ -389,7 +477,7 @@ export class InfectedSystem {
     if (e.infectionRise && this.world.tick < e.infectionRise.until) { e.combat!.attacking = false; return true; }
     if (e.attachedTo !== undefined) { e.combat!.attacking = false; return true; }
     if (this.world.missions?.state.states['cure-released']) {
-      this.cancelSpecial(e.id); if (b.special === 'pin') this.releasePin(e);
+      this.cancelSpecial(e.id); if (b.special === 'pin' || b.alphaType === 'leaper') this.releasePin(e);
       e.combat!.attacking = false; b.grabUntil = 0; b.state = 'chase';
       this.seek(e, courier.transform); this.place(e); return true;
     }
@@ -430,6 +518,7 @@ export class InfectedSystem {
   }
   /** Phase 4: an unnoticed scripted walker keeps its authored point. */
   private followScript(e: EntitySnapshot, b: InfectedState): boolean {
+    if (b.alphaType && this.provoker(b)) { delete b.scripted; return false; }
     // A windup already in progress must resolve before scripted travel resumes.
     if (!b.scripted || b.specialAttack || b.state === 'attack') return false;
     const retreatRun = b.clearingStreet || b.l4ArmyApproach && this.world.missions?.state.l4?.phase === 'collapse';
@@ -497,11 +586,14 @@ export class InfectedSystem {
         this.place(e); return true;
       }
     }
-    if (b.special === 'pin' && b.grabHits >= 2) this.releasePin(e);
-    if (b.special === 'pin' && b.grabUntil > this.world.tick) {
+    if ((b.special === 'pin' || b.alphaType === 'leaper') && b.grabHits >= 2) this.releasePin(e);
+    if ((b.special === 'pin' || b.alphaType === 'leaper') && b.grabUntil > this.world.tick) {
       const held = this.world.entities.get(b.heardTargetId || 1);
       if (!held || held.health.current <= 0 || held.hidden || this.world.inspectionGhost) this.releasePin(e);
-      else { e.combat!.attacking = false; return true; }
+      else {
+        if (b.alphaType === 'leaper' && this.world.tick >= b.grabNextTick && b.grabNextTick > 0) { this.attackVictim(e, 10); b.grabNextTick = 0; }
+        e.combat!.attacking = false; return true;
+      }
     }
     return false;
   }
@@ -583,10 +675,25 @@ export class InfectedSystem {
   /** Chase: Alpha/zoo specials, barricade obstacles, then the strike window or the approach (pack pounces flank first). */
   private chase(e: EntitySnapshot, b: InfectedState, player: EntitySnapshot, dx: number, dz: number, distance: number): void {
     if (this.nativeCivilianContact(e, player, distance)) return;
-    if (!this.world.inspectionGhost && (this.alphaSupport.tryStart(e, player) || this.tryZooSpecial(e, player))) return;
-    if (e.archetype === 'infected.alpha' && !this.world.inspectionGhost && this.world.tick >= b.cooldown && this.world.tick >= (b.specialRecoveryUntil ?? 0)) {
-      const move = b.pursuit && distance <= 2 ? 'alpha.grab-throw' : distance <= 4 ? 'alpha.ground-slam' : distance <= 12 ? 'alpha.charge' : undefined;
-      if (move && this.world.tick + infectedSpecialMoves[move].windup >= (b.specialCooldowns?.[move] ?? 0) && this.world.combat!.query.visible(e.transform, player.transform) && this.startSpecial(e.id, move, { id: player.id, x: player.transform.x, z: player.transform.z }, { x: e.transform.x, z: e.transform.z, radius: move === 'alpha.charge' ? 1 : 4, dx: dx / Math.max(.001, distance), dz: dz / Math.max(.001, distance) })) return;
+    if (!this.world.inspectionGhost && combatHeightReachable(e, player) && (this.alphaSupport.tryStart(e, player) || this.tryZooSpecial(e, player))) return;
+    if (e.archetype === 'infected.alpha' && combatHeightReachable(e, player) && !this.world.inspectionGhost && this.world.tick >= b.cooldown && this.world.tick >= (b.specialRecoveryUntil ?? 0)) {
+      const moves = b.pursuit ? distance <= 2 ? ['alpha.grab-throw' as const] : distance <= 4 ? ['alpha.ground-slam' as const] : ['alpha.charge' as const] : b.alphaType ? alphaTypes[b.alphaType].moves : ['alpha.ground-slam' as const, 'alpha.charge' as const];
+      const eligible = moves.filter(move => {
+        if (this.world.tick + infectedSpecialMoves[move].windup < (b.specialCooldowns?.[move] ?? 0)) return false;
+        if (move === 'alpha.charge') return distance > 2.5 && distance <= 12;
+        if (move === 'alpha.ground-slam') return distance <= 4;
+        if (move === 'alpha.grab-human') return distance <= 2.5;
+        if (move === 'alpha.grab-throw') return b.pursuit || distance <= 25 && !!this.props.nearestObject(e, 2);
+        if (move === 'alpha.living-missile') return distance >= 4 && distance <= 25 && !!this.props.nearestLiving(e, 2);
+        if (move === 'alpha.barrage') return distance <= 8 && !!this.props.nearestLight(e, 2);
+        if (move === 'alpha.roar') return distance <= 8;
+        if (move === 'alpha.pounce') return distance >= 8 && distance <= 12;
+        return move === 'alpha.shield-bash' && distance <= 2.5;
+      });
+      // Rotate through the available set so a ready special does not starve every other move.
+      const offset = Math.floor(this.world.tick / 120) % Math.max(1, eligible.length);
+      const ordered = eligible.length ? [...eligible.slice(offset), ...eligible.slice(0, offset)] : [];
+      for (const move of ordered) if (this.world.combat!.query.visible(e.transform, player.transform) && this.startSpecial(e.id, move, { id: player.id, x: player.transform.x, z: player.transform.z }, { x: e.transform.x, z: e.transform.z, radius: move === 'alpha.charge' || move === 'alpha.pounce' ? 1 : move === 'alpha.shield-bash' ? 2.5 : 4, dx: dx / Math.max(.001, distance), dz: dz / Math.max(.001, distance) })) return;
     }
     let obstacle = this.world.barricades?.attackTarget(e, player.transform);
     for (const target of this.barricades) if (!obstacle && !target.barricade && target.health.current > 0 && Math.hypot(e.transform.x - target.transform.x, e.transform.z - target.transform.z) <= 2) { obstacle = target; break; }
@@ -595,7 +702,7 @@ export class InfectedSystem {
     if (obstacle) {
       if (this.world.barricades!.vault(e, obstacle)) return;
       if (!this.world.barricades!.withinReach(e, obstacle)) { this.seek(e, this.world.barricades!.approach(e, obstacle)); this.place(e); }
-      else if (this.world.tick >= b.cooldown) { this.windup(e, obstacle); b.targetId = obstacle.id; }
+      else this.attackObstacle(e.id, obstacle.id);
       return;
     }
     let range = this.strikeRange(e, player);
@@ -618,11 +725,17 @@ export class InfectedSystem {
     if (b.special === 'revive' && this.revivable(e)) range = 20;
     const packAngle = b.packIndex * Math.PI / 2;
     const packReady = !b.pack || b.special !== 'pounce' || (-dx * Math.cos(packAngle) - dz * Math.sin(packAngle)) / Math.max(0.01, distance) >= 0.85;
-    if (packReady && distance <= range && this.world.tick >= b.cooldown && this.world.combat!.query.visible(e.transform, player.transform)) { b.combo = 0; this.windup(e); return; }
-    if (b.special === 'pounce' && b.pack && (!packReady || distance > 4)) {
+    if (packReady && distance <= range && combatHeightReachable(e, player) && this.world.tick >= b.cooldown && this.world.combat!.query.visible(e.transform, player.transform)) { b.combo = 0; this.windup(e); return; }
+    if (b.special === 'pounce' && b.pack && combatHeightReachable(e, player) && (!packReady || distance > 4)) {
       this.waypoint.x = player.transform.x + Math.cos(packAngle) * 3; this.waypoint.z = player.transform.z + Math.sin(packAngle) * 3;
       this.seek(e, this.waypoint);
     } else this.seek(e, player.transform); this.place(e);
+  }
+  /** Authored Alpha jobs reuse the ordinary, telegraphed E26 strike rather than forcing another type's special. */
+  attackObstacle(sourceId: number, targetId: number): boolean {
+    const e = this.world.entities.get(sourceId), b = e?.infected, target = this.world.entities.get(targetId);
+    if (!e || !b || !target || e.health.current <= 0 || target.health.current <= 0 || (!target.barricade && target.kind !== 'physics-prop' && target.kind !== 'barricade') || b.state === 'attack' || b.specialAttack || this.world.tick < b.cooldown || this.world.tick < (b.specialRecoveryUntil ?? 0) || Status.stunned(e, this.world.tick) || !this.world.barricades?.withinReach(e, target)) return false;
+    this.windup(e, target); b.targetId = target.id; return true;
   }
   /** Once the death/explosion animation settles, keep a static identity record
    * and return the costly brain to the warm pool. Bodies live until level unload. */
@@ -677,7 +790,7 @@ export class InfectedSystem {
   private releasePin(source: EntitySnapshot): void {
     const b = source.infected!, target = this.world.entities.get(b.heardTargetId || 1), until = b.grabUntil;
     b.grabUntil = 0;
-    if (source.archetype !== 'infected.lion' || until <= this.world.tick || !target) return;
+    if ((source.archetype !== 'infected.lion' && b.alphaType !== 'leaper') || until <= this.world.tick || !target) return;
     if (target.civilian?.knockedUntil === until) target.civilian.knockedUntil = this.world.tick;
     if (target.escort?.knockedUntil === until) target.escort.knockedUntil = this.world.tick;
     if (target.combat?.staggerUntil === until) target.combat.staggerUntil = this.world.tick;
@@ -686,14 +799,16 @@ export class InfectedSystem {
   playerPinned(): boolean {
     for (const e of this.active) {
       const b = e.infected!;
-      if (e.health.current > 0 && (b.heardTargetId ?? 0) <= 1 && b.grabUntil > this.world.tick && (b.special === 'pounce' || b.special === 'pin')) return true;
+      if (e.health.current > 0 && (b.heardTargetId ?? 0) <= 1 && b.grabUntil > this.world.tick && (b.special === 'pounce' || b.special === 'pin' || b.alphaType === 'leaper')) return true;
     }
     return false;
   }
   /** Existing archetype vision: 110 degrees / 14 m, weather, light and smoke unchanged. */
   private seesPlayer(e: EntitySnapshot, player: EntitySnapshot): boolean {
     const dx = player.transform.x - e.transform.x, dz = player.transform.z - e.transform.z, distance = Math.hypot(dx, dz);
-    return distance <= 14 * (this.world.weather?.modifiers.infectedSight ?? 1) * (this.world.lightPower?.sightMultiplier(player.transform) ?? 1)
+    const range = 14 * (this.world.weather?.modifiers.infectedSight ?? 1) * (this.world.lightPower?.sightMultiplier(player.transform) ?? 1);
+    return distance <= (this.world.scenario === 'L10' ? Math.min(range, cornSightRange(this.world, [e.transform.x, e.transform.z], [player.transform.x, player.transform.z])) : range)
+      && !(this.world.scenario === 'L10' && cornBlocksSight(this.world, [e.transform.x, e.transform.z], [player.transform.x, player.transform.z]))
       && (distance === 0 || (dx * Math.cos(e.transform.yaw) - dz * Math.sin(e.transform.yaw)) / distance >= Math.cos(55 * Math.PI / 180))
       && this.world.combat!.query.visible(e.transform, player.transform) && !this.world.combat!.effects.smokeBlocks(e.transform, player.transform);
   }
@@ -730,7 +845,7 @@ export class InfectedSystem {
     const b = e.infected!, player = this.victim(e), def = infectedDef(e.archetype);
     if (b.targetId) {
       const target = this.world.entities.get(b.targetId); b.targetId = 0;
-      if (target && target.health.current > 0 && (target.barricade || target.kind === 'physics-prop' ? this.world.barricades!.withinReach(e, target) : Math.hypot(e.transform.x - target.transform.x, e.transform.z - target.transform.z) <= 2)) {
+      if (target && target.health.current > 0 && (target.barricade || target.kind === 'physics-prop' ? this.world.barricades!.withinReach(e, target) : combatHeightReachable(e, target) && Math.hypot(e.transform.x - target.transform.x, e.transform.z - target.transform.z) <= 2)) {
         const amount = this.world.combat!.damage.apply({ sourceId: e.id, targetId: target.id, attackId: b.attackId, actionId: e.archetype, origin: e.transform, direction: { x: 0, z: 0 }, base: this.barricadeDamage(e.id, def.damage) * (e.archetype !== 'infected.alpha' ? target.barricade?.slot.hordeShare ?? 1 : 1), multiplier: 1, type: 'melee', knockback: 0, stagger: 0 });
         this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: e.id, targetId: target.id, attackId: b.attackId, special: 'barricade', amount });
       }
@@ -788,6 +903,7 @@ export class InfectedSystem {
   private attackVictim(e: EntitySnapshot, damage: number): void {
     const b = e.infected!, targetId = this.victim(e).id; this.struck = e.id;
     const target = this.victim(e);
+    if (!combatHeightReachable(e, target)) return;
     if (this.nativeCivilianContact(e, target, Math.hypot(target.transform.x - e.transform.x, target.transform.z - e.transform.z))) {
       this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, targetId, special: b.special, amount: 0 });
       return;
@@ -799,7 +915,7 @@ export class InfectedSystem {
   private nativeCivilianContact(e: EntitySnapshot, target: EntitySnapshot, distance: number): boolean {
     const c = target.civilian;
     if (this.world.scenario !== 'L4' || e.infected!.l1 || !(l4InfectedArchetypes as readonly string[]).includes(e.archetype)
-      || !c?.l1 || target.health.current <= 0 || target.infection) return false;
+      || !c?.l1 || target.health.current <= 0 || target.infection || !combatHeightReachable(e, target)) return false;
     // A neighbour's attack must not invoke the generic civilian hit reaction:
     // that reaction releases an existing grab as though the player rescued it.
     if (c.state === 'grabbed') return true;
@@ -817,7 +933,7 @@ export class InfectedSystem {
   down(e: EntitySnapshot, permanent: boolean): number {
     const b = e.infected!;
     if (b.specialAttack) this.cancelSpecial(e.id);
-    if (b.special === 'pin') this.releasePin(e);
+    if (b.special === 'pin' || b.alphaType === 'leaper') this.releasePin(e);
     if (permanent || !this.recovery || e.corpse || b.special === 'explode' || e.archetype === 'infected.crow') return b.recoverAt = -1;
     const l3Human = this.world.scenario === 'L3' && (e.archetype === 'infected.runner' || e.archetype === 'infected.sprinter');
     const [low, high] = l3Human ? l3.infected.recoverS : infectedRecovery.downS;
@@ -873,7 +989,7 @@ export class InfectedSystem {
       b.state = 'dead'; b.deadAt = this.world.tick; b.grabUntil = 0;
       // A killed ambusher is a visible ground body, even if it died on a perch
       // or while clinging. The living-only reveal path no longer runs for it.
-      if (b.special === 'cling') { b.hidden = false; b.perched = false; e.transform.y = (this.world.districts?.pavingHeight(e.transform.x, e.transform.z) ?? 0) + .7; }
+      if (b.special === 'cling') { b.hidden = false; b.perched = false; e.transform.y = (this.world.districts?.supportBelow(e.transform.x, e.transform.z, e.transform.y - .7) ?? 0) + .7; }
       if (e.archetype === 'infected.crow') { for (let i = 0; i < 20; i++) if (b.birdAlive[i]) b.birdDeadMask = (b.birdDeadMask ?? 0) | 1 << i; b.birds = 0; b.birdAlive.fill(0); }
       if (b.special === 'explode' && !this.world.missions?.state.states['cure-released']) { b.attackId = this.nextAttackId(); b.until = this.world.tick + 60; this.world.events.emit({ type: 'telegraph', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, special: 'explode', duration: 1 }); }
     }
@@ -1218,6 +1334,8 @@ export class InfectedSystem {
     if (!target) { this.startSearch(b, brain, { x: brain.seenX, z: brain.seenZ }, { x: brain.headingX, z: brain.headingZ }); return; }
     if (this.world.tick < brain.pauseUntil) { this.look(e, brain); return; }
     brain.looking = false;
+    const victim = this.world.entities.get(target.id);
+    if (victim && !combatHeightReachable(e, victim)) { this.seek(e, victim.transform, brain.runSpeed); return; }
     const distance = Math.hypot(target.position.x - e.transform.x, target.position.z - e.transform.z);
     let lunge = this.lungeRangeM(target.kind === 'player');
     if (this.world.scenario === 'L5' && target.kind === 'player') {
@@ -1258,12 +1376,13 @@ export class InfectedSystem {
     }
     // Civilians: runner lunge burst inside 2.5 m, then grab on contact.
     const contact = e.combat!.radius + (this.world.entities.get(target.id)?.combat?.radius ?? .35) + .3;
-    if (distance <= contact && this.l1!.lineOfSight(e.transform, target.position)) { this.startBite(e, b, brain, target); return; }
+    const victimEntity = this.world.entities.get(target.id);
+    if (distance <= contact && victimEntity && combatHeightReachable(e, victimEntity) && this.l1!.lineOfSight(e.transform, target.position)) { this.startBite(e, b, brain, target); return; }
     this.steerL1(e, brain, target.position, distance <= lunge ? Math.min(7, brain.runSpeed * 1.25) : brain.runSpeed, false, true);
     // L4 high resolves contact reached during this move. Separation runs afterward;
     // checking only before steering can leave a moving human just outside the
     // grab boundary on every tick, despite the runner reaching it each time.
-    if (this.world.scenario === 'L4' && this.director.tier === 'high' && Math.hypot(target.position.x - e.transform.x, target.position.z - e.transform.z) <= contact && this.l1!.lineOfSight(e.transform, target.position)) this.startBite(e, b, brain, target);
+    if (this.world.scenario === 'L4' && this.director.tier === 'high' && Math.hypot(target.position.x - e.transform.x, target.position.z - e.transform.z) <= contact && victimEntity && combatHeightReachable(e, victimEntity) && this.l1!.lineOfSight(e.transform, target.position)) this.startBite(e, b, brain, target);
   }
   /** PO 2026-11-07 ("The police crew that should follow me has zero chance to survive"): like the L7 evacuees (r5-l7), a bite on
    * a following L3 squad officer costs his shown health first and shoves the biter off; only the bite that empties it turns him. */
@@ -1286,7 +1405,7 @@ export class InfectedSystem {
   private updateBite(e: EntitySnapshot, b: InfectedState, brain: L1Brain): void {
     const victim = this.victimPosition(brain.biteTargetId);
     // Any hit on the infected during the grab rescues the victim (rescue window = the 1.0 s grab).
-    if (b.grabHits > 0 || !victim || Math.hypot(victim.x - e.transform.x, victim.z - e.transform.z) > e.combat!.radius + (this.world.entities.get(brain.biteTargetId)?.combat?.radius ?? .35) + 1.1 || !this.l1!.lineOfSight(e.transform, victim)) { this.endBite(e, b, brain, false); return; }
+    if (b.grabHits > 0 || !victim || !this.world.entities.get(brain.biteTargetId) || !combatHeightReachable(e, this.world.entities.get(brain.biteTargetId)!) || Math.hypot(victim.x - e.transform.x, victim.z - e.transform.z) > e.combat!.radius + (this.world.entities.get(brain.biteTargetId)?.combat?.radius ?? .35) + 1.1 || !this.l1!.lineOfSight(e.transform, victim)) { this.endBite(e, b, brain, false); return; }
     e.transform.yaw = -Math.atan2(victim.z - e.transform.z, victim.x - e.transform.x);
     if (this.world.tick >= b.grabUntil) this.endBite(e, b, brain, true);
   }
@@ -1438,11 +1557,14 @@ export class InfectedSystem {
   restoreSpecialTimers(b: InfectedState, delta: number): void {
     this.sequence = Math.max(this.sequence, b.attackId, b.specialAttack?.attackId ?? 0, b.roar?.attackId ?? 0);
     if (b.proximityNotice) b.proximityNotice.until += delta;
+    if (b.alphaSpecialStarted !== undefined) b.alphaSpecialStarted += delta;
     if (b.pressureTarget) b.pressureTarget.until += delta;
     if (b.megaStaggerReady !== undefined) b.megaStaggerReady += delta;
     if (b.specialAttack?.grabReleaseTick !== undefined) b.specialAttack.grabReleaseTick += delta;
     if (b.roar) { b.roar.until += delta; if (b.roar.speedUntil !== undefined) b.roar.speedUntil += delta; }
-    if (b.specialAttack?.projectile) b.specialAttack.projectile.started += delta;
+    if (b.specialAttack?.projectile) { b.specialAttack.projectile.started += delta; if (b.specialAttack.projectile.physics) b.specialAttack.projectile.restoreVelocity = true; }
+    for (const flight of b.specialAttack?.barrageProjectiles ?? []) { flight.started += delta; if (flight.physics) flight.restoreVelocity = true; }
+    if (b.specialAttack?.barrageNextTick !== undefined) b.specialAttack.barrageNextTick += delta;
     if (b.specialAttack?.impactTick !== undefined) b.specialAttack.impactTick += delta;
     if (b.specialAttack?.obstructionUntil) b.specialAttack.obstructionUntil += delta;
     if (b.specialRecoveryUntil) b.specialRecoveryUntil += delta;
@@ -1454,8 +1576,14 @@ export class InfectedSystem {
   startSpecial(sourceId: number, move: InfectedSpecialMove, target: { id: number; x: number; z: number }, area: { x: number; z: number; radius: number; dx: number; dz: number }, follower = false): boolean {
     const e = this.world.entities.get(sourceId), b = e?.infected, timing = e?.infected?.pursuit && move in megaAlpha.moves ? megaAlpha.moves[move as keyof typeof megaAlpha.moves] : infectedSpecialMoves[move], tick = this.world.tick;
     if (!e || !b || e.archetype !== infectedSpecialMoves[move].archetype || e.health.current <= 0 || b.specialAttack || b.state === 'attack' || tick < b.cooldown || tick < (b.specialRecoveryUntil ?? 0) || tick + timing.windup < (b.specialCooldowns?.[move] ?? 0) || Status.stunned(e, tick)) return false;
+    if (e.archetype === 'infected.alpha' && !b.pursuit && b.alphaType && !alphaTypes[b.alphaType].moves.includes(move)) return false;
     if (![target.x, target.z, area.x, area.z, area.radius, area.dx, area.dz].every(Number.isFinite) || area.radius < 0) return false;
     if (b.pursuit && (!(move in megaAlpha.moves) || Math.hypot(target.x - e.transform.x, target.z - e.transform.z) > megaAlpha.closeM || !this.megaSpecialClear(e))) return false;
+    if (e.archetype === 'infected.alpha') {
+      if (!this.director.inPlayerView(e.transform, 32)) return false;
+      let starts = 0;
+      for (const other of this.world.entities.iterate()) if ((other.infected?.alphaSpecialStarted ?? -Infinity) > tick - 60 && ++starts >= 2) return false;
+    }
     let members: EntitySnapshot[] | undefined;
     if (!follower && (move === 'zebra.stampede' || move === 'flamingo.dive')) {
       const limit = move === 'zebra.stampede' ? 4 : 8;
@@ -1470,10 +1598,11 @@ export class InfectedSystem {
     const attackId = this.nextAttackId(), activeTick = tick + timing.windup;
     let destination: { x: number; z: number } | undefined;
     b.attackId = attackId;
-    if (move === 'alpha.grab-throw' || move === 'gorilla.grab-throw' || move === 'alpha.roar') { if (e.locomotion) resetResponse(e.locomotion); b.dx = area.dx; b.dz = area.dz; }
-    if (!follower && ['zebra.kick', 'zebra.stampede', 'flamingo.dive', 'alpha.charge', 'alpha.ground-slam', 'lion.pounce', 'lion.flank', 'gorilla.pound', 'gorilla.roar', 'elephant.charge', 'elephant.swipe', 'gorilla.grab-throw'].includes(move)) {
+    if (move === 'alpha.roar' || move === 'alpha.grab-human') area = { ...area, x: e.transform.x, z: e.transform.z, radius: move === 'alpha.grab-human' ? 2.5 : b.alphaType === 'screamer' ? 8 : 18 };
+    if (move === 'alpha.grab-throw' || move === 'alpha.grab-human' || move === 'gorilla.grab-throw' || move === 'alpha.roar') { if (e.locomotion) resetResponse(e.locomotion); b.dx = area.dx; b.dz = area.dz; }
+    if (!follower && ['zebra.kick', 'zebra.stampede', 'flamingo.dive', 'alpha.charge', 'alpha.ground-slam', 'alpha.pounce', 'alpha.shield-bash', 'lion.pounce', 'lion.flank', 'gorilla.pound', 'gorilla.roar', 'elephant.charge', 'elephant.swipe', 'gorilla.grab-throw'].includes(move)) {
       const dx = target.x - e.transform.x, dz = target.z - e.transform.z, length = Math.hypot(dx, dz);
-      area = { x: e.transform.x, z: e.transform.z, radius: move === 'zebra.kick' ? 2 : move === 'zebra.stampede' ? .75 : move === 'flamingo.dive' ? 3 : move === 'elephant.charge' ? 1.75 : move === 'elephant.swipe' ? 3 : move === 'gorilla.pound' ? 5 : move === 'gorilla.roar' ? 20 : move === 'alpha.ground-slam' ? 4 : 1, dx: length > .001 ? dx / length : Math.cos(e.transform.yaw), dz: length > .001 ? dz / length : -Math.sin(e.transform.yaw) };
+      area = { x: e.transform.x, z: e.transform.z, radius: move === 'zebra.kick' ? 2 : move === 'zebra.stampede' ? .75 : move === 'flamingo.dive' ? 3 : move === 'elephant.charge' ? 1.75 : move === 'elephant.swipe' ? 3 : move === 'gorilla.pound' ? 5 : move === 'gorilla.roar' ? 20 : move === 'alpha.ground-slam' ? 4 : move === 'alpha.shield-bash' ? 2.5 : 1, dx: length > .001 ? dx / length : Math.cos(e.transform.yaw), dz: length > .001 ? dz / length : -Math.sin(e.transform.yaw) };
       if (move === 'zebra.kick') { area.dx = -Math.cos(e.transform.yaw); area.dz = Math.sin(e.transform.yaw); }
       if (move === 'flamingo.dive') { area.x = target.x; area.z = target.z; }
       if (move === 'lion.flank') {
@@ -1493,6 +1622,8 @@ export class InfectedSystem {
       e.transform.yaw = -Math.atan2(area.dz, area.dx);
     }
     b.specialAttack = { move, attackId, stage: 'telegraph', startTick: tick, activeTick, cooldownExpiry: activeTick + timing.cooldown, recoveryUntil: 0, target: { ...target }, area: { ...area }, hitIds: [], ...(destination ? { destination } : {}) };
+    if (e.archetype === 'infected.alpha') b.alphaSpecialStarted = tick;
+    if ((!b.pursuit && move === 'alpha.grab-throw') || move === 'alpha.living-missile' || move === 'alpha.barrage' || move === 'gorilla.grab-throw') this.props.pickupSpecial(e, b.specialAttack);
     e.combat!.attacking = true;
     this.world.events.emit({ type: 'telegraph', tick, sourceId, attackId, special: move, move, duration: timing.windup / 60, startTick: tick, activeTick, cooldownExpiry: activeTick + timing.cooldown, target: { ...target }, area: { ...area } });
     if (members) {
@@ -1526,76 +1657,82 @@ export class InfectedSystem {
   finishSpecial(sourceId: number): boolean {
     const e = this.world.entities.get(sourceId), b = e?.infected, a = b?.specialAttack;
     if (!e || !b || !a || a.stage !== 'active') return false;
-    if (a.move === 'lion.pounce') e.transform.y = (this.world.districts?.pavingHeight(e.transform.x, e.transform.z) ?? 0) + .7;
+    this.props.settleSpecial(a);
+    if (a.move === 'lion.pounce' || a.move === 'alpha.pounce') e.transform.y = (this.world.districts?.supportBelow(e.transform.x, e.transform.z, e.transform.y - .7) ?? 0) + .7;
     if (e.locomotion) resetResponse(e.locomotion);
-    a.stage = 'recovery'; a.recoveryUntil = Math.max(this.world.tick + (b.pursuit ? megaAlpha.recoveryTicks : infectedSpecialRecoveryTicks), a.obstructionUntil ?? 0);
+    a.stage = 'recovery'; a.recoveryUntil = Math.max(this.world.tick + (b.pursuit ? megaAlpha.recoveryTicks : b.alphaType ? 48 : infectedSpecialRecoveryTicks), a.obstructionUntil ?? 0);
     b.specialRecoveryUntil = a.recoveryUntil; e.combat!.attacking = false;
     this.world.events.emit({ type: 'infected.special', tick: this.world.tick, sourceId, move: a.move, attackId: a.attackId, stage: 'recovery' }); return true;
   }
   cancelSpecial(sourceId: number): void {
     const e = this.world.entities.get(sourceId), b = e?.infected, a = b?.specialAttack;
     if (!e || !b || !a) return;
-    if (b.pursuit) (b.specialCooldowns ??= {})[a.move] = a.cooldownExpiry;
+    if (b.pursuit || a.stage === 'active') (b.specialCooldowns ??= {})[a.move] = a.cooldownExpiry;
     this.releaseMegaGrab(a);
     this.props.settleSpecial(a);
-    if (a.move === 'lion.pounce') e.transform.y = (this.world.districts?.pavingHeight(e.transform.x, e.transform.z) ?? 0) + .7;
-    b.specialRecoveryUntil = Math.max(b.specialRecoveryUntil ?? 0, this.world.tick + (b.pursuit ? megaAlpha.recoveryTicks : infectedSpecialRecoveryTicks));
+    if (a.move === 'lion.pounce' || a.move === 'alpha.pounce') e.transform.y = (this.world.districts?.supportBelow(e.transform.x, e.transform.z, e.transform.y - .7) ?? 0) + .7;
+    b.specialRecoveryUntil = Math.max(b.specialRecoveryUntil ?? 0, this.world.tick + (b.pursuit ? megaAlpha.recoveryTicks : b.alphaType ? 48 : infectedSpecialRecoveryTicks));
     this.world.events.emit({ type: 'infected.special', tick: this.world.tick, sourceId, move: a.move, attackId: a.attackId, stage: 'cancelled' });
-    delete b.specialAttack; e.combat!.attacking = false;
+    if (b.alphaType && e.health.current > 0) { a.stage = 'recovery'; a.recoveryUntil = b.specialRecoveryUntil; }
+    else delete b.specialAttack;
+    e.combat!.attacking = false;
   }
   private updateSpecial(e: EntitySnapshot): boolean {
     const b = e.infected!, a = b.specialAttack, tick = this.world.tick;
     if (!a) return tick < (b.specialRecoveryUntil ?? 0);
-    if (a.stage === 'telegraph' && (a.move === 'alpha.grab-throw' || a.move === 'gorilla.grab-throw' || a.move === 'alpha.roar')) {
+    if (a.stage === 'telegraph' && (a.move === 'alpha.grab-throw' || a.move === 'alpha.grab-human' || a.move === 'gorilla.grab-throw' || a.move === 'alpha.roar')) {
       const yaw = -Math.atan2(a.area.dz, a.area.dx), delta = Math.atan2(Math.sin(yaw - e.transform.yaw), Math.cos(yaw - e.transform.yaw));
       e.transform.yaw += Math.max(-hearingTurnRadS / 60, Math.min(hearingTurnRadS / 60, delta));
     }
+    if (a.pickup) this.props.holdSpecial(e, a);
+    if (a.stage === 'telegraph' && Status.stunned(e, tick)) { this.cancelSpecial(e.id); return true; }
     if (a.stage === 'telegraph' && tick >= a.activeTick) {
       if (Status.stunned(e, tick)) { this.cancelSpecial(e.id); return true; }
       a.stage = 'active'; (b.specialCooldowns ??= {})[a.move] = a.cooldownExpiry;
       this.world.events.emit({ type: 'infected.special', tick, sourceId: e.id, move: a.move, attackId: a.attackId, stage: 'active' });
     }
-    if (b.pursuit && (Status.stunned(e, tick) || !this.megaSpecialClear(e))) { this.cancelSpecial(e.id); return true; }
+    if ((b.pursuit && a.stage !== 'recovery' && (Status.stunned(e, tick) || !this.megaSpecialClear(e))) || (a.stage === 'active' && e.archetype === 'infected.alpha' && Status.stunned(e, tick))) { this.cancelSpecial(e.id); return true; }
     if (b.pursuit && a.move === 'alpha.grab-throw') this.resolveMegaGrab(e);
+    else if (a.move === 'alpha.grab-human') this.resolveAlphaHumanGrab(e);
     else this.alphaSupport.update(e);
     if (a.stage === 'active' && a.move === 'flamingo.dive') this.resolveFlockDive(e);
     if (a.stage === 'recovery' && tick >= a.recoveryUntil) {
       this.world.events.emit({ type: 'infected.special', tick, sourceId: e.id, move: a.move, attackId: a.attackId, stage: 'expiry' });
       delete b.specialAttack; return false;
     }
-    if (a.stage === 'active' && ['alpha.charge', 'alpha.ground-slam', 'lion.pounce', 'lion.flank', 'gorilla.pound', 'elephant.charge', 'elephant.swipe', 'zebra.kick', 'zebra.stampede'].includes(a.move)) this.resolvePhysical(e);
+    if (a.stage === 'active' && ['alpha.charge', 'alpha.ground-slam', 'alpha.pounce', 'alpha.shield-bash', 'lion.pounce', 'lion.flank', 'gorilla.pound', 'elephant.charge', 'elephant.swipe', 'zebra.kick', 'zebra.stampede'].includes(a.move)) this.resolvePhysical(e);
     return true;
   }
   /** Fixed, locked physical moves use combat hits, E26 blockers and the existing human hurt state. */
   private resolvePhysical(e: EntitySnapshot): void {
     const a = e.infected!.specialAttack!, mega = !!e.infected!.pursuit;
-    const pounce = a.move === 'lion.pounce', pound = a.move === 'gorilla.pound', elephant = a.move === 'elephant.charge', swipe = a.move === 'elephant.swipe', kick = a.move === 'zebra.kick', zebra = a.move === 'zebra.stampede';
+    const pounce = a.move === 'lion.pounce' || a.move === 'alpha.pounce', bash = a.move === 'alpha.shield-bash', pound = a.move === 'gorilla.pound', elephant = a.move === 'elephant.charge', swipe = a.move === 'elephant.swipe', kick = a.move === 'zebra.kick', zebra = a.move === 'zebra.stampede';
     const q = this.world.combat!.query, p = e.transform, direction = this.physicalDirection;
     direction.x = a.area.dx; direction.z = a.area.dz;
     if (a.move === 'lion.flank') {
       if (this.world.tick - a.activeTick >= 120 || !a.destination || Math.hypot(p.x - a.destination.x, p.z - a.destination.z) <= e.combat!.radius + .5) { this.finishSpecial(e.id); return; }
       this.seek(e, a.destination, 10); this.world.spatial.set(e.id, p.x, p.z); return;
     }
-    if (a.move === 'alpha.ground-slam' || pound || swipe || kick) {
-      const radius = kick ? 2 : swipe ? 3 : pound ? 5 : 4;
+    if (a.move === 'alpha.ground-slam' || bash || pound || swipe || kick) {
+      const radius = kick ? 2 : swipe ? 3 : pound ? 5 : bash ? 2.5 : 4;
       this.physicalQuery.x = a.area.x; this.physicalQuery.z = a.area.z; this.physicalQuery.r = radius + 1e-8;
       this.world.spatial.query(this.physicalQuery, this.physicalNeighbors);
       for (const id of this.physicalNeighbors) {
         const target = this.world.entities.get(id);
         if (!target || !this.physicalHuman(target) || Math.hypot(target.transform.x - a.area.x, target.transform.z - a.area.z) > radius + 1e-8 || !q.visible(a.area, target.transform) || !this.physicalPropVisible(a.area, target.transform)) continue;
-        if (swipe || kick) { const dx = target.transform.x - a.area.x, dz = target.transform.z - a.area.z; if (dx * a.area.dx + dz * a.area.dz < Math.hypot(dx, dz) * (kick ? Math.SQRT1_2 : .5) - 1e-8) continue; }
-        this.physicalHit(e, target, mega ? megaAlpha.moves['alpha.ground-slam'].damage : kick ? 20 : pound ? 30 : 25);
+        if (swipe || kick || bash) { const dx = target.transform.x - a.area.x, dz = target.transform.z - a.area.z; if (dx * a.area.dx + dz * a.area.dz < Math.hypot(dx, dz) * (kick ? Math.SQRT1_2 : .5) - 1e-8) continue; }
+        this.physicalHit(e, target, mega ? megaAlpha.moves['alpha.ground-slam'].damage : kick ? 20 : pound ? 30 : bash ? 18 : 25);
       }
       this.finishSpecial(e.id); return;
     }
     const hitRadius = mega ? megaAlpha.moves['alpha.charge'].radius : pounce ? infectedContactDistance(e.combat!.radius) : elephant ? 1.75 : zebra ? .75 : 1;
     const travelled = (p.x - a.area.x) * a.area.dx + (p.z - a.area.z) * a.area.dz;
-    const range = mega ? Math.min(megaAlpha.moves['alpha.charge'].range, megaAlpha.moves['alpha.charge'].speed) : pounce ? Math.min(8, Math.hypot(a.target.x - a.area.x, a.target.z - a.area.z)) : elephant ? 16 : zebra ? 15 : 12;
+    const range = mega ? Math.min(megaAlpha.moves['alpha.charge'].range, megaAlpha.moves['alpha.charge'].speed) : pounce ? Math.min(a.move === 'alpha.pounce' ? 12 : 8, Math.hypot(a.target.x - a.area.x, a.target.z - a.area.z)) : elephant ? 16 : zebra ? 15 : 12;
     const step = Math.min((mega ? megaAlpha.moves['alpha.charge'].speed : pounce || zebra ? 10 : elephant ? 8 : 9) / 60, Math.max(0, range - travelled));
     let distance = this.physicalClearDistance(e, direction, step);
     if (pounce) {
       const target = this.world.entities.get(a.target.id);
-      if (target && this.physicalHuman(target)) {
+      if (target && this.physicalHuman(target) && combatHeightReachable(e, target)) {
         const dx = target.transform.x - p.x, dz = target.transform.z - p.z, along = dx * direction.x + dz * direction.z;
         const lateral = dx * direction.z - dz * direction.x;
         if (along >= 0 && Math.abs(lateral) <= hitRadius) distance = Math.min(distance, Math.max(0, along - Math.sqrt(hitRadius ** 2 - lateral ** 2)));
@@ -1622,19 +1759,26 @@ export class InfectedSystem {
       const along = Math.max(0, Math.min(distance, dx * a.area.dx + dz * a.area.dz));
       if (Math.hypot(dx - along * a.area.dx, dz - along * a.area.dz) <= hitRadius + 1e-8 && q.visible(this.physicalOrigin, target.transform) && this.physicalPropVisible(this.physicalOrigin, target.transform)) this.physicalHit(e, target, mega ? megaAlpha.moves['alpha.charge'].damage : zebra ? 25 : elephant ? 40 : 30);
     }
+    const hitWall = distance < step;
     distance = Math.min(distance, this.world.solids.sweep(e, direction, distance, e.combat!.radius, zebra ? 'side' : !pounce, true, zebra ? target => {
       if (this.physicalHuman(target) && q.visible(this.physicalOrigin, target.transform) && this.physicalPropVisible(this.physicalOrigin, target.transform)) this.physicalHit(e, target, 25);
     } : undefined));
     p.x += a.area.dx * Math.max(0, distance - (distance < step ? .001 : 0));
     p.z += a.area.dz * Math.max(0, distance - (distance < step ? .001 : 0));
-    p.y = (this.world.districts?.pavingHeight(p.x, p.z) ?? 0) + .7 + (pounce && range > 0 ? Math.sin(Math.PI * Math.min(1, (travelled + distance) / range)) * .65 : 0);
+    p.y = (this.world.districts?.supportBelow(p.x, p.z, p.y - .7) ?? 0) + .7 + (pounce && range > 0 ? Math.sin(Math.PI * Math.min(1, (travelled + distance) / range)) * .65 : 0);
     p.yaw = -Math.atan2(a.area.dz, a.area.dx); this.world.spatial.set(e.id, p.x, p.z);
     if (pounce && a.hitIds.includes(a.target.id)) {
-      const b = e.infected!; b.grabUntil = this.world.tick + 90; b.grabHits = 0; b.heardTargetId = a.target.id;
+      const b = e.infected!; b.grabUntil = this.world.tick + 90; b.grabNextTick = this.world.tick + 30; b.grabHits = 0; b.heardTargetId = a.target.id;
       const target = this.world.entities.get(a.target.id)!; b.grabX = target.transform.x; b.grabZ = target.transform.z;
       this.finishSpecial(e.id); return;
     }
-    if (distance < step || travelled + step >= range - 1e-8) this.finishSpecial(e.id);
+    if (distance < step || travelled + step >= range - 1e-8) {
+      if (hitWall && a.move === 'alpha.charge' && !mega) {
+        a.obstructionUntil = this.world.tick + 90;
+        e.combat!.staggerUntil = Math.max(e.combat!.staggerUntil, a.obstructionUntil);
+      }
+      this.finishSpecial(e.id);
+    }
   }
   /** Existing flock steering drives actual birds; one leader owns the flock hit set. */
   private resolveFlockDive(e: EntitySnapshot): void {
@@ -1642,7 +1786,7 @@ export class InfectedSystem {
     const leader = this.world.entities.get(a.leaderId ?? e.id), leaderAttack = leader?.infected?.specialAttack;
     if (!leader || leader.health.current <= 0 || !leaderAttack || leaderAttack.move !== 'flamingo.dive') { this.cancelSpecial(e.id); e.transform.y = .7; return; }
     const impactAge = leaderAttack.impactTick === undefined ? undefined : this.world.tick - leaderAttack.impactTick;
-    if (age >= 180 || impactAge !== undefined && impactAge >= 24) { e.transform.y = (this.world.districts?.pavingHeight(e.transform.x, e.transform.z) ?? 0) + .7; this.finishSpecial(e.id); return; }
+    if (age >= 180 || impactAge !== undefined && impactAge >= 24) { e.transform.y = (this.world.districts?.supportBelow(e.transform.x, e.transform.z, e.transform.y - .7) ?? 0) + .7; this.finishSpecial(e.id); return; }
     steerFlockDive(e, a.area, age, this.world.tick, impactAge, a.members?.indexOf(e.id) ?? 0, this.world.combat!.query);
     this.place(e);
     if (a.leaderId !== e.id || age < 24 || a.impactTick !== undefined) return;
@@ -1711,6 +1855,26 @@ export class InfectedSystem {
     }
     if (tick >= a.grabReleaseTick) { this.releaseMegaGrab(a); this.finishSpecial(e.id); }
   }
+  /** Brute's close grab holds the courier/follower briefly, then throws them six metres. */
+  private resolveAlphaHumanGrab(e: EntitySnapshot): void {
+    const a = e.infected!.specialAttack!, tick = this.world.tick;
+    if (a.stage !== 'active') return;
+    if (a.grabReleaseTick === undefined) {
+      const target = this.world.entities.get(a.target.id);
+      if (!target || !this.physicalHuman(target) || Math.hypot(target.transform.x - e.transform.x, target.transform.z - e.transform.z) > 2.5 || !this.world.combat!.query.visible(e.transform, target.transform) || !this.physicalPropVisible(e.transform, target.transform)) { this.finishSpecial(e.id); return; }
+      this.physicalHit(e, target, 25); a.grabbedId = target.id; a.grabReleaseTick = tick + 36;
+      if (target.survivor) target.survivor.knockdown = { started: tick, until: a.grabReleaseTick };
+      target.combat!.staggerUntil = a.grabReleaseTick;
+    }
+    if (tick >= a.grabReleaseTick) {
+      const target = this.world.entities.get(a.grabbedId!);
+      if (target && target.health.current > 0) {
+        const dx = target.transform.x - e.transform.x, dz = target.transform.z - e.transform.z, length = Math.hypot(dx, dz) || 1;
+        this.world.knockback(target, { x: dx / length, z: dz / length }, 6);
+      }
+      delete a.grabbedId; this.finishSpecial(e.id);
+    }
+  }
   private physicalPropVisible(origin: { x: number; z: number }, target: { x: number; z: number }): boolean {
     const dx = target.x - origin.x, dz = target.z - origin.z, length = Math.hypot(dx, dz);
     if (!length) return true;
@@ -1721,10 +1885,11 @@ export class InfectedSystem {
     return target.health.current > 0 && !target.hidden && !target.companion && !target.escort?.child && !(target.civilian && (!target.civilian.adult || (target.civilian.pet && !target.civilian.zooAnimal) || ['finished', 'infected', 'down', 'rising'].includes(target.civilian.state))) && !storyProtected(this.world, target) && (target.kind === 'player' || target.faction === 'civilian' || target.faction === 'escort' || !!target.civilian);
   }
   private physicalHit(source: EntitySnapshot, target: EntitySnapshot, base: number): void {
+    if (!combatHeightReachable(source, target)) return;
     if (!this.specialHit(source.id, target.id)) return;
     const a = source.infected!.specialAttack!;
     const dx = target.transform.x - source.transform.x, dz = target.transform.z - source.transform.z, length = Math.hypot(dx, dz);
-    const amount = this.world.combat!.damage.apply({ sourceId: source.id, targetId: target.id, attackId: a.attackId, actionId: a.move.startsWith('alpha.') ? a.move : `infected.${a.move}`, origin: source.transform, direction: length ? { x: dx / length, z: dz / length } : { x: a.area.dx, z: a.area.dz }, base, multiplier: 1, type: 'melee', knockback: a.move === 'elephant.swipe' || a.move === 'zebra.kick' ? 3 : 0, stagger: a.move === 'zebra.kick' || a.move === 'flamingo.dive' ? .6 : 0, knockdownTicks: a.move === 'zebra.kick' || a.move === 'flamingo.dive' ? 0 : a.move === 'zebra.stampede' ? 60 : a.move === 'elephant.charge' ? 90 : a.move === 'elephant.swipe' ? 48 : a.move === 'lion.pounce' ? target.kind === 'player' ? 0 : 90 : 72, hitStopMs: 0 });
+    const amount = this.world.combat!.damage.apply({ sourceId: source.id, targetId: target.id, attackId: a.attackId, actionId: a.move.startsWith('alpha.') ? a.move : `infected.${a.move}`, origin: source.transform, direction: length ? { x: dx / length, z: dz / length } : { x: a.area.dx, z: a.area.dz }, base, multiplier: 1, type: 'melee', knockback: a.move === 'elephant.swipe' || a.move === 'zebra.kick' || a.move === 'alpha.shield-bash' ? 3 : 0, stagger: a.move === 'zebra.kick' || a.move === 'flamingo.dive' || a.move === 'alpha.shield-bash' ? .6 : 0, knockdownTicks: a.move === 'alpha.shield-bash' ? 0 : a.move === 'alpha.pounce' ? 90 : a.move === 'zebra.kick' || a.move === 'flamingo.dive' ? 0 : a.move === 'zebra.stampede' ? 60 : a.move === 'elephant.charge' ? 90 : a.move === 'elephant.swipe' ? 48 : a.move === 'lion.pounce' ? target.kind === 'player' ? 0 : 90 : 72, hitStopMs: 0 });
     this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: source.id, targetId: target.id, attackId: a.attackId, special: a.move, amount });
   }
   /** Stable test/debug surface, including RNG and pool/director counters needed for deterministic replay. */
@@ -1863,18 +2028,19 @@ export class InfectedSystem {
     }
     else { brain.hasGoal = false; brain.looking = true; brain.lookYaw = e.transform.yaw + Math.PI * 0.7; brain.pauseUntil = tick + 20; }
   }
-  private seek(e: EntitySnapshot, target: { x: number; z: number }, specialSpeed?: number): void {
+  seek(e: EntitySnapshot, target: { x: number; y?: number; z: number }, specialSpeed?: number): void {
     const grid = this.navigation.district(e.transform), b = e.infected!;
     const armyApproach = !!b.l4ArmyApproach || this.world.scenario === 'L4' && !!b.breachApproach;
     if (b.pathGrid !== grid) { b.pathGrid = grid; b.goal = -1; b.path.length = 0; }
-    const nav = this.navigation.grid(e.transform); target = this.navigation.target(e.transform, target);
+    const nav = this.navigation.grid(e.transform), heightGoal = this.world.districts ? heightRouteWaypoint(this.world.districts, e, target) : undefined;
+    target = this.navigation.target(e.transform, heightGoal ?? target);
     let x = target.x, z = target.z;
     // Only a courier chase can share its flow field; soldier and investigation goals need their own route.
     // Courier-assigned L4 breach walkers have the same destination as the
     // shared flow. Making each compete for an individual A* search can leave
     // the new cohort waiting behind the rest of the horde for its whole cue.
     const courierApproach = b.breachApproach === 'inside' && b.pressureTarget?.id === 1 && b.pressureTarget.until > this.world.tick;
-    const useFlow = this.active.length > 20 && !b.roar && !b.specialAttack && (!b.scripted || courierApproach) && !b.investigate && (courierApproach || (b.heardTargetId ?? 1) <= 1);
+    const useFlow = !heightGoal && this.active.length > 20 && !b.roar && !b.specialAttack && (!b.scripted || courierApproach) && !b.investigate && (courierApproach || (b.heardTargetId ?? 1) <= 1);
     if (!nav.visible(e.transform, target, e.combat!.radius)) {
       // Clear paths steer directly; cell searches are needed only around cover.
       // The nearest cell can lie across a thin doorway wall. Start on a
@@ -1910,7 +2076,7 @@ export class InfectedSystem {
     const dx = x - e.transform.x, dz = z - e.transform.z, distance = Math.hypot(dx, dz);
     // Scripted staging is a walking waypoint, not a melee target. Applying
     // attack clearance left Alphas outside the director's 1.2 m charge gate.
-    const remaining = !(this.world.scenario === 'L4' && b.scripted) && x === target.x && z === target.z ? distance - e.combat!.radius - 0.36 : distance;
+    const remaining = !heightGoal && !(this.world.scenario === 'L4' && b.scripted) && x === target.x && z === target.z ? distance - e.combat!.radius - 0.36 : distance;
     if (remaining < 0.02) return;
     const pursuit = specialSpeed === undefined && b.state === 'chase' && e.archetype === 'infected.runner' && armedCampaigns.has(this.world.scenario ?? '') ? 1.25 : 1;
     const speed = Math.min((specialSpeed ?? b.speed) * pursuit * (b.roar && this.world.tick < b.roar.until ? (b.roar.speedUntil === undefined || this.world.tick < b.roar.speedUntil ? b.roar.speedScale ?? 1.25 : 1) : 1), remaining * (specialSpeed === undefined ? 2 : 60)); moveAgent(e, dx / distance * speed, dz / distance * speed, this.infectedNav, this.world.tick, e.combat!.radius, specialSpeed !== undefined);

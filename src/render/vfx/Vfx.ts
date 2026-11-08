@@ -351,6 +351,22 @@ export class Vfx extends Group {
     // Bat/axe roundhouse: a quick ground swoosh at the sweep radius under the spinning trail.
     if (event.style === 'roundhouse') this.waves.spawn(this.time, .32, event.position.x, .03, event.position.z, 0, 0, 0, (def?.roundhouse?.radius ?? 2.2) * 2, 1, 0xfff0ba, 1);
     if (def?.category === 'ranged') {
+      if (event.actionId === 'weapon.flamethrower') {
+        if (!this.enabled) return;
+        const muzzle = this.targets.muzzle?.(event.sourceId, event.direction) ?? { ...event.position, y: event.position.y + .45 };
+        const range = this.world.combat?.query.clearDistance(muzzle, event.direction, def.range) ?? def.range;
+        const count = this.quality === 'high' ? 18 : 8;
+        // Existing fire particles form a short, cover-clipped cone; no additional textures or particle pools.
+        for (let i = 0; i < count; i++) {
+          const t = (i + 1) / count, spread = (this.rng.next() - .5) * t * 2;
+          const x = muzzle.x + event.direction.x * range * t - event.direction.z * spread;
+          const z = muzzle.z + event.direction.z * range * t + event.direction.x * spread;
+          this.particles.spawn(this.time, .38, x, muzzle.y + (this.rng.next() - .5) * t, z,
+            event.direction.x * 3, .6, event.direction.z * 3, .25 + t * .75, particleShape.smoke, i % 3 ? 0xff7027 : 0xffd16a);
+        }
+        this.muzzleLight(muzzle.x, muzzle.z, muzzle.y);
+        return;
+      }
       // Rockets show their moving projectile. Keep the launch flash, without
       // an instant horizontal gun tracer continuing past the clicked endpoint.
       this.gunshot(event.sourceId, event.direction, event.actionId === 'weapon.rocket-launcher' ? 0 : def.range, event.position);
@@ -392,21 +408,22 @@ export class Vfx extends Group {
 
     const source = event.sourceId !== undefined ? this.world.entities.get(event.sourceId) : undefined;
     const kind: TelegraphKind = source?.infected?.pursuit && 'move' in event && event.move === 'alpha.grab-throw' ? 'splash' : 'kind' in event ? event.kind : event.special === 'explode' ? 'bloated' : event.special === 'charge' || event.special === 'pin' || event.special === 'alpha.grab-throw' || event.special === 'gorilla.grab-throw' || event.special === 'elephant.charge' || event.special === 'zebra.stampede' ? 'charge' : event.special === 'aura' || event.special === 'alpha.roar' || event.special === 'gorilla.roar' || event.special === 'gorilla.pound' || event.special === 'flamingo.dive' ? 'splash' : 'lunge';
-    const throwing = !source?.infected?.pursuit && 'move' in event && (event.move === 'alpha.grab-throw' || event.move === 'gorilla.grab-throw') && event.area && event.target;
+    const throwing = !source?.infected?.pursuit && 'move' in event && (['alpha.grab-throw', 'alpha.living-missile', 'alpha.barrage', 'gorilla.grab-throw'].includes(event.move ?? '')) && event.area && event.target;
     const move = 'move' in event ? event.move : undefined;
     const area = 'area' in event ? event.area : undefined;
     const target = 'target' in event ? event.target : undefined;
-    const directional = throwing || move === 'alpha.charge' || move === 'elephant.charge' || move === 'zebra.stampede' || move === 'lion.pounce' || move === 'lion.flank';
+    const directional = move === 'alpha.pounce' || move === 'alpha.charge' || move === 'elephant.charge' || move === 'zebra.stampede' || move === 'lion.pounce' || move === 'lion.flank';
     const destination = source?.infected?.specialAttack?.destination;
-    const length = throwing ? Math.min(15, Math.hypot(target!.x - area!.x, target!.z - area!.z))
+    const length = throwing ? Math.min(25, Math.hypot(target!.x - area!.x, target!.z - area!.z))
       : directional && area ? source?.infected?.pursuit ? Math.min(megaAlpha.moves['alpha.charge'].range, megaAlpha.moves['alpha.charge'].speed)
       : destination ? Math.hypot(destination.x - area.x, destination.z - area.z)
-      : move === 'elephant.charge' ? 16 : move === 'zebra.stampede' ? 15 : move === 'lion.pounce' ? Math.min(8, Math.hypot(target!.x - area.x, target!.z - area.z)) : 12 : 0;
-    const position = directional && area ? { x: area.x + area.dx * length / 2, z: area.z + area.dz * length / 2 } : 'position' in event ? event.position : area ?? source?.transform;
+      : move === 'elephant.charge' ? 16 : move === 'zebra.stampede' ? 15 : move === 'lion.pounce' || move === 'alpha.pounce' ? Math.min(move === 'alpha.pounce' ? 12 : 8, Math.hypot(target!.x - area.x, target!.z - area.z)) : 12 : 0;
+    const landing = throwing && target && area ? { x: area.x + area.dx * Math.max(0, length - (move === 'alpha.living-missile' ? 1.8 : 0)), z: area.z + area.dz * Math.max(0, length - (move === 'alpha.living-missile' ? 1.8 : 0)) } : undefined;
+    const position = landing ?? (directional && area ? { x: area.x + area.dx * length / 2, z: area.z + area.dz * length / 2 } : 'position' in event ? event.position : area ?? source?.transform);
     if (!position) return;
-    const radius = directional ? Math.max(.1, length / 2) : 'radius' in event ? event.radius : area?.radius ?? (kind === 'bloated' || kind === 'splash' ? 3 : source ? Math.max(this.world.missions?.def.l1 ? 1 : 2, infectedDef(source.archetype).range) : 2);
+    const radius = throwing ? 1.5 : directional ? Math.max(.1, length / 2) : 'radius' in event ? event.radius : area?.radius ?? (kind === 'bloated' || kind === 'splash' ? 3 : source ? Math.max(this.world.missions?.def.l1 ? 1 : 2, infectedDef(source.archetype).range) : 2);
     const angle = area ? Math.atan2(area.dz, area.dx) : 'angle' in event ? event.angle : Math.atan2(source?.infected?.dz ?? 0, source?.infected?.dx ?? 1);
-    const shape = move === 'zebra.kick' ? 10 : move === 'elephant.swipe' ? 9 : move === 'alpha.ground-slam' || move === 'gorilla.pound' || source?.infected?.pursuit && move === 'alpha.grab-throw' ? 1 : move === 'alpha.roar' || move === 'gorilla.roar' ? 8 : directional ? 2 : telegraphShapes[kind];
+    const shape = throwing ? 1 : move === 'alpha.shield-bash' ? 9 : move === 'zebra.kick' ? 10 : move === 'elephant.swipe' ? 9 : move === 'alpha.ground-slam' || move === 'gorilla.pound' || source?.infected?.pursuit && move === 'alpha.grab-throw' ? 1 : move === 'alpha.roar' || move === 'gorilla.roar' ? 8 : directional ? 2 : telegraphShapes[kind];
     const width = throwing ? 2 : move === 'elephant.charge' ? 3.5 : move === 'zebra.stampede' ? 1.5 : (area?.radius ?? 1) * 2;
     const ground = this.world.districts?.groundHeight(position.x, position.z) ?? 0;
     const slot = this.telegraphs.spawn(this.time, 1e9, position.x, ground + .065, position.z, angle, 'duration' in event ? event.duration : .6, 0, radius * 2, shape, this.telegraphColor(kind), 0, directional ? width / (radius * 2) : kind === 'charge' ? .3 : 1, true);

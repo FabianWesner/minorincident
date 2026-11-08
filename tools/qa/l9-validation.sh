@@ -18,6 +18,12 @@ git add --renormalize -u
 git -c user.name='Remote validation' -c user.email=validation@localhost commit -qm 'Remote validation source snapshot' || exit 1
 run typecheck npm run typecheck
 run lint npm run lint
+if [ "${1:-}" = --merge ]; then
+  run unit npm test -- --maxWorkers=1
+  run road-low node --import tsx/esm tools/qa/l9-driving-proof.ts --route road --tier low
+  awk -F '\t' '$2 != 0 { bad=1 } END { exit bad }' "$root/checks.tsv"
+  exit $?
+fi
 run story node --import tsx/esm tools/qa/l9-story-proof.ts
 run course node --import tsx/esm tools/qa/l9-course-proof.ts
 if [ "${1:-}" = --quick ]; then

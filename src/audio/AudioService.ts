@@ -1,5 +1,7 @@
+import { CureHymn } from './CureHymn';
 import { AudioEventMapper } from './AudioEventMapper';
 import { isMega } from '../data/megaPresentation';
+import { insideCureHangar } from '../data/l10Story';
 import type { Lifecycle } from '../core/Lifecycle';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { GameEvent } from '../sim/world/types';
@@ -61,6 +63,7 @@ export class AudioService implements Lifecycle {
     readonly graph: AudioGraph;
     readonly registry: AudioRegistry;
     readonly score: StreamedMusic;
+    private hymn: CureHymn | null = null;
     readonly log: CueLog[] = [];
     readonly horde = new HordeClusters();
     music = new MusicDirector('L1');
@@ -182,7 +185,8 @@ export class AudioService implements Lifecycle {
         // either event to start decodeAudioData on demand can hitch the first
         // physical action while the background bank queue is still running.
         if (this.level === 'L7') await Promise.all(['pickups', 'weapons'].map(bank => this.registry.load(bank)));
-        if (this.level === 'L10' || this.world.megaPursuit) await Promise.all(['telegraph', 'music-L6'].map(bank => this.registry.load(bank)));
+        if (this.level === 'L10') await Promise.all(['telegraph', 'music-L10-fx'].map(bank => this.registry.load(bank)));
+        else if (this.world.megaPursuit) await Promise.all(['telegraph', 'music-L6'].map(bank => this.registry.load(bank)));
         // reset() or dispose() ran while the banks were loading: this world is gone, bind nothing.
         if (generation !== this.generation || this.disposed || !this.world.entities.get(1))
             return;
@@ -538,9 +542,15 @@ export class AudioService implements Lifecycle {
         const t = this.context.currentTime;
         this.score.update();
         const story = storyMusic(this.level, this.world.missions?.state);
-        const band = this.world.megaPursuit?.band();
+        const sanctuary = this.level === 'L10' && insideCureHangar(this.world.entities.get(1)!.transform);
+        const band = sanctuary ? null : this.world.megaPursuit?.band();
+        if (this.level === 'L10') {
+            if (this.score.setFinale(story.beat === 'finale' || story.beat === 'released')) this.scheduledTransition = null;
+            if (!sanctuary && story.beat !== 'released' && (input.danger || band === 'near' || band === 'approaching')) this.loop('l10-heartbeat', 'l10.heartbeat', { gain: .65 });
+            else this.stopLoop('l10-heartbeat');
+        }
         const minimum = Math.max(story.minimum, input.minimum ?? 0, band === 'near' ? .5 : band ? .25 : 0, input.phase === 'boss' ? .5 : input.phase === 'defend' || input.phase === 'timer' ? .25 : 0);
-        this.music.update(t, { ...input, ...(input.danger !== undefined || story.minimum > 0 || band ? { minimum } : {}), incident: this.eventMapper.incident, complete: this.eventMapper.complete || input.complete || this.world.l7Departure?.cinematic || !!this.world.missions?.state.states['cure-released'] });
+        this.music.update(t, { ...input, ...(input.danger !== undefined || story.minimum > 0 || band ? { minimum } : {}), ...(sanctuary ? { alerted: 0, danger: false, minimum: 0 } : {}), incident: !sanctuary && this.eventMapper.incident, complete: sanctuary || this.eventMapper.complete || input.complete || this.world.l7Departure?.cinematic || !!this.world.missions?.state.states['cure-released'] });
         // A dense fight escalates within the combat state (also when a story floor already holds it there).
         if (this.music.peak !== this.score.peak) {
             this.score.setPeak(this.music.peak);
@@ -568,6 +578,11 @@ export class AudioService implements Lifecycle {
             const at = this.graph.twist(t);
             this.quietMusicUntil = at;
             this.play('stinger.twist', { time: at });
+        }
+        else if (kind === 'scare') {
+            const at = this.graph.twist(t);
+            this.quietMusicUntil = at;
+            this.play(`l10.scare.${Math.floor(this.world.tick / 60) % 5}`, { time: at });
         }
         else
             this.play(kind === 'extraction' && level === 'L1' ? 'l1.outro.sting' : kind === 'extraction' && level === 'L6' ? 'stinger.dawn' : `stinger.${kind === 'extraction' ? 'complete' : kind}`);
@@ -600,6 +615,7 @@ export class AudioService implements Lifecycle {
         for (const voice of this.graph.active.values()) if (voice.position && voice.distanceCutoffM !== undefined &&
             Math.hypot(voice.position.x - player.transform.x, voice.position.z - player.transform.z) > voice.distanceCutoffM) voice.stop(t);
         const front = this.world.missions?.state.cureFront;
+        if (front && this.level === 'L10') { this.hymn ??= new CureHymn(this.context, this.graph.buses.music); this.hymn.update(front.elapsed / 60); }
         if (front) this.loop('cure:ventilation', 'generator.idle', { position: { ...front.fronts[0], y: 2 }, gain: .55, lowpass: 1800 });
         else this.stopLoop('cure:ventilation');
         const weather = this.world.weather;
@@ -706,6 +722,8 @@ export class AudioService implements Lifecycle {
             this.updateArc(player.transform, t);
         const metro=this.world.missions?.state.l6;
         if(metro?.phase==='shelter'&&this.world.tick-this.metroAmbientAt>=600){this.metroAmbientAt=this.world.tick;this.play('dialogue.radio',{position:{x:-4,z:2},gain:.15,lowpass:1800});}
+        const zooCalm = this.world.missions?.state.id === 'L8' && !this.world.missions.state.states.breached;
+        if (zooCalm) this.loop('l8:animals', 'bed.zoo-animals', { position: player.transform, gain: 0.65 }); else this.stopLoop('l8:animals');
         const ambient = metro || this.arc && this.arc.phase !== 'calm' ? null : this.ambience.update(t);
         if (ambient)
             this.play(ambient.cue, { position: { x: player.transform.x + ambient.x, z: player.transform.z + ambient.z }, gain: this.level === 'L5' ? dbGain(l5.audio.quietDb) : 1 });
@@ -765,6 +783,7 @@ export class AudioService implements Lifecycle {
         this.unsubscribers.length = 0;
         this.alarm.stop();
         this.graph.reset();
+        this.hymn?.dispose(); this.hymn = null;
         this.score.reset(); this.radio.reset();
         this.loops.clear();
         this.stemVoices.clear();

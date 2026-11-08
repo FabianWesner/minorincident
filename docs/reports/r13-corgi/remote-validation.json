@@ -1,0 +1,86 @@
+{
+  "revision": "602835dd3b69d5f0a40215df4c1ffc54dc807d8a",
+  "platform": "remote Linux",
+  "workers": 1,
+  "checks": [
+    {
+      "name": "threat",
+      "command": [
+        "node",
+        "tools/qa/test-budget.mjs",
+        "--name",
+        "qa-threat-serial-remote",
+        "--max-seconds",
+        "3000",
+        "--",
+        "node",
+        "--import",
+        "tsx/esm",
+        "tools/qa/threat-audit.ts",
+        "--maxWorkers=1",
+        "--out",
+        "test-results/r13-corgi/remote/threat"
+      ],
+      "exit": 0,
+      "seconds": 1931.4
+    },
+    {
+      "name": "typecheck",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exit": 0,
+      "seconds": 45.28
+    },
+    {
+      "name": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exit": 0,
+      "seconds": 28.26
+    },
+    {
+      "name": "unit",
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--maxWorkers=1"
+      ],
+      "exit": 1,
+      "seconds": 157.15
+    },
+    {
+      "name": "native",
+      "command": [
+        "node",
+        "--import",
+        "tsx/esm",
+        "tools/qa/r13-corgi.ts"
+      ],
+      "exit": 0,
+      "seconds": 192.1
+    },
+    {
+      "name": "accept",
+      "command": [
+        "npm",
+        "run",
+        "qa:accept",
+        "--",
+        "--level",
+        "L10",
+        "--skip-browser"
+      ],
+      "exit": 1,
+      "seconds": 1.29
+    }
+  ],
+  "unitInfrastructureFailure": "Commit-less remote manifest: tests/tools/gate-tools.test.ts:64 requires git HEAD; gameplay companion case passed.",
+  "acceptInfrastructureFailure": "Same missing git HEAD; no acceptance policy started."
+}

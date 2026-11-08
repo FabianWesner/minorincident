@@ -1,0 +1,267 @@
+{
+  "runtimeRevision": "602835dd3b69d5f0a40215df4c1ffc54dc807d8a",
+  "sourceHash": "af461613360ea843ff9fce1ac59c291db4ffebce7465e696861d656941f9a476",
+  "commandExit": 1,
+  "policies": [
+    {
+      "tier": "low",
+      "policy": "complete",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "test-results/r13-corgi/accept/receipts/L10-low-complete.json"
+    },
+    {
+      "tier": "low",
+      "policy": "stationary",
+      "outcome": "tick-budget",
+      "error": null,
+      "receipt": "test-results/r13-corgi/accept/receipts/L10-low-stationary.json"
+    },
+    {
+      "tier": "high",
+      "policy": "complete",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "test-results/r13-corgi/accept/receipts/L10-high-complete.json"
+    },
+    {
+      "tier": "high",
+      "policy": "stationary",
+      "outcome": "tick-budget",
+      "error": null,
+      "receipt": "test-results/r13-corgi/accept/receipts/L10-high-stationary.json"
+    },
+    {
+      "tier": "low",
+      "policy": "controlled-fixtures",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "test-results/r13-corgi/accept/receipts/L10-low-composition.json"
+    },
+    {
+      "tier": "low",
+      "policy": "controlled-fixtures",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "test-results/r13-corgi/accept/receipts/L10-low-fixtures.json"
+    },
+    {
+      "tier": "high",
+      "policy": "controlled-fixtures",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "test-results/r13-corgi/accept/receipts/L10-high-composition.json"
+    },
+    {
+      "tier": "high",
+      "policy": "controlled-fixtures",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "test-results/r13-corgi/accept/receipts/L10-high-fixtures.json"
+    },
+    {
+      "tier": "low",
+      "policy": "checkpoint-death-control",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "test-results/r13-corgi/accept/receipts/L10-low-checkpoints.json"
+    },
+    {
+      "tier": "high",
+      "policy": "checkpoint-death-control",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "test-results/r13-corgi/accept/receipts/L10-high-checkpoints.json"
+    }
+  ],
+  "currentGlobalStatuses": {
+    "NOT CHECKED": 26,
+    "FAIL": 1
+  },
+  "currentRowStatuses": {
+    "PASS": 4,
+    "NOT CHECKED": 10,
+    "FAIL": 1
+  },
+  "failures": [
+    {
+      "id": "G-24",
+      "checks": [
+        {
+          "clause": "production enemy-bar eligibility at distance/health boundaries",
+          "tier": "low",
+          "policy": "controlled-fixture",
+          "target": "near/full and far/damaged true; far/full, dead and healthy animals false",
+          "value": [
+            {
+              "archetype": "infected.alpha",
+              "farHealthy": true
+            }
+          ]
+        },
+        {
+          "clause": "production enemy-bar eligibility at distance/health boundaries",
+          "tier": "high",
+          "policy": "controlled-fixture",
+          "target": "near/full and far/damaged true; far/full, dead and healthy animals false",
+          "value": [
+            {
+              "archetype": "infected.alpha",
+              "farHealthy": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "L10-03",
+      "checks": [
+        {
+          "clause": "military-column regular group size",
+          "tier": "low",
+          "policy": "stationary",
+          "target": "10 \u2264 value \u2264 20",
+          "value": 2
+        },
+        {
+          "clause": "same-tick regional count and species composition",
+          "tier": "low",
+          "policy": "complete",
+          "target": "Every region has one joint count/dog/Alpha witness; every local tick preserves authored upper bounds; canonical final state identical.",
+          "value": {
+            "fresh": false,
+            "regions": [
+              {
+                "region": "residential-fringe",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0
+              },
+              {
+                "region": "industrial-area",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0
+              },
+              {
+                "region": "military-zone",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0
+              },
+              {
+                "region": "research-campus",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0
+              },
+              {
+                "region": "destroyed-corridor",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0
+              },
+              {
+                "region": "dispersal-complex",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0
+              }
+            ]
+          }
+        },
+        {
+          "clause": "residential dogs follow actual handgun pickup",
+          "tier": "low",
+          "policy": "complete",
+          "target": "Actual handgun pickup observed; first admitted fringe dog at or after pickup; zero premature ticks; canonical control identical.",
+          "value": {
+            "tier": "low",
+            "pickupTick": 3497,
+            "firstDogTick": 4950,
+            "prematureTicks": 0,
+            "nativeStateHash": "edf01875",
+            "controlIdentical": true
+          }
+        },
+        {
+          "clause": "same-tick regional count and species composition",
+          "tier": "high",
+          "policy": "complete",
+          "target": "Every region has one joint count/dog/Alpha witness; every local tick preserves authored upper bounds; canonical final state identical.",
+          "value": {
+            "fresh": false,
+            "regions": [
+              {
+                "region": "residential-fringe",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0
+              },
+              {
+                "region": "industrial-area",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0
+              },
+              {
+                "region": "military-zone",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0
+              },
+              {
+                "region": "research-campus",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0
+              },
+              {
+                "region": "destroyed-corridor",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0
+              },
+              {
+                "region": "dispersal-complex",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0
+              }
+            ]
+          }
+        },
+        {
+          "clause": "residential dogs follow actual handgun pickup",
+          "tier": "high",
+          "policy": "complete",
+          "target": "Actual handgun pickup observed; first admitted fringe dog at or after pickup; zero premature ticks; canonical control identical.",
+          "value": {
+            "tier": "high",
+            "pickupTick": 3497,
+            "firstDogTick": 4950,
+            "prematureTicks": 0,
+            "nativeStateHash": "586d721c",
+            "controlIdentical": true
+          }
+        }
+      ]
+    }
+  ],
+  "checkpoints": [
+    {
+      "tier": "low",
+      "clauses": 27,
+      "allPass": true,
+      "controlIdentical": true,
+      "errors": []
+    },
+    {
+      "tier": "high",
+      "clauses": 27,
+      "allPass": true,
+      "controlIdentical": true,
+      "errors": []
+    }
+  ]
+}

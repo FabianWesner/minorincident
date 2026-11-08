@@ -1,0 +1,933 @@
+{
+  "sourceHash": "a1e580287d5e1c421c04bb85495712248b3584a832529a713168b0c405048572",
+  "observerHash": "464c1197f2b35be60f1ee086a1c69f6ebce3fc1b8e2f9137358e3b0d877b17e2",
+  "revision": "manifest-only",
+  "checks": [
+    {
+      "tier": "low",
+      "name": "farmhouse-rifle is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 882,
+          "y": 0.15,
+          "z": 80,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "low",
+      "name": "barn-machete is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 1007,
+          "y": 0.15,
+          "z": 80,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "low",
+      "name": "workshop-nailgun is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 1397,
+          "y": 0.15,
+          "z": 100,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "low",
+      "name": "shed-molotov is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 1217,
+          "y": 0.15,
+          "z": 25,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "low",
+      "name": "guard-tower-rifle is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 1947,
+          "y": 0.15,
+          "z": -75,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "low",
+      "name": "checkpoint-flashbang is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 2077,
+          "y": 0.15,
+          "z": -75,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "low",
+      "name": "gap 937 fits courier and excludes Mega",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 937,
+          "z": 80
+        },
+        "courierClear": true,
+        "megaClear": false
+      }
+    },
+    {
+      "tier": "low",
+      "name": "gap 2137 fits courier and excludes Mega",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 2137,
+          "z": -75
+        },
+        "courierClear": true,
+        "megaClear": false
+      }
+    },
+    {
+      "tier": "low",
+      "name": "gap 3317 fits courier and excludes Mega",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 3317,
+          "z": 95
+        },
+        "courierClear": true,
+        "megaClear": false
+      }
+    },
+    {
+      "tier": "low",
+      "name": "hangar conversation completes in order with Reyes fallback",
+      "pass": true,
+      "observed": [
+        "L10.voss-intro",
+        "L10.voss-sample",
+        "L10.courier-carried",
+        "L10.voss-cure",
+        "L10.voss-delivery",
+        "L10.ruiz",
+        "L10.voss-prototype",
+        "L10.sam-coming.reyes",
+        "L10.voss-stay",
+        "L10.sam-delivery.reyes"
+      ]
+    },
+    {
+      "tier": "low",
+      "name": "six living researchers, guards and continuity speaker are present",
+      "pass": true,
+      "observed": [
+        {
+          "key": "hangar-voss",
+          "id": 125,
+          "model": "npc.lab-tech-b",
+          "hp": 100
+        },
+        {
+          "key": "hangar-ruiz",
+          "id": 126,
+          "model": "npc.national-guard",
+          "hp": 100
+        },
+        {
+          "key": "hangar-researcher",
+          "id": 127,
+          "model": "npc.lab-tech-a",
+          "hp": 100
+        },
+        {
+          "key": "hangar-sam",
+          "id": 128,
+          "model": "npc.national-guard",
+          "hp": 40
+        },
+        {
+          "key": "hangar-guard-west",
+          "id": 129,
+          "model": "npc.lab-guard",
+          "hp": 100
+        },
+        {
+          "key": "hangar-guard-east",
+          "id": 130,
+          "model": "npc.lab-guard",
+          "hp": 100
+        }
+      ]
+    },
+    {
+      "tier": "low",
+      "name": "hangar entrance connects to indoor handoff",
+      "pass": true,
+      "observed": {
+        "cells": 56
+      }
+    },
+    {
+      "tier": "low",
+      "name": "cure handoff restores every campaign weapon and the prototype into selectable racks",
+      "pass": true,
+      "observed": [
+        "weapon.fire-axe",
+        "weapon.fists",
+        "weapon.kick",
+        "weapon.bat",
+        "weapon.machete",
+        "weapon.fire-axe",
+        "weapon.molotov",
+        "weapon.handgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher",
+        "weapon.pipe-bomb",
+        "weapon.shotgun",
+        "ability.corgi-lure",
+        "weapon.hunting-rifle",
+        "weapon.nail-gun",
+        "weapon.assault-rifle",
+        "weapon.flashbang",
+        "weapon.flamethrower"
+      ]
+    },
+    {
+      "tier": "low",
+      "name": "full hangar inventory and conversation survive save validation and codec",
+      "pass": true
+    },
+    {
+      "tier": "low",
+      "name": "walk Mega cannot be killed even by repeated direct rockets",
+      "pass": true,
+      "observed": {
+        "initialHp": 3000,
+        "hp": 3000
+      }
+    },
+    {
+      "tier": "low",
+      "name": "hangar boundary protects courier from outside attacks",
+      "pass": true
+    },
+    {
+      "tier": "low",
+      "name": "every damaging carried weapon can hurt the finale Mega",
+      "pass": true,
+      "observed": {
+        "weapon.bat": 22,
+        "weapon.fire-axe": 56,
+        "weapon.handgun": 20,
+        "weapon.army-mg": 14,
+        "weapon.shotgun": 240,
+        "weapon.rocket-launcher": 300,
+        "weapon.pipe-bomb": 150,
+        "weapon.hunting-rifle": 90,
+        "weapon.nail-gun": 14,
+        "weapon.machete": 32,
+        "weapon.molotov": 10,
+        "weapon.assault-rifle": 26,
+        "weapon.flamethrower": 4
+      }
+    },
+    {
+      "tier": "low",
+      "name": "arena has both fuel hazards and an accessible gate switch",
+      "pass": true
+    },
+    {
+      "tier": "low",
+      "name": "powered gate damages and interrupts the finale Mega once",
+      "pass": true,
+      "observed": {
+        "beforeGate": 2996,
+        "after": 2096,
+        "staggerUntil": 3741
+      }
+    },
+    {
+      "tier": "low",
+      "name": "reinforcements continue after charge-ready",
+      "pass": true,
+      "observed": {
+        "before": 14,
+        "after": 48,
+        "assaultTicks": 1200
+      }
+    },
+    {
+      "tier": "low",
+      "name": "production resume restores indoor cast, completed dialogue, cure and every selectable weapon",
+      "pass": true
+    },
+    {
+      "tier": "low",
+      "name": "living post-crash Sam keeps his radio lines and identity model",
+      "pass": true,
+      "observed": [
+        "L10.farmstead"
+      ]
+    },
+    {
+      "tier": "high",
+      "name": "farmhouse-rifle is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 882,
+          "y": 0.15,
+          "z": 80,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "high",
+      "name": "barn-machete is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 1007,
+          "y": 0.15,
+          "z": 80,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "high",
+      "name": "workshop-nailgun is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 1397,
+          "y": 0.15,
+          "z": 100,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "high",
+      "name": "shed-molotov is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 1217,
+          "y": 0.15,
+          "z": 25,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "high",
+      "name": "guard-tower-rifle is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 1947,
+          "y": 0.15,
+          "z": -75,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "high",
+      "name": "checkpoint-flashbang is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 2077,
+          "y": 0.15,
+          "z": -75,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "high",
+      "name": "gap 937 fits courier and excludes Mega",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 937,
+          "z": 80
+        },
+        "courierClear": true,
+        "megaClear": false
+      }
+    },
+    {
+      "tier": "high",
+      "name": "gap 2137 fits courier and excludes Mega",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 2137,
+          "z": -75
+        },
+        "courierClear": true,
+        "megaClear": false
+      }
+    },
+    {
+      "tier": "high",
+      "name": "gap 3317 fits courier and excludes Mega",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 3317,
+          "z": 95
+        },
+        "courierClear": true,
+        "megaClear": false
+      }
+    },
+    {
+      "tier": "high",
+      "name": "hangar conversation completes in order with Reyes fallback",
+      "pass": true,
+      "observed": [
+        "L10.voss-intro",
+        "L10.voss-sample",
+        "L10.courier-carried",
+        "L10.voss-cure",
+        "L10.voss-delivery",
+        "L10.ruiz",
+        "L10.voss-prototype",
+        "L10.sam-coming.reyes",
+        "L10.voss-stay",
+        "L10.sam-delivery.reyes"
+      ]
+    },
+    {
+      "tier": "high",
+      "name": "six living researchers, guards and continuity speaker are present",
+      "pass": true,
+      "observed": [
+        {
+          "key": "hangar-voss",
+          "id": 139,
+          "model": "npc.lab-tech-b",
+          "hp": 100
+        },
+        {
+          "key": "hangar-ruiz",
+          "id": 140,
+          "model": "npc.national-guard",
+          "hp": 100
+        },
+        {
+          "key": "hangar-researcher",
+          "id": 141,
+          "model": "npc.lab-tech-a",
+          "hp": 100
+        },
+        {
+          "key": "hangar-sam",
+          "id": 142,
+          "model": "npc.national-guard",
+          "hp": 40
+        },
+        {
+          "key": "hangar-guard-west",
+          "id": 143,
+          "model": "npc.lab-guard",
+          "hp": 100
+        },
+        {
+          "key": "hangar-guard-east",
+          "id": 144,
+          "model": "npc.lab-guard",
+          "hp": 100
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "name": "hangar entrance connects to indoor handoff",
+      "pass": true,
+      "observed": {
+        "cells": 56
+      }
+    },
+    {
+      "tier": "high",
+      "name": "cure handoff restores every campaign weapon and the prototype into selectable racks",
+      "pass": true,
+      "observed": [
+        "weapon.fire-axe",
+        "weapon.fists",
+        "weapon.kick",
+        "weapon.bat",
+        "weapon.machete",
+        "weapon.fire-axe",
+        "weapon.molotov",
+        "weapon.handgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher",
+        "weapon.pipe-bomb",
+        "weapon.shotgun",
+        "ability.corgi-lure",
+        "weapon.hunting-rifle",
+        "weapon.nail-gun",
+        "weapon.assault-rifle",
+        "weapon.flashbang",
+        "weapon.flamethrower"
+      ]
+    },
+    {
+      "tier": "high",
+      "name": "full hangar inventory and conversation survive save validation and codec",
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "name": "walk Mega cannot be killed even by repeated direct rockets",
+      "pass": true,
+      "observed": {
+        "initialHp": 3000,
+        "hp": 3000
+      }
+    },
+    {
+      "tier": "high",
+      "name": "hangar boundary protects courier from outside attacks",
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "name": "every damaging carried weapon can hurt the finale Mega",
+      "pass": true,
+      "observed": {
+        "weapon.bat": 22,
+        "weapon.fire-axe": 56,
+        "weapon.handgun": 20,
+        "weapon.army-mg": 14,
+        "weapon.shotgun": 240,
+        "weapon.rocket-launcher": 300,
+        "weapon.pipe-bomb": 150,
+        "weapon.hunting-rifle": 90,
+        "weapon.nail-gun": 14,
+        "weapon.machete": 32,
+        "weapon.molotov": 10,
+        "weapon.assault-rifle": 26,
+        "weapon.flamethrower": 4
+      }
+    },
+    {
+      "tier": "high",
+      "name": "arena has both fuel hazards and an accessible gate switch",
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "name": "powered gate damages and interrupts the finale Mega once",
+      "pass": true,
+      "observed": {
+        "beforeGate": 2996,
+        "after": 2096,
+        "staggerUntil": 3741
+      }
+    },
+    {
+      "tier": "high",
+      "name": "reinforcements continue after charge-ready",
+      "pass": true,
+      "observed": {
+        "before": 25,
+        "after": 84,
+        "assaultTicks": 1200
+      }
+    },
+    {
+      "tier": "high",
+      "name": "production resume restores indoor cast, completed dialogue, cure and every selectable weapon",
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "name": "living post-crash Sam keeps his radio lines and identity model",
+      "pass": true,
+      "observed": [
+        "L10.farmstead"
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "tier": "low",
+      "method": "Controlled production-world fixtures; placements/objective advances are explicitly injected. Native route below uses inputs only.",
+      "pickups": [
+        {
+          "id": "farmhouse-rifle",
+          "action": "weapon.hunting-rifle",
+          "at": {
+            "x": 882,
+            "y": 0.15,
+            "z": 80,
+            "yaw": 0
+          }
+        },
+        {
+          "id": "barn-machete",
+          "action": "weapon.machete",
+          "at": {
+            "x": 1007,
+            "y": 0.15,
+            "z": 80,
+            "yaw": 0
+          }
+        },
+        {
+          "id": "workshop-nailgun",
+          "action": "weapon.nail-gun",
+          "at": {
+            "x": 1397,
+            "y": 0.15,
+            "z": 100,
+            "yaw": 0
+          }
+        },
+        {
+          "id": "shed-molotov",
+          "action": "weapon.molotov",
+          "at": {
+            "x": 1217,
+            "y": 0.15,
+            "z": 25,
+            "yaw": 0
+          }
+        },
+        {
+          "id": "guard-tower-rifle",
+          "action": "weapon.assault-rifle",
+          "at": {
+            "x": 1947,
+            "y": 0.15,
+            "z": -75,
+            "yaw": 0
+          }
+        },
+        {
+          "id": "checkpoint-flashbang",
+          "action": "weapon.flashbang",
+          "at": {
+            "x": 2077,
+            "y": 0.15,
+            "z": -75,
+            "yaw": 0
+          }
+        }
+      ],
+      "gaps": [
+        {
+          "at": {
+            "x": 937,
+            "z": 80
+          },
+          "courierClear": true,
+          "megaClear": false
+        },
+        {
+          "at": {
+            "x": 2137,
+            "z": -75
+          },
+          "courierClear": true,
+          "megaClear": false
+        },
+        {
+          "at": {
+            "x": 3317,
+            "z": 95
+          },
+          "courierClear": true,
+          "megaClear": false
+        }
+      ],
+      "lines": [
+        "L10.voss-intro",
+        "L10.voss-sample",
+        "L10.courier-carried",
+        "L10.voss-cure",
+        "L10.voss-delivery",
+        "L10.ruiz",
+        "L10.voss-prototype",
+        "L10.sam-coming.reyes",
+        "L10.voss-stay",
+        "L10.sam-delivery.reyes"
+      ],
+      "cast": [
+        {
+          "key": "hangar-voss",
+          "id": 125,
+          "model": "npc.lab-tech-b",
+          "hp": 100
+        },
+        {
+          "key": "hangar-ruiz",
+          "id": 126,
+          "model": "npc.national-guard",
+          "hp": 100
+        },
+        {
+          "key": "hangar-researcher",
+          "id": 127,
+          "model": "npc.lab-tech-a",
+          "hp": 100
+        },
+        {
+          "key": "hangar-sam",
+          "id": 128,
+          "model": "npc.national-guard",
+          "hp": 40
+        },
+        {
+          "key": "hangar-guard-west",
+          "id": 129,
+          "model": "npc.lab-guard",
+          "hp": 100
+        },
+        {
+          "key": "hangar-guard-east",
+          "id": 130,
+          "model": "npc.lab-guard",
+          "hp": 100
+        }
+      ],
+      "damage": {
+        "weapon.bat": 22,
+        "weapon.fire-axe": 56,
+        "weapon.handgun": 20,
+        "weapon.army-mg": 14,
+        "weapon.shotgun": 240,
+        "weapon.rocket-launcher": 300,
+        "weapon.pipe-bomb": 150,
+        "weapon.hunting-rifle": 90,
+        "weapon.nail-gun": 14,
+        "weapon.machete": 32,
+        "weapon.molotov": 10,
+        "weapon.assault-rifle": 26,
+        "weapon.flamethrower": 4
+      }
+    },
+    {
+      "tier": "high",
+      "method": "Controlled production-world fixtures; placements/objective advances are explicitly injected. Native route below uses inputs only.",
+      "pickups": [
+        {
+          "id": "farmhouse-rifle",
+          "action": "weapon.hunting-rifle",
+          "at": {
+            "x": 882,
+            "y": 0.15,
+            "z": 80,
+            "yaw": 0
+          }
+        },
+        {
+          "id": "barn-machete",
+          "action": "weapon.machete",
+          "at": {
+            "x": 1007,
+            "y": 0.15,
+            "z": 80,
+            "yaw": 0
+          }
+        },
+        {
+          "id": "workshop-nailgun",
+          "action": "weapon.nail-gun",
+          "at": {
+            "x": 1397,
+            "y": 0.15,
+            "z": 100,
+            "yaw": 0
+          }
+        },
+        {
+          "id": "shed-molotov",
+          "action": "weapon.molotov",
+          "at": {
+            "x": 1217,
+            "y": 0.15,
+            "z": 25,
+            "yaw": 0
+          }
+        },
+        {
+          "id": "guard-tower-rifle",
+          "action": "weapon.assault-rifle",
+          "at": {
+            "x": 1947,
+            "y": 0.15,
+            "z": -75,
+            "yaw": 0
+          }
+        },
+        {
+          "id": "checkpoint-flashbang",
+          "action": "weapon.flashbang",
+          "at": {
+            "x": 2077,
+            "y": 0.15,
+            "z": -75,
+            "yaw": 0
+          }
+        }
+      ],
+      "gaps": [
+        {
+          "at": {
+            "x": 937,
+            "z": 80
+          },
+          "courierClear": true,
+          "megaClear": false
+        },
+        {
+          "at": {
+            "x": 2137,
+            "z": -75
+          },
+          "courierClear": true,
+          "megaClear": false
+        },
+        {
+          "at": {
+            "x": 3317,
+            "z": 95
+          },
+          "courierClear": true,
+          "megaClear": false
+        }
+      ],
+      "lines": [
+        "L10.voss-intro",
+        "L10.voss-sample",
+        "L10.courier-carried",
+        "L10.voss-cure",
+        "L10.voss-delivery",
+        "L10.ruiz",
+        "L10.voss-prototype",
+        "L10.sam-coming.reyes",
+        "L10.voss-stay",
+        "L10.sam-delivery.reyes"
+      ],
+      "cast": [
+        {
+          "key": "hangar-voss",
+          "id": 139,
+          "model": "npc.lab-tech-b",
+          "hp": 100
+        },
+        {
+          "key": "hangar-ruiz",
+          "id": 140,
+          "model": "npc.national-guard",
+          "hp": 100
+        },
+        {
+          "key": "hangar-researcher",
+          "id": 141,
+          "model": "npc.lab-tech-a",
+          "hp": 100
+        },
+        {
+          "key": "hangar-sam",
+          "id": 142,
+          "model": "npc.national-guard",
+          "hp": 40
+        },
+        {
+          "key": "hangar-guard-west",
+          "id": 143,
+          "model": "npc.lab-guard",
+          "hp": 100
+        },
+        {
+          "key": "hangar-guard-east",
+          "id": 144,
+          "model": "npc.lab-guard",
+          "hp": 100
+        }
+      ],
+      "damage": {
+        "weapon.bat": 22,
+        "weapon.fire-axe": 56,
+        "weapon.handgun": 20,
+        "weapon.army-mg": 14,
+        "weapon.shotgun": 240,
+        "weapon.rocket-launcher": 300,
+        "weapon.pipe-bomb": 150,
+        "weapon.hunting-rifle": 90,
+        "weapon.nail-gun": 14,
+        "weapon.machete": 32,
+        "weapon.molotov": 10,
+        "weapon.assault-rifle": 26,
+        "weapon.flamethrower": 4
+      }
+    }
+  ]
+}

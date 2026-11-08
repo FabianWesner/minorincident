@@ -2,14 +2,19 @@
 // every level from the same catalogs. Each test drives the real system through a scenario.
 import { afterEach, expect, test } from 'vitest';
 import { blastDamage, explosionDef } from '../../src/data/explosions';
+import { destructionDamage, destructionMaterial } from '../../src/data/destruction';
 import type { Pickup } from '../../src/sim/interact/Pickups';
 import { NavGrid } from '../../src/sim/world/NavGrid';
 import type { GameEvent } from '../../src/sim/world/types';
+import { BoxGeometry, Group, Mesh, MeshBasicNodeMaterial } from 'three/webgpu';
+import { DestructionView } from '../../src/render/DestructionView';
+import { loadL3 } from '../../tools/sim-runner/l3Bots';
+import { rotate } from '../../src/sim/destruction/Destruction';
 import { SimWorld } from '../../src/sim/world/SimWorld';
 
 const worlds: SimWorld[] = [];
 afterEach(() => { for (const w of worlds.splice(0)) w.dispose(); });
-async function world(name = 'combat-arena', god = false) { const w = new SimWorld(); worlds.push(w); await w.init(); w.loadScenario(name, 1); w.combat!.damage.god = god; return w; }
+async function world(name = 'combat-arena', god = false) { const w = new SimWorld(); worlds.push(w); await w.init(); w.loadScenario(name, 1); if (w.combat) w.combat.damage.god = god; return w; }
 const step = (w: SimWorld, n: number) => { for (let i = 0; i < n; i++) w.update(); };
 const events = <T extends GameEvent['type']>(w: SimWorld, type: T) => w.events.events().filter((e): e is Extract<GameEvent, { type: T }> => e.type === type);
 function move(w: SimWorld, x: number, z = 0) { const p = w.entities.get(1)!; Object.assign(p.transform, { x, z }); w.physics.playerBody!.setTranslation(p.transform, true); w.spatial.set(1, x, z); }
@@ -96,6 +101,14 @@ test('pickups: exact one-time effects with caps, rack join/replacement, dead pla
 });
 
 test('explosions: every class follows its damage curve, full cover shields, rails take damage, chains are paced and capped, fires burn out', async () => {
+  expect(destructionDamage('weapon.fire-axe', 'wood', 10)).toBe(8);
+  expect(destructionDamage('weapon.handgun', 'wood', 10)).toBe(.8);
+  expect(destructionDamage('weapon.shotgun', 'glass', 10)).toBe(12);
+  expect(destructionDamage('weapon.rocket-launcher', 'concrete', 10)).toBe(15);
+  expect(destructionDamage('weapon.unlisted', 'brick', 10)).toBeCloseTo(.12);
+  expect(destructionMaterial('prop.fence')).toBe('wood');
+  expect(destructionMaterial('veh.sedan-blue')).toBe('metal');
+  expect(destructionMaterial('bld.farmhouse')).toBe('brick');
   for (const id of ['explosion.pipe-bomb', 'explosion.propane', 'explosion.car', 'explosion.gas-tanks', 'explosion.molotov', 'explosion.toxic']) {
     const w = await world('blast-lab', true), d = explosionDef(id), at = { x: 0, z: -18 };
     const ids = [0, .5, 1].map(f => w.spawnDummy('infected.dummy', { x: at.x + d.radius * f * (f === 1 ? .999 : 1), z: at.z }, { hp: 5000 }));
@@ -128,6 +141,110 @@ test('explosions: every class follows its damage curve, full cover shields, rail
   const fires = () => f.entities.values().filter(e => e.hazard?.kind === 'fire' && f.tick < e.hazard.activeUntil);
   expect(fires().length).toBeGreaterThan(0);
   step(f, 18 * 30 + 30 * 60 + 2); expect(fires()).toHaveLength(0);
+
+  // Production L3 placement ownership: real player input hits the facade, then a blast opens nav/LOS.
+  const {world: street, mission} = await loadL3(17, 'low'); worlds.push(street);
+  const destruction=street.destruction!, house=destruction.objects.find(o=>!o.protected&&o.placement.assetId==='bld.house-a')!;
+  expect(house).toBeDefined(); expect(destruction.objects.filter(o=>!o.protected)).toHaveLength(4);
+  const glass=house.parts.findIndex(p=>p.id==='window_front'), bounds=house.parts[glass].bounds;
+  const local=[bounds.max[0]+2,1.2,(bounds.min[2]+bounds.max[2])/2], pos=rotate(local,house.home.q), dir=rotate([-1,0,0],house.home.q);
+  move(street,house.home.p[0]+pos[0],house.home.p[2]+pos[2]);street.combat!.damage.god=true;
+  const pristine=destruction.snapshot();
+  // A restored timeline can reach the same revision by breaking a different window: invalidate the view cache.
+  const view=new DestructionView(), prototype=new Group(), geometry=new BoxGeometry(6.6,3,7).translate(0,1.5,0), material=new MeshBasicNodeMaterial();
+  prototype.add(new Mesh(geometry,material));view.extract(house,prototype);
+  const indices=()=>{const arrays:number[][]=[];view.traverse(n=>{if(n instanceof Mesh&&n.geometry.index)arrays.push(Array.from(n.geometry.index.array));});return arrays;};
+  const breakWindow=(name:string)=>{const part=house.parts.findIndex(p=>p.id===name);destruction.damage({object:house,part,local:house.parts[part].bounds.min,distance:0,normal:[0,1,0]},'weapon.handgun',20);view.update(destruction);};
+  breakWindow('window_left');const firstIndices=indices();
+  destruction.restore(pristine);view.update(destruction);breakWindow('window_rearL');
+  expect(indices(), 'same revision after restore draws the newly broken part').not.toEqual(firstIndices);
+  view.dispose();geometry.dispose();material.dispose();destruction.restore(pristine);
+
+  street.combat!.setLoadout(['weapon.handgun'],['weapon.grenade']);
+  street.setInput({aim:{x:dir[0],z:dir[2]},aimSource:'pointer',left:{down:true,held:true,up:false}}); step(street,40);street.clearInput();
+  expect(house.state.revision, 'real handgun input reaches the placement').toBeGreaterThan(0);
+  expect(house.state.hp[glass], 'window shatters').toBe(0);
+  const fireAt=(weapon:string, local:number[], aim:number[], ticks:number) => {
+    const p=rotate(local,house.home.q),d=rotate(aim,house.home.q);
+    move(street,house.home.p[0]+p[0],house.home.p[2]+p[2]);street.combat!.setLoadout([weapon],['weapon.grenade']);
+    street.setInput({aim:{x:d[0],z:d[2]},aimSource:'pointer',left:{down:true,held:true,up:false}});step(street,ticks);street.clearInput();
+  };
+  destruction.restore(pristine);
+  fireAt('weapon.shotgun',local,[-1,0,0],25);
+  expect(house.state.hp[glass], 'pellets shatter the exposed front window').toBe(0);
+  const door=house.parts.findIndex(p=>p.role==='door'), db=house.parts[door].bounds;
+  // The authored porch shell stands ahead of this recessed door; successive swings clear it first.
+  fireAt('weapon.fire-axe',[db.max[0]+1.2,1.2,(db.min[2]+db.max[2])/2],[-1,0,0],180);
+  expect(house.state.hp[door], 'axe breaches a timber door').toBe(0);
+  const mgPosition=rotate([-5,1.2,0],house.home.q), mgDirection=rotate([1,0,0],house.home.q);
+  const origin={x:house.home.p[0]+mgPosition[0],y:1.2,z:house.home.p[2]+mgPosition[2]}, direction={x:mgDirection[0],y:0,z:mgDirection[2]};
+  const covered=destruction.trace(origin,direction,3)!; expect(covered.object.id).toBe(house.id);
+  expect(destruction.strike('weapon.army-mg',14,origin,direction,3), 'unrelated yard cover stops the round').toBe(false);
+  const exposed=house.parts.filter(p=>p.role==='structure').flatMap(p=>[0,2].flatMap(axis=>[-1,1].map(sign=>{
+    const at=p.bounds.min.map((v,i)=>(v+p.bounds.max[i])/2);at[1]=1.2;at[axis]=p.bounds[sign<0?'min':'max'][axis]+sign*.2;
+    const way=[0,0,0];way[axis]=-sign;const a=rotate(at,house.home.q),d=rotate(way,house.home.q);
+    return {origin:{x:house.home.p[0]+a[0],y:1.2,z:house.home.p[2]+a[2]},direction:{x:d[0],y:0,z:d[2]}};
+  }))).find(ray=>{const hit=destruction.trace(ray.origin,ray.direction,2);return hit&&hit.object.id===house.id&&house.parts[hit.part].role==='structure'&&hit.distance>.05&&street.combat!.query.clearDistance(ray.origin,ray.direction,2)>=hit.distance-.08;});
+  expect(exposed, 'at least one surviving facade is exposed').toBeDefined();
+  const thinWall=destruction.trace(exposed!.origin,exposed!.direction,2)!;
+  for(let i=0;i<40&&house.state.hp[thinWall.part]>0;i++)destruction.strike('weapon.army-mg',14,exposed!.origin,exposed!.direction,2);
+  expect(house.state.hp[thinWall.part], 'sustained MG fire chews a thin wall').toBe(0);
+  expect(house.state.marks.length).toBeLessThanOrEqual(8);
+  const initial=destruction.snapshot(), navBefore=street.districts!.nav.cells.slice(), wallsBefore=street.interactables!.walls.length;
+  const checkpoint=mission.def.checkpoints[0]; mission.checkpoint(checkpoint);
+  street.explosions!.blast('explosion.rocket',{x:house.home.p[0],z:house.home.p[2]},{actionId:'weapon.rocket-launcher',radius:9});
+  expect(house.state.collapsed).toBe(true);expect(house.parts.every((p,i)=>p.role!=='roof'||house.state.hp[i]===0)).toBe(true);
+  expect(street.interactables!.walls.length).toBeLessThan(wallsBefore);
+  expect(street.districts!.nav.cells.some((v,i)=>v===1&&navBefore[i]===0)).toBe(true);
+  const destroyed=destruction.snapshot();
+  mission.restore(checkpoint); expect(destruction.snapshot()).toEqual(initial);
+  expect(street.interactables!.walls.length).toBe(wallsBefore);
+  street.explosions!.blast('explosion.rocket',{x:house.home.p[0],z:house.home.p[2]},{actionId:'weapon.rocket-launcher',radius:9});
+  expect(destruction.snapshot()).toEqual(destroyed); destruction.rebuild();expect(destruction.snapshot()).toEqual(destroyed);
+  const protectedObject=destruction.objects.find(o=>o.protected)!;
+  destruction.blast('weapon.rocket-launcher',{x:protectedObject.home.p[0],z:protectedObject.home.p[2]},20,1e6);
+  expect(protectedObject.state.revision).toBe(0);
+  const car=destruction.objects.find(o=>!o.protected&&o.placement.destruction!.class==='vehicle')!;
+  destruction.blast('weapon.molotov',{x:car.home.p[0],z:car.home.p[2]},4,10);
+  expect(car.state.burning).toBeGreaterThan(0);expect(car.state.fireEntity).toBeDefined();
+  const remainingBurn=car.state.burning; mission.checkpoint(checkpoint);street.tick+=600;mission.restore(checkpoint);
+  expect(car.state.burning).toBe(remainingBurn);
+  expect(street.entities.get(car.state.fireEntity!)!.hazard!.activeUntil, 'restored fire survives the shifted checkpoint clock').toBeGreaterThan(street.tick);
+  // Isolate fixed-tick fire from the mission director; no rendering or wall-clock timer participates.
+  for(let tick=0;tick<310;tick++){street.tick++;destruction.update();}
+  expect(car.state.exploded).toBe(true);expect(car.state.burning).toBe(0);
+  expect(street.hazards!.debris.pieces.length).toBeLessThanOrEqual(32);
+  street.hazards!.debris.update(street.tick+481);expect(street.hazards!.debris.snapshot()).toHaveLength(0);
+
+  destruction.restore(pristine);
+  expect(destruction.impact(protectedObject.id,'boss.gorilla.smash',10000)).toBe(false);
+  expect(destruction.impact(house.id,'boss.gorilla.smash',150)).toBe(true);
+  expect(house.state.collapsed).toBe(true);
+  destruction.restore(pristine);
+  const vehiclePolicy=car.placement.destruction!;
+  car.placement.destruction={class:'fuel-tank'};
+  expect(destruction.impact(car.id,'boss.mega.charge',100)).toBe(true);
+  expect(car.state.burning).toBe(60);
+  for(let tick=0;tick<60;tick++){street.tick++;destruction.update();}
+  expect(car.state.exploded).toBe(true);
+  const explosionRevision=car.state.revision;
+  for(let tick=0;tick<60;tick++){street.tick++;destruction.update();}
+  expect(car.state.revision).toBe(explosionRevision);
+  const fuelBody=street.props!.items.find(p=>p.id===car.id)!;
+  expect(fuelBody.body.isEnabled(),'exploded movable tank relinquishes its collider').toBe(false);
+  destruction.restore(pristine);
+  expect(fuelBody.body.isEnabled(),'checkpoint restores the tank body').toBe(true);
+  car.placement.destruction=vehiclePolicy;
+  destruction.blast('weapon.molotov',{x:car.home.p[0],z:car.home.p[2]},4,10);
+  const tierFire=street.entities.get(car.state.fireEntity!)!;
+  const state=destruction.snapshot(); street.setTier(street.districts!.composition.tier===6?5:6);expect(destruction.snapshot()).toEqual(state);
+  expect(car.present,'tier 6 removes this authored car placement').toBe(false);
+  expect(tierFire.hazard!.activeUntil).toBe(street.tick);
+  expect(destruction.impact(car.id,'boss.mega.charge',10000),'inactive tiers cannot take damage').toBe(false);
+  expect(destruction.snapshot()).toEqual(state);
+  street.setTier(5);expect(car.present).toBe(true);expect(tierFire.hazard!.activeUntil).toBeGreaterThan(street.tick);
+
+
 });
 
 test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables match the layout without it, a re-preparation adds none, L9 has none; L10 crossing scenes stay clear and grounded', async () => {
@@ -190,7 +307,44 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   expect(cureCrossingStories([...cureLayout.placements, ...belt])).toEqual(stories);
   const { cureForecourtDecor } = await import('../../src/levels/L10/forecourts');
   const apron = cureForecourtDecor([...cureLayout.placements, ...belt, ...stories]);
-  expect(districtDecor('D-CURE', cureLayout.placements)).toEqual([...belt, ...stories, ...apron]);
+  const { clearFarmFromSurfaces, cureFarmDecor } = await import('../../src/levels/L10/farmLayout');
+  const farm = cureFarmDecor([...cureLayout.placements, ...belt, ...stories, ...apron]);
+  expect(farm.filter(p => p.assetId === 'veg.corn-block').length).toBeGreaterThan(100);
+  const { cureVignetteCatalogue, cureVignettes } = await import('../../src/levels/L10/vignettes');
+  const vignettes = cureVignettes([...cureLayout.placements, ...belt, ...stories, ...apron, ...farm]);
+  const { cureEvacuationLane } = await import('../../src/levels/L10/vignettes');
+  const clearedFarm = clearFarmFromSurfaces(farm, cureEvacuationLane(vignettes));
+  expect(clearedFarm.filter(p => p.assetId === 'veg.corn-block').length).toBeGreaterThan(100);
+  expect(clearedFarm.filter(p => p.assetId !== 'veg.corn-block').map(p => [p.id, p.assetId])).toEqual(farm.filter(p => p.assetId !== 'veg.corn-block').map(p => [p.id, p.assetId]));
+  expect(clearedFarm.filter(p => p.assetId !== 'veg.corn-block' && !p.id.startsWith('decor-cure-farm-field-'))).toEqual(farm.filter(p => p.assetId !== 'veg.corn-block' && !p.id.startsWith('decor-cure-farm-field-')));
+  expect(districtDecor('D-CURE', cureLayout.placements)).toEqual([...belt, ...stories, ...apron, ...clearedFarm, ...vignettes]);
+  expect(cureVignettes([...cureLayout.placements, ...belt, ...stories, ...apron, ...farm])).toEqual(vignettes);
+  expect(cureVignetteCatalogue.every(v => v.pieces.length >= 3 && v.pieces.length <= 8)).toBe(true);
+  const vignetteGroups = new Set(vignettes.map(p => p.id.replace(/-\d+$/, '')));
+  expect(vignetteGroups.size).toBeGreaterThanOrEqual(85); // ~20/km over the 4.3 km authored route.
+  expect(vignettes.every(p => p.decor && p.fixed)).toBe(true);
+  const farmOverlaps = vignettes.flatMap(p => clearedFarm.filter(q => p.visualAabb.min[0] < q.visualAabb.max[0] && p.visualAabb.max[0] > q.visualAabb.min[0] && p.visualAabb.min[2] < q.visualAabb.max[2] && p.visualAabb.max[2] > q.visualAabb.min[2]).map(q => [p.id, q.id]));
+  expect(farmOverlaps, 'vignette footprints must clear corn and farm structures').toEqual([]);
+  expect(placementColliders(vignettes, []).every(c => c.aabb.physicsOnly)).toBe(true);
+  const { cureVignetteDecals, cureWallMessages } = await import('../../src/levels/L10/vignettes');
+  const { CureVignetteDecals } = await import('../../src/render/district/CureVignetteDecals');
+  const { DataTexture } = await import('three/webgpu');
+  const rows = cureVignetteDecals(vignettes), paint = rows.filter(r=>!r.ground), casings = rows.filter(r=>r.cell===12);
+  expect(paint).toHaveLength(35);
+  expect(casings.filter(r=>r.highOnly)).toHaveLength(casings.length/2);
+  expect(cureWallMessages).toEqual(['HELP — 3 INSIDE','AUTHORIZED PERSONNEL ONLY — BIOHAZARD LEVEL 4']);
+  expect(paint.every(r=>r.cell===0||r.cell===1)).toBe(true);
+  const serviceLane=cureEvacuationLane(vignettes);
+  expect(serviceLane).toHaveLength(3);
+  expect(serviceLane.every(s=>s.surface==='asphalt')).toBe(true);
+  expect(serviceLane[0].polygon[2][0]-serviceLane[0].polygon[0][0]).toBeGreaterThan(128);
+  const sample=casings[0],pair=casings.filter(r=>r.scene===sample.scene);
+  const decals=new CureVignetteDecals(pair,new DataTexture(new Uint8Array([255,255,255,255]),1,1));
+  const focus={x:sample.position[0],z:sample.position[2]};
+  decals.update(focus,false);expect(decals.visibleIds()).toHaveLength(2);
+  decals.update(focus,true);expect(decals.visibleIds()).toHaveLength(1);
+  decals.update({x:0,z:0},true);expect(decals.visibleIds()).toHaveLength(0);decals.dispose();
+
   expect(apron.some(p => p.position[0] > 3900 && p.roadLife)).toBe(true);
   expect(stories.filter(q => q.fieldLight).length).toBeGreaterThan(60);
   for (const li of cureCrossingLines.keys()) expect(stories.some(q => q.id.startsWith(`decor-cure-cross-${li}-`) && q.fieldLight)).toBe(true);
@@ -226,4 +380,23 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   // Ground under each piece without the scenes (a sandbag pallet carries its own 25 cm walkable deck).
   const bare = new DistrictWorld(compositions.L10, [{ ...cureLayout, placements: [...cureLayout.placements, ...belt] }], 32);
   for (const q of stories) for (const [x, z] of [[q.visualAabb.min[0], q.visualAabb.min[2]], [q.visualAabb.max[0], q.visualAabb.max[2]]]) expect(Math.abs(bare.groundHeight(x, z))).toBeLessThan(.05);
+  const platform = cureLayout.placements.find(q => q.assetId === 'kit.dispersal-platform')!;
+  const [px, , pz] = platform.position;
+  expect(bare.pavingHeight(px, pz)).toBeCloseTo(3.08);
+  expect(bare.supportBelow(px, pz, 0), 'a ground-level infected under the deck stays below it').toBe(0);
+  expect(bare.supportBelow(px + 8.1, pz, 0), 'the lowest stair tread remains a valid first step').toBeCloseTo(.1);
+  const { heightRouteWaypoint } = await import('../../src/sim/ai/InfectedSystem');
+  const waypoint = heightRouteWaypoint(bare, { transform: { x: px + 10, y: .7, z: pz, yaw: 0 } } as never, { x: px, y: 3.78, z: pz });
+  expect(waypoint?.x).toBeCloseTo(px + 8.07, 1);
+  const chase = await world('survivor', true);
+  chase.districts = bare;
+  chase.enableInfected();
+  const infected = chase.infected!, walker = chase.entities.get(infected.spawn('infected.runner', { x: px + 10, z: pz }, { state: 'chase' }))!;
+  const seek = infected as unknown as { seek(e: typeof walker, goal: { x: number; y: number; z: number }): void };
+  for (let tick = 0; tick < 2400; tick++) {
+    seek.seek(walker, { x: px, y: 3.78, z: pz });
+    walker.transform.y = .7 + bare.supportBelow(walker.transform.x, walker.transform.z, walker.transform.y - .7);
+    chase.tick++;
+  }
+  expect(walker.transform.y, 'a pursuer must walk all the way up the stairs onto the deck').toBeCloseTo(3.78);
 }, 60_000);

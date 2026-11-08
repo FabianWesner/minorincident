@@ -1,4 +1,3 @@
-import { dialogue } from '../../data/dialogue';
 import { megaCueInterval } from '../../data/megaPresentation';
 import { SimPhase } from '../../core/EventBus';
 import { megaAlpha } from '../../data/megaAlpha';
@@ -14,7 +13,7 @@ import type { EntitySnapshot } from '../world/types';
  * E32 §5.4 / AC10 (lane L10-S3): the one persistent Mega Alpha and its global pursuit.
  *
  * - It reads the player's position (sampled at 2 Hz: "approximately") with no sight, hearing or lure checks.
- * - Normal pursuit cruises at 0.7 × the nominal run. Where detailed collision/nav is resident it steers on the shared nav grid
+ * - Normal pursuit keeps pace with a runner. Where detailed collision/nav is resident it steers on the shared nav grid
  *   (towards the next authored route node while far, towards the player while near); inside `closeM` the shared Alpha chase brain
  *   (contact, barricade breach, special scheduler) runs it. Off-region it walks the authored route graph every tick
  *   (route planning remains 2 Hz), with hidden catch-up on the final delivery approach, without a mesh or collider.
@@ -80,6 +79,8 @@ export class MegaPursuit {
   /** Nav baked at the Mega's own clearance (falls back to the shared crowd grid on very large grids). */
   private localGrid: NavGrid;
   get grid(): NavGrid { return this.localGrid; }
+  /** Fleet-feet upgrades must not turn the terrain-escape stalker into a slower pursuer. */
+  private get cruiseSpeed(): number { return megaAlpha.cruiseMs * (this.world.scenario === 'L10' ? Math.max(1, this.world.player?.progressionSpeed ?? 1) : 1); }
   invalidateNavigation(): void {
     this.path.path.length = 0; this.path.goal = -1;
     if (!this.world.chunks) return;
@@ -128,13 +129,23 @@ export class MegaPursuit {
   /** Spawn the one Mega Alpha (idempotent: a second call returns the same entity id). */
   introduce(at?: { x: number; z: number }): number {
     if (this.state.id) return this.state.id;
-    const ai = this.world.infected!, spot = at ?? this.options.spawn ?? this.behind();
+    const ai = this.world.infected!;
+    let spot = at ?? this.options.spawn ?? this.behind();
+    if (this.world.scenario === 'L10' && !at && !this.options.spawn && ai.director.inFrame(spot, 1, true)) {
+      const player = this.world.entities.get(1)!.transform;
+      // An idle courier may still be at the trail origin. Enter from clear offscreen ground, never materialize beside her.
+      for (let i = 0; i < 16; i++) {
+        const angle = player.yaw + Math.PI + i * Math.PI / 8;
+        const candidate = { x: player.x + Math.cos(angle) * 75, z: player.z + Math.sin(angle) * 75 };
+        if (this.resident(candidate.x, candidate.z) && this.grid.clear(candidate.x, candidate.z, this.radius) && !ai.director.inFrame(candidate, 1, true)) { spot = candidate; break; }
+      }
+    }
     if (this.reservation) { ai.director.reserved = Math.max(0, ai.director.reserved - 1); this.reservation = false; }
     const resident = this.resident(spot.x, spot.z);
     const place = resident ? this.clearNear(spot) ?? spot : spot;
     const id = ai.spawn(megaAlpha.archetype, place, { state: 'chase', variant: megaAlpha.asset, offNav: !resident });
     const e = this.world.entities.get(id)!, b = e.infected!;
-    b.pursuit = true; b.hidden = !resident; b.speed = megaAlpha.cruiseMs; e.combat!.radius = this.radius;
+    b.pursuit = true; b.hidden = !resident; b.speed = this.cruiseSpeed; e.combat!.radius = this.radius;
     e.health.current = e.health.max = megaAlpha.hp;
     const player = this.world.entities.get(1)!.transform;
     e.transform.yaw = -Math.atan2(player.z - place.z, player.x - place.x);
@@ -169,13 +180,7 @@ export class MegaPursuit {
     const emit = (kind: 'roar' | 'impact' | 'step') => this.world.events.emit({ type: 'mega.cue', tick, sourceId: e.id, kind, band });
     if (tick >= audio.next) {
       emit('roar'); emit('impact');
-      // First audible roar, once the opening line is gone: say what it is (story audit, finding 11).
-      const m = this.world.mission && 'subtitle' in this.world.mission ? this.world.mission : null;
-      if (!this.state.introduced && m && (!m.subtitle || m.subtitle.until <= tick)) {
-        this.state.introduced = true;
-        m.subtitle = { id: 'L10.mega-roar', text: dialogue['L10.mega-roar'], until: tick + 300 };
-        this.world.events.emit({ type: 'dialogue.line', tick, id: 'L10.mega-roar', text: m.subtitle.text });
-      } audio.next = tick + megaCueInterval(this.world.seed, audio.index++);
+      audio.next = tick + megaCueInterval(this.world.seed, audio.index++);
     }
     if (tick >= audio.step) {
       audio.step = tick + 48;
@@ -191,7 +196,7 @@ export class MegaPursuit {
     const s = this.state, b = e.infected!, tick = this.world.tick;
     const player = this.world.entities.get(1)!;
     // Never lured, never investigating a noise, never a civilian's pursuer: the player is the only target.
-    delete e.noiseTarget; delete b.investigate; b.heardTargetId = 0; b.speed = megaAlpha.cruiseMs;
+    delete e.noiseTarget; delete b.investigate; b.heardTargetId = 0; b.speed = this.cruiseSpeed;
     if (b.specialAttack) { b.hidden = false; s.mode = 'close'; return false; }
     const mission = this.world.missions, arena = mission?.def.anchors['cure-console'];
     if (mission?.state.states['charge-ready'] && arena && dist(player.transform, arena) > finale.fightRadius && dist(e.transform, arena) > finale.fightRadius - 5 && dist(e.transform, arena) < 100 && this.resident(e.transform.x, e.transform.z) && !Status.stunned(e, tick) && b.grabUntil <= tick && (b.specialRecoveryUntil ?? 0) <= tick && b.state !== 'attack' && !e.combat!.attacking) {
@@ -219,7 +224,7 @@ export class MegaPursuit {
     if (s.mode === 'coarse') {
       const motion = e.locomotion ??= motionResponse(), velocity = e.motion?.velocity;
       const speed = velocity ? Math.hypot(velocity.x, velocity.z) : 0;
-      const cruise = megaAlpha.cruiseMs * Status.speed(e);
+      const cruise = this.cruiseSpeed * Status.speed(e);
       motion.vx = speed > .01 ? velocity!.x / speed * cruise : 0;
       motion.vz = speed > .01 ? velocity!.z / speed * cruise : 0;
       motion.ax = motion.az = 0;
@@ -330,7 +335,7 @@ export class MegaPursuit {
     // Hidden final-route pressure is faster than the ordinary far-pursuit pace
     // without collapsing the arrival interval before the charge is activated.
     const farSpeed = finalApproach ? (tier === 'low' ? 1.2 : 1.24) : tier === 'low' ? 1.15 : 1.11;
-    let budget = megaAlpha.cruiseMs * Status.speed(e) * (farHidden ? farSpeed : 1) / 60;
+    let budget = this.cruiseSpeed * Status.speed(e) * (farHidden ? farSpeed : 1) / 60;
     const t = e.transform, startX = t.x, startZ = t.z;
     while (budget > 1e-6) {
       if (this.legBlocked(t)) break;
@@ -370,7 +375,7 @@ export class MegaPursuit {
   private walkTo(e: EntitySnapshot, to: { x: number; z: number }, direct: boolean): void {
     const t = e.transform, dx = to.x - t.x, dz = to.z - t.z, d = Math.hypot(dx, dz);
     if (d < .02) return;
-    const speed = Math.min(megaAlpha.cruiseMs, d * 60);
+    const speed = Math.min(this.cruiseSpeed, d * 60);
     if (direct) { const step = Math.min(d, speed / 60); t.x += dx / d * step; t.z += dz / d * step; }
     else moveAgent(e, dx / d * speed, dz / d * speed, this.grid, this.world.tick, this.radius);
     t.y = .7 + (this.world.districts?.groundHeight(t.x, t.z) ?? 0);
@@ -424,8 +429,28 @@ export class MegaPursuit {
   }
   /** Introduction point: the route node closest to `startBehindM` route-metres from the player's node; else straight behind her. */
   private behind(): { x: number; z: number } {
-    const player = this.world.entities.get(1)!.transform, want = megaAlpha.startBehindM;
+    const player = this.world.entities.get(1)!.transform, want = this.world.scenario === 'L10' ? megaAlpha.walkStartBehindM : megaAlpha.startBehindM;
     if (this.nodes.size) {
+      if (this.world.scenario === 'L10') {
+        // Sample the ordered eastbound trail behind the courier. Choosing an
+        // arbitrary graph node at least60m away could select a future node ahead.
+        const trail = [...this.nodes.values()];
+        let segment = 0, progress = 0, nearest = Infinity;
+        for (let i = 1; i < trail.length; i++) {
+          const a = trail[i - 1], b = trail[i], dx = b.x - a.x, dz = b.z - a.z, length2 = dx * dx + dz * dz;
+          if (!length2) continue;
+          const t = Math.max(0, Math.min(1, ((player.x - a.x) * dx + (player.z - a.z) * dz) / length2));
+          const distance2 = (player.x - a.x - dx * t) ** 2 + (player.z - a.z - dz * t) ** 2;
+          if (distance2 < nearest) { nearest = distance2; segment = i; progress = t * Math.sqrt(length2); }
+        }
+        let remaining = want;
+        for (let i = segment; i > 0; i--) {
+          const a = trail[i - 1], b = trail[i], length = dist(a, b), along = i === segment ? progress : length;
+          if (length && along >= remaining) { const t = (along - remaining) / length; return { x: a.x + (b.x - a.x) * t, z: a.z + (b.z - a.z) * t }; }
+          remaining -= along;
+        }
+        return { x: trail[0].x, z: trail[0].z };
+      }
       const costs = this.costs(this.nearestNode(player).id);
       let best: PursuitNode | null = null, score = Infinity;
       for (const node of this.nodes.values()) { const c = costs.get(node.id) ?? Infinity; if (c >= want && c - want < score) { score = c - want; best = node; } }

@@ -283,10 +283,10 @@ Feel: "false sanctuary → internal mass outbreak with infected animals; fight t
 | ID | Step | Criterion (expected value) | Source | Check |
 |---|---|---|---|---|
 | L8-01 | escape (calm) | L7 roster and arsenal arrive exactly; companions at full health; no weapon pickup in L8; start weapon = last weapon (not the bat). | E30-AC03, Q-198 | S |
-| L8-02 | sanctuary → escape | **PO 2026-11-08:** from control return, the tracker names the zoo gate and shows its distance; the fixed world marker/edge arrow and minimap target point there during the 60 active-second calm. The APC objective and its markers activate only after the internal breach at 60 s and reaching the zoo gate in that breached state; the APC cannot be boarded/driven and survivors cannot queue there before that transition. No scripted attack/conversion/breach begins early, and movement/weapon selection stay available. Pause and sanctuary restore preserve the remaining calm time. | E30-AC04/07/14 | S, O |
-| L8-03 | escape (calm) | ≥ 20 civilians, ≥ 6 soldiers, ≥ 4 staff, ≥ 8 animals (all 5 species, ≥ 2 zebras, ≥ 3 flamingos); outside-wall infected cannot cross; nobody idle > 3 s. | E30-AC05/06 | S, O |
+| L8-02 | sanctuary → escape | **PO 2026-11-08:** from control return, the tracker names the central plaza and shows its distance; the fixed world marker/edge arrow and minimap target point there during the 60 active-second calm. Nadia's route passes the public-facing enclosures; arriving at the plaza early preserves the calm timer. The internal breach at 60 s begins a 30 s ‘Protect the group!’ hold with no destination marker; the APC route and its markers appear after that hold and the plaza rendezvous; the APC cannot be boarded/driven and survivors cannot queue there before that transition. No scripted attack/conversion/breach begins early, and movement/weapon selection stay available. Pause and sanctuary restore preserve the remaining calm time. | E30-AC04/07/14 | S, O |
+| L8-03 | escape (calm) | **PO 2026-11-08:** ≥ 20 civilians, ≥ 6 soldiers, ≥ 4 staff, ≥ 8 healthy animals (all 5 species, ≥ 2 zebras, ≥ 3 flamingos); Nadia's route passes public-facing lit enclosures so all five species are visible before the breach; zoo ambience and the command-post counter-agent / Hollow Creek bridge-at-dawn broadcast play during the calm minute; outside-wall infected cannot cross; nobody idle > 3 s. | E30-AC05/06 | S, O |
 | L8-04 | escape (breach) | Breach at 60 s ± 1 tick at ≥ 3 tunnel outlets ≥ 20 m apart within 1 s; **6 / 3 per point** (≥ 18 / ≥ 9); no pop-in. | E30-AC07 | S |
-| L8-05 | escape (breach) | Attacks hit civilians, soldiers, staff and animals; animals turn in 2.5–3.5 s keeping id/species; 3–5 Alphas over the run; concurrent ≤ 200 / 100. | E30-AC08/09/11 | S |
+| L8-05 | escape (breach) | **PO 2026-11-08:** Attacks hit civilians, soldiers, staff and animals; animals turn in 2.5–3.5 s keeping id/species; the opening tunnel wave includes turned army K9s; at the flamingo pond a keeper is pulled down and a flamingo is bitten and visibly turns with the same id/species in 2.5–3.5 s; 3–5 Alphas over the run; concurrent ≤ 200 / 100. At the completed APC boarding hold, the Mega comes over the north wall and soldiers cannot stop it. Hale gives the Hollow Creek line and dies at the APC (no close gore); on departure the Mega chases the APC and the caption reads “Something is following you.” | E30-AC08/09/11 | S |
 | L8-06 | escape (breach) | combat: reachable ≥ 90 %; passive first attack ≤ 20 s after the breach (measured 15.7 s from level start sample); attacks on player + group ≥ 4/min (tune). | orch. | S |
 | L8-07 | escape | ≥ 2 escape paths ≥ 2.5 m wide from each enclosure; marker points at the APC (fixed). | E30-AC12, Q-306 | S |
 | L8-08 | escape | Infected animals read as enemies (lion snarl, wounds visible from the iso camera); zebra legs clean at PO zooms; player readable at night (rim/accents). | lessons 10-28, Q-175, Q-178 | O |
@@ -329,46 +329,44 @@ Feel: "open-country drive: read the road, choose a route, shake off boarders, an
 | L9-17 | reach-outskirts | PO 2026-11-08: rear weapon rack and duffel visibly fall into the river; objective text appears before the player-controlled 5–8 s crawl; axe is visible on her back and all other weapons are absent. Wreck explodes after she clears it. | docs/design/story-script.md §L9; PO 2026-11-08 | S, O |
 | L9-18 | handover | PO 2026-11-08: evacuation passengers are already accounted for at the bridgehead (no off-screen shelter); L10 begins with the courier alone except the safe corgi and axe, while Sam's radio establishes the research-site trail. | docs/design/story-script.md §L10; PO 2026-11-08 | S |
 
-## L10 · The Cure (D-CURE, 7 regions, axe → arsenal → minigun)
+## L10 · The Cure (D-CURE, farms → restricted zone → safe hangar → dispersal)
 
-Feel: "vulnerable again → rebuild the arsenal → hunted by the Mega Alpha → stand your ground → the world becomes safe". Newbie no-death **45–50 min** incl. epilogue (E32-AC04); competent **25–50 min** (tune; complete bot 19.5 min); deaths competent **0–3** (tune).
+**PO 2026-11-08:** Feel: "alone in the corn → cross broken farms → breach the Area 51 perimeter → meet researchers in a safe hangar → carry the cure through the Mega's hunt". Target about **15 min**, without idle timing padding.
 
 | Step | Objective text | Player does |
 |---|---|---|
-| `crash` | Leave the wreck on foot | R1 crash outskirts, axe only |
-| `residential-fringe` | Recover the handgun at the checkpoint | R2 |
-| `industrial-area` | Recover the shotgun at the checkpoint | R3 |
-| `military-zone` | Recover the machine gun at the checkpoint | R4 |
-| `research-campus` | Reach the research campus | R5 entry |
-| `research` | Play the research recording | terminal |
-| `cure` | Pack the cure canister | backpack |
-| `research-exit` | Get the cure out of the laboratory | lab exit |
-| `destroyed-corridor` | Carry the cure down the corridor and grab the rocket launcher | R6 |
+| `crash` | Get away from the river | R1 wreck and corn fields, axe only |
+| `farmstead` | Find a way through the farms | farmhouses, barns, workshops and town edge; Sam checks in over radio |
+| `restricted-zone` | Get through the restricted zone | Area 51-style perimeter, guard tower and checkpoint locker |
+| `research-hangar` | Enter the hangar | sealed safe space, Dr. Voss, Sam and guards; no infected inside |
+| `research` | Enter the hangar | Voss explains the failed sample and hands over the cure |
+| `cure` | Bring the cure to the dispersal complex | Ruiz returns the bridge arsenal; Voss issues the experimental flamethrower |
+| `research-exit` | Bring the cure to the dispersal complex | hangar exit |
+| `delivery-corridor` | Bring the cure to the dispersal complex | wrecked delivery route; the Mega is waiting outside |
 | `dispersal-complex` | Bring the cure to the dispersal complex | R7 |
-| `install` | Install the cure in the dispersal device | install point |
-| `hold` | Charge the dispersal system | 60 s within 25 m, minigun |
-| `mega` | Kill the Mega Alpha | ~10 direct rockets |
-| `release` | Release the cure at the console | interaction |
-| `epilogue` | Watch the cure spread | free walk 120–180 s |
-| `credits` | Minor Incident | title + credits |
+| `install` | Install the cure | install point |
+| `hold` | Hold the console | 60 s within 40 m, minigun |
+| `mega` | Kill the Mega Alpha | whole arsenal, mounted gun, fuel tanks and electric gate |
+| `release` | Release the cure | console interaction |
+| `epilogue` | Release the cure | 8 s control among recovering people; journey/survivor shots; Delivered ✓ and 15 s map pullback; title at 65 s |
+| `credits` | Minor Incident | title, 90 s scrolling credits with pause/skip, Thanks for playing and menu |
 
 | ID | Step | Criterion (expected value) | Source | Check |
 |---|---|---|---|---|
-| L10-01 | crash | First minute ≤ 8 regulars, no dogs/Alphas; R1 concurrent 4–8 (both tiers), singles/pairs. | E32-AC02, §4 | S |
-| L10-02 | crash | Mega Alpha introduced by roar/impact by 2:00 (authored 1:30), ≥ 80 m behind on a reachable route. | E32-AC10, megaAlpha | S |
-| L10-03 | regions | Concurrent local infected per region (high / low): R2 12–24 / 8–16 (+1–2 dogs after pickup); R3 25–45 / 16–28 (2–4 dogs, 1 Alpha); R4 45–75 / 28–45 (groups 10–20, 2–4 dogs, 1–2 Alphas); R5 55–85 / 35–55 (2–4 dogs, 1–2 Alphas); R6 80–130 / 50–75 (groups 20–35, 3–5 dogs, 2–3 Alphas); R7 peak 140–190 / 75–95. | E32 §4 | S |
-| L10-04 | regions | combat in every region: reachable ≥ 90 %; attacks on player ≥ 2/min in R1–R2, ≥ 4/min from R3 (tune); no region crossable with 0 attacks. | orch. | S |
-| L10-05 | regions | Weapons only at their named checkpoints, taken on approach, snapshot with the pickup; picking one up spawns nothing. | E32-AC05/06, G-10 | S |
+| L10-01 | crash | First minute ≤ 8 regulars, no dogs/Alphas; the opening reads as a wreck beside dry corn, broken farm buildings and dead livestock. | E32-AC02, PO 2026-11-08 | S, O |
+| L10-02 | crash | Mega first sighting by 3:00, then 2–3 close encounters across the journey; terrain gaps let the player evade it. It cannot be killed and has no HP bar before the finale. | E32-AC10, PO 2026-11-08 | S, O |
+| L10-03 | regions | Seven route regions connect in order: creek/corn → farmstead and broken farms → restricted military zone → safe research hangar → dispersal route/complex. Total target ≈15 min with no idle padding. | E32-AC03, PO 2026-11-08 | S, O |
+| L10-04 | regions | Quiet survival-horror pacing: 30–60 s quiet stretches, authored scares about every 60–120 s, small moving groups (normally 8–15 concurrent); finale is the only crowd fight. | PO 2026-11-08, l9-l10-concept | S |
+| L10-05 | regions | Farmhouse rifle, barn machete, workshop nail gun and shed Molotov; guard-tower assault rifle and checkpoint flashbangs. Mission objectives remain story goals and name no weapon. | story-script.md, PO 2026-11-08 | S, O |
 | L10-06 | regions | Dogs: 1.1× run, ≥ 0.6 s telegraph, ≤ 2 m reach, ≥ 2 s cooldown, 10 HP/bite; low, distinct from the corgi. | E32-AC07 | S, O |
-| L10-07 | regions | Mega: cruise 0.7× run ± 2 % whenever it is on camera or within 200 m of the courier (orchestrator 2026-11-04: hidden far pursuit beyond 200 m may run faster than cruise (up to 1.15× in the regions, up to 1.35× catch-up on the final delivery approach, sweep-c6 (was 6×)) so the walking arrival of L10-11 holds; it follows connected nav links, never relocates, and the player never sees that speed), always pursuing (no LOS), never trapped, never teleports; minimap shows only a pulsing distance ring; roar/impacts every 20–35 s, louder when closer. | E32-AC10/13/14 | S |
+| L10-07 | regions | Mega pursues without LOS and takes longer routes around tight alleys, fence gaps, culverts and doorways; staying still draws it in. A red pulsing minimap dot shows its real position while near, with footsteps/roars between sightings. | E32-AC10/13/14, PO 2026-11-08 | S, O |
 | L10-08 | regions | Road regions framed ×1.3 (verges/fields in frame), base × max zoom ≤ 2.0; not in the finale. Suit crowds readable at night, slam telegraph is a ground effect. | lessons 10-30, Q-179, Q-147 | O |
-| L10-09 | research → corridor | Recording explains the airborne cure (subtitles); canister is a visible backpack, no slot, no slowdown, restored on death. | E32-AC15/16 | S, O |
-| L10-10 | hold | Charge = exactly 3,600 ticks while alive within 25 m; pauses outside with an instruction; minigun 20 rounds/s, heat +12.5 %/s, lock at 100 %, unlock < 40 %. | E32-AC19/20 | S |
-| L10-11 | hold | Assault: infected at the capped peak (140–190 / 75–95), reachable ≥ 90 %, attacks on player ≥ 8/min (tune); Mega reaches the arena ~140 s after activation (orchestrator 2026-11-04: "~140 s" = 120–160 s, by walking; no relocation). | E32-AC21, PO 10-16 | S |
-| | | **Conflict:** E32 §5.7 "Mega arrives 10–40 s after activation" → PO 10-16 "keep the current ~143 s build-up" wins. | | |
-| L10-12 | mega | Mega survives 9 direct rockets, dies on the 10th; conventional/minigun never below 90 % HP; charge/slam/grab only inside 12 m; no frame > 200 ms at fight and death; corpse reads as the creature. | E32-AC11/12, Q-180, Q-124 | S, O |
+| L10-09 | hangar | Sealed hangar is a safe space with Dr. Elena Voss, Sgt. Ruiz, researchers, Sam (Private Reyes if Sam died) and two guards; lab containers, quarantine tents, generators and emergency lights. Cure handoff is indoors. Voss explains that the sample came from the campus, the container failed, and the dispersal complex is two kilometres east. No infected spawn inside. Sergeant Ruiz returns the bridge arsenal; Voss adds the experimental flamethrower. The canister stays a visible zero-slot backpack item with no movement penalty. | story-script.md, PO 2026-11-08 | S, O |
+| L10-10 | hold | Charge = exactly 3,600 ticks while alive within **40 m**; pauses outside with an instruction; minigun 20 rounds/s, heat +12.5 %/s, lock at 100 %, unlock < 40 %. | E32-AC19/20 | S |
+| L10-11 | hold | Final assault only: **at most 22 high / 14 low, small waves from three directions with breathers** living ordinary infected; stationary ground policy: reachable ≥ 90 %, infected attacks on player ≥ 8/min. Reinforcements continue through charging and the Mega fight. The same stalker walks into the arena; no replacement or teleport. | PO 2026-11-08 | S |
+| L10-12 | mega | Mega health bar appears only for the finale. Mounted shield/platform protect the courier, crowds climb only the stairs, gun shreds crowds and occasional dismount clears stair pressure. Returned arsenal and cover make the encounter survivable; it is killable at the dispersal complex. | E32-AC11/12, PO 2026-11-08 | S, O |
 | L10-13 | release | Release only with charge 60 + Mega dead + cure installed, player at the console. | E32-AC22 | S |
-| L10-14 | epilogue | Mist front ~10 m/s; every touched infected dies within 1 tick (dogs, Alphas, zoo species); no harm to healthy/player/corgi; player keeps control 120–180 s; camera pulls out in the last 30–45 s; then title and credits. | E32-AC23/25/26 | S, O, P |
+| L10-14 | epilogue | Green ground dust restores living infected to same-ID healthy people after a kneeling recovery; dead bodies remain dead, healthy/player/corgi unharmed. Player walks among the cured for 8 s, then journey/survivor shots; Delivered ✓ at 50 s starts the 15 s full-L10 pullback. Title by 65 s, 90 s readable licensed credits (skippable), Thanks for playing and menu. Cinematic skippable after first view. | story-script.md, PO 2026-11-08 | S, O, P |
 | L10-15 | all | Death in any region respawns at that region's checkpoint (never level start), with the loadout, cure and boss state of that checkpoint. | E32-AC27 | S |
 
 ---
@@ -398,3 +396,7 @@ Feel: "vulnerable again → rebuild the arsenal → hunted by the Mega Alpha →
 5. Every new PO finding adds a row here (and a po-checklist line).
 
 **Immortal test mode (PO 11-01: "a mode where the user cannot die, so an agent has a chance to play it. This is not for judging fun but to check the acceptance criterias").** Agent runs that check criteria play with the courier unable to die: Luna screen play is immortal by default (`tools/playtest/live.ts --screen`, `LUNA_MORTAL=1` to disable), scripted bots use `PLAYTEST_GOD=1`, `qa:threat` passive runs use survival protection. Attacks still land and are counted, so threat criteria stay measurable; deaths bands and difficulty are judged only in mortal skilled runs and by the PO.
+
+L10 PO 2026-11-08 finale revision: waves contain 9 high / 6 low infected, admitted for at most 5 s, then no arrivals for 25 s; uncleared waves defer the next by 8 s. Raised platform access is stair-only (r14-height integration); gun shield protects the manned courier from the front and ground melee, while stair climbers can contest the rear. Mounted rounds permanently shred ordinary crowds. Competent input-only runs must complete without close ground rockets.
+
+L10 PO epilogue revision: player keeps control for 8 s among living infected recovering as people in green ground dust. Journey and survivor shots follow; Delivered ✓ at 50 s starts the 15 s full-map pullback. Title at 65 s; readable licensed credits for 90 s, skippable, then Thanks for playing and menu. Cinematic skipping requires a previous view. Browser QA owns shot continuity and panorama draw/performance review.

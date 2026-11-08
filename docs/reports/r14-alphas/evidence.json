@@ -1,0 +1,727 @@
+{
+  "baselineArchiveVerifiedFiles": 3241,
+  "baseline": {
+    "revision": "a7b70c78",
+    "mainRevision": "a7b70c78",
+    "sourceMatchesMain": true,
+    "seed": 1,
+    "policy": "kiting + passive",
+    "tier": "low",
+    "workers": 1,
+    "seconds": 1218.034228584,
+    "flags": [
+      "L3/criterion/L3-08 segment density and concurrent cap:FAIL",
+      "L3/criterion/L3-11 native competent rate:FAIL",
+      "L6/KITING_BELOW_ATTACKS_PER_MINUTE_2:0.00",
+      "L8/phase/breached:SLOW_FOLLOWER:364",
+      "L8/FOLLOWER_WAIT_UPPER_BOUND_OVER_10_PERCENT"
+    ],
+    "levels": [
+      {
+        "level": "L1",
+        "flags": [],
+        "passiveFlags": [],
+        "nativeStateHash": "9b4431c2",
+        "completed": true,
+        "outcome": "complete"
+      },
+      {
+        "level": "L2",
+        "flags": [],
+        "passiveFlags": [],
+        "nativeStateHash": "618cb09e",
+        "completed": true,
+        "outcome": "complete"
+      },
+      {
+        "level": "L3",
+        "flags": [
+          "wave/station-0:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+          "wave/station-2:WAVE_NO_ATTACK_WITHIN_20_SECONDS"
+        ],
+        "passiveFlags": [
+          "criterion/L3-08 segment density and concurrent cap:FAIL",
+          "criterion/L3-11 native competent rate:FAIL"
+        ],
+        "nativeStateHash": "32db4e0a",
+        "completed": true,
+        "outcome": "complete"
+      },
+      {
+        "level": "L4",
+        "flags": [
+          "wave/breach-north:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+        ],
+        "passiveFlags": [],
+        "nativeStateHash": "efe2c980",
+        "completed": true,
+        "outcome": "complete"
+      },
+      {
+        "level": "L5",
+        "flags": [],
+        "passiveFlags": [],
+        "nativeStateHash": "f80f6b83",
+        "completed": true,
+        "outcome": "complete"
+      },
+      {
+        "level": "L6",
+        "flags": [
+          "wave/entry-2@10236:L6_ENTRY_COUNT_MISMATCH",
+          "wave/entry-5@11161:L6_ENTRY_COUNT_MISMATCH",
+          "wave/entry-3@13418:L6_ENTRY_COUNT_MISMATCH",
+          "wave/entry-6@15122:L6_ENTRY_COUNT_MISMATCH",
+          "wave/entry-4@18122:L6_ENTRY_COUNT_MISMATCH"
+        ],
+        "passiveFlags": [
+          "KITING_BELOW_ATTACKS_PER_MINUTE_2:0.00"
+        ],
+        "nativeStateHash": "d23f113e",
+        "completed": true,
+        "outcome": "complete"
+      },
+      {
+        "level": "L7",
+        "flags": [],
+        "passiveFlags": [],
+        "nativeStateHash": "a0c0bf12",
+        "completed": true,
+        "outcome": "complete"
+      },
+      {
+        "level": "L8",
+        "flags": [
+          "INCOMPLETE_NATIVE_POLICY:tick-budget",
+          "step/escape:SLOW_FOLLOWER:357",
+          "step/escape:SLOW_FOLLOWER:358",
+          "step/escape:SLOW_FOLLOWER:360",
+          "step/escape:SLOW_FOLLOWER:361",
+          "step/escape:SLOW_FOLLOWER:364",
+          "phase/breached:SLOW_FOLLOWER:357",
+          "phase/breached:SLOW_FOLLOWER:358",
+          "phase/breached:SLOW_FOLLOWER:360",
+          "phase/breached:SLOW_FOLLOWER:361",
+          "phase/breached:SLOW_FOLLOWER:364",
+          "wave/tunnel-breach:BREACH_FEWER_THAN_THREE_OUTLETS_WITH_3"
+        ],
+        "passiveFlags": [
+          "phase/breached:SLOW_FOLLOWER:364",
+          "FOLLOWER_WAIT_UPPER_BOUND_OVER_10_PERCENT"
+        ],
+        "nativeStateHash": "7f284160",
+        "completed": false,
+        "outcome": "tick-budget"
+      },
+      {
+        "level": "L9",
+        "flags": [],
+        "passiveFlags": [],
+        "nativeStateHash": "f35614e0",
+        "completed": true,
+        "outcome": "complete"
+      },
+      {
+        "level": "L10",
+        "flags": [
+          "INCOMPLETE_NATIVE_POLICY:tick-budget"
+        ],
+        "passiveFlags": [],
+        "nativeStateHash": "707fb2f5",
+        "completed": false,
+        "outcome": "tick-budget"
+      }
+    ],
+    "stages": [
+      {
+        "id": "L5/passive/1",
+        "seconds": 122.030657
+      },
+      {
+        "id": "L5/passive/2",
+        "seconds": 92.76825229100001
+      },
+      {
+        "id": "L5/passive/3",
+        "seconds": 105.55771562499999
+      },
+      {
+        "id": "L4/skilled/1",
+        "seconds": 235.01144466699998
+      },
+      {
+        "id": "L4/high-hold",
+        "seconds": 65.45405174999999
+      },
+      {
+        "id": "L4/passive/1",
+        "seconds": 45.84022929200006
+      },
+      {
+        "id": "L10/skilled/1",
+        "seconds": 163.623580875
+      },
+      {
+        "id": "L10/passive/1",
+        "seconds": 35.029834583000046
+      },
+      {
+        "id": "L3/skilled/1",
+        "seconds": 17.690848665999948
+      },
+      {
+        "id": "L2/skilled/1",
+        "seconds": 17.284313624999953
+      },
+      {
+        "id": "L3/skilled/2",
+        "seconds": 13.143144333000063
+      },
+      {
+        "id": "L3/skilled/3",
+        "seconds": 13.950480167000089
+      },
+      {
+        "id": "L8/passive/1",
+        "seconds": 17.904135666999967
+      },
+      {
+        "id": "L1/skilled/1",
+        "seconds": 12.867505958999972
+      },
+      {
+        "id": "L5/skilled/1",
+        "seconds": 15.11212254199991
+      },
+      {
+        "id": "L8/skilled/1",
+        "seconds": 125.20748841699992
+      },
+      {
+        "id": "L2/passive/1",
+        "seconds": 13.478159749999875
+      },
+      {
+        "id": "L5/skilled/2",
+        "seconds": 10.895804459000006
+      },
+      {
+        "id": "L5/skilled/3",
+        "seconds": 9.50994337500003
+      },
+      {
+        "id": "L7/skilled/1",
+        "seconds": 10.326797374999849
+      },
+      {
+        "id": "L6/skilled/1",
+        "seconds": 10.586045167000034
+      },
+      {
+        "id": "L7/passive/1",
+        "seconds": 9.141983416999922
+      },
+      {
+        "id": "L7/skilled/2",
+        "seconds": 7.181920125000179
+      },
+      {
+        "id": "L7/skilled/3",
+        "seconds": 6.824648333000019
+      },
+      {
+        "id": "L1/passive/1",
+        "seconds": 6.736947874999838
+      },
+      {
+        "id": "L9/skilled/1",
+        "seconds": 11.612583583000117
+      },
+      {
+        "id": "L7/passive/2",
+        "seconds": 6.479895832999842
+      },
+      {
+        "id": "L7/passive/3",
+        "seconds": 5.644104416999966
+      },
+      {
+        "id": "L9/passive/1",
+        "seconds": 4.7549589159998575
+      },
+      {
+        "id": "L3/passive/1",
+        "seconds": 4.189184917000122
+      },
+      {
+        "id": "L6/passive/1",
+        "seconds": 2.1703941669999622
+      }
+    ]
+  },
+  "changed": {
+    "revision": "80fa72318756e4f72e4f7bfcb5f9bb4608045925",
+    "mainRevision": "5de851174b0b8bc24d71623fdba9dd6e2e0fdd58",
+    "sourceMatchesMain": false,
+    "seed": 1,
+    "policy": "kiting + passive",
+    "tier": "low",
+    "workers": 1,
+    "seconds": 863.5937308329999,
+    "flags": [
+      "L3/criterion/L3-08 segment density and concurrent cap:FAIL",
+      "L3/criterion/L3-11 native competent rate:FAIL",
+      "L6/KITING_BELOW_ATTACKS_PER_MINUTE_2:0.00",
+      "L8/phase/breached:SLOW_FOLLOWER:364",
+      "L8/FOLLOWER_WAIT_UPPER_BOUND_OVER_10_PERCENT",
+      "L10/MISSING_KITING_ON_FOOT_SAMPLE",
+      "L10/step/hold:SKILLED_BELOW_ATTACKS_PER_MINUTE_8"
+    ],
+    "levels": [
+      {
+        "level": "L1",
+        "flags": [],
+        "passiveFlags": [],
+        "nativeStateHash": "9b4431c2",
+        "completed": true,
+        "outcome": "complete"
+      },
+      {
+        "level": "L2",
+        "flags": [],
+        "passiveFlags": [],
+        "nativeStateHash": "618cb09e",
+        "completed": true,
+        "outcome": "complete"
+      },
+      {
+        "level": "L3",
+        "flags": [
+          "wave/station-0:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+          "wave/station-2:WAVE_NO_ATTACK_WITHIN_20_SECONDS"
+        ],
+        "passiveFlags": [
+          "criterion/L3-08 segment density and concurrent cap:FAIL",
+          "criterion/L3-11 native competent rate:FAIL"
+        ],
+        "nativeStateHash": "32db4e0a",
+        "completed": true,
+        "outcome": "complete"
+      },
+      {
+        "level": "L4",
+        "flags": [
+          "wave/breach-north:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+        ],
+        "passiveFlags": [],
+        "nativeStateHash": "a6fe38dd",
+        "completed": true,
+        "outcome": "complete"
+      },
+      {
+        "level": "L5",
+        "flags": [],
+        "passiveFlags": [],
+        "nativeStateHash": "5313a169",
+        "completed": true,
+        "outcome": "complete"
+      },
+      {
+        "level": "L6",
+        "flags": [
+          "wave/entry-2@10236:L6_ENTRY_COUNT_MISMATCH",
+          "wave/entry-5@11161:L6_ENTRY_COUNT_MISMATCH",
+          "wave/entry-3@13418:L6_ENTRY_COUNT_MISMATCH",
+          "wave/entry-6@15122:L6_ENTRY_COUNT_MISMATCH",
+          "wave/entry-4@18122:L6_ENTRY_COUNT_MISMATCH"
+        ],
+        "passiveFlags": [
+          "KITING_BELOW_ATTACKS_PER_MINUTE_2:0.00"
+        ],
+        "nativeStateHash": "d23f113e",
+        "completed": true,
+        "outcome": "complete"
+      },
+      {
+        "level": "L7",
+        "flags": [],
+        "passiveFlags": [],
+        "nativeStateHash": "b89090d7",
+        "completed": true,
+        "outcome": "complete"
+      },
+      {
+        "level": "L8",
+        "flags": [
+          "INCOMPLETE_NATIVE_POLICY:tick-budget",
+          "step/escape:SLOW_FOLLOWER:357",
+          "step/escape:SLOW_FOLLOWER:358",
+          "step/escape:SLOW_FOLLOWER:360",
+          "step/escape:SLOW_FOLLOWER:361",
+          "step/escape:SLOW_FOLLOWER:364",
+          "phase/breached:SLOW_FOLLOWER:357",
+          "phase/breached:SLOW_FOLLOWER:358",
+          "phase/breached:SLOW_FOLLOWER:360",
+          "phase/breached:SLOW_FOLLOWER:361",
+          "phase/breached:SLOW_FOLLOWER:364",
+          "wave/tunnel-breach:BREACH_FEWER_THAN_THREE_OUTLETS_WITH_3"
+        ],
+        "passiveFlags": [
+          "phase/breached:SLOW_FOLLOWER:364",
+          "FOLLOWER_WAIT_UPPER_BOUND_OVER_10_PERCENT"
+        ],
+        "nativeStateHash": "bff6ebb0",
+        "completed": false,
+        "outcome": "tick-budget"
+      },
+      {
+        "level": "L9",
+        "flags": [],
+        "passiveFlags": [],
+        "nativeStateHash": "f35614e0",
+        "completed": true,
+        "outcome": "complete"
+      },
+      {
+        "level": "L10",
+        "flags": [
+          "INCOMPLETE_NATIVE_POLICY:tick-budget",
+          "UNOBSERVED_THREAT_STEP:hold"
+        ],
+        "passiveFlags": [
+          "MISSING_KITING_ON_FOOT_SAMPLE",
+          "step/hold:SKILLED_BELOW_ATTACKS_PER_MINUTE_8"
+        ],
+        "nativeStateHash": "e6cc0a9e",
+        "completed": false,
+        "outcome": "tick-budget"
+      }
+    ],
+    "stages": [
+      {
+        "id": "L5/passive/1",
+        "seconds": 62.298803917
+      },
+      {
+        "id": "L5/passive/2",
+        "seconds": 60.43886833299999
+      },
+      {
+        "id": "L5/passive/3",
+        "seconds": 66.852961458
+      },
+      {
+        "id": "L4/skilled/1",
+        "seconds": 63.11285266600002
+      },
+      {
+        "id": "L4/high-hold",
+        "seconds": 43.600247333000006
+      },
+      {
+        "id": "L4/passive/1",
+        "seconds": 35.05125229099998
+      },
+      {
+        "id": "L10/skilled/1",
+        "seconds": 148.090772083
+      },
+      {
+        "id": "L10/passive/1",
+        "seconds": 29.442819790999987
+      },
+      {
+        "id": "L3/skilled/1",
+        "seconds": 15.586122334000072
+      },
+      {
+        "id": "L2/skilled/1",
+        "seconds": 16.491994292000076
+      },
+      {
+        "id": "L3/skilled/2",
+        "seconds": 12.133140165999997
+      },
+      {
+        "id": "L3/skilled/3",
+        "seconds": 12.502132334000082
+      },
+      {
+        "id": "L8/passive/1",
+        "seconds": 13.263985374999931
+      },
+      {
+        "id": "L1/skilled/1",
+        "seconds": 10.636040750000044
+      },
+      {
+        "id": "L5/skilled/1",
+        "seconds": 12.933814500000095
+      },
+      {
+        "id": "L8/skilled/1",
+        "seconds": 106.93133212499995
+      },
+      {
+        "id": "L2/passive/1",
+        "seconds": 12.790561999999918
+      },
+      {
+        "id": "L5/skilled/2",
+        "seconds": 18.69834600000002
+      },
+      {
+        "id": "L5/skilled/3",
+        "seconds": 17.05267225000006
+      },
+      {
+        "id": "L7/skilled/1",
+        "seconds": 11.229565042000031
+      },
+      {
+        "id": "L6/skilled/1",
+        "seconds": 9.988295207999997
+      },
+      {
+        "id": "L7/passive/1",
+        "seconds": 9.377621500000009
+      },
+      {
+        "id": "L7/skilled/2",
+        "seconds": 10.105328624999965
+      },
+      {
+        "id": "L7/skilled/3",
+        "seconds": 11.73577658299997
+      },
+      {
+        "id": "L1/passive/1",
+        "seconds": 9.059156707999994
+      },
+      {
+        "id": "L9/skilled/1",
+        "seconds": 9.608230708000017
+      },
+      {
+        "id": "L7/passive/2",
+        "seconds": 5.721136834000005
+      },
+      {
+        "id": "L7/passive/3",
+        "seconds": 8.347529874999891
+      },
+      {
+        "id": "L9/passive/1",
+        "seconds": 9.06861666700011
+      },
+      {
+        "id": "L3/passive/1",
+        "seconds": 7.960305291999946
+      },
+      {
+        "id": "L6/passive/1",
+        "seconds": 3.440219332999899
+      }
+    ]
+  },
+  "newGateFlags": [
+    "L10/MISSING_KITING_ON_FOOT_SAMPLE",
+    "L10/step/hold:SKILLED_BELOW_ATTACKS_PER_MINUTE_8"
+  ],
+  "newSkilledFlags": [
+    "L10/UNOBSERVED_THREAT_STEP:hold"
+  ],
+  "unchangedL1L2": {
+    "L1": {
+      "baseline": "9b4431c2",
+      "changed": "9b4431c2",
+      "equal": true,
+      "baselineOutcome": "complete",
+      "changedOutcome": "complete"
+    },
+    "L2": {
+      "baseline": "618cb09e",
+      "changed": "618cb09e",
+      "equal": true,
+      "baselineOutcome": "complete",
+      "changedOutcome": "complete"
+    }
+  },
+  "threatMetrics": [
+    {
+      "level": "L3",
+      "phase": "defend",
+      "baseline": {
+        "seconds": 26.2,
+        "attacksPerMinute": 16.03053435114504,
+        "attacks": 7,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "alive": 18
+      },
+      "changed": {
+        "seconds": 26.2,
+        "attacksPerMinute": 16.03053435114504,
+        "attacks": 7,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "alive": 18
+      }
+    },
+    {
+      "level": "L3",
+      "phase": "checkpoint",
+      "baseline": {
+        "seconds": 154.28333333333333,
+        "attacksPerMinute": 1.5555795614129848,
+        "attacks": 4,
+        "groupAttacks": 2,
+        "groupAttacksPerMinute": 0.7777897807064924,
+        "alive": 35
+      },
+      "changed": {
+        "seconds": 154.28333333333333,
+        "attacksPerMinute": 1.5555795614129848,
+        "attacks": 4,
+        "groupAttacks": 2,
+        "groupAttacksPerMinute": 0.7777897807064924,
+        "alive": 35
+      }
+    },
+    {
+      "level": "L3",
+      "phase": "corridor",
+      "baseline": {
+        "seconds": 145.91666666666666,
+        "attacksPerMinute": 0.8223872073101085,
+        "attacks": 2,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "alive": 35
+      },
+      "changed": {
+        "seconds": 145.91666666666666,
+        "attacksPerMinute": 0.8223872073101085,
+        "attacks": 2,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "alive": 35
+      }
+    },
+    {
+      "level": "L4",
+      "phase": "hold",
+      "baseline": {
+        "seconds": 183.25,
+        "attacksPerMinute": 166.00272851296043,
+        "attacks": 507,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "alive": 80
+      },
+      "changed": {
+        "seconds": 184.26666666666668,
+        "attacksPerMinute": 257.561505065123,
+        "attacks": 791,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "alive": 79
+      }
+    },
+    {
+      "level": "L4",
+      "phase": "hide",
+      "baseline": {
+        "seconds": 732.75,
+        "attacksPerMinute": 324.4216990788127,
+        "attacks": 3962,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "alive": 65
+      },
+      "changed": {
+        "seconds": 107.68333333333334,
+        "attacksPerMinute": 54.04736108961461,
+        "attacks": 97,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "alive": 76
+      }
+    },
+    {
+      "level": "L5",
+      "phase": "look",
+      "baseline": {
+        "seconds": 139.28333333333333,
+        "attacksPerMinute": 6.0308723226038055,
+        "attacks": 14,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "alive": 47
+      },
+      "changed": {
+        "seconds": 136.53333333333333,
+        "attacksPerMinute": 8.7890625,
+        "attacks": 20,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "alive": 42
+      }
+    },
+    {
+      "level": "L5",
+      "phase": "metro",
+      "baseline": {
+        "seconds": 44.1,
+        "attacksPerMinute": 10.884353741496598,
+        "attacks": 8,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "alive": 32
+      },
+      "changed": {
+        "seconds": 48.78333333333333,
+        "attacksPerMinute": 1.2299282541851726,
+        "attacks": 1,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "alive": 24
+      }
+    }
+  ],
+  "checks": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "npmTest": {
+      "passed": 107,
+      "files": 27,
+      "seconds": 85.63395458400001,
+      "totalCaseBudget": 150,
+      "caseLimit": 150
+    },
+    "npmQaThreatWrapper": {
+      "exitCode": 1,
+      "childExitCode": 124,
+      "seconds": 601.0,
+      "limitSeconds": 600,
+      "reason": "watchdog timeout before all 31 serial stages finished"
+    },
+    "supplementalAudits": {
+      "baselineStages": 31,
+      "changedStages": 31,
+      "workers": 1
+    }
+  },
+  "auditFiles": {
+    "baseline": {
+      "path": "test-results/qa-threat-baseline/audit.json",
+      "sha256": "e2f88f58192dc57d4037e9f6db7c5a0355890e9e16364e4a6a1e5ab4632ff0cd"
+    },
+    "changed": {
+      "path": "test-results/qa-threat/audit.json",
+      "sha256": "4cb576be3aa7a50b54ea6cc738cb457fee5625d5d504f68b8506469003852c4b"
+    }
+  },
+  "comparisonPassed": false,
+  "handoff": "L10 progression/type integration follow-up; zero-new-flags goal remains open."
+}

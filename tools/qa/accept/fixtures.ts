@@ -4,7 +4,8 @@ import { SimWorld } from '../../../src/sim/world/SimWorld';
 import type { EntitySnapshot } from '../../../src/sim/world/types';
 import { emptyInput } from '../../../src/input/InputFrame';
 import { Minigun } from '../../../src/sim/combat/Minigun';
-import { MegaPursuit } from '../../../src/sim/ai/MegaPursuit';
+import { cureHangarWeapons } from '../../../src/levels/L10/mission';
+import { catalog } from '../../../src/data/actions/catalog';
 import { barEligible, followerBarCap } from '../../../src/render/HealthBars';
 import { infectedDefinitions } from '../../../src/data/infected';
 import { survivor } from '../../../src/data/survivor';
@@ -307,18 +308,23 @@ export async function runFixtures(level: RunnerLevel, tier: Tier, sourceHash: st
       add('L10-10', 'minigun unlock threshold', { lockedAt40, afterCooling: gun.snapshot() }, 'still locked at40%, unlock below40%', lockedAt40 && gun.heat < .4 && !gun.locked);
     });
     await fixture('Mega damage thresholds', async () => {
-      const world = await arena(tier, 'mega-course');
+      const world = await loadLevel('L10', 1, undefined, 0, { quality: tier });
       try {
-        const boss = new MegaPursuit(world, { introduceTick: null });
-        const id = boss.introduce({ x: 8, z: 0 }), entity = world.entities.get(id)!;
-        const hp = entity.health.max, conventional: number[] = [], rockets: number[] = [];
-        const hit = (attackId: number, rocket: boolean) => world.combat!.damage.apply({ attackId, actionId: rocket ? 'weapon.rocket-launcher' : 'weapon.rotary-minigun', sourceId: 1, targetId: id, origin: { x: 0, z: 0 }, direction: { x: 1, z: 0 }, base: 99999, multiplier: 1, type: rocket ? 'explosive' : 'bullet', knockback: 0, stagger: 0, direct: rocket });
-        for (let i = 0; i < 20; i++) { hit(i + 1, false); conventional.push(entity.health.current); }
+        const boss = world.megaPursuit!, id = boss.introduce({ x: 580, z: -12.5 }), entity = world.entities.get(id)!;
+        const hp = entity.health.max, rockets: number[] = [];
+        let hitSequence = 0;
+        const hit = (actionId: string, base: number, rocket = false) => world.combat!.damage.apply({ attackId: ++hitSequence, actionId, sourceId: 1, targetId: id, origin: { x: 547, z: -12.5 }, direction: { x: 1, z: 0 }, base, multiplier: 1, type: rocket ? 'explosive' : 'bullet', knockback: 0, stagger: 0, direct: rocket });
+        for (let i = 0; i < 20; i++) hit('weapon.rocket-launcher', 99999, true);
+        add('L10-02', 'walk Mega immunity including direct rockets', { hp, remaining: entity.health.current }, 'zero HP loss before installation', entity.health.current === hp);
+        world.missions!.state.states['cure-installed'] = true;
+        const damage = cureHangarWeapons.filter(id => catalog[id].damage > 0).map(id => {
+          entity.health.current = hp;
+          return { id, amount: hit(id, catalog[id].damage, id === 'weapon.rocket-launcher') };
+        });
+        add('L10-12', 'every damaging returned weapon hurts finale Mega', damage, 'positive actual production damage for every damaging hangar weapon', damage.every(row => row.amount > 0));
         entity.health.current = hp;
-        for (let i = 0; i < 10; i++) { hit(100 + i, true); rockets.push(entity.health.current); }
-        add('L10-12', 'Mega conventional damage floor', { hp, remaining: conventional }, 'never below90% HP', conventional.every(value => value >= .9 * hp));
+        for (let i = 0; i < 10; i++) { hit('weapon.rocket-launcher', 99999, true); rockets.push(entity.health.current); }
         add('L10-12', 'Mega direct rocket9/10 HP threshold', { hp, remaining: rockets }, 'survives9; dies on10', rockets.slice(0, 9).every(value => value > 0) && rockets[9] <= 0);
-        boss.dispose();
       } finally { world.dispose(); }
     });
   }

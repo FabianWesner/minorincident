@@ -1,0 +1,8 @@
+
+> qa:threat
+> node tools/qa/test-budget.mjs --name qa-threat --max-seconds 600 -- node --import tsx/esm tools/qa/threat-audit.ts --levels L10 --maxWorkers=1 --out docs/reports/eg-l10-story/evidence/threat --report docs/reports/eg-l10-story/evidence/threat.md
+
+[test-budget] 150/150 test cases ({"vitest":129,"e2e":9,"invariantsBrowser":12}), 43/45 files
+[test-budget] qa-threat: 179.1 s (budget 600 s)
+[test-budget] FAIL: qa-threat failed (exit 143)
+[test-budget] See docs/qa/test-strategy.md: merge into an existing test or delete one before adding another.

@@ -173,10 +173,10 @@ export class LevelNineCrash {
       }
       // Hitting the far bank removes forward momentum instead of pulling the
       // hull back toward a predetermined wreck pose.
-      w.vehicles!.scriptPose(s.carId, { x: y < height - .8 ? Math.min(523.5, x) : x, y, z: start.z + heading.z * speed * seconds, yaw: start.yaw }, rotation(Math.min(Math.PI / 2, f * Math.PI / 2)));
+      w.vehicles!.scriptPose(s.carId, { x: y < height - .8 ? Math.min(523.5, x) : x, y, z: start.z + heading.z * speed * seconds, yaw: start.yaw }, 0, rotation(Math.min(Math.PI / 2, f * Math.PI / 2)));
     } else {
       const landed = { ...car.transform, y: height + wreck.y };
-      w.vehicles!.scriptPose(s.carId, landed, rotation(Math.PI / 2));
+      w.vehicles!.scriptPose(s.carId, landed, 0, rotation(Math.PI / 2));
       if (s.phase === 'fall' || s.phase === 'approach') {
         s.crawlAnchor = this.safeAnchor(); s.phase = 'impact';
         this.mission.setState('crash-impacted', true);
@@ -265,7 +265,7 @@ export class LevelNineCrash {
     if (s.phase === 'driving') { this.w.storyLock = null; this.w.vehicles!.setFloorPolicy(s.carId); this.driving.poseHatch(); return; }
     const roll = s.phase === 'fall' ? Math.min(1, (this.w.tick - s.startedAt - (s.approachTicks ?? 180)) / FALL) * Math.PI / 2 : s.phase === 'approach' ? 0 : Math.PI / 2;
     const yaw = car.transform.yaw;
-    this.w.vehicles!.scriptPose(s.carId, car.transform, { x: Math.cos(yaw / 2) * Math.sin(roll / 2), y: Math.sin(yaw / 2) * Math.cos(roll / 2), z: -Math.sin(yaw / 2) * Math.sin(roll / 2), w: Math.cos(yaw / 2) * Math.cos(roll / 2) });
+    this.w.vehicles!.scriptPose(s.carId, car.transform, 0, { x: Math.cos(yaw / 2) * Math.sin(roll / 2), y: Math.sin(yaw / 2) * Math.cos(roll / 2), z: -Math.sin(yaw / 2) * Math.sin(roll / 2), w: Math.cos(yaw / 2) * Math.cos(roll / 2) });
     if (s.phase === 'crawl' || s.finished) this.w.storyLock = null; else this.lock();
   }
 }

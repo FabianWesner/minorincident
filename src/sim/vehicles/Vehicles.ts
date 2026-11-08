@@ -204,7 +204,7 @@ export class Vehicles {
     }
   }
   /** Mission-owned fall: suppress ordinary controls/contact destruction and retain the existing vehicle view. */
-  scriptPose(id: number, pose: EntitySnapshot['transform'], rotation?: { x: number; y: number; z: number; w: number }): void {
+  scriptPose(id: number, pose: EntitySnapshot['transform'], speed = 0, rotation?: { x: number; y: number; z: number; w: number }): void {
     const car = this.cars.get(id)!; car.entity.vehicle!.scripted = true;
     const b = car.physics;
     b.body.setBodyType(RAPIER.RigidBodyType.KinematicPositionBased, true);
@@ -214,7 +214,8 @@ export class Vehicles {
     Object.assign(b.rotation, rotation ?? { x: 0, y: Math.sin(pose.yaw / 2), z: 0, w: Math.cos(pose.yaw / 2) });
     b.body.setTranslation(pose, true); b.body.setNextKinematicTranslation(pose);
     b.body.setRotation(b.rotation, true); b.body.setNextKinematicRotation(b.rotation);
-    b.speed = b.forwardSpeed = 0; car.entity.vehicle!.speed = car.entity.vehicle!.forwardSpeed = 0;
+    b.speed = b.forwardSpeed = speed; car.entity.vehicle!.speed = car.entity.vehicle!.forwardSpeed = speed;
+    for (const wheel of b.wheels) wheel.rotation += speed / 60 / b.def.wheelRadius;
     for (const [slot, actorId] of car.entity.vehicle!.attached.entries()) {
       const e = this.world.entities.get(actorId); if (!e) continue;
       const side = car.entity.vehicle!.apcBoarders?.[actorId]?.side ?? (actorId % 2 ? 1 : -1), along = -car.physics.def.length * .25 + Math.floor(slot / 2) * .65;
@@ -768,6 +769,7 @@ export class Vehicles {
     if (vehicle.vehicle.explodeAt !== null) vehicle.vehicle.explodeAt += delta;
     if (vehicle.vehicle.recoveringUntil) vehicle.vehicle.recoveringUntil += delta;
     vehicle.vehicle.attached = [];
+    delete vehicle.vehicle.scripted; // The destination level owns driving after the departure shot.
     // A campaign handover leaves the old district's infected behind, retaining the ID sequence.
     if (vehicle.vehicle.apcContacts) { vehicle.vehicle.apcContacts.infected = {}; delete vehicle.vehicle.apcContacts.obstacles; }
     vehicle.transform.x = position.x; vehicle.transform.z = position.z; vehicle.transform.yaw = yaw;

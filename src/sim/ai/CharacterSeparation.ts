@@ -5,6 +5,7 @@ import type { EntitySnapshot } from '../world/types';
 import type { ContactCells } from '../spatial/SpatialHash';
 import { SimPhase } from '../../core/EventBus';
 import { FIXED_DT } from '../../core/Clock';
+import { combatHeightReachable } from '../combat/height';
 
 /** Human-sized infected contact spacing; larger bodies reserve their extra radius as well. */
 export const meleeRing = 1.08;
@@ -106,6 +107,7 @@ export function installCharacterSeparation(world: SimWorld): void {
       const body = active!, { entity: e, point: p } = body;
       const neighbor = radii[id]; if (!neighbor || neighbor.entity === e) return;
       const other = neighbor.entity;
+      if (!combatHeightReachable(e, other)) return;
       if (body.courier && courierFollower(other)) return;
       if (body.courier && !other.civilian?.survivor && !(narrowQueue && other.companion)) return;
       let dx = body.x - neighbor.x, dz = body.z - neighbor.z;
@@ -171,7 +173,7 @@ export function installCharacterSeparation(world: SimWorld): void {
       let support = ground.get(e);
       const { x, z } = e.transform;
       if (!support || support.district !== world.districts || support.x !== x || support.z !== z) {
-        const y = .7 + world.districts.pavingHeight(x, z);
+        const y = .7 + world.districts.supportBelow(x, z, e.transform.y - .7);
         if (support) { support.district = world.districts; support.x = x; support.z = z; support.y = y; }
         else { support = { district: world.districts, x, z, y }; ground.set(e, support); }
       }

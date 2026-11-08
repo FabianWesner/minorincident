@@ -30,15 +30,16 @@ function hashFiles(paths: string[]): string {
   for (const path of [...new Set(paths)].sort()) { hash.update(path); hash.update('\0'); hash.update(readFileSync(path)); }
   return hash.digest('hex');
 }
-function currentRevision(): string {
-  if (process.env.QA_ACCEPT_REVISION) return process.env.QA_ACCEPT_REVISION;
-  try { return execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); }
-  catch { return 'manifest-only'; } // Remote jobs retain exact file hashes without Git commit objects.
-}
-export function provenance(revision = currentRevision()) {
+export function provenance(revision = sourceRevision()) {
   const files = execFileSync('git', ['ls-files', '-z', '--', 'src', 'layouts', 'public/assets/layouts'], { encoding: 'utf8' }).split('\0').filter(Boolean);
   const toolFiles = ['tools/qa/accept/observer.ts', 'tools/qa/accept/probe.ts', 'tools/qa/accept/l5-formation.ts', ...['tools/qa/threat', 'tools/sim-runner'].flatMap(dir => readdirSync(dir).filter(file => file.endsWith('.ts')).map(file => join(dir, file)))];
   return { sourceHash: hashFiles(files), observerHash: hashFiles(toolFiles), revision };
+}
+/** Remote runners have a manifest index without Git history; content hashes remain the authority. */
+function sourceRevision(): string {
+  if (process.env.QA_ACCEPT_REVISION) return process.env.QA_ACCEPT_REVISION;
+  try { return execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); }
+  catch { return 'manifest-only'; }
 }
 
 /** Ordinary production bots, plus a separately labelled survival-protected stationary policy.

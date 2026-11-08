@@ -56,6 +56,10 @@ for (const [move, caption, duration] of [['lion.pounce', 'Lion pounce: clear the
   telegraphCues[move] = `telegraph.${move}`;
   cue(`telegraph.${move}`, 'telegraph', move === 'gorilla.roar' ? 'step' : 'vocal', duration, 140, { gain: .6, caption, rateSpread: 0, antiSpam: 0 });
 }
+// Reuse shipped telegraph recordings for the new humanoid Alpha moves.
+for (const move of ['alpha.grab-human', 'alpha.living-missile', 'alpha.barrage']) telegraphCues[move] = telegraphCues['alpha.grab-throw'];
+telegraphCues['alpha.pounce'] = telegraphCues['lion.pounce'];
+telegraphCues['alpha.shield-bash'] = telegraphCues['infected.riot'];
 cue('screamer.scream', 'telegraph', 'vocal', 1.2, 700, { gain: 0.65, caption: 'Screamer shrieking', antiSpam: 0.3, rateSpread: 0 });
 telegraphCues.zebra = 'telegraph.zebra';
 for (const name of ['civilian', 'explosive']) {
@@ -151,6 +155,7 @@ cue('infected.vocal', 'barks', 'vocal', 1.5, 130, { gain: 0.12, antiSpam: 0.9, r
 for (const [id, duration, gain, antiSpam] of [['alert', 0.55, 0.3, 0.2], ['hurt', 0.5, 0.22, 0.3], ['death', 0.85, 0.3, 0.1], ['bite', 0.6, 0.45, 0.25]] as const)
     cue(`infected.${id}`, 'barks', 'vocal', duration, 140, { category: 'infected', gain, antiSpam, rateSpread: 0.14 });
 cue('horde.loop', 'ambience', 'bed', 2, 150, { loop: true, gain: 0.3, antiSpam: 0 });
+cue('bed.zoo-animals', 'ambience', 'chatter', 6, 620, { gain: 0.14, loop: true, antiSpam: 0, rateSpread: 0 });
 for (const [i, surface] of surfaces.entries())
     cue(`horde.loop.${surface}`, 'ambience', 'bed', 2, 110 + i * 90, { loop: true, gain: 0.3, antiSpam: 0 });
 export const ambienceTiers = [
@@ -171,12 +176,15 @@ for (const [i, id] of [...new Set(ambienceTiers.flatMap(t => [...t.oneShots]))].
 export const musicLevels = { L1: 120, L2: 120, L3: 128, L4: 96, L5: 120, L6: 120 } as const;
 /** Levels whose layered stems (`music-<level>` bank) exist. L7-L9 play only their streamed score (no stems exist for them). */
 export const stemLevels: ReadonlySet<string> = new Set(Object.keys(musicLevels));
-/** Stem bank a level plays: L10 reuses the L6 stems. */
-export const stemBank = (level: string): string | null => stemLevels.has(level === 'L10' ? 'L6' : level) ? `music-${level === 'L10' ? 'L6' : level}` : null;
+/** Stem bank a level plays. L10 uses its streamed dark score and synthesized heartbeat. */
+export const stemBank = (level: string): string | null => stemLevels.has(level) ? `music-${level}` : null;
 export const musicLayers = ['base', 'pulse', 'drive', 'peak'] as const;
 for (const [level, bpm] of Object.entries(musicLevels))
     for (const [i, layer] of musicLayers.entries())
         cue(`music.${level}.${layer}`, 'music', 'music', 960 / bpm, 130 + i * 90, { category: `music-${level}`, loop: true, gain: 0.35, rateSpread: 0, antiSpam: 0 });
+// Caption copied from docs/design/story-script.md, L10 chapter 1.
+for (let i = 0; i < 5; i++) cue(`l10.scare.${i}`, 'telegraph', 'noise', .8, 100 + i * 110, { category: 'music-L10-fx', gain: .6, rateSpread: 0, antiSpam: 1, initial: false, caption: 'Things move in the rows.' });
+cue('l10.heartbeat', 'music', 'tone', 2, 56, { category: 'music-L10-fx', gain: .25, rateSpread: 0, antiSpam: 0, initial: false, loop: true });
 for (const id of ['objective', 'weapon', 'elite', 'low-hp', 'twist', 'complete', 'dawn'])
     cue(`stinger.${id}`, 'music', 'music', id === 'dawn' ? 4 : 1, 200, { gain: 0.5, rateSpread: 0, antiSpam: 0 });
 for (const kind of ['jukebox', 'ice-cream', 'car-radio', 'school-bell', 'pa', 'megaphone']) {

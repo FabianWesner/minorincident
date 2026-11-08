@@ -63,6 +63,9 @@ body.full-ui:not([data-ui-screen=game]) [data-touch-controls],body.full-ui:not([
 .hud-map{position:absolute;right:max(20px,env(safe-area-inset-right));top:max(20px,env(safe-area-inset-top));width:168px;height:168px;border-radius:50%;background:repeating-linear-gradient(45deg,#3e455780 0 18px,#50506580 18px 36px),#293447;border:3px solid #fff0d4;box-shadow:0 4px 0 #10182488}
 .hud-map-n{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:#182333;border:2px solid #fff0d4;border-radius:6px;padding:0 4px}
 .hud-pin{position:absolute;transform:translate(-50%,-50%);width:12px;height:12px;border:1px solid #182333;border-radius:50%;background:#ee4350}
+.hud-pin-threat[data-mega="true"]{width:16px;height:16px;background:#ff1428;border:2px solid #fff0d4;box-shadow:0 0 0 3px #ff142888,0 0 12px #ff1428;animation:mega-dot-pulse .8s ease-in-out infinite alternate;z-index:4}
+@keyframes mega-dot-pulse{to{box-shadow:0 0 0 8px #ff142833,0 0 18px #ff1428;transform:translate(-50%,-50%) scale(.82)}}
+@media(prefers-reduced-motion:reduce){.hud-pin-threat[data-mega="true"]{animation:none}}
 .hud-pin-player{background:#ffcc66;clip-path:polygon(50% 0,100% 100%,50% 74%,0 100%);width:18px;height:20px;border:0}
 .hud-pin-objective{background:#ffcf77;border:2px solid #fff0d4;width:14px;height:14px}
 .hud-pin-home{color:#7ce088;background:transparent;border:0;font-size:23px;width:24px;height:24px}
@@ -120,7 +123,7 @@ body.full-ui:not([data-ui-screen=game]) [data-touch-controls],body.full-ui:not([
 .hud-objective-detail{pointer-events:auto;color:var(--ui-ink);width:min(420px,calc(100vw - 48px));padding:20px;font-size:calc(16px * var(--text-scale))}
 .hud-objective-detail::backdrop{background:#10182488}
 .touch-ui{--hud-top:max(12px,env(safe-area-inset-top));--hud-left:max(12px,env(safe-area-inset-left));--hud-right:max(12px,env(safe-area-inset-right));--hud-bottom:max(12px,env(safe-area-inset-bottom));--hud-map-size:min(96px,28vmin)}
-.touch-ui .hud-weapon,.touch-ui .hud-companion,.full-ui [data-touch-action=pause]{display:none!important}
+.touch-ui .hud-weapon,.full-ui [data-touch-action=pause]{display:none!important}
 .touch-ui .hud-vitals{top:var(--hud-top);left:var(--hud-left);width:min(172px,45vw);height:56px;grid-template-columns:40px 1fr;padding:5px;gap:5px;border-radius:12px}
 .touch-ui .hud-vitals .hud-portrait{width:40px;height:40px;font-size:22px;border-width:2px;grid-row:auto}
 .touch-ui .hud-bars{gap:3px}
@@ -350,8 +353,14 @@ body.debug-tools .hud-navigation{margin-top:var(--debug-row)}
 }
 /* DOM icons and opaque key badges keep the shortcuts readable at every render tier/zoom. */
 .hud-weapon-rack{position:absolute;left:max(20px,env(safe-area-inset-left));bottom:max(20px,env(safe-area-inset-bottom));max-width:calc(100vw - 56px);display:flex;flex-wrap:wrap;gap:4px;padding:6px}
-.hud-weapon-choice{position:relative;display:grid;place-items:center;box-sizing:border-box;width:32px;height:36px;padding:2px 2px 9px;border:1px solid #8b8175;border-radius:5px;background:#111b29}
-.hud-weapon-choice img{width:24px;height:24px;object-fit:contain}
+.hud-weapon-choice{pointer-events:auto;cursor:pointer;font:inherit;color:inherit;touch-action:manipulation;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;position:relative;display:grid;place-items:center;box-sizing:border-box;width:32px;height:36px;padding:2px 2px 9px;border:1px solid #8b8175;border-radius:5px;background:#111b29}
+.hud-weapon-choice:hover:not(:disabled){border-color:#ffe0a0;background:#2a3a52}
+.hud-weapon-choice:active:not(:disabled){transform:translateY(1px);background:#495040}
+.hud-weapon-choice:disabled{cursor:default}
+.hud-weapon-choice img{pointer-events:none;width:24px;height:24px;object-fit:contain}
 .hud-weapon-choice[data-selected=true]{border-color:#ffe0a0;background:#495040;box-shadow:0 0 0 1px #ffe0a0}
 .hud-weapon-key{position:absolute;right:0;bottom:0;min-width:13px;border-radius:3px;background:#0b111c;color:#fff3da;text-align:center;font:700 12px/14px system-ui,sans-serif}
 .touch-ui .hud-weapon-rack{display:none}
+.hud-pin-threat[data-kind=alpha][data-mega=false]{background:#ff9b32;width:7px;height:7px}
+.hud-pin-threat[data-kind=dog]{border-radius:0;clip-path:polygon(50% 0,100% 100%,0 100%);width:7px;height:7px}
+.hud-pin-discovery{background:transparent;color:#ffe0a0;font-size:13px;width:14px;height:14px;line-height:14px;text-align:center}
