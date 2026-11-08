@@ -1,0 +1,12 @@
+{
+  "name": "l10-crossing-r3",
+  "note": "R3 depot crossing on the checkpoint bearing (r9-l10pace): a container/drum spill with its drum fire and a burned police car beside the walked line. Review both tiers and zooms: pieces stand on the ground, nothing on the walked line, fires lit, no floating or clipped geometry.",
+  "seed": 32,
+  "ground": "district",
+  "layout": { "district": "D-CURE", "bbox": [[1375, -19], [1465, 61]] },
+  "actors": [{ "id": "courier", "kind": "courier", "at": [1420, 21] }],
+  "camera": { "mode": "game", "target": [1420, 21], "zoom": 1 },
+  "frames": 1,
+  "expect": { "consoleErrors": 0 },
+  "time": "L10-night"
+}

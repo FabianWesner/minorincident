@@ -6,8 +6,8 @@
  *
  * A second is "empty" when the frame holds no living infected (trace) and no story element: a solid placement at least
  * 1.4 m tall (building, vehicle, tent, tower, stack; fences and low decay excluded) or a night-accent fire. The frame is
- * the iso ground footprint of the follow camera (zoom 1.5 normal framing: 26 x 15 m screen; zoom 1 is 1.5x; R1-R5 road
- * framing a further 1.3x, src/levels/L10/cameraFraming.ts). `--without-crossings` drops the r9 crossing stories, so the
+ * the iso ground footprint of the follow camera (zoom 1.5 normal framing: 26 x 15 m screen; the player zoom scales it, so zoom 1 is
+ * 17 x 10 m; R1-R5 road framing a further 1.3x, src/levels/L10/cameraFraming.ts; a real zoom-1 R4 frame measured ~24 m wide). `--without-crossings` drops the r9 crossing stories, so the
  * same physical trace gives the before value of the dressing alone.
  */
 import { readFileSync } from 'node:fs';
@@ -27,7 +27,7 @@ const story = all.filter(p => p.visualAabb.max[1] - p.visualAabb.min[1] >= 1.4 &
 const things = [...story, ...fires.map(f => ({ x: f.x, z: f.z }))];
 const zoom = Number(values.zoom);
 const inFrame = (px: number, pz: number, x: number, z: number) => {
-  const wide = 1 + .3 * l10RoadWeight(px, pz, false), k = 1.5 / zoom * wide;
+  const wide = 1 + .3 * l10RoadWeight(px, pz, false), k = zoom / 1.5 * wide;
   const halfW = 13 * k, halfD = 7.5 * k / Math.sin(40.3 * Math.PI / 180);
   const dx = x - px, dz = z - pz, sx = (dx - dz) / Math.SQRT2, sy = (dx + dz) / Math.SQRT2;
   return Math.abs(sx) <= halfW && Math.abs(sy) <= halfD;
@@ -37,13 +37,13 @@ for (const file of positionals) for (const line of readFileSync(file, 'utf8').sp
   if (!line.includes('"routeTrace"')) continue;
   const r = JSON.parse(line).routeTrace; if (r.level === 'L10') rows.push(r);
 }
-rows.sort((a, b) => a.tick - b.tick);
+// File order: a Resume session restarts the tick counter.
 type Stretch = { seconds: number; from: typeof rows[0]; to: typeof rows[0] };
 const longest = (pred: (r: typeof rows[0]) => boolean) => {
   const out: Stretch[] = []; let start: typeof rows[0] | null = null, prev: typeof rows[0] | null = null;
   for (const r of rows) {
     // A gap in the trace (Resume, checkpoint reload) ends a stretch.
-    if (prev && r.tick - prev.tick > 150) { if (start) out.push({ seconds: (prev.tick - start.tick) / 60, from: start, to: prev }); start = null; }
+    if (prev && (r.tick - prev.tick > 150 || r.tick < prev.tick)) { if (start) out.push({ seconds: (prev.tick - start.tick) / 60, from: start, to: prev }); start = null; }
     if (pred(r)) start ??= r; else if (start) { out.push({ seconds: (r.tick - start.tick) / 60, from: start, to: r }); start = null; }
     prev = r;
   }
