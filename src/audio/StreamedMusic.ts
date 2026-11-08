@@ -12,7 +12,7 @@ levelStreams.L10 = { calm: 'calm-L10', tension: 'tension-L10', combat: 'combat-L
 /** Levels with their own streamed score (L1-L9 and the L10 finale). Single source for AudioService's level gate. */
 export const scoredLevels: ReadonlySet<string> = new Set(Object.keys(levelStreams));
 /** Score file stem (without `score-` and extension) a level plays in a state. */
-export const scoreFile = (level: string, state: MusicState, finale = false): string => level === 'L10' && state === 'combat' && finale ? 'tension-L7' : levelStreams[level]?.[state] ?? state;
+export const scoreFile = (level: string, state: MusicState, finale = false): string => level === 'L10' && (state === 'combat' || state === 'aftermath') && finale ? 'tension-L7' : levelStreams[level]?.[state] ?? state;
 /** Long recordings stay in the browser's streaming media cache, never decodeAudioData at boot.
  * All decks feed the existing music bus, so twist silence, ducking, mono and limiting still apply.
  * Keep the outgoing recording audible until its replacement actually starts, then fade on a bar.

@@ -229,8 +229,9 @@ export class Barricades {
     const brain = attacker.infected!;
     const slot = target?.barricade?.slot;
     const militaryWire = this.world.scenario === 'L4' && slot?.groupId === 'l4-wall' && slot.height <= 1.12;
-    if (!brain.vault && slot && (slot.sandbag && slot.height < .9 || militaryWire) &&
-        (attacker.archetype === 'infected.runner' || militaryWire && attacker.archetype !== 'infected.crawler' && (l4InfectedArchetypes as readonly string[]).includes(attacker.archetype)) && this.withinReach(attacker, target!)) {
+    const leaperClimb = attacker.archetype === 'infected.alpha' && brain.alphaType === 'leaper' && !!slot && slot.height <= 1.2;
+    if (!brain.vault && slot && (slot.sandbag && slot.height < .9 || militaryWire || leaperClimb) &&
+        (attacker.archetype === 'infected.runner' || leaperClimb || militaryWire && attacker.archetype !== 'infected.crawler' && (l4InfectedArchetypes as readonly string[]).includes(attacker.archetype)) && this.withinReach(attacker, target!)) {
       const wall = this.wall(target), from = { x: attacker.transform.x, z: attacker.transform.z };
       const alongX = wall.halfZ > wall.halfX;
       const sign = alongX ? Math.sign(wall.x - from.x) || 1 : Math.sign(wall.z - from.z) || 1;

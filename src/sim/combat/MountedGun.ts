@@ -136,12 +136,24 @@ export class MountedGun {
     w.events.emit({ type: 'combat.attack', tick: w.tick, attackId: id, actionId: def.id, combo: 0, sourceId: 1, side: 'LEFT', position: { x: muzzle.x, y: muzzle.y, z: muzzle.z, yaw: -angle }, direction });
     // One audible report per two rounds: the noise service plays one voice per event.
     if (id % 2 === 0) combat.effects.noise({ x: muzzle.x, z: muzzle.z }, def.noiseRadius, 'weapon.machine-gun', 1, 'ranged');
-    const ray = { x: muzzle.x, y: p.transform.y + .45, z: muzzle.z }, target = combat.query.ray(1, ray, direction, def.range);
+    // The deck gun aims down at the first visible body along its bearing. Height-aware rays must not fly over ground crowds.
+    let aimedY = 0, nearest = def.range + 1;
+    for (const candidateId of combat.query.nearby(muzzle, def.range)) {
+      const candidate = w.entities.get(candidateId);
+      if (!candidate?.infected || candidate.health.current <= 0 || candidate.hidden) continue;
+      const dx = candidate.transform.x - muzzle.x, dz = candidate.transform.z - muzzle.z;
+      const along = dx * direction.x + dz * direction.z, cross = Math.abs(dx * direction.z - dz * direction.x);
+      if (along <= 0 || along >= nearest || cross > (candidate.combat?.radius ?? .4) + .15) continue;
+      const centre = { ...candidate.transform, y: candidate.transform.y + .45 };
+      if (!combat.query.visible(muzzle, centre, candidateId)) continue;
+      nearest = along; aimedY = (centre.y - muzzle.y) / Math.max(.1, along);
+    }
+    const ray = { x: muzzle.x, y: muzzle.y, z: muzzle.z }, target = combat.query.ray(1, ray, { ...direction, y: aimedY }, def.range);
     const reach = target ? Math.max(0, Math.hypot(target.transform.x-ray.x,target.transform.z-ray.z)-(target.combat?.radius??.4)) : def.range;
-    if (w.destruction?.strike(def.id,def.damage*(p.combat?.damageMultiplier??1),ray,{...direction,y:0},reach)) return;
+    if (w.destruction?.strike(def.id,def.damage*(p.combat?.damageMultiplier??1),ray,{...direction,y:aimedY},reach)) return;
     if (!target) return;
     const dx = target.transform.x - muzzle.x, dz = target.transform.z - muzzle.z, distance = Math.hypot(dx, dz) || 1;
-    combat.damage.apply({ attackId: id, actionId: def.id, sourceId: 1, targetId: target.id, origin: { x: muzzle.x, z: muzzle.z }, direction: { x: dx / distance, z: dz / distance }, base: def.damage, multiplier: p.combat?.damageMultiplier ?? 1, type: 'bullet', radius: def.range, spread: def.spread, knockback: def.knockback, stagger: def.stagger });
+    combat.damage.apply({ attackId: id, actionId: def.id, sourceId: 1, targetId: target.id, origin: { x: muzzle.x, z: muzzle.z }, direction: { x: dx / distance, z: dz / distance }, base: def.damage, multiplier: p.combat?.damageMultiplier ?? 1, type: 'bullet', permanent: true, radius: def.range, spread: def.spread, knockback: def.knockback, stagger: def.stagger });
   }
   snapshot(): MountedGunSnapshot { return { ...this.gun.snapshot(), mounted: this.mounted }; }
   /** Checkpoint reload: heat comes back, the player is not on the gun (the checkpoint position owns where she stands). */

@@ -1,0 +1,31 @@
+{
+  "sourceHash": "c1c88b5907b38d8dbc659b3c8168c69f6bfed38588c00896ac928bdc18672a28",
+  "observerHash": "464c1197f2b35be60f1ee086a1c69f6ebce3fc1b8e2f9137358e3b0d877b17e2",
+  "revision": "manifest-only",
+  "checks": [
+    {
+      "tier": "low",
+      "name": "controlled fixtures execute",
+      "pass": false,
+      "observed": "Error: Unknown pursuit link cure-route-35-cure-route--1"
+    },
+    {
+      "tier": "high",
+      "name": "controlled fixtures execute",
+      "pass": false,
+      "observed": "Error: Unknown pursuit link cure-route-35-cure-route--1"
+    }
+  ],
+  "rows": [
+    {
+      "tier": "low",
+      "method": "Controlled production-world fixtures; placements/objective advances are explicitly injected. Native route below uses inputs only.",
+      "error": "Error: Unknown pursuit link cure-route-35-cure-route--1"
+    },
+    {
+      "tier": "high",
+      "method": "Controlled production-world fixtures; placements/objective advances are explicitly injected. Native route below uses inputs only.",
+      "error": "Error: Unknown pursuit link cure-route-35-cure-route--1"
+    }
+  ]
+}

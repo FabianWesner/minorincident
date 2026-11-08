@@ -6,7 +6,7 @@ export const megaBands: Record<PursuitBand, { gain: number; ringPercent: number;
   approaching: { gain: .28, ringPercent: 68, label: 'Mega Alpha: approaching' },
   near: { gain: .63, ringPercent: 44, label: 'Mega Alpha: near' },
 };
-export const cureRecordingText = 'Research recording: The cure is an airborne agent, not a vaccine. It is harmless to healthy humans and animals, but immediately kills infected humans and animals. It never reverses infection. Carry the canister to the regional dispersal complex to release it.';
+export const cureRecordingText = 'Dr. Elena Voss: “You’re the courier. The one from the Annex.” “The sample you carried that morning came from here. We sent it to the Annex for testing. The container failed. That’s on us. Not on you.” Courier: “I carried it.” Voss: “Then carry this one.” (She hands over the cure canister.) “It’s airborne. It only kills the infected. The dispersal complex is two kilometres east. Plug it into the main console, hold it while it charges, and release it.”';
 /** Seeded 20–35 s interval, independent of audio wall time and other RNG consumers. */
 export function megaCueInterval(seed: number, index: number): number {
   let hash = Math.imul(seed ^ index, 0x45d9f3b); hash = Math.imul(hash ^ (hash >>> 16), 0x45d9f3b);

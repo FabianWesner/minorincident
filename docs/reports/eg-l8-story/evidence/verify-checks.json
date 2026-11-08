@@ -1,0 +1,41 @@
+{
+  "target": "E30",
+  "epics": [
+    "E30"
+  ],
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "status": 0,
+      "seconds": 53.878
+    },
+    {
+      "command": "npm run lint",
+      "status": 0,
+      "seconds": 33.876
+    },
+    {
+      "command": "npm test",
+      "status": 0,
+      "seconds": 217.689
+    }
+  ],
+  "inputRevision": "2eacf0c5",
+  "sourceHash": "1860225dfb2ade93557b43673386a7ab2633d4e3559fb196855eb41d6b1b9420",
+  "command": "npm run verify -- E30",
+  "isolation": "tools/remote/timing-isolated.sh --whole-run",
+  "runner": "Hetzner; Mac fallback disabled",
+  "vitestMaxWorkers": 1,
+  "rawSha256": "26c3dc1cd587487d5917a8c52799fd0215b79980b8b24a079e2e5413ecb79bf8",
+  "unitResult": {
+    "filesPassed": 27,
+    "testsPassed": 106,
+    "testsSkipped": 1
+  },
+  "collection": {
+    "cases": 150,
+    "caseCap": 150,
+    "files": 43,
+    "fileCap": 45
+  }
+}

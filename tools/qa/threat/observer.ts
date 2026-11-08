@@ -1,4 +1,5 @@
 import { observeAttackStarts } from './attackStarts';
+import { Status } from '../../../src/sim/combat/Status';
 import type { SimWorld } from '../../../src/sim/world/SimWorld';
 import type { EntitySnapshot } from '../../../src/sim/world/types';
 import type { RunnerLevel } from '../../sim-runner/levels';
@@ -392,7 +393,7 @@ export class ThreatObserver {
       // r5-l7: a follower with a living infected at grab contact is being fought over, not walking; since L7 bites
       // wound instead of kill, a passive courier's mauled evacuees otherwise entered the pace median while dying.
       const engaged = w.infected!.active.some(o => o.health.current > 0 && !o.corpse && Math.hypot(o.transform.x - e.transform.x, o.transform.z - e.transform.z) <= 1.5);
-      const incapacitated = e.civilian?.state === 'grabbed' || e.civilian?.state === 'bitten' || (e.civilian?.knockedUntil ?? 0) > w.tick || engaged;
+      const incapacitated = e.civilian?.state === 'grabbed' || e.civilian?.state === 'bitten' || (e.civilian?.knockedUntil ?? 0) > w.tick || Status.stunned(e, w.tick) || engaged;
       if (!isWalkingSample(speed, leaderSpeed, lagging, incapacitated)) continue;
       for (const row of this.active) {
         const values = row.followers.get(e.id) ?? []; values.push(speed); row.followers.set(e.id, values);

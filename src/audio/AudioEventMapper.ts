@@ -140,6 +140,14 @@ export class AudioEventMapper {
             const special = 'special' in event ? event.special : event.kind;
             const id = telegraphCues[special] ?? telegraphCues[entity?.archetype ?? ''] ?? telegraphCues[`infected.${special}`] ?? eventCues.telegraph;
             if ('duration' in event && (special === 'alpha.charge' || special === 'alpha.ground-slam')) this.host.caption(special === 'alpha.charge' ? 'Alpha charging: clear the marked path' : 'Alpha ground slam: leave the marked circle', position, event.duration);
+            const alphaCaption: Record<string, string> = {
+                'alpha.grab-human': 'Alpha reaching: dodge away or shoot its arm',
+                'alpha.living-missile': 'Infected missile: dodge the landing marker',
+                'alpha.barrage': 'Debris barrage: take cover',
+                'alpha.pounce': 'Alpha crouching to pounce: dodge sideways',
+                'alpha.shield-bash': 'Alpha raising its arm: step back',
+            };
+            if (alphaCaption[special] && 'duration' in event) this.host.caption(alphaCaption[special], position, event.duration);
             this.host.play(id, { position, offscreen: position ? this.host.offscreen(position) : false }, source);
             return;
         }
@@ -286,6 +294,12 @@ export class AudioEventMapper {
             return;
         }
         if (event.type === 'dialogue' || event.type === 'dialogue.line') {
+            if (event.type === 'dialogue.line' && event.id === 'L1.delivered') {
+                // The same short phone vibration closes the first and last delivery.
+                this.host.play('ui.switch', { dry: true, rate: .25, gain: 2.5 });
+                this.host.caption(event.text, undefined, 4);
+                return;
+            }
             if (event.type === 'dialogue' && event.recording === 'cure' || event.type === 'dialogue.line' && event.id === 'L10.research') {
                 this.host.graph.duck('radio', t, 14);
                 this.host.play('cure.recording', { gain: .3, lowpass: 2400, dry: true });
