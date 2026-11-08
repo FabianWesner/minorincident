@@ -1,0 +1,62 @@
+[
+  {
+    "audit": "threat-main",
+    "revision": "78219de9",
+    "outcome": "mission-failed",
+    "time": 43.8,
+    "failure": {
+      "mission-failed": 1
+    },
+    "blockerObjective": "bus-departure",
+    "busPhase": "waiting",
+    "busHp": 0,
+    "followingRoster": 24,
+    "seedOutcomes": [
+      {
+        "seed": 1,
+        "valid": false,
+        "outcome": "mission-failed"
+      },
+      {
+        "seed": 2,
+        "valid": false,
+        "outcome": "mission-failed"
+      },
+      {
+        "seed": 3,
+        "valid": false,
+        "outcome": "mission-failed"
+      }
+    ]
+  },
+  {
+    "audit": "threat-followers-fixed",
+    "revision": "ff834fdc",
+    "outcome": "mission-failed",
+    "time": 92.46666666666667,
+    "failure": {
+      "mission-failed": 1
+    },
+    "blockerObjective": "bus-departure",
+    "busPhase": "boarding",
+    "busHp": 0,
+    "followingRoster": 24,
+    "seedOutcomes": [
+      {
+        "seed": 1,
+        "valid": false,
+        "outcome": "mission-failed"
+      },
+      {
+        "seed": 2,
+        "valid": false,
+        "outcome": "mission-failed"
+      },
+      {
+        "seed": 3,
+        "valid": false,
+        "outcome": "mission-failed"
+      }
+    ]
+  }
+]
