@@ -11,7 +11,10 @@ def linear_luminance(rgb):
     return (a*np.array([.2126,.7152,.0722])).sum(2)
 def analyze(folder):
     path=base/folder;data=json.loads((path/'ledger.json').read_text())
+    assert data['actorMaskHelperSha256']==sha('tools/qa/sweep-b-actor-mask.ts')
     assert not data['errors'] and not data['state']['god'];assert data['state']['tier']==data['state']['renderTier']
+    accessory=data['state']['figures'][0]['appearance'].get('accessory')
+    if accessory:assert any(s['name'].startswith(accessory+':') for s in data['slots']), 'Separate authored headwear must be in the complete actor mask'
     assert data['state']['flashlight'] and data['state']['emergency'] and not data['state']['mainPower']
     for c in data['captures']:assert sha(c['file'])==c['sha256']
     img=lambda name:read(path/f'captures/{name}.png')
@@ -26,11 +29,11 @@ def analyze(folder):
         ring.extend(patch[keep].tolist());ring_samples.append({'world':q['world'],'screen':q['screen'],'pixels':int(keep.sum()),'median':float(np.median(patch[keep]))})
     assert courier.sum()>100 and len(ring_samples)>32
     c90=float(np.percentile(lum[courier],90));bg=float(np.median(ring))
-    result={'backend':data['backend'],'zoom':data['zoom'],'tier':data['state']['tier'],'spot':data['state']['spot'],'actor':data['state']['enemy']['id'],'model':data['state']['enemy']['appearance']['asset'],'bodyMaskPixels':int(body.sum()),'eyeMaskPixels':int(eyes.sum()),'courierMaskPixels':int(courier.sum()),'bodyP90':c90,'ringMedian':bg,'contrast02':(c90+.02)/(bg+.02),'contrast05':(c90+.05)/(bg+.05),'ringSamples':ring_samples,'sourceHash':data['sourceHash'],'captures':data['captures']}
+    result={'backend':data['backend'],'zoom':data['zoom'],'tier':data['state']['tier'],'spot':data['state']['spot'],'actor':data['state']['enemy']['id'],'model':data['state']['enemy']['appearance']['asset'],'bodyMaskPixels':int(body.sum()),'eyeMaskPixels':int(eyes.sum()),'courierMaskPixels':int(courier.sum()),'bodyP90':c90,'ringMedian':bg,'contrast02':(c90+.02)/(bg+.02),'contrast05':(c90+.05)/(bg+.05),'ringSamples':ring_samples,'sourceHash':data['sourceHash'],'accessory':accessory,'maskSlots':data['slots'],'actorMaskHelperSha256':data['actorMaskHelperSha256'],'captures':data['captures']}
     if eyes.sum() and body.sum()>100:
         assert not (eyes&~body).any(), 'eye pixels must belong to the actual actor body'
         dilated=np.asarray(Image.fromarray((eyes*255).astype('uint8')).filter(ImageFilter.MaxFilter(5)))>0
-        full_body=img('actor-body').min(2)>=240
+        full_body=body&(img('actor-body').min(2)>=240)
         non_eye=full_body&~dilated
         result['fullCoverageBodyPixels']=int(full_body.sum())
         result['partialCoveragePixels']=int((body&~full_body).sum())
@@ -49,5 +52,5 @@ values=[analyze(p.name) for p in sorted(base.iterdir()) if (p/'ledger.json').exi
 assert len(values)==16, 'Both backends/tiers/zooms/spots are required'
 assert len({(v['backend'],v['tier'],v['zoom'],v['spot']) for v in values})==16
 assert all(v['contrast05']>=3 and v.get('eyesBrightest') is True and v.get('repeatedNativeBodyChangedPixels')==0 for v in values)
-Path('docs/reports/l6-visual/readability-analysis.json').write_text(json.dumps({'method':'Actual source-bound differential masks and same-pose native repeats. Full-coverage white body mask excludes background-contaminated antialias edges; positive eye masks remain depth tested. Courier P90 versus64-sample ground-ring median, reporting both .02 and .05 offsets.', 'rows':values},indent=2)+'\n')
+Path('docs/reports/l6-visual/readability-analysis.json').write_text(json.dumps({'analyzerSha256':sha(__file__),'actorMaskHelperSha256':sha('tools/qa/sweep-b-actor-mask.ts'),'sourceHash':values[0]['sourceHash'],'method':'Actual source-bound differential masks and same-pose native repeats. Full-coverage white body mask excludes background-contaminated antialias edges; positive eye masks remain depth tested. Courier P90 versus64-sample ground-ring median, reporting both .02 and .05 offsets.', 'rows':values},indent=2)+'\n')
 for v in values:print(v['backend'],v['tier'],v['zoom'],v['spot'],v['contrast05'],v.get('eyeMaskPixels'),v.get('eyeMax'),v.get('bodyNonEyeMax'),v.get('eyesBrightest'),v.get('eyeVerdict'))

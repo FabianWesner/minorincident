@@ -20,14 +20,17 @@ def main():
  bars=archive(RAW/'bars-final/receipt.json','bars')['rows'];pixels=archive(RAW/'bar-pixels.json','bar-pixels')['rows']
  overlap=archive(RAW/'bar-overlap-after/receipt.json','bar-overlap')['rows'];gates=archive(RAW/'gates/receipt.json','browser-gates')['rows']
  controls=archive(ROOT/'native/controls.json','controls')['rows'];walk=archive(ROOT/'native/walk.json','walk')['rows'];trajectories=archive(ROOT/'native/trajectories-supported.json','trajectories')['rows'];mechanical=archive(ROOT/'native/gates.json','mechanical-gates')['rows'];north=archive(ROOT/'native/northgate.json','northgate')['rows'];protect=archive(ROOT/'native/protection.json','protection')['rows']
- analysis=read(ROOT/'readability-analysis.json')['rows'];assert len(analysis)==16 and all(r['sourceHash']==source for r in analysis)
+ analysis_doc=read(ROOT/'readability-analysis.json');analysis=analysis_doc['rows']
+ assert analysis_doc['sourceHash']==source and analysis_doc['analyzerSha256']==sha('tools/qa/l6-visual-analyze.py') and analysis_doc['actorMaskHelperSha256']==sha('tools/qa/sweep-b-actor-mask.ts')
+ assert len(analysis)==16 and len({(r['backend'],r['tier'],r['zoom'],r['spot'])for r in analysis})==16 and all(r['sourceHash']==source for r in analysis)
+ assert all(r['actorMaskHelperSha256']==sha('tools/qa/sweep-b-actor-mask.ts') and (not r['accessory'] or any(slot['name'].startswith(r['accessory']+':') for slot in r['maskSlots'])) for r in analysis), 'Complete headwear mask required'
  reviewpath=ROOT/'capture-review.json';review=read(reviewpath);assert review['sourceHash']==source and review['allPersonallyReviewed'] and len(review['images'])>=36
  for e in review['images']:assert sha(e['file'])==e['sha256']
  for sheet in review['sourceMapping']['sheets']:
   for frame in sheet['sources']:assert sha(frame['file'])==frame['sha256']
  evidence.append({'file':str(ROOT/'readability-analysis.json'),'sha256':sha(ROOT/'readability-analysis.json')})
  for p in sorted((ROOT/'readability').glob('*.gz')):evidence.append({'file':str(p),'sha256':sha(p)})
- for p in ['tools/qa/l6-visual-analyze.py','tools/qa/l6-visual-sheets.py','tools/qa/sweep-b-l6-render.ts','tools/qa/sweep-b-l6-readability.ts','tools/qa/fix67-b-northgate.ts','tools/qa/l6-visual-bars.ts','tools/qa/l6-visual-gates.ts','tools/qa/accept/fix53-l6-trajectories.ts']:
+ for p in ['tools/qa/l6-visual-analyze.py','tools/qa/sweep-b-actor-mask.ts','tools/qa/l6-visual-sheets.py','tools/qa/sweep-b-l6-render.ts','tools/qa/sweep-b-l6-readability.ts','tools/qa/fix67-b-northgate.ts','tools/qa/l6-visual-bars.ts','tools/qa/l6-visual-gates.ts','tools/qa/accept/fix53-l6-trajectories.ts']:
   evidence.append({'file':p,'sha256':sha(p)})
  def matrix(rows,n=4):
   assert len(rows)==n and len({(r['backend'],r['zoom'])for r in rows})==n,'missing/duplicate matrix cell'
@@ -36,7 +39,7 @@ def main():
  for tier in ['low','high']:
   checks=[]
   def add(id,clause,value,target,passed):checks.append(dict(id=id,clause=clause,value=value,target=target,status='PASS'if passed else'FAIL',tier=tier,policy='controlled-fixture',receipt=f'docs/reports/fix51-verify/receipts/L6-{tier}-visual-browser.json'))
-  rows=[r for r in mainrows if r['tier']==tier];matrix(rows)
+  rows=[r for r in mainrows if r['tier']==tier];matrix(rows);assert all(not r['errors'] for r in rows)
   assert all(r['headlamp']['before']['backend']==('webgl' if r['backend']=='webgl2' else 'webgpu') and r['headlamp']['before']['renderTier']==tier and r['headlamp']['before']['camera']['zoom']==r['zoom'] for r in rows)
   initial=[r['shelter'] for r in rows];routine=set(p['routine'] for p in initial[0][0]['roster'])
   add('L6-01','actual carried shelter identities routines and stowed guns',{'cells':4,'identities':29,'snapshotsPerCell':[len(s)for s in initial],'routines':sorted(routine)},'carried 24+5 identities, full HP, active routines, no seated/lying visible gun; reviewed pixels',all(len(s)==5 and all(healthy(a)for a in s) and len({tuple(p['key']for p in a['roster'])for a in s})==1 for s in initial) and {'sit','talk','treat','rest','share'}<=routine)

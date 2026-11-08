@@ -18,7 +18,7 @@ try {
     const session = new SceneSession({ backend: 'webgpu', tier, viewport: { width: 1280, height: 720 }, query: { ui: '1', loadProfile: '2' } });
     try {
       await session.open();
-      await session.page.addInitScript(`(() => {
+      await session.page.addInitScript(`globalThis.__name = fn => fn; (() => {
         const request = navigator.gpu.requestAdapter;
         navigator.gpu.requestAdapter = function(...args) { return request.apply(this,args).then(adapter => {
           if (adapter) window.__l6Adapter = { architecture: adapter.info?.architecture, fallback: adapter.isFallbackAdapter ?? adapter.info?.isFallbackAdapter };
@@ -31,14 +31,14 @@ try {
       const save = preset('L6-default'); save.settings.quality = tier;
       await session.page.evaluate(async ({ tier, save }) => {
         const a = window.__SS__!; a.settings.set({ quality: tier }); a.campaign.restore(save); await a.loadLevel('L6', { seed: 1 });
-        a.pause(); a.camera.follow(); a.camera.zoom(1.5); a.input.clear();
+        a.pause(); a.camera.follow(); a.camera.zoom(1.5); a.cheats.god(false); a.input.clear();
       }, { tier, save });
       const cdp = await session.page.context().newCDPSession(session.page);
       await cdp.send('Profiler.enable'); await cdp.send('Profiler.setSamplingInterval', { interval: 1000 });
       const performanceStartedAt = await session.page.evaluate(() => performance.now()); await cdp.send('Profiler.start');
       await session.page.evaluate(() => {
         const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: Game }).game;
-        const frames: { at: number; ms: number; tick: number; sim: number; update: number; render: number; costs: Record<string, number> }[] = [];
+        const frames: { at: number; ms: number; tick: number; phase: string | undefined; sim: number; update: number; render: number; costs: Record<string, number> }[] = [];
         const builds: { at: number; tick: number; material: string; object: string; ms: number }[] = [];
         const longTasks: { startTime: number; duration: number }[] = [];
         const onBuild = g.view.renderer.debug.onNodeBuilderCreated;
@@ -56,43 +56,31 @@ try {
         let previous = p.start;
         const frame = (now: number) => {
           if (p.done) return;
-          frames.push({ at: now, ms: now - previous, tick: a.tick(), sim: g.simMs, update: g.view.updateCpuMs, render: g.view.renderCpuMs, costs: a.debug.cpuProfile() });
+          frames.push({ at: now, ms: now - previous, tick: a.tick(), phase: a.missions.state()?.phase, sim: g.simMs, update: g.view.updateCpuMs, render: g.view.renderCpuMs, costs: a.debug.cpuProfile() });
           previous = now; requestAnimationFrame(frame);
         };
-        a.debug.cpuProfile(); a.missions.begin(); a.resume(); requestAnimationFrame(frame);
+        a.debug.cpuProfile(); a.missions.begin(); a.bot.start('complete'); a.resume(); requestAnimationFrame(frame);
       });
-      await session.page.mouse.move(950, 360); await session.page.mouse.down();
-      const controls: { elapsed: number; key: string }[] = [];
+      const hostLoads: { elapsed: number; load: number[] }[] = [];
       const started = Date.now();
       while (Date.now() - started < 60_000) {
-        const elapsed = Date.now() - started;
-        const key = ['w', 'd', 's', 'a', 'w', 'd'][Math.min(5, Math.floor(elapsed / 10_000))];
-        const prior: string | undefined = controls.at(-1)?.key;
-        if (prior !== key) { if (prior) await session.page.keyboard.up(prior); await session.page.keyboard.down(key); controls.push({ elapsed, key }); }
-        const target = await session.page.evaluate(() => {
-          const a = window.__SS__!, s = a.getState(), p = s.player!.transform;
-          const enemies = s.entities.filter(e => e.faction === 'infected' && e.health.current > 0 && !e.hidden && !e.infected?.hidden);
-          enemies.sort((b, c) => Math.hypot(b.transform.x - p.x, b.transform.z - p.z) - Math.hypot(c.transform.x - p.x, c.transform.z - p.z));
-          return enemies[0] ? a.input.project(enemies[0].transform) : null;
-        });
-        if (target && target.x >= 0 && target.x <= 1280 && target.y >= 0 && target.y <= 720) await session.page.mouse.move(target.x, target.y);
-        await session.page.waitForTimeout(Math.min(1000, Math.max(1, 60_000 - (Date.now() - started))));
+        const elapsed = Date.now() - started; hostLoads.push({ elapsed, load: loadavg() });
+        await session.page.waitForTimeout(Math.min(1000, Math.max(1, 60_000 - elapsed)));
       }
       const result = await session.page.evaluate(() => {
         const a = window.__SS__!, p = (window as unknown as { l6Minute: { start: number; done: boolean; frames: unknown[]; builds: unknown[]; longTasks: unknown[]; stop(): void } }).l6Minute;
-        p.done = true; a.pause(); p.stop();
+        p.done = true; a.pause(); a.bot.stop(); p.stop();
         return { adapter: (window as unknown as { __l6Adapter: { architecture: string; fallback: boolean } }).__l6Adapter, start: p.start, elapsedMs: performance.now() - p.start, frames: p.frames, builds: p.builds, longTasks: p.longTasks,
-          resources: performance.getEntriesByType('resource').filter(e => e.startTime >= p.start).map(e => e.toJSON()), backend: a.perf().backend, quality: a.getState().render.quality, mission: a.missions.state(), events: a.events(0), loadTiming: a.perf().loadTiming };
+          resources: performance.getEntriesByType('resource').filter(e => e.startTime >= p.start).map(e => e.toJSON()), god: (window.__SCENE__ as unknown as { game: Game }).game.world.combat!.damage.god, backend: a.perf().backend, quality: a.getState().render.quality, mission: a.missions.state(), events: a.events(0), loadTiming: a.perf().loadTiming };
       });
-      await session.page.mouse.up(); if (controls.at(-1)) await session.page.keyboard.up(controls.at(-1)!.key);
       const profile = (await cdp.send('Profiler.stop')).profile; await cdp.detach();
       writeFileSync(`${out}/${tier}.cpuprofile.json.gz`, gzipSync(JSON.stringify({ ...profile, performanceStartedAt })));
       await session.page.screenshot({ path: `${out}/${tier}-end.png` });
-      rows.push({ tier, admissionLoad, finalLoad: loadavg(), controls, ...result, errors: session.errors });
-      writeFileSync(`${out}/receipt.json`, JSON.stringify({ ...provenance(), method: 'Headless native Metal WebGPU, production preview, quiet-run admission, normal RAF clock for60s per tier. Physical alternating WASD and held LMB with read-only nearest-target recommendations. Ordinary mortal courier; no actor reposition, input injection, manual stepping or combat/stat changes during timing. Main-thread1ms CPU samples, native frame/sim/update/render/system costs, actual material builds, long tasks and resource timings retained for attribution.', rows }, null, 2) + '\n');
-      const frames = result.frames as { ms: number }[];
+      rows.push({ tier, admissionLoad, finalLoad: loadavg(), inputPolicy: 'complete', hostLoads, ...result, errors: session.errors });
+      writeFileSync(`${out}/receipt.json`, JSON.stringify({ ...provenance(), method: 'Headless native Metal WebGPU, production preview, quiet-run admission, normal RAF clock for60s per tier. Ordinary mortal complete policy through the existing gameplay bot, with normal RAF input processing. No actor reposition, manual stepping or combat/stat changes during timing. Main-thread1ms CPU samples, native frame/sim/update/render/system costs, actual material builds, long tasks and resource timings retained for attribution.', rows }, null, 2) + '\n');
+      const frames = result.frames as { ms: number; phase: string | undefined }[];
       console.log(JSON.stringify({ tier, elapsedMs: result.elapsedMs, frames: frames.length, maxMs: Math.max(...frames.map(f => f.ms)), over100: frames.filter(f => f.ms > 100).length, builds: result.builds, errors: session.errors }));
-      assert.match(result.adapter.architecture, /^metal-/); assert.equal(result.adapter.fallback, false); assert.equal(result.backend, 'webgpu'); assert.equal(result.quality, tier); assert.ok(result.elapsedMs >= 60_000 && frames.length > 1000); assert.deepEqual(session.errors, []);
+      assert.match(result.adapter.architecture, /^metal-/); assert.equal(result.adapter.fallback, false); assert.equal(result.backend, 'webgpu'); assert.equal(result.quality, tier); assert.ok(result.elapsedMs >= 60_000 && frames.length > 1000); assert.deepEqual(session.errors, []); assert.equal(result.god, false); assert.equal(result.mission?.phase, 'playing'); assert.equal(result.mission?.stats.deaths, 0); assert.ok(frames.every(f => f.phase === 'playing'), 'Both minutes must remain active gameplay');
     } finally { await session.close(); }
   }
 } finally { stopServer(); }

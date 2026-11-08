@@ -61,6 +61,11 @@ try {
       await session.page.evaluate(async () => { const a = window.__SS__!; a.teleport(1, { x: 40, z: 15 }); a.camera.follow(); a.input.set({ move: { x: 1, z: 0 }, aim: { x: -1, z: 0 }, aimSource: 'pointer', strafe: true }); await a.step(60); });
       const opposed = await lampState(); await capture('lamp-opposed');
       await session.page.evaluate(() => window.__SS__!.input.clear());
+      if (process.env.L6_VISUAL_PREFIX_ONLY === '1') {
+        rows.push({ tier, backend, zoom, shelter, headlamp: { before, afterIdle, afterApproach, opposed }, bars: [], open: null, night: [], captures, errors: session.errors });
+        writeFileSync(`${out}/proof.json`, JSON.stringify({ ...provenance(), producerSha256: createHash('sha256').update(readFileSync('tools/qa/sweep-b-l6-render.ts')).digest('hex'), method: 'Carried shelter and actual headlamp presentation prefix only; follower and ending fixtures are separate. Original health/speeds/counts retained; no performance claim.', rows }, null, 2) + '\n');
+        console.log(tier, 'shelter/headlamp prefix done', captures.length); continue;
+      }
       const bars = [];
       for (let batch = 0; batch < 6; batch++) {
         const row = await session.page.evaluate(async batch => {

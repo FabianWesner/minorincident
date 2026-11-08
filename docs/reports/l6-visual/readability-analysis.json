@@ -1,4 +1,7 @@
 {
+  "analyzerSha256": "ac9f16fa810d787ffd4566b025b9d9e66f70024d806d28148664700ea66f2915",
+  "actorMaskHelperSha256": "350c9a802e74a9f938d53c31f68a9d6f264d4a6a577d3a7e5335b7b7b8c0aac6",
+  "sourceHash": "b4a871065668926e305cab6da2ee36990a9a49e1783fe17bb86e8686d1273711",
   "method": "Actual source-bound differential masks and same-pose native repeats. Full-coverage white body mask excludes background-contaminated antialias edges; positive eye masks remain depth tested. Courier P90 versus64-sample ground-ring median, reporting both .02 and .05 offsets.",
   "rows": [
     {
@@ -8,7 +11,7 @@
       "spot": "shelter",
       "actor": 62,
       "model": "npc.civilian-elderly",
-      "bodyMaskPixels": 4028,
+      "bodyMaskPixels": 4535,
       "eyeMaskPixels": 24,
       "courierMaskPixels": 2520,
       "bodyP90": 0.5464254406663791,
@@ -849,11 +852,25 @@
           "median": 0.05145844996500026
         }
       ],
-      "sourceHash": "b37cc44168c6fe41f416dc7f4af0dbaf63cb8cb1fe019ae8678bc0458d35af4c",
+      "sourceHash": "b4a871065668926e305cab6da2ee36990a9a49e1783fe17bb86e8686d1273711",
+      "accessory": "acc.hair-afro",
+      "maskSlots": [
+        {
+          "name": "acc.hair-afro:lod1",
+          "index": 0,
+          "count": 1
+        },
+        {
+          "name": "",
+          "index": 0,
+          "count": 1
+        }
+      ],
+      "actorMaskHelperSha256": "350c9a802e74a9f938d53c31f68a9d6f264d4a6a577d3a7e5335b7b7b8c0aac6",
       "captures": [
         {
           "file": "test-results/l6-visual/readability-final/webgl2-high-z1-shelter/captures/native.png",
-          "sha256": "a117433dc1fc1a2d3036fc93b73fdd2db6de6e9bf7dc0261f5b57ea2fac41531"
+          "sha256": "36436376f90a9dc504f50c67dbc5c59000dd4dfe435bf965ffe574d9a07a1fca"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-high-z1-shelter/captures/courier-hidden.png",
@@ -869,7 +886,7 @@
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-high-z1-shelter/captures/actor-body.png",
-          "sha256": "feab295de4050153e69224d55076436ac795088781f067a970b5aa61cc8710fe"
+          "sha256": "1bcb178837a709465d26a88e6a63c58315496e5e8092d5ad9b4061b9d4bde9e5"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-high-z1-shelter/captures/actor-eyes.png",
@@ -877,11 +894,11 @@
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-high-z1-shelter/captures/native-repeat.png",
-          "sha256": "a117433dc1fc1a2d3036fc93b73fdd2db6de6e9bf7dc0261f5b57ea2fac41531"
+          "sha256": "36436376f90a9dc504f50c67dbc5c59000dd4dfe435bf965ffe574d9a07a1fca"
         }
       ],
-      "fullCoverageBodyPixels": 3602,
-      "partialCoveragePixels": 426,
+      "fullCoverageBodyPixels": 4159,
+      "partialCoveragePixels": 376,
       "maskRule": "Non-eye luminance uses white-mask RGB channels >=240 (full coverage); partially covered silhouette pixels mix the warm floor into native RGB. Eye support uses the full positive differential mask, a conservative eye maximum.",
       "eyeMax": 0.23187806679836925,
       "bodyNonEyeMax": 0.04656514443956489,
@@ -1141,7 +1158,7 @@
       ],
       "repeatedNativeBodyChangedPixels": 0,
       "ledger": "docs/reports/l6-visual/readability/webgl2-high-z1-shelter-ledger.json.gz",
-      "ledgerSha256": "963c4b736bfba6b1da99f6bbdbca5c6906e86c910819436ffa69e91007d525f2"
+      "ledgerSha256": "d60d104674fac49653aa70621523a02c50aa7b5f22e2fc70ce010023a87b7746"
     },
     {
       "backend": "webgl2",
@@ -1150,7 +1167,7 @@
       "spot": "tunnel",
       "actor": 62,
       "model": "npc.civilian-elderly",
-      "bodyMaskPixels": 3281,
+      "bodyMaskPixels": 3740,
       "eyeMaskPixels": 23,
       "courierMaskPixels": 2368,
       "bodyP90": 0.5272031704698281,
@@ -1991,11 +2008,25 @@
           "median": 0.010935492494522327
         }
       ],
-      "sourceHash": "b37cc44168c6fe41f416dc7f4af0dbaf63cb8cb1fe019ae8678bc0458d35af4c",
+      "sourceHash": "b4a871065668926e305cab6da2ee36990a9a49e1783fe17bb86e8686d1273711",
+      "accessory": "acc.hair-afro",
+      "maskSlots": [
+        {
+          "name": "acc.hair-afro:lod1",
+          "index": 0,
+          "count": 1
+        },
+        {
+          "name": "",
+          "index": 0,
+          "count": 1
+        }
+      ],
+      "actorMaskHelperSha256": "350c9a802e74a9f938d53c31f68a9d6f264d4a6a577d3a7e5335b7b7b8c0aac6",
       "captures": [
         {
           "file": "test-results/l6-visual/readability-final/webgl2-high-z1-tunnel/captures/native.png",
-          "sha256": "9d256d7fb0b2245f939aa0676e2bc33aca3688c2ee6283cff72c47efcf466a00"
+          "sha256": "6555271d266fe2354cd46f438148a7bc1e71453dc5f02a7349d8dd0a56025a17"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-high-z1-tunnel/captures/courier-hidden.png",
@@ -2011,7 +2042,7 @@
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-high-z1-tunnel/captures/actor-body.png",
-          "sha256": "070b5ad382d12ef043bd2e1ca5f9ebc83059342cfb86f7cc544c4202859af65a"
+          "sha256": "d7082ba04c8782b1c290cf2a70be77db9f0a2784af4631f5b1013dfbcbe3fe29"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-high-z1-tunnel/captures/actor-eyes.png",
@@ -2019,13 +2050,13 @@
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-high-z1-tunnel/captures/native-repeat.png",
-          "sha256": "9d256d7fb0b2245f939aa0676e2bc33aca3688c2ee6283cff72c47efcf466a00"
+          "sha256": "6555271d266fe2354cd46f438148a7bc1e71453dc5f02a7349d8dd0a56025a17"
         }
       ],
-      "fullCoverageBodyPixels": 2931,
-      "partialCoveragePixels": 350,
+      "fullCoverageBodyPixels": 3434,
+      "partialCoveragePixels": 306,
       "maskRule": "Non-eye luminance uses white-mask RGB channels >=240 (full coverage); partially covered silhouette pixels mix the warm floor into native RGB. Eye support uses the full positive differential mask, a conservative eye maximum.",
-      "eyeMax": 0.2615598584495635,
+      "eyeMax": 0.23187806679836925,
       "bodyNonEyeMax": 0.04726313370759621,
       "eyesBrightest": true,
       "brightBodyPixel": {
@@ -2044,61 +2075,61 @@
           "x": 831,
           "y": 412,
           "rgb": [
-            228,
-            81,
-            69
+            216,
+            59,
+            49
           ],
-          "luminance": 0.22808510714889504
+          "luminance": 0.17948610098585724
         },
         {
           "x": 832,
           "y": 412,
           "rgb": [
-            209,
-            98,
-            85
+            180,
+            59,
+            51
           ],
-          "luminance": 0.2294655168571846
+          "luminance": 0.13070244059915936
         },
         {
           "x": 833,
           "y": 412,
           "rgb": [
-            198,
-            111,
-            91
+            136,
+            60,
+            54
           ],
-          "luminance": 0.24129976549978732
+          "luminance": 0.0873229937536804
         },
         {
           "x": 846,
           "y": 412,
           "rgb": [
-            206,
-            115,
-            92
+            136,
+            60,
+            54
           ],
-          "luminance": 0.2615598584495635
+          "luminance": 0.0873229937536804
         },
         {
           "x": 847,
           "y": 412,
           "rgb": [
-            214,
-            102,
-            87
+            181,
+            59,
+            51
           ],
-          "luminance": 0.24487003783525066
+          "luminance": 0.13190702719753228
         },
         {
           "x": 848,
           "y": 412,
           "rgb": [
-            214,
-            102,
-            87
+            181,
+            59,
+            51
           ],
-          "luminance": 0.24487003783525066
+          "luminance": 0.13190702719753228
         },
         {
           "x": 830,
@@ -2273,7 +2304,7 @@
       ],
       "repeatedNativeBodyChangedPixels": 0,
       "ledger": "docs/reports/l6-visual/readability/webgl2-high-z1-tunnel-ledger.json.gz",
-      "ledgerSha256": "f7ff5d58efe6d2fbfb74ff2ab22c8754565e35cd1481f0a6c5ab11b7523efc71"
+      "ledgerSha256": "9c2ce31ea9e7312fe9f0e69b07a1d42d55b6c92ed7153df2e00d9b8c4cb57c44"
     },
     {
       "backend": "webgl2",
@@ -2282,7 +2313,7 @@
       "spot": "shelter",
       "actor": 62,
       "model": "npc.civilian-elderly",
-      "bodyMaskPixels": 1666,
+      "bodyMaskPixels": 1856,
       "eyeMaskPixels": 11,
       "courierMaskPixels": 1095,
       "bodyP90": 0.6530636314793297,
@@ -3123,11 +3154,25 @@
           "median": 0.05145844996500026
         }
       ],
-      "sourceHash": "b37cc44168c6fe41f416dc7f4af0dbaf63cb8cb1fe019ae8678bc0458d35af4c",
+      "sourceHash": "b4a871065668926e305cab6da2ee36990a9a49e1783fe17bb86e8686d1273711",
+      "accessory": "acc.hair-afro",
+      "maskSlots": [
+        {
+          "name": "acc.hair-afro:lod1",
+          "index": 0,
+          "count": 1
+        },
+        {
+          "name": "",
+          "index": 0,
+          "count": 2
+        }
+      ],
+      "actorMaskHelperSha256": "350c9a802e74a9f938d53c31f68a9d6f264d4a6a577d3a7e5335b7b7b8c0aac6",
       "captures": [
         {
           "file": "test-results/l6-visual/readability-final/webgl2-high-z1.5-shelter/captures/native.png",
-          "sha256": "5cdee9fca69df52d24e27f84f440f541a8ad5ff107afe01674452990838049f6"
+          "sha256": "0fca34eebf051b5e302d65fe5013c9f38f16af6b139f2f6d41fbf919b9a12170"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-high-z1.5-shelter/captures/courier-hidden.png",
@@ -3143,7 +3188,7 @@
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-high-z1.5-shelter/captures/actor-body.png",
-          "sha256": "69764616de81840853c3a2ac91df10a4dc213506279e42577f42074b88a68c16"
+          "sha256": "4965064e43d5e72a1b96658e09bf1b7eb6136d051eb281af7e1c0751c5fe38d5"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-high-z1.5-shelter/captures/actor-eyes.png",
@@ -3151,11 +3196,11 @@
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-high-z1.5-shelter/captures/native-repeat.png",
-          "sha256": "a0113eb4b9835daefeb49d54790b1e962c478968cbc23eb5301474719fd0fa7e"
+          "sha256": "76adc9606e81f38246888bc2db47bd702343af778992d1289163563ffdc63fdf"
         }
       ],
-      "fullCoverageBodyPixels": 1389,
-      "partialCoveragePixels": 277,
+      "fullCoverageBodyPixels": 1609,
+      "partialCoveragePixels": 247,
       "maskRule": "Non-eye luminance uses white-mask RGB channels >=240 (full coverage); partially covered silhouette pixels mix the warm floor into native RGB. Eye support uses the full positive differential mask, a conservative eye maximum.",
       "eyeMax": 0.23187806679836925,
       "bodyNonEyeMax": 0.04673660146198169,
@@ -3285,7 +3330,7 @@
       ],
       "repeatedNativeBodyChangedPixels": 0,
       "ledger": "docs/reports/l6-visual/readability/webgl2-high-z1.5-shelter-ledger.json.gz",
-      "ledgerSha256": "af6375ac60d01e6578ea279a165f34a6de34af0ef9b74e2a4270c6828d123bed"
+      "ledgerSha256": "4595cdc50ff6a9d76b6aace6f8b83774700fa367c21123fb6ea621accc714265"
     },
     {
       "backend": "webgl2",
@@ -3294,7 +3339,7 @@
       "spot": "tunnel",
       "actor": 62,
       "model": "npc.civilian-elderly",
-      "bodyMaskPixels": 1388,
+      "bodyMaskPixels": 1563,
       "eyeMaskPixels": 10,
       "courierMaskPixels": 1006,
       "bodyP90": 0.6250549745338927,
@@ -4135,11 +4180,25 @@
           "median": 0.011060322416712755
         }
       ],
-      "sourceHash": "b37cc44168c6fe41f416dc7f4af0dbaf63cb8cb1fe019ae8678bc0458d35af4c",
+      "sourceHash": "b4a871065668926e305cab6da2ee36990a9a49e1783fe17bb86e8686d1273711",
+      "accessory": "acc.hair-afro",
+      "maskSlots": [
+        {
+          "name": "acc.hair-afro:lod1",
+          "index": 0,
+          "count": 1
+        },
+        {
+          "name": "",
+          "index": 0,
+          "count": 1
+        }
+      ],
+      "actorMaskHelperSha256": "350c9a802e74a9f938d53c31f68a9d6f264d4a6a577d3a7e5335b7b7b8c0aac6",
       "captures": [
         {
           "file": "test-results/l6-visual/readability-final/webgl2-high-z1.5-tunnel/captures/native.png",
-          "sha256": "ce6f804bd5f1485100a47044df53dfd64185fafd6f467dc6225b82b0ddda8c21"
+          "sha256": "a4c0eed4c3709128efc04ff85013a8c51b8734cc52faad2c5a980595de550140"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-high-z1.5-tunnel/captures/courier-hidden.png",
@@ -4155,7 +4214,7 @@
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-high-z1.5-tunnel/captures/actor-body.png",
-          "sha256": "b3f10f0fee4b0b6358c763b9de2b56b32f5d9a92d868212c42c79019cfcd9737"
+          "sha256": "0bad5c59af76285a8d9c6418328022901f23c8ce8bd3d3bbb19498d578833f7e"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-high-z1.5-tunnel/captures/actor-eyes.png",
@@ -4163,13 +4222,13 @@
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-high-z1.5-tunnel/captures/native-repeat.png",
-          "sha256": "ce6f804bd5f1485100a47044df53dfd64185fafd6f467dc6225b82b0ddda8c21"
+          "sha256": "a4c0eed4c3709128efc04ff85013a8c51b8734cc52faad2c5a980595de550140"
         }
       ],
-      "fullCoverageBodyPixels": 1161,
-      "partialCoveragePixels": 227,
+      "fullCoverageBodyPixels": 1366,
+      "partialCoveragePixels": 197,
       "maskRule": "Non-eye luminance uses white-mask RGB channels >=240 (full coverage); partially covered silhouette pixels mix the warm floor into native RGB. Eye support uses the full positive differential mask, a conservative eye maximum.",
-      "eyeMax": 0.2346443958378163,
+      "eyeMax": 0.23187806679836925,
       "bodyNonEyeMax": 0.0468389123810769,
       "eyesBrightest": true,
       "brightBodyPixel": {
@@ -4198,41 +4257,41 @@
           "x": 761,
           "y": 393,
           "rgb": [
-            228,
-            81,
-            69
+            216,
+            59,
+            49
           ],
-          "luminance": 0.22808510714889504
+          "luminance": 0.17948610098585724
         },
         {
           "x": 762,
           "y": 393,
           "rgb": [
-            228,
-            81,
-            69
+            216,
+            59,
+            49
           ],
-          "luminance": 0.22808510714889504
+          "luminance": 0.17948610098585724
         },
         {
           "x": 770,
           "y": 393,
           "rgb": [
-            230,
-            83,
-            71
+            217,
+            59,
+            49
           ],
-          "luminance": 0.2346443958378163
+          "luminance": 0.18101394001278664
         },
         {
           "x": 771,
           "y": 393,
           "rgb": [
-            230,
-            83,
-            71
+            217,
+            59,
+            49
           ],
-          "luminance": 0.2346443958378163
+          "luminance": 0.18101394001278664
         },
         {
           "x": 760,
@@ -4287,7 +4346,7 @@
       ],
       "repeatedNativeBodyChangedPixels": 0,
       "ledger": "docs/reports/l6-visual/readability/webgl2-high-z1.5-tunnel-ledger.json.gz",
-      "ledgerSha256": "2f04e992b6c0000a21d0d4375e869e5e45ffc5c55a114dae84edcc3e02a2eeb6"
+      "ledgerSha256": "0a02d5c89fd8e4e7a5019a2b87f880d591097431a61aaacd6c0626964ca6f9ab"
     },
     {
       "backend": "webgl2",
@@ -4296,7 +4355,7 @@
       "spot": "shelter",
       "actor": 62,
       "model": "npc.civilian-elderly",
-      "bodyMaskPixels": 3746,
+      "bodyMaskPixels": 4276,
       "eyeMaskPixels": 21,
       "courierMaskPixels": 2514,
       "bodyP90": 0.5464254406663791,
@@ -5137,15 +5196,29 @@
           "median": 0.2762140791217836
         }
       ],
-      "sourceHash": "b37cc44168c6fe41f416dc7f4af0dbaf63cb8cb1fe019ae8678bc0458d35af4c",
+      "sourceHash": "b4a871065668926e305cab6da2ee36990a9a49e1783fe17bb86e8686d1273711",
+      "accessory": "acc.hair-afro",
+      "maskSlots": [
+        {
+          "name": "acc.hair-afro:lod1",
+          "index": 0,
+          "count": 1
+        },
+        {
+          "name": "",
+          "index": 0,
+          "count": 1
+        }
+      ],
+      "actorMaskHelperSha256": "350c9a802e74a9f938d53c31f68a9d6f264d4a6a577d3a7e5335b7b7b8c0aac6",
       "captures": [
         {
           "file": "test-results/l6-visual/readability-final/webgl2-low-z1-shelter/captures/native.png",
-          "sha256": "0c1592dde397e1323907d22e0d5dd1c4b4f6cdfc823b2e9cdea83aca8b741ec7"
+          "sha256": "9a3f94b2ce4eab21309e4987a748b120b09ede532ae1d865c8b557d9cbdab271"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-low-z1-shelter/captures/courier-hidden.png",
-          "sha256": "980f8d3d208ab3121fa66b0718eaa85bd84880e59e8892ff3b9f3f4bcf953491"
+          "sha256": "0512aca2eb9fad1af4a5714885111d14e8e83b5f2131ec394eba02a491c9a7cd"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-low-z1-shelter/captures/courier-id.png",
@@ -5157,7 +5230,7 @@
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-low-z1-shelter/captures/actor-body.png",
-          "sha256": "9986a0301856ebf0a62e130114d643666ac646bf6a90c3cb88d5f1a6b7eb3403"
+          "sha256": "0ac3bc6f9490574b9a407e19792a8963acf7e14a4cbd7d7976e703187a67b0d5"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-low-z1-shelter/captures/actor-eyes.png",
@@ -5165,11 +5238,11 @@
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-low-z1-shelter/captures/native-repeat.png",
-          "sha256": "0c1592dde397e1323907d22e0d5dd1c4b4f6cdfc823b2e9cdea83aca8b741ec7"
+          "sha256": "9a3f94b2ce4eab21309e4987a748b120b09ede532ae1d865c8b557d9cbdab271"
         }
       ],
-      "fullCoverageBodyPixels": 3327,
-      "partialCoveragePixels": 419,
+      "fullCoverageBodyPixels": 3905,
+      "partialCoveragePixels": 371,
       "maskRule": "Non-eye luminance uses white-mask RGB channels >=240 (full coverage); partially covered silhouette pixels mix the warm floor into native RGB. Eye support uses the full positive differential mask, a conservative eye maximum.",
       "eyeMax": 0.23187806679836925,
       "bodyNonEyeMax": 0.04642315171739515,
@@ -5190,71 +5263,71 @@
           "x": 921,
           "y": 468,
           "rgb": [
-            203,
-            93,
-            81
+            180,
+            59,
+            51
           ],
-          "luminance": 0.2111929272095484
+          "luminance": 0.13070244059915936
         },
         {
           "x": 922,
           "y": 468,
           "rgb": [
-            184,
-            105,
-            89
+            135,
+            60,
+            54
           ],
-          "luminance": 0.21014766493019968
+          "luminance": 0.08648955833177153
         },
         {
           "x": 923,
           "y": 468,
           "rgb": [
-            184,
-            105,
-            89
+            135,
+            60,
+            54
           ],
-          "luminance": 0.21014766493019968
+          "luminance": 0.08648955833177153
         },
         {
           "x": 924,
           "y": 468,
           "rgb": [
-            185,
-            105,
-            89
+            135,
+            60,
+            54
           ],
-          "luminance": 0.21138707125888448
+          "luminance": 0.08648955833177153
         },
         {
           "x": 938,
           "y": 468,
           "rgb": [
-            190,
-            108,
-            90
+            135,
+            60,
+            54
           ],
-          "luminance": 0.2241045904605566
+          "luminance": 0.08648955833177153
         },
         {
           "x": 939,
           "y": 468,
           "rgb": [
-            206,
-            96,
-            83
+            180,
+            59,
+            51
           ],
-          "luminance": 0.22112087011034368
+          "luminance": 0.13070244059915936
         },
         {
           "x": 940,
           "y": 468,
           "rgb": [
-            169,
-            96,
-            84
+            137,
+            59,
+            54
           ],
-          "luminance": 0.174408516962988
+          "luminance": 0.08712636257713495
         },
         {
           "x": 921,
@@ -5399,7 +5472,7 @@
       ],
       "repeatedNativeBodyChangedPixels": 0,
       "ledger": "docs/reports/l6-visual/readability/webgl2-low-z1-shelter-ledger.json.gz",
-      "ledgerSha256": "7422b2674ee7a67fb14f876d7114b18d4e3a10e37f3ac5d5cd23e307f68d09ec"
+      "ledgerSha256": "e932bcf557861c1303f0d35aaa13a999ed3f092eb195b9ea8fbb67ef382870b3"
     },
     {
       "backend": "webgl2",
@@ -5408,7 +5481,7 @@
       "spot": "tunnel",
       "actor": 62,
       "model": "npc.civilian-elderly",
-      "bodyMaskPixels": 3155,
+      "bodyMaskPixels": 3634,
       "eyeMaskPixels": 17,
       "courierMaskPixels": 2360,
       "bodyP90": 0.536196739105217,
@@ -6249,11 +6322,25 @@
           "median": 0.05954953443205293
         }
       ],
-      "sourceHash": "b37cc44168c6fe41f416dc7f4af0dbaf63cb8cb1fe019ae8678bc0458d35af4c",
+      "sourceHash": "b4a871065668926e305cab6da2ee36990a9a49e1783fe17bb86e8686d1273711",
+      "accessory": "acc.hair-afro",
+      "maskSlots": [
+        {
+          "name": "acc.hair-afro:lod1",
+          "index": 0,
+          "count": 1
+        },
+        {
+          "name": "",
+          "index": 0,
+          "count": 1
+        }
+      ],
+      "actorMaskHelperSha256": "350c9a802e74a9f938d53c31f68a9d6f264d4a6a577d3a7e5335b7b7b8c0aac6",
       "captures": [
         {
           "file": "test-results/l6-visual/readability-final/webgl2-low-z1-tunnel/captures/native.png",
-          "sha256": "7d2e01cdb9e62d755f78bac9f1fb35feda37e24a8b6432c4ee8ef800448dc8ca"
+          "sha256": "b3a575382397dc15e489dd430a15adb76c00be653c3922907078e92620d3055b"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-low-z1-tunnel/captures/courier-hidden.png",
@@ -6269,7 +6356,7 @@
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-low-z1-tunnel/captures/actor-body.png",
-          "sha256": "baca2844b64b981b1a986ad21b1e6f69e1e2122a74cbe37ecb0e7fc183d9a284"
+          "sha256": "02cd50ee9e3233f7e51250d7bbc53e805457f9d1b01d387fcd93239a7dec274c"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-low-z1-tunnel/captures/actor-eyes.png",
@@ -6277,13 +6364,13 @@
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-low-z1-tunnel/captures/native-repeat.png",
-          "sha256": "7d2e01cdb9e62d755f78bac9f1fb35feda37e24a8b6432c4ee8ef800448dc8ca"
+          "sha256": "b3a575382397dc15e489dd430a15adb76c00be653c3922907078e92620d3055b"
         }
       ],
-      "fullCoverageBodyPixels": 2808,
-      "partialCoveragePixels": 347,
+      "fullCoverageBodyPixels": 3333,
+      "partialCoveragePixels": 301,
       "maskRule": "Non-eye luminance uses white-mask RGB channels >=240 (full coverage); partially covered silhouette pixels mix the warm floor into native RGB. Eye support uses the full positive differential mask, a conservative eye maximum.",
-      "eyeMax": 0.24125380486129044,
+      "eyeMax": 0.23187806679836925,
       "bodyNonEyeMax": 0.04726313370759621,
       "eyesBrightest": true,
       "brightBodyPixel": {
@@ -6332,41 +6419,41 @@
           "x": 833,
           "y": 413,
           "rgb": [
-            228,
-            81,
-            69
+            216,
+            59,
+            49
           ],
-          "luminance": 0.22808510714889504
+          "luminance": 0.17948610098585724
         },
         {
           "x": 834,
           "y": 413,
           "rgb": [
-            193,
-            82,
-            70
+            180,
+            60,
+            50
           ],
-          "luminance": 0.17814239510453145
+          "luminance": 0.13165305049266063
         },
         {
           "x": 845,
           "y": 413,
           "rgb": [
-            213,
-            101,
-            86
+            181,
+            59,
+            51
           ],
-          "luminance": 0.24125380486129044
+          "luminance": 0.13190702719753228
         },
         {
           "x": 846,
           "y": 413,
           "rgb": [
-            230,
-            83,
-            71
+            217,
+            59,
+            49
           ],
-          "luminance": 0.2346443958378163
+          "luminance": 0.18101394001278664
         },
         {
           "x": 847,
@@ -6471,7 +6558,7 @@
       ],
       "repeatedNativeBodyChangedPixels": 0,
       "ledger": "docs/reports/l6-visual/readability/webgl2-low-z1-tunnel-ledger.json.gz",
-      "ledgerSha256": "f9cb07e7f39fef4ebb06e5794dcc5c5667911002f5f3dcb9c44247e6e0763a0e"
+      "ledgerSha256": "7282f259aca6e68cea14b7ac0b179aa56a73d148b1d6621776317247bc75125a"
     },
     {
       "backend": "webgl2",
@@ -6480,7 +6567,7 @@
       "spot": "shelter",
       "actor": 62,
       "model": "npc.civilian-elderly",
-      "bodyMaskPixels": 1554,
+      "bodyMaskPixels": 1753,
       "eyeMaskPixels": 9,
       "courierMaskPixels": 1095,
       "bodyP90": 0.6544050437515272,
@@ -7321,15 +7408,29 @@
           "median": 0.2723002075526737
         }
       ],
-      "sourceHash": "b37cc44168c6fe41f416dc7f4af0dbaf63cb8cb1fe019ae8678bc0458d35af4c",
+      "sourceHash": "b4a871065668926e305cab6da2ee36990a9a49e1783fe17bb86e8686d1273711",
+      "accessory": "acc.hair-afro",
+      "maskSlots": [
+        {
+          "name": "acc.hair-afro:lod1",
+          "index": 0,
+          "count": 1
+        },
+        {
+          "name": "",
+          "index": 0,
+          "count": 2
+        }
+      ],
+      "actorMaskHelperSha256": "350c9a802e74a9f938d53c31f68a9d6f264d4a6a577d3a7e5335b7b7b8c0aac6",
       "captures": [
         {
           "file": "test-results/l6-visual/readability-final/webgl2-low-z1.5-shelter/captures/native.png",
-          "sha256": "0068515ce19dbc7adcdad3badfb8e2380f70f7169a90f76e10a15098fe3bcdb4"
+          "sha256": "d5b13b8b3de0d07a5b7acb13643cf8f5d1fce22fec6d951634062472ffc5c2a5"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-low-z1.5-shelter/captures/courier-hidden.png",
-          "sha256": "098040b17e8b32d5a3b1eb3b5f7ae5892ec72a6de53d343dc300a9a93e40b7ad"
+          "sha256": "75679a6113f4ebedd118925b1cc1ac91953a92f81cfa9c6b29c2cf86acd897b1"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-low-z1.5-shelter/captures/courier-id.png",
@@ -7341,7 +7442,7 @@
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-low-z1.5-shelter/captures/actor-body.png",
-          "sha256": "8f516d88ffeae2d7fd170d989cd3648a81d327fd7a0defbfaf6ee35caa6d00fe"
+          "sha256": "e8ea020282c5bda43055de9478c993f4cd33d1d975c6a9096580ea6c708b7591"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-low-z1.5-shelter/captures/actor-eyes.png",
@@ -7349,11 +7450,11 @@
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-low-z1.5-shelter/captures/native-repeat.png",
-          "sha256": "0068515ce19dbc7adcdad3badfb8e2380f70f7169a90f76e10a15098fe3bcdb4"
+          "sha256": "d5b13b8b3de0d07a5b7acb13643cf8f5d1fce22fec6d951634062472ffc5c2a5"
         }
       ],
-      "fullCoverageBodyPixels": 1291,
-      "partialCoveragePixels": 263,
+      "fullCoverageBodyPixels": 1519,
+      "partialCoveragePixels": 234,
       "maskRule": "Non-eye luminance uses white-mask RGB channels >=240 (full coverage); partially covered silhouette pixels mix the warm floor into native RGB. Eye support uses the full positive differential mask, a conservative eye maximum.",
       "eyeMax": 0.23187806679836925,
       "bodyNonEyeMax": 0.04642315171739515,
@@ -7374,51 +7475,51 @@
           "x": 815,
           "y": 427,
           "rgb": [
-            203,
-            93,
-            81
+            180,
+            59,
+            51
           ],
-          "luminance": 0.2111929272095484
+          "luminance": 0.13070244059915936
         },
         {
           "x": 816,
           "y": 427,
           "rgb": [
-            184,
-            105,
-            89
+            135,
+            60,
+            54
           ],
-          "luminance": 0.21014766493019968
+          "luminance": 0.08648955833177153
         },
         {
           "x": 817,
           "y": 427,
           "rgb": [
-            185,
-            106,
-            89
+            135,
+            60,
+            54
           ],
-          "luminance": 0.21343624779304513
+          "luminance": 0.08648955833177153
         },
         {
           "x": 825,
           "y": 427,
           "rgb": [
-            190,
-            108,
-            90
+            135,
+            60,
+            54
           ],
-          "luminance": 0.2241045904605566
+          "luminance": 0.08648955833177153
         },
         {
           "x": 826,
           "y": 427,
           "rgb": [
-            206,
-            96,
-            83
+            180,
+            59,
+            51
           ],
-          "luminance": 0.22112087011034368
+          "luminance": 0.13070244059915936
         },
         {
           "x": 815,
@@ -7463,7 +7564,7 @@
       ],
       "repeatedNativeBodyChangedPixels": 0,
       "ledger": "docs/reports/l6-visual/readability/webgl2-low-z1.5-shelter-ledger.json.gz",
-      "ledgerSha256": "3ae3d3b7e9814447f5f8acc236b304d53324c411cb9819c65cfc42279e25cc4f"
+      "ledgerSha256": "f429d941ac35a9f6938e7c79b0873d5c97e6ef9ff1f026bce11f040f996e84be"
     },
     {
       "backend": "webgl2",
@@ -7472,7 +7573,7 @@
       "spot": "tunnel",
       "actor": 62,
       "model": "npc.civilian-elderly",
-      "bodyMaskPixels": 1327,
+      "bodyMaskPixels": 1512,
       "eyeMaskPixels": 10,
       "courierMaskPixels": 1003,
       "bodyP90": 0.632045866945876,
@@ -8313,11 +8414,25 @@
           "median": 0.011118882565081428
         }
       ],
-      "sourceHash": "b37cc44168c6fe41f416dc7f4af0dbaf63cb8cb1fe019ae8678bc0458d35af4c",
+      "sourceHash": "b4a871065668926e305cab6da2ee36990a9a49e1783fe17bb86e8686d1273711",
+      "accessory": "acc.hair-afro",
+      "maskSlots": [
+        {
+          "name": "acc.hair-afro:lod1",
+          "index": 0,
+          "count": 1
+        },
+        {
+          "name": "",
+          "index": 0,
+          "count": 1
+        }
+      ],
+      "actorMaskHelperSha256": "350c9a802e74a9f938d53c31f68a9d6f264d4a6a577d3a7e5335b7b7b8c0aac6",
       "captures": [
         {
           "file": "test-results/l6-visual/readability-final/webgl2-low-z1.5-tunnel/captures/native.png",
-          "sha256": "375dde4acd1e7eb2b94aea812303b938928538f6c39146832ee94b32dbdd9502"
+          "sha256": "187f402c76fdffd1f0d7befc69f16449f35bc1e7bdca4b00e6fd787cb3ad11f2"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-low-z1.5-tunnel/captures/courier-hidden.png",
@@ -8333,7 +8448,7 @@
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-low-z1.5-tunnel/captures/actor-body.png",
-          "sha256": "fdfe67be16b2a81d067d9fe99daabef02696e350a7af115ab6f756534d8fae69"
+          "sha256": "1a2072a690a3de6692f8f42a1ea3a60d0d2f46bc5c1acf72812a9abea2b0e9bc"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-low-z1.5-tunnel/captures/actor-eyes.png",
@@ -8341,13 +8456,13 @@
         },
         {
           "file": "test-results/l6-visual/readability-final/webgl2-low-z1.5-tunnel/captures/native-repeat.png",
-          "sha256": "375dde4acd1e7eb2b94aea812303b938928538f6c39146832ee94b32dbdd9502"
+          "sha256": "187f402c76fdffd1f0d7befc69f16449f35bc1e7bdca4b00e6fd787cb3ad11f2"
         }
       ],
-      "fullCoverageBodyPixels": 1105,
-      "partialCoveragePixels": 222,
+      "fullCoverageBodyPixels": 1317,
+      "partialCoveragePixels": 195,
       "maskRule": "Non-eye luminance uses white-mask RGB channels >=240 (full coverage); partially covered silhouette pixels mix the warm floor into native RGB. Eye support uses the full positive differential mask, a conservative eye maximum.",
-      "eyeMax": 0.24487003783525066,
+      "eyeMax": 0.23187806679836925,
       "bodyNonEyeMax": 0.0468389123810769,
       "eyesBrightest": true,
       "brightBodyPixel": {
@@ -8366,51 +8481,51 @@
           "x": 760,
           "y": 393,
           "rgb": [
-            193,
-            82,
-            70
+            180,
+            60,
+            50
           ],
-          "luminance": 0.17814239510453145
+          "luminance": 0.13165305049266063
         },
         {
           "x": 761,
           "y": 393,
           "rgb": [
-            209,
-            98,
-            84
+            180,
+            59,
+            51
           ],
-          "luminance": 0.22930767863957538
+          "luminance": 0.13070244059915936
         },
         {
           "x": 762,
           "y": 393,
           "rgb": [
-            198,
-            111,
-            91
+            136,
+            60,
+            54
           ],
-          "luminance": 0.24129976549978732
+          "luminance": 0.0873229937536804
         },
         {
           "x": 770,
           "y": 393,
           "rgb": [
-            214,
-            102,
-            87
+            181,
+            59,
+            51
           ],
-          "luminance": 0.24487003783525066
+          "luminance": 0.13190702719753228
         },
         {
           "x": 771,
           "y": 393,
           "rgb": [
-            214,
-            102,
-            87
+            181,
+            59,
+            51
           ],
-          "luminance": 0.24487003783525066
+          "luminance": 0.13190702719753228
         },
         {
           "x": 760,
@@ -8465,7 +8580,7 @@
       ],
       "repeatedNativeBodyChangedPixels": 0,
       "ledger": "docs/reports/l6-visual/readability/webgl2-low-z1.5-tunnel-ledger.json.gz",
-      "ledgerSha256": "5fe038e52875de6a48c4a1d6c5d2e261878d8e9086a74a88f59088d7aeee6552"
+      "ledgerSha256": "c4895be8754c14f79acab095f53a1215e2efcfa80a64f94aafc6725b0f3a3c71"
     },
     {
       "backend": "webgpu",
@@ -8474,7 +8589,7 @@
       "spot": "shelter",
       "actor": 62,
       "model": "npc.civilian-elderly",
-      "bodyMaskPixels": 4021,
+      "bodyMaskPixels": 4527,
       "eyeMaskPixels": 24,
       "courierMaskPixels": 2529,
       "bodyP90": 0.5464254406663791,
@@ -9315,11 +9430,25 @@
           "median": 0.05145844996500026
         }
       ],
-      "sourceHash": "b37cc44168c6fe41f416dc7f4af0dbaf63cb8cb1fe019ae8678bc0458d35af4c",
+      "sourceHash": "b4a871065668926e305cab6da2ee36990a9a49e1783fe17bb86e8686d1273711",
+      "accessory": "acc.hair-afro",
+      "maskSlots": [
+        {
+          "name": "acc.hair-afro:lod1",
+          "index": 0,
+          "count": 1
+        },
+        {
+          "name": "",
+          "index": 0,
+          "count": 1
+        }
+      ],
+      "actorMaskHelperSha256": "350c9a802e74a9f938d53c31f68a9d6f264d4a6a577d3a7e5335b7b7b8c0aac6",
       "captures": [
         {
           "file": "test-results/l6-visual/readability-final/webgpu-high-z1-shelter/captures/native.png",
-          "sha256": "fb83a7a6f3e54d16b1c73d8f50482b1f782594e2e8b6ebf452673031c7da9ed5"
+          "sha256": "ccb8ef4a30407b25d6de209bb40173ecd284b1653da5f7f09bdb296fbe6bb6c0"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-high-z1-shelter/captures/courier-hidden.png",
@@ -9335,7 +9464,7 @@
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-high-z1-shelter/captures/actor-body.png",
-          "sha256": "53122aa866c7e1ec495b341d112b53a84c3faee3fe57fd4de444348cb6163b08"
+          "sha256": "70c9d90d8a9d740b0db31d7f62a2cbfdbb3c3fe74dad0d6723c9b9073e3fc138"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-high-z1-shelter/captures/actor-eyes.png",
@@ -9343,11 +9472,11 @@
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-high-z1-shelter/captures/native-repeat.png",
-          "sha256": "fb83a7a6f3e54d16b1c73d8f50482b1f782594e2e8b6ebf452673031c7da9ed5"
+          "sha256": "ccb8ef4a30407b25d6de209bb40173ecd284b1653da5f7f09bdb296fbe6bb6c0"
         }
       ],
-      "fullCoverageBodyPixels": 3602,
-      "partialCoveragePixels": 419,
+      "fullCoverageBodyPixels": 4155,
+      "partialCoveragePixels": 372,
       "maskRule": "Non-eye luminance uses white-mask RGB channels >=240 (full coverage); partially covered silhouette pixels mix the warm floor into native RGB. Eye support uses the full positive differential mask, a conservative eye maximum.",
       "eyeMax": 0.23187806679836925,
       "bodyNonEyeMax": 0.04656514443956489,
@@ -9607,7 +9736,7 @@
       ],
       "repeatedNativeBodyChangedPixels": 0,
       "ledger": "docs/reports/l6-visual/readability/webgpu-high-z1-shelter-ledger.json.gz",
-      "ledgerSha256": "51182d98063bba91b621cdc07e6a07f0800f5e5df69dec7eff15ec6d91e720a5"
+      "ledgerSha256": "76ae4b43f8b402dcbded7a7cef97bb04a2e83cb7365bbdafcd11e44fe4e72ef1"
     },
     {
       "backend": "webgpu",
@@ -9616,7 +9745,7 @@
       "spot": "tunnel",
       "actor": 62,
       "model": "npc.civilian-elderly",
-      "bodyMaskPixels": 3283,
+      "bodyMaskPixels": 3741,
       "eyeMaskPixels": 23,
       "courierMaskPixels": 2372,
       "bodyP90": 0.5274353342741229,
@@ -10457,11 +10586,25 @@
           "median": 0.010935492494522327
         }
       ],
-      "sourceHash": "b37cc44168c6fe41f416dc7f4af0dbaf63cb8cb1fe019ae8678bc0458d35af4c",
+      "sourceHash": "b4a871065668926e305cab6da2ee36990a9a49e1783fe17bb86e8686d1273711",
+      "accessory": "acc.hair-afro",
+      "maskSlots": [
+        {
+          "name": "acc.hair-afro:lod1",
+          "index": 0,
+          "count": 1
+        },
+        {
+          "name": "",
+          "index": 0,
+          "count": 1
+        }
+      ],
+      "actorMaskHelperSha256": "350c9a802e74a9f938d53c31f68a9d6f264d4a6a577d3a7e5335b7b7b8c0aac6",
       "captures": [
         {
           "file": "test-results/l6-visual/readability-final/webgpu-high-z1-tunnel/captures/native.png",
-          "sha256": "006d1388fed310418f32d61e55cb03aee8982450cac9977ead3052eb67d45ae7"
+          "sha256": "e4493e4af6b7d9f24fec83087cfb2563550cd6f2c5dbfaa0ed02f8b247c682ce"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-high-z1-tunnel/captures/courier-hidden.png",
@@ -10477,7 +10620,7 @@
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-high-z1-tunnel/captures/actor-body.png",
-          "sha256": "050c03593f1a25f1aec555c7f235e43c2f4350bdc304ce7dc45f3aa4e21dc399"
+          "sha256": "5d41f8d0b1d71537ce6c08b25337bf308a180c867f9bba6a5958a9ab8f7a5e05"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-high-z1-tunnel/captures/actor-eyes.png",
@@ -10485,13 +10628,13 @@
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-high-z1-tunnel/captures/native-repeat.png",
-          "sha256": "006d1388fed310418f32d61e55cb03aee8982450cac9977ead3052eb67d45ae7"
+          "sha256": "e4493e4af6b7d9f24fec83087cfb2563550cd6f2c5dbfaa0ed02f8b247c682ce"
         }
       ],
-      "fullCoverageBodyPixels": 2934,
-      "partialCoveragePixels": 349,
+      "fullCoverageBodyPixels": 3435,
+      "partialCoveragePixels": 306,
       "maskRule": "Non-eye luminance uses white-mask RGB channels >=240 (full coverage); partially covered silhouette pixels mix the warm floor into native RGB. Eye support uses the full positive differential mask, a conservative eye maximum.",
-      "eyeMax": 0.2615598584495635,
+      "eyeMax": 0.23187806679836925,
       "bodyNonEyeMax": 0.04726313370759621,
       "eyesBrightest": true,
       "brightBodyPixel": {
@@ -10510,61 +10653,61 @@
           "x": 831,
           "y": 412,
           "rgb": [
-            209,
-            98,
-            84
+            180,
+            59,
+            51
           ],
-          "luminance": 0.22930767863957538
+          "luminance": 0.13070244059915936
         },
         {
           "x": 832,
           "y": 412,
           "rgb": [
-            209,
-            98,
-            85
+            181,
+            59,
+            51
           ],
-          "luminance": 0.2294655168571846
+          "luminance": 0.13190702719753228
         },
         {
           "x": 833,
           "y": 412,
           "rgb": [
-            210,
-            98,
-            85
+            181,
+            59,
+            51
           ],
-          "luminance": 0.23092880183299905
+          "luminance": 0.13190702719753228
         },
         {
           "x": 846,
           "y": 412,
           "rgb": [
-            206,
-            115,
-            92
+            136,
+            60,
+            54
           ],
-          "luminance": 0.2615598584495635
+          "luminance": 0.0873229937536804
         },
         {
           "x": 847,
           "y": 412,
           "rgb": [
-            206,
-            115,
-            92
+            136,
+            60,
+            54
           ],
-          "luminance": 0.2615598584495635
+          "luminance": 0.0873229937536804
         },
         {
           "x": 848,
           "y": 412,
           "rgb": [
-            214,
-            102,
-            87
+            181,
+            59,
+            51
           ],
-          "luminance": 0.24487003783525066
+          "luminance": 0.13190702719753228
         },
         {
           "x": 830,
@@ -10739,7 +10882,7 @@
       ],
       "repeatedNativeBodyChangedPixels": 0,
       "ledger": "docs/reports/l6-visual/readability/webgpu-high-z1-tunnel-ledger.json.gz",
-      "ledgerSha256": "f6cedc22bd5ca2ca2c49791361afa92e01f0c3ef08c7de407f8085ac40dd230d"
+      "ledgerSha256": "802d5119f28cb3d6c30861b98fe88c2dc200c2d7d91bd5f9732573e51a2554e7"
     },
     {
       "backend": "webgpu",
@@ -10748,7 +10891,7 @@
       "spot": "shelter",
       "actor": 62,
       "model": "npc.civilian-elderly",
-      "bodyMaskPixels": 1664,
+      "bodyMaskPixels": 1856,
       "eyeMaskPixels": 11,
       "courierMaskPixels": 1106,
       "bodyP90": 0.6515859607764046,
@@ -11589,15 +11732,29 @@
           "median": 0.05145844996500026
         }
       ],
-      "sourceHash": "b37cc44168c6fe41f416dc7f4af0dbaf63cb8cb1fe019ae8678bc0458d35af4c",
+      "sourceHash": "b4a871065668926e305cab6da2ee36990a9a49e1783fe17bb86e8686d1273711",
+      "accessory": "acc.hair-afro",
+      "maskSlots": [
+        {
+          "name": "acc.hair-afro:lod1",
+          "index": 0,
+          "count": 1
+        },
+        {
+          "name": "",
+          "index": 0,
+          "count": 2
+        }
+      ],
+      "actorMaskHelperSha256": "350c9a802e74a9f938d53c31f68a9d6f264d4a6a577d3a7e5335b7b7b8c0aac6",
       "captures": [
         {
           "file": "test-results/l6-visual/readability-final/webgpu-high-z1.5-shelter/captures/native.png",
-          "sha256": "6705b2bffc5a252ec2f285d77207f1b293c212289861c071a96ea2a570ed1c25"
+          "sha256": "38a92cb934da9dc5f5b879a53cab22442904017a79db5a1fa43c1d9f22a3341c"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-high-z1.5-shelter/captures/courier-hidden.png",
-          "sha256": "56b6268ec68d9be14db0b70f46102fe80eb8700c5f70baca105c051848d94ad4"
+          "sha256": "f6bac810dbf365a1bd76689017444d920fc0ffa035d0d3218d68ea1fae63e440"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-high-z1.5-shelter/captures/courier-id.png",
@@ -11609,19 +11766,19 @@
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-high-z1.5-shelter/captures/actor-body.png",
-          "sha256": "65a8e55cd8b123d9a0f569b32aabf38207d73abad08f4c807f7c28391bb0828c"
+          "sha256": "12f4cf6b79732909e78f3b6119d62143122f2894af8cebd78e745e61ef52a57b"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-high-z1.5-shelter/captures/actor-eyes.png",
-          "sha256": "ca0a5f769e58b81ab2c2d09ad40ef1c88f13bb3cc66c9b9b873d77d0ab539984"
+          "sha256": "93327f869a38b319ad8194a36f36a09d7f98799559ee439fc79f4fcd718b7ba3"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-high-z1.5-shelter/captures/native-repeat.png",
-          "sha256": "94b037e345604c8ab15d20e0c9da56a33fe2e43f80d3675fd87ba6d1b78a721e"
+          "sha256": "7517b41e7aafe6f15e87f71b423be5d428e9d6498d76741e9f10dfab5085c6d9"
         }
       ],
-      "fullCoverageBodyPixels": 1391,
-      "partialCoveragePixels": 273,
+      "fullCoverageBodyPixels": 1605,
+      "partialCoveragePixels": 251,
       "maskRule": "Non-eye luminance uses white-mask RGB channels >=240 (full coverage); partially covered silhouette pixels mix the warm floor into native RGB. Eye support uses the full positive differential mask, a conservative eye maximum.",
       "eyeMax": 0.23187806679836925,
       "bodyNonEyeMax": 0.04656514443956489,
@@ -11642,21 +11799,21 @@
           "x": 815,
           "y": 424,
           "rgb": [
-            216,
+            248,
             58,
-            53
+            47
           ],
-          "luminance": 0.17882083323372722
+          "luminance": 0.23187806679836925
         },
         {
           "x": 816,
           "y": 424,
           "rgb": [
-            178,
+            216,
             58,
-            60
+            54
           ],
-          "luminance": 0.1281733387867989
+          "luminance": 0.17891383661871016
         },
         {
           "x": 817,
@@ -11672,11 +11829,11 @@
           "x": 825,
           "y": 424,
           "rgb": [
-            179,
-            59,
-            61
+            216,
+            58,
+            54
           ],
-          "luminance": 0.13048556958951646
+          "luminance": 0.17891383661871016
         },
         {
           "x": 826,
@@ -11751,7 +11908,7 @@
       ],
       "repeatedNativeBodyChangedPixels": 0,
       "ledger": "docs/reports/l6-visual/readability/webgpu-high-z1.5-shelter-ledger.json.gz",
-      "ledgerSha256": "5d72f38020a986aba762d11967bc989e704578afc49f92d1ace6e152e0ebb964"
+      "ledgerSha256": "0aa1e2516a5be18406430cc9b155895e0b8884ab4613019d0c8f0f907ca82787"
     },
     {
       "backend": "webgpu",
@@ -11760,7 +11917,7 @@
       "spot": "tunnel",
       "actor": 62,
       "model": "npc.civilian-elderly",
-      "bodyMaskPixels": 1386,
+      "bodyMaskPixels": 1561,
       "eyeMaskPixels": 10,
       "courierMaskPixels": 1018,
       "bodyP90": 0.6178693727921989,
@@ -12601,11 +12758,25 @@
           "median": 0.011060322416712755
         }
       ],
-      "sourceHash": "b37cc44168c6fe41f416dc7f4af0dbaf63cb8cb1fe019ae8678bc0458d35af4c",
+      "sourceHash": "b4a871065668926e305cab6da2ee36990a9a49e1783fe17bb86e8686d1273711",
+      "accessory": "acc.hair-afro",
+      "maskSlots": [
+        {
+          "name": "acc.hair-afro:lod1",
+          "index": 0,
+          "count": 1
+        },
+        {
+          "name": "",
+          "index": 0,
+          "count": 1
+        }
+      ],
+      "actorMaskHelperSha256": "350c9a802e74a9f938d53c31f68a9d6f264d4a6a577d3a7e5335b7b7b8c0aac6",
       "captures": [
         {
           "file": "test-results/l6-visual/readability-final/webgpu-high-z1.5-tunnel/captures/native.png",
-          "sha256": "6d3e34b6b3299c4c7f96628b55cf4f8cd259233f48903b66c472ad59b023716c"
+          "sha256": "bbdbec0672affc7c4842cfbdab82a40bdbd2eac571ccc11ac885f149f5565434"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-high-z1.5-tunnel/captures/courier-hidden.png",
@@ -12621,7 +12792,7 @@
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-high-z1.5-tunnel/captures/actor-body.png",
-          "sha256": "8cc181548f565f99b0acd227f54e9d5558475a6a9b8e2f6660f801c98eff9cc5"
+          "sha256": "5749cff695899d9452f58ca379d55f6f38f0f94945a15699741c24c4f5bbd92c"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-high-z1.5-tunnel/captures/actor-eyes.png",
@@ -12629,13 +12800,13 @@
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-high-z1.5-tunnel/captures/native-repeat.png",
-          "sha256": "6d3e34b6b3299c4c7f96628b55cf4f8cd259233f48903b66c472ad59b023716c"
+          "sha256": "bbdbec0672affc7c4842cfbdab82a40bdbd2eac571ccc11ac885f149f5565434"
         }
       ],
-      "fullCoverageBodyPixels": 1158,
-      "partialCoveragePixels": 228,
+      "fullCoverageBodyPixels": 1362,
+      "partialCoveragePixels": 199,
       "maskRule": "Non-eye luminance uses white-mask RGB channels >=240 (full coverage); partially covered silhouette pixels mix the warm floor into native RGB. Eye support uses the full positive differential mask, a conservative eye maximum.",
-      "eyeMax": 0.2346443958378163,
+      "eyeMax": 0.23187806679836925,
       "bodyNonEyeMax": 0.0468389123810769,
       "eyesBrightest": true,
       "brightBodyPixel": {
@@ -12664,41 +12835,41 @@
           "x": 761,
           "y": 393,
           "rgb": [
-            228,
-            81,
-            69
+            217,
+            59,
+            49
           ],
-          "luminance": 0.22808510714889504
+          "luminance": 0.18101394001278664
         },
         {
           "x": 762,
           "y": 393,
           "rgb": [
-            228,
-            81,
-            69
+            217,
+            59,
+            49
           ],
-          "luminance": 0.22808510714889504
+          "luminance": 0.18101394001278664
         },
         {
           "x": 770,
           "y": 393,
           "rgb": [
-            230,
-            83,
-            71
+            217,
+            59,
+            49
           ],
-          "luminance": 0.2346443958378163
+          "luminance": 0.18101394001278664
         },
         {
           "x": 771,
           "y": 393,
           "rgb": [
-            230,
-            83,
-            71
+            217,
+            59,
+            49
           ],
-          "luminance": 0.2346443958378163
+          "luminance": 0.18101394001278664
         },
         {
           "x": 760,
@@ -12753,7 +12924,7 @@
       ],
       "repeatedNativeBodyChangedPixels": 0,
       "ledger": "docs/reports/l6-visual/readability/webgpu-high-z1.5-tunnel-ledger.json.gz",
-      "ledgerSha256": "900a7cca8c33405f823c74dd81ffefe5bf6ce7bd2328923ceae3aa52e3a3d48a"
+      "ledgerSha256": "960dda27c7baf50d6accdfe012536576ef630bb1fe4dd1f43a4eca91ff36621e"
     },
     {
       "backend": "webgpu",
@@ -12762,7 +12933,7 @@
       "spot": "shelter",
       "actor": 62,
       "model": "npc.civilian-elderly",
-      "bodyMaskPixels": 3748,
+      "bodyMaskPixels": 4279,
       "eyeMaskPixels": 21,
       "courierMaskPixels": 2524,
       "bodyP90": 0.5464254406663791,
@@ -13603,15 +13774,29 @@
           "median": 0.2762140791217836
         }
       ],
-      "sourceHash": "b37cc44168c6fe41f416dc7f4af0dbaf63cb8cb1fe019ae8678bc0458d35af4c",
+      "sourceHash": "b4a871065668926e305cab6da2ee36990a9a49e1783fe17bb86e8686d1273711",
+      "accessory": "acc.hair-afro",
+      "maskSlots": [
+        {
+          "name": "acc.hair-afro:lod1",
+          "index": 0,
+          "count": 1
+        },
+        {
+          "name": "",
+          "index": 0,
+          "count": 1
+        }
+      ],
+      "actorMaskHelperSha256": "350c9a802e74a9f938d53c31f68a9d6f264d4a6a577d3a7e5335b7b7b8c0aac6",
       "captures": [
         {
           "file": "test-results/l6-visual/readability-final/webgpu-low-z1-shelter/captures/native.png",
-          "sha256": "9df514bb1d8275fee95efa90015e2c33e644a248c66a7c2256c793ba3c372e3a"
+          "sha256": "d3a752385095735640ca43d9de129c96dbd098ba5530a3794403c94f11e9b142"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-low-z1-shelter/captures/courier-hidden.png",
-          "sha256": "aab43c3645c6296fe42d763e270b5b14c711899ac83c4effad3dce764aeee0a5"
+          "sha256": "5131a2c9b0924b9d6e59a68a1980f4f41db3732d6dc72087191b876b97a47635"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-low-z1-shelter/captures/courier-id.png",
@@ -13623,7 +13808,7 @@
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-low-z1-shelter/captures/actor-body.png",
-          "sha256": "72422a7db0f1ed63a08417b2dba9ee74916c86643b2f37853a5257caca374ea6"
+          "sha256": "cb895329fc39c9b2837fd0e61fa2b914ce2297cd23d01671d0d01648e3789a12"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-low-z1-shelter/captures/actor-eyes.png",
@@ -13631,11 +13816,11 @@
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-low-z1-shelter/captures/native-repeat.png",
-          "sha256": "9df514bb1d8275fee95efa90015e2c33e644a248c66a7c2256c793ba3c372e3a"
+          "sha256": "d3a752385095735640ca43d9de129c96dbd098ba5530a3794403c94f11e9b142"
         }
       ],
-      "fullCoverageBodyPixels": 3332,
-      "partialCoveragePixels": 416,
+      "fullCoverageBodyPixels": 3905,
+      "partialCoveragePixels": 374,
       "maskRule": "Non-eye luminance uses white-mask RGB channels >=240 (full coverage); partially covered silhouette pixels mix the warm floor into native RGB. Eye support uses the full positive differential mask, a conservative eye maximum.",
       "eyeMax": 0.23187806679836925,
       "bodyNonEyeMax": 0.04642315171739515,
@@ -13656,71 +13841,71 @@
           "x": 921,
           "y": 468,
           "rgb": [
-            203,
-            93,
-            81
+            180,
+            59,
+            51
           ],
-          "luminance": 0.2111929272095484
+          "luminance": 0.13070244059915936
         },
         {
           "x": 922,
           "y": 468,
           "rgb": [
-            203,
-            93,
-            81
+            180,
+            59,
+            51
           ],
-          "luminance": 0.2111929272095484
+          "luminance": 0.13070244059915936
         },
         {
           "x": 923,
           "y": 468,
           "rgb": [
-            184,
-            105,
-            89
+            135,
+            60,
+            54
           ],
-          "luminance": 0.21014766493019968
+          "luminance": 0.08648955833177153
         },
         {
           "x": 924,
           "y": 468,
           "rgb": [
-            185,
-            105,
-            89
+            135,
+            60,
+            54
           ],
-          "luminance": 0.21138707125888448
+          "luminance": 0.08648955833177153
         },
         {
           "x": 938,
           "y": 468,
           "rgb": [
-            190,
-            108,
-            90
+            135,
+            60,
+            54
           ],
-          "luminance": 0.2241045904605566
+          "luminance": 0.08648955833177153
         },
         {
           "x": 939,
           "y": 468,
           "rgb": [
-            190,
-            108,
-            90
+            135,
+            60,
+            54
           ],
-          "luminance": 0.2241045904605566
+          "luminance": 0.08648955833177153
         },
         {
           "x": 940,
           "y": 468,
           "rgb": [
-            206,
-            96,
-            83
+            180,
+            59,
+            51
           ],
-          "luminance": 0.22112087011034368
+          "luminance": 0.13070244059915936
         },
         {
           "x": 921,
@@ -13865,7 +14050,7 @@
       ],
       "repeatedNativeBodyChangedPixels": 0,
       "ledger": "docs/reports/l6-visual/readability/webgpu-low-z1-shelter-ledger.json.gz",
-      "ledgerSha256": "44aeb9e33d4b0d59ceb5c7356566302cae6885a7bf6e9eef9db98b10f4c490f1"
+      "ledgerSha256": "db73edcd246da87a3765c6555a3f4757ca3a5eed2bfd82a45598511d810a46a6"
     },
     {
       "backend": "webgpu",
@@ -13874,7 +14059,7 @@
       "spot": "tunnel",
       "actor": 62,
       "model": "npc.civilian-elderly",
-      "bodyMaskPixels": 3156,
+      "bodyMaskPixels": 3634,
       "eyeMaskPixels": 17,
       "courierMaskPixels": 2372,
       "bodyP90": 0.5328691981198403,
@@ -14715,11 +14900,25 @@
           "median": 0.05954953443205293
         }
       ],
-      "sourceHash": "b37cc44168c6fe41f416dc7f4af0dbaf63cb8cb1fe019ae8678bc0458d35af4c",
+      "sourceHash": "b4a871065668926e305cab6da2ee36990a9a49e1783fe17bb86e8686d1273711",
+      "accessory": "acc.hair-afro",
+      "maskSlots": [
+        {
+          "name": "acc.hair-afro:lod1",
+          "index": 0,
+          "count": 1
+        },
+        {
+          "name": "",
+          "index": 0,
+          "count": 1
+        }
+      ],
+      "actorMaskHelperSha256": "350c9a802e74a9f938d53c31f68a9d6f264d4a6a577d3a7e5335b7b7b8c0aac6",
       "captures": [
         {
           "file": "test-results/l6-visual/readability-final/webgpu-low-z1-tunnel/captures/native.png",
-          "sha256": "5300b66966970f8343d546aee4ba87d3f97028af63b073b2eb004c4fb33cc5c2"
+          "sha256": "037f475f7542ed20f54b1fd280e35016a33e28429b74f01a270df728df044d0e"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-low-z1-tunnel/captures/courier-hidden.png",
@@ -14735,7 +14934,7 @@
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-low-z1-tunnel/captures/actor-body.png",
-          "sha256": "7fc68c648882e45db38c2eb86613f38c2a8f01494ed23846bc09a1123132cd0a"
+          "sha256": "af1d3fce91bb4632e83acb571e15a8fd3bc517baa5a129f8ec545627852cce6e"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-low-z1-tunnel/captures/actor-eyes.png",
@@ -14743,13 +14942,13 @@
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-low-z1-tunnel/captures/native-repeat.png",
-          "sha256": "5300b66966970f8343d546aee4ba87d3f97028af63b073b2eb004c4fb33cc5c2"
+          "sha256": "037f475f7542ed20f54b1fd280e35016a33e28429b74f01a270df728df044d0e"
         }
       ],
-      "fullCoverageBodyPixels": 2808,
-      "partialCoveragePixels": 348,
+      "fullCoverageBodyPixels": 3331,
+      "partialCoveragePixels": 303,
       "maskRule": "Non-eye luminance uses white-mask RGB channels >=240 (full coverage); partially covered silhouette pixels mix the warm floor into native RGB. Eye support uses the full positive differential mask, a conservative eye maximum.",
-      "eyeMax": 0.2346443958378163,
+      "eyeMax": 0.23187806679836925,
       "bodyNonEyeMax": 0.04726313370759621,
       "eyesBrightest": true,
       "brightBodyPixel": {
@@ -14798,51 +14997,51 @@
           "x": 833,
           "y": 413,
           "rgb": [
-            228,
-            81,
-            69
+            217,
+            59,
+            49
           ],
-          "luminance": 0.22808510714889504
+          "luminance": 0.18101394001278664
         },
         {
           "x": 834,
           "y": 413,
           "rgb": [
-            150,
-            83,
-            72
+            134,
+            62,
+            51
           ],
-          "luminance": 0.131384229275026
+          "luminance": 0.08752597702597803
         },
         {
           "x": 845,
           "y": 413,
           "rgb": [
-            195,
-            84,
-            71
+            180,
+            60,
+            49
           ],
-          "luminance": 0.18397681907344518
+          "luminance": 0.13156766754231133
         },
         {
           "x": 846,
           "y": 413,
           "rgb": [
-            230,
-            83,
-            71
+            217,
+            59,
+            49
           ],
-          "luminance": 0.2346443958378163
+          "luminance": 0.18101394001278664
         },
         {
           "x": 847,
           "y": 413,
           "rgb": [
-            230,
-            83,
-            71
+            217,
+            59,
+            49
           ],
-          "luminance": 0.2346443958378163
+          "luminance": 0.18101394001278664
         },
         {
           "x": 848,
@@ -14937,7 +15136,7 @@
       ],
       "repeatedNativeBodyChangedPixels": 0,
       "ledger": "docs/reports/l6-visual/readability/webgpu-low-z1-tunnel-ledger.json.gz",
-      "ledgerSha256": "cdf71ab49c5893f9c49965cb4582b2a4e504d11f29f78fc8d3425774d43dd80a"
+      "ledgerSha256": "afee8960d22a5b5fa7a2bc2e296d20de618f2fdaf03c1674bd9089cfa84b18e2"
     },
     {
       "backend": "webgpu",
@@ -14946,7 +15145,7 @@
       "spot": "shelter",
       "actor": 62,
       "model": "npc.civilian-elderly",
-      "bodyMaskPixels": 1553,
+      "bodyMaskPixels": 1753,
       "eyeMaskPixels": 9,
       "courierMaskPixels": 1108,
       "bodyP90": 0.6540589254636647,
@@ -15787,15 +15986,29 @@
           "median": 0.2723002075526737
         }
       ],
-      "sourceHash": "b37cc44168c6fe41f416dc7f4af0dbaf63cb8cb1fe019ae8678bc0458d35af4c",
+      "sourceHash": "b4a871065668926e305cab6da2ee36990a9a49e1783fe17bb86e8686d1273711",
+      "accessory": "acc.hair-afro",
+      "maskSlots": [
+        {
+          "name": "acc.hair-afro:lod1",
+          "index": 0,
+          "count": 1
+        },
+        {
+          "name": "",
+          "index": 0,
+          "count": 2
+        }
+      ],
+      "actorMaskHelperSha256": "350c9a802e74a9f938d53c31f68a9d6f264d4a6a577d3a7e5335b7b7b8c0aac6",
       "captures": [
         {
           "file": "test-results/l6-visual/readability-final/webgpu-low-z1.5-shelter/captures/native.png",
-          "sha256": "941b51b4a0d0210e7a1fb174867587fcbeeb9f62c0df4242c470b8738ebad44b"
+          "sha256": "36416fd36e8e2823b0c659f61486b2d9dc8d431deda07e71bc6a0f429ea3f4c1"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-low-z1.5-shelter/captures/courier-hidden.png",
-          "sha256": "75385ebf723090a1bb9671519998c46585387917987058d4317af02bf8364157"
+          "sha256": "14c7f1c033325a0ae567c8661c2858218b4618c78a2e86e6549aaf577633db14"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-low-z1.5-shelter/captures/courier-id.png",
@@ -15807,7 +16020,7 @@
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-low-z1.5-shelter/captures/actor-body.png",
-          "sha256": "88cf289d5a97de666d311d72f5280d1f0a2711be93c241b16a6fa30f09a1a354"
+          "sha256": "e5d382f899412100b4a3a2e51280a760393429674c32b529b1b64d3633df5ce1"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-low-z1.5-shelter/captures/actor-eyes.png",
@@ -15815,11 +16028,11 @@
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-low-z1.5-shelter/captures/native-repeat.png",
-          "sha256": "941b51b4a0d0210e7a1fb174867587fcbeeb9f62c0df4242c470b8738ebad44b"
+          "sha256": "36416fd36e8e2823b0c659f61486b2d9dc8d431deda07e71bc6a0f429ea3f4c1"
         }
       ],
-      "fullCoverageBodyPixels": 1294,
-      "partialCoveragePixels": 259,
+      "fullCoverageBodyPixels": 1521,
+      "partialCoveragePixels": 232,
       "maskRule": "Non-eye luminance uses white-mask RGB channels >=240 (full coverage); partially covered silhouette pixels mix the warm floor into native RGB. Eye support uses the full positive differential mask, a conservative eye maximum.",
       "eyeMax": 0.23187806679836925,
       "bodyNonEyeMax": 0.04642315171739515,
@@ -15840,51 +16053,51 @@
           "x": 815,
           "y": 427,
           "rgb": [
-            203,
-            93,
-            81
+            180,
+            59,
+            51
           ],
-          "luminance": 0.2111929272095484
+          "luminance": 0.13070244059915936
         },
         {
           "x": 816,
           "y": 427,
           "rgb": [
-            184,
-            105,
-            89
+            135,
+            60,
+            54
           ],
-          "luminance": 0.21014766493019968
+          "luminance": 0.08648955833177153
         },
         {
           "x": 817,
           "y": 427,
           "rgb": [
-            185,
-            106,
-            89
+            135,
+            60,
+            54
           ],
-          "luminance": 0.21343624779304513
+          "luminance": 0.08648955833177153
         },
         {
           "x": 825,
           "y": 427,
           "rgb": [
-            190,
-            108,
-            90
+            135,
+            60,
+            54
           ],
-          "luminance": 0.2241045904605566
+          "luminance": 0.08648955833177153
         },
         {
           "x": 826,
           "y": 427,
           "rgb": [
-            190,
-            108,
-            90
+            135,
+            60,
+            54
           ],
-          "luminance": 0.2241045904605566
+          "luminance": 0.08648955833177153
         },
         {
           "x": 815,
@@ -15929,7 +16142,7 @@
       ],
       "repeatedNativeBodyChangedPixels": 0,
       "ledger": "docs/reports/l6-visual/readability/webgpu-low-z1.5-shelter-ledger.json.gz",
-      "ledgerSha256": "316e854434876d0075586d2a41f44297fe926565a0324dcb010f558d7ca13964"
+      "ledgerSha256": "a19a90851c3a05bf3c33f22e963d8c5a3e4263c1fa762c1cfe0dca244fd6e6f4"
     },
     {
       "backend": "webgpu",
@@ -15938,7 +16151,7 @@
       "spot": "tunnel",
       "actor": 62,
       "model": "npc.civilian-elderly",
-      "bodyMaskPixels": 1325,
+      "bodyMaskPixels": 1511,
       "eyeMaskPixels": 10,
       "courierMaskPixels": 1017,
       "bodyP90": 0.6229368208153566,
@@ -16779,11 +16992,25 @@
           "median": 0.011118882565081428
         }
       ],
-      "sourceHash": "b37cc44168c6fe41f416dc7f4af0dbaf63cb8cb1fe019ae8678bc0458d35af4c",
+      "sourceHash": "b4a871065668926e305cab6da2ee36990a9a49e1783fe17bb86e8686d1273711",
+      "accessory": "acc.hair-afro",
+      "maskSlots": [
+        {
+          "name": "acc.hair-afro:lod1",
+          "index": 0,
+          "count": 1
+        },
+        {
+          "name": "",
+          "index": 0,
+          "count": 1
+        }
+      ],
+      "actorMaskHelperSha256": "350c9a802e74a9f938d53c31f68a9d6f264d4a6a577d3a7e5335b7b7b8c0aac6",
       "captures": [
         {
           "file": "test-results/l6-visual/readability-final/webgpu-low-z1.5-tunnel/captures/native.png",
-          "sha256": "746f98c8c977ebf055ab826234cad74e428f2d514801f193edc1d40b6360fb3c"
+          "sha256": "483373ac62b04bba8dd46afe3ac70d6560f54366f14872f26f996abb72e614cf"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-low-z1.5-tunnel/captures/courier-hidden.png",
@@ -16799,7 +17026,7 @@
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-low-z1.5-tunnel/captures/actor-body.png",
-          "sha256": "0a68467410db69dea64698c8d57eb8e4bc4f4fdbba7f52dede8ad2156df6fdd2"
+          "sha256": "fdd1dd68f074f85b00c0d27a4f2d27cc109ce1ee0ba821fa1001e346f8fcdfd8"
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-low-z1.5-tunnel/captures/actor-eyes.png",
@@ -16807,13 +17034,13 @@
         },
         {
           "file": "test-results/l6-visual/readability-final/webgpu-low-z1.5-tunnel/captures/native-repeat.png",
-          "sha256": "746f98c8c977ebf055ab826234cad74e428f2d514801f193edc1d40b6360fb3c"
+          "sha256": "483373ac62b04bba8dd46afe3ac70d6560f54366f14872f26f996abb72e614cf"
         }
       ],
-      "fullCoverageBodyPixels": 1106,
-      "partialCoveragePixels": 219,
+      "fullCoverageBodyPixels": 1315,
+      "partialCoveragePixels": 196,
       "maskRule": "Non-eye luminance uses white-mask RGB channels >=240 (full coverage); partially covered silhouette pixels mix the warm floor into native RGB. Eye support uses the full positive differential mask, a conservative eye maximum.",
-      "eyeMax": 0.2615598584495635,
+      "eyeMax": 0.23187806679836925,
       "bodyNonEyeMax": 0.0468389123810769,
       "eyesBrightest": true,
       "brightBodyPixel": {
@@ -16832,51 +17059,51 @@
           "x": 760,
           "y": 393,
           "rgb": [
-            171,
-            98,
-            84
+            135,
+            61,
+            52
           ],
-          "luminance": 0.1803338522787533
+          "luminance": 0.08736317043590047
         },
         {
           "x": 761,
           "y": 393,
           "rgb": [
-            209,
-            98,
-            84
+            180,
+            59,
+            51
           ],
-          "luminance": 0.22930767863957538
+          "luminance": 0.13070244059915936
         },
         {
           "x": 762,
           "y": 393,
           "rgb": [
-            210,
-            98,
-            85
+            180,
+            59,
+            51
           ],
-          "luminance": 0.23092880183299905
+          "luminance": 0.13070244059915936
         },
         {
           "x": 770,
           "y": 393,
           "rgb": [
-            206,
-            115,
-            92
+            136,
+            60,
+            54
           ],
-          "luminance": 0.2615598584495635
+          "luminance": 0.0873229937536804
         },
         {
           "x": 771,
           "y": 393,
           "rgb": [
-            214,
-            102,
-            87
+            181,
+            59,
+            51
           ],
-          "luminance": 0.24487003783525066
+          "luminance": 0.13190702719753228
         },
         {
           "x": 760,
@@ -16931,7 +17158,7 @@
       ],
       "repeatedNativeBodyChangedPixels": 0,
       "ledger": "docs/reports/l6-visual/readability/webgpu-low-z1.5-tunnel-ledger.json.gz",
-      "ledgerSha256": "22cee6342863bc04964eb1c4153fdece0b9de5a63f238045bf8adc40ea4782d6"
+      "ledgerSha256": "f3197741fda26495f1d8c5d476affbabe1d036a94824a307699f38f42ec3553e"
     }
   ]
 }
