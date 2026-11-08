@@ -27,12 +27,12 @@ export class LevelTenEpilogue {
     if (!front) return;
     const ending = state.epilogue ??= { phase: 'playable', phaseTicks: 0, survivors: [], approaching: [], groupsAuthored: false };
     state.counters['epilogue-ticks'] = Math.min(epilogueTicks, front.elapsed);
+    if (front.elapsed >= 8 * 60 && ending.phase !== 'done') this.mission.world.storyLock ??= { scripted: null, skip: false };
     if (ending.phase === 'playable') {
       this.cast();
       const elapsed = front.elapsed;
       if (elapsed >= 8 * 60) {
-        this.mission.world.storyLock ??= { scripted: null, skip: false };
-        if (this.mission.world.storyLock.skip && this.canSkip) { front.elapsed = epilogueTicks; front.radius = cureRadius(front.elapsed); }
+        if (this.mission.world.storyLock?.skip && this.canSkip) { front.elapsed = epilogueTicks; front.radius = cureRadius(front.elapsed); }
       }
       if (elapsed >= 30 * 60 && !state.states['epilogue-rosa']) {
         state.states['epilogue-rosa'] = true;
