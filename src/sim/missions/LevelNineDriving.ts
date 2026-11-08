@@ -386,6 +386,9 @@ export class LevelNineDriving {
       }
     }
     const spot = s.hugSpot; if (!spot) return false;
+    // They must enter each other's personal space before the authored lift.
+    // Keep the same paired exemption through approach and embrace.
+    corgi.contactExempt = rosa.id;
     corgi.companion!.transitionUntil = w.tick + 2;
     w.npcs!.move(rosa, spot, 2, rosa.civilian!, .4);
     if (s.hugAt === null) w.npcs!.move(corgi, { x: spot.dogX, z: spot.dogZ }, 2.5, corgi.companion!, .25);
