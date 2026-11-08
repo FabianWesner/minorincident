@@ -1,0 +1,1082 @@
+{
+  "runtimeRevision": "602835dd3b69d5f0a40215df4c1ffc54dc807d8a",
+  "snapshotHead": "5c3f4f7c289066b572148a06f7cf795683d87ff6",
+  "sourceHash": "af461613360ea843ff9fce1ac59c291db4ffebce7465e696861d656941f9a476",
+  "commandExit": 1,
+  "currentGlobalStatuses": {
+    "NOT CHECKED": 26,
+    "FAIL": 1
+  },
+  "currentRowStatuses": {
+    "PASS": 4,
+    "NOT CHECKED": 10,
+    "FAIL": 1
+  },
+  "failures": [
+    {
+      "id": "G-24",
+      "checks": [
+        {
+          "clause": "production enemy-bar eligibility at distance/health boundaries",
+          "tier": "low",
+          "policy": "controlled-fixture",
+          "status": "FAIL",
+          "target": "near/full and far/damaged true; far/full, dead and healthy animals false",
+          "value": [
+            {
+              "archetype": "infected.alpha",
+              "near": true,
+              "farHealthy": true,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.lion",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.gorilla",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.elephant",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.zebra",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.flamingo",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            }
+          ]
+        },
+        {
+          "clause": "production enemy-bar eligibility at distance/health boundaries",
+          "tier": "high",
+          "policy": "controlled-fixture",
+          "status": "FAIL",
+          "target": "near/full and far/damaged true; far/full, dead and healthy animals false",
+          "value": [
+            {
+              "archetype": "infected.alpha",
+              "near": true,
+              "farHealthy": true,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.lion",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.gorilla",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.elephant",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.zebra",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.flamingo",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "L10-03",
+      "checks": [
+        {
+          "clause": "same-tick regional count and species composition",
+          "tier": "low",
+          "policy": "complete",
+          "status": "FAIL",
+          "target": "Every region has one joint count/dog/Alpha witness; every local tick preserves authored upper bounds; canonical final state identical.",
+          "value": {
+            "fresh": false,
+            "regions": [
+              {
+                "region": "residential-fringe",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0,
+                "sample": {
+                  "tick": 6602,
+                  "count": 8,
+                  "regular": 8,
+                  "dogs": 2,
+                  "alphas": 0,
+                  "ids": [
+                    110,
+                    112,
+                    114,
+                    115,
+                    116,
+                    118,
+                    120,
+                    121,
+                    122,
+                    123
+                  ],
+                  "specialActors": [
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    }
+                  ]
+                }
+              },
+              {
+                "region": "industrial-area",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0,
+                "sample": {
+                  "tick": 13440,
+                  "count": 24,
+                  "regular": 20,
+                  "dogs": 3,
+                  "alphas": 1,
+                  "ids": [
+                    135,
+                    136,
+                    137,
+                    139,
+                    142,
+                    143,
+                    144,
+                    145,
+                    146,
+                    147,
+                    148,
+                    149,
+                    150,
+                    151,
+                    152,
+                    153,
+                    "<remaining items omitted>"
+                  ],
+                  "specialActors": [
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    }
+                  ]
+                }
+              },
+              {
+                "region": "military-zone",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0,
+                "sample": {
+                  "tick": 24220,
+                  "count": 30,
+                  "regular": 24,
+                  "dogs": 4,
+                  "alphas": 2,
+                  "ids": [
+                    135,
+                    136,
+                    147,
+                    177,
+                    178,
+                    179,
+                    180,
+                    181,
+                    182,
+                    183,
+                    184,
+                    185,
+                    186,
+                    187,
+                    188,
+                    189,
+                    "<remaining items omitted>"
+                  ],
+                  "specialActors": [
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    }
+                  ]
+                }
+              },
+              {
+                "region": "research-campus",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0,
+                "sample": {
+                  "tick": 33850,
+                  "count": 54,
+                  "regular": 49,
+                  "dogs": 4,
+                  "alphas": 1,
+                  "ids": [
+                    231,
+                    232,
+                    233,
+                    234,
+                    235,
+                    236,
+                    237,
+                    238,
+                    239,
+                    240,
+                    241,
+                    242,
+                    243,
+                    244,
+                    245,
+                    246,
+                    "<remaining items omitted>"
+                  ],
+                  "specialActors": [
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    }
+                  ]
+                }
+              },
+              {
+                "region": "destroyed-corridor",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0,
+                "sample": {
+                  "tick": 41670,
+                  "count": 68,
+                  "regular": 61,
+                  "dogs": 4,
+                  "alphas": 3,
+                  "ids": [
+                    309,
+                    311,
+                    312,
+                    313,
+                    314,
+                    315,
+                    316,
+                    317,
+                    318,
+                    319,
+                    320,
+                    321,
+                    322,
+                    323,
+                    324,
+                    325,
+                    "<remaining items omitted>"
+                  ],
+                  "specialActors": [
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    }
+                  ]
+                }
+              },
+              {
+                "region": "dispersal-complex",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0,
+                "sample": {
+                  "tick": 56978,
+                  "count": 75,
+                  "regular": 69,
+                  "dogs": 4,
+                  "alphas": 2,
+                  "ids": [
+                    446,
+                    447,
+                    448,
+                    449,
+                    450,
+                    451,
+                    452,
+                    453,
+                    454,
+                    455,
+                    456,
+                    457,
+                    458,
+                    459,
+                    460,
+                    461,
+                    "<remaining items omitted>"
+                  ],
+                  "specialActors": [
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "clause": "residential dogs follow actual handgun pickup",
+          "tier": "low",
+          "policy": "complete",
+          "status": "FAIL",
+          "target": "Actual handgun pickup observed; first admitted fringe dog at or after pickup; zero premature ticks; canonical control identical.",
+          "value": {
+            "tier": "low",
+            "pickupTick": 3497,
+            "firstDogTick": 4950,
+            "prematureTicks": 0,
+            "nativeStateHash": "edf01875",
+            "controlIdentical": true
+          }
+        },
+        {
+          "clause": "same-tick regional count and species composition",
+          "tier": "high",
+          "policy": "complete",
+          "status": "FAIL",
+          "target": "Every region has one joint count/dog/Alpha witness; every local tick preserves authored upper bounds; canonical final state identical.",
+          "value": {
+            "fresh": false,
+            "regions": [
+              {
+                "region": "residential-fringe",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0,
+                "sample": {
+                  "tick": 6590,
+                  "count": 14,
+                  "regular": 14,
+                  "dogs": 1,
+                  "alphas": 0,
+                  "ids": [
+                    110,
+                    111,
+                    112,
+                    113,
+                    116,
+                    118,
+                    119,
+                    120,
+                    121,
+                    123,
+                    124,
+                    125,
+                    126,
+                    127,
+                    128
+                  ],
+                  "specialActors": [
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    }
+                  ]
+                }
+              },
+              {
+                "region": "industrial-area",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0,
+                "sample": {
+                  "tick": 13440,
+                  "count": 32,
+                  "regular": 27,
+                  "dogs": 4,
+                  "alphas": 1,
+                  "ids": [
+                    145,
+                    146,
+                    147,
+                    148,
+                    149,
+                    150,
+                    152,
+                    153,
+                    156,
+                    157,
+                    158,
+                    159,
+                    160,
+                    161,
+                    162,
+                    163,
+                    "<remaining items omitted>"
+                  ],
+                  "specialActors": [
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    }
+                  ]
+                }
+              },
+              {
+                "region": "military-zone",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0,
+                "sample": {
+                  "tick": 25716,
+                  "count": 45,
+                  "regular": 40,
+                  "dogs": 4,
+                  "alphas": 1,
+                  "ids": [
+                    157,
+                    160,
+                    203,
+                    204,
+                    205,
+                    206,
+                    207,
+                    208,
+                    209,
+                    210,
+                    214,
+                    216,
+                    217,
+                    218,
+                    221,
+                    222,
+                    "<remaining items omitted>"
+                  ],
+                  "specialActors": [
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    }
+                  ]
+                }
+              },
+              {
+                "region": "research-campus",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0,
+                "sample": {
+                  "tick": 33930,
+                  "count": 57,
+                  "regular": 52,
+                  "dogs": 4,
+                  "alphas": 1,
+                  "ids": [
+                    274,
+                    275,
+                    276,
+                    277,
+                    278,
+                    279,
+                    280,
+                    281,
+                    282,
+                    283,
+                    284,
+                    285,
+                    286,
+                    287,
+                    288,
+                    289,
+                    "<remaining items omitted>"
+                  ],
+                  "specialActors": [
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    }
+                  ]
+                }
+              },
+              {
+                "region": "destroyed-corridor",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0,
+                "sample": {
+                  "tick": 41790,
+                  "count": 97,
+                  "regular": 90,
+                  "dogs": 5,
+                  "alphas": 2,
+                  "ids": [
+                    349,
+                    354,
+                    372,
+                    376,
+                    377,
+                    378,
+                    379,
+                    380,
+                    381,
+                    382,
+                    383,
+                    384,
+                    385,
+                    386,
+                    387,
+                    388,
+                    "<remaining items omitted>"
+                  ],
+                  "specialActors": [
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    }
+                  ]
+                }
+              },
+              {
+                "region": "dispersal-complex",
+                "intervals": true,
+                "witness": true,
+                "upperViolations": 0,
+                "sample": {
+                  "tick": 57170,
+                  "count": 140,
+                  "regular": 134,
+                  "dogs": 3,
+                  "alphas": 3,
+                  "ids": [
+                    482,
+                    541,
+                    542,
+                    544,
+                    545,
+                    546,
+                    547,
+                    548,
+                    549,
+                    550,
+                    551,
+                    552,
+                    553,
+                    554,
+                    555,
+                    556,
+                    "<remaining items omitted>"
+                  ],
+                  "specialActors": [
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    },
+                    {
+                      "id": "<details omitted>",
+                      "archetype": "<details omitted>",
+                      "x": "<details omitted>",
+                      "z": "<details omitted>",
+                      "cureRegion": "<details omitted>",
+                      "hidden": "<details omitted>"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "clause": "residential dogs follow actual handgun pickup",
+          "tier": "high",
+          "policy": "complete",
+          "status": "FAIL",
+          "target": "Actual handgun pickup observed; first admitted fringe dog at or after pickup; zero premature ticks; canonical control identical.",
+          "value": {
+            "tier": "high",
+            "pickupTick": 3497,
+            "firstDogTick": 4950,
+            "prematureTicks": 0,
+            "nativeStateHash": "586d721c",
+            "controlIdentical": true
+          }
+        }
+      ]
+    }
+  ],
+  "checkpoints": [
+    {
+      "tier": "low",
+      "clauses": 27,
+      "allPass": true,
+      "controlIdentical": true,
+      "errors": []
+    },
+    {
+      "tier": "high",
+      "clauses": 27,
+      "allPass": true,
+      "controlIdentical": true,
+      "errors": []
+    }
+  ]
+}

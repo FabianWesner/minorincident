@@ -1,0 +1,1638 @@
+{
+  "low": {
+    "revision": "4e59b762d0e14d5b8bb29c04b7da9cd76005cc1c",
+    "method": "Planner advice translated to physical WASD, number keys, E and mouse; no injected driver, teleport, god mode, objective skip or time scaling during route.",
+    "quality": "low",
+    "launcherClose": {
+      "before": {
+        "tick": 51,
+        "slot": {
+          "id": "weapon.rocket-launcher",
+          "magazine": 0,
+          "reserve": "infinite",
+          "charges": 0,
+          "nextCharge": 0,
+          "reloadUntil": 0,
+          "readyAt": 0
+        },
+        "events": 0,
+        "point": {
+          "x": 567.3274410038304,
+          "y": 357.2796046652236
+        }
+      },
+      "after": {
+        "tick": 67,
+        "slot": {
+          "id": "weapon.rocket-launcher",
+          "magazine": 0,
+          "reserve": "infinite",
+          "charges": 0,
+          "nextCharge": 0,
+          "reloadUntil": 0,
+          "readyAt": 70
+        },
+        "events": 0,
+        "hint": "Too close!",
+        "rejected": [
+          {
+            "type": "combat.empty",
+            "tick": 58,
+            "sourceId": 1,
+            "actionId": "weapon.rocket-launcher",
+            "position": {
+              "x": 274.2551574707031,
+              "y": 4.619999885559082,
+              "z": 15,
+              "yaw": 3.1415702600757536
+            },
+            "reason": "too-close"
+          }
+        ]
+      }
+    },
+    "finished": true,
+    "probeOnly": true,
+    "wallSeconds": 0.55,
+    "captures": [
+      {
+        "stage": "step-rocket",
+        "file": "step-rocket-z1.5.jpg",
+        "zoom": 1.5,
+        "state": {
+          "tick": 30,
+          "level": "L7",
+          "phase": "playing",
+          "active": [
+            "rocket"
+          ],
+          "hp": 100,
+          "position": {
+            "x": 273,
+            "y": 4.619999885559082,
+            "z": 15,
+            "yaw": 0.3205919885488634
+          },
+          "driver": false,
+          "god": false,
+          "backend": "webgl",
+          "quality": "low",
+          "zoom": 1.5,
+          "caption": "Night. While you were underground, Fairhaven was overrun. The rocket launcher in the wrecked army truck by the exit is your way through.",
+          "checkpoint": "night-exit",
+          "objective": "Recover the rocket launcher beside the exit \u00b7 3\u00a0m",
+          "weapons": {
+            "selectedSide": "RIGHT",
+            "LEFT": {
+              "rack": [
+                {
+                  "id": "weapon.bat",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                },
+                {
+                  "id": "weapon.fire-axe",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                }
+              ],
+              "index": 0,
+              "aim": {
+                "x": 1,
+                "z": 0
+              },
+              "aimPoint": null,
+              "swapUntil": 0
+            },
+            "RIGHT": {
+              "rack": [
+                {
+                  "id": "weapon.handgun",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                },
+                {
+                  "id": "weapon.army-mg",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                },
+                {
+                  "id": "weapon.shotgun",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                }
+              ],
+              "index": 2,
+              "aim": {
+                "x": 1,
+                "z": 0
+              },
+              "aimPoint": null,
+              "swapUntil": 0
+            }
+          },
+          "mountedGun": null,
+          "l7": {
+            "phase": "waiting",
+            "busId": 50,
+            "boarded": [],
+            "entering": {},
+            "lastEnterAt": -1000000000,
+            "startedAt": 0,
+            "readyAt": null
+          },
+          "marker": "l7-rocket",
+          "states": {
+            "corridor-group": false
+          },
+          "enemies": [
+            {
+              "id": 137,
+              "type": "infected.alpha",
+              "hp": 450,
+              "at": {
+                "x": 259,
+                "y": 4.6,
+                "z": 12,
+                "yaw": 3.141592653589793
+              },
+              "state": "idle"
+            },
+            {
+              "id": 138,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 272.9953363829375,
+                "y": 4.6,
+                "z": 9.491605489287469,
+                "yaw": 2.072450946420643
+              },
+              "state": "wander"
+            },
+            {
+              "id": 139,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 273,
+                "y": 4.6,
+                "z": 20.5,
+                "yaw": 1.815648697028407
+              },
+              "state": "chase"
+            },
+            {
+              "id": 140,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 271.6,
+                "y": 4.6,
+                "z": 9.5,
+                "yaw": 1.5949259869231294
+              },
+              "state": "wander"
+            },
+            {
+              "id": 141,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 271.6,
+                "y": 4.6,
+                "z": 20.5,
+                "yaw": 1.5949259869231294
+              },
+              "state": "chase"
+            },
+            {
+              "id": 142,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 259,
+                "y": 4.6,
+                "z": 10,
+                "yaw": 1.5949259869231294
+              },
+              "state": "wander"
+            },
+            {
+              "id": 143,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 258.9995930673337,
+                "y": 4.6,
+                "z": 19.999267521200625,
+                "yaw": 2.4502831628876773
+              },
+              "state": "wander"
+            },
+            {
+              "id": 144,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 259,
+                "y": 4.6,
+                "z": 8.2,
+                "yaw": 2.1609530365766685
+              },
+              "state": "wander"
+            },
+            {
+              "id": 145,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 258.9908092703053,
+                "y": 4.6,
+                "z": 21.830023050335885,
+                "yaw": 2.2782593202564616
+              },
+              "state": "wander"
+            },
+            {
+              "id": 146,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 259,
+                "y": 4.6,
+                "z": 6.4,
+                "yaw": 2.6718809749594303
+              },
+              "state": "wander"
+            },
+            {
+              "id": 147,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 258.9957447936455,
+                "y": 4.6,
+                "z": 23.602174883247844,
+                "yaw": 1.9394900522556509
+              },
+              "state": "wander"
+            },
+            {
+              "id": 148,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 259,
+                "y": 4.6,
+                "z": 4.6,
+                "yaw": 2.2791385597647205
+              },
+              "state": "wander"
+            },
+            {
+              "id": 149,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 259,
+                "y": 4.6,
+                "z": 25.4,
+                "yaw": 1.5949259869231294
+              },
+              "state": "wander"
+            },
+            {
+              "id": 150,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 259,
+                "y": 4.6,
+                "z": 2.8000000000000007,
+                "yaw": 2.0544190016890296
+              },
+              "state": "wander"
+            },
+            {
+              "id": 151,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 259,
+                "y": 4.6,
+                "z": 27.2,
+                "yaw": 2.037660422719864
+              },
+              "state": "wander"
+            },
+            {
+              "id": 152,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 257.4,
+                "y": 4.6,
+                "z": 10,
+                "yaw": 2.4945361173825065
+              },
+              "state": "wander"
+            },
+            {
+              "id": 153,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 257.4,
+                "y": 4.6,
+                "z": 20,
+                "yaw": 1.5949259869231294
+              },
+              "state": "wander"
+            },
+            {
+              "id": 154,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 257.4,
+                "y": 4.6,
+                "z": 8.2,
+                "yaw": 2.2744429124151395
+              },
+              "state": "wander"
+            },
+            {
+              "id": 155,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 257.4,
+                "y": 4.6,
+                "z": 21.8,
+                "yaw": 1.5949259869231294
+              },
+              "state": "wander"
+            },
+            {
+              "id": 156,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 257.4,
+                "y": 4.6,
+                "z": 6.4,
+                "yaw": 2.665956519021501
+              },
+              "state": "wander"
+            },
+            {
+              "id": 157,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 257.3957275306985,
+                "y": 4.6,
+                "z": 23.597317286717676,
+                "yaw": 1.894925986923129
+              },
+              "state": "wander"
+            },
+            {
+              "id": 158,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 257.3837307131686,
+                "y": 4.6,
+                "z": 4.589784401291901,
+                "yaw": 2.1149259869231285
+              },
+              "state": "wander"
+            },
+            {
+              "id": 159,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 257.4,
+                "y": 4.6,
+                "z": 25.4,
+                "yaw": 2.45241177879476
+              },
+              "state": "wander"
+            },
+            {
+              "id": 160,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 257.4,
+                "y": 4.6,
+                "z": 2.8000000000000007,
+                "yaw": 2.4537641225961693
+              },
+              "state": "wander"
+            },
+            {
+              "id": 161,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 257.4,
+                "y": 4.6,
+                "z": 27.2,
+                "yaw": 1.713992034498451
+              },
+              "state": "wander"
+            },
+            {
+              "id": 162,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 255.80017512468154,
+                "y": 4.6,
+                "z": 9.999946390403608,
+                "yaw": 2.29632938761311
+              },
+              "state": "wander"
+            },
+            {
+              "id": 163,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 255.8,
+                "y": 4.6,
+                "z": 20,
+                "yaw": 1.8591825342571093
+              },
+              "state": "wander"
+            },
+            {
+              "id": 164,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 255.81378557212952,
+                "y": 4.6,
+                "z": 8.20309472027397,
+                "yaw": 2.153522507615547
+              },
+              "state": "wander"
+            },
+            {
+              "id": 165,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 255.8,
+                "y": 4.6,
+                "z": 21.8,
+                "yaw": 2.495244342519129
+              },
+              "state": "wander"
+            },
+            {
+              "id": 166,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 255.80172728191616,
+                "y": 4.6,
+                "z": 6.3995417415324525,
+                "yaw": 1.744925986923129
+              },
+              "state": "wander"
+            },
+            {
+              "id": 167,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 255.8,
+                "y": 4.6,
+                "z": 23.6,
+                "yaw": 1.861580568256016
+              },
+              "state": "wander"
+            },
+            {
+              "id": 172,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 254.19922604768942,
+                "y": 4.6,
+                "z": 9.999763075823301,
+                "yaw": 1.959762405180842
+              },
+              "state": "wander"
+            }
+          ]
+        }
+      },
+      {
+        "stage": "launcher-safety",
+        "file": "launcher-safety-z1.5.jpg",
+        "zoom": 1.5,
+        "state": {
+          "tick": 67,
+          "slot": {
+            "id": "weapon.rocket-launcher",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 70
+          },
+          "events": 0,
+          "hint": "Too close!",
+          "rejected": [
+            {
+              "type": "combat.empty",
+              "tick": 58,
+              "sourceId": 1,
+              "actionId": "weapon.rocket-launcher",
+              "position": {
+                "x": 274.2551574707031,
+                "y": 4.619999885559082,
+                "z": 15,
+                "yaw": 3.1415702600757536
+              },
+              "reason": "too-close"
+            }
+          ]
+        }
+      },
+      {
+        "stage": "launcher-far-shot",
+        "file": "launcher-far-shot-z1.5.jpg",
+        "zoom": 1.5,
+        "state": [
+          {
+            "type": "combat.empty",
+            "tick": 58,
+            "sourceId": 1,
+            "actionId": "weapon.rocket-launcher",
+            "position": {
+              "x": 274.2551574707031,
+              "y": 4.619999885559082,
+              "z": 15,
+              "yaw": 3.1415702600757536
+            },
+            "reason": "too-close"
+          },
+          {
+            "type": "combat.attack",
+            "tick": 70,
+            "attackId": 2,
+            "actionId": "weapon.rocket-launcher",
+            "combo": 0,
+            "sourceId": 1,
+            "side": "RIGHT",
+            "position": {
+              "x": 274.2551574707031,
+              "y": 4.619999885559082,
+              "z": 15,
+              "yaw": 4.951264960750657e-07
+            },
+            "direction": {
+              "x": 0.9999999999998775,
+              "z": -4.951264960750454e-07
+            }
+          },
+          {
+            "type": "combat.attack",
+            "tick": 120,
+            "attackId": 3,
+            "actionId": "weapon.rocket-launcher",
+            "combo": 0,
+            "sourceId": 1,
+            "side": "RIGHT",
+            "position": {
+              "x": 274.2551574707031,
+              "y": 4.619999885559082,
+              "z": 15,
+              "yaw": 0.0017174429363602996
+            },
+            "direction": {
+              "x": 0.9999985251952428,
+              "z": -0.0017174420920625458
+            }
+          },
+          {
+            "tick": 120,
+            "attackId": 0,
+            "actionId": "hazard.fire",
+            "sourceId": 47,
+            "targetId": 106,
+            "position": {
+              "x": -53.22311394671276,
+              "y": 0.8099999999999999,
+              "z": 54.67565772182932,
+              "yaw": 1.098290964573474
+            },
+            "direction": {
+              "x": 0,
+              "z": 0
+            },
+            "knockback": 0,
+            "amount": 10,
+            "damageType": "status",
+            "type": "combat.hit",
+            "targetHp": 50,
+            "targetType": "infected.runner"
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "type": "combat.empty",
+        "tick": 58,
+        "sourceId": 1,
+        "actionId": "weapon.rocket-launcher",
+        "position": {
+          "x": 274.2551574707031,
+          "y": 4.619999885559082,
+          "z": 15,
+          "yaw": 3.1415702600757536
+        },
+        "reason": "too-close"
+      },
+      {
+        "type": "combat.attack",
+        "tick": 70,
+        "attackId": 2,
+        "actionId": "weapon.rocket-launcher",
+        "combo": 0,
+        "sourceId": 1,
+        "side": "RIGHT",
+        "position": {
+          "x": 274.2551574707031,
+          "y": 4.619999885559082,
+          "z": 15,
+          "yaw": 4.951264960750657e-07
+        },
+        "direction": {
+          "x": 0.9999999999998775,
+          "z": -4.951264960750454e-07
+        }
+      },
+      {
+        "type": "combat.attack",
+        "tick": 120,
+        "attackId": 3,
+        "actionId": "weapon.rocket-launcher",
+        "combo": 0,
+        "sourceId": 1,
+        "side": "RIGHT",
+        "position": {
+          "x": 274.2551574707031,
+          "y": 4.619999885559082,
+          "z": 15,
+          "yaw": 0.0017174429363602996
+        },
+        "direction": {
+          "x": 0.9999985251952428,
+          "z": -0.0017174420920625458
+        }
+      },
+      {
+        "tick": 120,
+        "attackId": 0,
+        "actionId": "hazard.fire",
+        "sourceId": 47,
+        "targetId": 106,
+        "position": {
+          "x": -53.22311394671276,
+          "y": 0.8099999999999999,
+          "z": 54.67565772182932,
+          "yaw": 1.098290964573474
+        },
+        "direction": {
+          "x": 0,
+          "z": 0
+        },
+        "knockback": 0,
+        "amount": 10,
+        "damageType": "status",
+        "type": "combat.hit",
+        "targetHp": 50,
+        "targetType": "infected.runner"
+      }
+    ],
+    "errors": [],
+    "farLaunches": [
+      {
+        "type": "combat.attack",
+        "tick": 70,
+        "attackId": 2,
+        "actionId": "weapon.rocket-launcher",
+        "combo": 0,
+        "sourceId": 1,
+        "side": "RIGHT",
+        "position": {
+          "x": 274.2551574707031,
+          "y": 4.619999885559082,
+          "z": 15,
+          "yaw": 4.951264960750657e-07
+        },
+        "direction": {
+          "x": 0.9999999999998775,
+          "z": -4.951264960750454e-07
+        }
+      },
+      {
+        "type": "combat.attack",
+        "tick": 120,
+        "attackId": 3,
+        "actionId": "weapon.rocket-launcher",
+        "combo": 0,
+        "sourceId": 1,
+        "side": "RIGHT",
+        "position": {
+          "x": 274.2551574707031,
+          "y": 4.619999885559082,
+          "z": 15,
+          "yaw": 0.0017174429363602996
+        },
+        "direction": {
+          "x": 0.9999985251952428,
+          "z": -0.0017174420920625458
+        }
+      }
+    ]
+  },
+  "high": {
+    "revision": "4e59b762d0e14d5b8bb29c04b7da9cd76005cc1c",
+    "method": "Planner advice translated to physical WASD, number keys, E and mouse; no injected driver, teleport, god mode, objective skip or time scaling during route.",
+    "quality": "high",
+    "launcherClose": {
+      "before": {
+        "tick": 51,
+        "slot": {
+          "id": "weapon.rocket-launcher",
+          "magazine": 0,
+          "reserve": "infinite",
+          "charges": 0,
+          "nextCharge": 0,
+          "reloadUntil": 0,
+          "readyAt": 0
+        },
+        "events": 0,
+        "point": {
+          "x": 567.3274410038304,
+          "y": 357.2796046652236
+        }
+      },
+      "after": {
+        "tick": 67,
+        "slot": {
+          "id": "weapon.rocket-launcher",
+          "magazine": 0,
+          "reserve": "infinite",
+          "charges": 0,
+          "nextCharge": 0,
+          "reloadUntil": 0,
+          "readyAt": 70
+        },
+        "events": 0,
+        "hint": "Too close!",
+        "rejected": [
+          {
+            "type": "combat.empty",
+            "tick": 58,
+            "sourceId": 1,
+            "actionId": "weapon.rocket-launcher",
+            "position": {
+              "x": 274.2551574707031,
+              "y": 4.619999885559082,
+              "z": 15,
+              "yaw": 3.1415702600757536
+            },
+            "reason": "too-close"
+          }
+        ]
+      }
+    },
+    "finished": true,
+    "probeOnly": true,
+    "wallSeconds": 0.766,
+    "captures": [
+      {
+        "stage": "step-rocket",
+        "file": "step-rocket-z1.5.jpg",
+        "zoom": 1.5,
+        "state": {
+          "tick": 30,
+          "level": "L7",
+          "phase": "playing",
+          "active": [
+            "rocket"
+          ],
+          "hp": 100,
+          "position": {
+            "x": 273,
+            "y": 4.619999885559082,
+            "z": 15,
+            "yaw": 0.3205919885488634
+          },
+          "driver": false,
+          "god": false,
+          "backend": "webgl",
+          "quality": "high",
+          "zoom": 1.5,
+          "caption": "Night. While you were underground, Fairhaven was overrun. The rocket launcher in the wrecked army truck by the exit is your way through.",
+          "checkpoint": "night-exit",
+          "objective": "Recover the rocket launcher beside the exit \u00b7 3\u00a0m",
+          "weapons": {
+            "selectedSide": "RIGHT",
+            "LEFT": {
+              "rack": [
+                {
+                  "id": "weapon.bat",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                },
+                {
+                  "id": "weapon.fire-axe",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                }
+              ],
+              "index": 0,
+              "aim": {
+                "x": 1,
+                "z": 0
+              },
+              "aimPoint": null,
+              "swapUntil": 0
+            },
+            "RIGHT": {
+              "rack": [
+                {
+                  "id": "weapon.handgun",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                },
+                {
+                  "id": "weapon.army-mg",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                },
+                {
+                  "id": "weapon.shotgun",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                }
+              ],
+              "index": 2,
+              "aim": {
+                "x": 1,
+                "z": 0
+              },
+              "aimPoint": null,
+              "swapUntil": 0
+            }
+          },
+          "mountedGun": null,
+          "l7": {
+            "phase": "waiting",
+            "busId": 50,
+            "boarded": [],
+            "entering": {},
+            "lastEnterAt": -1000000000,
+            "startedAt": 0,
+            "readyAt": null
+          },
+          "marker": "l7-rocket",
+          "states": {
+            "corridor-group": false
+          },
+          "enemies": [
+            {
+              "id": 197,
+              "type": "infected.alpha",
+              "hp": 450,
+              "at": {
+                "x": 259,
+                "y": 4.6,
+                "z": 12,
+                "yaw": 3.141592653589793
+              },
+              "state": "idle"
+            },
+            {
+              "id": 198,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 272.9990665607657,
+                "y": 4.6,
+                "z": 9.498319809378268,
+                "yaw": 1.9217851799995058
+              },
+              "state": "wander"
+            },
+            {
+              "id": 199,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 273,
+                "y": 4.6,
+                "z": 20.5,
+                "yaw": 1.5949259869231294
+              },
+              "state": "chase"
+            },
+            {
+              "id": 200,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 271.6,
+                "y": 4.6,
+                "z": 9.5,
+                "yaw": 2.02202282041203
+              },
+              "state": "wander"
+            },
+            {
+              "id": 201,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 271.6007569406923,
+                "y": 4.6,
+                "z": 20.49851902908028,
+                "yaw": 2.6288538685507796
+              },
+              "state": "wander"
+            },
+            {
+              "id": 202,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 270.2,
+                "y": 4.6,
+                "z": 9.5,
+                "yaw": 1.9579769293037281
+              },
+              "state": "wander"
+            },
+            {
+              "id": 203,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 259,
+                "y": 4.6,
+                "z": 10,
+                "yaw": 2.039151685460319
+              },
+              "state": "wander"
+            },
+            {
+              "id": 204,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 259,
+                "y": 4.6,
+                "z": 20,
+                "yaw": 2.173722618163722
+              },
+              "state": "wander"
+            },
+            {
+              "id": 205,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 259,
+                "y": 4.6,
+                "z": 8.2,
+                "yaw": 2.788302916593077
+              },
+              "state": "wander"
+            },
+            {
+              "id": 206,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 258.99994151555217,
+                "y": 4.6,
+                "z": 21.800191049196183,
+                "yaw": 1.8854292851241037
+              },
+              "state": "wander"
+            },
+            {
+              "id": 207,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 259,
+                "y": 4.6,
+                "z": 6.4,
+                "yaw": 2.263152747215241
+              },
+              "state": "wander"
+            },
+            {
+              "id": 208,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 259,
+                "y": 4.6,
+                "z": 23.6,
+                "yaw": 2.9932349235786466
+              },
+              "state": "wander"
+            },
+            {
+              "id": 209,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 259,
+                "y": 4.6,
+                "z": 4.6,
+                "yaw": 1.7538209285529682
+              },
+              "state": "wander"
+            },
+            {
+              "id": 210,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 259,
+                "y": 4.6,
+                "z": 25.4,
+                "yaw": 2.5706644603055935
+              },
+              "state": "wander"
+            },
+            {
+              "id": 211,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 259,
+                "y": 4.6,
+                "z": 2.8000000000000007,
+                "yaw": 2.4745629438079617
+              },
+              "state": "wander"
+            },
+            {
+              "id": 212,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 259,
+                "y": 4.6,
+                "z": 27.2,
+                "yaw": 2.0237141158048413
+              },
+              "state": "wander"
+            },
+            {
+              "id": 213,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 257.4,
+                "y": 4.6,
+                "z": 10,
+                "yaw": 2.608252568007916
+              },
+              "state": "wander"
+            },
+            {
+              "id": 214,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 257.4,
+                "y": 4.6,
+                "z": 20,
+                "yaw": 1.5949259869231294
+              },
+              "state": "wander"
+            },
+            {
+              "id": 215,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 257.4,
+                "y": 4.6,
+                "z": 8.2,
+                "yaw": 2.2396167966635003
+              },
+              "state": "wander"
+            },
+            {
+              "id": 216,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 257.4,
+                "y": 4.6,
+                "z": 21.8,
+                "yaw": 2.8093876732300687
+              },
+              "state": "wander"
+            },
+            {
+              "id": 217,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 257.4,
+                "y": 4.6,
+                "z": 6.4,
+                "yaw": 2.04889551231995
+              },
+              "state": "wander"
+            },
+            {
+              "id": 218,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 257.4,
+                "y": 4.6,
+                "z": 23.6,
+                "yaw": 1.851575537405136
+              },
+              "state": "wander"
+            },
+            {
+              "id": 219,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 257.4,
+                "y": 4.6,
+                "z": 4.6,
+                "yaw": 2.6793751767499714
+              },
+              "state": "wander"
+            },
+            {
+              "id": 220,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 257.4,
+                "y": 4.6,
+                "z": 25.4,
+                "yaw": 1.7234251152899467
+              },
+              "state": "wander"
+            },
+            {
+              "id": 221,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 257.389960613795,
+                "y": 4.6,
+                "z": 2.837840763388321,
+                "yaw": 2.364925986923128
+              },
+              "state": "wander"
+            },
+            {
+              "id": 222,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 257.4,
+                "y": 4.6,
+                "z": 27.2,
+                "yaw": 2.1328904672965137
+              },
+              "state": "wander"
+            },
+            {
+              "id": 223,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 255.82335787596193,
+                "y": 4.6,
+                "z": 9.99284962980758,
+                "yaw": 1.9549259869231286
+              },
+              "state": "wander"
+            },
+            {
+              "id": 224,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 255.8,
+                "y": 4.6,
+                "z": 20,
+                "yaw": 1.9589036400620865
+              },
+              "state": "wander"
+            },
+            {
+              "id": 225,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 255.8,
+                "y": 4.6,
+                "z": 8.2,
+                "yaw": 3.0086853869062256
+              },
+              "state": "wander"
+            },
+            {
+              "id": 226,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 255.8,
+                "y": 4.6,
+                "z": 21.8,
+                "yaw": 1.9421980437315107
+              },
+              "state": "wander"
+            },
+            {
+              "id": 227,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 255.8127172330865,
+                "y": 4.6,
+                "z": 6.3966260402015465,
+                "yaw": 1.898259320256462
+              },
+              "state": "wander"
+            },
+            {
+              "id": 228,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 255.8193033987935,
+                "y": 4.6,
+                "z": 23.60512130988398,
+                "yaw": 2.0752366156213338
+              },
+              "state": "wander"
+            },
+            {
+              "id": 233,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 254.2,
+                "y": 4.6,
+                "z": 10,
+                "yaw": 1.8143322322817248
+              },
+              "state": "wander"
+            },
+            {
+              "id": 234,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 254.2,
+                "y": 4.6,
+                "z": 20,
+                "yaw": 2.8848396713756985
+              },
+              "state": "wander"
+            },
+            {
+              "id": 235,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 254.55355339059327,
+                "y": 4.6,
+                "z": 8.553553390593272,
+                "yaw": 1.8475032058844074
+              },
+              "state": "wander"
+            },
+            {
+              "id": 237,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 256.08589156074896,
+                "y": 4.6,
+                "z": 7.043011562857403,
+                "yaw": 2.1356313843300296
+              },
+              "state": "wander"
+            },
+            {
+              "id": 239,
+              "type": "infected.runner",
+              "hp": 60,
+              "at": {
+                "x": 256.075,
+                "y": 4.6,
+                "z": 5.249519052838329,
+                "yaw": 1.5949259869231294
+              },
+              "state": "wander"
+            }
+          ]
+        }
+      },
+      {
+        "stage": "launcher-safety",
+        "file": "launcher-safety-z1.5.jpg",
+        "zoom": 1.5,
+        "state": {
+          "tick": 67,
+          "slot": {
+            "id": "weapon.rocket-launcher",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 70
+          },
+          "events": 0,
+          "hint": "Too close!",
+          "rejected": [
+            {
+              "type": "combat.empty",
+              "tick": 58,
+              "sourceId": 1,
+              "actionId": "weapon.rocket-launcher",
+              "position": {
+                "x": 274.2551574707031,
+                "y": 4.619999885559082,
+                "z": 15,
+                "yaw": 3.1415702600757536
+              },
+              "reason": "too-close"
+            }
+          ]
+        }
+      },
+      {
+        "stage": "launcher-far-shot",
+        "file": "launcher-far-shot-z1.5.jpg",
+        "zoom": 1.5,
+        "state": [
+          {
+            "type": "combat.empty",
+            "tick": 58,
+            "sourceId": 1,
+            "actionId": "weapon.rocket-launcher",
+            "position": {
+              "x": 274.2551574707031,
+              "y": 4.619999885559082,
+              "z": 15,
+              "yaw": 3.1415702600757536
+            },
+            "reason": "too-close"
+          },
+          {
+            "tick": 60,
+            "attackId": 0,
+            "actionId": "hazard.fire",
+            "sourceId": 47,
+            "targetId": 146,
+            "position": {
+              "x": -52.86027148434477,
+              "y": 0.8099999999999999,
+              "z": 56.122940507063795,
+              "yaw": 0.11825932025646203
+            },
+            "direction": {
+              "x": 0,
+              "z": 0
+            },
+            "knockback": 0,
+            "amount": 10,
+            "damageType": "status",
+            "type": "combat.hit",
+            "targetHp": 50,
+            "targetType": "infected.runner"
+          },
+          {
+            "type": "combat.attack",
+            "tick": 70,
+            "attackId": 2,
+            "actionId": "weapon.rocket-launcher",
+            "combo": 0,
+            "sourceId": 1,
+            "side": "RIGHT",
+            "position": {
+              "x": 274.2551574707031,
+              "y": 4.619999885559082,
+              "z": 15,
+              "yaw": 4.951264960750657e-07
+            },
+            "direction": {
+              "x": 0.9999999999998775,
+              "z": -4.951264960750454e-07
+            }
+          },
+          {
+            "type": "combat.attack",
+            "tick": 120,
+            "attackId": 3,
+            "actionId": "weapon.rocket-launcher",
+            "combo": 0,
+            "sourceId": 1,
+            "side": "RIGHT",
+            "position": {
+              "x": 274.2551574707031,
+              "y": 4.619999885559082,
+              "z": 15,
+              "yaw": 0.0017174429363602996
+            },
+            "direction": {
+              "x": 0.9999985251952428,
+              "z": -0.0017174420920625458
+            }
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "type": "combat.empty",
+        "tick": 58,
+        "sourceId": 1,
+        "actionId": "weapon.rocket-launcher",
+        "position": {
+          "x": 274.2551574707031,
+          "y": 4.619999885559082,
+          "z": 15,
+          "yaw": 3.1415702600757536
+        },
+        "reason": "too-close"
+      },
+      {
+        "tick": 60,
+        "attackId": 0,
+        "actionId": "hazard.fire",
+        "sourceId": 47,
+        "targetId": 146,
+        "position": {
+          "x": -52.86027148434477,
+          "y": 0.8099999999999999,
+          "z": 56.122940507063795,
+          "yaw": 0.11825932025646203
+        },
+        "direction": {
+          "x": 0,
+          "z": 0
+        },
+        "knockback": 0,
+        "amount": 10,
+        "damageType": "status",
+        "type": "combat.hit",
+        "targetHp": 50,
+        "targetType": "infected.runner"
+      },
+      {
+        "type": "combat.attack",
+        "tick": 70,
+        "attackId": 2,
+        "actionId": "weapon.rocket-launcher",
+        "combo": 0,
+        "sourceId": 1,
+        "side": "RIGHT",
+        "position": {
+          "x": 274.2551574707031,
+          "y": 4.619999885559082,
+          "z": 15,
+          "yaw": 4.951264960750657e-07
+        },
+        "direction": {
+          "x": 0.9999999999998775,
+          "z": -4.951264960750454e-07
+        }
+      },
+      {
+        "type": "combat.attack",
+        "tick": 120,
+        "attackId": 3,
+        "actionId": "weapon.rocket-launcher",
+        "combo": 0,
+        "sourceId": 1,
+        "side": "RIGHT",
+        "position": {
+          "x": 274.2551574707031,
+          "y": 4.619999885559082,
+          "z": 15,
+          "yaw": 0.0017174429363602996
+        },
+        "direction": {
+          "x": 0.9999985251952428,
+          "z": -0.0017174420920625458
+        }
+      }
+    ],
+    "errors": [],
+    "farLaunches": [
+      {
+        "type": "combat.attack",
+        "tick": 70,
+        "attackId": 2,
+        "actionId": "weapon.rocket-launcher",
+        "combo": 0,
+        "sourceId": 1,
+        "side": "RIGHT",
+        "position": {
+          "x": 274.2551574707031,
+          "y": 4.619999885559082,
+          "z": 15,
+          "yaw": 4.951264960750657e-07
+        },
+        "direction": {
+          "x": 0.9999999999998775,
+          "z": -4.951264960750454e-07
+        }
+      },
+      {
+        "type": "combat.attack",
+        "tick": 120,
+        "attackId": 3,
+        "actionId": "weapon.rocket-launcher",
+        "combo": 0,
+        "sourceId": 1,
+        "side": "RIGHT",
+        "position": {
+          "x": 274.2551574707031,
+          "y": 4.619999885559082,
+          "z": 15,
+          "yaw": 0.0017174429363602996
+        },
+        "direction": {
+          "x": 0.9999985251952428,
+          "z": -0.0017174420920625458
+        }
+      }
+    ]
+  }
+}

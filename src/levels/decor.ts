@@ -6,6 +6,7 @@
 import { Rng } from '../core/Rng';
 import { worldAssets } from '../assets/worldDefinitions';
 import { l6, l6Doors } from '../data/l6';
+import { cureFarmDecor } from './L10/farmLayout';
 import { cureRoadsideBelt } from './L10/roadsideBelt';
 import { cureCrossingStories } from './L10/crossingStories';
 import { cureForecourtDecor } from './L10/forecourts';
@@ -95,8 +96,9 @@ export function districtDecor(district: DistrictId, placements: readonly Placeme
     // The belt keeps its exact pieces; the crossing stories (r9-l10pace) fit round it.
     const belt = cureRoadsideBelt(placements), stories = cureCrossingStories([...placements, ...belt]);
     const forecourts = cureForecourtDecor([...placements, ...belt, ...stories]);
-    const vignettes = cureVignettes([...placements, ...belt, ...stories, ...forecourts]);
-    const list = [...belt, ...stories, ...forecourts, ...vignettes];
+    const farm = cureFarmDecor([...placements, ...belt, ...stories, ...forecourts]);
+    const vignettes = cureVignettes([...placements, ...belt, ...stories, ...forecourts, ...farm]);
+    const list = [...belt, ...stories, ...forecourts, ...farm, ...vignettes];
     cache.set(key, list); return list;
   }
   if (l7) {

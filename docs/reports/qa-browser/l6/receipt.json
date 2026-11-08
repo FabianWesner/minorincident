@@ -1,0 +1,4244 @@
+{
+  "runs": [
+    {
+      "quality": "low",
+      "run": {
+        "level": "L6",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 376,
+        "simSeconds": 356,
+        "maxNoProgressSeconds": 32.524,
+        "deaths": 3,
+        "assists": 1,
+        "attacks": {
+          "weapon.army-mg": 1613,
+          "weapon.fire-axe": 124
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "steps": [
+          {
+            "id": "shelter",
+            "text": "Look around the shelter \u00b7 rest while you can",
+            "tick": 11,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "stop",
+            "text": "Stop the infected \u00b7 Retreat in 0:36",
+            "tick": 1998,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "retreat",
+            "text": "Cover the retreat through the tunnel \u00b7 240\u00a0m",
+            "tick": 3258,
+            "marker": {
+              "anchor": "l6-next",
+              "ring": {
+                "x": 242,
+                "y": 0.6,
+                "z": 15
+              },
+              "drawn": [
+                242,
+                0.6,
+                15
+              ],
+              "playerY": 1.3200000524520874,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "exit",
+            "text": "Rejoin Marcus \u00b7 16 m",
+            "tick": 11087,
+            "marker": {
+              "anchor": "night-exit",
+              "ring": {
+                "x": 273,
+                "y": 3.9,
+                "z": 15
+              },
+              "drawn": [
+                273,
+                3.9,
+                15
+              ],
+              "playerY": 1.590000033378601,
+              "pinVisible": true
+            }
+          }
+        ]
+      },
+      "backend": "webgl",
+      "actualQuality": "low",
+      "sourceRevision": "ff6edd7c for low; 059b55ac plus capture-only observer for high",
+      "results": [
+        {
+          "stats": {
+            "time": 356.3666666666667,
+            "kills": 0,
+            "knockdowns": 140,
+            "damage": 530.3333333333323,
+            "deaths": 3,
+            "rescued": 13,
+            "optionalObjectives": []
+          },
+          "rescued": 1,
+          "survivorsIn": 29,
+          "survivorsLost": 28
+        }
+      ],
+      "lastObservation": {
+        "tick": 21088,
+        "deaths": 3,
+        "player": {
+          "transform": {
+            "x": 263.4872131347656,
+            "y": 4.619999885559082,
+            "z": 12.6498384475708,
+            "yaw": -7.850462293418876e-17
+          },
+          "health": {
+            "current": 19.733333333333103,
+            "max": 100
+          }
+        },
+        "leaderX": 276,
+        "tailX": 276,
+        "paused": true,
+        "waitFor": {
+          "kind": "rear",
+          "id": 0
+        },
+        "gates": [
+          {
+            "id": 45,
+            "x": 90,
+            "closedAt": 13909,
+            "hold": 0,
+            "requested": false,
+            "passed": true
+          },
+          {
+            "id": 46,
+            "x": 150,
+            "closedAt": 0,
+            "hold": 0,
+            "requested": false,
+            "passed": true
+          },
+          {
+            "id": 47,
+            "x": 210,
+            "closedAt": 0,
+            "hold": 0,
+            "requested": false,
+            "passed": true
+          }
+        ],
+        "survivors": [
+          {
+            "key": "shelter-0",
+            "id": 16,
+            "injured": false,
+            "routine": "guard",
+            "status": "out",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 270.0404175401904,
+              "z": 11.985197078291943,
+              "y": 4.6,
+              "yaw": 0.35137891956706824
+            }
+          },
+          {
+            "key": "shelter-1",
+            "id": 17,
+            "injured": false,
+            "routine": "sit",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 58.70782669199422,
+              "z": 14.521133185731513,
+              "y": 1.250000001490116,
+              "yaw": -2.6587454103737946
+            }
+          },
+          {
+            "key": "shelter-2",
+            "id": 18,
+            "injured": false,
+            "routine": "talk",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 34.71682234134086,
+              "z": 16.01248933744795,
+              "y": 1.250000001490116,
+              "yaw": 2.4994797844672263
+            }
+          },
+          {
+            "key": "shelter-3",
+            "id": 19,
+            "injured": false,
+            "routine": "talk",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 27.124123497064545,
+              "z": 14.078032587144143,
+              "y": 1.2499999970197677,
+              "yaw": -0.10103692324630818
+            }
+          },
+          {
+            "key": "shelter-4",
+            "id": 20,
+            "injured": false,
+            "routine": "rest",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 52.47074758911687,
+              "z": 14.707354758875475,
+              "y": 1.250000001490116,
+              "yaw": 3.129944952804251
+            }
+          },
+          {
+            "key": "shelter-5",
+            "id": 21,
+            "injured": true,
+            "routine": "share",
+            "status": "turned",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 116.72449732060437,
+              "z": 29.046307630971594,
+              "y": 0.7,
+              "yaw": 5.92446322786795
+            }
+          },
+          {
+            "key": "shelter-6",
+            "id": 22,
+            "injured": false,
+            "routine": "sit",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 57.138940083127196,
+              "z": 14.276562442584314,
+              "y": 1.250000001490116,
+              "yaw": -2.4694333885664763
+            }
+          },
+          {
+            "key": "shelter-7",
+            "id": 23,
+            "injured": false,
+            "routine": "talk",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 79.27707948793812,
+              "z": 14.947217633944032,
+              "y": 1.250000001490116,
+              "yaw": 2.7740444331390983
+            }
+          },
+          {
+            "key": "shelter-8",
+            "id": 24,
+            "injured": false,
+            "routine": "treat",
+            "status": "turned",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 25.861616893221264,
+              "z": -21.19370208108553,
+              "y": 1.2999999999999998,
+              "yaw": 2.1072889517175524
+            }
+          },
+          {
+            "key": "shelter-9",
+            "id": 25,
+            "injured": false,
+            "routine": "rest",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 29.75321718920901,
+              "z": 12.077879558690606,
+              "y": 1.2499999970197677,
+              "yaw": 3.230673125401624
+            }
+          },
+          {
+            "key": "shelter-10",
+            "id": 26,
+            "injured": true,
+            "routine": "share",
+            "status": "turned",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 129.78150206299864,
+              "z": -21.19659651813078,
+              "y": 0.7,
+              "yaw": -4.956161213927999
+            }
+          },
+          {
+            "key": "shelter-11",
+            "id": 27,
+            "injured": false,
+            "routine": "sit",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 67.6176311438151,
+              "z": 15.314022991464089,
+              "y": 1.250000001490116,
+              "yaw": -3.008522907772801
+            }
+          },
+          {
+            "key": "shelter-12",
+            "id": 28,
+            "injured": false,
+            "routine": "talk",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 38.347855025309165,
+              "z": 13.435523292854512,
+              "y": 1.250000001490116,
+              "yaw": -2.3948682288687295
+            }
+          },
+          {
+            "key": "shelter-13",
+            "id": 29,
+            "injured": false,
+            "routine": "treat",
+            "status": "turned",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 159.28355001516255,
+              "z": 6.094793519590437,
+              "y": 0.7,
+              "yaw": 0.570737582720906
+            }
+          },
+          {
+            "key": "shelter-14",
+            "id": 30,
+            "injured": false,
+            "routine": "rest",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 5.493196862425452,
+              "z": -8.052323093938245,
+              "y": 1.300000011920929,
+              "yaw": 4.89292276457375
+            }
+          },
+          {
+            "key": "shelter-15",
+            "id": 31,
+            "injured": true,
+            "routine": "share",
+            "status": "turned",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 135.08358453683513,
+              "z": -23.873627338664654,
+              "y": 0.7,
+              "yaw": 4.403888132153796
+            }
+          },
+          {
+            "key": "shelter-16",
+            "id": 32,
+            "injured": false,
+            "routine": "sit",
+            "status": "turned",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 91.18427762910757,
+              "z": 15.477617274023595,
+              "y": 1.250000001490116,
+              "yaw": 0.17413023589731821
+            }
+          },
+          {
+            "key": "shelter-17",
+            "id": 33,
+            "injured": false,
+            "routine": "talk",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 67.25596760453952,
+              "z": 14.566292382469948,
+              "y": 1.250000001490116,
+              "yaw": -3.03490444896451
+            }
+          },
+          {
+            "key": "shelter-18",
+            "id": 34,
+            "injured": false,
+            "routine": "treat",
+            "status": "turned",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 75.14974807251926,
+              "z": -25.187382226314888,
+              "y": 0.7,
+              "yaw": -1.8441883200282287
+            }
+          },
+          {
+            "key": "shelter-19",
+            "id": 35,
+            "injured": false,
+            "routine": "rest",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 52.829031200556976,
+              "z": 15.32610984271191,
+              "y": 1.250000001490116,
+              "yaw": -2.8794590445860275
+            }
+          },
+          {
+            "key": "shelter-20",
+            "id": 36,
+            "injured": true,
+            "routine": "share",
+            "status": "turned",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 117.29000196962181,
+              "z": -14.239889507178258,
+              "y": 0.7,
+              "yaw": -5.133250111396892
+            }
+          },
+          {
+            "key": "shelter-21",
+            "id": 37,
+            "injured": false,
+            "routine": "sit",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 154.4437321455329,
+              "z": 14.263645569153486,
+              "y": 1.250000001490116,
+              "yaw": -3.00535486687592
+            }
+          },
+          {
+            "key": "shelter-22",
+            "id": 38,
+            "injured": false,
+            "routine": "talk",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 29.76719072462508,
+              "z": 14.725297562607137,
+              "y": 1.2499999970197677,
+              "yaw": -3.076566302411789
+            }
+          },
+          {
+            "key": "shelter-23",
+            "id": 39,
+            "injured": false,
+            "routine": "treat",
+            "status": "turned",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 179.00219103888452,
+              "z": -13.502839822431223,
+              "y": 0.7,
+              "yaw": 1.4435191883938976
+            }
+          },
+          {
+            "key": "dale",
+            "id": 40,
+            "injured": false,
+            "routine": "rest",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 147.19419500494163,
+              "z": 14.086785281520537,
+              "y": 1.250000001490116,
+              "yaw": -3.307287750427081
+            }
+          },
+          {
+            "key": "rosa",
+            "id": 41,
+            "injured": false,
+            "routine": "treat",
+            "status": "turned",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 100.39107884040233,
+              "z": 3.767251770119215,
+              "y": 0.7,
+              "yaw": 0.594708915922014
+            }
+          },
+          {
+            "key": "okafor",
+            "id": 42,
+            "injured": false,
+            "routine": "sit",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 29.91729926598683,
+              "z": 16.136417595654635,
+              "y": 1.2499999970197677,
+              "yaw": 3.1957388743880015
+            }
+          },
+          {
+            "key": "mia",
+            "id": 43,
+            "injured": false,
+            "routine": "talk",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 19.520937471600252,
+              "z": 13.471670889929145,
+              "y": 1.2499999970197677,
+              "yaw": 1.9103993912307309
+            }
+          },
+          {
+            "key": "sam",
+            "id": 44,
+            "injured": false,
+            "routine": "treat",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 74.16478039825431,
+              "z": 15.134300740063285,
+              "y": 1.250000001490116,
+              "yaw": -3.1071218632944637
+            }
+          }
+        ]
+      },
+      "photos": [
+        {
+          "stage": "rail",
+          "file": "captures/L6-low-L6-rail-low-z1.jpg",
+          "quality": "low",
+          "zoom": 1,
+          "phase": "playing",
+          "out": []
+        },
+        {
+          "stage": "rail",
+          "file": "captures/L6-low-L6-rail-low-z1-5.jpg",
+          "quality": "low",
+          "zoom": 1.5,
+          "phase": "playing",
+          "out": []
+        },
+        {
+          "stage": "safe",
+          "file": "captures/L6-low-L6-safe-low-z1.jpg",
+          "quality": "low",
+          "zoom": 1,
+          "phase": "playing",
+          "caption": "The survivors are safe.",
+          "out": [
+            {
+              "id": 16,
+              "hidden": false,
+              "x": 263.0646885115756,
+              "z": 14.270188004651281,
+              "y": 4.6,
+              "yaw": -0.0024062830909163486
+            }
+          ]
+        },
+        {
+          "stage": "safe",
+          "file": "captures/L6-low-L6-safe-low-z1-5.jpg",
+          "quality": "low",
+          "zoom": 1.5,
+          "phase": "playing",
+          "caption": "The survivors are safe.",
+          "out": [
+            {
+              "id": 16,
+              "hidden": false,
+              "x": 263.0646885115756,
+              "z": 14.270188004651281,
+              "y": 4.6,
+              "yaw": -0.0024062830909163486
+            }
+          ]
+        },
+        {
+          "stage": "night",
+          "file": "captures/L6-low-L6-night-low-z1.jpg",
+          "quality": "low",
+          "zoom": 1,
+          "phase": "cinematic",
+          "out": [
+            {
+              "id": 16,
+              "hidden": false,
+              "x": 270.0404175401904,
+              "z": 11.985197078291943,
+              "y": 4.6,
+              "yaw": 0.35137891956706824
+            }
+          ]
+        },
+        {
+          "stage": "night",
+          "file": "captures/L6-low-L6-night-low-z1-5.jpg",
+          "quality": "low",
+          "zoom": 1.5,
+          "phase": "cinematic",
+          "out": [
+            {
+              "id": 16,
+              "hidden": false,
+              "x": 270.0404175401904,
+              "z": 11.985197078291943,
+              "y": 4.6,
+              "yaw": 0.35137891956706824
+            }
+          ]
+        }
+      ],
+      "manualInputs": [
+        {
+          "t": "2026-11-08T16:52:04.954Z",
+          "manualInput": {
+            "manual": true,
+            "keys": [
+              "KeyA",
+              "KeyS"
+            ],
+            "ms": 800,
+            "capture": "L6-low-manual-stair-z15"
+          },
+          "level": "L6",
+          "tick": 21382
+        },
+        {
+          "t": "2026-11-08T16:52:16.886Z",
+          "manualInput": {
+            "manual": false,
+            "capture": "L6-low-after-night"
+          },
+          "level": "L6",
+          "tick": 21382
+        }
+      ],
+      "issues": [
+        {
+          "level": "L6",
+          "tick": 1242,
+          "x": 3,
+          "z": 0,
+          "severity": "P2",
+          "kind": "stuck-navigating",
+          "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Look around the shelter \u00b7 rest while you can\"",
+          "captures": [
+            "captures/L6-low-L6-1242-stuck-navigating.jpg"
+          ],
+          "step": "shelter",
+          "objective": "Look around the shelter \u00b7 rest while you can"
+        }
+      ],
+      "logSha256": "172f1d4711ad84bd6ccd70b6e53f1c38f54d5e0a084b784ecef2b242d7b45745",
+      "actualDeaths": 3
+    },
+    {
+      "quality": "high",
+      "run": {
+        "level": "L6",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 495,
+        "simSeconds": 491,
+        "maxNoProgressSeconds": 63.911,
+        "deaths": 4,
+        "assists": 1,
+        "attacks": {
+          "weapon.army-mg": 1202,
+          "weapon.fire-axe": 275
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "steps": [
+          {
+            "id": "shelter",
+            "text": "Look around the shelter \u00b7 rest while you can",
+            "tick": 12,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "stop",
+            "text": "Stop the infected \u00b7 Retreat in 0:36",
+            "tick": 1997,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "retreat",
+            "text": "Cover the retreat through the tunnel \u00b7 240\u00a0m",
+            "tick": 3257,
+            "marker": {
+              "anchor": "l6-next",
+              "ring": {
+                "x": 242,
+                "y": 0.6,
+                "z": 15
+              },
+              "drawn": [
+                242,
+                0.6,
+                15
+              ],
+              "playerY": 1.3200000524520874,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "exit",
+            "text": "Bring the survivors into the night \u00b7 0/2 out \u00b7 32\u00a0m",
+            "tick": 10592,
+            "marker": {
+              "anchor": "night-exit",
+              "ring": {
+                "x": 273,
+                "y": 3.9,
+                "z": 15
+              },
+              "drawn": [
+                273,
+                3.9,
+                15
+              ],
+              "playerY": 1.2699999809265137,
+              "pinVisible": true
+            }
+          }
+        ]
+      },
+      "backend": "webgl",
+      "actualQuality": "high",
+      "sourceRevision": "ff6edd7c for low; 059b55ac plus capture-only observer for high",
+      "results": [],
+      "lastObservation": {
+        "tick": 29065,
+        "deaths": 6,
+        "player": {
+          "transform": {
+            "x": 241.2122039794922,
+            "y": 1.2699999809265137,
+            "z": 14.74278736114502,
+            "yaw": -7.850462293418876e-17
+          },
+          "health": {
+            "current": 100,
+            "max": 100
+          }
+        },
+        "leaderX": 252.32666666664278,
+        "tailX": 242.16494083358418,
+        "paused": false,
+        "gates": [
+          {
+            "id": 45,
+            "x": 90,
+            "closedAt": 0,
+            "hold": 0,
+            "requested": false,
+            "passed": true
+          },
+          {
+            "id": 46,
+            "x": 150,
+            "closedAt": 0,
+            "hold": 0,
+            "requested": false,
+            "passed": true
+          },
+          {
+            "id": 47,
+            "x": 210,
+            "closedAt": 28310,
+            "hold": 0,
+            "requested": false,
+            "passed": true
+          }
+        ],
+        "survivors": [
+          {
+            "key": "shelter-0",
+            "id": 16,
+            "injured": false,
+            "routine": "guard",
+            "status": "following",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 245.2645981447391,
+              "z": 14.224279154820765,
+              "y": 1.250000001490116,
+              "yaw": 0.020452289360317344
+            }
+          },
+          {
+            "key": "shelter-1",
+            "id": 17,
+            "injured": false,
+            "routine": "sit",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 46.56075972216294,
+              "z": 15.374990677510601,
+              "y": 1.250000001490116,
+              "yaw": 2.5148316143334295
+            }
+          },
+          {
+            "key": "shelter-2",
+            "id": 18,
+            "injured": false,
+            "routine": "talk",
+            "status": "turned",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 126.92423988949331,
+              "z": -9.58725894613303,
+              "y": 0.7,
+              "yaw": -0.9329626001704199
+            }
+          },
+          {
+            "key": "shelter-3",
+            "id": 19,
+            "injured": false,
+            "routine": "talk",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 54.114452132341306,
+              "z": 14.070643300740157,
+              "y": 1.250000001490116,
+              "yaw": -0.13682104945323337
+            }
+          },
+          {
+            "key": "shelter-4",
+            "id": 20,
+            "injured": false,
+            "routine": "rest",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 71.61088387639532,
+              "z": 15.122712975939773,
+              "y": 1.250000001490116,
+              "yaw": 2.911058049119303
+            }
+          },
+          {
+            "key": "shelter-5",
+            "id": 21,
+            "injured": true,
+            "routine": "share",
+            "status": "turned",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 211.81134027807428,
+              "z": 15.329704230450139,
+              "y": 1.2999999999999998,
+              "yaw": 0.7873946658080982
+            }
+          },
+          {
+            "key": "shelter-6",
+            "id": 22,
+            "injured": false,
+            "routine": "sit",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 65.08563571375535,
+              "z": 15.107747610988932,
+              "y": 1.250000001490116,
+              "yaw": -2.8963653703348324
+            }
+          },
+          {
+            "key": "shelter-7",
+            "id": 23,
+            "injured": false,
+            "routine": "talk",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 39.23751454072343,
+              "z": 15.586626860878004,
+              "y": 1.250000001490116,
+              "yaw": -3.166865718187066
+            }
+          },
+          {
+            "key": "shelter-8",
+            "id": 24,
+            "injured": false,
+            "routine": "treat",
+            "status": "turned",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 143.43274422183998,
+              "z": -9.75764746059332,
+              "y": 0.7,
+              "yaw": 1.3635138474907613
+            }
+          },
+          {
+            "key": "shelter-9",
+            "id": 25,
+            "injured": false,
+            "routine": "rest",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 67.80874854316583,
+              "z": 15.364247006436962,
+              "y": 1.250000001490116,
+              "yaw": 2.1232471725846165
+            }
+          },
+          {
+            "key": "shelter-10",
+            "id": 26,
+            "injured": true,
+            "routine": "share",
+            "status": "turned",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 78.01114232716483,
+              "z": -0.2591525891900163,
+              "y": 0.7,
+              "yaw": -11.221585978795474
+            }
+          },
+          {
+            "key": "shelter-11",
+            "id": 27,
+            "injured": false,
+            "routine": "sit",
+            "status": "following",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 242.16494083358418,
+              "z": 14.839864033805876,
+              "y": 1.250000001490116,
+              "yaw": 0.07210971850795943
+            }
+          },
+          {
+            "key": "shelter-12",
+            "id": 28,
+            "injured": false,
+            "routine": "talk",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 48.93797664149646,
+              "z": 15.607817083784868,
+              "y": 1.250000001490116,
+              "yaw": 2.644293023684342
+            }
+          },
+          {
+            "key": "shelter-13",
+            "id": 29,
+            "injured": false,
+            "routine": "treat",
+            "status": "turned",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 113.89848033622609,
+              "z": -14.406220096597531,
+              "y": 0.7,
+              "yaw": 1.5653046296917847
+            }
+          },
+          {
+            "key": "shelter-14",
+            "id": 30,
+            "injured": false,
+            "routine": "rest",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 55.89962309004731,
+              "z": 16.955584996087005,
+              "y": 1.5700000143051147,
+              "yaw": -2.865069140917933
+            }
+          },
+          {
+            "key": "shelter-15",
+            "id": 31,
+            "injured": true,
+            "routine": "share",
+            "status": "turned",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 113.00460223309534,
+              "z": 27.73493396630233,
+              "y": 0.7,
+              "yaw": 12.621471770526243
+            }
+          },
+          {
+            "key": "shelter-16",
+            "id": 32,
+            "injured": false,
+            "routine": "sit",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 57.18867473723757,
+              "z": 16.40884846376882,
+              "y": 1.250000001490116,
+              "yaw": -3.1896157786806807
+            }
+          },
+          {
+            "key": "shelter-17",
+            "id": 33,
+            "injured": false,
+            "routine": "talk",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 52.42554674919001,
+              "z": 15.671358142172158,
+              "y": 1.250000001490116,
+              "yaw": -3.124450061819441
+            }
+          },
+          {
+            "key": "shelter-18",
+            "id": 34,
+            "injured": false,
+            "routine": "treat",
+            "status": "turned",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 165.81333773976615,
+              "z": 15.194443363896593,
+              "y": 1.2999999999999998,
+              "yaw": 6.5162488761825275
+            }
+          },
+          {
+            "key": "shelter-19",
+            "id": 35,
+            "injured": false,
+            "routine": "rest",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 56.62276791228581,
+              "z": 15.454376788250928,
+              "y": 1.250000001490116,
+              "yaw": 3.072799493412577
+            }
+          },
+          {
+            "key": "shelter-20",
+            "id": 36,
+            "injured": true,
+            "routine": "share",
+            "status": "turned",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 128.4694110306308,
+              "z": 16.319226133847014,
+              "y": 1.2999999999999998,
+              "yaw": -0.09373331017428477
+            }
+          },
+          {
+            "key": "shelter-21",
+            "id": 37,
+            "injured": false,
+            "routine": "sit",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 30.858198892651856,
+              "z": 13.553280746944665,
+              "y": 1.250000001490116,
+              "yaw": 2.636279918417105
+            }
+          },
+          {
+            "key": "shelter-22",
+            "id": 38,
+            "injured": false,
+            "routine": "talk",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 30.685972458504473,
+              "z": 14.22027848364739,
+              "y": 1.250000001490116,
+              "yaw": -2.7275448690930073
+            }
+          },
+          {
+            "key": "shelter-23",
+            "id": 39,
+            "injured": false,
+            "routine": "treat",
+            "status": "turned",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 107.46379684698516,
+              "z": 23.67602897700926,
+              "y": 0.7,
+              "yaw": -0.33545722287694174
+            }
+          },
+          {
+            "key": "dale",
+            "id": 40,
+            "injured": false,
+            "routine": "rest",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 29.209115786571243,
+              "z": 13.801868641214046,
+              "y": 1.2499999970197677,
+              "yaw": -3.1929493957932418
+            }
+          },
+          {
+            "key": "rosa",
+            "id": 41,
+            "injured": false,
+            "routine": "treat",
+            "status": "turned",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 119.60509179444566,
+              "z": -11.456158879535256,
+              "y": 0.7,
+              "yaw": 0.773409315670792
+            }
+          },
+          {
+            "key": "okafor",
+            "id": 42,
+            "injured": false,
+            "routine": "sit",
+            "status": "turned",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 211.9870176241752,
+              "z": 11.954535677234215,
+              "y": 1.5700000143051147,
+              "yaw": 1.883494426243526
+            }
+          },
+          {
+            "key": "mia",
+            "id": 43,
+            "injured": false,
+            "routine": "talk",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 21.408247949993022,
+              "z": 13.799938839056516,
+              "y": 1.2499999970197677,
+              "yaw": -3.138386059466042
+            }
+          },
+          {
+            "key": "sam",
+            "id": 44,
+            "injured": false,
+            "routine": "treat",
+            "status": "dead",
+            "straggler": false,
+            "collected": false,
+            "rejoined": true,
+            "hold": 0,
+            "transform": {
+              "x": 39.102359486481454,
+              "z": 13.867282648294648,
+              "y": 1.250000001490116,
+              "yaw": 2.6945468551778506
+            }
+          }
+        ]
+      },
+      "photos": [
+        {
+          "stage": "rail",
+          "file": "captures/L6-high-L6-rail-high-z1.jpg",
+          "quality": "high",
+          "zoom": 1,
+          "pending": null,
+          "tick": 6253,
+          "phase": "playing",
+          "out": []
+        },
+        {
+          "stage": "rail",
+          "file": "captures/L6-high-L6-rail-high-z1-5.jpg",
+          "quality": "high",
+          "zoom": 1.5,
+          "pending": null,
+          "tick": 6253,
+          "phase": "playing",
+          "out": []
+        },
+        {
+          "stage": "rail-110",
+          "file": "captures/L6-high-L6-rail-110-high-z1.jpg",
+          "quality": "high",
+          "zoom": 1,
+          "pending": {
+            "stage": "rail-110"
+          },
+          "tick": 6827,
+          "phase": "playing",
+          "out": []
+        },
+        {
+          "stage": "rail-110",
+          "file": "captures/L6-high-L6-rail-110-high-z1-5.jpg",
+          "quality": "high",
+          "zoom": 1.5,
+          "pending": {
+            "stage": "rail-110"
+          },
+          "tick": 6827,
+          "phase": "playing",
+          "out": []
+        },
+        {
+          "stage": "safe",
+          "file": "captures/L6-high-L6-safe-high-z1.jpg",
+          "quality": "high",
+          "zoom": 1,
+          "pending": {
+            "stage": "safe"
+          },
+          "tick": 11078,
+          "phase": "playing",
+          "caption": "The survivors are safe.",
+          "out": [
+            {
+              "id": 16,
+              "hidden": false,
+              "x": 263.02366456762246,
+              "z": 14.334266141290072,
+              "y": 4.6,
+              "yaw": 0.00971554973109923
+            }
+          ]
+        },
+        {
+          "stage": "safe",
+          "file": "captures/L6-high-L6-safe-high-z1-5.jpg",
+          "quality": "high",
+          "zoom": 1.5,
+          "pending": {
+            "stage": "safe"
+          },
+          "tick": 11078,
+          "phase": "playing",
+          "caption": "The survivors are safe.",
+          "out": [
+            {
+              "id": 16,
+              "hidden": false,
+              "x": 263.02366456762246,
+              "z": 14.334266141290072,
+              "y": 4.6,
+              "yaw": 0.00971554973109923
+            }
+          ]
+        },
+        {
+          "stage": "last-crossed",
+          "file": "captures/L6-high-L6-last-crossed-high-z1.jpg",
+          "quality": "high",
+          "zoom": 1,
+          "pending": {
+            "stage": "last-crossed"
+          },
+          "tick": 11163,
+          "phase": "playing",
+          "caption": "The survivors are safe.",
+          "out": [
+            {
+              "id": 16,
+              "hidden": false,
+              "x": 265.99450970774564,
+              "z": 13.500687570756135,
+              "y": 4.6,
+              "yaw": 0.35493995232048436
+            },
+            {
+              "id": 27,
+              "hidden": false,
+              "x": 263.02464842309064,
+              "z": 15.488687116226432,
+              "y": 4.6,
+              "yaw": -0.025568906549966717
+            }
+          ]
+        },
+        {
+          "stage": "last-crossed",
+          "file": "captures/L6-high-L6-last-crossed-high-z1-5.jpg",
+          "quality": "high",
+          "zoom": 1.5,
+          "pending": {
+            "stage": "last-crossed"
+          },
+          "tick": 11163,
+          "phase": "playing",
+          "caption": "The survivors are safe.",
+          "out": [
+            {
+              "id": 16,
+              "hidden": false,
+              "x": 265.99450970774564,
+              "z": 13.500687570756135,
+              "y": 4.6,
+              "yaw": 0.35493995232048436
+            },
+            {
+              "id": 27,
+              "hidden": false,
+              "x": 263.02464842309064,
+              "z": 15.488687116226432,
+              "y": 4.6,
+              "yaw": -0.025568906549966717
+            }
+          ]
+        },
+        {
+          "stage": "street-clear",
+          "file": "captures/L6-high-L6-street-clear-high-z1.jpg",
+          "quality": "high",
+          "zoom": 1,
+          "pending": {
+            "stage": "street-clear"
+          },
+          "tick": 11248,
+          "phase": "playing",
+          "caption": "The survivors are safe.",
+          "out": [
+            {
+              "id": 16,
+              "hidden": false,
+              "x": 268.9131422764163,
+              "z": 12.40769672300893,
+              "y": 4.6,
+              "yaw": 0.3588288276941889
+            },
+            {
+              "id": 27,
+              "hidden": false,
+              "x": 266.0203839424528,
+              "z": 16.260652470291937,
+              "y": 4.6,
+              "yaw": -0.3212674309959442
+            }
+          ]
+        },
+        {
+          "stage": "street-clear",
+          "file": "captures/L6-high-L6-street-clear-high-z1-5.jpg",
+          "quality": "high",
+          "zoom": 1.5,
+          "pending": {
+            "stage": "street-clear"
+          },
+          "tick": 11248,
+          "phase": "playing",
+          "caption": "The survivors are safe.",
+          "out": [
+            {
+              "id": 16,
+              "hidden": false,
+              "x": 268.9131422764163,
+              "z": 12.40769672300893,
+              "y": 4.6,
+              "yaw": 0.3588288276941889
+            },
+            {
+              "id": 27,
+              "hidden": false,
+              "x": 266.0203839424528,
+              "z": 16.260652470291937,
+              "y": 4.6,
+              "yaw": -0.3212674309959442
+            }
+          ]
+        }
+      ],
+      "manualInputs": [
+        {
+          "t": "2026-11-08T16:59:24.383Z",
+          "manualInput": {
+            "manual": true,
+            "keys": [
+              "KeyA",
+              "KeyS"
+            ],
+            "ms": 600,
+            "capture": "qa-high-stair-align"
+          },
+          "level": "L6",
+          "tick": 23050
+        },
+        {
+          "t": "2026-11-08T16:59:57.967Z",
+          "manualInput": {
+            "manual": true,
+            "keys": [
+              "KeyD",
+              "KeyS"
+            ],
+            "ms": 1600,
+            "capture": "qa-high-stair-forward"
+          },
+          "level": "L6",
+          "tick": 25005
+        },
+        {
+          "t": "2026-11-08T17:00:14.815Z",
+          "manualInput": {
+            "manual": false,
+            "capture": "qa-high-resume-auto"
+          },
+          "level": "L6",
+          "tick": 26112
+        },
+        {
+          "t": "2026-11-08T17:00:58.430Z",
+          "manualInput": {
+            "manual": true,
+            "keys": [
+              "KeyA",
+              "KeyW"
+            ],
+            "ms": 500,
+            "capture": "qa-stair-back"
+          },
+          "level": "L6",
+          "tick": 28699
+        },
+        {
+          "t": "2026-11-08T17:00:59.390Z",
+          "manualInput": {
+            "manual": true,
+            "keys": [
+              "KeyA",
+              "KeyS"
+            ],
+            "ms": 700,
+            "capture": "qa-stair-align2"
+          },
+          "level": "L6",
+          "tick": 28744
+        },
+        {
+          "t": "2026-11-08T17:01:02.147Z",
+          "manualInput": {
+            "manual": true,
+            "keys": [
+              "KeyD",
+              "KeyS"
+            ],
+            "ms": 2500,
+            "capture": "qa-stair-climb"
+          },
+          "level": "L6",
+          "tick": 28803
+        },
+        {
+          "t": "2026-11-08T17:01:03.414Z",
+          "manualInput": {
+            "manual": true,
+            "keys": [
+              "KeyD",
+              "KeyS"
+            ],
+            "ms": 1000,
+            "capture": "qa-stair-clear"
+          },
+          "level": "L6",
+          "tick": 28968
+        },
+        {
+          "t": "2026-11-08T17:01:03.664Z",
+          "manualInput": {
+            "manual": false,
+            "capture": "qa-stair-finish"
+          },
+          "level": "L6",
+          "tick": 29044
+        }
+      ],
+      "issues": [
+        {
+          "level": "L6",
+          "tick": 1243,
+          "x": 3,
+          "z": 0,
+          "severity": "P2",
+          "kind": "stuck-navigating",
+          "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Look around the shelter \u00b7 rest while you can\"",
+          "captures": [
+            "captures/L6-high-L6-1243-stuck-navigating.jpg"
+          ],
+          "step": "shelter",
+          "objective": "Look around the shelter \u00b7 rest while you can"
+        },
+        {
+          "level": "L6",
+          "tick": 17520,
+          "x": 248.4,
+          "z": 11.2,
+          "severity": "P2",
+          "kind": "stuck-navigating",
+          "text": "20 s without objective progress (distance 25.0 m, no marker: false); HUD: \"Bring the survivors into the night \u00b7 2/2 out \u00b7 25\u00a0m\"",
+          "captures": [
+            "captures/L6-high-L6-17520-stuck-navigating.jpg"
+          ],
+          "step": "exit",
+          "objective": "Bring the survivors into the night \u00b7 2/2 out \u00b7 25\u00a0m"
+        }
+      ],
+      "logSha256": "91a0f7a73a1e4a0f22ff8c9dadc41ab1b1f3569d6e82eda72e89f7c688ca2a5c",
+      "finalMission": {
+        "phase": "playing",
+        "checkpoint": "exit-platform",
+        "stats": {
+          "time": 491.45,
+          "kills": 0,
+          "knockdowns": 147,
+          "damage": 851.4666666666598,
+          "deaths": 6,
+          "rescued": 16,
+          "optionalObjectives": []
+        },
+        "l6": {
+          "entries": [
+            {
+              "door": 2,
+              "warnedAt": 22015,
+              "remaining": 0,
+              "nextAt": 22495,
+              "switchId": 48
+            },
+            {
+              "door": 5,
+              "warnedAt": 23142,
+              "remaining": 0,
+              "nextAt": 23622,
+              "switchId": 49
+            },
+            {
+              "door": 3,
+              "warnedAt": 24463,
+              "remaining": 0,
+              "nextAt": 24943,
+              "switchId": 50
+            },
+            {
+              "door": 6,
+              "warnedAt": 25450,
+              "remaining": 0,
+              "nextAt": 25930,
+              "switchId": 51
+            },
+            {
+              "door": 4,
+              "warnedAt": 26375,
+              "remaining": 0,
+              "nextAt": 26855,
+              "switchId": 52,
+              "closedAt": 27664,
+              "hits": 8
+            },
+            {
+              "door": 7,
+              "warnedAt": 27207,
+              "remaining": 0,
+              "nextAt": 27687,
+              "switchId": 53
+            }
+          ],
+          "phase": "exit",
+          "startAt": 0,
+          "breach1At": 20465,
+          "breach2At": 21726,
+          "abandonAt": 21726,
+          "nextWave": 31415,
+          "firstBang": true,
+          "secondBang": true,
+          "leaderX": 267.7999999999832,
+          "leaderZ": 15,
+          "paused": false,
+          "survivors": [
+            {
+              "key": "shelter-0",
+              "id": 16,
+              "injured": false,
+              "routine": "guard",
+              "status": "following",
+              "straggler": false,
+              "collected": false,
+              "rejoined": true,
+              "hold": 0
+            },
+            {
+              "key": "shelter-1",
+              "id": 17,
+              "injured": false,
+              "routine": "sit",
+              "status": "dead",
+              "straggler": false,
+              "collected": false,
+              "rejoined": true,
+              "hold": 0
+            },
+            {
+              "key": "shelter-2",
+              "id": 18,
+              "injured": false,
+              "routine": "talk",
+              "status": "turned",
+              "straggler": false,
+              "collected": false,
+              "rejoined": true,
+              "hold": 0
+            },
+            {
+              "key": "shelter-3",
+              "id": 19,
+              "injured": false,
+              "routine": "talk",
+              "status": "dead",
+              "straggler": false,
+              "collected": false,
+              "rejoined": true,
+              "hold": 0
+            },
+            {
+              "key": "shelter-4",
+              "id": 20,
+              "injured": false,
+              "routine": "rest",
+              "status": "dead",
+              "straggler": false,
+              "collected": false,
+              "rejoined": true,
+              "hold": 0
+            },
+            {
+              "key": "shelter-5",
+              "id": 21,
+              "injured": true,
+              "routine": "share",
+              "status": "turned",
+              "straggler": false,
+              "collected": false,
+              "rejoined": true,
+              "hold": 0
+            },
+            {
+              "key": "shelter-6",
+              "id": 22,
+              "injured": false,
+              "routine": "sit",
+              "status": "dead",
+              "straggler": false,
+              "collected": false,
+              "rejoined": true,
+              "hold": 0
+            },
+            {
+              "key": "shelter-7",
+              "id": 23,
+              "injured": false,
+              "routine": "talk",
+              "status": "dead",
+              "straggler": false,
+              "collected": false,
+              "rejoined": true,
+              "hold": 0
+            },
+            {
+              "key": "shelter-8",
+              "id": 24,
+              "injured": false,
+              "routine": "treat",
+              "status": "turned",
+              "straggler": false,
+              "collected": false,
+              "rejoined": true,
+              "hold": 0
+            },
+            {
+              "key": "shelter-9",
+              "id": 25,
+              "injured": false,
+              "routine": "rest",
+              "status": "dead",
+              "straggler": false,
+              "collected": false,
+              "rejoined": true,
+              "hold": 0
+            },
+            {
+              "key": "shelter-10",
+              "id": 26,
+              "injured": true,
+              "routine": "share",
+              "status": "turned",
+              "straggler": false,
+              "collected": false,
+              "rejoined": true,
+              "hold": 0
+            },
+            {
+              "key": "shelter-11",
+              "id": 27,
+              "injured": false,
+              "routine": "sit",
+              "status": "following",
+              "straggler": false,
+              "collected": false,
+              "rejoined": true,
+              "hold": 0
+            },
+            {
+              "key": "shelter-12",
+              "id": 28,
+              "injured": false,
+              "routine": "talk",
+              "status": "dead",
+              "straggler": false,
+              "collected": false,
+              "rejoined": true,
+              "hold": 0
+            },
+            {
+              "key": "shelter-13",
+              "id": 29,
+              "injured": false,
+              "routine": "treat",
+              "status": "turned",
+              "straggler": false,
+              "collected": false,
+              "rejoined": true,
+              "hold": 0
+            },
+            {
+              "key": "shelter-14",
+              "id": 30,
+              "injured": false,
+              "routine": "rest",
+              "status": "dead",
+              "straggler": false,
+              "collected": false,
+              "rejoined": true,
+              "hold": 0
+            },
+            {
+              "key": "shelter-15",
+              "id": 31,
+              "injured": true,
+              "routine": "share",
+              "status": "turned",
+              "straggler": false,
+              "collected": false,
+              "rejoined": true,
+              "hold": 0
+            },
+            {
+              "key": "shelter-16",
+              "id": 32,
+              "injured": false,
+              "routine": "sit",
+              "status": "dead",
+              "straggler": false,
+              "collected": false,
+              "rejoined": true,
+              "hold": 0
+            },
+            {
+              "key": "shelter-17",
+              "id": 33,
+              "injured": false,
+              "routine": "talk",
+              "status": "dead",
+              "straggler": false,
+              "collected": false,
+              "rejoined": true,
+              "hold": 0
+            },
+            {
+              "key": "shelter-18",
+              "id": 34,
+              "injured": false,
+              "routine": "treat",
+              "status": "turned",
+              "straggler": false,
+              "collected": false,
+              "rejoined": true,
+              "hold": 0
+            },
+            {
+              "key": "shelter-19",
+              "id": 35,
+              "injured": false,
+              "routine": "rest",
+              "status": "dead",
+              "straggler": false,
+              "collected": false,
+              "rejoined": true,
+              "hold": 0
+            },
+            {
+              "key": "shelter-20",
+              "id": 36,
+              "injured": true,
+              "routine": "share",
+              "status": "turned",
+              "straggler": false,
+              "collected": false,
+              "rejoined": true,
+              "hold": 0
+            },
+            {
+              "key": "shelter-21",
+              "id": 37,
+              "injured": false,
+              "routine": "sit",
+              "status": "dead",
+              "straggler": false,
+              "collected": false,
+              "rejoined": true,
+              "hold": 0
+            },
+            {
+              "key": "shelter-22",
+              "id": 38,
+              "injured": false,
+              "routine": "talk",
+              "status": "dead",
+              "straggler": false,
+              "collected": false,
+              "rejoined": true,
+              "hold": 0
+            },
+            {
+              "key": "shelter-23",
+              "id": 39,
+              "injured": false,
+              "routine": "treat",
+              "status": "turned",
+              "straggler": false,
+              "collected": false,
+              "rejoined": true,
+              "hold": 0
+            },
+            {
+              "key": "dale",
+              "id": 40,
+              "injured": false,
+              "routine": "rest",
+              "status": "dead",
+              "straggler": false,
+              "collected": false,
+              "rejoined": true,
+              "hold": 0
+            },
+            {
+              "key": "rosa",
+              "id": 41,
+              "injured": false,
+              "routine": "treat",
+              "status": "turned",
+              "straggler": false,
+              "collected": false,
+              "rejoined": true,
+              "hold": 0
+            },
+            {
+              "key": "okafor",
+              "id": 42,
+              "injured": false,
+              "routine": "sit",
+              "status": "turned",
+              "straggler": false,
+              "collected": false,
+              "rejoined": true,
+              "hold": 0
+            },
+            {
+              "key": "mia",
+              "id": 43,
+              "injured": false,
+              "routine": "talk",
+              "status": "dead",
+              "straggler": false,
+              "collected": false,
+              "rejoined": true,
+              "hold": 0
+            },
+            {
+              "key": "sam",
+              "id": 44,
+              "injured": false,
+              "routine": "treat",
+              "status": "dead",
+              "straggler": false,
+              "collected": false,
+              "rejoined": true,
+              "hold": 0
+            }
+          ],
+          "gates": [
+            {
+              "id": 45,
+              "x": 90,
+              "closedAt": 0,
+              "hold": 0,
+              "requested": false,
+              "passed": true
+            },
+            {
+              "id": 46,
+              "x": 150,
+              "closedAt": 0,
+              "hold": 0,
+              "requested": false,
+              "passed": true
+            },
+            {
+              "id": 47,
+              "x": 210,
+              "closedAt": 28310,
+              "hold": 0,
+              "requested": false,
+              "passed": true
+            }
+          ],
+          "infectedIds": [
+            57,
+            59,
+            60,
+            62,
+            64,
+            66,
+            68,
+            70,
+            81,
+            82,
+            84,
+            86,
+            88,
+            90,
+            92,
+            94,
+            96,
+            98,
+            100,
+            101,
+            103,
+            104,
+            106,
+            107,
+            110,
+            111,
+            113,
+            114,
+            116,
+            118,
+            120,
+            122,
+            123
+          ],
+          "spawnLog": [
+            {
+              "id": 57,
+              "door": 2,
+              "x": 54,
+              "z": 31.2,
+              "tick": 1992,
+              "wave": 1,
+              "offscreen": true
+            },
+            {
+              "id": 59,
+              "door": 3,
+              "x": 126.8,
+              "z": 31.2,
+              "tick": 1992,
+              "wave": 1,
+              "offscreen": true
+            },
+            {
+              "id": 60,
+              "door": 2,
+              "x": 54.75,
+              "z": 31.2,
+              "tick": 1992,
+              "wave": 1,
+              "offscreen": true
+            },
+            {
+              "id": 62,
+              "door": 3,
+              "x": 127.8,
+              "z": 31.2,
+              "tick": 1992,
+              "wave": 1,
+              "offscreen": true
+            },
+            {
+              "id": 64,
+              "door": 2,
+              "x": 53.25,
+              "z": 31.2,
+              "tick": 1992,
+              "wave": 1,
+              "offscreen": true
+            },
+            {
+              "id": 66,
+              "door": 3,
+              "x": 125.8,
+              "z": 31.2,
+              "tick": 1992,
+              "wave": 1,
+              "offscreen": true
+            },
+            {
+              "id": 68,
+              "door": 2,
+              "x": 53.625,
+              "z": 30.55048094716167,
+              "tick": 1992,
+              "wave": 1,
+              "offscreen": true
+            },
+            {
+              "id": 70,
+              "door": 3,
+              "x": 126.09289321881344,
+              "z": 30.492893218813453,
+              "tick": 1992,
+              "wave": 1,
+              "offscreen": true
+            },
+            {
+              "id": 81,
+              "door": 0,
+              "x": -10,
+              "z": -19.4,
+              "tick": 3253,
+              "wave": 2,
+              "offscreen": true
+            },
+            {
+              "id": 82,
+              "door": 1,
+              "x": 10,
+              "z": -19.4,
+              "tick": 3298,
+              "wave": 2,
+              "offscreen": true
+            },
+            {
+              "id": 84,
+              "door": 0,
+              "x": -10,
+              "z": -19.4,
+              "tick": 3343,
+              "wave": 2,
+              "offscreen": true
+            },
+            {
+              "id": 86,
+              "door": 1,
+              "x": 10,
+              "z": -19.4,
+              "tick": 3388,
+              "wave": 2,
+              "offscreen": true
+            },
+            {
+              "id": 88,
+              "door": 0,
+              "x": -10,
+              "z": -19.4,
+              "tick": 3433,
+              "wave": 2,
+              "offscreen": true
+            },
+            {
+              "id": 90,
+              "door": 0,
+              "x": -10,
+              "z": -19.4,
+              "tick": 3478,
+              "wave": 2,
+              "offscreen": true
+            },
+            {
+              "id": 92,
+              "door": 0,
+              "x": -10,
+              "z": -19.4,
+              "tick": 3523,
+              "wave": 2,
+              "offscreen": true
+            },
+            {
+              "id": 94,
+              "door": 0,
+              "x": -10,
+              "z": -19.4,
+              "tick": 3568,
+              "wave": 2,
+              "offscreen": true
+            },
+            {
+              "id": 96,
+              "door": 0,
+              "x": -10,
+              "z": -19.4,
+              "tick": 3613,
+              "wave": 2,
+              "offscreen": true
+            },
+            {
+              "id": 98,
+              "door": 1,
+              "x": 10,
+              "z": -19.4,
+              "tick": 3658,
+              "wave": 2,
+              "offscreen": true
+            },
+            {
+              "id": 100,
+              "door": 2,
+              "x": 54,
+              "z": 12.6,
+              "tick": 3662,
+              "wave": 4,
+              "offscreen": true
+            },
+            {
+              "id": 101,
+              "door": 2,
+              "x": 55.05,
+              "z": 12.6,
+              "tick": 3662,
+              "wave": 4,
+              "offscreen": true
+            },
+            {
+              "id": 103,
+              "door": 5,
+              "x": 78,
+              "z": 17.400000000000002,
+              "tick": 4789,
+              "wave": 4,
+              "offscreen": true
+            },
+            {
+              "id": 104,
+              "door": 5,
+              "x": 79.05,
+              "z": 17.400000000000002,
+              "tick": 4789,
+              "wave": 4,
+              "offscreen": true
+            },
+            {
+              "id": 106,
+              "door": 3,
+              "x": 126,
+              "z": 12.6,
+              "tick": 6110,
+              "wave": 4,
+              "offscreen": true
+            },
+            {
+              "id": 107,
+              "door": 3,
+              "x": 127.05,
+              "z": 12.6,
+              "tick": 6110,
+              "wave": 4,
+              "offscreen": true
+            },
+            {
+              "id": 110,
+              "door": 6,
+              "x": 161,
+              "z": 17.400000000000002,
+              "tick": 7097,
+              "wave": 4,
+              "offscreen": true
+            },
+            {
+              "id": 111,
+              "door": 6,
+              "x": 162.8,
+              "z": 17.400000000000002,
+              "tick": 7097,
+              "wave": 4,
+              "offscreen": true
+            },
+            {
+              "id": 113,
+              "door": 4,
+              "x": 198,
+              "z": 12.6,
+              "tick": 8022,
+              "wave": 4,
+              "offscreen": true
+            },
+            {
+              "id": 114,
+              "door": 4,
+              "x": 199.05,
+              "z": 12.6,
+              "tick": 8022,
+              "wave": 4,
+              "offscreen": true
+            },
+            {
+              "id": 116,
+              "door": 4,
+              "x": 198,
+              "z": 12.6,
+              "tick": 8142,
+              "wave": 3,
+              "offscreen": true
+            },
+            {
+              "id": 118,
+              "door": 4,
+              "x": 198.8,
+              "z": 12.6,
+              "tick": 8142,
+              "wave": 3,
+              "offscreen": true
+            },
+            {
+              "id": 120,
+              "door": 4,
+              "x": 198.375,
+              "z": 13.249519052838329,
+              "tick": 8142,
+              "wave": 3,
+              "offscreen": true
+            },
+            {
+              "id": 122,
+              "door": 7,
+              "x": 228,
+              "z": 17.400000000000002,
+              "tick": 8854,
+              "wave": 4,
+              "offscreen": true
+            },
+            {
+              "id": 123,
+              "door": 7,
+              "x": 229.05,
+              "z": 17.400000000000002,
+              "tick": 8854,
+              "wave": 4,
+              "offscreen": true
+            }
+          ],
+          "spawnRefusals": {
+            "cap": 9,
+            "offscreen": 0,
+            "snap": 0
+          },
+          "flashlight": false,
+          "mainPower": false,
+          "emergency": true,
+          "exitAt": 0,
+          "gateAt": 0,
+          "injuryLineAt": 22953,
+          "lastShot": 28293,
+          "mid": true,
+          "platform": true,
+          "say": {
+            "id": 1,
+            "text": "Push the glowing crates onto the line, then press E to brace the gate.",
+            "at": 7722,
+            "until": 7992
+          },
+          "alarm": {
+            "key": "l6-42-9663",
+            "id": 42,
+            "x": 207.1364390312535,
+            "z": 15.732728829875708,
+            "text": "Survivor lost!",
+            "until": 28436,
+            "kind": "lost"
+          },
+          "waitFlipAt": 0,
+          "tailX": 257.68740923467846,
+          "strayed": false,
+          "strayFlipAt": 0,
+          "pushHintShown": true
+        }
+      },
+      "actualDeaths": 6,
+      "transitionEvents": [
+        {
+          "kind": "rail-110",
+          "tick": 6827,
+          "phase": "playing",
+          "player": {
+            "x": 108.00569152832031,
+            "y": 1.2699999809265137,
+            "z": 14.05550479888916,
+            "yaw": 0.997448448487239
+          },
+          "people": [
+            {
+              "id": 16,
+              "status": "following",
+              "hidden": false,
+              "hp": 60,
+              "x": 108.43768450475399,
+              "z": 15.109273477624091,
+              "y": 1.250000001490116,
+              "yaw": 0.08384337699548491
+            },
+            {
+              "id": 17,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 46.56075972216294,
+              "z": 15.374990677510601,
+              "y": 1.250000001490116,
+              "yaw": 2.5148316143334295
+            },
+            {
+              "id": 18,
+              "status": "turned",
+              "hidden": false,
+              "hp": 32,
+              "x": 99.37252599656244,
+              "z": 15.531868874360887,
+              "y": 1.2999999999999998,
+              "yaw": 0.10733346869218616
+            },
+            {
+              "id": 19,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 54.114452132341306,
+              "z": 14.070643300740157,
+              "y": 1.250000001490116,
+              "yaw": -0.13682104945323337
+            },
+            {
+              "id": 20,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 71.61088387639532,
+              "z": 15.122712975939773,
+              "y": 1.250000001490116,
+              "yaw": 2.911058049119303
+            },
+            {
+              "id": 21,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 74.67244092155278,
+              "z": 14.863459507773737,
+              "y": 1.2999999999999998,
+              "yaw": 0.14387258093469005
+            },
+            {
+              "id": 22,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 65.08563571375535,
+              "z": 15.107747610988932,
+              "y": 1.250000001490116,
+              "yaw": -2.8963653703348324
+            },
+            {
+              "id": 23,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 39.23751454072343,
+              "z": 15.586626860878004,
+              "y": 1.250000001490116,
+              "yaw": -3.166865718187066
+            },
+            {
+              "id": 24,
+              "status": "turned",
+              "hidden": false,
+              "hp": 0,
+              "x": 81.46922753010718,
+              "z": 13.77428258165717,
+              "y": 1.2999999999999998,
+              "yaw": -0.2541231604984488
+            },
+            {
+              "id": 25,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 67.80874854316583,
+              "z": 15.364247006436962,
+              "y": 1.250000001490116,
+              "yaw": 2.1232471725846165
+            },
+            {
+              "id": 26,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 60.990086348472616,
+              "z": 15.879580707838159,
+              "y": 1.2999999999999998,
+              "yaw": 0.09286644370591632
+            },
+            {
+              "id": 27,
+              "status": "following",
+              "hidden": false,
+              "hp": 60,
+              "x": 111.86404871647885,
+              "z": 15.556796045615252,
+              "y": 1.250000001490116,
+              "yaw": 0.04751134618556074
+            },
+            {
+              "id": 28,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 48.93797664149646,
+              "z": 15.607817083784868,
+              "y": 1.250000001490116,
+              "yaw": 2.644293023684342
+            },
+            {
+              "id": 29,
+              "status": "turned",
+              "hidden": false,
+              "hp": 0,
+              "x": 104.03414241194257,
+              "z": 16.095296941372936,
+              "y": 1.2999999999999998,
+              "yaw": 0.33887878694428825
+            },
+            {
+              "id": 30,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 55.89962309004731,
+              "z": 16.955584996087005,
+              "y": 1.5700000143051147,
+              "yaw": -2.865069140917933
+            },
+            {
+              "id": 31,
+              "status": "turned",
+              "hidden": false,
+              "hp": 0,
+              "x": 84.65363192617909,
+              "z": 14.509755442344675,
+              "y": 1.2999999999999998,
+              "yaw": 6.325844832770875
+            },
+            {
+              "id": 32,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 57.18867473723757,
+              "z": 16.40884846376882,
+              "y": 1.250000001490116,
+              "yaw": -3.1896157786806807
+            },
+            {
+              "id": 33,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 52.42554674919001,
+              "z": 15.671358142172158,
+              "y": 1.250000001490116,
+              "yaw": -3.124450061819441
+            },
+            {
+              "id": 34,
+              "status": "turned",
+              "hidden": false,
+              "hp": 0,
+              "x": 84.92584398549836,
+              "z": 14.459332516134278,
+              "y": 1.2999999999999998,
+              "yaw": 0.037325041046314705
+            },
+            {
+              "id": 35,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 56.62276791228581,
+              "z": 15.454376788250928,
+              "y": 1.250000001490116,
+              "yaw": 3.072799493412577
+            },
+            {
+              "id": 36,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 65.44773644725724,
+              "z": 13.873639260845845,
+              "y": 1.2999999999999998,
+              "yaw": -0.695278637921814
+            },
+            {
+              "id": 37,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 30.858198892651856,
+              "z": 13.553280746944665,
+              "y": 1.250000001490116,
+              "yaw": 2.636279918417105
+            },
+            {
+              "id": 38,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 30.685972458504473,
+              "z": 14.22027848364739,
+              "y": 1.250000001490116,
+              "yaw": -2.7275448690930073
+            },
+            {
+              "id": 39,
+              "status": "turned",
+              "hidden": false,
+              "hp": 0,
+              "x": 81.66026372435401,
+              "z": 14.412890371709121,
+              "y": 1.2999999999999998,
+              "yaw": 0.1028598616938631
+            },
+            {
+              "id": 40,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 29.209115786571243,
+              "z": 13.801868641214046,
+              "y": 1.2499999970197677,
+              "yaw": -3.1929493957932418
+            },
+            {
+              "id": 41,
+              "status": "turned",
+              "hidden": false,
+              "hp": 0,
+              "x": 79.6975834852141,
+              "z": 13.858326495586535,
+              "y": 1.2999999999999998,
+              "yaw": -0.16762509137436754
+            },
+            {
+              "id": 42,
+              "status": "following",
+              "hidden": false,
+              "hp": 60,
+              "x": 111.14064466506895,
+              "z": 15.588229209232312,
+              "y": 1.250000001490116,
+              "yaw": 0.05851484984768089
+            },
+            {
+              "id": 43,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 21.408247949993022,
+              "z": 13.799938839056516,
+              "y": 1.2499999970197677,
+              "yaw": -3.138386059466042
+            },
+            {
+              "id": 44,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 39.102359486481454,
+              "z": 13.867282648294648,
+              "y": 1.250000001490116,
+              "yaw": 2.6945468551778506
+            }
+          ],
+          "gateAt": 0
+        },
+        {
+          "kind": "cohort",
+          "tick": 8142,
+          "player": {
+            "x": 162.45484924316406,
+            "y": 1.2699999809265137,
+            "z": 14.236373901367188,
+            "yaw": 3.1266626163990607
+          },
+          "people": [
+            {
+              "id": 16,
+              "status": "following",
+              "hidden": false,
+              "hp": 60,
+              "x": 156.63249246796357,
+              "z": 14.319357961567306,
+              "y": 1.250000001490116,
+              "yaw": 0.00446904643500689
+            },
+            {
+              "id": 17,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 46.56075972216294,
+              "z": 15.374990677510601,
+              "y": 1.250000001490116,
+              "yaw": 2.5148316143334295
+            },
+            {
+              "id": 18,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 111.62223376463953,
+              "z": 14.488537697556488,
+              "y": 1.2999999999999998,
+              "yaw": -0.11582943772348618
+            },
+            {
+              "id": 19,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 54.114452132341306,
+              "z": 14.070643300740157,
+              "y": 1.250000001490116,
+              "yaw": -0.13682104945323337
+            },
+            {
+              "id": 20,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 71.61088387639532,
+              "z": 15.122712975939773,
+              "y": 1.250000001490116,
+              "yaw": 2.911058049119303
+            },
+            {
+              "id": 21,
+              "status": "turned",
+              "hidden": false,
+              "hp": 0,
+              "x": 154.201430477289,
+              "z": 13.953242996333506,
+              "y": 1.2999999999999998,
+              "yaw": -0.3690692655052105
+            },
+            {
+              "id": 22,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 65.08563571375535,
+              "z": 15.107747610988932,
+              "y": 1.250000001490116,
+              "yaw": -2.8963653703348324
+            },
+            {
+              "id": 23,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 39.23751454072343,
+              "z": 15.586626860878004,
+              "y": 1.250000001490116,
+              "yaw": -3.166865718187066
+            },
+            {
+              "id": 24,
+              "status": "turned",
+              "hidden": false,
+              "hp": 0,
+              "x": 143.84011841632994,
+              "z": 14.256964534748352,
+              "y": 1.2999999999999998,
+              "yaw": -0.1516378065590666
+            },
+            {
+              "id": 25,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 67.80874854316583,
+              "z": 15.364247006436962,
+              "y": 1.250000001490116,
+              "yaw": 2.1232471725846165
+            },
+            {
+              "id": 26,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 82.4647461151611,
+              "z": 16.78830951815924,
+              "y": 1.5700000143051147,
+              "yaw": -3.3881244935380384
+            },
+            {
+              "id": 27,
+              "status": "following",
+              "hidden": false,
+              "hp": 60,
+              "x": 157.87396818634164,
+              "z": 15.136010293368848,
+              "y": 1.250000001490116,
+              "yaw": -0.019168047785527473
+            },
+            {
+              "id": 28,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 48.93797664149646,
+              "z": 15.607817083784868,
+              "y": 1.250000001490116,
+              "yaw": 2.644293023684342
+            },
+            {
+              "id": 29,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 105.46245025988684,
+              "z": 14.559241664119845,
+              "y": 1.2999999999999998,
+              "yaw": -0.17473060658223635
+            },
+            {
+              "id": 30,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 55.89962309004731,
+              "z": 16.955584996087005,
+              "y": 1.5700000143051147,
+              "yaw": -2.865069140917933
+            },
+            {
+              "id": 31,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 101.79482743786123,
+              "z": 15.631573921489707,
+              "y": 1.2999999999999998,
+              "yaw": 4.027133814776464
+            },
+            {
+              "id": 32,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 57.18867473723757,
+              "z": 16.40884846376882,
+              "y": 1.250000001490116,
+              "yaw": -3.1896157786806807
+            },
+            {
+              "id": 33,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 52.42554674919001,
+              "z": 15.671358142172158,
+              "y": 1.250000001490116,
+              "yaw": -3.124450061819441
+            },
+            {
+              "id": 34,
+              "status": "turned",
+              "hidden": false,
+              "hp": 0,
+              "x": 153.55371596382508,
+              "z": 13.999593149774523,
+              "y": 1.2999999999999998,
+              "yaw": -0.15460985231586957
+            },
+            {
+              "id": 35,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 56.62276791228581,
+              "z": 15.454376788250928,
+              "y": 1.250000001490116,
+              "yaw": 3.072799493412577
+            },
+            {
+              "id": 36,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 94.27436134357508,
+              "z": 14.697243030696104,
+              "y": 1.2999999999999998,
+              "yaw": -0.03573673559516244
+            },
+            {
+              "id": 37,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 30.858198892651856,
+              "z": 13.553280746944665,
+              "y": 1.250000001490116,
+              "yaw": 2.636279918417105
+            },
+            {
+              "id": 38,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 30.685972458504473,
+              "z": 14.22027848364739,
+              "y": 1.250000001490116,
+              "yaw": -2.7275448690930073
+            },
+            {
+              "id": 39,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 100.8695134999498,
+              "z": 14.72737160294245,
+              "y": 1.2999999999999998,
+              "yaw": 0.010521173852734527
+            },
+            {
+              "id": 40,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 29.209115786571243,
+              "z": 13.801868641214046,
+              "y": 1.2499999970197677,
+              "yaw": -3.1929493957932418
+            },
+            {
+              "id": 41,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 97.3504002968939,
+              "z": 14.254768333060959,
+              "y": 1.2999999999999998,
+              "yaw": -0.9692841430147452
+            },
+            {
+              "id": 42,
+              "status": "following",
+              "hidden": false,
+              "hp": 60,
+              "x": 158.69469946034383,
+              "z": 15.372815606987011,
+              "y": 1.250000001490116,
+              "yaw": 0.019047043865605566
+            },
+            {
+              "id": 43,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 21.408247949993022,
+              "z": 13.799938839056516,
+              "y": 1.2499999970197677,
+              "yaw": -3.138386059466042
+            },
+            {
+              "id": 44,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 39.102359486481454,
+              "z": 13.867282648294648,
+              "y": 1.250000001490116,
+              "yaw": 2.6945468551778506
+            }
+          ],
+          "spawns": [
+            {
+              "id": 116,
+              "door": 4,
+              "x": 198,
+              "z": 12.6,
+              "tick": 8142,
+              "wave": 3,
+              "offscreen": true
+            },
+            {
+              "id": 118,
+              "door": 4,
+              "x": 198.8,
+              "z": 12.6,
+              "tick": 8142,
+              "wave": 3,
+              "offscreen": true
+            },
+            {
+              "id": 120,
+              "door": 4,
+              "x": 198.375,
+              "z": 13.249519052838329,
+              "tick": 8142,
+              "wave": 3,
+              "offscreen": true
+            }
+          ]
+        },
+        {
+          "kind": "safe",
+          "tick": 11078,
+          "phase": "playing",
+          "caption": "The survivors are safe.",
+          "player": {
+            "x": 249.3525390625,
+            "y": 0.7099999785423279,
+            "z": 11.200976371765137,
+            "yaw": -7.850462293418876e-17
+          },
+          "people": [
+            {
+              "id": 16,
+              "status": "out",
+              "hidden": false,
+              "hp": 60,
+              "x": 263.02366456762246,
+              "z": 14.334266141290072,
+              "y": 4.6,
+              "yaw": 0.00971554973109923
+            },
+            {
+              "id": 17,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 46.56075972216294,
+              "z": 15.374990677510601,
+              "y": 1.250000001490116,
+              "yaw": 2.5148316143334295
+            },
+            {
+              "id": 18,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 132.13382698950883,
+              "z": -5.9214890723191385,
+              "y": 0.7,
+              "yaw": -0.09401489117681636
+            },
+            {
+              "id": 19,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 54.114452132341306,
+              "z": 14.070643300740157,
+              "y": 1.250000001490116,
+              "yaw": -0.13682104945323337
+            },
+            {
+              "id": 20,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 71.61088387639532,
+              "z": 15.122712975939773,
+              "y": 1.250000001490116,
+              "yaw": 2.911058049119303
+            },
+            {
+              "id": 21,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 213.56564334807447,
+              "z": 6.090080864954156,
+              "y": 0.7,
+              "yaw": 1.383162383728275
+            },
+            {
+              "id": 22,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 65.08563571375535,
+              "z": 15.107747610988932,
+              "y": 1.250000001490116,
+              "yaw": -2.8963653703348324
+            },
+            {
+              "id": 23,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 39.23751454072343,
+              "z": 15.586626860878004,
+              "y": 1.250000001490116,
+              "yaw": -3.166865718187066
+            },
+            {
+              "id": 24,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 145.7426512135677,
+              "z": -20.743962217887923,
+              "y": 0.7,
+              "yaw": 1.363561712835633
+            },
+            {
+              "id": 25,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 67.80874854316583,
+              "z": 15.364247006436962,
+              "y": 1.250000001490116,
+              "yaw": 2.1232471725846165
+            },
+            {
+              "id": 26,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 82.95592913088213,
+              "z": -1.4532756422180848,
+              "y": 0.7,
+              "yaw": -12.7919581339563
+            },
+            {
+              "id": 27,
+              "status": "following",
+              "hidden": false,
+              "hp": 60,
+              "x": 259.9093685979207,
+              "z": 15.396307625924036,
+              "y": 4.6,
+              "yaw": -0.035562317528339764
+            },
+            {
+              "id": 28,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 48.93797664149646,
+              "z": 15.607817083784868,
+              "y": 1.250000001490116,
+              "yaw": 2.644293023684342
+            },
+            {
+              "id": 29,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 113.95133784703144,
+              "z": -24.03101103907274,
+              "y": 0.7,
+              "yaw": 1.5653045732870337
+            },
+            {
+              "id": 30,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 55.89962309004731,
+              "z": 16.955584996087005,
+              "y": 1.5700000143051147,
+              "yaw": -2.865069140917933
+            },
+            {
+              "id": 31,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 119.19818407857913,
+              "z": 26.502675586433128,
+              "y": 0.7,
+              "yaw": 12.834568079254346
+            },
+            {
+              "id": 32,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 57.18867473723757,
+              "z": 16.40884846376882,
+              "y": 1.250000001490116,
+              "yaw": -3.1896157786806807
+            },
+            {
+              "id": 33,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 52.42554674919001,
+              "z": 15.671358142172158,
+              "y": 1.250000001490116,
+              "yaw": -3.124450061819441
+            },
+            {
+              "id": 34,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 171.77176576370775,
+              "z": 13.713515403923559,
+              "y": 1.2999999999999998,
+              "yaw": 7.048848353670969
+            },
+            {
+              "id": 35,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 56.62276791228581,
+              "z": 15.454376788250928,
+              "y": 1.250000001490116,
+              "yaw": 3.072799493412577
+            },
+            {
+              "id": 36,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 126.83982817004669,
+              "z": 21.94690857080116,
+              "y": 0.7,
+              "yaw": -2.007254794859222
+            },
+            {
+              "id": 37,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 30.858198892651856,
+              "z": 13.553280746944665,
+              "y": 1.250000001490116,
+              "yaw": 2.636279918417105
+            },
+            {
+              "id": 38,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 30.685972458504473,
+              "z": 14.22027848364739,
+              "y": 1.250000001490116,
+              "yaw": -2.7275448690930073
+            },
+            {
+              "id": 39,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 114.17222421206874,
+              "z": 26.01494653575392,
+              "y": 0.7,
+              "yaw": -1.6947682684265275
+            },
+            {
+              "id": 40,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 29.209115786571243,
+              "z": 13.801868641214046,
+              "y": 1.2499999970197677,
+              "yaw": -3.1929493957932418
+            },
+            {
+              "id": 41,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 125.70743347304321,
+              "z": -13.010577066300373,
+              "y": 0.7,
+              "yaw": -0.09256683488886569
+            },
+            {
+              "id": 42,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 209.2893087904672,
+              "z": 13.813958871417922,
+              "y": 1.2999999999999998,
+              "yaw": -1.0309557369544364
+            },
+            {
+              "id": 43,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 21.408247949993022,
+              "z": 13.799938839056516,
+              "y": 1.2499999970197677,
+              "yaw": -3.138386059466042
+            },
+            {
+              "id": 44,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 39.102359486481454,
+              "z": 13.867282648294648,
+              "y": 1.250000001490116,
+              "yaw": 2.6945468551778506
+            }
+          ],
+          "gateAt": 0
+        },
+        {
+          "kind": "last-crossed",
+          "tick": 11163,
+          "phase": "playing",
+          "caption": "The survivors are safe.",
+          "player": {
+            "x": 249.3525390625,
+            "y": 0.7099999785423279,
+            "z": 11.200976371765137,
+            "yaw": -7.850462293418876e-17
+          },
+          "people": [
+            {
+              "id": 16,
+              "status": "out",
+              "hidden": false,
+              "hp": 60,
+              "x": 265.99450970774564,
+              "z": 13.500687570756135,
+              "y": 4.6,
+              "yaw": 0.35493995232048436
+            },
+            {
+              "id": 17,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 46.56075972216294,
+              "z": 15.374990677510601,
+              "y": 1.250000001490116,
+              "yaw": 2.5148316143334295
+            },
+            {
+              "id": 18,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 133.60343496218914,
+              "z": -5.782915523288127,
+              "y": 0.7,
+              "yaw": -0.09401489118330485
+            },
+            {
+              "id": 19,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 54.114452132341306,
+              "z": 14.070643300740157,
+              "y": 1.250000001490116,
+              "yaw": -0.13682104945323337
+            },
+            {
+              "id": 20,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 71.61088387639532,
+              "z": 15.122712975939773,
+              "y": 1.250000001490116,
+              "yaw": 2.911058049119303
+            },
+            {
+              "id": 21,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 213.87514534434234,
+              "z": 4.459985173229276,
+              "y": 0.7,
+              "yaw": 1.3831623837282674
+            },
+            {
+              "id": 22,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 65.08563571375535,
+              "z": 15.107747610988932,
+              "y": 1.250000001490116,
+              "yaw": -2.8963653703348324
+            },
+            {
+              "id": 23,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 39.23751454072343,
+              "z": 15.586626860878004,
+              "y": 1.250000001490116,
+              "yaw": -3.166865718187066
+            },
+            {
+              "id": 24,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 146.01991379697984,
+              "z": -22.06267072983111,
+              "y": 0.7,
+              "yaw": 1.0956371346508558
+            },
+            {
+              "id": 25,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 67.80874854316583,
+              "z": 15.364247006436962,
+              "y": 1.250000001490116,
+              "yaw": 2.1232471725846165
+            },
+            {
+              "id": 26,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 84.80434719767696,
+              "z": -1.0290752492092186,
+              "y": 0.7,
+              "yaw": -12.79195813395628
+            },
+            {
+              "id": 27,
+              "status": "out",
+              "hidden": false,
+              "hp": 60,
+              "x": 263.02464842309064,
+              "z": 15.488687116226432,
+              "y": 4.6,
+              "yaw": -0.025568906549966717
+            },
+            {
+              "id": 28,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 48.93797664149646,
+              "z": 15.607817083784868,
+              "y": 1.250000001490116,
+              "yaw": 2.644293023684342
+            },
+            {
+              "id": 29,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 113.95999217388126,
+              "z": -25.606871979437134,
+              "y": 0.7,
+              "yaw": 1.0532115690198374
+            },
+            {
+              "id": 30,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 55.89962309004731,
+              "z": 16.955584996087005,
+              "y": 1.5700000143051147,
+              "yaw": -2.865069140917933
+            },
+            {
+              "id": 31,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 121.05126199177973,
+              "z": 25.99341549210405,
+              "y": 0.7,
+              "yaw": 12.834568079254378
+            },
+            {
+              "id": 32,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 57.18867473723757,
+              "z": 16.40884846376882,
+              "y": 1.250000001490116,
+              "yaw": -3.1896157786806807
+            },
+            {
+              "id": 33,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 52.42554674919001,
+              "z": 15.671358142172158,
+              "y": 1.250000001490116,
+              "yaw": -3.124450061819441
+            },
+            {
+              "id": 34,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 172.49501861608337,
+              "z": 13.824821234001544,
+              "y": 1.2999999999999998,
+              "yaw": 6.130494754850294
+            },
+            {
+              "id": 35,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 56.62276791228581,
+              "z": 15.454376788250928,
+              "y": 1.250000001490116,
+              "yaw": 3.072799493412577
+            },
+            {
+              "id": 36,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 126.1471519044756,
+              "z": 23.43186848970184,
+              "y": 0.7,
+              "yaw": -2.0072547948589254
+            },
+            {
+              "id": 37,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 30.858198892651856,
+              "z": 13.553280746944665,
+              "y": 1.250000001490116,
+              "yaw": 2.636279918417105
+            },
+            {
+              "id": 38,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 30.685972458504473,
+              "z": 14.22027848364739,
+              "y": 1.250000001490116,
+              "yaw": -2.7275448690930073
+            },
+            {
+              "id": 39,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 114.98912870060123,
+              "z": 27.190115534301018,
+              "y": 0.7,
+              "yaw": -0.9633293087363886
+            },
+            {
+              "id": 40,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 29.209115786571243,
+              "z": 13.801868641214046,
+              "y": 1.2499999970197677,
+              "yaw": -3.1929493957932418
+            },
+            {
+              "id": 41,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 127.47551156232096,
+              "z": -12.846442603835074,
+              "y": 0.7,
+              "yaw": -0.09256683488881069
+            },
+            {
+              "id": 42,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 209.2893087904672,
+              "z": 13.813958871417922,
+              "y": 1.2999999999999998,
+              "yaw": -1.0309557369544364
+            },
+            {
+              "id": 43,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 21.408247949993022,
+              "z": 13.799938839056516,
+              "y": 1.2499999970197677,
+              "yaw": -3.138386059466042
+            },
+            {
+              "id": 44,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 39.102359486481454,
+              "z": 13.867282648294648,
+              "y": 1.250000001490116,
+              "yaw": 2.6945468551778506
+            }
+          ],
+          "gateAt": 0
+        },
+        {
+          "kind": "street-clear",
+          "tick": 11248,
+          "phase": "playing",
+          "caption": "The survivors are safe.",
+          "player": {
+            "x": 249.3525390625,
+            "y": 0.7099999785423279,
+            "z": 11.200976371765137,
+            "yaw": -7.850462293418876e-17
+          },
+          "people": [
+            {
+              "id": 16,
+              "status": "out",
+              "hidden": false,
+              "hp": 60,
+              "x": 268.9131422764163,
+              "z": 12.40769672300893,
+              "y": 4.6,
+              "yaw": 0.3588288276941889
+            },
+            {
+              "id": 17,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 46.56075972216294,
+              "z": 15.374990677510601,
+              "y": 1.250000001490116,
+              "yaw": 2.5148316143334295
+            },
+            {
+              "id": 18,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 135.07304374932338,
+              "z": -5.644341897459917,
+              "y": 0.7,
+              "yaw": -0.0940148911832868
+            },
+            {
+              "id": 19,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 54.114452132341306,
+              "z": 14.070643300740157,
+              "y": 1.250000001490116,
+              "yaw": -0.13682104945323337
+            },
+            {
+              "id": 20,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 71.61088387639532,
+              "z": 15.122712975939773,
+              "y": 1.250000001490116,
+              "yaw": 2.911058049119303
+            },
+            {
+              "id": 21,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 214.17837828045128,
+              "z": 2.862907581811118,
+              "y": 0.7,
+              "yaw": 1.033162383728155
+            },
+            {
+              "id": 22,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 65.08563571375535,
+              "z": 15.107747610988932,
+              "y": 1.250000001490116,
+              "yaw": -2.8963653703348324
+            },
+            {
+              "id": 23,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 39.23751454072343,
+              "z": 15.586626860878004,
+              "y": 1.250000001490116,
+              "yaw": -3.166865718187066
+            },
+            {
+              "id": 24,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 146.02257939317784,
+              "z": -22.075348763601287,
+              "y": 0.7,
+              "yaw": 0.36559072982215035
+            },
+            {
+              "id": 25,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 67.80874854316583,
+              "z": 15.364247006436962,
+              "y": 1.250000001490116,
+              "yaw": 2.1232471725846165
+            },
+            {
+              "id": 26,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 86.65276528946758,
+              "z": -0.6048748504639666,
+              "y": 0.7,
+              "yaw": -12.791958133956301
+            },
+            {
+              "id": 27,
+              "status": "out",
+              "hidden": false,
+              "hp": 60,
+              "x": 266.0203839424528,
+              "z": 16.260652470291937,
+              "y": 4.6,
+              "yaw": -0.3212674309959442
+            },
+            {
+              "id": 28,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 48.93797664149646,
+              "z": 15.607817083784868,
+              "y": 1.250000001490116,
+              "yaw": 2.644293023684342
+            },
+            {
+              "id": 29,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 113.96056802899224,
+              "z": -25.71172907489764,
+              "y": 0.7,
+              "yaw": 1.092151988939208
+            },
+            {
+              "id": 30,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 55.89962309004731,
+              "z": 16.955584996087005,
+              "y": 1.5700000143051147,
+              "yaw": -2.865069140917933
+            },
+            {
+              "id": 31,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 122.90434000311956,
+              "z": 25.48415537080451,
+              "y": 0.7,
+              "yaw": 12.834568079254403
+            },
+            {
+              "id": 32,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 57.18867473723757,
+              "z": 16.40884846376882,
+              "y": 1.250000001490116,
+              "yaw": -3.1896157786806807
+            },
+            {
+              "id": 33,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 52.42554674919001,
+              "z": 15.671358142172158,
+              "y": 1.250000001490116,
+              "yaw": -3.124450061819441
+            },
+            {
+              "id": 34,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 174.05324147194776,
+              "z": 14.064625733698707,
+              "y": 1.2999999999999998,
+              "yaw": 6.130487138140781
+            },
+            {
+              "id": 35,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 56.62276791228581,
+              "z": 15.454376788250928,
+              "y": 1.250000001490116,
+              "yaw": 3.072799493412577
+            },
+            {
+              "id": 36,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 125.81555977876431,
+              "z": 24.142735947673774,
+              "y": 0.7,
+              "yaw": -1.6905881281956991
+            },
+            {
+              "id": 37,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 30.858198892651856,
+              "z": 13.553280746944665,
+              "y": 1.250000001490116,
+              "yaw": 2.636279918417105
+            },
+            {
+              "id": 38,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 30.685972458504473,
+              "z": 14.22027848364739,
+              "y": 1.250000001490116,
+              "yaw": -2.7275448690930073
+            },
+            {
+              "id": 39,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 116.02462675081316,
+              "z": 28.67974525692752,
+              "y": 0.7,
+              "yaw": -0.9633409880910341
+            },
+            {
+              "id": 40,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 29.209115786571243,
+              "z": 13.801868641214046,
+              "y": 1.2499999970197677,
+              "yaw": -3.1929493957932418
+            },
+            {
+              "id": 41,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 129.24358968926137,
+              "z": -12.682308137873486,
+              "y": 0.7,
+              "yaw": -0.09256683488875106
+            },
+            {
+              "id": 42,
+              "status": "turned",
+              "hidden": false,
+              "hp": 60,
+              "x": 209.2893087904672,
+              "z": 13.813958871417922,
+              "y": 1.2999999999999998,
+              "yaw": -1.0309557369544364
+            },
+            {
+              "id": 43,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 21.408247949993022,
+              "z": 13.799938839056516,
+              "y": 1.2499999970197677,
+              "yaw": -3.138386059466042
+            },
+            {
+              "id": 44,
+              "status": "dead",
+              "hidden": false,
+              "hp": 0,
+              "x": 39.102359486481454,
+              "z": 13.867282648294648,
+              "y": 1.250000001490116,
+              "yaw": 2.6945468551778506
+            }
+          ],
+          "gateAt": 0
+        }
+      ]
+    }
+  ],
+  "captureManifest": [
+    {
+      "cell": 1,
+      "label": "low rail z1",
+      "original": "docs/reports/qa-browser/l6-physical-low/captures/L6-low-L6-rail-low-z1.jpg",
+      "sha256": "0e4a93982a1bdb19d58b3b3e6ebf46264bad9bf567175e30272d93bea6983a1c"
+    },
+    {
+      "cell": 2,
+      "label": "low rail z1.5",
+      "original": "docs/reports/qa-browser/l6-physical-low/captures/L6-low-L6-rail-low-z1-5.jpg",
+      "sha256": "0ac9723c94b5a33964a1ca545e3f60a69e22b381a39c8eabccaa577ef455b8b0"
+    },
+    {
+      "cell": 3,
+      "label": "low safe z1",
+      "original": "docs/reports/qa-browser/l6-physical-low/captures/L6-low-L6-safe-low-z1.jpg",
+      "sha256": "d6ce3a30ce3d9c37443bd4fc17b7dc7316702bc1887b97694b4d5971baab6e0d"
+    },
+    {
+      "cell": 4,
+      "label": "low safe z1.5",
+      "original": "docs/reports/qa-browser/l6-physical-low/captures/L6-low-L6-safe-low-z1-5.jpg",
+      "sha256": "d339b9092d0fdaf117ecb4a1b0cb0620ea53fff939f46d9649b6e363df5f393c"
+    },
+    {
+      "cell": 5,
+      "label": "low night z1",
+      "original": "docs/reports/qa-browser/l6-physical-low/captures/L6-low-L6-night-low-z1.jpg",
+      "sha256": "59cfef94c96ffcabe02d68ecedc17b9aea71686b41f25bc9c2cf1143bca91368"
+    },
+    {
+      "cell": 6,
+      "label": "low night z1.5",
+      "original": "docs/reports/qa-browser/l6-physical-low/captures/L6-low-L6-night-low-z1-5.jpg",
+      "sha256": "59cfef94c96ffcabe02d68ecedc17b9aea71686b41f25bc9c2cf1143bca91368"
+    },
+    {
+      "cell": 7,
+      "label": "low result",
+      "original": "docs/reports/qa-browser/l6-physical-low/captures/L6-low-L6-result.jpg",
+      "sha256": "b6d78323c6bf935a9ed9c28d31835e2c309c4ffb9766a07902a67e1f24cbee98"
+    },
+    {
+      "cell": 8,
+      "label": "high rail z1",
+      "original": "docs/reports/qa-browser/l6-physical-high/captures/L6-high-L6-rail-high-z1.jpg",
+      "sha256": "0d1340f235ea1358d341cc2d4a1a00ae5ac17d054558d8749ecc9ef2c97b73a1"
+    },
+    {
+      "cell": 9,
+      "label": "high rail z1.5",
+      "original": "docs/reports/qa-browser/l6-physical-high/captures/L6-high-L6-rail-high-z1-5.jpg",
+      "sha256": "37534fac1024e02de8ea49328e7fec5ba3dc444ad881e37b88ca571f0bc7c10d"
+    },
+    {
+      "cell": 10,
+      "label": "high rail-110 z1",
+      "original": "docs/reports/qa-browser/l6-physical-high/captures/L6-high-L6-rail-110-high-z1.jpg",
+      "sha256": "63f9f68dce758aa3a67d055c72724b0d14736a70ed88e9b35502e9c752382663"
+    },
+    {
+      "cell": 11,
+      "label": "high rail-110 z1.5",
+      "original": "docs/reports/qa-browser/l6-physical-high/captures/L6-high-L6-rail-110-high-z1-5.jpg",
+      "sha256": "a0c20a19875943abd982adce8984f508dd04965e668895dec4a9dd16192a273d"
+    },
+    {
+      "cell": 12,
+      "label": "high safe z1",
+      "original": "docs/reports/qa-browser/l6-physical-high/captures/L6-high-L6-safe-high-z1.jpg",
+      "sha256": "fd0d49a3e94a0f756936623ded44a032afc0f5bfdf91a8d661d3a653b38b69c7"
+    },
+    {
+      "cell": 13,
+      "label": "high safe z1.5",
+      "original": "docs/reports/qa-browser/l6-physical-high/captures/L6-high-L6-safe-high-z1-5.jpg",
+      "sha256": "ce150d131e33d6a337144d4f958ddcd4dcd883ad6f01cba14e4fd09c1dbd2567"
+    },
+    {
+      "cell": 14,
+      "label": "high last-crossed z1",
+      "original": "docs/reports/qa-browser/l6-physical-high/captures/L6-high-L6-last-crossed-high-z1.jpg",
+      "sha256": "fd4dcd0bd5fa23e38ff90e10688b0113a2a3e23a7c741d2a677c9e0f741772ef"
+    },
+    {
+      "cell": 15,
+      "label": "high last-crossed z1.5",
+      "original": "docs/reports/qa-browser/l6-physical-high/captures/L6-high-L6-last-crossed-high-z1-5.jpg",
+      "sha256": "c2b5832de44dc395c3d8db84bce7099a69da6b6280a2af2822d3ee489d746025"
+    },
+    {
+      "cell": 16,
+      "label": "high street-clear z1",
+      "original": "docs/reports/qa-browser/l6-physical-high/captures/L6-high-L6-street-clear-high-z1.jpg",
+      "sha256": "4f8081cb52cd1ee6f7118075c84e55a90c4e698fbc2bf0da4df8191476ccbe60"
+    },
+    {
+      "cell": 17,
+      "label": "high street-clear z1.5",
+      "original": "docs/reports/qa-browser/l6-physical-high/captures/L6-high-L6-street-clear-high-z1-5.jpg",
+      "sha256": "3a9087cf02b208c0004a0176a4c7c9516e5973e39f760a411e0ca4e1cc691678"
+    },
+    {
+      "cell": 18,
+      "label": "high: 495-second route bound",
+      "original": "docs/reports/qa-browser/l6-physical-high/captures/L6-high-L6-checkpoint-yield.jpg",
+      "sha256": "53da3e0944ff69179c289be1031bf3e9bd67158852070cc6192c1afe8eabee66"
+    }
+  ],
+  "limitations": [
+    "Low first night captures followed a queued physical movement command, so they do not certify an uninterrupted six-second cinematic.",
+    "High first run did not finish within 495 seconds; later manual stair inputs confound final death attribution.",
+    "New transition observer and fresh runs are pending."
+  ]
+}

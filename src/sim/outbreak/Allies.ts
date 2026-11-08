@@ -9,6 +9,7 @@ import type { SimWorld } from '../world/SimWorld';
 import type { SpawnDirector } from '../ai/SpawnDirector';
 import type { EntitySnapshot } from '../world/types';
 import type { AllyGun, AllyState, Point } from '../npc/types';
+import { combatHeightReachable } from '../combat/height';
 
 const civ = l4.civilians;
 const half = Math.cos(l2.allies.coneDeg / 2 * Math.PI / 180);
@@ -138,7 +139,7 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   // Engaged fighters already scan their targets below; only idle fighters and
   // followers considering regrouping consume the separate close-threat result.
   const closeThreat = (!a.engaged || follower)
-    && ai.active.some(o => (o.health.current > 0 || finishable(o)) && !o.hidden && !o.infected?.hidden && !o.infectionRise && !o.emerging &&
+    && ai.active.some(o => (o.health.current > 0 || finishable(o)) && !o.hidden && !o.infected?.hidden && !o.infectionRise && !o.emerging && combatHeightReachable(e, o) &&
       (!follower || !world.missions?.def.l3 || dist(o.transform, e.transform) <= a.follow!.engageM && policeCanEngage(o)) && (defence(o) || heard(o)) && visible(e.transform, o.transform, o.id));
   // Regroup past remote fights while keeping legal shots and contact shoves:
   // following the courier must not suppress the escort's own defence.
@@ -148,7 +149,7 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   }
   if (!a.engaged && !closeThreat) { a.targetId = 0; a.strikeAt = 0; a.baton = false; }
   if (follower && a.engaged && !closeThreat && !a.strikeAt && (breakout || dist(e.transform, leader!.transform) > a.follow!.leashM)) {
-    forced = dist(e.transform, leader!.transform) <= a.follow!.leashM ? ai.active.find(o => o.health.current > 0 && !o.hidden && !o.infectionRise && !o.emerging && policeCanEngage(o) && dist(o.transform, e.transform) < 3.5 && visible(e.transform, o.transform, o.id)) : undefined;
+    forced = dist(e.transform, leader!.transform) <= a.follow!.leashM ? ai.active.find(o => o.health.current > 0 && !o.hidden && !o.infectionRise && !o.emerging && combatHeightReachable(e, o) && policeCanEngage(o) && dist(o.transform, e.transform) < 3.5 && visible(e.transform, o.transform, o.id)) : undefined;
     if (!forced) { a.targetId = 0; return regroup(world, e, a, leader!.transform, !closeThreat); }
     a.targetId = forced.id;
   }
@@ -163,7 +164,7 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
     const spared = (o: EntitySnapshot) => (o.infected?.spearheadUntil ?? -1) > tick && dist(o.transform, e.transform) > l4.war.spearhead.selfDefenceM;
     // Recheck the camera/self-defence rule on cached targets as well as new scans.
     if (target && c.state !== 'grabbed' && spared(target)) { target = undefined; a.targetId = 0; }
-    if (target && (!policeCanEngage(target) || target.health.current <= 0 && !finishable(target))) { target = undefined; a.targetId = 0; }
+    if (target && (!combatHeightReachable(e, target) || !policeCanEngage(target) || target.health.current <= 0 && !finishable(target))) { target = undefined; a.targetId = 0; }
     if (c.state !== 'grabbed' && !forced && (!target || target.health.current <= 0 || !target.infected || target.hidden || (tick + e.id) % (a.role === 'soldier' ? 15 : 6) === 0)) {
       // Soldiers concentrate on visible Alphas within their firing range; other allies keep the rescue priority.
       let best: EntitySnapshot | undefined, score = Infinity;
@@ -176,7 +177,7 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
         return world.missions?.def.l4 && p.x > wall.x0 && p.x < wall.x1 && p.z > wall.z0 && p.z < wall.z1 ? 2 : 1;
       };
       for (const o of ai.active) {
-        if (o.health.current <= 0 && !finishable(o) || o.hidden || o.infected?.hidden || o.infectionRise || spared(o)) continue;
+        if (o.health.current <= 0 && !finishable(o) || o.hidden || o.infected?.hidden || o.infectionRise || spared(o) || !combatHeightReachable(e, o)) continue;
         const dx = o.transform.x - e.transform.x, dz = o.transform.z - e.transform.z, d = Math.hypot(dx, dz);
         const defending = a.role === 'officer' && d <= pt.defendM;
         // Half a metre of hysteresis: a fighter stepping between firing positions keeps a target at the edge of its range.
@@ -205,7 +206,7 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
     // A swing in progress lands after its windup on whatever is still in reach (no tracking, it can whiff).
     if (a.strikeAt && tick >= a.strikeAt) {
       const victim = world.entities.get(a.strikeTarget ?? 0); a.strikeAt = 0;
-      const allowed = !!victim && policeCanEngage(victim) && !victim.hidden && !victim.infected?.hidden && !victim.infectionRise && visible(e.transform, victim.transform, victim.id)
+      const allowed = !!victim && combatHeightReachable(e, victim) && policeCanEngage(victim) && !victim.hidden && !victim.infected?.hidden && !victim.infectionRise && visible(e.transform, victim.transform, victim.id)
         && (!shooter || a.baton || world.combat!.query.alliedShotClear(e, victim, tick) && inView(victim));
       if (!allowed) a.baton = false;
       if (allowed && victim?.infected && (victim.health.current > 0 || finishable(victim) && dist(e.transform, victim.transform) <= 2.4) && world.combat) {

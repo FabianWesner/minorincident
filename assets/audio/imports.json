@@ -3720,7 +3720,7 @@
     },
     "horde.loop.grass": {
       "source": "darsycho-moans",
-      "start": 5.0,
+      "start": 5,
       "filter": "lowpass=f=900,aecho=0.8:0.9:173|389|611|887:0.7|0.6|0.5|0.45"
     },
     "horde.loop.wood": {
@@ -3745,7 +3745,7 @@
     },
     "horde.loop.glass": {
       "source": "darsycho-moans",
-      "start": 1.0,
+      "start": 1,
       "filter": "lowpass=f=900,aecho=0.8:0.9:173|389|611|887:0.7|0.6|0.5|0.45"
     },
     "horde.loop.water": {
@@ -5821,7 +5821,7 @@
     },
     "action.weapon.assault-rifle.v2": {
       "source": "fw-AK-47-C_28P",
-      "start": 6.0,
+      "start": 6,
       "filter": "volume=26dB,asoftclip=type=tanh",
       "level": -8
     },
@@ -5845,7 +5845,7 @@
     },
     "action.weapon.machine-gun.v2": {
       "source": "fw-AK-47-C_28P",
-      "start": 6.0,
+      "start": 6,
       "filter": "bass=g=5:f=120,asetrate=42240,aresample=48000,volume=28dB,asoftclip=type=tanh",
       "level": -8
     },
@@ -5917,7 +5917,7 @@
     },
     "action.weapon.rotary-minigun.v2": {
       "source": "fw-AK-47-C_28P",
-      "start": 6.0,
+      "start": 6,
       "filter": "bass=g=4:f=130,asetrate=48000,aresample=48000,volume=22dB,asoftclip=type=tanh",
       "level": -8
     },
@@ -6334,7 +6334,7 @@
     },
     "tail.street": {
       "source": "fw-Model_12-K_17P",
-      "start": 1.0,
+      "start": 1,
       "filter": "lowpass=f=3200,highpass=f=200",
       "level": -31
     },
@@ -6440,8 +6440,8 @@
     },
     "tension-L6": {
       "source": "controlled-chaos",
-      "start": 6.0,
-      "duration": 96.0,
+      "start": 6,
+      "duration": 96,
       "crossfade": 3
     },
     "calm-L7": {
@@ -6479,6 +6479,24 @@
       "start": 3.934,
       "duration": 94.426,
       "crossfade": 3
+    },
+    "calm-L10": {
+      "source": "zombie-hoodoo",
+      "start": 4,
+      "duration": 76,
+      "crossfade": 3
+    },
+    "tension-L10": {
+      "source": "static-motion",
+      "start": 6,
+      "duration": 96,
+      "crossfade": 3
+    },
+    "combat-L10": {
+      "source": "zombie-hoodoo",
+      "start": 4,
+      "duration": 76,
+      "crossfade": 3
     }
   },
   "fanfare": {
@@ -6497,7 +6515,7 @@
         "start": 0,
         "at": 0,
         "duration": 1.2,
-        "gain": 1.0
+        "gain": 1
       }
     ],
     "pickup.fanfare.handgun": [
@@ -6506,7 +6524,7 @@
         "start": 0,
         "at": 0,
         "duration": 0.2,
-        "gain": 1.0
+        "gain": 1
       },
       {
         "source": "sfx2-rwm-metal_close_01",
@@ -6529,7 +6547,7 @@
         "start": 0,
         "at": 1.14,
         "duration": 0.3,
-        "gain": 1.0
+        "gain": 1
       }
     ],
     "pickup.fanfare.shotgun": [

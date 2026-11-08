@@ -9,7 +9,7 @@ import { SimWorld } from '../../src/sim/world/SimWorld';
 
 const worlds: SimWorld[] = [];
 afterEach(() => { for (const w of worlds.splice(0)) w.dispose(); });
-async function world(name = 'combat-arena', god = false) { const w = new SimWorld(); worlds.push(w); await w.init(); w.loadScenario(name, 1); w.combat!.damage.god = god; return w; }
+async function world(name = 'combat-arena', god = false) { const w = new SimWorld(); worlds.push(w); await w.init(); w.loadScenario(name, 1); if (w.combat) w.combat.damage.god = god; return w; }
 const step = (w: SimWorld, n: number) => { for (let i = 0; i < n; i++) w.update(); };
 const events = <T extends GameEvent['type']>(w: SimWorld, type: T) => w.events.events().filter((e): e is Extract<GameEvent, { type: T }> => e.type === type);
 function move(w: SimWorld, x: number, z = 0) { const p = w.entities.get(1)!; Object.assign(p.transform, { x, z }); w.physics.playerBody!.setTranslation(p.transform, true); w.spatial.set(1, x, z); }
@@ -190,14 +190,19 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   expect(cureCrossingStories([...cureLayout.placements, ...belt])).toEqual(stories);
   const { cureForecourtDecor } = await import('../../src/levels/L10/forecourts');
   const apron = cureForecourtDecor([...cureLayout.placements, ...belt, ...stories]);
+  const { cureFarmDecor } = await import('../../src/levels/L10/farmLayout');
+  const farm = cureFarmDecor([...cureLayout.placements, ...belt, ...stories, ...apron]);
+  expect(farm.filter(p => p.assetId === 'veg.corn-block').length).toBeGreaterThan(100);
   const { cureVignetteCatalogue, cureVignettes } = await import('../../src/levels/L10/vignettes');
-  const vignettes = cureVignettes([...cureLayout.placements, ...belt, ...stories, ...apron]);
-  expect(districtDecor('D-CURE', cureLayout.placements)).toEqual([...belt, ...stories, ...apron, ...vignettes]);
-  expect(cureVignettes([...cureLayout.placements, ...belt, ...stories, ...apron])).toEqual(vignettes);
+  const vignettes = cureVignettes([...cureLayout.placements, ...belt, ...stories, ...apron, ...farm]);
+  expect(districtDecor('D-CURE', cureLayout.placements)).toEqual([...belt, ...stories, ...apron, ...farm, ...vignettes]);
+  expect(cureVignettes([...cureLayout.placements, ...belt, ...stories, ...apron, ...farm])).toEqual(vignettes);
   expect(cureVignetteCatalogue.every(v => v.pieces.length >= 3 && v.pieces.length <= 8)).toBe(true);
   const vignetteGroups = new Set(vignettes.map(p => p.id.replace(/-\d+$/, '')));
   expect(vignetteGroups.size).toBeGreaterThanOrEqual(85); // ~20/km over the 4.3 km authored route.
   expect(vignettes.every(p => p.decor && p.fixed)).toBe(true);
+  const farmOverlaps = vignettes.flatMap(p => farm.filter(q => p.visualAabb.min[0] < q.visualAabb.max[0] && p.visualAabb.max[0] > q.visualAabb.min[0] && p.visualAabb.min[2] < q.visualAabb.max[2] && p.visualAabb.max[2] > q.visualAabb.min[2]).map(q => [p.id, q.id]));
+  expect(farmOverlaps, 'vignette footprints must clear corn and farm structures').toEqual([]);
   expect(placementColliders(vignettes, []).every(c => c.aabb.physicsOnly)).toBe(true);
   const { cureEvacuationLane, cureVignetteDecals, cureWallMessages } = await import('../../src/levels/L10/vignettes');
   const { CureVignetteDecals } = await import('../../src/render/district/CureVignetteDecals');
@@ -217,6 +222,7 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   decals.update(focus,false);expect(decals.visibleIds()).toHaveLength(2);
   decals.update(focus,true);expect(decals.visibleIds()).toHaveLength(1);
   decals.update({x:0,z:0},true);expect(decals.visibleIds()).toHaveLength(0);decals.dispose();
+
   expect(apron.some(p => p.position[0] > 3900 && p.roadLife)).toBe(true);
   expect(stories.filter(q => q.fieldLight).length).toBeGreaterThan(60);
   for (const li of cureCrossingLines.keys()) expect(stories.some(q => q.id.startsWith(`decor-cure-cross-${li}-`) && q.fieldLight)).toBe(true);
@@ -252,4 +258,23 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   // Ground under each piece without the scenes (a sandbag pallet carries its own 25 cm walkable deck).
   const bare = new DistrictWorld(compositions.L10, [{ ...cureLayout, placements: [...cureLayout.placements, ...belt] }], 32);
   for (const q of stories) for (const [x, z] of [[q.visualAabb.min[0], q.visualAabb.min[2]], [q.visualAabb.max[0], q.visualAabb.max[2]]]) expect(Math.abs(bare.groundHeight(x, z))).toBeLessThan(.05);
+  const platform = cureLayout.placements.find(q => q.assetId === 'kit.dispersal-platform')!;
+  const [px, , pz] = platform.position;
+  expect(bare.pavingHeight(px, pz)).toBeCloseTo(3.08);
+  expect(bare.supportBelow(px, pz, 0), 'a ground-level infected under the deck stays below it').toBe(0);
+  expect(bare.supportBelow(px + 8.1, pz, 0), 'the lowest stair tread remains a valid first step').toBeCloseTo(.1);
+  const { heightRouteWaypoint } = await import('../../src/sim/ai/InfectedSystem');
+  const waypoint = heightRouteWaypoint(bare, { transform: { x: px + 10, y: .7, z: pz, yaw: 0 } } as never, { x: px, y: 3.78, z: pz });
+  expect(waypoint?.x).toBeCloseTo(px + 8.07, 1);
+  const chase = await world('survivor', true);
+  chase.districts = bare;
+  chase.enableInfected();
+  const infected = chase.infected!, walker = chase.entities.get(infected.spawn('infected.runner', { x: px + 10, z: pz }, { state: 'chase' }))!;
+  const seek = infected as unknown as { seek(e: typeof walker, goal: { x: number; y: number; z: number }): void };
+  for (let tick = 0; tick < 2400; tick++) {
+    seek.seek(walker, { x: px, y: 3.78, z: pz });
+    walker.transform.y = .7 + bare.supportBelow(walker.transform.x, walker.transform.z, walker.transform.y - .7);
+    chase.tick++;
+  }
+  expect(walker.transform.y, 'a pursuer must walk all the way up the stairs onto the deck').toBeCloseTo(3.78);
 }, 60_000);

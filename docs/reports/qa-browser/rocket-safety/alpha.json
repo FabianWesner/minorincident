@@ -1,0 +1,549 @@
+{
+  "rows": [
+    {
+      "tier": "low",
+      "before": {
+        "id": 3,
+        "hp": {
+          "current": 450,
+          "max": 450
+        },
+        "method": "Native L7 spawn sets 450 HP; AI update disabled only for stationary direct-hit isolation. Physical Digit7, aim and LMB; no player god mode or health writes."
+      },
+      "after": {
+        "hp": {
+          "current": 0,
+          "max": 450
+        },
+        "events": [
+          {
+            "type": "combat.attack",
+            "tick": 67,
+            "attackId": 1,
+            "actionId": "weapon.rocket-launcher",
+            "combo": 0,
+            "sourceId": 1,
+            "side": "RIGHT",
+            "position": {
+              "x": 0,
+              "y": 0.7049999833106995,
+              "z": 0,
+              "yaw": 0
+            },
+            "direction": {
+              "x": 0.9999999999999976,
+              "z": -7.030195129492522e-8
+            }
+          },
+          {
+            "tick": 93,
+            "attackId": 1,
+            "actionId": "weapon.rocket-launcher",
+            "sourceId": 1,
+            "targetId": 3,
+            "position": {
+              "x": 8,
+              "y": 0.7,
+              "z": 0,
+              "yaw": 0
+            },
+            "direction": {
+              "x": 0.9999999999995466,
+              "z": 9.522718857222038e-7
+            },
+            "knockback": 1.134,
+            "amount": 170.1,
+            "damageType": "explosive",
+            "type": "combat.hit",
+            "hp": 279.9
+          },
+          {
+            "type": "combat.attack",
+            "tick": 117,
+            "attackId": 2,
+            "actionId": "weapon.rocket-launcher",
+            "combo": 0,
+            "sourceId": 1,
+            "side": "RIGHT",
+            "position": {
+              "x": 0,
+              "y": 0.7049999833106995,
+              "z": 0,
+              "yaw": 7.030195129492528e-8
+            },
+            "direction": {
+              "x": 0.9999999999999976,
+              "z": -7.030195129492522e-8
+            }
+          },
+          {
+            "tick": 144,
+            "attackId": 2,
+            "actionId": "weapon.rocket-launcher",
+            "sourceId": 1,
+            "targetId": 3,
+            "position": {
+              "x": 9.133999999999489,
+              "y": 0.7,
+              "z": 0.0000010798763184089792,
+              "yaw": 0
+            },
+            "direction": {
+              "x": 0.9999999999989513,
+              "z": 0.0000014482288873899674
+            },
+            "knockback": 1.063919970724213,
+            "amount": 159.58799560863199,
+            "damageType": "explosive",
+            "type": "combat.hit",
+            "hp": 120.31200439136799
+          },
+          {
+            "type": "combat.attack",
+            "tick": 167,
+            "attackId": 3,
+            "actionId": "weapon.rocket-launcher",
+            "combo": 0,
+            "sourceId": 1,
+            "side": "RIGHT",
+            "position": {
+              "x": 0,
+              "y": 0.7049999833106995,
+              "z": 0,
+              "yaw": 7.030195129492528e-8
+            },
+            "direction": {
+              "x": 0.9999999999999976,
+              "z": -7.030195129492522e-8
+            }
+          },
+          {
+            "tick": 194,
+            "attackId": 3,
+            "actionId": "weapon.rocket-launcher",
+            "sourceId": 1,
+            "targetId": 3,
+            "position": {
+              "x": 10.197919970722587,
+              "y": 0.7,
+              "z": 0.000002620675953882873,
+              "yaw": 0
+            },
+            "direction": {
+              "x": 0.9999999999989514,
+              "z": 0.0000014482288873899668
+            },
+            "knockback": 0.9362495742373077,
+            "amount": 120.31200439136799,
+            "damageType": "explosive",
+            "type": "combat.hit",
+            "hp": 0
+          }
+        ],
+        "god": false,
+        "quality": "low"
+      },
+      "hits": [
+        {
+          "tick": 93,
+          "attackId": 1,
+          "actionId": "weapon.rocket-launcher",
+          "sourceId": 1,
+          "targetId": 3,
+          "position": {
+            "x": 8,
+            "y": 0.7,
+            "z": 0,
+            "yaw": 0
+          },
+          "direction": {
+            "x": 0.9999999999995466,
+            "z": 9.522718857222038e-7
+          },
+          "knockback": 1.134,
+          "amount": 170.1,
+          "damageType": "explosive",
+          "type": "combat.hit",
+          "hp": 279.9
+        },
+        {
+          "tick": 144,
+          "attackId": 2,
+          "actionId": "weapon.rocket-launcher",
+          "sourceId": 1,
+          "targetId": 3,
+          "position": {
+            "x": 9.133999999999489,
+            "y": 0.7,
+            "z": 0.0000010798763184089792,
+            "yaw": 0
+          },
+          "direction": {
+            "x": 0.9999999999989513,
+            "z": 0.0000014482288873899674
+          },
+          "knockback": 1.063919970724213,
+          "amount": 159.58799560863199,
+          "damageType": "explosive",
+          "type": "combat.hit",
+          "hp": 120.31200439136799
+        },
+        {
+          "tick": 194,
+          "attackId": 3,
+          "actionId": "weapon.rocket-launcher",
+          "sourceId": 1,
+          "targetId": 3,
+          "position": {
+            "x": 10.197919970722587,
+            "y": 0.7,
+            "z": 0.000002620675953882873,
+            "yaw": 0
+          },
+          "direction": {
+            "x": 0.9999999999989514,
+            "z": 0.0000014482288873899668
+          },
+          "knockback": 0.9362495742373077,
+          "amount": 120.31200439136799,
+          "damageType": "explosive",
+          "type": "combat.hit",
+          "hp": 0
+        }
+      ],
+      "shots": [
+        {
+          "type": "combat.attack",
+          "tick": 67,
+          "attackId": 1,
+          "actionId": "weapon.rocket-launcher",
+          "combo": 0,
+          "sourceId": 1,
+          "side": "RIGHT",
+          "position": {
+            "x": 0,
+            "y": 0.7049999833106995,
+            "z": 0,
+            "yaw": 0
+          },
+          "direction": {
+            "x": 0.9999999999999976,
+            "z": -7.030195129492522e-8
+          }
+        },
+        {
+          "type": "combat.attack",
+          "tick": 117,
+          "attackId": 2,
+          "actionId": "weapon.rocket-launcher",
+          "combo": 0,
+          "sourceId": 1,
+          "side": "RIGHT",
+          "position": {
+            "x": 0,
+            "y": 0.7049999833106995,
+            "z": 0,
+            "yaw": 7.030195129492528e-8
+          },
+          "direction": {
+            "x": 0.9999999999999976,
+            "z": -7.030195129492522e-8
+          }
+        },
+        {
+          "type": "combat.attack",
+          "tick": 167,
+          "attackId": 3,
+          "actionId": "weapon.rocket-launcher",
+          "combo": 0,
+          "sourceId": 1,
+          "side": "RIGHT",
+          "position": {
+            "x": 0,
+            "y": 0.7049999833106995,
+            "z": 0,
+            "yaw": 7.030195129492528e-8
+          },
+          "direction": {
+            "x": 0.9999999999999976,
+            "z": -7.030195129492522e-8
+          }
+        }
+      ],
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "before": {
+        "id": 3,
+        "hp": {
+          "current": 450,
+          "max": 450
+        },
+        "method": "Native L7 spawn sets 450 HP; AI update disabled only for stationary direct-hit isolation. Physical Digit7, aim and LMB; no player god mode or health writes."
+      },
+      "after": {
+        "hp": {
+          "current": 0,
+          "max": 450
+        },
+        "events": [
+          {
+            "type": "combat.attack",
+            "tick": 67,
+            "attackId": 1,
+            "actionId": "weapon.rocket-launcher",
+            "combo": 0,
+            "sourceId": 1,
+            "side": "RIGHT",
+            "position": {
+              "x": 0,
+              "y": 0.7049999833106995,
+              "z": 0,
+              "yaw": 0
+            },
+            "direction": {
+              "x": 0.9999999999999976,
+              "z": -7.030195129492522e-8
+            }
+          },
+          {
+            "tick": 93,
+            "attackId": 1,
+            "actionId": "weapon.rocket-launcher",
+            "sourceId": 1,
+            "targetId": 3,
+            "position": {
+              "x": 8,
+              "y": 0.7,
+              "z": 0,
+              "yaw": 0
+            },
+            "direction": {
+              "x": 0.9999999999995466,
+              "z": 9.522718857222038e-7
+            },
+            "knockback": 1.134,
+            "amount": 170.1,
+            "damageType": "explosive",
+            "type": "combat.hit",
+            "hp": 279.9
+          },
+          {
+            "type": "combat.attack",
+            "tick": 117,
+            "attackId": 2,
+            "actionId": "weapon.rocket-launcher",
+            "combo": 0,
+            "sourceId": 1,
+            "side": "RIGHT",
+            "position": {
+              "x": 0,
+              "y": 0.7049999833106995,
+              "z": 0,
+              "yaw": 7.030195129492528e-8
+            },
+            "direction": {
+              "x": 0.9999999999999976,
+              "z": -7.030195129492522e-8
+            }
+          },
+          {
+            "tick": 144,
+            "attackId": 2,
+            "actionId": "weapon.rocket-launcher",
+            "sourceId": 1,
+            "targetId": 3,
+            "position": {
+              "x": 9.133999999999489,
+              "y": 0.7,
+              "z": 0.0000010798763184089792,
+              "yaw": 0
+            },
+            "direction": {
+              "x": 0.9999999999989513,
+              "z": 0.0000014482288873899674
+            },
+            "knockback": 1.063919970724213,
+            "amount": 159.58799560863199,
+            "damageType": "explosive",
+            "type": "combat.hit",
+            "hp": 120.31200439136799
+          },
+          {
+            "type": "combat.attack",
+            "tick": 167,
+            "attackId": 3,
+            "actionId": "weapon.rocket-launcher",
+            "combo": 0,
+            "sourceId": 1,
+            "side": "RIGHT",
+            "position": {
+              "x": 0,
+              "y": 0.7049999833106995,
+              "z": 0,
+              "yaw": 7.030195129492528e-8
+            },
+            "direction": {
+              "x": 0.9999999999999976,
+              "z": -7.030195129492522e-8
+            }
+          },
+          {
+            "tick": 194,
+            "attackId": 3,
+            "actionId": "weapon.rocket-launcher",
+            "sourceId": 1,
+            "targetId": 3,
+            "position": {
+              "x": 10.197919970722587,
+              "y": 0.7,
+              "z": 0.000002620675953882873,
+              "yaw": 0
+            },
+            "direction": {
+              "x": 0.9999999999989514,
+              "z": 0.0000014482288873899668
+            },
+            "knockback": 0.9362495742373077,
+            "amount": 120.31200439136799,
+            "damageType": "explosive",
+            "type": "combat.hit",
+            "hp": 0
+          }
+        ],
+        "god": false,
+        "quality": "high"
+      },
+      "hits": [
+        {
+          "tick": 93,
+          "attackId": 1,
+          "actionId": "weapon.rocket-launcher",
+          "sourceId": 1,
+          "targetId": 3,
+          "position": {
+            "x": 8,
+            "y": 0.7,
+            "z": 0,
+            "yaw": 0
+          },
+          "direction": {
+            "x": 0.9999999999995466,
+            "z": 9.522718857222038e-7
+          },
+          "knockback": 1.134,
+          "amount": 170.1,
+          "damageType": "explosive",
+          "type": "combat.hit",
+          "hp": 279.9
+        },
+        {
+          "tick": 144,
+          "attackId": 2,
+          "actionId": "weapon.rocket-launcher",
+          "sourceId": 1,
+          "targetId": 3,
+          "position": {
+            "x": 9.133999999999489,
+            "y": 0.7,
+            "z": 0.0000010798763184089792,
+            "yaw": 0
+          },
+          "direction": {
+            "x": 0.9999999999989513,
+            "z": 0.0000014482288873899674
+          },
+          "knockback": 1.063919970724213,
+          "amount": 159.58799560863199,
+          "damageType": "explosive",
+          "type": "combat.hit",
+          "hp": 120.31200439136799
+        },
+        {
+          "tick": 194,
+          "attackId": 3,
+          "actionId": "weapon.rocket-launcher",
+          "sourceId": 1,
+          "targetId": 3,
+          "position": {
+            "x": 10.197919970722587,
+            "y": 0.7,
+            "z": 0.000002620675953882873,
+            "yaw": 0
+          },
+          "direction": {
+            "x": 0.9999999999989514,
+            "z": 0.0000014482288873899668
+          },
+          "knockback": 0.9362495742373077,
+          "amount": 120.31200439136799,
+          "damageType": "explosive",
+          "type": "combat.hit",
+          "hp": 0
+        }
+      ],
+      "shots": [
+        {
+          "type": "combat.attack",
+          "tick": 67,
+          "attackId": 1,
+          "actionId": "weapon.rocket-launcher",
+          "combo": 0,
+          "sourceId": 1,
+          "side": "RIGHT",
+          "position": {
+            "x": 0,
+            "y": 0.7049999833106995,
+            "z": 0,
+            "yaw": 0
+          },
+          "direction": {
+            "x": 0.9999999999999976,
+            "z": -7.030195129492522e-8
+          }
+        },
+        {
+          "type": "combat.attack",
+          "tick": 117,
+          "attackId": 2,
+          "actionId": "weapon.rocket-launcher",
+          "combo": 0,
+          "sourceId": 1,
+          "side": "RIGHT",
+          "position": {
+            "x": 0,
+            "y": 0.7049999833106995,
+            "z": 0,
+            "yaw": 7.030195129492528e-8
+          },
+          "direction": {
+            "x": 0.9999999999999976,
+            "z": -7.030195129492522e-8
+          }
+        },
+        {
+          "type": "combat.attack",
+          "tick": 167,
+          "attackId": 3,
+          "actionId": "weapon.rocket-launcher",
+          "combo": 0,
+          "sourceId": 1,
+          "side": "RIGHT",
+          "position": {
+            "x": 0,
+            "y": 0.7049999833106995,
+            "z": 0,
+            "yaw": 7.030195129492528e-8
+          },
+          "direction": {
+            "x": 0.9999999999999976,
+            "z": -7.030195129492522e-8
+          }
+        }
+      ],
+      "pass": true
+    }
+  ],
+  "errors": []
+}

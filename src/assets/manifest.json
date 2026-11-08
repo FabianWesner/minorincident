@@ -11840,52 +11840,6 @@
     }
   },
   {
-    "id": "prop.l10-grave-cross",
-    "category": "prop",
-    "status": "integrated",
-    "tier": "side",
-    "glb": "public/assets/models/prop.l10-grave-cross.glb",
-    "sourceGlb": "assets/prop.l10-grave-cross/model.glb",
-    "sourceForward": "+X",
-    "lods": {
-      "lod1": "public/assets/models/prop.l10-grave-cross.lod1.glb",
-      "lod2": "public/assets/models/prop.l10-grave-cross.lod2.glb"
-    },
-    "authoredLodTriangles": {
-      "lod1": 300,
-      "lod2": 60
-    },
-    "dimensions": {
-      "x": 0.56,
-      "y": 0.96,
-      "z": 0.134,
-      "tolerance": 0.15
-    },
-    "forward": "+X",
-    "frontNodes": [
-      "front"
-    ],
-    "requiredNodes": [
-      "root",
-      "body",
-      "front"
-    ],
-    "animatedNodes": [],
-    "sockets": [],
-    "budget": {
-      "triangles": 800,
-      "materials": 8,
-      "fileKB": 120,
-      "drawCalls": 8
-    },
-    "world": {
-      "token": "woodWarm",
-      "solid": false
-    },
-    "decayVariants": [],
-    "script": "assets/l10-vignettes/build.py"
-  },
-  {
     "id": "prop.trash-bin",
     "category": "prop",
     "status": "integrated",
@@ -23403,6 +23357,459 @@
       "lod1": 80,
       "lod2": 80
     }
+  },
+  {
+    "id": "veg.corn-block",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "tools/blender/build_l10_farm.py",
+    "sourceGlb": "assets/veg.corn-block/model.glb",
+    "glb": "public/assets/models/veg.corn-block.glb",
+    "lods": {
+      "lod1": "public/assets/models/veg.corn-block.lod1.glb",
+      "lod2": "public/assets/models/veg.corn-block.lod2.glb"
+    },
+    "dimensions": {
+      "x": 10.8129,
+      "y": 2.5994,
+      "z": 10.9618,
+      "tolerance": 0.35
+    },
+    "forward": "+X",
+    "sourceForward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 6000,
+      "materials": 4,
+      "fileKB": 300,
+      "drawCalls": 4
+    },
+    "authoredLodTriangles": {
+      "lod1": 1500,
+      "lod2": 200
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "canvasTan",
+      "solid": false
+    }
+  },
+  {
+    "id": "prop.farm-scarecrow",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "tools/blender/build_l10_farm.py",
+    "sourceGlb": "assets/prop.farm-scarecrow/model.glb",
+    "glb": "public/assets/models/prop.farm-scarecrow.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.farm-scarecrow.lod1.glb",
+      "lod2": "public/assets/models/prop.farm-scarecrow.lod2.glb"
+    },
+    "dimensions": {
+      "x": 1.6523,
+      "y": 2.295,
+      "z": 0.47,
+      "tolerance": 0.35
+    },
+    "forward": "+X",
+    "sourceForward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 800,
+      "materials": 4,
+      "fileKB": 300,
+      "drawCalls": 4
+    },
+    "authoredLodTriangles": {
+      "lod1": 300,
+      "lod2": 60
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    }
+  },
+  {
+    "id": "prop.farm-carcass",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "tools/blender/build_l10_farm.py",
+    "sourceGlb": "assets/prop.farm-carcass/model.glb",
+    "glb": "public/assets/models/prop.farm-carcass.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.farm-carcass.lod1.glb",
+      "lod2": "public/assets/models/prop.farm-carcass.lod2.glb"
+    },
+    "dimensions": {
+      "x": 2.3031,
+      "y": 0.72,
+      "z": 1.6094,
+      "tolerance": 0.35
+    },
+    "forward": "+X",
+    "sourceForward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 800,
+      "materials": 4,
+      "fileKB": 300,
+      "drawCalls": 4
+    },
+    "authoredLodTriangles": {
+      "lod1": 300,
+      "lod2": 60
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    }
+  },
+  {
+    "id": "prop.tree.dead",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "tools/blender/build_l10_farm.py",
+    "sourceGlb": "assets/prop.tree.dead/model.glb",
+    "glb": "public/assets/models/prop.tree.dead.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.tree.dead.lod1.glb",
+      "lod2": "public/assets/models/prop.tree.dead.lod2.glb"
+    },
+    "dimensions": {
+      "x": 3.5468,
+      "y": 4.9773,
+      "z": 3.3323,
+      "tolerance": 0.35
+    },
+    "forward": "+X",
+    "sourceForward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 800,
+      "materials": 4,
+      "fileKB": 300,
+      "drawCalls": 4
+    },
+    "authoredLodTriangles": {
+      "lod1": 300,
+      "lod2": 60
+    },
+    "decayVariants": [
+      "burned"
+    ],
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    }
+  },
+  {
+    "id": "bld.farm-barn-ruin",
+    "category": "building",
+    "status": "integrated",
+    "tier": "side",
+    "script": "tools/blender/build_l10_farm.py",
+    "sourceGlb": "assets/bld.farm-barn-ruin/model.glb",
+    "glb": "public/assets/models/bld.farm-barn-ruin.glb",
+    "lods": {
+      "lod1": "public/assets/models/bld.farm-barn-ruin.lod1.glb",
+      "lod2": "public/assets/models/bld.farm-barn-ruin.lod2.glb"
+    },
+    "dimensions": {
+      "x": 10.3453,
+      "y": 5.3751,
+      "z": 8.22,
+      "tolerance": 0.35
+    },
+    "forward": "+X",
+    "sourceForward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 2400,
+      "materials": 4,
+      "fileKB": 300,
+      "drawCalls": 4
+    },
+    "authoredLodTriangles": {
+      "lod1": 800,
+      "lod2": 200
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    }
+  },
+  {
+    "id": "bld.farm-house-ruin",
+    "category": "building",
+    "status": "integrated",
+    "tier": "side",
+    "script": "tools/blender/build_l10_farm.py",
+    "sourceGlb": "assets/bld.farm-house-ruin/model.glb",
+    "glb": "public/assets/models/bld.farm-house-ruin.glb",
+    "lods": {
+      "lod1": "public/assets/models/bld.farm-house-ruin.lod1.glb",
+      "lod2": "public/assets/models/bld.farm-house-ruin.lod2.glb"
+    },
+    "dimensions": {
+      "x": 8.5152,
+      "y": 3.9225,
+      "z": 7.22,
+      "tolerance": 0.35
+    },
+    "forward": "+X",
+    "sourceForward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 2400,
+      "materials": 4,
+      "fileKB": 300,
+      "drawCalls": 4
+    },
+    "authoredLodTriangles": {
+      "lod1": 800,
+      "lod2": 200
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    }
+  },
+  {
+    "id": "prop.farm-tractor",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "tools/blender/build_l10_farm.py",
+    "sourceGlb": "assets/prop.farm-tractor/model.glb",
+    "glb": "public/assets/models/prop.farm-tractor.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.farm-tractor.lod1.glb",
+      "lod2": "public/assets/models/prop.farm-tractor.lod2.glb"
+    },
+    "dimensions": {
+      "x": 3.8,
+      "y": 2.745,
+      "z": 2.16,
+      "tolerance": 0.35
+    },
+    "forward": "+X",
+    "sourceForward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 800,
+      "materials": 4,
+      "fileKB": 300,
+      "drawCalls": 4
+    },
+    "authoredLodTriangles": {
+      "lod1": 300,
+      "lod2": 60
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    }
+  },
+  {
+    "id": "prop.farm-combine",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "tools/blender/build_l10_farm.py",
+    "sourceGlb": "assets/prop.farm-combine/model.glb",
+    "glb": "public/assets/models/prop.farm-combine.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.farm-combine.lod1.glb",
+      "lod2": "public/assets/models/prop.farm-combine.lod2.glb"
+    },
+    "dimensions": {
+      "x": 6.697,
+      "y": 2.745,
+      "z": 3.6,
+      "tolerance": 0.35
+    },
+    "forward": "+X",
+    "sourceForward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 800,
+      "materials": 4,
+      "fileKB": 300,
+      "drawCalls": 4
+    },
+    "authoredLodTriangles": {
+      "lod1": 300,
+      "lod2": 60
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    }
+  },
+  {
+    "id": "prop.farm-irrigator",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "tools/blender/build_l10_farm.py",
+    "sourceGlb": "assets/prop.farm-irrigator/model.glb",
+    "glb": "public/assets/models/prop.farm-irrigator.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.farm-irrigator.lod1.glb",
+      "lod2": "public/assets/models/prop.farm-irrigator.lod2.glb"
+    },
+    "dimensions": {
+      "x": 12.0,
+      "y": 2.1196,
+      "z": 1.36,
+      "tolerance": 0.35
+    },
+    "forward": "+X",
+    "sourceForward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 800,
+      "materials": 4,
+      "fileKB": 300,
+      "drawCalls": 4
+    },
+    "authoredLodTriangles": {
+      "lod1": 300,
+      "lod2": 60
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    }
+  },
+  {
+    "id": "prop.l10-grave-cross",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/prop.l10-grave-cross.glb",
+    "sourceGlb": "assets/prop.l10-grave-cross/model.glb",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/prop.l10-grave-cross.lod1.glb",
+      "lod2": "public/assets/models/prop.l10-grave-cross.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 300,
+      "lod2": 60
+    },
+    "dimensions": {
+      "x": 0.56,
+      "y": 0.96,
+      "z": 0.134,
+      "tolerance": 0.15
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "front"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 800,
+      "materials": 8,
+      "fileKB": 120,
+      "drawCalls": 8
+    },
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    },
+    "decayVariants": [],
+    "script": "assets/l10-vignettes/build.py"
   },
   {
     "id": "prop.l10-quarantine-tape",

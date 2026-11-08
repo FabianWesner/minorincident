@@ -13,7 +13,7 @@ if os.environ.get('MI_REMOTE') != '1':
     raise SystemExit('Use tools/remote/run.sh with Mac fallback disabled.')
 path = Path('src/levels/decor.ts')
 original = path.read_text()
-line = 'const vignettes = cureVignettes([...placements, ...belt, ...stories, ...forecourts]);'
+line = 'const vignettes = cureVignettes([...placements, ...belt, ...stories, ...forecourts, ...farm]);'
 if original.count(line) != 1:
     raise SystemExit('Unexpected decor integration; refuse to change the comparison.')
 try:

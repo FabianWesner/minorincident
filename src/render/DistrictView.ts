@@ -294,6 +294,7 @@ export class DistrictView extends Group {
     const { batch, refs, origin, center, radius } = entry, next: Object3D[] = [];
     for (const ref of refs) {
       if (ref.userData.interiorHidden || this.low && ref.userData.highOnly) continue;
+      if (this.low && ref.userData.farmScatter !== undefined && ref.userData.farmScatter % 2) continue;
       this.bounds.center.copy(center).applyMatrix4(ref.matrix); this.bounds.center.x += origin[0]; this.bounds.center.z += origin[1];
       this.bounds.radius = radius * Math.max(ref.scale.x, ref.scale.y, ref.scale.z);
       if (this.frustum.intersectsSphere(this.bounds)) next.push(ref);
@@ -310,6 +311,7 @@ export class DistrictView extends Group {
     let prefetchNear = false, prefetchHero = false;
     for (const [index, ref] of refs.entries()) {
       if (ref.userData.interiorHidden || this.low && ref.userData.highOnly) continue;
+      if (this.low && ref.userData.farmScatter !== undefined && ref.userData.farmScatter % 2) continue;
       if (entry.id === 'prop.cure-canister-pedestal' && this.cureCollected) continue;
       if (foliage && index >= Math.ceil(refs.length * this.materials.look.values.foliageDensity)) continue;
       const x = ref.position.x + origin[0], z = ref.position.z + origin[1];
@@ -322,7 +324,7 @@ export class DistrictView extends Group {
       // frustum entry or a band promotion can draw a coarser stand-in. Sandbags are the one low-tier prop exception.
       const policy = entry.id === 'prop.privacy-fence' ? privacyFenceLodPolicy : entry.id === 'prop.sandbag-pallet' ? sandbagLodPolicy : lodPolicy;
       if (this.lodPrefetchMetres > 0) {
-        if (this.low) prefetchNear ||= !prop && !heavyOnLow(entry.id) && distance <= 16 + this.lodPrefetchMetres;
+        if (this.low) prefetchNear ||= entry.id === 'veg.corn-block' && distance < 50 || !prop && !heavyOnLow(entry.id) && distance <= 16 + this.lodPrefetchMetres;
         else {
           prefetchNear ||= distance <= policy.lod2From * factor + this.lodPrefetchMetres;
           prefetchHero ||= distance <= policy.lod1From * factor + this.lodPrefetchMetres;
@@ -330,7 +332,7 @@ export class DistrictView extends Group {
       }
       if (!this.frustum.intersectsSphere(this.bounds)) continue;
       let band = this.low
-        ? (entry.id === 'prop.sandbag-pallet' ? distance > 32 ? 'lod2' : 'lod1' : distance > 16 || worldAssets[entry.id].category === 'prop' || heavyOnLow(entry.id) ? 'lod2' : 'lod1')
+        ? (entry.id === 'veg.corn-block' ? distance > 45 ? 'lod2' : 'lod1' : entry.id === 'prop.sandbag-pallet' ? distance > 32 ? 'lod2' : 'lod1' : distance > 16 || worldAssets[entry.id].category === 'prop' || heavyOnLow(entry.id) ? 'lod2' : 'lod1')
         : pickLod(detailDistance, entry.bands[index], policy);
       if (!this.low && !foliage && worldAssets[entry.id].category === 'prop') {
         const size = worldAssets[entry.id].dimensions;

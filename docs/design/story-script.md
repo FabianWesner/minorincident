@@ -99,7 +99,7 @@ The music drops to a quiet theme. This is the breath before the end.
 - Dr. **Elena Voss** (lead researcher): "You're the courier. The one from the Annex." (She knows.)
 - Voss: "The sample you carried that morning came from here. We sent it to the Annex for testing. The container failed. That's on us. Not on you."
 - Courier (her second line in the whole game): "I carried it."
-- Voss: "Then carry this one." (She hands over the cure canister.) "It's airborne. It only kills the infected. The dispersal complex is two kilometres east. Plug it into the main console, hold it while it charges, and release it."
+- Voss: "Then carry this one." (She hands over the cure canister.) "It's airborne. It doesn't kill them — it brings them back. Whoever is still in there. The dispersal complex is two kilometres east. Plug it into the main console, hold it while it charges, and release it."
 - Sergeant **Ruiz** (armory): "Your weapons came off the bridge wreck this morning. Cleaned them. Took the liberty." — she gets every weapon back.
 - Voss (giving the flamethrower): "Prototype. Burns hot. Don't use it in the corn."
 - Sam: "I'm coming." — Voss: "You're bleeding into my floor. You're staying." — Sam (to the courier): "Go finish your delivery."
@@ -112,9 +112,26 @@ She runs, fights, uses every gap. At the complex she installs the canister and h
 - When it falls — Voss (radio): "Release it. Now."
 - Objective: *Release the cure.*
 
-**Epilogue.** The mist rolls out over the corn, the farms, the river. Infected drop where they stand. Survivors step out
-of hiding. The corgi barks at the sunrise. Her phone buzzes, the same sound as the first minute of the game:
-**"Delivered ✓"**. Pull out. Title: **Minor Incident**.
+**Epilogue (after the win) — PO 2026-11-08: "Finale music is good, but could be more of a success hymn. The rest is boring, I cannot move and nothing is happening for 150 s. Make sure the storyline also shows what happens after the final win."**
+No waiting. The release is followed by a short, moving epilogue (~60–75 s total, skippable after the first view), scored by a
+triumphant hymn (build from the finale theme: brass/choir swell, then a warm resolution — not the horror score).
+1. **Release (0–8 s).** The courier slams the release lever. The canister fires; a column of glowing green dust rises from the complex and
+   rolls outward over the ground like a tide, settling on everything it touches (ground, corpses, wrecks turn faintly green).
+   PO 2026-11-08: "Cure could be also visual, maybe a green dust that grows over the place or something, and Zombies that still live become peds again."
+   Living infected it reaches stop, choke, fall to their knees — and stand up again as people: confused civilians, soldiers, a
+   nurse, who look at their hands, at each other, at her. Some sit down and cry; some walk toward her. The Mega (dead) stays dead.
+   The corgi sits down next to her. The player keeps control and can walk among the cured people while it happens (PO: "I can move, but still boring" → the cured crowd is the thing to see).
+2. **The wave (8–30 s, cinematic, camera leaves her).** Camera rides the mist across the places of the journey, each a 3–4 s shot:
+   the corn and the burned farms; the bridge wreck in the river; the zoo's empty enclosures with Nadia's keeper cap on a fence;
+   the city skyline from L7; the Medical Annex from L1 — wherever the green dust passes, infected kneel and stand up as people again.
+3. **The survivors (30–50 s).** Short vignettes, one line each:
+   - North of the river, the army trucks stop; Mia, Rosa, Dale and Mr. Okafor step down into morning light. Rosa: "Look — it's over."
+   - The hangar doors open; Dr. Voss and Sgt. Ruiz help Sam outside. Sam (radio): "Delivery confirmed. …Show-off."
+   - People come out of houses and basements across the town (depot workers among them), blinking at the sun.
+4. **Back to her (50–65 s).** Sunrise over the complex. The courier sits on the platform steps, the corgi's head on her knee.
+   Her phone buzzes — the same sound as the first minute of the game: **"Delivered ✓"**. She almost smiles.
+5. **Title and credits (65 s+).** PO 2026-11-08: "final zoom out is amazing, but we don't need to wait 120 s for this" — keep the existing slow zoom-out over the complex, but start it right after the 'Delivered ✓' beat and let it run ~15 s, not 120 s, and pull out much higher — until the whole of L10 is visible (corn, farms, restricted zone, hangar, complex) under the spreading green dust (PO: "could even zoom higher, so the entire level can be overseen"); distant terrain at low LOD is fine. Pull out, title **Minor Incident**, then proper scrolling credits over the hymn — readable, at least ~60–90 s, skippable with a button, ending on a 'Thanks for playing' card and a return to the menu (PO: "credits were only shown for a few seconds"); a final post-credits shot: the corgi
+   carrying its toy (if found in L10) up to her.
 
 ---
 

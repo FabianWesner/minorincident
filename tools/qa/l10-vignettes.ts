@@ -9,6 +9,7 @@ import { cureEvacuationLane, cureVignetteSet, cureVignetteRoutes, cureLineLength
 import { cureRoadsideBelt } from '../../src/levels/L10/roadsideBelt';
 import { cureCrossingStories } from '../../src/levels/L10/crossingStories';
 import { cureForecourtDecor } from '../../src/levels/L10/forecourts';
+import { cureFarmDecor } from '../../src/levels/L10/farmLayout';
 import { placementColliders } from '../../src/levels/districts/staticCollision';
 import type { DistrictLayout, Point } from '../../src/levels/districts/types';
 
@@ -17,8 +18,9 @@ assert(cureWallMessages.every(message=>script.includes(message)),'All written st
 const directory='docs/reports/eg-l10-vignettes/evidence';mkdirSync(directory,{recursive:true});
 const layout=JSON.parse(readFileSync('public/assets/layouts/D-CURE.layout.json','utf8')) as DistrictLayout;
 const belt=cureRoadsideBelt(layout.placements),crossings=cureCrossingStories([...layout.placements,...belt]),apron=cureForecourtDecor([...layout.placements,...belt,...crossings]);
-const baseline=[...layout.placements,...belt,...crossings,...apron],start=performance.now(),set=cureVignetteSet(baseline),constructionMs=performance.now()-start;
-writeFileSync(join(tmpdir(),'eg-l10-vignettes-before.json'),JSON.stringify([...belt,...crossings,...apron]));
+const farm=cureFarmDecor([...layout.placements,...belt,...crossings,...apron]);
+const baseline=[...layout.placements,...belt,...crossings,...apron,...farm],start=performance.now(),set=cureVignetteSet(baseline),constructionMs=performance.now()-start;
+writeFileSync(join(tmpdir(),'eg-l10-vignettes-before.json'),JSON.stringify([...belt,...crossings,...apron,...farm]));
 const all=[...baseline,...set.placements],byId=new Map(all.map(p=>[p.id,p]));
 assert.deepEqual(set.missed,[],'Every station, five messages/region and unique helicopter must be admitted');
 assert(set.scenes.every(s=>s.pieces.length>=3&&s.pieces.length<=8),'Every scene must be a complete 3–8 piece story');

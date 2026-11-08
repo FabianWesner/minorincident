@@ -1,6 +1,7 @@
 import { worldAssets } from '../../assets/worldDefinitions';
 import type { DistrictLayout, Placement, Point } from '../districts/types';
 import { cure } from './district';
+import { farmLanes } from './farmLayout';
 import { cureCrossingLines } from './crossingStories';
 import { cureEncounters, cureEncounterSlots, cureMedkits } from './encounters';
 
@@ -44,7 +45,7 @@ const body=(n:number)=>`prop.l10-corpse-${['back','side','crumple'][n%3]}`;
  * use DistrictView's existing instancing/LOD path. Key pieces are fixed, and rejected stations are exposed to QA. */
 export function cureVignetteSet(occupied:readonly Placement[]):CureVignetteSet {
   const out:CureVignetteSet={placements:[],scenes:[],decals:[],missed:[]},routes=cureVignetteRoutes();
-  const lines=[...routes.map(r=>r.line),...cure.detours.map(r=>r.route)];
+  const lines=[...routes.map(r=>r.line),...cure.detours.map(r=>r.route),...farmLanes];
   const anchors=[...Object.values(cure.anchors),...cureMedkits.map(m=>m.at)];
   const slots=cureEncounters.filter(e=>!e.assault).flatMap(e=>(['high','low'] as const).flatMap(t=>cureEncounterSlots(e,t).map(s=>[s.x,s.z] as Point)));
   const consoleAt=cure.anchors['cure-console'];
