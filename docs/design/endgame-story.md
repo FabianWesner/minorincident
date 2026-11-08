@@ -67,7 +67,7 @@ Climax: the bridge collapse caused by the Mega, the enemy introduced in L8. The 
 
 ## L10 The Cure — "alone, hunted, rebuild, deliver" (~35–40 min competent, 45–50 newbie)
 
-The level keeps its size and the long walks (PO). Its tone is survival horror, not crowds: quiet dark stretches with dread cues (sounds in the dark, lights flickering out, the corgi growling, the distant Mega), rare jump scares by stronger and faster infected and small hunting groups, continuous sparse scenery, and an apocalypse dressing pass on the houses. The only crowd fight is a smaller console assault around the Mega fight. Every weapon comes from a scene with a reason:
+The level keeps its size and the long walks (PO). Its tone is survival horror, not crowds: quiet dark stretches with dread cues (sounds in the dark, lights flickering out, the corgi growling, the distant Mega), rare jump scares by stronger and faster infected and small hunting groups, continuous sparse scenery across corn fields and dead farms (corn hides the scares), an apocalypse dressing pass on the houses, and a dark ambient score with silence before each scare (rock only for the Mega climax). The only crowd fight is a smaller console assault around the Mega fight. Every weapon comes from a scene with a reason:
 
 | Region | Story goal (objective) | Weapon and its story | Climax / threat |
 |---|---|---|---|
@@ -86,7 +86,7 @@ Pay-off check: the delivery (L1) matches the delivery (L10), the commander's bro
 
 ---
 
-## Implementation plan (6 lanes, after PO approval)
+## Implementation plan (7 lanes, after PO approval)
 
 | Lane | Model, time | Scope |
 |---|---|---|
@@ -96,6 +96,7 @@ Pay-off check: the delivery (L1) matches the delivery (L10), the commander's bro
 | L9-B content + ending | Opus, ~3 h | Routes, migrations, evacuation drop-off (Sam stays), Mega boarder on the bridge, real-motion collapse, weapon loss shown, crawl, explosion, L10 creek-bed start and captions. |
 | L10-A regions + story | Opus, ~3 h | Story objectives and weapon scenes (roadblock, depot rescue, armory with Sam's death, escort convoy), Sam radio and follower, moving encounters, release gate removed. |
 | L10-B Mega/HUD/dogs/dressing | Sonnet, ~3 h | Minimap icon language, Mega red dot, sightings 1/3 plus the corridor stagger, assault until `mega-dead`, dog superpowers, apocalypse house dressing. |
+| L10-farm + audio | Sonnet/Opus, ~3 h | Corn fields and farm dressing with their sight and nav rules; L10 dark-ambient music streams and scare stingers (details in l9-l10-concept.md). |
 | Story text | Haiku, ~0.5 h | `dialogue.ts` lines (L8 broadcast, Hale, Sam, L10 briefing/crash, new recording, "Delivered ✓" epilogue toast), checked against the save roster fallback (Sam → Reyes). |
 
 Order: L8-story and L9-A in parallel → L9-B → L10-A and L10-B → story text → Opus visual QA and a playtest of L8–L10 before any PROD deploy. Every lane runs focused checks and one real-input run of its level. Perf runs in the orchestrator's quiet window.

@@ -133,6 +133,42 @@ The order of the sequence is: learn (zoo gate, on-ramp) → choose a set piece (
 
 **Objective structure.** Drop "Recover the X at the checkpoint". Objectives name the story goal ("Follow Sam's trail", "Reach Sam at the depot", "Open the armory", "Reach the escort convoy"). The weapon is what that scene yields. Checkpoints stay at region entrances and on each pickup.
 
+## L10 landscape: corn instead of flat grass (PO: "You might also consider corn fields instead of just green fields.")
+
+**Landscape:** the open fields between regions become farmland:
+- tall corn (2.2–2.6 m) in large blocks;
+- stubble, fallow and dry crops;
+- fences, scarecrows, farm sheds and barns, irrigation pivots, tractors and combines (abandoned, lights dead).
+
+Corn cuts the sight lines, which suits the survival-horror tone, and it is the main jump-scare cover.
+
+**Gameplay rules:**
+- **Who sees whom.** Inside corn, infected sight drops to 3 m (rustle/sound still alerts them at their hearing range). Corn does not block the corgi's warning, so the corgi growls toward what is hidden.
+- **Reading the corn.** Stalks sway around every moving actor (a shader displaced by a small per-frame list of nearby entity positions). The player sees a moving shape in the corn before the burst.
+- **Movement.** Corn is walkable for everyone at 0.85× speed. Mowed lanes, tractor tracks and the road give full speed and act as guidance lines (the objective line follows a lane, so nobody crosses blind for 300 m unless they choose to).
+- **Camera.** Stalks within 3 m of the courier fade, like the existing enclosing-prop cut, so she is never hidden at zoom 1.5 or 0.5.
+- **Scares.** "Out of the corn" triggers sit 4–6 m from a lane. The infected is placed inside the block, unseen, and starts moving before it can be seen.
+
+**Perf:** a new instanced crop asset (`veg.corn-block`: crossed alpha-tested cards, wind sway in the vertex shader; LOD1 sparser cards; LOD2 one billboard slab per row). Indicative caps: LOD0 ≤ 6,000 / LOD1 ≤ 1,500 / LOD2 ≤ 200 triangles per 10 × 10 m tile. It uses the existing DistrictView instanced batches and chunk residency (25 / 9 detailed chunks), with low tier at half density. Corn has **no physics colliders** (nav cost only). Gate: E18 draws/triangles at the densest corn chunk, high and low.
+
+## Music direction (PO: "This also means another music. Our rock music for Zombies wouldn't [fit].")
+
+Today L10 has no level stream: it falls back to the generic `calm`/`tension`/`combat` streams (*Running free* / *Blinding Lights*, synth-rock). L8 uses *Chee Zee Jungle* / *Freddy's Menagerie*, L9 *Limit 70* / *Hot Pursuit* (all MacLeod, CC-BY 4.0, `assets/audio/imports.json`). New picks below come from the CC0/CC-BY sources already vetted in `specs/10-music-sources.md` (licence and attribution are checked per track at import).
+
+| Level / beat | Direction | Have | To source (vetted sources) |
+|---|---|---|---|
+| L10 walk (all regions) | Dark ambient bed: low drones, sparse piano/strings, long silences | *Zombie Hoodoo* (MacLeod, imported) | *Bent and Broken*, *Lightless Dawn* (MacLeod); Alexander Nakarada Ambient/Horror collection (CC-BY 4.0); Tri-Tachyon *Soundscape – Dust* (CC-BY 4.0) |
+| L10 tension (hunter near, corgi growl) | Heartbeat or low pulse layered over the bed; the music director's tension layer | — | Synthesised pulse (existing WebAudio synthesis), or a Freesound CC0 heartbeat |
+| L10 scares | **Silence** 1–2 s before (music ducks), then a sharp stinger | — | 4–6 stingers: Freesound CC0/CC-BY, or synthesised hits; captioned |
+| L10 campus lockdown and Mega chase | Pulsing dark march / chase | — | *Oppressive Gloom*, *Zombie Chase* (MacLeod; shares its theme with *Zombie Hoodoo*) |
+| L10 console + Mega fight | The only heavy track of the level: climax | *Metalmania* (L7) as a stand-in | Emma_MA *Unreleased Zombie Soundtrack* heavier intro+loop (CC-BY 3.0), or *Take the Lead* (MacLeod) |
+| L10 epilogue / credits | Release: hopeful piano | *Comfort in Uncertainty* (aftermath) | *Promises to Keep* (MacLeod), already recommended for the L6 dawn |
+| L8 sanctuary | Light, curious | *Chee Zee Jungle* | — |
+| L8 animal arenas | One boss loop per arena (short, percussive) plus an animal-specific telegraph sting | *Freddy's Menagerie* | JRPG Pack #5 *Encounter With The Witches* / *Preparing For Battle* (Junkala, CC0); *Prelude and Action* (MacLeod) |
+| L9 driving | Keep energetic driving music | *Limit 70*, *Hot Pursuit* | Bus chase / bridge: *Eighties Action* or *Go Cart – Loop Mix* (MacLeod) |
+
+Work: add `calm-L10`/`tension-L10`/`combat-L10` streams plus a `scare` duck-and-sting cue to the existing music director (`src/data/musicBeats.ts`). Audio is part of lane L10-B, and the L8 arena loops are part of L8-bosses.
+
 ## Infected dog: recurring special enemy (PO 11-08)
 
 "L10 has a Zombie dog. Put this also to other levels and give it some super-powers (eg higher speed or jumping)".
@@ -213,7 +249,8 @@ Current conflicts (`src/ui/Hud.ts`):
 | L9-A systems | Opus, ~3 h | Boarding plus shake-off plus driver damage. Heavy-ram and bloated costs. Pit-stop repair plus hatch fire. Shared "no idle in the zoom-0.5 frame" admission helper. | Unit/sim fixtures (board → shaken off by swerve; 4 boarders kill an idle courier; repair pauses when released); Scene Lab `qa-l9-boarders`, `qa-l9-pitstop`. |
 | L9-C driving set pieces | Sonnet, ~3 h (after A) | Ranks 2, 4, 6, 7 and 9: barricade language, tanker, bus chase, wheat-field fire wall, evac gate timer, swerving cars. Ranks 8 and 10 (jumps) are a separate Opus spike of about 2 h, done only if the PO wants jumps. | Real-input run per set piece with captures, low/high. |
 | L9-B content + ending | Opus, ~3 h (after A's helper) | Route mixes, roadblocks, zoo chasers, migration streams, level crossing, evac point drop-off, bridge collapse from the real transform, visible weapon loss, crawl with the axe on her back, wreck explosion. Also the L10 creek-bed start and caption. | One real-input run per route (low/high, zoom 1/1.5) with captures of every beat and the ending; idle-spawn probe = 0; L9 6–8 min. |
+| L10-farm (corn) | Sonnet asset + Opus systems, ~3 h | `veg.corn-block` with LOD budgets, farm dressing, sight/speed/sway/camera-fade rules, corn scare triggers. | Scene Lab corn sheets at low/high, zoom 0.5/1/1.5; perf counters at the densest chunk. |
 | L10-A regions | Opus, ~3 h | Remove the checkpoint-x release gate. Weapons mid-region with guards. Scare catalogue triggers and dread cues along every walking line (no field streams). Region peaks of 8–15. Per-region strong archetypes. R3 survivors and gate hold, R4 armory, jeep mounted gun and the survivor-grab sighting. | Scare log: one scare every 60–120 s on the walked line, none visible before it fires; scenery meter: never 10 s without a lit silhouette; `qa:threat` L10; one unprotected real-input run R1–R5. |
-| L10-B Mega + finale + dressing + HUD | Sonnet, ~3 h | Minimap icon language (table above, all levels) including the Mega red dot and ring (remove the band label). Dog superpowers (leap over low cover, pack flank, corgi dog-bark). Sightings 1 and 3 plus the corridor stagger-retreat. Assault continues until `mega-dead`. Apocalypse dressing pass on D-CURE houses (decay variants, at most one lit refuge per region). | Finale run: no 10 s window without an attack after `charge-ready`; minimap captures; R2/R3 house sheets at low/high, zoom 1/1.5. |
+| L10-B Mega + finale + dressing + HUD | Sonnet, ~3 h | Minimap icon language (table above, all levels) including the Mega red dot and ring (remove the band label). Dog superpowers (leap over low cover, pack flank, corgi dog-bark). Sightings 1 and 3 plus the corridor stagger-retreat. Assault continues until `mega-dead`. Apocalypse dressing pass on D-CURE houses (decay variants, at most one lit refuge per region). L10 music streams and the scare duck-and-sting cue. | Finale run: no 10 s window without an attack after `charge-ready`; minimap captures; R2/R3 house sheets at low/high, zoom 1/1.5. |
 
 L9-A and L10-A can run in parallel. B lanes follow their A lane. Perf runs in the orchestrator's quiet window. Followed by an Opus visual QA and a playtest of both levels before PROD.
