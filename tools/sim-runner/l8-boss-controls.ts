@@ -101,7 +101,7 @@ try {
     arena.phase = 1; arena.nextAt = w.tick + 30; arena.cycle = 0;
     const charges: unknown[] = [];
     w.events.on('infected.special', event => { if (event.type === 'infected.special' && event.sourceId === e.id && event.move === 'elephant.charge' && event.stage === 'recovery') charges.push({ tick: w.tick, a: structuredClone(e.infected!.specialAttack), boss: { ...e.transform }, courier: { ...p.transform } }); });
-    const generic = new L8ArenaBot(w), walker = new Walker(), contacts: unknown[] = []; let previous = 0, side = 1;
+    const generic = new L8ArenaBot(w), walker = new Walker(), contacts: unknown[] = []; let previous = 0, goal: { x: number; z: number } | undefined = { x: -44, z: 25 };
     for (let n = 0; n < 120 * 60 && e.health.current > 0 && p.health.current > 0; n++) {
       const a = e.infected!.specialAttack, f = emptyInput();
       if (a?.move === 'elephant.charge' && a.stage !== 'recovery') {
@@ -112,12 +112,17 @@ try {
       } else if (a?.move === 'elephant.swipe' && a.stage !== 'recovery' || Math.hypot(p.transform.x - e.transform.x, p.transform.z - e.transform.z) < 4.5 && a?.stage !== 'recovery') {
         const dx = p.transform.x - e.transform.x, dz = p.transform.z - e.transform.z, d = Math.hypot(dx, dz) || 1; f.move = { x: dx / d, z: dz / d };
       } else {
-        const x = side === 1 ? -44 : -76, z = Math.abs(p.transform.x - x) > 3 ? 17 : 25;
-        f.move = walker.step(w, { x, z }, 1, `lure-${side}-${z}`) ?? f.move;
+        const candidates = [[-44,20],[-44,44],[-76,20],[-76,44],[-52,18],[-52,46],[-64,18],[-64,46]].map(([x,z]) => ({x,z}));
+        const laneClear = (at: {x:number;z:number}) => {
+          const dx=at.x-e.transform.x,dz=at.z-e.transform.z,d=Math.hypot(dx,dz);
+          return d >= 7 && d <= 30 && w.solids.clear({ ...at, y:.7 }, .35, 1, false) && w.solids.sweep(e,{x:dx/d,z:dz/d},Math.max(0,d-1),e.combat!.radius,false,false) >= d-1-.01;
+        };
+        if (!goal || !laneClear(goal)) goal = candidates.filter(laneClear).sort((a,b) => Math.hypot(a.x-p.transform.x,a.z-p.transform.z)-Math.hypot(b.x-p.transform.x,b.z-p.transform.z))[0];
+        if (goal) f.move=walker.step(w,goal, .6,`lure-${goal.x}-${goal.z}`) ?? f.move;
       }
       if (process.env.L8_ELEPHANT_LURE === 'generic') f.move = generic.sample('elephant').move;
       w.applyInput(f, 'keyboard'); step(w);
-      if (arena.wallHits > previous) { previous = arena.wallHits; side = e.transform.x < -60 ? 1 : -1; contacts.push({ tick: w.tick, hits: previous, boss: { ...e.transform }, courier: { ...p.transform }, hp: e.health.current }); }
+      if (arena.wallHits > previous) { previous = arena.wallHits; goal = undefined; contacts.push({ tick: w.tick, hits: previous, boss: { ...e.transform }, courier: { ...p.transform }, hp: e.health.current }); }
     }
     check('three real sidestepped wall charges kill without firing', arena.wallHits === 3 && e.health.current === 0, { contacts, wallHits: arena.wallHits, hp: e.health.current, courierHP: p.health.current, finalBoss: e.transform, finalCourier: p.transform, finalAttack: e.infected!.specialAttack, phase: arena.phase, current: zoo.state.arenas.find(a => a.id === arena.id), tick: w.tick, missionPhase: w.missions!.state.phase, charges });
   } finally { w.dispose(); }
@@ -140,7 +145,7 @@ try {
         lifted ||= a.stage === 'telegraph' && payload.infected!.thrownBy === e.id;
         flight ||= a.stage === 'active' && payload.transform.y > 1;
         if (flight && payload.infected!.thrownBy === undefined) {
-          landed = payload.health.current > 0; rolling = payload.combat!.staggerUntil - w.tick === 36 && payload.combat!.reaction?.heavy === true && payload.combat.reaction.until - w.tick === 36;
+          landed = payload.health.current > 0; rolling = payload.combat!.staggerUntil - w.tick === 36 && payload.combat!.reaction?.heavy === true && payload.combat!.reaction.until - w.tick === 36;
           landingDistance = Math.hypot(payload.transform.x - a.target.x, payload.transform.z - a.target.z);
         }
       }
