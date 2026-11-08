@@ -946,7 +946,7 @@ export class InfectedSystem {
     const contact = infectedDef(e.archetype).range + Math.max(0, e.combat!.radius - .35) + .15;
     const glancing = introductoryCampaigns.has(this.world.scenario ?? '') && targetId === 1 && Math.hypot(target.survivor?.velocity.x ?? 0, target.survivor?.velocity.z ?? 0) > .2 && (b.special === 'lunge' || Math.hypot(target.transform.x - e.transform.x, target.transform.z - e.transform.z) > contact);
     const amount = this.world.combat!.damage.apply({ attackId: b.attackId, actionId: e.archetype, sourceId: e.id, targetId, origin: e.transform, direction: { x: b.dx, z: b.dz }, base: damage * (glancing ? movingGlanceFraction : 1), multiplier: e.combat!.damageMultiplier, type: 'melee', knockback: b.special === 'charge' ? 3.2 : 0, stagger: 0 });
-    if (glancing) b.cooldown = Math.max(b.cooldown, this.world.tick + 180);
+    if (glancing) b.cooldown = Math.max(b.cooldown, this.world.tick + 120);
     this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, targetId, special: b.special, amount });
   }
   /** Native L4 humans share the outbreak contact hold, rescue and turning rules. */
