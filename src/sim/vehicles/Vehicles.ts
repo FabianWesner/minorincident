@@ -427,7 +427,7 @@ export class Vehicles {
     const boarderLimit = car.entity.health.current <= car.entity.health.max * .25 ? 8 : 6;
     // A quick steering snap, a hull scrape, or the handbrake throws attackers
     // clear. Boarders stay visibly attached while they climb before biting.
-    const throwingBoarders = speed > 3 && Math.abs(car.physics.body.angvel().y) > .55 || car.physics.intent.handbrake && speed > 4;
+    const throwingBoarders = speed > 2 && Math.abs(car.physics.body.angvel().y) > .35 || car.physics.intent.handbrake && speed > 2;
     if (throwingBoarders) this.release(car);
     const ledger = car.entity.vehicle!.apcContacts ??= { sequence: 0, infected: {} };
     const c = Math.cos(p.yaw), s = Math.sin(p.yaw);

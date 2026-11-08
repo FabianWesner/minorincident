@@ -13,7 +13,7 @@ import { Outbreak } from '../outbreak/Outbreak';
 export interface L9DrivingState {
   prepared: boolean; roster: number[]; samId: number; megaId: number; soldiers: number[]; trucks: number[];
   boardersCalled: boolean; route: string | null; checkpoints: string[];
-  stallAt: number | null; restarted: boolean; repairTicks: number; repairActive: boolean;
+  stallAt: number | null; restarted: boolean; repairTicks: number; repairActive: boolean; hatchOpen?: boolean;
   gateAt: number | null; gateClosed: boolean; gateId: number; bridgeGateId: number; fenceBroken: boolean;
   evacuationAt: number | null; evacuated: number[]; evacuating: number[]; evacuationDone: boolean;
   hugAt: number | null; hugDone: boolean;
@@ -153,7 +153,7 @@ export class LevelNineDriving {
       || e.id === this.state.samId && this.mission.l9!.state.phase !== 'driving';
   }
   /** The cab stays occupied; only the stopped, open hatch exposes the courier and her carried arsenal. */
-  get hatch(): boolean { return this.mission.l9?.state.phase === 'driving' && this.holding(this.car.entity.id) && this.car.physics.speed < 1; }
+  get hatch(): boolean { return this.mission.l9?.state.phase === 'driving' && this.holding(this.car.entity.id) && !!this.state.hatchOpen; }
   canRepair(): boolean { return distance(this.car.entity.transform, cfg.repair) < cfg.repair.radius && this.car.physics.speed < 1 && this.state.restarted && this.state.evacuationAt === null && this.state.repairTicks < cfg.repair.ticks; }
   update(): void {
     const s = this.state, w = this.w, car = this.car, p = car.entity.transform, tick = w.tick;
@@ -190,7 +190,11 @@ export class LevelNineDriving {
       if (s.repairTicks === 1) this.signal('repair-started');
       if (s.repairTicks === cfg.repair.ticks) this.signal('repair-finished');
     }
-    this.evacuate(); this.waves(); this.poseHatch();
+    this.evacuate(); this.waves();
+    // Once the stopped crew opens it, a bus nudge cannot magically close the
+    // hatch and disable the player's weapon in the middle of the defence.
+    if (!this.holding(car.entity.id)) s.hatchOpen = false; else if (car.physics.speed < 1) s.hatchOpen = true;
+    this.poseHatch();
     for (const id of this.hatch ? s.roster : []) {
       const e = w.entities.get(id);
       if (alive(e) && e.civilian?.ally) updateAlly(w, e, (a, b, target) => w.combat!.query.visible(a, b, target), this.hatch);
