@@ -26,7 +26,8 @@ No foreign build, Blender, test or browser work was detected at sample boundarie
 ## Open / Browser QA needed
 
 - Browser QA needed: independent visual review and manual WebGPU look check are still useful before merge.
-- Automated moving/turning nozzle and night-light checks are pending.
+- Automated moving/turning and night-light checks pass. Across 65 successive moving/turning frames per tier the jet-to-drawn-nozzle gap is zero. Night checks observe exactly one transient source and changing uploaded light radiance. Frozen on/off body rectangles brighten by 3.5–5.2/255 mean luminance; [runtime receipt](runtime.json), [spill measurements](light-spill.json), and [night/motion sheet](runtime.jpg).
+- The main matched captures/native timing receipt are being regenerated after the final render-phase attachment correction.
 - `npm run verify -- E27` passes: typecheck, lint and all 107 tests in 27 files. The fuel checks extend the existing weapons battery, retaining the 150-case repository budget. [Gate receipt](checks.json).
 
 No deploy or push has been performed.
@@ -40,3 +41,5 @@ npm run verify -- E27
 ```
 
 The browser command is capped by the shared pool at ten minutes and uses private ports 4351/4352. Native timing and browser captures run before static/unit gates so test/build work does not overlap timing.
+
+Supplementary runtime reproduction: `SCENE_PORT=4351 BROWSER_POOL_JOB_ID=r15-flamevfx sh tools/e2e-lock.sh node --import tsx tools/scenelab/r15-flamevfx-runtime.ts`, then regenerate the sheets.

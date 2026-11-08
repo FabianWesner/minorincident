@@ -203,6 +203,7 @@ export class GameView implements Lifecycle {
   private dofEnabled = false;
   private readonly occlusion = new Occlusion();
   private readonly playerPosition = new Vector3();
+  private readonly flameOrigin = new Vector3();
   private readonly projection = new Vector3();
   private weatherPowerRevision = 0;
   /** QA builds only (__QA_HOOKS__): Scene Lab / e2e render probes. */
@@ -496,6 +497,7 @@ export class GameView implements Lifecycle {
         }
         return null; // Vehicle weapons carry their own authored event origin.
       },
+      drawnMuzzle: id => id === 1 ? this.actions?.muzzle(this.flameOrigin) ?? null : null,
       spout: id => this.npcs?.spout(id) ?? null,
       flash: (id, strength) => { this.crowd?.flash(id, strength); },
       detach: (id, limb) => this.crowd?.detach(id, limb),
@@ -1054,6 +1056,7 @@ export class GameView implements Lifecycle {
     this.entityAssets?.update(alpha);
     this.syncMountedGun();
     this.interactions?.update(this.camera); this.npcs?.update(this.camera, alpha, this.view.lodCamera); this.accessories?.finish();
+    this.vfx?.refreshFlameJet();
     const flashOpacity = String(Math.max(this.weather?.flash ?? 0, this.vfx?.flash ?? 0, this.labAccident?.flash ?? 0));
     if (this.flashOverlay.style.opacity !== flashOpacity) this.flashOverlay.style.opacity = flashOpacity;
     this.fixtureProps?.update();

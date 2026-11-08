@@ -474,6 +474,8 @@ export class Blasts extends Group {
     }
   }
   clearFlameJet(): void { this.flameJet = null; this.jetLight?.remove(); this.jetLight = null; }
+  /** Rewrite the shared cards after the drawn nozzle has moved in the current render. */
+  refreshFlameJet(): void { this.writeFlamesAndGlows(this.time); }
   private glow(x: number, z: number, radius: number, color: number, intensity: number, life: number, ground?: number): void {
     if (this.glowList.length >= 12) this.glowList.shift();
     this.glowList.push({ ground, x, z, radius, color, intensity, born: this.time, life });

@@ -22,6 +22,8 @@ export interface VfxTargets {
   camera?(): import('three').Camera;
   /** Resolve and pose the rendered gun synchronously at the shot tick. */
   muzzle?(id: number, direction: { x: number; y?: number; z: number }): { x: number; y: number; z: number } | null;
+  /** Already drawn gun socket, without reposing the interpolated character. */
+  drawnMuzzle?(id: number): { x: number; y: number; z: number } | null;
   /** Drawn spout of a pouring watering can (gardener routine), null when none. */
   spout?(id: number): { x: number; y: number; z: number } | null;
   flash(id: number, strength: number): void;
@@ -623,7 +625,7 @@ export class Vfx extends Group {
       this.flameSource = null; this.blasts.clearFlameJet(); return;
     }
     const direction = side.aim ?? jet.direction;
-    const muzzle = this.targets.muzzle?.(jet.id, direction) ?? { ...source.transform, y: source.transform.y + .45 };
+    const muzzle = this.targets.drawnMuzzle?.(jet.id) ?? this.targets.muzzle?.(jet.id, direction) ?? { ...source.transform, y: source.transform.y + .45 };
     const range = this.flameRange(muzzle, direction);
     this.blasts.flameJetAt(muzzle.x, muzzle.y, muzzle.z, direction.x, direction.z, range, jet.until, jet.id);
   }
@@ -631,6 +633,11 @@ export class Vfx extends Group {
     const range = actions['weapon.flamethrower'].range;
     return Math.min(this.world.combat?.query.clearDistance(origin, direction, range) ?? range,
       this.world.destruction?.trace(origin, { ...direction, y: 0 }, range)?.distance ?? range);
+  }
+  /** Run after actor/action posing, so movement and turns cannot leave the stream one frame behind. */
+  refreshFlameJet(): void {
+    if (!this.flameSource) return;
+    this.updateFlameJet(); this.blasts.refreshFlameJet();
   }
   advance(seconds: number): void {
     if (!Number.isFinite(seconds) || seconds < 0 || seconds > 1) throw new RangeError('Render step must be 0..1 seconds');
@@ -644,7 +651,6 @@ export class Vfx extends Group {
     this.visible = this.enabled || this.tells.size > 0;
     for (const id of this.world.vehicles?.cars.keys() ?? []) this.updateVehicle(id);
     if (this.enabled) this.waterStreams(seconds);
-    this.updateFlameJet();
     for (const pool of this.pools) pool.advance(this.time);
     if (this.enabled) this.blasts.advance(this.time, seconds);
     this.gibs.advance(this.time, seconds);
