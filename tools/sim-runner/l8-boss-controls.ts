@@ -1,5 +1,6 @@
 /** Controlled native checks complement the mortal arena runs; setup mutations never count as combat victories. */
 import { mkdirSync, writeFileSync } from 'node:fs';
+import { Walker } from '../../src/debug/bot/Walker';
 import { emptyInput } from '../../src/input/InputFrame';
 import { barEligible } from '../../src/render/HealthBars';
 import { l8BossArenas, type L8BossId } from '../../src/data/l8Bosses';
@@ -89,6 +90,32 @@ try {
     check('weapon selection returns at grab expiry', !zoo.bosses.swapBlocked() && loadout.state.selectedSide === gun.side, { blocked: zoo.bosses.swapBlocked(), selected: loadout.state.selectedSide, expected: gun.side });
   } finally { w.dispose(); }
 } catch (error) { errors.push(`monkey grab: ${String(error)}`); }
+
+try {
+  const { w, zoo, p, arena, e } = await fixture('elephant');
+  try {
+    w.missions!.state.states.breached = true; zoo.state.breachedAt = w.tick; zoo.state.nextWave = Number.MAX_SAFE_INTEGER;
+    w.solids.relocate(e, { x: -60, z: 25, y: .7 }, 'qa.elephant.lure-source', 2);
+    w.solids.relocate(p, { x: -44, z: 25, y: .7 }, 'qa.elephant.lure-target', 2);
+    arena.phase = 1; arena.nextAt = w.tick + 30; arena.cycle = 0;
+    const walker = new Walker(), contacts: unknown[] = []; let previous = 0, side = 1;
+    for (let n = 0; n < 100 * 60 && e.health.current > 0 && p.health.current > 0; n++) {
+      const a = e.infected!.specialAttack, f = emptyInput();
+      if (a?.move === 'elephant.charge' && a.stage !== 'recovery') {
+        const direction = { x: -a.area.dz, z: a.area.dx };
+        const other = { x: -direction.x, z: -direction.z };
+        f.move = w.solids.sweep(p, direction, 4) >= w.solids.sweep(p, other, 4) ? direction : other;
+      } else {
+        if (a?.stage === 'recovery') side = e.transform.x < -60 ? 1 : -1;
+        f.move = walker.step(w, { x: side === 1 ? -44 : -76, z: 25 }, 1, `lure-${side}`) ?? f.move;
+      }
+      w.applyInput(f, 'keyboard'); step(w);
+      if (arena.wallHits > previous) { previous = arena.wallHits; contacts.push({ tick: w.tick, hits: previous, boss: { ...e.transform }, courier: { ...p.transform }, hp: e.health.current }); }
+    }
+    check('three real sidestepped wall charges kill without firing', arena.wallHits === 3 && e.health.current === 0, { contacts, wallHits: arena.wallHits, hp: e.health.current, courierHP: p.health.current });
+  } finally { w.dispose(); }
+} catch (error) { errors.push(`elephant wall tactic: ${String(error)}`); }
+
 for (const alive of [true, false]) {
   try {
     const { w, e, lines } = await fixture('elephant', alive);
