@@ -20,7 +20,7 @@ const port = address.port; await new Promise<void>(done => socket.close(() => do
 const origin = `http://127.0.0.1:${port}`, save = preset('L9-default');
 save.settings.quality = tier as 'low' | 'high';
 writeFileSync(`${profile}/pool-storage.json`, JSON.stringify({ cookies: [], origins: [{ origin, localStorage: [{ name: SAVE_KEY, value: JSON.stringify(save) }] }] }));
-writeFileSync(`${out}/source.json`, JSON.stringify({ revision: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), variant, tier, zoom, route: route ?? 'objective bearing', backend, input: 'real keyboard/mouse', godMode: true }, null, 2));
+writeFileSync(`${out}/source.json`, JSON.stringify({ revision: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), bundle: /src="([^"]+\.js)"/.exec(readFileSync('dist/index.html', 'utf8'))?.[1], variant, tier, zoom, route: route ?? 'objective bearing', backend, input: 'real keyboard/mouse', godMode: true }, null, 2));
 const server = spawn(process.execPath, ['node_modules/vite/bin/vite.js', 'preview', '--host', '127.0.0.1', '--port', String(port), '--strictPort', '--configLoader', 'runner'], { stdio: 'ignore' });
 try {
   for (let i = 0; i < 100; i++) { try { if ((await fetch(origin)).ok) break; } catch { /* startup */ } await new Promise(done => setTimeout(done, 100)); }
@@ -31,6 +31,9 @@ try {
   type Sample = { level: string; tick: number; step: string; visibleInfected: number[]; crossingContent?: { practicals: number; fires: number; landmarks: number; kills: number; patrols: number } };
   const audit = JSON.parse(readFileSync(`${out}/${tag}-threat.json`, 'utf8')) as { samples: Sample[]; fightFrames: { level: string; ms: number }[] };
   const samples = audit.samples.filter(s => s.level === 'L9' && s.step === 'approach');
+  const ledger = JSON.parse(readFileSync(`${out}/${tag}-acceptance-ledger.json`, 'utf8')) as { level: string; events: { type: string; tick: number; source?: string; sourceId?: number; downed?: number }[] }[];
+  const events = ledger.find(l => l.level === 'L9')?.events.filter(e => e.tick <= (samples.at(-1)?.tick ?? 0)) ?? [];
+  const ramEvents = events.filter(e => e.type === 'combat.kill' && e.sourceId !== 1);
   let emptySeconds = 0, noInfectedSeconds = 0, emptyStreak = 0, longestEmptySeconds = 0, encounters = 0, previousVisible = false;
   for (const [i, s] of samples.entries()) {
     const dt = i ? (s.tick - samples[i - 1].tick) / 60 : 0, visible = s.visibleInfected.length > 0;
@@ -43,6 +46,8 @@ try {
   const frames = audit.fightFrames.filter(f => f.level === 'L9').map(f => f.ms).sort((a, b) => a - b);
   const summary = { tag, finished: result.runs[0]?.finished, driveSeconds: samples.length ? (samples.at(-1)!.tick - samples[0].tick) / 60 : 0,
     kills: Math.max(0, ...samples.map(s => s.crossingContent?.kills ?? 0)), patrols: Math.max(0, ...samples.map(s => s.crossingContent?.patrols ?? 0)),
+    ramContacts: events.filter(e => e.type === 'vehicle.durability-hit' && e.source === 'contact').length,
+    ramKnockdowns: ramEvents.filter(e => e.downed !== undefined).length, ramKills: ramEvents.filter(e => e.downed === undefined).length,
     encounters, emptySeconds, longestEmptySeconds, noInfectedSeconds, samples: samples.length,
     frameP95: frames[Math.floor(frames.length * .95)], frameMax: frames.at(-1), framesOver66: frames.filter(ms => ms > 66).length,
     issues: result.issues.map(i => ({ severity: i.severity, kind: i.kind, text: i.text })) };
