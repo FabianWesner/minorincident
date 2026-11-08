@@ -4,6 +4,7 @@ import { preset } from '../../src/sim/progression/Campaign';
 import { runLevel } from '../sim-runner/levels';
 import { ThreatObserver } from './threat/observer';
 import { l6 } from '../../src/data/l6';
+import { provenance } from './accept/probe';
 
 const output = process.argv[2] ?? 'test-results/r12-l6/pressure-matrix.json';
 const runs = [];
@@ -75,5 +76,5 @@ for (const tier of tiers) for (const seed of seeds) {
   console.log(JSON.stringify({ tier, seed, completed: report.completed, simSeconds: report.time, deaths: report.deaths }));
 }
 await mkdir(dirname(output), { recursive: true });
-await writeFile(output, JSON.stringify({ tuning: 'L6 pressure cadence and exit signposting', runs }, null, 2) + '\n');
+await writeFile(output, JSON.stringify({ ...provenance(), tuning: 'L6 pressure cadence and exit signposting', runs }, null, 2) + '\n');
 console.log(JSON.stringify({ output, runs: runs.length }));
