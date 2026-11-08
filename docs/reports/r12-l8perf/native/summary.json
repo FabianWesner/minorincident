@@ -3948,6 +3948,38 @@
         "afterPowerChecks": 97,
         "sightQueries": 137776
       }
+    ],
+    "sampledGameFunctions": [
+      {
+        "tick": 5722,
+        "functions": [
+          "sim/lighting/LightPower.ts:sightMultiplier",
+          "sim/spatial/SpatialHash.ts:query",
+          "sim/world/SolidRegistry.ts:commit",
+          "sim/ai/CharacterSeparation.ts:",
+          "sim/lighting/LightPower.ts:isOn",
+          "src/core/EventBus.ts:emit",
+          "sim/outbreak/Outbreak.ts:update",
+          "sim/ai/NavGrid.ts:steer",
+          "sim/ai/NavGrid.ts:",
+          "sim/world/SolidRegistry.ts:"
+        ]
+      },
+      {
+        "tick": 9051,
+        "functions": [
+          "sim/world/SolidRegistry.ts:commit",
+          "sim/spatial/SpatialHash.ts:query",
+          "src/core/EventBus.ts:emit",
+          "sim/ai/CharacterSeparation.ts:",
+          "sim/lighting/LightPower.ts:sightMultiplier",
+          "sim/ai/NavGrid.ts:clear",
+          "sim/npc/defence.ts:defendHuman",
+          "sim/ai/InfectedSystem.ts:update",
+          "sim/world/SolidRegistry.ts:",
+          "sim/ai/Perception.ts:inCone"
+        ]
+      }
     ]
   },
   "populationMetrics": {
