@@ -3,6 +3,7 @@ import { cure } from '../../levels/L10/district';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import { Walker } from './Walker';
 import { solidLargeCorpse } from '../../sim/world/SolidRegistry';
+import { isMega } from '../../data/megaPresentation';
 import { finale as arena } from '../../data/l10Finale';
 
 /** The existing L10 sim policy, available to browser diagnostics through bot.start. */
@@ -67,7 +68,12 @@ export class LevelTenBot {
     // omnidirectional scan shot unseen arrivals before they could enter view,
     // making the native route incomparable to real-input play.
     const threats = w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && !e.emerging && !e.infectionRise && distance(e.transform) < 30 && w.infected!.director.inPlayerView(e.transform, 30, 1, 5) && w.infected!.nav.visible(p, e.transform, 0)).sort((a, b) => distance(a.transform) - distance(b.transform));
-    const rack = player.weapons!.RIGHT.rack, index = rack.length - 1, weapon = rack[index]?.id, target = threats[0];
+    const rack = player.weapons!.RIGHT.rack, target = threats[0];
+    // The launcher has a five-metre minimum. Use the carried MG for ordinary
+    // street/console defence; keep rockets for the Mega when there is room.
+    const wanted = isMega(target) && distance(target.transform) >= 6 ? 'weapon.rocket-launcher' : 'weapon.army-mg';
+    const choice = rack.findIndex(slot => slot.id === wanted);
+    const index = choice >= 0 ? choice : rack.length - 1, weapon = rack[index]?.id;
     if (!released && target && this.profile !== 'evade-only' && weapon && (weapon !== 'weapon.fire-axe' || distance(target.transform) < 2.5)) {
       f.selectedSlot = { side: 'RIGHT', index }; f.aimSource = 'keyboard';
       const dx = target.transform.x - p.x, dz = target.transform.z - p.z, d = Math.hypot(dx, dz) || 1;

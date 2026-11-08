@@ -85,26 +85,21 @@ export class Combat {
       this.world.controls.reset();
       frame = { ...frame, left: { down: false, held: false, up: false }, right: { down: false, held: false, up: false } };
     }
-    const blocked = new Set<'LEFT' | 'RIGHT'>();
-    for (const side of ['LEFT', 'RIGHT'] as const) {
-      const button = frame[side === 'LEFT' ? 'left' : 'right'], slot = loadout.current(side);
-      if (slot.id !== 'weapon.rocket-launcher' || !(button.down || button.held) || this.runner.running[side] || !loadout.usable(side, this.world.tick)) continue;
-      const aimPoint = frame.aimPoint, pointDistance = aimPoint ? Math.hypot(aimPoint.x - player.transform.x, aimPoint.z - player.transform.z) : Infinity;
-      const aim = frame.aim ?? loadout.state[side].aim;
-      const closeEnemy = this.query.melee(1, player.transform, aim, 5, 30, 1000).some(target => target.faction === 'infected'
-        && Math.hypot(target.transform.x - player.transform.x, target.transform.z - player.transform.z) <= 5);
-      if (pointDistance >= 5 && !closeEnemy) continue;
-      blocked.add(side);
-      this.world.events.emit({ type: 'combat.empty', tick: this.world.tick, sourceId: 1, actionId: slot.id, position: { ...player.transform }, reason: 'too-close' });
-    }
-    if (blocked.size) frame = { ...frame,
-      ...(blocked.has('LEFT') ? { left: { down: false, held: false, up: frame.left.up } } : {}),
-      ...(blocked.has('RIGHT') ? { right: { down: false, held: false, up: frame.right.up } } : {}),
-    };
-    this.runner.update(frame, this.world.tick, player.health.current > 0 && !this.world.missions?.state.states['cure-released'] && this.world.vehicles?.active == null && !this.world.mountedGun?.mounted && !Status.stunned(player, this.world.tick), this.started, this.resolve, this.crowd);
+    this.runner.update(frame, this.world.tick, player.health.current > 0 && !this.world.missions?.state.states['cure-released'] && this.world.vehicles?.active == null && !this.world.mountedGun?.mounted && !Status.stunned(player, this.world.tick), this.started, this.resolve, this.crowd, this.canFire);
     this.updateProjectiles();
     this.effects.update(); this.pickups.update();
   }
+  /** Check at discharge, after aim assist and the raise: a close enemy may move into the shot. */
+  private readonly canFire = (attack: Attack): boolean => {
+    if (attack.def.id !== 'weapon.rocket-launcher') return true;
+    const source = this.world.entities.get(attack.sourceId)!, point = attack.aimPoint;
+    const closePoint = !!point && Math.hypot(point.x - source.transform.x, point.z - source.transform.z) < 5;
+    const closeEnemy = this.query.melee(source.id, source.transform, attack.aim, 5, 30, 1000).some(target => target.faction === 'infected'
+      && !target.hidden && !target.infected?.hidden && Math.hypot(target.transform.x - source.transform.x, target.transform.z - source.transform.z) < 5);
+    if (!closePoint && !closeEnemy) return true;
+    this.world.events.emit({ type: 'combat.empty', tick: this.world.tick, sourceId: source.id, actionId: attack.def.id, position: { ...source.transform }, reason: 'too-close' });
+    return false;
+  };
   /** Living infected a sweep of `radius` reaches from the player now (cover blocks; civilians never count). */
   private readonly crowd = (radius: number): number => {
     const player = this.world.entities.get(1)!;
@@ -246,19 +241,8 @@ export class Combat {
           travel = Math.max(0, along - Math.sqrt(Math.max(0, radius * radius - (tx * tx + tz * tz - along * along))));
         }
         const impact = !!target || wall < step || arrived;
-        if (impact) {
-          if (p.travelled + travel < 5) {
-            if (target) {
-              // The nose is still unarmed: pass through nearby infected without
-              // damage, then arm only after a full five metres of flight.
-              p.attack.hit.add(target.id);
-              const through = Math.min(step, wall);
-              p.x += direction.x * through; p.y += direction.y * through; p.z += direction.z * through; p.travelled += through;
-              if (wall < step || arrived) this.projectiles.splice(i, 1);
-            } else this.projectiles.splice(i, 1);
-            continue;
-          }
-        }
+        // An impact before arming is a harmless dud, including cover impacts.
+        if (impact && p.travelled + travel < 5) { this.projectiles.splice(i, 1); continue; }
         p.x += direction.x * travel; p.y += direction.y * travel; p.z += direction.z * travel; p.travelled += travel;
         if (impact) {
           if (!target && wall === step) Object.assign(p, p.destination);
