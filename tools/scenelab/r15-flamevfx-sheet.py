@@ -11,7 +11,7 @@ small = ImageFont.truetype(font_path, 15)
 sheet = Image.new('RGB', (1600, 700), '#211f28')
 draw = ImageDraw.Draw(sheet)
 draw.text((20, 14), 'R15 · Flamethrower continuous jet', font=title, fill='#ffd166')
-draw.text((20, 50), 'Same game-camera pose · before vs real discharge · high and low quality', font=small, fill='#ddd5cf')
+draw.text((20, 50), 'Same game-camera pose · original vs current firing · high and low quality', font=small, fill='#ddd5cf')
 for row, tier in enumerate(('high', 'low')):
     y = 86 + row * 300
     draw.text((20, y), f'{tier.upper()} QUALITY', font=label, fill='#ffd166')

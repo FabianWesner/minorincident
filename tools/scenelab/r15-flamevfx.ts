@@ -13,7 +13,7 @@ import { poolUrl } from '../browser-pool/client';
 assert(process.env.MI_BROWSER_POOL_EXCLUSIVE, 'Run through tools/perf/quiet-run.sh');
 const out = 'test-results/r15-flamevfx', report = 'docs/reports/r15-flamevfx';
 const paths = ['src/render/vfx/Vfx.ts', 'src/render/vfx/Blasts.ts', 'src/sim/combat/Combat.ts', 'src/sim/interact/Hazards.ts'];
-const revision = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+const revision = execFileSync('git', ['rev-parse', process.env.R15_BASELINE_REVISION ?? 'eb835fc1'], { encoding: 'utf8' }).trim();
 const original = new Map(paths.map(path => [resolve(path), execFileSync('git', ['show', `${revision}:${path}`], { encoding: 'utf8' })]));
 const sha = (value: string) => createHash('sha256').update(value).digest('hex');
 const sources = paths.map(path => ({ path, before: sha(original.get(resolve(path))!), after: sha(readFileSync(path, 'utf8')) }));

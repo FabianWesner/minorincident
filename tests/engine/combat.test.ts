@@ -29,7 +29,8 @@ const walls = (w: SimWorld) => w.combat!.query.walls as CoverWall[];
 const attacks = (w: SimWorld) => w.events.events().filter(e => e.type === 'combat.attack');
 const forehand = () => comboDefinition(rosterAction('weapon.bat'), 0);
 
-test('flamethrower: a cover-clipped discharge leaves fuel that burns after release, then expires @E27', async () => {
+/** Fuel is a real, cover-clipped hazard that persists after trigger release. */
+async function checkFlamethrowerFuel(): Promise<void> {
   const w = await arena(); equip(w, ['weapon.flamethrower']);
   walls(w).push({ x: 3, y: 1, z: 0, halfX: .1, halfY: 1, halfZ: 4 });
   fire(w);
@@ -44,9 +45,9 @@ test('flamethrower: a cover-clipped discharge leaves fuel that burns after relea
   expect(patch.hazard!.activeUntil).toBeGreaterThan(w.tick);
   step(w, 180);
   expect(patch.hazard!.activeUntil).toBeLessThanOrEqual(w.tick);
-});
+}
 
-test('flamethrower: fuel refreshes nearby fire, recycles expired patches and respects the shared fire cap @E27', async () => {
+async function checkFuelPool(): Promise<void> {
   const w = await arena(), hazards = w.hazards!;
   const first = hazards.ignitePatch({ x: 10, z: 0 }, .65, 3)!;
   step(w, 60);
@@ -56,7 +57,7 @@ test('flamethrower: fuel refreshes nearby fire, recycles expired patches and res
   expect(hazards.ignitePatch({ x: 12, z: 0 }, .65, 3)).toBe(first);
   for (let i = 1; i < Explosions.maxFires; i++) hazards.spawn('fire', { x: 30 + i * 3, z: 30 });
   expect(hazards.ignitePatch({ x: -12, z: 0 }, .65, 3)).toBeNull();
-});
+}
 
 async function checkRaisedMountedGun(): Promise<void> {
   for (const covered of [false, true]) {
@@ -328,6 +329,8 @@ test('damage modifiers: front shield ±60°, armor and multipliers, stun/slow/to
 });
 
 test('every weapon category fires and hits; swept projectiles never tunnel; full cover stops melee, hitscan and projectiles', async () => {
+  await checkFlamethrowerFuel();
+  await checkFuelPool();
   await checkRaisedMountedGun();
   await checkRocketEndpoints();
   await checkRocketSafety();

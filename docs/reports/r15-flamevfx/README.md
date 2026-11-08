@@ -27,7 +27,7 @@ No foreign build, Blender, test or browser work was detected at sample boundarie
 
 - Browser QA needed: independent visual review and manual WebGPU look check are still useful before merge.
 - Automated moving/turning nozzle and night-light checks are pending.
-- The focused combat suite passes, as do typecheck/lint. The full per-change gate has a unit-suite failure under investigation; do not treat it as green yet.
+- `npm run verify -- E27` passes: typecheck, lint and all 107 tests in 27 files. The fuel checks extend the existing weapons battery, retaining the 150-case repository budget. [Gate receipt](checks.json).
 
 No deploy or push has been performed.
 
