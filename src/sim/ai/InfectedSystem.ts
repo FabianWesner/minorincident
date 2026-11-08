@@ -45,7 +45,7 @@ const armedCampaigns = new Set(['L4', 'L5', 'L6', 'L7', 'L8', 'L10']);
 const lungeActiveTicks = (scenario: string | null | undefined) => armedCampaigns.has(scenario ?? '') ? 30 : 20;
 const introductoryCampaigns = new Set(['L1', 'L2', 'L3', 'L4', 'L5']);
 /** Introductory campaigns keep moving contacts readable without full contact wounds. */
-const movingReachBudget = 1.6, movingGlanceFraction = .04;
+const movingReachBudget = 1.6, movingGlanceFraction = .1;
 type DistrictSet = NonNullable<SimWorld['districts']>;
 type WalkableCollider = DistrictSet['districts'][number]['decay']['colliders'][number];
 type HeightSupport = { district: DistrictSet['districts'][number]; collider: WalkableCollider; group: string };
@@ -672,7 +672,7 @@ export class InfectedSystem {
         if (b.special === 'combo-grab' && b.combo < 2) { b.combo++; this.windup(e); return; }
         const def = infectedDef(e.archetype);
         b.state = 'chase';
-        b.cooldown = this.world.tick + (def.attackInterval === undefined ? b.special === 'scream' ? 300 : 60 : Math.round((def.attackInterval - def.windup) * 60));
+        b.cooldown = Math.max(b.cooldown, this.world.tick + (def.attackInterval === undefined ? b.special === 'scream' ? 300 : 60 : Math.round((def.attackInterval - def.windup) * 60)));
         e.combat!.attacking = false;
       }
       return;
@@ -838,7 +838,6 @@ export class InfectedSystem {
     // Aim ahead of a moving victim, with a bounded ordinary lunge lead.
     // The strike still checks live position and obstruction at impact.
     const velocity = player.survivor?.velocity ?? player.motion?.velocity;
-    b.movingTargetAtWindup = player.id === 1 && Math.hypot(velocity?.x ?? 0, velocity?.z ?? 0) > .2;
     const vx = velocity?.x ?? 0, vz = velocity?.z ?? 0, lead = this.capsMovingLunge(e) ? Math.min(def.windup, movingReachBudget / Math.max(.001, Math.hypot(vx, vz))) : def.windup;
     const dx = player.transform.x + vx * lead - e.transform.x, dz = player.transform.z + vz * lead - e.transform.z, distance = Math.hypot(dx, dz);
     b.dx = distance ? dx / distance : 1; b.dz = distance ? dz / distance : 0;
@@ -945,8 +944,9 @@ export class InfectedSystem {
     // Introductory moving contacts are glancing lunges or extended-reach grazes.
     // Keep the later campaigns' reviewed combat balance and progression intact.
     const contact = infectedDef(e.archetype).range + Math.max(0, e.combat!.radius - .35) + .15;
-    const glancing = introductoryCampaigns.has(this.world.scenario ?? '') && targetId === 1 && (b.movingTargetAtWindup || Math.hypot(target.survivor?.velocity.x ?? 0, target.survivor?.velocity.z ?? 0) > .2) && (b.special === 'lunge' || Math.hypot(target.transform.x - e.transform.x, target.transform.z - e.transform.z) > contact);
+    const glancing = introductoryCampaigns.has(this.world.scenario ?? '') && targetId === 1 && Math.hypot(target.survivor?.velocity.x ?? 0, target.survivor?.velocity.z ?? 0) > .2 && (b.special === 'lunge' || Math.hypot(target.transform.x - e.transform.x, target.transform.z - e.transform.z) > contact);
     const amount = this.world.combat!.damage.apply({ attackId: b.attackId, actionId: e.archetype, sourceId: e.id, targetId, origin: e.transform, direction: { x: b.dx, z: b.dz }, base: damage * (glancing ? movingGlanceFraction : 1), multiplier: e.combat!.damageMultiplier, type: 'melee', knockback: b.special === 'charge' ? 3.2 : 0, stagger: 0 });
+    if (glancing) b.cooldown = Math.max(b.cooldown, this.world.tick + 180);
     this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, targetId, special: b.special, amount });
   }
   /** Native L4 humans share the outbreak contact hold, rescue and turning rules. */
@@ -1205,7 +1205,7 @@ export class InfectedSystem {
           const p = this.world.entities.get(1)!.transform;
           brain.pauseUntil = tick + 30; brain.looking = true; brain.lookYaw = -Math.atan2(p.z - e.transform.z, p.x - e.transform.x);
         }
-        b.state = 'chase'; b.cooldown = tick + (serviceGate ? 60 : Math.max(0, l1Ticks(l1v2.infected.attackCycleS) - Math.ceil(infectedDef(e.archetype).windup * 60))); e.combat!.attacking = false;
+        b.state = 'chase'; b.cooldown = Math.max(b.cooldown, tick + (serviceGate ? 60 : Math.max(0, l1Ticks(l1v2.infected.attackCycleS) - Math.ceil(infectedDef(e.archetype).windup * 60)))); e.combat!.attacking = false;
         // The lunge ends planted: bleed its 7 m/s impulse so the next step can turn back onto the courier at once.
         const m = e.locomotion, v = m ? Math.hypot(m.vx, m.vz) : 0;
         if (m && v > 2.5) { m.vx *= 2.5 / v; m.vz *= 2.5 / v; m.ax = m.az = 0; }

@@ -295,15 +295,14 @@ test('every human and animal role validates and spawns with its catalog health a
       expect(damage.length > 0, 'an out-of-reach runner can still be outrun').toBe(!moving);
       if (!moving) expect(damage[0]).toMatchObject({ amount: 10 });
     }
-    for (const stopDuringWarning of [false, true]) {
-      const close = await arena(1, false); close.scenario = 'L2';
-      const reaching = spawn(close, 'runner', 1.3);
-      close.setInput({ move: { x: -1, z: 0 } }); step(close, 20);
-      expect(close.events.events().some(event => event.type === 'combat.hit' && event.sourceId === reaching.id), 'windup stays readable').toBe(false);
-      if (stopDuringWarning) close.setInput({ move: { x: 0, z: 0 } });
-      step(close, 40);
-      expect(close.events.events().find(event => event.type === 'combat.hit' && event.sourceId === reaching.id && event.amount > 0), 'a moving tell remains a glancing hit through a brief stop').toMatchObject({ amount: .4 });
-    }
+    const close = await arena(1, false); close.scenario = 'L2';
+    const reaching = spawn(close, 'runner', 1.3);
+    close.setInput({ move: { x: -1, z: 0 } }); step(close, 20);
+    expect(close.events.events().some(event => event.type === 'combat.hit' && event.sourceId === reaching.id), 'windup stays readable').toBe(false);
+    step(close, 40);
+    const graze = close.events.events().find(event => event.type === 'combat.hit' && event.sourceId === reaching.id && event.amount > 0);
+    expect(graze, 'movement connects with a glancing hit').toMatchObject({ amount: 1 });
+    expect(reaching.infected!.cooldown, 'a moving graze gives this attacker a three-second recovery').toBeGreaterThanOrEqual(graze!.tick + 180);
     const planted = await arena(1, false); planted.scenario = 'L2';
     const fullContact = spawn(planted, 'runner', 1.3); step(planted, 60);
     expect(planted.events.events().find(event => event.type === 'combat.hit' && event.sourceId === fullContact.id && event.amount > 0), 'a planted target still takes the authored wound').toMatchObject({ amount: 10 });
