@@ -1,0 +1,98 @@
+{
+  "runtimeRevision": "6fc0951870b36bc87433562f20524bb081adc514",
+  "mainRevision": "eb835fc1",
+  "laneSeconds": 462.975869691,
+  "mainSeconds": 504.194190801,
+  "laneFlags": [
+    "L7/FOLLOWER_WAIT_UPPER_BOUND_OVER_10_PERCENT",
+    "L7/step/corridor:SLOW_FOLLOWER:71",
+    "L7/phase/encounters:FOLLOWER_PACE_UNOBSERVED:63",
+    "L7/phase/encounters:SLOW_FOLLOWER:71",
+    "L7/phase/encounters:FOLLOWER_PACE_UNOBSERVED:60",
+    "L8/wave/tunnel-breach:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+    "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+  ],
+  "mainFlags": [
+    "L7/FOLLOWER_WAIT_UPPER_BOUND_OVER_10_PERCENT",
+    "L7/step/corridor:SLOW_FOLLOWER:71",
+    "L7/phase/encounters:FOLLOWER_PACE_UNOBSERVED:63",
+    "L7/phase/encounters:SLOW_FOLLOWER:71",
+    "L7/phase/encounters:FOLLOWER_PACE_UNOBSERVED:60",
+    "L8/wave/tunnel-breach:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+    "L8/phase/breached:SLOW_FOLLOWER:354",
+    "L8/phase/breached:SLOW_FOLLOWER:359",
+    "L8/phase/breached:SLOW_FOLLOWER:365",
+    "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+  ],
+  "L7FullReceiptEquivalent": true,
+  "rows": [
+    {
+      "level": "L2",
+      "addedFollowerFlags": {
+        "observation": [],
+        "passiveObservation": [],
+        "flags": [],
+        "passiveFlags": []
+      },
+      "collisionFailures": 0
+    },
+    {
+      "level": "L3",
+      "addedFollowerFlags": {
+        "observation": [],
+        "passiveObservation": [],
+        "flags": [],
+        "passiveFlags": []
+      },
+      "collisionFailures": 0
+    },
+    {
+      "level": "L5",
+      "addedFollowerFlags": {
+        "observation": [],
+        "passiveObservation": [],
+        "flags": [],
+        "passiveFlags": []
+      },
+      "collisionFailures": 0,
+      "addedQualifiedSeedFailures": {
+        "followerPace": [],
+        "passiveFollowerPace": []
+      }
+    },
+    {
+      "level": "L6",
+      "addedFollowerFlags": {
+        "observation": [],
+        "passiveObservation": [],
+        "flags": [],
+        "passiveFlags": []
+      },
+      "collisionFailures": 0
+    },
+    {
+      "level": "L7",
+      "addedFollowerFlags": {
+        "observation": [],
+        "passiveObservation": [],
+        "flags": [],
+        "passiveFlags": []
+      },
+      "collisionFailures": 0,
+      "addedQualifiedSeedFailures": {
+        "followerPace": [],
+        "passiveFollowerPace": []
+      }
+    },
+    {
+      "level": "L8",
+      "addedFollowerFlags": {
+        "observation": [],
+        "passiveObservation": [],
+        "flags": [],
+        "passiveFlags": []
+      },
+      "collisionFailures": 0
+    }
+  ]
+}

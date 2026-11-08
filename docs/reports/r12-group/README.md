@@ -1,6 +1,6 @@
 # R12 natural group movement
 
-**Status: authorized L7 fallback implemented; final runtime `6fc09518` is under native validation.**
+**Status: authorized L7 fallback completed and natively verified. Final runtime: `6fc09518`; no added follower failures versus merged main `eb835fc1`. Browser QA remains open.**
 
 ## Done
 
@@ -30,9 +30,18 @@ The earlier bus-destruction diagnosis was incorrect: `tools/sim-runner/levels.ts
 
 The final `6fc09518` snapshot passes typecheck, lint and **107 tests / 27 files** ([receipt](d-velocity-checks.json)). Its quiet boarding fixtures pass both tiers: L7 **24/24 in 8.18 s**, L8 **13/13 in 21.38 s**, zero collision invariant failures, no assists/recoveries, courier last in L7 ([receipts](d-velocity-boarding.json)).
 
-Its six-level audit completed in 410.6 s; clean main completed in 504.2 s. [Comparison before the velocity correction](d-follower-comparison-before-l5.json): L7 is identical; L8 removes main's slow-follower IDs 354/359/365; L5's new ID-28 pace vote is the reason for the final correction. Both snapshots retain diagnostic partial-selection and baseline flags. Neither is a passing complete threat gate.
+The final six-level remote audit covers **L2, L3 police, L5, L6, L7 and L8** using the unchanged evaluator, policies, seeds and thresholds. It completed in **463.0 s** versus current main's **504.2 s**. [Complete follower comparison](d-follower-comparison-final.json), [completion audit](d-completion-audit.json). The wrapper used 1200 s of observational wall allowance; no checked-in budget or gameplay criterion changed.
 
-The final `6fc09518` unit gates and boarding fixtures pass. All ten refreshed motion probes are collected; its six-level audit is pending. The evaluator, seed validity and thresholds are unchanged.
+- **No added follower flags** in skilled/passive raw phases or aggregate flags. No added qualified seed failures in L5/L7.
+- L7's full native receipt is identical to main, including its known wait/slow/unobserved coverage flags. L2/L3 native state hashes are also identical.
+- L5 has **zero skilled or passive pace-vote flags**; its temporary ID-28 regression is removed.
+- L6 has no slow-follower flags; stationary-far time falls **179.62 → 135.08 s**, and its upper-bound share falls **52.96% → 45.54%**.
+- L8 removes main's slow-follower flags for **354/359/365**; skilled stationary-far share falls **1.74% → 0.53%**.
+- Every skilled/passive route reports **zero collision invariant failures**.
+
+The audit still exits 1: seven flags remain versus main's ten. They are the unchanged L7 wait/pace/coverage flags, L8's late first attack, and diagnostic `PARTIAL_LEVEL_SELECTION`. This is **not a passing complete threat gate**, and unqualified samples were not counted as passes. [Final remote source fingerprint](d-velocity-remote-runtime.json), [main fingerprint](d-remote-main-runtime.json) confirm matching evaluator code and the actual runtime sources.
+
+The preceding integration comparison and rejected restrictions are archived in [investigation history](investigation-history.md).
 
 ## Native motion and roster measurements
 
@@ -57,7 +66,7 @@ The final L6 run rescues **22/29 (75.9%)** in **296.7 s**, versus main's 24/29 i
 
 ## Done / open handoff
 
-- **Done:** main integration, authorized L7 fallback, native low/high parity over all three seeds, and corrective velocity handling.
-- **Open:** final `6fc09518` aggregate audit receipt; current-main L7 courier deaths and known pace/wait/coverage flags.
+- **Done:** main integration; authorized L7 fallback; final-source low/high parity over all three seeds; corrective L5/L6 velocity handling; typecheck/lint/107 unit tests; native boarding, motion and six-level comparison.
+- **Open:** current-main L7 courier deaths and known pace/wait/coverage flags; L8 late first attack and high-tier native-route limit. No claim that all three L7 seeds complete or that the complete release gate is green.
 - **Browser QA needed.** No browser was used.
 - No push or deployment.
