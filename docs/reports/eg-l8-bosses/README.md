@@ -48,3 +48,13 @@ Source and observer hashes and raw stages/poses are retained in [calibration 01]
 ## Browser QA needed
 
 Inspect all six enclosures at the PO zooms and both quality tiers. Check monkey silhouette/tail and leader scale, healthy-to-infected continuity, ground telegraph alignment and visibility, readable windup poses/sounds, engaged pack bars, cover/prop throwing/pillar destruction, elephant wall/truck stun, doorway crowding, checkpoint return and the complete APC escape. Rendered frame time and visual quality are unproven by native combat receipts.
+
+## Calibration 02 and lifecycle controls
+
+All six skilled low-tier fights first entered the requested band at revision `1a476640`: 60.93 / 51.40 / 52.87 / 52.13 / 63.00 / 75.58 seconds, with zero deaths. These are superseded diagnostic runs: stationary and circling policies exposed contact stalls and low pressure. Raw [skilled](evidence/calibration-02-low-skilled.json), [passive](evidence/calibration-02-low-passive.json), [standing](evidence/calibration-02-low-standing.json), and [circling](evidence/calibration-02-low-kite.json) receipts remain available. The old observer double-counted a death when both the mission counter and zero courier HP were present; current receipts use the mission counter once.
+
+Revision `b8ff592f` passes all 14 [low-tier lifecycle controls](evidence/controls-03-low.json), including actual damage death and checkpoint restoration of boss HP, phase, destructible cover and exactly one rocket across world pickup plus arena stock. A respawn can immediately collect its entry pickup, so checking only ground-pickup presence would be incorrect. Other controls cover healthy/engaged health-bar eligibility, ordinary melee shake-off, two-second weapon selection lock, one-second exposed chest-beat interruption, permanent firearm kills and Nadia's alive/dead elephant dialogue.
+
+The elephant control uses ordinary movement after an explicit setup placement and never fires. Three actual solid contacts (east yard wall, truck, west yard wall) kill it through the normal damage owner; courier HP remains 87.77. This is a controlled counter proof, separate from complete-route evidence. Subsequent spacing preserves the normal charge cooldown across the first wall-hit phase transition.
+
+The first cover-stalking lion revision exposed a bot search stall after the male died. Arena movement now brakes at path corners, and the skilled bot routes toward a hidden surviving target to reacquire sight. The focused correction completes in 76.92 seconds with zero deaths; all other arenas are rerun after the shared routing adjustment.

@@ -1,0 +1,4835 @@
+{
+  "revision": "1a476640",
+  "sourceHash": "6c158fb7cd336dff522f4778dc78902245b7172146631cc397e792412eafb2a6",
+  "observerHash": "5b050435b5609b7faac0777337ce4130f413d4e38cb5f68e6ffa7a09b76d5973",
+  "policy": "skilled",
+  "rows": [
+    {
+      "id": "flamingo",
+      "tier": "low",
+      "policy": "skilled",
+      "complete": true,
+      "seconds": 60.93333333333333,
+      "totalSeconds": 60.93333333333333,
+      "hp": 44.96666666666468,
+      "deaths": 0,
+      "damage": 108,
+      "attacks": 8,
+      "phases": 3,
+      "counters": 0,
+      "wallHits": 0,
+      "rocket": 0,
+      "rocketPickups": 0,
+      "bites": [
+        404,
+        405,
+        406,
+        407,
+        408,
+        402,
+        403
+      ],
+      "turns": [
+        408,
+        405,
+        404,
+        407,
+        406,
+        402,
+        403
+      ],
+      "tells": [
+        {
+          "tick": 617,
+          "source": 405,
+          "attack": 6,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": 1.0923260519338172,
+            "z": -16.257165594784674,
+            "radius": 1.1,
+            "dx": -0.943007160086498,
+            "dz": -0.3327724388010488
+          }
+        },
+        {
+          "tick": 617,
+          "source": 406,
+          "attack": 7,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": -0.9805276182837661,
+            "z": -14.981011962028695,
+            "radius": 1.1,
+            "dx": -0.5796309586516795,
+            "dz": -0.8148791025499028
+          }
+        },
+        {
+          "tick": 617,
+          "source": 407,
+          "attack": 8,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": -3.2272695213434797,
+            "z": -13.906913764358507,
+            "radius": 1.1,
+            "dx": 0.09021745829817376,
+            "dz": -0.9959220904359023
+          }
+        },
+        {
+          "tick": 1037,
+          "source": 408,
+          "attack": 9,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": 3.0012998680449203,
+            "z": -13.12513400815045,
+            "radius": 1.1,
+            "dx": -0.7490484673187682,
+            "dz": -0.6625152025481409
+          }
+        },
+        {
+          "tick": 1037,
+          "source": 402,
+          "attack": 10,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": -0.6126365245678623,
+            "z": -11.329314286710346,
+            "radius": 1.1,
+            "dx": -0.1598311136810166,
+            "dz": -0.9871443739896846
+          }
+        },
+        {
+          "tick": 1037,
+          "source": 403,
+          "attack": 11,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": -4.901604175965194,
+            "z": -12.567293986867918,
+            "radius": 1.1,
+            "dx": 0.5891287669542304,
+            "dz": -0.8080391673347201
+          }
+        },
+        {
+          "tick": 1457,
+          "source": 404,
+          "attack": 12,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": 8.386526141267911,
+            "z": -18.479151782383223,
+            "radius": 1.1,
+            "dx": -0.9999194314625788,
+            "dz": -0.012693722210320552
+          }
+        },
+        {
+          "tick": 1457,
+          "source": 405,
+          "attack": 13,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": 4.908903641247436,
+            "z": -14.991262898987202,
+            "radius": 1.1,
+            "dx": -0.5236703194502172,
+            "dz": -0.851921003689255
+          }
+        },
+        {
+          "tick": 1457,
+          "source": 406,
+          "attack": 14,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": 0.816386692553896,
+            "z": -14.761264965441992,
+            "radius": 1.1,
+            "dx": 0.4489886127815556,
+            "dz": -0.8935374785606335
+          }
+        },
+        {
+          "tick": 1877,
+          "source": 407,
+          "attack": 15,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": 8.385512873256783,
+            "z": -27.307141146548872,
+            "radius": 1.1,
+            "dx": -0.9971761839860864,
+            "dz": 0.07509765702701218
+          }
+        },
+        {
+          "tick": 1877,
+          "source": 408,
+          "attack": 16,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": 7.031394256650604,
+            "z": -23.099221401731945,
+            "radius": 1.1,
+            "dx": -0.6346444338466244,
+            "dz": -0.7728042718486341
+          }
+        },
+        {
+          "tick": 1877,
+          "source": 402,
+          "attack": 17,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": 3.008989534421614,
+            "z": -21.572069248853964,
+            "radius": 1.1,
+            "dx": 0.1551103239190243,
+            "dz": -0.9878971542694794
+          }
+        },
+        {
+          "tick": 2297,
+          "source": 403,
+          "attack": 18,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": 4.344241843159498,
+            "z": -29.91748150444263,
+            "radius": 1.1,
+            "dx": -0.8410214231859554,
+            "dz": 0.5410018167642971
+          }
+        },
+        {
+          "tick": 2297,
+          "source": 404,
+          "attack": 19,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": 4.598906472528583,
+            "z": -25.598650189597706,
+            "radius": 1.1,
+            "dx": -0.892390667656797,
+            "dz": -0.45126366603024454
+          }
+        },
+        {
+          "tick": 2297,
+          "source": 405,
+          "attack": 20,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": 0.8591056425503163,
+            "z": -22.900841139861026,
+            "radius": 1.1,
+            "dx": -0.03460485016277458,
+            "dz": -0.9994010728157199
+          }
+        },
+        {
+          "tick": 2717,
+          "source": 406,
+          "attack": 21,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": 2.82854943457014,
+            "z": -36.23034945658782,
+            "radius": 1.1,
+            "dx": -0.8081923058869743,
+            "dz": 0.5889186673090736
+          }
+        },
+        {
+          "tick": 2717,
+          "source": 407,
+          "attack": 22,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": 4.258864591820877,
+            "z": -32.14581648551531,
+            "radius": 1.1,
+            "dx": -0.9925737990445774,
+            "dz": -0.12164396183212309
+          }
+        },
+        {
+          "tick": 2717,
+          "source": 408,
+          "attack": 23,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": 2.0381726125266364,
+            "z": -28.385111656686473,
+            "radius": 1.1,
+            "dx": -0.6454811950091496,
+            "dz": -0.7637761628183746
+          }
+        },
+        {
+          "tick": 3137,
+          "source": 403,
+          "attack": 24,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": 4.462801031347352,
+            "z": -28.64036144392082,
+            "radius": 1.1,
+            "dx": -0.8114763014398838,
+            "dz": 0.5843853285302831
+          }
+        },
+        {
+          "tick": 3137,
+          "source": 404,
+          "attack": 25,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": 3.657443193623811,
+            "z": -24.387238659147418,
+            "radius": 1.1,
+            "dx": -0.6778833696992572,
+            "dz": -0.7351694614748222
+          }
+        },
+        {
+          "tick": 3137,
+          "source": 407,
+          "attack": 26,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": -5.356362531768843,
+            "z": -25.34765489638028,
+            "radius": 1.1,
+            "dx": 0.9844078981583332,
+            "dz": -0.1759007960285938
+          }
+        },
+        {
+          "tick": 3557,
+          "source": 402,
+          "attack": 27,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": -7.230435428305375,
+            "z": -25.528000889447547,
+            "radius": 1.1,
+            "dx": 0.49390249190288127,
+            "dz": -0.8695172962581734
+          }
+        },
+        {
+          "tick": 3557,
+          "source": 403,
+          "attack": 28,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": -9.740418311816212,
+            "z": -28.992477554444893,
+            "radius": 1.1,
+            "dx": 0.9775159518317119,
+            "dz": -0.21086148039540575
+          }
+        },
+        {
+          "tick": 3557,
+          "source": 407,
+          "attack": 29,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": 0.4404777554236181,
+            "z": -29.039149792845855,
+            "radius": 1.1,
+            "dx": -0.9791236517950861,
+            "dz": -0.20326552707100884
+          }
+        },
+        {
+          "tick": 3811,
+          "source": 402,
+          "attack": 30,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": -1.2031087942805132,
+            "z": -38.363873126918286,
+            "radius": 1.1,
+            "dx": -0.7048403390311967,
+            "dz": 0.709365982039164
+          }
+        },
+        {
+          "tick": 3811,
+          "source": 403,
+          "attack": 31,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": 3.5920941463776863,
+            "z": -32.95222185804585,
+            "radius": 1.1,
+            "dx": -0.9965567250587289,
+            "dz": 0.08291377292236156
+          }
+        },
+        {
+          "tick": 3811,
+          "source": 408,
+          "attack": 32,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": -12.566442141491946,
+            "z": -32.01949949787327,
+            "radius": 1.1,
+            "dx": 0.9999980113443114,
+            "dz": -0.0019943187866002356
+          }
+        },
+        {
+          "tick": 4111,
+          "source": 408,
+          "attack": 33,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": -2.2378810661995905,
+            "z": -36.63813542745276,
+            "radius": 1.1,
+            "dx": -0.9973828622445078,
+            "dz": 0.07230094121761596
+          }
+        }
+      ],
+      "throws": [],
+      "signals": [
+        {
+          "tick": 3751,
+          "name": "l8.arena.flamingo.phase-2"
+        },
+        {
+          "tick": 4183,
+          "name": "l8.arena.flamingo.cleared"
+        }
+      ],
+      "stages": [
+        {
+          "tick": 653,
+          "source": 405,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 653,
+          "source": 407,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 653,
+          "source": 406,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 705,
+          "source": 405,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 707,
+          "source": 406,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 710,
+          "source": 407,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 825,
+          "source": 405,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 827,
+          "source": 406,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 830,
+          "source": 407,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1073,
+          "source": 408,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 1073,
+          "source": 402,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 1073,
+          "source": 403,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 1073,
+          "source": 403,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1125,
+          "source": 402,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1127,
+          "source": 408,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1193,
+          "source": 403,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1245,
+          "source": 402,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1247,
+          "source": 408,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1493,
+          "source": 405,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 1493,
+          "source": 404,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 1493,
+          "source": 406,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 1517,
+          "source": 406,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1548,
+          "source": 405,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1548,
+          "source": 404,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1637,
+          "source": 406,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1668,
+          "source": 405,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1668,
+          "source": 404,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1913,
+          "source": 408,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 1913,
+          "source": 407,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 1913,
+          "source": 402,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 1965,
+          "source": 407,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1966,
+          "source": 408,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1966,
+          "source": 402,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2085,
+          "source": 407,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2086,
+          "source": 408,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2086,
+          "source": 402,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2333,
+          "source": 405,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 2333,
+          "source": 404,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 2333,
+          "source": 403,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 2387,
+          "source": 403,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2389,
+          "source": 405,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2389,
+          "source": 404,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2507,
+          "source": 403,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2509,
+          "source": 405,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2509,
+          "source": 404,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2753,
+          "source": 408,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 2753,
+          "source": 407,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 2753,
+          "source": 406,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 2806,
+          "source": 406,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2807,
+          "source": 407,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2808,
+          "source": 408,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2847,
+          "source": 406,
+          "move": "flamingo.dive",
+          "stage": "cancelled"
+        },
+        {
+          "tick": 2927,
+          "source": 407,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2928,
+          "source": 408,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3173,
+          "source": 404,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 3173,
+          "source": 407,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 3173,
+          "source": 403,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 3225,
+          "source": 404,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3225,
+          "source": 407,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3227,
+          "source": 403,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3321,
+          "source": 404,
+          "move": "flamingo.dive",
+          "stage": "cancelled"
+        },
+        {
+          "tick": 3345,
+          "source": 407,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3347,
+          "source": 403,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3593,
+          "source": 407,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 3593,
+          "source": 402,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 3593,
+          "source": 403,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 3647,
+          "source": 407,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3647,
+          "source": 403,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3649,
+          "source": 402,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3751,
+          "source": 407,
+          "move": "flamingo.dive",
+          "stage": "cancelled"
+        },
+        {
+          "tick": 3767,
+          "source": 403,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3769,
+          "source": 402,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3847,
+          "source": 408,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 3847,
+          "source": 402,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 3847,
+          "source": 403,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 3890,
+          "source": 408,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3890,
+          "source": 403,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3892,
+          "source": 402,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3894,
+          "source": 403,
+          "move": "flamingo.dive",
+          "stage": "cancelled"
+        },
+        {
+          "tick": 3957,
+          "source": 402,
+          "move": "flamingo.dive",
+          "stage": "cancelled"
+        },
+        {
+          "tick": 4010,
+          "source": 408,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 4147,
+          "source": 408,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 4179,
+          "source": 408,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 4183,
+          "source": 408,
+          "move": "flamingo.dive",
+          "stage": "cancelled"
+        }
+      ],
+      "destruction": [
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-0",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-1",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-2",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-3",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        }
+      ],
+      "bosses": [
+        {
+          "id": 402,
+          "hp": 0,
+          "at": {
+            "x": -11.775713879748459,
+            "z": -27.723383396330817,
+            "y": 0.7,
+            "yaw": -2.3529943718702455
+          }
+        },
+        {
+          "id": 403,
+          "hp": 0,
+          "at": {
+            "x": -11.373968026812099,
+            "z": -31.943886501247892,
+            "y": 0.7,
+            "yaw": -3.058583584429852
+          }
+        },
+        {
+          "id": 404,
+          "hp": 0,
+          "at": {
+            "x": -6.510807351865033,
+            "z": -35.41478058126977,
+            "y": 0.7,
+            "yaw": 2.3156760202981905
+          }
+        },
+        {
+          "id": 405,
+          "hp": 0,
+          "at": {
+            "x": 2.1882072757429936,
+            "z": -24.48971700216333,
+            "y": 0.7,
+            "yaw": -2.220517540214324
+          }
+        },
+        {
+          "id": 406,
+          "hp": 0,
+          "at": {
+            "x": -9.389361823362032,
+            "z": -27.52847826775488,
+            "y": 0.7,
+            "yaw": -2.5118724306717652
+          }
+        },
+        {
+          "id": 407,
+          "hp": 0,
+          "at": {
+            "x": -13.363288539501653,
+            "z": -31.690923943810844,
+            "y": 0.7,
+            "yaw": 2.936900727533169
+          }
+        },
+        {
+          "id": 408,
+          "hp": 0,
+          "at": {
+            "x": -13.425702242066144,
+            "z": -35.769861792163,
+            "y": 0.7,
+            "yaw": -3.0692285724278525
+          }
+        }
+      ]
+    },
+    {
+      "id": "zebra",
+      "tier": "low",
+      "policy": "skilled",
+      "complete": true,
+      "seconds": 51.4,
+      "totalSeconds": 51.4,
+      "hp": 100,
+      "deaths": 0,
+      "damage": 24,
+      "attacks": 1,
+      "phases": 3,
+      "counters": 0,
+      "wallHits": 0,
+      "rocket": 0,
+      "rocketPickups": 0,
+      "bites": [
+        400,
+        409,
+        410,
+        401
+      ],
+      "turns": [
+        410,
+        409,
+        400,
+        401
+      ],
+      "tells": [
+        {
+          "tick": 408,
+          "source": 400,
+          "attack": 7,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 50.50290111995672,
+            "z": 14.356994488175848,
+            "radius": 0.9,
+            "dx": 0.9998719330519894,
+            "dz": -0.016003671293740043
+          }
+        },
+        {
+          "tick": 408,
+          "source": 401,
+          "attack": 8,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 50.661210814804846,
+            "z": 11.765609009843484,
+            "radius": 0.9,
+            "dx": 0.9675369636807933,
+            "dz": 0.2527295469693861
+          }
+        },
+        {
+          "tick": 408,
+          "source": 409,
+          "attack": 9,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 52.22219428997965,
+            "z": 13.618067068266509,
+            "radius": 0.9,
+            "dx": 0.9971649353452855,
+            "dz": 0.07524687181426576
+          }
+        },
+        {
+          "tick": 408,
+          "source": 410,
+          "attack": 10,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 54.57666726413141,
+            "z": 16.19408136685189,
+            "radius": 0.9,
+            "dx": 0.9388461284658252,
+            "dz": -0.344336967322318
+          }
+        },
+        {
+          "tick": 828,
+          "source": 400,
+          "attack": 11,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 66.26491549217491,
+            "z": 17.745995512684807,
+            "radius": 0.9,
+            "dx": -0.9754011339150729,
+            "dz": 0.2204373560837415
+          }
+        },
+        {
+          "tick": 828,
+          "source": 401,
+          "attack": 12,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 64.2886932803888,
+            "z": 23.342511183158113,
+            "radius": 0.9,
+            "dx": -0.9707573116723933,
+            "dz": -0.24006299555447483
+          }
+        },
+        {
+          "tick": 828,
+          "source": 409,
+          "attack": 13,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 61.77934966096044,
+            "z": 18.96116850206471,
+            "radius": 0.9,
+            "dx": -0.9802145436632974,
+            "dz": 0.1979379912774541
+          }
+        },
+        {
+          "tick": 828,
+          "source": 410,
+          "attack": 14,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 57.59429654652173,
+            "z": 12.484693120372643,
+            "radius": 0.9,
+            "dx": -0.4561812427670448,
+            "dz": 0.8898868881759718
+          }
+        },
+        {
+          "tick": 1248,
+          "source": 400,
+          "attack": 15,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 50.438814724263636,
+            "z": 27.686020665338724,
+            "radius": 0.9,
+            "dx": 0.9978962392630303,
+            "dz": 0.06483128615646275
+          }
+        },
+        {
+          "tick": 1248,
+          "source": 401,
+          "attack": 16,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 56.61487834939275,
+            "z": 18.394162965115626,
+            "radius": 0.9,
+            "dx": 0.4161639263997466,
+            "dz": 0.9092896053312971
+          }
+        },
+        {
+          "tick": 1248,
+          "source": 409,
+          "attack": 17,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 53.62348146986255,
+            "z": 22.92113995720308,
+            "radius": 0.9,
+            "dx": 0.8106532096499443,
+            "dz": 0.5855265781194253
+          }
+        },
+        {
+          "tick": 1248,
+          "source": 410,
+          "attack": 18,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 57.35159468401017,
+            "z": 32.238776348174355,
+            "radius": 0.9,
+            "dx": 0.7053690790754704,
+            "dz": -0.7088402233819853
+          }
+        },
+        {
+          "tick": 1668,
+          "source": 400,
+          "attack": 19,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 71.49244814475887,
+            "z": 22.607351746627497,
+            "radius": 0.9,
+            "dx": -0.9980073362800057,
+            "dz": 0.06309799308446891
+          }
+        },
+        {
+          "tick": 1668,
+          "source": 401,
+          "attack": 20,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 65.8062836311397,
+            "z": 28.794912345685706,
+            "radius": 0.9,
+            "dx": -0.2989921306356888,
+            "dz": -0.954255576781153
+          }
+        },
+        {
+          "tick": 1668,
+          "source": 409,
+          "attack": 21,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 69.45860852510181,
+            "z": 31.476025649127216,
+            "radius": 0.9,
+            "dx": -0.5439730341156238,
+            "dz": -0.8391026982169957
+          }
+        },
+        {
+          "tick": 1668,
+          "source": 410,
+          "attack": 22,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 63.5229412841672,
+            "z": 15.456468822958454,
+            "radius": 0.9,
+            "dx": 0.0644986000493199,
+            "dz": 0.997917797512239
+          }
+        },
+        {
+          "tick": 2088,
+          "source": 400,
+          "attack": 25,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 50.64993504331502,
+            "z": 29.9122553896372,
+            "radius": 0.9,
+            "dx": 0.9955584644254284,
+            "dz": -0.0941453339835973
+          }
+        },
+        {
+          "tick": 2088,
+          "source": 401,
+          "attack": 26,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 58.60804264123523,
+            "z": 20.04855197121429,
+            "radius": 0.9,
+            "dx": -0.016469395406290683,
+            "dz": 0.9998643703097693
+          }
+        },
+        {
+          "tick": 2088,
+          "source": 409,
+          "attack": 27,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 63.64665771670871,
+            "z": 24.988262704211735,
+            "radius": 0.9,
+            "dx": -0.778337614623069,
+            "dz": 0.6278459665099959
+          }
+        },
+        {
+          "tick": 2088,
+          "source": 410,
+          "attack": 28,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 56.9488612028606,
+            "z": 36.076299322214176,
+            "radius": 0.9,
+            "dx": 0.2135582797257853,
+            "dz": -0.9769303256428082
+          }
+        },
+        {
+          "tick": 2508,
+          "source": 400,
+          "attack": 29,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 70.04689181505456,
+            "z": 35.11968091041622,
+            "radius": 0.9,
+            "dx": -0.9848233855827815,
+            "dz": -0.17355949760606043
+          }
+        },
+        {
+          "tick": 2508,
+          "source": 401,
+          "attack": 30,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 63.0814744834272,
+            "z": 41.71169057053534,
+            "radius": 0.9,
+            "dx": 0.004162811075596742,
+            "dz": -0.9999913354644374
+          }
+        },
+        {
+          "tick": 2508,
+          "source": 409,
+          "attack": 31,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 56.37194311858574,
+            "z": 32.86909274479937,
+            "radius": 0.9,
+            "dx": 0.9885574574884582,
+            "dz": 0.15084479853132085
+          }
+        },
+        {
+          "tick": 2928,
+          "source": 400,
+          "attack": 32,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 59.80267335797516,
+            "z": 28.995032571156845,
+            "radius": 0.9,
+            "dx": 0.9985167000961045,
+            "dz": 0.05444630041780923
+          }
+        },
+        {
+          "tick": 2928,
+          "source": 401,
+          "attack": 33,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 70.46672783337426,
+            "z": 22.860167543767314,
+            "radius": 0.9,
+            "dx": -0.3879786722738179,
+            "dz": 0.921668351339377
+          }
+        },
+        {
+          "tick": 2928,
+          "source": 409,
+          "attack": 34,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 74.66243056208403,
+            "z": 29.942869771303283,
+            "radius": 0.9,
+            "dx": -0.9972514797781148,
+            "dz": -0.0740910661305411
+          }
+        },
+        {
+          "tick": 3188,
+          "source": 409,
+          "attack": 35,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 56.663512694980355,
+            "z": 29.789172269582135,
+            "radius": 0.9,
+            "dx": 0.9047469149529092,
+            "dz": 0.4259495508662894
+          }
+        }
+      ],
+      "throws": [],
+      "signals": [
+        {
+          "tick": 3081,
+          "name": "l8.arena.zebra.phase-2"
+        },
+        {
+          "tick": 3402,
+          "name": "l8.arena.zebra.cleared"
+        }
+      ],
+      "stages": [
+        {
+          "tick": 468,
+          "source": 410,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 468,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 468,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 468,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 512,
+          "source": 410,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 539,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 540,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 543,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 632,
+          "source": 410,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 659,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 660,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 663,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 888,
+          "source": 410,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 888,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 888,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 888,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 953,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 960,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 961,
+          "source": 410,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 962,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1073,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1080,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1081,
+          "source": 410,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1082,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1308,
+          "source": 410,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 1308,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 1308,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 1308,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 1380,
+          "source": 410,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1381,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1384,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1500,
+          "source": 410,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1501,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1504,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1611,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1728,
+          "source": 410,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 1728,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 1728,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 1728,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 1800,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1805,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1808,
+          "source": 410,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1823,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1920,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1925,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1928,
+          "source": 410,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1943,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2120,
+          "source": 410,
+          "move": "zebra.stampede",
+          "stage": "cancelled"
+        },
+        {
+          "tick": 2148,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 2148,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 2148,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 2230,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2231,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2251,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2350,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2351,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2371,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2568,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 2568,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 2568,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 2645,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2656,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2663,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2765,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2776,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2783,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2988,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 2988,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 2988,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 3066,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3067,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3071,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3081,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "cancelled"
+        },
+        {
+          "tick": 3112,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "cancelled"
+        },
+        {
+          "tick": 3187,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3248,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 3320,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3402,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "cancelled"
+        }
+      ],
+      "destruction": [
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-0",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-1",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-2",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-3",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        }
+      ],
+      "bosses": [
+        {
+          "id": 400,
+          "hp": 0,
+          "at": {
+            "x": 77.60623869348463,
+            "z": 31.641976414029553,
+            "y": 0.7,
+            "yaw": -0.0544732364642399
+          }
+        },
+        {
+          "id": 401,
+          "hp": 0,
+          "at": {
+            "x": 62.52903072481404,
+            "z": 39.015103826782834,
+            "y": 0.7,
+            "yaw": -1.9692337861585796
+          }
+        },
+        {
+          "id": 409,
+          "hp": 0,
+          "at": {
+            "x": 72.9415229898292,
+            "z": 37.472034898466305,
+            "y": 0.7,
+            "yaw": -0.4400111476189164
+          }
+        },
+        {
+          "id": 410,
+          "hp": 0,
+          "at": {
+            "x": 56.9488612028606,
+            "z": 36.076299322214176,
+            "y": 0.7,
+            "yaw": 1.3555805013186417
+          }
+        }
+      ]
+    },
+    {
+      "id": "monkey",
+      "tier": "low",
+      "policy": "skilled",
+      "complete": true,
+      "seconds": 52.86666666666667,
+      "totalSeconds": 52.86666666666667,
+      "hp": 100,
+      "deaths": 0,
+      "damage": 12,
+      "attacks": 3,
+      "phases": 3,
+      "counters": 3,
+      "wallHits": 0,
+      "rocket": 1,
+      "rocketPickups": 0,
+      "bites": [
+        413,
+        414,
+        415,
+        416,
+        417,
+        412,
+        411
+      ],
+      "turns": [
+        413,
+        416,
+        417,
+        414,
+        415,
+        412,
+        411
+      ],
+      "tells": [
+        {
+          "tick": 726,
+          "source": 411,
+          "attack": 4,
+          "move": "monkey.grab",
+          "duration": 0.8,
+          "area": {
+            "x": -0.31869521934038,
+            "z": 12.684759304762538,
+            "radius": 0.8,
+            "dx": 0.5514947939319924,
+            "dz": 0.8341783336109306
+          }
+        },
+        {
+          "tick": 726,
+          "source": 412,
+          "attack": 5,
+          "move": "monkey.grab",
+          "duration": 0.8333333333333334,
+          "area": {
+            "x": 7.394621314406322,
+            "z": 12.923935638721314,
+            "radius": 0.8,
+            "dx": -0.9644162498288674,
+            "dz": 0.26438853429379927
+          }
+        },
+        {
+          "tick": 726,
+          "source": 414,
+          "attack": 6,
+          "move": "monkey.grab",
+          "duration": 0.9,
+          "area": {
+            "x": 1.6160120220349092,
+            "z": 20.46511979108994,
+            "radius": 0.8,
+            "dx": -0.14837345296194307,
+            "dz": -0.988931402300559
+          }
+        },
+        {
+          "tick": 726,
+          "source": 415,
+          "attack": 7,
+          "move": "monkey.grab",
+          "duration": 0.9333333333333333,
+          "area": {
+            "x": -1.9616558189364526,
+            "z": 17.837545524743774,
+            "radius": 0.8,
+            "dx": 0.6520028010139007,
+            "dz": -0.7582165571062319
+          }
+        },
+        {
+          "tick": 768,
+          "source": 413,
+          "attack": 8,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": 5.494276074184017,
+            "z": 20.19540783826079,
+            "radius": 1,
+            "dx": -0.2668094250628836,
+            "dz": -0.9637493090516919
+          }
+        },
+        {
+          "tick": 868,
+          "source": 416,
+          "attack": 9,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -2.5563067744837515,
+            "z": 17.64725141086764,
+            "radius": 1,
+            "dx": 0.5984045708879919,
+            "dz": -0.8011940898061832
+          }
+        },
+        {
+          "tick": 1146,
+          "source": 411,
+          "attack": 10,
+          "move": "monkey.grab",
+          "duration": 0.8,
+          "area": {
+            "x": -0.9307145251953304,
+            "z": 22.934977007031254,
+            "radius": 0.8,
+            "dx": 0.06683381259995755,
+            "dz": -0.997764121169605
+          }
+        },
+        {
+          "tick": 1146,
+          "source": 413,
+          "attack": 11,
+          "move": "monkey.grab",
+          "duration": 0.8666666666666667,
+          "area": {
+            "x": -1.5640025563560829,
+            "z": 12.763173371549616,
+            "radius": 0.8,
+            "dx": 0.660700711063512,
+            "dz": 0.7506494324251299
+          }
+        },
+        {
+          "tick": 1146,
+          "source": 414,
+          "attack": 12,
+          "move": "monkey.grab",
+          "duration": 0.9,
+          "area": {
+            "x": 3.7123599540597336,
+            "z": 6.671956962168286,
+            "radius": 0.8,
+            "dx": -0.5208535825219781,
+            "dz": 0.8536460306087186
+          }
+        },
+        {
+          "tick": 1146,
+          "source": 416,
+          "attack": 13,
+          "move": "monkey.grab",
+          "duration": 0.9666666666666667,
+          "area": {
+            "x": 1.8803266097291655,
+            "z": 17.49890959204985,
+            "radius": 0.8,
+            "dx": -0.6293982957570072,
+            "dz": -0.7770828690031552
+          }
+        },
+        {
+          "tick": 1202,
+          "source": 415,
+          "attack": 14,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": 6.502677068133208,
+            "z": 7.345957430787482,
+            "radius": 1,
+            "dx": -0.5469101767183736,
+            "dz": 0.8371912915229573
+          }
+        },
+        {
+          "tick": 1242,
+          "source": 412,
+          "attack": 15,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -2.885668501625111,
+            "z": 13.93816596323345,
+            "radius": 1,
+            "dx": 0.9729312394968204,
+            "dz": 0.23109479269594224
+          }
+        },
+        {
+          "tick": 1566,
+          "source": 412,
+          "attack": 16,
+          "move": "monkey.grab",
+          "duration": 0.8333333333333334,
+          "area": {
+            "x": 3.4978400063522557,
+            "z": 15.987597705828115,
+            "radius": 0.8,
+            "dx": -0.8053983983893521,
+            "dz": 0.5927338524766965
+          }
+        },
+        {
+          "tick": 1566,
+          "source": 413,
+          "attack": 17,
+          "move": "monkey.grab",
+          "duration": 0.8666666666666667,
+          "area": {
+            "x": 7.489752510571597,
+            "z": 16.80867775104094,
+            "radius": 0.8,
+            "dx": -0.9400333175999841,
+            "dz": 0.34108263192658667
+          }
+        },
+        {
+          "tick": 1566,
+          "source": 415,
+          "attack": 18,
+          "move": "monkey.grab",
+          "duration": 0.9333333333333333,
+          "area": {
+            "x": 0.3476420317968525,
+            "z": 14.14629845837667,
+            "radius": 0.8,
+            "dx": -0.4468696108831171,
+            "dz": 0.8945991006418301
+          }
+        },
+        {
+          "tick": 1566,
+          "source": 416,
+          "attack": 19,
+          "move": "monkey.grab",
+          "duration": 0.9666666666666667,
+          "area": {
+            "x": -5.33223986075226,
+            "z": 15.435219156764898,
+            "radius": 0.8,
+            "dx": 0.42463368610626046,
+            "dz": 0.9053652481865039
+          }
+        },
+        {
+          "tick": 1567,
+          "source": 411,
+          "attack": 20,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": 2.8657457850299317,
+            "z": 15.450397226607098,
+            "radius": 1,
+            "dx": -0.6930414724171385,
+            "dz": 0.7208977163994104
+          }
+        },
+        {
+          "tick": 1586,
+          "source": 414,
+          "attack": 21,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": 1.0901330529524833,
+            "z": 20.173422650839235,
+            "radius": 1,
+            "dx": -0.8265950223637494,
+            "dz": -0.5627971828318553
+          }
+        },
+        {
+          "tick": 1986,
+          "source": 411,
+          "attack": 22,
+          "move": "monkey.grab",
+          "duration": 0.8,
+          "area": {
+            "x": -7.427873982732493,
+            "z": 22.615993004118486,
+            "radius": 0.8,
+            "dx": -0.7173385953402319,
+            "dz": -0.6967247229970406
+          }
+        },
+        {
+          "tick": 1986,
+          "source": 412,
+          "attack": 23,
+          "move": "monkey.grab",
+          "duration": 0.8333333333333334,
+          "area": {
+            "x": -12.760455224371901,
+            "z": 21.581936414441177,
+            "radius": 0.8,
+            "dx": 0.8732174299088208,
+            "dz": -0.48733081177310494
+          }
+        },
+        {
+          "tick": 1986,
+          "source": 414,
+          "attack": 24,
+          "move": "monkey.grab",
+          "duration": 0.9,
+          "area": {
+            "x": -7.357379699217005,
+            "z": 14.412474761299169,
+            "radius": 0.8,
+            "dx": -0.4409127846167654,
+            "dz": 0.897549952014644
+          }
+        },
+        {
+          "tick": 1986,
+          "source": 415,
+          "attack": 25,
+          "move": "monkey.grab",
+          "duration": 0.9333333333333333,
+          "area": {
+            "x": -3.2250543354956234,
+            "z": 19.1919066789222,
+            "radius": 0.8,
+            "dx": -0.9952370647324995,
+            "dz": 0.09748428069508575
+          }
+        },
+        {
+          "tick": 2072,
+          "source": 416,
+          "attack": 26,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -3.1362989180957457,
+            "z": 23.103532715730424,
+            "radius": 1,
+            "dx": -0.8566006854931183,
+            "dz": -0.5159799081482922
+          }
+        },
+        {
+          "tick": 2091,
+          "source": 413,
+          "attack": 27,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -4.911244188473049,
+            "z": 18.734960366112663,
+            "radius": 1,
+            "dx": -0.7151046372431294,
+            "dz": 0.6990174230971444
+          }
+        },
+        {
+          "tick": 2406,
+          "source": 411,
+          "attack": 28,
+          "move": "monkey.grab",
+          "duration": 0.8,
+          "area": {
+            "x": -4.52663453339905,
+            "z": 15.69089781542074,
+            "radius": 0.8,
+            "dx": -0.9853351339018261,
+            "dz": 0.17063022563036853
+          }
+        },
+        {
+          "tick": 2406,
+          "source": 413,
+          "attack": 29,
+          "move": "monkey.grab",
+          "duration": 0.8666666666666667,
+          "area": {
+            "x": -6.521172953754197,
+            "z": 24.826617548364226,
+            "radius": 0.8,
+            "dx": -0.5156729962001085,
+            "dz": -0.8567854813137316
+          }
+        },
+        {
+          "tick": 2406,
+          "source": 414,
+          "attack": 30,
+          "move": "monkey.grab",
+          "duration": 0.9,
+          "area": {
+            "x": -9.657442223578881,
+            "z": 27.02886839295889,
+            "radius": 0.8,
+            "dx": -0.1605361843323633,
+            "dz": -0.9870299557358962
+          }
+        },
+        {
+          "tick": 2406,
+          "source": 416,
+          "attack": 31,
+          "move": "monkey.grab",
+          "duration": 0.9666666666666667,
+          "area": {
+            "x": -10.094547291845561,
+            "z": 21.437881829551095,
+            "radius": 0.8,
+            "dx": -0.23395542891954263,
+            "dz": -0.9722473231020349
+          }
+        },
+        {
+          "tick": 2407,
+          "source": 412,
+          "attack": 32,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -3.2620846847296283,
+            "z": 21.862755629605363,
+            "radius": 1,
+            "dx": -0.8767063011304448,
+            "dz": -0.48102605081032146
+          }
+        },
+        {
+          "tick": 2465,
+          "source": 415,
+          "attack": 33,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -9.114796171154758,
+            "z": 23.236251209578626,
+            "radius": 1,
+            "dx": -0.8391249354068541,
+            "dz": -0.5439387307210647
+          }
+        },
+        {
+          "tick": 2826,
+          "source": 412,
+          "attack": 34,
+          "move": "monkey.grab",
+          "duration": 0.8333333333333334,
+          "area": {
+            "x": -14.029962577084683,
+            "z": 21.78183367895768,
+            "radius": 0.8,
+            "dx": 0.7550679659127283,
+            "dz": -0.6556465258448451
+          }
+        },
+        {
+          "tick": 2826,
+          "source": 413,
+          "attack": 35,
+          "move": "monkey.grab",
+          "duration": 0.8666666666666667,
+          "area": {
+            "x": -17.01796691688529,
+            "z": 18.73216227352056,
+            "radius": 0.8,
+            "dx": 0.9987373348051608,
+            "dz": -0.05023679992081344
+          }
+        },
+        {
+          "tick": 2827,
+          "source": 411,
+          "attack": 36,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -14.024736165508063,
+            "z": 22.779487514561474,
+            "radius": 1,
+            "dx": 0.7231383814877435,
+            "dz": -0.6907031788107587
+          }
+        },
+        {
+          "tick": 3009,
+          "source": 414,
+          "attack": 37,
+          "move": "monkey.debris",
+          "duration": 0.6,
+          "area": {
+            "x": -6.989633941224048,
+            "z": 17.629203845602422,
+            "radius": 1,
+            "dx": 0.17851291051131205,
+            "dz": 0.9839375695544816
+          }
+        },
+        {
+          "tick": 3040,
+          "source": 411,
+          "attack": 38,
+          "move": "monkey.grab",
+          "duration": 0.8,
+          "area": {
+            "x": -13.328601824224439,
+            "z": 22.474562220268048,
+            "radius": 0.8,
+            "dx": 0.9789617242415264,
+            "dz": 0.20404397190325818
+          }
+        },
+        {
+          "tick": 3040,
+          "source": 414,
+          "attack": 39,
+          "move": "monkey.grab",
+          "duration": 0.9,
+          "area": {
+            "x": -6.989633941224048,
+            "z": 17.629203845602422,
+            "radius": 0.8,
+            "dx": -0.5630723936346366,
+            "dz": 0.82640757470304
+          }
+        },
+        {
+          "tick": 3040,
+          "source": 417,
+          "attack": 40,
+          "move": "monkey.grab",
+          "duration": 1,
+          "area": {
+            "x": -8.815069676896616,
+            "z": 19.7137927132503,
+            "radius": 0.8,
+            "dx": -0.5391763429282465,
+            "dz": 0.8421928943101585
+          }
+        },
+        {
+          "tick": 3340,
+          "source": 411,
+          "attack": 41,
+          "move": "monkey.grab",
+          "duration": 0.8,
+          "area": {
+            "x": -0.03555285164944745,
+            "z": 23.99623841079365,
+            "radius": 0.8,
+            "dx": -0.9344575294451245,
+            "dz": -0.356074606877989
+          }
+        },
+        {
+          "tick": 3340,
+          "source": 417,
+          "attack": 42,
+          "move": "monkey.grab",
+          "duration": 1,
+          "area": {
+            "x": -12.03077629409283,
+            "z": 26.091079975198276,
+            "radius": 0.8,
+            "dx": 0.8239880833499399,
+            "dz": -0.566607128879696
+          }
+        },
+        {
+          "tick": 3641,
+          "source": 417,
+          "attack": 43,
+          "move": "monkey.debris",
+          "duration": 0.6,
+          "area": {
+            "x": -5.897404233160557,
+            "z": 22.4057594724127,
+            "radius": 1,
+            "dx": 0.07791993900486761,
+            "dz": -0.996959619596239
+          }
+        },
+        {
+          "tick": 3641,
+          "source": 411,
+          "attack": 44,
+          "move": "monkey.debris",
+          "duration": 0.6,
+          "area": {
+            "x": -11.657985751731278,
+            "z": 19.751398110415188,
+            "radius": 1,
+            "dx": 0.8710369987842856,
+            "dz": -0.4912174129129223
+          }
+        }
+      ],
+      "throws": [
+        {
+          "tick": 816,
+          "source": 413,
+          "prop": 1382670987
+        },
+        {
+          "tick": 916,
+          "source": 416,
+          "prop": 1449781463
+        },
+        {
+          "tick": 1250,
+          "source": 415,
+          "prop": 1304247627
+        },
+        {
+          "tick": 1290,
+          "source": 412,
+          "prop": 1449781463
+        },
+        {
+          "tick": 1615,
+          "source": 411,
+          "prop": 1449781463
+        },
+        {
+          "tick": 1634,
+          "source": 414,
+          "prop": 1466559082
+        },
+        {
+          "tick": 2120,
+          "source": 416,
+          "prop": 1433003844
+        },
+        {
+          "tick": 2139,
+          "source": 413,
+          "prop": 1466559082
+        },
+        {
+          "tick": 2455,
+          "source": 412,
+          "prop": 1483336701
+        },
+        {
+          "tick": 2513,
+          "source": 415,
+          "prop": 1466559082
+        },
+        {
+          "tick": 2875,
+          "source": 411,
+          "prop": 1466559082
+        },
+        {
+          "tick": 3677,
+          "source": 417,
+          "prop": 1433003844
+        },
+        {
+          "tick": 3677,
+          "source": 411,
+          "prop": 1466559082
+        }
+      ],
+      "signals": [
+        {
+          "tick": 214,
+          "name": "l8.arena.monkey.engaged"
+        },
+        {
+          "tick": 2980,
+          "name": "l8.arena.monkey.phase-2"
+        },
+        {
+          "tick": 3808,
+          "name": "l8.arena.monkey.cleared"
+        }
+      ],
+      "stages": [
+        {
+          "tick": 774,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 776,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 780,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 782,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 816,
+          "source": 413,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 824,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 828,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 830,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 832,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 834,
+          "source": 413,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 916,
+          "source": 416,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 934,
+          "source": 416,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 944,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 948,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 950,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 952,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 954,
+          "source": 413,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1054,
+          "source": 416,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1194,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 1197,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1198,
+          "source": 413,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 1200,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 1204,
+          "source": 416,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 1222,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1248,
+          "source": 413,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1250,
+          "source": 415,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 1255,
+          "source": 416,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1264,
+          "source": 415,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1290,
+          "source": 412,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 1310,
+          "source": 412,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1317,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1342,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1368,
+          "source": 413,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1375,
+          "source": 416,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1384,
+          "source": 415,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1430,
+          "source": 412,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1615,
+          "source": 411,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 1616,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 1618,
+          "source": 413,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 1622,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 1624,
+          "source": 416,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 1634,
+          "source": 414,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 1640,
+          "source": 411,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1645,
+          "source": 416,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1655,
+          "source": 414,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1669,
+          "source": 413,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1672,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1673,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1760,
+          "source": 411,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1765,
+          "source": 416,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1775,
+          "source": 414,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1789,
+          "source": 413,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1792,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1793,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2034,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 2036,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 2040,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 2042,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 2054,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2068,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2076,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2091,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2120,
+          "source": 416,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 2139,
+          "source": 413,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 2147,
+          "source": 416,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2158,
+          "source": 413,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2174,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2188,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2196,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2211,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2267,
+          "source": 416,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2278,
+          "source": 413,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2454,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 2455,
+          "source": 412,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 2458,
+          "source": 413,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 2458,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2460,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 2464,
+          "source": 416,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 2476,
+          "source": 412,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2479,
+          "source": 416,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2495,
+          "source": 413,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2506,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2513,
+          "source": 415,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 2534,
+          "source": 415,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2578,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2596,
+          "source": 412,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2599,
+          "source": 416,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2615,
+          "source": 413,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2626,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2649,
+          "source": 415,
+          "move": "monkey.debris",
+          "stage": "cancelled"
+        },
+        {
+          "tick": 2875,
+          "source": 411,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 2876,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 2878,
+          "source": 413,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 2886,
+          "source": 411,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2902,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2918,
+          "source": 413,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2924,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "cancelled"
+        },
+        {
+          "tick": 2980,
+          "source": 413,
+          "move": "monkey.grab",
+          "stage": "cancelled"
+        },
+        {
+          "tick": 3006,
+          "source": 411,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3088,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 3094,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 3100,
+          "source": 417,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 3137,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3143,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3150,
+          "source": 417,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3155,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "cancelled"
+        },
+        {
+          "tick": 3257,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3270,
+          "source": 417,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3388,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 3400,
+          "source": 417,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 3447,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3455,
+          "source": 417,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3567,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3575,
+          "source": 417,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3677,
+          "source": 417,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 3677,
+          "source": 411,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 3693,
+          "source": 411,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3698,
+          "source": 417,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3808,
+          "source": 417,
+          "move": "monkey.debris",
+          "stage": "cancelled"
+        },
+        {
+          "tick": 3808,
+          "source": 411,
+          "move": "monkey.debris",
+          "stage": "cancelled"
+        }
+      ],
+      "destruction": [
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-0",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-1",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-2",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-3",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        }
+      ],
+      "bosses": [
+        {
+          "id": 411,
+          "hp": 147.72000000000006,
+          "at": {
+            "x": -11.657985751731278,
+            "z": 19.751398110415188,
+            "y": 0.7,
+            "yaw": 0.513486862245707
+          }
+        },
+        {
+          "id": 412,
+          "hp": 0,
+          "at": {
+            "x": -8.291348034140178,
+            "z": 18.23537026770217,
+            "y": 0.7,
+            "yaw": 0.7150385510468205
+          }
+        },
+        {
+          "id": 413,
+          "hp": 0,
+          "at": {
+            "x": -9.104216528089461,
+            "z": 18.33908810842029,
+            "y": 0.7,
+            "yaw": 0.05025795469200972
+          }
+        },
+        {
+          "id": 414,
+          "hp": 0,
+          "at": {
+            "x": -12.620357877570376,
+            "z": 25.89327959263285,
+            "y": 0.7,
+            "yaw": -2.1688952088761013
+          }
+        },
+        {
+          "id": 415,
+          "hp": 0,
+          "at": {
+            "x": -9.114796171154758,
+            "z": 23.236251209578626,
+            "y": 0.7,
+            "yaw": 2.5664687913843096
+          }
+        },
+        {
+          "id": 416,
+          "hp": 0,
+          "at": {
+            "x": -5.356054415529336,
+            "z": 19.856141619442333,
+            "y": 0.7,
+            "yaw": -0.7377232485548906
+          }
+        },
+        {
+          "id": 417,
+          "hp": 0,
+          "at": {
+            "x": -5.897404233160557,
+            "z": 22.4057594724127,
+            "y": 0.7,
+            "yaw": 1.492797322874831
+          }
+        }
+      ]
+    },
+    {
+      "id": "lion",
+      "tier": "low",
+      "policy": "skilled",
+      "complete": true,
+      "seconds": 52.13333333333333,
+      "totalSeconds": 52.13333333333333,
+      "hp": 100,
+      "deaths": 0,
+      "damage": 0,
+      "attacks": 0,
+      "phases": 3,
+      "counters": 0,
+      "wallHits": 0,
+      "rocket": 0,
+      "rocketPickups": 0,
+      "bites": [
+        397,
+        418
+      ],
+      "turns": [
+        397,
+        418
+      ],
+      "tells": [
+        {
+          "tick": 348,
+          "source": 397,
+          "attack": 1,
+          "move": "lion.pounce",
+          "duration": 0.6,
+          "area": {
+            "x": -49.330791460212716,
+            "z": -14.660829792038715,
+            "radius": 1,
+            "dx": -0.9990885297253281,
+            "dz": 0.04268617775442191
+          }
+        },
+        {
+          "tick": 768,
+          "source": 397,
+          "attack": 2,
+          "move": "lion.pounce",
+          "duration": 0.6,
+          "area": {
+            "x": -60.87039606714168,
+            "z": -20.780678996189266,
+            "radius": 1,
+            "dx": -0.6471795584765716,
+            "dz": 0.7623376017815662
+          }
+        },
+        {
+          "tick": 1188,
+          "source": 397,
+          "attack": 3,
+          "move": "lion.pounce",
+          "duration": 0.6,
+          "area": {
+            "x": -67.8162749204173,
+            "z": -10.509671705996105,
+            "radius": 1,
+            "dx": -0.2776789329676754,
+            "dz": -0.9606739354150986
+          }
+        },
+        {
+          "tick": 1282,
+          "source": 418,
+          "attack": 4,
+          "move": "lion.flank",
+          "duration": 0.6,
+          "area": {
+            "x": -55.68714145341174,
+            "z": -32.69322576021325,
+            "radius": 1,
+            "dx": -0.6398841934953222,
+            "dz": 0.7684713520456314
+          }
+        },
+        {
+          "tick": 1347,
+          "source": 397,
+          "attack": 5,
+          "move": "lion.roar",
+          "duration": 0.6,
+          "area": {
+            "x": -67.97968078755744,
+            "z": -11.075,
+            "radius": 1,
+            "dx": 0.35559560738314544,
+            "dz": -0.9346399114149857
+          }
+        },
+        {
+          "tick": 1642,
+          "source": 418,
+          "attack": 6,
+          "move": "lion.flank",
+          "duration": 0.6,
+          "area": {
+            "x": -62.085983388364916,
+            "z": -25.008512239756897,
+            "radius": 1,
+            "dx": -0.1543072581434184,
+            "dz": 0.9880229096960559
+          }
+        },
+        {
+          "tick": 1647,
+          "source": 397,
+          "attack": 7,
+          "move": "lion.pounce",
+          "duration": 0.6,
+          "area": {
+            "x": -66.06281701420247,
+            "z": -11.683136189125007,
+            "radius": 1,
+            "dx": 0.14879225877417993,
+            "dz": -0.9888684764562362
+          }
+        },
+        {
+          "tick": 1947,
+          "source": 397,
+          "attack": 8,
+          "move": "lion.roar",
+          "duration": 0.6,
+          "area": {
+            "x": -63.389250033285755,
+            "z": -17.530993435491936,
+            "radius": 1,
+            "dx": 0.8697536392315629,
+            "dz": 0.4934861771554011
+          }
+        },
+        {
+          "tick": 2002,
+          "source": 418,
+          "attack": 9,
+          "move": "lion.flank",
+          "duration": 0.6,
+          "area": {
+            "x": -63.284250394606794,
+            "z": -15.12138013946447,
+            "radius": 1,
+            "dx": 0.9755504132280313,
+            "dz": -0.2197757749403186
+          }
+        },
+        {
+          "tick": 2247,
+          "source": 397,
+          "attack": 10,
+          "move": "lion.pounce",
+          "duration": 0.6,
+          "area": {
+            "x": -60.39607816774033,
+            "z": -21.132341241762607,
+            "radius": 1,
+            "dx": 0.20283927647688013,
+            "dz": 0.9792120444103698
+          }
+        },
+        {
+          "tick": 2362,
+          "source": 418,
+          "attack": 11,
+          "move": "lion.flank",
+          "duration": 0.6,
+          "area": {
+            "x": -53.49842450049277,
+            "z": -17.179868815137137,
+            "radius": 1,
+            "dx": -0.9651044534167749,
+            "dz": 0.26186522104912663
+          }
+        },
+        {
+          "tick": 2722,
+          "source": 418,
+          "attack": 12,
+          "move": "lion.roar",
+          "duration": 0.6,
+          "area": {
+            "x": -63.02327881371491,
+            "z": -14.134213531294316,
+            "radius": 1,
+            "dx": -0.38374021632827243,
+            "dz": -0.9234410898223723
+          }
+        },
+        {
+          "tick": 2879,
+          "source": 418,
+          "attack": 13,
+          "move": "lion.flank",
+          "duration": 0.6,
+          "area": {
+            "x": -63.02327881371491,
+            "z": -14.134213531294316,
+            "radius": 1,
+            "dx": -0.7322865673445789,
+            "dz": -0.6809966103342173
+          }
+        },
+        {
+          "tick": 3239,
+          "source": 418,
+          "attack": 14,
+          "move": "lion.pounce",
+          "duration": 0.6,
+          "area": {
+            "x": -70.26333535599669,
+            "z": -21.032138144061967,
+            "radius": 1,
+            "dx": 0.9600546143152192,
+            "dz": -0.27981268293638073
+          }
+        }
+      ],
+      "throws": [],
+      "signals": [
+        {
+          "tick": 1281,
+          "name": "l8.arena.lion.phase-2"
+        },
+        {
+          "tick": 3386,
+          "name": "l8.arena.lion.cleared"
+        }
+      ],
+      "stages": [
+        {
+          "tick": 384,
+          "source": 397,
+          "move": "lion.pounce",
+          "stage": "active"
+        },
+        {
+          "tick": 434,
+          "source": 397,
+          "move": "lion.pounce",
+          "stage": "recovery"
+        },
+        {
+          "tick": 554,
+          "source": 397,
+          "move": "lion.pounce",
+          "stage": "expiry"
+        },
+        {
+          "tick": 804,
+          "source": 397,
+          "move": "lion.pounce",
+          "stage": "active"
+        },
+        {
+          "tick": 854,
+          "source": 397,
+          "move": "lion.pounce",
+          "stage": "recovery"
+        },
+        {
+          "tick": 974,
+          "source": 397,
+          "move": "lion.pounce",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1224,
+          "source": 397,
+          "move": "lion.pounce",
+          "stage": "active"
+        },
+        {
+          "tick": 1226,
+          "source": 397,
+          "move": "lion.pounce",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1318,
+          "source": 418,
+          "move": "lion.flank",
+          "stage": "active"
+        },
+        {
+          "tick": 1346,
+          "source": 397,
+          "move": "lion.pounce",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1368,
+          "source": 418,
+          "move": "lion.flank",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1383,
+          "source": 397,
+          "move": "lion.roar",
+          "stage": "active"
+        },
+        {
+          "tick": 1383,
+          "source": 397,
+          "move": "lion.roar",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1488,
+          "source": 418,
+          "move": "lion.flank",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1503,
+          "source": 397,
+          "move": "lion.roar",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1678,
+          "source": 418,
+          "move": "lion.flank",
+          "stage": "active"
+        },
+        {
+          "tick": 1683,
+          "source": 397,
+          "move": "lion.pounce",
+          "stage": "active"
+        },
+        {
+          "tick": 1738,
+          "source": 397,
+          "move": "lion.pounce",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1739,
+          "source": 418,
+          "move": "lion.flank",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1858,
+          "source": 397,
+          "move": "lion.pounce",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1859,
+          "source": 418,
+          "move": "lion.flank",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1983,
+          "source": 397,
+          "move": "lion.roar",
+          "stage": "active"
+        },
+        {
+          "tick": 1983,
+          "source": 397,
+          "move": "lion.roar",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2038,
+          "source": 418,
+          "move": "lion.flank",
+          "stage": "active"
+        },
+        {
+          "tick": 2087,
+          "source": 418,
+          "move": "lion.flank",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2103,
+          "source": 397,
+          "move": "lion.roar",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2207,
+          "source": 418,
+          "move": "lion.flank",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2283,
+          "source": 397,
+          "move": "lion.pounce",
+          "stage": "active"
+        },
+        {
+          "tick": 2336,
+          "source": 397,
+          "move": "lion.pounce",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2384,
+          "source": 397,
+          "move": "lion.pounce",
+          "stage": "cancelled"
+        },
+        {
+          "tick": 2398,
+          "source": 418,
+          "move": "lion.flank",
+          "stage": "active"
+        },
+        {
+          "tick": 2450,
+          "source": 418,
+          "move": "lion.flank",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2570,
+          "source": 418,
+          "move": "lion.flank",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2758,
+          "source": 418,
+          "move": "lion.roar",
+          "stage": "active"
+        },
+        {
+          "tick": 2758,
+          "source": 418,
+          "move": "lion.roar",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2878,
+          "source": 418,
+          "move": "lion.roar",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2915,
+          "source": 418,
+          "move": "lion.flank",
+          "stage": "active"
+        },
+        {
+          "tick": 2975,
+          "source": 418,
+          "move": "lion.flank",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3095,
+          "source": 418,
+          "move": "lion.flank",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3275,
+          "source": 418,
+          "move": "lion.pounce",
+          "stage": "active"
+        },
+        {
+          "tick": 3333,
+          "source": 418,
+          "move": "lion.pounce",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3386,
+          "source": 418,
+          "move": "lion.pounce",
+          "stage": "cancelled"
+        }
+      ],
+      "destruction": [
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-0",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-1",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-2",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-3",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        }
+      ],
+      "bosses": [
+        {
+          "id": 397,
+          "hp": 0,
+          "at": {
+            "x": -58.266345614982576,
+            "z": -11.361762337225706,
+            "y": 0.82,
+            "yaw": -1.3665397199618592
+          }
+        },
+        {
+          "id": 418,
+          "hp": 0,
+          "at": {
+            "x": -60.88025708058187,
+            "z": -24.489058185709965,
+            "y": 0.7,
+            "yaw": 0.2835989928177539
+          }
+        }
+      ]
+    },
+    {
+      "id": "gorilla",
+      "tier": "low",
+      "policy": "skilled",
+      "complete": true,
+      "seconds": 63,
+      "totalSeconds": 63,
+      "hp": 100,
+      "deaths": 0,
+      "damage": 0,
+      "attacks": 0,
+      "phases": 3,
+      "counters": 6,
+      "wallHits": 0,
+      "rocket": 0,
+      "rocketPickups": 0,
+      "bites": [
+        398
+      ],
+      "turns": [
+        398
+      ],
+      "tells": [
+        {
+          "tick": 314,
+          "source": 398,
+          "attack": 1,
+          "move": "gorilla.roar",
+          "duration": 1,
+          "area": {
+            "x": 48.717759361707365,
+            "z": -14.715519862989646,
+            "radius": 8,
+            "dx": 0.9989777406748701,
+            "dz": 0.045204796605363896
+          }
+        },
+        {
+          "tick": 803,
+          "source": 398,
+          "attack": 2,
+          "move": "gorilla.grab-throw",
+          "duration": 0.8,
+          "area": {
+            "x": 67.60638522238943,
+            "z": -14.121170530900066,
+            "radius": 1,
+            "dx": -0.9998330639622599,
+            "dz": -0.018271404101477953
+          }
+        },
+        {
+          "tick": 1154,
+          "source": 398,
+          "attack": 3,
+          "move": "gorilla.pound",
+          "duration": 1,
+          "area": {
+            "x": 62.17413934717491,
+            "z": -12.558561167886198,
+            "radius": 5,
+            "dx": -0.13647155429231464,
+            "dz": -0.9906439899727045
+          }
+        },
+        {
+          "tick": 1574,
+          "source": 398,
+          "attack": 4,
+          "move": "gorilla.roar",
+          "duration": 1,
+          "area": {
+            "x": 62.03466277352405,
+            "z": -21.910081908211275,
+            "radius": 8,
+            "dx": 0.2331232407314179,
+            "dz": -0.9724471988909636
+          }
+        },
+        {
+          "tick": 2011,
+          "source": 398,
+          "attack": 5,
+          "move": "gorilla.grab-throw",
+          "duration": 0.8,
+          "area": {
+            "x": 62.48641341804659,
+            "z": -38.16168127547985,
+            "radius": 1,
+            "dx": 0.9336846516387102,
+            "dz": -0.35809631566702893
+          }
+        },
+        {
+          "tick": 2265,
+          "source": 398,
+          "attack": 6,
+          "move": "gorilla.pound",
+          "duration": 1,
+          "area": {
+            "x": 64.30393481964333,
+            "z": -39.430371243385984,
+            "radius": 5,
+            "dx": 0.4237641625239335,
+            "dz": -0.905772562269574
+          }
+        },
+        {
+          "tick": 2517,
+          "source": 398,
+          "attack": 7,
+          "move": "gorilla.roar",
+          "duration": 1,
+          "area": {
+            "x": 65.52301122796383,
+            "z": -40.477264374561166,
+            "radius": 8,
+            "dx": 0.2974120113648671,
+            "dz": -0.9547492317336025
+          }
+        },
+        {
+          "tick": 3014,
+          "source": 398,
+          "attack": 8,
+          "move": "gorilla.pound",
+          "duration": 1,
+          "area": {
+            "x": 55.14412359483113,
+            "z": -39.556289657604744,
+            "radius": 5,
+            "dx": 0.8843295045310963,
+            "dz": -0.4668632855727529
+          }
+        },
+        {
+          "tick": 3195,
+          "source": 398,
+          "attack": 9,
+          "move": "gorilla.pound",
+          "duration": 1,
+          "area": {
+            "x": 55.14412359483113,
+            "z": -39.556289657604744,
+            "radius": 5,
+            "dx": 0.8843299864167458,
+            "dz": -0.4668623727868399
+          }
+        },
+        {
+          "tick": 3923,
+          "source": 398,
+          "attack": 10,
+          "move": "gorilla.pound",
+          "duration": 1,
+          "area": {
+            "x": 63.5265097519069,
+            "z": -28.563310388438087,
+            "radius": 5,
+            "dx": 0.1393162415685944,
+            "dz": -0.9902479410911192
+          }
+        }
+      ],
+      "throws": [
+        {
+          "tick": 851,
+          "source": 398,
+          "prop": 1813144274
+        },
+        {
+          "tick": 2059,
+          "source": 398,
+          "prop": 1162109338
+        }
+      ],
+      "signals": [
+        {
+          "tick": 2157,
+          "name": "l8.arena.gorilla.phase-2"
+        },
+        {
+          "tick": 4004,
+          "name": "l8.arena.gorilla.cleared"
+        }
+      ],
+      "stages": [
+        {
+          "tick": 320,
+          "source": 398,
+          "move": "gorilla.roar",
+          "stage": "recovery"
+        },
+        {
+          "tick": 440,
+          "source": 398,
+          "move": "gorilla.roar",
+          "stage": "expiry"
+        },
+        {
+          "tick": 851,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "active"
+        },
+        {
+          "tick": 882,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1002,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1214,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "active"
+        },
+        {
+          "tick": 1214,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1334,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1576,
+          "source": 398,
+          "move": "gorilla.roar",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1696,
+          "source": 398,
+          "move": "gorilla.roar",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2059,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "active"
+        },
+        {
+          "tick": 2082,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2202,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2325,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "active"
+        },
+        {
+          "tick": 2325,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2445,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2518,
+          "source": 398,
+          "move": "gorilla.roar",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2638,
+          "source": 398,
+          "move": "gorilla.roar",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3074,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "active"
+        },
+        {
+          "tick": 3074,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3194,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3255,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "active"
+        },
+        {
+          "tick": 3255,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3375,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3983,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "active"
+        },
+        {
+          "tick": 3983,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "recovery"
+        },
+        {
+          "tick": 4004,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "cancelled"
+        }
+      ],
+      "destruction": [
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-0",
+          "hp": [
+            256.0800000000004
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-1",
+          "hp": [
+            0
+          ],
+          "collapsed": true
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-2",
+          "hp": [
+            0
+          ],
+          "collapsed": true
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-3",
+          "hp": [
+            0
+          ],
+          "collapsed": true
+        }
+      ],
+      "bosses": [
+        {
+          "id": 398,
+          "hp": 0,
+          "at": {
+            "x": 63.5265097519069,
+            "z": -28.563310388438087,
+            "y": 0.7,
+            "yaw": 1.4310254378333522
+          }
+        }
+      ]
+    },
+    {
+      "id": "elephant",
+      "tier": "low",
+      "policy": "skilled",
+      "complete": true,
+      "seconds": 75.58333333333333,
+      "totalSeconds": 75.58333333333333,
+      "hp": 100,
+      "deaths": 0,
+      "damage": 0,
+      "attacks": 0,
+      "phases": 3,
+      "counters": 1,
+      "wallHits": 1,
+      "rocket": 0,
+      "rocketPickups": 0,
+      "bites": [
+        399
+      ],
+      "turns": [
+        399
+      ],
+      "tells": [
+        {
+          "tick": 314,
+          "source": 399,
+          "attack": 1,
+          "move": "elephant.charge",
+          "duration": 0.9,
+          "area": {
+            "x": -48.902793498465,
+            "z": 14.849625459282423,
+            "radius": 1.75,
+            "dx": -0.9983170228083162,
+            "dz": -0.05799243029171876
+          }
+        },
+        {
+          "tick": 586,
+          "source": 399,
+          "attack": 2,
+          "move": "elephant.charge",
+          "duration": 0.9,
+          "area": {
+            "x": -71.70570308847368,
+            "z": 13.525,
+            "radius": 1.75,
+            "dx": 0.9977428150846047,
+            "dz": 0.06715113511362444
+          }
+        },
+        {
+          "tick": 1258,
+          "source": 399,
+          "attack": 3,
+          "move": "elephant.swipe",
+          "duration": 0.7,
+          "area": {
+            "x": -65.86830583629514,
+            "z": 18.270717486551398,
+            "radius": 3,
+            "dx": -0.4916405712565566,
+            "dz": -0.8707982250180157
+          }
+        },
+        {
+          "tick": 1745,
+          "source": 399,
+          "attack": 4,
+          "move": "elephant.swipe",
+          "duration": 0.7,
+          "area": {
+            "x": -67.80991236076792,
+            "z": 18.55548386235713,
+            "radius": 3,
+            "dx": -0.9820480412175897,
+            "dz": 0.18863097502980505
+          }
+        },
+        {
+          "tick": 2165,
+          "source": 399,
+          "attack": 5,
+          "move": "elephant.charge",
+          "duration": 0.9,
+          "area": {
+            "x": -68.04043889505564,
+            "z": 18.75922709994097,
+            "radius": 1.75,
+            "dx": -0.9994269524977084,
+            "dz": -0.033849174600626905
+          }
+        },
+        {
+          "tick": 2553,
+          "source": 399,
+          "attack": 6,
+          "move": "elephant.swipe",
+          "duration": 0.7,
+          "area": {
+            "x": -62.57464580966166,
+            "z": 16.049607565912005,
+            "radius": 3,
+            "dx": 0.8700465312205552,
+            "dz": -0.4929696070865621
+          }
+        },
+        {
+          "tick": 3485,
+          "source": 399,
+          "attack": 7,
+          "move": "elephant.charge",
+          "duration": 0.9,
+          "area": {
+            "x": -46.14987883464635,
+            "z": 29.891980972357498,
+            "radius": 1.75,
+            "dx": -0.5939701286959493,
+            "dz": 0.8044870951214304
+          }
+        },
+        {
+          "tick": 4224,
+          "source": 399,
+          "attack": 8,
+          "move": "elephant.swipe",
+          "duration": 0.7,
+          "area": {
+            "x": -69.20215596492211,
+            "z": 17.866181169038388,
+            "radius": 3,
+            "dx": -0.9447704443888021,
+            "dz": 0.3277328293128191
+          }
+        },
+        {
+          "tick": 4644,
+          "source": 399,
+          "attack": 9,
+          "move": "elephant.swipe",
+          "duration": 0.7,
+          "area": {
+            "x": -70.22053705222646,
+            "z": 17.438977487941152,
+            "radius": 3,
+            "dx": -0.5682783377583481,
+            "dz": 0.8228363937227187
+          }
+        }
+      ],
+      "throws": [],
+      "signals": [
+        {
+          "tick": 465,
+          "name": "l8.arena.elephant.phase-2"
+        },
+        {
+          "tick": 4759,
+          "name": "l8.arena.elephant.cleared"
+        }
+      ],
+      "stages": [
+        {
+          "tick": 368,
+          "source": 399,
+          "move": "elephant.charge",
+          "stage": "active"
+        },
+        {
+          "tick": 465,
+          "source": 399,
+          "move": "elephant.charge",
+          "stage": "recovery"
+        },
+        {
+          "tick": 585,
+          "source": 399,
+          "move": "elephant.charge",
+          "stage": "expiry"
+        },
+        {
+          "tick": 640,
+          "source": 399,
+          "move": "elephant.charge",
+          "stage": "active"
+        },
+        {
+          "tick": 763,
+          "source": 399,
+          "move": "elephant.charge",
+          "stage": "recovery"
+        },
+        {
+          "tick": 883,
+          "source": 399,
+          "move": "elephant.charge",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1300,
+          "source": 399,
+          "move": "elephant.swipe",
+          "stage": "active"
+        },
+        {
+          "tick": 1300,
+          "source": 399,
+          "move": "elephant.swipe",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1420,
+          "source": 399,
+          "move": "elephant.swipe",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1787,
+          "source": 399,
+          "move": "elephant.swipe",
+          "stage": "active"
+        },
+        {
+          "tick": 1787,
+          "source": 399,
+          "move": "elephant.swipe",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1907,
+          "source": 399,
+          "move": "elephant.swipe",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2219,
+          "source": 399,
+          "move": "elephant.charge",
+          "stage": "active"
+        },
+        {
+          "tick": 2265,
+          "source": 399,
+          "move": "elephant.charge",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2385,
+          "source": 399,
+          "move": "elephant.charge",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2595,
+          "source": 399,
+          "move": "elephant.swipe",
+          "stage": "active"
+        },
+        {
+          "tick": 2595,
+          "source": 399,
+          "move": "elephant.swipe",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2715,
+          "source": 399,
+          "move": "elephant.swipe",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3539,
+          "source": 399,
+          "move": "elephant.charge",
+          "stage": "active"
+        },
+        {
+          "tick": 3575,
+          "source": 399,
+          "move": "elephant.charge",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3695,
+          "source": 399,
+          "move": "elephant.charge",
+          "stage": "expiry"
+        },
+        {
+          "tick": 4266,
+          "source": 399,
+          "move": "elephant.swipe",
+          "stage": "active"
+        },
+        {
+          "tick": 4266,
+          "source": 399,
+          "move": "elephant.swipe",
+          "stage": "recovery"
+        },
+        {
+          "tick": 4386,
+          "source": 399,
+          "move": "elephant.swipe",
+          "stage": "expiry"
+        },
+        {
+          "tick": 4686,
+          "source": 399,
+          "move": "elephant.swipe",
+          "stage": "active"
+        },
+        {
+          "tick": 4686,
+          "source": 399,
+          "move": "elephant.swipe",
+          "stage": "recovery"
+        },
+        {
+          "tick": 4759,
+          "source": 399,
+          "move": "elephant.swipe",
+          "stage": "cancelled"
+        }
+      ],
+      "destruction": [
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-0",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-1",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-2",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-3",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        }
+      ],
+      "bosses": [
+        {
+          "id": 399,
+          "hp": 0,
+          "at": {
+            "x": -70.46910418735044,
+            "z": 17.783250532562036,
+            "y": 0.7,
+            "yaw": -2.175208315891176
+          }
+        }
+      ]
+    }
+  ]
+}

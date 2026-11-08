@@ -1,0 +1,250 @@
+{
+  "sourceHash": "ba1d8a37d78c443f45371d82aeb961207f94f444e7741886af52f0d2779d7606",
+  "observerHash": "c26509acc1fbb0d23d0a47cdd858e0e95e70958e34960841981d5eceab6fc256",
+  "revision": "b8ff592f",
+  "tier": "low",
+  "method": "Controlled native lifecycle, mortal checkpoint, input, damage, bar and dialogue checks; setup mutations are explicit and do not certify arena combat completion.",
+  "checks": [
+    {
+      "name": "healthy animal has no enemy bar",
+      "pass": true,
+      "value": {
+        "id": 397,
+        "infected": false
+      }
+    },
+    {
+      "name": "engagement sets arena-entry checkpoint and health bar",
+      "pass": true,
+      "value": {
+        "checkpoint": "arena-gorilla",
+        "arenaPhase": 1,
+        "bar": true
+      }
+    },
+    {
+      "name": "one rocket pickup is present at entry",
+      "pass": true,
+      "value": [
+        {
+          "id": 426,
+          "at": {
+            "x": 60,
+            "y": 0.27,
+            "z": -8,
+            "yaw": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "pickup grants one rocket without changing the campaign rack",
+      "pass": true,
+      "value": {
+        "one": true,
+        "second": false,
+        "rackCount": 7,
+        "after": 7,
+        "stock": 0
+      }
+    },
+    {
+      "name": "pillar uses the real destruction owner",
+      "pass": true,
+      "value": {
+        "id": "D-ZOO/l8-gorilla-pillar-0",
+        "beforeHP": [
+          260
+        ],
+        "hp": [
+          0
+        ],
+        "collapsed": true
+      }
+    },
+    {
+      "name": "mortal retry restores entry, phase, boss HP, cover and rocket pickup",
+      "pass": true,
+      "value": {
+        "deaths": 1,
+        "at": {
+          "x": 60,
+          "y": 0.7170000076293945,
+          "z": -16,
+          "yaw": 0.19952152321515965
+        },
+        "phase": 1,
+        "hp": {
+          "current": 0,
+          "max": 6000
+        },
+        "pillarHP": [
+          260
+        ],
+        "stock": 1,
+        "pickups": 0
+      }
+    },
+    {
+      "name": "chest beat can be hit during its full one-second cue and countered into recovery",
+      "pass": true,
+      "value": {
+        "windup": true,
+        "body": 2.52,
+        "exposed": 25.2,
+        "move": {
+          "move": "gorilla.roar",
+          "attackId": 3,
+          "stage": "recovery",
+          "startTick": 318,
+          "activeTick": 378,
+          "cooldownExpiry": 738,
+          "recoveryUntil": 440,
+          "target": {
+            "id": 1,
+            "x": 60,
+            "z": -16
+          },
+          "area": {
+            "x": 60,
+            "z": -22,
+            "radius": 8,
+            "dx": 0,
+            "dz": 1
+          },
+          "hitIds": [],
+          "destination": {
+            "x": 60,
+            "z": -22
+          }
+        },
+        "counters": 1
+      }
+    },
+    {
+      "name": "ordinary weapons finish an arena boss permanently",
+      "pass": true,
+      "value": {
+        "hp": 0,
+        "recoverAt": -1
+      }
+    },
+    {
+      "name": "grab blocks weapon selection for two seconds",
+      "pass": true,
+      "value": {
+        "selected": "RIGHT",
+        "gunSide": "RIGHT",
+        "blocked": true,
+        "remaining": 60
+      }
+    },
+    {
+      "name": "a real melee hit shakes off the monkey and opens recovery",
+      "pass": true,
+      "value": {
+        "grabUntil": 0,
+        "tick": 300,
+        "counters": 1,
+        "hp": 684.768
+      }
+    },
+    {
+      "name": "weapon selection returns at grab expiry",
+      "pass": true,
+      "value": {
+        "blocked": false,
+        "selected": "RIGHT",
+        "expected": "RIGHT"
+      }
+    },
+    {
+      "name": "three real sidestepped wall charges kill without firing",
+      "pass": true,
+      "value": {
+        "contacts": [
+          {
+            "tick": 364,
+            "hits": 1,
+            "boss": {
+              "x": -39.52500020368802,
+              "z": 24.9792459523801,
+              "y": 0.7,
+              "yaw": 0.004637742964702756
+            },
+            "courier": {
+              "x": -43.952880859375,
+              "y": 0.7099999785423279,
+              "z": 35.179927825927734,
+              "yaw": -1.566158583830194
+            },
+            "hp": 6000
+          },
+          {
+            "tick": 653,
+            "hits": 2,
+            "boss": {
+              "x": -65.49499938127747,
+              "z": 30.846261747107633,
+              "y": 0.7,
+              "yaw": -2.9194073462339967
+            },
+            "courier": {
+              "x": -55.121253967285156,
+              "y": 0.7099999785423279,
+              "z": 20.751323699951172,
+              "yaw": -4.490203673028893
+            },
+            "hp": 6000
+          },
+          {
+            "tick": 1943,
+            "hits": 3,
+            "boss": {
+              "x": -80.47499979631198,
+              "z": 24.324055653845406,
+              "y": 0.7,
+              "yaw": 3.02883227864573
+            },
+            "courier": {
+              "x": -74.25696563720703,
+              "y": 0.7099999785423279,
+              "z": 16.911632537841797,
+              "yaw": -9.642258090833106
+            },
+            "hp": 0
+          }
+        ],
+        "wallHits": 3,
+        "hp": 0,
+        "courierHP": 87.76666666666566
+      }
+    },
+    {
+      "name": "elephant dialogue continuity (Nadia alive)",
+      "pass": true,
+      "value": {
+        "lines": [
+          "L8.nadia-path",
+          "L8.nadia-elephant",
+          "L8.courier-elephant"
+        ],
+        "hp": 0,
+        "nadiaAlive": true
+      }
+    },
+    {
+      "name": "elephant dialogue continuity (Nadia dead)",
+      "pass": true,
+      "value": {
+        "lines": [
+          "L8.nadia-path",
+          "L8.courier-elephant"
+        ],
+        "hp": 0,
+        "nadiaAlive": false
+      }
+    }
+  ],
+  "errors": []
+}
