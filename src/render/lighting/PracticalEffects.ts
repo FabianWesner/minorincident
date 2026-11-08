@@ -1,5 +1,5 @@
 import { AdditiveBlending, BufferGeometry, Color, ConeGeometry, DoubleSide, Float32BufferAttribute, Group, InstancedMesh, Matrix4, Mesh, MeshBasicNodeMaterial, PlaneGeometry, Quaternion, Vector3 } from 'three/webgpu';
-import { attribute, cos, fract, normalView, positionGeometry, positionViewDirection, positionWorld, sin, uniform, uv, vec3 } from 'three/tsl';
+import { attribute, cameraFar, cameraNear, cos, fract, linearDepth, normalView, positionGeometry, positionViewDirection, positionWorld, sin, uniform, uv, vec3, viewportDepthTexture } from 'three/tsl';
 import { Rng } from '../../core/Rng';
 import { placedLights, type PlacedLight } from '../../data/placedLights';
 import { lightPalette } from '../../data/lights';
@@ -32,8 +32,11 @@ export class PracticalEffects extends Group {
     super();
     const beam = new MeshBasicNodeMaterial({ transparent: true, depthWrite: false, side: DoubleSide, blending: AdditiveBlending });
     const edge = normalView.dot(positionViewDirection).abs().smoothstep(.03, .35);
-    const groundFade = positionWorld.y.smoothstep(.02, .8);
-    beam.colorNode = vec3(1); beam.opacityNode = edge.mul(uv().y.smoothstep(0, .2)).mul(groundFade).mul(this.beamStrength).mul(.015);
+    // Fade against the drawn opaque surface, including raised floors and props.
+    // World Y only faded sea-level asphalt and left hard cuts against other geometry.
+    const surfaceDistance = linearDepth(viewportDepthTexture()).sub(linearDepth()).mul(cameraFar.sub(cameraNear));
+    const depthFade = surfaceDistance.smoothstep(0, .8);
+    beam.colorNode = vec3(1); beam.opacityNode = edge.mul(uv().y.smoothstep(0, .2)).mul(depthFade).mul(this.beamStrength).mul(.015);
     this.beams = new InstancedMesh(new ConeGeometry(1, 1, 20, 1, true), beam, 128); this.beams.count = 0; this.beams.frustumCulled = false;
     const streak = new MeshBasicNodeMaterial({ transparent: true, depthWrite: false, blending: AdditiveBlending });
     const local = uv().sub(.5).mul(2);
