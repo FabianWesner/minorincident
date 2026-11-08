@@ -437,7 +437,8 @@ export class InteractionView extends Group {
     const pieces = this.world.hazards?.debris.pieces ?? [];
     for (let i = 0; i < pieces.length; i++) {
       if (!this.debrisMeshes[i]) { const m = new Mesh(this.box, this.materials.get('woodWarm')); m.scale.set(.24, .2, .44); this.debrisMeshes.push(m); this.add(m); }
-      const p = pieces[i], m = this.debrisMeshes[i]; m.visible = p.until > 0;
+      const p = pieces[i], m = this.debrisMeshes[i]; m.visible = p.until > 0; m.scale.fromArray(p.half ?? [.12,.1,.22]).multiplyScalar(2);
+      m.material = this.materials.get(p.material === 'glass' ? 'windowGlow' : p.material === 'metal' ? 'sidewalk' : p.material === 'brick' ? 'brick' : p.material === 'concrete' ? 'sidewalk' : 'woodWarm');
       if (m.visible && !p.body.isSleeping()) { const t = p.body.translation(), r = p.body.rotation(); m.position.set(t.x, t.y, t.z); m.quaternion.set(r.x, r.y, r.z, r.w); }
     }
   }

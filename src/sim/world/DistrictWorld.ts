@@ -81,6 +81,9 @@ export class DistrictWorld {
       const pushables = decay.placements.filter((p) => pushableProps[p.assetId] && !p.decor);
       const pushed = new Set(pushables.map((p) => p.id));
       decay.colliders = placementColliders(decay.placements, decay.colliders).filter((c) => !pushed.has(c.id.split("/")[0]));
+      // Destructible structures own removable parts; supports remain in the immutable ground bake.
+      const destructible = new Set(decay.placements.filter(p => p.destruction && !p.destruction.indestructible).map(p => p.id));
+      decay.colliders = decay.colliders.filter(c => c.walkable || !destructible.has(c.id.split('/')[0]));
       const off = new Set(gameplayLayers.flatMap((l) => l.powerOut));
       decay.lights = decay.lights.filter((id) => !off.has(id));
       return {

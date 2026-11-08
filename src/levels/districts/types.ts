@@ -45,6 +45,8 @@ export interface Aabb {
   max: [number, number, number];
 }
 export interface Placement extends PlacementTransform {
+  /** Explicit opt-in; protected story objects retain their authored collision and appearance. */
+  destruction?: import('../../data/destructionModel').DestructionPolicy;
   /** Reviewed navigation obstruction: use the authored box yaw instead of its conservative collision proxy. */
   orientedFootprint?: boolean;
   /** Bolted furniture keeps a prop body/seat anchor but cannot be pushed out of its authored position. */

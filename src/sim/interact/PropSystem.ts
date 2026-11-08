@@ -118,10 +118,9 @@ export class PropSystem {
     const car = activeId === null || activeId === undefined ? undefined : this.world.vehicles?.cars.get(activeId);
     let navChanged = false;
     if (car && car.physics.speed > .35) for (const item of this.items) {
-      if (item.fixed || item.braced) continue;
+      if (item.fixed || item.braced || !item.body.isEnabled() || this.world.entities.get(item.entityId)?.health.current === 0) continue;
       const gap = car.physics.hullDistance(item.pose.p[0], item.pose.p[2]);
       if (gap > item.radius + .18 || Math.abs(item.pose.p[1] - .6) > item.half[1] + 1.5) continue;
-      if (!item.body.isEnabled() || this.world.entities.get(item.entityId)?.health.current === 0) continue;
       const contact = car.physics.collider.contactCollider(item.collider, .12);
       if (!contact) continue;
       const velocity = car.physics.body.linvel();
