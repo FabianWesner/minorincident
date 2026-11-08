@@ -27,6 +27,7 @@ logs.mkdir(parents=True, exist_ok=True)
 root.mkdir(parents=True, exist_ok=True)
 env = dict(os.environ, QA_ACCEPT_ROOT=str(root / 'acceptance'))
 checks = [
+    ('asset-scripts', ['python3', '-m', 'py_compile', 'assets/l10-vignettes/build.py', 'assets/l10-vignettes/atlas.py', 'assets/l10-vignettes/render.py', 'tools/qa/l10-vignettes-baseline.py', 'tools/qa/l10-vignettes-verify.py']),
     ('typecheck', ['npm', 'run', 'typecheck']),
     ('lint', ['npm', 'run', 'lint']),
     ('unit', ['npm', 'test', '--', '--maxWorkers=1']),
