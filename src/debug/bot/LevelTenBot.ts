@@ -21,6 +21,7 @@ export class LevelTenBot {
   ];
   private waypoint = 0;
   private releaseAttempt = 0;
+  private clearStairsUntil = 0;
   private releaseSidestepUntil = 0;
   private releaseBlockedAt = 0;
   private readonly startTick: number;
@@ -78,7 +79,10 @@ export class LevelTenBot {
     // making the native route incomparable to real-input play.
     const threats = w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && !e.emerging && !e.infectionRise && distance(e.transform) < 30 && w.infected!.director.inPlayerView(e.transform, 30, 1, 5) && (p.y > 2 ? w.combat!.query.visible({ ...p, y: p.y + .45 }, e.transform) : w.infected!.nav.visible(p, e.transform, 0))).sort((a, b) => distance(a.transform) - distance(b.transform));
     const gun = w.mountedGun;
-    if (active.id === 'hold' && mission.state.states['charge-active'] && gun && (gun.mounted || mission.state.counters['charge-ticks'] < 480)) {
+    if (active.id === 'hold' && mission.state.states['charge-active'] && gun && w.tick >= this.clearStairsUntil) {
+      if (gun.mounted && threats.some(e => !isMega(e) && e.transform.y > arena.gun.deckHeight && distance(e.transform) < 6)) {
+        this.clearStairsUntil = w.tick + 240; f.interact = true; return f;
+      }
       if (gun.mounted) {
         f.move = { x: 0, z: 0 }; f.interact = false;
         const target = threats[0];

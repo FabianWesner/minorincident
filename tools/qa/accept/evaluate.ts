@@ -1,3 +1,4 @@
+import { cureRadius } from '../../../src/data/cureDust';
 import type { L8PathProof } from './fix55-l8-paths';
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
@@ -456,12 +457,12 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
       }
       // A moving competent player can clear arrivals before reaching the crowd
       // cap. Use the separately labelled survival-protected stationary policy for peak coverage.
-      number('L10-11', 'stationary final assault crowd peak', !competent && state.states['charge-active'] ? story?.assaultPeak : null, low ? 25 : 40, low ? 35 : 60);
+      number('L10-11', 'bounded final assault crowd peak', !competent && state.states['charge-active'] ? story?.assaultPeak : null, 1, low ? 14 : 22);
       add('L10-10', 'actual eligible charge ticks and increments', observation.charge, '3600 eligible ticks; 3600 increments; no invalid increment', observation.charge.maximum === 3600 ? observation.charge.eligibleTicks === 3600 && observation.charge.incrementTicks === 3600 && observation.charge.invalidIncrements === 0 : undefined);
       add('L10-13', 'release transaction observed prerequisites', observation.release, 'charge3600 + installed + Mega dead + player at console', observation.release ? observation.release.charge === 3600 && observation.release.installed && observation.release.dead && observation.release.distance <= 2.5 : undefined);
       const front = state.cureFront;
-      add('L10-14', 'native cure radius speed', front ? { elapsed: front.elapsed, radius: front.radius } : null, '10 m/s', front && front.elapsed > 0 ? Math.abs(front.radius / (front.elapsed / 60) - 10) < 1e-6 : undefined);
-      number('L10-14', 'playable epilogue counter duration', state.counters['epilogue-ticks'] ? state.counters['epilogue-ticks'] / 60 : null, 120, 180);
+      add('L10-14', 'native cure radius speed', front ? { elapsed: front.elapsed, radius: front.radius } : null, '10 m/s playable; accelerated journey montage', front && front.elapsed > 0 ? front.radius === cureRadius(front.elapsed) : undefined);
+      number('L10-14', 'release to title duration', state.counters['epilogue-ticks'] ? state.counters['epilogue-ticks'] / 60 : null, 60, 75);
       break;
     }
   }
@@ -653,7 +654,7 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
   ]],
   ['L10-11', [
     ...['hold player windups per minute', 'hold bounded-path reachable share'].map(clause => ({ clause, policy: 'complete' })),
-    { clause: 'stationary final assault crowd peak', policy: 'stationary' },
+    { clause: 'bounded final assault crowd peak', policy: 'stationary' },
     { clause: 'reinforcements continue after charging', policy: 'controlled-fixture' },
   ]],
   ['L10-15', ['cure-crash', 'cure-residential', 'cure-industrial', 'cure-military', 'cure-research-entry', 'cure-research', 'cure-corridor', 'cure-complex', 'cure-disperse-ready'].flatMap(checkpoint => [

@@ -62,12 +62,12 @@ export async function finaleFixtures(tier: Tier, add: Add): Promise<void> {
       arena.tick++; cure.update();
       for (const enemy of enemies) {
         if (cureReached(mission.state.cureFront!, enemy.entity.transform)) enemy.reached ??= tick;
-        if (enemy.entity.health.current <= 0 && enemy.entity.infected!.recoverAt < 0) enemy.dead ??= tick;
+        if (arena.entities.get(enemy.id)?.civilian && !arena.entities.get(enemy.id)?.infected) enemy.dead ??= tick;
       }
     }
-    const species = enemies.map(enemy => ({ role: enemy.role, id: enemy.id, reached: enemy.reached, dead: enemy.dead, hp: enemy.entity.health.current }));
+    const species = enemies.map(enemy => ({ role: enemy.role, id: enemy.id, reached: enemy.reached, dead: enemy.dead, hp: arena.entities.get(enemy.id)?.health.current }));
     const harmed = healthy.filter(e => arena.entities.get(e.id)?.health.current !== e.hp);
-    add('L10-14', 'cure native species mortality and healthy immunity', { species, healthyChecked: healthy.length, harmed }, 'regular, dog, Alpha and all zoo species die≤1 tick after front; healthy/player/corgi unchanged', species.every(enemy => enemy.reached !== null && enemy.dead !== null && enemy.dead - enemy.reached <= 1) && harmed.length === 0);
+    add('L10-14', 'cure native living-species recovery and healthy immunity', { species, healthyChecked: healthy.length, harmed }, 'regular, dog, Alpha and all zoo species recover as healthy actors ≤1 tick after front; healthy/player/corgi unchanged', species.every(enemy => enemy.reached !== null && enemy.dead !== null && enemy.dead - enemy.reached <= 1) && harmed.length === 0);
   } finally { arena.dispose(); }
 }
 

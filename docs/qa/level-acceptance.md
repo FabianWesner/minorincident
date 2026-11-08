@@ -335,7 +335,7 @@ Feel: "open-country drive: smash through or steer around; the APC survives until
 | `hold` | Hold the console | 60 s within 40 m, minigun |
 | `mega` | Kill the Mega Alpha | ~10 direct rockets |
 | `release` | Release the cure at the console | interaction |
-| `epilogue` | Watch the cure spread | free walk 120–180 s |
+| `epilogue` | Watch the cure spread | free walk 60–75 s |
 | `credits` | Minor Incident | title + credits |
 
 | ID | Step | Criterion (expected value) | Source | Check |
@@ -350,10 +350,10 @@ Feel: "open-country drive: smash through or steer around; the APC survives until
 | L10-08 | regions | Road regions framed ×1.3 (verges/fields in frame), base × max zoom ≤ 2.0; not in the finale. Suit crowds readable at night, slam telegraph is a ground effect. | lessons 10-30, Q-179, Q-147 | O |
 | L10-09 | hangar | Sealed hangar is a safe space with Dr. Elena Voss, Sgt. Ruiz, researchers, Sam (Private Reyes if Sam died) and two guards; lab containers, quarantine tents, generators and emergency lights. Cure handoff is indoors. Voss explains that the sample came from the campus, the container failed, and the dispersal complex is two kilometres east. No infected spawn inside. Sergeant Ruiz returns the bridge arsenal; Voss adds the experimental flamethrower. The canister stays a visible zero-slot backpack item with no movement penalty. | story-script.md, PO 2026-11-08 | S, O |
 | L10-10 | hold | Charge = exactly 3,600 ticks while alive within **40 m**; pauses outside with an instruction; minigun 20 rounds/s, heat +12.5 %/s, lock at 100 %, unlock < 40 %. | E32-AC19/20 | S |
-| L10-11 | hold | Final assault only: **40–60 high / 25–35 low** living ordinary infected, reachable ≥ 90 %, player attacks ≥ 8/min. Reinforcements continue through charging and the Mega fight. The same stalker walks into the arena; no replacement or teleport. | PO 2026-11-08 | S |
+| L10-11 | hold | Final assault only: **at most 22 high / 14 low, small waves from three directions with breathers** living ordinary infected, reachable ≥ 90 %, player attacks ≥ 8/min. Reinforcements continue through charging and the Mega fight. The same stalker walks into the arena; no replacement or teleport. | PO 2026-11-08 | S |
 | L10-12 | mega | Mega health bar appears only for the finale. Returned arsenal and final fight cover make the encounter survivable; it is killable at the dispersal complex. | E32-AC11/12, PO 2026-11-08 | S, O |
 | L10-13 | release | Release only with charge 60 + Mega dead + cure installed, player at the console. | E32-AC22 | S |
-| L10-14 | epilogue | Mist front ~10 m/s; every touched infected dies within 1 tick (dogs, Alphas, zoo species); no harm to healthy/player/corgi; player keeps control 120–180 s; camera pulls out in the last 30–45 s; then title and credits. | E32-AC23/25/26 | S, O, P |
+| L10-14 | epilogue | Mist front ~10 m/s; every touched infected dies within 1 tick (dogs, Alphas, zoo species); no harm to healthy/player/corgi; player keeps control 60–75 s; camera pulls out in the last 30–45 s; then title and credits. | E32-AC23/25/26 | S, O, P |
 | L10-15 | all | Death in any region respawns at that region's checkpoint (never level start), with the loadout, cure and boss state of that checkpoint. | E32-AC27 | S |
 
 ---
@@ -383,3 +383,7 @@ Feel: "open-country drive: smash through or steer around; the APC survives until
 5. Every new PO finding adds a row here (and a po-checklist line).
 
 **Immortal test mode (PO 11-01: "a mode where the user cannot die, so an agent has a chance to play it. This is not for judging fun but to check the acceptance criterias").** Agent runs that check criteria play with the courier unable to die: Luna screen play is immortal by default (`tools/playtest/live.ts --screen`, `LUNA_MORTAL=1` to disable), scripted bots use `PLAYTEST_GOD=1`, `qa:threat` passive runs use survival protection. Attacks still land and are counted, so threat criteria stay measurable; deaths bands and difficulty are judged only in mortal skilled runs and by the PO.
+
+L10 PO 2026-11-08 finale revision: waves contain 9 high / 6 low infected, admitted for at most 5 s, then no arrivals for 25 s; uncleared waves defer the next by 8 s. Raised platform access is stair-only (r14-height integration); gun shield protects the manned courier from the front and ground melee, while stair climbers can contest the rear. Mounted rounds permanently shred ordinary crowds. Competent input-only runs must complete without close ground rockets.
+
+L10 PO epilogue revision: player keeps control for 8 s among living infected recovering as people in green ground dust. Journey and survivor shots follow; Delivered ✓ at 50 s starts the 15 s full-map pullback. Title at 65 s; readable licensed credits for 75 s, skippable, then Thanks for playing and menu. Cinematic skipping requires a previous view. Browser QA owns shot continuity and panorama draw/performance review.

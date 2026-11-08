@@ -7,6 +7,8 @@ import { cureEscapeGaps, cureHangar, cureHangarConversation } from '../../src/da
 import { cureHangarWeapons } from '../../src/levels/L10/mission';
 import { cureWeaponPickups } from '../../src/levels/L10/encounters';
 import { cure } from '../../src/levels/L10/district';
+import { emptyInput } from '../../src/input/InputFrame';
+import { cureRadius } from '../../src/data/cureDust';
 import { catalog } from '../../src/data/actions/catalog';
 import { megaAlpha } from '../../src/data/megaAlpha';
 import { encodeSave, decodeSave, validateSave } from '../../src/sim/progression/Save';
@@ -114,6 +116,18 @@ for (const tier of tiers) {
     advance(w, 1200);
     const after = Object.keys(w.l10Encounters!.state.spawned).length;
     check(tier, 'reinforcements continue after charge-ready', after > before, { before, after, assaultTicks: w.l10Encounters!.state.assaultTicks });
+    const gun = w.mountedGun!;
+    const bossPose = { ...boss.transform };
+    place(w, gun.placement.x, gun.placement.z); player.transform.y = gun.placement.y + .78;
+    gun.mounted = true; gun.aim.x = 1; gun.aim.z = 0; w.combat!.damage.god = false;
+    Object.assign(boss.transform, { x: player.transform.x + 2, y: .7, z: player.transform.z });
+    const shieldHit = () => w!.combat!.damage.apply({ attackId: ++hitSequence, actionId: 'infected.claw', sourceId: bossId, targetId: 1, origin: boss.transform, direction: { x: -1, z: 0 }, base: 35, multiplier: 1, type: 'melee', knockback: 2, stagger: 1 });
+    const shieldHp = player.health.current; shieldHit();
+    check(tier, 'mounted platform rejects ground melee without stunlock', player.health.current === shieldHp && player.combat!.staggerUntil <= w.tick);
+    Object.assign(boss.transform, { x: player.transform.x - 2, y: player.transform.y });
+    const rear = shieldHit();
+    check(tier, 'stair climber can contest the gun from behind with reduced damage', rear > 0 && rear <= 35 * .25 && player.combat!.staggerUntil <= w.tick, rear);
+    gun.mounted = false; Object.assign(boss.transform, bossPose); w.combat!.damage.god = true;
     m.loadResume(resume);
     const restored = w.entities.get(1)!;
     check(tier, 'production resume restores indoor cast, completed dialogue, cure and every selectable weapon', m.state.states['cure-carried'] &&
@@ -129,6 +143,23 @@ for (const tier of tiers) {
     m.l10!.story.update(); stopContinuity();
     check(tier, 'living post-crash Sam keeps his radio lines and identity model', m.state.states['sam-alive'] &&
       continuity.includes('L10.farmstead') && w.entities.get(m.state.actors['hangar-sam'])?.civilian?.model === sam.civilian!.model, continuity);
+    // Explicit release fixture; only the setup injects a position/state. Movement uses ordinary inputs.
+    place(w, 4002, -27);
+    for (const step of Object.values(m.state.steps)) step.status = 'completed'; m.state.steps.epilogue.status = 'active';
+    const cell = w.infected!.nav.nearestCell(4008, -22, .4);
+    const humanId = w.infected!.spawn('infected.runner', { x: w.infected!.nav.x(cell), z: w.infected!.nav.z(cell) });
+    m.state.states['cure-released'] = true; m.l10!.cure.release();
+    const start = { ...w.entities.get(1)!.transform };
+    w.setInput({ ...emptyInput(), move: { x: 1, z: 0 } }); advance(w, 180); w.setInput(emptyInput());
+    const recovered = w.entities.get(humanId);
+    check(tier, 'green tide restores living infected as healthy same-ID people', !!recovered?.civilian && !recovered.infected && recovered.health.current > 0, { humanId, archetype: recovered?.archetype, hp: recovered?.health.current });
+    check(tier, 'courier can walk among recovering people during release', Math.hypot(w.entities.get(1)!.transform.x - start.x, w.entities.get(1)!.transform.z - start.z) > 1 && !w.storyLock);
+    advance(w, 65 * 60 - 180);
+    check(tier, 'title starts within 65 seconds after delivery and compressed panorama', m.state.epilogue?.phase === 'title' && m.state.states['delivery-notified'] && m.state.cureFront!.radius === cureRadius(m.state.cureFront!.elapsed), { phase: m.state.epilogue?.phase, elapsed: m.state.cureFront!.elapsed });
+    advance(w, 5 * 60 + 74 * 60);
+    check(tier, 'readable credits remain for at least 74 seconds', m.state.epilogue?.phase === 'credits', m.state.epilogue);
+    advance(w, 8 * 60);
+    check(tier, 'credits finish through thanks and record a skippable repeat view', m.state.states['credits-finished'] && m.l10!.epilogue.canSkip);
     fixture.gaps = gaps; fixture.lines = lines; fixture.cast = cast; fixture.damage = damage;
   } catch (error) { fixture.error = String(error); check(tier, 'controlled fixtures execute', false, String(error)); }
   finally { w?.dispose(); }

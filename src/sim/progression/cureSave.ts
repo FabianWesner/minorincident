@@ -1,7 +1,7 @@
 import { cureRadius } from '../../data/cureDust';
 import { catalog } from '../../data/actions/catalog';
 import { cureRackCapacity } from '../../data/l10Story';
-import { cureCheckpoints, levelTenMission } from '../../levels/L10/mission';
+import { cureCheckpoints, cureStates, cureCounters, levelTenMission } from '../../levels/L10/mission';
 import type { MissionCheckpoint } from '../missions/types';
 const record = (v: unknown): v is Record<string, unknown> => !!v && typeof v === 'object' && !Array.isArray(v);
 const strings = (v: unknown): v is string[] => Array.isArray(v) && v.every(x => typeof x === 'string') && new Set(v).size === v.length;
@@ -47,6 +47,9 @@ export function migrateCureResume(raw: unknown): unknown {
     const checkpoint = copy[name];
     if (!record(checkpoint) || !record(checkpoint.state) || !record(checkpoint.state.states)) continue;
     const states = checkpoint.state.states;
+    for (const key of cureStates) if (states[key] === undefined) states[key] = false;
+    if (record(checkpoint.state.counters)) for (const key of cureCounters) if (checkpoint.state.counters[key] === undefined) checkpoint.state.counters[key] = 0;
+    if (record(checkpoint.state.cureFront)) checkpoint.state.cureFront.radius = cureRadius(Number(checkpoint.state.cureFront.elapsed));
     if (states['charge-active'] === undefined) states['charge-active'] = false;
     if (states['console-held'] === undefined) states['console-held'] = false;
     const steps = checkpoint.state.steps;

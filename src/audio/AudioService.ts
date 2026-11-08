@@ -1,3 +1,4 @@
+import { CureHymn } from './CureHymn';
 import { AudioEventMapper } from './AudioEventMapper';
 import { isMega } from '../data/megaPresentation';
 import { insideCureHangar } from '../data/l10Story';
@@ -62,6 +63,7 @@ export class AudioService implements Lifecycle {
     readonly graph: AudioGraph;
     readonly registry: AudioRegistry;
     readonly score: StreamedMusic;
+    private hymn: CureHymn | null = null;
     readonly log: CueLog[] = [];
     readonly horde = new HordeClusters();
     music = new MusicDirector('L1');
@@ -543,7 +545,7 @@ export class AudioService implements Lifecycle {
         const sanctuary = this.level === 'L10' && insideCureHangar(this.world.entities.get(1)!.transform);
         const band = sanctuary ? null : this.world.megaPursuit?.band();
         if (this.level === 'L10') {
-            if (this.score.setFinale(story.beat === 'finale')) this.scheduledTransition = null;
+            if (this.score.setFinale(story.beat === 'finale' || story.beat === 'released')) this.scheduledTransition = null;
             if (!sanctuary && story.beat !== 'released' && (input.danger || band === 'near' || band === 'approaching')) this.loop('l10-heartbeat', 'l10.heartbeat', { gain: .65 });
             else this.stopLoop('l10-heartbeat');
         }
@@ -613,6 +615,7 @@ export class AudioService implements Lifecycle {
         for (const voice of this.graph.active.values()) if (voice.position && voice.distanceCutoffM !== undefined &&
             Math.hypot(voice.position.x - player.transform.x, voice.position.z - player.transform.z) > voice.distanceCutoffM) voice.stop(t);
         const front = this.world.missions?.state.cureFront;
+        if (front && this.level === 'L10') { this.hymn ??= new CureHymn(this.context, this.graph.buses.music); this.hymn.update(front.elapsed / 60); }
         if (front) this.loop('cure:ventilation', 'generator.idle', { position: { ...front.fronts[0], y: 2 }, gain: .55, lowpass: 1800 });
         else this.stopLoop('cure:ventilation');
         const weather = this.world.weather;
@@ -778,6 +781,7 @@ export class AudioService implements Lifecycle {
         this.unsubscribers.length = 0;
         this.alarm.stop();
         this.graph.reset();
+        this.hymn?.dispose(); this.hymn = null;
         this.score.reset(); this.radio.reset();
         this.loops.clear();
         this.stemVoices.clear();
