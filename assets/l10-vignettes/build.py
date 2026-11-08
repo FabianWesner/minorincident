@@ -164,4 +164,4 @@ if __name__ == '__main__':
             lo = [min(v[i] for v in points) for i in range(3)]; hi = [max(v[i] for v in points) for i in range(3)]
             report.append({'id':asset,'lod':lod,'triangles':len(body.data.loop_triangles),'dimensions':[hi[0]-lo[0],hi[2]-lo[2],hi[1]-lo[1]]})
     (ROOT/'assets/l10-vignettes/build-report.json').write_text(json.dumps(report,indent=2)+'\n')
-    print('L10 asset batch: 12 authored exports; caps 800/300/60')
+    print('L10 asset batch: 15 authored exports; caps 800/300/60')

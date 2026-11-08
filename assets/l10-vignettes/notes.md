@@ -1,12 +1,12 @@
 # L10 vignette asset batch
 
-Reproduction (from repo root, sequentially, no browser):
+Reproduction (from repo root on a CPU runner with Blender 5.2 and ImageMagick 7, sequentially, no browser; dispatch through `tools/remote/run.sh`):
 
 ```sh
-/Applications/Blender.app/Contents/MacOS/Blender --background --factory-startup -t 1 --python-exit-code 1 --python assets/l10-vignettes/build.py -- --batch
+blender --background --factory-startup -t 1 --python-exit-code 1 --python assets/l10-vignettes/build.py -- --batch
 python3 assets/l10-vignettes/atlas.py
 node --import tsx/esm tools/assets/l10-vignettes.ts
-/Applications/Blender.app/Contents/MacOS/Blender --background --factory-startup -t 1 --python-exit-code 1 --python assets/l10-vignettes/render.py
+blender --background --factory-startup -t 1 --python-exit-code 1 --python assets/l10-vignettes/render.py
 ```
 
 `build-report.json` records actual Blender triangle counts for the five new small props, capped at 800/300/60 per tier. `delivery-report.json` validates all 33 delivered tiers. `corpse-source.json` identifies reused production worker geometry and three frozen death poses; these are the existing 840-triangle character LOD2, not newly modeled small props. No living actors, rigs or per-frame animation are added.
