@@ -5,7 +5,7 @@ import type { SimWorld } from '../../sim/world/SimWorld';
 import { Walker } from './Walker';
 import { isMega } from '../../data/megaPresentation';
 import { finale as arena } from '../../data/l10Finale';
-import { cureEscapeGaps } from '../../data/l10Story';
+import { cureCorgiToy, cureEscapeGaps } from '../../data/l10Story';
 
 /** The existing L10 sim policy, available to browser diagnostics through bot.start. */
 export class LevelTenBot {
@@ -24,7 +24,10 @@ export class LevelTenBot {
   private coolingGun = false;
   private readonly startTick: number;
   finished = false;
-  constructor(private readonly w: SimWorld, readonly profile = 'complete') { this.startTick = w.tick; }
+  constructor(private readonly w: SimWorld, readonly profile = 'complete') {
+    this.startTick = w.tick;
+    if (profile === 'optional-toy') this.route.splice(this.route.indexOf(cure.anchors['barn-machete']) + 1, 0, [cureCorgiToy.x, cureCorgiToy.z]);
+  }
   sample(): InputFrame {
     const w = this.w, mission = w.missions!, player = w.entities.get(1)!, f = emptyInput();
     this.finished = mission.state.phase === 'result' || mission.state.phase === 'progression';
@@ -44,7 +47,11 @@ export class LevelTenBot {
       return f;
     }
     const released = !!mission.state.states['cure-released'];
-    while (this.waypoint < this.route.length && distance({ x: this.route[this.waypoint][0], z: this.route[this.waypoint][1] }) < 2) this.waypoint++;
+    while (this.waypoint < this.route.length) {
+      const point = this.route[this.waypoint], toy = point[0] === cureCorgiToy.x && point[1] === cureCorgiToy.z;
+      if (distance({ x: point[0], z: point[1] }) >= (toy ? 1.2 : 2)) break;
+      this.waypoint++;
+    }
     let goal = anchor;
     // Once the boss reaches the apron, follow its private pursuit anchor
     // around console cover. Waiting at the console cannot acquire a boss on

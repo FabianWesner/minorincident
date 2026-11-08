@@ -1,0 +1,25 @@
+/** Inspect the shipped ground geometry and actual assembled farm; no browser or renderer. */
+import { NodeIO } from '@gltf-transform/core';
+import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
+import { MeshoptDecoder } from 'meshoptimizer';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { dirname } from 'node:path';
+import { groundTriangles } from '../layouts/audit-ground';
+import { levelTenLayouts } from '../../src/levels/L10/layout';
+import { DistrictWorld } from '../../src/sim/world/DistrictWorld';
+import { compositions } from '../../src/levels/compositions';
+import { cureVignetteDecals } from '../../src/levels/L10/vignettes';
+import type { DistrictLayout } from '../../src/levels/districts/types';
+const out=process.argv.find((arg,i)=>process.argv[i-1]==='--out')??'test-results/l10-pacing/ground.json';
+await MeshoptDecoder.ready;
+const io=new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({'meshopt.decoder':MeshoptDecoder});
+const doc=await io.read('public/assets/layouts/D-CURE.base.glb'),point:[number,number]=[858.66,-93.68];
+const cross=(a:number[],b:number[],c:number[])=>(b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0]);
+const ground=groundTriangles(doc).filter(t=>{const c=t.points.map((a,i)=>cross(a,t.points[(i+1)%3],point));return c.every(v=>v>=-1e-6)||c.every(v=>v<=1e-6);}).map(t=>({material:t.material,y:t.y,layer:t.layer,color:t.primitive.getMaterial()!.getBaseColorFactor()}));
+const layout=JSON.parse(readFileSync('public/assets/layouts/D-CURE.layout.json','utf8')) as DistrictLayout;
+const world=new DistrictWorld(compositions.L10,levelTenLayouts([layout]),42),placements=world.districts[0].layout.placements;
+const crops=placements.filter(p=>p.assetId==='veg.corn-block'),near=crops.filter(p=>Math.hypot(p.position[0]-point[0],p.position[2]-point[1])<30).map(p=>({id:p.id,position:p.position}));
+const graves=placements.filter(p=>p.id.startsWith('l10-barn-grave-')).map(p=>p.position),roof=cureVignetteDecals(placements).find(p=>p.id==='l10-barn-help-roof');
+const report={method:'Read shipped GLB triangles at exact PO coordinates and assemble production DistrictWorld without a renderer.',point,ground,cornBlocks:crops.length,cornWithin30mOfPO:near,barnGraves:graves,barnRoofMessage:roof,vignettePieces:placements.filter(p=>p.id.startsWith('decor-cure-vignette-')).length};
+mkdirSync(dirname(out),{recursive:true});writeFileSync(out,JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));
+if(!ground.some(t=>t.material==='pal_gloveKhaki')||crops.length<100||!near.length||graves.length!==3||!roof)process.exitCode=1;

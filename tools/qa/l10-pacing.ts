@@ -34,6 +34,8 @@ for (const quality of tiers) {
   const gapCrossings: { index: number; seconds: number; x: number; z: number; megaDistance: number; maxSeparation20s: number }[] = [];
   const megaActions: Record<string, unknown>[] = [], megaPhases: Record<string, unknown>[] = [], hangarVisits: Record<string, unknown>[] = [];
   let holdWindowTicks = 0;
+  const epiloguePhases: Record<string, unknown>[] = [];
+  let endingKey = '';
   const seenVignettes = new Set<string>(), knownInfected = new Set<number>(), trace: Record<string, unknown>[] = [];
   let deaths = 0, fights = 0, finds = 0, scares = 0, megaMoments = 0, fightUntil = 0, lastCombatBeat = -1200, lastMegaBand = -1, routeMetres = 0, lastEncounterBeat = -600;
   let gameplayEnd = 0, peakOpeningRegulars = 0, peakOpeningDogs = 0, peakOpeningAlphas = 0, arenaMetres = 0;
@@ -49,7 +51,7 @@ for (const quality of tiers) {
     world.events.on('objective.completed', e => { if (e.type === 'objective.completed') addBeat('objective', e.id); }),
     world.events.on('checkpoint.set', e => { if (e.type === 'checkpoint.set') { const p = world.entities.get(1)!.transform; checkpoints.push({ id: e.id, tick: world.tick, seconds: world.tick / 60, routeMetres, x: p.x, z: p.z }); addBeat('checkpoint', e.id); } }),
     world.events.on('checkpoint.restored', e => { if (e.type === 'checkpoint.restored') { const p = world.entities.get(1)!.transform; checkpoints.push({ id: e.id, restored: true, tick: world.tick, seconds: world.tick / 60, routeMetres, x: p.x, z: p.z }); } }),
-    world.events.on('pickup.collected', e => { if (e.type === 'pickup.collected' && 'actionId' in e) { if (e.pickupId) finds++; addBeat(e.pickupId ? 'find' : 'handover', e.actionId); } }),
+    world.events.on('pickup.collected', e => { if (e.type === 'pickup.collected' && 'actionId' in e) { if (e.pickupId) finds++; addBeat(e.pickupId ? 'find' : 'handover', e.actionId); } else if (e.type === 'pickup.collected' && 'item' in e && e.item === 'corgi-toy') addBeat('optional-find', e.item); }),
     world.events.on('combat.hit', e => {
       if (e.type !== 'combat.hit' || e.sourceId !== 1) return;
       const target = world.entities.get(e.targetId);
@@ -116,6 +118,12 @@ for (const quality of tiers) {
         // that recovery before counting its later return as a new encounter.
         if (d > 50) lastMegaBand = -1;
       }
+      const ending = mission.state.epilogue, key = ending ? `${ending.phase}/${!!world.storyLock}` : '';
+      if (ending && key !== endingKey) {
+        endingKey = key;
+        const corgi = [...world.entities.iterate()].find(e=>!!e.companion);
+        epiloguePhases.push({ seconds: world.tick / 60, elapsed: mission.state.cureFront?.elapsed, phase: ending.phase, cinematic: !!world.storyLock, toy: mission.state.items.includes('corgi-toy'), corgi: corgi ? { id: corgi.id, hp: corgi.health.current, ...corgi.transform } : null, player: { ...p } });
+      }
       if (mission.state.states['charge-active'] && ++holdWindowTicks >= Number(process.env.L10_PACING_STOP_AFTER_HOLD ?? Infinity) * 60) { outcome = 'stationary-window'; break; }
     }
     if (mission.state.phase === 'result' || mission.state.phase === 'progression') outcome = 'complete';
@@ -131,7 +139,7 @@ for (const quality of tiers) {
     return { metres: Number((to.routeMetres - from.routeMetres).toFixed(1)), directMetres: Number(distance(from, to).toFixed(1)), from: from.id, to: to.id };
   });
   const firstRouteCheckpoint = checkpoints.find(cp => (cp as { id: string }).id !== 'cure-crash') as { seconds: number } | undefined;
-  results.push({ quality, seed, profile: process.env.L10_PACING_PROFILE ?? 'complete', outcome, completed: outcome === 'complete', seconds: elapsedSeconds, gameplaySeconds: gameplayEnd, deaths, fights, finds, scares, megaMoments, gapCrossings, megaActions, megaPhases, hangarVisits, observation, threat: threatObservation, opening: { peakRegulars: peakOpeningRegulars, peakDogs: peakOpeningDogs, peakAlphas: peakOpeningAlphas }, trace, routeMetresTravelled: routeMetres, arenaMetres, canonicalRouteMetres: routeDistances, checkpoints, checkpointGaps, maxCheckpointGapM: Math.max(0, ...checkpointGaps.map(g => g.metres)), timeToFirstCheckpoint: firstRouteCheckpoint?.seconds ?? null, beats, longestBeatGapSeconds: longestGap.seconds, longestGap, activeAtEnd, limits: { beatGapSeconds: 40, checkpointGapMetres: 250, firstCheckpointSeconds: 60 } });
+  results.push({ quality, seed, profile: process.env.L10_PACING_PROFILE ?? 'complete', outcome, completed: outcome === 'complete', seconds: elapsedSeconds, gameplaySeconds: gameplayEnd, deaths, fights, finds, scares, megaMoments, gapCrossings, megaActions, megaPhases, epiloguePhases, hangarVisits, observation, threat: threatObservation, opening: { peakRegulars: peakOpeningRegulars, peakDogs: peakOpeningDogs, peakAlphas: peakOpeningAlphas }, trace, routeMetresTravelled: routeMetres, arenaMetres, canonicalRouteMetres: routeDistances, checkpoints, checkpointGaps, maxCheckpointGapM: Math.max(0, ...checkpointGaps.map(g => g.metres)), timeToFirstCheckpoint: firstRouteCheckpoint?.seconds ?? null, beats, longestBeatGapSeconds: longestGap.seconds, longestGap, activeAtEnd, limits: { beatGapSeconds: 40, checkpointGapMetres: 250, firstCheckpointSeconds: 60 } });
 }
 
 mkdirSync(dirname(output), { recursive: true });

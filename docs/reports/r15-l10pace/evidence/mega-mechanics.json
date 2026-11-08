@@ -1,0 +1,215 @@
+{
+  "method": "Controlled production-world mechanics fixtures with explicit position, objective, HP and timer setup; no claims of native route delivery.",
+  "checks": [
+    {
+      "quality": "low",
+      "name": "machinery stops a real charge, exposes the back and stuns for 120 ticks",
+      "pass": true,
+      "observed": {
+        "explicitStart": false,
+        "nativeChargeSeen": true,
+        "weak": 119,
+        "stun": 120,
+        "at": {
+          "x": 4002,
+          "y": 0.7,
+          "z": -23.378999999999998,
+          "yaw": 1.5707963267948966
+        }
+      }
+    },
+    {
+      "quality": "low",
+      "name": "70% threshold enters rage and intact plates reduce a frontal bullet to 35%",
+      "pass": true,
+      "observed": {
+        "phase": 2,
+        "armour": 35
+      }
+    },
+    {
+      "quality": "low",
+      "name": "two seconds of flame burn off plates and restore full weapon damage",
+      "pass": true,
+      "observed": {
+        "burn": 120,
+        "opened": 100
+      }
+    },
+    {
+      "quality": "low",
+      "name": "flashbang interrupts for one second despite gun stagger cooldown, without HP damage or a later bullet shortening it",
+      "pass": true,
+      "observed": {
+        "beforeFlash": 1935,
+        "afterFlash": 1935,
+        "flashUntil": 343,
+        "tick": 283,
+        "afterBullet": 343
+      }
+    },
+    {
+      "quality": "low",
+      "name": "rage lifts and throws a retained world corpse",
+      "pass": true,
+      "observed": {
+        "throwStarted": true,
+        "picked": 104,
+        "corpseId": 104,
+        "thrown": true
+      }
+    },
+    {
+      "quality": "low",
+      "name": "rage roar calls an escort wave through the normal admission gate",
+      "pass": true,
+      "observed": {
+        "roar": true,
+        "called": true,
+        "next": 0
+      }
+    },
+    {
+      "quality": "low",
+      "name": "the same rage Mega climbs the actual platform stair",
+      "pass": true,
+      "observed": {
+        "id": 100,
+        "maxY": 3.7800000000000002,
+        "at": {
+          "x": 3990.5062348405772,
+          "y": 3.7800000000000002,
+          "z": -33.000121425224165,
+          "yaw": -3.1414982499708164
+        }
+      }
+    },
+    {
+      "quality": "low",
+      "name": "35% threshold makes the Mega walk toward the console while courier is elsewhere",
+      "pass": true,
+      "observed": {
+        "phase": 3,
+        "before": 21.18962010041709,
+        "after": 14.322480195750236
+      }
+    },
+    {
+      "quality": "low",
+      "name": "a real death restarts the phase with console charge retained",
+      "pass": true,
+      "observed": {
+        "hp": 100,
+        "bossHp": 1020.0000000000001,
+        "phaseHp": 1020.0000000000001,
+        "charge": 1234,
+        "phase": 3
+      }
+    },
+    {
+      "quality": "high",
+      "name": "machinery stops a real charge, exposes the back and stuns for 120 ticks",
+      "pass": true,
+      "observed": {
+        "explicitStart": false,
+        "nativeChargeSeen": true,
+        "weak": 119,
+        "stun": 120,
+        "at": {
+          "x": 4002,
+          "y": 0.7,
+          "z": -23.378999999999998,
+          "yaw": 1.5707963267948966
+        }
+      }
+    },
+    {
+      "quality": "high",
+      "name": "70% threshold enters rage and intact plates reduce a frontal bullet to 35%",
+      "pass": true,
+      "observed": {
+        "phase": 2,
+        "armour": 35
+      }
+    },
+    {
+      "quality": "high",
+      "name": "two seconds of flame burn off plates and restore full weapon damage",
+      "pass": true,
+      "observed": {
+        "burn": 120,
+        "opened": 100
+      }
+    },
+    {
+      "quality": "high",
+      "name": "flashbang interrupts for one second despite gun stagger cooldown, without HP damage or a later bullet shortening it",
+      "pass": true,
+      "observed": {
+        "beforeFlash": 1935,
+        "afterFlash": 1935,
+        "flashUntil": 343,
+        "tick": 283,
+        "afterBullet": 343
+      }
+    },
+    {
+      "quality": "high",
+      "name": "rage lifts and throws a retained world corpse",
+      "pass": true,
+      "observed": {
+        "throwStarted": true,
+        "picked": 104,
+        "corpseId": 104,
+        "thrown": true
+      }
+    },
+    {
+      "quality": "high",
+      "name": "rage roar calls an escort wave through the normal admission gate",
+      "pass": true,
+      "observed": {
+        "roar": true,
+        "called": true,
+        "next": 0
+      }
+    },
+    {
+      "quality": "high",
+      "name": "the same rage Mega climbs the actual platform stair",
+      "pass": true,
+      "observed": {
+        "id": 100,
+        "maxY": 3.7800000000000002,
+        "at": {
+          "x": 3990.5062348405772,
+          "y": 3.7800000000000002,
+          "z": -33.000121425224165,
+          "yaw": -3.1414982499708164
+        }
+      }
+    },
+    {
+      "quality": "high",
+      "name": "35% threshold makes the Mega walk toward the console while courier is elsewhere",
+      "pass": true,
+      "observed": {
+        "phase": 3,
+        "before": 21.18962010041709,
+        "after": 14.322480195750236
+      }
+    },
+    {
+      "quality": "high",
+      "name": "a real death restarts the phase with console charge retained",
+      "pass": true,
+      "observed": {
+        "hp": 100,
+        "bossHp": 1020.0000000000001,
+        "phaseHp": 1020.0000000000001,
+        "charge": 1234,
+        "phase": 3
+      }
+    }
+  ]
+}

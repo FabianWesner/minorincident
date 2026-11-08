@@ -204,7 +204,7 @@ export class Damage {
       this.world.infected?.cancelSpecial(target.id);
       // An interrupt must not turn a 0.5 s stagger into the completed move's 1.2 s immobilization.
       target.infected!.specialRecoveryUntil = Math.max(recovery, this.world.tick + megaAlpha.staggerTicks);
-      target.combat!.staggerUntil = this.world.tick + Math.min(megaAlpha.staggerTicks, Math.max(this.world.scenario === 'L10' ? 30 : 1, Math.ceil(hit.stagger * 60)));
+      target.combat!.staggerUntil = Math.max(target.combat!.staggerUntil, this.world.tick + Math.min(megaAlpha.staggerTicks, Math.max(this.world.scenario === 'L10' ? 30 : 1, Math.ceil(hit.stagger * 60))));
     }
     if (mega) hit = { ...hit, knockback: megaReact ? Math.min(.4, hit.knockback) : 0, stagger: 0, knockdown: false, knockdownTicks: 0, part: undefined };
     const wasAlive = target.health.current > 0;
