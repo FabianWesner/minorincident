@@ -7,6 +7,7 @@ import { stateHash } from '../../../src/sim/world/stateHash';
 import { PathProbe } from '../threat/observer';
 import { l6Doors } from '../../../src/data/l6';
 import { provenance } from './probe';
+import { reportRoot } from './report';
 import type { EntitySnapshot } from '../../../src/sim/world/types';
 const layout=JSON.parse(readFileSync('public/assets/layouts/D-SUBWAY.layout.json','utf8')) as {surfaces:{surface:string;height:number;polygon:number[][]}[]};
 const shelter=layout.surfaces.find(s=>s.surface==='tile')!,tracks=layout.surfaces.find(s=>s.surface==='gravel'&&s.polygon[0][0]===30)!;
@@ -38,7 +39,7 @@ export async function l6Trajectories(tier: 'low'|'high') {
    if(state.phase==='fails'&&power.length<2)power.push({tick:world.tick,main:state.mainPower,emergency:state.emergency,lightGroups:[...world.districts!.districts[0].decay.lights]});
   },8);
  },beforeDispose:world=>{observedHash=stateHash(world.getState());}});
- const control=JSON.parse(readFileSync(`docs/reports/fix51-verify/receipts/L6-${tier}-complete.json`,'utf8'));
+ const control=JSON.parse(readFileSync(`${reportRoot}/receipts/L6-${tier}-complete.json`,'utf8'));
  assert.equal(control.sourceHash,provenance().sourceHash);
  assert.equal(observedHash,control.nativeStateHash,'Read-only trajectory observer must leave canonical final state unchanged');assert.equal(run.deaths,0);
  return {tier,run,samples,observedHash,canonicalHash:control.nativeStateHash,events:events as {type:string;tick:number;breach?:number}[],power,actors:[...actors.values()]};
