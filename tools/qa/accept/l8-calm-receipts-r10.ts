@@ -42,12 +42,13 @@ export function l8CalmReceipts(sourceHash: string, browserHash: string): { path:
     // This row ends at breach tick3600; later APC departure is qualified separately.
     const completed = runtimeMatches && input.result?.runs.some((run: { level: string; finished: boolean; skipped: string[] }) => run.level === 'L7' && run.finished && !run.skipped.length) && input.result?.runs.some((run: { level: string; skipped: string[] }) => run.level === 'L8' && !run.skipped.length);
     const consolePass = !input.error && !input.result?.issues.some((issue: { kind: string }) => ['console-error', 'page-error'].includes(issue.kind));
-    const pass = completed && consolePass && continuous && calm.every(sample => sample.text.includes('Stay with the group') && !sample.pin && !sample.marker && !sample.breached) && !!breach?.breached && !!breach.text && breach.pin && breach.marker;
+    const pass = completed && consolePass && continuous && calm.every(sample => sample.text.includes('zoo gate') && sample.pin && sample.marker && !sample.breached) &&
+      !!breach?.breached && breach.text.includes('Lead the group to the armored vehicle') && breach.pin && breach.marker;
     const path = `${reportRoot}/receipts/L8-${tier}-calm-browser.json`;
     const receipt: FixtureReceipt = { version: 1, level: 'L8', tier, sourceHash, fixtureHash: sha(readFileSync(new URL(import.meta.url))), errors: [],
       checks: [{ id: 'L8-02', clause: 'carried real-input 60-second opening objective and marker audit', tier, policy: 'real-input-webgl2', status: pass ? 'PASS' : 'FAIL',
         value: { completed, consolePass, samples: calm.length, firstTick: calm[0]?.tick, lastCalmTick: calm.at(-1)?.tick, maxGapTicks, breach, inputPath, reviewPath },
-        target: 'physical L7→L8 campaign; opening objective visible before tick3600, pin/world-marker absent until tick3600; native every-tick ledger separately requires zero scripted combat', receipt: path }],
+        target: 'physical L7→L8 campaign; zoo-gate objective and direction visible before tick3600, then APC objective and direction once the gate is reached after breach; native every-tick ledger separately requires zero scripted combat', receipt: path }],
       observations: { browserHash, inputPath, reviewPath } };
     atomicJson(path, receipt); results.push({ path, receipt });
   }

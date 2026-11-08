@@ -19,9 +19,10 @@ export interface OutbreakSeam extends SnapshotSeam {
 }
 export interface L1Seams { bicycle?: SnapshotSeam; toys?: SnapshotSeam; outbreak?: OutbreakSeam }
 
-const names = ['bicycle', 'toys', 'outbreak', 'props', 'chunks', 'l7Encounters', 'l7Departure', 'l10Encounters', 'l8', 'l9', 'megaPursuit', 'mountedGun'] as const;
+const names = ['bicycle', 'toys', 'outbreak', 'props', 'destruction', 'chunks', 'l7Encounters', 'l7Departure', 'l10Encounters', 'l8', 'l9', 'megaPursuit', 'mountedGun'] as const;
 /** The real outbreak layer (lane D) is `world.npcs.civilians.outbreak`; its state is snapshot()/load(). */
 function resolve(world: SimWorld, name: typeof names[number]): SnapshotSeam | undefined {
+  if (name === 'destruction') return world.destruction ?? undefined;
   if (name === 'chunks') return world.chunks ?? undefined;
   if (name === 'l9') return world.missions?.l9 ?? undefined;
   if (name === 'l8') return world.missions?.l8 ?? undefined;

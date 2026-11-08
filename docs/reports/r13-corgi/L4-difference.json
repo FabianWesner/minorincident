@@ -1,0 +1,33 @@
+{
+  "baselineRevision": "c92a03b2",
+  "runtimeRevision": "602835dd3b69d5f0a40215df4c1ffc54dc807d8a",
+  "baselineRunner": "2.31.170.171",
+  "runtimeRunner": "2.31.107.230",
+  "baseline": {
+    "outcome": "complete",
+    "time": 599.1333333333333,
+    "deaths": 19,
+    "failures": {
+      "player-died": 19
+    },
+    "blocker": null
+  },
+  "runtime": {
+    "outcome": "mission-failed",
+    "time": 455.55,
+    "deaths": 8,
+    "failures": {
+      "player-died": 8,
+      "collision-invariant": 1
+    },
+    "blocker": {
+      "objective": "wait",
+      "detail": "{\"failures\":1,\"pending\":0,\"admitted\":777,\"deferred\":4,\"requests\":[],\"offenders\":[{\"tick\":12480,\"actor\":440,\"other\":442,\"depth\":0.6406720814536289,\"inside\":false,\"writer\":\"infected.update\"}]}"
+    }
+  },
+  "runtimeDiagnosticFlags": [
+    "INCOMPLETE_NATIVE_POLICY:mission-failed"
+  ],
+  "runtimeGateFlags": [],
+  "causality": "OPEN: different runner hosts; controlled same-runner follow-up cancelled at orchestrator direction. Do not treat this diagnostic as a proved pre-existing failure."
+}

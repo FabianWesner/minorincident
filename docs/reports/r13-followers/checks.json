@@ -1,0 +1,32 @@
+{
+  "revision": "c45f847bf42dd6813fea18da02843dedd3da3acf",
+  "runner": "2.31.170.171",
+  "commands": [
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run lint",
+      "exitCode": 0
+    },
+    {
+      "command": "npm test -- --maxWorkers=1",
+      "exitCode": 1,
+      "seconds": 205.7,
+      "passed": 105,
+      "failed": 1,
+      "skipped": 1,
+      "failure": "tests/tools/gate-tools.test.ts:64: git rev-parse HEAD fails in the runner manifest repository without a commit"
+    },
+    {
+      "command": "node node_modules/vitest/vitest.mjs run tests/tools/gate-tools.test.ts --project default --configLoader runner --maxWorkers=1 --reporter=json",
+      "exitCode": 0,
+      "passed": 7,
+      "skipped": 1,
+      "context": "Fresh private runner snapshot; git add -A and a disposable manifest commit supply HEAD for the Git-aware tooling assertions."
+    }
+  ],
+  "sourceTree": "08f0c4524969ec1974281600f578d881205d4925",
+  "publicTree": "e8bcb6bbc365af75546f7899698f2b0a34715e01"
+}

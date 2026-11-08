@@ -1,3 +1,5 @@
+import { cornMaterial } from '../render/Corn';
+import { groundDepth } from '../render/GroundLayers';
 import { spinNodes } from "../data/spinNodes";
 import { Box3, Color, Group, Mesh, Object3D, Vector3, type BufferGeometry, type WebGPURenderer, type Material } from "three/webgpu";
 import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
@@ -16,7 +18,7 @@ import { dinerSign } from '../render/DinerSign';
 import { attribute } from 'three/tsl';
 import { surfaceDetail } from '../render/SurfaceDetail';
 import { anchorsFor } from '../data/placedLights';
-import { staticBatch, staticBatchAsync } from './staticBatch';
+import { staticBatchSharingKey, staticBatch, staticBatchAsync } from './staticBatch';
 import { buildingDoors } from '../data/buildingDoors';
 import { loadGate, loadGltf } from './loadGate';
 import { productionIds } from './productionIds';
@@ -112,11 +114,17 @@ export class DistrictAssets {
                     `Unknown palette material ${m.name} in ${url}`,
                   );
                 const emi = m.name.startsWith("emi_");
+                const layer = Number(m.userData.groundLayer ?? 0);
                 m.dispose();
-                return this.materials.world(
+                const material = this.materials.world(
                   emi && !lit ? "backpackTeal" : token,
                   emi && lit ? 2 : 0,
                 ).seeThrough();
+                if (!layer) return material;
+                const key = `ground:${token}:${+emi}:${+lit}:${layer}`;
+                let biased = this.sharedMaterials.get(key);
+                if (!biased) { biased = groundDepth(material.frozenCopy(), layer); this.sharedMaterials.set(key, biased); this.batchMaterials.add(biased); }
+                return biased;
               };
               o.material = Array.isArray(o.material)
                 ? o.material.map(remap)
@@ -171,7 +179,7 @@ export class DistrictAssets {
       if (!(child instanceof Mesh) || !['window-light', 'static-body', 'roof', 'roof-light'].includes(child.name)) continue;
       // Window/gloss graphs require different vertex inputs; sharing solely by
       // mesh name silently replaced those graphs with the first matte batch.
-      const key = `${child.name}:${(child.material as Material).userData.batchFeatures ?? 'legacy'}`;
+      const key = staticBatchSharingKey(child.name, child.material as Material);
       const shared = this.sharedMaterials.get(key);
       // The graph cache can lend this material to another role (for example a
       // roof). Keep every borrowed graph alive until the presentation cache retires.
@@ -262,6 +270,11 @@ export class DistrictAssets {
     return twin;
   }
   private finishBatch(id: string, root: Group): Group {
+    if (id === 'veg.corn-block') {
+      let material = this.sharedMaterials.get('l10-corn');
+      if (!material) { material = cornMaterial(this.materials); this.sharedMaterials.set('l10-corn', material); this.batchMaterials.add(material); }
+      root.traverse(node => { if (node instanceof Mesh) { node.material = material!; node.castShadow = false; } });
+    }
     this.share(root);
     if (id === 'kit.highway-onramp') {
       // The joining layout slab uses Materials.world's asphalt detail. The
@@ -291,7 +304,7 @@ export class DistrictAssets {
     const deck = id === 'kit.highway-onramp' || id === 'kit.dispersal-platform';
     root.traverse(node => { if (node instanceof Mesh) {
       // A shut metro leaf must read as a solid barrier even with the courier behind it.
-      if (node.material instanceof PaletteMaterial) {
+      if (node.material instanceof PaletteMaterial && id !== 'veg.corn-block') {
         if (id === 'bld.metro-entrance' && node.userData.door === 'shutter') node.material = node.material.frozenCopy().seeThrough(false);
         else if (solid) node.material = this.uncut(node.material);
         else if (deck) node.material = this.deckCut(node.material);

@@ -1,3 +1,4 @@
+import { groundDepth, groundLayers } from './GroundLayers';
 import { interactionPromptPosition, type PromptRect } from '../ui/promptPosition';
 export { interactionPromptPosition } from '../ui/promptPosition';
 import { LevelSixSubway } from '../sim/missions/LevelSixSubway';
@@ -75,6 +76,7 @@ export class InteractionView extends Group {
   private disposed = false;
   constructor(private readonly world: SimWorld, private readonly materials: Materials, private readonly view: View, private readonly low = false) {
     super(); this.registry = new AssetRegistry(() => {}, { materials: materials }); this.name = 'interactions';
+    groundDepth(this.gasMaterial, groundLayers.footprint);
     this.gasMaterial.outputNode = vec4(.3, .55, .12, uv().sub(.5).mul(2).length().smoothstep(1, .3).mul(.18));
     const outline = new Mesh(this.outlineGeometry, this.black), stroke = new Mesh(this.strokeGeometry, this.white);
     outline.renderOrder = 90; stroke.renderOrder = 91; this.fill.renderOrder = 92;
@@ -433,7 +435,8 @@ export class InteractionView extends Group {
     const pieces = this.world.hazards?.debris.pieces ?? [];
     for (let i = 0; i < pieces.length; i++) {
       if (!this.debrisMeshes[i]) { const m = new Mesh(this.box, this.materials.get('woodWarm')); m.scale.set(.24, .2, .44); this.debrisMeshes.push(m); this.add(m); }
-      const p = pieces[i], m = this.debrisMeshes[i]; m.visible = p.until > 0;
+      const p = pieces[i], m = this.debrisMeshes[i]; m.visible = p.until > 0; m.scale.fromArray(p.half ?? [.12,.1,.22]).multiplyScalar(2);
+      m.material = this.materials.get(p.material === 'glass' ? 'windowGlow' : p.material === 'metal' ? 'sidewalk' : p.material === 'brick' ? 'brick' : p.material === 'concrete' ? 'sidewalk' : 'woodWarm');
       if (m.visible && !p.body.isSleeping()) { const t = p.body.translation(), r = p.body.rotation(); m.position.set(t.x, t.y, t.z); m.quaternion.set(r.x, r.y, r.z, r.w); }
     }
   }

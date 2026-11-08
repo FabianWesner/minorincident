@@ -1,0 +1,300 @@
+{
+  "generatedAt": "2026-11-08T16:15:47.674391+00:00",
+  "revision": "9d15628dcfb63165e4c65f3cdc9b2bafd6c84384",
+  "gameSourceHash": "d3ae91cee143e58a5e909b96e5de47d261f926e54bb6c2ee3fd7a6dfdff225b2",
+  "gameSourceUnchangedSince": "df4599e185b82f2b9aff41f137598865e95cc748",
+  "e24": {
+    "target": "E24",
+    "epics": [
+      "E24"
+    ],
+    "checks": [
+      {
+        "command": "npm run typecheck",
+        "status": 0,
+        "seconds": 39.592
+      },
+      {
+        "command": "npm run lint",
+        "status": 0,
+        "seconds": 20.55
+      },
+      {
+        "command": "npm test",
+        "status": 0,
+        "seconds": 54.82
+      }
+    ]
+  },
+  "unitBudget": {
+    "name": "test",
+    "cases": 150,
+    "counts": {
+      "vitest": 129,
+      "e2e": 9,
+      "invariantsBrowser": 12
+    },
+    "files": 43,
+    "limits": {
+      "cases": 150,
+      "files": 45,
+      "seconds": 240
+    },
+    "command": [
+      "node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "--project",
+      "default",
+      "--configLoader",
+      "runner"
+    ],
+    "seconds": 54.478796167,
+    "exitCode": 0,
+    "signal": null,
+    "failures": [],
+    "at": "2026-11-08T16:04:08.172Z"
+  },
+  "threatEarlierComplete": {
+    "revision": "15058e4217f8ab946c87ec70f00451768c094c94",
+    "seconds": 304.24655929200003,
+    "flags": [],
+    "scope": "Completed before the final street-clearance/escaped-actor protection followup; retained as earlier evidence, not a final-source pass.",
+    "levels": [
+      {
+        "level": "L1",
+        "native": "complete",
+        "passive": "complete",
+        "flags": []
+      },
+      {
+        "level": "L2",
+        "native": "complete",
+        "passive": "complete",
+        "flags": []
+      },
+      {
+        "level": "L3",
+        "native": "complete",
+        "passive": "tick-budget",
+        "flags": []
+      },
+      {
+        "level": "L4",
+        "native": "complete",
+        "passive": "tick-budget",
+        "flags": []
+      },
+      {
+        "level": "L5",
+        "native": "complete",
+        "passive": "tick-budget",
+        "flags": []
+      },
+      {
+        "level": "L6",
+        "native": "complete",
+        "passive": "tick-budget",
+        "flags": []
+      },
+      {
+        "level": "L7",
+        "native": "complete",
+        "passive": "complete",
+        "flags": []
+      },
+      {
+        "level": "L8",
+        "native": "complete",
+        "passive": "complete",
+        "flags": []
+      },
+      {
+        "level": "L9",
+        "native": "complete",
+        "passive": "complete",
+        "flags": []
+      },
+      {
+        "level": "L10",
+        "native": "complete",
+        "passive": "tick-budget",
+        "flags": []
+      }
+    ]
+  },
+  "threatFinalAttempt": {
+    "name": "qa-threat",
+    "cases": 150,
+    "counts": {
+      "vitest": 129,
+      "e2e": 9,
+      "invariantsBrowser": 12
+    },
+    "files": 43,
+    "limits": {
+      "cases": 150,
+      "files": 45,
+      "seconds": 600
+    },
+    "command": [
+      "node",
+      "--import",
+      "tsx/esm",
+      "tools/qa/threat-audit.ts",
+      "--maxWorkers",
+      "4",
+      "--out",
+      "/private/tmp/r12-l6-threat-final"
+    ],
+    "seconds": 600.6668789580001,
+    "exitCode": 124,
+    "signal": null,
+    "failures": [
+      "qa-threat failed (exit 124)",
+      "qa-threat took 600.7 s, over the 600 s budget"
+    ],
+    "at": "2026-11-08T16:01:37.697Z"
+  },
+  "pressure": {
+    "cells": 6,
+    "allNewNumericTargetsPass": true,
+    "escapedBodiesRemainVisible": true
+  },
+  "covering": {
+    "cells": 2,
+    "evadeOnlyAtMost30PercentOut": true
+  },
+  "legacyE24Runtime": {
+    "criterion": "E24-AC02: at least one complete bot seed takes 180\u2013300 simulation seconds",
+    "pass": false,
+    "times": [
+      {
+        "tier": "low",
+        "seed": 1,
+        "seconds": 441.3666666666667
+      },
+      {
+        "tier": "low",
+        "seed": 2,
+        "seconds": 411.9
+      },
+      {
+        "tier": "low",
+        "seed": 3,
+        "seconds": 614.4833333333333
+      },
+      {
+        "tier": "high",
+        "seed": 1,
+        "seconds": 441.3666666666667
+      },
+      {
+        "tier": "high",
+        "seed": 2,
+        "seconds": 411.9
+      },
+      {
+        "tier": "high",
+        "seed": 3,
+        "seconds": 614.4833333333333
+      }
+    ]
+  },
+  "browser": {
+    "status": "DELEGATED TO DEDICATED QA LANE",
+    "consoleOwner": "root",
+    "qualifiedCurrentRuns": 0,
+    "required": "Corrected real-input L6 runs at low/high; personally opened zoom 1 and 1.5 rail and exit captures.",
+    "reason": "Latest PO instruction: coding lanes no longer run browsers; dedicated QA runs after merge.",
+    "priorAttemptContext": "Chromium bootstrap_check_in MachPortRendezvousServer failed (141); launchctl gui/501 reports Reentrancy avoided"
+  },
+  "sceneGate": {
+    "status": "DELEGATED TO DEDICATED QA LANE",
+    "reason": "Latest PO instruction forbids browser runs in coding lanes; exact handoff is in README."
+  },
+  "postRestartTuningProbes": [
+    {
+      "candidate": {
+        "intervalS": 45,
+        "group": 3,
+        "description": "Process-local candidate override; source files remain at 40 seconds."
+      },
+      "qualifying": false,
+      "tier": "low",
+      "seed": 1,
+      "completed": true,
+      "simSeconds": 588.4166666666666,
+      "deaths": 4,
+      "survivorsOut": 23,
+      "playerAttacksPerMinute": 18.869337326843876,
+      "followerAttacksPerMinute": 8.873081242980156,
+      "pressureArrivalsPerMinute": 3.543941292285663
+    },
+    {
+      "candidate": {
+        "intervalS": 50,
+        "group": 3,
+        "description": "Process-local candidate; production source retains 40 seconds."
+      },
+      "qualifying": false,
+      "tier": "low",
+      "seed": 1,
+      "completed": true,
+      "simSeconds": 793.2666666666667,
+      "deaths": 5,
+      "survivorsOut": 23,
+      "playerAttacksPerMinute": 27.521818550842298,
+      "followerAttacksPerMinute": 6.576009742236655,
+      "pressureArrivalsPerMinute": 3.309258043335522
+    },
+    {
+      "candidate": {
+        "intervalS": 60,
+        "group": 3,
+        "description": "Process-local candidate; production source retains 40 seconds."
+      },
+      "qualifying": false,
+      "tier": "low",
+      "seed": 1,
+      "completed": true,
+      "simSeconds": 383.21666666666664,
+      "deaths": 1,
+      "survivorsOut": 23,
+      "playerAttacksPerMinute": 16.048632218844986,
+      "followerAttacksPerMinute": 3.1003039513677813,
+      "pressureArrivalsPerMinute": 2.834149755073478
+    },
+    {
+      "candidate": {
+        "behindM": 24,
+        "intervalS": 40,
+        "group": 3,
+        "description": "Process-local candidate override; source files retain 18 metres behind."
+      },
+      "qualifying": false,
+      "tier": "low",
+      "seed": 1,
+      "completed": true,
+      "simSeconds": 580.3166666666667,
+      "deaths": 3,
+      "survivorsOut": 23,
+      "playerAttacksPerMinute": 19.228554979850315,
+      "followerAttacksPerMinute": 7.253886010362694,
+      "pressureArrivalsPerMinute": 4.765356613823316
+    }
+  ],
+  "tuningDecision": "Retain source interval 40 seconds / ahead 18m / behind 18m: alternatives failed to restore 180\u2013300 seconds; 60 seconds reduces follower attacks below baseline. Legacy timing remains unresolved, not waived.",
+  "threatRemoteAttempt": {
+    "command": "MI_LOCAL_FALLBACK=0 sh tools/remote/run.sh \"$PWD\" --pull test-results/r12-l6-threat-remote --env QA_THREAT_REVISION=9d15628dcfb63165e4c65f3cdc9b2bafd6c84384 --env QA_THREAT_MAIN_REVISION=1b4e89b1 --env QA_THREAT_SOURCE_MATCHES_MAIN=false -- npm run qa:threat -- --maxWorkers=1 --out test-results/r12-l6-threat-remote",
+    "status": "BLOCKED BEFORE ADMISSION",
+    "exitCode": 130,
+    "nativeCommandStarted": false,
+    "reason": "Runner pool API unavailable: api.hetzner.cloud and example.com both fail getaddrinfo with Errno 8 (nodename nor servname provided, or not known). Queued wrapper cancelled; no job left running. Local fallback explicitly disabled to respect CPU-overload instruction."
+  },
+  "handoff": {
+    "implementation": "complete",
+    "browser": "delegated per latest PO instruction",
+    "remainingNative": "Full final-source threat audit must be rerun when runner DNS is restored. Legacy E24-AC02 180\u2013300s timing criterion remains unmet; no spec waiver or edit."
+  }
+}

@@ -1,3 +1,4 @@
+import { groundDepth } from '../render/GroundLayers';
 // Adapted from Bruno Simon folio-2025 Materials.js (MIT).
 import { type Node, Box3, BufferAttribute, BufferGeometry, InterleavedBuffer, InterleavedBufferAttribute, Color, Sphere, Vector3, Group, MathUtils, Matrix3, Matrix4, Mesh, MeshBasicNodeMaterial, MeshLambertNodeMaterial, type Object3D, type Material } from 'three/webgpu';
 import { attribute, float, luminance, varying, cameraPosition, normalWorld, positionWorld, vec3 } from 'three/tsl';
@@ -204,7 +205,7 @@ function* steps(source: Object3D, lit: boolean, materials?: Materials, foliage =
     }
     let interior = false;
     if (/^bld\./.test(source.userData.assetId ?? '')) for (let parent: Object3D | null = node; parent; parent = parent.parent) if (parent.name === 'interior') interior = true;
-    const bucket = (emissive ? 1 : 0) + (roof ? 2 : 0) + (door >= 0 ? 4 * (door + 1) : 0);
+    const bucket = (emissive ? 1 : 0) + (roof ? 2 : 0) + (door >= 0 ? 4 * (door + 1) : 0) + Number(material.userData.groundLayer ?? 0) * 131072;
     // Delivery bundling combines material primitives under their semantic parent.
     // Match the authored parent + material reference through that hierarchy.
     let anchorIndex = -1;
@@ -268,7 +269,7 @@ function* steps(source: Object3D, lit: boolean, materials?: Materials, foliage =
       for (const { name, input } of packedInputs) { geometry.setAttribute(name, new InterleavedBufferAttribute(data, input.itemSize, offset)); offset += input.itemSize; }
     }
     if (emissive) geometry.setAttribute('_lightBase', new BufferAttribute(new Float32Array(geometry.getAttribute('position').count), 1));
-    const material = staticBatchMaterial(materials, emissive, lit, anchorList.length > 0, hasSurface, hasWindows, world, foliage, cache);
+    const material = staticBatchMaterial(materials, emissive, lit, anchorList.length > 0, hasSurface, hasWindows, world, foliage, cache, Math.floor(bucket / 131072));
     const mesh = new Mesh(geometry, material); mesh.name = isRoof ? (emissive ? 'roof-light' : 'roof') : emissive ? 'window-light' : 'static-body';
     if (door >= 0) { mesh.userData.door = doorNames[door]; doorNodes[door]!.matrixWorld.decompose(mesh.position, mesh.quaternion, mesh.scale); }
     if ((bucket & 65536) !== 0) mesh.userData.interior = true;
@@ -301,8 +302,8 @@ function roadMask(): Node<'float'> {
  * its own node build (138-176 identical `pal_picketWhite` builds per level, ~0.7 s at 1x, ~3 s at 4x CPU). A caller that
  * owns the batches' lifetime (DistrictAssets) passes a map keyed by the full argument tuple and gets one shared material
  * per graph; the output is the same material graph with the same uniforms, so the drawn pixels do not change. */
-export function staticBatchMaterial(materials: Materials | undefined, emissive: boolean, lit: boolean, anchors: boolean, hasSurface: boolean, hasWindows: boolean, world = true, foliage = false, cache?: Map<string, Material>): Material {
-  const cacheKey = materials && cache ? `${+emissive}:${+lit}:${+anchors}:${+hasSurface}:${+hasWindows}:${+world}:${+foliage}` : undefined;
+export function staticBatchMaterial(materials: Materials | undefined, emissive: boolean, lit: boolean, anchors: boolean, hasSurface: boolean, hasWindows: boolean, world = true, foliage = false, cache?: Map<string, Material>, groundLayer = 0): Material {
+  const cacheKey = materials && cache ? `${+emissive}:${+lit}:${+anchors}:${+hasSurface}:${+hasWindows}:${+world}:${+foliage}:${groundLayer}` : undefined;
   const cached = cacheKey ? cache!.get(cacheKey) : undefined;
   if (cached) return cached;
   const base = materials && world ? varying(materials.sample(attribute('_palette', 'float')), 'worldPaletteColor').mul(emissive && !lit && !anchors ? .08 : 1) : attribute('color', 'vec3');
@@ -315,10 +316,16 @@ export function staticBatchMaterial(materials: Materials | undefined, emissive: 
   const glow = emissive && (lit || anchors) ? base.div(luminance(base).max(.001)).mul(hasWindows ? attribute('_window', 'float').greaterThan(.5).select(.6, 2) : 2).mul(power ?? 1).mul(interior ?? 1) : undefined;
   // InstancedGroup owns the placement-specific base; direct prototype renders use texel zero.
   const material = materials ? foliage ? materials.foliage(world) : materials.shaded(hasWindows ? base.mul(attribute('_window', 'float').greaterThan(.5).select(.025, 1)) : base, glow, undefined, hasSurface ? attribute('_surface', 'float') : undefined, world && !emissive ? roadMask() : undefined) : emissive && lit ? new MeshBasicNodeMaterial({ vertexColors: true }) : new MeshLambertNodeMaterial({ vertexColors: true });
+  groundDepth(material, groundLayer);
   material.userData.emissiveStrength = emissive && lit ? 2 : 0;
   material.userData.batchFeatures = `${+hasSurface}:${+hasWindows}:${+!!glow}`;
   material.userData.worldPaletteOnly = !!materials && world;
   material.name = emissive ? 'emi_static-windows' : 'pal_static-colors';
   if (cacheKey) cache!.set(cacheKey, material);
   return material;
+}
+
+/** Material sharing must preserve render state as well as shader features. */
+export function staticBatchSharingKey(name: string, material: Material): string {
+  return `${name}:${material.userData.batchFeatures ?? 'legacy'}:${material.userData.groundLayer ?? 0}`;
 }

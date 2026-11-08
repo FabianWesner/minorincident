@@ -1,3 +1,4 @@
+import { groundDepth, groundLayers } from '../GroundLayers';
 // Adapted from Bruno Simon folio-2025 Confetti.js, Leaves.js, Trails.js and Noises.js (MIT, 41046b5).
 import { Color, CustomBlending, OneFactor, OneMinusSrcAlphaFactor, DoubleSide, DynamicDrawUsage, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBufferAttribute, InstancedMesh, Matrix4, MeshBasicNodeMaterial, PlaneGeometry, type Node, DepthTexture, DepthStencilFormat, UnsignedInt248Type, ViewportDepthTextureNode, TextureLoader, SRGBColorSpace, type Texture } from 'three/webgpu';
 import manifest from '../../assets/manifest.json' with { type: 'json' };
@@ -77,6 +78,7 @@ export class FxPool {
     if (mode === 'particle') {
       material.blending = CustomBlending; material.blendSrc = OneFactor; material.blendDst = OneMinusSrcAlphaFactor;
     }
+    if (mode === 'ground') groundDepth(material, groundLayers.footprint);
     material.positionNode = Fn(() => {
       const size = style.x.mul(alive);
       if (mode === 'particle') {

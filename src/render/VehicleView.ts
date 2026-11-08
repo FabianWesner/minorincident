@@ -309,7 +309,8 @@ export class VehicleView extends Group {
       record.brake.color.set('#ff2d2d').multiplyScalar(record.decay || record.apc && !record.apc.lightsOn ? 0 : state.braking ? 4 : .15);
       for (let i = 0; i < record.sirens.length; i++) record.sirens[i].color.set(i === 0 ? '#ff2d2d' : '#2f6bff').multiplyScalar(record.decay ? 0 : (Math.floor(this.world.tick / 30) % 2 === i) ? 4 : .1);
       record.door.position.y = .025 + body.def.suspension + body.def.wheelRadius + .15 - p.y;
-      record.door.visible = !state.floor && this.world.vehicles!.active === null && car.entity.health.current > 0 && this.world.tick >= car.noEnterUntil;
+      const zoo = this.world.missions?.l8;
+      record.door.visible = (zoo?.state.carId !== id || zoo.canBoardDriver()) && !state.floor && this.world.vehicles!.active === null && car.entity.health.current > 0 && this.world.tick >= car.noEnterUntil;
       // E27 burned variant: an exploded car chars to soot once (shared paint copies, no new materials).
       if ((state.damage === 'exploded') !== record.charred) { record.charred = state.damage === 'exploded'; for (const m of record.paint) if ('char' in m) (m as unknown as { char: { value: number } }).char.value = record.charred ? .88 : 0; }
       record.smoke.visible = !state.floor && state.damage !== 'normal'; record.fire.visible = state.damage === 'burning' || state.damage === 'exploded';
@@ -409,6 +410,9 @@ export class VehicleView extends Group {
         lampPosition.fromArray(a.position).applyMatrix4(record.model.matrixWorld);
         lampDirection.set(a.direction[0], level ? -.12 : a.direction[1], a.direction[2]).normalize().transformDirection(record.model.matrixWorld);
         const light = footprint({ ...a, ...(level ? { color: 'light_led_white' as const } : {}), position: lampPosition.toArray(), direction: lampDirection.toArray() }, this.world.districts?.groundHeight(lampPosition.x, lampPosition.z) ?? 0, id * 3.1);
+        // A moving driven headlight can promote the single nearby shadow map.
+        // Stable ids let Lighting follow its position without counting every frame as a new promotion.
+        if (driven && a.type === 'spot') { light.hero = true; light.id = `vehicle-${id}-${a.name}`; }
         if (level) { light.r *= .6; light.g *= .6; light.b *= .6; }
         if (/brake/i.test(a.name) && !car.entity.vehicle!.braking) { light.r *= .3; light.g *= .3; light.b *= .3; }
         field.push(light);
@@ -567,7 +571,7 @@ export class VehicleView extends Group {
     return !out.isEmpty();
   }
   wheelNodes(): Map<number, Object3D[]> { return new Map([...this.records].map(([id, r]) => [id, r.wheels.map(w => w.node)])); }
-  snapshot() { return [...this.records].map(([id, r]) => ({ id, apcDamage: r.apc?.snapshot() ?? null, transitionCouriers: [...this.occupants.values()].filter(o => o.parent === r.parent && o.visible).map(o => ({ actorId: o.actorId, asset: o.asset, phase: 'exit', position: o.position.toArray() })), doors: ['doorL','doorR','door_near_0','door_near_1','door_far_0','door_far_1'].flatMap(name => { const node = r.model.getObjectByName(name); let meshes = 0; node?.traverse(child => { if (child instanceof Mesh) meshes++; }); return node ? [{ name, yaw: node.rotation.y, meshes }] : []; }), decay: r.decay ?? null, bloodCoverage: this.bloodEnabled ? r.blood : 0, windshieldBloodCoverage: this.bloodEnabled ? r.blood : 0, wheels: r.wheels.map(w => ({ spin: w.node.rotation.z, steer: w.node.rotation.y })), brake: r.brake.color.r, sirens: r.sirens.map(s => s.color.toArray()), placeholder: !!r.model.userData.placeholder, occupants: [...this.occupants.values()].filter(o => o.parent === r.model && o.visible).map(o => ({ actorId: o.actorId, asset: o.asset, seated: true, position: o.position.toArray(), handGapM: [...o.handGapM] })) })); }
+  snapshot() { return [...this.records].map(([id, r]) => ({ id, entryRingVisible: r.door.visible, apcDamage: r.apc?.snapshot() ?? null, transitionCouriers: [...this.occupants.values()].filter(o => o.parent === r.parent && o.visible).map(o => ({ actorId: o.actorId, asset: o.asset, phase: 'exit', position: o.position.toArray() })), doors: ['doorL','doorR','door_near_0','door_near_1','door_far_0','door_far_1'].flatMap(name => { const node = r.model.getObjectByName(name); let meshes = 0; node?.traverse(child => { if (child instanceof Mesh) meshes++; }); return node ? [{ name, yaw: node.rotation.y, meshes }] : []; }), decay: r.decay ?? null, bloodCoverage: this.bloodEnabled ? r.blood : 0, windshieldBloodCoverage: this.bloodEnabled ? r.blood : 0, wheels: r.wheels.map(w => ({ spin: w.node.rotation.z, steer: w.node.rotation.y })), brake: r.brake.color.r, sirens: r.sirens.map(s => s.color.toArray()), placeholder: !!r.model.userData.placeholder, occupants: [...this.occupants.values()].filter(o => o.parent === r.model && o.visible).map(o => ({ actorId: o.actorId, asset: o.asset, seated: true, position: o.position.toArray(), handGapM: [...o.handGapM] })) })); }
   private releaseRecord(record: Record): void {
     record.apc?.dispose(); disposeTransportCab(record.model);
     record.crewRoof?.trim.traverse(node => { if (node instanceof Mesh) node.geometry.dispose(); });

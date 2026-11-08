@@ -7,7 +7,9 @@ import { ensurePool } from './ensure';
 const quiet = process.argv[2] === 'exclusive';
 const command = process.argv.slice(3);
 const migrated = command.some(arg => /(?:^|\/)(?:playwright|cli[.]js)$/.test(arg) || arg.endsWith('.ts') && (() => { try { return /(?:SceneSession|launchBrowser|launchProfile)/.test(readFileSync(arg, 'utf8')); } catch { return false; } })());
-const exclusive = quiet || !migrated;
+// Functional checks can reserve one pooled browser without FPS-measurement
+// preconditions. Start their batch budget after admission, not while queued.
+const exclusive = quiet || process.argv[2] === 'serial' || !migrated;
 const capSeconds = Number(process.env.E2E_RESERVATION_SECONDS ?? 600);
 if (!Number.isInteger(capSeconds) || capSeconds < 1 || capSeconds > 600) {
   console.error('Browser reservations must be 1–600 seconds; split batches longer than 10 minutes.'); process.exit(2);
@@ -27,6 +29,10 @@ if (!Number.isInteger(admissionSeconds) || admissionSeconds <= 0) {
   console.error('E2E_ADMISSION_TIMEOUT_SECONDS must be a positive integer'); process.exit(2);
 }
 const admissionMs = admissionSeconds * 1000;
+const requestTimeoutMs = Number(process.env.BROWSER_POOL_REQUEST_TIMEOUT_MS ?? 3000);
+if (!Number.isInteger(requestTimeoutMs) || requestTimeoutMs < 1000 || requestTimeoutMs > 30_000) {
+  throw new Error('BROWSER_POOL_REQUEST_TIMEOUT_MS must be 1000–30000');
+}
 const deadline = Date.now() + admissionMs;
 const cooldown = `${process.env.E2E_LOCK ?? '/tmp/minor-incident-e2e.lock'}.quiet-finished`;
 let token: string | undefined, started = false, cancelled = false;
@@ -43,7 +49,7 @@ const logWait = (conditions: Record<string, unknown>) => {
 process.on('SIGINT', () => { cancelled = true; child?.kill('SIGINT'); });
 process.on('SIGTERM', () => { cancelled = true; child?.kill('SIGTERM'); });
 const request = async (path: string, method = 'GET') => {
-  const r = await fetch(`${poolUrl()}${path}`, { method, signal: AbortSignal.timeout(path.endsWith('/external') ? Math.max(1, reservedAt + capSeconds * 1000 - Date.now() - 5000) : 3000) });
+  const r = await fetch(`${poolUrl()}${path}`, { method, signal: AbortSignal.timeout(path.endsWith('/external') ? Math.max(1, reservedAt + capSeconds * 1000 - Date.now() - 5000) : requestTimeoutMs) });
   if (!r.ok) throw new Error(`Pool ${path.split('?')[0]} returned ${r.status}`);
   return await r.json();
 };

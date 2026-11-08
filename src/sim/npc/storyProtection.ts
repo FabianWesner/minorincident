@@ -30,6 +30,9 @@ export function storyProtected(world: SimWorld, entity: EntitySnapshot): boolean
       || r.status === 'following' && world.tick < r.foundAt + l5.follow.rescueGraceS * 60))) return true;
   }
   if (s.l6) {
+    // Rescued actors now remain drawn on the night street instead of being
+    // hidden; crossing Northgate still ends their exposure to the outbreak.
+    if (s.l6.survivors.some(r => r.id === id && r.status === 'out')) return true;
     if (id === s.l6.survivors[0]?.id && !s.l6.gateAt) return true;
     if (world.tick < s.l6.breach1At) {
       const medic = s.l6.survivors.find(r => r.key === 'rosa' || r.routine === 'treat');

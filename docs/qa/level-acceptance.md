@@ -236,13 +236,13 @@ Feel: "calm shelter → **a defence: waves pour in through the breaches** → fi
 | L6-04 | stop | Breach 2 at +20–30 s from ≥ 2 accesses, ≥ 10 infected (tune); power off within 1 frame, red emergency light; abandon at breach 2 + 15 s or ≥ 3 bitten. | E24-AC06/07 | S |
 | L6-05 | stop | combat: **reachable ≥ 95 %** (every infected spawns inside the walkable station/tunnel, none behind the tunnel wall); passive first attack ≤ 15 s after each breach caption; attacks on player ≥ 4/min (tune). | Q-326, Q-327 | S |
 | L6-06 | retreat | Infected enter the tunnel from 6 side entries (2 each, alternating sides) **and reach the tracks**; reachable ≥ 95 %; none stand harmless behind the platform/gate line. PO: "Just let them enter and it's good." | Q-327, l6Entries | S |
-| L6-07 | retreat | combat: attacks on player + group ≥ 4/min across the retreat (tune); competent damage taken ≥ 30 HP (tune); concurrent infected ≤ 60 / 30. | Q-308, E24-AC13 | S, P |
+| L6-07 | retreat | PO 2026-11-08: recurring rail pressure arrives as **3-infected cohorts every 40 s**, alternating between an entry ahead of the walking tail and one behind it. Across complete seeds 1–3, low + high: ≥ 4.4 arrivals/min, with ≥ 1 arrival from each direction per run; attacks on player **≥ 11/min**, attacks on followers **≥ 5/min**; competent damage taken ≥ 30 HP; concurrent infected ≤ 60 high / 30 low. | Q-308, E24-AC13, PO 2026-11-08; `docs/reports/r12-l6/evidence/pressure-after.json` | S, P |
 | L6-08 | retreat | Group walks at 2.2 m/s; **injured survivors at group speed** (no single straggler that needs babysitting); every follower's bar visible. | Q-328, Q-323 | S |
 | | | **Conflict:** E24-AC10 "injured move at 1.4 m/s and become stragglers" → Q-328 (11-01) wins. | | |
 | L6-09 | retreat | Gates: ≥ 3 chokepoints ≤ 2.5 m; a closed gate blocks movement + sight and holds 8–12 s vs 5 infected; refuses to close with a survivor ≤ 2 m; when everyone is through, its prompt and ring stay at the gate until closed (E or click). | E24-AC11, Q-305 | S |
 | L6-10 | retreat | Markers fixed at the gate / exit platform; never walking ahead of the group. | Q-306 | S |
-| L6-11 | retreat | Covering matters: `evade-only` ≤ 30 % out, `complete` ≥ 60 %. | E24-AC09 | S |
-| L6-12 | exit | Northgate is solid when closed and drawn open when passable; night caption "Night. Still alive."; end shot frames the scene; result counts match the objective. | Q-307, Q-144, E24-AC14 | S, O |
+| L6-11 | retreat | PO 2026-11-08: covering matters: `evade-only` ≤ 30 % out; `complete` exits with **≥ 22/29 (76 %) survivors** and ≤ 3 courier deaths on seeds 1–3, low + high. Measured: 22–26/29 out, 1–3 deaths. | E24-AC09, PO 2026-11-08; `docs/reports/r12-l6/evidence/pressure-after.json` | S |
+| L6-12 | exit | PO 2026-11-08: survivors visibly pass Northgate into the night street, with "The survivors are safe." while they leave; rescued bodies remain visible in the end shot, never disappear on the platform. Northgate is solid when closed and drawn open when passable; night caption "Night. Still alive."; end shot frames the scene; result counts match the objective. | Q-307, Q-144, E24-AC14, PO 2026-11-08 | S, O |
 | L6-13 | all | Fists-only run finishable (no soft-lock). | PO 10-22 | S |
 | L6-14 | all | Underground readability: player contrast ≥ 3:1; infected eyes brightest pixels. | E24-AC15 | O |
 
@@ -260,8 +260,8 @@ Feel: "power fantasy: rockets blow gaps into enormous crowds while the group esc
 |---|---|---|---|---|
 | L7-01 | rocket | Launcher ≤ 5 m from the exit, taken on approach, no hitch (max frame ≤ 50 ms at pickup and first shot). | E29-AC04, Q-309, G-10 | S |
 | L7-02 | rocket | All six weapons selectable; L6 roster arrives with same ids at full health in formation (no convergence through the courier). | E29-AC03/04/11 | S |
-| L7-03 | corridor | Rocket: cadence **2.4/s**, no wait for impact; detonates at the clicked ground point (or first hit / max range); visible in the dark; one rocket kills ≥ 20/24 regulars within 3 m and opens a ≥ 3 m gap; no white-out at point blank. | E29-AC05/06, F-290, F-290b, Q-311, Q-148 | S, O |
-| L7-04 | corridor | Over the run ≥ 400 / 200 regulars and **4–6 Alphas** arrive; concurrent ≤ 200 / 100. | E29-AC08 | S |
+| L7-03 | corridor | Rocket: cadence **1.2/s** (PO 2026-11-08; half rate), no wait for impact; refuses aim points/enemies in its 30° firing cone closer than **5 m**, with dry click + "Too close!"; arms after **5 m** travel (earlier impacts are duds); detonates at the clicked ground point (or first hit / max range); visible in the dark; one rocket kills ≥ 20/24 regulars within 3 m and opens a ≥ 3 m gap; no white-out at point blank. | E29-AC05/06, F-290b, Q-311, Q-148 | S, O |
+| L7-04 | corridor | Over the run ≥ 400 / 200 regulars and **4–6 Alphas** arrive at **450 HP each in L7**; high and low tiers enter the route/corridor from the street and both flanks, with arrivals separated so one rocket cannot clear all approaches; concurrent ≤ 200 / 100. | E29-AC08, PO 2026-11-08 | S |
 | L7-05 | corridor | combat: reachable ≥ 90 %; passive first attack ≤ 10 s (measured 4.6 s); attacks on player + group ≥ 6/min (tune). | orch. | S |
 | L7-06 | corridor | ≥ 2 connected routes reach the corridor; no dead-end street that looks like the route; no meaningless walk-through wall/slab. PO: "This street feels like a trap". | E29-AC10, Q-291, Q-289 | L, O |
 | L7-07 | corridor | Corridor ring fixed (not the nearest of several moving entrances); group counter "Group n/n" correct. | Q-306 | S |
@@ -283,8 +283,7 @@ Feel: "false sanctuary → internal mass outbreak with infected animals; fight t
 | ID | Step | Criterion (expected value) | Source | Check |
 |---|---|---|---|---|
 | L8-01 | escape (calm) | L7 roster and arsenal arrive exactly; companions at full health; no weapon pickup in L8; start weapon = last weapon (not the bat). | E30-AC03, Q-198 | S |
-| L8-02 | escape (calm) | Exactly 60 active sim seconds with the opening objective visible, without waypoint or scripted attack. | E30-AC04 | S |
-| | | **Check:** the code starts `escape` (waypoint on) at level start; verify the marker/text stay hidden for the 60 s calm, else FAIL. | | |
+| L8-02 | sanctuary → escape | **PO 2026-11-08:** from control return, the tracker names the zoo gate and shows its distance; the fixed world marker/edge arrow and minimap target point there during the 60 active-second calm. The APC objective and its markers activate only after the internal breach at 60 s and reaching the zoo gate in that breached state; the APC cannot be boarded/driven and survivors cannot queue there before that transition. No scripted attack/conversion/breach begins early, and movement/weapon selection stay available. Pause and sanctuary restore preserve the remaining calm time. | E30-AC04/07/14 | S, O |
 | L8-03 | escape (calm) | ≥ 20 civilians, ≥ 6 soldiers, ≥ 4 staff, ≥ 8 animals (all 5 species, ≥ 2 zebras, ≥ 3 flamingos); outside-wall infected cannot cross; nobody idle > 3 s. | E30-AC05/06 | S, O |
 | L8-04 | escape (breach) | Breach at 60 s ± 1 tick at ≥ 3 tunnel outlets ≥ 20 m apart within 1 s; **6 / 3 per point** (≥ 18 / ≥ 9); no pop-in. | E30-AC07 | S |
 | L8-05 | escape (breach) | Attacks hit civilians, soldiers, staff and animals; animals turn in 2.5–3.5 s keeping id/species; 3–5 Alphas over the run; concurrent ≤ 200 / 100. | E30-AC08/09/11 | S |

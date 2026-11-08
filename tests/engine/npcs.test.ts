@@ -67,6 +67,39 @@ test('civilians: seeded grab → bite → down → glowing eyes → rising → i
     attacker.health.current = 0; step(s, 1);
     expect(s.events.events().some(ev => ev.type === 'civilian.saved'), mode).toBe(mode !== 'late');
   }
+  // Sight caching must retain interleaved survivor answers across a high-tier night crowd and invalidate on tick/power change.
+  {
+    const w = await loadRunnerLevel('L8', 1, undefined, 0, { quality: 'high' }); worlds.push(w);
+    w.missions!.state.timeOfDay = 'night'; const power = w.lightPower!;
+    for (const lamp of power.lamps.values()) for (const point of [{ x: lamp.x, z: lamp.z }, { x: lamp.x + lamp.range, z: lamp.z }, { x: lamp.x, z: lamp.z - lamp.range - .001 }]) {
+      const lit = [...power.lamps.values()].some(l => Math.hypot(point.x - l.x, point.z - l.z) <= l.range && power.isOn(l.id));
+      expect(power.sightMultiplier(point)).toBe(lit ? 1 : .6);
+    }
+    w.tick++;
+    const humans = w.infected!.hearing.humans, at = w.entities.get(1)!.transform;
+    for (const center of [at, { x: at.x + 20, z: at.z - 12 }]) for (const radius of [0, 8, 16, 40]) {
+      const expected = humans.all().filter(h => (h.position.x - center.x) ** 2 + (h.position.z - center.z) ** 2 <= radius * radius).map(h => h.id).sort((a, b) => a - b);
+      expect(humans.within(center, radius).map(h => h.id)).toEqual(expected);
+    }
+    const target = humans.all().find(h => h.id !== 1)!, person = w.entities.get(target.id)!, hp = person.health.current;
+    person.health.current = 0;
+    expect(humans.get(person.id)).toBeUndefined();
+    expect(humans.within(target.position, 1).some(h => h.id === person.id)).toBe(false);
+    person.health.current = hp;
+    const lamp = [...power.lamps.values()].find(l => power.isOn(l.id))!;
+    let reads = 0; const isOn = power.isOn.bind(power); power.isOn = (id: string) => { reads++; return isOn(id); };
+    const a = { x: lamp.x, z: lamp.z }, b = { x: lamp.x + .1, z: lamp.z + .1 }, firstA = power.sightMultiplier(a), afterA = reads;
+    const firstB = power.sightMultiplier(b), afterB = reads;
+    expect(power.sightMultiplier(a)).toBe(firstA); expect(reads).toBe(afterB);
+    expect(afterA).toBeGreaterThan(0); expect(afterB).toBeGreaterThan(afterA);
+    expect(power.sightMultiplier(b)).toBe(firstB);
+    expect(power.sightMultiplier({ x: 100000, z: 100000 })).toBe(.6); expect(reads).toBe(afterB);
+    w.tick++; power.sightMultiplier(a); expect(reads).toBeGreaterThan(afterB);
+    const afterNextTick = reads; power.revision++; power.sightMultiplier(a); expect(reads).toBeGreaterThan(afterNextTick);
+    const listeners = w.events.listenerCount;
+    w.loadMission(w.missions!.def);
+    expect(w.events.listenerCount).toBe(listeners);
+  }
 });
 
 test('escort: shared combat pace, follows through a maze, a 2 s stand revives to 50 %, unattended 20 s down fails the mission', async () => {
@@ -248,6 +281,63 @@ test('corgi: warns of an offscreen threat within 18 m with a unit direction', as
       expect(move).toHaveBeenCalledOnce(); expect(dog.transform.x).toBeGreaterThan(start.x);
       steer.mockRestore();
     } finally { w.dispose(); }
+  }
+  // Six seconds of failed progress recover off-screen, followed by real visible running.
+  {
+    const w = await world(), dog = w.entities.get(w.npcs!.companion.spawn())!, p = w.entities.get(1)!;
+    for (const enemy of [...w.infected!.active]) w.infected!.release(enemy);
+    w.npcs!.companion.forceSafe = true;
+    Object.assign(w.infected!.director.camera, { halfWidth: 6, halfDepth: 6 });
+    for (const gap of [45, 20, 5]) {
+      Object.assign(w.infected!.director.camera, { halfWidth: gap > 6 ? 6 : 2, halfDepth: gap > 6 ? 6 : 2 });
+      Object.assign(dog.transform, { x: p.transform.x + gap, z: p.transform.z }); w.spatial.set(dog.id, dog.transform.x, dog.transform.z);
+      const move = vi.spyOn(w.npcs!, 'move').mockReturnValue(false), start = w.tick;
+      for (let tick = 1; tick <= 360; tick++) {
+        // Slow catch-up still has a six-second limit outside the 35 m leash.
+        if (gap === 45) dog.transform.x = p.transform.x + gap - tick / 120;
+        // Side-to-side escape attempts must not count as closing the gap.
+        if (gap === 20) dog.transform.z = p.transform.z + (tick % 2 ? .6 : -.6);
+        w.tick = start + tick; w.npcs!.companion.update();
+      }
+      expect(dog.transform.x).toBe(p.transform.x + gap - (gap === 45 ? 3 : 0));
+      expect(w.infected!.director.offscreen(dog.transform, dog.transform.y - .3)).toBe(true);
+      w.update();
+      expect(dog.hidden).not.toBe(true);
+      expect(dog.transform.x).toBeLessThan(p.transform.x);
+      expect(w.infected!.director.offscreen(dog.transform, dog.transform.y - .3)).toBe(true);
+      expect(dog.companion!.rejoining).toBe(true);
+      move.mockRestore();
+      let ranIntoView = false;
+      for (let tick = 0; tick < 240; tick++) {
+        const before = { ...dog.transform }; w.update();
+        expect(Math.hypot(dog.transform.x - before.x, dog.transform.z - before.z)).toBeLessThan(.2);
+        expect(dog.hidden).not.toBe(true);
+        if (!w.infected!.director.offscreen(dog.transform, dog.transform.y - .3) && Math.hypot(dog.companion!.velocity!.x, dog.companion!.velocity!.z) > 1) ranIntoView = true;
+      }
+      expect(ranIntoView).toBe(true);
+      expect(Math.hypot(dog.transform.x - p.transform.x, dog.transform.z - p.transform.z)).toBeLessThan(3);
+      expect(dog.companion!.rejoining).toBeUndefined();
+    }
+    // A visible dog cannot vanish, and scripted transport keeps ownership of its pose.
+    const move = vi.spyOn(w.npcs!, 'move').mockReturnValue(false);
+    Object.assign(dog.transform, { x: p.transform.x + 40, z: p.transform.z });
+    Object.assign(w.infected!.director.camera, { halfWidth: 50, halfDepth: 50 });
+    for (let i = 0; i < 400; i++) { w.tick++; w.npcs!.companion.update(); }
+    expect(dog.transform.x).toBe(p.transform.x + 40);
+    dog.passengerOf = 999;
+    Object.assign(w.infected!.director.camera, { halfWidth: 6, halfDepth: 6 });
+    for (let i = 0; i < 400; i++) { w.tick++; w.npcs!.companion.update(); }
+    expect(dog.transform.x).toBe(p.transform.x + 40);
+    delete dog.passengerOf; move.mockRestore();
+    w.events.emit({ type: 'cinematic.completed', id: 'test-transition', tick: w.tick });
+    expect(Math.hypot(dog.transform.x - p.transform.x, dog.transform.z - p.transform.z)).toBeLessThanOrEqual(4);
+    expect(dog.hidden).not.toBe(true);
+    expect(dog.companion!.path).toEqual([]);
+    dog.hidden = true;
+    dog.pendingAdmission = { ...dog.transform, writer: 'test.hidden-admission', hidden: true };
+    w.npcs!.companion.respawnNear();
+    expect(dog.pendingAdmission).toBeUndefined();
+    expect(dog.hidden).toBe(false);
   }
   // G-27: the Oak sedan's rotated nav footprint must leave a route through the gate beside the wreck.
   {

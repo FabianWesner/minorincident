@@ -1,0 +1,19 @@
+{
+  "adapterSha256": "6b73acee0caffafdb5c95639a985c2f2ebfa6d0d768fa15c38d2c65fd9af62f6",
+  "patchRows": [
+    {
+      "side": "candidate",
+      "main": "/build/index-DajticFx.js",
+      "originalSha256": "75e4d4d1bcb154003f80d47419da594c4f4801cb46e81535277f23ab33bc69e0",
+      "patchedSha256": "48d577e581ccb4303c43136d7e03664ba284fa64d5a7461464f34b2403bedcc8",
+      "patch": "Expose the existing Game instance to the shared test adapter only for ?testApi=1; original public code otherwise intact."
+    },
+    {
+      "side": "prod",
+      "main": "/build/index-Dk-iL-FG.js",
+      "originalSha256": "61043483d030ec6be950a50c4de5d2d3d1301106df7a6ac18c2eaa0b1bbf29e0",
+      "patchedSha256": "1e611e98364fc87f75469e2f1e6c987a9826a19d0b3bcb39159a4e65489892bb",
+      "patch": "Expose the existing Game instance to the shared test adapter only for ?testApi=1; original public code otherwise intact."
+    }
+  ]
+}

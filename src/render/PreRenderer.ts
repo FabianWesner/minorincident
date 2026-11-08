@@ -119,6 +119,7 @@ export function incrementalPreRender(renderer: Renderer, scene: Scene, camera: C
   };
 }
 export async function preRender(renderer: Renderer, scene: Scene, camera: Camera, render: () => void, compile: (partitions: CompilePartitions) => Promise<unknown> = partitions => Promise.all(partitions.map(apply => { apply(); return renderer.compileAsync(scene, camera); })), pause?: () => Promise<void>, progress?: (completed: number, total: number) => void, background = false, budgetedWarmUp = false, cooperative = false, foregroundLanes = compileLanes): Promise<void> {
+  const prepareDraw = async (): Promise<void> => { if (!background && !cooperative) await renderer.prepareWarmRender(render); else render(); };
   const saved: { object: Object3D; visible: boolean; culled: boolean; castShadow: boolean; count?: number; matrices?: Matrix4[]; position?: Vector3 }[] = [];
   scene.updateMatrixWorld(true);
   const focus = camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(camera.position);
@@ -202,19 +203,19 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
       for (let from = 0; from < leaves.length; from += chunk) {
         await pause();
         leaves.forEach((leaf, i) => { leaf.visible = i >= from && i < from + chunk; });
-        try { render(); } finally { for (const leaf of leaves) leaf.visible = true; }
+        try { await prepareDraw(); } finally { for (const leaf of leaves) leaf.visible = true; }
         progress?.(++completed, total);
       }
       performance.measure('L1 warm-up chunks', { start, end: performance.now() });
       await pause();
     }
-    const draw = performance.now(); render();
+    const draw = performance.now(); await prepareDraw();
     await renderer.finishWarmUp(); progress?.(++completed, total);
     performance.measure('L1 warm-up draw', { start: draw, end: performance.now() }); let phase = performance.now();
     // Three switches from drawArrays/Elements to their instanced variants only above
     // one instance. ANGLE Metal specializes both driver pipelines on their first draw.
     for (const { object, matrices } of saved) if (object instanceof InstancedMesh) object.count = matrices!.length;
-    render(); await renderer.finishWarmUp(); progress?.(++completed, total);
+    await prepareDraw(); await renderer.finishWarmUp(); progress?.(++completed, total);
     performance.measure('L1 warm-up instanced draw', { start: phase, end: performance.now() }); phase = performance.now();
     // Opaque district geometry can cover the animated batches in the tiny target.
     // Draw animated batches without opaque geometry so ANGLE executes their fragment pipelines, rather than
@@ -244,7 +245,7 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
         });
         for (const instanced of [false, true]) {
           for (const { object, matrices } of group) (object as InstancedMesh).count = instanced ? matrices!.length : 1;
-          render(); await renderer.finishWarmUp(); progress?.(++completed, total);
+          await prepareDraw(); await renderer.finishWarmUp(); progress?.(++completed, total);
         }
         for (const { object } of group) object.visible = false;
       }

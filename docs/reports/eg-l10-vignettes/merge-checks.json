@@ -1,0 +1,79 @@
+{
+  "sourceCommit": "466b7fd2d118abc9b48b8f572bc123a9374b4aac",
+  "runnerSnapshotHead": "50e8683e302e5c64fb495968f262057f5f47fdd2",
+  "host": "mi-runner-2",
+  "browsersLaunched": 0,
+  "checks": [
+    {
+      "name": "scope",
+      "command": [
+        "node",
+        "--import",
+        "tsx/esm",
+        "tools/qa/l10-vignettes.ts"
+      ],
+      "exitCode": 0,
+      "seconds": 1.54,
+      "log": "test-results/eg-l10-vignettes-checks-merge/scope.log"
+    },
+    {
+      "name": "placement",
+      "command": [
+        "node",
+        "--import",
+        "tsx/esm",
+        "tools/qa/l10-vignettes-placement.ts"
+      ],
+      "exitCode": 0,
+      "seconds": 9.65,
+      "log": "test-results/eg-l10-vignettes-checks-merge/placement.log"
+    },
+    {
+      "name": "farm-native",
+      "command": [
+        "node",
+        "--import",
+        "tsx/esm",
+        "tools/qa/eg-l10-farm.ts"
+      ],
+      "exitCode": 0,
+      "seconds": 8.98,
+      "log": "test-results/eg-l10-vignettes-checks-merge/farm-native.log"
+    },
+    {
+      "name": "typecheck",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "seconds": 69.18,
+      "log": "test-results/eg-l10-vignettes-checks-merge/typecheck.log"
+    },
+    {
+      "name": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0,
+      "seconds": 38.44,
+      "log": "test-results/eg-l10-vignettes-checks-merge/lint.log"
+    },
+    {
+      "name": "world-systems",
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "tests/engine/world-systems.test.ts",
+        "--maxWorkers=1"
+      ],
+      "exitCode": 0,
+      "seconds": 28.61,
+      "log": "test-results/eg-l10-vignettes-checks-merge/world-systems.log"
+    }
+  ]
+}

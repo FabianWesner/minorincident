@@ -86,10 +86,11 @@ export class ChunkResidency {
   private refreshNavigation(): void {
     const w = this.world, ai = w.infected;
     if (!ai) return;
-    const ground = this.bounds();
+    const ground = this.bounds(), movementCost = ai.nav.movementCost;
     const mask = this.activeBounds?.rectangular ? null : (x: number, z: number) => this.resident(x, z);
     if (ai.nav.ground.width === ground.width && ai.nav.ground.depth === ground.depth && ai.nav.walls === this.walls) { ai.nav.mask = mask; ai.nav.recenter(ground.center!); }
     else ai.nav = new NavGrid(ground, this.walls, .5, ground.center, mask);
+    ai.nav.movementCost = movementCost;
     for (const [id, wall] of w.props?.navWalls ?? []) if (this.resident(wall.x, wall.z)) ai.nav.setBlocker(id, wall, true);
     for (const wall of w.interactables?.walls ?? []) if (wall.entityId !== undefined && this.resident(wall.x, wall.z)) ai.nav.setBlocker(wall.entityId, wall, true);
     ai.navigation = new DistrictNavigation({ name: 'streamed', ground, player: w.entities.get(1)!.transform }, ai.nav);

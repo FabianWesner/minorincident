@@ -1,0 +1,1894 @@
+{
+  "labels": [
+    "APC finished cab close",
+    "vehicle.military-apc",
+    "vehicle.sedan",
+    "vehicle.pickup",
+    "vehicle.suv",
+    "vehicle.police",
+    "vehicle.ambulance",
+    "vehicle.school-bus",
+    "vehicle.fire-engine",
+    "L1 bicycle E19-AC16",
+    "L2 native fire-engine ride",
+    "L9 low zoom 1",
+    "L9 low zoom 1.5",
+    "L9 low native wreck ram",
+    "L9 high zoom 1",
+    "L9 high zoom 1.5",
+    "L9 high native wreck ram"
+  ],
+  "evidence": [
+    {
+      "vehicle": "vehicle.military-apc",
+      "code": "ArrowLeft",
+      "from": {
+        "x": -3.997068405151367,
+        "z": -12.770033836364746,
+        "y": 0.9954185485839844,
+        "yaw": 2.0112445498277043
+      },
+      "result": {
+        "car": {
+          "kind": "vehicle",
+          "archetype": "vehicle.military-apc",
+          "transform": {
+            "x": -26.22755241394043,
+            "z": -21.747028350830078,
+            "y": 0.9954281449317932,
+            "yaw": -2.993027288568227
+          },
+          "faction": "survivor",
+          "health": {
+            "current": 1000,
+            "max": 1000
+          },
+          "vehicle": {
+            "speed": 14.302406540716557,
+            "forwardSpeed": 14.300762159675434,
+            "steer": 0.10861086384630057,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0,
+            "apcContacts": {
+              "sequence": 0,
+              "infected": {}
+            }
+          },
+          "id": 3
+        },
+        "dx": -463.09116737684155,
+        "input": {
+          "scheme": "keyboard",
+          "frame": {
+            "move": {
+              "x": -0.7071067811865476,
+              "z": 0.7071067811865475
+            },
+            "aim": {
+              "x": -0.707106781186547,
+              "z": 0.707106781186548
+            },
+            "aimSource": "keyboard",
+            "left": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "right": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "selector": 0,
+            "interact": false,
+            "pause": false,
+            "cancelMove": false,
+            "brake": false,
+            "drive": {
+              "throttle": 0,
+              "steer": -1
+            }
+          }
+        }
+      }
+    },
+    {
+      "vehicle": "vehicle.military-apc",
+      "code": "ArrowRight",
+      "from": {
+        "x": -26.22755241394043,
+        "z": -21.747028350830078,
+        "y": 0.9954281449317932,
+        "yaw": -2.993027288568227
+      },
+      "result": {
+        "car": {
+          "kind": "vehicle",
+          "archetype": "vehicle.military-apc",
+          "transform": {
+            "x": -15.525300025939941,
+            "z": -26.28304100036621,
+            "y": 0.9954345226287842,
+            "yaw": -2.570200964186007
+          },
+          "faction": "survivor",
+          "health": {
+            "current": 1000,
+            "max": 1000
+          },
+          "vehicle": {
+            "speed": 5.944243989965072,
+            "forwardSpeed": -5.93994211205756,
+            "steer": -0.05612566405564044,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0,
+            "apcContacts": {
+              "sequence": 0,
+              "infected": {}
+            }
+          },
+          "id": 3
+        },
+        "dx": 398.5938238486182,
+        "input": {
+          "scheme": "keyboard",
+          "frame": {
+            "move": {
+              "x": 0.7071067811865476,
+              "z": -0.7071067811865475
+            },
+            "aim": {
+              "x": 0.7071067811865476,
+              "z": -0.7071067811865475
+            },
+            "aimSource": "keyboard",
+            "left": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "right": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "selector": 0,
+            "interact": false,
+            "pause": false,
+            "cancelMove": false,
+            "brake": false,
+            "drive": {
+              "throttle": 0,
+              "steer": 1
+            }
+          }
+        }
+      }
+    },
+    {
+      "vehicle": "vehicle.military-apc",
+      "northFacingKeyboard": "pass",
+      "speed": 5.944243989965072,
+      "lateral": [
+        {
+          "key": "ArrowLeft",
+          "screenDx": -463.09116737684155
+        },
+        {
+          "key": "ArrowRight",
+          "screenDx": 398.5938238486182
+        }
+      ]
+    },
+    {
+      "vehicle": "vehicle.sedan",
+      "code": "ArrowLeft",
+      "from": {
+        "x": -4.517719268798828,
+        "z": -13.454703330993652,
+        "y": 0.7354232668876648,
+        "yaw": 2.0658822647531476
+      },
+      "result": {
+        "car": {
+          "kind": "vehicle",
+          "archetype": "vehicle.sedan",
+          "transform": {
+            "x": -26.940292358398438,
+            "z": -20.44603157043457,
+            "y": 0.7354282140731812,
+            "yaw": -2.871711608359423
+          },
+          "faction": "survivor",
+          "health": {
+            "current": 300,
+            "max": 300
+          },
+          "vehicle": {
+            "speed": 13.910582981724106,
+            "forwardSpeed": 13.910582832474516,
+            "steer": 0.076174484648985,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0
+          },
+          "id": 3
+        },
+        "dx": -512.18374014376,
+        "input": {
+          "scheme": "keyboard",
+          "frame": {
+            "move": {
+              "x": -0.7071067811865476,
+              "z": 0.7071067811865475
+            },
+            "aim": {
+              "x": -0.707106781186547,
+              "z": 0.707106781186548
+            },
+            "aimSource": "keyboard",
+            "left": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "right": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "selector": 0,
+            "interact": false,
+            "pause": false,
+            "cancelMove": false,
+            "brake": false,
+            "drive": {
+              "throttle": 0,
+              "steer": -1
+            }
+          }
+        }
+      }
+    },
+    {
+      "vehicle": "vehicle.sedan",
+      "code": "ArrowRight",
+      "from": {
+        "x": -26.940292358398438,
+        "z": -20.44603157043457,
+        "y": 0.7354282140731812,
+        "yaw": -2.871711608359423
+      },
+      "result": {
+        "car": {
+          "kind": "vehicle",
+          "archetype": "vehicle.sedan",
+          "transform": {
+            "x": -15.518982887268066,
+            "z": -26.884653091430664,
+            "y": 0.7354345917701721,
+            "yaw": -2.4922462408499126
+          },
+          "faction": "survivor",
+          "health": {
+            "current": 300,
+            "max": 300
+          },
+          "vehicle": {
+            "speed": 5.959415410914525,
+            "forwardSpeed": -5.957919713263035,
+            "steer": -0.030124492969052567,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0
+          },
+          "id": 3
+        },
+        "dx": 463.4221563041241,
+        "input": {
+          "scheme": "keyboard",
+          "frame": {
+            "move": {
+              "x": 0.7071067811865476,
+              "z": -0.7071067811865475
+            },
+            "aim": {
+              "x": 0.7071067811865476,
+              "z": -0.7071067811865475
+            },
+            "aimSource": "keyboard",
+            "left": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "right": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "selector": 0,
+            "interact": false,
+            "pause": false,
+            "cancelMove": false,
+            "brake": false,
+            "drive": {
+              "throttle": 0,
+              "steer": 1
+            }
+          }
+        }
+      }
+    },
+    {
+      "vehicle": "vehicle.sedan",
+      "northFacingKeyboard": "pass",
+      "speed": 5.959415410914525,
+      "lateral": [
+        {
+          "key": "ArrowLeft",
+          "screenDx": -512.18374014376
+        },
+        {
+          "key": "ArrowRight",
+          "screenDx": 463.4221563041241
+        }
+      ]
+    },
+    {
+      "vehicle": "vehicle.pickup",
+      "code": "ArrowLeft",
+      "from": {
+        "x": -3.836914300918579,
+        "z": -13.092814445495605,
+        "y": 0.7354280948638916,
+        "yaw": 2.001436980987245
+      },
+      "result": {
+        "car": {
+          "kind": "vehicle",
+          "archetype": "vehicle.pickup",
+          "transform": {
+            "x": -24.862062454223633,
+            "z": -22.915433883666992,
+            "y": 0.7354289889335632,
+            "yaw": -3.0388940663359265
+          },
+          "faction": "survivor",
+          "health": {
+            "current": 450,
+            "max": 450
+          },
+          "vehicle": {
+            "speed": 13.468096180317813,
+            "forwardSpeed": 13.467347021354247,
+            "steer": 0.10239065564023289,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0
+          },
+          "id": 3
+        },
+        "dx": -418.752068107961,
+        "input": {
+          "scheme": "keyboard",
+          "frame": {
+            "move": {
+              "x": -0.7071067811865476,
+              "z": 0.7071067811865475
+            },
+            "aim": {
+              "x": -0.707106781186547,
+              "z": 0.707106781186548
+            },
+            "aimSource": "keyboard",
+            "left": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "right": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "selector": 0,
+            "interact": false,
+            "pause": false,
+            "cancelMove": false,
+            "brake": false,
+            "drive": {
+              "throttle": 0,
+              "steer": -1
+            }
+          }
+        }
+      }
+    },
+    {
+      "vehicle": "vehicle.pickup",
+      "code": "ArrowRight",
+      "from": {
+        "x": -24.862062454223633,
+        "z": -22.915433883666992,
+        "y": 0.7354289889335632,
+        "yaw": -3.0388940663359265
+      },
+      "result": {
+        "car": {
+          "kind": "vehicle",
+          "archetype": "vehicle.pickup",
+          "transform": {
+            "x": -12.151758193969727,
+            "z": -27.88739585876465,
+            "y": 0.7354347109794617,
+            "yaw": -2.578556740991419
+          },
+          "faction": "survivor",
+          "health": {
+            "current": 450,
+            "max": 450
+          },
+          "vehicle": {
+            "speed": 5.955073162582363,
+            "forwardSpeed": -5.95158203555083,
+            "steer": -0.04880701432669276,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0
+          },
+          "id": 3
+        },
+        "dx": 479.417063928106,
+        "input": {
+          "scheme": "keyboard",
+          "frame": {
+            "move": {
+              "x": 0.7071067811865476,
+              "z": -0.7071067811865475
+            },
+            "aim": {
+              "x": 0.7071067811865476,
+              "z": -0.7071067811865475
+            },
+            "aimSource": "keyboard",
+            "left": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "right": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "selector": 0,
+            "interact": false,
+            "pause": false,
+            "cancelMove": false,
+            "brake": false,
+            "drive": {
+              "throttle": 0,
+              "steer": 1
+            }
+          }
+        }
+      }
+    },
+    {
+      "vehicle": "vehicle.pickup",
+      "northFacingKeyboard": "pass",
+      "speed": 5.955073162582363,
+      "lateral": [
+        {
+          "key": "ArrowLeft",
+          "screenDx": -418.752068107961
+        },
+        {
+          "key": "ArrowRight",
+          "screenDx": 479.417063928106
+        }
+      ]
+    },
+    {
+      "vehicle": "vehicle.suv",
+      "code": "ArrowLeft",
+      "from": {
+        "x": -4.241917610168457,
+        "z": -12.869316101074219,
+        "y": 0.7354224920272827,
+        "yaw": 2.0568535470357436
+      },
+      "result": {
+        "car": {
+          "kind": "vehicle",
+          "archetype": "vehicle.suv",
+          "transform": {
+            "x": -26.058523178100586,
+            "z": -19.79783821105957,
+            "y": 0.7354280352592468,
+            "yaw": -2.877649668635473
+          },
+          "faction": "survivor",
+          "health": {
+            "current": 500,
+            "max": 500
+          },
+          "vehicle": {
+            "speed": 13.652077984496575,
+            "forwardSpeed": 13.652074532401233,
+            "steer": 0.07850331968649055,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0
+          },
+          "id": 3
+        },
+        "dx": -503.0331528497117,
+        "input": {
+          "scheme": "keyboard",
+          "frame": {
+            "move": {
+              "x": -0.7071067811865476,
+              "z": 0.7071067811865475
+            },
+            "aim": {
+              "x": -0.707106781186547,
+              "z": 0.707106781186548
+            },
+            "aimSource": "keyboard",
+            "left": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "right": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "selector": 0,
+            "interact": false,
+            "pause": false,
+            "cancelMove": false,
+            "brake": false,
+            "drive": {
+              "throttle": 0,
+              "steer": -1
+            }
+          }
+        }
+      }
+    },
+    {
+      "vehicle": "vehicle.suv",
+      "code": "ArrowRight",
+      "from": {
+        "x": -26.058523178100586,
+        "z": -19.79783821105957,
+        "y": 0.7354280352592468,
+        "yaw": -2.877649668635473
+      },
+      "result": {
+        "car": {
+          "kind": "vehicle",
+          "archetype": "vehicle.suv",
+          "transform": {
+            "x": -14.719548225402832,
+            "z": -26.107864379882812,
+            "y": 0.7354347109794617,
+            "yaw": -2.4957496484243338
+          },
+          "faction": "survivor",
+          "health": {
+            "current": 500,
+            "max": 500
+          },
+          "vehicle": {
+            "speed": 5.952676926592724,
+            "forwardSpeed": -5.951105821232797,
+            "steer": -0.030909686252088467,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0
+          },
+          "id": 3
+        },
+        "dx": 467.6587312842283,
+        "input": {
+          "scheme": "keyboard",
+          "frame": {
+            "move": {
+              "x": 0.7071067811865476,
+              "z": -0.7071067811865475
+            },
+            "aim": {
+              "x": 0.7071067811865476,
+              "z": -0.7071067811865475
+            },
+            "aimSource": "keyboard",
+            "left": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "right": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "selector": 0,
+            "interact": false,
+            "pause": false,
+            "cancelMove": false,
+            "brake": false,
+            "drive": {
+              "throttle": 0,
+              "steer": 1
+            }
+          }
+        }
+      }
+    },
+    {
+      "vehicle": "vehicle.suv",
+      "northFacingKeyboard": "pass",
+      "speed": 5.952676926592724,
+      "lateral": [
+        {
+          "key": "ArrowLeft",
+          "screenDx": -503.0331528497117
+        },
+        {
+          "key": "ArrowRight",
+          "screenDx": 467.6587312842283
+        }
+      ]
+    },
+    {
+      "vehicle": "vehicle.police",
+      "code": "ArrowLeft",
+      "from": {
+        "x": -4.517719268798828,
+        "z": -13.454703330993652,
+        "y": 0.7354232668876648,
+        "yaw": 2.0658822647531476
+      },
+      "result": {
+        "car": {
+          "kind": "vehicle",
+          "archetype": "vehicle.police",
+          "transform": {
+            "x": -26.940292358398438,
+            "z": -20.44603157043457,
+            "y": 0.7354282140731812,
+            "yaw": -2.871711608359423
+          },
+          "faction": "survivor",
+          "health": {
+            "current": 400,
+            "max": 400
+          },
+          "vehicle": {
+            "speed": 13.910582981724106,
+            "forwardSpeed": 13.910582832474516,
+            "steer": 0.076174484648985,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0
+          },
+          "id": 3
+        },
+        "dx": -512.18374014376,
+        "input": {
+          "scheme": "keyboard",
+          "frame": {
+            "move": {
+              "x": -0.7071067811865476,
+              "z": 0.7071067811865475
+            },
+            "aim": {
+              "x": -0.707106781186547,
+              "z": 0.707106781186548
+            },
+            "aimSource": "keyboard",
+            "left": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "right": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "selector": 0,
+            "interact": false,
+            "pause": false,
+            "cancelMove": false,
+            "brake": false,
+            "drive": {
+              "throttle": 0,
+              "steer": -1
+            }
+          }
+        }
+      }
+    },
+    {
+      "vehicle": "vehicle.police",
+      "code": "ArrowRight",
+      "from": {
+        "x": -26.940292358398438,
+        "z": -20.44603157043457,
+        "y": 0.7354282140731812,
+        "yaw": -2.871711608359423
+      },
+      "result": {
+        "car": {
+          "kind": "vehicle",
+          "archetype": "vehicle.police",
+          "transform": {
+            "x": -15.518982887268066,
+            "z": -26.884653091430664,
+            "y": 0.7354345917701721,
+            "yaw": -2.4922462408499126
+          },
+          "faction": "survivor",
+          "health": {
+            "current": 400,
+            "max": 400
+          },
+          "vehicle": {
+            "speed": 5.959415410914525,
+            "forwardSpeed": -5.957919713263035,
+            "steer": -0.030124492969052567,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0
+          },
+          "id": 3
+        },
+        "dx": 463.4221563041241,
+        "input": {
+          "scheme": "keyboard",
+          "frame": {
+            "move": {
+              "x": 0.7071067811865476,
+              "z": -0.7071067811865475
+            },
+            "aim": {
+              "x": 0.7071067811865476,
+              "z": -0.7071067811865475
+            },
+            "aimSource": "keyboard",
+            "left": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "right": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "selector": 0,
+            "interact": false,
+            "pause": false,
+            "cancelMove": false,
+            "brake": false,
+            "drive": {
+              "throttle": 0,
+              "steer": 1
+            }
+          }
+        }
+      }
+    },
+    {
+      "vehicle": "vehicle.police",
+      "northFacingKeyboard": "pass",
+      "speed": 5.959415410914525,
+      "lateral": [
+        {
+          "key": "ArrowLeft",
+          "screenDx": -512.18374014376
+        },
+        {
+          "key": "ArrowRight",
+          "screenDx": 463.4221563041241
+        }
+      ]
+    },
+    {
+      "vehicle": "vehicle.ambulance",
+      "code": "ArrowLeft",
+      "from": {
+        "x": -2.95175838470459,
+        "z": -11.81649112701416,
+        "y": 0.7354316711425781,
+        "yaw": 1.9292807133573218
+      },
+      "result": {
+        "car": {
+          "kind": "vehicle",
+          "archetype": "vehicle.ambulance",
+          "transform": {
+            "x": -20.057050704956055,
+            "z": -23.81024932861328,
+            "y": 0.7354323863983154,
+            "yaw": 3.0010328017161227
+          },
+          "faction": "survivor",
+          "health": {
+            "current": 650,
+            "max": 650
+          },
+          "vehicle": {
+            "speed": 11.634498899634318,
+            "forwardSpeed": 11.629905063311591,
+            "steer": 0.13774087222083295,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0
+          },
+          "id": 3
+        },
+        "dx": -273.1016781020994,
+        "input": {
+          "scheme": "keyboard",
+          "frame": {
+            "move": {
+              "x": -0.7071067811865476,
+              "z": 0.7071067811865475
+            },
+            "aim": {
+              "x": -0.707106781186547,
+              "z": 0.707106781186548
+            },
+            "aimSource": "keyboard",
+            "left": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "right": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "selector": 0,
+            "interact": false,
+            "pause": false,
+            "cancelMove": false,
+            "brake": false,
+            "drive": {
+              "throttle": 0,
+              "steer": -1
+            }
+          }
+        }
+      }
+    },
+    {
+      "vehicle": "vehicle.ambulance",
+      "code": "ArrowRight",
+      "from": {
+        "x": -20.057050704956055,
+        "z": -23.81024932861328,
+        "y": 0.7354323863983154,
+        "yaw": 3.0010328017161227
+      },
+      "result": {
+        "car": {
+          "kind": "vehicle",
+          "archetype": "vehicle.ambulance",
+          "transform": {
+            "x": -36.11735153198242,
+            "z": -61.90530776977539,
+            "y": 0.7354339361190796,
+            "yaw": 1.257234929763937
+          },
+          "faction": "survivor",
+          "health": {
+            "current": 650,
+            "max": 650
+          },
+          "vehicle": {
+            "speed": 13.174853213958825,
+            "forwardSpeed": 13.174228861475163,
+            "steer": -0.06158101780059327,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0
+          },
+          "id": 3
+        },
+        "dx": 296.68129624401206,
+        "input": {
+          "scheme": "keyboard",
+          "frame": {
+            "move": {
+              "x": 0.7071067811865476,
+              "z": -0.7071067811865475
+            },
+            "aim": {
+              "x": 0.7071067811865476,
+              "z": -0.7071067811865475
+            },
+            "aimSource": "keyboard",
+            "left": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "right": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "selector": 0,
+            "interact": false,
+            "pause": false,
+            "cancelMove": false,
+            "brake": false,
+            "drive": {
+              "throttle": 0,
+              "steer": 1
+            }
+          }
+        }
+      }
+    },
+    {
+      "vehicle": "vehicle.ambulance",
+      "northFacingKeyboard": "pass",
+      "speed": 13.174853213958825,
+      "lateral": [
+        {
+          "key": "ArrowLeft",
+          "screenDx": -273.1016781020994
+        },
+        {
+          "key": "ArrowRight",
+          "screenDx": 296.68129624401206
+        }
+      ]
+    },
+    {
+      "vehicle": "vehicle.school-bus",
+      "code": "ArrowLeft",
+      "from": {
+        "x": -2.6016063690185547,
+        "z": -10.032546043395996,
+        "y": 0.73543381690979,
+        "yaw": 1.9017572123883646
+      },
+      "result": {
+        "car": {
+          "kind": "vehicle",
+          "archetype": "vehicle.school-bus",
+          "transform": {
+            "x": -17.159040451049805,
+            "z": -19.589046478271484,
+            "y": 0.7354336380958557,
+            "yaw": 2.971052313055748
+          },
+          "faction": "survivor",
+          "health": {
+            "current": 1200,
+            "max": 1200
+          },
+          "vehicle": {
+            "speed": 9.678993901337813,
+            "forwardSpeed": 9.649452913102255,
+            "steer": 0.23414742902666302,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0
+          },
+          "id": 3
+        },
+        "dx": -255.6090521014405,
+        "input": {
+          "scheme": "keyboard",
+          "frame": {
+            "move": {
+              "x": -0.7071067811865476,
+              "z": 0.7071067811865475
+            },
+            "aim": {
+              "x": -0.707106781186547,
+              "z": 0.707106781186548
+            },
+            "aimSource": "keyboard",
+            "left": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "right": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "selector": 0,
+            "interact": false,
+            "pause": false,
+            "cancelMove": false,
+            "brake": false,
+            "drive": {
+              "throttle": 0,
+              "steer": -1
+            }
+          }
+        }
+      }
+    },
+    {
+      "vehicle": "vehicle.school-bus",
+      "code": "ArrowRight",
+      "from": {
+        "x": -17.159040451049805,
+        "z": -19.589046478271484,
+        "y": 0.7354336380958557,
+        "yaw": 2.971052313055748
+      },
+      "result": {
+        "car": {
+          "kind": "vehicle",
+          "archetype": "vehicle.school-bus",
+          "transform": {
+            "x": -27.89065170288086,
+            "z": -52.245609283447266,
+            "y": 0.7354342937469482,
+            "yaw": 1.2350639764660634
+          },
+          "faction": "survivor",
+          "health": {
+            "current": 1200,
+            "max": 1200
+          },
+          "vehicle": {
+            "speed": 11.176635282734162,
+            "forwardSpeed": 11.171456793170563,
+            "steer": -0.10165758195617346,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0
+          },
+          "id": 3
+        },
+        "dx": 361.5611018062407,
+        "input": {
+          "scheme": "keyboard",
+          "frame": {
+            "move": {
+              "x": 0.7071067811865476,
+              "z": -0.7071067811865475
+            },
+            "aim": {
+              "x": 0.7071067811865476,
+              "z": -0.7071067811865475
+            },
+            "aimSource": "keyboard",
+            "left": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "right": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "selector": 0,
+            "interact": false,
+            "pause": false,
+            "cancelMove": false,
+            "brake": false,
+            "drive": {
+              "throttle": 0,
+              "steer": 1
+            }
+          }
+        }
+      }
+    },
+    {
+      "vehicle": "vehicle.school-bus",
+      "northFacingKeyboard": "pass",
+      "speed": 11.176635282734162,
+      "lateral": [
+        {
+          "key": "ArrowLeft",
+          "screenDx": -255.6090521014405
+        },
+        {
+          "key": "ArrowRight",
+          "screenDx": 361.5611018062407
+        }
+      ]
+    },
+    {
+      "vehicle": "vehicle.fire-engine",
+      "code": "ArrowLeft",
+      "from": {
+        "x": -2.837141752243042,
+        "z": -10.29198169708252,
+        "y": 0.7354331016540527,
+        "yaw": 1.9336565579679053
+      },
+      "result": {
+        "car": {
+          "kind": "vehicle",
+          "archetype": "vehicle.fire-engine",
+          "transform": {
+            "x": -18.749919891357422,
+            "z": -19.141550064086914,
+            "y": 0.7354327440261841,
+            "yaw": 3.090056964430574
+          },
+          "faction": "survivor",
+          "health": {
+            "current": 1600,
+            "max": 1600
+          },
+          "vehicle": {
+            "speed": 10.384632309482834,
+            "forwardSpeed": 10.366321080872336,
+            "steer": 0.19899109493688552,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0
+          },
+          "id": 3
+        },
+        "dx": -311.83133851384355,
+        "input": {
+          "scheme": "keyboard",
+          "frame": {
+            "move": {
+              "x": -0.7071067811865476,
+              "z": 0.7071067811865475
+            },
+            "aim": {
+              "x": -0.707106781186547,
+              "z": 0.707106781186548
+            },
+            "aimSource": "keyboard",
+            "left": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "right": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "selector": 0,
+            "interact": false,
+            "pause": false,
+            "cancelMove": false,
+            "brake": false,
+            "drive": {
+              "throttle": 0,
+              "steer": -1
+            }
+          }
+        }
+      }
+    },
+    {
+      "vehicle": "vehicle.fire-engine",
+      "code": "ArrowRight",
+      "from": {
+        "x": -18.749919891357422,
+        "z": -19.141550064086914,
+        "y": 0.7354327440261841,
+        "yaw": 3.090056964430574
+      },
+      "result": {
+        "car": {
+          "kind": "vehicle",
+          "archetype": "vehicle.fire-engine",
+          "transform": {
+            "x": -29.712739944458008,
+            "z": -52.73890686035156,
+            "y": 0.7354342937469482,
+            "yaw": 1.168138537232752
+          },
+          "faction": "survivor",
+          "health": {
+            "current": 1600,
+            "max": 1600
+          },
+          "vehicle": {
+            "speed": 12.028256707850773,
+            "forwardSpeed": 12.025527849625483,
+            "steer": -0.08283798450774615,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0
+          },
+          "id": 3
+        },
+        "dx": 388.530361892109,
+        "input": {
+          "scheme": "keyboard",
+          "frame": {
+            "move": {
+              "x": 0.7071067811865476,
+              "z": -0.7071067811865475
+            },
+            "aim": {
+              "x": 0.7071067811865476,
+              "z": -0.7071067811865475
+            },
+            "aimSource": "keyboard",
+            "left": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "right": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "selector": 0,
+            "interact": false,
+            "pause": false,
+            "cancelMove": false,
+            "brake": false,
+            "drive": {
+              "throttle": 0,
+              "steer": 1
+            }
+          }
+        }
+      }
+    },
+    {
+      "vehicle": "vehicle.fire-engine",
+      "northFacingKeyboard": "pass",
+      "speed": 12.028256707850773,
+      "lateral": [
+        {
+          "key": "ArrowLeft",
+          "screenDx": -311.83133851384355
+        },
+        {
+          "key": "ArrowRight",
+          "screenDx": 388.530361892109
+        }
+      ]
+    },
+    {
+      "level": "L1",
+      "bikeBefore": {
+        "kind": "bicycle",
+        "archetype": "veh.courier-bike",
+        "faction": "environment",
+        "transform": {
+          "x": -38.508331298828125,
+          "y": 0.13,
+          "z": -34.599998474121094,
+          "yaw": 0
+        },
+        "health": {
+          "current": 1,
+          "max": 1
+        },
+        "bicycle": {
+          "mounted": true,
+          "heading": 0,
+          "speed": 3.500000000000002,
+          "pedal": 2.415,
+          "steer": 0,
+          "lean": 0,
+          "standTicks": 0,
+          "armed": true,
+          "lockUntil": 0,
+          "approached": false
+        },
+        "id": 84
+      },
+      "bikeAfter": {
+        "kind": "bicycle",
+        "archetype": "veh.courier-bike",
+        "faction": "environment",
+        "transform": {
+          "x": -38.135379791259766,
+          "y": 0.13,
+          "z": -34.593040466308594,
+          "yaw": -0.2151918731838602
+        },
+        "health": {
+          "current": 1,
+          "max": 1
+        },
+        "bicycle": {
+          "mounted": true,
+          "heading": 0.2151918731838602,
+          "speed": 0.23333333333333334,
+          "pedal": 3.518666666666668,
+          "steer": 0.9863364736855615,
+          "lean": 0.01888838170953458,
+          "standTicks": 0,
+          "armed": true,
+          "lockUntil": 0,
+          "approached": false
+        },
+        "id": 84
+      },
+      "rule": "E19-AC16 retained: local WASD, deliberate exception to car screen headings"
+    },
+    {
+      "level": "L2",
+      "ride": {
+        "phase": "ride",
+        "alarmAt": 1389,
+        "departAt": 1457,
+        "arrivedAt": 0,
+        "crewExitAt": 0,
+        "atDoorsAt": 0,
+        "doorsOpenAt": 0,
+        "radioAt": 0,
+        "crossedAt": 0,
+        "gateClosedAt": 0,
+        "truckId": 120,
+        "seated": true,
+        "axe": false,
+        "rideS": 7.039410666984056,
+        "rideV": 2.5699973235616502,
+        "crewIds": [
+          121,
+          122,
+          123,
+          124,
+          125,
+          126
+        ],
+        "benchIds": [
+          127,
+          128,
+          129,
+          130
+        ],
+        "trappedIds": [
+          150,
+          151,
+          152,
+          153,
+          154,
+          155,
+          156,
+          157,
+          158,
+          159,
+          160,
+          161,
+          162,
+          163,
+          164,
+          165,
+          166,
+          167,
+          168,
+          169,
+          170,
+          171,
+          172,
+          173,
+          174,
+          175,
+          176,
+          177,
+          178,
+          179
+        ],
+        "officerIds": [
+          131,
+          132,
+          133,
+          134
+        ],
+        "lineIds": [
+          135,
+          136,
+          137,
+          138,
+          139,
+          140,
+          141,
+          142
+        ],
+        "doorIds": [],
+        "gateIds": [],
+        "released": 0,
+        "ambush": [],
+        "ambushIds": [],
+        "pending": [],
+        "escapeIds": [],
+        "clusterIds": [],
+        "escapeSpawned": false,
+        "clusterSpawned": false,
+        "clusterReached": false
+      }
+    },
+    {
+      "level": "L9",
+      "tier": "low",
+      "before": {
+        "car": {
+          "kind": "vehicle",
+          "archetype": "vehicle.military-apc",
+          "transform": {
+            "x": -550,
+            "y": 1.0482969284057617,
+            "z": 0,
+            "yaw": 0
+          },
+          "faction": "survivor",
+          "health": {
+            "current": 1000,
+            "max": 1000
+          },
+          "vehicle": {
+            "speed": 0,
+            "forwardSpeed": 0,
+            "steer": 0,
+            "braking": true,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0,
+            "passengers": [
+              {
+                "id": 668,
+                "seat": 0,
+                "phase": "seated",
+                "started": 0,
+                "from": {
+                  "x": -553.35,
+                  "z": 0,
+                  "y": 0.3,
+                  "yaw": 0
+                },
+                "pauseUntil": 0
+              }
+            ],
+            "floor": true,
+            "stage": 0,
+            "apcContacts": {
+              "sequence": 0,
+              "infected": {},
+              "obstacles": {}
+            }
+          },
+          "id": 667
+        },
+        "camera": {
+          "zoom": 1,
+          "targetZoom": 1,
+          "zoomLimits": [
+            0.5,
+            2
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 19.54795710678479,
+          "regionScale": 1,
+          "focus": [
+            -550,
+            0.031241583357956033,
+            0
+          ],
+          "target": [
+            -550,
+            0.031241583357956033,
+            0
+          ],
+          "position": [
+            -538.8173682352727,
+            11.521242483171896,
+            11.18263176472723
+          ],
+          "spot": null
+        }
+      },
+      "after": {
+        "car": {
+          "kind": "vehicle",
+          "archetype": "vehicle.military-apc",
+          "transform": {
+            "x": -548.2615356445312,
+            "y": 0.9952329397201538,
+            "z": -0.6610971093177795,
+            "yaw": 0.2471210617754545
+          },
+          "faction": "survivor",
+          "health": {
+            "current": 1000,
+            "max": 1000
+          },
+          "vehicle": {
+            "speed": 2.9615319674921747,
+            "forwardSpeed": 2.9535392226018247,
+            "steer": 0.15895531809707947,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0,
+            "passengers": [
+              {
+                "id": 668,
+                "seat": 0,
+                "phase": "seated",
+                "started": 0,
+                "from": {
+                  "x": -553.35,
+                  "z": 0,
+                  "y": 0.3,
+                  "yaw": 0
+                },
+                "pauseUntil": 0
+              }
+            ],
+            "floor": true,
+            "stage": 0,
+            "apcContacts": {
+              "sequence": 0,
+              "infected": {},
+              "obstacles": {}
+            }
+          },
+          "id": 667
+        },
+        "input": {
+          "scheme": "keyboard",
+          "frame": {
+            "move": {
+              "x": 0.7071067811865476,
+              "z": -0.7071067811865475
+            },
+            "aim": {
+              "x": 0.7071067811865476,
+              "z": -0.7071067811865475
+            },
+            "aimSource": "keyboard",
+            "left": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "right": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "selector": 0,
+            "interact": false,
+            "pause": false,
+            "cancelMove": false,
+            "brake": false,
+            "drive": {
+              "throttle": 0,
+              "steer": 1
+            }
+          }
+        }
+      }
+    },
+    {
+      "level": "L9",
+      "tier": "low",
+      "ram": {
+        "id": "D-CROSSING/veh.wreck:2436",
+        "asset": "veh.wreck",
+        "start": [
+          -539,
+          0,
+          0
+        ]
+      },
+      "ramAfter": {
+        "position": [
+          -520.657470703125,
+          -0.00004470348358154297,
+          -0.08985039591789246
+        ],
+        "awake": 1,
+        "budget": 12
+      },
+      "displacement": 18.342749360452057
+    },
+    {
+      "level": "L9",
+      "tier": "high",
+      "before": {
+        "car": {
+          "kind": "vehicle",
+          "archetype": "vehicle.military-apc",
+          "transform": {
+            "x": -550,
+            "y": 1.0482969284057617,
+            "z": 0,
+            "yaw": 0
+          },
+          "faction": "survivor",
+          "health": {
+            "current": 1000,
+            "max": 1000
+          },
+          "vehicle": {
+            "speed": 0,
+            "forwardSpeed": 0,
+            "steer": 0,
+            "braking": true,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0,
+            "passengers": [
+              {
+                "id": 668,
+                "seat": 0,
+                "phase": "seated",
+                "started": 0,
+                "from": {
+                  "x": -553.35,
+                  "z": 0,
+                  "y": 0.3,
+                  "yaw": 0
+                },
+                "pauseUntil": 0
+              }
+            ],
+            "floor": true,
+            "stage": 0,
+            "apcContacts": {
+              "sequence": 0,
+              "infected": {},
+              "obstacles": {}
+            }
+          },
+          "id": 667
+        },
+        "camera": {
+          "zoom": 1,
+          "targetZoom": 1,
+          "zoomLimits": [
+            0.5,
+            2
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 19.54795710678479,
+          "regionScale": 1,
+          "focus": [
+            -550,
+            0.031241583357956033,
+            0
+          ],
+          "target": [
+            -550,
+            0.031241583357956033,
+            0
+          ],
+          "position": [
+            -538.8173682352727,
+            11.521242483171896,
+            11.18263176472723
+          ],
+          "spot": null
+        }
+      },
+      "after": {
+        "car": {
+          "kind": "vehicle",
+          "archetype": "vehicle.military-apc",
+          "transform": {
+            "x": -548.2615356445312,
+            "y": 0.9952329397201538,
+            "z": -0.6610971093177795,
+            "yaw": 0.2471210617754545
+          },
+          "faction": "survivor",
+          "health": {
+            "current": 1000,
+            "max": 1000
+          },
+          "vehicle": {
+            "speed": 2.9615319674921747,
+            "forwardSpeed": 2.9535392226018247,
+            "steer": 0.15895531809707947,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0,
+            "passengers": [
+              {
+                "id": 668,
+                "seat": 0,
+                "phase": "seated",
+                "started": 0,
+                "from": {
+                  "x": -553.35,
+                  "z": 0,
+                  "y": 0.3,
+                  "yaw": 0
+                },
+                "pauseUntil": 0
+              }
+            ],
+            "floor": true,
+            "stage": 0,
+            "apcContacts": {
+              "sequence": 0,
+              "infected": {},
+              "obstacles": {}
+            }
+          },
+          "id": 667
+        },
+        "input": {
+          "scheme": "keyboard",
+          "frame": {
+            "move": {
+              "x": 0.7071067811865476,
+              "z": -0.7071067811865475
+            },
+            "aim": {
+              "x": 0.7071067811865476,
+              "z": -0.7071067811865475
+            },
+            "aimSource": "keyboard",
+            "left": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "right": {
+              "down": false,
+              "held": false,
+              "up": false
+            },
+            "selector": 0,
+            "interact": false,
+            "pause": false,
+            "cancelMove": false,
+            "brake": false,
+            "drive": {
+              "throttle": 0,
+              "steer": 1
+            }
+          }
+        }
+      }
+    },
+    {
+      "level": "L9",
+      "tier": "high",
+      "ram": {
+        "id": "D-CROSSING/veh.pickup-white:2339",
+        "asset": "veh.pickup-white",
+        "start": [
+          -539,
+          0,
+          0
+        ]
+      },
+      "ramAfter": {
+        "position": [
+          -521.5023193359375,
+          -0.00005692243576049805,
+          -0.10205002129077911
+        ],
+        "awake": 1,
+        "budget": 12
+      },
+      "displacement": 17.497978249739372
+    }
+  ]
+}

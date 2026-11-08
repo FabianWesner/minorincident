@@ -11,7 +11,7 @@ import { cure } from '../../src/levels/L10/district';
 import type { Game } from '../../src/Game';
 
 const [level = 'L10', tier = 'high'] = process.argv.slice(2);
-assert(['L1', 'L3', 'L7', 'L10'].includes(level)); assert(tier === 'low' || tier === 'high');
+assert(['L1', 'L3', 'L7', 'L8', 'L10'].includes(level)); assert(tier === 'low' || tier === 'high');
 const out = process.env.FIX51_ROUTE_OUT ?? `test-results/fix51-perf/route-${level}-${tier}`;
 mkdirSync(out, { recursive: true });
 const session = new SceneSession({ backend: 'webgpu', tier, viewport: { width: 1280, height: 720 }, query: { loadProfile: '2', ui: '1' } });
@@ -34,6 +34,14 @@ try {
       for (let i = 0; i < 150 && !g.world.l7Encounters!.state.started; i++) await a.step(120);
       a.bot.stop(); a.input.clear();
       if (!g.world.l7Encounters!.state.started) throw Error('Native L7 fight was not reached');
+      await a.screenshotReady();
+    }
+    if (level === 'L8') {
+      const g = (window.__SCENE__ as unknown as { game: Game }).game;
+      a.bot.start('complete');
+      for (let i = 0; i < 31 && !g.world.missions!.l8!.state.breachedAt; i++) await a.step(120);
+      a.bot.stop(); a.input.clear();
+      if (!g.world.missions!.l8!.state.breachedAt) throw Error('Native L8 breach was not reached');
       await a.screenshotReady();
     }
   }, { level, tier: tier as 'low' | 'high' });

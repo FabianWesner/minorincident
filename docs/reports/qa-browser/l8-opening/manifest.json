@@ -1,0 +1,603 @@
+{
+  "sourceHash": "b9217fda423127a1b9a0fa718ac0ec08624dd6a185b6fcb0e4bfcf9e12b2d874",
+  "observerHash": "2c536930d36d27fb546ce2f0ae4431df5913b794c1ea3ae24e355d457f7c11db",
+  "revision": "5cd762aa89f95e0698329d986b55fc234a362ab9",
+  "errors": [],
+  "earlyAttempt": {
+    "input": "physical WASD along the south road, then hold E at the driver door; no teleport, bot, invulnerability, objective skip or time scale change",
+    "arrived": {
+      "entryRing": false,
+      "tick": 1590,
+      "checkpoint": "sanctuary",
+      "breached": false,
+      "steps": {
+        "sanctuary": "active",
+        "escape": "pending",
+        "depart": "pending"
+      },
+      "marker": "zoo-gate",
+      "driver": null,
+      "passengers": 0,
+      "player": {
+        "x": 96.35641479492188,
+        "y": 0.8399999737739563,
+        "z": 76.02261352539062,
+        "yaw": -1.1102230246251565e-16
+      },
+      "infected": 0
+    },
+    "calm": {
+      "entryRing": false,
+      "tick": 3125,
+      "checkpoint": "sanctuary",
+      "breached": false,
+      "steps": {
+        "sanctuary": "active",
+        "escape": "pending",
+        "depart": "pending"
+      },
+      "marker": "zoo-gate",
+      "driver": null,
+      "passengers": 0,
+      "player": {
+        "x": 96.43002319335938,
+        "y": 0.8399999737739563,
+        "z": 76.00529479980469,
+        "yaw": -1.1102230246251565e-16
+      },
+      "infected": 0
+    },
+    "breached": {
+      "entryRing": false,
+      "tick": 3660,
+      "checkpoint": "breach",
+      "breached": true,
+      "steps": {
+        "sanctuary": "active",
+        "escape": "pending",
+        "depart": "pending"
+      },
+      "marker": "zoo-gate",
+      "driver": null,
+      "passengers": 0,
+      "player": {
+        "x": 96.43002319335938,
+        "y": 0.8399999737739563,
+        "z": 76.00529479980469,
+        "yaw": -1.1102230246251565e-16
+      },
+      "infected": 24
+    },
+    "image": "early-apc-52s.jpg"
+  },
+  "captures": [
+    {
+      "file": "fresh-low-zoom-1.jpg",
+      "progressed": false,
+      "zoom": 1,
+      "first": {
+        "tick": 0,
+        "marker": "zoo-gate",
+        "text": "Lead the group to the zoo gate · 11 m"
+      },
+      "movedMetres": 2.0799817030925603,
+      "tick": 31,
+      "objective": "Lead the group to the zoo gate · 13 m",
+      "marker": "zoo-gate",
+      "tracker": true,
+      "minimap": true,
+      "direction": true,
+      "worldMarker": {
+        "visible": true,
+        "position": [
+          7,
+          0,
+          78
+        ]
+      },
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          -1.1814325175685916,
+          0.11416018857617413,
+          68.81858695759415
+        ],
+        "target": [
+          -1.1814325175685916,
+          0.11416018857617413,
+          68.81858695759415
+        ],
+        "position": [
+          9.68773413596741,
+          11.282079982133164,
+          79.68775361113015
+        ],
+        "spot": null
+      },
+      "quality": "low",
+      "backend": "webgl",
+      "active": [
+        "sanctuary"
+      ],
+      "player": {
+        "x": -1.4707818031311035,
+        "y": 0.8399999737739563,
+        "z": 68.52924346923828,
+        "yaw": 2.356194490192345
+      },
+      "campaign": false
+    },
+    {
+      "file": "fresh-low-zoom-1-5.jpg",
+      "progressed": false,
+      "zoom": 1.5,
+      "first": {
+        "tick": 0,
+        "marker": "zoo-gate",
+        "text": "Lead the group to the zoo gate · 11 m"
+      },
+      "movedMetres": 2.0799817030925603,
+      "tick": 31,
+      "objective": "Lead the group to the zoo gate · 13 m",
+      "marker": "zoo-gate",
+      "tracker": true,
+      "minimap": true,
+      "direction": true,
+      "worldMarker": {
+        "visible": true,
+        "position": [
+          7,
+          0,
+          78
+        ]
+      },
+      "camera": {
+        "zoom": 1.5,
+        "targetZoom": 1.5,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 28.5,
+        "regionScale": 1,
+        "focus": [
+          -1.1814325175685916,
+          0.11416018857617413,
+          68.81858695759415
+        ],
+        "target": [
+          -1.1814325175685916,
+          0.11416018857617413,
+          68.81858695759415
+        ],
+        "position": [
+          15.12231746273541,
+          16.86603987891166,
+          85.12233693789815
+        ],
+        "spot": null
+      },
+      "quality": "low",
+      "backend": "webgl",
+      "active": [
+        "sanctuary"
+      ],
+      "player": {
+        "x": -1.4707818031311035,
+        "y": 0.8399999737739563,
+        "z": 68.52924346923828,
+        "yaw": 2.356194490192345
+      },
+      "campaign": false
+    },
+    {
+      "file": "progressed-low-zoom-1.jpg",
+      "progressed": true,
+      "zoom": 1,
+      "first": {
+        "tick": 0,
+        "marker": "zoo-gate",
+        "text": "Lead the group to the zoo gate · 11 m"
+      },
+      "movedMetres": 2.0799817030925603,
+      "tick": 31,
+      "objective": "Lead the group to the zoo gate · 13 m",
+      "marker": "zoo-gate",
+      "tracker": true,
+      "minimap": true,
+      "direction": true,
+      "worldMarker": {
+        "visible": true,
+        "position": [
+          7,
+          0,
+          78
+        ]
+      },
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          2
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          -1.1814325175685916,
+          0.11416018857617413,
+          68.81858695759415
+        ],
+        "target": [
+          -1.1814325175685916,
+          0.11416018857617413,
+          68.81858695759415
+        ],
+        "position": [
+          9.68773413596741,
+          11.282079982133164,
+          79.68775361113015
+        ],
+        "spot": null
+      },
+      "quality": "low",
+      "backend": "webgl",
+      "active": [
+        "sanctuary"
+      ],
+      "player": {
+        "x": -1.4707818031311035,
+        "y": 0.8399999737739563,
+        "z": 68.52924346923828,
+        "yaw": 2.356194490192345
+      },
+      "campaign": true
+    },
+    {
+      "file": "progressed-low-zoom-1-5.jpg",
+      "progressed": true,
+      "zoom": 1.5,
+      "first": {
+        "tick": 0,
+        "marker": "zoo-gate",
+        "text": "Lead the group to the zoo gate · 11 m"
+      },
+      "movedMetres": 2.0799817030925603,
+      "tick": 31,
+      "objective": "Lead the group to the zoo gate · 13 m",
+      "marker": "zoo-gate",
+      "tracker": true,
+      "minimap": true,
+      "direction": true,
+      "worldMarker": {
+        "visible": true,
+        "position": [
+          7,
+          0,
+          78
+        ]
+      },
+      "camera": {
+        "zoom": 1.5,
+        "targetZoom": 1.5,
+        "zoomLimits": [
+          0.5,
+          2
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 28.5,
+        "regionScale": 1,
+        "focus": [
+          -1.1814325175685916,
+          0.11416018857617413,
+          68.81858695759415
+        ],
+        "target": [
+          -1.1814325175685916,
+          0.11416018857617413,
+          68.81858695759415
+        ],
+        "position": [
+          15.12231746273541,
+          16.86603987891166,
+          85.12233693789815
+        ],
+        "spot": null
+      },
+      "quality": "low",
+      "backend": "webgl",
+      "active": [
+        "sanctuary"
+      ],
+      "player": {
+        "x": -1.4707818031311035,
+        "y": 0.8399999737739563,
+        "z": 68.52924346923828,
+        "yaw": 2.356194490192345
+      },
+      "campaign": true
+    },
+    {
+      "file": "fresh-high-zoom-1.jpg",
+      "progressed": false,
+      "zoom": 1,
+      "first": {
+        "tick": 3,
+        "marker": "zoo-gate",
+        "text": "Lead the group to the zoo gate · 11 m"
+      },
+      "movedMetres": 2.004982481981739,
+      "tick": 33,
+      "objective": "Lead the group to the zoo gate · 13 m",
+      "marker": "zoo-gate",
+      "tracker": true,
+      "minimap": true,
+      "direction": true,
+      "worldMarker": {
+        "visible": true,
+        "position": [
+          7,
+          0,
+          78
+        ]
+      },
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          -1.1289560116765949,
+          0.11521876204116246,
+          68.87106241210236
+        ],
+        "target": [
+          -1.1289560116765949,
+          0.11521876204116246,
+          68.87106241210236
+        ],
+        "position": [
+          9.740210641859408,
+          11.283138555598153,
+          79.74022906563836
+        ],
+        "spot": null
+      },
+      "quality": "high",
+      "backend": "webgl",
+      "active": [
+        "sanctuary"
+      ],
+      "player": {
+        "x": -1.4177488088607788,
+        "y": 0.8399999737739563,
+        "z": 68.582275390625,
+        "yaw": 2.356194490192345
+      },
+      "campaign": false
+    },
+    {
+      "file": "fresh-high-zoom-1-5.jpg",
+      "progressed": false,
+      "zoom": 1.5,
+      "first": {
+        "tick": 3,
+        "marker": "zoo-gate",
+        "text": "Lead the group to the zoo gate · 11 m"
+      },
+      "movedMetres": 2.004982481981739,
+      "tick": 33,
+      "objective": "Lead the group to the zoo gate · 13 m",
+      "marker": "zoo-gate",
+      "tracker": true,
+      "minimap": true,
+      "direction": true,
+      "worldMarker": {
+        "visible": true,
+        "position": [
+          7,
+          0,
+          78
+        ]
+      },
+      "camera": {
+        "zoom": 1.5,
+        "targetZoom": 1.5,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 28.5,
+        "regionScale": 1,
+        "focus": [
+          -1.1289560116765949,
+          0.11521876204116246,
+          68.87106241210236
+        ],
+        "target": [
+          -1.1289560116765949,
+          0.11521876204116246,
+          68.87106241210236
+        ],
+        "position": [
+          15.174793968627407,
+          16.86709845237665,
+          85.17481239240637
+        ],
+        "spot": null
+      },
+      "quality": "high",
+      "backend": "webgl",
+      "active": [
+        "sanctuary"
+      ],
+      "player": {
+        "x": -1.4177488088607788,
+        "y": 0.8399999737739563,
+        "z": 68.582275390625,
+        "yaw": 2.356194490192345
+      },
+      "campaign": false
+    },
+    {
+      "file": "progressed-high-zoom-1.jpg",
+      "progressed": true,
+      "zoom": 1,
+      "first": {
+        "tick": 7,
+        "marker": "zoo-gate",
+        "text": "Lead the group to the zoo gate · 11 m"
+      },
+      "movedMetres": 2.004982481981739,
+      "tick": 38,
+      "objective": "Lead the group to the zoo gate · 13 m",
+      "marker": "zoo-gate",
+      "tracker": true,
+      "minimap": true,
+      "direction": true,
+      "worldMarker": {
+        "visible": true,
+        "position": [
+          7,
+          0,
+          78
+        ]
+      },
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          2
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          -1.1289560116765949,
+          0.11710002226743908,
+          68.87106241210236
+        ],
+        "target": [
+          -1.1289560116765949,
+          0.11710002226743908,
+          68.87106241210236
+        ],
+        "position": [
+          9.740210641859408,
+          11.285019815824429,
+          79.74022906563836
+        ],
+        "spot": null
+      },
+      "quality": "high",
+      "backend": "webgl",
+      "active": [
+        "sanctuary"
+      ],
+      "player": {
+        "x": -1.4177488088607788,
+        "y": 0.8399999737739563,
+        "z": 68.582275390625,
+        "yaw": 2.356194490192345
+      },
+      "campaign": true
+    },
+    {
+      "file": "progressed-high-zoom-1-5.jpg",
+      "progressed": true,
+      "zoom": 1.5,
+      "first": {
+        "tick": 7,
+        "marker": "zoo-gate",
+        "text": "Lead the group to the zoo gate · 11 m"
+      },
+      "movedMetres": 2.004982481981739,
+      "tick": 38,
+      "objective": "Lead the group to the zoo gate · 13 m",
+      "marker": "zoo-gate",
+      "tracker": true,
+      "minimap": true,
+      "direction": true,
+      "worldMarker": {
+        "visible": true,
+        "position": [
+          7,
+          0,
+          78
+        ]
+      },
+      "camera": {
+        "zoom": 1.5,
+        "targetZoom": 1.5,
+        "zoomLimits": [
+          0.5,
+          2
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 28.5,
+        "regionScale": 1,
+        "focus": [
+          -1.1289560116765949,
+          0.11710002226743908,
+          68.87106241210236
+        ],
+        "target": [
+          -1.1289560116765949,
+          0.11710002226743908,
+          68.87106241210236
+        ],
+        "position": [
+          15.174793968627407,
+          16.868979712602926,
+          85.17481239240637
+        ],
+        "spot": null
+      },
+      "quality": "high",
+      "backend": "webgl",
+      "active": [
+        "sanctuary"
+      ],
+      "player": {
+        "x": -1.4177488088607788,
+        "y": 0.8399999737739563,
+        "z": 68.582275390625,
+        "yaw": 2.356194490192345
+      },
+      "campaign": true
+    }
+  ]
+}

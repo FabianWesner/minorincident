@@ -1,0 +1,1683 @@
+{
+  "sourceFixCommit": "619896aefe614af28199c192bacd8ee22a624545",
+  "cause": "Synchronous first-use pipeline links in nested warm-up and final readiness draws",
+  "initialLoadFailures": [
+    {
+      "level": "L1",
+      "tier": "low",
+      "backend": "webgl2",
+      "temperature": "cold",
+      "candidateMs": 7460.199999809265,
+      "prodMs": 7843.400000572205,
+      "rawSource": "test-results/perf12/initial/gl2-low/loads/L1-L4-L7.json",
+      "rawSha256": "582e38467c6febd348a1132a1ec014017cd0ff1783c165f39c5703b90f949b04"
+    },
+    {
+      "level": "L4",
+      "tier": "low",
+      "backend": "webgl2",
+      "temperature": "cold",
+      "candidateMs": 6027.60000038147,
+      "prodMs": 8992.20000076294,
+      "rawSource": "test-results/perf12/initial/gl2-low/loads/L1-L4-L7.json",
+      "rawSha256": "582e38467c6febd348a1132a1ec014017cd0ff1783c165f39c5703b90f949b04"
+    },
+    {
+      "level": "L7",
+      "tier": "low",
+      "backend": "webgl2",
+      "temperature": "cold",
+      "candidateMs": 9109.5,
+      "prodMs": 9108.199999809265,
+      "rawSource": "test-results/perf12/initial/gl2-low/loads/L1-L4-L7.json",
+      "rawSha256": "582e38467c6febd348a1132a1ec014017cd0ff1783c165f39c5703b90f949b04"
+    },
+    {
+      "level": "L7",
+      "tier": "high",
+      "backend": "webgpu",
+      "temperature": "cold",
+      "candidateMs": 6656.700000762939,
+      "prodMs": 7322.89999961853,
+      "rawSource": "test-results/perf12/initial/high/loads/L1-L3-L4-L5-L7-L10.json",
+      "rawSha256": "c94f78caa4d61e3f949d3094de29bacb0b2a39bc666ec39bb04e052d444d5765"
+    }
+  ],
+  "diagnosticRows": [
+    {
+      "phase": "before-state",
+      "backend": "webgl2",
+      "level": "L1",
+      "tier": "low",
+      "temperature": "cold",
+      "diagnosticLoadMs": 2243.2000007629395,
+      "syncLinks": 14,
+      "asyncLinks": 93,
+      "totalLinks": 107,
+      "syncGlCallMs": 54.0,
+      "bundle": "http://127.0.0.1:4901/build/index-CVRHMteJ.js",
+      "errors": [],
+      "rawSource": "test-results/perf12/causal/before-state/webgl2-low/loads/L1-L4-L7.json",
+      "rawSha256": "357b4cb4b17feceef62e6bd031602c1cfa5ec281ea7b830525a0b75667eb5de5"
+    },
+    {
+      "phase": "before-state",
+      "backend": "webgl2",
+      "level": "L1",
+      "tier": "low",
+      "temperature": "warm",
+      "diagnosticLoadMs": 2200.4000005722046,
+      "syncLinks": 14,
+      "asyncLinks": 93,
+      "totalLinks": 107,
+      "syncGlCallMs": 43.10000038146973,
+      "bundle": "http://127.0.0.1:4901/build/index-CVRHMteJ.js",
+      "errors": [],
+      "rawSource": "test-results/perf12/causal/before-state/webgl2-low/loads/L1-L4-L7.json",
+      "rawSha256": "357b4cb4b17feceef62e6bd031602c1cfa5ec281ea7b830525a0b75667eb5de5"
+    },
+    {
+      "phase": "before-state",
+      "backend": "webgl2",
+      "level": "L4",
+      "tier": "low",
+      "temperature": "cold",
+      "diagnosticLoadMs": 3387.1000003814697,
+      "syncLinks": 10,
+      "asyncLinks": 108,
+      "totalLinks": 118,
+      "syncGlCallMs": 20.0,
+      "bundle": "http://127.0.0.1:4901/build/index-CVRHMteJ.js",
+      "errors": [],
+      "rawSource": "test-results/perf12/causal/before-state/webgl2-low/loads/L1-L4-L7.json",
+      "rawSha256": "357b4cb4b17feceef62e6bd031602c1cfa5ec281ea7b830525a0b75667eb5de5"
+    },
+    {
+      "phase": "before-state",
+      "backend": "webgl2",
+      "level": "L4",
+      "tier": "low",
+      "temperature": "warm",
+      "diagnosticLoadMs": 3462.9000005722046,
+      "syncLinks": 10,
+      "asyncLinks": 108,
+      "totalLinks": 118,
+      "syncGlCallMs": 19.000000953674316,
+      "bundle": "http://127.0.0.1:4901/build/index-CVRHMteJ.js",
+      "errors": [],
+      "rawSource": "test-results/perf12/causal/before-state/webgl2-low/loads/L1-L4-L7.json",
+      "rawSha256": "357b4cb4b17feceef62e6bd031602c1cfa5ec281ea7b830525a0b75667eb5de5"
+    },
+    {
+      "phase": "before-state",
+      "backend": "webgl2",
+      "level": "L7",
+      "tier": "low",
+      "temperature": "cold",
+      "diagnosticLoadMs": 3048.3999996185303,
+      "syncLinks": 13,
+      "asyncLinks": 92,
+      "totalLinks": 105,
+      "syncGlCallMs": 47.80000019073486,
+      "bundle": "http://127.0.0.1:4901/build/index-CVRHMteJ.js",
+      "errors": [],
+      "rawSource": "test-results/perf12/causal/before-state/webgl2-low/loads/L1-L4-L7.json",
+      "rawSha256": "357b4cb4b17feceef62e6bd031602c1cfa5ec281ea7b830525a0b75667eb5de5"
+    },
+    {
+      "phase": "before-state",
+      "backend": "webgl2",
+      "level": "L7",
+      "tier": "low",
+      "temperature": "warm",
+      "diagnosticLoadMs": 2956.199999809265,
+      "syncLinks": 13,
+      "asyncLinks": 92,
+      "totalLinks": 105,
+      "syncGlCallMs": 40.30000114440918,
+      "bundle": "http://127.0.0.1:4901/build/index-CVRHMteJ.js",
+      "errors": [],
+      "rawSource": "test-results/perf12/causal/before-state/webgl2-low/loads/L1-L4-L7.json",
+      "rawSha256": "357b4cb4b17feceef62e6bd031602c1cfa5ec281ea7b830525a0b75667eb5de5"
+    },
+    {
+      "phase": "before-state",
+      "backend": "webgpu",
+      "level": "L7",
+      "tier": "high",
+      "temperature": "cold",
+      "diagnosticLoadMs": 3390,
+      "syncLinks": 0,
+      "asyncLinks": 0,
+      "totalLinks": 0,
+      "syncGlCallMs": 0,
+      "bundle": "http://127.0.0.1:4901/build/index-CVRHMteJ.js",
+      "errors": [],
+      "rawSource": "test-results/perf12/causal/before-state/webgpu-high/loads/L7.json",
+      "rawSha256": "3cbc4d5bf8d03e8cd46b9c17806f236d48ce2c5cec74ffd18f605a630d16b868"
+    },
+    {
+      "phase": "before-state",
+      "backend": "webgpu",
+      "level": "L7",
+      "tier": "high",
+      "temperature": "warm",
+      "diagnosticLoadMs": 3362.300000190735,
+      "syncLinks": 0,
+      "asyncLinks": 0,
+      "totalLinks": 0,
+      "syncGlCallMs": 0,
+      "bundle": "http://127.0.0.1:4901/build/index-CVRHMteJ.js",
+      "errors": [],
+      "rawSource": "test-results/perf12/causal/before-state/webgpu-high/loads/L7.json",
+      "rawSha256": "3cbc4d5bf8d03e8cd46b9c17806f236d48ce2c5cec74ffd18f605a630d16b868"
+    },
+    {
+      "phase": "after-state",
+      "backend": "webgl2",
+      "level": "L1",
+      "tier": "low",
+      "temperature": "cold",
+      "diagnosticLoadMs": 2322.6000003814697,
+      "syncLinks": 2,
+      "asyncLinks": 105,
+      "totalLinks": 107,
+      "syncGlCallMs": 3.200000762939453,
+      "bundle": "http://127.0.0.1:4901/build/index-DR-3_Shw.js",
+      "errors": [],
+      "rawSource": "test-results/perf12/causal/after-state/webgl2-low/loads/L1-L4-L7.json",
+      "rawSha256": "26486d6ef3c5e13693e453443d03b1a6722899c2c594be92fef6a9957a8e37f3"
+    },
+    {
+      "phase": "after-state",
+      "backend": "webgl2",
+      "level": "L1",
+      "tier": "low",
+      "temperature": "warm",
+      "diagnosticLoadMs": 2152,
+      "syncLinks": 2,
+      "asyncLinks": 105,
+      "totalLinks": 107,
+      "syncGlCallMs": 2.799999237060547,
+      "bundle": "http://127.0.0.1:4901/build/index-DR-3_Shw.js",
+      "errors": [],
+      "rawSource": "test-results/perf12/causal/after-state/webgl2-low/loads/L1-L4-L7.json",
+      "rawSha256": "26486d6ef3c5e13693e453443d03b1a6722899c2c594be92fef6a9957a8e37f3"
+    },
+    {
+      "phase": "after-state",
+      "backend": "webgl2",
+      "level": "L4",
+      "tier": "low",
+      "temperature": "cold",
+      "diagnosticLoadMs": 3435.5,
+      "syncLinks": 5,
+      "asyncLinks": 113,
+      "totalLinks": 118,
+      "syncGlCallMs": 8.100001335144043,
+      "bundle": "http://127.0.0.1:4901/build/index-DR-3_Shw.js",
+      "errors": [],
+      "rawSource": "test-results/perf12/causal/after-state/webgl2-low/loads/L1-L4-L7.json",
+      "rawSha256": "26486d6ef3c5e13693e453443d03b1a6722899c2c594be92fef6a9957a8e37f3"
+    },
+    {
+      "phase": "after-state",
+      "backend": "webgl2",
+      "level": "L4",
+      "tier": "low",
+      "temperature": "warm",
+      "diagnosticLoadMs": 3360.5999994277954,
+      "syncLinks": 5,
+      "asyncLinks": 113,
+      "totalLinks": 118,
+      "syncGlCallMs": 7.200000762939453,
+      "bundle": "http://127.0.0.1:4901/build/index-DR-3_Shw.js",
+      "errors": [],
+      "rawSource": "test-results/perf12/causal/after-state/webgl2-low/loads/L1-L4-L7.json",
+      "rawSha256": "26486d6ef3c5e13693e453443d03b1a6722899c2c594be92fef6a9957a8e37f3"
+    },
+    {
+      "phase": "after-state",
+      "backend": "webgl2",
+      "level": "L7",
+      "tier": "low",
+      "temperature": "cold",
+      "diagnosticLoadMs": 3084.8999996185303,
+      "syncLinks": 8,
+      "asyncLinks": 97,
+      "totalLinks": 105,
+      "syncGlCallMs": 40.70000076293945,
+      "bundle": "http://127.0.0.1:4901/build/index-DR-3_Shw.js",
+      "errors": [],
+      "rawSource": "test-results/perf12/causal/after-state/webgl2-low/loads/L1-L4-L7.json",
+      "rawSha256": "26486d6ef3c5e13693e453443d03b1a6722899c2c594be92fef6a9957a8e37f3"
+    },
+    {
+      "phase": "after-state",
+      "backend": "webgl2",
+      "level": "L7",
+      "tier": "low",
+      "temperature": "warm",
+      "diagnosticLoadMs": 2978,
+      "syncLinks": 8,
+      "asyncLinks": 97,
+      "totalLinks": 105,
+      "syncGlCallMs": 29.799999237060547,
+      "bundle": "http://127.0.0.1:4901/build/index-DR-3_Shw.js",
+      "errors": [],
+      "rawSource": "test-results/perf12/causal/after-state/webgl2-low/loads/L1-L4-L7.json",
+      "rawSha256": "26486d6ef3c5e13693e453443d03b1a6722899c2c594be92fef6a9957a8e37f3"
+    },
+    {
+      "phase": "after-state",
+      "backend": "webgpu",
+      "level": "L7",
+      "tier": "high",
+      "temperature": "cold",
+      "diagnosticLoadMs": 3442.1000003814697,
+      "syncLinks": 0,
+      "asyncLinks": 0,
+      "totalLinks": 0,
+      "syncGlCallMs": 0,
+      "bundle": "http://127.0.0.1:4901/build/index-DR-3_Shw.js",
+      "errors": [],
+      "rawSource": "test-results/perf12/causal/after-state/webgpu-high/loads/L7.json",
+      "rawSha256": "0ab3b583e28bacd6af87bd869cc409ad2c2126f3258e887156d715ec58529916"
+    },
+    {
+      "phase": "after-state",
+      "backend": "webgpu",
+      "level": "L7",
+      "tier": "high",
+      "temperature": "warm",
+      "diagnosticLoadMs": 3361.8999996185303,
+      "syncLinks": 0,
+      "asyncLinks": 0,
+      "totalLinks": 0,
+      "syncGlCallMs": 0,
+      "bundle": "http://127.0.0.1:4901/build/index-DR-3_Shw.js",
+      "errors": [],
+      "rawSource": "test-results/perf12/causal/after-state/webgpu-high/loads/L7.json",
+      "rawSha256": "0ab3b583e28bacd6af87bd869cc409ad2c2126f3258e887156d715ec58529916"
+    }
+  ],
+  "linkConservation": [
+    {
+      "level": "L1",
+      "tier": "low",
+      "temperature": "cold",
+      "beforeSync": 14,
+      "afterSync": 2,
+      "beforeAsync": 93,
+      "afterAsync": 105,
+      "beforeTotal": 107,
+      "afterTotal": 107,
+      "sameTotalPrograms": true
+    },
+    {
+      "level": "L1",
+      "tier": "low",
+      "temperature": "warm",
+      "beforeSync": 14,
+      "afterSync": 2,
+      "beforeAsync": 93,
+      "afterAsync": 105,
+      "beforeTotal": 107,
+      "afterTotal": 107,
+      "sameTotalPrograms": true
+    },
+    {
+      "level": "L4",
+      "tier": "low",
+      "temperature": "cold",
+      "beforeSync": 10,
+      "afterSync": 5,
+      "beforeAsync": 108,
+      "afterAsync": 113,
+      "beforeTotal": 118,
+      "afterTotal": 118,
+      "sameTotalPrograms": true
+    },
+    {
+      "level": "L4",
+      "tier": "low",
+      "temperature": "warm",
+      "beforeSync": 10,
+      "afterSync": 5,
+      "beforeAsync": 108,
+      "afterAsync": 113,
+      "beforeTotal": 118,
+      "afterTotal": 118,
+      "sameTotalPrograms": true
+    },
+    {
+      "level": "L7",
+      "tier": "low",
+      "temperature": "cold",
+      "beforeSync": 13,
+      "afterSync": 8,
+      "beforeAsync": 92,
+      "afterAsync": 97,
+      "beforeTotal": 105,
+      "afterTotal": 105,
+      "sameTotalPrograms": true
+    },
+    {
+      "level": "L7",
+      "tier": "low",
+      "temperature": "warm",
+      "beforeSync": 13,
+      "afterSync": 8,
+      "beforeAsync": 92,
+      "afterAsync": 97,
+      "beforeTotal": 105,
+      "afterTotal": 105,
+      "sameTotalPrograms": true
+    }
+  ],
+  "cpuProfile": {
+    "rawSource": "test-results/perf12/load-diagnostic/webgl2-low/loads/L1-candidate-cold.cpuprofile.gz",
+    "rawSha256": "1a7b1d110f6bfbc3edf739a799177d221f1ce2537adf08b6e9d46ea993120d77",
+    "diagnosticLoadMs": 6585.599999427795,
+    "getProgramParameterSelfMs": 1768.741999999997,
+    "stacks": [
+      {
+        "ms": 1453.2899999999975,
+        "frames": [
+          [
+            "getProgramParameter",
+            "",
+            -1,
+            -1
+          ],
+          [
+            "proto.<computed>",
+            "",
+            6,
+            51
+          ],
+          [
+            "_completeCompile",
+            "three-webgpu-VmN4QZ8l.js",
+            242,
+            74
+          ],
+          [
+            "createRenderPipeline",
+            "three-webgpu-VmN4QZ8l.js",
+            232,
+            62734
+          ],
+          [
+            "_getRenderPipeline",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            93786
+          ],
+          [
+            "getForRender",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            91828
+          ],
+          [
+            "updateForRender",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            93552
+          ],
+          [
+            "_renderObjectDirect",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            23638
+          ],
+          [
+            "renderObject",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            21745
+          ],
+          [
+            "_renderObjects",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            19922
+          ],
+          [
+            "_renderTransparents",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            19670
+          ],
+          [
+            "_renderScene",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            3485
+          ],
+          [
+            "render",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            1182
+          ],
+          [
+            "render",
+            "index-CVRHMteJ.js",
+            17,
+            615575
+          ],
+          [
+            "updateBefore",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            151671
+          ],
+          [
+            "updateBeforeNode",
+            "three-webgpu-VmN4QZ8l.js",
+            40,
+            521
+          ],
+          [
+            "updateBefore",
+            "three-webgpu-VmN4QZ8l.js",
+            40,
+            15454
+          ],
+          [
+            "_renderObjectDirect",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            23638
+          ],
+          [
+            "renderObject",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            21745
+          ],
+          [
+            "_renderObjects",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            19922
+          ],
+          [
+            "_renderScene",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            3485
+          ],
+          [
+            "render",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            1182
+          ],
+          [
+            "render",
+            "index-CVRHMteJ.js",
+            17,
+            615575
+          ],
+          [
+            "render",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            133038
+          ],
+          [
+            "render",
+            "three-webgpu-VmN4QZ8l.js",
+            578,
+            41293
+          ],
+          [
+            "render",
+            "index-CVRHMteJ.js",
+            17,
+            717785
+          ],
+          [
+            "r",
+            "index-CVRHMteJ.js",
+            17,
+            948087
+          ],
+          [
+            "Mp",
+            "index-CVRHMteJ.js",
+            17,
+            619727
+          ],
+          [
+            "(root)",
+            "",
+            -1,
+            -1
+          ]
+        ]
+      },
+      {
+        "ms": 105.13899999999997,
+        "frames": [
+          [
+            "getProgramParameter",
+            "",
+            -1,
+            -1
+          ],
+          [
+            "proto.<computed>",
+            "",
+            6,
+            51
+          ],
+          [
+            "_completeCompile",
+            "three-webgpu-VmN4QZ8l.js",
+            242,
+            74
+          ],
+          [
+            "createRenderPipeline",
+            "three-webgpu-VmN4QZ8l.js",
+            232,
+            62734
+          ],
+          [
+            "_getRenderPipeline",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            93786
+          ],
+          [
+            "getForRender",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            91828
+          ],
+          [
+            "updateForRender",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            93552
+          ],
+          [
+            "_renderObjectDirect",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            23638
+          ],
+          [
+            "renderObject",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            21745
+          ],
+          [
+            "_renderObjects",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            19922
+          ],
+          [
+            "_renderScene",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            3485
+          ],
+          [
+            "render",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            1182
+          ],
+          [
+            "render",
+            "index-CVRHMteJ.js",
+            17,
+            615575
+          ],
+          [
+            "render",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            133038
+          ],
+          [
+            "updateBefore",
+            "index-CVRHMteJ.js",
+            17,
+            685314
+          ],
+          [
+            "updateBeforeNode",
+            "three-webgpu-VmN4QZ8l.js",
+            40,
+            521
+          ],
+          [
+            "updateBefore",
+            "three-webgpu-VmN4QZ8l.js",
+            40,
+            15454
+          ],
+          [
+            "_renderObjectDirect",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            23638
+          ],
+          [
+            "renderObject",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            21745
+          ],
+          [
+            "_renderObjects",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            19922
+          ],
+          [
+            "_renderScene",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            3485
+          ],
+          [
+            "render",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            1182
+          ],
+          [
+            "render",
+            "index-CVRHMteJ.js",
+            17,
+            615575
+          ],
+          [
+            "render",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            133038
+          ],
+          [
+            "render",
+            "three-webgpu-VmN4QZ8l.js",
+            578,
+            41293
+          ],
+          [
+            "render",
+            "index-CVRHMteJ.js",
+            17,
+            717785
+          ],
+          [
+            "updateFrame",
+            "index-CVRHMteJ.js",
+            17,
+            968559
+          ],
+          [
+            "update",
+            "index-CVRHMteJ.js",
+            17,
+            968324
+          ],
+          [
+            "unfreeze",
+            "index-CVRHMteJ.js",
+            17,
+            932945
+          ],
+          [
+            "",
+            "index-CVRHMteJ.js",
+            20,
+            40834
+          ],
+          [
+            "(root)",
+            "",
+            -1,
+            -1
+          ]
+        ]
+      },
+      {
+        "ms": 77.55,
+        "frames": [
+          [
+            "getProgramParameter",
+            "",
+            -1,
+            -1
+          ],
+          [
+            "proto.<computed>",
+            "",
+            6,
+            51
+          ],
+          [
+            "_completeCompile",
+            "three-webgpu-VmN4QZ8l.js",
+            242,
+            74
+          ],
+          [
+            "createRenderPipeline",
+            "three-webgpu-VmN4QZ8l.js",
+            232,
+            62734
+          ],
+          [
+            "_getRenderPipeline",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            93786
+          ],
+          [
+            "getForRender",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            91828
+          ],
+          [
+            "updateForRender",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            93552
+          ],
+          [
+            "_renderObjectDirect",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            23638
+          ],
+          [
+            "renderObject",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            21745
+          ],
+          [
+            "_renderObjects",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            19922
+          ],
+          [
+            "_renderScene",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            3485
+          ],
+          [
+            "render",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            1182
+          ],
+          [
+            "render",
+            "index-CVRHMteJ.js",
+            17,
+            615575
+          ],
+          [
+            "render",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            133038
+          ],
+          [
+            "render",
+            "three-webgpu-VmN4QZ8l.js",
+            578,
+            41293
+          ],
+          [
+            "render",
+            "index-CVRHMteJ.js",
+            17,
+            717785
+          ],
+          [
+            "updateFrame",
+            "index-CVRHMteJ.js",
+            17,
+            968559
+          ],
+          [
+            "update",
+            "index-CVRHMteJ.js",
+            17,
+            968324
+          ],
+          [
+            "unfreeze",
+            "index-CVRHMteJ.js",
+            17,
+            932945
+          ],
+          [
+            "",
+            "index-CVRHMteJ.js",
+            20,
+            40834
+          ],
+          [
+            "(root)",
+            "",
+            -1,
+            -1
+          ]
+        ]
+      },
+      {
+        "ms": 63.084,
+        "frames": [
+          [
+            "getProgramParameter",
+            "",
+            -1,
+            -1
+          ],
+          [
+            "proto.<computed>",
+            "",
+            6,
+            51
+          ],
+          [
+            "_completeCompile",
+            "three-webgpu-VmN4QZ8l.js",
+            242,
+            74
+          ],
+          [
+            "createRenderPipeline",
+            "three-webgpu-VmN4QZ8l.js",
+            232,
+            62734
+          ],
+          [
+            "_getRenderPipeline",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            93786
+          ],
+          [
+            "getForRender",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            91828
+          ],
+          [
+            "updateForRender",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            93552
+          ],
+          [
+            "_renderObjectDirect",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            23638
+          ],
+          [
+            "renderObject",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            21745
+          ],
+          [
+            "_renderObjects",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            19922
+          ],
+          [
+            "_renderScene",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            3485
+          ],
+          [
+            "render",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            1182
+          ],
+          [
+            "render",
+            "index-CVRHMteJ.js",
+            17,
+            615575
+          ],
+          [
+            "render",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            133038
+          ],
+          [
+            "updateBefore",
+            "index-CVRHMteJ.js",
+            17,
+            685314
+          ],
+          [
+            "updateBeforeNode",
+            "three-webgpu-VmN4QZ8l.js",
+            40,
+            521
+          ],
+          [
+            "updateBefore",
+            "three-webgpu-VmN4QZ8l.js",
+            40,
+            15454
+          ],
+          [
+            "_renderObjectDirect",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            23638
+          ],
+          [
+            "renderObject",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            21745
+          ],
+          [
+            "_renderObjects",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            19922
+          ],
+          [
+            "_renderScene",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            3485
+          ],
+          [
+            "render",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            1182
+          ],
+          [
+            "render",
+            "index-CVRHMteJ.js",
+            17,
+            615575
+          ],
+          [
+            "render",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            133038
+          ],
+          [
+            "render",
+            "three-webgpu-VmN4QZ8l.js",
+            578,
+            41293
+          ],
+          [
+            "render",
+            "index-CVRHMteJ.js",
+            17,
+            717785
+          ],
+          [
+            "r",
+            "index-CVRHMteJ.js",
+            17,
+            948087
+          ],
+          [
+            "Mp",
+            "index-CVRHMteJ.js",
+            17,
+            619727
+          ],
+          [
+            "(root)",
+            "",
+            -1,
+            -1
+          ]
+        ]
+      },
+      {
+        "ms": 26.632,
+        "frames": [
+          [
+            "getProgramParameter",
+            "",
+            -1,
+            -1
+          ],
+          [
+            "proto.<computed>",
+            "",
+            6,
+            51
+          ],
+          [
+            "_completeCompile",
+            "three-webgpu-VmN4QZ8l.js",
+            242,
+            74
+          ],
+          [
+            "createRenderPipeline",
+            "three-webgpu-VmN4QZ8l.js",
+            232,
+            62734
+          ],
+          [
+            "_getRenderPipeline",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            93786
+          ],
+          [
+            "getForRender",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            91828
+          ],
+          [
+            "updateForRender",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            93552
+          ],
+          [
+            "_renderObjectDirect",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            23638
+          ],
+          [
+            "renderObject",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            21745
+          ],
+          [
+            "_renderObjects",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            19922
+          ],
+          [
+            "_renderScene",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            3485
+          ],
+          [
+            "render",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            1182
+          ],
+          [
+            "render",
+            "index-CVRHMteJ.js",
+            17,
+            615575
+          ],
+          [
+            "render",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            133038
+          ],
+          [
+            "updateBefore",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            136097
+          ],
+          [
+            "updateBeforeNode",
+            "three-webgpu-VmN4QZ8l.js",
+            40,
+            521
+          ],
+          [
+            "updateBefore",
+            "three-webgpu-VmN4QZ8l.js",
+            40,
+            15454
+          ],
+          [
+            "_renderObjectDirect",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            23638
+          ],
+          [
+            "renderObject",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            21745
+          ],
+          [
+            "_renderObjects",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            19922
+          ],
+          [
+            "_renderScene",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            3485
+          ],
+          [
+            "render",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            1182
+          ],
+          [
+            "render",
+            "index-CVRHMteJ.js",
+            17,
+            615575
+          ],
+          [
+            "render",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            133038
+          ],
+          [
+            "render",
+            "three-webgpu-VmN4QZ8l.js",
+            578,
+            41293
+          ],
+          [
+            "render",
+            "index-CVRHMteJ.js",
+            17,
+            717785
+          ],
+          [
+            "r",
+            "index-CVRHMteJ.js",
+            17,
+            948087
+          ],
+          [
+            "Mp",
+            "index-CVRHMteJ.js",
+            17,
+            619727
+          ],
+          [
+            "(root)",
+            "",
+            -1,
+            -1
+          ]
+        ]
+      },
+      {
+        "ms": 22.493,
+        "frames": [
+          [
+            "getProgramParameter",
+            "",
+            -1,
+            -1
+          ],
+          [
+            "proto.<computed>",
+            "",
+            6,
+            51
+          ],
+          [
+            "_completeCompile",
+            "three-webgpu-VmN4QZ8l.js",
+            242,
+            74
+          ],
+          [
+            "createRenderPipeline",
+            "three-webgpu-VmN4QZ8l.js",
+            232,
+            62734
+          ],
+          [
+            "_getRenderPipeline",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            93786
+          ],
+          [
+            "getForRender",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            91828
+          ],
+          [
+            "updateForRender",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            93552
+          ],
+          [
+            "_renderObjectDirect",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            23638
+          ],
+          [
+            "renderObject",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            21745
+          ],
+          [
+            "_renderObjects",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            19922
+          ],
+          [
+            "_renderScene",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            3485
+          ],
+          [
+            "render",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            1182
+          ],
+          [
+            "render",
+            "index-CVRHMteJ.js",
+            17,
+            615575
+          ],
+          [
+            "updateBefore",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            151671
+          ],
+          [
+            "updateBeforeNode",
+            "three-webgpu-VmN4QZ8l.js",
+            40,
+            521
+          ],
+          [
+            "updateBefore",
+            "three-webgpu-VmN4QZ8l.js",
+            40,
+            15454
+          ],
+          [
+            "_renderObjectDirect",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            23638
+          ],
+          [
+            "renderObject",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            21745
+          ],
+          [
+            "_renderObjects",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            19922
+          ],
+          [
+            "_renderScene",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            3485
+          ],
+          [
+            "render",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            1182
+          ],
+          [
+            "render",
+            "index-CVRHMteJ.js",
+            17,
+            615575
+          ],
+          [
+            "render",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            133038
+          ],
+          [
+            "render",
+            "three-webgpu-VmN4QZ8l.js",
+            578,
+            41293
+          ],
+          [
+            "render",
+            "index-CVRHMteJ.js",
+            17,
+            717785
+          ],
+          [
+            "updateFrame",
+            "index-CVRHMteJ.js",
+            17,
+            968559
+          ],
+          [
+            "update",
+            "index-CVRHMteJ.js",
+            17,
+            968324
+          ],
+          [
+            "h",
+            "index-CVRHMteJ.js",
+            17,
+            940926
+          ],
+          [
+            "load",
+            "index-CVRHMteJ.js",
+            17,
+            936033
+          ],
+          [
+            "(root)",
+            "",
+            -1,
+            -1
+          ]
+        ]
+      },
+      {
+        "ms": 12.004,
+        "frames": [
+          [
+            "getProgramParameter",
+            "",
+            -1,
+            -1
+          ],
+          [
+            "proto.<computed>",
+            "",
+            6,
+            51
+          ],
+          [
+            "_completeCompile",
+            "three-webgpu-VmN4QZ8l.js",
+            242,
+            74
+          ],
+          [
+            "createRenderPipeline",
+            "three-webgpu-VmN4QZ8l.js",
+            232,
+            62734
+          ],
+          [
+            "_getRenderPipeline",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            93786
+          ],
+          [
+            "getForRender",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            91828
+          ],
+          [
+            "updateForRender",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            93552
+          ],
+          [
+            "_renderObjectDirect",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            23638
+          ],
+          [
+            "renderObject",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            21745
+          ],
+          [
+            "_renderObjects",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            19922
+          ],
+          [
+            "_renderScene",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            3485
+          ],
+          [
+            "render",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            1182
+          ],
+          [
+            "render",
+            "index-CVRHMteJ.js",
+            17,
+            615575
+          ],
+          [
+            "render",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            133038
+          ],
+          [
+            "render",
+            "three-webgpu-VmN4QZ8l.js",
+            578,
+            41293
+          ],
+          [
+            "render",
+            "index-CVRHMteJ.js",
+            17,
+            717785
+          ],
+          [
+            "r",
+            "index-CVRHMteJ.js",
+            17,
+            948087
+          ],
+          [
+            "Mp",
+            "index-CVRHMteJ.js",
+            17,
+            619727
+          ],
+          [
+            "(root)",
+            "",
+            -1,
+            -1
+          ]
+        ]
+      },
+      {
+        "ms": 2.949,
+        "frames": [
+          [
+            "getProgramParameter",
+            "",
+            -1,
+            -1
+          ],
+          [
+            "proto.<computed>",
+            "",
+            6,
+            51
+          ],
+          [
+            "_completeCompile",
+            "three-webgpu-VmN4QZ8l.js",
+            242,
+            74
+          ],
+          [
+            "createRenderPipeline",
+            "three-webgpu-VmN4QZ8l.js",
+            232,
+            62734
+          ],
+          [
+            "_getRenderPipeline",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            93786
+          ],
+          [
+            "getForRender",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            91828
+          ],
+          [
+            "updateForRender",
+            "three-webgpu-VmN4QZ8l.js",
+            32,
+            93552
+          ],
+          [
+            "_renderObjectDirect",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            23638
+          ],
+          [
+            "renderObject",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            21745
+          ],
+          [
+            "_renderObjects",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            19922
+          ],
+          [
+            "_renderScene",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            3485
+          ],
+          [
+            "_renderOutputLayers",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            1433
+          ],
+          [
+            "_renderOutput",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            7463
+          ],
+          [
+            "clear",
+            "three-webgpu-VmN4QZ8l.js",
+            43,
+            10620
+          ],
+          [
+            "presentLoading",
+            "index-CVRHMteJ.js",
+            17,
+            933130
+          ],
+          [
+            "",
+            "index-CVRHMteJ.js",
+            20,
+            37273
+          ],
+          [
+            "emit",
+            "index-CVRHMteJ.js",
+            0,
+            348938
+          ],
+          [
+            "frame",
+            "index-CVRHMteJ.js",
+            12,
+            69865
+          ],
+          [
+            "(root)",
+            "",
+            -1,
+            -1
+          ]
+        ]
+      }
+    ]
+  },
+  "assetVersions": {
+    "beforeAssetPaths": 2074,
+    "afterAssetPaths": 2074,
+    "assetVersionsUnchanged": true,
+    "focusedBundleSha256": "b94d981dd2fc5bf67f7185d3b9d6f381d2ff502a48f720d9dcb671f52b229dea",
+    "finalBundle": "index-DajticFx.js",
+    "note": "Focused diagnostics use the same runtime source content before its commit; their distinct build hash is retained and no diagnostic supplies a verdict."
+  },
+  "reportParagraphs": [
+    "The initial public load sweep on `f3e603fb` fails four absolute limits: L7 high WebGPU cold **6.657 s**, and low WebGL2 L1/L4/L7 cold **7.460 / 6.028 / 9.110 s**. PROD is slower in every one of those cells; inherited cost does not waive the candidate\u2019s 6 s limit. The twelve completed initial near-scene captures are retained; the next heavy-scene admission was deliberately stopped before a capture began to validate the repair with a complete final matrix.",
+    "The separate L1 cold CPU profile reproduces **6.586 s** and attributes **1768.7 ms** of sampled time to `getProgramParameter`, including **1453.3 ms** through the nested transparent draw. Pipeline attribution identifies first-use post-processing programs and actual pet/character surfaces outside the earlier scene compilation. These diagnostics locate work; none supplies a verdict.",
+    "The repair discovers cold pipelines in the real warm-up render contexts, queues their native links asynchronously, then replays the complete draws after linking. The final foreground readiness draw does the same for surfaces exposed by unfreezing. Scene geometry, every warm-up variant and both instancing paths remain present. Gameplay restores the original backend methods. This changes loading preparation; no model, population, effects, quality tier or acceptance limit is reduced.",
+    "One cause commit: `619896ae` \u2014 Prepare cold warm-up pipelines before their first real draw. Focused WebGL2 cold diagnostics move synchronous links **14\u21922 (L1), 10\u21925 (L4), 13\u21928 (L7)** while conserving total linked programs **107 / 118 / 105** on both sides. All **2,074 asset-version paths** are unchanged. Shared GPU contract checks cover waiting, complete replay, frame renewal and hook restoration. The residual synchronous programs are reported; no claim of zero cold shader work is made.",
+    "An earlier material-state prototype hit an uninitialized framebuffer-copy error; its revision was discarded. A corrected version of that prototype added unused preparation without reducing the synchronous link count and was also discarded. Only the direct warm-up draw repair above is committed. Failed and diagnostic attempts remain identified in the command ledger."
+  ]
+}

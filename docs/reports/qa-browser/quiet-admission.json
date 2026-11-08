@@ -1,0 +1,708 @@
+[
+  {
+    "tier": "low",
+    "exit": 75,
+    "result": "BLOCKED: no quiet admission; timing never started",
+    "first": {
+      "at": "2026-11-08T18:06:38.313Z",
+      "event": "quiet-admission-wait",
+      "granted": false,
+      "quiet": false,
+      "load": [
+        5.212890625,
+        6.5576171875,
+        6.68603515625
+      ],
+      "busy": [],
+      "ignoredIdle": [
+        {
+          "pid": 19056,
+          "cpu": 0,
+          "ageSeconds": 1283,
+          "command": "/bin/zsh -c source /Users/wesner/.claude/shell-snapshots/snapshot-zsh-1794154295444-1u2siu.sh 2>/dev/null || true && setopt NO_EXTENDED_GLOB NO_BARE_GLOB_QUAL 2>/dev/null || true &"
+        }
+      ]
+    },
+    "last": {
+      "at": "2026-11-08T18:23:31.273Z",
+      "event": "quiet-admission-wait",
+      "granted": true,
+      "quiet": false,
+      "load": [
+        4.6015625,
+        5.1533203125,
+        5.75537109375
+      ],
+      "busy": [],
+      "ignoredIdle": []
+    },
+    "samples": 34,
+    "busyObservations": [
+      {
+        "at": "2026-11-08T18:08:41.562Z",
+        "event": "quiet-admission-wait",
+        "granted": false,
+        "quiet": false,
+        "load": [
+          6.64794921875,
+          6.6142578125,
+          6.68505859375
+        ],
+        "busy": [
+          {
+            "pid": 76833,
+            "cpu": 207.7,
+            "ageSeconds": 5,
+            "command": "node /Users/wesner/Workspace/minorincident/.claude/worktrees/r14-alphas/node_modules/.bin/eslint src tests tools functions playwright.config.ts vite.config.ts vitest.config.ts esli"
+          }
+        ],
+        "ignoredIdle": [
+          {
+            "pid": 19056,
+            "cpu": 0,
+            "ageSeconds": 1406,
+            "command": "/bin/zsh -c source /Users/wesner/.claude/shell-snapshots/snapshot-zsh-1794154295444-1u2siu.sh 2>/dev/null || true && setopt NO_EXTENDED_GLOB NO_BARE_GLOB_QUAL 2>/dev/null || true &"
+          }
+        ]
+      },
+      {
+        "at": "2026-11-08T18:09:43.115Z",
+        "event": "quiet-admission-wait",
+        "granted": false,
+        "quiet": false,
+        "load": [
+          5.88623046875,
+          6.39404296875,
+          6.59521484375
+        ],
+        "busy": [
+          {
+            "pid": 85650,
+            "cpu": 0.4,
+            "ageSeconds": 3,
+            "command": "node tools/qa/test-budget.mjs --name test --max-seconds 240 -- node node_modules/vitest/vitest.mjs run --project default --configLoader runner --maxWorkers=1"
+          },
+          {
+            "pid": 86047,
+            "cpu": 66.6,
+            "ageSeconds": 1,
+            "command": "/opt/homebrew/Cellar/node/26.0.0/bin/node node_modules/vitest/vitest.mjs run --project default --configLoader runner --maxWorkers=1"
+          }
+        ],
+        "ignoredIdle": [
+          {
+            "pid": 19056,
+            "cpu": 0,
+            "ageSeconds": 1468,
+            "command": "/bin/zsh -c source /Users/wesner/.claude/shell-snapshots/snapshot-zsh-1794154295444-1u2siu.sh 2>/dev/null || true && setopt NO_EXTENDED_GLOB NO_BARE_GLOB_QUAL 2>/dev/null || true &"
+          }
+        ]
+      },
+      {
+        "at": "2026-11-08T18:10:14.023Z",
+        "event": "quiet-admission-wait",
+        "granted": false,
+        "quiet": false,
+        "load": [
+          5.55615234375,
+          6.2734375,
+          6.5439453125
+        ],
+        "busy": [
+          {
+            "pid": 85650,
+            "cpu": 0,
+            "ageSeconds": 34,
+            "command": "node tools/qa/test-budget.mjs --name test --max-seconds 240 -- node node_modules/vitest/vitest.mjs run --project default --configLoader runner --maxWorkers=1"
+          },
+          {
+            "pid": 86047,
+            "cpu": 0,
+            "ageSeconds": 32,
+            "command": "/opt/homebrew/Cellar/node/26.0.0/bin/node node_modules/vitest/vitest.mjs run --project default --configLoader runner --maxWorkers=1"
+          },
+          {
+            "pid": 92824,
+            "cpu": 0,
+            "ageSeconds": 3,
+            "command": "/opt/homebrew/Cellar/node/26.0.0/bin/node /var/folders/0d/d1pz5009603g0jcd5r3j353c0000gn/T/mi-budget-fixture-WHS1qc/vitest.cjs list --json=/var/folders/0d/d1pz5009603g0jcd5r3j353c0"
+          }
+        ],
+        "ignoredIdle": [
+          {
+            "pid": 19056,
+            "cpu": 0,
+            "ageSeconds": 1499,
+            "command": "/bin/zsh -c source /Users/wesner/.claude/shell-snapshots/snapshot-zsh-1794154295444-1u2siu.sh 2>/dev/null || true && setopt NO_EXTENDED_GLOB NO_BARE_GLOB_QUAL 2>/dev/null || true &"
+          }
+        ]
+      },
+      {
+        "at": "2026-11-08T18:10:44.196Z",
+        "event": "quiet-admission-wait",
+        "granted": false,
+        "quiet": false,
+        "load": [
+          7.8408203125,
+          6.83154296875,
+          6.74072265625
+        ],
+        "busy": [
+          {
+            "pid": 85650,
+            "cpu": 0,
+            "ageSeconds": 64,
+            "command": "node tools/qa/test-budget.mjs --name test --max-seconds 240 -- node node_modules/vitest/vitest.mjs run --project default --configLoader runner --maxWorkers=1"
+          },
+          {
+            "pid": 86047,
+            "cpu": 118.8,
+            "ageSeconds": 62,
+            "command": "/opt/homebrew/Cellar/node/26.0.0/bin/node node_modules/vitest/vitest.mjs run --project default --configLoader runner --maxWorkers=1"
+          }
+        ],
+        "ignoredIdle": [
+          {
+            "pid": 19056,
+            "cpu": 0,
+            "ageSeconds": 1529,
+            "command": "/bin/zsh -c source /Users/wesner/.claude/shell-snapshots/snapshot-zsh-1794154295444-1u2siu.sh 2>/dev/null || true && setopt NO_EXTENDED_GLOB NO_BARE_GLOB_QUAL 2>/dev/null || true &"
+          }
+        ]
+      },
+      {
+        "at": "2026-11-08T18:11:15.135Z",
+        "event": "quiet-admission-wait",
+        "granted": false,
+        "quiet": false,
+        "load": [
+          6.9873046875,
+          6.73193359375,
+          6.70849609375
+        ],
+        "busy": [
+          {
+            "pid": 85650,
+            "cpu": 0,
+            "ageSeconds": 95,
+            "command": "node tools/qa/test-budget.mjs --name test --max-seconds 240 -- node node_modules/vitest/vitest.mjs run --project default --configLoader runner --maxWorkers=1"
+          },
+          {
+            "pid": 86047,
+            "cpu": 98.4,
+            "ageSeconds": 93,
+            "command": "/opt/homebrew/Cellar/node/26.0.0/bin/node node_modules/vitest/vitest.mjs run --project default --configLoader runner --maxWorkers=1"
+          }
+        ],
+        "ignoredIdle": [
+          {
+            "pid": 19056,
+            "cpu": 0,
+            "ageSeconds": 1560,
+            "command": "/bin/zsh -c source /Users/wesner/.claude/shell-snapshots/snapshot-zsh-1794154295444-1u2siu.sh 2>/dev/null || true && setopt NO_EXTENDED_GLOB NO_BARE_GLOB_QUAL 2>/dev/null || true &"
+          }
+        ]
+      },
+      {
+        "at": "2026-11-08T18:13:16.044Z",
+        "event": "quiet-admission-wait",
+        "granted": false,
+        "quiet": false,
+        "load": [
+          5.75634765625,
+          6.3017578125,
+          6.53515625
+        ],
+        "busy": [
+          {
+            "pid": 19056,
+            "cpu": 0.1,
+            "ageSeconds": 1681,
+            "command": "/bin/zsh -c source /Users/wesner/.claude/shell-snapshots/snapshot-zsh-1794154295444-1u2siu.sh 2>/dev/null || true && setopt NO_EXTENDED_GLOB NO_BARE_GLOB_QUAL 2>/dev/null || true &"
+          }
+        ],
+        "ignoredIdle": []
+      },
+      {
+        "at": "2026-11-08T18:20:57.579Z",
+        "event": "quiet-admission-wait",
+        "granted": true,
+        "quiet": false,
+        "load": [
+          5.23193359375,
+          5.4453125,
+          5.9580078125
+        ],
+        "busy": [
+          {
+            "pid": 81159,
+            "cpu": 140.8,
+            "ageSeconds": 2,
+            "command": "node /Users/wesner/Workspace/minorincident/.claude/worktrees/r14-height/node_modules/.bin/tsc --noEmit"
+          }
+        ],
+        "ignoredIdle": []
+      },
+      {
+        "at": "2026-11-08T18:21:28.416Z",
+        "event": "quiet-admission-wait",
+        "granted": true,
+        "quiet": false,
+        "load": [
+          4.99072265625,
+          5.36865234375,
+          5.9111328125
+        ],
+        "busy": [
+          {
+            "pid": 84664,
+            "cpu": 128.8,
+            "ageSeconds": 11,
+            "command": "node /Users/wesner/Workspace/minorincident/.claude/worktrees/r14-height/node_modules/.bin/tsc --noEmit"
+          },
+          {
+            "pid": 85920,
+            "cpu": 0,
+            "ageSeconds": 0,
+            "command": "node /opt/homebrew/bin/npx vitest run tests/engine/infected-ai.test.ts tests/engine/l4-contact.test.ts --maxWorkers=1 --configLoader runner"
+          }
+        ],
+        "ignoredIdle": []
+      },
+      {
+        "at": "2026-11-08T18:21:59.314Z",
+        "event": "quiet-admission-wait",
+        "granted": true,
+        "quiet": false,
+        "load": [
+          5.095703125,
+          5.38818359375,
+          5.900390625
+        ],
+        "busy": [
+          {
+            "pid": 89043,
+            "cpu": 172.5,
+            "ageSeconds": 5,
+            "command": "node /Users/wesner/Workspace/minorincident/.claude/worktrees/r14-height/node_modules/.bin/tsc --noEmit"
+          }
+        ],
+        "ignoredIdle": []
+      },
+      {
+        "at": "2026-11-08T18:22:30.256Z",
+        "event": "quiet-admission-wait",
+        "granted": true,
+        "quiet": false,
+        "load": [
+          4.68017578125,
+          5.2548828125,
+          5.8330078125
+        ],
+        "busy": [
+          {
+            "pid": 92978,
+            "cpu": 124.3,
+            "ageSeconds": 13,
+            "command": "node /Users/wesner/Workspace/minorincident/.claude/worktrees/r14-alphas/node_modules/.bin/tsc --noEmit"
+          },
+          {
+            "pid": 93650,
+            "cpu": 152.7,
+            "ageSeconds": 10,
+            "command": "node /Users/wesner/Workspace/minorincident/.claude/worktrees/r14-height/node_modules/.bin/eslint src tests tools functions playwright.config.ts vite.config.ts vitest.config.ts esli"
+          }
+        ],
+        "ignoredIdle": []
+      }
+    ],
+    "error": [
+      "Error: Quiet-run: admission reached the 600-second reservation cap; last conditions: {\"quiet\":false,\"load\":[5.35107421875,5.2958984375,5.79833984375],\"busy\":[{\"pid\":4269,\"cpu\":162.1,\"ageSeconds\":1,\"command\":\"node /Users/wesner/Workspace/minorincident/.claude/worktrees/r14-alphas/node_modules/.bin/tsc --noEmit\"}],\"ignoredIdle\":[]}; report unmeasured coverage."
+    ]
+  },
+  {
+    "tier": "high",
+    "exit": 75,
+    "result": "BLOCKED: no quiet admission; timing never started",
+    "first": {
+      "at": "2026-11-08T18:06:39.470Z",
+      "event": "quiet-admission-wait",
+      "granted": false,
+      "quiet": false,
+      "load": [
+        5.212890625,
+        6.5576171875,
+        6.68603515625
+      ],
+      "busy": [],
+      "ignoredIdle": [
+        {
+          "pid": 19056,
+          "cpu": 0,
+          "ageSeconds": 1284,
+          "command": "/bin/zsh -c source /Users/wesner/.claude/shell-snapshots/snapshot-zsh-1794154295444-1u2siu.sh 2>/dev/null || true && setopt NO_EXTENDED_GLOB NO_BARE_GLOB_QUAL 2>/dev/null || true &"
+        }
+      ]
+    },
+    "last": {
+      "at": "2026-11-08T18:26:38.787Z",
+      "event": "quiet-admission-wait",
+      "granted": true,
+      "quiet": false,
+      "load": [
+        7.205078125,
+        5.9619140625,
+        5.955078125
+      ],
+      "busy": [],
+      "ignoredIdle": []
+    },
+    "samples": 40,
+    "busyObservations": [
+      {
+        "at": "2026-11-08T18:08:42.657Z",
+        "event": "quiet-admission-wait",
+        "granted": false,
+        "quiet": false,
+        "load": [
+          6.64794921875,
+          6.6142578125,
+          6.68505859375
+        ],
+        "busy": [
+          {
+            "pid": 76833,
+            "cpu": 197.4,
+            "ageSeconds": 6,
+            "command": "node /Users/wesner/Workspace/minorincident/.claude/worktrees/r14-alphas/node_modules/.bin/eslint src tests tools functions playwright.config.ts vite.config.ts vitest.config.ts esli"
+          }
+        ],
+        "ignoredIdle": [
+          {
+            "pid": 19056,
+            "cpu": 0,
+            "ageSeconds": 1407,
+            "command": "/bin/zsh -c source /Users/wesner/.claude/shell-snapshots/snapshot-zsh-1794154295444-1u2siu.sh 2>/dev/null || true && setopt NO_EXTENDED_GLOB NO_BARE_GLOB_QUAL 2>/dev/null || true &"
+          }
+        ]
+      },
+      {
+        "at": "2026-11-08T18:09:44.213Z",
+        "event": "quiet-admission-wait",
+        "granted": false,
+        "quiet": false,
+        "load": [
+          5.88623046875,
+          6.39404296875,
+          6.59521484375
+        ],
+        "busy": [
+          {
+            "pid": 85650,
+            "cpu": 0,
+            "ageSeconds": 4,
+            "command": "node tools/qa/test-budget.mjs --name test --max-seconds 240 -- node node_modules/vitest/vitest.mjs run --project default --configLoader runner --maxWorkers=1"
+          },
+          {
+            "pid": 86047,
+            "cpu": 4,
+            "ageSeconds": 2,
+            "command": "/opt/homebrew/Cellar/node/26.0.0/bin/node node_modules/vitest/vitest.mjs run --project default --configLoader runner --maxWorkers=1"
+          }
+        ],
+        "ignoredIdle": [
+          {
+            "pid": 19056,
+            "cpu": 0,
+            "ageSeconds": 1469,
+            "command": "/bin/zsh -c source /Users/wesner/.claude/shell-snapshots/snapshot-zsh-1794154295444-1u2siu.sh 2>/dev/null || true && setopt NO_EXTENDED_GLOB NO_BARE_GLOB_QUAL 2>/dev/null || true &"
+          }
+        ]
+      },
+      {
+        "at": "2026-11-08T18:10:15.144Z",
+        "event": "quiet-admission-wait",
+        "granted": false,
+        "quiet": false,
+        "load": [
+          5.55615234375,
+          6.2734375,
+          6.5439453125
+        ],
+        "busy": [
+          {
+            "pid": 85650,
+            "cpu": 0,
+            "ageSeconds": 35,
+            "command": "node tools/qa/test-budget.mjs --name test --max-seconds 240 -- node node_modules/vitest/vitest.mjs run --project default --configLoader runner --maxWorkers=1"
+          },
+          {
+            "pid": 86047,
+            "cpu": 0,
+            "ageSeconds": 33,
+            "command": "/opt/homebrew/Cellar/node/26.0.0/bin/node node_modules/vitest/vitest.mjs run --project default --configLoader runner --maxWorkers=1"
+          },
+          {
+            "pid": 92824,
+            "cpu": 0,
+            "ageSeconds": 4,
+            "command": "/opt/homebrew/Cellar/node/26.0.0/bin/node /var/folders/0d/d1pz5009603g0jcd5r3j353c0000gn/T/mi-budget-fixture-WHS1qc/vitest.cjs list --json=/var/folders/0d/d1pz5009603g0jcd5r3j353c0"
+          }
+        ],
+        "ignoredIdle": [
+          {
+            "pid": 19056,
+            "cpu": 0,
+            "ageSeconds": 1500,
+            "command": "/bin/zsh -c source /Users/wesner/.claude/shell-snapshots/snapshot-zsh-1794154295444-1u2siu.sh 2>/dev/null || true && setopt NO_EXTENDED_GLOB NO_BARE_GLOB_QUAL 2>/dev/null || true &"
+          }
+        ]
+      },
+      {
+        "at": "2026-11-08T18:10:45.239Z",
+        "event": "quiet-admission-wait",
+        "granted": false,
+        "quiet": false,
+        "load": [
+          7.853515625,
+          6.8505859375,
+          6.748046875
+        ],
+        "busy": [
+          {
+            "pid": 85650,
+            "cpu": 0,
+            "ageSeconds": 65,
+            "command": "node tools/qa/test-budget.mjs --name test --max-seconds 240 -- node node_modules/vitest/vitest.mjs run --project default --configLoader runner --maxWorkers=1"
+          },
+          {
+            "pid": 86047,
+            "cpu": 107.7,
+            "ageSeconds": 63,
+            "command": "/opt/homebrew/Cellar/node/26.0.0/bin/node node_modules/vitest/vitest.mjs run --project default --configLoader runner --maxWorkers=1"
+          }
+        ],
+        "ignoredIdle": [
+          {
+            "pid": 19056,
+            "cpu": 0,
+            "ageSeconds": 1530,
+            "command": "/bin/zsh -c source /Users/wesner/.claude/shell-snapshots/snapshot-zsh-1794154295444-1u2siu.sh 2>/dev/null || true && setopt NO_EXTENDED_GLOB NO_BARE_GLOB_QUAL 2>/dev/null || true &"
+          }
+        ]
+      },
+      {
+        "at": "2026-11-08T18:11:16.159Z",
+        "event": "quiet-admission-wait",
+        "granted": false,
+        "quiet": false,
+        "load": [
+          7.068359375,
+          6.7529296875,
+          6.7158203125
+        ],
+        "busy": [
+          {
+            "pid": 85650,
+            "cpu": 0,
+            "ageSeconds": 96,
+            "command": "node tools/qa/test-budget.mjs --name test --max-seconds 240 -- node node_modules/vitest/vitest.mjs run --project default --configLoader runner --maxWorkers=1"
+          },
+          {
+            "pid": 86047,
+            "cpu": 157.1,
+            "ageSeconds": 94,
+            "command": "/opt/homebrew/Cellar/node/26.0.0/bin/node node_modules/vitest/vitest.mjs run --project default --configLoader runner --maxWorkers=1"
+          }
+        ],
+        "ignoredIdle": [
+          {
+            "pid": 19056,
+            "cpu": 0,
+            "ageSeconds": 1561,
+            "command": "/bin/zsh -c source /Users/wesner/.claude/shell-snapshots/snapshot-zsh-1794154295444-1u2siu.sh 2>/dev/null || true && setopt NO_EXTENDED_GLOB NO_BARE_GLOB_QUAL 2>/dev/null || true &"
+          }
+        ]
+      },
+      {
+        "at": "2026-11-08T18:20:59.103Z",
+        "event": "quiet-admission-wait",
+        "granted": false,
+        "quiet": false,
+        "load": [
+          5.23193359375,
+          5.4453125,
+          5.9580078125
+        ],
+        "busy": [
+          {
+            "pid": 81159,
+            "cpu": 188.7,
+            "ageSeconds": 4,
+            "command": "node /Users/wesner/Workspace/minorincident/.claude/worktrees/r14-height/node_modules/.bin/tsc --noEmit"
+          }
+        ],
+        "ignoredIdle": []
+      },
+      {
+        "at": "2026-11-08T18:21:29.907Z",
+        "event": "quiet-admission-wait",
+        "granted": false,
+        "quiet": false,
+        "load": [
+          4.99072265625,
+          5.36865234375,
+          5.9111328125
+        ],
+        "busy": [
+          {
+            "pid": 85920,
+            "cpu": 0.4,
+            "ageSeconds": 1,
+            "command": "npm exec vitest run tests/engine/infected-ai.test.ts tests/engine/l4-contact.test.ts --maxWorkers=1 --configLoader runner        "
+          },
+          {
+            "pid": 86035,
+            "cpu": 93.4,
+            "ageSeconds": 1,
+            "command": "node /Users/wesner/Workspace/minorincident/.claude/worktrees/r14-alphas/node_modules/.bin/vitest run tests/engine/infected-ai.test.ts tests/engine/l4-contact.test.ts --maxWorkers=1"
+          },
+          {
+            "pid": 86142,
+            "cpu": 11,
+            "ageSeconds": 0,
+            "command": "node /Users/wesner/Workspace/minorincident/.claude/worktrees/r14-height/node_modules/.bin/tsc --noEmit -p tsconfig.sim.json"
+          }
+        ],
+        "ignoredIdle": []
+      },
+      {
+        "at": "2026-11-08T18:22:00.704Z",
+        "event": "quiet-admission-wait",
+        "granted": false,
+        "quiet": false,
+        "load": [
+          5.095703125,
+          5.38818359375,
+          5.900390625
+        ],
+        "busy": [
+          {
+            "pid": 89043,
+            "cpu": 136.6,
+            "ageSeconds": 6,
+            "command": "node /Users/wesner/Workspace/minorincident/.claude/worktrees/r14-height/node_modules/.bin/tsc --noEmit"
+          }
+        ],
+        "ignoredIdle": []
+      },
+      {
+        "at": "2026-11-08T18:22:31.601Z",
+        "event": "quiet-admission-wait",
+        "granted": false,
+        "quiet": false,
+        "load": [
+          4.94580078125,
+          5.30029296875,
+          5.845703125
+        ],
+        "busy": [
+          {
+            "pid": 94709,
+            "cpu": 224.5,
+            "ageSeconds": 1,
+            "command": "node /Users/wesner/Workspace/minorincident/.claude/worktrees/r14-alphas/node_modules/.bin/tsc --noEmit -p tsconfig.sim.json"
+          }
+        ],
+        "ignoredIdle": []
+      },
+      {
+        "at": "2026-11-08T18:24:35.069Z",
+        "event": "quiet-admission-wait",
+        "granted": true,
+        "quiet": false,
+        "load": [
+          5.74072265625,
+          5.33837890625,
+          5.77734375
+        ],
+        "busy": [
+          {
+            "pid": 9912,
+            "cpu": 0,
+            "ageSeconds": 17,
+            "command": "node tools/qa/test-budget.mjs --name test --max-seconds 240 -- node node_modules/vitest/vitest.mjs run --project default --configLoader runner --maxWorkers=1"
+          },
+          {
+            "pid": 10293,
+            "cpu": 0.7,
+            "ageSeconds": 15,
+            "command": "/opt/homebrew/Cellar/node/26.0.0/bin/node node_modules/vitest/vitest.mjs run --project default --configLoader runner --maxWorkers=1"
+          }
+        ],
+        "ignoredIdle": []
+      },
+      {
+        "at": "2026-11-08T18:25:06.022Z",
+        "event": "quiet-admission-wait",
+        "granted": true,
+        "quiet": false,
+        "load": [
+          5.00146484375,
+          5.19384765625,
+          5.708984375
+        ],
+        "busy": [
+          {
+            "pid": 9912,
+            "cpu": 0,
+            "ageSeconds": 48,
+            "command": "node tools/qa/test-budget.mjs --name test --max-seconds 240 -- node node_modules/vitest/vitest.mjs run --project default --configLoader runner --maxWorkers=1"
+          },
+          {
+            "pid": 10293,
+            "cpu": 154,
+            "ageSeconds": 46,
+            "command": "/opt/homebrew/Cellar/node/26.0.0/bin/node node_modules/vitest/vitest.mjs run --project default --configLoader runner --maxWorkers=1"
+          }
+        ],
+        "ignoredIdle": []
+      },
+      {
+        "at": "2026-11-08T18:25:37.047Z",
+        "event": "quiet-admission-wait",
+        "granted": true,
+        "quiet": false,
+        "load": [
+          7.0380859375,
+          5.6904296875,
+          5.86865234375
+        ],
+        "busy": [
+          {
+            "pid": 9912,
+            "cpu": 0,
+            "ageSeconds": 79,
+            "command": "node tools/qa/test-budget.mjs --name test --max-seconds 240 -- node node_modules/vitest/vitest.mjs run --project default --configLoader runner --maxWorkers=1"
+          },
+          {
+            "pid": 10293,
+            "cpu": 254.3,
+            "ageSeconds": 77,
+            "command": "/opt/homebrew/Cellar/node/26.0.0/bin/node node_modules/vitest/vitest.mjs run --project default --configLoader runner --maxWorkers=1"
+          },
+          {
+            "pid": 23651,
+            "cpu": 139.7,
+            "ageSeconds": 9,
+            "command": "node /Users/wesner/Workspace/minorincident/.claude/worktrees/r14-height/node_modules/.bin/tsc --noEmit"
+          }
+        ],
+        "ignoredIdle": []
+      }
+    ],
+    "error": [
+      "Error: Quiet-run: admission exceeded 1200 seconds; last conditions: {\"quiet\":false,\"load\":[7.205078125,5.9619140625,5.955078125],\"busy\":[],\"ignoredIdle\":[]}; report unmeasured coverage."
+    ]
+  }
+]

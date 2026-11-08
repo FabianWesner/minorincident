@@ -1,3 +1,4 @@
+import { groundDepth, groundLayers } from '../GroundLayers';
 import { worldTiers } from '../../levels/districts/types';
 // Assembly/reference pattern adapted from folio-2025 World.js / References.js (Bruno Simon, MIT).
 import { BoxGeometry, CircleGeometry, FrontSide, PlaneGeometry, Path, Shape, ShapeGeometry, Sprite, SpriteMaterial, Box3, CanvasTexture, ConeGeometry, Group, Sphere, Vector2, Vector3, InstancedMesh, Mesh, MeshBasicNodeMaterial, Object3D, SphereGeometry, type BufferGeometry, type Material } from 'three/webgpu';
@@ -28,6 +29,8 @@ import { NightAccents, nightAccents } from '../NightAccents';
 import { fairhavenDressing } from './FairhavenDressing';
 import { removeL7LakeWall } from './l7LakeWall';
 import { cureAprons } from '../../levels/L10/forecourts';
+import { cureEvacuationLane, cureVignetteDecals } from '../../levels/L10/vignettes';
+import { CureVignetteDecals } from './CureVignetteDecals';
 
 const crownTokens = new Map<string, [PaletteToken, PaletteToken]>(Object.values(worldAssets).flatMap(asset => asset.foliage ? [[asset.foliage.colors.join(':'), asset.foliage.tokens ?? ['foliageDark', 'foliageLight']]] : []));
 
@@ -56,13 +59,14 @@ export class DistrictParts {
   ambient?: AmbientLife;
   /** L9 night accents (studs, flares, lanterns, blinkers); render-only. */
   accents?: NightAccents;
+  cureDecals?: CureVignetteDecals;
   terrain?: TerrainView;
   stepEdges?: HeightStepEdges;
   terrainHorizon?: Group;
   maxBarTerrainHeight = 0;
   /** Releases exactly what the build created; the registry's shared assets are borrowed and never touched. */
   dispose(): void {
-    this.terrain?.dispose(); this.stepEdges?.dispose(); this.ambient?.dispose(); this.accents?.dispose();
+    this.terrain?.dispose(); this.stepEdges?.dispose(); this.ambient?.dispose(); this.accents?.dispose(); this.cureDecals?.dispose();
     for (const b of this.batches) b.dispose();
     for (const b of this.dressingBatches) b.dispose(); this.dressingBatches.length = 0;
     for (const g of this.grass) g.dispose();
@@ -89,6 +93,11 @@ export interface DistrictBuildDeps {
 
 /** Load the district's layout GLBs and assets and assemble its static batches into `parts`, in the established scene order. */
 export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDeps, seed: number, focus?: { x: number; z: number }, heroAtSpawn = false): Promise<void> {
+  const cureDistrict=deps.world.districts.find(d=>d.id==='D-CURE');
+  if(cureDistrict){
+    const rows=cureVignetteDecals(cureDistrict.decay.placements).map(d=>({...d,position:[d.position[0]+cureDistrict.origin[0],d.position[1],d.position[2]+cureDistrict.origin[1]] as [number,number,number]}));
+    if(rows.length){parts.cureDecals=await CureVignetteDecals.load(rows);parts.cureDecals.update(focus??{x:deps.world.playerStart[0],z:deps.world.playerStart[1]},deps.low());deps.view.add(parts.cureDecals);}
+  }
   if (deps.world.composition.id === 'L7') {
     parts.maxBarTerrainHeight = Math.max(0, ...deps.world.districts.flatMap(d => [...d.layout.surfaces.map(s => s.height ?? 0), ...d.decay.colliders.filter(c => c.walkable).map(c => c.aabb.max[1])]));
   }
@@ -128,8 +137,8 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
     }
   }
   const posts = new Map<number, [number, number, number][]>();
-  const rails = new Map<PaletteToken, PerimeterBox[]>();
-  const rail = (token: PaletteToken, size: [number, number, number], p: [number, number, number]) => { let row = rails.get(token); if (!row) { row = []; rails.set(token, row); } row.push([...p, size]); };
+  const rails = new Map<string, {token: PaletteToken; layer: number; row: PerimeterBox[]}>();
+  const rail = (token: PaletteToken, size: [number, number, number], p: [number, number, number], layer = 0) => { const key = `${token}:${layer}`; let batch = rails.get(key); if (!batch) { batch = {token,layer,row:[]}; rails.set(key,batch); } batch.row.push([...p,size]); };
   for (const fence of lab && !lab.perimeter ? [] : deps.world.boundaries) {
     const x = (fence.min[0] + fence.max[0]) / 2, z = (fence.min[2] + fence.max[2]) / 2;
     const width = fence.max[0] - fence.min[0], depth = fence.max[2] - fence.min[2];
@@ -146,9 +155,14 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
   }
   for (const district of deps.world.districts.filter(d => d.id === 'D-CURE')) {
     const [ox, oz] = district.origin;
-    for (const [x, y, z, size] of [...cureAprons.paving, ...cureAprons.kerbs]) rail('sidewalk', size, [x + ox, y, z + oz]);
+    for (const [x, y, z, size] of [...cureAprons.paving, ...cureAprons.kerbs]) rail('sidewalk', size, [x + ox, y, z + oz], groundLayers.paving);
+    for(const surface of cureEvacuationLane(district.decay.placements)){
+      const xs=surface.polygon.map(p=>p[0]),zs=surface.polygon.map(p=>p[1]),minX=Math.min(...xs),maxX=Math.max(...xs),minZ=Math.min(...zs),maxZ=Math.max(...zs);
+      rail('asphalt',[maxX-minX,.008,maxZ-minZ],[(minX+maxX)/2+ox,0,(minZ+maxZ)/2+oz],groundLayers.paving);
+    }
     const geometry = new CircleGeometry(1, 9); geometry.rotateX(-Math.PI / 2); parts.ownedGeometry.push(geometry);
-    const puddles = batchPerimeterPosts(cureAprons.puddles.map(([x, y, z, size]) => [x + ox, y, z + oz, size]), geometry, deps.materials.world('tealDark', 0, false, FrontSide, 1));
+    const puddleMaterial = groundDepth(deps.materials.world('tealDark', 0, false, FrontSide, 1).frozenCopy(), groundLayers.puddle); parts.ownedMaterials.push(puddleMaterial);
+    const puddles = batchPerimeterPosts(cureAprons.puddles.map(([x, y, z, size]) => [x + ox, y, z + oz, size]), geometry, puddleMaterial);
     parts.perimeterPosts.push(...puddles); perimeter.add(...puddles);
   }
   for (const [height, row] of posts) {
@@ -156,9 +170,11 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
     const batches = batchPerimeterPosts(row, geometry, deps.materials.get('woodWarm'));
     parts.perimeterPosts.push(...batches); perimeter.add(...batches);
   }
-  for (const [token, row] of rails) {
+  for (const {token, layer, row} of rails.values()) {
     const geometry = new BoxGeometry(1, 1, 1); parts.ownedGeometry.push(geometry);
-    const batches = batchPerimeterPosts(row, geometry, deps.materials.get(token));
+    const material = layer ? groundDepth(deps.materials.get(token).frozenCopy(), layer) : deps.materials.get(token);
+    if (layer) parts.ownedMaterials.push(material);
+    const batches = batchPerimeterPosts(row, geometry, material);
     parts.perimeterPosts.push(...batches); perimeter.add(...batches);
   }
   // Placement asset ids are known from the layout JSON: start their downloads now instead of
@@ -315,9 +331,12 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
         for (const p of d.decay.placements) {
           const lit = d.decay.lights.includes(p.lightGroup), key = `${p.assetId}:${lit}:${p.decay ?? ''}`;
           const reference = new Object3D(); reference.position.fromArray(p.position); reference.rotation.y = p.yaw; reference.scale.fromArray(p.scale);
+          if (p.highOnly) reference.userData.highOnly = true;
+          reference.userData.placementId = `${d.id}/${p.id}`;
           const first = anchorsFor(p.assetId)[0];
           if (first) reference.userData.lightBase = deps.materials.lamps.base(placedLightId(d.id, d.origin, p.id, first.name), anchorsFor(p.assetId));
           if (p.tint) reference.userData.tint = p.tint;
+          if (p.id.startsWith('decor-cure-farm-field-')) reference.userData.farmScatter = Number(p.id.split('-').at(-1));
           if (!references.has(key)) references.set(key, []);
           references.get(key)!.push(reference);
         }
@@ -379,7 +398,8 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
           p as [number, number, number],
         );
       }
-      for (const grass of Grass.tiles(d.layout, deps.grassMaterial, seed)) { parts.grass.push(grass); root.add(grass); }
+      const grassLayout=d.id==='D-CURE'?{...d.layout,surfaces:[...d.layout.surfaces,...cureEvacuationLane(d.decay.placements)]}:d.layout;
+      for (const grass of Grass.tiles(grassLayout, deps.grassMaterial, seed)) { parts.grass.push(grass); root.add(grass); }
       for (const b of d.layout.buildings) {
         const p = d.layout.placements.find((p) => p.id === b.id)!;
         tag(parts, root, b.label, [p.position[0], 2.8, b.aabb.max[2] + .6]);

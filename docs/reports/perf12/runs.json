@@ -1,0 +1,489 @@
+[
+  {
+    "label": "final-loads",
+    "started": "2026-11-08T12:34:34.675Z",
+    "revision": "f3e603fbfa37fcc81335a85c6db1c3c328776256",
+    "command": [
+      "sh",
+      "tools/perf/quiet-run.sh",
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "--import",
+      "tsx",
+      "test-results/perf12/final-loads.mjs"
+    ],
+    "env": {},
+    "signal": null,
+    "finished": "2026-11-08T12:42:33.968Z",
+    "seconds": 479.293,
+    "exitCode": 0,
+    "stdoutSha256": "a3889932a6f44155fad27804f4bc046f21a044dbd15fccca870137e8fe4d0094",
+    "phase": "initial",
+    "stdoutPath": "test-results/perf12/logs/initial-final-loads.log",
+    "conditionsPath": "test-results/perf12/conditions/initial-final-loads.jsonl"
+  },
+  {
+    "label": "final-low-near",
+    "started": "2026-11-08T12:42:34.029Z",
+    "revision": "f3e603fbfa37fcc81335a85c6db1c3c328776256",
+    "command": [
+      "sh",
+      "tools/perf/quiet-run.sh",
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "--import",
+      "tsx",
+      "test-results/perf12/final-group.mjs",
+      "low",
+      "near"
+    ],
+    "env": {},
+    "signal": null,
+    "finished": "2026-11-08T12:51:58.454Z",
+    "seconds": 564.425,
+    "exitCode": 0,
+    "stdoutSha256": "46706198e8221d36cf793be022982ac2334d9546e17aaa643666f0a2b467ea26",
+    "phase": "initial",
+    "stdoutPath": "test-results/perf12/logs/initial-final-low-near.log",
+    "conditionsPath": "test-results/perf12/conditions/initial-final-low-near.jsonl"
+  },
+  {
+    "label": "load-diagnostic",
+    "started": "2026-11-08T12:44:35.982Z",
+    "revision": "f3e603fbfa37fcc81335a85c6db1c3c328776256",
+    "command": [
+      "sh",
+      "tools/perf/quiet-run.sh",
+      "node",
+      "--import",
+      "tsx",
+      "test-results/perf12/load-diagnostic-group.mjs"
+    ],
+    "env": {},
+    "signal": null,
+    "finished": "2026-11-08T12:52:50.666Z",
+    "seconds": 494.684,
+    "exitCode": 0,
+    "stdoutSha256": "d2893d8b0930a513d2a64927771427a6d7ded339fe2a80d3056fc120d85d8e06",
+    "phase": "diagnostic",
+    "stdoutPath": "test-results/perf12/logs/diagnostic-load-diagnostic.log",
+    "conditionsPath": "test-results/perf12/conditions/diagnostic-load-diagnostic.jsonl"
+  },
+  {
+    "label": "final-high-near",
+    "started": "2026-11-08T12:51:58.524Z",
+    "revision": "f3e603fbfa37fcc81335a85c6db1c3c328776256",
+    "command": [
+      "sh",
+      "tools/perf/quiet-run.sh",
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "--import",
+      "tsx",
+      "test-results/perf12/final-group.mjs",
+      "high",
+      "near"
+    ],
+    "env": {},
+    "signal": null,
+    "finished": "2026-11-08T13:01:42.103Z",
+    "seconds": 583.579,
+    "exitCode": 0,
+    "stdoutSha256": "dff77278fd0c2324177fc2dec100aed730c062dbfd45ca80843c1e4f4763dec7",
+    "phase": "initial",
+    "stdoutPath": "test-results/perf12/logs/initial-final-high-near.log",
+    "conditionsPath": "test-results/perf12/conditions/initial-final-high-near.jsonl"
+  },
+  {
+    "label": "final-low-heavy",
+    "started": "2026-11-08T13:01:42.163Z",
+    "revision": "f3e603fbfa37fcc81335a85c6db1c3c328776256",
+    "command": [
+      "sh",
+      "tools/perf/quiet-run.sh",
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "--import",
+      "tsx",
+      "test-results/perf12/final-group.mjs",
+      "low",
+      "heavy"
+    ],
+    "env": {},
+    "signal": null,
+    "finished": "2026-11-08T13:01:54.500Z",
+    "seconds": 12.337,
+    "exitCode": 75,
+    "stdoutSha256": "e621d93acc059ba73802c651be7d3100640681098ec5a0d2d1f775371aa572a5",
+    "phase": "initial",
+    "stdoutPath": "test-results/perf12/logs/initial-final-low-heavy.log",
+    "conditionsPath": "test-results/perf12/conditions/initial-final-low-heavy.jsonl"
+  },
+  {
+    "label": "before-state",
+    "started": "2026-11-08T13:01:01.061Z",
+    "revision": "f3e603fbfa37fcc81335a85c6db1c3c328776256",
+    "command": [
+      "sh",
+      "tools/perf/quiet-run.sh",
+      "node",
+      "--import",
+      "tsx",
+      "test-results/perf12/state-group.mjs",
+      "before-state"
+    ],
+    "env": {},
+    "signal": null,
+    "finished": "2026-11-08T13:03:19.813Z",
+    "seconds": 138.752,
+    "exitCode": 0,
+    "stdoutSha256": "bb55df66e7321c8553f3f5941b86972347f418f5b8c48f4ef0029b2ceae676a9",
+    "phase": "diagnostic",
+    "stdoutPath": "test-results/perf12/logs/diagnostic-before-state.log",
+    "conditionsPath": "test-results/perf12/conditions/diagnostic-before-state.jsonl"
+  },
+  {
+    "label": "after-state",
+    "started": "2026-11-08T13:04:36.093Z",
+    "revision": "f3e603fbfa37fcc81335a85c6db1c3c328776256",
+    "command": [
+      "sh",
+      "tools/perf/quiet-run.sh",
+      "node",
+      "--import",
+      "tsx",
+      "test-results/perf12/state-group.mjs",
+      "after-state"
+    ],
+    "env": {},
+    "signal": null,
+    "finished": "2026-11-08T13:06:48.823Z",
+    "seconds": 132.73,
+    "exitCode": 1,
+    "stdoutSha256": "5d077fa2130f2ac28dc0d1dd67084f046a6dc03f0fc74e1b9a29e7638f670522",
+    "phase": "diagnostic",
+    "stdoutPath": "test-results/perf12/logs/diagnostic-after-state.log",
+    "conditionsPath": "test-results/perf12/conditions/diagnostic-after-state.jsonl"
+  },
+  {
+    "label": "failed-state",
+    "phase": "final",
+    "stdoutPath": "test-results/perf12/logs/final-failed-state.log",
+    "conditionsPath": "test-results/perf12/conditions/final-failed-state.jsonl",
+    "started": "2026-11-08T13:07:16.664Z",
+    "revision": "f3e603fbfa37fcc81335a85c6db1c3c328776256",
+    "command": [
+      "sh",
+      "tools/perf/quiet-run.sh",
+      "node",
+      "--import",
+      "tsx",
+      "test-results/perf12/diagnostic-load.mjs",
+      "L1",
+      "webgl2"
+    ],
+    "env": {
+      "RELEASE_QUALITY": "low",
+      "RELEASE_OUT": "test-results/perf12/failed-state",
+      "RELEASE_CPU_PROFILE": "1",
+      "RELEASE_SIDES": "candidate"
+    },
+    "signal": null,
+    "finished": "2026-11-08T13:08:30.042Z",
+    "seconds": 73.378,
+    "exitCode": 1,
+    "stdoutSha256": "d37c8076f62b706a69b660a685a08316ac81747ae190c7ec4c55aee55dfe84f3"
+  },
+  {
+    "label": "after-state-v2",
+    "phase": "diagnostic",
+    "stdoutPath": "test-results/perf12/logs/diagnostic-after-state-v2.log",
+    "conditionsPath": "test-results/perf12/conditions/diagnostic-after-state-v2.jsonl",
+    "started": "2026-11-08T13:10:40.284Z",
+    "revision": "f3e603fbfa37fcc81335a85c6db1c3c328776256",
+    "command": [
+      "sh",
+      "tools/perf/quiet-run.sh",
+      "node",
+      "--import",
+      "tsx",
+      "test-results/perf12/state-group.mjs",
+      "after-state"
+    ],
+    "env": {
+      "PERF_PHASE": "diagnostic"
+    },
+    "signal": null,
+    "finished": "2026-11-08T13:11:30.966Z",
+    "seconds": 50.682,
+    "exitCode": 0,
+    "stdoutSha256": "18d02c0448c218ccf92774ba57d8bf2f2cd2776e93da0bb4a4285a90a86f99c5"
+  },
+  {
+    "label": "pipelines-after",
+    "phase": "diagnostic",
+    "stdoutPath": "test-results/perf12/logs/diagnostic-pipelines-after.log",
+    "conditionsPath": "test-results/perf12/conditions/diagnostic-pipelines-after.jsonl",
+    "started": "2026-11-08T13:14:10.924Z",
+    "revision": "f3e603fbfa37fcc81335a85c6db1c3c328776256",
+    "command": [
+      "sh",
+      "tools/perf/quiet-run.sh",
+      "node",
+      "--import",
+      "tsx",
+      "test-results/perf12/pipeline-load.mjs",
+      "L1",
+      "webgl2"
+    ],
+    "env": {
+      "PERF_PHASE": "diagnostic",
+      "RELEASE_QUALITY": "low",
+      "RELEASE_OUT": "test-results/perf12/pipelines-after",
+      "RELEASE_SIDES": "candidate",
+      "RELEASE_CANDIDATE_ORIGIN": "http://127.0.0.1:4916"
+    },
+    "signal": null,
+    "finished": "2026-11-08T13:14:28.844Z",
+    "seconds": 17.92,
+    "exitCode": 0,
+    "stdoutSha256": "89bde550999d7cd918b4df2a2780d779a254792c1466a16a2ad3e720c8736d65"
+  },
+  {
+    "label": "warm-draw",
+    "phase": "diagnostic",
+    "stdoutPath": "test-results/perf12/logs/diagnostic-warm-draw.log",
+    "conditionsPath": "test-results/perf12/conditions/diagnostic-warm-draw.jsonl",
+    "started": "2026-11-08T13:20:15.945Z",
+    "revision": "f3e603fbfa37fcc81335a85c6db1c3c328776256",
+    "command": [
+      "sh",
+      "tools/perf/quiet-run.sh",
+      "node",
+      "--import",
+      "tsx",
+      "test-results/perf12/state-group.mjs",
+      "after-state"
+    ],
+    "env": {
+      "PERF_PHASE": "diagnostic"
+    },
+    "signal": null,
+    "finished": "2026-11-08T13:21:21.818Z",
+    "seconds": 65.873,
+    "exitCode": 0,
+    "stdoutSha256": "420944bdc6e134bb6755f850a80e0963887eec1736c6ab05ecd24707de88ea2d"
+  },
+  {
+    "label": "wet-first",
+    "phase": "final",
+    "stdoutPath": "test-results/perf12/logs/final-wet-first.log",
+    "conditionsPath": "test-results/perf12/conditions/final-wet-first.jsonl",
+    "started": "2026-11-08T13:25:11.323Z",
+    "revision": "619896aefe614af28199c192bacd8ee22a624545",
+    "command": [
+      "sh",
+      "tools/perf/quiet-run.sh",
+      "node",
+      "--import",
+      "tsx",
+      "test-results/perf12/wet-first.mjs"
+    ],
+    "env": {
+      "PERF_PHASE": "final"
+    },
+    "signal": null,
+    "finished": "2026-11-08T13:28:33.716Z",
+    "seconds": 202.393,
+    "exitCode": 1,
+    "stdoutSha256": "5cc7b4d1a4183ff15ffb9dde2f55e21999c35181929903247bc7c4af171387ae"
+  },
+  {
+    "label": "final-loads",
+    "phase": "final",
+    "stdoutPath": "test-results/perf12/logs/final-final-loads.log",
+    "conditionsPath": "test-results/perf12/conditions/final-final-loads.jsonl",
+    "started": "2026-11-08T13:29:32.112Z",
+    "revision": "619896aefe614af28199c192bacd8ee22a624545",
+    "command": [
+      "sh",
+      "tools/perf/quiet-run.sh",
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "--import",
+      "tsx",
+      "test-results/perf12/final-loads.mjs"
+    ],
+    "env": {
+      "PERF_PHASE": "final"
+    },
+    "signal": null,
+    "finished": "2026-11-08T13:34:05.924Z",
+    "seconds": 273.812,
+    "exitCode": 0,
+    "stdoutSha256": "44b69a55aa3825ad698b5ac08c585e775ea06bcf7a26b88cd02c917f24394caa"
+  },
+  {
+    "label": "final-low-near",
+    "phase": "final",
+    "stdoutPath": "test-results/perf12/logs/final-final-low-near.log",
+    "conditionsPath": "test-results/perf12/conditions/final-final-low-near.jsonl",
+    "started": "2026-11-08T13:34:05.981Z",
+    "revision": "619896aefe614af28199c192bacd8ee22a624545",
+    "command": [
+      "sh",
+      "tools/perf/quiet-run.sh",
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "--import",
+      "tsx",
+      "test-results/perf12/final-group.mjs",
+      "low",
+      "near"
+    ],
+    "env": {
+      "PERF_PHASE": "final"
+    },
+    "signal": null,
+    "finished": "2026-11-08T13:42:55.174Z",
+    "seconds": 529.193,
+    "exitCode": 0,
+    "stdoutSha256": "1698abbd7c14ff02ac004c9873d2b77938bc088437514d0166c1bdab27489487"
+  },
+  {
+    "label": "final-high-near",
+    "phase": "final",
+    "stdoutPath": "test-results/perf12/logs/final-final-high-near.log",
+    "conditionsPath": "test-results/perf12/conditions/final-final-high-near.jsonl",
+    "started": "2026-11-08T13:42:55.233Z",
+    "revision": "619896aefe614af28199c192bacd8ee22a624545",
+    "command": [
+      "sh",
+      "tools/perf/quiet-run.sh",
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "--import",
+      "tsx",
+      "test-results/perf12/final-group.mjs",
+      "high",
+      "near"
+    ],
+    "env": {
+      "PERF_PHASE": "final"
+    },
+    "signal": null,
+    "finished": "2026-11-08T13:51:48.075Z",
+    "seconds": 532.842,
+    "exitCode": 0,
+    "stdoutSha256": "c939661985c5c5dbb2fe2101c616844251fef1266618155790d4be7acff41ff4"
+  },
+  {
+    "label": "final-low-heavy",
+    "phase": "final",
+    "stdoutPath": "test-results/perf12/logs/final-final-low-heavy.log",
+    "conditionsPath": "test-results/perf12/conditions/final-final-low-heavy.jsonl",
+    "started": "2026-11-08T13:51:48.143Z",
+    "revision": "619896aefe614af28199c192bacd8ee22a624545",
+    "command": [
+      "sh",
+      "tools/perf/quiet-run.sh",
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "--import",
+      "tsx",
+      "test-results/perf12/final-group.mjs",
+      "low",
+      "heavy"
+    ],
+    "env": {
+      "PERF_PHASE": "final"
+    },
+    "signal": null,
+    "finished": "2026-11-08T14:01:08.745Z",
+    "seconds": 560.602,
+    "exitCode": 0,
+    "stdoutSha256": "38f5543e790af22c9c06178edd44e67dccc603b2c5d68fb52e12be1430f1ae16"
+  },
+  {
+    "label": "final-high-heavy-near",
+    "phase": "final",
+    "stdoutPath": "test-results/perf12/logs/final-final-high-heavy-near.log",
+    "conditionsPath": "test-results/perf12/conditions/final-final-high-heavy-near.jsonl",
+    "started": "2026-11-08T14:01:08.804Z",
+    "revision": "619896aefe614af28199c192bacd8ee22a624545",
+    "command": [
+      "sh",
+      "tools/perf/quiet-run.sh",
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "--import",
+      "tsx",
+      "test-results/perf12/final-group.mjs",
+      "high",
+      "heavy-near"
+    ],
+    "env": {
+      "PERF_PHASE": "final"
+    },
+    "signal": null,
+    "finished": "2026-11-08T14:07:48.111Z",
+    "seconds": 399.307,
+    "exitCode": 0,
+    "stdoutSha256": "3a2ce8c87ed61c121ca112758e85c44aec83548a8cfd3a32778044ab98063839"
+  },
+  {
+    "label": "final-high-heavy-finale",
+    "phase": "final",
+    "stdoutPath": "test-results/perf12/logs/final-final-high-heavy-finale.log",
+    "conditionsPath": "test-results/perf12/conditions/final-final-high-heavy-finale.jsonl",
+    "started": "2026-11-08T14:07:48.191Z",
+    "revision": "619896aefe614af28199c192bacd8ee22a624545",
+    "command": [
+      "sh",
+      "tools/perf/quiet-run.sh",
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "--import",
+      "tsx",
+      "test-results/perf12/final-group.mjs",
+      "high",
+      "heavy-finale"
+    ],
+    "env": {
+      "PERF_PHASE": "final"
+    },
+    "signal": null,
+    "finished": "2026-11-08T14:15:00.005Z",
+    "seconds": 431.814,
+    "exitCode": 0,
+    "stdoutSha256": "46ee6f4c6d26eb38268af36cf6c1ac6aee7760187622a212c14f334593d87137"
+  },
+  {
+    "label": "extra-r4",
+    "phase": "final",
+    "stdoutPath": "test-results/perf12/logs/final-extra-r4.log",
+    "conditionsPath": "test-results/perf12/conditions/final-extra-r4.jsonl",
+    "started": "2026-11-08T14:15:05.486Z",
+    "revision": "619896aefe614af28199c192bacd8ee22a624545",
+    "command": [
+      "sh",
+      "tools/perf/quiet-run.sh",
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "--import",
+      "tsx",
+      "test-results/perf12/extra-group.mjs",
+      "r4",
+      "L10"
+    ],
+    "env": {
+      "PERF_PHASE": "final"
+    },
+    "signal": null,
+    "finished": "2026-11-08T14:25:55.239Z",
+    "seconds": 649.753,
+    "exitCode": 75,
+    "stdoutSha256": "81d102f4033131fc6a385cf102801a4f879fc5d41e45338adf0c17b147cb01ac",
+    "admissionOnly": {
+      "reason": "600-second reservation cap reached during host preflight; no timing child started",
+      "quietAdmission": false,
+      "nativeCaptureFiles": 0
+    },
+    "terminalOutput": [
+      "Quiet-run waiting: {\"at\":\"2026-11-08T14:24:17.004Z\",\"event\":\"quiet-admission-wait\",\"granted\":true,\"quiet\":false,\"load\":[17.68115234375,14.564453125,8.97900390625],\"busy\":[],\"ignoredIdle\":[]}",
+      "Quiet-run waiting: {\"at\":\"2026-11-08T14:24:48.322Z\",\"event\":\"quiet-admission-wait\",\"granted\":true,\"quiet\":false,\"load\":[14.31494140625,14.033203125,8.97900390625],\"busy\":[],\"ignoredIdle\":[]}",
+      "Quiet-run waiting: {\"at\":\"2026-11-08T14:25:19.065Z\",\"event\":\"quiet-admission-wait\",\"granted\":true,\"quiet\":false,\"load\":[12.55419921875,13.6181640625,9.001953125],\"busy\":[],\"ignoredIdle\":[]}",
+      "Quiet-run waiting: {\"at\":\"2026-11-08T14:25:50.043Z\",\"event\":\"quiet-admission-wait\",\"granted\":true,\"quiet\":false,\"load\":[11.1552734375,13.17529296875,9],\"busy\":[{\"pid\":10661,\"cpu\":23.9,\"ageSeconds\":1,\"command\":\"node tools/qa/test-budget.mjs --name test --max-seconds 240 -- node node_modules/vitest/vitest.mjs run --project default --configLoader runner tests/engine/missions.test.ts tests/e\"},{\"pid\":10685,\"cpu\":0,\"ageSeconds\":1,\"command\":\"/opt/homebrew/Cellar/node/26.0.0/bin/node node_modules/vitest/vitest.mjs list --json=/var/folders/0d/d1pz5009603g0jcd5r3j353c0000gn/T/mi-test-budget-yIF6HA/list.json --configLoader\"}],\"ignoredIdle\":[]}",
+      "Error: Quiet-run: admission reached the 600-second reservation cap; last conditions: {\"quiet\":false,\"load\":[10.90234375,13.08935546875,8.994140625],\"busy\":[{\"pid\":10661,\"cpu\":0,\"ageSeconds\":6,\"command\":\"node tools/qa/test-budget.mjs --name test --max-seconds 240 -- node node_modules/vitest/vitest.mjs run --project default --configLoader runner tests/engine/missions.test.ts tests/e\"},{\"pid\":10898,\"cpu\":411.3,\"ageSeconds\":3,\"command\":\"/opt/homebrew/Cellar/node/26.0.0/bin/node node_modules/vitest/vitest.mjs run --project default --configLoader runner tests/engine/missions.test.ts tests/engine/vehicles.test.ts\"}],\"ignoredIdle\":[]}; report unmeasured coverage."
+    ]
+  }
+]
