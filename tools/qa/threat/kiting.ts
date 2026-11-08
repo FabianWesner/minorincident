@@ -99,13 +99,7 @@ export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, lev
       if (entity.infected.special !== 'dive' && Math.abs(entity.transform.y - position.y) > 2) return false;
       const brain = entity.infected.l1;
       const pressing = entity.infected.state === 'chase' || entity.infected.state === 'attack' || !!entity.infected.specialAttack || brain?.mode === 'chase' || brain?.mode === 'bite';
-      const pressure = entity.infected.pressureTarget;
-      const targetId = pressure && world.tick < pressure.until ? pressure.id : brain?.targetId || entity.infected.heardTargetId || 1;
-      // L3's police hold and L8's sanctuary arrivals include scripted NPC
-      // fights. Those groups must actually pursue the courier before replacing
-      // her native input; the other levels retain their accepted admission.
-      const courierEncounter = level !== 'L3' && level !== 'L8' || targetId === 1;
-      return pressing && courierEncounter && !!world.combat?.query.visible(entity.transform, position);
+      return pressing && !!world.combat?.query.visible(entity.transform, position);
     }) ?? [];
     const buckets = new Map<string, { x: number; z: number; count: number }>(), cell = 7;
     for (const threat of threats) {
@@ -131,8 +125,13 @@ export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, lev
     const denseHorde = !frame.drive && player?.passengerOf === undefined && !!position && !!centre && density >= minimumHordeSize && separation > 0.01 && separation <= 30;
     // L2/L5's first distant chaser is an approach, not yet a close encounter.
     const pursuitRange = level === 'L2' || level === 'L5' ? 6 : 12;
-    const closePursuer = level === 'L1' ? threats.length > 0
-      : threats.some(entity => Math.hypot(entity.transform.x - position!.x, entity.transform.z - position!.z) <= pursuitRange);
+    const closePursuer = threats.some(entity => {
+      const brain = entity.infected!, pressure = brain.pressureTarget;
+      const targetId = pressure && world.tick < pressure.until ? pressure.id : brain.l1?.targetId || brain.heardTargetId || 1;
+      // The horde can also threaten followers, but at least one nearby attacker
+      // must pursue the courier before replacing her input for this encounter.
+      return targetId === 1 && (level === 'L1' || Math.hypot(entity.transform.x - position!.x, entity.transform.z - position!.z) <= pursuitRange);
+    });
     // A lone opening enemy killed before reaching the courier is successful
     // combat, not evidence of a moving-target miss. Sample a pressing horde;
     // this also keeps the existing L8 three-body admission rule for every level.

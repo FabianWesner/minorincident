@@ -151,9 +151,9 @@ export async function proveThreatAudit(): Promise<void> {
     for (const [i, e] of active.entries()) { e.transform.x = 5 + i; e.infected.heardTargetId = 99; }
     world.applyInput(emptyInput(), 'mouse-keyboard');
     assert.equal(receipt.samples, 0, 'infected pursuing another human cannot fill the courier horde denominator');
-    for (const e of active) e.infected.heardTargetId = 1;
+    active[0].infected.heardTargetId = 1;
     world.applyInput(emptyInput(), 'mouse-keyboard');
-    assert.equal(receipt.samples, 1, 'a nearby courier-directed horde starts the same moving sample');
+    assert.equal(receipt.samples, 1, 'one courier pursuer among a nearby mixed-target horde starts the same moving sample');
   }
   {
     const events = new EventBus<GameEvent>(), starts: number[] = [];
