@@ -25,12 +25,25 @@ export function synthesize(cue: AudioCue, sampleRate: number): Float32Array {
                 value = (n * 0.35 + low * 2) * Math.exp(-phase * 5);
                 break;
             case 'step':
+                if (cue.id.startsWith('telegraph.zebra.stampede')) {
+                    const beat = t % .22;
+                    value = (Math.sin(tau * 55 * t) * .3 + low * 2) * (.4 + .6 * Math.exp(-beat * 25)) * Math.sin(Math.PI * phase);
+                    break;
+                }
                 value = (Math.sin(tau * f * t) * 0.45 + n * 0.35) * Math.exp(-t * 35);
                 break;
             case 'tone':
                 value = Math.sin(tau * f * t) * (cue.loop ? 0.25 : 0.35 * Math.sin(Math.PI * phase));
                 break;
             case 'vocal': {
+                if (cue.id.startsWith('telegraph.elephant.charge')) {
+                    // Original brassy trumpet with a low foot stamp, bounded to the charge cue.
+                    const horn = tau * (210 * t + 100 * t * t / cue.duration + .8 * Math.sin(tau * 7 * t));
+                    const stamp = Math.max(0, t - .12);
+                    value = (Math.sin(horn) * .32 + Math.sin(horn * 2) * .2 + Math.sin(horn * 3) * .1) * Math.sin(Math.PI * phase)
+                        + (Math.sin(tau * 52 * stamp) * .4 + low) * Math.exp(-stamp * 28) * (t >= .12 ? 1 : 0);
+                    break;
+                }
                 // Source/filter-like voiced phonation. Formant harmonics and syllables provide original bark/effort placeholders.
                 const pitch = f * (1 + 0.03 * Math.sin(tau * 5 * t) + 0.1 * phase);
                 const syllable = Math.max(0, Math.sin(tau * (cue.id === 'dialogue.radio' ? 3 : 2) * t));
