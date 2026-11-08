@@ -1,0 +1,2987 @@
+{
+  "performanceStatus": "perf pending",
+  "pending": [
+    {
+      "scope": "extra",
+      "slice": "r4",
+      "tier": "low",
+      "reason": [
+        "prod: missing capture",
+        "candidate: missing capture"
+      ]
+    },
+    {
+      "scope": "extra",
+      "slice": "r4",
+      "tier": "high",
+      "reason": [
+        "prod: missing capture",
+        "candidate: missing capture"
+      ]
+    },
+    {
+      "scope": "extra",
+      "slice": "r6",
+      "tier": "low",
+      "reason": [
+        "prod: missing capture",
+        "candidate: missing capture"
+      ]
+    },
+    {
+      "scope": "extra",
+      "slice": "r6",
+      "tier": "high",
+      "reason": [
+        "prod: missing capture",
+        "candidate: missing capture"
+      ]
+    },
+    {
+      "scope": "extra",
+      "slice": "approach",
+      "tier": "low",
+      "reason": [
+        "prod: missing capture",
+        "candidate: missing capture"
+      ]
+    },
+    {
+      "scope": "extra",
+      "slice": "approach",
+      "tier": "high",
+      "reason": [
+        "prod: missing capture",
+        "candidate: missing capture"
+      ]
+    },
+    {
+      "scope": "extra",
+      "slice": "drive",
+      "tier": "low",
+      "reason": [
+        "prod: missing capture",
+        "candidate: missing capture"
+      ]
+    },
+    {
+      "scope": "extra",
+      "slice": "drive",
+      "tier": "high",
+      "reason": [
+        "prod: missing capture",
+        "candidate: missing capture"
+      ]
+    },
+    {
+      "scope": "SSR cost",
+      "reason": "Complete-frame SSR cost capture did not run before the orchestrator stopped the job. Retained nested pass queries overlap and do not measure whole-frame GPU cost."
+    }
+  ],
+  "passAudit": true,
+  "performancePass": false,
+  "checks": 554,
+  "failures": [],
+  "details": [
+    {
+      "name": "15 matrix cells and 9 named windows",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "60 unique cold/warm loads",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "24 unique native main captures",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "completed extra captures unique (2/18 collected)",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "fresh public build",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "committed runtime source",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "build precedes every final capture",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "both original public bundle identities preserved",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgl2/low/L1/cold/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgl2/low/L1/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgl2/low/L1/cold/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgl2/low/L1/cold/G-01 Begin mission",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgl2/low/L1/warm/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgl2/low/L1/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgl2/low/L1/warm/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgl2/low/L1/cold/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgl2/low/L1/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgl2/low/L1/cold/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgl2/low/L1/cold/G-01 Begin mission",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgl2/low/L1/warm/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgl2/low/L1/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgl2/low/L1/warm/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgl2/low/L4/cold/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgl2/low/L4/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgl2/low/L4/cold/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgl2/low/L4/warm/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgl2/low/L4/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgl2/low/L4/warm/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgl2/low/L4/cold/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgl2/low/L4/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgl2/low/L4/cold/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgl2/low/L4/warm/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgl2/low/L4/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgl2/low/L4/warm/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgl2/low/L7/cold/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgl2/low/L7/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgl2/low/L7/cold/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgl2/low/L7/warm/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgl2/low/L7/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgl2/low/L7/warm/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgl2/low/L7/cold/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgl2/low/L7/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgl2/low/L7/cold/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgl2/low/L7/warm/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgl2/low/L7/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgl2/low/L7/warm/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L1/cold/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L1/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L1/cold/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L1/warm/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L1/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L1/warm/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L1/cold/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L1/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L1/cold/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L1/warm/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L1/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L1/warm/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L3/cold/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L3/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L3/cold/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L3/warm/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L3/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L3/warm/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L3/cold/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L3/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L3/cold/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L3/warm/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L3/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L3/warm/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L4/cold/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L4/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L4/cold/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L4/warm/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L4/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L4/warm/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L4/cold/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L4/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L4/cold/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L4/warm/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L4/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L4/warm/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L5/cold/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L5/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L5/cold/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L5/warm/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L5/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L5/warm/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L5/cold/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L5/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L5/cold/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L5/warm/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L5/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L5/warm/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L7/cold/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L7/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L7/cold/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L7/warm/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L7/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L7/warm/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L7/cold/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L7/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L7/cold/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L7/warm/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L7/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L7/warm/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L10/cold/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L10/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L10/cold/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L10/warm/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L10/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/high/L10/warm/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L10/cold/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L10/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L10/cold/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L10/warm/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L10/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/high/L10/warm/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L1/cold/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L1/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L1/cold/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L1/warm/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L1/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L1/warm/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L1/cold/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L1/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L1/cold/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L1/warm/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L1/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L1/warm/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L3/cold/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L3/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L3/cold/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L3/warm/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L3/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L3/warm/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L3/cold/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L3/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L3/cold/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L3/warm/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L3/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L3/warm/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L4/cold/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L4/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L4/cold/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L4/warm/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L4/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L4/warm/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L4/cold/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L4/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L4/cold/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L4/warm/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L4/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L4/warm/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L5/cold/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L5/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L5/cold/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L5/warm/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L5/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L5/warm/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L5/cold/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L5/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L5/cold/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L5/warm/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L5/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L5/warm/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L7/cold/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L7/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L7/cold/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L7/warm/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L7/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L7/warm/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L7/cold/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L7/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L7/cold/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L7/warm/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L7/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L7/warm/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L10/cold/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L10/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L10/cold/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L10/warm/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L10/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/webgpu/low/L10/warm/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L10/cold/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L10/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L10/cold/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L10/warm/no errors and correct tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L10/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/webgpu/low/L10/warm/native backend",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L1/high/complete native duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 90194.9000005722,
+        "frameSum": 90179.7,
+        "minimum": 90000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/prod/L1/high/no errors or CPU profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L1/high/native Apple adapter",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L1/high/actual backend and tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L1/high/frame statistics",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L1/high/ordinary input frames",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L1/high/complete frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L1/high/complete native duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 90103.19999980927,
+        "frameSum": 90079.7,
+        "minimum": 90000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/candidate/L1/high/no errors or CPU profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L1/high/native Apple adapter",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L1/high/actual backend and tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L1/high/frame statistics",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L1/high/ordinary input frames",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L1/high/complete frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L10/high/complete native duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 90229.5999994278,
+        "frameSum": 90196.40000000001,
+        "minimum": 90000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/prod/L10/high/no errors or CPU profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L10/high/native Apple adapter",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L10/high/actual backend and tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L10/high/frame statistics",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L10/high/ordinary input frames",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L10/high/complete frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L10/high/complete native duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 90188.5,
+        "frameSum": 90163.09999999999,
+        "minimum": 90000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/candidate/L10/high/no errors or CPU profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L10/high/native Apple adapter",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L10/high/actual backend and tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L10/high/frame statistics",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L10/high/ordinary input frames",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L10/high/complete frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L3/high/complete native duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60201.60000038147,
+        "frameSum": 60181.0,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/prod/L3/high/no errors or CPU profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L3/high/native Apple adapter",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L3/high/actual backend and tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L3/high/frame statistics",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L3/high/ordinary input frames",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L3/high/complete native duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60186.60000038147,
+        "frameSum": 60164.40000000001,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/candidate/L3/high/no errors or CPU profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L3/high/native Apple adapter",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L3/high/actual backend and tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L3/high/frame statistics",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L3/high/ordinary input frames",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L5/high/complete native duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60183.89999961853,
+        "frameSum": 60164.2,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/prod/L5/high/no errors or CPU profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L5/high/native Apple adapter",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L5/high/actual backend and tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L5/high/frame statistics",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L5/high/ordinary input frames",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L5/high/complete native duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60152.199999809265,
+        "frameSum": 60130.9,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/candidate/L5/high/no errors or CPU profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L5/high/native Apple adapter",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L5/high/actual backend and tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L5/high/frame statistics",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L5/high/ordinary input frames",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L4/high/complete native duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60214,
+        "frameSum": 60181.00000000001,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/prod/L4/high/no errors or CPU profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L4/high/native Apple adapter",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L4/high/actual backend and tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L4/high/frame statistics",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L4/high/ordinary input frames",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L4/high/complete frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L4/high/complete native duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60137.5,
+        "frameSum": 60114.3,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/candidate/L4/high/no errors or CPU profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L4/high/native Apple adapter",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L4/high/actual backend and tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L4/high/frame statistics",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L4/high/ordinary input frames",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L4/high/complete frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L7/high/complete native duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60183.599999427795,
+        "frameSum": 60164.3,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/prod/L7/high/no errors or CPU profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L7/high/native Apple adapter",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L7/high/actual backend and tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L7/high/frame statistics",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L7/high/ordinary input frames",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L7/high/complete frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L7/high/complete native duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60162.599999427795,
+        "frameSum": 60130.9,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/candidate/L7/high/no errors or CPU profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L7/high/native Apple adapter",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L7/high/actual backend and tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L7/high/frame statistics",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L7/high/ordinary input frames",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L7/high/complete frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L1/low/complete native duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 90118.69999980927,
+        "frameSum": 90096.40000000001,
+        "minimum": 90000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/prod/L1/low/no errors or CPU profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L1/low/native Apple adapter",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L1/low/actual backend and tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L1/low/frame statistics",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L1/low/ordinary input frames",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L1/low/complete frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L1/low/complete native duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 90183.60000038147,
+        "frameSum": 90163.0,
+        "minimum": 90000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/candidate/L1/low/no errors or CPU profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L1/low/native Apple adapter",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L1/low/actual backend and tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L1/low/frame statistics",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L1/low/ordinary input frames",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L1/low/complete frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L3/low/complete native duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60134.300000190735,
+        "frameSum": 60114.299999999996,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/prod/L3/low/no errors or CPU profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L3/low/native Apple adapter",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L3/low/actual backend and tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L3/low/frame statistics",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L3/low/ordinary input frames",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L3/low/complete native duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60127,
+        "frameSum": 60097.6,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/candidate/L3/low/no errors or CPU profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L3/low/native Apple adapter",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L3/low/actual backend and tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L3/low/frame statistics",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L3/low/ordinary input frames",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L5/low/complete native duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60154.800000190735,
+        "frameSum": 60130.899999999994,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/prod/L5/low/no errors or CPU profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L5/low/native Apple adapter",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L5/low/actual backend and tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L5/low/frame statistics",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L5/low/ordinary input frames",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L5/low/complete native duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60135.300000190735,
+        "frameSum": 60114.20000000001,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/candidate/L5/low/no errors or CPU profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L5/low/native Apple adapter",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L5/low/actual backend and tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L5/low/frame statistics",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L5/low/ordinary input frames",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L4/low/complete native duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60175.599999427795,
+        "frameSum": 60147.700000000004,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/prod/L4/low/no errors or CPU profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L4/low/native Apple adapter",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L4/low/actual backend and tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L4/low/frame statistics",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L4/low/ordinary input frames",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L4/low/complete frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L4/low/complete native duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60106.60000038147,
+        "frameSum": 60080.9,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/candidate/L4/low/no errors or CPU profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L4/low/native Apple adapter",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L4/low/actual backend and tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L4/low/frame statistics",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L4/low/ordinary input frames",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L4/low/complete frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L7/low/complete native duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60185.199999809265,
+        "frameSum": 60164.299999999996,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/prod/L7/low/no errors or CPU profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L7/low/native Apple adapter",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L7/low/actual backend and tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L7/low/frame statistics",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L7/low/ordinary input frames",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L7/low/complete frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L7/low/complete native duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60104.39999961853,
+        "frameSum": 60080.899999999994,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/candidate/L7/low/no errors or CPU profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L7/low/native Apple adapter",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L7/low/actual backend and tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L7/low/frame statistics",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L7/low/ordinary input frames",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L7/low/complete frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L10/low/complete native duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60138.599999427795,
+        "frameSum": 60114.3,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/prod/L10/low/no errors or CPU profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L10/low/native Apple adapter",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L10/low/actual backend and tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L10/low/frame statistics",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L10/low/ordinary input frames",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L10/low/complete frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L10/low/complete native duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60133.29999923706,
+        "frameSum": 60114.3,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/candidate/L10/low/no errors or CPU profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L10/low/native Apple adapter",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L10/low/actual backend and tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L10/low/frame statistics",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L10/low/ordinary input frames",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L10/low/complete frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/wet/high/complete native duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60137.5,
+        "frameSum": 60114.3,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/prod/wet/high/no errors or CPU profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/wet/high/native Apple adapter",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/wet/high/actual backend and tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/wet/high/frame statistics",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/wet/high/ordinary input frames",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/wet/high/complete frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/wet/high/complete native duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60150.699999809265,
+        "frameSum": 60131.00000000001,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/candidate/wet/high/no errors or CPU profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/wet/high/native Apple adapter",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/wet/high/actual backend and tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/wet/high/frame statistics",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/wet/high/ordinary input frames",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/wet/high/complete frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/low/L1/cold/exact load values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/low/L1/warm/exact load values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/low/L1/exact frame values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/low/L1/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "matrix/webgpu/low/L3/cold/exact load values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/low/L3/warm/exact load values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/low/L3/exact frame values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/low/L3/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "matrix/webgpu/low/L4/cold/exact load values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/low/L4/warm/exact load values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/low/L4/exact frame values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/low/L4/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "matrix/webgpu/low/L5/cold/exact load values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/low/L5/warm/exact load values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/low/L5/exact frame values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/low/L5/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "matrix/webgpu/low/L7/cold/exact load values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/low/L7/warm/exact load values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/low/L7/exact frame values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/low/L7/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "matrix/webgpu/low/L10/cold/exact load values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/low/L10/warm/exact load values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/low/L10/exact frame values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/low/L10/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "matrix/webgpu/high/L1/cold/exact load values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/high/L1/warm/exact load values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/high/L1/exact frame values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/high/L1/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "matrix/webgpu/high/L3/cold/exact load values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/high/L3/warm/exact load values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/high/L3/exact frame values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/high/L3/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "matrix/webgpu/high/L4/cold/exact load values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/high/L4/warm/exact load values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/high/L4/exact frame values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/high/L4/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "matrix/webgpu/high/L5/cold/exact load values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/high/L5/warm/exact load values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/high/L5/exact frame values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/high/L5/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "matrix/webgpu/high/L7/cold/exact load values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/high/L7/warm/exact load values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/high/L7/exact frame values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/high/L7/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "matrix/webgpu/high/L10/cold/exact load values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/high/L10/warm/exact load values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/high/L10/exact frame values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgpu/high/L10/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "matrix/webgl2/low/L1/cold/exact load values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgl2/low/L1/warm/exact load values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgl2/low/L1/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "matrix/webgl2/low/L4/cold/exact load values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgl2/low/L4/warm/exact load values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgl2/low/L4/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "matrix/webgl2/low/L7/cold/exact load values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgl2/low/L7/warm/exact load values",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "matrix/webgl2/low/L7/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "moment/L1/low/handover/outbreak/prod",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "moment/L1/low/handover/outbreak/candidate",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "moment/L1/low/handover/outbreak/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "moment/L1/high/handover/outbreak/prod",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "moment/L1/high/handover/outbreak/candidate",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "moment/L1/high/handover/outbreak/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "moment/L7/low/pickup/prod",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "moment/L7/low/pickup/candidate",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "moment/L7/low/pickup/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "moment/L7/low/first rocket/prod",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "moment/L7/low/first rocket/candidate",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "moment/L7/low/first rocket/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "moment/L7/low/pickup through first rocket/prod",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "moment/L7/low/pickup through first rocket/candidate",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "moment/L7/low/pickup through first rocket/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "moment/L7/high/pickup/prod",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "moment/L7/high/pickup/candidate",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "moment/L7/high/pickup/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "moment/L7/high/first rocket/prod",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "moment/L7/high/first rocket/candidate",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "moment/L7/high/first rocket/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "moment/L7/high/pickup through first rocket/prod",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "moment/L7/high/pickup through first rocket/candidate",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "moment/L7/high/pickup through first rocket/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "moment/L10/high/charge through completion (+2 s)/prod",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "moment/L10/high/charge through completion (+2 s)/candidate",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "moment/L10/high/charge through completion (+2 s)/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "extra/r4/low/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "extra/r4/high/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "extra/r6/low/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "extra/r6/high/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "extra/approach/low/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "extra/approach/high/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "extra/drive/low/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "extra/drive/high/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "extra/wet/high/prod/stats",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "extra/wet/high/prod/exact route",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "extra/wet/high/prod/route",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "extra/wet/high/candidate/stats",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "extra/wet/high/candidate/exact route",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "extra/wet/high/candidate/route",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "wet high SSR remains active",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "extra/wet/high/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "SSR diagnostic explicitly pending",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "SSR diagnostic errors absent",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "SSR diagnostic controls",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "SSR diagnostic enabled state/0",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "partial SSR diagnostic sample count/0",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "SSR diagnostic enabled state/1",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "partial SSR diagnostic sample count/1",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "SSR diagnostic enabled state/2",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "partial SSR diagnostic sample count/2",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "SSR diagnostic enabled state/3",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "partial SSR diagnostic sample count/3",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "every mirrored file rehashed",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "deployed asset versions rehashed",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "runtime uses mirrored successful public files",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "pinned PROD bundle still live",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "four required validation commands pass on captured source",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "quiet admission/final-loads",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "quiet admission/final-low-near",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "quiet admission/load-diagnostic",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "quiet admission/final-high-near",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "quiet admission/before-state",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "quiet admission/failed-state",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "quiet admission/after-state-v2",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "quiet admission/pipelines-after",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "quiet admission/warm-draw",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "quiet admission/wet-first",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "quiet admission/final-loads",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "quiet admission/final-low-near",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "quiet admission/final-high-near",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "quiet admission/final-low-heavy",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "quiet admission/final-high-heavy-near",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "quiet admission/final-high-heavy-finale",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "uncaptured admission timeout/extra-r4",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "reproduction source hash/test-results/perf12/perf6-mirror.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "reproduction source hash/test-results/perf12/build-public.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "reproduction source hash/test-results/perf12/serve.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "reproduction source hash/test-results/perf12/run-job.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "reproduction source hash/test-results/perf12/native.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "reproduction source hash/test-results/perf12/extra-native.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "reproduction source hash/test-results/perf12/extras-batch.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "reproduction source hash/test-results/perf12/extra-group.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "reproduction source hash/test-results/perf12/ssr-cost.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "reproduction source hash/test-results/perf12/public-adapter.ts",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "reproduction source hash/test-results/perf12/final-batch.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "reproduction source hash/test-results/perf12/final-group.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "reproduction source hash/test-results/perf12/final-loads.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "reproduction source hash/test-results/perf12/summarize.py",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "reproduction source hash/test-results/perf12/validate.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "reproduction source hash/test-results/perf12/package12.py",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "reproduction source hash/test-results/perf12/audit12.py",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "reproduction source hash/test-results/perf12/report12.py",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "reproduction source hash/test-results/perf12/live-final.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "reproduction source hash/test-results/perf12/capture-admission.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "reproduction source hash/test-results/perf12/diagnostic-load.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "reproduction source hash/test-results/perf12/state-group.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "reproduction source hash/test-results/perf12/restore-batch59.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "reproduction source hash/test-results/perf12/wet-first.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "reproduction source hash/test-results/perf12/pipeline-load.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "reproduction source hash/test-results/perf12/serve-probe.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "reproduction source hash/test-results/perf12/attribute12.py",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "reproduction source hash/test-results/perf12/cleanup12.py",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "cause commit and code match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "six focused pairs conserve every linked program",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "focused receipt unique/before-state/L1/cold",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "focused link census/before-state/L1/cold",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "focused receipt unique/after-state/L1/cold",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "focused link census/after-state/L1/cold",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "focused receipt unique/before-state/L1/warm",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "focused link census/before-state/L1/warm",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "focused receipt unique/after-state/L1/warm",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "focused link census/after-state/L1/warm",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "focused receipt unique/before-state/L4/cold",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "focused link census/before-state/L4/cold",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "focused receipt unique/after-state/L4/cold",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "focused link census/after-state/L4/cold",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "focused receipt unique/before-state/L4/warm",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "focused link census/before-state/L4/warm",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "focused receipt unique/after-state/L4/warm",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "focused link census/after-state/L4/warm",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "focused receipt unique/before-state/L7/cold",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "focused link census/before-state/L7/cold",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "focused receipt unique/after-state/L7/cold",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "focused link census/after-state/L7/cold",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "focused receipt unique/before-state/L7/warm",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "focused link census/before-state/L7/warm",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "focused receipt unique/after-state/L7/warm",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "focused link census/after-state/L7/warm",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "model asset versions unchanged",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "owned raw output deleted and servers released",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "orchestrator stop recorded",
+      "passCheck": true,
+      "detail": null
+    }
+  ]
+}

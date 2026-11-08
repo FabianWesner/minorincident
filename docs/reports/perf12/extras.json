@@ -1,0 +1,251 @@
+[
+  {
+    "slice": "r4",
+    "tier": "low",
+    "sides": {},
+    "coverage": {},
+    "verdict": "perf pending",
+    "issues": [
+      "prod: missing capture",
+      "candidate: missing capture"
+    ]
+  },
+  {
+    "slice": "r4",
+    "tier": "high",
+    "sides": {},
+    "coverage": {},
+    "verdict": "perf pending",
+    "issues": [
+      "prod: missing capture",
+      "candidate: missing capture"
+    ]
+  },
+  {
+    "slice": "r6",
+    "tier": "low",
+    "sides": {},
+    "coverage": {},
+    "verdict": "perf pending",
+    "issues": [
+      "prod: missing capture",
+      "candidate: missing capture"
+    ]
+  },
+  {
+    "slice": "r6",
+    "tier": "high",
+    "sides": {},
+    "coverage": {},
+    "verdict": "perf pending",
+    "issues": [
+      "prod: missing capture",
+      "candidate: missing capture"
+    ]
+  },
+  {
+    "slice": "approach",
+    "tier": "low",
+    "sides": {},
+    "coverage": {},
+    "verdict": "perf pending",
+    "issues": [
+      "prod: missing capture",
+      "candidate: missing capture"
+    ]
+  },
+  {
+    "slice": "approach",
+    "tier": "high",
+    "sides": {},
+    "coverage": {},
+    "verdict": "perf pending",
+    "issues": [
+      "prod: missing capture",
+      "candidate: missing capture"
+    ]
+  },
+  {
+    "slice": "drive",
+    "tier": "low",
+    "sides": {},
+    "coverage": {},
+    "verdict": "perf pending",
+    "issues": [
+      "prod: missing capture",
+      "candidate: missing capture"
+    ]
+  },
+  {
+    "slice": "drive",
+    "tier": "high",
+    "sides": {},
+    "coverage": {},
+    "verdict": "perf pending",
+    "issues": [
+      "prod: missing capture",
+      "candidate: missing capture"
+    ]
+  },
+  {
+    "slice": "wet",
+    "tier": "high",
+    "sides": {
+      "prod": {
+        "samples": 3605,
+        "p95": 16.70000000001164,
+        "maximum": 33.29999999999927,
+        "spikes66": 0
+      },
+      "candidate": {
+        "samples": 3607,
+        "p95": 16.70000000001164,
+        "maximum": 33.29999999999927,
+        "spikes66": 0
+      }
+    },
+    "coverage": {
+      "prod": {
+        "start": {
+          "x": -66.4000015258789,
+          "y": 0.7049999833106995,
+          "z": 9,
+          "yaw": 0.3205919885488634
+        },
+        "end": {
+          "x": -66.4000015258789,
+          "y": 0.7049999833106995,
+          "z": 9,
+          "yaw": 0.3205919885488634
+        },
+        "sampledPathM": 0.0,
+        "ticks": 3607,
+        "wetness": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "ssr": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "candidate": {
+        "start": {
+          "x": -66.4000015258789,
+          "y": 0.7049999833106995,
+          "z": 9,
+          "yaw": 0.3205919885488634
+        },
+        "end": {
+          "x": -66.4000015258789,
+          "y": 0.7049999833106995,
+          "z": 9,
+          "yaw": 0.3205919885488634
+        },
+        "sampledPathM": 0.0,
+        "ticks": 3608,
+        "wetness": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "ssr": [
+          {
+            "active": true,
+            "passes": 7,
+            "resolutionScale": 0.5,
+            "quality": 0.5
+          },
+          {
+            "active": true,
+            "passes": 7,
+            "resolutionScale": 0.5,
+            "quality": 0.5
+          },
+          {
+            "active": true,
+            "passes": 7,
+            "resolutionScale": 0.5,
+            "quality": 0.5
+          },
+          {
+            "active": true,
+            "passes": 7,
+            "resolutionScale": 0.5,
+            "quality": 0.5
+          },
+          {
+            "active": true,
+            "passes": 7,
+            "resolutionScale": 0.5,
+            "quality": 0.5
+          },
+          {
+            "active": true,
+            "passes": 7,
+            "resolutionScale": 0.5,
+            "quality": 0.5
+          },
+          {
+            "active": true,
+            "passes": 7,
+            "resolutionScale": 0.5,
+            "quality": 0.5
+          },
+          {
+            "active": true,
+            "passes": 7,
+            "resolutionScale": 0.5,
+            "quality": 0.5
+          },
+          {
+            "active": true,
+            "passes": 7,
+            "resolutionScale": 0.5,
+            "quality": 0.5
+          },
+          {
+            "active": true,
+            "passes": 7,
+            "resolutionScale": 0.5,
+            "quality": 0.5
+          },
+          {
+            "active": true,
+            "passes": 7,
+            "resolutionScale": 0.5,
+            "quality": 0.5
+          }
+        ]
+      }
+    },
+    "verdict": "PASS",
+    "issues": []
+  }
+]

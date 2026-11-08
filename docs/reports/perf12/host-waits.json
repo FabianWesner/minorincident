@@ -1,0 +1,168 @@
+[
+  {
+    "at": "2026-11-08T14:26:11.898Z",
+    "quiet": false,
+    "load": [
+      11.76171875,
+      13.171875,
+      9.1201171875
+    ],
+    "busy": [],
+    "ignoredIdle": [],
+    "source": "test-results/perf12/extras-batch-resume1.log"
+  },
+  {
+    "at": "2026-11-08T14:26:42.654Z",
+    "quiet": false,
+    "load": [
+      10.03125,
+      12.61376953125,
+      9.05712890625
+    ],
+    "busy": [
+      {
+        "pid": 16449,
+        "cpu": 0,
+        "ageSeconds": 4,
+        "command": "npm exec tsc --noEmit   "
+      },
+      {
+        "pid": 16476,
+        "cpu": 167.5,
+        "ageSeconds": 3,
+        "command": "node /Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ada09c4ba6a8319b1/node_modules/.bin/tsc --noEmit"
+      },
+      {
+        "pid": 16499,
+        "cpu": 0,
+        "ageSeconds": 3,
+        "command": "node tools/qa/test-budget.mjs --name test --max-seconds 240 -- node node_modules/vitest/vitest.mjs run --project default --configLoader runner tests/engine/vehicles.test.ts"
+      },
+      {
+        "pid": 16719,
+        "cpu": 110,
+        "ageSeconds": 1,
+        "command": "/opt/homebrew/Cellar/node/26.0.0/bin/node node_modules/vitest/vitest.mjs run --project default --configLoader runner tests/engine/vehicles.test.ts"
+      }
+    ],
+    "ignoredIdle": [],
+    "source": "test-results/perf12/extras-batch-resume1.log"
+  },
+  {
+    "at": "2026-11-08T14:27:13.472Z",
+    "quiet": false,
+    "load": [
+      8.48095703125,
+      12.0078125,
+      8.9609375
+    ],
+    "busy": [],
+    "ignoredIdle": [],
+    "source": "test-results/perf12/extras-batch-resume1.log"
+  },
+  {
+    "at": "2026-11-08T14:27:44.539Z",
+    "quiet": false,
+    "load": [
+      12.51904296875,
+      12.59228515625,
+      9.2744140625
+    ],
+    "busy": [],
+    "ignoredIdle": [],
+    "source": "test-results/perf12/extras-batch-resume1.log"
+  },
+  {
+    "at": "2026-11-08T14:28:14.763Z",
+    "quiet": false,
+    "load": [
+      14.5751953125,
+      13.07763671875,
+      9.56396484375
+    ],
+    "busy": [
+      {
+        "pid": 19748,
+        "cpu": 116.4,
+        "ageSeconds": 6,
+        "command": "node /Users/wesner/Workspace/minorincident/.claude/worktrees/r12-l8/node_modules/.bin/eslint src tests tools functions playwright.config.ts vite.config.ts vitest.config.ts eslint.c"
+      },
+      {
+        "pid": 19751,
+        "cpu": 0.6,
+        "ageSeconds": 6,
+        "command": "node tools/qa/test-budget.mjs --name test --max-seconds 240 -- node node_modules/vitest/vitest.mjs run --project default --configLoader runner tests/engine/missions.test.ts tests/e"
+      },
+      {
+        "pid": 19752,
+        "cpu": 62.9,
+        "ageSeconds": 6,
+        "command": "node /Users/wesner/Workspace/minorincident/.claude/worktrees/r12-l8/node_modules/.bin/tsc --noEmit"
+      },
+      {
+        "pid": 20213,
+        "cpu": 43.2,
+        "ageSeconds": 0,
+        "command": "/opt/homebrew/Cellar/node/26.0.0/bin/node node_modules/vitest/vitest.mjs run --project default --configLoader runner tests/engine/missions.test.ts tests/engine/vehicles.test.ts"
+      }
+    ],
+    "ignoredIdle": [],
+    "source": "test-results/perf12/extras-batch-resume1.log"
+  },
+  {
+    "at": "2026-11-08T14:28:45.477Z",
+    "quiet": false,
+    "load": [
+      19.0029296875,
+      14.26953125,
+      10.115234375
+    ],
+    "busy": [
+      {
+        "pid": 19748,
+        "cpu": 52.9,
+        "ageSeconds": 37,
+        "command": "node /Users/wesner/Workspace/minorincident/.claude/worktrees/r12-l8/node_modules/.bin/eslint src tests tools functions playwright.config.ts vite.config.ts vitest.config.ts eslint.c"
+      },
+      {
+        "pid": 19751,
+        "cpu": 0,
+        "ageSeconds": 37,
+        "command": "node tools/qa/test-budget.mjs --name test --max-seconds 240 -- node node_modules/vitest/vitest.mjs run --project default --configLoader runner tests/engine/missions.test.ts tests/e"
+      },
+      {
+        "pid": 19752,
+        "cpu": 32,
+        "ageSeconds": 37,
+        "command": "node /Users/wesner/Workspace/minorincident/.claude/worktrees/r12-l8/node_modules/.bin/tsc --noEmit"
+      },
+      {
+        "pid": 20213,
+        "cpu": 61.6,
+        "ageSeconds": 31,
+        "command": "/opt/homebrew/Cellar/node/26.0.0/bin/node node_modules/vitest/vitest.mjs run --project default --configLoader runner tests/engine/missions.test.ts tests/engine/vehicles.test.ts"
+      }
+    ],
+    "ignoredIdle": [],
+    "source": "test-results/perf12/extras-batch-resume1.log"
+  },
+  {
+    "at": "2026-11-08T14:29:15.707Z",
+    "quiet": false,
+    "load": [
+      21.90966796875,
+      15.5107421875,
+      10.712890625
+    ],
+    "busy": [
+      {
+        "pid": 22751,
+        "cpu": 174.8,
+        "ageSeconds": 1,
+        "command": "node /Users/wesner/Workspace/minorincident/.claude/worktrees/r12-l8/node_modules/.bin/tsc --noEmit -p tsconfig.sim.json"
+      }
+    ],
+    "ignoredIdle": [],
+    "source": "test-results/perf12/extras-batch-resume1.log"
+  }
+]

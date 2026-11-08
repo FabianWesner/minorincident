@@ -1,0 +1,22 @@
+{
+  "status": "perf pending",
+  "reason": "Orchestrator stopped waiting: PO testing and seven lanes keep the Mac busy for the next hours.",
+  "stoppedAt": "2026-11-08T14:30:18.612637+00:00",
+  "completedMatrixCells": 15,
+  "completedEventWindows": 9,
+  "completedExtraCells": 1,
+  "pendingExtraCells": 8,
+  "pendingSSRCompleteFrameCost": true,
+  "stoppedHostWait": {
+    "pid": 14953,
+    "exitCode": 143,
+    "command": [
+      "node",
+      "--import",
+      "tsx",
+      "test-results/perf12/extras-batch.mjs"
+    ],
+    "timingCapturesStarted": 0
+  },
+  "instruction": "Stop waiting: commit fixes and native/partial measurements, mark unmeasured cells perf pending, delete raw output, and end."
+}
