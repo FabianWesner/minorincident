@@ -185,8 +185,7 @@ Feel: "we actually escaped" → "everyone is fighting, and it is still not enoug
 | L4-15 | hide | Camera never snaps to top-down; sandbag/pallet structures are textured, solid and readable (no void beyond). | PO #25, Q-282, Q-283 | O |
 | L4-16 | bar/wait | Only the player (+ corgi) enters; door barred in 1.0 s; battle audible above ≥ 6 s (low-pass); L5 loads in the same basement. | E22-AC15 | S |
 | L4-17 | all | Corpse piles ≤ ~1 m, no stretched limbs; player never drawn under a corpse. | Q-287, Q-286, Q-195 | O |
-| L4-18 | all | Frames: `l4-plaza-safe` clean and alive; war frames read "huge mixed war"; player readable in the battle. | E22-AC19 | O, P |
-| L4-19 | all | Parked cargo truck clears the east perimeter wall, fence and sign by ≥ 0.5 m; its authored physics hull does not overlap the perimeter collider at any L4 phase. | `tests/qa/invariants/contract.test.ts` scripted convoy route/stop OBB check, PO 2026-11-08 | S |
+| L4-18 | all | Frames: `l4-plaza-safe` clean and alive; war frames read "huge mixed war"; player readable in the battle; parked cargo truck clears the east perimeter wall, fence and sign, including its authored physics hull (PO 2026-11-08). | E22-AC19, `tests/qa/invariants/contract.test.ts` scripted convoy route/stop OBB check | O, P, S |
 
 ## L5 · Aftermath (D-FAIR W5, sunset, +shotgun)
 
