@@ -158,12 +158,20 @@ export class LevelTenEncounters {
     // Wide road framing can include every old 30–50 m candidate. Search
     // farther ahead too, so safe off-camera arrivals can intercept the real
     // route at either zoom instead of silently refusing every patrol.
+    // r9-l10pace (vqa-4/vqa58: "0 infected near the courier" over minutes of corridor): a lone runner every 12 s read
+    // as "a single infected now and then". Each patrol is a small pack (3 high / 2 low) under the same regional cap.
+    const pack = low ? 2 : 3;
     for (const distance of [30, 40, 50, 65, 80, 100]) for (const offset of [.25, -.25, .6, -.6, 1, -1, Math.PI]) {
       const at = { x: player.transform.x + Math.cos(offset) * distance, z: player.transform.z + Math.sin(offset) * distance };
       if (!chunks.resident(at.x, at.z) || !ai.director.safe('infected.runner', at)) continue;
-      const id = ai.spawn('infected.runner', at, { state: 'chase', cureRegion: current.id });
-      ai.pursueTarget(id, 1);
-      this.state.spawned[`corridor-wanderer-${patrol.serial++}`] = id;
+      for (let k = 0; k < pack; k++) {
+        if (k && (!ai.pool.length || ai.director.count >= ai.director.cap - ai.director.reserved - ai.director.pendingTurns)) break;
+        const spot = k ? { x: at.x + Math.cos(k * 2.4) * 1.6, z: at.z + Math.sin(k * 2.4) * 1.6 } : at;
+        if (k && (!chunks.resident(spot.x, spot.z) || !ai.director.safe('infected.runner', spot) || !ai.nav.clear(spot.x, spot.z, .4))) continue;
+        const id = ai.spawn('infected.runner', spot, { state: 'chase', cureRegion: current.id });
+        ai.pursueTarget(id, 1);
+        this.state.spawned[`corridor-wanderer-${patrol.serial++}`] = id;
+      }
       patrol.nextSeconds = w.missions.state.stats.time + 12;
       return;
     }

@@ -34,7 +34,8 @@ export function placementColliders(placements: Placement[], fallback: StaticColl
     if (p.assetId === 'kit.highway-onramp' && p.lightGroup === 'l3-highway') return highwayColliders(p);
     if (p.collisionId === 'l5.metro-ingress') return metroIngressColliders(p);
     if (p.assetId === 'prop.flower') return [];
-    if (p.decor) return [];
+    // Render-only decor has no collider; `decorSolid` decor (L10 crossing scenes) blocks the courier as a physics static only.
+    if (p.decor && !p.decorSolid) return [];
     const platform = p.assetId === 'kit.dispersal-platform' && !p.collisionId;
     const shape = platform ? dispersalPlatform : sources[p.collisionId ?? p.assetId];
     if (!shape) return fallback.filter(c => c.id === p.id);
@@ -59,6 +60,7 @@ export function placementColliders(placements: Placement[], fallback: StaticColl
         yaw: p.yaw,
       };
       if(p.navBlocker) aabb.navBlocker = true;
+      if (p.decorSolid) aabb.physicsOnly = true;
       return [{ id: `${p.id}/geometry-${index}`, aabb, walkable: platform ? dispersalPlatform.walkable.has(box) : box.max[1] < .45 || extraSupports[p.assetId]?.includes(box), minTier: p.minTier, maxTier: p.maxTier }];
     });
   }));

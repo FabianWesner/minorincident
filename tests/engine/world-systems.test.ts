@@ -130,7 +130,7 @@ test('explosions: every class follows its damage curve, full cover shields, rail
   step(f, 18 * 30 + 30 * 60 + 2); expect(fires()).toHaveLength(0);
 });
 
-test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables match the layout without it, a re-preparation adds none, L9 has none', async () => {
+test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables match the layout without it, a re-preparation adds none, L9 has none; L10 crossing scenes stay clear and grounded', async () => {
   const { DistrictWorld } = await import('../../src/sim/world/DistrictWorld');
   const { compositions } = await import('../../src/levels/compositions');
   const { districtDecor } = await import('../../src/levels/decor');
@@ -143,4 +143,49 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   expect(d.pushables.map(q => q.id)).toEqual(p.pushables.map(q => q.id));
   expect(new DistrictWorld(compositions.L6, dressed.districts.map(x => x.layout), 1).districts[0].decay.placements.length).toBe(d.decay.placements.length);
   expect(districtDecor('D-CROSSING', [])).toEqual([]);
+
+  // r9-l10pace (vqa58 "minutes of empty dark grass"): L10 crossing scenes. The belt keeps its pieces; the scenes are
+  // deterministic, lit, clear of the walked line, roads, encounter slots (lane-shifted groups: their x band at any z) and the
+  // console; tall pieces are solids, small ones render-only; nothing intersects an existing solid; all stand on the ground.
+  const { cureCrossingLines, cureCrossingStories, crossingScenesBlock } = await import('../../src/levels/L10/crossingStories');
+  const { cureRoadsideBelt } = await import('../../src/levels/L10/roadsideBelt');
+  const { cure } = await import('../../src/levels/L10/district');
+  const { cureEncounters, cureEncounterSlots } = await import('../../src/levels/L10/encounters');
+  const { placementColliders } = await import('../../src/levels/districts/staticCollision');
+  type P = [number, number];
+  const cureLayout = (await import('../../public/assets/layouts/D-CURE.layout.json')).default as unknown as import('../../src/levels/districts/types').DistrictLayout;
+  const belt = cureRoadsideBelt(cureLayout.placements), stories = cureCrossingStories([...cureLayout.placements, ...belt]);
+  expect(cureCrossingStories([...cureLayout.placements, ...belt])).toEqual(stories);
+  expect(districtDecor('D-CURE', cureLayout.placements)).toEqual([...belt, ...stories]);
+  expect(stories.filter(q => q.fieldLight).length).toBeGreaterThan(60);
+  for (const li of cureCrossingLines.keys()) expect(stories.some(q => q.id.startsWith(`decor-cure-cross-${li}-`) && q.fieldLight)).toBe(true);
+  const seg = (q: P, a: P, b: P) => { const dx = b[0] - a[0], dz = b[1] - a[1], l = dx * dx + dz * dz, t = l ? Math.max(0, Math.min(1, ((q[0] - a[0]) * dx + (q[1] - a[1]) * dz) / l)) : 0; return Math.hypot(q[0] - a[0] - t * dx, q[1] - a[1] - t * dz); };
+  const dist = (q: P, line: readonly P[]) => Math.min(...line.slice(1).map((b, i) => seg(q, line[i], b)));
+  const roads: P[][] = [...cure.regions.map(r => r.route), ...cure.detours.map(r => r.route), [cure.regions[5].route[1], cure.anchors['corridor-breach'], cure.anchors['r6-r7-seam'], cure.regions[6].route[5]]];
+  const shifted = (e: { id: string }) => e.id.includes('-direct-') || e.id.startsWith('corridor-');
+  const slotsOf = (e: (typeof cureEncounters)[number]) => (['high', 'low'] as const).flatMap(t => cureEncounterSlots(e, t));
+  const slots = cureEncounters.filter(e => !e.assault && !shifted(e)).flatMap(slotsOf), laneSlots = cureEncounters.filter(shifted).flatMap(slotsOf);
+  const consoleAt = cure.anchors['cure-console'];
+  for (const q of stories) {
+    const a = q.visualAabb, line = cureCrossingLines[Number(q.id.split('-')[3])].line;
+    for (const c of [[a.min[0], a.min[2]], [a.min[0], a.max[2]], [a.max[0], a.min[2]], [a.max[0], a.max[2]]] as P[]) {
+      expect(dist(c, line)).toBeGreaterThanOrEqual(3.2);
+      for (const r of roads) expect(dist(c, r)).toBeGreaterThanOrEqual(8);
+    }
+    expect(Math.hypot(q.position[0] - consoleAt[0], q.position[2] - consoleAt[1])).toBeGreaterThan(100);
+    expect(slots.some(s => s.x > a.min[0] - 4 && s.x < a.max[0] + 4 && s.z > a.min[2] - 4 && s.z < a.max[2] + 4)).toBe(false);
+    expect(laneSlots.some(s => s.x > a.min[0] - 4 && s.x < a.max[0] + 4)).toBe(false);
+    expect(cureLayout.colliders.some(c => !c.walkable && c.aabb.max[1] > .05 && a.min[0] < c.aabb.max[0] && a.max[0] > c.aabb.min[0] && a.min[2] < c.aabb.max[2] && a.max[2] > c.aabb.min[2])).toBe(false);
+  }
+  const solids = stories.filter(q => q.decorSolid);
+  expect(stories.every(q => q.decor)).toBe(true);
+  expect(solids.length > 40).toBe(crossingScenesBlock);
+  expect(placementColliders(stories.filter(q => !q.decorSolid), [])).toEqual([]);
+  const solidColliders = placementColliders(solids, []), solidIds = new Set(solidColliders.map(c => c.id.split('/')[0]));
+  // Physics-only: they stop the courier but are no AI nav wall (qa:accept L10-03: nav solids starved the corridor-breach group).
+  expect(solidColliders.every(c => c.aabb.physicsOnly)).toBe(true);
+  expect(solids.every(q => solidIds.has(q.id))).toBe(true);
+  // Ground under each piece without the scenes (a sandbag pallet carries its own 25 cm walkable deck).
+  const bare = new DistrictWorld(compositions.L10, [{ ...cureLayout, placements: [...cureLayout.placements, ...belt] }], 32);
+  for (const q of stories) for (const [x, z] of [[q.visualAabb.min[0], q.visualAabb.min[2]], [q.visualAabb.max[0], q.visualAabb.max[2]]]) expect(Math.abs(bare.groundHeight(x, z))).toBeLessThan(.05);
 });
