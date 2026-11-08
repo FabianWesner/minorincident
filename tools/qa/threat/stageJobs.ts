@@ -80,10 +80,15 @@ export async function runStages(levels: readonly RunnerLevel[], maxWorkers: numb
   }
   // Runner stage profiles: start long routes first to avoid a late passive tail.
   const nativeCosts: Record<RunnerLevel, readonly [number, number]> = {
-    L1: [30, 30], L2: [45, 45], L3: [80, 20], L4: [270, 150], L5: [50, 250],
-    L6: [35, 10], L7: [40, 30], L8: [35, 70], L9: [20, 20], L10: [120, 90],
+    L1: [55, 30], L2: [65, 45], L3: [80, 15], L4: [210, 150], L5: [55, 250],
+    L6: [40, 10], L7: [45, 35], L8: [50, 65], L9: [30, 20], L10: [150, 85],
   };
-  const cost = (job: StageJob) => job.kind === 'high-hold' ? 180 : nativeCosts[job.level][job.passive ? 1 : 0];
+  const cost = (job: StageJob) => {
+    if (job.kind === 'high-hold') return 175;
+    if (job.kind === 'l3' && job.seed > 1) return 65;
+    if (job.kind === 'follower') return job.level === 'L5' ? job.passive ? 250 : 45 : job.passive ? 25 : 35;
+    return nativeCosts[job.level][job.passive ? 1 : 0];
+  };
   jobs.sort((a, b) => cost(b) - cost(a));
   const results = new Map<string, StageResult>();
   if (maxWorkers === 1) {
@@ -91,7 +96,9 @@ export async function runStages(levels: readonly RunnerLevel[], maxWorkers: numb
     return results;
   }
   const worker = async () => {
-    const child = fork(fileURLToPath(import.meta.url), [], { execArgv: ['--import', 'tsx/esm'],
+    // Four workers remain within the runner's memory budget while collecting
+    // short-lived simulation allocations less frequently.
+    const child = fork(fileURLToPath(import.meta.url), [], { execArgv: ['--max-semi-space-size=64', '--import', 'tsx/esm'],
       env: { ...process.env, MI_THREAT_STAGE_WORKER: '1' }, stdio: ['ignore', 'inherit', 'inherit', 'ipc'] });
     const exited = new Promise<number | null>((resolve, reject) => { child.once('error', reject); child.once('exit', resolve); });
     let finished = false;
