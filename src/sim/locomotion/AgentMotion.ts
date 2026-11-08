@@ -169,8 +169,9 @@ export function installAgentMotion(world: SimWorld): void {
       if (world.scenario === 'L7' && world.missions?.state.steps.departure?.status === 'active' && e.civilian?.survivor?.mode === 'follow' && response?.updatedAt === world.tick && blocker && (solidLargeCorpse(blocker) || blocker.civilian?.survivor?.mode === 'follow') && distance / FIXED_DT <= .12 && !forced(e, world.tick, world)) {
         response.vx = dx / FIXED_DT; response.vz = dz / FIXED_DT; response.ax = response.az = 0;
       }
-      motion.velocity.x = dx / FIXED_DT; motion.velocity.z = dz / FIXED_DT; motion.speed = distance / FIXED_DT;
-      motion.moving = motion.speed > (motion.moving ? .04 : .12); if (distance < 3) motion.distance += distance;
+      const carried = world.scenario === 'L9' && e.attachedTo !== undefined;
+      motion.velocity.x = carried ? 0 : dx / FIXED_DT; motion.velocity.z = carried ? 0 : dz / FIXED_DT; motion.speed = carried ? 0 : distance / FIXED_DT;
+      motion.moving = motion.speed > (motion.moving ? .04 : .12); if (!carried && distance < 3) motion.distance += distance;
     }
     if (world.scenario === 'L5') for (const e of world.entities.iterate()) if (e.companion) {
       const c = e.companion;

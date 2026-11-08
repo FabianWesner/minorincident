@@ -383,6 +383,7 @@ export class Vehicles {
         target.transform.z = boarder ? target.transform.z + Math.cos(p.yaw) * side * .9 : p.z + Math.cos(p.yaw) * side * 2;
         if (state.floor && boarder && target.health.current > 0) {
           target.transform.y = (this.world.districts?.groundHeight(target.transform.x, target.transform.z) ?? 0) + .7;
+          target.infected!.state = 'chase'; target.infected!.cooldown = Math.max(target.infected!.cooldown, this.world.tick + 120);
           // A real fall has a recovery window. Immediate reattachment while
           // the handbrake slowed the APC made a successful shake-off useless.
           this.world.combat?.damage.apply({ attackId: this.world.tick, actionId: car.entity.archetype, sourceId: car.entity.id, targetId: id, origin: p, direction: { x: Math.sin(p.yaw) * side, z: Math.cos(p.yaw) * side }, base: 1, multiplier: 1, type: 'vehicle', knockback: .5, stagger: 2, knockdownTicks: 120 });
@@ -486,6 +487,10 @@ export class Vehicles {
       target.transform.x = p.x + Math.cos(p.yaw) * localX + Math.sin(p.yaw) * side * (car.physics.def.width / 2 + .12);
       target.transform.z = p.z - Math.sin(p.yaw) * localX + Math.cos(p.yaw) * side * (car.physics.def.width / 2 + .12);
       target.transform.y = p.y + .1 + .7 * Math.min(1, (tick - climb.startedAt) / 180); this.world.spatial.set(id, target.transform.x, target.transform.z);
+      target.transform.yaw = -Math.atan2(p.z - target.transform.z, p.x - target.transform.x);
+      target.infected!.state = 'attack';
+      if (tick < climb.startedAt + 180 || tick >= climb.nextHit - 36) target.infected!.until = climb.nextHit;
+      target.combat!.attacking = tick >= climb.nextHit - 36;
       if (occupied && tick >= climb.nextHit) {
         const player = this.world.entities.get(1)!;
         if (player.health.current > 0) this.world.player?.damage(10, tick, true);
