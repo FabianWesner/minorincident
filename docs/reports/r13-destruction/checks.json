@@ -1,5 +1,5 @@
 {
-  "sourceCommit": "cd84315b",
+  "sourceCommit": "a0f76924",
   "mergedMain": "a7b70c78",
   "runner": "2.31.107.230",
   "typecheck": "pass",
@@ -9,7 +9,7 @@
     "skipped": 1,
     "filesPassed": 27,
     "budgetSeconds": 240,
-    "elapsedSeconds": 174.4
+    "elapsedSeconds": 176.7
   },
   "caseBudget": {
     "cases": 150,
@@ -42,5 +42,23 @@
     "removedFlags": [
       "criterion/L3-08 segment density and concurrent cap:FAIL"
     ]
+  },
+  "lifecycleCoverage": [
+    "destroyed movable fixture releases body",
+    "checkpoint restores fixture body",
+    "tier removal suspends collision and damage",
+    "tier removal and return suspend/resume owned fire",
+    "LOS cache invalidated on blocker mutation"
+  ],
+  "routeComparison": {
+    "sourceCommit": "5fbd7b2f",
+    "main": "a7b70c78",
+    "simulationSeconds": 180,
+    "levels": [
+      "L8",
+      "L10"
+    ],
+    "identicalNativeReports": true,
+    "scope": "bounded diagnostic, not full gate"
   }
 }
