@@ -97,3 +97,6 @@ Before dispatching, classify the task: judgement/hard bug → Opus; crisp goal +
 
 ## Routing after Codex stops (PO 2026-11-08, binding)
 "Use codex until it stops working" and "When switching to Claude, only use Sonnet for development and Haiku for testing. 5.5 each" → after Codex: Sonnet 5.5 (claude-sonnet-5-5) for every development lane, Haiku 5.5 (claude-haiku-5-5) for every testing/QA lane; no Opus agents.
+
+## Lane layout (PO 2026-11-08, binding)
+Coding lanes never start browsers: native/sim checks + unit tests only, and a README section 'Browser QA needed' (level, tick/position, quality, zoom, what to check). Exactly one QA lane owns the browser and runs those checks after merges (Haiku 5.5 after Codex ends). Lane count: start at 3, raise to 4/5 only while load < 15 and memory > 40 % free; after any scheduler daemon restart re-run `config --parallel N`.
