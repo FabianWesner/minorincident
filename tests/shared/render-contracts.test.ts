@@ -235,7 +235,11 @@ test('a held cane reaches the floor across rig scales without moving its fitted 
 });
 
 test('authored aftermath and skinned infected headwear survives variation and accepts explicit accessories', async () => {
-  const shaded = vi.fn((..._args: unknown[]) => new MeshLambertNodeMaterial());
+  const shaded = vi.fn((...args: unknown[]) => {
+    expect(args[5], 'headwear declares no emissive eye surface').toBeDefined();
+    expect(args[8], 'headwear reads each instance’s infected flag').toBeDefined();
+    return new MeshLambertNodeMaterial();
+  });
   const accessories = new CrowdAccessories({ shaded } as unknown as Materials);
   accessories.ids.splice(0, accessories.ids.length, 'acc.placeholder-hair');
   const poses = new CrowdPosePalette({ parts: ['head'], frames: 1, duration: 1, matrices: new Float32Array(new Matrix4().elements) }, 2);
