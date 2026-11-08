@@ -1,0 +1,72 @@
+{
+  "method": "Explicit collision diagnostic, not a played route: production Rapier capsule sweeps at the observed failed low route height and the correct high route landing height; no objective or tuning changes.",
+  "layoutSha256": "3456bb73ffc3dff3b1c0fbd108f727beb87034121a4379311dc6bf3c0d7923ea",
+  "rows": [
+    {
+      "tier": "low",
+      "samples": [
+        {
+          "label": "below street, observed failed physical lane",
+          "pose": {
+            "x": 257,
+            "y": 0.71,
+            "z": 12.99
+          },
+          "delta": {
+            "x": 6,
+            "y": -0.005001535173505545,
+            "z": 0
+          },
+          "crossedStreet": true
+        },
+        {
+          "label": "correct raised stair landing",
+          "pose": {
+            "x": 255.5,
+            "y": 4.62,
+            "z": 15
+          },
+          "delta": {
+            "x": 6,
+            "y": -0.015020467340946198,
+            "z": 0
+          },
+          "crossedStreet": true
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "samples": [
+        {
+          "label": "below street, observed failed physical lane",
+          "pose": {
+            "x": 257,
+            "y": 0.71,
+            "z": 12.99
+          },
+          "delta": {
+            "x": 6,
+            "y": -0.005001535173505545,
+            "z": 0
+          },
+          "crossedStreet": true
+        },
+        {
+          "label": "correct raised stair landing",
+          "pose": {
+            "x": 255.5,
+            "y": 4.62,
+            "z": 15
+          },
+          "delta": {
+            "x": 6,
+            "y": -0.015020467340946198,
+            "z": 0
+          },
+          "crossedStreet": true
+        }
+      ]
+    }
+  ]
+}

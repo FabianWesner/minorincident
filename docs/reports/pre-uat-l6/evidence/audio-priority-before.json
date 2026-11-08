@@ -1,0 +1,55 @@
+{
+  "method": "Audio-only diagnostic: replay the actual second-breach event through the production AudioEventMapper and VoiceLimiter with the available voice capacity occupied by weapon-priority100 voices. No gameplay trial or subjective mix/listening claim.",
+  "sourceSha256": "51442e532c0bff3389fc2787d73021d85bc2b2ec16c7b5a211c82ffd51dc3028",
+  "event": {
+    "type": "l6.bang",
+    "tick": 3133,
+    "breach": 2,
+    "position": {
+      "x": 10,
+      "z": -18
+    }
+  },
+  "rows": [
+    {
+      "tier": "low",
+      "capacity": 12,
+      "filledPriority": 100,
+      "calls": [
+        {
+          "cue": "door.wood",
+          "options": {
+            "position": {
+              "x": 10,
+              "z": -18
+            },
+            "gain": 1,
+            "lowpass": 1800
+          },
+          "priority": 40,
+          "admitted": false
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "capacity": 28,
+      "filledPriority": 100,
+      "calls": [
+        {
+          "cue": "door.wood",
+          "options": {
+            "position": {
+              "x": 10,
+              "z": -18
+            },
+            "gain": 1,
+            "lowpass": 1800
+          },
+          "priority": 40,
+          "admitted": false
+        }
+      ]
+    }
+  ]
+}

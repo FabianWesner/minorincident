@@ -1,0 +1,28 @@
+{
+  "command": "npm run qa:threat -- --levels L6 --out test-results/pre-uat-l6/threat-navigation-final --maxWorkers=2",
+  "runner": "tools/remote/run.sh;94.130.181.173",
+  "codeUnderReview": "db0f6985dce5d08e21a130973745b8cda80320b9",
+  "provenanceLimit": "Harness revision defaults to manifest-only; no explicit revision env was supplied. Runner copied the worktree after db0f6985; no product source edits followed. Do not read this as a full main gate.",
+  "seconds": 22.836412099999997,
+  "workers": 2,
+  "flags": [
+    "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+  ],
+  "L6Flags": [],
+  "passiveFlags": [],
+  "skilled": {
+    "completed": true,
+    "time": 305.71666666666664,
+    "deaths": 0,
+    "kills": 25,
+    "damageTaken": 180,
+    "outcome": "complete"
+  },
+  "passive": {
+    "completed": false,
+    "time": 110,
+    "outcome": "tick-budget"
+  },
+  "auditSha256": "2b354afaa78bbf8361ff230b06827eb66f6106891fc76b1fc92e3e4ce83b8b37",
+  "exit": 1
+}

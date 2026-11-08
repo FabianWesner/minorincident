@@ -97,7 +97,8 @@ export class AudioEventMapper {
             if (Math.floor((event.tick - barred) / 75) % 3 === 0) this.host.play('explosion.boom', { gain: .22, lowpass: 500, dry: true, priority: 110 });
             return;
         }
-        if (event.type === 'l6.bang') { this.host.play('door.wood', { position: event.position, gain: 1, lowpass: 1800 }); return; }
+        // A breach warning must survive the weapon/impact voices of the shelter fight.
+        if (event.type === 'l6.bang') { this.host.play('door.wood', { position: event.position, gain: 1, lowpass: 1800, priority: 110 }); return; }
         if (event.type === 'l5.wait') {
             this.host.play('civilian.hey', { position, gain: 0.7, rate: 0.9 }, source);
             return;
