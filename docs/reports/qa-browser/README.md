@@ -2,7 +2,7 @@
 
 **In progress.** Headless native GPU checks run serially through the shared browser pool. No game code changes, deployment or push. The initial sandbox denied the pool listener and Git index; those restrictions have been removed. Restarting the idle daemon resolved its inherited Chromium Mach-port failure.
 
-Initial main was `4640125c`; vehicle/flicker receipts use `8db1ce18`. The worktree then advanced to `ff6edd7c`, adding r12-shadow. Remaining checks are not counted as gameplay failures merely because they are pending.
+Initial main was `4640125c`; vehicle/flicker receipts use `8db1ce18`. The worktree then advanced to `ff6edd7c`, adding r12-shadow. The L8 performance merge was subsequently included at `5cd762aa`. Remaining checks are not counted as gameplay failures merely because they are pending.
 
 ## r12-l9flicker
 
@@ -29,6 +29,20 @@ I opened the original baseline sheet, all three 30-frame strips, every corner ca
 | Scene gate and quiet GPU timing | PENDING | — |
 
 The supplied `tools/qa/r12-vehicles.ts` ran with `E2E_SERIAL=1 SCENE_PORT=4341 R12_OUT=docs/reports/qa-browser/vehicles`, exit 0. Personally opened its retained sheet.
+
+## r12-l8 opening / early APC
+
+| Check | Result | Evidence |
+|---|---|---|
+| Fresh and persisted progressed L8 seed 1; low/high × zoom 1/1.5; normal mission button and physical W | PASS: gate objective/distance, world arrow, minimap pin and calm group in all eight views. First guidance ticks 0/0/3/7; physical movement 2.005–2.080 m. Personally opened the eight-view sheet and full high image. | [Manifest](l8-opening/manifest.json), [sheet](l8-opening/review.jpg) |
+| High zoom 1.5, physically walk south road to APC and hold E, tick 3125 at (96.430,76.005) | PASS: sanctuary active, escape/depart pending, sanctuary checkpoint, gate marker, zero infected, no driver/passengers/entry ring. Personally opened image: group beside APC, gate arrow points back left, no gold ring or boarding prompt. | Same manifest; bottom cell in the same reviewed sheet. |
+| Same door, tick 3660 | PASS for state: breach checkpoint, 24 infected, gate marker, sanctuary active, escape/depart pending, no driver/passengers/ring. Supplied runner saves only the pre-breach image; post-breach visual review remains pending supplementary route. | Same manifest |
+
+## r12-l6 / r12-l7 physical progress
+
+L6 low completed the mortal route with 3 deaths, 1 rescued of 29 and 28 lost. The result panel agrees. First survivor #16 remains visible at (263.065,14.270), y=4.6, but the low safe view frames the courier back on the stairs and loses the rescued body off screen. Night views show living infected inside the closed gate near the courier. These are visual FAIL candidates with exact state in [receipt](l6/receipt.json) and the personally reviewed [sheet](l6/review.jpg). The low night capture was shortened by a queued physical control command, so it does **not** certify the uninterrupted six-second caption. High reached all survivors out but did not finish within the 495-second run; later manual stair commands confound its final deaths. Fresh transition-only repeats are pending.
+
+L7 low completed physical boarding/departure and handed over to L8: 15 boarded, 1 death, 26 rockets. No skips or assists. High reached the bus but timed out with repeated close-range rocket rejections (operator always preferred rockets). This is a QA input-policy limitation; its generated “enemy-unhittable” issues are not accepted as game damage bugs. A repeat will select the carried shotgun within six metres, matching ordinary physical controls and the native controller's range policy. High's 122 launches have a minimum interval of **50 ticks**; native Alphas show **450 maximum HP**. Three-direct-hit and low cadence evidence remain pending. The audit observed 25 mission-stat deaths (the driver's summary undercounts one). High output will be compacted after extracting its relevant event rows.
 
 ## Remaining lanes
 
