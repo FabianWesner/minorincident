@@ -7,7 +7,8 @@ import { SimPhase } from '../../core/EventBus';
 import type { NavGrid } from '../ai/NavGrid';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
-import { faceMotion, motionResponse, resetResponse, respond } from './MotionResponse';
+import { angleDelta, faceMotion, motionLimits, motionResponse, resetResponse, respond } from './MotionResponse';
+import { idleEligible, idleLookYaw, responseScale } from '../outbreak/groupNature';
 import { Status } from '../combat/Status';
 import { followerInCombat } from '../outbreak/Survivors';
 
@@ -16,6 +17,15 @@ import { followerInCombat } from '../outbreak/Survivors';
 export const followerTracking = { acceleration: 12, jerk: 300, omega: 20 } as const;
 // Keep the calm party responsive without overshooting its moving slots.
 export const l5FollowerTracking = { ...followerTracking, omega: 22 } as const;
+/** Response limits of one actor this tick: L5's brisk calm followers, otherwise a following survivor's own
+ * temperament (r12-group: people react a little apart; the injured lag), otherwise the shared defaults. */
+export function trackingFor(world: SimWorld, e: EntitySnapshot): Parameters<typeof respond>[3] {
+  const s = e.civilian?.survivor;
+  if (world.scenario === 'L5' && (e.companion || s?.briskAt === world.tick)) return l5FollowerTracking;
+  if (s?.mode !== 'follow' || world.scenario === 'L5') return undefined;
+  const limits = s.briskAt === world.tick ? followerTracking : motionLimits;
+  return { ...limits, acceleration: limits.acceleration * responseScale(e, world.scenario) };
+}
 export function moveAgent(e: EntitySnapshot, vx: number, vz: number, nav: NavGrid, tick: number, radius = actorRadius(e), impulse = false, tracking?: Parameters<typeof respond>[3]): void {
   const state = e.locomotion ??= motionResponse();
   if (state.updatedAt === tick) return;
@@ -77,8 +87,7 @@ export function installAgentMotion(world: SimWorld): void {
     const nav = world.infected!.nav;
     for (const e of world.entities.iterate()) if (actor(e) && !forced(e, world.tick, world) && e.locomotion && e.locomotion.updatedAt !== world.tick) {
       const yaw = e.transform.yaw;
-      moveAgent(e, 0, 0, e.infected ? world.infected!.infectedNav : nav, world.tick, actorRadius(e), false,
-        world.scenario === 'L5' && (e.companion || e.civilian?.survivor?.briskAt === world.tick) ? l5FollowerTracking : undefined); world.spatial.set(e.id, e.transform.x, e.transform.z);
+      moveAgent(e, 0, 0, e.infected ? world.infected!.infectedNav : nav, world.tick, actorRadius(e), false, trackingFor(world, e)); world.spatial.set(e.id, e.transform.x, e.transform.z);
       // Braking retains the authored approach distance. The windup owns facing,
       // so residual steering must not turn the strike away from its victim.
       if (e.infected?.state === 'attack') e.transform.yaw = yaw;
@@ -125,6 +134,7 @@ export function installAgentMotion(world: SimWorld): void {
         // Followers and gunners can overwrite walking yaw with an aim/formation pose. Leave other controllers and passive nudges alone.
         if (!c || c.pet || c.zooAnimal || e.infected || e.health.current <= 0) continue;
         if (!c.survivor && !ally?.follow && !ally?.gun && ally?.role !== 'officer' && ally?.role !== 'soldier') continue;
+        if (c.survivor?.mode === 'follow') idleSurvivor(world, e);
         if (motion?.updatedAt !== world.tick || Math.hypot(motion.vx, motion.vz) <= .12) { if (ally) delete ally.aimMoveAt; continue; }
       }
       // A waiting Metro pet sidesteps for the queue while retaining the shaft-facing pose.
@@ -182,4 +192,19 @@ export function installAgentMotion(world: SimWorld): void {
       }
     }
   }, SimPhase.cleanup + 1);
+}
+
+/** r12-group: a resting follower records when it came to rest and, once settled, looks around
+ * (toward threats, the courier, a neighbour or a personal glance) instead of freezing in its last walking yaw. */
+function idleSurvivor(world: SimWorld, e: EntitySnapshot): void {
+  const s = e.civilian!.survivor!, motion = e.locomotion, tick = world.tick;
+  const still = !motion || Math.hypot(motion.vx, motion.vz) < .05;
+  if (!still) { delete s.restAt; delete s.stirAt; return; }
+  s.restAt ??= tick;
+  if (tick - s.restAt < 20 || !idleEligible(e)) return;
+  const yaw = idleLookYaw(world, e);
+  if (yaw === undefined) return;
+  // An easy head-and-shoulders turn: quick for a large glance, slowing as it settles.
+  const delta = angleDelta(e.transform.yaw, yaw);
+  e.transform.yaw += Math.max(-1.8, Math.min(1.8, delta * 2.5)) * FIXED_DT;
 }

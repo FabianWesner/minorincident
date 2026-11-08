@@ -11,6 +11,8 @@ import { adultMaleStandingHeight, civilianHeight, fitCivilianHeight, heroineStan
 import { SimWorld } from '../../src/sim/world/SimWorld';
 import { actorRadius, solidLargeCorpse } from '../../src/sim/world/SolidRegistry';
 import { followerInCombat, updateSurvivor } from '../../src/sim/outbreak/Survivors';
+import { formationBack, formationSlot } from '../../src/sim/missions/missionHelpers';
+import { idleEligible, idleLookYaw, looseSlotOffset, startDelayTicks } from '../../src/sim/outbreak/groupNature';
 
 const worlds: SimWorld[] = [];
 afterEach(() => { for (const w of worlds.splice(0)) w.dispose(); });
@@ -71,6 +73,30 @@ test('civilians: seeded grab → bite → down → glowing eyes → rising → i
 
 test('escort: shared combat pace, follows through a maze, a 2 s stand revives to 50 %, unattended 20 s down fails the mission', async () => {
   {
+  // r12-group: the follower formation is a loose, persistent cluster (not the 1.2 m parade lattice) with body room between slots.
+  const heading = { x: 1, z: 0 }, slots = Array.from({ length: 24 }, (_, i) => formationSlot({ x: 0, z: 0 }, heading, i));
+  expect(slots).toEqual(Array.from({ length: 24 }, (_, i) => formationSlot({ x: 0, z: 0 }, heading, i)));
+  for (let i = 0; i < 24; i++) for (let j = i + 1; j < 24; j++) expect(Math.hypot(slots[i].x - slots[j].x, slots[i].z - slots[j].z)).toBeGreaterThan(.89);
+  expect(slots.filter((s, i) => Math.hypot(s.x + formationBack(i), s.z - (i % 3 - 1) * 1.2) > .12).length).toBeGreaterThan(16);
+  expect(Math.max(...slots.slice(0, 3).map(s => s.x))).toBeLessThan(-2.2);
+  const w = await world(), p = w.entities.get(1)!;
+  for (const e of [...w.infected!.active]) w.infected!.release(e);
+  w.scenario = 'L7';
+  const follower = w.entities.get(w.npcs!.civilians.spawn('cashier', { x: p.transform.x - 3, z: p.transform.z }))!, c = follower.civilian!;
+  c.survivor = { key: 'group-react', mode: 'follow', leader: 1, slot: 0, cover: false, foundAt: 0, waitAt: 9999, restAt: w.tick - 60 };
+  // A rested follower sets off a personal beat after it is asked, then walks.
+  const delay = startDelayTicks(follower, 'L7'), start = { ...follower.transform }, goal = { x: start.x - 4, z: start.z };
+  expect(delay).toBeGreaterThan(4);
+  for (let i = 0; i < delay - 1; i++) { w.npcs!.move(follower, goal, 3, c, 0); w.tick++; }
+  expect(Math.hypot(follower.transform.x - start.x, follower.transform.z - start.z)).toBe(0);
+  for (let i = 0; i < 20; i++) { w.npcs!.move(follower, goal, 3, c, 0); w.tick++; }
+  expect(follower.transform.x).toBeLessThan(start.x - .05);
+  // Standing, it looks toward a nearby infected before anything else.
+  const enemy = w.entities.get(w.infected!.spawn('infected.runner', { x: follower.transform.x, z: follower.transform.z + 6 }))!;
+  expect(idleEligible(follower)).toBe(true);
+  expect(idleLookYaw(w, follower)).toBeCloseTo(-Math.atan2(enemy.transform.z - follower.transform.z, enemy.transform.x - follower.transform.x));
+  }
+  {
   const w = await world(), p = w.entities.get(1)!;
   for (const e of [...w.infected!.active]) w.infected!.release(e);
   w.scenario = 'L5'; p.survivor!.velocity = { x: 4.5, z: 0 };
@@ -113,8 +139,8 @@ test('escort: shared combat pace, follows through a maze, a 2 s stand revives to
     // In its slot: walk with the courier's velocity, no braking and no surge.
     for (let slot = 0; slot < 5; slot++) {
       c.survivor.slot = slot; delete c.survivor.pace;
-      // Calm slots sit 2.7/3.4 m back; the rear row staggers into the front row's gaps.
-      Object.assign(follower.transform, { x: p.transform.x - (slot < 3 ? 2.7 : 3.4), z: p.transform.z + (slot < 3 ? (slot % 3 - 1) * 1.2 : [-.6, .6][slot - 3]) });
+      // Calm slots sit 2.7/3.4 m back; the rear row staggers into the front row's gaps (plus a small personal side offset, r12-group).
+      Object.assign(follower.transform, { x: p.transform.x - (slot < 3 ? 2.7 : 3.4), z: p.transform.z + (slot < 3 ? (slot % 3 - 1) * 1.2 : [-.6, .6][slot - 3]) + looseSlotOffset(slot).side * .4 });
       updateSurvivor(w, follower);
       const [, aim, pace] = movement.mock.lastCall!;
       expect(aim.x - follower.transform.x).toBeCloseTo(4.5 * .5); expect(aim.z - follower.transform.z).toBeCloseTo(0); expect(pace).toBeCloseTo(4.5);
