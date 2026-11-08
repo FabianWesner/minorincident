@@ -91,7 +91,7 @@ export class LevelTenBot {
     }
     if (active.id !== 'hold' && gun?.mounted) { f.interact = true; return f; }
     const rack = player.weapons!.RIGHT.rack, target = active.id === 'mega' ? threats.find(isMega) ?? threats[0] : threats[0];
-    if (active.id === 'mega' && p.y > 2) f.move = this.walker.step(w, { x: anchor.x + arena.platformStair.at[0], z: anchor.z + arena.platformStair.at[1] }, .6, 'descend-stair') ?? f.move;
+    if (['mega', 'release'].includes(active.id) && p.y > 2) f.move = this.walker.step(w, { x: anchor.x + arena.platformStair.at[0], z: anchor.z + arena.platformStair.at[1] }, .6, 'descend-stair') ?? f.move;
 
     // Moving targets need room for the rocket to arm before contact. Keep the
     // launcher for distant packs/Mega and the carried shotgun for close defence.

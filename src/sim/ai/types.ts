@@ -40,6 +40,11 @@ export interface InfectedState {
   /** Mega hit bookkeeping is bounded, serializable and shared by every weapon/status. */
   megaStaggerReady?: number;
   megaRocketIds?: number[];
+  /** L10 finale state travels with the one stalker through phase checkpoints. */
+  megaPhase?: 1 | 2 | 3;
+  megaWeakTicks?: number;
+  megaBurnTicks?: number;
+  megaArmourBroken?: boolean;
   /** Courier/companion hit memory, refreshed on damage. Archetype brains pursue the source; vision brains receive one hit-time move. */
   provoked?: { id: number; until: number };
   /** Finite authored pressure for archetypes that do not use the pedestrian brain. */

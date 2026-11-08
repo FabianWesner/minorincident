@@ -8,7 +8,7 @@ import type { SimWorld } from '../world/SimWorld';
 export interface CureEncounterState {
   farmScares?: FarmScareState; toy?: number;
   spawned: Record<string, number>; medkits: Record<string, number>; weapons?: Record<string, number>;
-  released?: string[]; laneOffsets?: Record<string, number>; assaultTicks?: number; assaultWave?: number; nextAssaultAt?: number;
+  released?: string[]; laneOffsets?: Record<string, number>; assaultTicks?: number; assaultWave?: number; nextAssaultAt?: number; lastAssaultAdmission?: number;
 }
 /** Once-only moving hunters; bounded finale waves leave time to clear stairs and cool the gun. */
 export class LevelTenEncounters {
@@ -82,9 +82,17 @@ export class LevelTenEncounters {
         if (!at) continue;
         const id = ai.spawn(slot.archetype, at, { state: 'chase', yaw: Math.PI, cureRegion: group.region });
         this.state.spawned[key] = id;
+        if (assault) this.state.lastAssaultAdmission = clock;
         ai.pursueTarget(id, 1);
         if (assault) break; // Bounded actor setup per director tick.
       }
     }
+  }
+  /** A rage roar requests the next escort wave through the same cap/breather gate. */
+  callWave(): void {
+    const clock = this.state.assaultTicks ?? 0;
+    const earliest = Math.max(clock, (this.state.lastAssaultAdmission ?? -1500) + 1500);
+    this.state.nextAssaultAt = Math.min(this.state.nextAssaultAt ?? earliest, earliest);
+    this.world.events.emit({ type: 'mission.signal', tick: this.world.tick, name: 'mega-escort-called' });
   }
 }

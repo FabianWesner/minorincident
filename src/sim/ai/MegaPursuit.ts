@@ -199,6 +199,11 @@ export class MegaPursuit {
     delete e.noiseTarget; delete b.investigate; b.heardTargetId = 0; b.speed = this.cruiseSpeed;
     if (b.specialAttack) { b.hidden = false; s.mode = 'close'; return false; }
     const mission = this.world.missions, arena = mission?.def.anchors['cure-console'];
+    if (b.megaPhase === 3 && arena && dist(e.transform, arena) > 3 && !Status.stunned(e, tick) && b.grabUntil <= tick && tick >= (b.specialRecoveryUntil ?? 0) && b.state !== 'attack') {
+      b.hidden = false; b.state = 'chase'; s.mode = 'detailed';
+      if (this.grid.steer(e.transform, arena, this.path, this.radius, this.waypoint, 20000)) this.walkTo(e, this.waypoint, false);
+      this.world.spatial.set(e.id, e.transform.x, e.transform.z); return true;
+    }
     if (mission?.state.states['charge-ready'] && arena && dist(player.transform, arena) > finale.fightRadius && dist(e.transform, arena) > finale.fightRadius - 5 && dist(e.transform, arena) < 100 && this.resident(e.transform.x, e.transform.z) && !Status.stunned(e, tick) && b.grabUntil <= tick && (b.specialRecoveryUntil ?? 0) <= tick && b.state !== 'attack' && !e.combat!.attacking) {
       // Once the dispersal device is ready, the final fight belongs to its
       // apron. A courier retreat used to pull the pursuing boss down hundreds

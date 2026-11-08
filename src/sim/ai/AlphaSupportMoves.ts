@@ -1,4 +1,4 @@
-import { humanInfected, infectedSpecialMoves } from '../../data/infected';
+import { humanInfected, infectedSpecialMoves, type InfectedSpecialMove } from '../../data/infected';
 import { alphaTypes } from '../../data/alphaTypes';
 import type { EntitySnapshot } from '../world/types';
 import type { InfectedSystem } from './InfectedSystem';
@@ -10,17 +10,19 @@ export class AlphaSupportMoves {
   private regular(e: EntitySnapshot): boolean { return !!e.infected && this.regularTypes.has(e.archetype); }
   tryStart(e: EntitySnapshot, target: EntitySnapshot): boolean {
     const b = e.infected!, tick = this.ai.world.tick;
-    if (e.archetype !== 'infected.alpha' || b.pursuit || b.specialAttack || tick < b.cooldown || tick < (b.specialRecoveryUntil ?? 0)) return false;
-    const moves = b.alphaType ? alphaTypes[b.alphaType].moves : ['alpha.grab-throw', 'alpha.roar'] as const;
+    const rage = !!b.pursuit && this.ai.world.scenario === 'L10' && b.megaPhase === 2;
+    if (e.archetype !== 'infected.alpha' || b.pursuit && !rage || b.specialAttack || tick < b.cooldown || tick < (b.specialRecoveryUntil ?? 0)) return false;
+    const moves: readonly InfectedSpecialMove[] = rage ? ['alpha.grab-throw', 'alpha.barrage', 'alpha.living-missile', 'alpha.roar'] : b.alphaType ? alphaTypes[b.alphaType].moves : ['alpha.grab-throw', 'alpha.roar'];
     const p = e.transform, t = target.transform, dx = t.x - p.x, dz = t.z - p.z, distance = Math.hypot(dx, dz);
-    if (distance > 25 || !(b.alphaType === 'thrower' ? this.ai.hearing.lineOfSight(e.transform, t) : this.ai.hearing.sees(e, t))) return false;
+    if (distance > (rage ? 35 : 25) || !(rage || b.alphaType === 'thrower' ? this.ai.hearing.lineOfSight(e.transform, t) : this.ai.hearing.sees(e, t))) return false;
     const ready = (move: typeof moves[number]) => moves.includes(move) && tick + infectedSpecialMoves[move].windup >= (b.specialCooldowns?.[move] ?? 0);
     const start = (move: typeof moves[number], radius = 1) => this.ai.startSpecial(e.id, move, { id: target.id, x: t.x, z: t.z }, { x: p.x, z: p.z, radius, dx: dx / (distance || 1), dz: dz / (distance || 1) });
-    if (b.alphaType === 'thrower') {
+    if (rage && ready('alpha.roar') && start('alpha.roar', 25)) return true;
+    if (b.alphaType === 'thrower' || rage) {
       if (distance <= 8 && ready('alpha.barrage') && this.ai.props.nearestLight(e, 2) && start('alpha.barrage')) return true;
       if (distance >= 4 && ready('alpha.living-missile') && this.ai.props.nearestLiving(e, 2) && start('alpha.living-missile')) return true;
     }
-    if (ready('alpha.grab-throw') && this.ai.props.nearestObject(e, 2) && start('alpha.grab-throw')) return true;
+    if (ready('alpha.grab-throw') && this.ai.props.nearestObject(e, rage ? 6 : 2) && start('alpha.grab-throw')) return true;
     // Within melee range the ordinary contact attack takes priority over scavenging.
     if (b.alphaType === 'thrower' && distance > 8) {
       const object = ready('alpha.grab-throw') ? this.ai.props.nearestObject(e, 6) : undefined;
@@ -36,6 +38,7 @@ export class AlphaSupportMoves {
     const a = e.infected!.specialAttack!;
     if (a.stage !== 'active') return;
     if (a.move === 'alpha.roar' || a.move === 'gorilla.roar') {
+      if (e.infected!.pursuit) this.ai.world.l10Encounters?.callWave();
       const screamer = e.infected!.alphaType === 'screamer', radius = a.move === 'gorilla.roar' ? 20 : 18;
       if (screamer) {
         for (const human of this.ai.hearing.humans.within(a.area, 8)) {

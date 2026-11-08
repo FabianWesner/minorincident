@@ -37,6 +37,21 @@ export class LevelTenFinale {
       if (!wasDead && state.states['mega-dead'] && state.states['charge-ready']) this.mission.radio('L10.release');
     }
     if (!console || player.health.current <= 0 || !state.states['cure-installed'] || state.states['cure-released']) return;
+    const mega = boss?.entity();
+    if (mega && mega.health.current > 0) {
+      const brain = mega.infected!, phase = mega.health.current > mega.health.max * .7 ? 1 : mega.health.current > mega.health.max * .35 ? 2 : 3;
+      if (brain.megaPhase !== phase) {
+        world.infected!.cancelSpecial(mega.id);
+        brain.megaPhase = phase;
+        this.mission.requestCheckpoint('cure-disperse-ready');
+        world.events.emit({ type: 'mission.signal', tick: world.tick, name: `mega-phase-${phase}` });
+      }
+      brain.megaWeakTicks = Math.max(0, (brain.megaWeakTicks ?? 0) - 1);
+      if (phase === 2 && mega.combat!.statuses.some(s => s.kind === 'burning')) {
+        brain.megaBurnTicks = Math.min(120, (brain.megaBurnTicks ?? 0) + 1);
+        if (brain.megaBurnTicks === 120) brain.megaArmourBroken = true;
+      }
+    }
     const gate = { x: console.x, z: console.z + 28 }, switchOn = world.entities.get(state.actors['arena-gate-switch'])?.interactable?.completed;
     if (switchOn && !state.states['gate-spent']) {
       if (world.tick % 60 === 0) world.events.emit({ type: 'vfx.effect', tick: world.tick, kind: 'electric', position: gate, radius: 4 });
@@ -62,7 +77,8 @@ export class LevelTenFinale {
       if (state.states['charge-ready'] && !wasReady) {
         // Preserve damage dealt while defending. The checkpoint captures the same stalker's actual state.
         if (state.states['mega-dead']) this.mission.radio('L10.release');
-        this.mission.checkpoint('cure-disperse-ready', console);
+        // Phase-entry checkpoints own the boss state. Death keeps the live
+        // charge counter, so finishing a charge must not overwrite that seam.
       }
     }
     if (state.steps.mega.status === 'active' && boss?.alive()) {
