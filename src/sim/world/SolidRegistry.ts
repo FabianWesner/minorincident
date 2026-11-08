@@ -24,7 +24,7 @@ export function solidLargeCorpse(e: EntitySnapshot): boolean {
 }
 // A courage-hiding pet is invisible and follows without crowd contact; navigation still keeps it outside static walls.
 function actor(e: EntitySnapshot): boolean {
-  return !!(e.survivor || e.infected || e.civilian || e.companion || e.escort) && (e.health.current > 0 && !e.corpse && e.civilian?.state !== 'finished' || solidLargeCorpse(e)) && !e.hidden && e.companion?.state !== 'hide' && !e.infected?.hidden && !e.pendingAdmission && e.passengerOf === undefined;
+  return !!(e.survivor || e.infected || e.civilian || e.companion || e.escort) && (e.health.current > 0 && !e.corpse && e.civilian?.state !== 'finished' || solidLargeCorpse(e)) && !e.hidden && e.companion?.state !== 'hide' && !e.infected?.hidden && !e.pendingAdmission && e.infected?.thrownBy === undefined && e.passengerOf === undefined;
 }
 /** Living members of the courier's group are soft contact for her capsule.
  * Character separation still gives the follower room; physical admission and

@@ -447,7 +447,7 @@ export class InfectedSystem {
     if (this.world.npcs?.civilians.holds(e.id)) { e.combat!.attacking = false; return true; }
     if (e.health.current <= 0) { this.dead(e); return true; }
     if (e.infectionRise && this.world.tick < e.infectionRise.until) { e.combat!.attacking = false; return true; }
-    if (e.attachedTo !== undefined) { e.combat!.attacking = false; return true; }
+    if (e.attachedTo !== undefined || b.thrownBy !== undefined) { e.combat!.attacking = false; return true; }
     if (this.world.missions?.state.states['cure-released']) {
       this.cancelSpecial(e.id); if (b.special === 'pin') this.releasePin(e);
       e.combat!.attacking = false; b.grabUntil = 0; b.state = 'chase';

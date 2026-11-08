@@ -133,6 +133,7 @@ export class L8BossArenas {
       if (distance(e.transform, hunt) > 1.2 && w.tick < hunt.until) { this.walk(e, hunt, hunt.flank ? 7 : 4); return true; }
       delete boss.hunt; this.start(e, hunt.flank ? 'lion.flank' : 'lion.pounce', 36, 10, 1); return true;
     }
+    if (arena.id === 'gorilla' && boss.barrage && !boss.scavengeId) this.scavenge(e);
     if (boss.scavengeId) {
       const object = w.entities.get(boss.scavengeId), prop = w.props?.items.find(p => p.entityId === boss.scavengeId);
       const pose = prop?.body.translation() ?? object?.transform;
@@ -209,7 +210,8 @@ export class L8BossArenas {
     else if (arena.id === 'elephant') this.start(e, distance(e.transform, this.w.entities.get(1)!.transform) < 3 ? 'elephant.swipe' : 'elephant.charge', 54, 24, 1.75);
     else if (arena.id === 'gorilla') {
       const pillar = arena.phase === 2 && arena.cycle % 2 === 0 ? this.w.destruction?.objects.filter(o => o.id.includes('l8-gorilla-pillar') && !o.state.collapsed).sort((a, b) => distance(e.transform, { x: a.home.p[0], z: a.home.p[2] }) - distance(e.transform, { x: b.home.p[0], z: b.home.p[2] }))[0] : undefined;
-      if (pillar) e.infected!.arenaBoss!.smashId = pillar.id;
+      if (distance(e.transform, this.w.entities.get(1)!.transform) < 5 && this.w.infected!.props.nearestObject(e, 25, true)) { e.infected!.arenaBoss!.barrage = 3; this.scavenge(e); }
+      else if (pillar) e.infected!.arenaBoss!.smashId = pillar.id;
       else if (arena.cycle % 3 === 2) this.scavenge(e);
       else this.start(e, arena.cycle % 3 === 1 ? 'gorilla.roar' : 'gorilla.pound', 60, 0, arena.cycle % 3 === 0 ? 5 : 8);
     } else for (const member of live) {
@@ -242,9 +244,9 @@ export class L8BossArenas {
     if (f === 1) { boss.roof = t.roof; e.infected!.perched = t.roof; delete boss.traversal; }
   }
   private scavenge(e: EntitySnapshot): void {
-    const object = this.w.infected!.props.nearestObject(e, 25);
+    const object = this.w.infected!.props.nearestObject(e, 25, (e.infected!.arenaBoss!.barrage ?? 0) > 0);
     if (object) e.infected!.arenaBoss!.scavengeId = object.id;
-    else this.start(e, e.archetype === 'infected.monkey' ? 'monkey.grab' : 'gorilla.pound', 60, 10, e.archetype === 'infected.monkey' ? .8 : 5);
+    else { e.infected!.arenaBoss!.barrage = 0; this.start(e, e.archetype === 'infected.monkey' ? 'monkey.grab' : 'gorilla.pound', 60, 10, e.archetype === 'infected.monkey' ? .8 : 5); }
   }
   private start(e: EntitySnapshot, move: InfectedSpecialMove, windup: number, range: number, radius: number, axis?: { x: number; z: number }): void {
     const w = this.w, p = w.entities.get(1)!, arena = this.state.find(a => a.id === e.infected!.arenaBoss!.arena)!;
@@ -254,6 +256,7 @@ export class L8BossArenas {
     const dx = target.x - e.transform.x, dz = target.z - e.transform.z, d = Math.hypot(dx, dz) || 1;
     const attackId = w.infected!.arenaAttackId();
     const a = e.infected!.specialAttack = { move, attackId, stage: 'telegraph', startTick: w.tick, activeTick: w.tick + windup, cooldownExpiry: w.tick + 420, recoveryUntil: 0, target, area: { x: e.transform.x, z: e.transform.z, radius, dx: axis?.x ?? dx / d, dz: axis?.z ?? dz / d }, hitIds: [], destination: { x: e.transform.x + (axis?.x ?? dx / d) * range, z: e.transform.z + (axis?.z ?? dz / d) * range } };
+    if (move === 'gorilla.grab-throw' || move === 'monkey.debris') w.infected!.props.launchSpecial(e, a, 3, 25, arena.phase === 2 ? 18 : 12, true);
     e.infected!.attackId = attackId; e.infected!.state = 'attack'; e.infected!.until = a.activeTick; e.infected!.grabHits = 0; e.infected!.arenaBoss!.shakeHits = 0; e.combat!.attacking = true;
     e.transform.yaw = -Math.atan2(a.area.dz, a.area.dx) + (move === 'zebra.kick' ? Math.PI : 0); if (e.locomotion) resetResponse(e.locomotion);
     w.events.emit({ type: 'telegraph', tick: w.tick, sourceId: e.id, attackId, move, special: move, duration: windup / 60, startTick: w.tick, activeTick: a.activeTick, cooldownExpiry: a.cooldownExpiry, target, area: a.area });
@@ -261,9 +264,10 @@ export class L8BossArenas {
   private advanceMove(e: EntitySnapshot, arena: L8ArenaState): void {
     const w = this.w, b = e.infected!, a = b.specialAttack!, boss = b.arenaBoss!;
     if (a.stage === 'telegraph') {
+      if (a.projectile) w.infected!.props.holdSpecial(a);
       if (a.move === 'gorilla.roar') boss.exposedUntil = a.activeTick;
       if (w.tick < a.activeTick) return;
-      a.stage = 'active'; w.events.emit({ type: 'infected.special', tick: w.tick, sourceId: e.id, attackId: a.attackId, move: a.move, stage: 'active' });
+      a.stage = 'active'; if (a.projectile) w.events.emit({ type: 'infected.prop-thrown', tick: w.tick, sourceId: e.id, propId: a.projectile.objectId, attackId: a.attackId }); w.events.emit({ type: 'infected.special', tick: w.tick, sourceId: e.id, attackId: a.attackId, move: a.move, stage: 'active' });
     }
     if (a.stage === 'recovery') { if (w.tick >= a.recoveryUntil) { w.events.emit({ type: 'infected.special', tick: w.tick, sourceId: e.id, attackId: a.attackId, move: a.move, stage: 'expiry' }); delete b.specialAttack; b.state = 'chase'; } return; }
     const p = w.entities.get(1)!;
@@ -281,7 +285,7 @@ export class L8BossArenas {
     }
     if (a.move === 'gorilla.grab-throw' || a.move === 'monkey.debris') {
       if (!a.projectile && !w.infected!.props.launchSpecial(e, a, 3, 25, arena.phase === 2 ? 18 : 12)) { this.recover(e, 120); return; }
-      if (w.infected!.props.updateSpecial(e, a)) this.recover(e, 120); return;
+      if (w.infected!.props.updateSpecial(e, a)) { if (boss.barrage) boss.barrage--; this.recover(e, boss.barrage ? 48 : 120); } return;
     }
     const range = distance(a.area, a.destination!), travelled = distance(e.transform, a.area);
     const speed = arena.id === 'elephant' ? 14 : arena.id === 'zebra' ? 15 : arena.id === 'flamingo' ? arena.phase === 2 ? 21 : 17 : 12;

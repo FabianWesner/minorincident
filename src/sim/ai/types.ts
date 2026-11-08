@@ -3,7 +3,8 @@ import type { InfectedSpecialMove } from '../../data/infected';
 /** Serializable AI and crowd animation intent; all timers are fixed sim ticks. */
 export interface InfectedState {
   /** L8 arena ownership and punish window; copied with the actor on retries. */
-  arenaBoss?: { arena: import('../../data/l8Bosses').L8BossId; slot: number; engaged: boolean; exposedUntil: number; readyAt: number; scattered?: boolean; shakeHits?: number; scavengeId?: number; smashId?: string; roof?: boolean; leaderEntered?: boolean; hunt?: { x: number; z: number; until: number; flank: boolean }; traversal?: { start: number; from: { x: number; y: number; z: number }; to: { x: number; y: number; z: number }; roof: boolean } };
+  thrownBy?: number;
+  arenaBoss?: { arena: import('../../data/l8Bosses').L8BossId; slot: number; engaged: boolean; exposedUntil: number; readyAt: number; scattered?: boolean; shakeHits?: number; scavengeId?: number; smashId?: string; roof?: boolean; leaderEntered?: boolean; barrage?: number; hunt?: { x: number; z: number; until: number; flank: boolean }; traversal?: { start: number; from: { x: number; y: number; z: number }; to: { x: number; y: number; z: number }; roof: boolean } };
   arenaCarrier?: number;
   /** L10 authored regular Alpha ownership, serialized with the entity. */
   cureRegion?: import('../../levels/L10/alphaContracts').CureRegion;
@@ -78,5 +79,5 @@ export interface InfectedSpecialAttack {
   members?: number[]; leaderId?: number; impactTick?: number; obstructionUntil?: number;
   grabbedId?: number; grabReleaseTick?: number;
   destination?: { x: number; z: number };
-  projectile?: { objectId: number; corpse: boolean; started: number; x: number; z: number; dx: number; dz: number; distance: number; range: number; speed?: number; fromY?: number; toY?: number };
+  projectile?: { objectId: number; corpse: boolean; living?: boolean; started: number; x: number; z: number; dx: number; dz: number; distance: number; range: number; speed?: number; fromY?: number; toY?: number };
 }
