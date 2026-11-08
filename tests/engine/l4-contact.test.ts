@@ -3,6 +3,7 @@ import { emptyInput } from '../../src/input/InputFrame';
 import { Box3, PerspectiveCamera, Vector3 } from 'three/webgpu';
 import { ColliderDesc, Ray, ShapeType } from '@dimforge/rapier3d-compat';
 import { l4InfectedArchetypes } from '../../src/data/l4';
+import { l4BreachSite } from '../../src/data/l4Perimeter';
 import { infectedDef } from '../../src/data/infected';
 import { barEligible, followerBarsAlwaysMax, followerPipSize, HealthBars } from '../../src/render/HealthBars';
 import { pickBodies } from '../../src/render/characters/PickBodies';
@@ -332,6 +333,17 @@ test('L4: every contact archetype interrupts approach/lure and attacks within 3 
           expect(orders.mock.calls.some(call => call[0] === alpha.id && (call[1] === 'alpha.charge' || call[1] === 'alpha.ground-slam')), alphaType).toBe(false);
           ai.release(alpha);
         }
+        const site = l4BreachSite('west');
+        const alpha = world.entities.get(ai.spawn('infected.alpha', site.stage, { alphaType: 'brute' }))!;
+        Object.assign(alpha.transform, site.stage);
+        state.alphaIds = [alpha.id]; state.director.alphaJobs = [{ alphaId: alpha.id, job: 'west', breach: 'west', stage: 'charge', startedAt: world.tick }];
+        const visible = vi.spyOn(ai.director, 'inPlayerView').mockReturnValue(false);
+        try {
+          controller.alphaJobs();
+          const approach = alpha.infected!.scripted;
+          expect(approach, 'offscreen Brute approaches the wire instead of retrying a hidden windup').toBeDefined();
+          expect(Math.hypot(approach!.x - site.centre.x, approach!.z - site.centre.z)).toBeLessThan(3);
+        } finally { visible.mockRestore(); ai.release(alpha); }
       } finally { state.alphaIds = savedIds; state.director.alphaJobs = savedJobs; orders.mockRestore(); pressure.mockRestore(); }
     }
     for (const actor of world.entities.iterate()) if (actor.companion) actor.hidden = true;

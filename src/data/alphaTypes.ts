@@ -27,7 +27,5 @@ const levelMix: Readonly<Record<string, readonly AlphaType[]>> = {
 export function alphaTypeFor(level: string | undefined, entityId: number): AlphaType {
   const mix = levelMix[level ?? ''];
   if (!mix) return 'brute';
-  let hash = (entityId + 1) | 0;
-  hash ^= hash >>> 16; hash = Math.imul(hash, 0x7feb352d); hash ^= hash >>> 15;
-  return mix[(hash >>> 0) % mix.length]!;
+  return mix[(entityId >>> 0) % mix.length]!;
 }

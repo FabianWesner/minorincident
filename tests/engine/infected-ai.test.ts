@@ -30,6 +30,8 @@ async function alphaTypeContracts() {
   const firstWorld = worlds.length;
   try {
     expect(alphaTypeFor('L1', 18)).toBe('brute'); expect(alphaTypeFor('L2', 18)).toBe('brute');
+    expect(alphaTypeFor('L5', 92)).not.toBe(alphaTypeFor('L5', 99));
+    expect([75, 76, 137, 173].map(id => alphaTypeFor('L7', id))).toEqual(expect.arrayContaining(['brute', 'thrower', 'screamer']));
     for (const level of ['L3', 'L4', 'L5', 'L6', 'L7', 'L9', 'L10']) {
       const present = new Set(Array.from({ length: 80 }, (_, id) => alphaTypeFor(level, id)));
       expect(present.size, level).toBeGreaterThan(1);
@@ -167,10 +169,19 @@ async function alphaTypeContracts() {
     }
     {
       const effectWorld = await arena(1, false), player = effectWorld.entities.get(1)!;
+      const civilian = effectWorld.entities.get(effectWorld.npcs!.civilians.spawn('civilian', { x: 1, z: 2 }))!;
+      civilian.combat!.staggerUntil = effectWorld.tick + 60;
       const screamer = effectWorld.entities.get(effectWorld.infected!.spawn('infected.alpha', { x: 4, z: 0 }, { alphaType: 'screamer', state: 'chase' }))!;
       expect(effectWorld.infected!.startSpecial(screamer.id, 'alpha.roar', { id: 1, x: 0, z: 0 }, { x: 4, z: 0, radius: 8, dx: -1, dz: 0 })).toBe(true);
       step(effectWorld, 60);
       expect(player.combat!.statuses.some(status => status.kind === 'stunned' && status.expires > effectWorld.tick)).toBe(true);
+      expect(civilian.combat!.staggerUntil).toBe(effectWorld.tick + 60);
+      const position = { ...civilian.transform };
+      step(effectWorld, 30);
+      expect(civilian.transform.x).toBeCloseTo(position.x, 6);
+      expect(civilian.transform.z).toBeCloseTo(position.z, 6);
+      player.combat!.staggerUntil = effectWorld.tick;
+      player.combat!.statuses.length = 0;
       const brute = effectWorld.entities.get(effectWorld.infected!.spawn('infected.alpha', { x: 8, z: 0 }, { alphaType: 'brute', state: 'chase' }))!;
       expect(effectWorld.infected!.startSpecial(brute.id, 'alpha.ground-slam', { id: 1, x: 0, z: 0 }, { x: 8, z: 0, radius: 4, dx: -1, dz: 0 })).toBe(true);
       step(effectWorld, 61); expect(brute.infected!.specialAttack?.stage).toBe('recovery');

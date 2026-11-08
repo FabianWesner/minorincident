@@ -249,9 +249,13 @@ export class L4Collapse {
       // The wall first (PO 10-23 "so Zombies or alphas can tear them down"): announced, it runs up from outside the breach site and
       // charges the wire again and again (300 per contacted charge, E26 HP) until a segment falls; then its job goes on through the gap.
       if (job.breach && !this.h.breachOpen(job.breach) && !this.inside(e.transform)) {
-        const site = l4BreachSite(job.breach), out = l4Breaches[job.breach].out, stage = this.h.snap(site.stage, .55);
+        const site = l4BreachSite(job.breach), out = l4Breaches[job.breach].out;
+        // A special needs a visible windup. Approach the wire when the old
+        // run-up point is offscreen instead of retrying there indefinitely.
+        const stage = this.h.snap(ai.director.inPlayerView(site.stage, 32) ? site.stage
+          : { x: site.centre.x + out.x * 1.2, z: site.centre.z + out.z * 1.2 }, .55);
         this.h.announceBreach(job.breach, e.id);
-        if (b.alphaType && b.alphaType !== 'brute') {
+        if ((b.alphaType && b.alphaType !== 'brute') || !ai.director.inPlayerView(e.transform, 32)) {
           const segment = this.h.breachSegments(job.breach).find(seg => world.barricades!.withinReach(e, seg));
           if (segment) { delete b.scripted; ai.attackObstacle(e.id, segment.id); }
           else b.scripted = this.h.snap({ x: site.centre.x + out.x * 1.2, z: site.centre.z + out.z * 1.2 }, .55);

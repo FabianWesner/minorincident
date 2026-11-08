@@ -40,8 +40,11 @@ export class AlphaSupportMoves {
       if (screamer) {
         for (const human of this.ai.hearing.humans.within(a.area, 8)) {
           const target = this.ai.world.entities.get(human.id);
-          if (target && !target.companion && !target.escort?.child && target.health.current > 0 && this.ai.hearing.lineOfSight(e.transform, target.transform))
+          if (target && !target.companion && !target.escort?.child && target.health.current > 0 && this.ai.hearing.lineOfSight(e.transform, target.transform)) {
             this.ai.world.combat!.status.apply(target, { kind: 'stunned', duration: 1, maxStacks: 1, dps: 0, slow: 0 }, e.id, 'infected.alpha.roar', a.attackId);
+            // NPC locomotion uses the shared stagger clock to stop its body.
+            if (target.combat) target.combat.staggerUntil = Math.max(target.combat.staggerUntil, this.ai.world.tick + 60);
+          }
         }
       }
       let called = 0;
