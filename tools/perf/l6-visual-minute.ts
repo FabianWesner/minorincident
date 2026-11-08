@@ -1,23 +1,27 @@
 /** Native Metal real-clock minute per tier; admission belongs to quiet-run.sh. */
 import assert from 'node:assert/strict';
-import { mkdirSync, writeFileSync } from 'node:fs';
-import { gzipSync } from 'node:zlib';
+import { mkdirSync, writeFileSync, createWriteStream } from 'node:fs';
+import { gzipSync, createGzip } from 'node:zlib';
+import { once } from 'node:events';
 import { loadavg } from 'node:os';
 import { preset } from '../../src/sim/progression/Campaign';
 import type { Game } from '../../src/Game';
+import { launchBrowser } from '../browser-pool/client';
 import { SceneSession, stopServer } from '../scenelab/session';
 import { provenance } from '../qa/accept/probe';
 assert.equal(process.env.MI_PERF_LOCK_HELD, '1', 'Run through tools/perf/quiet-run.sh');
 assert.ok(loadavg()[0] < 4, 'The requested 1-minute load must be below4 at admission');
-const out = 'test-results/l6-visual/perf'; mkdirSync(out, { recursive: true });
+const out = process.env.L6_PERF_OUT ?? 'test-results/l6-visual/perf'; mkdirSync(out, { recursive: true });
 const rows = [];
+const browser = process.env.L6_PERF_COLD ? await launchBrowser({ headless: true, args: ['--use-angle=metal', '--enable-gpu', '--enable-unsafe-webgpu', '--ignore-gpu-blocklist', '--disable-gpu-shader-disk-cache', `--disk-cache-dir=${process.cwd()}/${out}/cold-browser-cache`] }) : undefined;
 try {
   for (const tier of ['low', 'high'] as const) {
+    if (process.env.L6_PERF_TIER && process.env.L6_PERF_TIER !== tier) continue;
     const admissionLoad = loadavg();
     assert.ok(admissionLoad[0] < 4, `${tier}: shared host lost quiet admission`);
     const session = new SceneSession({ backend: 'webgpu', tier, viewport: { width: 1280, height: 720 }, query: { ui: '1', loadProfile: '2' } });
     try {
-      await session.open();
+      await session.open(browser);
       await session.page.addInitScript(`globalThis.__name = fn => fn; (() => {
         const request = navigator.gpu.requestAdapter;
         navigator.gpu.requestAdapter = function(...args) { return request.apply(this,args).then(adapter => {
@@ -34,6 +38,10 @@ try {
         a.pause(); a.setTimeScale(1); a.camera.follow(); a.camera.zoom(1.5); a.cheats.god(false); a.input.clear();
       }, { tier, save });
       const cdp = await session.page.context().newCDPSession(session.page);
+      if (process.env.L6_PERF_TRACE) {
+        const { categories } = await cdp.send('Tracing.getCategories');
+        await cdp.send('Tracing.start', { categories: ['toplevel', 'devtools.timeline', 'cc', 'blink.user_timing', 'v8', ...categories.filter(name => /gpu|dawn/i.test(name))].join(','), transferMode: 'ReturnAsStream' });
+      }
       await cdp.send('Profiler.enable'); await cdp.send('Profiler.setSamplingInterval', { interval: 1000 });
       const performanceStartedAt = await session.page.evaluate(() => performance.now()); await cdp.send('Profiler.start');
       await session.page.evaluate(() => {
@@ -71,16 +79,24 @@ try {
         const a = window.__SS__!, p = (window as unknown as { l6Minute: { start: number; done: boolean; frames: unknown[]; builds: unknown[]; longTasks: unknown[]; stop(): void } }).l6Minute;
         p.done = true; a.pause(); a.bot.stop(); p.stop();
         return { adapter: (window as unknown as { __l6Adapter: { architecture: string; fallback: boolean } }).__l6Adapter, start: p.start, elapsedMs: performance.now() - p.start, frames: p.frames, builds: p.builds, longTasks: p.longTasks,
-          resources: performance.getEntriesByType('resource').filter(e => e.startTime >= p.start).map(e => e.toJSON()), god: (window.__SCENE__ as unknown as { game: Game }).game.world.combat!.damage.god, backend: a.perf().backend, quality: a.getState().render.quality, mission: a.missions.state(), events: a.events(0), loadTiming: a.perf().loadTiming };
+          resources: performance.getEntriesByType('resource').map(e => e.toJSON()), god: (window.__SCENE__ as unknown as { game: Game }).game.world.combat!.damage.god, backend: a.perf().backend, quality: a.getState().render.quality, mission: a.missions.state(), events: a.events(0), loadTiming: a.perf().loadTiming };
       });
-      const profile = (await cdp.send('Profiler.stop')).profile; await cdp.detach();
+      const profile = (await cdp.send('Profiler.stop')).profile;
+      if (process.env.L6_PERF_TRACE) {
+        const completed = new Promise<{ stream?: string }>(resolve => cdp.once('Tracing.tracingComplete', resolve));
+        await cdp.send('Tracing.end'); const { stream } = await completed; assert.ok(stream, 'Chrome returned no trace stream'); const compressed = createGzip(), file = createWriteStream(`${out}/${tier}.trace.json.gz`); compressed.pipe(file);
+        for (;;) { const part = await cdp.send('IO.read', { handle: stream }); if (!compressed.write(part.data)) await once(compressed, 'drain'); if (part.eof) break; }
+        await cdp.send('IO.close', { handle: stream });
+        compressed.end(); await once(file, 'finish');
+      }
+      await cdp.detach();
       writeFileSync(`${out}/${tier}.cpuprofile.json.gz`, gzipSync(JSON.stringify({ ...profile, performanceStartedAt })));
       await session.page.screenshot({ path: `${out}/${tier}-end.png` });
-      rows.push({ tier, admissionLoad, finalLoad: loadavg(), inputPolicy: 'complete', hostLoads, ...result, errors: session.errors });
-      writeFileSync(`${out}/receipt.json`, JSON.stringify({ ...provenance(), method: 'Headless native Metal WebGPU, production preview, quiet-run admission, normal RAF clock for60s per tier. Ordinary mortal complete policy through the existing gameplay bot, with normal RAF input processing. No actor reposition, manual stepping or combat/stat changes during timing. Main-thread1ms CPU samples, native frame/sim/update/render/system costs, actual material builds, long tasks and resource timings retained for attribution.', rows }, null, 2) + '\n');
+      rows.push({ tier, coldCacheRequested: !!process.env.L6_PERF_COLD, admissionLoad, finalLoad: loadavg(), inputPolicy: 'complete', hostLoads, ...result, errors: session.errors });
+      writeFileSync(`${out}/receipt.json`, JSON.stringify({ ...provenance(), method: 'Headless native Metal WebGPU, production preview, quiet-run admission, normal RAF clock for60s per tier. Ordinary mortal complete policy through the existing gameplay bot, with normal RAF input processing. No actor reposition, manual stepping or combat/stat changes during timing. Main-thread1ms CPU samples, native frame/sim/update/render/system costs, node-builder notifications (not total compiler durations), long tasks and all resource timings retained for attribution. Optional cold-cache mode disables GPU shader disk cache and uses a new browser disk-cache directory; platform driver caches remain shared.', rows }, null, 2) + '\n');
       const frames = result.frames as { ms: number; phase: string | undefined }[];
       console.log(JSON.stringify({ tier, elapsedMs: result.elapsedMs, frames: frames.length, maxMs: Math.max(...frames.map(f => f.ms)), over100: frames.filter(f => f.ms > 100).length, builds: result.builds, errors: session.errors }));
       assert.match(result.adapter.architecture, /^metal-/); assert.equal(result.adapter.fallback, false); assert.equal(result.backend, 'webgpu'); assert.equal(result.quality, tier); assert.ok(result.elapsedMs >= 60_000 && frames.length > 1000); assert.deepEqual(session.errors, []); assert.equal(result.god, false); assert.equal(result.mission?.phase, 'playing'); assert.equal(result.mission?.stats.deaths, 0); assert.ok(frames.every(f => f.phase === 'playing'), 'Both minutes must remain active gameplay');
     } finally { await session.close(); }
   }
-} finally { stopServer(); }
+} finally { await browser?.close(); stopServer(); }

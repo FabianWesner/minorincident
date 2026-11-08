@@ -64,5 +64,16 @@
       "before": "non-eye0.30215554 > eye0.26155986; missing per-instance threat attribute",
       "after": "all16 cells eye0.23187807 > non-eye maximum0.04726314; healthy/infected instance flags0/1"
     }
-  ]
+  ],
+  "traceProbeChecks": {
+    "commands": [
+      "npm run typecheck",
+      "npm run lint"
+    ],
+    "exitCodes": [
+      0,
+      0
+    ],
+    "reason": "Trace streaming export, optional trace/cold-cache diagnostics, all resource timings; product source unchanged."
+  }
 }

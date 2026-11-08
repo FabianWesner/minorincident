@@ -1,6 +1,6 @@
 # L6 visual/browser review — 2026-11-08
 
-**L6: 14 PASS, 0 failing rows, 0 incomplete rows after all three fixes. The final E24 gate passed; quiet performance timing remains to finish.** This is L6 acceptance closure, not a campaign UAT GO: the generated global report retains independent failures and unmeasured coverage. No push or deployment.
+**L6: 14 PASS, 0 failing rows, 0 incomplete rows after all three fixes. The final E24 gate passed. Performance remains open: the valid low-tier minute has five frames over100ms; the high-tier minute has none.** This is L6 acceptance closure, not a campaign UAT GO: the generated global report retains independent failures and unmeasured coverage. No push or deployment.
 
 ## Fixes
 
@@ -9,6 +9,14 @@
 - `4874fa1b` — both regressions extend existing test families. They were demonstrated red before/green after; the registered suite remains within the150-case/45-file budget. Focused files:15 tests PASS.
 
 - `3d213be3` — separate instanced infected headwear did not receive the body’s underground highlight limit. A complete actor mask measured headwear0.3022 versus eyes0.2616. Headwear now inherits the existing rule per instance; healthy civilians retain their original shading. The same fixture measures non-eye0.0473 versus eyes0.2319; the existing headwear contract is red before/green after.
+
+### Headwear counterexample
+
+Native actor crops enlarged8× for inspection; luminance values come from the original lossless PNGs, not these resized illustrations.
+
+| Before: headwear0.3022 > eyes0.2616 | After: non-eye0.0473 < eyes0.2319 |
+|---|---|
+| ![Bright headwear before the fix](eye-before-crop.png) | ![Existing infected shading applied to headwear](eye-after-crop.png) |
 
 ## Fresh evidence and review
 
@@ -53,6 +61,15 @@ Capture tools accept `L6_VISUAL_BACKEND=webgl2|webgpu`, `L6_VISUAL_ZOOM=1|1.5`, 
 
 ## Validation and real-clock performance
 
-Focused regression files15 tests PASS; the extended headwear contract is red before/green after. `VITEST_MAX_WORKERS=2 npm run verify -- E24` passed against the frozen evidence: typecheck13.357s, lint9.398s, all107 default unit tests/27 files45.480s including collection;150 registered cases/43 files stay within budget. The final measurement-observer change also passed typecheck and lint. [Validation](validation.json). Remote attempts were excluded: a queued file manifest predated newly created tooling; the refreshed remote copy had no Git HEAD and a simulation test exceeded its30s timeout. Final local results will be recorded here when terminal.
+Focused regression files15 tests PASS; the extended headwear contract is red before/green after. `VITEST_MAX_WORKERS=2 npm run verify -- E24` passed against the frozen evidence: typecheck13.357s, lint9.398s, all107 default unit tests/27 files45.480s including collection;150 registered cases/43 files stay within budget. The final measurement-observer change also passed typecheck and lint. [Validation](validation.json). Remote attempts were excluded: a queued file manifest predated newly created tooling; the refreshed remote copy had no Git HEAD and a simulation test exceeded its30s timeout. The final local gate is terminal and passed.
 
-A final-source native Mac WebGPU preview probe is waiting through `tools/perf/quiet-run.sh`, private port4879, with a20-minute total admission cap. The wrapper requires load<3, stricter than the requested<4, and excludes other test/build/headless work. The probe uses the existing ordinary mortal complete bot, normal RAF input processing,60s per tier, CPU profiles, frame/system costs, material builds and long tasks. It asserts god mode off, no deaths, and active gameplay throughout. The inherited load≈21 hitches remain diagnostic only. An earlier pre-headwear attempt was admitted but failed before timing because the browser callback lacked the tsx naming helper; it produced no qualifying minute. This has been fixed. No final-source performance claim is made until the fresh quiet window is terminal.
+The final-source native Mac WebGPU preview probe completed through `tools/perf/quiet-run.sh`, private port4879, after admission within the20-minute cap. Admission required load<3 and no competing test/build/headless work. Both minutes used the existing ordinary mortal complete bot, normal RAF input processing, time scale1, no actor repositioning, god mode off, no deaths, and active gameplay throughout. Native adapter: Metal3, fallback false.
+
+| Tier | Real elapsed | Frames | Maximum | Frames>100ms | Admission load1 | Highest sampled load1 |
+|---|---:|---:|---:|---:|---:|---:|
+| Low |60007.9ms|3547|350ms|5|2.864|3.848|
+| High |60031.6ms|3598|50ms|0|3.563|4.319|
+
+Low gaps occur at elapsed415.2,648.5,33413.9,33613.9,37980.4ms, lasting350,183.3,116.7,116.7,150ms respectively. Main-thread CPU samples are predominantly idle during every gap; there are no matching long tasks or node-builder notifications. Two gaps coincide with resource/transcoder requests. This does **not** prove a streaming, GPU or host cause; attribution and a demonstrated correction remain outstanding. Recorded node-builder `ms:0` values are not total compiler durations. The initial observer omitted requests begun before the timing window, so in-flight completions are not covered there. High admission was below4, but its sampled host load subsequently reached4.319; low remained below4 throughout.
+
+[Performance analysis](performance/analysis.json), [raw minute receipts](performance/receipt.json.gz), [low CPU profile](performance/low.cpuprofile.json.gz), [high CPU profile](performance/high.cpuprofile.json.gz). The inherited load≈21 hitches are diagnostic only. The earlier pre-headwear attempt failed before timing and supplies no qualifying minute. A subsequent Chrome trace exceeded the JavaScript string limit while saving; the probe now streams compressed trace output and retains all resource timings. Diagnostic trace work is still in progress. **This is a measured low-tier performance failure, not “perf pending” due to lack of quiet admission.**
