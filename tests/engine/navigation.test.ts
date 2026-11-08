@@ -104,7 +104,9 @@ test('A*: budgeted search resumes across ticks within its expansion budget; conn
   {
     const w = await loadLevel('L2', 1, undefined, 0, { quality: 'low' }); worlds.push(w);
     const nav = w.infected!.nav, path: number[] = [], from = nav.cell(5.25, -26.75), goal = nav.nearestCell(10, -30);
-    const proxy = new NavGrid(nav.ground, nav.walls.map(wall => ({ ...wall, navFootprint: undefined })), .5, nav.center, nav.mask);
+    // Parked cars are now sleeping props; include their live blockers in the
+    // old AABB proxy so this still proves the reviewed pickup OBB is needed.
+    const proxy = new NavGrid(nav.ground, [...nav.walls, ...w.props!.navWalls.values()].map(wall => ({ ...wall, navFootprint: undefined })), .5, nav.center, nav.mask);
     expect(proxy.path(from, goal, path, Infinity), 'pickup proxy created an eight-cell island').toBe(false);
     expect(nav.path(from, goal, path, Infinity), 'reviewed pickup footprint connects the island to the street').toBe(true);
   }

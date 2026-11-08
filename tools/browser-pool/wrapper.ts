@@ -7,7 +7,9 @@ import { ensurePool } from './ensure';
 const quiet = process.argv[2] === 'exclusive';
 const command = process.argv.slice(3);
 const migrated = command.some(arg => /(?:^|\/)(?:playwright|cli[.]js)$/.test(arg) || arg.endsWith('.ts') && (() => { try { return /(?:SceneSession|launchBrowser|launchProfile)/.test(readFileSync(arg, 'utf8')); } catch { return false; } })());
-const exclusive = quiet || !migrated;
+// Functional checks can reserve one pooled browser without FPS-measurement
+// preconditions. Start their batch budget after admission, not while queued.
+const exclusive = quiet || process.argv[2] === 'serial' || !migrated;
 const capSeconds = Number(process.env.E2E_RESERVATION_SECONDS ?? 600);
 if (!Number.isInteger(capSeconds) || capSeconds < 1 || capSeconds > 600) {
   console.error('Browser reservations must be 1–600 seconds; split batches longer than 10 minutes.'); process.exit(2);
