@@ -35,6 +35,7 @@ export interface SessionOptions {
   entry: 'new' | 'continue' | 'debug'; profile: string; levelMinutes: number; stopAfterLevel: boolean; tag: string; noSkip?: boolean;
   /** Bounded diagnostic sample; finish without skipping an objective when time expires. */
   sampleSeconds?: number;
+  viewport?: { width: number; height: number };
   /** At a bounded L10 batch boundary, use paused Settings to save the live production Resume snapshot. */
   saveOnYield?: boolean;
   /** Authored road selected by a logged map assist; all driving stays WASD. */
@@ -66,7 +67,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   if (cueAudio) args.push('--mute-audio'); // Keep real cue scheduling while silencing the host's speakers.
   const webgpu = process.env.PLAYTEST_BACKEND === 'webgpu';
   if (webgpu) args.push('--enable-unsafe-webgpu');
-  const context = await launchProfile(resolve(o.profile), { headless: true, args, viewport: { width: 1280, height: 720 }, deviceScaleFactor: 1 });
+  const context = await launchProfile(resolve(o.profile), { headless: true, args, viewport: o.viewport ?? { width: 1280, height: 720 }, deviceScaleFactor: 1 });
   const page = context.pages()[0] ?? await context.newPage();
   let pageClosed = false;
   let pageCrashed = false;
@@ -77,27 +78,54 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   const noFrameTiming = process.env.PLAYTEST_NO_FRAME_TIMING === '1';
   if (noFrameTiming && (process.env.PLAYTEST_FRAME_GATE === '1' || process.env.PLAYTEST_CPU_PROFILE === '1')) throw new Error('PLAYTEST_NO_FRAME_TIMING conflicts with frame/CPU profiling');
   await page.addInitScript(noFrameTiming ? 'window.__name = f => f; window.__playtestFrames = [];' : `window.__name = f => f; (${installFrameProbe.toString()})(${frameInterval.toString()});`);
+  if (process.env.QA_BROWSER_ROUTE_AUDIT === '1') await page.addInitScript(() => {
+    const scope = window as unknown as { __qaBrowserRoutes: { level: string; events: unknown[]; samples: unknown[] }[] };
+    scope.__qaBrowserRoutes = []; let bound: Game['world']['missions'];
+    const bind = () => {
+      requestAnimationFrame(bind);
+      const w = (window.__SCENE__ as unknown as { game?: Game })?.game?.world, m = w?.missions;
+      if (!w || !m || m === bound) return; bound = m;
+      const row = { level: m.def.id, events: [] as unknown[], samples: [] as unknown[] }; scope.__qaBrowserRoutes.push(row);
+      const actor = (id?: number) => { const e = id === undefined ? null : w.entities.get(id); return e ? { id: e.id, kind: e.kind, archetype: e.archetype, hp: e.health.current, max: e.health.max, at: { ...e.transform }, hidden: !!e.hidden } : null; };
+      for (const name of ['combat.attack', 'combat.hit', 'combat.kill', 'combat.empty', 'player.died', 'telegraph', 'civilian.grabbed', 'infected.attack', 'checkpoint.restored'] as const) w.events.on(name, event => {
+        if (w.missions !== m) return;
+        const e = event as unknown as { sourceId?: number; targetId?: number; target?: { id?: number } };
+        row.events.push({ ...event, source: actor(e.sourceId), victim: actor(e.targetId ?? e.target?.id), courier: actor(1) });
+      });
+      w.events.on('sim.tick', () => {
+        if (w.missions !== m || w.tick % 60) return;
+        const roster = w.l7Encounters?.state.roster;
+        row.samples.push({ tick: w.tick, phase: m.state.phase, checkpoint: m.state.checkpoint, active: Object.keys(m.state.steps).filter(id => m.state.steps[id].status === 'active'), player: actor(1), stats: { ...m.state.stats }, roster: roster?.map(r => ({ status: r.status, actor: actor(r.id) })), boarded: w.l7Departure?.state.boarded, gun: w.mountedGun && { mounted: w.mountedGun.mounted, heat: w.mountedGun.heat }, charge: m.state.counters['charge-ticks'] });
+      });
+    }; requestAnimationFrame(bind);
+  });
   if (process.env.PLAYTEST_L6_RAIL_CAPTURES === '1') await page.addInitScript(() => {
-    const scope = window as unknown as { __qaL6Audit: unknown[]; __qaL6Photo: { stage: string } | null };
+    const scope = window as unknown as { __qaL6Audit: unknown[]; __qaL6Frames: unknown[]; __qaL6Photo: { stage: string } | null };
     scope.__qaL6Audit = []; scope.__qaL6Photo = null;
-    const seen = new Set<string>(); let nightAt = 0, spawnCount = 0;
+    scope.__qaL6Frames = [];
+    const seen = new Set<string>(); let nightAt = 0, spawnCount = 0, deaths = 0, frameTick = -1;
     const observe = () => {
       const g = (window.__SCENE__ as unknown as { game?: Game })?.game, w = g?.world, m = w?.missions?.state, s = m?.l6;
       if (w?.scenario === 'L6' && s && !scope.__qaL6Photo) {
-        const people = s.survivors.map(r => { const e = w.entities.get(r.id)!; return { id: r.id, status: r.status, hidden: !!e.hidden, hp: e.health.current, ...e.transform }; });
+        if (m && m.stats.deaths !== deaths) { deaths = m.stats.deaths; nightAt = 0; for (const key of ['safe', 'last-crossed', 'street-clear', 'night', 'night-middle']) seen.delete(key); }
+        const figures = new Map(window.__SS__!.crowdFigures().map(f => [f.id, f.drawn]));
+        const people = s.survivors.map(r => { const e = w.entities.get(r.id)!; return { id: r.id, status: r.status, hidden: !!e.hidden, drawn: !!figures.get(r.id), hp: e.health.current, ...e.transform }; });
         const out = people.filter(r => r.status === 'out'), live = people.filter(r => !['out', 'dead', 'turned'].includes(r.status));
         const player = w.entities.get(1)!.transform, spawns = s.spawnLog.filter(q => q.wave === 3);
         if (spawns.length !== spawnCount) { scope.__qaL6Audit.push({ kind: 'cohort', tick: w.tick, player: { ...player }, people, spawns: spawns.slice(spawnCount) }); spawnCount = spawns.length; }
+        if (out.length && (w.tick !== frameTick || m?.phase === 'cinematic' || m?.phase === 'result') && scope.__qaL6Frames.length < 20000) { scope.__qaL6Frames.push({ tick: w.tick, phase: m?.phase, cinematicElapsed: m?.cinematic?.elapsed, caption: m?.subtitle?.text, player: { ...player }, out, gateAt: s.gateAt }); frameTick = w.tick; }
         if (m?.phase === 'cinematic') nightAt ||= w.tick;
+        const cohort = spawns.find(row => !seen.has(`cohort-visible-${row.tick}`) && figures.get(row.id) && (w.entities.get(row.id)?.health.current ?? 0) > 0 && Math.hypot((w.entities.get(row.id)?.transform.x ?? Infinity) - player.x, (w.entities.get(row.id)?.transform.z ?? Infinity) - player.z) < 18);
         const stage = out.length && !seen.has('safe') ? 'safe'
           : out.length && !live.length && !seen.has('last-crossed') ? 'last-crossed'
           : out.length && !live.length && out.every(r => r.x >= 266) && !seen.has('street-clear') ? 'street-clear'
           : m?.phase === 'cinematic' && !seen.has('night') ? 'night'
-          : nightAt && w.tick - nightAt >= 180 && m?.phase === 'cinematic' && !seen.has('night-middle') ? 'night-middle'
+          : m?.phase === 'cinematic' && ((m.cinematic?.elapsed ?? 0) >= 180 || nightAt && w.tick - nightAt >= 180) && !seen.has('night-middle') ? 'night-middle'
+          : cohort ? `cohort-visible-${cohort.tick}`
           : player.x >= 108 && player.x <= 112 && !seen.has('rail-110') ? 'rail-110' : null;
-        if (stage) {
-          seen.add(stage); scope.__qaL6Audit.push({ kind: stage, tick: w.tick, phase: m?.phase, caption: m?.subtitle?.text, player: { ...player }, people, gateAt: s.gateAt });
-          scope.__qaL6Photo = { stage }; window.__SS__!.pause();
+        if (stage && w.entities.get(1)!.health.current > 0) {
+          seen.add(stage); scope.__qaL6Audit.push({ kind: stage, tick: w.tick, phase: m?.phase, cinematicElapsed: m?.cinematic?.elapsed, caption: m?.subtitle?.text, player: { ...player }, people, threats: spawns.map(row => { const e=w.entities.get(row.id); return { ...row, at:e&&{...e.transform},hp:e?.health.current,drawn:!!figures.get(row.id),state:e?.infected?.state }; }), gateAt: s.gateAt });
+          scope.__qaL6Photo = { stage: `${stage}-attempt-${deaths}` }; window.__SS__!.pause();
         }
       }
       requestAnimationFrame(observe);
@@ -210,6 +238,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   const l6RailCaptures = new Set<string>();
   const l6ShieldPhotos = new Set<number>();
   const l7DeparturePhotos = new Set<number>();
+  const l7RoutePhotos = new Set<string>();
   let l6GatePhoto = false;
   let l5GuardStarted = false, l5GuardDone = false, l5MetroPhoto = false;
   let l6DeathExercise = process.env.PLAYTEST_L6_DIE_ONCE === '1';
@@ -220,6 +249,21 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   const l6GroupMemory: { rear: { x: number; z: number; tick: number } | null } = { rear: null };
   const see = async () => {
     eyes = await observeWithin(page.evaluate(look));
+    if (eyes.level === 'L7' && eyes.player && process.env.PLAYTEST_L7_DEPARTURE_CAPTURES === '1') {
+      const p = eyes.player, stage = Math.hypot(p.x - 262.4, p.z - 15) < 6 ? 'opening'
+        : Math.hypot(p.x - 46.47, p.z - 46.37) < 7 ? 'corridor'
+        : Math.hypot(p.x + 50.26, p.z - 42.6) < 8 ? 'bus' : null;
+      if (stage && !l7RoutePhotos.has(stage)) {
+        l7RoutePhotos.add(stage); await page.evaluate(() => window.__SS__!.pause());
+        try {
+          for (const zoom of stage === 'bus' ? [1.5, .8] : [1.5]) {
+            await page.evaluate(async z => { window.__SS__!.camera.zoom(z); await window.__SS__!.screenshotReady(); }, zoom);
+            const file = await capture(`L7-${stage}-${o.quality}-z${zoom}`);
+            log({ l7RoutePhoto: { file, stage, tick: eyes.tick, position: { x: p.x, z: p.z }, quality: o.quality, zoom } });
+          }
+        } finally { await page.evaluate(z => { window.__SS__!.camera.zoom(z); window.__SS__!.resume(); }, o.zoom); }
+      }
+    }
     if (eyes.level === 'L7' && process.env.PLAYTEST_L7_DEPARTURE_CAPTURES === '1') {
       const shot = await page.evaluate(() => {
         const w = (window.__SCENE__ as unknown as { game: Game }).game.world, d = w.l7Departure?.state;
@@ -229,6 +273,12 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         l7DeparturePhotos.add(seconds);
         const file = await capture(`L7-departure-${seconds}`);
         log({ l7DeparturePhoto: { file, requestedSeconds: seconds, ...shot, ...await photoPresentation() } });
+        if (seconds === .5) {
+          await page.evaluate(async () => { window.__SS__!.camera.zoom(.8); await window.__SS__!.screenshotReady(); });
+          const wide = await capture('L7-departure-wide-z0.8');
+          log({ l7DeparturePhoto: { file: wide, requestedSeconds: seconds, ...shot, ...await photoPresentation() } });
+          await page.evaluate(z => window.__SS__!.camera.zoom(z), o.zoom);
+        }
       }
     }
     if (process.env.PLAYTEST_L6_SHIELD_CAPTURES === '1' && eyes.level === 'L6' && eyes.phase === 'playing' && eyes.player && eyes.player.x > 50 && eyes.player.x < 115 && l6ShieldPhotos.size < 2) {
@@ -403,6 +453,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         : escape.out.length && escape.caption === 'The survivors are safe.' ? 'safe'
         : eyes.step === 'retreat' && (eyes.player?.x ?? 0) > 95 && eyes.enemies.some(e => e.drawn && e.hp > 0) ? 'rail' : null);
       if (stage && !l6RailCaptures.has(stage)) {
+        if (escape.phase === 'cinematic') { await press([]); await releaseAim(); }
         l6RailCaptures.add(stage); await page.evaluate(() => window.__SS__!.pause());
         try {
           for (const zoom of [1, 1.5]) {
@@ -1597,7 +1648,8 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       }
     }
     if (e.level === 'L6' && e.enemies.filter(b => b.d < 1.8).length >= 3) l6CrowdUntil = Date.now() + 650;
-    const weapon = e.player && (e.level === 'L6' && Date.now() < l6CrowdUntil && e.player.weapons.includes('weapon.fire-axe') ? 'weapon.fire-axe' : o.weapon && e.player.weapons.includes(o.weapon)
+    const closeRocketBackup = process.env.PLAYTEST_CLOSE_ROCKET_BACKUP === '1' && ['L7', 'L10'].includes(e.level ?? '') && e.player?.weapons.includes('weapon.shotgun') && e.enemies.some(b => b.drawn && b.hp > 0 && b.d < 6);
+    const weapon = e.player && (closeRocketBackup ? 'weapon.shotgun' : e.level === 'L6' && Date.now() < l6CrowdUntil && e.player.weapons.includes('weapon.fire-axe') ? 'weapon.fire-axe' : o.weapon && e.player.weapons.includes(o.weapon)
       ? o.weapon
       : campaignCombatWeapon(e.level, e.player.weapons, e.player.emptyWeapons));
     const shortcut = weapon && weaponKey(weapon);
@@ -1870,8 +1922,11 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   assert.ok(handoverReady,'L8 must have no objective, destination pin or minimap marker during the calm after handover (L8-02)');
   return { runs, issues, yielded };
   } finally {
+    if (process.env.QA_BROWSER_ROUTE_AUDIT === '1' && !page.isClosed()) {
+      await page.evaluate(() => (window as unknown as { __qaBrowserRoutes: unknown[] }).__qaBrowserRoutes).then(data => writeFileSync(join(o.out, `${o.tag}-route-audit.json`), JSON.stringify(data))).catch(error => log({ qaRouteAuditError: String(error) }));
+    }
     if (process.env.PLAYTEST_L6_RAIL_CAPTURES === '1' && !page.isClosed()) {
-      await page.evaluate(() => (window as unknown as { __qaL6Audit: unknown[] }).__qaL6Audit).then(data => writeFileSync(join(o.out, `${o.tag}-rail-transitions.json`), JSON.stringify(data))).catch(error => log({ l6RailAuditError: String(error) }));
+      await page.evaluate(() => { const s = window as unknown as { __qaL6Audit: unknown[]; __qaL6Frames: unknown[] }; return { events: s.__qaL6Audit, frames: s.__qaL6Frames }; }).then(data => writeFileSync(join(o.out, `${o.tag}-rail-transitions.json`), JSON.stringify(data))).catch(error => log({ l6RailAuditError: String(error) }));
     }
     if (process.env.PLAYTEST_THREAT_AUDIT === '1' && !page.isClosed()) {
       await page.evaluate('window.__threatAudit').then(data => writeFileSync(join(o.out, `${o.tag}-l3l4-threat.json`), JSON.stringify(data))).catch(error => log({ threatAuditError: String(error) }));

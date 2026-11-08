@@ -25,7 +25,9 @@ I opened the original baseline sheet, all three 30-frame strips, every corner ca
 | All eight driven definitions: arrows/WASD screen headings, actual lateral travel and forward movement | PASS for runner assertions | [Receipt](vehicles/checks.json), [17-cell sheet](vehicles/review.jpg) |
 | Native L1 bicycle keeps local W/S/A/D steering; native L2 boarding reaches ride | PASS | Same receipt; f10 bicycle, f11 fire-engine ride |
 | Native L9 low/high, zoom 1/1.5: physical keys move the APC; native wreck/parked-car ram; awake cap | PASS for runner assertions and reviewed views. APC roof is continuous in f1/f2; native road shots and prop displacement render correctly. Low wreck moved 18.343 m; high parked pickup moved 17.498 m. One prop awake in each, budget 12. | Same receipt and sheet, f12–f17 |
-| Every vehicle at close front view, visible seated driver/glazing; explicit brake/reverse; small-prop settling and fixed-structure collisions | PENDING supplementary checks. Existing sheet does not establish every requested front/glazing view or these additional contacts. | — |
+| All eight close front views | FAIL for APC driver visibility: opaque front armor obscures the driver/full-width pane in both front angles despite driver=1 and a seated render occupant. Roof is continuous. Other seven cabs show the seated driver through glazing; complete body panels in reviewed angles. | [Supplement receipt](vehicles/detail-receipt.json), lower cells of [combined sheet](vehicles/review.jpg), `detail-apc-front` / `military-apc` |
+| Explicit brake / reverse, physical arrows | PASS: APC forward speed 11.877 → braking → −5.944 m/s under the opposite screen direction | Same receipt |
+| Small props, settling / navigation, fixed structures and awake cap | PASS for chair/drum contacts: moved 7.120 / 34.899 m at contact; settled asleep with nav blockers at their new poses. Concrete barrier/fence/house stop APC at x=10.655/12.030/8.669 before their x=15 centers. Twenty-cone stress peak 8 awake ≤12. Centered cone only moved .0084 m as the hull passed over it; this probe establishes no cone shove, so no pass is claimed for that contact. | Same receipt and reviewed sheet |
 | Scene gate and quiet GPU timing | PENDING | — |
 
 The supplied `tools/qa/r12-vehicles.ts` ran with `E2E_SERIAL=1 SCENE_PORT=4341 R12_OUT=docs/reports/qa-browser/vehicles`, exit 0. Personally opened its retained sheet.
@@ -38,18 +40,63 @@ The supplied `tools/qa/r12-vehicles.ts` ran with `E2E_SERIAL=1 SCENE_PORT=4341 R
 | High zoom 1.5, physically walk south road to APC and hold E, tick 3125 at (96.430,76.005) | PASS: sanctuary active, escape/depart pending, sanctuary checkpoint, gate marker, zero infected, no driver/passengers/entry ring. Personally opened image: group beside APC, gate arrow points back left, no gold ring or boarding prompt. | Same manifest; bottom cell in the same reviewed sheet. |
 | Same door, tick 3660 | PASS for state: breach checkpoint, 24 infected, gate marker, sanctuary active, escape/depart pending, no driver/passengers/ring. Supplied runner saves only the pre-breach image; post-breach visual review remains pending supplementary route. | Same manifest |
 
-## r12-l6 / r12-l7 physical progress
+## r12-l6
 
-L6 low completed the mortal route with 3 deaths, 1 rescued of 29 and 28 lost. The result panel agrees. First survivor #16 remains visible at (263.065,14.270), y=4.6, but the low safe view frames the courier back on the stairs and loses the rescued body off screen. Night views show living infected inside the closed gate near the courier. These are visual FAIL candidates with exact state in [receipt](l6/receipt.json) and the personally reviewed [sheet](l6/review.jpg). The low night capture was shortened by a queued physical control command, so it does **not** certify the uninterrupted six-second caption. High reached all survivors out but did not finish within the 495-second run; later manual stair commands confound its final deaths. Fresh transition-only repeats are pending.
+Fresh mortal physical routes, seed 1, captions enabled, WebGL2/Metal, zoom requests 1/1.5. [Low receipt](l6/low-repeat.json), [fresh high receipt](l6/high-aligned.json), [reviewed sheet](l6/review.jpg), [capture hashes](l6/repeat-capture-hashes.json). Both clean runs completed without deaths or manual intervention; one read-only map-route assist supplies ordinary physical movement bearings. The high “aligned” monitor never needed to send a command.
 
-L7 low completed physical boarding/departure and handed over to L8: 15 boarded, 1 death, 26 rockets. No skips or assists. High reached the bus but timed out with repeated close-range rocket rejections (operator always preferred rockets). This is a QA input-policy limitation; its generated “enemy-unhittable” issues are not accepted as game damage bugs. A repeat will select the carried shotgun within six metres, matching ordinary physical controls and the native controller's range policy. High's 122 launches have a minimum interval of **50 ticks**; native Alphas show **450 maximum HP**. Three-direct-hit and low cadence evidence remain pending. The audit observed 25 mission-stat deaths (the driver's summary undercounts one). High output will be compacted after extracting its relevant event rows.
+| Check | Low | High |
+|---|---|---|
+| Full route / result identities | PASS: 192.17 sim seconds, 1/29 rescued, 28 lost; survivor #16 | PASS: 189.68 sim seconds, 3/29 rescued, 26 lost; #16/#17/#27 |
+| First original survivor safe / last crossed / all rescued x≥266 | PASS at ticks 11007 / 11007 / 11093 | PASS at 10931 / 10995 / 11081 |
+| Gate waits for physical clearance | PASS: gateAt11230 after clearance11093 | PASS: gateAt11081, all rescued already clear |
+| Full six-second night and result | PASS: world tick11530, cinematic elapsed0–359; same rescued identity remains hidden=false | PASS: world tick11381, elapsed0–359; same three rescued identities remain hidden=false |
+| Recurring three-person pressure, two complete successive cohorts | INCOMPLETE: admission8142 has3 ahead at198 while courier164.74; second10542 has1 behind at228 while courier249.38 (exact40s, admission cap). No full second three-body cohort. | One three-body admission8142, photographed visibly on-track8374. No full second cohort before finish. |
+| Ordinary Rejoin cue | Separate mortal high attempt visibly displays “Rejoin Marcus · 18 m” after checkpoint restoration. Physical sideways stair alignment then permits reunion/ending; no skip or teleport. | Cue cell retained in same sheet; [that run's receipt](l6/high-repeat.json). |
+
+Personally opened every retained rail/safe/crossing/clear/night/result cell. Clean high now frames the courier and all three rescued actors in the street, with readable safe and exact “Night. Still alive.” captions. Low's survivor remains visible but its safe caption coincides with a “Survivor lost!” toast, and hostile bodies/red bars remain beside the courier in the night view; this is a readability concern for PO review, not a count mismatch. The authored cinematic camera keeps the same framing under both player-zoom requests. Two drawn=false audit samples at elapsed12 coincide with paused API zoom recapture; screenshots and hidden flags do not establish a natural-play disappearance.
+
+A separate high run with one death rescued five, but its post-restoration all-clear captures at tick14417 are black. Those two invalid diagnostic cells are retained at the bottom of the sheet; they are not accepted as visual approval. The clean no-death high repeat above supplies usable all-clear views. The initial manually shortened low night is superseded by the full clean repeat.
+
+## r12-l7 completed physical route matrix
+
+[Compact receipt](l7/receipt.json), [reviewed route/departure sheet](l7/review.jpg), [capture hashes](l7/capture-hashes.json). Fresh `L7-default`, seed 1, mortal, WebGL2 Metal, 1280×800. Physical number keys, WASD and mouse; shotgun chosen below 6 m, no injected driver/god/teleport/skip. The earlier high rocket-only timeout remains an operator limitation, not a damage bug.
+
+| Check | Low | High |
+|---|---|---|
+| Full route, boarding, continuous departure and L8 handover | PASS: 131.13 sim seconds, 135 wall seconds, 1 death, 15 boarded | PASS: 181.07 sim seconds, 185 wall seconds, 2 deaths, 23 boarded |
+| Opening / corridor / bus physical captures, zoom 1.5 | PASS at actual ticks 224 / 3625 / 6309 | PASS at actual ticks 284 / 5753 / 9116 |
+| Bus zoom 0.8 | PASS: physical approach capture | PASS: physical approach capture |
+| Distinct approach pressure / follower damage | PASS: windup events from all four cardinal sectors in opening, corridor and bus; wounded #51/#58 later boarded | PASS: opening/bus all four sectors, corridor three; eight wounded followers later boarded, including #53 at 11 HP |
+| Global rocket cadence | PASS: minimum 50 ticks, individual shot ticks retained | PASS: minimum 50 ticks across 31 launches |
+| Native Alpha health | PASS: observed 450 maximum HP | PASS: observed 450 maximum HP |
+| Alpha survives two hits, dies on third | PASS controlled production L7 spawn: 450 → 279.9 → 120.312 → 0 HP; launches67/117/167, impacts93/144/194 | PASS: same sequence and cadence |
+
+Personally opened all 14 retained route/departure cells. Opening shows red threat telegraphs around the courier and the exit crowd; the corridor has room between the courier and following column. Bus approach shows followers near the wrecked vehicles and threats on multiple sides; the 0.8 view is closer than the 1.5 view. Both departure sequences show the bus moving along the street and leave the HUD hidden before normal L8 handover. The requested departure 0.8 zoom is overridden by its authored cinematic (actual 1.5), so only the **pre-departure bus approach** is certified at 0.8. The driver's `simSeconds=0` is a clock-reset reporting bug at L8 handover; the actual L7 mission result time is used above.
+
+[Shared rocket safety](rocket-safety/receipt.json) and [L10 scenario fixtures](rocket-safety/L10.json) pass both qualities: 2m aim and forward living infected reject discharge; behind infected permits it; an8m shot hits. The [extended cover probe](rocket-safety/early-cover.json) tracks the projectile until its pre-5m collision, with no blast, hit or player damage. The16-tick incomplete samples are retained as superseded diagnostics in the aggregate receipt. [Alpha receipt](rocket-safety/alpha.json) disables target AI only for stationary health isolation; production spawning, damage and projectiles remain active, the courier is mortal, and no health values are overwritten. Its first-to-third impact span is1.683s; this is not moving-encounter TTK. The first native low pickup probe shows “Too close!” without another launch, then successful farther shots, but already had a prior launch; a strict first-ready repeat is queued. L10 full finale checks remain pending. Controlled safety and health cells were personally opened in the same sheet.
+
+## r12-shadow
+
+[Measurements](shadow/measurements.json), [personally opened 68-cell sheet](shadow/shadow-sheet.jpg). Native WebGL2/Metal and WebGPU, low/high, requested zoom 1/1.5; actual backend fallback is rejected. The latest GL/high repetition corrects the original fixture zoom labels. Fixture poses are distinct from mortal traversal evidence.
+
+| Check | Result |
+|---|---|
+| Dominant brighter right street lamp, courier/corgi/infected direction | PASS all four combinations: shadows extend away from the right lamp. The before-method replay points towards the wrong side. Ground shadow hue 254.72–257.73°, inside 230–290°. |
+| Rendered forty-lamp walk | PASS WebGL2 low/high: 40 changes, ≤2 promotions/s, 39 fades of 300–316.7 ms, one refreshed map, maximum pool luminance step ≤8.24% (<15%). Equivalent WebGPU long probes are queued; short rendered handoffs already cover both WebGPU qualities. |
+| Power off / transient expiry | PASS all four: selected source becomes null and moon returns, with one refreshed map. Fire/work-light images show dark violet shadows extending away from their visible light pools. |
+| L5 / L6 underground and outdoor / L7 / L8 / L9 / L10, both zooms | PASS for the requested fixture matrix and posed native L7-low moon probe. Outdoor practicals remain readable; the underground low-tier restriction is retained. Actual physical L6/L7 routes are separately reviewed above. |
+| Moving headlight coverage | FAIL of sustained coverage in an isolated night/asphalt APC drive: source `vehicle-3-light:headL` selected around tick 21, null by tick 51 and at tick 120 on all four combinations. The beam remains visible. No stable headlight-driven actor-shadow direction is established. Repro is the `isolated-headlights` fixture in [audit](shadow-audit.ts); complete source/car/map trajectories are retained. |
+| Catalog driveout headlight assertion | Not a game-defect verdict: this fixture contains a dominant street lamp, which is what the selector chose. Raw nonzero audit exits retain that assertion. The separate isolated probe above is the relevant sustained-coverage finding. |
+| Geometry / map budget | PASS sampled fixture limits: maximum 82 submitted draws / 163,527 triangles; never more than one refreshed map. Quiet native GPU timing remains pending. |
+
+The “before” restores two original Lighting methods from `a0d4f7ba^`, not a complete older build. Native L7 moon is a deliberate posed/god probe. The new production QA artifact was built on Hetzner (18.498 s, exit 0), not on the Mac; [artifact identity](production-build.json). Remote lint passes; the nullable helper type error was corrected and a remote typecheck rerun is queued.
 
 ## Remaining lanes
 
 | Lane | Required checks | Current state |
 |---|---|---|
 | r12-l6 | Fresh mortal low/high physical routes; successive rail cohorts; safe/last-survivor/street-clear transitions; six-second night/result at zoom 1/1.5; actor identities; scene gate | Existing physical-input playtest is running with `PLAYTEST_L6_RAIL_CAPTURES=1`. Accelerated planner-advice diagnostics stalled at the shelter after ordinary deaths and are not accepted as full route evidence. |
-| r12-l7 | Low/high physical route and pickup safety; opening/corridor/bus crossfire, Alpha TTK/cadence, wounds/boarding/departure; close forward/behind/dud cases; L10 stair/charge/moving Mega; scene gate | PENDING |
+| r12-l7 | See completed L7 route/safety evidence above; native pickup hint, L10 stair/charge/moving Mega and scene gate remain | IN PROGRESS |
 | r12-l8 | Eight fresh/progressed opening cases; early APC attempt/breach; physical return to gate then APC evacuation and L9 handover, low/high × zoom 1/1.5 | PENDING |
 | r12-shadow | Before/after dominant-light direction, handoff/promotion/map/luminance/hue checks, source expiry/power loss, moon/headlamps/practicals, native backend/tier/zoom matrix, scene gate and GPU budgets | PENDING; discovered in later main merge. |
 

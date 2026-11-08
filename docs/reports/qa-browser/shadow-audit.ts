@@ -52,7 +52,7 @@ async function capture(s: SceneSession, label: string, sheet = true) {
       draws: profile.reduce((sum, [, v]) => sum + v.drawCalls, 0), triangles: profile.reduce((sum, [, v]) => sum + v.triangles, 0),
       selected: l.heroLight, position: l.spot.position.toArray(), target: l.spot.target.position.toArray(), sunWeight: l.sun.shadow.intensity, spotWeight: l.spot.shadow.intensity,
       refreshed: Number(l.sun.visible && l.sun.shadow.autoUpdate) + Number(l.spot.visible && l.spot.shadow.autoUpdate), backend: g.view.renderer.selectedBackend,
-      level: g.world.scenario, preset: l.preset, quality: window.__SS__!.getState().render.quality, zoom: g.view.view.getState().targetZoom };
+      level: g.world.scenario, preset: l.preset, quality: window.__SS__!.getState().render.quality, zoom: window.qaNativeMoon ? g.view.view.getState().targetZoom : window.__SCENE__.camera.zoom, rigZoom:g.view.view.getState().targetZoom, camera:g.view.view.getState() };
   });
   const { png, thumbnail, ...receipt } = r;
   rows.push({ label, ...receipt });
@@ -121,7 +121,7 @@ try {
       if (walk.end - walk.start < 1.9 || walk.frames.some(f => f.maps > 1)) failures.push(`${phase} ${backend}/${tier}: walk or map budget failed`);
       await s.step(30);
       for (const zoom of [1, 1.5]) {
-        await s.page.evaluate(zoom => window.__SS__!.camera.zoom(zoom), zoom);
+        await s.page.evaluate(zoom => { if(!window.qaNativeMoon) window.__SCENE__.setCamera({...window.__SCENE__.camera,zoom}); else window.__SS__!.camera.zoom(zoom); }, zoom);
         const label = `${phase} ${backend}/${tier} z${zoom}`;
         const beauty = await capture(s, label);
         {
@@ -189,7 +189,7 @@ try {
         for (const actor of spec.actors ?? []) if (actor.state && typeof actor.state === 'object' && 'walk' in actor.state) actor.state = { idle: true };
         await s.load(spec); await s.step(30);
         for (const zoom of [1, 1.5]) {
-          await s.page.evaluate(zoom => window.__SS__!.camera.zoom(zoom), zoom); await capture(s, `${spec.name} ${backend}/${tier} z${zoom}`, zoom === 1.5);
+          await s.page.evaluate(zoom => { if(!window.qaNativeMoon) window.__SCENE__.setCamera({...window.__SCENE__.camera,zoom}); else window.__SS__!.camera.zoom(zoom); }, zoom); await capture(s, `${spec.name} ${backend}/${tier} z${zoom}`, zoom === 1.5);
           if (name.endsWith('world-fill-l8-driveout') && !(rows.at(-1) as { selected: string | null }).selected?.startsWith('vehicle-')) failures.push(`${backend}/${tier}: driven headlights not promoted`);
         }
       }
@@ -197,13 +197,27 @@ try {
       for (const spec of practicals) {
         await s.load(spec); await s.step(60);
         for (const zoom of [1, 1.5]) {
-          await s.page.evaluate(zoom => window.__SS__!.camera.zoom(zoom), zoom); await capture(s, `${spec.name} ${backend}/${tier} z${zoom}`, zoom === 1.5);
+          await s.page.evaluate(zoom => { if(!window.qaNativeMoon) window.__SCENE__.setCamera({...window.__SCENE__.camera,zoom}); else window.__SS__!.camera.zoom(zoom); }, zoom); await capture(s, `${spec.name} ${backend}/${tier} z${zoom}`, zoom === 1.5);
           if (!(rows.at(-1) as { selected: string | null }).selected) failures.push(`${spec.name} ${backend}/${tier}: practical shadow missing`);
         }
       }
+      await s.load({name:'isolated-headlights',size:100,ground:'asphalt',time:'night',dof:false,vehicles:[{id:'apc',asset:'vehicle.military-apc',at:[0,0],yaw:0,path:[[30,0]],driven:true}],actors:[{id:'beam-target',kind:'infected',archetype:'infected.runner',at:[12,0],state:'idle'}],camera:{mode:'game',target:'apc',zoom:1.5},frames:0});
+      const driveSources=[];for(let frame=0;frame<120;frame++){await s.step(1);if(frame%10===0)driveSources.push(await s.page.evaluate(()=>{const g=window.__SCENE__.game,l=g.view.lighting;return{tick:g.world.tick,id:l.heroLight,lighting:{changes:l.getState().promotionChanges,blend:l.getState().promotionBlend,maps:Number(l.sun.visible&&l.sun.shadow.autoUpdate)+Number(l.spot.visible&&l.spot.shadow.autoUpdate)},car:g.world.entities.get(g.world.vehicles.active).transform};}));}
+      await capture(s,`isolated headlights ${backend}/${tier}`);rows.push({label:`moving headlights ${backend}/${tier}`,samples:driveSources});
+      if(!driveSources.some(v=>v.id?.startsWith('vehicle-')))failures.push(`${backend}/${tier}: isolated moving headlights never promoted`);
+      // Source lifecycle fixtures use the production power and transient paths.
+      await s.load(fixture);await s.step(60);
+      await s.page.evaluate(()=>{const g=window.__SCENE__.game,l=g.view.lighting;for(const group of new Set([...l.lamps.state.lamps.values()].map(v=>v.group)))l.lamps.state.setGroup(group,false);});
+      await s.step(60);await capture(s,`powered-off ${backend}/${tier}`);
+      if((rows.at(-1) as {selected:string|null}).selected)failures.push(`${backend}/${tier}: powered-off source retained`);
+      await s.load({...fixture,props:[],actors:[{id:'courier',kind:'courier',at:[0,0]},{id:'corgi',kind:'corgi',at:[-1,2]}]});
+      await s.page.evaluate(()=>window.__SCENE__.game.view.lightField.addTransient({x:3,z:1},'#ff9944',30,8,.8,true));await s.step(30);await capture(s,`transient-live ${backend}/${tier}`);
+      const transientLive=(rows.at(-1) as {selected:string|null}).selected;
+      await s.step(90);await capture(s,`transient-expired ${backend}/${tier}`);
+      if(!transientLive||(rows.at(-1) as {selected:string|null}).selected)failures.push(`${backend}/${tier}: transient lifecycle gate failed`);
       if (tier === 'low') {
         await s.page.evaluate(async () => {
-          await window.__SS__!.loadLevel('L7', { seed: 1 }); window.__SS__!.pause(); window.__SS__!.cheats.god(true);
+          window.qaNativeMoon=true; await window.__SS__!.loadLevel('L7', { seed: 1 }); window.__SS__!.pause(); window.__SS__!.cheats.god(true);
           const g = (window.__SCENE__ as unknown as { game: Game }).game, l = (g.view as unknown as { lighting: Lighting }).lighting;
           const origin = g.world.entities.get(1)!.transform, nav = g.world.infected!.nav;
           let dark: { x: number; z: number } | null = null;
@@ -215,7 +229,7 @@ try {
           window.__SS__!.teleport('player', dark); g.view.unfreeze(); g.view.view.follow(); await window.__SS__!.step(60);
         });
         for (const zoom of [1, 1.5]) {
-          await s.page.evaluate(zoom => window.__SS__!.camera.zoom(zoom), zoom); await capture(s, `native L7 moon ${backend}/${tier} z${zoom}`, zoom === 1.5);
+          await s.page.evaluate(zoom => { if(!window.qaNativeMoon) window.__SCENE__.setCamera({...window.__SCENE__.camera,zoom}); else window.__SS__!.camera.zoom(zoom); }, zoom); await capture(s, `native L7 moon ${backend}/${tier} z${zoom}`, zoom === 1.5);
           const r = rows.at(-1) as { selected: string | null; sunWeight: number; refreshed: number };
           if (r.selected || r.sunWeight !== 1 || r.refreshed !== 1) failures.push(`${backend}/${tier}: native L7 moon fallback missing`);
         }
