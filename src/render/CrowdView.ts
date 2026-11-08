@@ -187,6 +187,12 @@ export class CrowdView extends Group {
       for (const asset of alphaLooks['inf.mega-alpha']) l1Roles.add(asset);
       l1Roles.add('inf.dog');
     }
+    if (this.world.scenario === 'L8') {
+      // These story actors enter after Begin; register their actual models
+      // behind the loading card along with the healthy sanctuary animals.
+      l1Roles.add('infected.dog'); l1Roles.add('inf.dog-k9');
+      for (const asset of alphaLooks['inf.mega-alpha']) l1Roles.add(asset);
+    }
     if (alphaLevel)
       for (const def of allDefinitions) if (alphaLooks['inf.alpha'].includes(def.asset)) l1Roles.add(def.id);
     const grove = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L6';
