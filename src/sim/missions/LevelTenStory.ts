@@ -9,7 +9,8 @@ import { cureWeaponPickups } from '../../levels/L10/encounters';
 
 /** Exact scripted dialogue, continuity and the safe-hangar cast. All progress lives in the mission snapshot. */
 export class LevelTenStory {
-  constructor(private readonly mission: Mission) {}
+  private previous: { x: number; z: number };
+  constructor(private readonly mission: Mission) { this.previous = { ...mission.world.entities.get(1)!.transform }; }
   private savedSam(): EntitySnapshot | undefined {
     const save = this.mission.world.progression?.campaign;
     const roster = save?.crossingHandover?.shelteredPassengers ?? save?.results?.L8?.escapedSurvivors ?? save?.results?.L7?.escapedSurvivors ?? [];
@@ -34,12 +35,19 @@ export class LevelTenStory {
       state.counters['story-region'] = i;
       this.mission.requestCheckpoint(cure.regions[i].checkpoint);
     }
-    // The first recovery point is 120 m from the crash; subsequent points are
-    // 200 m apart along this eastbound route (well inside the 250 m limit).
-    const paceIndex = p.transform.x < 667 ? 0 : Math.min(curePaceCheckpoints.length, 1 + Math.floor((p.transform.x - 667) / 200));
-    if (paceIndex > (state.counters['pace-checkpoint'] ?? 0)) {
-      state.counters['pace-checkpoint'] = paceIndex;
-      this.mission.requestCheckpoint(curePaceCheckpoints[paceIndex - 1]);
+    // Count actual walking distance, including bends and field detours. The
+    // old east-west markers left up to 320 m between recovery points.
+    const moved = Math.hypot(p.transform.x - this.previous.x, p.transform.z - this.previous.z);
+    this.previous = { x: p.transform.x, z: p.transform.z };
+    if (!state.states['cure-installed']) {
+      if (moved < 8) state.counters['pace-mm'] = (state.counters['pace-mm'] ?? 0) + Math.round(moved * 1000);
+      const index = state.counters['pace-checkpoint'] ?? 0;
+      if (state.counters['pace-mm'] >= (index ? 200000 : 120000)) {
+        const next = Math.min(curePaceCheckpoints.length, index + 1);
+        state.counters['pace-checkpoint'] = next;
+        state.counters['pace-mm'] = 0;
+        this.mission.requestCheckpoint(curePaceCheckpoints[next - 1]);
+      }
     }
     if (!state.states['gap-hint'] && p.transform.x >= 937) { state.states['gap-hint'] = true; this.say('L10.hide-gap'); }
     if (!state.states['hangar-radio'] && p.transform.x >= 2300) { state.states['hangar-radio'] = true; this.say('L10.armory'); }
