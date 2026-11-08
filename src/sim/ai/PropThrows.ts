@@ -39,19 +39,19 @@ export class PropThrows {
     for (const p of this.props) if (p.class === 'medium' && p.body.isEnabled()) this.considerObject(source, p.id, false, p.body.translation());
     return this.object.id ? this.object : undefined;
   }
-  private considerObject(source: EntitySnapshot, id: number, corpse: boolean, p: { x: number; z: number }): void {
+  private considerObject(source: EntitySnapshot, id: number, corpse: boolean, p: { x: number; y?: number; z: number }): void {
     const dx = p.x - source.transform.x, dz = p.z - source.transform.z, squared = dx * dx + dz * dz;
     if (squared > this.objectDistanceSquared || squared === this.objectDistanceSquared && id >= (this.object.id || Infinity)) return;
     for (const e of this.world.infected!.active) if (e.infected!.specialAttack?.projectile?.objectId === id && e.infected!.specialAttack.stage === 'active') return;
     for (const flight of this.flights) if (flight.prop.id === id) return;
-    if (!this.world.infected!.hearing.lineOfSight(source.transform, p)) return;
+    if (source.infected?.arenaBoss?.roof ? !this.world.combat!.query.visible(source.transform, { x: p.x, y: (p.y ?? 0) + .5, z: p.z }) : !this.world.infected!.hearing.lineOfSight(source.transform, p)) return;
     this.object.id = id; this.object.corpse = corpse; this.objectDistanceSquared = squared;
   }
   launchSpecial(source: EntitySnapshot, a: InfectedSpecialAttack, radius: number, range = 15, speed = 12): boolean {
     const object = this.nearestObject(source, radius); if (!object) return false;
     const dx = a.target.x - source.transform.x, dz = a.target.z - source.transform.z, distance = Math.hypot(dx, dz);
     if (distance < .01) return false;
-    a.projectile = { objectId: object.id, corpse: object.corpse, started: this.world.tick, x: source.transform.x, z: source.transform.z, dx: dx / distance, dz: dz / distance, distance: 0, range: Math.min(range, distance), speed };
+    a.projectile = { objectId: object.id, corpse: object.corpse, started: this.world.tick, x: source.transform.x, z: source.transform.z, dx: dx / distance, dz: dz / distance, distance: 0, range: Math.min(range, distance), speed, ...(source.infected?.arenaBoss ? { fromY: source.transform.y + .6, toY: this.world.districts?.groundHeight(a.target.x, a.target.z) ?? 0 } : {}) };
     const body = this.world.entities.get(object.id); if (object.corpse && body) { body.corpseThrown = true; delete body.corpseBlast; }
     this.world.events.emit({ type: 'infected.prop-thrown', tick: this.world.tick, sourceId: source.id, propId: object.id, attackId: a.attackId });
     this.positionSpecial(a, false); return true;
@@ -60,17 +60,18 @@ export class PropThrows {
   updateSpecial(source: EntitySnapshot, a: InfectedSpecialAttack): boolean {
     const f = a.projectile!;
     if (this.world.tick === f.started) return false;
-    const old = { x: f.x + f.dx * f.distance, z: f.z + f.dz * f.distance };
-    const next = Math.min(f.range, (this.world.tick - f.started) * (f.speed ?? 12) / 60), p = { x: f.x + f.dx * next, z: f.z + f.dz * next };
+    const old = { x: f.x + f.dx * f.distance, y: this.flightY(a, f.distance), z: f.z + f.dz * f.distance };
+    const next = Math.min(f.range, (this.world.tick - f.started) * (f.speed ?? 12) / 60), p = { x: f.x + f.dx * next, y: this.flightY(a, next), z: f.z + f.dz * next };
     // Full solid cover wins over a human behind it, including thin dynamic LOS blockers.
-    if (!this.world.infected!.hearing.lineOfSight(old, p)) { this.positionSpecial(a, true); return true; }
+    if (f.fromY !== undefined ? !this.world.combat!.query.visible(old, p) : !this.world.infected!.hearing.lineOfSight(old, p)) { this.positionSpecial(a, true); return true; }
     f.distance = next; this.positionSpecial(a, false);
     let victim: EntitySnapshot | undefined, along = Infinity;
     for (const human of this.world.infected!.hearing.humans.within(p, 1.2)) {
       const e = this.world.entities.get(human.id);
       if (!e || e.health.current <= 0 || e.companion || e.escort?.child || storyProtected(this.world, e)) continue;
       const vx = e.transform.x - old.x, vz = e.transform.z - old.z, t = Math.max(0, Math.min(Math.hypot(p.x - old.x, p.z - old.z), vx * f.dx + vz * f.dz));
-      if (Math.hypot(old.x + f.dx * t - e.transform.x, old.z + f.dz * t - e.transform.z) > 1 || !this.world.infected!.hearing.lineOfSight(old, e.transform)) continue;
+      if (f.fromY !== undefined && Math.abs(old.y + (p.y - old.y) * t / (Math.hypot(p.x - old.x, p.z - old.z) || 1) - e.transform.y) > 1) continue;
+      if (Math.hypot(old.x + f.dx * t - e.transform.x, old.z + f.dz * t - e.transform.z) > 1 || (f.fromY !== undefined ? !this.world.combat!.query.visible(old, e.transform) : !this.world.infected!.hearing.lineOfSight(old, e.transform))) continue;
       if (t < along || t === along && e.id < (victim?.id ?? Infinity)) { victim = e; along = t; }
     }
     if (victim && this.world.infected!.specialHit(source.id, victim.id)) {
@@ -81,10 +82,14 @@ export class PropThrows {
     if (next >= f.range) { this.positionSpecial(a, true); return true; }
     return false;
   }
+  private flightY(a: InfectedSpecialAttack, distance: number): number {
+    const f = a.projectile!, t = distance / f.range, floor = this.world.districts?.groundHeight(f.x + f.dx * distance, f.z + f.dz * distance) ?? 0;
+    return f.fromY === undefined ? floor + 1.3 * (1 - t) + Math.sin(Math.PI * t) * .6 : f.fromY * (1 - t) + (f.toY ?? floor) * t + Math.sin(Math.PI * t) * 1.2;
+  }
   private positionSpecial(a: InfectedSpecialAttack, settled: boolean): void {
     const f = a.projectile!, x = f.x + f.dx * f.distance, z = f.z + f.dz * f.distance;
     const floor = this.world.districts?.groundHeight(x, z) ?? 0;
-    const height = settled ? 0 : 1.3 * (1 - f.distance / f.range) + Math.sin(Math.PI * f.distance / f.range) * .6;
+    const height = settled ? 0 : this.flightY(a, f.distance) - floor;
     const e = this.world.entities.get(f.objectId);
     if (f.corpse) { if (e) Object.assign(e.transform, { x, y: floor + .7 + height, z }); }
     else {

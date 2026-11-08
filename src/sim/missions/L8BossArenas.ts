@@ -70,7 +70,7 @@ export class L8BossArenas {
       const first = w.entities.get(arena.ids[0]);
       const secondPhase = arena.id === 'lion' ? !!first?.infected && first.health.current <= first.health.max / 2 : arena.id === 'elephant' ? arena.wallHits > 0 || total <= def.hp / 2 : ['flamingo', 'zebra', 'monkey'].includes(arena.id) ? halfDown : total <= def.hp * def.count / 2;
       if (arena.phase === 1 && secondPhase) {
-        arena.phase = 2; arena.nextAt = Math.min(arena.nextAt, w.tick + 60); this.signal(arena, 'phase-2');
+        arena.phase = 2; if (arena.id === 'monkey') this.announce('The leader is coming out — stop him to scatter the pack!'); arena.nextAt = Math.min(arena.nextAt, w.tick + 60); this.signal(arena, 'phase-2');
       }
       const leader = w.entities.get(arena.ids.at(-1)!);
       if (!unturned && !live.length || arena.id === 'monkey' && arena.phase === 2 && leader?.infected && leader.health.current <= 0) {
@@ -86,6 +86,20 @@ export class L8BossArenas {
     if (!boss) return false;
     const w = this.w, arena = this.state.find(a => a.id === boss.arena)!;
     const def = l8BossArenas.find(a => a.id === boss.arena)!, p = w.entities.get(1)!, b = e.infected!;
+    const roofHarasser = arena.id === 'monkey' && (boss.slot === 2 || boss.slot === 5);
+    if (roofHarasser) {
+      if (!boss.roof && !boss.traversal && !boss.scattered) this.traverse(e, { x: -12, y: 4.8, z: boss.slot === 2 ? 12.5 : 15.5 }, true);
+      if (boss.roof && boss.scattered && !boss.traversal) this.traverse(e, { x: -6, y: .7, z: 14 }, false);
+      if (boss.traversal) { this.traverseStep(e); return true; }
+      if (boss.roof) {
+        if (b.specialAttack) this.advanceMove(e, arena);
+        else if (arena.phase > 0 && arena.phase < 3 && w.tick >= boss.readyAt) {
+          if (w.infected!.props.nearestObject(e, 3)) this.start(e, 'monkey.debris', 48, 0, 1.2);
+          boss.readyAt = w.tick + (arena.phase === 2 ? 240 : 360);
+        }
+        return true;
+      }
+    }
     if (boss.scattered) { this.walk(e, { x: def.centre.x + 10, z: def.centre.z - 8 }, 6); return true; }
     if (!arena.phase) {
       const victim = arena.ids.map(id => w.entities.get(id)).find(v => v?.civilian && !v.infection && v.health.current > 0);
@@ -97,7 +111,13 @@ export class L8BossArenas {
     }
     boss.engaged = arena.phase !== 3;
     if (p.health.current <= 0 || arena.phase === 3) return true;
-    if (arena.id === 'lion' && boss.slot === 1 && arena.phase < 2 || arena.id === 'monkey' && boss.slot === def.count - 1 && arena.phase < 2) { this.orbit(e, arena, def.centre, 2); return true; }
+    if (arena.id === 'lion' && boss.slot === 1 && arena.phase < 2) { this.orbit(e, arena, def.centre, 2); return true; }
+    if (arena.id === 'monkey' && boss.slot === def.count - 1 && arena.phase < 2) { this.walk(e, { x: -22, z: 14 }, 3.5); return true; }
+    if (arena.id === 'monkey' && boss.slot === 6 && arena.phase === 2 && !boss.leaderEntered) {
+      this.walk(e, { x: -6, z: 14 }, 6);
+      if (distance(e.transform, { x: -6, z: 14 }) < 1) boss.leaderEntered = true;
+      else return true;
+    }
     if (b.grabUntil > w.tick) {
       if ((boss.shakeHits ?? 0) > 0 && arena.id === 'monkey' || arena.id === 'lion' && b.grabHits >= 2) { b.grabUntil = 0; arena.counters++; this.recover(e, 120); }
       else { this.walk(e, p.transform, 2); return true; }
@@ -121,7 +141,7 @@ export class L8BossArenas {
       }
     }
     if (arena.id === 'zebra' && distance(e.transform, p.transform) < 2 && w.tick >= boss.readyAt) { this.start(e, 'zebra.kick', 36, 0, 2); boss.readyAt = w.tick + 360; return true; }
-    const lead = arena.ids.find(id => (w.entities.get(id)?.health.current ?? 0) > 0) === e.id;
+    const lead = arena.ids.find(id => { const member = w.entities.get(id); return member && member.health.current > 0 && !member.infected?.arenaBoss?.roof && !member.infected?.arenaBoss?.traversal; }) === e.id;
     if (lead && w.tick >= arena.nextAt) {
       arena.cycle++; arena.nextAt = w.tick + (arena.id === 'elephant' ? 1320 : arena.phase === 2 ? 300 : 420); this.beginCycle(e, arena);
     } else if (arena.id === 'lion' && arena.phase === 2 && boss.slot === 1 && w.tick >= boss.readyAt) {
@@ -146,10 +166,23 @@ export class L8BossArenas {
       else if (arena.cycle % 3 === 2) this.scavenge(e);
       else this.start(e, arena.cycle % 3 === 1 ? 'gorilla.roar' : 'gorilla.pound', 60, 0, arena.cycle % 3 === 0 ? 5 : 8);
     } else for (const member of live) {
-      if (member.infected!.arenaBoss!.slot === 6 && arena.phase < 2) continue;
+      if (member.infected!.arenaBoss!.roof || member.infected!.arenaBoss!.traversal || member.infected!.arenaBoss!.slot === 6 && arena.phase < 2) continue;
       if ((arena.cycle + member.id) % 3 === 0) this.scavenge(member);
       else this.start(member, 'monkey.grab', 48 + member.infected!.arenaBoss!.slot * 2, 10, .8);
     }
+  }
+  /** Existing roof is real cover; the fixed climb/drop arc is body-clear and serialized, with no position jump. */
+  private traverse(e: EntitySnapshot, to: { x: number; y: number; z: number }, roof: boolean): void {
+    const boss = e.infected!.arenaBoss!;
+    boss.traversal = { start: this.w.tick, from: { x: e.transform.x, y: e.transform.y, z: e.transform.z }, to, roof };
+    e.infected!.perched = true; e.combat!.attacking = false;
+  }
+  private traverseStep(e: EntitySnapshot): void {
+    const boss = e.infected!.arenaBoss!, t = boss.traversal!, f = Math.min(1, (this.w.tick - t.start) / 90);
+    this.w.solids.wrote(e, 'l8.monkey-roof');
+    Object.assign(e.transform, { x: t.from.x + (t.to.x - t.from.x) * f, y: t.from.y + (t.to.y - t.from.y) * f + Math.sin(Math.PI * f) * 2, z: t.from.z + (t.to.z - t.from.z) * f });
+    this.w.spatial.set(e.id, e.transform.x, e.transform.z);
+    if (f === 1) { boss.roof = t.roof; e.infected!.perched = t.roof; delete boss.traversal; }
   }
   private scavenge(e: EntitySnapshot): void {
     const object = this.w.infected!.props.nearestObject(e, 25);
@@ -161,9 +194,9 @@ export class L8BossArenas {
     const target = { id: 1, x: p.transform.x + velocity.x * windup / 60, z: p.transform.z + velocity.z * windup / 60 };
     const dx = target.x - e.transform.x, dz = target.z - e.transform.z, d = Math.hypot(dx, dz) || 1;
     const attackId = w.infected!.arenaAttackId();
-    const a = e.infected!.specialAttack = { move, attackId, stage: 'telegraph', startTick: w.tick, activeTick: w.tick + windup, cooldownExpiry: w.tick + 420, recoveryUntil: 0, target, area: { x: e.transform.x, z: e.transform.z, radius, dx: dx / d, dz: dz / d }, hitIds: [], destination: { x: e.transform.x + dx / d * range, z: e.transform.z + dz / d * range } };
+    const a = e.infected!.specialAttack = { move, attackId, stage: 'telegraph', startTick: w.tick, activeTick: w.tick + windup, cooldownExpiry: w.tick + 420, recoveryUntil: 0, target, area: { x: e.transform.x, z: e.transform.z, radius, dx: dx / d, dz: dz / d }, hitIds: [], destination: { x: e.transform.x + (dx / d) * range, z: e.transform.z + (dz / d) * range } };
     e.infected!.attackId = attackId; e.infected!.state = 'attack'; e.infected!.until = a.activeTick; e.infected!.grabHits = 0; e.infected!.arenaBoss!.shakeHits = 0; e.combat!.attacking = true;
-    e.transform.yaw = -Math.atan2(dz, dx) + (move === 'zebra.kick' ? Math.PI : 0); if (e.locomotion) resetResponse(e.locomotion);
+    e.transform.yaw = -Math.atan2(a.area.dz, a.area.dx) + (move === 'zebra.kick' ? Math.PI : 0); if (e.locomotion) resetResponse(e.locomotion);
     w.events.emit({ type: 'telegraph', tick: w.tick, sourceId: e.id, attackId, move, special: move, duration: windup / 60, startTick: w.tick, activeTick: a.activeTick, cooldownExpiry: a.cooldownExpiry, target, area: a.area });
   }
   private advanceMove(e: EntitySnapshot, arena: L8ArenaState): void {
