@@ -55,8 +55,7 @@ export class Destruction {
     const present=new Set(this.world.districts?.districts.flatMap(d=>d.decay.placements.map(p=>`${d.id}/${p.id}`)));
     for(const o of this.objects) {
       o.present=present.has(o.id);
-      const fire=this.world.entities.get(o.state.fireEntity??-1);
-      if(o.state.burning&&fire?.hazard?.kind==='fire') fire.hazard.activeUntil=this.world.tick+(o.present?o.state.burning+120:0);
+      this.rebaseFire(o);
     }
     for (const b of this.blockers) {
       if (b.active && !worldReset) this.world.physics.removeBlocker(b.handle);
@@ -211,14 +210,20 @@ export class Destruction {
     }
     this.reconcile();
   }
+  private rebaseFire(o: DestructionObject): void {
+    const fire=this.world.entities.get(o.state.fireEntity??-1);
+    if(!o.state.burning||fire?.hazard?.kind!=='fire') return;
+    if(!o.present) {fire.hazard.activeUntil=this.world.tick;return;}
+    const active=this.world.entities.values().filter(e=>e.hazard?.kind==='fire'&&e.hazard.activeUntil>this.world.tick).length;
+    if(fire.hazard.activeUntil>this.world.tick||active<Explosions.maxFires) fire.hazard.activeUntil=this.world.tick+o.state.burning+120;
+  }
   snapshot() { return this.objects.filter(o=>!o.protected).map(o=>({id:o.id,state:structuredClone(o.state)})); }
   restore(snapshot:unknown):void {
     const saved=snapshot as ReturnType<Destruction['snapshot']>;
     for(const o of this.objects) {
       const entry=saved.find(s=>s.id===o.id); if(!entry) continue;
       o.state=structuredClone(entry.state);
-      const fire=this.world.entities.get(o.state.fireEntity??-1);
-      if(o.state.burning&&fire?.hazard?.kind==='fire') fire.hazard.activeUntil=this.world.tick+(o.present?o.state.burning+120:0);
+      this.rebaseFire(o);
     }
     this.reconcile();
   }
