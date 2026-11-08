@@ -29,7 +29,7 @@ try {
   const spawn = world.infected!.spawn.bind(world.infected);
   world.infected!.spawn = (...args) => {
     const id = spawn(...args), e = world.entities.get(id)!;
-    admissions.push({ tick: world.tick, id, archetype: e.archetype, distance: Math.hypot(e.transform.x - car.entity.transform.x, e.transform.z - car.entity.transform.z), state: e.infected!.state, hidden: !!(e.hidden || e.infected!.hidden) });
+    if (!args[3]) admissions.push({ tick: world.tick, id, archetype: e.archetype, distance: Math.hypot(e.transform.x - car.entity.transform.x, e.transform.z - car.entity.transform.z), state: e.infected!.state, hidden: !!(e.hidden || e.infected!.hidden) });
     return id;
   };
   const seen = new Set<number>(), firstNear: { id: number; archetype: string; state: string; distance: number }[] = [], durations: number[] = [];

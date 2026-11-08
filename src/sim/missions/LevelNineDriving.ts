@@ -17,6 +17,7 @@ export interface L9DrivingState {
   gateAt: number | null; gateClosed: boolean; gateId: number; bridgeGateId: number; fenceBroken: boolean;
   evacuationAt: number | null; evacuated: number[]; evacuating: number[]; evacuationDone: boolean;
   hugAt: number | null; hugDone: boolean;
+  hugSpot?: { x: number; z: number; dogX: number; dogZ: number };
   truckEntering: Record<number, number>;
   busId: number; busPassengers: number[]; busReleased: number; busHitAt: number; busStoppedAt: number | null; busLineAt: number | null;
   tankerId: number; tankerWreckId: number; tankerFuseAt: number | null; tankerExploded: boolean; stampede: number[];
@@ -373,11 +374,21 @@ export class LevelNineDriving {
     const w = this.w, s = this.state, corgi = [...w.entities.iterate()].find(e => e.companion);
     if (!corgi) { s.hugDone = true; return true; }
     if (corgi.passengerOf) { w.vehicles!.disembarkPassenger(this.car.entity.id, corgi.id); return false; }
-    const p = this.car.entity.transform, c = Math.cos(p.yaw), side = Math.sin(p.yaw);
-    const spot = { x: p.x - c + side * 3.5, z: p.z + side + c * 3.5 };
+    const p = this.car.entity.transform, c = Math.cos(p.yaw), side = Math.sin(p.yaw), nav = w.infected!.nav;
+    const clear = (spot: NonNullable<L9DrivingState['hugSpot']>) => nav.clear(spot.x, spot.z, .35) && nav.clear(spot.dogX, spot.dogZ, .9)
+      && w.solids.clear({ ...spot, y: .7 }, .35, rosa.id, false) && w.solids.clear({ x: spot.dogX, z: spot.dogZ, y: .3 }, .9, corgi.id, false);
+    if (s.hugAt === null && s.hugSpot && !clear(s.hugSpot)) delete s.hugSpot;
+    if (!s.hugSpot) {
+      search: for (const sign of [1, -1]) for (const along of [-1, -2, 0, 1]) for (const across of [3.5, 4.5, 5.5]) {
+        const x = p.x + c * along + side * across * sign, z = p.z - side * along + c * across * sign;
+        const candidate = { x, z, dogX: x + side * .7 * sign, dogZ: z + c * .7 * sign };
+        if (clear(candidate)) { s.hugSpot = candidate; break search; }
+      }
+    }
+    const spot = s.hugSpot; if (!spot) return false;
     corgi.companion!.transitionUntil = w.tick + 2;
     w.npcs!.move(rosa, spot, 2, rosa.civilian!, .4);
-    if (s.hugAt === null) w.npcs!.move(corgi, { x: spot.x + side * .7, z: spot.z + c * .7 }, 2.5, corgi.companion!, .25);
+    if (s.hugAt === null) w.npcs!.move(corgi, { x: spot.dogX, z: spot.dogZ }, 2.5, corgi.companion!, .25);
     if (distance(rosa.transform, spot) > .8 || s.hugAt === null && distance(corgi.transform, rosa.transform) > 1.2) return false;
     s.hugAt ??= w.tick; rosa.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; rosa.civilian!.story = { clip: 'npc-hug', start: s.hugAt };
     corgi.contactExempt = rosa.id; corgi.companion!.transitionUntil = w.tick + 2;
