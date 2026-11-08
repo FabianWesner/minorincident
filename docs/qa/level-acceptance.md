@@ -335,7 +335,7 @@ Feel: "open-country drive: smash through or steer around; the APC survives until
 | `hold` | Hold the console | 60 s within 40 m, minigun |
 | `mega` | Kill the Mega Alpha | ~10 direct rockets |
 | `release` | Release the cure at the console | interaction |
-| `epilogue` | Watch the cure spread | free walk 60–75 s |
+| `epilogue` | Watch the cure spread | free walk 60–90 s |
 | `credits` | Minor Incident | title + credits |
 
 | ID | Step | Criterion (expected value) | Source | Check |
@@ -353,7 +353,7 @@ Feel: "open-country drive: smash through or steer around; the APC survives until
 | L10-11 | hold | Final assault only: **at most 22 high / 14 low, small waves from three directions with breathers** living ordinary infected, reachable ≥ 90 %, player attacks ≥ 8/min. Reinforcements continue through charging and the Mega fight. The same stalker walks into the arena; no replacement or teleport. | PO 2026-11-08 | S |
 | L10-12 | mega | Mega health bar appears only for the finale. Mounted shield/platform protect the courier, crowds climb only the stairs, gun shreds crowds and occasional dismount clears stair pressure. Returned arsenal and cover make the encounter survivable; it is killable at the dispersal complex. | E32-AC11/12, PO 2026-11-08 | S, O |
 | L10-13 | release | Release only with charge 60 + Mega dead + cure installed, player at the console. | E32-AC22 | S |
-| L10-14 | epilogue | Green ground dust restores living infected to same-ID healthy people after a kneeling recovery; dead bodies remain dead, healthy/player/corgi unharmed. Player walks among the cured for 8 s, then journey/survivor shots; Delivered ✓ at 50 s starts the 15 s full-L10 pullback. Title by 65 s, 75 s readable licensed credits (skippable), Thanks for playing and menu. Cinematic skippable after first view. | story-script.md, PO 2026-11-08 | S, O, P |
+| L10-14 | epilogue | Green ground dust restores living infected to same-ID healthy people after a kneeling recovery; dead bodies remain dead, healthy/player/corgi unharmed. Player walks among the cured for 8 s, then journey/survivor shots; Delivered ✓ at 50 s starts the 15 s full-L10 pullback. Title by 65 s, 90 s readable licensed credits (skippable), Thanks for playing and menu. Cinematic skippable after first view. | story-script.md, PO 2026-11-08 | S, O, P |
 | L10-15 | all | Death in any region respawns at that region's checkpoint (never level start), with the loadout, cure and boss state of that checkpoint. | E32-AC27 | S |
 
 ---
@@ -386,4 +386,4 @@ Feel: "open-country drive: smash through or steer around; the APC survives until
 
 L10 PO 2026-11-08 finale revision: waves contain 9 high / 6 low infected, admitted for at most 5 s, then no arrivals for 25 s; uncleared waves defer the next by 8 s. Raised platform access is stair-only (r14-height integration); gun shield protects the manned courier from the front and ground melee, while stair climbers can contest the rear. Mounted rounds permanently shred ordinary crowds. Competent input-only runs must complete without close ground rockets.
 
-L10 PO epilogue revision: player keeps control for 8 s among living infected recovering as people in green ground dust. Journey and survivor shots follow; Delivered ✓ at 50 s starts the 15 s full-map pullback. Title at 65 s; readable licensed credits for 75 s, skippable, then Thanks for playing and menu. Cinematic skipping requires a previous view. Browser QA owns shot continuity and panorama draw/performance review.
+L10 PO epilogue revision: player keeps control for 8 s among living infected recovering as people in green ground dust. Journey and survivor shots follow; Delivered ✓ at 50 s starts the 15 s full-map pullback. Title at 65 s; readable licensed credits for 90 s, skippable, then Thanks for playing and menu. Cinematic skipping requires a previous view. Browser QA owns shot continuity and panorama draw/performance review.

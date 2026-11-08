@@ -89,6 +89,12 @@ export class CampaignUI {
       credits.style.animationDuration = `${creditsTicks / 60}s`;
       credits.style.animationPlayState = 'paused'; credits.style.animationDelay = `-${(this.game.world.missions?.state.epilogue?.phaseTicks ?? 0) / 60}s`; }
     else this.creditsTimer=setTimeout(()=>{if(!this.root.hidden)this.showMenu({status:'ok',save});},12000);
+    if (ending) {
+      const pause = this.button('Pause credits', () => {
+        if (this.game.clock.paused) { this.game.clock.resume(); pause.textContent = 'Pause credits'; }
+        else { this.game.clock.pause(); pause.textContent = 'Resume credits'; }
+      });
+    }
     const back = this.button(ending ? 'Skip credits' : 'Main menu',()=>{
       if (ending) { this.game.world.missions?.l10?.epilogue.skip(); this.game.clock.resume(); }
       else this.showMenu({status:'ok',save});

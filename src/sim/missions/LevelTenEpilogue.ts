@@ -6,7 +6,7 @@ import type { Mission } from './Mission';
 export const epilogueTicks = 65 * 60;
 export const pulloutTicks = 15 * 60;
 export const titleTicks = 5 * 60;
-export const creditsTicks = 75 * 60;
+export const creditsTicks = 90 * 60;
 // Give residents individual walking routes and room to pause at each end,
 // rather than keeping the small epilogue cast in a tight formation.
 const survivorSpread = [

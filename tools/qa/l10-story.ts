@@ -173,8 +173,8 @@ for (const tier of tiers) {
     check(tier, 'courier can walk among recovering people during release', Math.hypot(w.entities.get(1)!.transform.x - start.x, w.entities.get(1)!.transform.z - start.z) > 1 && !w.storyLock);
     advance(w, 65 * 60 - 180);
     check(tier, 'title starts within 65 seconds after delivery and compressed panorama', m.state.epilogue?.phase === 'title' && m.state.states['delivery-notified'] && m.state.cureFront!.radius === cureRadius(m.state.cureFront!.elapsed), { phase: m.state.epilogue?.phase, elapsed: m.state.cureFront!.elapsed });
-    advance(w, 5 * 60 + 74 * 60);
-    check(tier, 'readable credits remain for at least 74 seconds', m.state.epilogue?.phase === 'credits', m.state.epilogue);
+    advance(w, 5 * 60 + 89 * 60);
+    check(tier, 'readable credits remain for at least 89 seconds', m.state.epilogue?.phase === 'credits', m.state.epilogue);
     advance(w, 8 * 60);
     check(tier, 'credits finish through thanks and record a skippable repeat view', m.state.states['credits-finished'] && m.l10!.epilogue.canSkip);
     fixture.gaps = gaps; fixture.lines = lines; fixture.cast = cast; fixture.damage = damage;
