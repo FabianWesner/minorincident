@@ -1,6 +1,6 @@
 # L9 / L10 ground flicker
 
-**Status: implementation and code checks complete; final visual verification blocked by Chromium launch permissions after the restart.**
+**Status: implementation and nonbrowser checks complete. Final browser verification is handed to the QA lane under the orchestrator’s latest no-browser instruction. The visual fix is not yet verified.**
 
 ## Cause and fix
 
@@ -14,7 +14,7 @@ Runtime forecourt paving, puddles, decals, footprints, toxic masks, fire/flash p
 
 ## All-level guard
 
-The existing unit case now checks exact-height ties, disjoint faces, material/batch priority preservation and every district's combined base/wear GLBs, including W6. The geometry audit examines horizontal upward faces at all heights. It rejects differently colored overlapping faces within 2 mm unless their material priorities separate them. Sub-5 mm edge aprons and intersections smaller than .01 m² are excluded.
+The existing unit case now checks exact-height ties, disjoint faces, material/batch priority preservation and every district's combined base/wear GLBs, including W6. The geometry audit examines upward faces at all heights, including parallel inclined layers. The same case checks parallel ramps and excludes crossing, nonparallel slopes. It rejects differently colored overlapping faces within 2 mm unless their material priorities separate them. Sub-5 mm edge aprons and intersections smaller than .01 m² are excluded.
 
 | District | Baseline unsafe triangle pairs | After |
 | --- | ---: | ---: |
@@ -30,33 +30,41 @@ The build also regenerates D-CROSSING's streamed assets, and compression compare
 
 ## Visual verification
 
-The reserved post-restart batch reached its exclusive slot, but Chromium failed before opening a page: `bootstrap_check_in ... MachPortRendezvousServer ... (141)`, followed by SIGTRAP and `kill EPERM`. See the [launch failure](browser-blocker.log). An OS/bootstrap or sandbox restriction needs an unsandboxed parent session. The [single sheet](comparison.jpg) contains only the three baseline views; there is no verified after row. Baseline L9 series recorded 30 consecutive rendered frames on each backend: [WebGPU high](before-webgpu-high.json), [WebGL2 low](before-webgl2-low.json).
+The reserved post-restart batch reached its exclusive slot, but Chromium failed before opening a page: `bootstrap_check_in ... MachPortRendezvousServer ... (141)`, followed by SIGTRAP and `kill EPERM`. See the [launch failure](browser-blocker.log). The precise launch restriction was not resolved; this lane is now prohibited from starting browsers. The [single sheet](comparison.jpg) contains only the three baseline views; there is no verified after row. Baseline L9 series recorded 30 consecutive rendered frames on each backend: [WebGPU high](before-webgpu-high.json), [WebGL2 low](before-webgl2-low.json).
 
 The [capture script](verify-capture.ts) uses [L9's reported pose](l9-start.json) and [L10's reported pose](l10-campus.json), records 30 real RAF frames, verifies nonzero priorities survive runtime sharing, and checks 18 L9 / five L10 corner positions. L10 is a geometry/lighting fixture at the reported position and zoom, not a replay of the full mission checkpoint.
 
 ## Checks
 
-Post-restart checks:
+Saved checks reviewed after the latest restart (the last WIP contains the completed results, not an interrupted run):
 
 - [Typecheck](typecheck-final.log): pass.
 - [Lint](lint-final.log): pass.
-- [Unit suite](unit.log): 107/107 pass, 109.7 seconds; repository budget 150/150 cases.
-- [Focused ground regression](ground-test.log): 5/5 pass.
+- [Unit suite](unit.log): 107/107 pass, 118.9 seconds including the budget wrapper; repository budget 150/150 cases.
+- [Earlier focused ground regression](ground-test.log): 5/5 pass; the final full suite above also covers the subsequent inclined-layer extension.
 - [Combined geometry audit](ground-all-heights.json): pass across all 14 districts and all wear tiers.
 - [Streamed terrain](terrain.json): layout/source hashes match; L9 max 300 triangles/cell and 9904 horizon triangles; L10 max 655/cell and 2340 horizon triangles.
-- Scene gate and final visual verification: blocked by the browser launch failure. The pre-restart gate was interrupted; the post-restart batch stopped at its first Chromium launch.
+- Scene gate and final visual verification: pending in the QA lane. The earlier gate was interrupted; the subsequent batch stopped at its first Chromium launch. Neither is recorded as passing.
 
-The initial resource-constrained unit attempts timed out; the complete rerun above passed. No deployment or push. Raw pre-restart captures, traces and temporary baseline GLBs were removed after the disk-space alert. Only one browser is requested at a time.
+The initial resource-constrained unit attempts timed out; the complete rerun above passed. No deployment or push. Raw pre-restart captures, traces and temporary baseline GLBs were removed after the disk-space alert. This resumption opened no browsers, started no builds or heavy suites, and created no large outputs. The retained report is approximately 104 KB with one baseline sheet; disk space is now approximately 37 GiB free.
 
 
-## Finish verification outside this launch context
+## Browser QA needed
 
-From this worktree in the unsandboxed orchestrator or a normal Terminal session:
+The QA lane must complete these checks with **one headless browser at a time**, using the shared build cache and browser admission mechanism. This lane must not run them.
+
+1. L9 seed 1, approach / crossing-start, tick 1170, on foot at `(-550, 0)`, zoom `1.14`: WebGPU/high and WebGL2/low. Compare the pale track/shoulder/asphalt corner with the baseline sheet and consecutive-frame receipts. Confirm the exact track pixel retains its nonzero depth priority after material sharing.
+2. L10 seed 1, research-campus / cure-military, tick 38160, player `(2363.99, -75.39)`, zoom `1.3`: WebGPU/high near D-CURE/street-lamp `1533`. The automated fixture sets geometry, lighting, pose and tick; also inspect the actual mission checkpoint for mission-specific effects.
+3. Inspect all 18 L9 and five L10 corner positions in the capture script. Review at least 30 consecutive real rendered frames at each reported location, including small camera movements, for striped bands, dark rectangles, floating overlays or incorrect occlusion. Review paving, puddles, verges, decals, toxic masks, footprints and practical/fire light pools together.
+4. Run `scene:gate` with one job. Record the actual backend/tier and gate result. Review frame pacing and any material/draw-call increase; no final performance measurement is available from this lane.
+5. Replace the baseline-only sheet with one compact before/after sheet, summarize what changed across consecutive frames, retain only linked receipts, and remove temporary raw captures.
+
+QA capture and gate command from this worktree:
 
 ```sh
 sh tools/e2e-lock.sh sh docs/reports/r12-l9flicker/capture-batch.sh
 ```
 
-The [batch](capture-batch.sh) reserves the supported external exclusive slot, runs the three captures sequentially, then runs `npm run scene:gate -- --jobs 1`. Every browser is headless and closes before the next opens. No additional build or worktree is created. The capture validates actual backend/tier, consecutive render-frame counters, retained runtime priorities and the exact reported L9 track pixel. Its output needs visual review before this goal can be marked complete.
+The [batch](capture-batch.sh) reserves the supported external exclusive slot, runs three captures sequentially, then runs `npm run scene:gate -- --jobs 1`. Each headless browser closes before the next opens. No additional build or worktree is created. The capture asserts actual backend/tier, consecutive render-frame counters, retained runtime priorities and the reported L9 track pixel. Visual review is required in addition to those assertions. Any additional heavy suites must follow the current remote-run and single-worker rules.
 
-The source fixes are committed in `0152c49a`, `19b18704`, `02086d3b`, `f940a6cb` and `b4a42010`; `be936ebe` is the orchestrator's restart snapshot. Historical `test-results/` deletions requested during disk cleanup remain unstaged.
+The implementation is committed in `0152c49a`, `19b18704`, `02086d3b`, `f940a6cb` and `b4a42010`; `7259e0d1` adds inclined-layer coverage. The orchestrator’s restart snapshots are `be936ebe` and `947546a0`. Historical `test-results/` deletions requested during disk cleanup remain unstaged. No checks remain running.
