@@ -1,5 +1,6 @@
 /** Full production-input L8 story audit. No cheats, invulnerability or staged boarding. */
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { dirname } from 'node:path';
 import { SimPhase } from '../../../src/core/EventBus';
 import { preset } from '../../../src/sim/progression/Campaign';
@@ -9,6 +10,7 @@ import { provenance } from '../accept/probe';
 const tier = process.argv[2] ?? 'high', out = process.argv[3] ?? `test-results/eg-l8-story/story-${tier}.json`;
 if (tier !== 'low' && tier !== 'high') throw new Error('Usage: story-probe.ts low|high [output.json]');
 const identity = provenance(), campaign = preset('L8-default'); campaign.settings.quality = tier;
+const probeSha256 = createHash('sha256').update(readFileSync(new URL(import.meta.url))).digest('hex');
 const animals: { id: number; species: string; healthy: boolean; closest: number }[] = [];
 const lines: { id: string; text: string; tick: number }[] = [], bites: { id: number; source: number; tick: number; distance: number }[] = [];
 const turns: { id: number; tick: number; archetype: string }[] = [], mega: { tick: number; x: number; y: number; z: number }[] = [];
@@ -58,7 +60,10 @@ if (!run.completed) flags.push(`INCOMPLETE:${run.outcome}`);
 if (animals.length < 8 || new Set(animals.map(row => row.species)).size !== 5 || animals.some(row => !row.healthy)) flags.push('CALM_ANIMAL_CENSUS');
 if (animals.some(row => row.closest > 18)) flags.push('ANIMALS_NOT_PASSED_ON_REAL_ROUTE');
 for (const id of ['nadia-path', 'nadia-lion', 'broadcast', 'hale-greeting', 'hale-breach', 'hale-dying', 'following']) if (!lines.some(row => row.id === `L8.${id}`)) flags.push(`MISSING_LINE:${id}`);
-const opening = bites.find(bite => animals.find(row => row.id === bite.id)?.species === 'flamingo' && bite.distance < 20 && turns.some(turn => turn.id === bite.id && turn.archetype === 'infected.flamingo' && turn.tick - bite.tick >= 150 && turn.tick - bite.tick <= 210 && turn.tick <= end.breachedAt + 1800));
+// A death shifts checkpoint timers. Judge the observed opening against its
+// actual alarm event, never the final restored breach timestamp.
+const openingAlarmTick = lines.find(row => row.id === 'L8.hale-breach')?.tick;
+const opening = bites.find(bite => openingAlarmTick !== undefined && bite.tick >= openingAlarmTick && animals.find(row => row.id === bite.id)?.species === 'flamingo' && bite.distance < 20 && turns.some(turn => turn.id === bite.id && turn.archetype === 'infected.flamingo' && turn.tick - bite.tick >= 150 && turn.tick - bite.tick <= 210 && turn.tick <= openingAlarmTick + 1800));
 if (!opening) flags.push('MISSING_VISIBLE_SAME_ID_OPENING_TURN');
 if (!end.keeperGrabbed) flags.push('MISSING_POND_KEEPER_GRAB');
 if (!mega.length || mega[0].z >= -86 || mega[0].y <= 4) flags.push('MISSING_NORTH_WALL_REVEAL');
@@ -67,6 +72,6 @@ if (end.haleFallenAt < 0 || end.driverAt <= end.haleFallenAt) flags.push('DRIVER
 if (!end.departed || end.carX <= 116 || end.carZ !== 80 || end.megaX <= 116 || end.carX - end.megaX > 20) flags.push('MISSING_MOVING_GATE_ESCAPE_AND_CHASE');
 if (end.peak > (tier === 'low' ? 100 : 200) || end.alphas < 3 || end.alphas > 5) flags.push('POPULATION_BUDGET');
 mkdirSync(dirname(out), { recursive: true });
-writeFileSync(out, JSON.stringify({ ...identity, tier, seed: 1, flags, animals, lines, bites, turns, mega, end, run, finalState }, null, 2) + '\n');
+writeFileSync(out, JSON.stringify({ ...identity, probeSha256, tier, seed: 1, flags, animals, lines, bites, turns, mega, end, run, openingAlarmTick, finalState }, null, 2) + '\n');
 console.log(JSON.stringify({ tier, outcome: run.outcome, seconds: run.time, flags, output: out }));
 process.exitCode = flags.length ? 1 : 0;
