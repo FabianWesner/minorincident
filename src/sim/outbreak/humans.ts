@@ -22,22 +22,27 @@ export class HumanTargets implements HumanTargetQuery {
   private readonly list: HumanTarget[] = [];
   private readonly byId = new Map<number, HumanTarget>();
   private readonly found: HumanTarget[] = [];
+  private readonly records = new WeakMap<EntitySnapshot, HumanTarget>();
   private readonly index = new SpatialHash();
-  private readonly indexedIds: number[] = [];
+  private readonly indexedIds = new Set<number>();
   private readonly nearby: number[] = [];
   constructor(private readonly world: SimWorld) {}
   private refresh(): void {
     if (this.tick === this.world.tick) return;
     this.tick = this.world.tick; this.list.length = 0; this.byId.clear();
-    for (const id of this.indexedIds) this.index.delete(id); this.indexedIds.length = 0;
     for (const e of this.world.entities.iterate()) {
       if (!isLiveHuman(e) || this.world.missions?.state.l3?.waitingIds?.includes(e.id) || e.id === 1 && this.world.inspectionGhost) continue;
-      const target: HumanTarget = { id: e.id, kind: e.id === 1 ? 'player' : e.civilian?.zooAnimal ? 'animal' : 'civilian', position: { x: e.transform.x, z: e.transform.z }, facing: e.transform.yaw };
+      let target = this.records.get(e);
+      if (!target) {
+        target = { id: e.id, kind: e.id === 1 ? 'player' : e.civilian?.zooAnimal ? 'animal' : 'civilian', position: { x: e.transform.x, z: e.transform.z }, facing: e.transform.yaw };
+        this.records.set(e, target);
+      } else { target.position.x = e.transform.x; target.position.z = e.transform.z; target.facing = e.transform.yaw; }
       this.list.push(target);
-      this.indexedIds.push(e.id); this.index.set(e.id, target.position.x, target.position.z);
+      this.indexedIds.add(e.id); this.index.set(e.id, target.position.x, target.position.z);
     }
     this.list.sort((a, b) => a.id - b.id);
     for (const target of this.list) this.byId.set(target.id, target);
+    for (const id of this.indexedIds) if (!this.byId.has(id)) { this.index.delete(id); this.indexedIds.delete(id); }
   }
   all(): readonly HumanTarget[] { this.refresh(); return this.list; }
   get(id: number): HumanTarget | undefined { this.refresh(); const e = this.world.entities.get(id); return e && isLiveHuman(e) ? this.byId.get(id) : undefined; }

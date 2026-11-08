@@ -84,8 +84,15 @@ test('civilians: seeded grab → bite → down → glowing eyes → rising → i
     const w = await loadRunnerLevel('L8', 1, undefined, 0, { quality: 'high' }); worlds.push(w);
     w.missions!.state.timeOfDay = 'night'; const power = w.lightPower!;
     const humans = w.infected!.hearing.humans, at = w.entities.get(1)!.transform;
-    const expected = humans.all().filter(h => (h.position.x - at.x) ** 2 + (h.position.z - at.z) ** 2 <= 64).map(h => h.id).sort((a, b) => a - b);
-    expect(humans.within(at, 8).map(h => h.id)).toEqual(expected);
+    for (const center of [at, { x: at.x + 20, z: at.z - 12 }]) for (const radius of [0, 8, 16, 40]) {
+      const expected = humans.all().filter(h => (h.position.x - center.x) ** 2 + (h.position.z - center.z) ** 2 <= radius * radius).map(h => h.id).sort((a, b) => a - b);
+      expect(humans.within(center, radius).map(h => h.id)).toEqual(expected);
+    }
+    const target = humans.all().find(h => h.id !== 1)!, person = w.entities.get(target.id)!, hp = person.health.current;
+    person.health.current = 0;
+    expect(humans.get(person.id)).toBeUndefined();
+    expect(humans.within(target.position, 1).some(h => h.id === person.id)).toBe(false);
+    person.health.current = hp;
     let reads = 0; const isOn = power.isOn.bind(power); power.isOn = (id: string) => { reads++; return isOn(id); };
     const a = { x: 23, z: 59 }, b = { x: 31, z: 61 }, firstA = power.sightMultiplier(a), afterA = reads;
     const firstB = power.sightMultiplier(b), afterB = reads;
