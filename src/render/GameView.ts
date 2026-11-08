@@ -1210,6 +1210,7 @@ export class GameView implements Lifecycle {
       if (hero && this.world.missions?.state.l6?.flashlight) {
         const yaw=headlampYaw;
         flashlight = footprint({type:'spot',color:'light_led_white',intensity:9,range:18,angle:48,flicker:'none',shadow:'hero',position:[hero.x,hero.y+1,hero.z],direction:[Math.cos(yaw),-.3,-Math.sin(yaw)]});
+        flashlight.id = 'headlamp';
         field.push(flashlight);
       }
       if (metro && lighting.preset === 'L6-subway') for (const entry of l6Entries) {
@@ -1225,10 +1226,8 @@ export class GameView implements Lifecycle {
       // Pickups keep a small cool glint pool so loot stays findable in the dark.
       for (const entity of this.world.entities.iterate()) if (entity.pickup && !entity.hidden && !('collected' in entity.pickup && entity.pickup.collected)) field.push(pickupLight(entity.transform.x, entity.transform.z));
     }
-    lighting.setHeroLight(hero && field.active ? flashlight ?? field.heroAt(hero.x, hero.z) : null, hero ?? this.view.focus, this.world.tick / 60);
-    // Low W6 keeps the palette moon shade and contact shadows; a promoted fire
-    // still owns its one hero shadow map. Avoid a second city-wide moon pass.
-    if (this.world.scenario === 'L7' && this.quality === 'low') lighting.sun.visible = false;
+    const shadowFocus = hero ?? this.view.focus;
+    lighting.setHeroLight(field.active ? field.heroAt(shadowFocus.x, shadowFocus.z) ?? flashlight : null, shadowFocus, this.world.tick / 60);
     this.districts?.accents?.update(this.world.tick / 60);
     field.update(this.view.focus.x, this.view.focus.z, this.world.tick / 60);
     field.render(this.renderer);

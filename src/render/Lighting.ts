@@ -90,8 +90,8 @@ export class Lighting {
   private promoted: import('./LightField').FieldLight | null = null;
   private promotedAt = -Infinity;
   private promotionChanges = 0;
-  private readonly promotionPosition = new Vector3();
-  private readonly promotionTarget = new Vector3();
+  private shadowLight: import('./LightField').FieldLight | null = null;
+  private shadowFade = 1;
   private quality: QualityTier = 'high';
   /** Night readability (specs/06 §2): the player's feet (xyz) for the hero rim, and the preset rim weight. */
   /** L6 darkness is part of the existing palette output, never an extra pass. */
@@ -126,7 +126,6 @@ export class Lighting {
   readonly shadowHue = uniform(new Color());
   /** Direction towards the shadow-casting light: the sun/moon, or the promoted hero lamp at night. */
   private readonly shadowDirection = new Vector3(0, 1, 0);
-  private readonly heroTarget = new Vector3();
   private readonly lightDir = new Vector3();
   private readonly lightRight = new Vector3();
   private readonly lightUp = new Vector3();
@@ -185,7 +184,7 @@ export class Lighting {
   }
   set(name: TimeOfDay): void {
     if (!(name in timeOfDay)) throw new Error(`Unknown time-of-day preset: ${name}`);
-    this.promoted = null; this.promotedAt = -Infinity; this.heroLight = null; this.promotionChanges = 0; this.heroTime = -1; this.spot.visible = name === 'L6-subway'; this.sun.visible = !this.spot.visible;
+    this.promoted = this.shadowLight = null; this.shadowFade = 1; this.promotedAt = -Infinity; this.heroLight = null; this.promotionChanges = 0; this.heroTime = -1; this.spot.visible = name === 'L6-subway'; this.sun.visible = !this.spot.visible;
     this.worldPaletteEnabled.value = Number(name === 'L1');
     this.preset = name; const p = timeOfDay[name];
     this.corpseRim.value = p.corpseRim ?? 0;
@@ -222,7 +221,7 @@ export class Lighting {
    * `shadowMap.depthTexture` every frame (WebGL2 view blank, WebGPU validation errors). castShadow stays true; the low
    * tier only zeroes the shadow weight and stops refreshing the map, both plain uniforms/flags.
    */
-  private spotShadowOff(): boolean { return (this.preset === 'L6-subway' || this.preset === 'L6') && this.quality === 'low'; }
+  private spotShadowOff(): boolean { return this.preset === 'L6-subway' && this.quality === 'low'; }
   private spotSource = false;
   private setShadowSource(spot: boolean): void {
     this.spotSource = spot;
@@ -230,9 +229,9 @@ export class Lighting {
     delete this.scene.userData.shadowVariant;
     const spotOff = this.spotShadowOff();
     this.spot.visible = stable || spot; this.sun.visible = stable || !spot;
-    this.spot.shadow.intensity = spotOff ? 0 : stable ? Number(spot) : 1;
-    this.sun.shadow.intensity = stable ? Number(!spot) : 1;
-    this.spot.shadow.autoUpdate = !spotOff && (!stable || spot); this.sun.shadow.autoUpdate = !stable || !spot;
+    this.spot.shadow.intensity = spotOff || !spot ? 0 : this.shadowFade;
+    this.sun.shadow.intensity = spot ? 0 : this.shadowFade;
+    this.spot.shadow.autoUpdate = !spotOff && spot; this.sun.shadow.autoUpdate = !spot;
     // Draw each reserved map once at load, including the currently inactive source.
     if (stable) { if (!this.sun.shadow.map) this.sun.shadow.needsUpdate = true; if (!this.spot.shadow.map) this.spot.shadow.needsUpdate = true; }
     this.sun.intensity = spot ? 0 : this.intensity.value;
@@ -295,7 +294,7 @@ export class Lighting {
     const radius = Math.ceil(Math.max(8, visibleRadius) * 1.1 * 4) / 4;
     // Stable shadows while scrolling: move the shadow frustum in whole texels of its own light-space grid,
     // otherwise every static shadow edge resamples (swims/flickers) as the follow camera glides.
-    const direction = this.lightDir.copy(this.heroTime >= 0 ? this.shadowDirection : this.direction.value).normalize();
+    const direction = this.lightDir.copy(this.direction.value).normalize();
     const right = this.lightRight.crossVectors(this.worldUp, direction); if (right.lengthSq() < 1e-8) right.set(1, 0, 0); right.normalize(); const up = this.lightUp.crossVectors(direction, right);
     const texel = 2 * radius / this.sun.shadow.mapSize.x, a = view.focus.dot(right), b = view.focus.dot(up);
     const center = this.shadowCenter.copy(view.focus).addScaledVector(right, Math.round(a / texel) * texel - a).addScaledVector(up, Math.round(b / texel) * texel - b);
@@ -305,38 +304,44 @@ export class Lighting {
     camera.left = camera.bottom = -radius; camera.right = camera.top = radius;
     camera.near = 0.1; camera.far = radius * 4; camera.updateProjectionMatrix();
   }
-  /** Hero shadows within the one-shadow-map budget (specs/06 §4): at night the sun/moon shadow camera turns
-   * towards the strongest `shadow: hero` light covering the survivor, and the light-field pools take that
-   * shadow. Direction and weight crossfade over ~0.3 s, so promotion never pops. `time` is sim seconds. */
+  /** One refreshed shadow map. Source changes fade out then in over 0.3 s, switching
+   * at zero weight so moon and practical shadows never pop or require two maps. */
   setHeroLight(light: import('./LightField').FieldLight | null, focus: { x: number; y: number; z: number }, time: number): void {
-    // Retain the current lamp until it leaves the pool (or loses power), and
-    // never select a replacement within one second of the last promotion.
+    const first = this.heroTime < 0, night = this.field.strength.value >= .5;
+    if (!night) light = null;
     const current = this.promoted;
-    const covered = current?.on && Math.hypot(current.x + current.aimX - focus.x, current.z + current.aimZ - focus.z) < current.radius * 1.05;
-    if (covered || (time - this.promotedAt < 1 && current?.on)) light = current;
-    if (light !== current) { this.promotionPosition.copy(this.spot.position); this.promotionTarget.copy(this.spot.target.position); if (this.heroTime < 0 && light) { this.promotionPosition.set(light.x, light.y ?? 3, light.z); this.promotionTarget.set(light.x + light.aimX, focus.y, light.z + light.aimZ); } this.promoted = light; this.promotedAt = time; this.promotionChanges++; }
-    this.heroLight = light?.id ?? null;
-    const seconds = this.heroTime < 0 ? 0 : Math.max(0, Math.min(.1, time - this.heroTime)); this.heroTime = time;
-    const night = this.field.strength.value >= .5;
-    const goal = light && night ? 1 : 0;
-    if (light && night) this.heroTarget.set(light.x - focus.x, Math.max(1.5, (light.y ?? 3) - focus.y), light.z - focus.z).normalize();
-    else this.heroTarget.copy(this.direction.value);
-    const k = seconds > 0 ? 1 - Math.exp(-seconds / .1) : 1;
-    if (this.shadowDirection.lengthSq() < .5 || seconds === 0) this.shadowDirection.copy(this.heroTarget);
-    else this.shadowDirection.lerp(this.heroTarget, k).normalize();
-    this.fieldShadow.value = seconds === 0 ? goal : this.fieldShadow.value + (goal - this.fieldShadow.value) * k;
-    this.field.visibilitySoftness.value = this.fieldShadow.value;
-    // Keep castShadow stable: Three disposes its ShadowNode when this flag
-    // flips, while cached material graphs can still reference that node.
-    // Only the active source updates its shadow map.
-    if (light) {
-      const blend = Math.min(1, Math.max(0, (time - this.promotedAt) / .3));
-      this.spot.position.copy(this.promotionPosition).lerp(this.heroTarget.set(light.x, light.y ?? 3, light.z), blend);
-      this.spot.target.position.copy(this.promotionTarget).lerp(this.heroTarget.set(light.x + light.aimX, focus.y, light.z + light.aimZ), blend);
-      this.spot.distance = Math.max(10, light.radius * 4); this.spot.angle = Math.atan2(light.radius * light.stretch, Math.max(1, light.y ?? 3));
-      this.spot.intensity = .001 * this.fieldShadow.value;
-    } else this.spot.intensity = .001 * this.fieldShadow.value;
-    this.setShadowSource(this.preset === 'L6-subway' || (night && !!light));
+    const sameSource = light === current || !!current?.id && light?.id === current.id;
+    // A 20% advantage avoids ties churning the source, but a stronger practical
+    // can replace the current lamp before the player leaves its pool.
+    const strength = current ? this.field.heroStrength(current, focus.x, focus.z) : 0;
+    const retain = current?.on && light && strength > .02 && strength >= this.field.heroStrength(light, focus.x, focus.z) * .8;
+    // Count moon handoffs and power loss too: neither may bypass the 2/s cap.
+    if (!sameSource && (retain || time - this.promotedAt < .5)) light = current;
+    const changed = light !== current && !(current?.id && light?.id === current.id);
+    if (changed) { this.promotedAt = time; this.promotionChanges++; }
+    this.promoted = light;
+    if (first || !changed && (light === this.shadowLight || !!light?.id && light.id === this.shadowLight?.id)) this.shadowLight = light;
+    const blend = Math.min(1, Math.max(0, (time - this.promotedAt) / .3));
+    if (first || blend >= .5) this.shadowLight = light;
+    this.shadowFade = first || blend >= 1 ? 1 : Math.abs(2 * blend - 1);
+    if (this.shadowLight && !this.shadowLight.on) this.shadowFade = 0;
+    this.heroLight = light?.id ?? (light ? 'fire' : null); this.heroTime = time;
+    const source = this.shadowLight;
+    this.fieldShadow.value = Number(!!source && night);
+    this.field.visibilitySoftness.value = Number(!!light && night);
+    if (source) {
+      this.spot.position.set(source.x, source.y ?? 3, source.z);
+      // Authored spots (headlamps/headlights/work lights) retain their forward
+      // aim. Point lamps use the focus to fit the one perspective shadow map.
+      const aimed = Math.hypot(source.aimX, source.aimZ) > .01;
+      this.spot.target.position.set(aimed ? source.x + source.aimX : focus.x, focus.y, aimed ? source.z + source.aimZ : focus.z);
+      const reach = this.spot.position.distanceTo(this.spot.target.position);
+      this.spot.distance = Math.max(10, reach + source.radius * source.stretch * 2);
+      this.spot.angle = Math.min(1.45, Math.atan2(source.radius * source.stretch, Math.max(1, reach)));
+      this.shadowDirection.set(source.x - focus.x, Math.max(.5, (source.y ?? 3) - focus.y), source.z - focus.z).normalize();
+    } else this.shadowDirection.copy(this.direction.value);
+    this.spot.intensity = source ? .001 : 0;
+    this.setShadowSource(this.preset === 'L6-subway' || !!source);
     this.practicalEffects.update(this.lamps.state, this.field.strength.value, focus, this.quality === 'low', timeOfDay[this.preset].lampInsects, time);
   }
   /** E27 keeps the survivor's capsule and rim readable inside an active smoke cloud. */
