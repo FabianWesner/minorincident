@@ -11,6 +11,9 @@ export interface PhysicsAsset {
   boxes: Aabb[]; source: string; hash: string;
 }
 export const physicsAssets = records as unknown as Readonly<Record<string, PhysicsAsset>>;
-/** Only movable environment props enter Rapier; vehicles, pickups and fixed objects retain their own systems. */
+/** Vehicle impacts move freestanding props, including parked/wrecked vehicles and
+ * heavy furniture whose old pushable flag only allowed on-foot pushing. Authored
+ * fixed fixtures and concrete barrier walls remain part of the static world.
+ * Driven vehicles are spawned separately by Vehicles, never from this table. */
 export const pushableProps: Readonly<Record<string, PhysicsAsset>> = Object.fromEntries(Object.entries(physicsAssets)
-  .filter(([id, p]) => (id.startsWith('prop.') || id.startsWith('haz.')) && p.pushable && p.class !== 'fixed' && p.mass > 0 && p.boxes.length));
+  .filter(([id, p]) => (id.startsWith('prop.') || id.startsWith('haz.') || id.startsWith('veh.')) && id !== 'prop.jersey-barrier' && p.class !== 'fixed' && p.mass > 0 && p.boxes.length));
