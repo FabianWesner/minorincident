@@ -131,6 +131,7 @@ export class L8BossArenas {
     if (boss.hunt) {
       const hunt = boss.hunt;
       if (distance(e.transform, hunt) > 1.2 && w.tick < hunt.until) { this.walk(e, hunt, hunt.flank ? 7 : 4); return true; }
+      if (distance(e.transform, p.transform) > 9) { hunt.until = w.tick; this.walk(e, p.transform, 6.5); return true; }
       delete boss.hunt; this.start(e, hunt.flank ? 'lion.flank' : 'lion.pounce', 36, 10, 1); return true;
     }
     if (arena.id === 'gorilla' && boss.barrage && !boss.scavengeId) this.scavenge(e);
@@ -151,7 +152,10 @@ export class L8BossArenas {
     }
     if (arena.id === 'zebra' && distance(e.transform, p.transform) < 2 && w.tick >= boss.readyAt) { this.start(e, 'zebra.kick', 36, 0, 2); boss.readyAt = w.tick + 360; return true; }
     if (arena.id === 'zebra' && arena.lane?.staging) {
-      const lane = arena.lane, goal = { x: lane.x + (boss.slot - 1.5) * .95, z: lane.side === 1 ? 16 : 48 };
+      const lane = arena.lane;
+      const aim = this.predict(e, 1 + Math.abs(p.transform.z - (lane.side === 1 ? 16 : 48)) / 15, arena);
+      lane.x = Math.max(46, Math.min(74, aim.x));
+      const goal = { x: lane.x + (boss.slot - 1.5) * .95, z: lane.side === 1 ? 16 : 48 };
       this.walk(e, goal, 7);
       const members = arena.ids.map(id => w.entities.get(id)).filter((v): v is EntitySnapshot => !!v?.infected && v.health.current > 0);
       if (members.every(v => !v.infected!.specialAttack && w.tick >= v.infected!.arenaBoss!.readyAt && distance(v.transform, { x: lane.x + (v.infected!.arenaBoss!.slot - 1.5) * .95, z: goal.z }) < 1.6)) {
@@ -280,7 +284,7 @@ export class L8BossArenas {
       }
       const dx = p.transform.x - e.transform.x, dz = p.transform.z - e.transform.z, d = Math.hypot(dx, dz);
       const dot = (dx * a.area.dx + dz * a.area.dz) / (d || 1);
-      if (d <= a.area.radius && (a.move !== 'elephant.swipe' || dot >= 0) && (a.move !== 'zebra.kick' || dot >= Math.SQRT1_2)) this.hit(e, a.move === 'gorilla.roar' ? 8 : a.move === 'zebra.kick' ? 25 : 30, a.move === 'gorilla.roar' ? 60 : 30);
+      if (d <= a.area.radius && (a.move !== 'elephant.swipe' || dot >= 0) && (a.move !== 'zebra.kick' || dot >= Math.SQRT1_2)) this.hit(e, a.move === 'gorilla.roar' ? 8 : a.move === 'zebra.kick' ? 25 : a.move === 'elephant.swipe' ? 45 : 30, a.move === 'gorilla.roar' ? 60 : 30);
       this.recover(e, 120); return;
     }
     if (a.move === 'gorilla.grab-throw' || a.move === 'monkey.debris') {
@@ -297,7 +301,7 @@ export class L8BossArenas {
     w.spatial.set(e.id, e.transform.x, e.transform.z);
     if (distance(e.transform, p.transform) <= a.area.radius + .35) {
       const firstContact = !a.hitIds.includes(1);
-      this.hit(e, arena.id === 'elephant' ? 40 : arena.id === 'monkey' ? 12 : arena.id === 'flamingo' ? 30 : 24, arena.id === 'elephant' ? 60 : 0);
+      this.hit(e, arena.id === 'elephant' ? 60 : arena.id === 'monkey' ? 12 : arena.id === 'flamingo' ? 30 : arena.id === 'lion' ? 45 : 35, arena.id === 'elephant' ? 60 : 0);
       if (firstContact && (arena.id === 'lion' || arena.id === 'monkey')) { b.grabUntil = w.tick + 120; b.grabHits = 0; b.heardTargetId = 1; arena.grabs++; }
     }
     if (clear + .001 < step || travelled + step >= range || w.tick - a.activeTick > (range / speed + 1) * 60) {

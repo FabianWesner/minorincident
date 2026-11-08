@@ -6,7 +6,8 @@ const out = process.env.L8_ROUTE_OUT ?? 'test-results/l8-route'; mkdirSync(out, 
 const tier = (process.env.L8_BOSS_TIER ?? 'low') as Tier;
 const identity = provenance(process.env.L8_BOSS_REVISION ?? 'working-tree');
 let failed = false;
-for (const policy of ['complete', 'stationary'] as const) {
+for (const policy of ['stationary', 'complete'] as const) {
+  if (process.env.L8_ROUTE_POLICY && policy !== process.env.L8_ROUTE_POLICY) continue;
   console.log(`L8 ${tier}/${policy} starting`);
   const receipt = await probeLevel('L8', tier, policy, identity);
   const path = `${out}/${tier}-${policy}.json`; writeFileSync(path, JSON.stringify(receipt, null, 2) + '\n');

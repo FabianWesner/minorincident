@@ -26,7 +26,7 @@ export class L8ArenaBot {
     });
     const target = targets[0];
     if (target) {
-      const grabbed = zoo.bosses.swapBlocked();
+      const grabbed = policy === 'skilled' && zoo.bosses.swapBlocked();
       const action = grabbed ? 'weapon.fire-axe' : 'weapon.army-mg';
       const choice = w.combat!.runner.loadout.activeEntries().find(e => e.id === action)!;
       if (choice) { f.selectedSlot = { side: choice.side, index: choice.index }; strikeAt(f, target, choice.side, p.transform, false); if (grabbed) f[choice.side === 'LEFT' ? 'left' : 'right'].down = true; }
