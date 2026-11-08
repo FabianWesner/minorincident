@@ -1,12 +1,18 @@
 # eg-l8-bosses — L8 animal arenas
 
-**Native gameplay is verified. Final presentation-gate and source-matched receipt refreshes are running.**
+**Goal met: six L8 animal boss arenas are playable and natively verified.**
 
-Gameplay snapshot: `f20b187b`. Presentation follow-up `dea0efbb` aligns the landing marker with the real projectile endpoint and passes the added native pool-geometry contract. Its repository gate and refreshed matrix/route/tour receipts are running. The goal will be marked complete when these finish. The binding design is `docs/design/boss-and-alpha-moves.md` (L8 table/common rules), `docs/design/story-script.md` L8 beat 3, and the lane brief.
+Runtime source: `dea0efbb`. Later commits contain this report and evidence only. The binding design is `docs/design/boss-and-alpha-moves.md` (L8 table/common rules), `docs/design/story-script.md` L8 beat 3, and the lane brief.
+
+## Done and open items
+
+- **Done:** all six arenas, native combat/lifecycle/control checks, required L8 route acceptance items, assets/audio validation and repository gates.
+- **Open — Browser QA needed:** rendered visuals, audio presentation and performance at both quality tiers/backends; the brief prohibits browser launches in this lane.
+- **Open outside the requested speed item:** G-13's separate far-follower waiting-time bound remains inconclusive, as detailed below.
 
 ## Final combat results
 
-[Final matrix receipts](evidence/arena-final/) use the same gameplay snapshot for every row. Low and high skilled results agree; each fight is within 45–120 s. All passive, standing-fire and constant-circle policies die without clearing their arena.
+[Final matrix receipts](evidence/arena-final/) use the same final runtime for every row. Low and high skilled results agree; each fight is within 45–120 s. All passive, standing-fire and constant-circle policies die without clearing their arena.
 
 | Arena | Skilled seconds, low / high | Courier deaths, low / high | Passive death (s) | Standing death (s) | Circle-kiting death (s) |
 | --- | ---: | ---: | ---: | ---: | ---: |
@@ -34,7 +40,7 @@ The [production tour](evidence/production-tour-low.json) clears all six arenas a
 | Healthy → infected continuity | Real bites and the shared 2.5–3.5 s same-ID turn owner; no replacement boss spawn. Healthy animals have no enemy bars. |
 | Runtime lifecycle | All 16 [final controls](evidence/controls-final-low.json) pass, including real death/retry, cover/ammo restoration, bars, grab/swap/melee inputs, chest interruption, permanent kills and conditional dialogue. |
 
-The no-fire elephant control records three actual fence IDs (`189`, `207`, `179`) and ends with 97 courier HP. The native pool-geometry contract places its circular landing marker at the actual shortened endpoint. The gorilla's living missile retains the actual infected ID and HP, lands 2 m from the locked target, receives a 36-tick rolling/down recovery and resumes its ordinary pursuit.
+The no-fire elephant control records three actual fence IDs (`189`, `207`, `179`) and ends with 97 courier HP. The gorilla's living missile retains the actual infected ID and HP, lands 2 m from the locked target, receives a 36-tick rolling/down recovery and resumes its ordinary pursuit. A native VFX pool contract verifies its circular landing marker at the actual shortened endpoint.
 
 The [natural lifecycle observation](evidence/natural-infection-final-low.json) transforms all 22 animals through real tunnel walks, grabs and timers. The [interrupted-carrier proof](evidence/carrier-retry-low.json) kills the opening carrier after its first flock bite through the damage owner; a distinct replacement walks out of a real tunnel, and all 22 animals still turn by tick 6066. The keeper opening is retained. Only the courier is protected in these lifecycle observations; they are not combat-victory receipts.
 
@@ -61,7 +67,7 @@ Both competent escape policies complete with zero courier deaths. G-13's separat
 
 ## Validation and reproduction
 
-The gameplay snapshot passes [typecheck, lint and the unit suite through `verify -- E30`](evidence/verify-final-checks.json): **106 passed, one skipped**, with the 150-case budget unchanged. [Full final log](evidence/verify-final.log).
+The final runtime passes [typecheck, lint and the unit suite through `verify -- E30`](evidence/verify-final-checks.json): **106 passed, one skipped**, with the 150-case budget unchanged. [Full final log](evidence/verify-final.log).
 
 Two shared-runner attempts hit the existing navigation test's 30-second timeout; [one failure is retained](evidence/verify-shared-timeout.log). The successful gate held both runner slots. Tests and their timeouts were not changed. The runner's synced Git manifest has no HEAD, so an ephemeral runner-only commit was required by the existing HEAD-dependent tool test; native receipts retain explicit source/observer hashes.
 

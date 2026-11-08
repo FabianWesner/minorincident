@@ -17,27 +17,27 @@
 
 [test-budget] 150/150 test cases ({"vitest":129,"e2e":9,"invariantsBrowser":12}), 43/45 files
 
-[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/eg-l8-bosses-f788a9-24779-1794176884[39m
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/eg-l8-bosses-f788a9-36736-1794177788[39m
 
- [32m✓[39m [30m[42m default [49m[39m tests/shared/render-contracts.test.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 1395[2mms[22m[39m
-   [33m[2m✓[22m[39m corpse pages: bodies persist past the old cap, bounds stay conservative, culling restores identity/pose/tint, normals survive vec4 padding[33m 932[2mms[22m[39m
- [32m✓[39m [30m[42m default [49m[39m tests/engine/combat.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 693[2mms[22m[39m
- [32m✓[39m [30m[42m default [49m[39m tests/engine/npcs.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 12358[2mms[22m[39m
-   [33m[2m✓[22m[39m civilians: seeded grab → bite → down → glowing eyes → rising → infected cycle in place; panic flees; a kill during the grab saves[33m 1959[2mms[22m[39m
-   [33m[2m✓[22m[39m escort: shared combat pace, follows through a maze, a 2 s stand revives to 50 %, unattended 20 s down fails the mission[33m 1326[2mms[22m[39m
-   [33m[2m✓[22m[39m corgi: warns of an offscreen threat within 18 m with a unit direction[33m 9071[2mms[22m[39m
- [32m✓[39m [30m[42m default [49m[39m tests/engine/l4-contact.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 15272[2mms[22m[39m
-   [33m[2m✓[22m[39m L4: every contact archetype interrupts approach/lure and attacks within 3 s; soldiers remain biteable and corgi protected[33m 15268[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/shared/render-contracts.test.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 1938[2mms[22m[39m
+   [33m[2m✓[22m[39m corpse pages: bodies persist past the old cap, bounds stay conservative, culling restores identity/pose/tint, normals survive vec4 padding[33m 1410[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/combat.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 758[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/npcs.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 14458[2mms[22m[39m
+   [33m[2m✓[22m[39m civilians: seeded grab → bite → down → glowing eyes → rising → infected cycle in place; panic flees; a kill during the grab saves[33m 2483[2mms[22m[39m
+   [33m[2m✓[22m[39m escort: shared combat pace, follows through a maze, a 2 s stand revives to 50 %, unattended 20 s down fails the mission[33m 1474[2mms[22m[39m
+   [33m[2m✓[22m[39m corgi: warns of an offscreen threat within 18 m with a unit direction[33m 10495[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/l4-contact.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 19035[2mms[22m[39m
+   [33m[2m✓[22m[39m L4: every contact archetype interrupts approach/lure and attacks within 3 s; soldiers remain biteable and corgi protected[33m 19033[2mms[22m[39m
 [90mstdout[2m | tests/shared/asset-contract.test.ts[2m > [22m[2mthe asset validator rejects every contract violation, and every production asset passes it
 [22m[39mprune: Removed types... Accessor (2)
 
 [90mstdout[2m | tests/shared/asset-contract.test.ts[2m > [22m[2mthe asset validator rejects every contract violation, and every production asset passes it
 [22m[39mprune: Removed types... Accessor (2)
 
- [32m✓[39m [30m[42m default [49m[39m tests/engine/world-systems.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 18264[2mms[22m[39m
-   [33m[2m✓[22m[39m interaction: rings fill and decay, complete once, nearest instant wins in range, damage floors interruptible progress[33m 344[2mms[22m[39m
-   [33m[2m✓[22m[39m explosions: every class follows its damage curve, full cover shields, rails take damage, chains are paced and capped, fires burn out[33m 6938[2mms[22m[39m
-   [33m[2m✓[22m[39m look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables match the layout without it, a re-preparation adds none, L9 has none; L10 crossing scenes stay clear and grounded[33m 10836[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/world-systems.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 22749[2mms[22m[39m
+   [33m[2m✓[22m[39m interaction: rings fill and decay, complete once, nearest instant wins in range, damage floors interruptible progress[33m 314[2mms[22m[39m
+   [33m[2m✓[22m[39m explosions: every class follows its damage curve, full cover shields, rails take damage, chains are paced and capped, fires burn out[33m 7865[2mms[22m[39m
+   [33m[2m✓[22m[39m look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables match the layout without it, a re-preparation adds none, L9 has none; L10 crossing scenes stay clear and grounded[33m 14475[2mms[22m[39m
 [90mstdout[2m | tests/engine/save-progression.test.ts[2m > [22m[2mL1–L10 starts clamp progressed saves and fresh handovers to story weapons, keeping eligible carry-over and selection
 [22m[39m[campaign] selected action weapon.handgun unavailable (not in destination rack); falling back to weapon.fists
 [campaign] selected action weapon.handgun unavailable (not in destination rack); falling back to weapon.bat
@@ -50,66 +50,67 @@
 [90mstdout[2m | tests/engine/save-progression.test.ts[2m > [22m[2mbare hands are innate: key 1 selects fists without them entering the carried racks
 [22m[39m[campaign] selected action weapon.fists unavailable (not in destination rack); falling back to weapon.rocket-launcher
 
- [32m✓[39m [30m[42m default [49m[39m tests/engine/save-progression.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 424[2mms[22m[39m
-   [33m[2m✓[22m[39m save decoding: presets round-trip, v0 migrates, corrupt/unknown data and storage errors fail safely[33m 338[2mms[22m[39m
- [32m✓[39m [30m[42m default [49m[39m tests/engine/infected-ai.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 3657[2mms[22m[39m
-   [33m[2m✓[22m[39m every human and animal role validates and spawns with its catalog health and speed; every attack is telegraphed[33m 901[2mms[22m[39m
-   [33m[2m✓[22m[39m perception: sight cone, facing-independent gunshots, silent melee misses, bounded kill noise, screamer radius[33m 2111[2mms[22m[39m
-   [33m[2m✓[22m[39m melee knocks down for a seeded 10-20 s, respects the L2 recovery pool, then up at full HP; explosives and burns kill for good[33m 455[2mms[22m[39m
- [32m✓[39m [30m[42m default [49m[39m tests/shared/asset-contract.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 9471[2mms[22m[39m
-   [33m[2m✓[22m[39m crowd atlas cleanup preserves enclosed eye paint and its authored alpha class[33m 588[2mms[22m[39m
-   [33m[2m✓[22m[39m uniform and civilian faces and yellow bare arms share the per-person skin class[33m 653[2mms[22m[39m
-   [33m[2m✓[22m[39m the asset validator rejects every contract violation, and every production asset passes it[33m 8229[2mms[22m[39m
- [32m✓[39m [30m[42m default [49m[39m tests/engine/collision.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 2333[2mms[22m[39m
-   [33m[2m✓[22m[39m admission: parked vehicle hulls exclude bodies, coincident spawns separate, a thin wall never admits a body through it[33m 1933[2mms[22m[39m
- [32m✓[39m [30m[42m default [49m[39m tests/engine/input.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 83[2mms[22m[39m
- [32m✓[39m [30m[42m default [49m[39m tests/tools/gate-tools.test.ts [2m([22m[2m8 tests[22m[2m | [22m[33m1 skipped[39m[2m)[22m[33m 17347[2mms[22m[39m
-   [33m[2m✓[22m[39m browser pool admission backs off under WindowServer pressure, keeps a one-context floor, recovers only after three cool samples[33m 5359[2mms[22m[39m
-   [33m[2m✓[22m[39m scene gate resume requires identical rows, revision and backend identities[33m 2131[2mms[22m[39m
-   [33m[2m✓[22m[39m scene gate rejects stale, failed, malformed and incomplete child results[33m 2760[2mms[22m[39m
-   [33m[2m✓[22m[39m scene gate rejects invalid arguments and empty selections before running children[33m 5806[2mms[22m[39m
-   [33m[2m✓[22m[39m build-cache publication never leaves an interrupted copy looking complete[33m 1061[2mms[22m[39m
- [32m✓[39m [30m[42m default [49m[39m tests/tools/qa-drivers.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 123[2mms[22m[39m
- [32m✓[39m [30m[42m default [49m[39m tests/engine/vehicles.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 14886[2mms[22m[39m
-   [33m[2m✓[22m[39m enter, drive and exit: door dwell, input ownership (no attacks while driving), capsule-safe exit on the free side; bike stand-to-mount needs an approach[33m 14613[2mms[22m[39m
- [32m✓[39m [30m[42m default [49m[39m tests/engine/spawn-director.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 8219[2mms[22m[39m
-   [33m[2m✓[22m[39m a 150-infected migration follows its spline on time and fans out at the goal[33m 1080[2mms[22m[39m
-   [33m[2m✓[22m[39m pooling: spawn/kill cycles reuse prewarmed records, keep every corpse, and refresh borrowed collision radii[33m 6805[2mms[22m[39m
- [32m✓[39m [30m[42m default [49m[39m tests/engine/aim-assist.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 326[2mms[22m[39m
- [32m✓[39m [30m[42m default [49m[39m tests/engine/director-pressure.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 1125[2mms[22m[39m
-   [33m[2m✓[22m[39m director pressure brings every native role to its human without replacing its combat role[33m 415[2mms[22m[39m
-   [33m[2m✓[22m[39m native routing clears thin doorways and yields failed shared searches[33m 699[2mms[22m[39m
- [32m✓[39m [30m[42m default [49m[39m tests/engine/input-log-codec.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 1243[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/save-progression.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 612[2mms[22m[39m
+   [33m[2m✓[22m[39m save decoding: presets round-trip, v0 migrates, corrupt/unknown data and storage errors fail safely[33m 562[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/infected-ai.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 4402[2mms[22m[39m
+   [33m[2m✓[22m[39m every human and animal role validates and spawns with its catalog health and speed; every attack is telegraphed[33m 912[2mms[22m[39m
+   [33m[2m✓[22m[39m perception: sight cone, facing-independent gunshots, silent melee misses, bounded kill noise, screamer radius[33m 2670[2mms[22m[39m
+   [33m[2m✓[22m[39m melee knocks down for a seeded 10-20 s, respects the L2 recovery pool, then up at full HP; explosives and burns kill for good[33m 536[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/shared/asset-contract.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 13448[2mms[22m[39m
+   [33m[2m✓[22m[39m crowd atlas cleanup preserves enclosed eye paint and its authored alpha class[33m 736[2mms[22m[39m
+   [33m[2m✓[22m[39m uniform and civilian faces and yellow bare arms share the per-person skin class[33m 981[2mms[22m[39m
+   [33m[2m✓[22m[39m the asset validator rejects every contract violation, and every production asset passes it[33m 11728[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/collision.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 2800[2mms[22m[39m
+   [33m[2m✓[22m[39m admission: parked vehicle hulls exclude bodies, coincident spawns separate, a thin wall never admits a body through it[33m 2402[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/input.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 73[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/tools/gate-tools.test.ts [2m([22m[2m8 tests[22m[2m | [22m[33m1 skipped[39m[2m)[22m[33m 19920[2mms[22m[39m
+   [33m[2m✓[22m[39m browser pool admission backs off under WindowServer pressure, keeps a one-context floor, recovers only after three cool samples[33m 5909[2mms[22m[39m
+   [33m[2m✓[22m[39m scene gate resume requires identical rows, revision and backend identities[33m 2464[2mms[22m[39m
+   [33m[2m✓[22m[39m scene gate rejects stale, failed, malformed and incomplete child results[33m 3232[2mms[22m[39m
+   [33m[2m✓[22m[39m scene gate rejects invalid arguments and empty selections before running children[33m 6677[2mms[22m[39m
+   [33m[2m✓[22m[39m build-cache publication never leaves an interrupted copy looking complete[33m 1340[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/tools/qa-drivers.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 133[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/vehicles.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 19555[2mms[22m[39m
+   [33m[2m✓[22m[39m handling: deterministic scripted drives, speed-dependent steering for every vehicle, braking before reverse, flip recovery[33m 388[2mms[22m[39m
+   [33m[2m✓[22m[39m enter, drive and exit: door dwell, input ownership (no attacks while driving), capsule-safe exit on the free side; bike stand-to-mount needs an approach[33m 19164[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/spawn-director.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 10047[2mms[22m[39m
+   [33m[2m✓[22m[39m a 150-infected migration follows its spline on time and fans out at the goal[33m 1501[2mms[22m[39m
+   [33m[2m✓[22m[39m pooling: spawn/kill cycles reuse prewarmed records, keep every corpse, and refresh borrowed collision radii[33m 8171[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/aim-assist.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 393[2mms[22m[39m
+   [33m[2m✓[22m[39m keyboard fire at all eight facings: Off shoots along the facing, Default lands on the zombie in front[33m 357[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/director-pressure.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 1201[2mms[22m[39m
+   [33m[2m✓[22m[39m director pressure brings every native role to its human without replacing its combat role[33m 435[2mms[22m[39m
+   [33m[2m✓[22m[39m native routing clears thin doorways and yields failed shared searches[33m 760[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/input-log-codec.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 1791[2mms[22m[39m
    [32m✓[39m input log codec [2m(2)[22m
-     [33m[2m✓[22m[39m round-trips every InputFrame field and scheme exactly, with float64 precision and commands at their sample index[33m 445[2mms[22m[39m
-     [33m[2m✓[22m[39m cuts independent chunks under the upload cap, decodes them in order, survives gzip and rejects gaps and garbage[33m 796[2mms[22m[39m
- [32m✓[39m [30m[42m default [49m[39m tests/engine/player.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 2052[2mms[22m[39m
-   [33m[2m✓[22m[39m walls: a 72-direction capsule sweep never penetrates the wall ring; sliding keeps 60 % tangential speed; head-on corners slip[33m 1848[2mms[22m[39m
- [32m✓[39m [30m[42m default [49m[39m tests/engine/navigation.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 22313[2mms[22m[39m
-   [33m[2m✓[22m[39m A*: budgeted search resumes across ticks within its expansion budget; connectivity tells a long route from an enclosed yard[33m 21931[2mms[22m[39m
-   [33m[2m✓[22m[39m chasers path through a maze and an offset district without ever overlapping a static collider[33m 313[2mms[22m[39m
- [32m✓[39m [30m[42m default [49m[39m tests/engine/core.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 87[2mms[22m[39m
- [32m✓[39m [30m[42m default [49m[39m tests/engine/l10-camera-framing.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 174[2mms[22m[39m
- [32m✓[39m [30m[42m default [49m[39m tests/engine/determinism.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 14822[2mms[22m[39m
-   [33m[2m✓[22m[39m a serialized recording replays the identical state hash at every tick; snapshots are copies; reset frees everything[33m 564[2mms[22m[39m
-   [33m[2m✓[22m[39m real levels replay deterministically: same seed and script give the same hash on L1, L4 and L10[33m 14051[2mms[22m[39m
+     [33m[2m✓[22m[39m round-trips every InputFrame field and scheme exactly, with float64 precision and commands at their sample index[33m 619[2mms[22m[39m
+     [33m[2m✓[22m[39m cuts independent chunks under the upload cap, decodes them in order, survives gzip and rejects gaps and garbage[33m 1170[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/player.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 2310[2mms[22m[39m
+   [33m[2m✓[22m[39m walls: a 72-direction capsule sweep never penetrates the wall ring; sliding keeps 60 % tangential speed; head-on corners slip[33m 2107[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/navigation.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 28614[2mms[22m[39m
+   [33m[2m✓[22m[39m A*: budgeted search resumes across ticks within its expansion budget; connectivity tells a long route from an enclosed yard[33m 28255[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/core.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 109[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/l10-camera-framing.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 207[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/determinism.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 18179[2mms[22m[39m
+   [33m[2m✓[22m[39m a serialized recording replays the identical state hash at every tick; snapshots are copies; reset frees everything[33m 626[2mms[22m[39m
+   [33m[2m✓[22m[39m real levels replay deterministically: same seed and script give the same hash on L1, L4 and L10[33m 17263[2mms[22m[39m
  [32m✓[39m [30m[42m default [49m[39m tests/tools/browser-pool-client.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 10[2mms[22m[39m
- [32m✓[39m [30m[42m default [49m[39m tests/tools/playtest-finale-retreat.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 6[2mms[22m[39m
- [32m✓[39m [30m[42m default [49m[39m tests/shared/architecture.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 2190[2mms[22m[39m
-   [33m[2m✓[22m[39m the sim import graph never reaches renderer, UI, debug or DOM code (Three math, synchronous save codecs and Rapier)[33m 1662[2mms[22m[39m
-   [33m[2m✓[22m[39m lint rejects unseeded randomness, DOM and renderer imports in the sim[33m 526[2mms[22m[39m
- [32m✓[39m [30m[42m default [49m[39m tests/engine/missions.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 57451[2mms[22m[39m
-   [33m[2m✓[22m[39m every objective type completes through the real sim exactly once[33m 417[2mms[22m[39m
-   [33m[2m✓[22m[39m graph timing: parallel tasks join in any order; a timeout fires exactly at 120 s, retry restores the timer, completion cancels it[33m 1546[2mms[22m[39m
-   [33m[2m✓[22m[39m interactions: ring, input and view predicates agree for every interact step of every level[33m 42645[2mms[22m[39m
-   [33m[2m✓[22m[39m interactions: only the open L6 gate the group is heading for offers its prompt[33m 9736[2mms[22m[39m
-   [33m[2m✓[22m[39m checkpoints: death restores objectives, HP, charges and escorts; a boss killed before or after C stays dead[33m 3095[2mms[22m[39m
- [32m✓[39m [30m[42m default [49m[39m tests/tools/test-budget-tools.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 24189[2mms[22m[39m
-   [33m[2m✓[22m[39m test budget collection is passive, rejects missing counts and bounds collection with child cleanup[33m 24187[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/tools/playtest-finale-retreat.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/engine/missions.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 69971[2mms[22m[39m
+   [33m[2m✓[22m[39m every objective type completes through the real sim exactly once[33m 496[2mms[22m[39m
+   [33m[2m✓[22m[39m graph timing: parallel tasks join in any order; a timeout fires exactly at 120 s, retry restores the timer, completion cancels it[33m 1625[2mms[22m[39m
+   [33m[2m✓[22m[39m interactions: ring, input and view predicates agree for every interact step of every level[33m 52128[2mms[22m[39m
+   [33m[2m✓[22m[39m interactions: only the open L6 gate the group is heading for offers its prompt[33m 11306[2mms[22m[39m
+   [33m[2m✓[22m[39m checkpoints: death restores objectives, HP, charges and escorts; a boss killed before or after C stays dead[33m 4403[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/shared/architecture.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 2943[2mms[22m[39m
+   [33m[2m✓[22m[39m the sim import graph never reaches renderer, UI, debug or DOM code (Three math, synchronous save codecs and Rapier)[33m 2296[2mms[22m[39m
+   [33m[2m✓[22m[39m lint rejects unseeded randomness, DOM and renderer imports in the sim[33m 644[2mms[22m[39m
+ [32m✓[39m [30m[42m default [49m[39m tests/tools/test-budget-tools.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 24925[2mms[22m[39m
+   [33m[2m✓[22m[39m test budget collection is passive, rejects missing counts and bounds collection with child cleanup[33m 24922[2mms[22m[39m
 
 [2m Test Files [22m [1m[32m27 passed[39m[22m[90m (27)[39m
 [2m      Tests [22m [1m[32m106 passed[39m[22m[2m | [22m[33m1 skipped[39m[90m (107)[39m
-[2m   Start at [22m 22:29:57
-[2m   Duration [22m 79.68s[2m (tests 89%, transform 6%, import 4%, setup 1%)[22m
+[2m   Start at [22m 22:45:50
+[2m   Duration [22m 92.01s[2m (tests 89%, transform 6%, import 4%, setup 1%)[22m
 
-[test-budget] test: 84.5 s (budget 240 s)
+[test-budget] test: 98.2 s (budget 240 s)
