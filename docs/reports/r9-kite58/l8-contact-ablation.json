@@ -1,0 +1,101 @@
+{
+  "method": "Same seed 1, low quality, original 20-second kiting policy. Temporarily restore only the two contact files from 7326320f, run the probe, then restore the worktree bytes in finally. The original worktree bytes match f95e7376 for these files. No other game files changed in the comparison.",
+  "files": {
+    "src/sim/ai/CharacterSeparation.ts": {
+      "7326320f": "b614f4bed83ecfc3489265fdc081bffef1d884c3",
+      "f95e7376": "63705d51bea9a371e6b0822d9ba660fb21f9c098"
+    },
+    "src/sim/world/SolidRegistry.ts": {
+      "7326320f": "ba2d1743f698b9b55c669e05cdba718139fcbb1c",
+      "f95e7376": "5d11756cfbacceabe18ac8fc5fccf73887fed762"
+    }
+  },
+  "withoutSoftContact": {
+    "kitingSeconds": 20.000000000000146,
+    "attacks": 0,
+    "attacksPerMinute": 0,
+    "samples": 1200,
+    "diagnostics": {
+      "startTick": 3646,
+      "endTick": 4845,
+      "firingFrames": 1,
+      "playerAttackStarts": 1,
+      "framesWithoutThreats": 294
+    }
+  },
+  "withSoftContact": {
+    "kitingSeconds": 20.000000000000146,
+    "attacks": 6,
+    "attacksPerMinute": 17.99999999999987,
+    "samples": 1200,
+    "diagnostics": {
+      "startTick": 3646,
+      "endTick": 4845,
+      "firingFrames": 1,
+      "playerAttackStarts": 1,
+      "framesWithoutThreats": 0
+    }
+  },
+  "courierWindupsWithSoftContact": [
+    {
+      "tick": 3861,
+      "sourceId": 429,
+      "target": {
+        "id": 1,
+        "x": 19.89116096496582,
+        "z": 63.630584716796875
+      },
+      "special": "lunge"
+    },
+    {
+      "tick": 3945,
+      "sourceId": 429,
+      "target": {
+        "id": 1,
+        "x": 17.09617042541504,
+        "z": 63.46363830566406
+      },
+      "special": "lunge"
+    },
+    {
+      "tick": 4029,
+      "sourceId": 429,
+      "target": {
+        "id": 1,
+        "x": 14.301179885864258,
+        "z": 63.29669189453125
+      },
+      "special": "lunge"
+    },
+    {
+      "tick": 4113,
+      "sourceId": 429,
+      "target": {
+        "id": 1,
+        "x": 11.506189346313477,
+        "z": 63.12974548339844
+      },
+      "special": "lunge"
+    },
+    {
+      "tick": 4186,
+      "sourceId": 429,
+      "target": {
+        "id": 1,
+        "x": 9.07720947265625,
+        "z": 62.98466110229492
+      },
+      "special": "lunge"
+    },
+    {
+      "tick": 4248,
+      "sourceId": 429,
+      "target": {
+        "id": 1,
+        "x": 7.026510238647461,
+        "z": 62.82549285888672
+      },
+      "special": "lunge"
+    }
+  ]
+}
