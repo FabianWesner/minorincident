@@ -22,7 +22,7 @@ export class Npcs {
   private readonly escapes = new Map<number, { x: number; z: number; tick: number; cell: number }>();
   /** A failed route search is retried after a second, not every tick (l4-collapse-2: a soldier sent to a post behind a closed
    * barricade ran a 1600-expansion A* per tick, 3 ms of every L4 war tick). */
-  private readonly unreachable = new Map<number, { cell: number; until: number }>();
+  private readonly unreachable = new Map<number, { x: number; z: number; until: number }>();
   /** First tick of a companion's current run of failed route searches. */
   private readonly routeless = new Map<number, number>();
   constructor(readonly world: SimWorld) {
@@ -96,9 +96,7 @@ export class Npcs {
     } else {
       // Quiet streets do not build a crowd flow field; followers still need their own route.
       const failed = this.unreachable.get(e.id), tick = this.world.tick;
-      // Formation goals move every tick. Compare the actual navigation goal cell, not floating point
-      // coordinates, so sub-cell jitter cannot defeat the retry cooldown and repeat a full A* search.
-      if (failed && tick < failed.until && failed.cell === nav.nearestCell(target.x, target.z, footprint)) return false;
+      if (failed && tick < failed.until && Math.abs(failed.x - target.x) + Math.abs(failed.z - target.z) < .25) return false;
       // Reserve the full body around posts when the actual goal has that room.
       // A goal beside a bench/wall needs the narrow approach, rather than a
       // wider nearest-cell goal on the other side. L3 keeps its shared field's clearance.
@@ -114,7 +112,7 @@ export class Npcs {
         const pocket = !!e.companion;
         if (pocket && !(this.routeless.get(e.id)! <= tick)) this.routeless.set(e.id, tick); // first failure, or a restored earlier tick
         const trail = pocket && tick - this.routeless.get(e.id)! >= 120 ? this.companion.trailPoint(e) : null;
-        if (!trail) { this.unreachable.set(e.id, { cell: nav.nearestCell(target.x, target.z, footprint), until: tick + 60 }); return false; }
+        if (!trail) { this.unreachable.set(e.id, { x: target.x, z: target.z, until: tick + 60 }); return false; }
         this.waypoint.x = trail.x; this.waypoint.z = trail.z;
       } else this.routeless.delete(e.id);
       if (failed) this.unreachable.delete(e.id);

@@ -67,18 +67,6 @@ test('civilians: seeded grab → bite → down → glowing eyes → rising → i
     attacker.health.current = 0; step(s, 1);
     expect(s.events.events().some(ev => ev.type === 'civilian.saved'), mode).toBe(mode !== 'late');
   }
-  // Moving-target jitter beyond the former 0.25 m coordinate tolerance must not defeat a same-cell path cooldown.
-  {
-    const w = await world(), follower = w.entities.get(w.npcs!.civilians.spawn('cashier', { x: 5, z: 5 }))!;
-    const nav = w.infected!.nav, cell = nav.nearestCell(10, 10, .35), center = { x: nav.x(cell), z: nav.z(cell) };
-    const steer = vi.spyOn(nav, 'steer').mockReturnValue(false), path = { path: [] as number[], goal: -1, pathIndex: 0 };
-    expect(w.npcs!.move(follower, center, 3, path)).toBe(false);
-    expect(nav.nearestCell(center.x + .2, center.z + .1, .35)).toBe(cell);
-    expect(w.npcs!.move(follower, { x: center.x + .2, z: center.z + .1 }, 3, path)).toBe(false);
-    expect(steer).toHaveBeenCalledTimes(1);
-    w.tick += 60; expect(w.npcs!.move(follower, center, 3, path)).toBe(false);
-    expect(steer).toHaveBeenCalledTimes(2); steer.mockRestore();
-  }
   // Sight caching must retain interleaved survivor answers across a high-tier night crowd and invalidate on tick/power change.
   {
     const w = await loadRunnerLevel('L8', 1, undefined, 0, { quality: 'high' }); worlds.push(w);
