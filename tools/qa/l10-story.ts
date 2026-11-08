@@ -135,6 +135,7 @@ for (const tier of tiers) {
     gun.mounted = false; Object.assign(boss.transform, bossPose); w.combat!.damage.god = true;
     // A labelled stationary capability fixture: production AI must climb the real stair, never acquire deck support below it.
     const foot = { x: 4002.2, z: -33 }, climber = w.infected!.spawn('infected.runner', foot, { state: 'chase' });
+    for (const other of [...w.infected!.active]) if (other.id !== climber) { other.health.current = 0; w.infected!.down(other, true); }
     const mountedAt = { x: gun.placement.x - .78, y: gun.placement.y + .78, z: gun.placement.z };
     Object.assign(player.transform, mountedAt); w.physics.playerBody!.setTranslation(mountedAt, true); w.spatial.set(1, mountedAt.x, mountedAt.z);
     gun.mounted = true; w.infected!.pursueTarget(climber, 1);
