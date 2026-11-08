@@ -1,0 +1,184 @@
+{
+  "revision": "marked-lanes",
+  "sourceHash": "a313a2e4a7be4a77f96f912df87de3b29b3c284016b0ce988471d54f26e7acf8",
+  "observerHash": "ea79c693ab65599b1e5693bd074bf48139a64bb08bbe20f362195d02e2713cfc",
+  "policy": "kite",
+  "rows": [
+    {
+      "id": "elephant",
+      "tier": "low",
+      "policy": "kite",
+      "measurementEntry": {
+        "x": -60,
+        "z": 16,
+        "y": 0.7
+      },
+      "complete": false,
+      "seconds": 9.233333333333333,
+      "totalSeconds": 9.233333333333333,
+      "hp": 0,
+      "deaths": 1,
+      "damage": 104.83333333333327,
+      "attacks": 2,
+      "phases": 1,
+      "counters": 0,
+      "wallHits": 0,
+      "rocket": 0,
+      "rocketPickups": 0,
+      "bites": [
+        399
+      ],
+      "turns": [
+        399
+      ],
+      "tells": [
+        {
+          "tick": 314,
+          "source": 399,
+          "attack": 1,
+          "move": "elephant.charge",
+          "duration": 0.9,
+          "area": {
+            "x": -49.216152815341445,
+            "z": 16.63034413458253,
+            "radius": 1.75,
+            "dx": -0.1727872501391444,
+            "dz": 0.9849591698082477
+          }
+        },
+        {
+          "tick": 736,
+          "source": 399,
+          "attack": 2,
+          "move": "elephant.swipe",
+          "duration": 0.7,
+          "area": {
+            "x": -55.74111064331016,
+            "z": 44.89926049208292,
+            "radius": 5.5,
+            "dx": -0.8411257701595433,
+            "dz": -0.5408395684244219
+          }
+        }
+      ],
+      "throws": [],
+      "signals": [],
+      "stages": [
+        {
+          "tick": 368,
+          "source": 399,
+          "move": "elephant.charge",
+          "stage": "active"
+        },
+        {
+          "tick": 515,
+          "source": 399,
+          "move": "elephant.charge",
+          "stage": "recovery"
+        },
+        {
+          "tick": 635,
+          "source": 399,
+          "move": "elephant.charge",
+          "stage": "expiry"
+        },
+        {
+          "tick": 778,
+          "source": 399,
+          "move": "elephant.swipe",
+          "stage": "active"
+        },
+        {
+          "tick": 778,
+          "source": 399,
+          "move": "elephant.swipe",
+          "stage": "recovery"
+        }
+      ],
+      "destruction": [
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-0",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-1",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-2",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-3",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        }
+      ],
+      "bosses": [
+        {
+          "id": 399,
+          "hp": 4591.759999999979,
+          "at": {
+            "x": -55.74111064331016,
+            "z": 44.89926049208292,
+            "y": 0.7,
+            "yaw": 2.5701577156286297
+          },
+          "state": "chase",
+          "boss": {
+            "arena": "elephant",
+            "slot": 0,
+            "engaged": true,
+            "exposedUntil": 898,
+            "readyAt": 1156,
+            "shakeHits": 0
+          },
+          "attack": {
+            "move": "elephant.swipe",
+            "attackId": 2,
+            "stage": "recovery",
+            "startTick": 736,
+            "activeTick": 778,
+            "cooldownExpiry": 1156,
+            "recoveryUntil": 898,
+            "target": {
+              "id": 1,
+              "x": -60.40551621664785,
+              "z": 41.90007156369956
+            },
+            "area": {
+              "x": -55.74111064331016,
+              "z": 44.89926049208292,
+              "radius": 5.5,
+              "dx": -0.8411257701595433,
+              "dz": -0.5408395684244219
+            },
+            "hitIds": [
+              1
+            ],
+            "bait": {
+              "x": -55.9132080078125,
+              "z": 40.91584777832031
+            },
+            "destination": {
+              "x": -55.74111064331016,
+              "z": 44.89926049208292
+            }
+          },
+          "held": false
+        }
+      ]
+    }
+  ]
+}

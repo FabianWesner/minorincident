@@ -1,0 +1,541 @@
+{
+  "sourceHash": "40f741f4a57cf935a6ceb9794c277dfb5ebf7b15b89b8d1a6cf162a9e48f9114",
+  "observerHash": "68e35971bfe59e945d217afaba070871cca203b9c363fa5848df7a0ece3fef9b",
+  "revision": "marked-lanes",
+  "tier": "low",
+  "method": "Controlled native lifecycle, mortal checkpoint, input, damage, bar and dialogue checks; setup mutations are explicit and do not certify arena combat completion.",
+  "checks": [
+    {
+      "name": "healthy animal has no enemy bar",
+      "pass": true,
+      "value": {
+        "id": 397,
+        "infected": false
+      }
+    },
+    {
+      "name": "engagement sets arena-entry checkpoint and health bar",
+      "pass": true,
+      "value": {
+        "checkpoint": "arena-gorilla",
+        "arenaPhase": 1,
+        "bar": true
+      }
+    },
+    {
+      "name": "one rocket pickup is present at entry",
+      "pass": true,
+      "value": [
+        {
+          "id": 426,
+          "at": {
+            "x": 60,
+            "y": 0.27,
+            "z": -8,
+            "yaw": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "pickup grants one rocket without changing the campaign rack",
+      "pass": true,
+      "value": {
+        "one": true,
+        "second": false,
+        "rackCount": 7,
+        "after": 7,
+        "stock": 0
+      }
+    },
+    {
+      "name": "pillar uses the real destruction owner",
+      "pass": true,
+      "value": {
+        "id": "D-ZOO/l8-gorilla-pillar-0",
+        "beforeHP": [
+          260
+        ],
+        "hp": [
+          0
+        ],
+        "collapsed": true
+      }
+    },
+    {
+      "name": "mortal retry restores entry, phase, boss HP, cover and rocket pickup",
+      "pass": true,
+      "value": {
+        "deaths": 1,
+        "at": {
+          "x": 60,
+          "y": 0.7170000076293945,
+          "z": -16,
+          "yaw": 0.19952152321515965
+        },
+        "phase": 1,
+        "hp": {
+          "current": 0,
+          "max": 6000
+        },
+        "pillarHP": [
+          260
+        ],
+        "stock": 1,
+        "pickups": 0
+      }
+    },
+    {
+      "name": "chest beat can be hit during its full one-second cue and countered into recovery",
+      "pass": true,
+      "value": {
+        "windup": true,
+        "body": 2.52,
+        "exposed": 25.2,
+        "move": {
+          "move": "gorilla.roar",
+          "attackId": 3,
+          "stage": "recovery",
+          "startTick": 319,
+          "activeTick": 379,
+          "cooldownExpiry": 739,
+          "recoveryUntil": 440,
+          "target": {
+            "id": 1,
+            "x": 60,
+            "z": -16
+          },
+          "area": {
+            "x": 60.00082413201894,
+            "z": -22.000593243446335,
+            "radius": 8,
+            "dx": -0.0001373417556786841,
+            "dz": 0.9999999905686211
+          },
+          "hitIds": [],
+          "destination": {
+            "x": 60.00082413201894,
+            "z": -22.000593243446335
+          }
+        },
+        "counters": 1
+      }
+    },
+    {
+      "name": "ordinary weapons finish an arena boss permanently",
+      "pass": true,
+      "value": {
+        "hp": 0,
+        "recoverAt": -1
+      }
+    },
+    {
+      "name": "grab blocks weapon selection for two seconds",
+      "pass": true,
+      "value": {
+        "selected": "RIGHT",
+        "gunSide": "RIGHT",
+        "blocked": true,
+        "remaining": 60
+      }
+    },
+    {
+      "name": "a real melee hit shakes off the monkey and opens recovery",
+      "pass": true,
+      "value": {
+        "grabUntil": 0,
+        "tick": 300,
+        "counters": 1,
+        "hp": 684.768
+      }
+    },
+    {
+      "name": "weapon selection returns at grab expiry",
+      "pass": true,
+      "value": {
+        "blocked": false,
+        "selected": "RIGHT",
+        "expected": "RIGHT"
+      }
+    },
+    {
+      "name": "three real sidestepped wall charges kill without firing",
+      "pass": true,
+      "value": {
+        "contacts": [
+          {
+            "tick": 364,
+            "hits": 1,
+            "boss": {
+              "x": -39.52500020368802,
+              "z": 25,
+              "y": 0.7,
+              "yaw": 0
+            },
+            "courier": {
+              "x": -46.27656936645508,
+              "y": 0.7049999833106995,
+              "z": 30.15257453918457,
+              "yaw": 4.6825505551217566
+            },
+            "hp": 5000
+          },
+          {
+            "tick": 1776,
+            "hits": 2,
+            "boss": {
+              "x": -68.93490008499596,
+              "z": 72.84101974509265,
+              "y": 0.7,
+              "yaw": -1.9725875264684256
+            },
+            "courier": {
+              "x": -61.446197509765625,
+              "y": 0.7099999785423279,
+              "z": 44.33820724487305,
+              "yaw": 3.8297714519435977
+            },
+            "hp": 5000
+          },
+          {
+            "tick": 4243,
+            "hits": 3,
+            "boss": {
+              "x": -70.50500060259947,
+              "z": 32.225342186200685,
+              "y": 0.7,
+              "yaw": 1.3283261187696673
+            },
+            "courier": {
+              "x": -73.50845336914062,
+              "y": 0.7099999785423279,
+              "z": 27.271331787109375,
+              "yaw": 2.899122445564564
+            },
+            "hp": 0
+          }
+        ],
+        "wallHits": 3,
+        "hp": 0,
+        "courierHP": 100,
+        "finalBoss": {
+          "x": -70.50500060259947,
+          "z": 32.225342186200685,
+          "y": 0.7,
+          "yaw": 1.3283261187696673
+        },
+        "finalCourier": {
+          "x": -73.50845336914062,
+          "y": 0.7099999785423279,
+          "z": 27.271331787109375,
+          "yaw": 2.899122445564564
+        },
+        "phase": 3,
+        "current": {
+          "id": "elephant",
+          "ids": [
+            399
+          ],
+          "carrier": 0,
+          "phase": 3,
+          "startedAt": 0,
+          "endedAt": 4243,
+          "nextAt": 5505,
+          "cycle": 4,
+          "wallHits": 3,
+          "rocket": 0,
+          "grabs": 0,
+          "counters": 3,
+          "track": {
+            "x": -73.4356460571289,
+            "z": 27.289339065551758,
+            "vx": -4.368438720703125,
+            "vz": -1.0804367065429688,
+            "turn": -1.3480391935076256e-9,
+            "at": 4242
+          }
+        },
+        "tick": 4243,
+        "missionPhase": "playing",
+        "charges": [
+          {
+            "tick": 364,
+            "a": {
+              "move": "elephant.charge",
+              "attackId": 1,
+              "stage": "recovery",
+              "startTick": 225,
+              "activeTick": 279,
+              "cooldownExpiry": 645,
+              "recoveryUntil": 484,
+              "target": {
+                "id": 1,
+                "x": -55.03989406367829,
+                "z": 25
+              },
+              "area": {
+                "x": -59.42277777777778,
+                "z": 25,
+                "radius": 1.75,
+                "dx": 1,
+                "dz": 0
+              },
+              "hitIds": [],
+              "bait": {
+                "x": -45.930015563964844,
+                "z": 25
+              },
+              "destination": {
+                "x": -15.422777777777782,
+                "z": 25
+              }
+            },
+            "boss": {
+              "x": -39.52500020368802,
+              "z": 25,
+              "y": 0.7,
+              "yaw": 0
+            },
+            "courier": {
+              "x": -46.27656936645508,
+              "y": 0.7049999833106995,
+              "z": 30.15257453918457,
+              "yaw": 4.6825505551217566
+            },
+            "neighbors": [
+              {
+                "id": 1484211042,
+                "role": "prop.crowd-fence",
+                "at": {
+                  "x": -38,
+                  "y": -0.001703500747680664,
+                  "z": 20.329999923706055,
+                  "yaw": 1.5707963267948966
+                },
+                "radius": 1.1910000000000018
+              },
+              {
+                "id": 1517766280,
+                "role": "prop.crowd-fence",
+                "at": {
+                  "x": -38,
+                  "y": -0.001703500747680664,
+                  "z": 25.09000015258789,
+                  "yaw": 1.5707963267948966
+                },
+                "radius": 1.1910000000000018
+              },
+              {
+                "id": 1534543899,
+                "role": "prop.crowd-fence",
+                "at": {
+                  "x": -38,
+                  "y": -0.001703500747680664,
+                  "z": 22.709999084472656,
+                  "yaw": 1.5707963267948966
+                },
+                "radius": 1.1910000000000007
+              },
+              {
+                "id": 1836393946,
+                "role": "prop.crowd-fence",
+                "at": {
+                  "x": -38,
+                  "y": -0.001703500747680664,
+                  "z": 27.469999313354492,
+                  "yaw": 1.5707963267948966
+                },
+                "radius": 1.1910000000000018
+              },
+              {
+                "id": 1853171565,
+                "role": "prop.crowd-fence",
+                "at": {
+                  "x": -38,
+                  "y": -0.001703500747680664,
+                  "z": 29.850000381469727,
+                  "yaw": 1.5707963267948966
+                },
+                "radius": 1.191
+              }
+            ],
+            "staticAhead": 0
+          },
+          {
+            "tick": 1776,
+            "a": {
+              "move": "elephant.charge",
+              "attackId": 3,
+              "stage": "recovery",
+              "startTick": 1545,
+              "activeTick": 1599,
+              "cooldownExpiry": 1965,
+              "recoveryUntil": 1896,
+              "target": {
+                "id": 1,
+                "x": -54.79288864135742,
+                "z": 39.558353424072266
+              },
+              "area": {
+                "x": -52.74704802299658,
+                "z": 34.74354819510853,
+                "radius": 1.75,
+                "dx": -0.391067520874193,
+                "dz": 0.9203619908043316
+              },
+              "hitIds": [],
+              "bait": {
+                "x": -54.79288864135742,
+                "z": 39.558353424072266
+              },
+              "destination": {
+                "x": -69.95401894146107,
+                "z": 75.23947579049911
+              }
+            },
+            "boss": {
+              "x": -68.93490008499596,
+              "z": 72.84101974509265,
+              "y": 0.7,
+              "yaw": -1.9725875264684256
+            },
+            "courier": {
+              "x": -61.41408157348633,
+              "y": 0.7099999785423279,
+              "z": 44.292537689208984,
+              "yaw": 3.8297714519435977
+            },
+            "neighbors": [],
+            "staticAhead": 2.8950948493339665e-15
+          },
+          {
+            "tick": 2920,
+            "a": {
+              "move": "elephant.charge",
+              "attackId": 4,
+              "stage": "recovery",
+              "startTick": 2865,
+              "activeTick": 2919,
+              "cooldownExpiry": 3285,
+              "recoveryUntil": 3040,
+              "target": {
+                "id": 1,
+                "x": -65.34039306640625,
+                "z": 48.31196975708008
+              },
+              "area": {
+                "x": -65.25216493021436,
+                "z": 53.757874448389245,
+                "radius": 1.75,
+                "dx": -0.016198697002444515,
+                "dz": -0.9998687925000074
+              },
+              "hitIds": [],
+              "bait": {
+                "x": -65.34039306640625,
+                "z": 48.31196975708008
+              },
+              "destination": {
+                "x": -65.96490759832191,
+                "z": 9.76364757838892
+              }
+            },
+            "boss": {
+              "x": -65.25593768785753,
+              "z": 53.525,
+              "y": 0.7,
+              "yaw": 1.586995732298038
+            },
+            "courier": {
+              "x": -61.535926818847656,
+              "y": 0.7099999785423279,
+              "z": 48.250423431396484,
+              "yaw": 0.016199405503141175
+            },
+            "neighbors": [
+              {
+                "id": 1488007660,
+                "role": "prop.crowd-fence",
+                "at": {
+                  "x": -68.91000366210938,
+                  "y": -0.0017031431198120117,
+                  "z": 52,
+                  "yaw": 0
+                },
+                "radius": 1.1909999999999956
+              },
+              {
+                "id": 1504785279,
+                "role": "prop.crowd-fence",
+                "at": {
+                  "x": -66.53016662597656,
+                  "y": -0.0017031431198120117,
+                  "z": 52,
+                  "yaw": 0
+                },
+                "radius": 1.1908319327731043
+              },
+              {
+                "id": 1588673374,
+                "role": "prop.crowd-fence",
+                "at": {
+                  "x": -64.1903305053711,
+                  "y": -0.0017031431198120117,
+                  "z": 52,
+                  "yaw": 0
+                },
+                "radius": 1.1510042016806714
+              }
+            ],
+            "staticAhead": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "gorilla lifts a real living infected, lands it nearby and gives it a 0.6s roll",
+      "pass": true,
+      "value": {
+        "payloadId": 426,
+        "lifted": true,
+        "flight": true,
+        "landed": true,
+        "rolling": true,
+        "landingDistance": 2,
+        "hp": 60,
+        "at": {
+          "x": 60,
+          "y": 0.82,
+          "z": -12,
+          "yaw": 0
+        }
+      }
+    },
+    {
+      "name": "elephant dialogue continuity (Nadia alive)",
+      "pass": true,
+      "value": {
+        "lines": [
+          "L8.nadia-path",
+          "L8.nadia-elephant",
+          "L8.courier-elephant"
+        ],
+        "hp": 0,
+        "nadiaAlive": true
+      }
+    },
+    {
+      "name": "elephant dialogue continuity (Nadia dead)",
+      "pass": true,
+      "value": {
+        "lines": [
+          "L8.nadia-path",
+          "L8.courier-elephant"
+        ],
+        "hp": 0,
+        "nadiaAlive": false
+      }
+    }
+  ],
+  "errors": []
+}
