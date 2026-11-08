@@ -18,9 +18,11 @@ run_check() {
   [ "$result" = 0 ] || tail -n 12 "$root/$name.log"
 }
 run_check typecheck npm run typecheck
-[ "$result" = 0 ] || failed=1
+[ "$result" = 0 ] || exit 1
 run_check lint npm run lint
-[ "$result" = 0 ] || failed=1
+[ "$result" = 0 ] || exit 1
+run_check finale env L10_STORY_FINAL_ONLY=1 node --import tsx/esm tools/qa/l10-story.ts --out "$root/finale-proof.json"
+[ "$result" = 0 ] || exit 1
 run_check unit node tools/qa/test-budget.mjs --name test-l10-story --max-seconds 150 -- node node_modules/vitest/vitest.mjs run --project default --configLoader runner --maxWorkers=1
 [ "$result" = 0 ] || failed=1
 run_check acceptance env QA_ACCEPT_ROOT="$root/acceptance" npm run qa:accept -- --level L10 --skip-browser
