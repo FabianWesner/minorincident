@@ -15,6 +15,7 @@ const out = 'test-results/r10-l10/perf'; mkdirSync(out, { recursive: true });
 const sides = ['before', 'after'] as const;
 const servers = await Promise.all(sides.map((side, i) => preview({ configFile: false, build: { outDir: resolve(`test-results/r10-l10/${side === 'after' ? 'final' : 'before'}-dist`) }, preview: { host: '127.0.0.1', port: 3901 + i, strictPort: true } })));
 const rows: unknown[] = [];
+type TraversalSample = { frames: number[]; end: { x: number; z: number }; perf: unknown };
 const browser = await launchBrowser({ headless: true, args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist', ...uncappedArgs()] });
 try {
   for (const tier of ['low', 'high'] as const) for (const [i, side] of sides.entries()) {
@@ -26,15 +27,22 @@ try {
     await page.waitForFunction(() => !!window.__SS__);
     await page.evaluate(async tier => { const a = window.__SS__!; await a.ready; a.pause(); a.settings.set({ quality: tier, cameraShake: false }); await a.loadLevel('L10', { seed: 32, progression: 'L10-default' } as never); a.missions.begin(); a.cheats.god(true); }, tier);
     for (const zoom of [1, 1.5]) for (const [name, x, z] of [['r4', 2235, -64], ['r6', 3390, -94], ['approach', 3900, -30], ['console', 3940, -30]] as const) {
-      const start = await page.evaluate(async ({ x, z, zoom }) => { const a = window.__SS__!; a.pause(); a.cheats.killAll(); a.teleport(1, { x, z }); a.camera.follow(); a.camera.zoom(zoom); await a.step(120); await a.screenshotReady(); const p = a.getEntity(1)!.transform; a.resume(); return { x: p.x, z: p.z }; }, { x, z, zoom });
+      const start = await page.evaluate(async ({ x, z, zoom }) => {
+        const a = window.__SS__!; a.pause(); a.cheats.killAll(); a.teleport(1, { x, z }); a.camera.follow(); a.camera.zoom(zoom); await a.step(120); await a.screenshotReady();
+        const p = a.getEntity(1)!.transform, startPosition = { x: p.x, z: p.z };
+        // Arm before resume and physical key-down; retain the first movement
+        // interval so a cold material stall cannot disappear from this sample.
+        (window as unknown as { __r10sample: Promise<TraversalSample> }).__r10sample = new Promise(done => {
+          const frames: number[] = []; let last = performance.now(); const start = last;
+          const frame = (now: number) => { frames.push(now - last); last = now; if (now - start < 6500) requestAnimationFrame(frame); else { const p = a.getEntity(1)!.transform; a.pause(); done({ frames, end: { x: p.x, z: p.z }, perf: a.perf() }); } };
+          requestAnimationFrame(frame);
+        });
+        a.resume(); return startPosition;
+      }, { x, z, zoom });
       await page.keyboard.down('KeyD'); await page.keyboard.down('KeyS');
-      const sample = await page.evaluate(() => new Promise<{ frames: number[]; end: { x: number; z: number }; perf: unknown }>(done => {
-        const frames: number[] = []; let last = performance.now(); const start = last;
-        const frame = (now: number) => { frames.push(now - last); last = now; if (now - start < 6500) requestAnimationFrame(frame); else { const a = window.__SS__!, p = a.getEntity(1)!.transform; a.pause(); done({ frames, end: { x: p.x, z: p.z }, perf: a.perf() }); } };
-        requestAnimationFrame(frame);
-      }));
+      const sample = await page.evaluate(() => (window as unknown as { __r10sample: Promise<TraversalSample> }).__r10sample);
       await page.keyboard.up('KeyD'); await page.keyboard.up('KeyS');
-      const times = sample.frames.slice(2).sort((a, b) => a - b), distance = Math.hypot(sample.end.x - start.x, sample.end.z - start.z);
+      const times = sample.frames.filter(t => t >= 0).sort((a, b) => a - b), distance = Math.hypot(sample.end.x - start.x, sample.end.z - start.z);
       rows.push({ side, tier, zoom, name, start, ...sample, distance, load: loadavg(), max: times.at(-1), p95: times[Math.floor(times.length * .95)], over66: times.filter(t => t > 66).length });
       writeFileSync(`${out}/frames.json`, JSON.stringify(rows, null, 1));
       assert.ok(distance > 5, `Physical movement required: ${side}/${tier}/${name}/${zoom}`);
