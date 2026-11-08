@@ -2,7 +2,7 @@ import { expect, test, vi } from 'vitest';
 import { emptyInput } from '../../src/input/InputFrame';
 import { Box3, PerspectiveCamera, Vector3 } from 'three/webgpu';
 import { ColliderDesc, Ray, ShapeType } from '@dimforge/rapier3d-compat';
-import { l4, l4InfectedArchetypes, l4Route, l4RoutePose, l4ConvoyStations } from '../../src/data/l4';
+import { l4, l4InfectedArchetypes, l4Route, l4RoutePose, l4ConvoyStations, l4ConvoyParkOffsetX } from '../../src/data/l4';
 import physicsAssets from '../../src/data/physicsAssets';
 import { l4PerimeterWalls } from '../../src/data/l4Perimeter';
 import { infectedDef } from '../../src/data/infected';
@@ -249,7 +249,7 @@ test('L4: every contact archetype interrupts approach/lure and attacks within 3 
   const route = l4Route(), stations = l4ConvoyStations(route.length), violations: string[] = [];
   for (const [index, vehicle] of l4.convoy.vehicles.entries()) {
     if (vehicle.asset !== 'veh.military-truck') continue;
-    const pose = l4RoutePose(route, stations.end[index]);
+    const pose = l4RoutePose(route, stations.end[index]); pose.x += l4ConvoyParkOffsetX;
     for (const [boxIndex, box] of physicsAssets['veh.military-truck'].boxes.entries()) for (const wall of l4PerimeterWalls) {
       const aabb = { min: [wall.x - wall.halfX, wall.y - wall.halfY, wall.z - wall.halfZ], max: [wall.x + wall.halfX, wall.y + wall.halfY, wall.z + wall.halfZ] };
       if (obbHitsAabb(pose.x, pose.z, pose.yaw, (box.max[0] - box.min[0]) / 2, (box.max[2] - box.min[2]) / 2, box.min[1] + .7, box.max[1] + .7, aabb)) violations.push(`${vehicle.id} collider ${boxIndex} overlaps ${wall.id}`);

@@ -238,9 +238,10 @@ export const l4 = {
   bots: { seeds: 20, completeMedianS: [245, 460] as P, newbieMedianS: [275, 490] as P, newbieMinSeeds: 18, newbieMaxMedianDeaths: 2 },
 } as const;
 
-/** Convoy parking: the column ends along the plaza with the APC at the north end. See `l4Route`. */
-// PO 2026-11-08: park the rear cargo truck wholly inside the east perimeter; its front bumper previously crossed the wall/sign.
-export const l4Convoy = { endX: -17.5, endZ: -20.85 } as const;
+/** Convoy drives the PO-accepted route, then parks the full column west of its arrival line. See `l4Route`. */
+export const l4Convoy = { endX: -11, endZ: -20.85 } as const;
+/** PO 2026-11-08: the whole stopped column shifts west, keeping the rear cargo truck clear of the east wall/sign. */
+export const l4ConvoyParkOffsetX = -6.5;
 /** The wider blast wreck turns and settles west of the intact truck, clear of the frontage. */
 export const l4FuelCrater = { x: l4.fuelTruck.x - .8, z: l4.fuelTruck.z, yaw: -Math.PI / 2 };
 
