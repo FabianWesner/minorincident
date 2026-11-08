@@ -71,6 +71,11 @@ test('civilians: seeded grab → bite → down → glowing eyes → rising → i
   {
     const w = await loadRunnerLevel('L8', 1, undefined, 0, { quality: 'high' }); worlds.push(w);
     w.missions!.state.timeOfDay = 'night'; const power = w.lightPower!;
+    for (const lamp of power.lamps.values()) for (const point of [{ x: lamp.x, z: lamp.z }, { x: lamp.x + lamp.range, z: lamp.z }, { x: lamp.x, z: lamp.z - lamp.range - .001 }]) {
+      const lit = [...power.lamps.values()].some(l => Math.hypot(point.x - l.x, point.z - l.z) <= l.range && power.isOn(l.id));
+      expect(power.sightMultiplier(point)).toBe(lit ? 1 : .6);
+    }
+    w.tick++;
     const humans = w.infected!.hearing.humans, at = w.entities.get(1)!.transform;
     for (const center of [at, { x: at.x + 20, z: at.z - 12 }]) for (const radius of [0, 8, 16, 40]) {
       const expected = humans.all().filter(h => (h.position.x - center.x) ** 2 + (h.position.z - center.z) ** 2 <= radius * radius).map(h => h.id).sort((a, b) => a - b);
