@@ -322,7 +322,8 @@ export class LevelEightZoo {
     ai.director.pendingTurns = pending;
     if (!this.breached && t - s.startedAt >= 3600) {
       s.breachedAt = t; s.nextWave = t + 600;
-      s.outlets.forEach((outlet, i) => { for (let n = 0; n < (ai.director.tier === 'low' ? 3 : 6); n++) this.release(outlet, i); });
+      // The southern gate sends a compact five-member low-tier assault; the other mouths retain their three/six-member opening.
+      s.outlets.forEach((outlet, i) => { const count = ai.director.tier === 'low' ? i === 3 ? 5 : 3 : 6; for (let n = 0; n < count; n++) this.release(outlet, i); });
       // The parked hull has settled by the alarm. Capture its boarding action
       // point once; minor physics impulses must not steer the objective ring.
       Object.assign(this.mission.def.anchors.exit, this.boardingRing());
