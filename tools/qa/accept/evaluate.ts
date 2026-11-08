@@ -471,7 +471,7 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
 
 /** Only these rows have all clauses covered by the current native checks at both qualities. */
 export const completeNativeRows = new Map<string, { clause: string; policy: string; level?: string }[]>([
-  ['L10-14', ['continuous physical epilogue control and final camera pullback', 'actual cure front mortality immunity and all species fixture', 'reviewed actual mist title credits and menu sequence'].map(clause => ({ clause, policy: 'physical-epilogue' }))],
+  ['L10-14', ['continuous physical epilogue control and final camera pullback', 'actual cure front recovery immunity and all species fixture', 'reviewed actual mist title credits and menu sequence'].map(clause => ({ clause, policy: 'physical-epilogue' }))],
   ['G-10', [{ clause: 'moving approach collection for every pickup class', policy: 'controlled-fixture', level: 'L6' }]],
   ['G-11', [...Array.from({ length: 10 }, (_, i) => ({ clause: 'duplicate pickup transactions since the last restore', policy: 'complete', level: `L${i + 1}` })), { clause: 'pickup remains removed for 120 ticks after transaction', policy: 'controlled-fixture', level: 'L1' }]],
   ['G-12', [{ clause: '35-follower production eligibility and cap', policy: 'controlled-fixture', level: 'L7' }]],

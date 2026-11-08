@@ -107,7 +107,7 @@ export class LevelTenBot {
       }
       f.interact = gun.canMount() && tick % 30 === 0;
     }
-    if (active.id === 'mega' && gun?.mounted) { f.interact = true; return f; }
+    if (active.id !== 'hold' && gun?.mounted) { f.interact = true; return f; }
     const rack = player.weapons!.RIGHT.rack, target = active.id === 'mega' ? threats.find(isMega) ?? threats[0] : threats[0];
     if (active.id === 'mega' && p.y > 2) f.move = { x: 0, z: 0 };
 

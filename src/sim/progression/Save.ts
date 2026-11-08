@@ -123,7 +123,7 @@ export function validateSave(raw:unknown):raw is CampaignSave {
   if(Object.entries(save.usage).some(([id,n])=>!Object.hasOwn(catalog,id)||!Number.isSafeInteger(n)||n<0))return false;
   if (save.world?.infectionCleared !== undefined) {
     const cleared = save.world.infectionCleared;
-    if (!record(cleared) || cleared.level !== 10 || !Number.isSafeInteger(cleared.releasedAt) || cleared.releasedAt < 0) return false;
+    if (!record(cleared) || cleared.level !== 10 || !Number.isSafeInteger(cleared.releasedAt) || cleared.releasedAt < 0 || cleared.epilogueSeen !== undefined && typeof cleared.epilogueSeen !== 'boolean') return false;
   }
   if (save.cureResume !== undefined) {
     const resume = save.cureResume;

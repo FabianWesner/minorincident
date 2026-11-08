@@ -145,7 +145,7 @@ for (const tier of tiers) {
     check(tier, 'living post-crash Sam keeps his radio lines and identity model', m.state.states['sam-alive'] &&
       continuity.includes('L10.farmstead') && w.entities.get(m.state.actors['hangar-sam'])?.civilian?.model === sam.civilian!.model, continuity);
     // Explicit release fixture; only the setup injects a position/state. Movement uses ordinary inputs.
-    place(w, 4002, -27);
+    place(w, 4006, -24);
     for (const step of Object.values(m.state.steps)) step.status = 'completed'; m.state.steps.epilogue.status = 'active';
     const cell = w.infected!.nav.nearestCell(4008, -22, .4);
     const humanId = w.infected!.spawn('infected.runner', { x: w.infected!.nav.x(cell), z: w.infected!.nav.z(cell) });
