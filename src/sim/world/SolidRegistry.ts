@@ -15,13 +15,14 @@ const tolerance = .02, skin = .001;
 /** One physical footprint. Reach, crowd spacing and animation envelopes are owned by combat/presentation. */
 export function actorRadius(e: EntitySnapshot): number {
   // Corgi uses a 0.88 m wide capsule, with fore/aft probes for its longer body.
-  // The L10 hero uses the Alpha-sized body. Its old enlarged corpse disc
-  // sealed the platform's only stair after it climbed up during rage.
-  if (e.health.current <= 0 && e.infected?.variant?.includes('mega-alpha')) return e.infected.megaPhase ? 1 : 1.45;
+  if (e.health.current <= 0 && e.infected?.variant?.includes('mega-alpha')) return 1.45;
   if (e.health.current <= 0 && e.archetype === 'infected.alpha') return 1;
   return e.companion ? .44 : e.survivor ? survivor.radius : e.combat?.radius ?? .35;
 }
 export function solidLargeCorpse(e: EntitySnapshot): boolean {
+  // Rage can die across the platform's sole 1.3 m stair. Keep its rendered
+  // body, but let the courier step over it like other fallen infected there.
+  if (e.infected?.megaPhase && e.transform.y > 2) return false;
   return e.health.current <= 0 && (!!e.civilian?.zooAnimal || /^infected\.(alpha|lion|gorilla|elephant|zebra|flamingo)$/.test(e.archetype ?? '') || !!e.infected?.variant?.includes('mega-alpha'));
 }
 // A courage-hiding pet is invisible and follows without crowd contact; navigation still keeps it outside static walls.

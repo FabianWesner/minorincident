@@ -8,7 +8,7 @@ import { followTenFrustum } from '../sim-runner/l10';
 import { emptyInput } from '../../src/input/InputFrame';
 import type { EntitySnapshot } from '../../src/sim/world/types';
 import { LevelTenBot } from '../../src/debug/bot/LevelTenBot';
-import { actorRadius } from '../../src/sim/world/SolidRegistry';
+import { actorRadius, solidLargeCorpse } from '../../src/sim/world/SolidRegistry';
 
 const out = process.argv.find((arg, i) => process.argv[i - 1] === '--out') ?? 'test-results/l10-pacing/mega-mechanics.json';
 const checks: { quality: string; name: string; pass: boolean; observed: unknown }[] = [];
@@ -80,7 +80,7 @@ for (const quality of ['low','high'] as const) {
     while(m.state.steps.release.status!=='active')m.completeObjective();
     const bot=new LevelTenBot(w);let lowest=player.transform.y;
     for(let i=0;i<600&&!m.state.states['cure-released'];i++){followTenFrustum(w);w.applyInput(bot.sample(),'keyboard');w.update();lowest=Math.min(lowest,player.transform.y);}
-    check('ordinary inputs descend past a dead Mega on the landing and release the cure',actorRadius(fallen)===1&&lowest<1&&m.state.states['cure-released'],{radius:actorRadius(fallen),lowest,released:m.state.states['cure-released'],at:{...player.transform}});
+    check('ordinary inputs descend past a dead Mega on the landing and release the cure',!solidLargeCorpse(fallen)&&lowest<1&&m.state.states['cure-released'],{radius:actorRadius(fallen),solid:solidLargeCorpse(fallen),lowest,released:m.state.states['cure-released'],at:{...player.transform}});
   } catch(error){check('mechanics fixtures execute',false,String(error));}
   finally{w.dispose();}
 }
