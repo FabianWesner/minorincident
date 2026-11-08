@@ -51,11 +51,12 @@ async function execute(job: StageJob): Promise<StageResult> {
       });
       if (!job.passive) {
         native.kiting = kiting;
+        let kitingComplete = () => false;
         try { await runLevel(job.level, 'complete', job.seed, undefined, 'auto', campaignFor(job.level, job.seed), undefined, 0, {
-          quality: 'low', beforeBegin: world => installKitingPolicy(world, kiting, job.level),
+          quality: 'low', beforeBegin: world => { kitingComplete = installKitingPolicy(world, kiting, job.level); },
           // L4 can start a second short sample after its physical rejoin; let
           // its route finish so this optimization preserves that receipt.
-          stopWhen: () => job.level !== 'L4' && kiting.samples >= 1200,
+          stopWhen: () => job.level !== 'L4' && kitingComplete(),
           beforeDispose: () => { native.kiting = finishKitingReceipt(kiting); },
         }); } catch (error) { if (!(error instanceof LevelRunStopped)) throw error; }
       }

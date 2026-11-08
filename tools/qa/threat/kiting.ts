@@ -14,7 +14,7 @@ export interface KitingReceipt {
 }
 
 /** Apply player-like backpedal fire only while a dense, nearby horde is pressing. */
-export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, level: RunnerLevel): void {
+export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, level: RunnerLevel): () => boolean {
   const applyInput = world.applyInput.bind(world);
   const diagnostics = receipt.diagnostics = { startTick: null as number | null, endTick: null as number | null, firingFrames: 0, playerAttackStarts: 0, framesWithoutThreats: 0 };
   let selectedButtonHeld = false;
@@ -157,6 +157,9 @@ export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, lev
     };
     world.clearInput = () => { clearInput(); nativeFrame = structuredClone(world.deviceInput); kitingNow = false; };
   }
+  // Cinematic/death locks can leave fewer than 1,200 active frames in the
+  // fixed window. Its elapsed clock, rather than sample count, ends the probe.
+  return () => sampleUntil !== null && world.tick >= sampleUntil;
 }
 
 export function finishKitingReceipt(receipt: KitingReceipt): KitingReceipt {
