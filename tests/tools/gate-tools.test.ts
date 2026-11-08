@@ -175,6 +175,7 @@ test('scene gate resume requires identical rows, revision and backend identities
   expect(f.run(['--resume']).status, 'changed scene config').toBe(0); expect(f.calls()).toBe(4);
   f.select(['alpha', 'alpha'], ['webgpu', 'webgl2']);
   expect(f.run([], { FAIL_BACKEND: 'webgpu' }).status, 'same name on different backends cannot mask a failure').toBe(1);
+  expect(f.run(['--backend', 'webgl2'], { FAIL_BACKEND: 'webgpu' }).status, 'explicit WebGL2 selection respects manual WebGPU policy').toBe(0);
 });
 
 test('scene gate rejects stale, failed, malformed and incomplete child results', () => {
@@ -194,6 +195,7 @@ test('scene gate rejects invalid arguments and empty selections before running c
   for (const args of [
     ['--batch', 'NaN'], ['--batch', 'Infinity'], ['--batch', '0'], ['--batch', '-1'], ['--batch', '1.5'],
     ['--shard', '0/2'], ['--shard', '3/2'], ['--shard', '1/0'], ['--shard', '1/NaN'], ['--shard', '2/2'],
+    ['--backend', 'other'],
   ]) expect(f.run(args).status, args.join(' ')).not.toBe(0);
   expect(f.run([], {}, 'other').status, 'unknown mode').not.toBe(0);
   expect(f.calls(), 'invalid input must not launch work').toBe(0);

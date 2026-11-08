@@ -1,0 +1,37 @@
+{
+  "archiveRoot": "/Users/wesner/Workspace/mi-evidence-archive",
+  "manifest": "/Users/wesner/Workspace/mi-evidence-archive/docs/reports/e25-emitters/archive-manifest.json",
+  "filesMoved": 937,
+  "bytesMoved": 760605267,
+  "sameVolume": true,
+  "allBlobAndSHA256ChecksPassed": true,
+  "trackedOriginals": [
+    {
+      "source": "docs/reports/e25-emitters/evidence/inventory-final.json",
+      "archive": "/Users/wesner/Workspace/mi-evidence-archive/docs/reports/e25-emitters/evidence/inventory-final.json",
+      "blob": "bcd6cbfdd90d4ebbe473462ba74394741b28b124",
+      "bytes": 738368,
+      "sha256": "cf7cd8799a0f31ac8471abe3d59e8433f4c9e0836cc33a554cf42050b3d1d293",
+      "trackedBlob": "bcd6cbfdd90d4ebbe473462ba74394741b28b124"
+    },
+    {
+      "source": "docs/reports/e25-emitters/evidence/reference-repair-final-plan.json",
+      "archive": "/Users/wesner/Workspace/mi-evidence-archive/docs/reports/e25-emitters/evidence/reference-repair-final-plan.json",
+      "blob": "60c278cdff1ae2e27258ba6766b147f9be5780eb",
+      "bytes": 4210,
+      "sha256": "418fad994b477c9cef77fef50a4431079af8f55af78a9af7ffe0508899c8b3e0",
+      "trackedBlob": "60c278cdff1ae2e27258ba6766b147f9be5780eb"
+    }
+  ],
+  "scope": "Only this job\u2019s evidence. Application/source assets and fixture inputs remain in place.",
+  "checker": {
+    "command": "python3 tools/qa/evidence-retention.py",
+    "exitCode": 1,
+    "baselineRevision": "ac0a9e26",
+    "baselineErrors": 4912,
+    "finalErrors": 4912,
+    "errorSetsIdentical": true,
+    "e25EmitterErrors": 0,
+    "note": "All global errors predate this lane and are outside this report family."
+  }
+}

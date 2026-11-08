@@ -17,6 +17,8 @@ an evaluator or reviewed proof chain actually reads. Some required JSONL archive
 are receipt inputs, rather than disposable execution logs. Two L9 producer
 snapshots remain byte-identical because the qualification manifest hashes them.
 
+Current E25 emitter contract repair: [E25-AC02 report](e25-emitters/README.md).
+
 ## Retained report subtrees
 
 | Subtree | Required use |

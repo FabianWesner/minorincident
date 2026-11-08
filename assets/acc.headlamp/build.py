@@ -1,7 +1,9 @@
 """Small +X-facing courier cap; the local origin is the head node. Headless Blender."""
 from pathlib import Path
-import bpy, math, json
+import bpy, math, json, sys
 root=Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(root/'tools/blender'))
+from sslib.equipment_lights import install
 bpy.ops.object.select_all(action='SELECT');bpy.ops.object.delete(use_global=False)
 palette=json.loads((root/'src/assets/palette.json').read_text())
 def material(token, emission=False):
@@ -36,8 +38,9 @@ for lod,segments,rings in [(0,12,4),(1,8,2),(2,8,2)]:
     cube('band',(0,0,.105),(.4,.48,.045),dark)
     cube('lamp_housing',(.24,0,.16),(.12,.16,.12),gold)
     cube('lamp_lens',(.306,0,.16),(.018,.11,.075),lens)
+    install('acc.headlamp')
     triangles=sum(len(p.vertices)-2 for o in bpy.context.scene.objects if o.type=='MESH' for p in o.data.polygons)
     assert triangles<=(800 if lod==0 else 80),triangles
     suffix='' if lod==0 else '.lod'+str(lod)
-    bpy.ops.export_scene.gltf(filepath=str(root/('assets/acc.headlamp/model'+suffix+'.glb')),export_format='GLB',export_yup=True)
+    bpy.ops.export_scene.gltf(filepath=str(root/('assets/acc.headlamp/model'+suffix+'.glb')),export_format='GLB',export_yup=True,export_extras=True)
     print(json.dumps({'lod':lod,'triangles':triangles}))

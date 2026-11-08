@@ -1,0 +1,4962 @@
+{
+  "baseline": "ac0a9e26",
+  "method": "Direct own-graph audit of the exact baseline public GLBs restored by e25-emitter-ab.ts, using the corrected named-owner and unnamed-emitter traversal. No authored substitution.",
+  "checked": 1823,
+  "anchors": 1550,
+  "missingEmitterReferences": 1313,
+  "errors": 1313,
+  "uncoveredEmissive": 638,
+  "issues": [
+    {
+      "path": "public/assets/models/acc.headlamp.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node9"
+      ]
+    },
+    {
+      "path": "public/assets/models/acc.headlamp.lod1.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node9"
+      ]
+    },
+    {
+      "path": "public/assets/models/acc.headlamp.lod2.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node9"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.apartment-block-a.w5.glb",
+      "anchors": 1,
+      "errors": [
+        "light:entry: emissive node body_pal_uiDark is missing"
+      ],
+      "uncoveredEmissive": []
+    },
+    {
+      "path": "public/assets/models/bld.apartment-block-a.w5.lod1.glb",
+      "anchors": 1,
+      "errors": [
+        "light:entry: emissive node body_pal_uiDark is missing"
+      ],
+      "uncoveredEmissive": []
+    },
+    {
+      "path": "public/assets/models/bld.apartment-block-a.w5.lod2.glb",
+      "anchors": 1,
+      "errors": [
+        "light:entry: emissive node body_pal_uiDark is missing"
+      ],
+      "uncoveredEmissive": []
+    },
+    {
+      "path": "public/assets/models/bld.apartment-block-a.w6.glb",
+      "anchors": 1,
+      "errors": [
+        "light:entry: emissive node body_pal_uiDark is missing"
+      ],
+      "uncoveredEmissive": []
+    },
+    {
+      "path": "public/assets/models/bld.apartment-block-a.w6.lod1.glb",
+      "anchors": 1,
+      "errors": [
+        "light:entry: emissive node body_pal_uiDark is missing"
+      ],
+      "uncoveredEmissive": []
+    },
+    {
+      "path": "public/assets/models/bld.apartment-block-a.w6.lod2.glb",
+      "anchors": 1,
+      "errors": [
+        "light:entry: emissive node body_pal_uiDark is missing"
+      ],
+      "uncoveredEmissive": []
+    },
+    {
+      "path": "public/assets/models/bld.apartment-block-b.w5.glb",
+      "anchors": 1,
+      "errors": [
+        "light:entry: emissive node body_pal_uiDark is missing"
+      ],
+      "uncoveredEmissive": []
+    },
+    {
+      "path": "public/assets/models/bld.apartment-block-b.w5.lod1.glb",
+      "anchors": 1,
+      "errors": [
+        "light:entry: emissive node body_pal_uiDark is missing"
+      ],
+      "uncoveredEmissive": []
+    },
+    {
+      "path": "public/assets/models/bld.apartment-block-b.w5.lod2.glb",
+      "anchors": 1,
+      "errors": [
+        "light:entry: emissive node body_pal_uiDark is missing"
+      ],
+      "uncoveredEmissive": []
+    },
+    {
+      "path": "public/assets/models/bld.apartment-block-b.w6.glb",
+      "anchors": 1,
+      "errors": [
+        "light:entry: emissive node body_pal_uiDark is missing"
+      ],
+      "uncoveredEmissive": []
+    },
+    {
+      "path": "public/assets/models/bld.apartment-block-b.w6.lod1.glb",
+      "anchors": 1,
+      "errors": [
+        "light:entry: emissive node body_pal_uiDark is missing"
+      ],
+      "uncoveredEmissive": []
+    },
+    {
+      "path": "public/assets/models/bld.apartment-block-b.w6.lod2.glb",
+      "anchors": 1,
+      "errors": [
+        "light:entry: emissive node body_pal_uiDark is missing"
+      ],
+      "uncoveredEmissive": []
+    },
+    {
+      "path": "public/assets/models/bld.cafe-corner.glb",
+      "anchors": 3,
+      "errors": [
+        "light:lanterns: emissive node body_emi_lavender is missing",
+        "light:lanterns: emissive node body_emi_windowGlow is missing",
+        "light:sign: emissive node roof_emi_survivorRed is missing",
+        "light:sign: emissive node roof_emi_windowGlow is missing",
+        "light:windows: emissive node window_left_emi_windowGlow is missing",
+        "light:windows: emissive node window_right_emi_windowGlow is missing",
+        "light:windows: emissive node window_entry_emi_windowGlow is missing",
+        "light:windows: emissive node door_main_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node11",
+        "node13",
+        "node17",
+        "node18",
+        "node20",
+        "node9"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.cafe-corner.lod1.glb",
+      "anchors": 3,
+      "errors": [
+        "light:lanterns: emissive node body_emi_lavender is missing",
+        "light:lanterns: emissive node body_emi_windowGlow is missing",
+        "light:sign: emissive node roof_emi_survivorRed is missing",
+        "light:sign: emissive node roof_emi_windowGlow is missing",
+        "light:windows: emissive node window_left_emi_windowGlow is missing",
+        "light:windows: emissive node window_right_emi_windowGlow is missing",
+        "light:windows: emissive node window_entry_emi_windowGlow is missing",
+        "light:windows: emissive node door_main_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node11",
+        "node13",
+        "node17",
+        "node18",
+        "node20",
+        "node9"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.cafe-corner.lod2.glb",
+      "anchors": 3,
+      "errors": [
+        "light:lanterns: emissive node body_emi_lavender is missing",
+        "light:lanterns: emissive node body_emi_windowGlow is missing",
+        "light:sign: emissive node roof_emi_survivorRed is missing",
+        "light:windows: emissive node window_left_emi_windowGlow is missing",
+        "light:windows: emissive node window_right_emi_windowGlow is missing",
+        "light:windows: emissive node window_entry_emi_windowGlow is missing",
+        "light:windows: emissive node door_main_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node10",
+        "node12",
+        "node14",
+        "node18",
+        "node19",
+        "node20"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.church.glb",
+      "anchors": 1,
+      "errors": [
+        "light:nave: emissive node body_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node22"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.church.lod1.glb",
+      "anchors": 1,
+      "errors": [
+        "light:nave: emissive node body_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node22"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.church.lod2.glb",
+      "anchors": 1,
+      "errors": [
+        "light:nave: emissive node body_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node22"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.church.w5.glb",
+      "anchors": 1,
+      "errors": [
+        "light:nave: emissive node body_pal_uiDark is missing"
+      ],
+      "uncoveredEmissive": []
+    },
+    {
+      "path": "public/assets/models/bld.church.w5.lod1.glb",
+      "anchors": 1,
+      "errors": [
+        "light:nave: emissive node body_pal_uiDark is missing"
+      ],
+      "uncoveredEmissive": []
+    },
+    {
+      "path": "public/assets/models/bld.church.w5.lod2.glb",
+      "anchors": 1,
+      "errors": [
+        "light:nave: emissive node body_pal_uiDark is missing"
+      ],
+      "uncoveredEmissive": []
+    },
+    {
+      "path": "public/assets/models/bld.church.w6.glb",
+      "anchors": 1,
+      "errors": [
+        "light:nave: emissive node body_pal_uiDark is missing"
+      ],
+      "uncoveredEmissive": []
+    },
+    {
+      "path": "public/assets/models/bld.church.w6.lod1.glb",
+      "anchors": 1,
+      "errors": [
+        "light:nave: emissive node body_pal_uiDark is missing"
+      ],
+      "uncoveredEmissive": []
+    },
+    {
+      "path": "public/assets/models/bld.church.w6.lod2.glb",
+      "anchors": 1,
+      "errors": [
+        "light:nave: emissive node body_pal_uiDark is missing"
+      ],
+      "uncoveredEmissive": []
+    },
+    {
+      "path": "public/assets/models/bld.civic-center.glb",
+      "anchors": 4,
+      "errors": [
+        "light:entry_0: emissive node lamp_glow_0 is missing",
+        "light:entry_1: emissive node lamp_glow_1 is missing",
+        "light:entry_2: emissive node lamp_glow_2 is missing",
+        "light:entry_3: emissive node lamp_glow_3 is missing"
+      ],
+      "uncoveredEmissive": [
+        "node34",
+        "node35",
+        "node37"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.civic-center.lod1.glb",
+      "anchors": 4,
+      "errors": [
+        "light:entry_0: emissive node lamp_glow_0 is missing",
+        "light:entry_1: emissive node lamp_glow_1 is missing",
+        "light:entry_2: emissive node lamp_glow_2 is missing",
+        "light:entry_3: emissive node lamp_glow_3 is missing"
+      ],
+      "uncoveredEmissive": [
+        "node34",
+        "node35",
+        "node37"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.civic-center.lod2.glb",
+      "anchors": 4,
+      "errors": [
+        "light:entry_0: emissive node lamp_glow_0 is missing",
+        "light:entry_1: emissive node lamp_glow_1 is missing",
+        "light:entry_2: emissive node lamp_glow_2 is missing",
+        "light:entry_3: emissive node lamp_glow_3 is missing"
+      ],
+      "uncoveredEmissive": [
+        "node34",
+        "node35",
+        "node37"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.clinic-annex.glb",
+      "anchors": 7,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node37"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.clinic-annex.lod1.glb",
+      "anchors": 7,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node37"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.clinic-annex.lod2.glb",
+      "anchors": 7,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node37"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.courier-depot.glb",
+      "anchors": 3,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node28",
+        "node30",
+        "node31",
+        "node32"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.courier-depot.lod1.glb",
+      "anchors": 3,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node28",
+        "node30",
+        "node31",
+        "node32"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.courier-depot.lod2.glb",
+      "anchors": 3,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node28",
+        "node30",
+        "node31"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.fire-station.glb",
+      "anchors": 6,
+      "errors": [
+        "light:entry_0: emissive node lamp_0_emi_windowGlow is missing",
+        "light:entry_1: emissive node lamp_1_emi_windowGlow is missing",
+        "light:entry_2: emissive node lamp_2_emi_windowGlow is missing",
+        "light:entry_3: emissive node lamp_3_emi_windowGlow is missing",
+        "light:entry_4: emissive node lamp_4_emi_windowGlow is missing",
+        "light:side_window: emissive node root_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node39"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.fire-station.lod1.glb",
+      "anchors": 6,
+      "errors": [
+        "light:entry_0: emissive node lod1_lamp_0_emi_windowGlow is missing",
+        "light:entry_1: emissive node lod1_lamp_1_emi_windowGlow is missing",
+        "light:entry_2: emissive node lod1_lamp_2_emi_windowGlow is missing",
+        "light:entry_3: emissive node lod1_lamp_3_emi_windowGlow is missing",
+        "light:entry_4: emissive node lod1_lamp_4_emi_windowGlow is missing",
+        "light:side_window: emissive node lod1_root_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node39"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.fire-station.lod2.glb",
+      "anchors": 6,
+      "errors": [
+        "light:entry_0: emissive node lod2_lamp_0_emi_windowGlow is missing",
+        "light:entry_1: emissive node lod2_lamp_1_emi_windowGlow is missing",
+        "light:entry_2: emissive node lod2_lamp_2_emi_windowGlow is missing",
+        "light:entry_3: emissive node lod2_lamp_3_emi_windowGlow is missing",
+        "light:entry_4: emissive node lod2_lamp_4_emi_windowGlow is missing",
+        "light:side_window: emissive node lod2_root_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node34"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.garage-detached.glb",
+      "anchors": 3,
+      "errors": [
+        "light:entrance: emissive node lamp_entrance_emi_windowGlow is missing",
+        "light:side: emissive node window_side_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node24",
+        "node28",
+        "node29"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.garage-detached.lod1.glb",
+      "anchors": 3,
+      "errors": [
+        "light:entrance: emissive node lamp_entrance_emi_windowGlow is missing",
+        "light:side: emissive node window_side_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node23",
+        "node27",
+        "node28"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.garage-detached.lod2.glb",
+      "anchors": 3,
+      "errors": [
+        "light:entrance: emissive node lamp_entrance_emi_windowGlow is missing",
+        "light:side: emissive node window_side_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node19",
+        "node23",
+        "node24"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.gas-station.glb",
+      "anchors": 6,
+      "errors": [
+        "light:canopy: emissive node roof_emi_windowGlow is missing",
+        "light:lamp_shop_-1.8: emissive node lamp_shop_-1.8_emi_windowGlow is missing",
+        "light:lamp_shop_-3.85: emissive node lamp_shop_-3.85_emi_windowGlow is missing",
+        "light:open: emissive node root_emi_policeBlue is missing",
+        "light:open: emissive node root_emi_sirenRed is missing",
+        "light:prices: emissive node root_emi_policeBlue is missing",
+        "light:prices: emissive node root_emi_sirenRed is missing",
+        "light:shop: emissive node interior_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node24",
+        "node25",
+        "node26"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.gas-station.lod1.glb",
+      "anchors": 6,
+      "errors": [
+        "light:canopy: emissive node roof_emi_windowGlow is missing",
+        "light:lamp_shop_-1.8: emissive node lamp_shop_-1.8_emi_windowGlow is missing",
+        "light:lamp_shop_-3.85: emissive node lamp_shop_-3.85_emi_windowGlow is missing",
+        "light:open: emissive node root_emi_policeBlue is missing",
+        "light:open: emissive node root_emi_sirenRed is missing",
+        "light:prices: emissive node root_emi_policeBlue is missing",
+        "light:prices: emissive node root_emi_sirenRed is missing",
+        "light:shop: emissive node lamp_shop_-1.8_emi_windowGlow is missing",
+        "light:shop: emissive node lamp_shop_-3.85_emi_windowGlow is missing",
+        "light:shop: emissive node roof_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node29",
+        "node30"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.gas-station.lod2.glb",
+      "anchors": 6,
+      "errors": [
+        "light:canopy: emissive node roof_emi_windowGlow is missing",
+        "light:lamp_shop_-1.8: emissive node lamp_shop_-1.8_emi_windowGlow is missing",
+        "light:lamp_shop_-3.85: emissive node lamp_shop_-3.85_emi_windowGlow is missing",
+        "light:open: emissive node root_emi_policeBlue is missing",
+        "light:prices: emissive node root_emi_policeBlue is missing",
+        "light:shop: emissive node lamp_shop_-1.8_emi_windowGlow is missing",
+        "light:shop: emissive node lamp_shop_-3.85_emi_windowGlow is missing",
+        "light:shop: emissive node roof_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node29",
+        "node30"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.gazebo.glb",
+      "anchors": 10,
+      "errors": [
+        "light:lamp_park_0: emissive node lamp_park_0_bulbs is missing",
+        "light:lamp_park_1: emissive node lamp_park_1_bulbs is missing",
+        "light:lamp_string_00: emissive node lamp_string_00_bulbs is missing",
+        "light:lamp_string_01: emissive node lamp_string_01_bulbs is missing",
+        "light:lamp_string_02: emissive node lamp_string_02_bulbs is missing",
+        "light:lamp_string_03: emissive node lamp_string_03_bulbs is missing",
+        "light:lamp_string_04: emissive node lamp_string_04_bulbs is missing",
+        "light:lamp_string_05: emissive node lamp_string_05_bulbs is missing",
+        "light:lamp_string_06: emissive node lamp_string_06_bulbs is missing",
+        "light:lamp_string_07: emissive node lamp_string_07_bulbs is missing"
+      ],
+      "uncoveredEmissive": [
+        "node42",
+        "node43"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.gazebo.lod1.glb",
+      "anchors": 10,
+      "errors": [
+        "light:lamp_park_0: emissive node lamp_park_0_bulbs is missing",
+        "light:lamp_park_1: emissive node lamp_park_1_bulbs is missing",
+        "light:lamp_string_00: emissive node lamp_string_00_bulbs is missing",
+        "light:lamp_string_01: emissive node lamp_string_01_bulbs is missing",
+        "light:lamp_string_02: emissive node lamp_string_02_bulbs is missing",
+        "light:lamp_string_03: emissive node lamp_string_03_bulbs is missing",
+        "light:lamp_string_04: emissive node lamp_string_04_bulbs is missing",
+        "light:lamp_string_05: emissive node lamp_string_05_bulbs is missing",
+        "light:lamp_string_06: emissive node lamp_string_06_bulbs is missing",
+        "light:lamp_string_07: emissive node lamp_string_07_bulbs is missing"
+      ],
+      "uncoveredEmissive": [
+        "node42",
+        "node43"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.gazebo.lod2.glb",
+      "anchors": 10,
+      "errors": [
+        "light:lamp_park_0: emissive node lamp_park_0_bulbs is missing",
+        "light:lamp_park_1: emissive node lamp_park_1_bulbs is missing",
+        "light:lamp_string_00: emissive node lamp_string_00_bulbs is missing",
+        "light:lamp_string_01: emissive node lamp_string_01_bulbs is missing",
+        "light:lamp_string_02: emissive node lamp_string_02_bulbs is missing",
+        "light:lamp_string_03: emissive node lamp_string_03_bulbs is missing",
+        "light:lamp_string_04: emissive node lamp_string_04_bulbs is missing",
+        "light:lamp_string_05: emissive node lamp_string_05_bulbs is missing",
+        "light:lamp_string_06: emissive node lamp_string_06_bulbs is missing",
+        "light:lamp_string_07: emissive node lamp_string_07_bulbs is missing"
+      ],
+      "uncoveredEmissive": [
+        "node42",
+        "node43"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.gym.glb",
+      "anchors": 5,
+      "errors": [
+        "light:sconce_3.42: emissive node static_emi_windowGlow is missing",
+        "light:sconce_-2.7: emissive node static_emi_windowGlow is missing",
+        "light:sconce_-6.65: emissive node static_emi_windowGlow is missing",
+        "light:sconce_left_6.0: emissive node static_emi_windowGlow is missing",
+        "light:sconce_left_-2.45: emissive node static_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node27"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.gym.lod1.glb",
+      "anchors": 5,
+      "errors": [
+        "light:sconce_3.42: emissive node static_emi_windowGlow is missing",
+        "light:sconce_-2.7: emissive node static_emi_windowGlow is missing",
+        "light:sconce_-6.65: emissive node static_emi_windowGlow is missing",
+        "light:sconce_left_6.0: emissive node static_emi_windowGlow is missing",
+        "light:sconce_left_-2.45: emissive node static_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node11"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.gym.lod2.glb",
+      "anchors": 5,
+      "errors": [
+        "light:sconce_3.42: emissive node static_emi_windowGlow is missing",
+        "light:sconce_-2.7: emissive node static_emi_windowGlow is missing",
+        "light:sconce_-6.65: emissive node static_emi_windowGlow is missing",
+        "light:sconce_left_6.0: emissive node static_emi_windowGlow is missing",
+        "light:sconce_left_-2.45: emissive node static_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node11"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.helipad.glb",
+      "anchors": 4,
+      "errors": [
+        "light:landing_0: emissive node lamp_0_emi_windowGlow is missing",
+        "light:landing_1: emissive node lamp_1_emi_windowGlow is missing",
+        "light:landing_2: emissive node lamp_2_emi_windowGlow is missing",
+        "light:landing_3: emissive node lamp_3_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node28"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.helipad.lod1.glb",
+      "anchors": 4,
+      "errors": [
+        "light:landing_0: emissive node lamp_0_emi_windowGlow is missing",
+        "light:landing_1: emissive node lamp_1_emi_windowGlow is missing",
+        "light:landing_2: emissive node lamp_2_emi_windowGlow is missing",
+        "light:landing_3: emissive node lamp_3_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node28"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.helipad.lod2.glb",
+      "anchors": 4,
+      "errors": [
+        "light:landing_0: emissive node lamp_0_emi_windowGlow is missing",
+        "light:landing_1: emissive node lamp_1_emi_windowGlow is missing",
+        "light:landing_2: emissive node lamp_2_emi_windowGlow is missing",
+        "light:landing_3: emissive node lamp_3_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node25"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.hospital-exterior.glb",
+      "anchors": 4,
+      "errors": [
+        "light:windows: emissive node body_emi_windowGlow is missing",
+        "light:doorL: emissive node door_L_emi_windowGlow is missing",
+        "light:doorR: emissive node door_R_emi_windowGlow is missing",
+        "light:entrance: emissive node roof_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node11",
+        "node12",
+        "node13",
+        "node14"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.hospital-exterior.lod1.glb",
+      "anchors": 4,
+      "errors": [
+        "light:windows: emissive node body_emi_windowGlow is missing",
+        "light:doorL: emissive node door_L_emi_windowGlow is missing",
+        "light:doorR: emissive node door_R_emi_windowGlow is missing",
+        "light:entrance: emissive node roof_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node11",
+        "node12",
+        "node13",
+        "node14"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.hospital-exterior.lod2.glb",
+      "anchors": 4,
+      "errors": [
+        "light:windows: emissive node body_emi_windowGlow is missing",
+        "light:doorL: emissive node door_L_emi_windowGlow is missing",
+        "light:doorR: emissive node door_R_emi_windowGlow is missing",
+        "light:entrance: emissive node roof_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node11",
+        "node12",
+        "node13",
+        "node14"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.house-a.glb",
+      "anchors": 7,
+      "errors": [
+        "light:door_front: emissive node door_front_emi_windowGlow is missing",
+        "light:lamp_porch: emissive node lamp_porch_emi_windowGlow is missing",
+        "light:window_front: emissive node window_front_emi_windowGlow is missing",
+        "light:window_left: emissive node window_left_emi_windowGlow is missing",
+        "light:window_rearL: emissive node window_rearL_emi_windowGlow is missing",
+        "light:window_rearR: emissive node window_rearR_emi_windowGlow is missing",
+        "light:window_right: emissive node window_right_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node23",
+        "node26",
+        "node27",
+        "node28",
+        "node29",
+        "node30",
+        "node31"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.house-a.lod1.glb",
+      "anchors": 7,
+      "errors": [
+        "light:door_front: emissive node door_front_emi_windowGlow is missing",
+        "light:lamp_porch: emissive node lamp_porch_emi_windowGlow is missing",
+        "light:window_front: emissive node window_front_emi_windowGlow is missing",
+        "light:window_left: emissive node window_left_emi_windowGlow is missing",
+        "light:window_rearL: emissive node window_rearL_emi_windowGlow is missing",
+        "light:window_rearR: emissive node window_rearR_emi_windowGlow is missing",
+        "light:window_right: emissive node window_right_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node24",
+        "node26",
+        "node27",
+        "node28",
+        "node29",
+        "node30",
+        "node31"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.house-a.lod2.glb",
+      "anchors": 7,
+      "errors": [
+        "light:door_front: emissive node door_front_emi_windowGlow is missing",
+        "light:lamp_porch: emissive node lamp_porch_emi_windowGlow is missing",
+        "light:window_front: emissive node window_front_emi_windowGlow is missing",
+        "light:window_left: emissive node window_left_emi_windowGlow is missing",
+        "light:window_rearL: emissive node window_rearL_emi_windowGlow is missing",
+        "light:window_rearR: emissive node window_rearR_emi_windowGlow is missing",
+        "light:window_right: emissive node window_right_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node24",
+        "node26",
+        "node27",
+        "node28",
+        "node29",
+        "node30",
+        "node31"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.house-b.glb",
+      "anchors": 8,
+      "errors": [
+        "light:back_window: emissive node body_emi_windowGlow is missing",
+        "light:front_double: emissive node body_emi_windowGlow is missing",
+        "light:front_right: emissive node body_emi_windowGlow is missing",
+        "light:porch_window: emissive node body_emi_windowGlow is missing",
+        "light:right_window: emissive node body_emi_windowGlow is missing",
+        "light:garage: emissive node lamp_garage_emi_windowGlow is missing",
+        "light:porch: emissive node lamp_porch_emi_windowGlow is missing",
+        "light:dormer_window: emissive node roof_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node24",
+        "node25",
+        "node28",
+        "node29"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.house-b.lod1.glb",
+      "anchors": 8,
+      "errors": [
+        "light:back_window: emissive node body_emi_windowGlow is missing",
+        "light:front_double: emissive node body_emi_windowGlow is missing",
+        "light:front_right: emissive node body_emi_windowGlow is missing",
+        "light:porch_window: emissive node body_emi_windowGlow is missing",
+        "light:right_window: emissive node body_emi_windowGlow is missing",
+        "light:garage: emissive node lamp_garage_emi_windowGlow is missing",
+        "light:porch: emissive node lamp_porch_emi_windowGlow is missing",
+        "light:dormer_window: emissive node roof_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node24",
+        "node25",
+        "node28",
+        "node29"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.house-b.lod2.glb",
+      "anchors": 8,
+      "errors": [
+        "light:back_window: emissive node body_emi_windowGlow is missing",
+        "light:front_double: emissive node body_emi_windowGlow is missing",
+        "light:front_right: emissive node body_emi_windowGlow is missing",
+        "light:porch_window: emissive node body_emi_windowGlow is missing",
+        "light:right_window: emissive node body_emi_windowGlow is missing",
+        "light:garage: emissive node lamp_garage_emi_windowGlow is missing",
+        "light:porch: emissive node lamp_porch_emi_windowGlow is missing",
+        "light:dormer_window: emissive node roof_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node24",
+        "node25",
+        "node28",
+        "node29"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.house-c.glb",
+      "anchors": 2,
+      "errors": [
+        "light:festoon: emissive node lamp_festoon_00_emi_windowGlow is missing",
+        "light:festoon: emissive node lamp_festoon_01_emi_windowGlow is missing",
+        "light:festoon: emissive node lamp_festoon_02_emi_windowGlow is missing",
+        "light:festoon: emissive node lamp_festoon_03_emi_windowGlow is missing",
+        "light:festoon: emissive node lamp_festoon_04_emi_windowGlow is missing",
+        "light:festoon: emissive node lamp_festoon_05_emi_windowGlow is missing",
+        "light:festoon: emissive node lamp_festoon_06_emi_windowGlow is missing",
+        "light:festoon: emissive node lamp_festoon_07_emi_windowGlow is missing",
+        "light:festoon: emissive node lamp_festoon_08_emi_windowGlow is missing",
+        "light:festoon: emissive node lamp_festoon_09_emi_windowGlow is missing",
+        "light:festoon: emissive node lamp_festoon_10_emi_windowGlow is missing",
+        "light:festoon: emissive node lamp_festoon_11_emi_windowGlow is missing",
+        "light:festoon: emissive node lamp_festoon_12_emi_windowGlow is missing",
+        "light:festoon: emissive node lamp_festoon_13_emi_windowGlow is missing",
+        "light:festoon: emissive node lamp_festoon_14_emi_windowGlow is missing",
+        "light:festoon: emissive node lamp_festoon_15_emi_windowGlow is missing",
+        "light:windows: emissive node window_emi_windowGlow is missing",
+        "light:windows: emissive node door_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node42",
+        "node45"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.house-c.lod1.glb",
+      "anchors": 2,
+      "errors": [
+        "light:festoon.001: emissive node lamp_festoon_00_emi_windowGlow is missing",
+        "light:festoon.001: emissive node lamp_festoon_01_emi_windowGlow is missing",
+        "light:festoon.001: emissive node lamp_festoon_02_emi_windowGlow is missing",
+        "light:festoon.001: emissive node lamp_festoon_03_emi_windowGlow is missing",
+        "light:festoon.001: emissive node lamp_festoon_04_emi_windowGlow is missing",
+        "light:festoon.001: emissive node lamp_festoon_05_emi_windowGlow is missing",
+        "light:festoon.001: emissive node lamp_festoon_06_emi_windowGlow is missing",
+        "light:festoon.001: emissive node lamp_festoon_07_emi_windowGlow is missing",
+        "light:festoon.001: emissive node lamp_festoon_08_emi_windowGlow is missing",
+        "light:festoon.001: emissive node lamp_festoon_09_emi_windowGlow is missing",
+        "light:festoon.001: emissive node lamp_festoon_10_emi_windowGlow is missing",
+        "light:festoon.001: emissive node lamp_festoon_11_emi_windowGlow is missing",
+        "light:festoon.001: emissive node lamp_festoon_12_emi_windowGlow is missing",
+        "light:festoon.001: emissive node lamp_festoon_13_emi_windowGlow is missing",
+        "light:festoon.001: emissive node lamp_festoon_14_emi_windowGlow is missing",
+        "light:festoon.001: emissive node lamp_festoon_15_emi_windowGlow is missing",
+        "light:windows.001: emissive node door_back_emi_windowGlow is missing",
+        "light:windows.001: emissive node lamp_festoon_00_emi_windowGlow is missing",
+        "light:windows.001: emissive node lamp_festoon_01_emi_windowGlow is missing",
+        "light:windows.001: emissive node lamp_festoon_02_emi_windowGlow is missing",
+        "light:windows.001: emissive node lamp_festoon_03_emi_windowGlow is missing",
+        "light:windows.001: emissive node lamp_festoon_04_emi_windowGlow is missing",
+        "light:windows.001: emissive node lamp_festoon_05_emi_windowGlow is missing",
+        "light:windows.001: emissive node lamp_festoon_06_emi_windowGlow is missing",
+        "light:windows.001: emissive node lamp_festoon_07_emi_windowGlow is missing",
+        "light:windows.001: emissive node lamp_festoon_08_emi_windowGlow is missing",
+        "light:windows.001: emissive node lamp_festoon_09_emi_windowGlow is missing",
+        "light:windows.001: emissive node lamp_festoon_10_emi_windowGlow is missing",
+        "light:windows.001: emissive node lamp_festoon_11_emi_windowGlow is missing",
+        "light:windows.001: emissive node lamp_festoon_12_emi_windowGlow is missing",
+        "light:windows.001: emissive node lamp_festoon_13_emi_windowGlow is missing",
+        "light:windows.001: emissive node lamp_festoon_14_emi_windowGlow is missing",
+        "light:windows.001: emissive node lamp_festoon_15_emi_windowGlow is missing",
+        "light:windows.001: emissive node root_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node44",
+        "node47"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.house-c.lod2.glb",
+      "anchors": 2,
+      "errors": [
+        "light:festoon.001: emissive node lamp_festoon_00_emi_windowGlow is missing",
+        "light:festoon.001: emissive node lamp_festoon_01_emi_windowGlow is missing",
+        "light:festoon.001: emissive node lamp_festoon_02_emi_windowGlow is missing",
+        "light:festoon.001: emissive node lamp_festoon_03_emi_windowGlow is missing",
+        "light:festoon.001: emissive node lamp_festoon_04_emi_windowGlow is missing",
+        "light:festoon.001: emissive node lamp_festoon_05_emi_windowGlow is missing",
+        "light:festoon.001: emissive node lamp_festoon_06_emi_windowGlow is missing",
+        "light:festoon.001: emissive node lamp_festoon_07_emi_windowGlow is missing",
+        "light:festoon.001: emissive node lamp_festoon_08_emi_windowGlow is missing",
+        "light:festoon.001: emissive node lamp_festoon_09_emi_windowGlow is missing",
+        "light:festoon.001: emissive node lamp_festoon_10_emi_windowGlow is missing",
+        "light:festoon.001: emissive node lamp_festoon_11_emi_windowGlow is missing",
+        "light:festoon.001: emissive node lamp_festoon_12_emi_windowGlow is missing",
+        "light:festoon.001: emissive node lamp_festoon_13_emi_windowGlow is missing",
+        "light:festoon.001: emissive node lamp_festoon_14_emi_windowGlow is missing",
+        "light:festoon.001: emissive node lamp_festoon_15_emi_windowGlow is missing",
+        "light:windows.001: emissive node door_back_emi_windowGlow is missing",
+        "light:windows.001: emissive node lamp_festoon_00_emi_windowGlow is missing",
+        "light:windows.001: emissive node lamp_festoon_01_emi_windowGlow is missing",
+        "light:windows.001: emissive node lamp_festoon_02_emi_windowGlow is missing",
+        "light:windows.001: emissive node lamp_festoon_03_emi_windowGlow is missing",
+        "light:windows.001: emissive node lamp_festoon_04_emi_windowGlow is missing",
+        "light:windows.001: emissive node lamp_festoon_05_emi_windowGlow is missing",
+        "light:windows.001: emissive node lamp_festoon_06_emi_windowGlow is missing",
+        "light:windows.001: emissive node lamp_festoon_07_emi_windowGlow is missing",
+        "light:windows.001: emissive node lamp_festoon_08_emi_windowGlow is missing",
+        "light:windows.001: emissive node lamp_festoon_09_emi_windowGlow is missing",
+        "light:windows.001: emissive node lamp_festoon_10_emi_windowGlow is missing",
+        "light:windows.001: emissive node lamp_festoon_11_emi_windowGlow is missing",
+        "light:windows.001: emissive node lamp_festoon_12_emi_windowGlow is missing",
+        "light:windows.001: emissive node lamp_festoon_13_emi_windowGlow is missing",
+        "light:windows.001: emissive node lamp_festoon_14_emi_windowGlow is missing",
+        "light:windows.001: emissive node lamp_festoon_15_emi_windowGlow is missing",
+        "light:windows.001: emissive node root_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node44",
+        "node47"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.house-d.glb",
+      "anchors": 19,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node93",
+        "node96"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.house-d.lod1.glb",
+      "anchors": 19,
+      "errors": [
+        "light:door_front: emissive node door_front_emi_windowGlow.001 is missing",
+        "light:lamp_left: emissive node lightsFront_emi_windowGlow is missing",
+        "light:lamp_right: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_front_1.875_1.75: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_front_1.875_-1.75: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_front_4.395_1.75: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_front_4.395_-1.75: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_rear_1.875_1.45: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_rear_1.875_-1.45: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_rear_4.395_1.45: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_rear_4.395_-1.45: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_side1_1.875_1.1: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_side1_1.875_-1.35: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_side1_4.395_1.1: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_side1_4.395_-1.35: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_side-1_1.875_1.1: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_side-1_1.875_-1.35: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_side-1_4.395_1.1: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_side-1_4.395_-1.35: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node108",
+        "node55"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.house-d.lod2.glb",
+      "anchors": 19,
+      "errors": [
+        "light:door_front: emissive node door_front_emi_windowGlow.001 is missing",
+        "light:lamp_left: emissive node lightsFront_emi_windowGlow is missing",
+        "light:lamp_right: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_front_1.875_1.75: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_front_1.875_-1.75: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_front_4.395_1.75: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_front_4.395_-1.75: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_rear_1.875_1.45: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_rear_1.875_-1.45: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_rear_4.395_1.45: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_rear_4.395_-1.45: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_side1_1.875_1.1: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_side1_1.875_-1.35: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_side1_4.395_1.1: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_side1_4.395_-1.35: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_side-1_1.875_1.1: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_side-1_1.875_-1.35: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_side-1_4.395_1.1: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_side-1_4.395_-1.35: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node108",
+        "node55"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.house-d.w2.glb",
+      "anchors": 19,
+      "errors": [
+        "light:lamp_left: emissive node lightsFront_emi_windowGlow is missing",
+        "light:lamp_right: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node56"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.house-d.w2.lod1.glb",
+      "anchors": 19,
+      "errors": [
+        "light:lamp_left: emissive node lightsFront_emi_windowGlow is missing",
+        "light:lamp_right: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node56"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.house-d.w2.lod2.glb",
+      "anchors": 19,
+      "errors": [
+        "light:lamp_left: emissive node lightsFront_emi_windowGlow is missing",
+        "light:lamp_right: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node56"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.house-d.w3.glb",
+      "anchors": 19,
+      "errors": [
+        "light:lamp_left: emissive node lightsFront_emi_windowGlow is missing",
+        "light:lamp_right: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node56"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.house-d.w3.lod1.glb",
+      "anchors": 19,
+      "errors": [
+        "light:lamp_left: emissive node lightsFront_emi_windowGlow is missing",
+        "light:lamp_right: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node56"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.house-d.w3.lod2.glb",
+      "anchors": 19,
+      "errors": [
+        "light:lamp_left: emissive node lightsFront_emi_windowGlow is missing",
+        "light:lamp_right: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node56"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.house-e.glb",
+      "anchors": 7,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node71",
+        "node74"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.house-e.lod1.glb",
+      "anchors": 7,
+      "errors": [
+        "light:door_front: emissive node door_front_emi_windowGlow.001 is missing",
+        "light:lamp_porch: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_front: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_rear_1.35: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_rear_-1.3: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_side_1: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_side_-1: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node43",
+        "node73"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.house-e.lod2.glb",
+      "anchors": 7,
+      "errors": [
+        "light:door_front: emissive node door_front_emi_windowGlow.001 is missing",
+        "light:lamp_porch: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_front: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_rear_1.35: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_rear_-1.3: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_side_1: emissive node lightsFront_emi_windowGlow is missing",
+        "light:window_side_-1: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node43",
+        "node73"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.house-e.w2.glb",
+      "anchors": 7,
+      "errors": [
+        "light:lamp_porch: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node44"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.house-e.w2.lod1.glb",
+      "anchors": 7,
+      "errors": [
+        "light:lamp_porch: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node44"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.house-e.w2.lod2.glb",
+      "anchors": 7,
+      "errors": [
+        "light:lamp_porch: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node44"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.house-e.w3.glb",
+      "anchors": 7,
+      "errors": [
+        "light:lamp_porch: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node44"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.house-e.w3.lod1.glb",
+      "anchors": 7,
+      "errors": [
+        "light:lamp_porch: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node44"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.house-e.w3.lod2.glb",
+      "anchors": 7,
+      "errors": [
+        "light:lamp_porch: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node44"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.joes-diner.glb",
+      "anchors": 2,
+      "errors": [
+        "light:neon: emissive node roof_emi_windowGlow is missing",
+        "light:neon: emissive node roof_emi_survivorRed is missing",
+        "light:windows: emissive node door_front_emi_windowGlow is missing",
+        "light:windows: emissive node interior_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node11",
+        "node12",
+        "node9"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.joes-diner.lod1.glb",
+      "anchors": 2,
+      "errors": [
+        "light:neon: emissive node roof_emi_survivorRed is missing",
+        "light:neon: emissive node roof_emi_windowGlow is missing",
+        "light:windows: emissive node door_front_emi_windowGlow is missing",
+        "light:windows: emissive node roof_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node11",
+        "node14"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.joes-diner.lod2.glb",
+      "anchors": 2,
+      "errors": [
+        "light:neon: emissive node roof_emi_survivorRed is missing",
+        "light:neon: emissive node roof_emi_windowGlow is missing",
+        "light:windows: emissive node door_front_emi_windowGlow is missing",
+        "light:windows: emissive node roof_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node12",
+        "node14"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.kessler-hardware.glb",
+      "anchors": 5,
+      "errors": [
+        "light:cellarDoorLamp: emissive node body_emi_windowGlow is missing",
+        "light:shopWindowL: emissive node body_emi_windowGlow is missing",
+        "light:shopWindowR: emissive node body_emi_windowGlow is missing",
+        "light:signLamp1: emissive node body_emi_windowGlow is missing",
+        "light:signLamp2: emissive node body_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node13"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.kessler-hardware.lod1.glb",
+      "anchors": 5,
+      "errors": [
+        "light:cellarDoorLamp: emissive node body_emi_windowGlow is missing",
+        "light:shopWindowL: emissive node body_emi_windowGlow is missing",
+        "light:shopWindowR: emissive node body_emi_windowGlow is missing",
+        "light:signLamp1: emissive node body_emi_windowGlow is missing",
+        "light:signLamp2: emissive node body_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node13"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.kessler-hardware.lod2.glb",
+      "anchors": 5,
+      "errors": [
+        "light:cellarDoorLamp: emissive node body_emi_windowGlow is missing",
+        "light:shopWindowL: emissive node body_emi_windowGlow is missing",
+        "light:shopWindowR: emissive node body_emi_windowGlow is missing",
+        "light:signLamp1: emissive node body_emi_windowGlow is missing",
+        "light:signLamp2: emissive node body_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node13"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.mainstreet-brick.glb",
+      "anchors": 7,
+      "errors": [
+        "light:bakery_display: emissive node body_emi_windowGlow is missing",
+        "light:bakery_upper_-1.15: emissive node body_emi_windowGlow is missing",
+        "light:bakery_upper_-2.95: emissive node body_emi_windowGlow is missing",
+        "light:pharmacy_sign: emissive node body_emi_foliage is missing",
+        "light:side_-1.55_1.95: emissive node body_emi_windowGlow is missing",
+        "light:side_-1.55_5.35: emissive node body_emi_windowGlow is missing",
+        "light:door_bakery: emissive node door_bakery_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node15",
+        "node16"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.mainstreet-brick.lod1.glb",
+      "anchors": 11,
+      "errors": [
+        "light:bakery_display: emissive node body_emi_windowGlow is missing",
+        "light:bakery_upper_-1.15: emissive node body_emi_windowGlow is missing",
+        "light:bakery_upper_-2.95: emissive node body_emi_windowGlow is missing",
+        "light:pharmacy_sign: emissive node body_emi_foliage is missing",
+        "light:side_-1.55_1.95: emissive node body_emi_windowGlow is missing",
+        "light:side_-1.55_5.35: emissive node body_emi_windowGlow is missing",
+        "light:door_bakery: emissive node door_bakery_emi_windowGlow is missing",
+        "light:bakery_upper_-1: emissive node body_emi_windowGlow is missing",
+        "light:bakery_upper_-2: emissive node body_emi_windowGlow is missing",
+        "light:side_-1.55_1: emissive node body_emi_windowGlow is missing",
+        "light:side_-1.55_5: emissive node body_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node20",
+        "node21"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.mainstreet-brick.lod2.glb",
+      "anchors": 11,
+      "errors": [
+        "light:bakery_display: emissive node body_emi_windowGlow is missing",
+        "light:bakery_upper_-1.15: emissive node body_emi_windowGlow is missing",
+        "light:bakery_upper_-2.95: emissive node body_emi_windowGlow is missing",
+        "light:pharmacy_sign: emissive node body_emi_foliage is missing",
+        "light:side_-1.55_1.95: emissive node body_emi_windowGlow is missing",
+        "light:side_-1.55_5.35: emissive node body_emi_windowGlow is missing",
+        "light:door_bakery: emissive node door_bakery_emi_windowGlow is missing",
+        "light:bakery_upper_-1: emissive node body_emi_windowGlow is missing",
+        "light:bakery_upper_-2: emissive node body_emi_windowGlow is missing",
+        "light:side_-1.55_1: emissive node body_emi_windowGlow is missing",
+        "light:side_-1.55_5: emissive node body_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node20",
+        "node21"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.maple-hardware.glb",
+      "anchors": 4,
+      "errors": [
+        "light:lamp_0: emissive node lamp_0_emi_windowGlow is missing",
+        "light:lamp_1: emissive node lamp_1_emi_windowGlow is missing",
+        "light:lamp_2: emissive node lamp_2_emi_windowGlow is missing",
+        "light:shopfront: emissive node interior_emi_windowGlow is missing",
+        "light:shopfront: emissive node door_front_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node22",
+        "node23",
+        "node25"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.maple-hardware.lod1.glb",
+      "anchors": 4,
+      "errors": [
+        "light:lamp_0: emissive node lamp_0_emi_windowGlow is missing",
+        "light:lamp_1: emissive node lamp_1_emi_windowGlow is missing",
+        "light:lamp_2: emissive node lamp_2_emi_windowGlow is missing",
+        "light:shopfront: emissive node interior_emi_windowGlow is missing",
+        "light:shopfront: emissive node door_front_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node22",
+        "node23",
+        "node25"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.maple-hardware.lod2.glb",
+      "anchors": 4,
+      "errors": [
+        "light:lamp_0: emissive node lamp_0_lod2_emi_windowGlow is missing",
+        "light:lamp_1: emissive node lamp_1_lod2_emi_windowGlow is missing",
+        "light:lamp_2: emissive node lamp_2_lod2_emi_windowGlow is missing",
+        "light:shopfront: emissive node interior_lod2_emi_windowGlow is missing",
+        "light:shopfront: emissive node door_front_lod2_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node22",
+        "node23",
+        "node25"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.metro-entrance.glb",
+      "anchors": 3,
+      "errors": [
+        "light:canopyFront: emissive node body_emi_windowGlow is missing",
+        "light:signLamp: emissive node body_emi_windowGlow is missing",
+        "light:stairWell: emissive node body_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node18"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.metro-entrance.lod1.glb",
+      "anchors": 3,
+      "errors": [
+        "light:canopyFront: emissive node body_emi_windowGlow is missing",
+        "light:signLamp: emissive node body_emi_windowGlow is missing",
+        "light:stairWell: emissive node body_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node18"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.metro-entrance.lod2.glb",
+      "anchors": 3,
+      "errors": [
+        "light:canopyFront: emissive node body_emi_windowGlow is missing",
+        "light:signLamp: emissive node body_emi_windowGlow is missing",
+        "light:stairWell: emissive node body_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node18"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.pharmacy.glb",
+      "anchors": 1,
+      "errors": [
+        "light:pharmacy: emissive node interior_emi_picketWhite is missing"
+      ],
+      "uncoveredEmissive": [
+        "node28"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.pharmacy.lod1.glb",
+      "anchors": 1,
+      "errors": [
+        "light:pharmacy: emissive node interior_emi_picketWhite is missing"
+      ],
+      "uncoveredEmissive": [
+        "node28"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.pharmacy.lod2.glb",
+      "anchors": 1,
+      "errors": [
+        "light:pharmacy: emissive node interior_emi_picketWhite is missing"
+      ],
+      "uncoveredEmissive": [
+        "node28"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.restroom-block.glb",
+      "anchors": 2,
+      "errors": [
+        "light:door_men: emissive node lamp_men_windowGlow is missing",
+        "light:door_women: emissive node lamp_women_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node34"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.restroom-block.lod1.glb",
+      "anchors": 2,
+      "errors": [
+        "light:door_men: emissive node lamp_men_windowGlow is missing",
+        "light:door_women: emissive node lamp_women_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node34"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.restroom-block.lod2.glb",
+      "anchors": 2,
+      "errors": [
+        "light:door_men: emissive node lamp_men_windowGlow is missing",
+        "light:door_women: emissive node lamp_women_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node34"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.river-bridge.glb",
+      "anchors": 4,
+      "errors": [
+        "light:bridge_0: emissive node lamp_0_emi_windowGlow is missing",
+        "light:bridge_1: emissive node lamp_1_emi_windowGlow is missing",
+        "light:bridge_2: emissive node lamp_2_emi_windowGlow is missing",
+        "light:bridge_3: emissive node lamp_3_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node21"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.river-bridge.lod1.glb",
+      "anchors": 4,
+      "errors": [
+        "light:bridge_0: emissive node lamp_0_emi_windowGlow is missing",
+        "light:bridge_1: emissive node lamp_1_emi_windowGlow is missing",
+        "light:bridge_2: emissive node lamp_2_emi_windowGlow is missing",
+        "light:bridge_3: emissive node lamp_3_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node21"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.river-bridge.lod2.glb",
+      "anchors": 4,
+      "errors": [
+        "light:bridge_0: emissive node lamp_0_emi_windowGlow is missing",
+        "light:bridge_1: emissive node lamp_1_emi_windowGlow is missing",
+        "light:bridge_2: emissive node lamp_2_emi_windowGlow is missing",
+        "light:bridge_3: emissive node lamp_3_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node21"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.school-elementary.glb",
+      "anchors": 2,
+      "errors": [
+        "light:lampL: emissive node lampL_glass is missing",
+        "light:lampR: emissive node lampR_glass is missing"
+      ],
+      "uncoveredEmissive": [
+        "node20"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.school-elementary.lod1.glb",
+      "anchors": 2,
+      "errors": [
+        "light:lampL: emissive node lampL_glass is missing",
+        "light:lampR: emissive node lampR_glass is missing"
+      ],
+      "uncoveredEmissive": [
+        "node20"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.school-elementary.lod2.glb",
+      "anchors": 2,
+      "errors": [
+        "light:lampL: emissive node lampL_glass is missing",
+        "light:lampR: emissive node lampR_glass is missing"
+      ],
+      "uncoveredEmissive": [
+        "node20"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.shed.glb",
+      "anchors": 2,
+      "errors": [
+        "light:entrance: emissive node lamp_entrance_emi_windowGlow is missing",
+        "light:window: emissive node window_side_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node10",
+        "node16"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.shed.lod1.glb",
+      "anchors": 2,
+      "errors": [
+        "light:entrance: emissive node lamp_entrance_emi_windowGlow is missing",
+        "light:window: emissive node window_side_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node10",
+        "node16"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.shed.lod2.glb",
+      "anchors": 2,
+      "errors": [
+        "light:entrance: emissive node lamp_entrance_emi_windowGlow is missing",
+        "light:window: emissive node window_side_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node10",
+        "node16"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.storefront-row.glb",
+      "anchors": 5,
+      "errors": [
+        "light:shop1Window: emissive node body_emi_windowGlow is missing",
+        "light:shop2Window: emissive node body_emi_windowGlow is missing",
+        "light:shop3Window: emissive node body_emi_windowGlow is missing",
+        "light:streetLamp1: emissive node body_emi_windowGlow is missing",
+        "light:streetLamp2: emissive node body_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node15"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.storefront-row.lod1.glb",
+      "anchors": 5,
+      "errors": [
+        "light:shop1Window: emissive node body_emi_windowGlow is missing",
+        "light:shop2Window: emissive node body_emi_windowGlow is missing",
+        "light:shop3Window: emissive node body_emi_windowGlow is missing",
+        "light:streetLamp1: emissive node body_emi_windowGlow is missing",
+        "light:streetLamp2: emissive node body_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node15"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.storefront-row.lod2.glb",
+      "anchors": 5,
+      "errors": [
+        "light:shop1Window: emissive node body_emi_windowGlow is missing",
+        "light:shop2Window: emissive node body_emi_windowGlow is missing",
+        "light:shop3Window: emissive node body_emi_windowGlow is missing",
+        "light:streetLamp1: emissive node body_emi_windowGlow is missing",
+        "light:streetLamp2: emissive node body_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node15"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.supermarket.glb",
+      "anchors": 8,
+      "errors": [
+        "light:cold_00: emissive node static_emi_picketWhite is missing",
+        "light:cold_01: emissive node static_emi_picketWhite is missing",
+        "light:cold_02: emissive node static_emi_picketWhite is missing",
+        "light:cold_03: emissive node static_emi_picketWhite is missing",
+        "light:cold_04: emissive node static_emi_picketWhite is missing",
+        "light:cold_05: emissive node static_emi_picketWhite is missing",
+        "light:frozen: emissive node static_emi_picketWhite is missing",
+        "light:staff: emissive node static_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node50"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.supermarket.lod1.glb",
+      "anchors": 8,
+      "errors": [
+        "light:cold_00: emissive node static_emi_picketWhite is missing",
+        "light:cold_01: emissive node static_emi_picketWhite is missing",
+        "light:cold_02: emissive node static_emi_picketWhite is missing",
+        "light:cold_03: emissive node static_emi_picketWhite is missing",
+        "light:cold_04: emissive node static_emi_picketWhite is missing",
+        "light:cold_05: emissive node static_emi_picketWhite is missing",
+        "light:frozen: emissive node static_emi_picketWhite is missing",
+        "light:staff: emissive node static_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node50"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.supermarket.lod2.glb",
+      "anchors": 8,
+      "errors": [
+        "light:cold_00: emissive node static_emi_picketWhite is missing",
+        "light:cold_01: emissive node static_emi_picketWhite is missing",
+        "light:cold_02: emissive node static_emi_picketWhite is missing",
+        "light:cold_03: emissive node static_emi_picketWhite is missing",
+        "light:cold_04: emissive node static_emi_picketWhite is missing",
+        "light:cold_05: emissive node static_emi_picketWhite is missing",
+        "light:frozen: emissive node static_emi_picketWhite is missing",
+        "light:staff: emissive node static_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node49"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.town-hall.w5.glb",
+      "anchors": 1,
+      "errors": [
+        "light:entry: emissive node body_pal_uiDark is missing"
+      ],
+      "uncoveredEmissive": []
+    },
+    {
+      "path": "public/assets/models/bld.town-hall.w5.lod1.glb",
+      "anchors": 1,
+      "errors": [
+        "light:entry: emissive node body_pal_uiDark is missing"
+      ],
+      "uncoveredEmissive": []
+    },
+    {
+      "path": "public/assets/models/bld.town-hall.w5.lod2.glb",
+      "anchors": 1,
+      "errors": [
+        "light:entry: emissive node body_pal_uiDark is missing"
+      ],
+      "uncoveredEmissive": []
+    },
+    {
+      "path": "public/assets/models/bld.town-hall.w6.glb",
+      "anchors": 1,
+      "errors": [
+        "light:entry: emissive node body_pal_uiDark is missing"
+      ],
+      "uncoveredEmissive": []
+    },
+    {
+      "path": "public/assets/models/bld.town-hall.w6.lod1.glb",
+      "anchors": 1,
+      "errors": [
+        "light:entry: emissive node body_pal_uiDark is missing"
+      ],
+      "uncoveredEmissive": []
+    },
+    {
+      "path": "public/assets/models/bld.town-hall.w6.lod2.glb",
+      "anchors": 1,
+      "errors": [
+        "light:entry: emissive node body_pal_uiDark is missing"
+      ],
+      "uncoveredEmissive": []
+    },
+    {
+      "path": "public/assets/models/bld.tunnel-portal.glb",
+      "anchors": 2,
+      "errors": [
+        "light:tunnel_-1: emissive node lampLensL is missing",
+        "light:tunnel_1: emissive node lampLensR is missing"
+      ],
+      "uncoveredEmissive": [
+        "node20"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.tunnel-portal.lod1.glb",
+      "anchors": 2,
+      "errors": [
+        "light:tunnel_-1: emissive node lampLensL is missing",
+        "light:tunnel_1: emissive node lampLensR is missing"
+      ],
+      "uncoveredEmissive": [
+        "node20"
+      ]
+    },
+    {
+      "path": "public/assets/models/bld.tunnel-portal.lod2.glb",
+      "anchors": 2,
+      "errors": [
+        "light:tunnel_-1: emissive node lampLensL is missing",
+        "light:tunnel_1: emissive node lampLensR is missing"
+      ],
+      "uncoveredEmissive": [
+        "node20"
+      ]
+    },
+    {
+      "path": "public/assets/models/house.garage.half.glb",
+      "anchors": 1,
+      "errors": [
+        "light:garage: emissive node root_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node11"
+      ]
+    },
+    {
+      "path": "public/assets/models/house.garage.half.lod1.glb",
+      "anchors": 1,
+      "errors": [
+        "light:garage: emissive node root_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node10"
+      ]
+    },
+    {
+      "path": "public/assets/models/house.garage.half.lod2.glb",
+      "anchors": 1,
+      "errors": [
+        "light:garage: emissive node root_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node10"
+      ]
+    },
+    {
+      "path": "public/assets/models/house.garage.open.glb",
+      "anchors": 1,
+      "errors": [
+        "light:garage: emissive node root_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node11"
+      ]
+    },
+    {
+      "path": "public/assets/models/house.garage.open.lod1.glb",
+      "anchors": 1,
+      "errors": [
+        "light:garage: emissive node root_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node10"
+      ]
+    },
+    {
+      "path": "public/assets/models/house.garage.open.lod2.glb",
+      "anchors": 1,
+      "errors": [
+        "light:garage: emissive node root_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node10"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.armored-football.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node30"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.armored-football.lod1.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node30"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.armored-football.lod2.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node30"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.baseball-cap.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node45"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.baseball-cap.lod1.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node45"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.baseball-cap.lod2.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node45"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.bloated.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node30"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.bloated.lod1.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node30"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.bloated.lod2.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node30"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.brute.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node32"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.brute.lod1.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node32"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.brute.lod2.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node32"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.butcher.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node33"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.butcher.lod1.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node33"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.butcher.lod2.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node33"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.cat-black.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node62"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.cat-black.lod1.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node62"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.cat-black.lod2.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node62"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.cat-tabby.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node71"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.cat-tabby.lod1.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node71"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.cat-tabby.lod2.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node71"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.college-student.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node46"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.college-student.lod1.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node46"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.college-student.lod2.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node46"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.common-worker.crowd.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "crowd_emi_infectedEye"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.construction-worker.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node45"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.construction-worker.lod1.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node45"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.construction-worker.lod2.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node45"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.crow.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node50"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.crow.lod1.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node50"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.crow.lod2.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node50"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.dog-dachshund.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node42"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.dog-dachshund.lod1.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node42"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.dog-dachshund.lod2.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node42"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.dog-k9.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node77"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.dog-k9.lod1.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node77"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.dog-k9.lod2.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node77"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.dog-retriever.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node75"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.dog-retriever.lod1.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node75"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.dog-retriever.lod2.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node75"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.dog.black.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node39"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.dog.black.lod1.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node39"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.dog.black.lod2.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node39"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.dog.cream.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node39"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.dog.cream.lod1.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node39"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.dog.cream.lod2.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node39"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.screamer.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node45"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.screamer.lod1.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node45"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.screamer.lod2.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node45"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.skater.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node45"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.skater.lod1.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node45"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.skater.lod2.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node45"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.sprinter.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node45"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.sprinter.lod1.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node45"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.sprinter.lod2.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node45"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.teen-skater.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node46"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.teen-skater.lod1.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node46"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.teen-skater.lod2.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node46"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.zebra.lod1.low.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node72"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.zebra.lod2.low.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node72"
+      ]
+    },
+    {
+      "path": "public/assets/models/inf.zebra.low.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node72"
+      ]
+    },
+    {
+      "path": "public/assets/models/int.basement-cellar.glb",
+      "anchors": 1,
+      "errors": [
+        "light:bulb: emissive node body_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node33"
+      ]
+    },
+    {
+      "path": "public/assets/models/int.basement-cellar.lod1.glb",
+      "anchors": 1,
+      "errors": [
+        "light:bulb: emissive node body_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node33"
+      ]
+    },
+    {
+      "path": "public/assets/models/int.basement-cellar.lod2.glb",
+      "anchors": 1,
+      "errors": [
+        "light:bulb: emissive node body_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node33"
+      ]
+    },
+    {
+      "path": "public/assets/models/int.diner.glb",
+      "anchors": 7,
+      "errors": [
+        "light:neon: emissive node interior_emi_windowGlow is missing",
+        "light:neon: emissive node interior_emi_schoolBusYellow is missing",
+        "light:neon: emissive node interior_emi_survivorRed is missing",
+        "light:pendant_0: emissive node lamp_0_emi_windowGlow is missing",
+        "light:pendant_1: emissive node lamp_1_emi_windowGlow is missing",
+        "light:pendant_2: emissive node lamp_2_emi_windowGlow is missing",
+        "light:pendant_3: emissive node lamp_3_emi_windowGlow is missing",
+        "light:pendant_4: emissive node lamp_4_emi_windowGlow is missing",
+        "light:pendant_5: emissive node lamp_5_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node37",
+        "node38"
+      ]
+    },
+    {
+      "path": "public/assets/models/int.diner.lod1.glb",
+      "anchors": 7,
+      "errors": [
+        "light:neon: emissive node interior_emi_windowGlow is missing",
+        "light:neon: emissive node interior_emi_schoolBusYellow is missing",
+        "light:neon: emissive node interior_emi_survivorRed is missing",
+        "light:pendant_0: emissive node lamp_0_emi_windowGlow is missing",
+        "light:pendant_1: emissive node lamp_1_emi_windowGlow is missing",
+        "light:pendant_2: emissive node lamp_2_emi_windowGlow is missing",
+        "light:pendant_3: emissive node lamp_3_emi_windowGlow is missing",
+        "light:pendant_4: emissive node lamp_4_emi_windowGlow is missing",
+        "light:pendant_5: emissive node lamp_5_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node37",
+        "node38"
+      ]
+    },
+    {
+      "path": "public/assets/models/int.diner.lod2.glb",
+      "anchors": 7,
+      "errors": [
+        "light:neon: emissive node interior_emi_windowGlow is missing",
+        "light:neon: emissive node interior_emi_schoolBusYellow is missing",
+        "light:neon: emissive node interior_emi_survivorRed is missing",
+        "light:pendant_0: emissive node lamp_0_emi_windowGlow is missing",
+        "light:pendant_1: emissive node lamp_1_emi_windowGlow is missing",
+        "light:pendant_2: emissive node lamp_2_emi_windowGlow is missing",
+        "light:pendant_3: emissive node lamp_3_emi_windowGlow is missing",
+        "light:pendant_4: emissive node lamp_4_emi_windowGlow is missing",
+        "light:pendant_5: emissive node lamp_5_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node37",
+        "node38"
+      ]
+    },
+    {
+      "path": "public/assets/models/int.fire-station-bay.glb",
+      "anchors": 6,
+      "errors": [
+        "light:alarm3.2: emissive node alarm3.2Mount_emi_sirenRed is missing",
+        "light:alarm-3.2: emissive node alarm-3.2Mount_emi_sirenRed is missing",
+        "light:ceiling1.7-3: emissive node ceiling1.7-3Mount_emi_windowGlow is missing",
+        "light:ceiling1.73: emissive node ceiling1.73Mount_emi_windowGlow is missing",
+        "light:ceiling-3-3: emissive node ceiling-3-3Mount_emi_windowGlow is missing",
+        "light:ceiling-33: emissive node ceiling-33Mount_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node25"
+      ]
+    },
+    {
+      "path": "public/assets/models/int.fire-station-bay.lod1.glb",
+      "anchors": 6,
+      "errors": [
+        "light:alarm3.2: emissive node alarm3.2Mount_emi_sirenRed is missing",
+        "light:alarm-3.2: emissive node alarm-3.2Mount_emi_sirenRed is missing",
+        "light:ceiling1.7-3: emissive node ceiling1.7-3Mount_emi_windowGlow is missing",
+        "light:ceiling1.73: emissive node ceiling1.73Mount_emi_windowGlow is missing",
+        "light:ceiling-3-3: emissive node ceiling-3-3Mount_emi_windowGlow is missing",
+        "light:ceiling-33: emissive node ceiling-33Mount_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node25"
+      ]
+    },
+    {
+      "path": "public/assets/models/int.fire-station-bay.lod2.glb",
+      "anchors": 6,
+      "errors": [
+        "light:alarm3.2: emissive node alarm3.2Mount_emi_sirenRed is missing",
+        "light:alarm-3.2: emissive node alarm-3.2Mount_emi_sirenRed is missing",
+        "light:ceiling1.7-3: emissive node ceiling1.7-3Mount_emi_windowGlow is missing",
+        "light:ceiling1.73: emissive node ceiling1.73Mount_emi_windowGlow is missing",
+        "light:ceiling-3-3: emissive node ceiling-3-3Mount_emi_windowGlow is missing",
+        "light:ceiling-33: emissive node ceiling-33Mount_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node25"
+      ]
+    },
+    {
+      "path": "public/assets/models/int.food-court.glb",
+      "anchors": 4,
+      "errors": [
+        "light:sconce_0: emissive node lamp_sconce_0_emi_windowGlow is missing",
+        "light:sconce_1: emissive node lamp_sconce_1_emi_windowGlow is missing",
+        "light:sconce_2: emissive node lamp_sconce_2_emi_windowGlow is missing",
+        "light:sconce_side: emissive node lamp_sconce_side_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node30",
+        "node31"
+      ]
+    },
+    {
+      "path": "public/assets/models/int.food-court.lod1.glb",
+      "anchors": 4,
+      "errors": [
+        "light:sconce_0: emissive node lamp_sconce_0_emi_windowGlow is missing",
+        "light:sconce_1: emissive node lamp_sconce_1_emi_windowGlow is missing",
+        "light:sconce_2: emissive node lamp_sconce_2_emi_windowGlow is missing",
+        "light:sconce_side: emissive node lamp_sconce_side_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node30",
+        "node31"
+      ]
+    },
+    {
+      "path": "public/assets/models/int.food-court.lod2.glb",
+      "anchors": 4,
+      "errors": [
+        "light:sconce_0: emissive node lamp_sconce_0_emi_windowGlow is missing",
+        "light:sconce_1: emissive node lamp_sconce_1_emi_windowGlow is missing",
+        "light:sconce_2: emissive node lamp_sconce_2_emi_windowGlow is missing",
+        "light:sconce_side: emissive node lamp_sconce_side_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node31",
+        "node32"
+      ]
+    },
+    {
+      "path": "public/assets/models/int.gym-cafeteria.glb",
+      "anchors": 5,
+      "errors": [
+        "light:sconce_3.42: emissive node static_emi_windowGlow is missing",
+        "light:sconce_-2.7: emissive node static_emi_windowGlow is missing",
+        "light:sconce_-6.65: emissive node static_emi_windowGlow is missing",
+        "light:sconce_left_6.0: emissive node static_emi_windowGlow is missing",
+        "light:sconce_left_-2.45: emissive node static_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node26"
+      ]
+    },
+    {
+      "path": "public/assets/models/int.gym-cafeteria.lod1.glb",
+      "anchors": 5,
+      "errors": [
+        "light:sconce_3.42: emissive node static_emi_windowGlow is missing",
+        "light:sconce_-2.7: emissive node static_emi_windowGlow is missing",
+        "light:sconce_-6.65: emissive node static_emi_windowGlow is missing",
+        "light:sconce_left_6.0: emissive node static_emi_windowGlow is missing",
+        "light:sconce_left_-2.45: emissive node static_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node26"
+      ]
+    },
+    {
+      "path": "public/assets/models/int.gym-cafeteria.lod2.glb",
+      "anchors": 5,
+      "errors": [
+        "light:sconce_3.42: emissive node static_emi_windowGlow is missing",
+        "light:sconce_-2.7: emissive node static_emi_windowGlow is missing",
+        "light:sconce_-6.65: emissive node static_emi_windowGlow is missing",
+        "light:sconce_left_6.0: emissive node static_emi_windowGlow is missing",
+        "light:sconce_left_-2.45: emissive node static_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node26"
+      ]
+    },
+    {
+      "path": "public/assets/models/int.metro-station.glb",
+      "anchors": 8,
+      "errors": [
+        "light:mainHall0: emissive node body_emi_picketWhite is missing",
+        "light:mainHall12: emissive node body_emi_picketWhite is missing",
+        "light:mainHall-12: emissive node body_emi_picketWhite is missing",
+        "light:mainPlatform0: emissive node body_emi_picketWhite is missing",
+        "light:mainPlatform12: emissive node body_emi_picketWhite is missing",
+        "light:mainPlatform24: emissive node body_emi_picketWhite is missing",
+        "light:mainPlatform-12: emissive node body_emi_picketWhite is missing",
+        "light:mainPlatform-24: emissive node body_emi_picketWhite is missing"
+      ],
+      "uncoveredEmissive": [
+        "node77"
+      ]
+    },
+    {
+      "path": "public/assets/models/int.metro-station.lod1.glb",
+      "anchors": 8,
+      "errors": [
+        "light:mainHall0: emissive node body_emi_picketWhite is missing",
+        "light:mainHall12: emissive node body_emi_picketWhite is missing",
+        "light:mainHall-12: emissive node body_emi_picketWhite is missing",
+        "light:mainPlatform0: emissive node body_emi_picketWhite is missing",
+        "light:mainPlatform12: emissive node body_emi_picketWhite is missing",
+        "light:mainPlatform24: emissive node body_emi_picketWhite is missing",
+        "light:mainPlatform-12: emissive node body_emi_picketWhite is missing",
+        "light:mainPlatform-24: emissive node body_emi_picketWhite is missing"
+      ],
+      "uncoveredEmissive": [
+        "node73"
+      ]
+    },
+    {
+      "path": "public/assets/models/int.metro-station.lod2.glb",
+      "anchors": 8,
+      "errors": [
+        "light:mainHall0: emissive node body_emi_picketWhite is missing",
+        "light:mainHall12: emissive node body_emi_picketWhite is missing",
+        "light:mainHall-12: emissive node body_emi_picketWhite is missing",
+        "light:mainPlatform0: emissive node body_emi_picketWhite is missing",
+        "light:mainPlatform12: emissive node body_emi_picketWhite is missing",
+        "light:mainPlatform24: emissive node body_emi_picketWhite is missing",
+        "light:mainPlatform-12: emissive node body_emi_picketWhite is missing",
+        "light:mainPlatform-24: emissive node body_emi_picketWhite is missing"
+      ],
+      "uncoveredEmissive": [
+        "node69"
+      ]
+    },
+    {
+      "path": "public/assets/models/int.mini-mall.glb",
+      "anchors": 3,
+      "errors": [
+        "light:lamp_pizza_0.35: emissive node lamp_pizza_0.35_emi_windowGlow is missing",
+        "light:lamp_pizza_-1.2: emissive node lamp_pizza_-1.2_emi_windowGlow is missing",
+        "light:interior: emissive node interior_emi_schoolBusYellow is missing",
+        "light:interior: emissive node interior_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node31"
+      ]
+    },
+    {
+      "path": "public/assets/models/int.mini-mall.lod1.glb",
+      "anchors": 3,
+      "errors": [
+        "light:lamp_pizza_0.35: emissive node lamp_pizza_0.35_emi_windowGlow is missing",
+        "light:lamp_pizza_-1.2: emissive node lamp_pizza_-1.2_emi_windowGlow is missing",
+        "light:interior: emissive node interior_emi_schoolBusYellow is missing",
+        "light:interior: emissive node interior_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node31"
+      ]
+    },
+    {
+      "path": "public/assets/models/int.mini-mall.lod2.glb",
+      "anchors": 3,
+      "errors": [
+        "light:lamp_pizza_0.35: emissive node lamp_pizza_0.35_emi_windowGlow is missing",
+        "light:lamp_pizza_-1.2: emissive node lamp_pizza_-1.2_emi_windowGlow is missing",
+        "light:interior: emissive node interior_emi_schoolBusYellow is missing",
+        "light:interior: emissive node interior_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node31"
+      ]
+    },
+    {
+      "path": "public/assets/models/int.pharmacy-clinic.glb",
+      "anchors": 1,
+      "errors": [
+        "light:pharmacy: emissive node interior_emi_picketWhite is missing"
+      ],
+      "uncoveredEmissive": [
+        "node27"
+      ]
+    },
+    {
+      "path": "public/assets/models/int.pharmacy-clinic.lod1.glb",
+      "anchors": 1,
+      "errors": [
+        "light:pharmacy: emissive node interior_emi_picketWhite is missing"
+      ],
+      "uncoveredEmissive": [
+        "node27"
+      ]
+    },
+    {
+      "path": "public/assets/models/int.pharmacy-clinic.lod2.glb",
+      "anchors": 1,
+      "errors": [
+        "light:pharmacy: emissive node interior_emi_picketWhite is missing"
+      ],
+      "uncoveredEmissive": [
+        "node27"
+      ]
+    },
+    {
+      "path": "public/assets/models/int.supermarket.glb",
+      "anchors": 8,
+      "errors": [
+        "light:cold_00: emissive node static_emi_picketWhite is missing",
+        "light:cold_01: emissive node static_emi_picketWhite is missing",
+        "light:cold_02: emissive node static_emi_picketWhite is missing",
+        "light:cold_03: emissive node static_emi_picketWhite is missing",
+        "light:cold_04: emissive node static_emi_picketWhite is missing",
+        "light:cold_05: emissive node static_emi_picketWhite is missing",
+        "light:frozen: emissive node static_emi_picketWhite is missing",
+        "light:staff: emissive node static_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node49"
+      ]
+    },
+    {
+      "path": "public/assets/models/int.supermarket.lod1.glb",
+      "anchors": 8,
+      "errors": [
+        "light:cold_00: emissive node static_emi_picketWhite is missing",
+        "light:cold_01: emissive node static_emi_picketWhite is missing",
+        "light:cold_02: emissive node static_emi_picketWhite is missing",
+        "light:cold_03: emissive node static_emi_picketWhite is missing",
+        "light:cold_04: emissive node static_emi_picketWhite is missing",
+        "light:cold_05: emissive node static_emi_picketWhite is missing",
+        "light:frozen: emissive node static_emi_picketWhite is missing",
+        "light:staff: emissive node static_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node49"
+      ]
+    },
+    {
+      "path": "public/assets/models/int.supermarket.lod2.glb",
+      "anchors": 8,
+      "errors": [
+        "light:cold_00: emissive node static_emi_picketWhite is missing",
+        "light:cold_01: emissive node static_emi_picketWhite is missing",
+        "light:cold_02: emissive node static_emi_picketWhite is missing",
+        "light:cold_03: emissive node static_emi_picketWhite is missing",
+        "light:cold_04: emissive node static_emi_picketWhite is missing",
+        "light:cold_05: emissive node static_emi_picketWhite is missing",
+        "light:frozen: emissive node static_emi_picketWhite is missing",
+        "light:staff: emissive node static_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node48"
+      ]
+    },
+    {
+      "path": "public/assets/models/kit.army-checkpoint.glb",
+      "anchors": 4,
+      "errors": [
+        "light:extraFlood3: emissive node extraFlood3Mount_emi_windowGlow is missing",
+        "light:extraFlood-6: emissive node extraFlood-6Mount_emi_windowGlow is missing",
+        "light:flood3: emissive node flood3Mount_emi_windowGlow is missing",
+        "light:flood-3: emissive node flood-3Mount_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node17"
+      ]
+    },
+    {
+      "path": "public/assets/models/kit.army-checkpoint.lod1.glb",
+      "anchors": 4,
+      "errors": [
+        "light:extraFlood3: emissive node extraFlood3Mount_emi_windowGlow is missing",
+        "light:extraFlood-6: emissive node extraFlood-6Mount_emi_windowGlow is missing",
+        "light:flood3: emissive node flood3Mount_emi_windowGlow is missing",
+        "light:flood-3: emissive node flood-3Mount_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node17"
+      ]
+    },
+    {
+      "path": "public/assets/models/kit.army-checkpoint.lod2.glb",
+      "anchors": 4,
+      "errors": [
+        "light:extraFlood3: emissive node extraFlood3Mount_emi_windowGlow is missing",
+        "light:extraFlood-6: emissive node extraFlood-6Mount_emi_windowGlow is missing",
+        "light:flood3: emissive node flood3Mount_emi_windowGlow is missing",
+        "light:flood-3: emissive node flood-3Mount_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node17"
+      ]
+    },
+    {
+      "path": "public/assets/models/kit.campground.glb",
+      "anchors": 8,
+      "errors": [
+        "light:camper_head_1: emissive node headlamp_1 is missing",
+        "light:camper_head_-1: emissive node headlamp_-1 is missing",
+        "light:campfire: emissive node campfire_flames_emi_schoolBusYellow is missing",
+        "light:campfire: emissive node campfire_flames_emi_windowGlow is missing",
+        "light:string_0: emissive node lamp_0_emi_windowGlow is missing",
+        "light:string_1: emissive node lamp_1_emi_windowGlow is missing",
+        "light:string_2: emissive node lamp_2_emi_windowGlow is missing",
+        "light:string_3: emissive node lamp_3_emi_windowGlow is missing",
+        "light:string_4: emissive node lamp_4_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node45"
+      ]
+    },
+    {
+      "path": "public/assets/models/kit.campground.lod1.glb",
+      "anchors": 8,
+      "errors": [
+        "light:camper_head_1: emissive node headlamp_1 is missing",
+        "light:camper_head_-1: emissive node headlamp_-1 is missing",
+        "light:campfire: emissive node campfire_flames_emi_schoolBusYellow is missing",
+        "light:campfire: emissive node campfire_flames_emi_windowGlow is missing",
+        "light:string_0: emissive node lamp_0_emi_windowGlow is missing",
+        "light:string_1: emissive node lamp_1_emi_windowGlow is missing",
+        "light:string_2: emissive node lamp_2_emi_windowGlow is missing",
+        "light:string_3: emissive node lamp_3_emi_windowGlow is missing",
+        "light:string_4: emissive node lamp_4_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node45"
+      ]
+    },
+    {
+      "path": "public/assets/models/kit.campground.lod2.glb",
+      "anchors": 8,
+      "errors": [
+        "light:camper_head_1: emissive node headlamp_1 is missing",
+        "light:camper_head_-1: emissive node headlamp_-1 is missing",
+        "light:campfire: emissive node campfire_flames_emi_schoolBusYellow is missing",
+        "light:campfire: emissive node campfire_flames_emi_windowGlow is missing",
+        "light:string_0: emissive node lamp_0_emi_windowGlow is missing",
+        "light:string_1: emissive node lamp_1_emi_windowGlow is missing",
+        "light:string_2: emissive node lamp_2_emi_windowGlow is missing",
+        "light:string_3: emissive node lamp_3_emi_windowGlow is missing",
+        "light:string_4: emissive node lamp_4_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node45"
+      ]
+    },
+    {
+      "path": "public/assets/models/kit.dispersal-console.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node6",
+        "node9"
+      ]
+    },
+    {
+      "path": "public/assets/models/kit.dispersal-console.lod1.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node6",
+        "node9"
+      ]
+    },
+    {
+      "path": "public/assets/models/kit.dispersal-console.lod2.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node6",
+        "node9"
+      ]
+    },
+    {
+      "path": "public/assets/models/kit.dispersal-filtration-tower.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node6"
+      ]
+    },
+    {
+      "path": "public/assets/models/kit.dispersal-filtration-tower.lod1.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node6"
+      ]
+    },
+    {
+      "path": "public/assets/models/kit.dispersal-filtration-tower.lod2.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node6"
+      ]
+    },
+    {
+      "path": "public/assets/models/kit.dispersal-turbine-hall.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node10"
+      ]
+    },
+    {
+      "path": "public/assets/models/kit.dispersal-turbine-hall.lod1.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node10"
+      ]
+    },
+    {
+      "path": "public/assets/models/kit.dispersal-turbine-hall.lod2.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node10"
+      ]
+    },
+    {
+      "path": "public/assets/models/kit.evac-camp.glb",
+      "anchors": 4,
+      "errors": [
+        "light:flood_0: emissive node lamp_0_emi_windowGlow is missing",
+        "light:flood_1: emissive node lamp_1_emi_windowGlow is missing",
+        "light:flood_2: emissive node lamp_2_emi_windowGlow is missing",
+        "light:flood_3: emissive node lamp_3_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node30"
+      ]
+    },
+    {
+      "path": "public/assets/models/kit.evac-camp.lod1.glb",
+      "anchors": 4,
+      "errors": [
+        "light:flood_0: emissive node lamp_0_emi_windowGlow is missing",
+        "light:flood_1: emissive node lamp_1_emi_windowGlow is missing",
+        "light:flood_2: emissive node lamp_2_emi_windowGlow is missing",
+        "light:flood_3: emissive node lamp_3_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node30"
+      ]
+    },
+    {
+      "path": "public/assets/models/kit.evac-camp.lod2.glb",
+      "anchors": 4,
+      "errors": [
+        "light:flood_0: emissive node lamp_0_emi_windowGlow is missing",
+        "light:flood_1: emissive node lamp_1_emi_windowGlow is missing",
+        "light:flood_2: emissive node lamp_2_emi_windowGlow is missing",
+        "light:flood_3: emissive node lamp_3_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node30"
+      ]
+    },
+    {
+      "path": "public/assets/models/kit.highway-onramp.glb",
+      "anchors": 3,
+      "errors": [
+        "light:lantern1: emissive node lampHead1 is missing",
+        "light:lantern2: emissive node lampHead2 is missing",
+        "light:lantern3: emissive node lampHead3 is missing"
+      ],
+      "uncoveredEmissive": [
+        "node28"
+      ]
+    },
+    {
+      "path": "public/assets/models/kit.highway-onramp.lod1.glb",
+      "anchors": 3,
+      "errors": [
+        "light:lantern1: emissive node lampHead1 is missing",
+        "light:lantern2: emissive node lampHead2 is missing",
+        "light:lantern3: emissive node lampHead3 is missing"
+      ],
+      "uncoveredEmissive": [
+        "node27"
+      ]
+    },
+    {
+      "path": "public/assets/models/kit.highway-onramp.lod2.glb",
+      "anchors": 3,
+      "errors": [
+        "light:lantern1: emissive node lampHead1 is missing",
+        "light:lantern2: emissive node lampHead2 is missing",
+        "light:lantern3: emissive node lampHead3 is missing"
+      ],
+      "uncoveredEmissive": [
+        "node29"
+      ]
+    },
+    {
+      "path": "public/assets/models/kit.police-checkpoint.glb",
+      "anchors": 10,
+      "errors": [
+        "light:flood_0: emissive node lamp_flood_0 is missing",
+        "light:flood_1: emissive node lamp_flood_1 is missing",
+        "light:lamp_barrier_0_0: emissive node lamp_barrier_0_0 is missing",
+        "light:lamp_barrier_0_1: emissive node lamp_barrier_0_1 is missing",
+        "light:lamp_barrier_1_0: emissive node lamp_barrier_1_0 is missing",
+        "light:lamp_barrier_1_1: emissive node lamp_barrier_1_1 is missing",
+        "light:lamp_barrier_2_0: emissive node lamp_barrier_2_0 is missing",
+        "light:lamp_barrier_2_1: emissive node lamp_barrier_2_1 is missing",
+        "light:message: emissive node static_windowGlow is missing",
+        "light:signal_red: emissive node static_sirenRed is missing"
+      ],
+      "uncoveredEmissive": [
+        "node26"
+      ]
+    },
+    {
+      "path": "public/assets/models/kit.police-checkpoint.lod1.glb",
+      "anchors": 10,
+      "errors": [
+        "light:flood_0: emissive node lamp_flood_0 is missing",
+        "light:flood_1: emissive node lamp_flood_1 is missing",
+        "light:lamp_barrier_0_0: emissive node lamp_barrier_0_0 is missing",
+        "light:lamp_barrier_0_1: emissive node lamp_barrier_0_1 is missing",
+        "light:lamp_barrier_1_0: emissive node lamp_barrier_1_0 is missing",
+        "light:lamp_barrier_1_1: emissive node lamp_barrier_1_1 is missing",
+        "light:lamp_barrier_2_0: emissive node lamp_barrier_2_0 is missing",
+        "light:lamp_barrier_2_1: emissive node lamp_barrier_2_1 is missing",
+        "light:message: emissive node static_windowGlow is missing",
+        "light:signal_red: emissive node static_sirenRed is missing"
+      ],
+      "uncoveredEmissive": [
+        "node26"
+      ]
+    },
+    {
+      "path": "public/assets/models/kit.police-checkpoint.lod2.glb",
+      "anchors": 10,
+      "errors": [
+        "light:flood_0: emissive node lamp_flood_0 is missing",
+        "light:flood_1: emissive node lamp_flood_1 is missing",
+        "light:lamp_barrier_0_0: emissive node lamp_barrier_0_0 is missing",
+        "light:lamp_barrier_0_1: emissive node lamp_barrier_0_1 is missing",
+        "light:lamp_barrier_1_0: emissive node lamp_barrier_1_0 is missing",
+        "light:lamp_barrier_1_1: emissive node lamp_barrier_1_1 is missing",
+        "light:lamp_barrier_2_0: emissive node lamp_barrier_2_0 is missing",
+        "light:lamp_barrier_2_1: emissive node lamp_barrier_2_1 is missing",
+        "light:message: emissive node static_windowGlow is missing",
+        "light:signal_red: emissive node static_sirenRed is missing"
+      ],
+      "uncoveredEmissive": [
+        "node26"
+      ]
+    },
+    {
+      "path": "public/assets/models/kit.porch-stairs.glb",
+      "anchors": 1,
+      "errors": [
+        "light:porch: emissive node static_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node7"
+      ]
+    },
+    {
+      "path": "public/assets/models/kit.porch-stairs.lod1.glb",
+      "anchors": 1,
+      "errors": [
+        "light:porch: emissive node static_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node7"
+      ]
+    },
+    {
+      "path": "public/assets/models/kit.porch-stairs.lod2.glb",
+      "anchors": 1,
+      "errors": [
+        "light:porch: emissive node static_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node7"
+      ]
+    },
+    {
+      "path": "public/assets/models/kit.rail-crossing.glb",
+      "anchors": 4,
+      "errors": [
+        "light:beaconL: emissive node beaconL_emi_sirenRed is missing",
+        "light:beaconR: emissive node beaconR_emi_sirenRed is missing",
+        "light:signalL: emissive node signalL_emi_sirenRed is missing",
+        "light:signalL: emissive node signalL_emi_windowGlow is missing",
+        "light:signalR: emissive node signalR_emi_sirenRed is missing",
+        "light:signalR: emissive node signalR_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node31"
+      ]
+    },
+    {
+      "path": "public/assets/models/kit.rail-crossing.lod1.glb",
+      "anchors": 4,
+      "errors": [
+        "light:beaconL: emissive node beaconL_emi_sirenRed is missing",
+        "light:beaconR: emissive node beaconR_emi_sirenRed is missing",
+        "light:signalL: emissive node signalL_emi_sirenRed is missing",
+        "light:signalL: emissive node signalL_emi_windowGlow is missing",
+        "light:signalR: emissive node signalR_emi_sirenRed is missing",
+        "light:signalR: emissive node signalR_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node31"
+      ]
+    },
+    {
+      "path": "public/assets/models/kit.rail-crossing.lod2.glb",
+      "anchors": 4,
+      "errors": [
+        "light:beaconL: emissive node beaconL_emi_sirenRed is missing",
+        "light:beaconR: emissive node beaconR_emi_sirenRed is missing",
+        "light:signalL: emissive node signalL_emi_sirenRed is missing",
+        "light:signalL: emissive node signalL_emi_windowGlow is missing",
+        "light:signalR: emissive node signalR_emi_sirenRed is missing",
+        "light:signalR: emissive node signalR_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node31"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.checkpoint-gate.glb",
+      "anchors": 1,
+      "errors": [
+        "light:gateBeacon: emissive node gateBeaconMount_emi_sirenRed is missing"
+      ],
+      "uncoveredEmissive": [
+        "node5"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.checkpoint-gate.lod1.glb",
+      "anchors": 1,
+      "errors": [
+        "light:gateBeacon: emissive node gateBeaconMount_emi_sirenRed is missing"
+      ],
+      "uncoveredEmissive": [
+        "node5"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.checkpoint-gate.lod2.glb",
+      "anchors": 1,
+      "errors": [
+        "light:gateBeacon: emissive node gateBeaconMount_emi_sirenRed is missing"
+      ],
+      "uncoveredEmissive": [
+        "node5"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.cure-canister-pedestal.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node5"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.cure-canister-pedestal.lod1.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node5"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.cure-canister-pedestal.lod2.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node5"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.cure-canister.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node6"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.cure-canister.lod1.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node6"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.cure-canister.lod2.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node6"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.emergency-light.glb",
+      "anchors": 1,
+      "errors": [
+        "light:emergency: emissive node body_emi_redDark is missing"
+      ],
+      "uncoveredEmissive": [
+        "node6"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.emergency-light.lod1.glb",
+      "anchors": 1,
+      "errors": [
+        "light:emergency: emissive node body_emi_redDark is missing"
+      ],
+      "uncoveredEmissive": [
+        "node6"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.emergency-light.lod2.glb",
+      "anchors": 1,
+      "errors": [
+        "light:emergency: emissive node body_emi_redDark is missing"
+      ],
+      "uncoveredEmissive": [
+        "node6"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.fluorescent-strip.glb",
+      "anchors": 1,
+      "errors": [
+        "light:fluorescent: emissive node body_emi_picketWhite is missing"
+      ],
+      "uncoveredEmissive": [
+        "node6"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.fluorescent-strip.lod1.glb",
+      "anchors": 1,
+      "errors": [
+        "light:fluorescent: emissive node body_emi_picketWhite is missing"
+      ],
+      "uncoveredEmissive": [
+        "node6"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.fluorescent-strip.lod2.glb",
+      "anchors": 1,
+      "errors": [
+        "light:fluorescent: emissive node body_emi_picketWhite is missing"
+      ],
+      "uncoveredEmissive": [
+        "node6"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.gas-pump.glb",
+      "anchors": 1,
+      "errors": [
+        "light:globe: emissive node lamp_globe_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node9"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.gas-pump.lod1.glb",
+      "anchors": 1,
+      "errors": [
+        "light:globe: emissive node lamp_globe_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node9"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.gas-pump.lod2.glb",
+      "anchors": 1,
+      "errors": [
+        "light:globe: emissive node lamp_globe_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node9"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.jukebox.glb",
+      "anchors": 1,
+      "errors": [
+        "light:neon: emissive node body_emi_windowGlow is missing",
+        "light:neon: emissive node body_emi_sirenRed is missing"
+      ],
+      "uncoveredEmissive": [
+        "node6"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.jukebox.lod1.glb",
+      "anchors": 1,
+      "errors": [
+        "light:neon: emissive node body_emi_windowGlow is missing",
+        "light:neon: emissive node body_emi_sirenRed is missing"
+      ],
+      "uncoveredEmissive": [
+        "node6"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.jukebox.lod2.glb",
+      "anchors": 1,
+      "errors": [
+        "light:neon: emissive node body_emi_windowGlow is missing",
+        "light:neon: emissive node body_emi_sirenRed is missing"
+      ],
+      "uncoveredEmissive": [
+        "node6"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.light-tower-trailer.glb",
+      "anchors": 4,
+      "errors": [
+        "light:lamp0_L: emissive node lamp0_L_emi_windowGlow is missing",
+        "light:lamp0_R: emissive node lamp0_R_emi_windowGlow is missing",
+        "light:lamp1_L: emissive node lamp1_L_emi_windowGlow is missing",
+        "light:lamp1_R: emissive node lamp1_R_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node46"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.light-tower-trailer.lod1.glb",
+      "anchors": 4,
+      "errors": [
+        "light:lamp0_L: emissive node lamp0_L_emi_windowGlow is missing",
+        "light:lamp0_R: emissive node lamp0_R_emi_windowGlow is missing",
+        "light:lamp1_L: emissive node lamp1_L_emi_windowGlow is missing",
+        "light:lamp1_R: emissive node lamp1_R_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node46"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.light-tower-trailer.lod2.glb",
+      "anchors": 4,
+      "errors": [
+        "light:lamp0_L: emissive node lamp0_L_emi_windowGlow is missing",
+        "light:lamp0_R: emissive node lamp0_R_emi_windowGlow is missing",
+        "light:lamp1_L: emissive node lamp1_L_emi_windowGlow is missing",
+        "light:lamp1_R: emissive node lamp1_R_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node46"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.light-tower.glb",
+      "anchors": 2,
+      "errors": [
+        "light:flood_L: emissive node lampL_emi_windowGlow is missing",
+        "light:flood_R: emissive node lampR_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node39"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.light-tower.lod1.glb",
+      "anchors": 2,
+      "errors": [
+        "light:flood_L: emissive node lampL_emi_windowGlow is missing",
+        "light:flood_R: emissive node lampR_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node39"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.light-tower.lod2.glb",
+      "anchors": 2,
+      "errors": [
+        "light:flood_L: emissive node lampL_emi_windowGlow is missing",
+        "light:flood_R: emissive node lampR_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node39"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.scoreboard.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node4"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.scoreboard.lod1.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node4"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.scoreboard.lod2.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node4"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.stop-here-sign-trailer.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node19",
+        "node20"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.stop-here-sign-trailer.lod1.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node19",
+        "node20"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.stop-here-sign-trailer.lod2.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node19",
+        "node20"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.street-lamp.glb",
+      "anchors": 1,
+      "errors": [
+        "light:lantern: emissive node lantern is missing"
+      ],
+      "uncoveredEmissive": [
+        "node2"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.street-lamp.lod1.glb",
+      "anchors": 1,
+      "errors": [
+        "light:lantern: emissive node lantern is missing"
+      ],
+      "uncoveredEmissive": [
+        "node2"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.street-lamp.lod2.glb",
+      "anchors": 1,
+      "errors": [
+        "light:lantern: emissive node lantern is missing"
+      ],
+      "uncoveredEmissive": [
+        "node2"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.vending-machine.glb",
+      "anchors": 1,
+      "errors": [
+        "light:front: emissive node door_front_emi_windowGlow is missing",
+        "light:front: emissive node door_front_emi_survivorRed is missing"
+      ],
+      "uncoveredEmissive": [
+        "node10"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.vending-machine.lod1.glb",
+      "anchors": 1,
+      "errors": [
+        "light:front: emissive node door_front_emi_windowGlow is missing",
+        "light:front: emissive node door_front_emi_survivorRed is missing"
+      ],
+      "uncoveredEmissive": [
+        "node10"
+      ]
+    },
+    {
+      "path": "public/assets/models/prop.vending-machine.lod2.glb",
+      "anchors": 1,
+      "errors": [
+        "light:front: emissive node door_front_emi_windowGlow is missing",
+        "light:front: emissive node door_front_emi_survivorRed is missing"
+      ],
+      "uncoveredEmissive": [
+        "node10"
+      ]
+    },
+    {
+      "path": "public/assets/models/thr.firecracker-lure.glb",
+      "anchors": 1,
+      "errors": [
+        "light:fuse: emissive node sparkCore is missing",
+        "light:fuse: emissive node sparkRays is missing"
+      ],
+      "uncoveredEmissive": [
+        "node7"
+      ]
+    },
+    {
+      "path": "public/assets/models/thr.firecracker-lure.lod1.glb",
+      "anchors": 1,
+      "errors": [
+        "light:fuse: emissive node sparkCore is missing",
+        "light:fuse: emissive node sparkRays is missing"
+      ],
+      "uncoveredEmissive": [
+        "node7"
+      ]
+    },
+    {
+      "path": "public/assets/models/thr.molotov.glb",
+      "anchors": 1,
+      "errors": [
+        "light:wick: emissive node flame is missing"
+      ],
+      "uncoveredEmissive": [
+        "node7"
+      ]
+    },
+    {
+      "path": "public/assets/models/thr.molotov.lod1.glb",
+      "anchors": 1,
+      "errors": [
+        "light:wick: emissive node flame is missing"
+      ],
+      "uncoveredEmissive": [
+        "node7"
+      ]
+    },
+    {
+      "path": "public/assets/models/thr.pipe-bomb.glb",
+      "anchors": 1,
+      "errors": [
+        "light:fuse: emissive node fuseSpark is missing"
+      ],
+      "uncoveredEmissive": [
+        "node7"
+      ]
+    },
+    {
+      "path": "public/assets/models/thr.pipe-bomb.lod1.glb",
+      "anchors": 1,
+      "errors": [
+        "light:fuse: emissive node fuseSpark is missing"
+      ],
+      "uncoveredEmissive": [
+        "node7"
+      ]
+    },
+    {
+      "path": "public/assets/models/util.flashlight.glb",
+      "anchors": 1,
+      "errors": [
+        "light:flashlight: emissive node body_emi_picketWhite is missing"
+      ],
+      "uncoveredEmissive": [
+        "node7"
+      ]
+    },
+    {
+      "path": "public/assets/models/util.flashlight.lod1.glb",
+      "anchors": 1,
+      "errors": [
+        "light:flashlight: emissive node body_emi_picketWhite is missing"
+      ],
+      "uncoveredEmissive": [
+        "node7"
+      ]
+    },
+    {
+      "path": "public/assets/models/util.flashlight.lod2.glb",
+      "anchors": 1,
+      "errors": [
+        "light:flashlight: emissive node body_emi_picketWhite is missing"
+      ],
+      "uncoveredEmissive": [
+        "node7"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.ambulance.glb",
+      "anchors": 6,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node lightsFront_emi_windowGlow is missing",
+        "light:sirenL: emissive node sirenL_emi_sirenRed is missing",
+        "light:sirenL: emissive node sirenL_pal_picketWhite is missing",
+        "light:sirenR: emissive node sirenR_emi_sirenRed is missing",
+        "light:sirenR: emissive node sirenR_pal_picketWhite is missing",
+        "light:sirenR: emissive node sirenR_emi_policeBlue is missing"
+      ],
+      "uncoveredEmissive": [
+        "node41",
+        "node48",
+        "node49"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.ambulance.lod1.glb",
+      "anchors": 6,
+      "errors": [
+        "light:brakeL.001: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR.001: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headlightL.001: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR.001: emissive node lightsFront_emi_windowGlow is missing",
+        "light:sirenL.001: emissive node sirenL_emi_sirenRed is missing",
+        "light:sirenR.001: emissive node sirenR_emi_policeBlue is missing",
+        "light:sirenR.001: emissive node sirenR_emi_sirenRed is missing"
+      ],
+      "uncoveredEmissive": [
+        "node34",
+        "node36",
+        "node38",
+        "node42",
+        "node49"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.ambulance.lod2.glb",
+      "anchors": 6,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node lightsFront_emi_windowGlow is missing",
+        "light:sirenL: emissive node sirenL_emi_sirenRed is missing",
+        "light:sirenR: emissive node sirenR_emi_policeBlue is missing",
+        "light:sirenR: emissive node sirenR_emi_sirenRed is missing"
+      ],
+      "uncoveredEmissive": [
+        "node38",
+        "node40",
+        "node42",
+        "node46",
+        "node49"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.box-truck.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lampBrakeL_emi_sirenRed is missing",
+        "light:brakeL: emissive node lampBrakeL_emi_schoolBusYellow is missing",
+        "light:brakeR: emissive node lampBrakeR_emi_sirenRed is missing",
+        "light:brakeR: emissive node lampBrakeR_emi_schoolBusYellow is missing",
+        "light:headlightL: emissive node lampHeadL_emi_windowGlow is missing",
+        "light:headlightL: emissive node lampHeadL_emi_schoolBusYellow is missing",
+        "light:headlightR: emissive node lampHeadR_emi_windowGlow is missing",
+        "light:headlightR: emissive node lampHeadR_emi_schoolBusYellow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node39",
+        "node40",
+        "node45"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.box-truck.lod1.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lampBrakeL_emi_schoolBusYellow is missing",
+        "light:brakeL: emissive node lampBrakeL_emi_sirenRed is missing",
+        "light:brakeR: emissive node lampBrakeR_emi_schoolBusYellow is missing",
+        "light:brakeR: emissive node lampBrakeR_emi_sirenRed is missing",
+        "light:headlightL: emissive node lampHeadL_emi_schoolBusYellow is missing",
+        "light:headlightL: emissive node lampHeadL_emi_windowGlow is missing",
+        "light:headlightR: emissive node lampHeadR_emi_schoolBusYellow is missing",
+        "light:headlightR: emissive node lampHeadR_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node38",
+        "node39",
+        "node44"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.box-truck.lod2.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lampBrakeL_emi_schoolBusYellow is missing",
+        "light:brakeL: emissive node lampBrakeL_emi_sirenRed is missing",
+        "light:brakeR: emissive node lampBrakeR_emi_schoolBusYellow is missing",
+        "light:brakeR: emissive node lampBrakeR_emi_sirenRed is missing",
+        "light:headlightL: emissive node lampHeadL_emi_schoolBusYellow is missing",
+        "light:headlightL: emissive node lampHeadL_emi_windowGlow is missing",
+        "light:headlightR: emissive node lampHeadR_emi_schoolBusYellow is missing",
+        "light:headlightR: emissive node lampHeadR_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node42",
+        "node43"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.courier-van.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lampBrakeL_emi_sirenRed is missing",
+        "light:brakeR: emissive node lampBrakeR_emi_sirenRed is missing",
+        "light:headlightL: emissive node lampHeadL_emi_windowGlow is missing",
+        "light:headlightR: emissive node lampHeadR_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node27",
+        "node32",
+        "node51"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.courier-van.lod1.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lampBrakeL_emi_sirenRed is missing",
+        "light:brakeR: emissive node lampBrakeR_emi_sirenRed is missing",
+        "light:headlightL: emissive node lampHeadL_emi_windowGlow is missing",
+        "light:headlightR: emissive node lampHeadR_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node24",
+        "node29",
+        "node48"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.courier-van.lod2.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lampBrakeL_emi_sirenRed is missing",
+        "light:brakeR: emissive node lampBrakeR_emi_sirenRed is missing",
+        "light:headlightL: emissive node lampHeadL_emi_windowGlow is missing",
+        "light:headlightR: emissive node lampHeadR_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node22",
+        "node27",
+        "node45"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.evac-bus.glb",
+      "anchors": 2,
+      "errors": [
+        "light:lightsBrake: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:lightsFront: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node11",
+        "node25",
+        "node9"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.evac-bus.lod1.glb",
+      "anchors": 2,
+      "errors": [
+        "light:lightsBrake: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:lightsFront: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node11",
+        "node25",
+        "node9"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.evac-bus.lod2.glb",
+      "anchors": 2,
+      "errors": [
+        "light:lightsBrake: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:lightsFront: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node11",
+        "node25",
+        "node9"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.fire-engine.glb",
+      "anchors": 9,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node lightsFront_emi_windowGlow is missing",
+        "light:markerAmber: emissive node body_emi_schoolBusYellow is missing",
+        "light:markerAmber: emissive node ladder_emi_schoolBusYellow is missing",
+        "light:markerAmber: emissive node root_emi_schoolBusYellow is missing",
+        "light:markerRed: emissive node root_emi_sirenRed is missing",
+        "light:markerWarm: emissive node root_emi_windowGlow is missing",
+        "light:markerWarm: emissive node sirenR_emi_windowGlow is missing",
+        "light:sirenBlue: emissive node sirenL_emi_policeBlue is missing",
+        "light:sirenBlue: emissive node sirenR_emi_policeBlue is missing",
+        "light:sirenRed: emissive node sirenL_emi_sirenRed is missing",
+        "light:sirenRed: emissive node sirenR_emi_sirenRed is missing"
+      ],
+      "uncoveredEmissive": [
+        "node20",
+        "node22",
+        "node35",
+        "node38",
+        "node39",
+        "node40",
+        "node41"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.fire-engine.lod1.glb",
+      "anchors": 9,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node lightsFront_emi_windowGlow is missing",
+        "light:markerAmber: emissive node body_emi_schoolBusYellow is missing",
+        "light:markerAmber: emissive node crew_cab_emi_schoolBusYellow is missing",
+        "light:markerAmber: emissive node ladder_emi_schoolBusYellow is missing",
+        "light:markerAmber: emissive node rear_compartment_emi_schoolBusYellow is missing",
+        "light:markerRed: emissive node crew_cab_emi_sirenRed is missing",
+        "light:markerRed: emissive node rear_compartment_emi_sirenRed is missing",
+        "light:markerWarm: emissive node equipment_body_emi_windowGlow is missing",
+        "light:markerWarm: emissive node sirenR_emi_windowGlow is missing",
+        "light:sirenBlue: emissive node sirenL_emi_policeBlue is missing",
+        "light:sirenBlue: emissive node sirenR_emi_policeBlue is missing",
+        "light:sirenRed: emissive node sirenL_emi_sirenRed is missing",
+        "light:sirenRed: emissive node sirenR_emi_sirenRed is missing"
+      ],
+      "uncoveredEmissive": [
+        "node21",
+        "node23",
+        "node48",
+        "node51",
+        "node52",
+        "node53",
+        "node54",
+        "node55"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.fire-engine.lod2.glb",
+      "anchors": 9,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node lightsFront_emi_windowGlow is missing",
+        "light:markerAmber: emissive node body_emi_schoolBusYellow is missing",
+        "light:markerAmber: emissive node crew_cab_emi_schoolBusYellow is missing",
+        "light:markerAmber: emissive node ladder_emi_schoolBusYellow is missing",
+        "light:markerAmber: emissive node rear_compartment_emi_schoolBusYellow is missing",
+        "light:markerRed: emissive node rear_compartment_emi_sirenRed is missing",
+        "light:markerWarm: emissive node equipment_body_emi_windowGlow is missing",
+        "light:markerWarm: emissive node sirenR_emi_windowGlow is missing",
+        "light:sirenBlue: emissive node sirenL_emi_policeBlue is missing",
+        "light:sirenBlue: emissive node sirenR_emi_policeBlue is missing",
+        "light:sirenRed: emissive node sirenL_emi_sirenRed is missing",
+        "light:sirenRed: emissive node sirenR_emi_sirenRed is missing"
+      ],
+      "uncoveredEmissive": [
+        "node25",
+        "node27",
+        "node42",
+        "node45",
+        "node46",
+        "node47",
+        "node48",
+        "node49"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.fuel-truck.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node headlampR_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node17",
+        "node19",
+        "node38",
+        "node43"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.fuel-truck.lod1.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node headlampR_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node17",
+        "node19",
+        "node38",
+        "node43"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.fuel-truck.lod2.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node headlampR_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node17",
+        "node19",
+        "node38",
+        "node39"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.helicopter-military.glb",
+      "anchors": 2,
+      "errors": [
+        "light:beacon: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:searchlight: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node16",
+        "node18"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.helicopter-military.lod1.glb",
+      "anchors": 2,
+      "errors": [
+        "light:beacon: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:searchlight: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node16",
+        "node18"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.helicopter-military.lod2.glb",
+      "anchors": 2,
+      "errors": [
+        "light:beacon: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:searchlight: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node16",
+        "node18"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.helicopter.glb",
+      "anchors": 4,
+      "errors": [
+        "light:tailNav: emissive node lightsBrake_emi_windowGlow is missing",
+        "light:searchlight: emissive node searchlight_emi_windowGlow is missing",
+        "light:beacon: emissive node sirenL_emi_windowGlow is missing",
+        "light:tailWarning: emissive node sirenR_emi_sirenRed is missing"
+      ],
+      "uncoveredEmissive": [
+        "node23",
+        "node32",
+        "node41",
+        "node43"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.helicopter.lod1.glb",
+      "anchors": 4,
+      "errors": [
+        "light:beacon.001: emissive node sirenL_emi_windowGlow is missing",
+        "light:searchlight.001: emissive node searchlight_emi_windowGlow is missing",
+        "light:tailNav.001: emissive node lightsBrake_emi_windowGlow is missing",
+        "light:tailWarning.001: emissive node sirenR_emi_sirenRed is missing"
+      ],
+      "uncoveredEmissive": [
+        "node18",
+        "node24",
+        "node34",
+        "node36"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.helicopter.lod2.glb",
+      "anchors": 4,
+      "errors": [
+        "light:beacon.001: emissive node sirenL_emi_windowGlow is missing",
+        "light:searchlight.001: emissive node searchlight_emi_windowGlow is missing",
+        "light:tailNav.001: emissive node lightsBrake_emi_windowGlow is missing",
+        "light:tailWarning.001: emissive node sirenR_emi_sirenRed is missing"
+      ],
+      "uncoveredEmissive": [
+        "node16",
+        "node22",
+        "node32",
+        "node34"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.jeep-red.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake__emi_sirenRed is missing",
+        "light:brakeL: emissive node lightsBrake__emi_schoolBusYellow is missing",
+        "light:brakeR: emissive node lightsBrake__emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake__emi_schoolBusYellow is missing",
+        "light:headlightL: emissive node lightsFront__emi_windowGlow is missing",
+        "light:headlightL: emissive node lightsFront__emi_schoolBusYellow is missing",
+        "light:headlightR: emissive node lightsFront__emi_windowGlow is missing",
+        "light:headlightR: emissive node lightsFront__emi_schoolBusYellow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node17",
+        "node18"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.jeep-red.lod1.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_schoolBusYellow is missing",
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeL: emissive node lightsFront_emi_schoolBusYellow is missing",
+        "light:brakeR: emissive node lightsBrake_emi_schoolBusYellow is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsFront_emi_schoolBusYellow is missing",
+        "light:headlightL: emissive node lightsBrake_emi_schoolBusYellow is missing",
+        "light:headlightL: emissive node lightsFront_emi_schoolBusYellow is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node lightsBrake_emi_schoolBusYellow is missing",
+        "light:headlightR: emissive node lightsFront_emi_schoolBusYellow is missing",
+        "light:headlightR: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node17",
+        "node18"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.jeep-red.lod2.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_schoolBusYellow is missing",
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeL: emissive node lightsFront_emi_schoolBusYellow is missing",
+        "light:brakeR: emissive node lightsBrake_emi_schoolBusYellow is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsFront_emi_schoolBusYellow is missing",
+        "light:headlightL: emissive node lightsBrake_emi_schoolBusYellow is missing",
+        "light:headlightL: emissive node lightsFront_emi_schoolBusYellow is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node lightsBrake_emi_schoolBusYellow is missing",
+        "light:headlightR: emissive node lightsFront_emi_schoolBusYellow is missing",
+        "light:headlightR: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node21",
+        "node22"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.military-apc.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headR: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node11",
+        "node13"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.military-apc.lod1.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headR: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node11",
+        "node13"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.military-apc.lod2.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headR: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node11",
+        "node13"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.military-apc.unarmed.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headR: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node12",
+        "node14"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.military-apc.unarmed.lod1.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headR: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node12",
+        "node14"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.military-apc.unarmed.lod2.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headR: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node12",
+        "node14"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.military-truck.glb",
+      "anchors": 5,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:clearance: emissive node lampsRoof_emi_windowGlow is missing",
+        "light:clearance: emissive node lightsBrake_emi_windowGlow is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node15",
+        "node28",
+        "node7"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.military-truck.lod1.glb",
+      "anchors": 5,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:clearance: emissive node lampsRoof_emi_windowGlow is missing",
+        "light:clearance: emissive node lightsBrake_emi_windowGlow is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node15",
+        "node28",
+        "node7"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.military-truck.lod2.glb",
+      "anchors": 5,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:clearance: emissive node lampsRoof_emi_windowGlow is missing",
+        "light:clearance: emissive node lightsBrake_emi_windowGlow is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node15",
+        "node34",
+        "node7"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.pickup-red.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lampBrakeL_emi_sirenRed is missing",
+        "light:brakeL: emissive node lampBrakeL_emi_schoolBusYellow is missing",
+        "light:brakeR: emissive node lampBrakeR_emi_sirenRed is missing",
+        "light:brakeR: emissive node lampBrakeR_emi_schoolBusYellow is missing",
+        "light:headlightL: emissive node lampHeadL_emi_windowGlow is missing",
+        "light:headlightL: emissive node lampHeadL_emi_schoolBusYellow is missing",
+        "light:headlightR: emissive node lampHeadR_emi_windowGlow is missing",
+        "light:headlightR: emissive node lampHeadR_emi_schoolBusYellow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node33",
+        "node34",
+        "node39"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.pickup-red.lod1.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lampBrakeL_emi_schoolBusYellow is missing",
+        "light:brakeL: emissive node lampBrakeL_emi_sirenRed is missing",
+        "light:brakeR: emissive node lampBrakeR_emi_schoolBusYellow is missing",
+        "light:brakeR: emissive node lampBrakeR_emi_sirenRed is missing",
+        "light:headlightL: emissive node lampHeadL_emi_schoolBusYellow is missing",
+        "light:headlightL: emissive node lampHeadL_emi_windowGlow is missing",
+        "light:headlightR: emissive node lampHeadR_emi_schoolBusYellow is missing",
+        "light:headlightR: emissive node lampHeadR_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node52",
+        "node53",
+        "node54"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.pickup-red.lod2.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lampBrakeL_emi_schoolBusYellow is missing",
+        "light:brakeL: emissive node lampBrakeL_emi_sirenRed is missing",
+        "light:brakeR: emissive node lampBrakeR_emi_schoolBusYellow is missing",
+        "light:brakeR: emissive node lampBrakeR_emi_sirenRed is missing",
+        "light:headlightL: emissive node lampHeadL_emi_schoolBusYellow is missing",
+        "light:headlightL: emissive node lampHeadL_emi_windowGlow is missing",
+        "light:headlightR: emissive node lampHeadR_emi_schoolBusYellow is missing",
+        "light:headlightR: emissive node lampHeadR_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node49",
+        "node50",
+        "node51"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.pickup-white.glb",
+      "anchors": 4,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node42"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.pickup-white.lod1.glb",
+      "anchors": 4,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node35",
+        "node40"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.pickup-white.lod2.glb",
+      "anchors": 4,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node37",
+        "node38"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.police-sedan.glb",
+      "anchors": 6,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node lightsFront_emi_windowGlow is missing",
+        "light:sirenL: emissive node sirenL_emi_sirenRed is missing",
+        "light:sirenL: emissive node sirenL_emi_windowGlow is missing",
+        "light:sirenR: emissive node sirenR_emi_policeBlue is missing",
+        "light:sirenR: emissive node sirenR_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node38",
+        "node39",
+        "node40"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.police-sedan.lod1.glb",
+      "anchors": 6,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node lightsFront_emi_windowGlow is missing",
+        "light:sirenL: emissive node lightsBrake_emi_windowGlow is missing",
+        "light:sirenL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:sirenL: emissive node sirenL_emi_sirenRed is missing",
+        "light:sirenR: emissive node lightsBrake_emi_windowGlow is missing",
+        "light:sirenR: emissive node lightsFront_emi_windowGlow is missing",
+        "light:sirenR: emissive node sirenR_emi_policeBlue is missing"
+      ],
+      "uncoveredEmissive": [
+        "node11",
+        "node13",
+        "node17",
+        "node40"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.police-sedan.lod2.glb",
+      "anchors": 6,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node lightsFront_emi_windowGlow is missing",
+        "light:sirenL: emissive node lightsBrake_emi_windowGlow is missing",
+        "light:sirenL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:sirenL: emissive node sirenL_emi_sirenRed is missing",
+        "light:sirenR: emissive node lightsBrake_emi_windowGlow is missing",
+        "light:sirenR: emissive node lightsFront_emi_windowGlow is missing",
+        "light:sirenR: emissive node sirenR_emi_policeBlue is missing"
+      ],
+      "uncoveredEmissive": [
+        "node11",
+        "node13",
+        "node17",
+        "node44"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.police-sedan.wrecked.glb",
+      "anchors": 6,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node lightsFront_emi_windowGlow is missing",
+        "light:sirenL: emissive node lightsBrake_emi_windowGlow is missing",
+        "light:sirenL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:sirenL: emissive node sirenL_emi_sirenRed is missing",
+        "light:sirenR: emissive node lightsBrake_emi_windowGlow is missing",
+        "light:sirenR: emissive node lightsFront_emi_windowGlow is missing",
+        "light:sirenR: emissive node sirenR_emi_policeBlue is missing"
+      ],
+      "uncoveredEmissive": [
+        "node13",
+        "node49",
+        "node7",
+        "node9"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.police-sedan.wrecked.lod1.glb",
+      "anchors": 6,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node lightsFront_emi_windowGlow is missing",
+        "light:sirenL: emissive node lightsBrake_emi_windowGlow is missing",
+        "light:sirenL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:sirenL: emissive node sirenL_emi_sirenRed is missing",
+        "light:sirenR: emissive node lightsBrake_emi_windowGlow is missing",
+        "light:sirenR: emissive node lightsFront_emi_windowGlow is missing",
+        "light:sirenR: emissive node sirenR_emi_policeBlue is missing"
+      ],
+      "uncoveredEmissive": [
+        "node13",
+        "node44",
+        "node7",
+        "node9"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.police-sedan.wrecked.lod2.glb",
+      "anchors": 6,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node lightsFront_emi_windowGlow is missing",
+        "light:sirenL: emissive node lightsBrake_emi_windowGlow is missing",
+        "light:sirenL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:sirenL: emissive node sirenL_emi_sirenRed is missing",
+        "light:sirenR: emissive node lightsBrake_emi_windowGlow is missing",
+        "light:sirenR: emissive node lightsFront_emi_windowGlow is missing",
+        "light:sirenR: emissive node sirenR_emi_policeBlue is missing"
+      ],
+      "uncoveredEmissive": [
+        "node10",
+        "node14",
+        "node42",
+        "node8"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.police-suv.glb",
+      "anchors": 6,
+      "errors": [
+        "light:sirenL: emissive node sirenL__emi_sirenRed is missing",
+        "light:sirenR: emissive node sirenR__emi_policeBlue is missing",
+        "light:brakeL: emissive node lampBrakeL__emi_sirenRed is missing",
+        "light:brakeR: emissive node lampBrakeR__emi_sirenRed is missing",
+        "light:headlightL: emissive node lampHeadL__emi_windowGlow is missing",
+        "light:headlightR: emissive node lampHeadR__emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node55"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.police-suv.lod1.glb",
+      "anchors": 6,
+      "errors": [
+        "light:sirenL: emissive node sirenL__emi_sirenRed is missing",
+        "light:sirenR: emissive node sirenR__emi_policeBlue is missing",
+        "light:brakeL: emissive node lampBrakeL__emi_sirenRed is missing",
+        "light:brakeR: emissive node lampBrakeR__emi_sirenRed is missing",
+        "light:headlightL: emissive node lampHeadL__emi_windowGlow is missing",
+        "light:headlightR: emissive node lampHeadR__emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node19",
+        "node22",
+        "node61",
+        "node62"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.police-suv.lod2.glb",
+      "anchors": 6,
+      "errors": [
+        "light:sirenL: emissive node sirenL__emi_sirenRed is missing",
+        "light:sirenR: emissive node sirenR__emi_policeBlue is missing",
+        "light:brakeL: emissive node lampBrakeL__emi_sirenRed is missing",
+        "light:brakeR: emissive node lampBrakeR__emi_sirenRed is missing",
+        "light:headlightL: emissive node lampHeadL__emi_windowGlow is missing",
+        "light:headlightR: emissive node lampHeadR__emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node19",
+        "node22",
+        "node57",
+        "node58"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.school-bus.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeLampL:emi_sirenRed: emissive node brakeLampL:emi_sirenRed is missing",
+        "light:brakeLampR:emi_sirenRed: emissive node brakeLampR:emi_sirenRed is missing",
+        "light:headlamp_lens: emissive node headlamp_lens is missing",
+        "light:headlamp_lens.001: emissive node headlamp_lens.001 is missing"
+      ],
+      "uncoveredEmissive": [
+        "node86"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.school-bus.lod1.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeLampL:emi_sirenRed: emissive node body:emi_sirenRed is missing",
+        "light:brakeLampL:emi_sirenRed: emissive node brakeLampL:emi_sirenRed is missing",
+        "light:brakeLampR:emi_sirenRed: emissive node body:emi_sirenRed is missing",
+        "light:brakeLampR:emi_sirenRed: emissive node brakeLampL:emi_sirenRed is missing",
+        "light:headlamp_lens: emissive node bonnet_emi_windowGlow is missing",
+        "light:headlamp_lens: emissive node headlamp_lens is missing",
+        "light:headlamp_lens.001: emissive node bonnet_emi_windowGlow is missing",
+        "light:headlamp_lens.001: emissive node headlamp_lens is missing"
+      ],
+      "uncoveredEmissive": [
+        "node47",
+        "node49",
+        "node80",
+        "node85"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.school-bus.lod2.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeLampL:emi_sirenRed: emissive node body:emi_sirenRed is missing",
+        "light:brakeLampL:emi_sirenRed: emissive node brakeLampR:emi_sirenRed is missing",
+        "light:brakeLampR:emi_sirenRed: emissive node body:emi_sirenRed is missing",
+        "light:brakeLampR:emi_sirenRed: emissive node brakeLampR:emi_sirenRed is missing",
+        "light:headlamp_lens: emissive node bonnet_emi_windowGlow is missing",
+        "light:headlamp_lens: emissive node headlamp_lens is missing",
+        "light:headlamp_lens.001: emissive node bonnet_emi_windowGlow is missing",
+        "light:headlamp_lens.001: emissive node headlamp_lens is missing"
+      ],
+      "uncoveredEmissive": [
+        "node48",
+        "node50",
+        "node79",
+        "node80"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.sedan-blue.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_sirenRed is missing",
+        "light:brakeL: emissive node lightsBrake_schoolBusYellow is missing",
+        "light:brakeR: emissive node lightsBrake_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_schoolBusYellow is missing",
+        "light:headlightL: emissive node lightsFront_windowGlow is missing",
+        "light:headlightL: emissive node lightsFront_schoolBusYellow is missing",
+        "light:headlightR: emissive node lightsFront_windowGlow is missing",
+        "light:headlightR: emissive node lightsFront_schoolBusYellow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node36",
+        "node37"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.sedan-blue.lod1.glb",
+      "anchors": 4,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node34",
+        "node35"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.sedan-blue.lod2.glb",
+      "anchors": 4,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node34",
+        "node35"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.sedan-blue.wrecked.glb",
+      "anchors": 4,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node40",
+        "node41"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.sedan-blue.wrecked.lod1.glb",
+      "anchors": 4,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node35",
+        "node36"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.sedan-blue.wrecked.lod2.glb",
+      "anchors": 4,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node30",
+        "node31"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.sedan-green.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lampBrakeL_emi_sirenRed is missing",
+        "light:brakeR: emissive node lampBrakeR_emi_sirenRed is missing",
+        "light:headlightL: emissive node lampHeadL_emi_windowGlow is missing",
+        "light:headlightR: emissive node lampHeadR_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node40",
+        "node41"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.sedan-green.lod1.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lampBrakeL_emi_sirenRed is missing",
+        "light:brakeR: emissive node lampBrakeR_emi_sirenRed is missing",
+        "light:headlightL: emissive node lampHeadL_emi_windowGlow is missing",
+        "light:headlightR: emissive node lampHeadR_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node21",
+        "node40"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.sedan-green.lod2.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lampBrakeL_emi_sirenRed is missing",
+        "light:brakeR: emissive node lampBrakeR_emi_sirenRed is missing",
+        "light:headlightL: emissive node lampHeadL_emi_windowGlow is missing",
+        "light:headlightR: emissive node lampHeadR_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node21",
+        "node44"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.sedan-red.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node27",
+        "node28"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.sedan-red.lod1.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node27",
+        "node28"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.sedan-red.lod2.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node29",
+        "node30"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.sedan-red.wrecked.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node37",
+        "node38"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.sedan-red.wrecked.lod1.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node32",
+        "node33"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.sedan-red.wrecked.lod2.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node28",
+        "node29"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.sedan-white.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lampBrakeL_emi_sirenRed is missing",
+        "light:brakeR: emissive node lampBrakeR_emi_sirenRed is missing",
+        "light:headlightL: emissive node lampHeadL_emi_windowGlow is missing",
+        "light:headlightR: emissive node lampHeadR_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node45",
+        "node46",
+        "node51"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.sedan-white.lod1.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lampBrakeL_emi_sirenRed is missing",
+        "light:brakeR: emissive node lampBrakeR_emi_sirenRed is missing",
+        "light:headlightL: emissive node lampHeadL_emi_windowGlow is missing",
+        "light:headlightR: emissive node lampHeadR_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node45",
+        "node46",
+        "node51"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.sedan-white.lod2.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lampBrakeL_emi_sirenRed is missing",
+        "light:brakeR: emissive node lampBrakeR_emi_sirenRed is missing",
+        "light:headlightL: emissive node lampHeadL_emi_windowGlow is missing",
+        "light:headlightR: emissive node lampHeadR_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node48",
+        "node49",
+        "node50"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.semi-trailer.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node23",
+        "node25",
+        "node54"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.semi-trailer.lod1.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node23",
+        "node25",
+        "node54"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.semi-trailer.lod2.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node23",
+        "node25",
+        "node48"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.suv-dark.glb",
+      "anchors": 8,
+      "errors": [
+        "light:lampBrakeL: emissive node lampBrakeL_brake is missing",
+        "light:lampBrakeR: emissive node lampBrakeR_brake is missing"
+      ],
+      "uncoveredEmissive": [
+        "node59"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.suv-dark.lod1.glb",
+      "anchors": 8,
+      "errors": [
+        "light:lampBrakeL: emissive node lampBrakeL_brake is missing",
+        "light:lampBrakeR: emissive node lampBrakeR_brake is missing"
+      ],
+      "uncoveredEmissive": [
+        "node59"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.suv-dark.lod2.glb",
+      "anchors": 8,
+      "errors": [
+        "light:lampBrakeL: emissive node lampBrakeL_brake is missing",
+        "light:lampBrakeR: emissive node lampBrakeR_brake is missing"
+      ],
+      "uncoveredEmissive": [
+        "node55"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.suv-green.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_schoolBusYellow is missing",
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeL: emissive node lightsBrake_emi_windowGlow is missing",
+        "light:brakeR: emissive node lightsBrake_emi_schoolBusYellow is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_windowGlow is missing",
+        "light:headlightL: emissive node lightsFront_emi_schoolBusYellow is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node lightsFront_emi_schoolBusYellow is missing",
+        "light:headlightR: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node38",
+        "node39"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.suv-green.lod1.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_schoolBusYellow is missing",
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeL: emissive node lightsBrake_emi_windowGlow is missing",
+        "light:brakeR: emissive node lightsBrake_emi_schoolBusYellow is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_windowGlow is missing",
+        "light:headlightL: emissive node lightsFront_emi_schoolBusYellow is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node lightsFront_emi_schoolBusYellow is missing",
+        "light:headlightR: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node37",
+        "node38"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.suv-green.lod2.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_schoolBusYellow is missing",
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeL: emissive node lightsBrake_emi_windowGlow is missing",
+        "light:brakeR: emissive node lightsBrake_emi_schoolBusYellow is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_windowGlow is missing",
+        "light:headlightL: emissive node lightsFront_emi_schoolBusYellow is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node lightsFront_emi_schoolBusYellow is missing",
+        "light:headlightR: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node38",
+        "node39"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.tank.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headR: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node10",
+        "node8"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.tank.lod1.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headR: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node10",
+        "node8"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.tank.lod2.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headR: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node10",
+        "node8"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.train-freight.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node21",
+        "node25"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.train-freight.lod1.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node18",
+        "node22"
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.train-freight.lod2.glb",
+      "anchors": 4,
+      "errors": [
+        "light:brakeL: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:brakeR: emissive node lightsBrake_emi_sirenRed is missing",
+        "light:headlightL: emissive node lightsFront_emi_windowGlow is missing",
+        "light:headlightR: emissive node lightsFront_emi_windowGlow is missing"
+      ],
+      "uncoveredEmissive": [
+        "node18",
+        "node22"
+      ]
+    },
+    {
+      "path": "public/assets/models/wpn.minigun-mounted.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node8"
+      ]
+    },
+    {
+      "path": "public/assets/models/wpn.minigun-mounted.lod1.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node8"
+      ]
+    },
+    {
+      "path": "public/assets/models/wpn.minigun-mounted.lod2.glb",
+      "anchors": 0,
+      "errors": [],
+      "uncoveredEmissive": [
+        "node8"
+      ]
+    }
+  ]
+}

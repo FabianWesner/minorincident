@@ -51,7 +51,9 @@ function runBatch(b: Batch): { code: number | null; seconds: number; rows: Catal
 function selectRows(): { rows: Row[]; known: Map<string, string> } {
   if (mode === 'gate') {
     const list = JSON.parse(readFileSync('specs/scenes/gate-list.json', 'utf8')) as { rows: { scene: string; tier: 'high' | 'low'; zoom: number | null; backend: string }[]; known?: Record<string, string> };
-    return { rows: list.rows.map(r => ({ name: rowName(r.scene, r.tier, r.zoom), scene: r.scene, tier: r.tier, backend: r.backend })), known: new Map(Object.entries(list.known ?? {})) };
+    const backend = flag('backend');
+    if (backend !== undefined && backend !== 'webgl2' && backend !== 'webgpu') throw new Error('Unknown gate backend');
+    return { rows: list.rows.filter(r => backend === undefined || r.backend === backend).map(r => ({ name: rowName(r.scene, r.tier, r.zoom), scene: r.scene, tier: r.tier, backend: r.backend })), known: new Map(Object.entries(list.known ?? {})) };
   }
   const backend = flag('backend') ?? 'webgpu';
   const filter = flag('filter') ?? /--filter '([^']+)'/.exec(JSON.parse(readFileSync('package.json', 'utf8')).scripts['scene:matrix'] as string)![1];

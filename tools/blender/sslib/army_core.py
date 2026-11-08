@@ -257,6 +257,8 @@ class Army:
         low = [min(p[k] for p in points) for k in range(3)]
         high = [max(p[k] for p in points) for k in range(3)]
         assert abs(low[2]) < .03, 'ground must sit at Z=0, got %.3f' % low[2]
+        from .equipment_lights import install
+        install(self.asset, self.root)
         export.glb(self.root, Path(path).resolve())
         tris = sum(len(o.data.polygons) for o in meshes)
         return {'triangles': tris, 'draws': len(meshes), 'bytes': Path(path).stat().st_size,

@@ -1,0 +1,94 @@
+{
+  "method": "Identical repaired assets, seed, tick, tier and camera, repeated native L5 at both zooms on high and low. Entire frames compared without masking; original A/B frames remain unchanged.",
+  "rows": [
+    {
+      "tier": "high",
+      "name": "native-L5",
+      "zoom": 1,
+      "changedPixels": 5909,
+      "meanChannelDelta": 0.12674515335648148,
+      "maxChannelDelta": 157,
+      "strongDeltaPixels": 844,
+      "barColorSwaps": 412,
+      "first": "/Users/wesner/Workspace/mi-evidence-archive/test-results/epics/E25/emitters-after/high/native-L5-z1.png",
+      "repeat": "/Users/wesner/Workspace/mi-evidence-archive/test-results/epics/E25/emitters-native-repeat/high/native-L5-z1.png",
+      "firstSHA256": "efe6ac5416cc3d421c9f800a5da6b4cf5e46fc7effc7b516f6c60e82e9375b4d",
+      "repeatSHA256": "c1cc60584cbdd1252af82ed490024ebf70bbb43b4dceaf15cdfd7923b494318f",
+      "baselineVsRepeat": {
+        "changedPixels": 233,
+        "strongDeltaPixels": 0,
+        "maxChannelDelta": 7
+      },
+      "originalVsRepeatStrongDeltaMasksIdentical": true,
+      "strongDeltaThreshold": 100
+    },
+    {
+      "tier": "high",
+      "name": "native-L5",
+      "zoom": 1.5,
+      "changedPixels": 1294,
+      "meanChannelDelta": 0.07128544560185185,
+      "maxChannelDelta": 157,
+      "strongDeltaPixels": 520,
+      "barColorSwaps": 256,
+      "first": "/Users/wesner/Workspace/mi-evidence-archive/test-results/epics/E25/emitters-after/high/native-L5-z1.5.png",
+      "repeat": "/Users/wesner/Workspace/mi-evidence-archive/test-results/epics/E25/emitters-native-repeat/high/native-L5-z1.5.png",
+      "firstSHA256": "56be617d7c15a1f8b455fb25bc862e7a36a846745690b5ab1b27581d2683e689",
+      "repeatSHA256": "dbd19d6b5347e3a72196d85006f00db0b0a77f3173a0d232dbcb4c655856e05a",
+      "baselineVsRepeat": {
+        "changedPixels": 49,
+        "strongDeltaPixels": 0,
+        "maxChannelDelta": 3
+      },
+      "originalVsRepeatStrongDeltaMasksIdentical": true,
+      "strongDeltaThreshold": 100
+    },
+    {
+      "tier": "low",
+      "name": "native-L5",
+      "zoom": 1,
+      "changedPixels": 747,
+      "meanChannelDelta": 0.002211009837962963,
+      "maxChannelDelta": 108,
+      "strongDeltaPixels": 1,
+      "barColorSwaps": 0,
+      "first": "/Users/wesner/Workspace/mi-evidence-archive/test-results/epics/E25/emitters-after/low/native-L5-z1.png",
+      "repeat": "/Users/wesner/Workspace/mi-evidence-archive/test-results/epics/E25/emitters-native-repeat/low/native-L5-z1.png",
+      "firstSHA256": "0d2fcb47a2f502f6c21d76190e00af75f3ff0cd157bca2d1d37de0b4bf029984",
+      "repeatSHA256": "722fc3e40eaf583a87c10de32c2d7d3d81df671e7f34de0d1a6e0af45865c4f5",
+      "baselineVsRepeat": {
+        "changedPixels": 0,
+        "strongDeltaPixels": 0,
+        "maxChannelDelta": 0
+      },
+      "originalVsRepeatStrongDeltaMasksIdentical": true,
+      "strongDeltaThreshold": 100
+    },
+    {
+      "tier": "low",
+      "name": "native-L5",
+      "zoom": 1.5,
+      "changedPixels": 325,
+      "meanChannelDelta": 0.0002781394675925926,
+      "maxChannelDelta": 7,
+      "strongDeltaPixels": 0,
+      "barColorSwaps": 0,
+      "first": "/Users/wesner/Workspace/mi-evidence-archive/test-results/epics/E25/emitters-after/low/native-L5-z1.5.png",
+      "repeat": "/Users/wesner/Workspace/mi-evidence-archive/test-results/epics/E25/emitters-native-repeat/low/native-L5-z1.5.png",
+      "firstSHA256": "4244466f0b4f3ca40e86141176e818d15d1beb89f9c62cfad705678ee18c41cf",
+      "repeatSHA256": "4d8d451bdfabac5e83fe68874cf3d08dc1a9810b257f67049ec9d06071196ca1",
+      "baselineVsRepeat": {
+        "changedPixels": 0,
+        "strongDeltaPixels": 0,
+        "maxChannelDelta": 0
+      },
+      "originalVsRepeatStrongDeltaMasksIdentical": true,
+      "strongDeltaThreshold": 100
+    }
+  ],
+  "finding": "Identical repaired-input repeats reproduce the exact 844/520 strong-delta high-tier bar-edge masks. High baseline versus repeat has only 233/49 changed pixels, maxima 7/3. Low-tier repeat metrics are also retained. Original full-frame A/B metrics are unchanged; no masks or replacement frames.",
+  "archivedContactSheet": {
+    "path": "/Users/wesner/Workspace/mi-evidence-archive/docs/reports/e25-emitters/evidence/visual-sheets/native-repeat-control.webp",
+    "sha256": "8180bac7634368895f2e6e5d5a8f50fa78285ba03b388abb6629b6d7c5b64d85"
+  }
+}
