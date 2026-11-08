@@ -182,7 +182,7 @@ export class L8BossArenas {
     }
     const lead = arena.ids.find(id => { const member = w.entities.get(id); return member && member.health.current > 0 && !member.infected?.arenaBoss?.roof && !member.infected?.arenaBoss?.traversal; }) === e.id;
     if (lead && w.tick >= arena.nextAt) {
-      arena.cycle++; arena.nextAt = w.tick + (arena.id === 'elephant' ? 1320 : arena.phase === 2 ? 300 : 420); this.beginCycle(e, arena);
+      arena.cycle++; arena.nextAt = w.tick + (arena.id === 'elephant' ? arena.phase === 2 && arena.wallHits === 0 ? 1080 : 1320 : arena.phase === 2 ? 300 : 420); this.beginCycle(e, arena);
     } else if (arena.id === 'lion' && arena.phase === 2 && boss.slot === 1 && w.tick >= boss.readyAt) {
       this.hunt(e, true); boss.readyAt = w.tick + 360;
     } else if (arena.id === 'elephant' && distance(e.transform, p.transform) < 3) {
@@ -301,7 +301,7 @@ export class L8BossArenas {
       }
       const dx = p.transform.x - e.transform.x, dz = p.transform.z - e.transform.z, d = Math.hypot(dx, dz);
       const dot = (dx * a.area.dx + dz * a.area.dz) / (d || 1);
-      if (d <= a.area.radius && (a.move !== 'elephant.swipe' || dot >= 0) && (a.move !== 'zebra.kick' || dot >= Math.SQRT1_2)) this.hit(e, a.move === 'gorilla.roar' ? 8 : a.move === 'zebra.kick' ? 25 : a.move === 'elephant.swipe' ? 45 : 30, a.move === 'gorilla.roar' ? 60 : 30);
+      if (d <= a.area.radius && (a.move !== 'elephant.swipe' || dot >= 0) && (a.move !== 'zebra.kick' || dot >= Math.SQRT1_2)) this.hit(e, a.move === 'gorilla.roar' ? 8 : a.move === 'zebra.kick' ? 25 : a.move === 'elephant.swipe' ? 55 : 30, a.move === 'gorilla.roar' ? 60 : 30);
       this.recover(e, 120); return;
     }
     if (a.move === 'gorilla.grab-throw' || a.move === 'monkey.debris') {
@@ -318,7 +318,7 @@ export class L8BossArenas {
     w.spatial.set(e.id, e.transform.x, e.transform.z);
     if (distance(e.transform, p.transform) <= a.area.radius + .35) {
       const firstContact = !a.hitIds.includes(1);
-      this.hit(e, arena.id === 'elephant' ? 60 : arena.id === 'monkey' ? 35 : arena.id === 'flamingo' ? 30 : arena.id === 'lion' ? 50 : 35, arena.id === 'elephant' ? 60 : 0);
+      this.hit(e, arena.id === 'elephant' ? 70 : arena.id === 'monkey' ? 35 : arena.id === 'flamingo' ? 30 : arena.id === 'lion' ? 70 : 35, arena.id === 'elephant' ? 70 : 0);
       if (firstContact && (arena.id === 'lion' || arena.id === 'monkey')) { b.grabUntil = w.tick + 120; b.grabHits = 0; b.heardTargetId = 1; arena.grabs++; }
     }
     if (clear + .001 < step || travelled + step >= range || w.tick - a.activeTick > (range / speed + 1) * 60) {

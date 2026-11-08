@@ -1,5 +1,6 @@
 /** Controlled native checks complement the mortal arena runs; setup mutations never count as combat victories. */
 import { mkdirSync, writeFileSync } from 'node:fs';
+import { L8ArenaBot } from '../../src/debug/bot/L8ArenaBot';
 import { Walker } from '../../src/debug/bot/Walker';
 import { emptyInput } from '../../src/input/InputFrame';
 import { barEligible } from '../../src/render/HealthBars';
@@ -98,7 +99,7 @@ try {
     w.solids.relocate(e, { x: -60, z: 25, y: .7 }, 'qa.elephant.lure-source', 2);
     w.solids.relocate(p, { x: -44, z: 25, y: .7 }, 'qa.elephant.lure-target', 2);
     arena.phase = 1; arena.nextAt = w.tick + 30; arena.cycle = 0;
-    const walker = new Walker(), contacts: unknown[] = []; let previous = 0, side = 1;
+    const generic = new L8ArenaBot(w), walker = new Walker(), contacts: unknown[] = []; let previous = 0, side = 1;
     for (let n = 0; n < 120 * 60 && e.health.current > 0 && p.health.current > 0; n++) {
       const a = e.infected!.specialAttack, f = emptyInput();
       if (a?.move === 'elephant.charge' && a.stage !== 'recovery') {
@@ -112,6 +113,7 @@ try {
         const x = side === 1 ? -44 : -76, z = Math.abs(p.transform.x - x) > 3 ? 17 : 25;
         f.move = walker.step(w, { x, z }, 1, `lure-${side}-${z}`) ?? f.move;
       }
+      if (process.env.L8_ELEPHANT_LURE === 'generic') f.move = generic.sample('elephant').move;
       w.applyInput(f, 'keyboard'); step(w);
       if (arena.wallHits > previous) { previous = arena.wallHits; side = e.transform.x < -60 ? 1 : -1; contacts.push({ tick: w.tick, hits: previous, boss: { ...e.transform }, courier: { ...p.transform }, hp: e.health.current }); }
     }
