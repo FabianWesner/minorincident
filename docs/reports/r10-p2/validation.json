@@ -1,0 +1,3535 @@
+{
+  "artifactRoot": "/Users/wesner/Workspace/mi-evidence-archive/r10-p2-da16c087-20261108",
+  "proofHarnessRevision": "699a0cfb",
+  "proofHarnessSha256": "fbb50fd1d26f76596e5735b49643a781bc7b6adcb0c9826253392b63930a6496",
+  "baseline": "0ad5a72b",
+  "gameRevision": "da16c087",
+  "static": {
+    "typecheck": "PASS",
+    "lint": "PASS",
+    "npmTest": {
+      "passed": 107,
+      "files": 27,
+      "collectedBudget": 150,
+      "budgetCap": 150,
+      "seconds": 45.8
+    },
+    "buildQa": "PASS"
+  },
+  "proofs": [
+    {
+      "side": "before",
+      "level": "L6",
+      "renderedRevision": "0ad5a72b",
+      "harness": {
+        "sourceHash": "c905e5eb6b059135a1237787afffe368cc5b92bec17ba9a1a8632dc74683abd7",
+        "observerHash": "2c536930d36d27fb546ce2f0ae4431df5913b794c1ea3ae24e355d457f7c11db",
+        "revision": "da16c08703895fa05e1c2640fe86ba9f891f11e6"
+      },
+      "receipt": "test-results/r10-p2/before-L6/receipt.json",
+      "receiptSha256": "1c1d471fbb8c21fa759353238e7abff665b7e3b83bd64ae21a965f910abed761",
+      "errors": [],
+      "rowCount": 22,
+      "keyTraceCount": 0,
+      "captures": [
+        {
+          "name": "exit-regroup",
+          "quality": "low",
+          "zoom": 1,
+          "tick": 6586,
+          "actualQuality": "low",
+          "actualZoom": 1,
+          "backend": "webgl",
+          "objective": "Stay with the group \u00b7 0\u00a0m",
+          "tracker": true,
+          "cue": {
+            "text": "\u203aSurvivor under attack! Turn back!",
+            "visible": true,
+            "arrow": true,
+            "opacity": "0.26"
+          },
+          "target": null,
+          "crash": null,
+          "character": {
+            "clip": "run",
+            "animation": "run",
+            "head": [
+              242.13493094697697,
+              1.1709285101474332,
+              15.198883180008352
+            ],
+            "feet": [
+              [
+                241.81456096396857,
+                0.692411967301299,
+                14.821139193501581
+              ],
+              [
+                242.06668202545166,
+                0.6689968808622502,
+                15.245507710803102
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/before-L6/exit-regroup-low-z1.jpg",
+          "sha256": "4cae9a86366c4de8868d444abbbfc261b599b8732eb9fcfbb54d71b2d9794f70",
+          "visibleHeld": [
+            "weapon.army-mg"
+          ]
+        },
+        {
+          "name": "exit-regroup",
+          "quality": "low",
+          "zoom": 1.5,
+          "tick": 6586,
+          "actualQuality": "low",
+          "actualZoom": 1.5,
+          "backend": "webgl",
+          "objective": "Stay with the group \u00b7 0\u00a0m",
+          "tracker": true,
+          "cue": {
+            "text": "\u203aSurvivor under attack! Turn back!",
+            "visible": true,
+            "arrow": true,
+            "opacity": "0.26"
+          },
+          "target": null,
+          "crash": null,
+          "character": {
+            "clip": "run",
+            "animation": "run",
+            "head": [
+              242.13493094697697,
+              1.1709285101474332,
+              15.198883180008352
+            ],
+            "feet": [
+              [
+                241.81456096396857,
+                0.692411967301299,
+                14.821139193501581
+              ],
+              [
+                242.06668202545166,
+                0.6689968808622502,
+                15.245507710803102
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/before-L6/exit-regroup-low-z1.5.jpg",
+          "sha256": "b767c9989feef97031ef511e5c0d8dcfea5d6878c4bccfcdcd23998b9ab02385",
+          "visibleHeld": [
+            "weapon.army-mg"
+          ]
+        },
+        {
+          "name": "exit-regroup",
+          "quality": "high",
+          "zoom": 1,
+          "tick": 6586,
+          "actualQuality": "high",
+          "actualZoom": 1,
+          "backend": "webgl",
+          "objective": "Stay with the group \u00b7 0\u00a0m",
+          "tracker": true,
+          "cue": {
+            "text": "\u203aSurvivor under attack! Turn back!",
+            "visible": true,
+            "arrow": true,
+            "opacity": "0.26"
+          },
+          "target": null,
+          "crash": null,
+          "character": {
+            "clip": "run",
+            "animation": "run",
+            "head": [
+              242.13493094697697,
+              1.1709285101474332,
+              15.198883180008352
+            ],
+            "feet": [
+              [
+                241.81456096396857,
+                0.692411967301299,
+                14.821139193501581
+              ],
+              [
+                242.06668202545166,
+                0.6689968808622502,
+                15.245507710803102
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/before-L6/exit-regroup-high-z1.jpg",
+          "sha256": "0a9a9d4c721157247df8d0e951411535121acc89f4ff350ce957f88e2c695f4b",
+          "visibleHeld": [
+            "weapon.army-mg"
+          ]
+        },
+        {
+          "name": "exit-regroup",
+          "quality": "high",
+          "zoom": 1.5,
+          "tick": 6586,
+          "actualQuality": "high",
+          "actualZoom": 1.5,
+          "backend": "webgl",
+          "objective": "Stay with the group \u00b7 0\u00a0m",
+          "tracker": true,
+          "cue": {
+            "text": "\u203aSurvivor under attack! Turn back!",
+            "visible": true,
+            "arrow": true,
+            "opacity": "0.26"
+          },
+          "target": null,
+          "crash": null,
+          "character": {
+            "clip": "run",
+            "animation": "run",
+            "head": [
+              242.13493094697697,
+              1.1709285101474332,
+              15.198883180008352
+            ],
+            "feet": [
+              [
+                241.81456096396857,
+                0.692411967301299,
+                14.821139193501581
+              ],
+              [
+                242.06668202545166,
+                0.6689968808622502,
+                15.245507710803102
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/before-L6/exit-regroup-high-z1.5.jpg",
+          "sha256": "e56cff73f1f2af6829bd95b35e51053c5e6d900017f19bb1cddaaff256a65466",
+          "visibleHeld": [
+            "weapon.army-mg"
+          ]
+        },
+        {
+          "name": "regroup-after-banner",
+          "quality": "low",
+          "zoom": 1,
+          "tick": 6946,
+          "actualQuality": "low",
+          "actualZoom": 1,
+          "backend": "webgl",
+          "objective": "Stay with the group \u00b7 0\u00a0m",
+          "tracker": true,
+          "cue": {
+            "text": "\u203aSurvivor under attack! Turn back!",
+            "visible": true,
+            "arrow": true,
+            "opacity": "1"
+          },
+          "target": null,
+          "crash": null,
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              242.26343631971224,
+              1.614085885791386,
+              15.27917175045232
+            ],
+            "feet": [
+              [
+                242.3078059075494,
+                0.6741274593037981,
+                15.221679207943955
+              ],
+              [
+                242.06737743453385,
+                0.7007480867551907,
+                15.247589509862216
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/before-L6/regroup-after-banner-low-z1.jpg",
+          "sha256": "817d062ba0387d0f4eb892dcb1a5c85f8998f996fe845aeecd90803ddab61820",
+          "visibleHeld": [
+            "weapon.army-mg"
+          ]
+        },
+        {
+          "name": "regroup-after-banner",
+          "quality": "low",
+          "zoom": 1.5,
+          "tick": 6946,
+          "actualQuality": "low",
+          "actualZoom": 1.5,
+          "backend": "webgl",
+          "objective": "Stay with the group \u00b7 0\u00a0m",
+          "tracker": true,
+          "cue": {
+            "text": "\u203aSurvivor under attack! Turn back!",
+            "visible": true,
+            "arrow": true,
+            "opacity": "1"
+          },
+          "target": null,
+          "crash": null,
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              242.26343631971224,
+              1.614085885791386,
+              15.27917175045232
+            ],
+            "feet": [
+              [
+                242.3078059075494,
+                0.6741274593037981,
+                15.221679207943955
+              ],
+              [
+                242.06737743453385,
+                0.7007480867551907,
+                15.247589509862216
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/before-L6/regroup-after-banner-low-z1.5.jpg",
+          "sha256": "1b82c3183fee467e2b804c31394c6cc97801a218e4e4cfb16379c96a1556ca23",
+          "visibleHeld": [
+            "weapon.army-mg"
+          ]
+        },
+        {
+          "name": "regroup-after-banner",
+          "quality": "high",
+          "zoom": 1,
+          "tick": 6946,
+          "actualQuality": "high",
+          "actualZoom": 1,
+          "backend": "webgl",
+          "objective": "Stay with the group \u00b7 0\u00a0m",
+          "tracker": true,
+          "cue": {
+            "text": "\u203aSurvivor under attack! Turn back!",
+            "visible": true,
+            "arrow": true,
+            "opacity": "1"
+          },
+          "target": null,
+          "crash": null,
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              242.26343631971224,
+              1.614085885791386,
+              15.27917175045232
+            ],
+            "feet": [
+              [
+                242.3078059075494,
+                0.6741274593037981,
+                15.221679207943955
+              ],
+              [
+                242.06737743453385,
+                0.7007480867551907,
+                15.247589509862216
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/before-L6/regroup-after-banner-high-z1.jpg",
+          "sha256": "1584c97d1184d5f296ddbc9780f1c5c5eca573fc97b819d8acf505e38e1815bb",
+          "visibleHeld": [
+            "weapon.army-mg"
+          ]
+        },
+        {
+          "name": "regroup-after-banner",
+          "quality": "high",
+          "zoom": 1.5,
+          "tick": 6946,
+          "actualQuality": "high",
+          "actualZoom": 1.5,
+          "backend": "webgl",
+          "objective": "Stay with the group \u00b7 0\u00a0m",
+          "tracker": true,
+          "cue": {
+            "text": "\u203aSurvivor under attack! Turn back!",
+            "visible": true,
+            "arrow": true,
+            "opacity": "1"
+          },
+          "target": null,
+          "crash": null,
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              242.26343631971224,
+              1.614085885791386,
+              15.27917175045232
+            ],
+            "feet": [
+              [
+                242.3078059075494,
+                0.6741274593037981,
+                15.221679207943955
+              ],
+              [
+                242.06737743453385,
+                0.7007480867551907,
+                15.247589509862216
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/before-L6/regroup-after-banner-high-z1.5.jpg",
+          "sha256": "d3a35d6da164a79cd3096535f9822d199ef9731244d33693f77db05bdd09e3a3",
+          "visibleHeld": [
+            "weapon.army-mg"
+          ]
+        }
+      ],
+      "poseRows": [],
+      "cueFollow": []
+    },
+    {
+      "side": "before",
+      "level": "L8",
+      "renderedRevision": "0ad5a72b",
+      "harness": {
+        "sourceHash": "c905e5eb6b059135a1237787afffe368cc5b92bec17ba9a1a8632dc74683abd7",
+        "observerHash": "2c536930d36d27fb546ce2f0ae4431df5913b794c1ea3ae24e355d457f7c11db",
+        "revision": "da16c08703895fa05e1c2640fe86ba9f891f11e6"
+      },
+      "receipt": "test-results/r10-p2/before-L8/receipt.json",
+      "receiptSha256": "1ebb5128a8593a2fee078f397095fe25ddae3154fd4a0c9aafbc6d52435dfe2a",
+      "errors": [],
+      "rowCount": 59,
+      "keyTraceCount": 0,
+      "captures": [
+        {
+          "name": "opening",
+          "quality": "low",
+          "zoom": 1,
+          "tick": 61,
+          "actualQuality": "low",
+          "actualZoom": 1,
+          "backend": "webgl",
+          "objective": "",
+          "tracker": false,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": null,
+          "character": {
+            "clip": "idle",
+            "animation": "run",
+            "head": [
+              3.0256445633445845,
+              0.74248581852067,
+              66.99133503837646
+            ],
+            "feet": [
+              [
+                2.611068930399932,
+                0.27216344187040514,
+                67.2589542314518
+              ],
+              [
+                3.0805197053958526,
+                0.23890950411743014,
+                67.05261553139201
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/before-L8/opening-low-z1.jpg",
+          "sha256": "e92ab8e12b5be3712d6b9532385a66180e9c0655f8dc0195dceb35d57f8b5983",
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        },
+        {
+          "name": "opening",
+          "quality": "low",
+          "zoom": 1.5,
+          "tick": 61,
+          "actualQuality": "low",
+          "actualZoom": 1.5,
+          "backend": "webgl",
+          "objective": "",
+          "tracker": false,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": null,
+          "character": {
+            "clip": "idle",
+            "animation": "run",
+            "head": [
+              3.0256445633445845,
+              0.74248581852067,
+              66.99133503837646
+            ],
+            "feet": [
+              [
+                2.611068930399932,
+                0.27216344187040514,
+                67.2589542314518
+              ],
+              [
+                3.0805197053958526,
+                0.23890950411743014,
+                67.05261553139201
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/before-L8/opening-low-z1.5.jpg",
+          "sha256": "754b53131d72d52689834a36a0212b23b7ea6ff8c972c3edf4f0a766b428b7a7",
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        },
+        {
+          "name": "opening",
+          "quality": "high",
+          "zoom": 1,
+          "tick": 61,
+          "actualQuality": "high",
+          "actualZoom": 1,
+          "backend": "webgl",
+          "objective": "",
+          "tracker": false,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": null,
+          "character": {
+            "clip": "idle",
+            "animation": "run",
+            "head": [
+              3.0256445633445845,
+              0.74248581852067,
+              66.99133503837646
+            ],
+            "feet": [
+              [
+                2.611068930399932,
+                0.27216344187040514,
+                67.2589542314518
+              ],
+              [
+                3.0805197053958526,
+                0.23890950411743014,
+                67.05261553139201
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/before-L8/opening-high-z1.jpg",
+          "sha256": "82390c44005eb476c11fc081bef1bead4a9684508a2993e5f7cd322962b47c96",
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        },
+        {
+          "name": "opening",
+          "quality": "high",
+          "zoom": 1.5,
+          "tick": 61,
+          "actualQuality": "high",
+          "actualZoom": 1.5,
+          "backend": "webgl",
+          "objective": "",
+          "tracker": false,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": null,
+          "character": {
+            "clip": "idle",
+            "animation": "run",
+            "head": [
+              3.0256445633445845,
+              0.74248581852067,
+              66.99133503837646
+            ],
+            "feet": [
+              [
+                2.611068930399932,
+                0.27216344187040514,
+                67.2589542314518
+              ],
+              [
+                3.0805197053958526,
+                0.23890950411743014,
+                67.05261553139201
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/before-L8/opening-high-z1.5.jpg",
+          "sha256": "53a8dbb628e9c49e33a4f51c7e60d979c1d901cf9dc5b184db30e6b01cc0279f",
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        },
+        {
+          "name": "calm-end",
+          "quality": "low",
+          "zoom": 1,
+          "tick": 3541,
+          "actualQuality": "low",
+          "actualZoom": 1,
+          "backend": "webgl",
+          "objective": "",
+          "tracker": false,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": null,
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              3.1312672404959687,
+              1.182797432658323,
+              66.88471905460614
+            ],
+            "feet": [
+              [
+                3.0532805033121555,
+                0.24412745225821506,
+                66.81347310315743
+              ],
+              [
+                3.1937018656644263,
+                0.24412741558320153,
+                66.9408439482507
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/before-L8/calm-end-low-z1.jpg",
+          "sha256": "5e5d6b54cb08c2760513f2b2f2d0cac05c466fb74ff7f9875b1272868c5700f2",
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        },
+        {
+          "name": "calm-end",
+          "quality": "low",
+          "zoom": 1.5,
+          "tick": 3541,
+          "actualQuality": "low",
+          "actualZoom": 1.5,
+          "backend": "webgl",
+          "objective": "",
+          "tracker": false,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": null,
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              3.1312672404959687,
+              1.182797432658323,
+              66.88471905460614
+            ],
+            "feet": [
+              [
+                3.0532805033121555,
+                0.24412745225821506,
+                66.81347310315743
+              ],
+              [
+                3.1937018656644263,
+                0.24412741558320153,
+                66.9408439482507
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/before-L8/calm-end-low-z1.5.jpg",
+          "sha256": "498633cc430bd4678fee91b6df842517100e9bd58b328ab3a4ec4241b9eb1456",
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        },
+        {
+          "name": "calm-end",
+          "quality": "high",
+          "zoom": 1,
+          "tick": 3541,
+          "actualQuality": "high",
+          "actualZoom": 1,
+          "backend": "webgl",
+          "objective": "",
+          "tracker": false,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": null,
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              3.1312672404959687,
+              1.182797432658323,
+              66.88471905460614
+            ],
+            "feet": [
+              [
+                3.0532805033121555,
+                0.24412745225821506,
+                66.81347310315743
+              ],
+              [
+                3.1937018656644263,
+                0.24412741558320153,
+                66.9408439482507
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/before-L8/calm-end-high-z1.jpg",
+          "sha256": "06967b5dde9446647a9e8c80ecb82442add5cf284c7cdcbb8eae5432f09b55e6",
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        },
+        {
+          "name": "calm-end",
+          "quality": "high",
+          "zoom": 1.5,
+          "tick": 3541,
+          "actualQuality": "high",
+          "actualZoom": 1.5,
+          "backend": "webgl",
+          "objective": "",
+          "tracker": false,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": null,
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              3.1312672404959687,
+              1.182797432658323,
+              66.88471905460614
+            ],
+            "feet": [
+              [
+                3.0532805033121555,
+                0.24412745225821506,
+                66.81347310315743
+              ],
+              [
+                3.1937018656644263,
+                0.24412741558320153,
+                66.9408439482507
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/before-L8/calm-end-high-z1.5.jpg",
+          "sha256": "509d19dd01f7ef240bf9b2f735c49a0eca4f2b276cae350ccc37c7bc729ab0da",
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        }
+      ],
+      "poseRows": [],
+      "cueFollow": []
+    },
+    {
+      "side": "before",
+      "level": "L9",
+      "renderedRevision": "0ad5a72b",
+      "harness": {
+        "sourceHash": "c905e5eb6b059135a1237787afffe368cc5b92bec17ba9a1a8632dc74683abd7",
+        "observerHash": "2c536930d36d27fb546ce2f0ae4431df5913b794c1ea3ae24e355d457f7c11db",
+        "revision": "da16c08703895fa05e1c2640fe86ba9f891f11e6"
+      },
+      "receipt": "test-results/r10-p2/before-L9/receipt.json",
+      "receiptSha256": "01aabcf6b7e454595517780d80ddd515bafdbb656cac375f4823efec83e1cc90",
+      "errors": [],
+      "rowCount": 364,
+      "keyTraceCount": 358,
+      "captures": [
+        {
+          "name": "impact",
+          "quality": "low",
+          "zoom": 1,
+          "tick": 5772,
+          "actualQuality": "low",
+          "actualZoom": 1,
+          "backend": "webgl",
+          "objective": "Get clear of the wreck \u00b7 20\u00a0m",
+          "tracker": true,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": "impact",
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              527.5128741492604,
+              1.047963877062475,
+              2.613016558867743
+            ],
+            "feet": [
+              [
+                527.5164343573356,
+                0.1091274618364971,
+                2.5048969673695707
+              ],
+              [
+                527.5165237954719,
+                0.10912742512361848,
+                2.6950874119640504
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/before-L9/impact-low-z1.jpg",
+          "sha256": "8a383d8fe2769e5fa0dcb237b4480cc00a7ee762fcb839ba62d08b2e715793f0",
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        },
+        {
+          "name": "impact",
+          "quality": "low",
+          "zoom": 1.5,
+          "tick": 5772,
+          "actualQuality": "low",
+          "actualZoom": 1,
+          "backend": "webgl",
+          "objective": "Get clear of the wreck \u00b7 20\u00a0m",
+          "tracker": true,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": "impact",
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              527.5128741492604,
+              1.047963877062475,
+              2.613016558867743
+            ],
+            "feet": [
+              [
+                527.5164343573356,
+                0.1091274618364971,
+                2.5048969673695707
+              ],
+              [
+                527.5165237954719,
+                0.10912742512361848,
+                2.6950874119640504
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/before-L9/impact-low-z1.5.jpg",
+          "sha256": "8a383d8fe2769e5fa0dcb237b4480cc00a7ee762fcb839ba62d08b2e715793f0",
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        },
+        {
+          "name": "impact",
+          "quality": "high",
+          "zoom": 1,
+          "tick": 5772,
+          "actualQuality": "high",
+          "actualZoom": 1,
+          "backend": "webgl",
+          "objective": "Get clear of the wreck \u00b7 20\u00a0m",
+          "tracker": true,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": "impact",
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              527.5128741492604,
+              1.047963877062475,
+              2.613016558867743
+            ],
+            "feet": [
+              [
+                527.5164343573356,
+                0.1091274618364971,
+                2.5048969673695707
+              ],
+              [
+                527.5165237954719,
+                0.10912742512361848,
+                2.6950874119640504
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/before-L9/impact-high-z1.jpg",
+          "sha256": "7f75763514637f2a4dfb130e7bd1d00d0a758d005c0de79f6884da82b75c174a",
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        },
+        {
+          "name": "impact",
+          "quality": "high",
+          "zoom": 1.5,
+          "tick": 5772,
+          "actualQuality": "high",
+          "actualZoom": 1,
+          "backend": "webgl",
+          "objective": "Get clear of the wreck \u00b7 20\u00a0m",
+          "tracker": true,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": "impact",
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              527.5128741492604,
+              1.047963877062475,
+              2.613016558867743
+            ],
+            "feet": [
+              [
+                527.5164343573356,
+                0.1091274618364971,
+                2.5048969673695707
+              ],
+              [
+                527.5165237954719,
+                0.10912742512361848,
+                2.6950874119640504
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/before-L9/impact-high-z1.5.jpg",
+          "sha256": "7f75763514637f2a4dfb130e7bd1d00d0a758d005c0de79f6884da82b75c174a",
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        },
+        {
+          "name": "crawl",
+          "quality": "low",
+          "zoom": 1,
+          "tick": 5952,
+          "actualQuality": "low",
+          "actualZoom": 1,
+          "backend": "webgl",
+          "objective": "Get clear of the wreck \u00b7 14\u00a0m",
+          "tracker": true,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": "crawl",
+          "character": {
+            "clip": "crawl",
+            "animation": "idle",
+            "head": [
+              533.3860159029522,
+              0.352116044622233,
+              1.8703603020172044
+            ],
+            "feet": [
+              [
+                532.5126496729027,
+                0.3169442602108712,
+                1.72684849786536
+              ],
+              [
+                532.5748061615426,
+                0.37163615158624236,
+                2.014665193904541
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/before-L9/crawl-low-z1.jpg",
+          "sha256": "38eff091c2b9b29a595ef76aed858e44006bbd6b95e446cf6953dc75184332a9",
+          "visibleHeld": []
+        },
+        {
+          "name": "crawl",
+          "quality": "low",
+          "zoom": 1.5,
+          "tick": 5952,
+          "actualQuality": "low",
+          "actualZoom": 1.5,
+          "backend": "webgl",
+          "objective": "Get clear of the wreck \u00b7 14\u00a0m",
+          "tracker": true,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": "crawl",
+          "character": {
+            "clip": "crawl",
+            "animation": "idle",
+            "head": [
+              533.3860159029522,
+              0.352116044622233,
+              1.8703603020172044
+            ],
+            "feet": [
+              [
+                532.5126496729027,
+                0.3169442602108712,
+                1.72684849786536
+              ],
+              [
+                532.5748061615426,
+                0.37163615158624236,
+                2.014665193904541
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/before-L9/crawl-low-z1.5.jpg",
+          "sha256": "81df41047435f113edd4eec5837c78ae019d23bd98281671a02a4eaee0aaab21",
+          "visibleHeld": []
+        },
+        {
+          "name": "crawl",
+          "quality": "high",
+          "zoom": 1,
+          "tick": 5952,
+          "actualQuality": "high",
+          "actualZoom": 1,
+          "backend": "webgl",
+          "objective": "Get clear of the wreck \u00b7 14\u00a0m",
+          "tracker": true,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": "crawl",
+          "character": {
+            "clip": "crawl",
+            "animation": "idle",
+            "head": [
+              533.3860159029522,
+              0.352116044622233,
+              1.8703603020172044
+            ],
+            "feet": [
+              [
+                532.5126496729027,
+                0.3169442602108712,
+                1.72684849786536
+              ],
+              [
+                532.5748061615426,
+                0.37163615158624236,
+                2.014665193904541
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/before-L9/crawl-high-z1.jpg",
+          "sha256": "5a89045ea590674f4d126045edf83149767ef36758a35140ef15840aeed0026a",
+          "visibleHeld": []
+        },
+        {
+          "name": "crawl",
+          "quality": "high",
+          "zoom": 1.5,
+          "tick": 5952,
+          "actualQuality": "high",
+          "actualZoom": 1.5,
+          "backend": "webgl",
+          "objective": "Get clear of the wreck \u00b7 14\u00a0m",
+          "tracker": true,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": "crawl",
+          "character": {
+            "clip": "crawl",
+            "animation": "idle",
+            "head": [
+              533.3860159029522,
+              0.352116044622233,
+              1.8703603020172044
+            ],
+            "feet": [
+              [
+                532.5126496729027,
+                0.3169442602108712,
+                1.72684849786536
+              ],
+              [
+                532.5748061615426,
+                0.37163615158624236,
+                2.014665193904541
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/before-L9/crawl-high-z1.5.jpg",
+          "sha256": "607672790b5965ba862bcd207c64db6712459476bfb162c36d0a22099813573b",
+          "visibleHeld": []
+        }
+      ],
+      "poseRows": [
+        {
+          "pose": "standing",
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              0.019412545380633854,
+              1.0336572435690152,
+              70.02377964901945
+            ],
+            "feet": [
+              [
+                -0.00587427692225978,
+                0.27981757839142946,
+                69.86570235929334
+              ],
+              [
+                0.029557410097316106,
+                0.10912744216472278,
+                70.2032309654763
+              ]
+            ]
+          },
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        },
+        {
+          "pose": "knockdown",
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              0.019412545380633854,
+              1.0336572435690152,
+              70.02377964901945
+            ],
+            "feet": [
+              [
+                -0.00587427692225978,
+                0.27981757839142946,
+                69.86570235929334
+              ],
+              [
+                0.029557410097316106,
+                0.10912744216472278,
+                70.2032309654763
+              ]
+            ]
+          },
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        },
+        {
+          "pose": "get-up",
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              0.019412545380633854,
+              1.0336572435690152,
+              70.02377964901945
+            ],
+            "feet": [
+              [
+                -0.00587427692225978,
+                0.27981757839142946,
+                69.86570235929334
+              ],
+              [
+                0.029557410097316106,
+                0.10912744216472278,
+                70.2032309654763
+              ]
+            ]
+          },
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        },
+        {
+          "pose": "die",
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              0.018195248209617425,
+              1.0337595688089212,
+              70.02344224743167
+            ],
+            "feet": [
+              [
+                -0.00587427692225978,
+                0.27981757839142946,
+                69.86570235929334
+              ],
+              [
+                0.029557410097316106,
+                0.10912744216472278,
+                70.2032309654763
+              ]
+            ]
+          },
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        },
+        {
+          "pose": "crawl",
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              0.018195248209617425,
+              1.0337595688089212,
+              70.02344224743167
+            ],
+            "feet": [
+              [
+                -0.00587427692225978,
+                0.27981757839142946,
+                69.86570235929334
+              ],
+              [
+                0.029557410097316106,
+                0.10912744216472278,
+                70.2032309654763
+              ]
+            ]
+          },
+          "visibleHeld": []
+        }
+      ],
+      "cueFollow": []
+    },
+    {
+      "side": "before",
+      "level": "L9-poses",
+      "renderedRevision": "0ad5a72b",
+      "harness": {
+        "sourceHash": "c905e5eb6b059135a1237787afffe368cc5b92bec17ba9a1a8632dc74683abd7",
+        "observerHash": "2c536930d36d27fb546ce2f0ae4431df5913b794c1ea3ae24e355d457f7c11db",
+        "revision": "da16c08703895fa05e1c2640fe86ba9f891f11e6"
+      },
+      "receipt": "test-results/r10-p2/before-L9-poses/receipt.json",
+      "receiptSha256": "eb3bdbd57bceb23b093db56eb78781f153d4846bd96911a3492c2092bf1a5a5b",
+      "errors": [],
+      "rowCount": 5,
+      "keyTraceCount": 0,
+      "captures": [
+        {
+          "name": "fixture-knockdown",
+          "quality": "low",
+          "zoom": 1,
+          "tick": 14,
+          "actualQuality": "low",
+          "actualZoom": 1,
+          "backend": "webgl",
+          "objective": "",
+          "tracker": false,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": null,
+          "character": {
+            "clip": "knockdown",
+            "animation": "knockdown",
+            "head": [
+              -0.03630277665412979,
+              1.087440343606672,
+              70.02509539749117
+            ],
+            "feet": [
+              [
+                0.44062141182901154,
+                0.744029187018119,
+                69.70204404113385
+              ],
+              [
+                0.5280385796587587,
+                0.7572350200733313,
+                69.97631676073209
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/before-L9-poses/fixture-knockdown-low-z1.jpg",
+          "sha256": "30cc9a04e39a4bd05b1eed995f7aa0e4265f410b2ba7debc31000457c3111cf0",
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        },
+        {
+          "name": "fixture-knockdown",
+          "quality": "low",
+          "zoom": 1.5,
+          "tick": 14,
+          "actualQuality": "low",
+          "actualZoom": 1.5,
+          "backend": "webgl",
+          "objective": "",
+          "tracker": false,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": null,
+          "character": {
+            "clip": "knockdown",
+            "animation": "knockdown",
+            "head": [
+              -0.03630277665412979,
+              1.087440343606672,
+              70.02509539749117
+            ],
+            "feet": [
+              [
+                0.44062141182901154,
+                0.744029187018119,
+                69.70204404113385
+              ],
+              [
+                0.5280385796587587,
+                0.7572350200733313,
+                69.97631676073209
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/before-L9-poses/fixture-knockdown-low-z1.5.jpg",
+          "sha256": "878667c4c3cca65de8e2d31b76d00818a0233517ee347e564797bcbe56a34a94",
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        },
+        {
+          "name": "fixture-knockdown",
+          "quality": "high",
+          "zoom": 1,
+          "tick": 14,
+          "actualQuality": "high",
+          "actualZoom": 1,
+          "backend": "webgl",
+          "objective": "",
+          "tracker": false,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": null,
+          "character": {
+            "clip": "knockdown",
+            "animation": "knockdown",
+            "head": [
+              -0.03630277665412979,
+              1.087440343606672,
+              70.02509539749117
+            ],
+            "feet": [
+              [
+                0.44062141182901154,
+                0.744029187018119,
+                69.70204404113385
+              ],
+              [
+                0.5280385796587587,
+                0.7572350200733313,
+                69.97631676073209
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/before-L9-poses/fixture-knockdown-high-z1.jpg",
+          "sha256": "914cc522f0a7c1a0457563bf64a963e2a135de7dfa6ce5731a285dba53deb09d",
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        },
+        {
+          "name": "fixture-knockdown",
+          "quality": "high",
+          "zoom": 1.5,
+          "tick": 14,
+          "actualQuality": "high",
+          "actualZoom": 1.5,
+          "backend": "webgl",
+          "objective": "",
+          "tracker": false,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": null,
+          "character": {
+            "clip": "knockdown",
+            "animation": "knockdown",
+            "head": [
+              -0.03630277665412979,
+              1.087440343606672,
+              70.02509539749117
+            ],
+            "feet": [
+              [
+                0.44062141182901154,
+                0.744029187018119,
+                69.70204404113385
+              ],
+              [
+                0.5280385796587587,
+                0.7572350200733313,
+                69.97631676073209
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/before-L9-poses/fixture-knockdown-high-z1.5.jpg",
+          "sha256": "810194ce6533d22b2d251f5cf170d7b8a167b28d13369da1460001ed6fc1a09e",
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        }
+      ],
+      "poseRows": [
+        {
+          "pose": "standing",
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              0.019412545380633854,
+              1.0336572435690152,
+              70.02377964901945
+            ],
+            "feet": [
+              [
+                -0.00587427692225978,
+                0.27981757839142946,
+                69.86570235929334
+              ],
+              [
+                0.029557410097316106,
+                0.10912744216472278,
+                70.2032309654763
+              ]
+            ]
+          },
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        },
+        {
+          "pose": "knockdown",
+          "character": {
+            "clip": "knockdown",
+            "animation": "knockdown",
+            "head": [
+              -0.03630277665412979,
+              1.087440343606672,
+              70.02509539749117
+            ],
+            "feet": [
+              [
+                0.44062141182901154,
+                0.744029187018119,
+                69.70204404113385
+              ],
+              [
+                0.5280385796587587,
+                0.7572350200733313,
+                69.97631676073209
+              ]
+            ]
+          },
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        },
+        {
+          "pose": "get-up",
+          "character": {
+            "clip": "knockdown",
+            "animation": "knockdown",
+            "head": [
+              -0.03630277665412979,
+              1.087440343606672,
+              70.02509539749117
+            ],
+            "feet": [
+              [
+                0.44062141182901154,
+                0.744029187018119,
+                69.70204404113385
+              ],
+              [
+                0.5280385796587587,
+                0.7572350200733313,
+                69.97631676073209
+              ]
+            ]
+          },
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        },
+        {
+          "pose": "die",
+          "character": {
+            "clip": "knockdown",
+            "animation": "knockdown",
+            "head": [
+              -0.03630277665412979,
+              1.087440343606672,
+              70.02509539749117
+            ],
+            "feet": [
+              [
+                0.44062141182901154,
+                0.744029187018119,
+                69.70204404113385
+              ],
+              [
+                0.5280385796587587,
+                0.7572350200733313,
+                69.97631676073209
+              ]
+            ]
+          },
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        },
+        {
+          "pose": "crawl",
+          "character": {
+            "clip": "knockdown",
+            "animation": "knockdown",
+            "head": [
+              -0.03630277665412979,
+              1.087440343606672,
+              70.02509539749117
+            ],
+            "feet": [
+              [
+                0.44062141182901154,
+                0.744029187018119,
+                69.70204404113385
+              ],
+              [
+                0.5280385796587587,
+                0.7572350200733313,
+                69.97631676073209
+              ]
+            ]
+          },
+          "visibleHeld": []
+        }
+      ],
+      "cueFollow": []
+    },
+    {
+      "side": "after",
+      "level": "L6",
+      "renderedRevision": "da16c087",
+      "harness": {
+        "sourceHash": "c905e5eb6b059135a1237787afffe368cc5b92bec17ba9a1a8632dc74683abd7",
+        "observerHash": "2c536930d36d27fb546ce2f0ae4431df5913b794c1ea3ae24e355d457f7c11db",
+        "revision": "da16c08703895fa05e1c2640fe86ba9f891f11e6"
+      },
+      "receipt": "test-results/r10-p2/after-L6/receipt.json",
+      "receiptSha256": "1b6a73f95e09e92e84d598cad7b0fe02bf1da2000af8d4c4bf8d6322a11754ca",
+      "errors": [],
+      "rowCount": 23,
+      "keyTraceCount": 0,
+      "captures": [
+        {
+          "name": "exit-regroup",
+          "quality": "low",
+          "zoom": 1,
+          "tick": 6586,
+          "actualQuality": "low",
+          "actualZoom": 1,
+          "backend": "webgl",
+          "objective": "Rejoin Marcus \u00b7 155 m",
+          "tracker": true,
+          "cue": {
+            "text": "\u203aRejoin Marcus \u00b7 155 m",
+            "visible": true,
+            "arrow": true,
+            "opacity": "1"
+          },
+          "target": "16",
+          "crash": null,
+          "character": {
+            "clip": "run",
+            "animation": "run",
+            "head": [
+              242.13493094697697,
+              1.1709285101474332,
+              15.198883180008352
+            ],
+            "feet": [
+              [
+                241.81456096396857,
+                0.692411967301299,
+                14.821139193501581
+              ],
+              [
+                242.06668202545166,
+                0.6689968808622502,
+                15.245507710803102
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/after-L6/exit-regroup-low-z1.jpg",
+          "sha256": "a6411af8585bce93b3729653e35cccf5186910a93a344cfb29d8709be65cf4e0",
+          "visibleHeld": [
+            "weapon.army-mg"
+          ]
+        },
+        {
+          "name": "exit-regroup",
+          "quality": "low",
+          "zoom": 1.5,
+          "tick": 6586,
+          "actualQuality": "low",
+          "actualZoom": 1.5,
+          "backend": "webgl",
+          "objective": "Rejoin Marcus \u00b7 155 m",
+          "tracker": true,
+          "cue": {
+            "text": "\u203aRejoin Marcus \u00b7 155 m",
+            "visible": true,
+            "arrow": true,
+            "opacity": "1"
+          },
+          "target": "16",
+          "crash": null,
+          "character": {
+            "clip": "run",
+            "animation": "run",
+            "head": [
+              242.13493094697697,
+              1.1709285101474332,
+              15.198883180008352
+            ],
+            "feet": [
+              [
+                241.81456096396857,
+                0.692411967301299,
+                14.821139193501581
+              ],
+              [
+                242.06668202545166,
+                0.6689968808622502,
+                15.245507710803102
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/after-L6/exit-regroup-low-z1.5.jpg",
+          "sha256": "c74bd0154d7e10655646ec3d80ef0d68846d1612e4823f247fe56f6fd98bcc19",
+          "visibleHeld": [
+            "weapon.army-mg"
+          ]
+        },
+        {
+          "name": "exit-regroup",
+          "quality": "high",
+          "zoom": 1,
+          "tick": 6586,
+          "actualQuality": "high",
+          "actualZoom": 1,
+          "backend": "webgl",
+          "objective": "Rejoin Marcus \u00b7 155 m",
+          "tracker": true,
+          "cue": {
+            "text": "\u203aRejoin Marcus \u00b7 155 m",
+            "visible": true,
+            "arrow": true,
+            "opacity": "1"
+          },
+          "target": "16",
+          "crash": null,
+          "character": {
+            "clip": "run",
+            "animation": "run",
+            "head": [
+              242.13493094697697,
+              1.1709285101474332,
+              15.198883180008352
+            ],
+            "feet": [
+              [
+                241.81456096396857,
+                0.692411967301299,
+                14.821139193501581
+              ],
+              [
+                242.06668202545166,
+                0.6689968808622502,
+                15.245507710803102
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/after-L6/exit-regroup-high-z1.jpg",
+          "sha256": "194d34f25623d8462ccd3a7821850c0321fb71523ae2092b11170a331cd343ca",
+          "visibleHeld": [
+            "weapon.army-mg"
+          ]
+        },
+        {
+          "name": "exit-regroup",
+          "quality": "high",
+          "zoom": 1.5,
+          "tick": 6586,
+          "actualQuality": "high",
+          "actualZoom": 1.5,
+          "backend": "webgl",
+          "objective": "Rejoin Marcus \u00b7 155 m",
+          "tracker": true,
+          "cue": {
+            "text": "\u203aRejoin Marcus \u00b7 155 m",
+            "visible": true,
+            "arrow": true,
+            "opacity": "1"
+          },
+          "target": "16",
+          "crash": null,
+          "character": {
+            "clip": "run",
+            "animation": "run",
+            "head": [
+              242.13493094697697,
+              1.1709285101474332,
+              15.198883180008352
+            ],
+            "feet": [
+              [
+                241.81456096396857,
+                0.692411967301299,
+                14.821139193501581
+              ],
+              [
+                242.06668202545166,
+                0.6689968808622502,
+                15.245507710803102
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/after-L6/exit-regroup-high-z1.5.jpg",
+          "sha256": "425670a35e56684a6bcc6af2b08dcfe15068fc3b18e1428a36dd95a4c27e92c7",
+          "visibleHeld": [
+            "weapon.army-mg"
+          ]
+        },
+        {
+          "name": "regroup-after-banner",
+          "quality": "low",
+          "zoom": 1,
+          "tick": 6946,
+          "actualQuality": "low",
+          "actualZoom": 1,
+          "backend": "webgl",
+          "objective": "Rejoin Marcus \u00b7 155 m",
+          "tracker": true,
+          "cue": {
+            "text": "\u203aRejoin Marcus \u00b7 155 m",
+            "visible": true,
+            "arrow": true,
+            "opacity": "1"
+          },
+          "target": "16",
+          "crash": null,
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              242.26343631971224,
+              1.614085885791386,
+              15.27917175045232
+            ],
+            "feet": [
+              [
+                242.3078059075494,
+                0.6741274593037981,
+                15.221679207943955
+              ],
+              [
+                242.06737743453385,
+                0.7007480867551907,
+                15.247589509862216
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/after-L6/regroup-after-banner-low-z1.jpg",
+          "sha256": "351b57af752f8e4a284bc2e387941b5fb8bda14756b3aba43f445b6e7eacf26b",
+          "visibleHeld": [
+            "weapon.army-mg"
+          ]
+        },
+        {
+          "name": "regroup-after-banner",
+          "quality": "low",
+          "zoom": 1.5,
+          "tick": 6946,
+          "actualQuality": "low",
+          "actualZoom": 1.5,
+          "backend": "webgl",
+          "objective": "Rejoin Marcus \u00b7 155 m",
+          "tracker": true,
+          "cue": {
+            "text": "\u203aRejoin Marcus \u00b7 155 m",
+            "visible": true,
+            "arrow": true,
+            "opacity": "1"
+          },
+          "target": "16",
+          "crash": null,
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              242.26343631971224,
+              1.614085885791386,
+              15.27917175045232
+            ],
+            "feet": [
+              [
+                242.3078059075494,
+                0.6741274593037981,
+                15.221679207943955
+              ],
+              [
+                242.06737743453385,
+                0.7007480867551907,
+                15.247589509862216
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/after-L6/regroup-after-banner-low-z1.5.jpg",
+          "sha256": "ff62bf40533535d575e41da7b65b8e9d2b313a29e9c40b65b738aee8f50e0b2f",
+          "visibleHeld": [
+            "weapon.army-mg"
+          ]
+        },
+        {
+          "name": "regroup-after-banner",
+          "quality": "high",
+          "zoom": 1,
+          "tick": 6946,
+          "actualQuality": "high",
+          "actualZoom": 1,
+          "backend": "webgl",
+          "objective": "Rejoin Marcus \u00b7 155 m",
+          "tracker": true,
+          "cue": {
+            "text": "\u203aRejoin Marcus \u00b7 155 m",
+            "visible": true,
+            "arrow": true,
+            "opacity": "1"
+          },
+          "target": "16",
+          "crash": null,
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              242.26343631971224,
+              1.614085885791386,
+              15.27917175045232
+            ],
+            "feet": [
+              [
+                242.3078059075494,
+                0.6741274593037981,
+                15.221679207943955
+              ],
+              [
+                242.06737743453385,
+                0.7007480867551907,
+                15.247589509862216
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/after-L6/regroup-after-banner-high-z1.jpg",
+          "sha256": "dd6496ed5157c4c3ab14f7d6734828f770f95917eec922b2823e6c89fbfc794e",
+          "visibleHeld": [
+            "weapon.army-mg"
+          ]
+        },
+        {
+          "name": "regroup-after-banner",
+          "quality": "high",
+          "zoom": 1.5,
+          "tick": 6946,
+          "actualQuality": "high",
+          "actualZoom": 1.5,
+          "backend": "webgl",
+          "objective": "Rejoin Marcus \u00b7 155 m",
+          "tracker": true,
+          "cue": {
+            "text": "\u203aRejoin Marcus \u00b7 155 m",
+            "visible": true,
+            "arrow": true,
+            "opacity": "1"
+          },
+          "target": "16",
+          "crash": null,
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              242.26343631971224,
+              1.614085885791386,
+              15.27917175045232
+            ],
+            "feet": [
+              [
+                242.3078059075494,
+                0.6741274593037981,
+                15.221679207943955
+              ],
+              [
+                242.06737743453385,
+                0.7007480867551907,
+                15.247589509862216
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/after-L6/regroup-after-banner-high-z1.5.jpg",
+          "sha256": "8b8197ea1d90009899c9a71abde80804fa957a9fb4dc60561a4eccfee7cd2863",
+          "visibleHeld": [
+            "weapon.army-mg"
+          ]
+        }
+      ],
+      "poseRows": [],
+      "cueFollow": [
+        {
+          "before": 154.19270745639096,
+          "after": 152.18782230796972
+        }
+      ]
+    },
+    {
+      "side": "after",
+      "level": "L8",
+      "renderedRevision": "da16c087",
+      "harness": {
+        "sourceHash": "c905e5eb6b059135a1237787afffe368cc5b92bec17ba9a1a8632dc74683abd7",
+        "observerHash": "2c536930d36d27fb546ce2f0ae4431df5913b794c1ea3ae24e355d457f7c11db",
+        "revision": "699a0cfbf6fd7f4755645fc22b47afeb0c478358"
+      },
+      "receipt": "test-results/r10-p2/after-L8/receipt.json",
+      "receiptSha256": "e5981c492a4b7f2e634f037a6f4a13ff088334272fec68149d7fa6df509fb8a8",
+      "errors": [],
+      "rowCount": 59,
+      "keyTraceCount": 0,
+      "captures": [
+        {
+          "name": "opening",
+          "quality": "low",
+          "zoom": 1,
+          "tick": 61,
+          "actualQuality": "low",
+          "actualZoom": 1,
+          "backend": "webgl",
+          "objective": "Stay with the group",
+          "tracker": true,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": null,
+          "character": {
+            "clip": "idle",
+            "animation": "run",
+            "head": [
+              3.0256445633445845,
+              0.74248581852067,
+              66.99133503837646
+            ],
+            "feet": [
+              [
+                2.611068930399932,
+                0.27216344187040514,
+                67.2589542314518
+              ],
+              [
+                3.0805197053958526,
+                0.23890950411743014,
+                67.05261553139201
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/after-L8/opening-low-z1.jpg",
+          "sha256": "267f41db1010a5ec5dc63e6daff9096210d2982002bf0d6976e639e1e1e54b02",
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        },
+        {
+          "name": "opening",
+          "quality": "low",
+          "zoom": 1.5,
+          "tick": 61,
+          "actualQuality": "low",
+          "actualZoom": 1.5,
+          "backend": "webgl",
+          "objective": "Stay with the group",
+          "tracker": true,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": null,
+          "character": {
+            "clip": "idle",
+            "animation": "run",
+            "head": [
+              3.0256445633445845,
+              0.74248581852067,
+              66.99133503837646
+            ],
+            "feet": [
+              [
+                2.611068930399932,
+                0.27216344187040514,
+                67.2589542314518
+              ],
+              [
+                3.0805197053958526,
+                0.23890950411743014,
+                67.05261553139201
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/after-L8/opening-low-z1.5.jpg",
+          "sha256": "df9cabea1d383caa1da9434d2ba5b42cd0fb518cd810719eb37bec28f63204bb",
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        },
+        {
+          "name": "opening",
+          "quality": "high",
+          "zoom": 1,
+          "tick": 61,
+          "actualQuality": "high",
+          "actualZoom": 1,
+          "backend": "webgl",
+          "objective": "Stay with the group",
+          "tracker": true,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": null,
+          "character": {
+            "clip": "idle",
+            "animation": "run",
+            "head": [
+              3.0256445633445845,
+              0.74248581852067,
+              66.99133503837646
+            ],
+            "feet": [
+              [
+                2.611068930399932,
+                0.27216344187040514,
+                67.2589542314518
+              ],
+              [
+                3.0805197053958526,
+                0.23890950411743014,
+                67.05261553139201
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/after-L8/opening-high-z1.jpg",
+          "sha256": "6525de23ad8f11c45704d428319efff077d75d3853cbf91507f8ee9be77ac9dd",
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        },
+        {
+          "name": "opening",
+          "quality": "high",
+          "zoom": 1.5,
+          "tick": 61,
+          "actualQuality": "high",
+          "actualZoom": 1.5,
+          "backend": "webgl",
+          "objective": "Stay with the group",
+          "tracker": true,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": null,
+          "character": {
+            "clip": "idle",
+            "animation": "run",
+            "head": [
+              3.0256445633445845,
+              0.74248581852067,
+              66.99133503837646
+            ],
+            "feet": [
+              [
+                2.611068930399932,
+                0.27216344187040514,
+                67.2589542314518
+              ],
+              [
+                3.0805197053958526,
+                0.23890950411743014,
+                67.05261553139201
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/after-L8/opening-high-z1.5.jpg",
+          "sha256": "dc617043f9659a7cbd693b3300aaa0ef6013b72efbb038914b12719ef4208803",
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        },
+        {
+          "name": "calm-end",
+          "quality": "low",
+          "zoom": 1,
+          "tick": 3541,
+          "actualQuality": "low",
+          "actualZoom": 1,
+          "backend": "webgl",
+          "objective": "Stay with the group",
+          "tracker": true,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": null,
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              3.1312672404959687,
+              1.182797432658323,
+              66.88471905460614
+            ],
+            "feet": [
+              [
+                3.0532805033121555,
+                0.24412745225821506,
+                66.81347310315743
+              ],
+              [
+                3.1937018656644263,
+                0.24412741558320153,
+                66.9408439482507
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/after-L8/calm-end-low-z1.jpg",
+          "sha256": "da0befc31a92a9370747fa0cf64387de94a4ac0a2c02ef7421a4200cd955a877",
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        },
+        {
+          "name": "calm-end",
+          "quality": "low",
+          "zoom": 1.5,
+          "tick": 3541,
+          "actualQuality": "low",
+          "actualZoom": 1.5,
+          "backend": "webgl",
+          "objective": "Stay with the group",
+          "tracker": true,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": null,
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              3.1312672404959687,
+              1.182797432658323,
+              66.88471905460614
+            ],
+            "feet": [
+              [
+                3.0532805033121555,
+                0.24412745225821506,
+                66.81347310315743
+              ],
+              [
+                3.1937018656644263,
+                0.24412741558320153,
+                66.9408439482507
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/after-L8/calm-end-low-z1.5.jpg",
+          "sha256": "ce0a9538da6ab8a886cd9f035a536f21f35c3d6a1298826a1a57c99aa0051470",
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        },
+        {
+          "name": "calm-end",
+          "quality": "high",
+          "zoom": 1,
+          "tick": 3541,
+          "actualQuality": "high",
+          "actualZoom": 1,
+          "backend": "webgl",
+          "objective": "Stay with the group",
+          "tracker": true,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": null,
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              3.1312672404959687,
+              1.182797432658323,
+              66.88471905460614
+            ],
+            "feet": [
+              [
+                3.0532805033121555,
+                0.24412745225821506,
+                66.81347310315743
+              ],
+              [
+                3.1937018656644263,
+                0.24412741558320153,
+                66.9408439482507
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/after-L8/calm-end-high-z1.jpg",
+          "sha256": "46c73459ef94b410c89cade8dd39a36fc285f9042f56f7a7019895d6c8003805",
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        },
+        {
+          "name": "calm-end",
+          "quality": "high",
+          "zoom": 1.5,
+          "tick": 3541,
+          "actualQuality": "high",
+          "actualZoom": 1.5,
+          "backend": "webgl",
+          "objective": "Stay with the group",
+          "tracker": true,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": null,
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              3.1312672404959687,
+              1.182797432658323,
+              66.88471905460614
+            ],
+            "feet": [
+              [
+                3.0532805033121555,
+                0.24412745225821506,
+                66.81347310315743
+              ],
+              [
+                3.1937018656644263,
+                0.24412741558320153,
+                66.9408439482507
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/after-L8/calm-end-high-z1.5.jpg",
+          "sha256": "95d9fbdbdbd58d2199d2b9892690b4c701308a8bfed79e33e87f010207e29145",
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        }
+      ],
+      "poseRows": [],
+      "cueFollow": []
+    },
+    {
+      "side": "after",
+      "level": "L9",
+      "renderedRevision": "da16c08703895fa05e1c2640fe86ba9f891f11e6",
+      "harness": {
+        "sourceHash": "c905e5eb6b059135a1237787afffe368cc5b92bec17ba9a1a8632dc74683abd7",
+        "observerHash": "2c536930d36d27fb546ce2f0ae4431df5913b794c1ea3ae24e355d457f7c11db",
+        "revision": "da16c08703895fa05e1c2640fe86ba9f891f11e6"
+      },
+      "receipt": "test-results/r10-p2/after-L9/receipt.json",
+      "receiptSha256": "2362cb8ba03b7d53ba7e554d8912e05d46189f456062dab28bb6f7f845cf9bbf",
+      "errors": [],
+      "rowCount": 364,
+      "keyTraceCount": 358,
+      "captures": [
+        {
+          "name": "impact",
+          "quality": "low",
+          "zoom": 1,
+          "tick": 5749,
+          "actualQuality": "low",
+          "actualZoom": 1,
+          "backend": "webgl",
+          "objective": "Get clear of the wreck \u00b7 20\u00a0m",
+          "tracker": true,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": "impact",
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              527.5260064166068,
+              1.0477814314127238,
+              2.6029870341236028
+            ],
+            "feet": [
+              [
+                527.5159478031056,
+                0.1091274618493499,
+                2.5048141685442595
+              ],
+              [
+                527.5176535215317,
+                0.10912742512632412,
+                2.6949463226713655
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/after-L9/impact-low-z1.jpg",
+          "sha256": "579473823b93aa0a4906d7e507d7b2431ae0769dac04b36b97825b999b6278d1",
+          "visibleHeld": []
+        },
+        {
+          "name": "impact",
+          "quality": "low",
+          "zoom": 1.5,
+          "tick": 5749,
+          "actualQuality": "low",
+          "actualZoom": 1,
+          "backend": "webgl",
+          "objective": "Get clear of the wreck \u00b7 20\u00a0m",
+          "tracker": true,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": "impact",
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              527.5260064166068,
+              1.0477814314127238,
+              2.6029870341236028
+            ],
+            "feet": [
+              [
+                527.5159478031056,
+                0.1091274618493499,
+                2.5048141685442595
+              ],
+              [
+                527.5176535215317,
+                0.10912742512632412,
+                2.6949463226713655
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/after-L9/impact-low-z1.5.jpg",
+          "sha256": "579473823b93aa0a4906d7e507d7b2431ae0769dac04b36b97825b999b6278d1",
+          "visibleHeld": []
+        },
+        {
+          "name": "impact",
+          "quality": "high",
+          "zoom": 1,
+          "tick": 5749,
+          "actualQuality": "high",
+          "actualZoom": 1,
+          "backend": "webgl",
+          "objective": "Get clear of the wreck \u00b7 20\u00a0m",
+          "tracker": true,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": "impact",
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              527.5260064166068,
+              1.0477814314127238,
+              2.6029870341236028
+            ],
+            "feet": [
+              [
+                527.5159478031056,
+                0.1091274618493499,
+                2.5048141685442595
+              ],
+              [
+                527.5176535215317,
+                0.10912742512632412,
+                2.6949463226713655
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/after-L9/impact-high-z1.jpg",
+          "sha256": "cc8968f084e579e7b6b1e1a558ef6b0fb295c898a78e3ddae70850e3b6a1cd64",
+          "visibleHeld": []
+        },
+        {
+          "name": "impact",
+          "quality": "high",
+          "zoom": 1.5,
+          "tick": 5749,
+          "actualQuality": "high",
+          "actualZoom": 1,
+          "backend": "webgl",
+          "objective": "Get clear of the wreck \u00b7 20\u00a0m",
+          "tracker": true,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": "impact",
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              527.5260064166068,
+              1.0477814314127238,
+              2.6029870341236028
+            ],
+            "feet": [
+              [
+                527.5159478031056,
+                0.1091274618493499,
+                2.5048141685442595
+              ],
+              [
+                527.5176535215317,
+                0.10912742512632412,
+                2.6949463226713655
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/after-L9/impact-high-z1.5.jpg",
+          "sha256": "cc8968f084e579e7b6b1e1a558ef6b0fb295c898a78e3ddae70850e3b6a1cd64",
+          "visibleHeld": []
+        },
+        {
+          "name": "crawl",
+          "quality": "low",
+          "zoom": 1,
+          "tick": 5946,
+          "actualQuality": "low",
+          "actualZoom": 1,
+          "backend": "webgl",
+          "objective": "Get clear of the wreck \u00b7 14\u00a0m",
+          "tracker": true,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": "crawl",
+          "character": {
+            "clip": "crawl",
+            "animation": "idle",
+            "head": [
+              533.0610037418156,
+              0.352116044622233,
+              1.913888967545629
+            ],
+            "feet": [
+              [
+                532.1682283311304,
+                0.2868955092105062,
+                1.7699664559496264
+              ],
+              [
+                532.2819750561779,
+                0.38720038444041105,
+                2.0578123508766484
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/after-L9/crawl-low-z1.jpg",
+          "sha256": "170fb5ad9dcb008c62516f3dae6a950ee7d104a77ba310159379ea3c87efcc70",
+          "visibleHeld": []
+        },
+        {
+          "name": "crawl",
+          "quality": "low",
+          "zoom": 1.5,
+          "tick": 5946,
+          "actualQuality": "low",
+          "actualZoom": 1.5,
+          "backend": "webgl",
+          "objective": "Get clear of the wreck \u00b7 14\u00a0m",
+          "tracker": true,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": "crawl",
+          "character": {
+            "clip": "crawl",
+            "animation": "idle",
+            "head": [
+              533.0610037418156,
+              0.352116044622233,
+              1.913888967545629
+            ],
+            "feet": [
+              [
+                532.1682283311304,
+                0.2868955092105062,
+                1.7699664559496264
+              ],
+              [
+                532.2819750561779,
+                0.38720038444041105,
+                2.0578123508766484
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/after-L9/crawl-low-z1.5.jpg",
+          "sha256": "e50bb9749717adb5e997918787a611eb62013c16bfff319b6e91acd522da1c3d",
+          "visibleHeld": []
+        },
+        {
+          "name": "crawl",
+          "quality": "high",
+          "zoom": 1,
+          "tick": 5946,
+          "actualQuality": "high",
+          "actualZoom": 1,
+          "backend": "webgl",
+          "objective": "Get clear of the wreck \u00b7 14\u00a0m",
+          "tracker": true,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": "crawl",
+          "character": {
+            "clip": "crawl",
+            "animation": "idle",
+            "head": [
+              533.0610037418156,
+              0.352116044622233,
+              1.913888967545629
+            ],
+            "feet": [
+              [
+                532.1682283311304,
+                0.2868955092105062,
+                1.7699664559496264
+              ],
+              [
+                532.2819750561779,
+                0.38720038444041105,
+                2.0578123508766484
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/after-L9/crawl-high-z1.jpg",
+          "sha256": "45fa07e383aaf8ebd025b038766aef54969149376d7e6df37b571779ab23b697",
+          "visibleHeld": []
+        },
+        {
+          "name": "crawl",
+          "quality": "high",
+          "zoom": 1.5,
+          "tick": 5946,
+          "actualQuality": "high",
+          "actualZoom": 1.5,
+          "backend": "webgl",
+          "objective": "Get clear of the wreck \u00b7 14\u00a0m",
+          "tracker": true,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": "crawl",
+          "character": {
+            "clip": "crawl",
+            "animation": "idle",
+            "head": [
+              533.0610037418156,
+              0.352116044622233,
+              1.913888967545629
+            ],
+            "feet": [
+              [
+                532.1682283311304,
+                0.2868955092105062,
+                1.7699664559496264
+              ],
+              [
+                532.2819750561779,
+                0.38720038444041105,
+                2.0578123508766484
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/after-L9/crawl-high-z1.5.jpg",
+          "sha256": "0462044d991ac5efe5ce41377199c6a58a1bafeab15d9f570851c49b03da43a6",
+          "visibleHeld": []
+        }
+      ],
+      "poseRows": [
+        {
+          "pose": "standing",
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              0.019412545380633854,
+              1.0336572435690152,
+              70.02377964901945
+            ],
+            "feet": [
+              [
+                -0.00587427692225978,
+                0.27981757839142946,
+                69.86570235929334
+              ],
+              [
+                0.029557410097316106,
+                0.10912744216472278,
+                70.2032309654763
+              ]
+            ]
+          },
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        },
+        {
+          "pose": "knockdown",
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              0.018195248209617425,
+              1.0337595688089212,
+              70.02344224743167
+            ],
+            "feet": [
+              [
+                -0.00587427692225978,
+                0.27981757839142946,
+                69.86570235929334
+              ],
+              [
+                0.029557410097316106,
+                0.10912744216472278,
+                70.2032309654763
+              ]
+            ]
+          },
+          "visibleHeld": []
+        },
+        {
+          "pose": "get-up",
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              0.018195248209617425,
+              1.0337595688089212,
+              70.02344224743167
+            ],
+            "feet": [
+              [
+                -0.00587427692225978,
+                0.27981757839142946,
+                69.86570235929334
+              ],
+              [
+                0.029557410097316106,
+                0.10912744216472278,
+                70.2032309654763
+              ]
+            ]
+          },
+          "visibleHeld": []
+        },
+        {
+          "pose": "die",
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              0.018195248209617425,
+              1.0337595688089212,
+              70.02344224743167
+            ],
+            "feet": [
+              [
+                -0.00587427692225978,
+                0.27981757839142946,
+                69.86570235929334
+              ],
+              [
+                0.029557410097316106,
+                0.10912744216472278,
+                70.2032309654763
+              ]
+            ]
+          },
+          "visibleHeld": []
+        },
+        {
+          "pose": "crawl",
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              0.018195248209617425,
+              1.0337595688089212,
+              70.02344224743167
+            ],
+            "feet": [
+              [
+                -0.00587427692225978,
+                0.27981757839142946,
+                69.86570235929334
+              ],
+              [
+                0.029557410097316106,
+                0.10912744216472278,
+                70.2032309654763
+              ]
+            ]
+          },
+          "visibleHeld": []
+        }
+      ],
+      "cueFollow": []
+    },
+    {
+      "side": "after",
+      "level": "L9-poses",
+      "renderedRevision": "da16c08703895fa05e1c2640fe86ba9f891f11e6",
+      "harness": {
+        "sourceHash": "c905e5eb6b059135a1237787afffe368cc5b92bec17ba9a1a8632dc74683abd7",
+        "observerHash": "2c536930d36d27fb546ce2f0ae4431df5913b794c1ea3ae24e355d457f7c11db",
+        "revision": "da16c08703895fa05e1c2640fe86ba9f891f11e6"
+      },
+      "receipt": "test-results/r10-p2/after-L9-poses/receipt.json",
+      "receiptSha256": "86bf99da4c70cd0a28a6e407cf97c4be668548af11d971708b8f51240b52b27e",
+      "errors": [],
+      "rowCount": 5,
+      "keyTraceCount": 0,
+      "captures": [
+        {
+          "name": "fixture-knockdown",
+          "quality": "low",
+          "zoom": 1,
+          "tick": 14,
+          "actualQuality": "low",
+          "actualZoom": 1,
+          "backend": "webgl",
+          "objective": "Stay with the group",
+          "tracker": true,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": null,
+          "character": {
+            "clip": "knockdown",
+            "animation": "knockdown",
+            "head": [
+              -0.39927942600841515,
+              0.28305795237814707,
+              70.13257938784918
+            ],
+            "feet": [
+              [
+                0.44062141182901154,
+                0.3236045652004572,
+                69.70204404113385
+              ],
+              [
+                0.5280385796587587,
+                0.3368103982556696,
+                69.97631676073209
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/after-L9-poses/fixture-knockdown-low-z1.jpg",
+          "sha256": "0caa0b8e094eb0db35e077be8eec2626efcc138897a1b31b7ac93f654d75e459",
+          "visibleHeld": []
+        },
+        {
+          "name": "fixture-knockdown",
+          "quality": "low",
+          "zoom": 1.5,
+          "tick": 14,
+          "actualQuality": "low",
+          "actualZoom": 1.5,
+          "backend": "webgl",
+          "objective": "Stay with the group",
+          "tracker": true,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": null,
+          "character": {
+            "clip": "knockdown",
+            "animation": "knockdown",
+            "head": [
+              -0.39927942600841515,
+              0.28305795237814707,
+              70.13257938784918
+            ],
+            "feet": [
+              [
+                0.44062141182901154,
+                0.3236045652004572,
+                69.70204404113385
+              ],
+              [
+                0.5280385796587587,
+                0.3368103982556696,
+                69.97631676073209
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/after-L9-poses/fixture-knockdown-low-z1.5.jpg",
+          "sha256": "3ec28cda1d626f1245974ce766f93730ba7d3e12a487eb726eb155ea16a91735",
+          "visibleHeld": []
+        },
+        {
+          "name": "fixture-knockdown",
+          "quality": "high",
+          "zoom": 1,
+          "tick": 14,
+          "actualQuality": "high",
+          "actualZoom": 1,
+          "backend": "webgl",
+          "objective": "Stay with the group",
+          "tracker": true,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": null,
+          "character": {
+            "clip": "knockdown",
+            "animation": "knockdown",
+            "head": [
+              -0.39927942600841515,
+              0.28305795237814707,
+              70.13257938784918
+            ],
+            "feet": [
+              [
+                0.44062141182901154,
+                0.3236045652004572,
+                69.70204404113385
+              ],
+              [
+                0.5280385796587587,
+                0.3368103982556696,
+                69.97631676073209
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/after-L9-poses/fixture-knockdown-high-z1.jpg",
+          "sha256": "cdd4bf35d1886df79a17fff7ab563ed929f18986b37dc1999899aa0ddae57b84",
+          "visibleHeld": []
+        },
+        {
+          "name": "fixture-knockdown",
+          "quality": "high",
+          "zoom": 1.5,
+          "tick": 14,
+          "actualQuality": "high",
+          "actualZoom": 1.5,
+          "backend": "webgl",
+          "objective": "Stay with the group",
+          "tracker": true,
+          "cue": {
+            "text": "\u203a",
+            "visible": false,
+            "arrow": false,
+            "opacity": "0"
+          },
+          "target": null,
+          "crash": null,
+          "character": {
+            "clip": "knockdown",
+            "animation": "knockdown",
+            "head": [
+              -0.39927942600841515,
+              0.28305795237814707,
+              70.13257938784918
+            ],
+            "feet": [
+              [
+                0.44062141182901154,
+                0.3236045652004572,
+                69.70204404113385
+              ],
+              [
+                0.5280385796587587,
+                0.3368103982556696,
+                69.97631676073209
+              ]
+            ]
+          },
+          "file": "test-results/r10-p2/after-L9-poses/fixture-knockdown-high-z1.5.jpg",
+          "sha256": "260f5e4728d1b631dc91e1e14300608b089b01d173e1c368d6c62e2cb52611a6",
+          "visibleHeld": []
+        }
+      ],
+      "poseRows": [
+        {
+          "pose": "standing",
+          "character": {
+            "clip": "idle",
+            "animation": "idle",
+            "head": [
+              0.019412545380633854,
+              1.0336572435690152,
+              70.02377964901945
+            ],
+            "feet": [
+              [
+                -0.00587427692225978,
+                0.27981757839142946,
+                69.86570235929334
+              ],
+              [
+                0.029557410097316106,
+                0.10912744216472278,
+                70.2032309654763
+              ]
+            ]
+          },
+          "visibleHeld": [
+            "weapon.rocket-launcher"
+          ]
+        },
+        {
+          "pose": "knockdown",
+          "character": {
+            "clip": "knockdown",
+            "animation": "knockdown",
+            "head": [
+              -0.39927942600841515,
+              0.28305795237814707,
+              70.13257938784918
+            ],
+            "feet": [
+              [
+                0.44062141182901154,
+                0.3236045652004572,
+                69.70204404113385
+              ],
+              [
+                0.5280385796587587,
+                0.3368103982556696,
+                69.97631676073209
+              ]
+            ]
+          },
+          "visibleHeld": []
+        },
+        {
+          "pose": "get-up",
+          "character": {
+            "clip": "knockdown",
+            "animation": "knockdown",
+            "head": [
+              -0.39927942600841515,
+              0.28305795237814707,
+              70.13257938784918
+            ],
+            "feet": [
+              [
+                0.44062141182901154,
+                0.3236045652004572,
+                69.70204404113385
+              ],
+              [
+                0.5280385796587587,
+                0.3368103982556696,
+                69.97631676073209
+              ]
+            ]
+          },
+          "visibleHeld": []
+        },
+        {
+          "pose": "die",
+          "character": {
+            "clip": "knockdown",
+            "animation": "knockdown",
+            "head": [
+              -0.39927942600841515,
+              0.28305795237814707,
+              70.13257938784918
+            ],
+            "feet": [
+              [
+                0.44062141182901154,
+                0.3236045652004572,
+                69.70204404113385
+              ],
+              [
+                0.5280385796587587,
+                0.3368103982556696,
+                69.97631676073209
+              ]
+            ]
+          },
+          "visibleHeld": []
+        },
+        {
+          "pose": "crawl",
+          "character": {
+            "clip": "knockdown",
+            "animation": "knockdown",
+            "head": [
+              -0.39927942600841515,
+              0.28305795237814707,
+              70.13257938784918
+            ],
+            "feet": [
+              [
+                0.44062141182901154,
+                0.3236045652004572,
+                69.70204404113385
+              ],
+              [
+                0.5280385796587587,
+                0.3368103982556696,
+                69.97631676073209
+              ]
+            ]
+          },
+          "visibleHeld": []
+        }
+      ],
+      "cueFollow": []
+    }
+  ],
+  "acceptance": {
+    "L6": {
+      "exitCode": 1,
+      "sourceHash": "c905e5eb6b059135a1237787afffe368cc5b92bec17ba9a1a8632dc74683abd7",
+      "generatedAt": "2026-11-08T10:58:14.128Z",
+      "levelFreshFailRows": [],
+      "levelIncompleteRows": [
+        "L6-01",
+        "L6-02",
+        "L6-04",
+        "L6-06",
+        "L6-08",
+        "L6-09",
+        "L6-11",
+        "L6-12",
+        "L6-14"
+      ],
+      "globalFreshFailRows": [
+        "G-22",
+        "G-24"
+      ],
+      "policies": [
+        {
+          "tier": "low",
+          "policy": "complete",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/r10-p2/accept/receipts/L6-low-complete.json"
+        },
+        {
+          "tier": "low",
+          "policy": "stationary",
+          "outcome": "tick-budget",
+          "error": null,
+          "receipt": "docs/reports/r10-p2/accept/receipts/L6-low-stationary.json"
+        },
+        {
+          "tier": "high",
+          "policy": "complete",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/r10-p2/accept/receipts/L6-high-complete.json"
+        },
+        {
+          "tier": "high",
+          "policy": "stationary",
+          "outcome": "tick-budget",
+          "error": null,
+          "receipt": "docs/reports/r10-p2/accept/receipts/L6-high-stationary.json"
+        },
+        {
+          "tier": "low",
+          "policy": "controlled-fixtures",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/r10-p2/accept/receipts/L6-low-fixtures.json"
+        },
+        {
+          "tier": "high",
+          "policy": "controlled-fixtures",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/r10-p2/accept/receipts/L6-high-fixtures.json"
+        },
+        {
+          "tier": "low",
+          "policy": "checkpoint-death-control",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/r10-p2/accept/receipts/L6-low-checkpoints.json"
+        },
+        {
+          "tier": "high",
+          "policy": "checkpoint-death-control",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/r10-p2/accept/receipts/L6-high-checkpoints.json"
+        }
+      ],
+      "report": "docs/reports/r10-p2/accept/L6.json",
+      "reportSha256": "771021da3ef91b56cb9435b513e95c7bc131cef530ee8aac3fdfbd3767ccf038",
+      "policyErrors": []
+    },
+    "L8": {
+      "exitCode": 1,
+      "sourceHash": "c905e5eb6b059135a1237787afffe368cc5b92bec17ba9a1a8632dc74683abd7",
+      "generatedAt": "2026-11-08T11:07:37.871Z",
+      "levelFreshFailRows": [],
+      "levelIncompleteRows": [
+        "L8-01",
+        "L8-02",
+        "L8-03",
+        "L8-04",
+        "L8-05",
+        "L8-07",
+        "L8-08",
+        "L8-09",
+        "L8-10",
+        "L8-11"
+      ],
+      "globalFreshFailRows": [
+        "G-24"
+      ],
+      "policies": [
+        {
+          "tier": "low",
+          "policy": "complete",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/r10-p2/accept/receipts/L8-low-complete.json"
+        },
+        {
+          "tier": "low",
+          "policy": "stationary",
+          "outcome": "tick-budget",
+          "error": null,
+          "receipt": "docs/reports/r10-p2/accept/receipts/L8-low-stationary.json"
+        },
+        {
+          "tier": "high",
+          "policy": "complete",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/r10-p2/accept/receipts/L8-high-complete.json"
+        },
+        {
+          "tier": "high",
+          "policy": "stationary",
+          "outcome": "tick-budget",
+          "error": null,
+          "receipt": "docs/reports/r10-p2/accept/receipts/L8-high-stationary.json"
+        },
+        {
+          "tier": "low",
+          "policy": "controlled-fixtures",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/r10-p2/accept/receipts/L8-low-fixtures.json"
+        },
+        {
+          "tier": "high",
+          "policy": "controlled-fixtures",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/r10-p2/accept/receipts/L8-high-fixtures.json"
+        },
+        {
+          "tier": "low",
+          "policy": "checkpoint-death-control",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/r10-p2/accept/receipts/L8-low-checkpoints.json"
+        },
+        {
+          "tier": "high",
+          "policy": "checkpoint-death-control",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/r10-p2/accept/receipts/L8-high-checkpoints.json"
+        }
+      ],
+      "report": "docs/reports/r10-p2/accept/L8.json",
+      "reportSha256": "411b5ade02a9e2fb6bb129fa90e2d0b72dfd4fabdc2b312373b86ee132021a5b",
+      "policyErrors": []
+    },
+    "L9": {
+      "exitCode": 1,
+      "sourceHash": "c905e5eb6b059135a1237787afffe368cc5b92bec17ba9a1a8632dc74683abd7",
+      "generatedAt": "2026-11-08T11:15:09.085Z",
+      "levelFreshFailRows": [],
+      "levelIncompleteRows": [
+        "L9-01",
+        "L9-02",
+        "L9-03",
+        "L9-04",
+        "L9-05",
+        "L9-06",
+        "L9-07",
+        "L9-09"
+      ],
+      "globalFreshFailRows": [
+        "G-24"
+      ],
+      "policies": [
+        {
+          "tier": "low",
+          "policy": "complete",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/r10-p2/accept/receipts/L9-low-complete.json"
+        },
+        {
+          "tier": "low",
+          "policy": "stationary",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/r10-p2/accept/receipts/L9-low-stationary.json"
+        },
+        {
+          "tier": "high",
+          "policy": "complete",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/r10-p2/accept/receipts/L9-high-complete.json"
+        },
+        {
+          "tier": "high",
+          "policy": "stationary",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/r10-p2/accept/receipts/L9-high-stationary.json"
+        },
+        {
+          "tier": "low",
+          "policy": "controlled-fixtures",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/r10-p2/accept/receipts/L9-low-fixtures.json"
+        },
+        {
+          "tier": "high",
+          "policy": "controlled-fixtures",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/r10-p2/accept/receipts/L9-high-fixtures.json"
+        },
+        {
+          "tier": "low",
+          "policy": "checkpoint-death-control",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/r10-p2/accept/receipts/L9-low-checkpoints.json"
+        },
+        {
+          "tier": "high",
+          "policy": "checkpoint-death-control",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/r10-p2/accept/receipts/L9-high-checkpoints.json"
+        }
+      ],
+      "report": "docs/reports/r10-p2/accept/L9.json",
+      "reportSha256": "08cd62676005bef2439fe1b390006f3cdc9a884fe61e226fea313fb2f2b94d24",
+      "policyErrors": []
+    }
+  },
+  "verifiedArchiveCaptureCount": 56,
+  "threatAttempts": [
+    {
+      "out": "test-results/r10-p2/threat-delivered",
+      "exitCode": 1,
+      "reason": "600.5 s budget timeout under contention; no completed audit"
+    },
+    {
+      "out": "test-results/r10-p2/threat-targeted",
+      "exitCode": 1,
+      "seconds": 180.64,
+      "levelFlags": {
+        "L6": [],
+        "L8": [],
+        "L9": []
+      },
+      "globalFlags": [
+        "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+      ]
+    },
+    {
+      "out": "test-results/r10-p2/threat-final",
+      "exitCode": 1,
+      "reason": "601.0 s budget timeout under contention; no completed audit"
+    }
+  ],
+  "threat": {
+    "command": "npm run qa:threat -- --maxWorkers 4 --out test-results/r10-p2/threat-quiet",
+    "exitCode": 0,
+    "revision": "699a0cfbf6fd7f4755645fc22b47afeb0c478358",
+    "sourceHash": "c905e5eb6b059135a1237787afffe368cc5b92bec17ba9a1a8632dc74683abd7",
+    "seconds": 163.632500459,
+    "budgetSeconds": 166.06047579100002,
+    "flags": [],
+    "receipt": "test-results/r10-p2/threat-quiet/audit.json",
+    "receiptSha256": "ae7d883b2435f02cdfe4032865de8b81d1df2edea83ff55aa9ce9e91b8ebe406",
+    "levels": [
+      {
+        "level": "L1",
+        "flags": [],
+        "passiveFlags": [],
+        "nativeStateHash": "c1d54be5"
+      },
+      {
+        "level": "L2",
+        "flags": [],
+        "passiveFlags": [],
+        "nativeStateHash": "570e6e04"
+      },
+      {
+        "level": "L3",
+        "flags": [],
+        "passiveFlags": [],
+        "nativeStateHash": "74e91d40"
+      },
+      {
+        "level": "L4",
+        "flags": [],
+        "passiveFlags": [],
+        "nativeStateHash": "d9b4c86c"
+      },
+      {
+        "level": "L5",
+        "flags": [],
+        "passiveFlags": [],
+        "nativeStateHash": "cd3a1420"
+      },
+      {
+        "level": "L6",
+        "flags": [],
+        "passiveFlags": [],
+        "nativeStateHash": "98ec0b82"
+      },
+      {
+        "level": "L7",
+        "flags": [],
+        "passiveFlags": [],
+        "nativeStateHash": "c1bf52d8"
+      },
+      {
+        "level": "L8",
+        "flags": [],
+        "passiveFlags": [],
+        "nativeStateHash": "de450f17"
+      },
+      {
+        "level": "L9",
+        "flags": [],
+        "passiveFlags": [],
+        "nativeStateHash": "16a15ab1"
+      },
+      {
+        "level": "L10",
+        "flags": [],
+        "passiveFlags": [],
+        "nativeStateHash": "caaa8821"
+      }
+    ]
+  }
+}
