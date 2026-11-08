@@ -139,12 +139,21 @@ async function crossingStorySequence(): Promise<void> {
       Object.assign(player.transform, pose); w.physics.playerBody!.setTranslation(pose, true); w.spatial.set(1, x, z); w.spatial.set(car.entity.id, x, z);
     };
     const fire = emptyInput(); fire.selectedWeaponKey = 5; fire.aim = { x: -1, z: 0 }; fire.aimSource = 'keyboard'; fire.left = { down: true, held: true, up: false }; fire.activeAttack = true;
+    const defend = () => {
+      const targets = w.infected!.active.filter(e => !e.hidden && !e.infected?.hidden && e.health.current > 0);
+      const humans = [player, ...driving.roster.map(id => w.entities.get(id)).filter(e => !!e && !e.hidden && !!e.civilian)];
+      const risk = (e: typeof player) => Math.min(...humans.map(h => Math.hypot(e.transform.x - h!.transform.x, e.transform.z - h!.transform.z)));
+      targets.sort((a, b) => risk(a) - risk(b)); const target = targets[0];
+      if (!target) return fire;
+      const dx = target.transform.x - player.transform.x, dz = target.transform.z - player.transform.z, length = Math.hypot(dx, dz) || 1;
+      return { ...fire, brake: true, aim: { x: dx / length, z: dz / length } };
+    };
     w.applyInput(fire, 'keyboard'); for (let i = 0; i < 90; i++) w.update();
     expect(shots, 'the closed driving cab suppresses personal weapons').toBe(0);
     place(380, 0); l9.update();
     expect(driving.stallAt, 'the rail stop is checkpointed and exposed').not.toBeNull();
     expect(mission.state.checkpoint).toBe('mid-crossing');
-    for (let i = 0; i < 1800; i++) { w.update(); player.health.current = player.health.max; }
+    for (let i = 0; i < 1800; i++) { w.applyInput(defend(), 'keyboard'); w.update(); player.health.current = player.health.max; }
     expect(shots, 'the hatch admits the current carried gun').toBeGreaterThan(0);
     expect(driving.restarted, 'Sam restarts after thirty simulation seconds').toBe(true);
     expect(car.entity.vehicle!.damage).not.toBe('exploded');
@@ -159,11 +168,11 @@ async function crossingStorySequence(): Promise<void> {
     expect(driving.repairTicks, 'release pauses the crank').toBe(120);
     expect(car.entity.health.current).toBeLessThanOrEqual(530);
     w.applyInput({ ...fire, interactHeld: true }, 'keyboard');
-    for (let i = 0; i < 1320; i++) { w.update(); player.health.current = player.health.max; }
+    for (let i = 0; i < 1320; i++) { w.applyInput({ ...defend(), interactHeld: true }, 'keyboard'); w.update(); player.health.current = player.health.max; }
     expect(driving.repairTicks, 'the bay has a finite twenty-second repair budget').toBe(1200);
     expect(car.entity.health.current + repairDamage - 500, 'exactly 300 durability is restored across hold, pause and resume').toBeCloseTo(300, 3);
     place(457, 0); w.applyInput(fire, 'keyboard');
-    for (let i = 0; i < 3000 && !driving.evacuationDone; i++) { w.update(); player.health.current = player.health.max; }
+    for (let i = 0; i < 3000 && !driving.evacuationDone; i++) { w.applyInput(defend(), 'keyboard'); w.update(); player.health.current = player.health.max; }
     expect(driving.evacuationDone, `the living civilians actually reach the trucks: ${JSON.stringify({ evacuated: driving.evacuated, entering: driving.truckEntering, hugAt: driving.hugAt, hugDone: driving.hugDone, roster: driving.roster.map(id => { const e = w.entities.get(id); return { id, key: e?.civilian?.survivor?.key, p: e?.transform, health: e?.health.current, passengerOf: e?.passengerOf, state: e?.civilian?.state }; }), dog: [...w.entities.iterate()].find(e => e.companion) })}`).toBe(true);
     expect(driving.evacuated).toHaveLength(4);
     expect(car.entity.vehicle!.passengers?.filter(p => w.entities.get(p.id)?.civilian).map(p => p.id), 'Sam stays aboard').toEqual([driving.samId]);

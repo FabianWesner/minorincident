@@ -340,6 +340,7 @@ export class LevelNineDriving {
     const rosaWaiting = s.roster.some(id => { const e = w.entities.get(id); return alive(e) && e.civilian?.survivor?.key === 'rosa' && !s.hugDone; });
     if (corgi && corgi.passengerOf === undefined && !rosaWaiting) {
       if (corgi.contactExempt !== undefined) { delete corgi.contactExempt; delete corgi.companion!.transitionUntil; corgi.transform.y = .3; }
+      corgi.companion!.transitionUntil = w.tick + 2;
       const door = w.vehicles!.passengerDoor(this.car.entity.id);
       w.npcs!.move(corgi, door, 2.5, corgi.companion!, .15);
       w.vehicles!.boardPassenger(this.car.entity.id, corgi.id);
@@ -360,8 +361,10 @@ export class LevelNineDriving {
     if (!corgi) { s.hugDone = true; return true; }
     if (corgi.passengerOf) { w.vehicles!.disembarkPassenger(this.car.entity.id, corgi.id); return false; }
     const p = this.car.entity.transform, spot = { x: p.x - 1, z: p.z + 3.5 };
+    corgi.companion!.transitionUntil = w.tick + 2;
     w.npcs!.move(rosa, spot, 2, rosa.civilian!, .4);
-    if (distance(rosa.transform, spot) > .8) return false;
+    if (s.hugAt === null) w.npcs!.move(corgi, { x: spot.x + .7, z: spot.z }, 2.5, corgi.companion!, .25);
+    if (distance(rosa.transform, spot) > .8 || s.hugAt === null && distance(corgi.transform, rosa.transform) > 1.2) return false;
     s.hugAt ??= w.tick; rosa.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; rosa.civilian!.story = { clip: 'npc-hug', start: s.hugAt };
     corgi.contactExempt = rosa.id; corgi.companion!.transitionUntil = w.tick + 2;
     const facing = rosa.transform.yaw;
