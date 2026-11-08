@@ -105,6 +105,7 @@ export class Damage {
   apply(hit: DamageEvent): number {
     const target = this.world.entities.get(hit.targetId), source = this.world.entities.get(hit.sourceId);
     if (!target || !source) return 0;
+    if (target.environmentObject) return 0; // placement parts own this prop's durability
     if (hit.type === 'melee' && !combatHeightReachable(source, target)) return 0;
     // L7's power weapon opens a route for the column. Civilian splash already
     // deals no HP damage, but its generic reaction knocked the living followers

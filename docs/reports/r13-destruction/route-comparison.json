@@ -1,0 +1,232 @@
+{
+  "branchSource": "5fbd7b2f",
+  "mainSource": "a7b70c78",
+  "simulationSecondsPerRoute": 180,
+  "method": "Native complete policy, seed 1, low tier; reverse complete src diff for main in the private remote job. Identical reports describe this bounded window only, not full completion.",
+  "levels": [
+    {
+      "level": "L8",
+      "identicalReports": true,
+      "branchReportSha256": "45af756d53311084137fb2e63fead5e614c0116b1135c94c2de4ae8d13e878ca",
+      "mainReportSha256": "45af756d53311084137fb2e63fead5e614c0116b1135c94c2de4ae8d13e878ca",
+      "branchWallSeconds": 29.531685861,
+      "mainWallSeconds": 28.890499244999997,
+      "report": {
+        "level": "L8",
+        "policy": "complete",
+        "seed": 1,
+        "completed": false,
+        "time": 180,
+        "deaths": 7,
+        "kills": 0,
+        "damageTaken": 700,
+        "failures": {
+          "player-died": 7,
+          "tick-budget": 1
+        },
+        "objectiveTimeline": [
+          {
+            "id": "sanctuary",
+            "t": 60
+          },
+          {
+            "id": "sanctuary",
+            "t": 76.36666666666666
+          },
+          {
+            "id": "sanctuary",
+            "t": 92.75
+          },
+          {
+            "id": "sanctuary",
+            "t": 109.15
+          },
+          {
+            "id": "sanctuary",
+            "t": 125.51666666666667
+          },
+          {
+            "id": "sanctuary",
+            "t": 141.9
+          },
+          {
+            "id": "sanctuary",
+            "t": 158.26666666666668
+          },
+          {
+            "id": "sanctuary",
+            "t": 174.6
+          }
+        ],
+        "furthestObjective": "escape",
+        "activeObjectives": [
+          "escape"
+        ],
+        "outcome": "tick-budget",
+        "blocker": {
+          "objective": "escape",
+          "detail": "tick-budget: Lead the group to the armored vehicle",
+          "player": {
+            "x": 25.948087692260742,
+            "z": 76.96662902832031
+          },
+          "distance": 70.76529222833037,
+          "actors": {
+            "apc": {
+              "x": 96,
+              "z": 74,
+              "hp": 1000,
+              "state": "normal",
+              "driver": null,
+              "speed": 0,
+              "yaw": 0
+            }
+          }
+        },
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 848,
+          "deferred": 176,
+          "requests": [],
+          "offenders": []
+        }
+      }
+    },
+    {
+      "level": "L10",
+      "identicalReports": true,
+      "branchReportSha256": "15c5b2843750c5384be4af8b4e1b7e887a7f29672bab8714b586b0c0fdc0ae43",
+      "mainReportSha256": "15c5b2843750c5384be4af8b4e1b7e887a7f29672bab8714b586b0c0fdc0ae43",
+      "branchWallSeconds": 6.790069854999998,
+      "mainWallSeconds": 6.763131117999998,
+      "report": {
+        "level": "L10",
+        "policy": "complete",
+        "seed": 1,
+        "completed": false,
+        "time": 180,
+        "deaths": 0,
+        "kills": 0,
+        "damageTaken": 60,
+        "failures": {
+          "tick-budget": 1
+        },
+        "objectiveTimeline": [
+          {
+            "id": "crash",
+            "t": 0.016666666666666666
+          },
+          {
+            "id": "residential-fringe",
+            "t": 58.28333333333333
+          }
+        ],
+        "furthestObjective": "industrial-area",
+        "activeObjectives": [
+          "industrial-area"
+        ],
+        "outcome": "tick-budget",
+        "blocker": {
+          "objective": "industrial-area",
+          "detail": "tick-budget: Recover the shotgun at the checkpoint",
+          "player": {
+            "x": 1206.652099609375,
+            "z": 25.266401290893555
+          },
+          "distance": 50.348605178218065,
+          "actors": {}
+        },
+        "cureReleases": 0,
+        "regions": [
+          {
+            "id": "crash-outskirts",
+            "seconds": 66.04999999999754,
+            "travelSeconds": 62.799999999997716,
+            "combatSeconds": 3.21666666666666,
+            "interactionSeconds": 0.03333333333333333,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 296.44077342764035
+          },
+          {
+            "id": "residential-fringe",
+            "seconds": 113.94999999999482,
+            "travelSeconds": 86.46666666666304,
+            "combatSeconds": 27.483333333333054,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 509.71601453126493
+          },
+          {
+            "id": "industrial-area",
+            "seconds": 0,
+            "travelSeconds": 0,
+            "combatSeconds": 0,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 0
+          },
+          {
+            "id": "military-zone",
+            "seconds": 0,
+            "travelSeconds": 0,
+            "combatSeconds": 0,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 0
+          },
+          {
+            "id": "research-campus",
+            "seconds": 0,
+            "travelSeconds": 0,
+            "combatSeconds": 0,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 0
+          },
+          {
+            "id": "destroyed-corridor",
+            "seconds": 0,
+            "travelSeconds": 0,
+            "combatSeconds": 0,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 0
+          },
+          {
+            "id": "dispersal-complex",
+            "seconds": 0,
+            "travelSeconds": 0,
+            "combatSeconds": 0,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 0
+          }
+        ],
+        "maxConcurrentInfected": 13,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 32,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      }
+    }
+  ]
+}
