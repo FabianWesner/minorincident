@@ -436,6 +436,11 @@ export class InfectedSystem {
   }
   /** Phase 5: provocation by hits, the Alpha's sight/hearing acquisition and its territory leash. */
   private perceiveTargets(e: EntitySnapshot, b: InfectedState): boolean {
+    if (this.world.scenario === 'L8' && this.hearing.courierShotNearby(e) && !b.pursuit && !b.specialAttack && !e.emerging) {
+      delete b.pressureTarget;
+      if (b.l1) this.rush(e.id, this.world.entities.get(1)!.transform, this.world.tick + provokeTicks);
+      else { b.heardTargetId = 1; delete b.investigate; }
+    }
     const provoker = this.provoker(b);
     if (provoker && !b.l1 && !b.pursuit && !b.specialAttack && !e.emerging && !Status.stunned(e, this.world.tick)) {
       b.heardTargetId = provoker.id; delete b.investigate;
@@ -932,6 +937,7 @@ export class InfectedSystem {
   }
   /** Escape crowds commit only once their lunge can reach the moving courier. */
   private lungeRangeM(courier = true): number {
+    if (this.world.scenario === 'L8' && courier) return 8;
     if (this.world.scenario === 'L2' && this.world.missions?.state.l2?.escapeSpawned) return l2.escape.lungeM;
     const retreat = this.world.missions?.state.l3;
     if (this.world.scenario === 'L3' && retreat?.fallbackAt) {

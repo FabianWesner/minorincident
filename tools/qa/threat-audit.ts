@@ -13,6 +13,7 @@ import { armyLineVerdict, type ArmyLineVerdict } from './threat/l3ArmyLine';
 import { followerPaceVerdict, type FollowerPaceSeed, type FollowerPaceVerdict } from './threat/followerPace';
 import { runStages, stageId } from './threat/stageJobs';
 import type { L3SurvivalSeed } from './threat/l3SurvivalSeeds';
+import type { KitingReceipt } from './threat/kiting';
 
 export interface LevelReceipt {
   level: RunnerLevel; quality: string; definitions: ThreatObserver['definitions']; run: LevelReport | null;
@@ -26,6 +27,7 @@ export interface LevelReceipt {
   passiveFollowerPace?: FollowerPaceVerdict;
   followerPaceSeeds?: FollowerPaceSeed[];
   passiveFollowerPaceSeeds?: FollowerPaceSeed[];
+  kiting: KitingReceipt | null;
 }
 export interface AuditReceipt {
   revision: string; mainRevision: string; sourceMatchesMain: boolean | null; seed: number; policy: string; tier: string;
@@ -82,6 +84,10 @@ for (const level of selected) {
   const passiveStage = stage(stageId(level, true));
   const passiveRun = passiveStage.native?.run ?? null, passiveObservation = passiveStage.native?.observation ?? null;
   const passiveFlags: string[] = passiveStage.error ? [`AUDIT_ERROR:${passiveStage.error}`] : [];
+  const kiting = skilled?.kiting ?? null;
+  if (!kiting) passiveFlags.push('MISSING_KITING_POLICY_RECEIPT');
+  else if (kiting.kitingSeconds === 0 && level !== 'L9') passiveFlags.push('MISSING_KITING_ON_FOOT_SAMPLE');
+  else if (kiting.kitingSeconds > 0 && kiting.attacksPerMinute < 2) passiveFlags.push(`KITING_BELOW_ATTACKS_PER_MINUTE_2:${kiting.attacksPerMinute.toFixed(2)}`);
   // The acceptance hard rule applies to competent combat as well as passive
   // threat potential. Interrupted windups and group grabs are real attempts.
   for (const row of observation?.phases ?? []) if (row.threat && row.attacks + row.groupAttacks === 0)
@@ -115,7 +121,7 @@ for (const level of selected) {
   for (const wave of passiveObservation?.waves ?? []) passiveFlags.push(...wave.flags.map(flag => `wave/${wave.key}:${flag}`));
   if (!multiSeedPace) passiveFlags.push(...followerCoverageFlags(level, observation?.phases ?? []));
   if (followerPaceChecks[level]) passiveFlags.push(...followerWaitFlags(observation?.followerWait));
-  const receipt: LevelReceipt = { level, quality, definitions, run, observation, flags, passiveRun, passiveObservation, passiveFlags, wallSeconds, nativeStateHash: skilled?.nativeStateHash ?? null };
+  const receipt: LevelReceipt = { level, quality, definitions, run, observation, flags, passiveRun, passiveObservation, passiveFlags, kiting, wallSeconds, nativeStateHash: skilled?.nativeStateHash ?? null };
   if (level === 'L4') {
     const hold = stage('L4/high-hold');
     if (hold.error || !hold.highHold) throw new Error(`Missing L4 high hold: ${hold.error ?? 'no census'}`);
@@ -151,7 +157,7 @@ const seconds = (performance.now() - started) / 1000;
 const flags = levels.flatMap(level => level.passiveFlags.map(flag => `${level.level}/${flag}`));
 if (selected.length !== runnerLevels.length) flags.push('PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate');
 if (values.report && sourceMatchesMain !== true) flags.push('BASELINE_MAIN_SOURCE_NOT_VERIFIED');
-const receipt: AuditReceipt = { revision, mainRevision, sourceMatchesMain, seed: 1, policy: 'complete + passive', tier: 'low', workers: maxWorkers, seconds, flags, levels };
+const receipt: AuditReceipt = { revision, mainRevision, sourceMatchesMain, seed: 1, policy: 'kiting + passive', tier: 'low', workers: maxWorkers, seconds, flags, levels };
 await writeFile(join(values.out!, 'audit.json'), JSON.stringify(receipt, null, 2) + '\n');
 const reportPath = values.report ?? join(values.out!, 'README.md');
 await mkdir(dirname(reportPath), { recursive: true }); await writeFile(reportPath, renderReport(receipt, !!values.report));

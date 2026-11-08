@@ -1,0 +1,190 @@
+{
+  "gameBase": "f4bba5cf9bb269d288dfcb31687bc86e4031f9aa",
+  "harnessCommit": "5b700e7e5d923f2b1a228117726b001befeae8d5",
+  "receiptRevisionLabel": "fa193ad7-plus-L1-adapter",
+  "sourceMatchesMain": true,
+  "auditSha256": "2a1fff873599feb2ced4702831f38f481e2eb347b7461fde3dd7a646795e2b39",
+  "tier": "low",
+  "policy": "kiting + passive",
+  "seed": 1,
+  "auditInternalSeconds": 508.2727062,
+  "budgetedCommand": {
+    "name": "qa-threat",
+    "cases": 150,
+    "counts": {
+      "vitest": 129,
+      "e2e": 9,
+      "invariantsBrowser": 12
+    },
+    "files": 43,
+    "limits": {
+      "cases": 150,
+      "files": 45,
+      "seconds": 600
+    },
+    "command": [
+      "node",
+      "--import",
+      "tsx/esm",
+      "tools/qa/threat-audit.ts"
+    ],
+    "seconds": 516.073833832,
+    "exitCode": 1,
+    "signal": null,
+    "failures": [
+      "qa-threat failed (exit 1)"
+    ],
+    "at": "2026-11-08T00:04:02.013Z"
+  },
+  "unitCommand": {
+    "name": "test",
+    "cases": 150,
+    "counts": {
+      "vitest": 129,
+      "e2e": 9,
+      "invariantsBrowser": 12
+    },
+    "files": 43,
+    "limits": {
+      "cases": 150,
+      "files": 45,
+      "seconds": 240
+    },
+    "command": [
+      "node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "--project",
+      "default",
+      "--configLoader",
+      "runner",
+      "--maxWorkers=4"
+    ],
+    "seconds": 100.337521441,
+    "exitCode": 0,
+    "signal": null,
+    "failures": [],
+    "at": "2026-11-08T00:06:37.068Z"
+  },
+  "flags": [
+    "L2/KITING_BELOW_ATTACKS_PER_MINUTE_2:0.00",
+    "L2/phase/collapse:SKILLED_ZERO_ATTACK_WINDUPS",
+    "L3/KITING_BELOW_ATTACKS_PER_MINUTE_2:0.00",
+    "L5/KITING_BELOW_ATTACKS_PER_MINUTE_2:0.00",
+    "L7/KITING_BELOW_ATTACKS_PER_MINUTE_2:0.00",
+    "L8/KITING_BELOW_ATTACKS_PER_MINUTE_2:0.00",
+    "L8/phase/breached:SLOW_FOLLOWER:364"
+  ],
+  "levels": [
+    {
+      "level": "L1",
+      "completed": true,
+      "deaths": 1,
+      "kitingSeconds": 18.316666666666908,
+      "attacks": 18,
+      "attacksPerMinute": 58.96269335759704,
+      "samples": 1099,
+      "floor": 2,
+      "result": "PASS"
+    },
+    {
+      "level": "L2",
+      "completed": true,
+      "deaths": 0,
+      "kitingSeconds": 10.500000000000101,
+      "attacks": 0,
+      "attacksPerMinute": 0,
+      "samples": 630,
+      "floor": 2,
+      "result": "FAIL"
+    },
+    {
+      "level": "L3",
+      "completed": true,
+      "deaths": 0,
+      "kitingSeconds": 3.2333333333333267,
+      "attacks": 0,
+      "attacksPerMinute": 0,
+      "samples": 194,
+      "floor": 2,
+      "result": "FAIL"
+    },
+    {
+      "level": "L4",
+      "completed": true,
+      "deaths": 7,
+      "kitingSeconds": 19.650000000000166,
+      "attacks": 22,
+      "attacksPerMinute": 67.1755725190834,
+      "samples": 1179,
+      "floor": 2,
+      "result": "PASS"
+    },
+    {
+      "level": "L5",
+      "completed": true,
+      "deaths": 1,
+      "kitingSeconds": 6.933333333333314,
+      "attacks": 0,
+      "attacksPerMinute": 0,
+      "samples": 416,
+      "floor": 2,
+      "result": "FAIL"
+    },
+    {
+      "level": "L6",
+      "completed": true,
+      "deaths": 0,
+      "kitingSeconds": 12.883333333333553,
+      "attacks": 1,
+      "attacksPerMinute": 4.657179818887372,
+      "samples": 773,
+      "floor": 2,
+      "result": "PASS"
+    },
+    {
+      "level": "L7",
+      "completed": true,
+      "deaths": 0,
+      "kitingSeconds": 4.583333333333322,
+      "attacks": 0,
+      "attacksPerMinute": 0,
+      "samples": 275,
+      "floor": 2,
+      "result": "FAIL"
+    },
+    {
+      "level": "L8",
+      "completed": true,
+      "deaths": 0,
+      "kitingSeconds": 5.3833333333333195,
+      "attacks": 0,
+      "attacksPerMinute": 0,
+      "samples": 323,
+      "floor": 2,
+      "result": "FAIL"
+    },
+    {
+      "level": "L9",
+      "completed": true,
+      "deaths": 0,
+      "kitingSeconds": 0,
+      "attacks": 0,
+      "attacksPerMinute": 0,
+      "samples": 0,
+      "floor": null,
+      "result": "N/A driving"
+    },
+    {
+      "level": "L10",
+      "completed": true,
+      "deaths": 0,
+      "kitingSeconds": 19.116666666666863,
+      "attacks": 22,
+      "attacksPerMinute": 69.04969485614576,
+      "samples": 1147,
+      "floor": 2,
+      "result": "PASS"
+    }
+  ]
+}

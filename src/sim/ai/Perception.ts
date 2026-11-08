@@ -134,6 +134,12 @@ export class Perception {
     for (const [id, until] of this.shotUntil) if (until <= this.world.tick) this.shotUntil.delete(id);
     this.shotUntil.set(sourceId, this.world.tick + 60);
   }
+  courierShotNearby(e: EntitySnapshot): boolean {
+    const player = this.world.entities.get(1);
+    if (!player || this.world.tick >= (this.shotUntil.get(1) ?? 0)) return false;
+    const distance = Math.hypot(player.transform.x - e.transform.x, player.transform.z - e.transform.z);
+    return this.world.scenario === 'L8' ? distance <= 30 : distance <= 12 && this.lineOfSight(e.transform, player.transform);
+  }
   /** Clear line of sight between two ground points (static cover walls + active dynamic blockers). */
   lineOfSight(from: Vec2, to: Vec2): boolean {
     return (this.world.combat?.query.visible(from, to) ?? true) && this.los.clear(from, to);

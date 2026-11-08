@@ -1,3 +1,6 @@
+import { installKitingPolicy, finishKitingReceipt } from './kiting';
+import { ControlIntent } from '../../../src/sim/entities/ControlIntent';
+import { emptyInput, type InputFrame } from '../../../src/input/InputFrame';
 import { observeAttackStarts } from './attackStarts';
 import { loadLevel } from '../../sim-runner/levels';
 import { ThreatObserver } from './observer';
@@ -24,7 +27,7 @@ import { crossing } from '../../../src/levels/L9/district';
 /** Replay the same policies without instrumentation and compare complete native state, not only completion. */
 export async function provePassiveFrom(path: string, out: string, reportPath?: string): Promise<void> {
   const audit = JSON.parse(await readFile(path, 'utf8')) as AuditReceipt;
-  assert.equal(audit.seed, 1); assert.equal(audit.tier, 'low'); assert.equal(audit.policy, 'complete');
+  assert.equal(audit.seed, 1); assert.equal(audit.tier, 'low'); assert(['complete', 'complete + passive', 'kiting + passive'].includes(audit.policy));
   if (process.env.QA_THREAT_MAIN_REVISION) {
     assert.equal(process.env.QA_THREAT_MAIN_REVISION, audit.mainRevision);
     assert.equal(process.env.QA_THREAT_SOURCE_MATCHES_MAIN, 'true');
@@ -35,7 +38,7 @@ export async function provePassiveFrom(path: string, out: string, reportPath?: s
     const level = receipt.level, campaign = level === 'L1' ? newCampaign('female', 1) : preset(`${level}-default` as ProgressionPreset);
     campaign.seed = 1; campaign.settings.quality = 'low';
     let control: string | null = null;
-    await runLevel(level, 'complete', 1, undefined, 'auto', campaign, undefined, 0, { quality: 'low', beforeDispose: world => { control = stateHash(world.getState()); } });
+    await runLevel(level, 'complete', 1, undefined, 'auto', campaign, undefined, 0, { quality: 'low', beforeBegin: world => { if (receipt.kiting) installKitingPolicy(world, { kitingSeconds: 0, attacks: 0, attacksPerMinute: 0, samples: 0 }, level); }, beforeDispose: world => { control = stateHash(world.getState()); } });
     const row = { level, observed: receipt.nativeStateHash, control, equal: !!control && control === receipt.nativeStateHash };
     rows.push(row); console.log(`[qa:threat:passive] ${level}: ${row.equal ? 'identical' : 'DIFFERS'} (${control})`);
   }
@@ -55,6 +58,44 @@ export async function provePassiveFrom(path: string, out: string, reportPath?: s
 
 /** Red fixtures exercise the same evaluators as the gate, without growing the registered unit suite. */
 export async function proveThreatAudit(): Promise<void> {
+  {
+    const events = new EventBus<GameEvent>(), frames: InputFrame[] = [];
+    let clearRetreat = true, device = emptyInput();
+    const receipt = { kitingSeconds: 0, attacks: 0, attacksPerMinute: 0, samples: 0 };
+    const world = { tick: 0, events,
+      entities: new Map([[1, { transform: { x: 0, z: 0 }, health: { current: 100 }, weapons: { selectedSide: 'RIGHT' } }]]),
+      infected: { active: [5, 6, 7].map(x => ({ health: { current: 100 }, infected: {}, transform: { x, z: 0 } })),
+        nav: { visible: (_from: { x: number; z: number }, to: { x: number; z: number }) => clearRetreat || to.x >= -.5 } },
+      get deviceInput() { return device; },
+      setInput: (patch: Partial<InputFrame>) => { device = { ...device, ...patch }; frames.push(device); },
+      clearInput: () => { device = emptyInput(); },
+      applyInput: (frame: InputFrame) => { device = frame; frames.push(frame); },
+    } as unknown as SimWorld;
+    installKitingPolicy(world, receipt, 'L1');
+    world.setInput(emptyInput());
+    assert(frames[0].move.x < 0 && frames[0].aim!.x > 0 && frames[0].left.held, 'retreat while aiming and firing back');
+    const resolved = new ControlIntent(world).resolve(frames[0]);
+    assert(resolved.right.held && !resolved.left.held, 'physical mouse fire reaches the selected RIGHT weapon');
+    events.emit({ type: 'combat.attack', tick: 0, sourceId: 1, actionId: 'weapon.handgun', attackId: 1, side: 'LEFT', position: { x: 0, y: 0, z: 0, yaw: 0 }, direction: { x: 1, z: 0 } });
+    assert.equal(receipt.attacks, 0, 'courier shots cannot satisfy the threat floor');
+    events.emit({ type: 'telegraph', tick: 0, sourceId: 2, attackId: 1, special: 'lunge', duration: .35, target: { id: 1, x: 0, z: 0 } });
+    events.emit({ type: 'civilian.grabbed', tick: 0, sourceId: 3, targetId: 4, variant: '', rescueUntil: 90 });
+    assert.equal(receipt.attacks, 1, 'only infected attempts targeting the kiting courier count');
+    world.entities.get(1)!.health.current = 0; world.setInput(emptyInput());
+    assert.equal(receipt.samples, 1, 'dead courier frames cannot count as active kiting');
+    world.entities.get(1)!.health.current = 100;
+    for (world.tick = 1; world.tick <= 1200; world.tick++) {
+      clearRetreat = world.tick !== 1;
+      world.applyInput(emptyInput(), 'mouse-keyboard');
+      if (world.tick === 1) assert(Math.abs(frames.at(-1)!.move.x) < .01 && Math.abs(frames.at(-1)!.move.z) > .9, 'a blocked backpedal stays on clear ground along a tangent');
+    }
+    assert(Math.abs(receipt.kitingSeconds - 20) < 1e-8, 'sustain a full twenty-second chase');
+    assert.equal(frames.at(-1)!.left.held, false, 'native route resumes after the sample');
+    assert(Math.abs(finishKitingReceipt(receipt).attacksPerMinute - 3) < 1e-8);
+    world.clearInput(); world.setInput({ move: { x: 0, z: 0 } });
+    assert(!world.deviceInput.mouseAttack && !world.deviceInput.left.held, 'L1 partial inputs do not retain injected fire after the sample');
+  }
+
   {
     const events = new EventBus<GameEvent>(), starts: number[] = [];
     observeAttackStarts({ events } as unknown as SimWorld, (_source, target) => starts.push(target));
@@ -222,7 +263,7 @@ export async function proveThreatAudit(): Promise<void> {
   assert.equal(nav.expansions, expansions); assert.equal(nav.pending(from, to), pending); assert.deepEqual(nav.blocked, blocked);
   nav.setBlocker(42, { x: 0, z: 0, y: 1, halfX: 1, halfY: 1, halfZ: 10 }, false);
   assert(probe.query(nav, entity, goal), 'live blocker revision must invalidate the independent snapshot');
-  console.log('[qa:threat:proof] red fixtures proved: zero attacks, sustained disconnection, slow follower, proximity without attacks, late/missing arrival, incomplete observation; native route snapshot is passive and follows blocker changes');
+  console.log('[qa:threat:proof] red fixtures proved: kiting retreat/fire and infected-only counts, zero attacks, sustained disconnection, slow follower, proximity without attacks, late/missing arrival, incomplete observation; native route snapshot is passive and follows blocker changes');
 }
 
 function entityForWave(): EntitySnapshot {
