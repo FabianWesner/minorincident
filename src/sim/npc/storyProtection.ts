@@ -12,6 +12,7 @@ export function storyProtected(world: SimWorld, entity: EntitySnapshot): boolean
   const s = world.missions?.state;
   if (!s || s.phase === 'result' || s.phase === 'progression') return false;
   const id = entity.id;
+  if (world.missions?.l9?.driving.protectsCrew(entity)) return true;
   if (s.l1) {
     if (id === s.l1.clerkId || (id === s.l1.techId && !s.l1.delivered)) return true;
     if (id === s.l1.firefighterId && s.steps.firestation?.status === 'active') return true;

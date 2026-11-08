@@ -151,6 +151,12 @@ export class LevelNineDriving {
     return s.stallAt !== null && !s.restarted || s.repairActive || s.evacuationAt !== null && !s.evacuationDone;
   }
   claims(e: EntitySnapshot): boolean { return this.state.roster.includes(e.id) && (e.passengerOf !== undefined || this.state.evacuationAt !== null); }
+  protectsCrew(e: EntitySnapshot): boolean {
+    if (e.id === 1) return false; // The courier is exposed when she opens the hatch.
+    const l9 = this.mission.l9!, s = this.state;
+    return e.id === s.samId && l9.state.phase !== 'driving'
+      || e.passengerOf === l9.state.carId && !!this.car.entity.vehicle!.passengers?.some(p => p.id === e.id && p.phase === 'seated');
+  }
   ownsPose(e: EntitySnapshot): boolean {
     return e.passengerOf !== undefined || !!e.companion && e.contactExempt !== undefined
       || e.id === this.state.samId && this.mission.l9!.state.phase !== 'driving';
@@ -367,10 +373,11 @@ export class LevelNineDriving {
     const w = this.w, s = this.state, corgi = [...w.entities.iterate()].find(e => e.companion);
     if (!corgi) { s.hugDone = true; return true; }
     if (corgi.passengerOf) { w.vehicles!.disembarkPassenger(this.car.entity.id, corgi.id); return false; }
-    const p = this.car.entity.transform, spot = { x: p.x - 1, z: p.z + 3.5 };
+    const p = this.car.entity.transform, c = Math.cos(p.yaw), side = Math.sin(p.yaw);
+    const spot = { x: p.x - c + side * 3.5, z: p.z + side + c * 3.5 };
     corgi.companion!.transitionUntil = w.tick + 2;
     w.npcs!.move(rosa, spot, 2, rosa.civilian!, .4);
-    if (s.hugAt === null) w.npcs!.move(corgi, { x: spot.x + .7, z: spot.z }, 2.5, corgi.companion!, .25);
+    if (s.hugAt === null) w.npcs!.move(corgi, { x: spot.x + side * .7, z: spot.z + c * .7 }, 2.5, corgi.companion!, .25);
     if (distance(rosa.transform, spot) > .8 || s.hugAt === null && distance(corgi.transform, rosa.transform) > 1.2) return false;
     s.hugAt ??= w.tick; rosa.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; rosa.civilian!.story = { clip: 'npc-hug', start: s.hugAt };
     corgi.contactExempt = rosa.id; corgi.companion!.transitionUntil = w.tick + 2;

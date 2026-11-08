@@ -77,7 +77,8 @@ export class LevelNineBot {
     if (p.x > 405 && Math.abs(p.z) < 35 && !driving.evacuationDone) {
       if (driving.gateClosed && p.x < l9Course.gate.x + 4) target = [l9Course.gate.x + 6, l9Course.gate.sideZ];
       else target = [l9Course.evacuation.x, l9Course.evacuation.z];
-      if (Math.hypot(target[0] - p.x, target[1] - p.z) < 5 && target[0] === l9Course.evacuation.x) { f.brake = true; return f; }
+      const distance = Math.hypot(target[0] - p.x, target[1] - p.z);
+      if (target[0] === l9Course.evacuation.x && (distance < 5 || car.vehicle!.speed > Math.max(1, distance * .6))) { f.brake = true; return f; }
     }
     // Read nearby moving heavy bodies, just as the driver reads solid road
     // furniture. Ploughing into the same brute after every restart is not a
