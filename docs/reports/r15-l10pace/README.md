@@ -9,17 +9,18 @@
 - Added small encounters, warned ambushes and usable courier-width escapes. The persistent Mega follows around those gaps; native crossings demonstrate regained separation.
 - Completed both native production-input routes, seed 42, zero deaths, six finds each. Longest content gaps: **23.52 s low / 24.52 s high**. Installation: **879 / 883 s**; credits complete: **1110 / 1120 s**.
 - Reviewed every L10 acceptance row, story beat and Mega rule before fixes, after finds, and after pacing fixes: [acceptance review](ac-review.md). Historical successful route receipt: [after step 5](evidence/after-step5-native.json), source `2e181f80`.
-- Added Mega phases, machinery stun/back weak point, flame armour counter, real corpse throws, console pressure and phase retry/charge retention. Latest targeted production-mechanics run passes **20/20 checks**; receipt refresh is pending below.
+- Added Mega phases, machinery stun/back weak point, flame armour counter, real corpse throws, console pressure and phase retry/charge retention. Latest targeted production-mechanics run passes **20/20 checks**: [receipt](evidence/mega-mechanics.json).
 - Verified 14 deliberate native checkpoint deaths across all seven regions and both tiers, retaining inventory/cure/Mega continuity: [recovery receipt](evidence/recovery-native.json).
 
 ## Open / validation in progress
 
-- Latest source reserves one journey population slot for later warned ambushes. Its final low/high completion and cadence run is in progress; the successful metrics above are explicitly from the committed earlier snapshot.
-- Final E32 verification with two Vitest workers is in progress. Earlier four-worker runs hit timing limits; the runner requires a real manifest Git snapshot for tools freshness checks.
-- Optional porch-toy route: actual pickup and a complete high-tier ending are recorded, but the low-tier bot can still stall behind the dead Mega at the platform exit. A controlled landing-corpse case passes after retaining a passable corpse footprint; the remaining bot route must not be called complete.
+- Latest source reserves one journey population slot for later warned ambushes. Its first run completes both tiers with 9/8 actual scares and content gaps 25.75/24.25 s; high required one real retry. Current stair-anchor/corpse fixes are being rerun. The zero-death metrics above are explicitly from the earlier snapshot.
+- E32 verification passed with two Vitest workers: typecheck, lint, 106 unit tests passed and one skipped. Earlier four-worker runs hit timing limits; the passing runner used a real manifest Git snapshot for tools freshness checks.
+- Optional porch-toy route: actual pickup and a complete high-tier ending are recorded, but the low-tier bot can still stall behind the dead Mega at the platform exit. A controlled landing-corpse case now passes after making the raised corpse traversable and correcting the 2 m stair-anchor offset; the complete optional route is being rerun.
 - The literal animated Mega climb from the river wreck remains unverified/unimplemented as a presentation beat. Persistent pursuit and the later real platform climb are verified separately.
+- The older scare-only 60–120 s interval is not uniformly met (including safe-hangar time); the required overall content cadence passes. L10-04 remains a strict whole-row FAIL in the review.
 - Existing global fixture G-24 fails because healthy distant Alphas receive a mandatory bar. All L10-specific contract checks pass; this broader bar policy remains open.
-- Refresh final receipts and acceptance verdicts for dog/minigun boundaries, stationary-ground pressure and Mega counters when current runs finish.
+- Dog/minigun boundaries, stationary-ground pressure and all 20 Mega mechanics checks now pass; see the final closure section of the acceptance review.
 
 ## Browser QA needed
 

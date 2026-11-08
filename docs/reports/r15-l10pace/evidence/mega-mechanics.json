@@ -1,4 +1,5 @@
 {
+  "sourceHash": "30659cbb85705a711a3cb4adcf488b9d8d4fa4deb232c9228b9e5f87a3e37069",
   "method": "Controlled production-world mechanics fixtures with explicit position, objective, HP and timer setup; no claims of native route delivery.",
   "checks": [
     {
@@ -107,6 +108,23 @@
       }
     },
     {
+      "quality": "low",
+      "name": "ordinary inputs descend past a dead Mega on the landing and release the cure",
+      "pass": true,
+      "observed": {
+        "radius": 1.45,
+        "solid": false,
+        "lowest": 0.7099999785423279,
+        "released": true,
+        "at": {
+          "x": 4001.262451171875,
+          "y": 0.7099999785423279,
+          "z": -28.74616241455078,
+          "yaw": -1.1710907247643747
+        }
+      }
+    },
+    {
       "quality": "high",
       "name": "machinery stops a real charge, exposes the back and stuns for 120 ticks",
       "pass": true,
@@ -209,6 +227,23 @@
         "phaseHp": 1020.0000000000001,
         "charge": 1234,
         "phase": 3
+      }
+    },
+    {
+      "quality": "high",
+      "name": "ordinary inputs descend past a dead Mega on the landing and release the cure",
+      "pass": true,
+      "observed": {
+        "radius": 1.45,
+        "solid": false,
+        "lowest": 0.7099999785423279,
+        "released": true,
+        "at": {
+          "x": 4001.262451171875,
+          "y": 0.7099999785423279,
+          "z": -28.74616241455078,
+          "yaw": -1.1710907247643747
+        }
       }
     }
   ]

@@ -258,3 +258,27 @@ Demands are unchanged from the complete baseline story table above. Timed delive
 ### Remaining visual QA
 
 No browser was used. The FAILs above that explicitly name rendered appearance, shot continuity, audio/credits readability or panorama performance need the PO/visual-QA lane. Native route delivery is now established; those verdicts are not silently converted to PASS by source inspection. The literal river-wreck climb and optional-toy route also remain called out, rather than being hidden behind completion metrics.
+
+
+## Final mechanics and pressure closure (2026-11-08)
+
+These receipts close the explicitly pending functional checks above. Historical baseline and step-2/step-5 observations remain intact; the table below is the newer verdict where it differs.
+
+| Row / rule | Before | Latest verdict | Evidence |
+|---|---|---|---|
+| L10-06 dogs | FAIL | PASS | [Contracts](evidence/contracts.json): four exact dog checks per tier pass (speed, telegraph, reach/cooldown, bite damage); full native routes deliver actual dogs separately from the unharmed corgi. |
+| L10-10 charge / minigun | FAIL | PASS | All exact boundary/heat/rate contracts pass on low and high. Full route records exactly 3600 eligible increments and no invalid increments. |
+| L10-11 stationary pressure | FAIL | PASS | [Independent native stationary-ground policy](evidence/stationary-native.json), after walking to the console: bounded reachability 100% both tiers. Hold attacks/min **98.53 low / 228.36 high**; Mega-fight phase **84.75 / 206.57**, above 8/min. Expected idle-policy deaths are recorded, rather than suppressed. Ordinary caps remain below 14/22. |
+| Mega phase 1 counter | FAIL | PASS | [Mechanics](evidence/mega-mechanics.json): actual charge stopped by machinery, 120-tick stun and exposed-back timer. Native route establishes phase delivery; controlled setup establishes the precise counter. Weak-point pixels still need visual QA. |
+| Mega phase 2 counters | FAIL | PASS | Real retained corpse is lifted/thrown, roar requests the bounded escort gate, flame strips armour after two seconds, flashbang interrupts for one second without damage or bullet-shortened stun. Both tiers climb the actual stair. |
+| Mega phase 3 / downed failure | FAIL | PASS | Actual console-directed walking; real downed courier restores phase HP and retained charge 1234. Gate damage/stun and positive damage contracts pass separately. |
+| Platform release obstruction | FAIL | PASS (targeted mechanics) | Dead raised finale body remains rendered but is traversable, like smaller infected corpses. Bot uses authored stair-top/foot anchors: the interaction marker was 2 m offset from the assembly origin. Ordinary input landing/death fixture descends and releases on both tiers. Full current route confirmation follows below. |
+| Global G-24 | FAIL | FAIL | Existing mandatory Alpha bar policy makes a healthy distant Alpha visible. All **26 L10-specific contract checks** pass; the broader global failure is retained in the receipt. |
+
+The mechanics receipt now contains **20/20 PASS checks**, with explicit controlled setup labels and a content hash. [E32 verification](evidence/e32-checks.json) passed typecheck, lint and unit tests: **106 passed, one skipped**, with two Vitest workers. Runner validation reconstructed its manifest Git objects so freshness checks used real source contents; it did not modify this branch or push anything.
+
+### Later ambush delivery
+
+[Reserved-slot native receipt](evidence/after-reserved-ambush-slot.json), source `fc867c06`: low/high both finish, with **9 / 8 actual emerged attackers**, separate warning events, six finds, first checkpoint 26.78 s, route checkpoint maxima 200.0/200.2 m and content gaps **25.75/24.25 s**. Low has zero deaths; high has one genuine death/retry at the then-blocked platform exit. This is preserved as an intermediate receipt, not labelled a zero-death final run.
+
+Strict L10-04 caveat: the newer user requirement of content every 20–40 s passes. The older scare-specific “about every 60–120 s” clause is not uniformly proven: high has a 231.5 s emergence gap spanning the safe hangar and exit, and another 132.8 s gap. Therefore **L10-04 as a whole remains FAIL against that older scare-only interval**, despite the passing overall content cadence. These gaps do not disappear by counting music warnings as attackers. Exact emergence times/positions are in the receipt.
