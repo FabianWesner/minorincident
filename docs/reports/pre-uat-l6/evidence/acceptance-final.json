@@ -1,0 +1,156 @@
+{
+  "sourceCommit": "db0f6985dce5d08e21a130973745b8cda80320b9",
+  "sourceHash": "514d46572b4da63d38e806cbeedd84a52e3c974e73b13c420a550d71c58cbefb",
+  "observerHash": "1c26884d805bff9c113c0f6cfd1393f14e1bdc1a9a603e42ae6644b509e112a6",
+  "generatedAt": "2026-11-08T00:13:26.971Z",
+  "levelRows": [
+    {
+      "id": "L6-01",
+      "status": "NOT CHECKED"
+    },
+    {
+      "id": "L6-02",
+      "status": "NOT CHECKED"
+    },
+    {
+      "id": "L6-03",
+      "status": "PASS"
+    },
+    {
+      "id": "L6-04",
+      "status": "NOT CHECKED"
+    },
+    {
+      "id": "L6-05",
+      "status": "PASS"
+    },
+    {
+      "id": "L6-06",
+      "status": "NOT CHECKED"
+    },
+    {
+      "id": "L6-07",
+      "status": "PASS"
+    },
+    {
+      "id": "L6-08",
+      "status": "NOT CHECKED"
+    },
+    {
+      "id": "L6-09",
+      "status": "NOT CHECKED"
+    },
+    {
+      "id": "L6-10",
+      "status": "PASS"
+    },
+    {
+      "id": "L6-11",
+      "status": "NOT CHECKED"
+    },
+    {
+      "id": "L6-12",
+      "status": "NOT CHECKED"
+    },
+    {
+      "id": "L6-13",
+      "status": "PASS"
+    },
+    {
+      "id": "L6-14",
+      "status": "NOT CHECKED"
+    }
+  ],
+  "receipts": [
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-checkpoints.json",
+      "sha256": "52aa513b807b33cc8b8b279e0f61983a13f6139d12efd2f5017d1f8a6e5110b2",
+      "sourceHash": "514d46572b4da63d38e806cbeedd84a52e3c974e73b13c420a550d71c58cbefb"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-complete.json",
+      "sha256": "337a60d182e9dee5fa060479917573ff2ecbeb95adf483d3dcaac2b8b976b547",
+      "sourceHash": "514d46572b4da63d38e806cbeedd84a52e3c974e73b13c420a550d71c58cbefb"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-fixtures.json",
+      "sha256": "6f5bbaf1e42068a77a2d9e584720f8e29cbca401b8de0de22ccb56796ae9f991",
+      "sourceHash": "514d46572b4da63d38e806cbeedd84a52e3c974e73b13c420a550d71c58cbefb"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-stationary.json",
+      "sha256": "f910b075446ffe8df016cb917f17159333ca7e5c07b9d6f1569686ee6503b6f3",
+      "sourceHash": "514d46572b4da63d38e806cbeedd84a52e3c974e73b13c420a550d71c58cbefb"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-checkpoints.json",
+      "sha256": "84d3a55037fa9a9d7495a7802f3e128f3c2cf4a75b04f62883283df669d620cc",
+      "sourceHash": "514d46572b4da63d38e806cbeedd84a52e3c974e73b13c420a550d71c58cbefb"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-complete.json",
+      "sha256": "285bb66729c18b2b07209f59ef34dcbb1fbbaaf27a756da5e2c954a1ecf56931",
+      "sourceHash": "514d46572b4da63d38e806cbeedd84a52e3c974e73b13c420a550d71c58cbefb"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-fixtures.json",
+      "sha256": "08f2ce050b44e2a4744a10b1abebc5f2756be096bfac9889b60da406d35dc178",
+      "sourceHash": "514d46572b4da63d38e806cbeedd84a52e3c974e73b13c420a550d71c58cbefb"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-stationary.json",
+      "sha256": "66a205810d62db220969f448226f6e2eba481426337b5e5332bcb4390ead381e",
+      "sourceHash": "514d46572b4da63d38e806cbeedd84a52e3c974e73b13c420a550d71c58cbefb"
+    }
+  ],
+  "fists": [
+    {
+      "tier": "low",
+      "status": "PASS",
+      "completed": true,
+      "phase": "result",
+      "stats": {
+        "time": 253.45,
+        "kills": 0,
+        "knockdowns": 8,
+        "damage": 453.56666666666536,
+        "deaths": 3,
+        "rescued": 1,
+        "optionalObjectives": []
+      },
+      "attacks": [
+        "weapon.fists"
+      ],
+      "lastBodyY": 4.619999885559082
+    },
+    {
+      "tier": "high",
+      "status": "PASS",
+      "completed": true,
+      "phase": "result",
+      "stats": {
+        "time": 253.45,
+        "kills": 0,
+        "knockdowns": 8,
+        "damage": 453.56666666666536,
+        "deaths": 3,
+        "rescued": 1,
+        "optionalObjectives": []
+      },
+      "attacks": [
+        "weapon.fists"
+      ],
+      "lastBodyY": 4.619999885559082
+    }
+  ],
+  "numericReviews": {
+    "L6-05": "18/18 PASS; FRESH; evidence hashes match",
+    "L6-07": "8/8 PASS; FRESH; evidence hashes match"
+  },
+  "firstAcceptExit": 1,
+  "firstAcceptReason": "New native receipts invalidate previous numeric review evidence hashes; refreshed against new receipts before reuse.",
+  "reuseAcceptExit": 1,
+  "reuseAcceptReason": "0 fresh failing L6 rows;9 incomplete L6 rows. Inherited global G-24 fixture fail also remains.",
+  "checkpointCases": 14,
+  "checkpointControlsIdentical": true
+}

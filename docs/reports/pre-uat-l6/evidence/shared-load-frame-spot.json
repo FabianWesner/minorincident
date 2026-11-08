@@ -1,0 +1,52 @@
+{
+  "method": "Normal RAF clock, real alternating WASD and held mouse fire,20s per quality. Shared Mac GPU/CPU load; raw observations, not isolated performance acceptance.",
+  "quality": {
+    "low": {
+      "frames": 1082,
+      "p50": 16.69999999999709,
+      "p95": 16.799999999999272,
+      "max": 583.2999999999993,
+      "over200ms": 2
+    },
+    "high": {
+      "frames": 1109,
+      "p50": 16.69999999999709,
+      "p95": 16.80000000000291,
+      "max": 366.6999999999971,
+      "over200ms": 3
+    }
+  },
+  "hitches": [
+    {
+      "ms": 233.39999999999782,
+      "tick": 889,
+      "cpu": 233.39999999999782,
+      "quality": "low"
+    },
+    {
+      "ms": 583.2999999999993,
+      "tick": 1002,
+      "cpu": 583.2999999999993,
+      "quality": "low"
+    },
+    {
+      "ms": 300,
+      "tick": 1545,
+      "cpu": 300,
+      "quality": "high"
+    },
+    {
+      "ms": 366.6999999999971,
+      "tick": 1551,
+      "cpu": 366.6999999999971,
+      "quality": "high"
+    },
+    {
+      "ms": 216.70000000000437,
+      "tick": 1560,
+      "cpu": 216.70000000000437,
+      "quality": "high"
+    }
+  ],
+  "sourceHash": "7daac07fa4b8278dd9b310d0fe5390a36a9e24e32c87fb53784ff9b128ceb01c"
+}

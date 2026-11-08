@@ -1,0 +1,69 @@
+{
+  "sourceCommit": "db0f6985dce5d08e21a130973745b8cda80320b9",
+  "method": "Exact actual shallow Git source commit restored and relevant tree blobs verified against working files on remote runner. Both CPU slots held for the entire gate.",
+  "verifyCommand": "npm run verify -- E24",
+  "exit": 0,
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "status": 0,
+      "seconds": 44.672
+    },
+    {
+      "command": "npm run lint",
+      "status": 0,
+      "seconds": 30.681
+    },
+    {
+      "command": "npm test",
+      "status": 0,
+      "seconds": 77.176
+    }
+  ],
+  "unit": {
+    "passed": 106,
+    "skipped": 1,
+    "filesPassed": 27,
+    "vitestSeconds": 71.34,
+    "budget": {
+      "name": "test",
+      "cases": 150,
+      "counts": {
+        "vitest": 129,
+        "e2e": 9,
+        "invariantsBrowser": 12
+      },
+      "files": 43,
+      "limits": {
+        "cases": 150,
+        "files": 45,
+        "seconds": 240
+      },
+      "command": [
+        "node",
+        "node_modules/vitest/vitest.mjs",
+        "run",
+        "--project",
+        "default",
+        "--configLoader",
+        "runner"
+      ],
+      "seconds": 76.98825997099999,
+      "exitCode": 0,
+      "signal": null,
+      "failures": [],
+      "at": "2026-11-08T00:30:31.552Z"
+    }
+  },
+  "logs": {
+    "test-results/pre-uat-l6/verify-db0-final/verify.log": "c23230f975d9492342f1de7b111aefdf5778666bcb3da052ce06f170c9e661f7",
+    "test-results/pre-uat-l6/verify-db0-final/provenance.log": "60ee4fe2bbe2ba623480b361e51a0d9b457d03f66a8c72519caf46708a5df8c8",
+    "test-results/epics/E24/checks.json": "37dd2ab342301a3702d8f3d204c2957ad5f55ba5f167cdcea095168ea9d064e0",
+    "test-results/timings/test.json": "8d56bdd6491cb97d6f4ad1ccab8a32216a1f98e9c0ead31f323775ce41c6f492"
+  },
+  "earlierAttempt": {
+    "exit": 124,
+    "reason": "600-second watchdog expired during exclusive-slot waiting; no validation command started. Retried with300-second validation timeout inside exclusive section.",
+    "statusFile": "test-results/pre-uat-l6/gate-db0-final/status.txt"
+  }
+}

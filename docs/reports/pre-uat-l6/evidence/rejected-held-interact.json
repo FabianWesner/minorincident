@@ -1,0 +1,91 @@
+{
+  "method": "Rejected physical controller attempt. Repeated held E survived respawns; the production keyboard input received no new interact edge. This is not a game soft-lock or a balance verdict. Controller now releases controls on death and taps E for each request.",
+  "phase": "playing",
+  "deaths": 89,
+  "lastRequestedCommands": [
+    {
+      "observerApproach": false,
+      "tick": 182275,
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "interact": true,
+      "shoot": false,
+      "action": null,
+      "cursor": null,
+      "dx": 0,
+      "dy": 0,
+      "flashlight": true,
+      "keys": [
+        "KeyE"
+      ],
+      "mouseDown": false,
+      "quantum": 60
+    },
+    {
+      "observerApproach": false,
+      "tick": 182335,
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "interact": true,
+      "shoot": false,
+      "action": null,
+      "cursor": null,
+      "dx": 0,
+      "dy": 0,
+      "flashlight": true,
+      "keys": [
+        "KeyE"
+      ],
+      "mouseDown": false,
+      "quantum": 60
+    }
+  ],
+  "lastActualInput": [
+    {
+      "tick": 182393,
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "interact": false,
+      "nativeDriver": false
+    },
+    {
+      "tick": 182394,
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "interact": false,
+      "nativeDriver": false
+    }
+  ],
+  "finalGates": [
+    {
+      "id": 45,
+      "x": 90,
+      "closedAt": 0,
+      "hold": 0,
+      "requested": false,
+      "passed": true
+    },
+    {
+      "id": 46,
+      "x": 150,
+      "closedAt": 0,
+      "hold": 0,
+      "requested": false
+    },
+    {
+      "id": 47,
+      "x": 210,
+      "closedAt": 0,
+      "hold": 0,
+      "requested": false
+    }
+  ]
+}

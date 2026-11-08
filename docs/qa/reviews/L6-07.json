@@ -2,8 +2,8 @@
   "row": "L6-07",
   "status": "PASS",
   "reviewer": "Codex/pre-uat-l6",
-  "date": "2026-11-07",
-  "commit": "ff25c4564cedab37d22a024cf325ff0d589dd8e0",
+  "date": "2026-11-08",
+  "commit": "db0f6985dce5d08e21a130973745b8cda80320b9",
   "clauses": [
     {
       "clause": "combat: attacks on player + group ≥ 4/min across the retreat (tune); competent damage taken ≥ 30 HP (tune); concurrent infected ≤ 60 / 30.",
@@ -14,15 +14,15 @@
   "evidence": [
     {
       "file": "docs/reports/fix51-verify/receipts/L6-low-complete.json",
-      "sha256": "4415225dd0cdd13f6653af146a189909360fd69f7abecc74f4b2ce6839d58af4",
-      "what": "Fresh current-source native low L6 L6-07 receipt; every recorded clause passes."
+      "sha256": "285bb66729c18b2b07209f59ef34dcbb1fbbaaf27a756da5e2c954a1ecf56931",
+      "what": "Fresh final-source native numeric receipt; every reviewed clause passes."
     },
     {
       "file": "docs/reports/fix51-verify/receipts/L6-high-complete.json",
-      "sha256": "6caf01bb791f8842fb061c007b1140b1b822ec3691836d1da75e5f4a18198ca6",
-      "what": "Fresh current-source native high L6 L6-07 receipt; every recorded clause passes."
+      "sha256": "337a60d182e9dee5fa060479917573ff2ecbeb95adf483d3dcaac2b8b976b547",
+      "what": "Fresh final-source native numeric receipt; every reviewed clause passes."
     }
   ],
   "notes": "Fresh native current-source numeric review only. This does not qualify real-input presentation, audio audibility, visual polish, or the separate L6-08/09/11/12/14 clauses.",
-  "sourceDigest": "8b419815f7eb7a67ee71e1ab98d75c75b5fcd225fad3eb4c2ddcec91d726b936"
+  "sourceDigest": "8789ab835698db80a9d202097738b9da90c114d6e409fd3cbadbb67c8c8771db"
 }
