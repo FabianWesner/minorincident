@@ -2,6 +2,7 @@ import { worldAssets } from '../../assets/worldDefinitions';
 import { Rng } from '../../core/Rng';
 import type { Placement, Point } from '../districts/types';
 import { cureCrossingLines } from './crossingStories';
+import { cureEncounters, cureEncounterSlots } from './encounters';
 
 /** Worn service paving follows the actual southern crossing, including the last
  * 100 m to the dispersal platform. Heights stay below the existing road paint;
@@ -36,13 +37,19 @@ export const cureAprons = (() => {
  * established physics-only dressing, without adding AI navigation walls. */
 export function cureForecourtDecor(placements: readonly Placement[]): Placement[] {
   const out: Placement[] = [];
+  const slots = cureEncounters.flatMap(e => (['low', 'high'] as const).flatMap(tier => cureEncounterSlots(e, tier)));
   const add = (assetId: string, x: number, z: number, light = false, solid = false) => {
     const d = worldAssets[assetId].dimensions;
     const aabb = { min: [x - d.x / 2, 0, z - d.z / 2] as [number, number, number], max: [x + d.x / 2, d.y, z + d.z / 2] as [number, number, number] };
+    if (solid && slots.some(s => s.x > aabb.min[0] - 4 && s.x < aabb.max[0] + 4 && s.z > aabb.min[2] - 4 && s.z < aabb.max[2] + 4)) return;
     if ([...placements, ...out].some(p => aabb.min[0] < p.visualAabb.max[0] + .4 && aabb.max[0] > p.visualAabb.min[0] - .4 && aabb.min[2] < p.visualAabb.max[2] + .4 && aabb.max[2] > p.visualAabb.min[2] - .4)) return;
     out.push({ id: `decor-cure-apron-${out.length}`, assetId, position: [x, 0, z], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 6,
       allowRoad: false, lightGroup: 'decor', decor: true, ...(light ? { roadLife: true } : {}), ...(solid ? { decorSolid: true } : {}), visualAabb: aabb });
   };
+  // These positions remain inside the close follow-camera footprint, rather
+  // than putting every tall work light beyond its diagonal edge. Keep the
+  // ordinary road, both walked bearings and all authored spawn slots clear.
+  for (const [x, z] of [[3740, -33], [3784, -35], [3846, -21], [3906, -39], [3938, -39], [3784, -61], [3846, -61], [3906, -61], [3938, -61]] as Point[]) add('prop.cure-generator', x, z, true, true);
   for (const path of [cureCrossingLines[5].line, [...cureCrossingLines[6].line, [3975, -27] as Point], cureCrossingLines[7].line]) {
     for (let j = 1; j < path.length; j++) {
       const a = path[j - 1], b = path[j], length = Math.hypot(b[0] - a[0], b[1] - a[1]), ux = (b[0] - a[0]) / length, uz = (b[1] - a[1]) / length;
@@ -53,6 +60,5 @@ export function cureForecourtDecor(placements: readonly Placement[]): Placement[
       }
     }
   }
-  for (const [x, z] of [[3780, -16], [3822, -59], [3870, -16], [3907, -59], [3936, -16]] as Point[]) add('prop.cure-generator', x, z, true, true);
   return out;
 }
