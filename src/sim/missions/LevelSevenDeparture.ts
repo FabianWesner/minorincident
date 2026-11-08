@@ -183,7 +183,8 @@ export class LevelSevenDeparture {
       if (d <= cfg.boardRadius && (!living.length || w.tick - s.readyAt >= 60)) this.depart();
     } else s.readyAt = null;
   }
-  private queue(slot: number) { return { x: cfg.queue.x + Math.floor(slot / 3) % 3 * .9, z: cfg.queue.z + (slot % 3 - 1) * .8 }; }
+  /** Three columns with distinct rows; wrapping rows packed later arrivals onto earlier queue slots. */
+  private queue(slot: number) { return { x: cfg.queue.x + Math.floor(slot / 3) * .9, z: cfg.queue.z + (slot % 3 - 1) * .8 }; }
   /** Offscreen and distant only: hide the transition, retain the actor, validate the destination.
    * The recovered follower still queues and crosses the door for the ordinary enterTicks before counting aboard. */
   private recover(e: EntitySnapshot, queue: { x: number; z: number }): void {

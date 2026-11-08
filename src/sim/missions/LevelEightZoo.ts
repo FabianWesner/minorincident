@@ -63,7 +63,8 @@ export class LevelEightZoo {
       e.health.current = e.health.max;
       c.state = 'calm'; c.entered = w.tick; c.until = 0; c.knockedUntil = 0;
       if (c.l1) c.l1.target = null;
-      if (e.combat) { e.combat.staggerUntil = 0; e.combat.attacking = false; delete e.combat.reaction; }
+      // Recovery also expires effects whose timestamps belong to L7's clock.
+      if (e.combat) { e.combat.staggerUntil = 0; e.combat.attacking = false; e.combat.statuses.length = 0; delete e.combat.reaction; }
       readyCarriedAlly(e, w.tick);
       c.survivor = { key: c.survivor?.key ?? `zoo-carried-${i}`, slot: i, leader: 1, mode: 'follow', cover: false, injured: c.survivor?.injured ?? c.l1?.walkSpeed === 1.4, waitAt: 0, foundAt: w.tick };
       s.roster.push(e.id); w.solids.admit(e, 'l8.roster.arrival');
@@ -280,6 +281,9 @@ export class LevelEightZoo {
     c.state = 'calm'; c.story = null; c.survivor!.cover = false;
     const door = w.vehicles!.passengerDoor(s.carId), boarding = this.boarding();
     const slot = c.survivor!.slot, velocity = p.survivor!.velocity;
+    // Catch-up and the tightly spaced APC queue need the shared follower
+    // response: civilian steering overshoots these changing targets.
+    if (this.breached && (boarding || distance(e.transform, p.transform) > 10)) c.survivor!.briskAt = w.tick;
     const goal = formationSlot(p.transform, leaderHeading(p.transform.yaw, velocity), slot);
     let target = boarding ? door : w.infected!.nav.clear(goal.x, goal.z, .35) ? goal : p.transform;
     let queueIndex = 0;
@@ -314,7 +318,7 @@ export class LevelEightZoo {
       // board-up; a stale carried injury flag must not leave passengers behind.
       // A follower displaced from its assigned slot catches up, then settles
       // back to courier pace. This avoids making the courier stop for it.
-      const speed = Math.min(4.7, 4.5 + Math.max(0, distance(e.transform, target) - 4) * .35);
+      const speed = Math.min(5.2, 4.5 + Math.max(0, distance(e.transform, target) - 4) * .35);
       if (!boarding || !this.approachBoardingSpot(e, target, speed)) w.npcs!.move(e, target, speed, c, boarding ? .2 : 0, 2400);
     }
     return true;
