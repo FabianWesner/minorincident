@@ -1,0 +1,39 @@
+{
+  "objective": "L5 and L8 kiting >= 2/min at the cause; L4 identical",
+  "gameRevision": "d0a02b22df99bacc9312f0438d68755f6301fb63",
+  "gameSourceTree": "3bd297992d3559b7b472f9b8978fd1c08b487c4a",
+  "requirements": {
+    "originalKitingPolicyPreserved": true,
+    "L5AttacksPerMinute": 5.9999999999999565,
+    "L8AttacksPerMinute": 17.99999999999987,
+    "L5CauseHasPhysicalReachRegression": true,
+    "L8ContactCauseReproduced": true,
+    "L4MatchedSeeds": [
+      1,
+      2,
+      3
+    ],
+    "L4CompleteNativeAndKitingReceiptsIdentical": true,
+    "L4Seed1PassiveAndHighHoldIdentical": true,
+    "normalL5BeforeAfterReported": true,
+    "finalFullThreatAuditFlags": [],
+    "all31StagesCompleted": true,
+    "fullThreatBudgetSeconds": 327.25793604200004,
+    "causeCommits": [
+      "9d495fff",
+      "a5cc4cd7",
+      "d0a02b22"
+    ],
+    "report": "README.md"
+  },
+  "validationLimit": {
+    "passed": 106,
+    "failed": 1,
+    "failure": "tests/shared/asset-contract.test.ts:188 \u2014 95 emissive-node/light-anchor metadata errors in existing GLBs",
+    "reproducedOnBaseline": true,
+    "unchangedAssetsTree": true,
+    "assetValidatorInputChanges": []
+  },
+  "pendingChecks": [],
+  "deployment": "No deploy or push performed"
+}

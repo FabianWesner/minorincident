@@ -1032,6 +1032,15 @@ export class InfectedSystem {
     if (this.world.scenario === 'L1' && brain.ignoreId === 1 && tick < brain.ignoreUntil && tick < brain.pauseUntil) { this.look(e, brain); return; }
     if (this.divertFromForecourt(e, b, brain)) return;
     if (b.state === 'attack') {
+      // L5's shotgun kills close pursuers before a stationary 4.4 m windup.
+      // Telegraph the approach at six metres and keep ordinary chase motion
+      // during the warning; damage still waits for windup and physical reach.
+      if (this.world.scenario === 'L5' && b.special === 'lunge' && !b.targetId && brain.targetId === 1 && tick < b.until) {
+        const target = this.world.entities.get(1)!;
+        if (this.l1!.lineOfSight(e.transform, target.transform)) {
+          this.steerL1(e, brain, target.transform, brain.runSpeed, true, true); this.place(e);
+        }
+      }
       const serviceGate = this.world.entities.get(b.targetId)?.archetype === 'l6.service-gate';
       if (tick >= b.until && (this.struck = 0, this.resolve(e))) {
         // A lunge that missed (she side-stepped or outran it) costs a recovery beat: it stops and turns back onto her.
@@ -1206,7 +1215,15 @@ export class InfectedSystem {
     if (!target) { this.startSearch(b, brain, { x: brain.seenX, z: brain.seenZ }, { x: brain.headingX, z: brain.headingZ }); return; }
     if (this.world.tick < brain.pauseUntil) { this.look(e, brain); return; }
     brain.looking = false;
-    const distance = Math.hypot(target.position.x - e.transform.x, target.position.z - e.transform.z), lunge = this.lungeRangeM(target.kind === 'player');
+    const distance = Math.hypot(target.position.x - e.transform.x, target.position.z - e.transform.z);
+    let lunge = this.lungeRangeM(target.kind === 'player');
+    if (this.world.scenario === 'L5' && target.kind === 'player') {
+      // Only a moving pursuer can cover this extra approach during its warning.
+      // A stopped infected retains the ordinary reachable 4.4 m start range.
+      const speed = Math.max(0, ((e.locomotion?.vx ?? 0) * (target.position.x - e.transform.x) +
+        (e.locomotion?.vz ?? 0) * (target.position.z - e.transform.z)) / Math.max(.001, distance));
+      lunge += Math.min(1.6, speed * infectedDef(e.archetype).windup);
+    }
     if (target.kind === 'player') {
       // Strike with clear sight, or at arm's reach even past a thin post/lamp (PO-QA #13: no frozen stand-off).
       const strikable = this.l1!.lineOfSight(e.transform, target.position) || distance <= 1.6;

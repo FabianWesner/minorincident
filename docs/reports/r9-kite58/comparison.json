@@ -1,0 +1,541 @@
+{
+  "revision": "d0a02b22df99bacc9312f0438d68755f6301fb63",
+  "flags": [],
+  "seconds": 324.485099584,
+  "l4Exact": {
+    "nativeStateHash": true,
+    "run": true,
+    "observation": true,
+    "passiveRun": true,
+    "passiveObservation": true,
+    "highHold": true,
+    "kiting": true
+  },
+  "l4ExtraSeedsExact": [
+    {
+      "seed": 2,
+      "hash": "6e599b4b",
+      "kitingRate": 35.12195121951199,
+      "identical": true
+    },
+    {
+      "seed": 3,
+      "hash": "b6586d40",
+      "kitingRate": 43.2618025751069,
+      "identical": true
+    }
+  ],
+  "kiting": {
+    "L4": {
+      "before": {
+        "kitingSeconds": 20.45000000000012,
+        "attacks": 20,
+        "attacksPerMinute": 58.67970660146665,
+        "samples": 1227,
+        "diagnostics": {
+          "startTick": 2304,
+          "endTick": 3503,
+          "firingFrames": 1227,
+          "playerAttackStarts": 164,
+          "framesWithoutThreats": 0
+        }
+      },
+      "after": {
+        "kitingSeconds": 20.45000000000012,
+        "attacks": 20,
+        "attacksPerMinute": 58.67970660146665,
+        "samples": 1227,
+        "diagnostics": {
+          "startTick": 2304,
+          "endTick": 3503,
+          "firingFrames": 1227,
+          "playerAttackStarts": 164,
+          "framesWithoutThreats": 0
+        }
+      }
+    },
+    "L5": {
+      "before": {
+        "kitingSeconds": 20.000000000000146,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "samples": 1200,
+        "diagnostics": {
+          "startTick": 249,
+          "endTick": 1448,
+          "firingFrames": 1200,
+          "playerAttackStarts": 40,
+          "framesWithoutThreats": 1133
+        }
+      },
+      "after": {
+        "kitingSeconds": 20.000000000000146,
+        "attacks": 2,
+        "attacksPerMinute": 5.9999999999999565,
+        "samples": 1200,
+        "diagnostics": {
+          "startTick": 249,
+          "endTick": 1448,
+          "firingFrames": 1200,
+          "playerAttackStarts": 40,
+          "framesWithoutThreats": 1133
+        }
+      }
+    },
+    "L8": {
+      "before": {
+        "kitingSeconds": 20.000000000000146,
+        "attacks": 6,
+        "attacksPerMinute": 17.99999999999987,
+        "samples": 1200,
+        "diagnostics": {
+          "startTick": 3646,
+          "endTick": 4845,
+          "firingFrames": 1,
+          "playerAttackStarts": 1,
+          "framesWithoutThreats": 0
+        }
+      },
+      "after": {
+        "kitingSeconds": 20.000000000000146,
+        "attacks": 6,
+        "attacksPerMinute": 17.99999999999987,
+        "samples": 1200,
+        "diagnostics": {
+          "startTick": 3646,
+          "endTick": 4845,
+          "firingFrames": 1,
+          "playerAttackStarts": 1,
+          "framesWithoutThreats": 0
+        }
+      }
+    }
+  },
+  "l5Normal": {
+    "before": {
+      "run": {
+        "level": "L5",
+        "policy": "complete",
+        "seed": 1,
+        "completed": true,
+        "time": 208.01666666666668,
+        "deaths": 1,
+        "kills": 61,
+        "damageTaken": 150,
+        "failures": {
+          "player-died": 1
+        },
+        "objectiveTimeline": [
+          {
+            "id": "emerge",
+            "t": 1
+          },
+          {
+            "id": "look",
+            "t": 158.71666666666667
+          },
+          {
+            "id": "metro",
+            "t": 208.01666666666668
+          }
+        ],
+        "furthestObjective": "metro",
+        "activeObjectives": [],
+        "outcome": "complete",
+        "blocker": null,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 275,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "skilled": {
+        "phase/emerged": {
+          "seconds": 20,
+          "attacks": 24,
+          "attacksPerMinute": 72,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstAttackSeconds": 2.783333333333333
+        },
+        "step/look": {
+          "seconds": 137.06666666666666,
+          "attacks": 10,
+          "attacksPerMinute": 4.377431906614786,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstAttackSeconds": 12.15
+        },
+        "step/metro": {
+          "seconds": 49.3,
+          "attacks": 3,
+          "attacksPerMinute": 3.6511156186612577,
+          "groupAttacks": 1,
+          "groupAttacksPerMinute": 1.2170385395537526,
+          "firstAttackSeconds": 11.5
+        }
+      },
+      "passive": {
+        "phase/emerged": {
+          "seconds": 10,
+          "attacks": 23,
+          "attacksPerMinute": 138,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstAttackSeconds": 2.783333333333333
+        },
+        "step/look": {
+          "seconds": 1188.35,
+          "attacks": 12856,
+          "attacksPerMinute": 649.1016956283923,
+          "groupAttacks": 17,
+          "groupAttacksPerMinute": 0.8583329827071149,
+          "firstAttackSeconds": 0.18333333333333332
+        }
+      }
+    },
+    "after": {
+      "run": {
+        "level": "L5",
+        "policy": "complete",
+        "seed": 1,
+        "completed": true,
+        "time": 220.65,
+        "deaths": 1,
+        "kills": 66,
+        "damageTaken": 225,
+        "failures": {
+          "player-died": 1
+        },
+        "objectiveTimeline": [
+          {
+            "id": "emerge",
+            "t": 1
+          },
+          {
+            "id": "look",
+            "t": 178.51666666666668
+          },
+          {
+            "id": "metro",
+            "t": 220.65
+          }
+        ],
+        "furthestObjective": "metro",
+        "activeObjectives": [],
+        "outcome": "complete",
+        "blocker": null,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 275,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "skilled": {
+        "phase/emerged": {
+          "seconds": 20,
+          "attacks": 33,
+          "attacksPerMinute": 99,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstAttackSeconds": 2.5166666666666666
+        },
+        "step/look": {
+          "seconds": 156.86666666666667,
+          "attacks": 18,
+          "attacksPerMinute": 6.8848278793030175,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstAttackSeconds": 12.516666666666667
+        },
+        "step/metro": {
+          "seconds": 42.13333333333333,
+          "attacks": 0,
+          "attacksPerMinute": 0,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstAttackSeconds": null
+        }
+      },
+      "passive": {
+        "phase/emerged": {
+          "seconds": 10,
+          "attacks": 23,
+          "attacksPerMinute": 138,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstAttackSeconds": 2.5166666666666666
+        },
+        "step/look": {
+          "seconds": 1188.35,
+          "attacks": 12489,
+          "attacksPerMinute": 630.5718012370093,
+          "groupAttacks": 9,
+          "groupAttacksPerMinute": 0.4544115790802373,
+          "firstAttackSeconds": 0.1
+        }
+      }
+    }
+  },
+  "l3": {
+    "before": [
+      {
+        "seed": 1,
+        "valid": true,
+        "s1": {
+          "completed": true,
+          "officerHits": 189,
+          "officerKills": 40,
+          "playerKills": 43,
+          "damage": 102.29999999999924
+        },
+        "density": {
+          "prepopulated": [
+            125,
+            240,
+            710
+          ],
+          "near30": [
+            15,
+            21,
+            29
+          ],
+          "maxConcurrent": 100,
+          "cap": 100
+        }
+      },
+      {
+        "seed": 2,
+        "valid": true,
+        "s1": {
+          "completed": true,
+          "officerHits": 157,
+          "officerKills": 32,
+          "playerKills": 17,
+          "damage": 11
+        },
+        "density": {
+          "prepopulated": [
+            125,
+            240,
+            710
+          ],
+          "near30": [
+            11,
+            24,
+            18
+          ],
+          "maxConcurrent": 100,
+          "cap": 100
+        }
+      },
+      {
+        "seed": 3,
+        "valid": true,
+        "s1": {
+          "completed": true,
+          "officerHits": 93,
+          "officerKills": 24,
+          "playerKills": 15,
+          "damage": 11
+        },
+        "density": {
+          "prepopulated": [
+            125,
+            240,
+            710
+          ],
+          "near30": [
+            17,
+            23,
+            23
+          ],
+          "maxConcurrent": 100,
+          "cap": 100
+        }
+      }
+    ],
+    "after": [
+      {
+        "seed": 1,
+        "valid": true,
+        "s1": {
+          "completed": true,
+          "officerHits": 189,
+          "officerKills": 40,
+          "playerKills": 43,
+          "damage": 102.29999999999924
+        },
+        "density": {
+          "prepopulated": [
+            125,
+            240,
+            710
+          ],
+          "near30": [
+            15,
+            21,
+            29
+          ],
+          "maxConcurrent": 100,
+          "cap": 100
+        }
+      },
+      {
+        "seed": 2,
+        "valid": true,
+        "s1": {
+          "completed": true,
+          "officerHits": 157,
+          "officerKills": 32,
+          "playerKills": 17,
+          "damage": 11
+        },
+        "density": {
+          "prepopulated": [
+            125,
+            240,
+            710
+          ],
+          "near30": [
+            11,
+            24,
+            19
+          ],
+          "maxConcurrent": 100,
+          "cap": 100
+        }
+      },
+      {
+        "seed": 3,
+        "valid": true,
+        "s1": {
+          "completed": true,
+          "officerHits": 93,
+          "officerKills": 24,
+          "playerKills": 15,
+          "damage": 11
+        },
+        "density": {
+          "prepopulated": [
+            125,
+            240,
+            710
+          ],
+          "near30": [
+            17,
+            23,
+            25
+          ],
+          "maxConcurrent": 100,
+          "cap": 100
+        }
+      }
+    ],
+    "army": {
+      "seeds": [
+        {
+          "seed": 1,
+          "valid": true,
+          "army": 4,
+          "attacksPerMinute": 30.18935978358882
+        },
+        {
+          "seed": 2,
+          "valid": true,
+          "army": 4,
+          "attacksPerMinute": 3.535959838480847
+        },
+        {
+          "seed": 3,
+          "valid": true,
+          "army": 0,
+          "attacksPerMinute": 12.112394289351641
+        }
+      ],
+      "measured": 3,
+      "within": 2,
+      "pass": true
+    }
+  },
+  "l7": {
+    "beforeFlags": [
+      "step/departure:SLOW_FOLLOWER:64"
+    ],
+    "afterFlags": [],
+    "follower64": {
+      "before": {
+        "phase": "step/departure",
+        "id": 64,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 25,
+            "median": 4.237252760563735,
+            "groupMedian": 4.599999999999809,
+            "ratio": 0.9211419044704156
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 26,
+            "median": 4.509180588640573,
+            "groupMedian": 4.583997790318571,
+            "ratio": 0.983678613057796
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 26,
+            "median": 3.3650078088585023,
+            "groupMedian": 3.889659748724034,
+            "ratio": 0.8651162379851762
+          }
+        ],
+        "measured": 3,
+        "failures": 2,
+        "pass": false
+      },
+      "after": {
+        "phase": "step/departure",
+        "id": 64,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 25,
+            "median": 4.501008764307714,
+            "groupMedian": 4.562088943952353,
+            "ratio": 0.9866113571227916
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 26,
+            "median": 4.497239486635332,
+            "groupMedian": 4.544346369692395,
+            "ratio": 0.9896339585003394
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 26,
+            "median": 3.833609315174061,
+            "groupMedian": 4.00978702023752,
+            "ratio": 0.9560630766236997
+          }
+        ],
+        "measured": 3,
+        "failures": 0,
+        "pass": true
+      }
+    }
+  }
+}

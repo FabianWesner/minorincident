@@ -399,7 +399,12 @@ export class LevelSevenEncounters {
         if (length >= remaining && length > 0) {
           const hx = (newer.x - older.x) / length, hz = (newer.z - older.z) / length;
           const side = slot % 2 - .5;
-          return { x: newer.x - hx * remaining - hz * side, z: newer.z - hz * remaining + hx * side };
+          const centre = { x: newer.x - hx * remaining, z: newer.z - hz * remaining };
+          const goal = { x: centre.x - hz * side, z: centre.z + hx * side };
+          const nav = this.followerNavigation();
+          // A lateral slot beside the walked trail can cross a wreck's edge.
+          // Use the walked centreline instead of snapping across that blocker.
+          return nav.clear(goal.x, goal.z, .35) && nav.visible(centre, goal, .35) ? goal : centre;
         }
         remaining -= length; newer = older;
       }

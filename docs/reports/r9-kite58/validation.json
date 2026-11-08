@@ -1,0 +1,92 @@
+{
+  "baseline": "f95e737662a5a9adb508b6ae40e2ad3561396ff8",
+  "gameRevision": "d0a02b22df99bacc9312f0438d68755f6301fb63",
+  "gameSourceTree": "3bd297992d3559b7b472f9b8978fd1c08b487c4a",
+  "publicTree": "1a1a5f59d8d423b827f34058472aa4b3ebc16a8c",
+  "perChangeGate": {
+    "target": "E23",
+    "epics": [
+      "E23"
+    ],
+    "checks": [
+      {
+        "command": "npm run typecheck",
+        "status": 0,
+        "seconds": 24.032
+      },
+      {
+        "command": "npm run lint",
+        "status": 0,
+        "seconds": 10.978
+      },
+      {
+        "command": "npm test",
+        "status": 1,
+        "seconds": 47.197
+      }
+    ]
+  },
+  "unit": {
+    "passed": 106,
+    "failed": 1,
+    "failure": "tests/shared/asset-contract.test.ts:188 \u2014 95 emissive-node/light-anchor metadata errors in existing GLBs",
+    "reproducedOnBaseline": true,
+    "unchangedAssetsTree": true,
+    "assetValidatorInputChanges": []
+  },
+  "focusedTests": {
+    "command": "node node_modules/vitest/vitest.mjs run tests/engine/navigation.test.ts tests/engine/infected-ai.test.ts --project default --configLoader runner --maxWorkers=2",
+    "passed": 9,
+    "failed": 0,
+    "seconds": 19.47
+  },
+  "finalThreatBudget": {
+    "name": "qa-threat",
+    "cases": 150,
+    "counts": {
+      "vitest": 129,
+      "e2e": 9,
+      "invariantsBrowser": 12
+    },
+    "files": 43,
+    "limits": {
+      "cases": 150,
+      "files": 45,
+      "seconds": 600
+    },
+    "command": [
+      "node",
+      "--import",
+      "tsx/esm",
+      "tools/qa/threat-audit.ts",
+      "--out",
+      "/tmp/r9-final-verified"
+    ],
+    "seconds": 327.25793604200004,
+    "exitCode": 0,
+    "signal": null,
+    "failures": [],
+    "at": "2026-11-08T08:46:31.683Z"
+  },
+  "kitingPolicy": {
+    "f95e7376": "6c31264cc859fb81fae2754b87b41efe84208974",
+    "HEAD": "6c31264cc859fb81fae2754b87b41efe84208974"
+  },
+  "acceptanceOrProbeChanges": [],
+  "specificationOrDependencyChanges": [],
+  "finalStaticRecheck": {
+    "typecheck": 0,
+    "lint": 0
+  },
+  "finalWorkingSourceMatchesMeasuredGame": true,
+  "l4AdditionalSeeds": {
+    "seeds": [
+      2,
+      3
+    ],
+    "allNativeObservationsAndKitingReceiptsIdentical": true,
+    "baselineGameSourceRestoredExactly": true,
+    "finalGameSourceRestoredExactly": true
+  },
+  "diagnosticRevision": "82a802bf06a1785dd90324e8ed952a679198894c"
+}
