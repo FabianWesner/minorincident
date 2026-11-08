@@ -5,7 +5,7 @@
  *   node --import tsx/esm tools/qa/r9-l10pace-empty.ts <log.jsonl> [--without-crossings] [--zoom 1|1.5] [--decor-json snapshot.json]
  *
  * A second is "empty" when the frame holds no living infected (trace) and no story element: a solid placement at least
- * 1.4 m tall (building, vehicle, tent, tower, stack; fences and low decay excluded) or a night-accent fire. The frame is
+ * 1.4 m tall (building, vehicle, tent, tower, stack; ordinary fences and low decay excluded), a complete vignette core or a night-accent fire. The frame is
  * the iso ground footprint of the follow camera (zoom 1.5 normal framing: 26 x 15 m screen; the player zoom scales it, so zoom 1 is
  * 17 x 10 m; R1-R5 road framing a further 1.3x, src/levels/L10/cameraFraming.ts; a real zoom-1 R4 frame measured ~24 m wide). `--without-crossings` drops the r9 crossing stories, so the
  * same physical trace gives the before value of the dressing alone.

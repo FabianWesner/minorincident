@@ -199,12 +199,14 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   expect(vignetteGroups.size).toBeGreaterThanOrEqual(85); // ~20/km over the 4.3 km authored route.
   expect(vignettes.every(p => p.decor && p.fixed)).toBe(true);
   expect(placementColliders(vignettes, []).every(c => c.aabb.physicsOnly)).toBe(true);
-  const { cureVignetteDecals } = await import('../../src/levels/L10/vignettes');
+  const { cureVignetteDecals, cureWallMessages } = await import('../../src/levels/L10/vignettes');
   const { CureVignetteDecals } = await import('../../src/render/district/CureVignetteDecals');
   const { DataTexture } = await import('three/webgpu');
   const rows = cureVignetteDecals(vignettes), paint = rows.filter(r=>!r.ground), casings = rows.filter(r=>r.cell===12);
   expect(paint).toHaveLength(35);
   expect(casings.filter(r=>r.highOnly)).toHaveLength(casings.length/2);
+  expect(cureWallMessages).toEqual(['HELP — 3 INSIDE','AUTHORIZED PERSONNEL ONLY — BIOHAZARD LEVEL 4']);
+  expect(paint.every(r=>r.cell===0||r.cell===1)).toBe(true);
   const sample=casings[0],pair=casings.filter(r=>r.scene===sample.scene);
   const decals=new CureVignetteDecals(pair,new DataTexture(new Uint8Array([255,255,255,255]),1,1));
   const focus={x:sample.position[0],z:sample.position[2]};

@@ -3,13 +3,15 @@ import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { gzipSync } from 'node:zlib';
 import { strict as assert } from 'node:assert';
 import { cure } from '../../src/levels/L10/district';
-import { cureVignetteSet, cureVignetteRoutes, cureLineLength, cureLineDistance } from '../../src/levels/L10/vignettes';
+import { cureVignetteSet, cureVignetteRoutes, cureLineLength, cureLineDistance, cureWallMessages } from '../../src/levels/L10/vignettes';
 import { cureRoadsideBelt } from '../../src/levels/L10/roadsideBelt';
 import { cureCrossingStories } from '../../src/levels/L10/crossingStories';
 import { cureForecourtDecor } from '../../src/levels/L10/forecourts';
 import { placementColliders } from '../../src/levels/districts/staticCollision';
 import type { DistrictLayout, Point } from '../../src/levels/districts/types';
 
+const script=readFileSync('docs/design/story-script.md','utf8');
+assert(cureWallMessages.every(message=>script.includes(message)),'All written story text must come verbatim from the approved story script');
 const directory='docs/reports/eg-l10-vignettes/evidence';mkdirSync(directory,{recursive:true});
 const layout=JSON.parse(readFileSync('public/assets/layouts/D-CURE.layout.json','utf8')) as DistrictLayout;
 const belt=cureRoadsideBelt(layout.placements),crossings=cureCrossingStories([...layout.placements,...belt]),apron=cureForecourtDecor([...layout.placements,...belt,...crossings]);

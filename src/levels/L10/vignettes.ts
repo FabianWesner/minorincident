@@ -15,7 +15,8 @@ export const cureVignetteCatalogue = [
   { id: 'quarantine-execution', story: 'The dead were left on the wrong side of the wire.', pieces: ['prop.cure-quarantine-fence','prop.crates'] },
   { id: 'home-refuge', story: 'A painted plea on the final refuge that failed.', pieces: ['prop.privacy-fence','decay.dropped-belongings'] },
 ].map(v=>({...v,pieces:[...v.pieces,'prop.l10-corpse-back']}));
-export const cureWallMessages = ['HELP','NO ROOM','WE WENT NORTH',"DON'T DRINK THE WATER",'SAM WAS HERE','KEEP THE GATE CLOSED','THEY ARE IN THE FIELDS','WAIT FOR THE TRUCK','DO NOT OPEN','WE TRIED',"WE'RE INSIDE",'CAMPUS →'] as const;
+/** Verbatim environmental writing from docs/design/story-script.md, L10 chapters 1–2. */
+export const cureWallMessages = ['HELP — 3 INSIDE','AUTHORIZED PERSONNEL ONLY — BIOHAZARD LEVEL 4'] as const;
 export interface CureVignetteScene { id:string; region:number; theme:string; story:string; route:string; at:Point; pieces:string[]; large:boolean }
 export interface CureVignetteDecal { id:string; scene:string; cell:number; position:[number,number,number]; yaw:number; ground:boolean; size:[number,number]; highOnly?:boolean }
 export interface CureVignetteSet { placements:Placement[]; scenes:CureVignetteScene[]; decals:CureVignetteDecal[]; missed:string[] }
@@ -171,7 +172,7 @@ export function cureVignetteSet(occupied:readonly Placement[]):CureVignetteSet {
         }
         if(!wall)continue;
         const yaw=wall.yaw;
-        wall.paintedMessage=(ri*3+m)%12;
+        wall.paintedMessage=ri<3?0:1;
         out.decals.push({id:`l10-message-r${ri+1}-${m}`,scene:scene.id,cell:wall.paintedMessage,position:[wall.position[0]+Math.cos(yaw)*.151,1.05,wall.position[2]-Math.sin(yaw)*.151],yaw:Math.PI/2+yaw,ground:false,size:[2.35,.58]});
         used.add(scene.id);done=true;
       }
