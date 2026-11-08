@@ -1,0 +1,4496 @@
+{
+  "revision": "8db1ce18ce071f43fb719b5cd4183828c8c1e255",
+  "backend": "webgl2",
+  "tier": "low",
+  "level": "l9",
+  "state": {
+    "backend": "webgl",
+    "quality": "low",
+    "camera": {
+      "zoom": 1,
+      "targetZoom": 1,
+      "zoomLimits": [
+        0.5,
+        1.5
+      ],
+      "fov": 25,
+      "azimuth": 0.7853981633974483,
+      "polar": 0.9424777960769379,
+      "radius": 19,
+      "regionScale": 1,
+      "focus": [
+        -550,
+        0,
+        0
+      ],
+      "target": [
+        -550,
+        0,
+        0
+      ],
+      "position": [
+        -537.6091500149689,
+        12.731428564654966,
+        12.390849985031041
+      ],
+      "spot": "scene-lab"
+    },
+    "lighting": {
+      "promotionBlend": 1,
+      "heroLight": null,
+      "lamps": [
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:0/light:door_front",
+          "position": [
+            -248.581,
+            1.77,
+            318.21
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:0/light:lamp_porch",
+          "position": [
+            -248.381,
+            2.08,
+            317.61
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:0/light:window_front",
+          "position": [
+            -248.616,
+            1.85,
+            321.15
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:0/light:window_left",
+          "position": [
+            -250.906,
+            1.85,
+            323.265
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:0/light:window_rearL",
+          "position": [
+            -253.246,
+            1.85,
+            318.425
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:0/light:window_rearR",
+          "position": [
+            -253.246,
+            1.85,
+            321.325
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:0/light:window_right",
+          "position": [
+            -250.646,
+            1.85,
+            316.735
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:1/light:door_front",
+          "position": [
+            -223.581,
+            1.77,
+            318.21
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:1/light:lamp_porch",
+          "position": [
+            -223.381,
+            2.08,
+            317.61
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:1/light:window_front",
+          "position": [
+            -223.616,
+            1.85,
+            321.15
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:1/light:window_left",
+          "position": [
+            -225.906,
+            1.85,
+            323.265
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:1/light:window_rearL",
+          "position": [
+            -228.246,
+            1.85,
+            318.425
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:1/light:window_rearR",
+          "position": [
+            -228.246,
+            1.85,
+            321.325
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:1/light:window_right",
+          "position": [
+            -225.646,
+            1.85,
+            316.735
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:2/light:door_front",
+          "position": [
+            161.419,
+            1.77,
+            328.21
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:2/light:lamp_porch",
+          "position": [
+            161.619,
+            2.08,
+            327.61
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:2/light:window_front",
+          "position": [
+            161.384,
+            1.85,
+            331.15
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:2/light:window_left",
+          "position": [
+            159.094,
+            1.85,
+            333.265
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:2/light:window_rearL",
+          "position": [
+            156.754,
+            1.85,
+            328.425
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:2/light:window_rearR",
+          "position": [
+            156.754,
+            1.85,
+            331.325
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:2/light:window_right",
+          "position": [
+            159.354,
+            1.85,
+            326.735
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:3/light:door_front",
+          "position": [
+            186.419,
+            1.77,
+            328.21
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:3/light:lamp_porch",
+          "position": [
+            186.619,
+            2.08,
+            327.61
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:3/light:window_front",
+          "position": [
+            186.384,
+            1.85,
+            331.15
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:3/light:window_left",
+          "position": [
+            184.094,
+            1.85,
+            333.265
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:3/light:window_rearL",
+          "position": [
+            181.754,
+            1.85,
+            328.425
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:3/light:window_rearR",
+          "position": [
+            181.754,
+            1.85,
+            331.325
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:3/light:window_right",
+          "position": [
+            184.354,
+            1.85,
+            326.735
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:4/light:door_front",
+          "position": [
+            -10.581,
+            1.77,
+            220.21
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:4/light:lamp_porch",
+          "position": [
+            -10.381,
+            2.08,
+            219.61
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:4/light:window_front",
+          "position": [
+            -10.616,
+            1.85,
+            223.15
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:4/light:window_left",
+          "position": [
+            -12.906,
+            1.85,
+            225.265
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:4/light:window_rearL",
+          "position": [
+            -15.246,
+            1.85,
+            220.425
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:4/light:window_rearR",
+          "position": [
+            -15.246,
+            1.85,
+            223.325
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:4/light:window_right",
+          "position": [
+            -12.646,
+            1.85,
+            218.735
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:5/light:door_front",
+          "position": [
+            33.419,
+            1.77,
+            214.21
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:5/light:lamp_porch",
+          "position": [
+            33.619,
+            2.08,
+            213.61
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:5/light:window_front",
+          "position": [
+            33.384,
+            1.85,
+            217.15
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:5/light:window_left",
+          "position": [
+            31.094,
+            1.85,
+            219.265
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:5/light:window_rearL",
+          "position": [
+            28.754,
+            1.85,
+            214.425
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:5/light:window_rearR",
+          "position": [
+            28.754,
+            1.85,
+            217.325
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:5/light:window_right",
+          "position": [
+            31.354,
+            1.85,
+            212.735
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:6/light:entrance",
+          "position": [
+            -13.1,
+            2.23,
+            284.41
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:6/light:window",
+          "position": [
+            -15.16,
+            1.77,
+            283.3
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:7/light:entrance",
+          "position": [
+            45.9,
+            2.23,
+            214.41
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:7/light:window",
+          "position": [
+            43.84,
+            1.77,
+            213.3
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:8/light:entrance",
+          "position": [
+            -236.1,
+            2.23,
+            336.41
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:8/light:window",
+          "position": [
+            -238.16,
+            1.77,
+            335.3
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:9/light:entrance",
+          "position": [
+            176.9,
+            2.23,
+            345.41
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:9/light:window",
+          "position": [
+            174.84,
+            1.77,
+            344.3
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:10/light:entrance",
+          "position": [
+            11.844,
+            2.925,
+            221.132
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:10/light:side",
+          "position": [
+            9.964,
+            1.95,
+            218.822
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:10/light:workshop",
+          "position": [
+            9.064,
+            2.36,
+            221.332
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.gas-station:18/light:canopy",
+          "position": [
+            12.695,
+            3.76,
+            -352.38
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.gas-station:18/light:lamp_shop_-1.8",
+          "position": [
+            16.305,
+            2.86,
+            -349.18
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.gas-station:18/light:lamp_shop_-3.85",
+          "position": [
+            16.305,
+            2.86,
+            -347.13
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.gas-station:18/light:open",
+          "position": [
+            14.945,
+            2.85,
+            -350.23
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.gas-station:18/light:prices",
+          "position": [
+            7.975,
+            4.8,
+            -355.62
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.gas-station:18/light:shop",
+          "position": [
+            12.695,
+            2.2,
+            -350.13
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:19/light:entrance",
+          "position": [
+            32.132,
+            2.925,
+            -351.844
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:19/light:side",
+          "position": [
+            29.822,
+            1.95,
+            -349.964
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:19/light:workshop",
+          "position": [
+            32.332,
+            2.36,
+            -349.064
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.apartment-block-a:84/light:entry",
+          "position": [
+            569.77,
+            3.35,
+            -65
+          ],
+          "group": "fairhaven-civic",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.apartment-block-a:85/light:entry",
+          "position": [
+            584.77,
+            3.35,
+            -85
+          ],
+          "group": "fairhaven-civic",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.apartment-block-a:86/light:entry",
+          "position": [
+            549.77,
+            3.35,
+            -105
+          ],
+          "group": "fairhaven-civic",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.apartment-block-a:87/light:entry",
+          "position": [
+            579.77,
+            3.35,
+            -130
+          ],
+          "group": "fairhaven-civic",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:2300/light:door_front",
+          "position": [
+            0.42213870784056784,
+            1.77,
+            -362.2558851196092
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:2300/light:lamp_porch",
+          "position": [
+            1.022138707840568,
+            2.08,
+            -362.0558851196092
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:2300/light:window_front",
+          "position": [
+            -2.517861292159432,
+            1.85,
+            -362.2908851196092
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:2300/light:window_left",
+          "position": [
+            -4.632861292159433,
+            1.85,
+            -364.5808851196092
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:2300/light:window_rearL",
+          "position": [
+            0.20713870784056754,
+            1.85,
+            -366.9208851196092
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:2300/light:window_rearR",
+          "position": [
+            -2.6928612921594324,
+            1.85,
+            -366.9208851196092
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:2300/light:window_right",
+          "position": [
+            1.897138707840568,
+            1.85,
+            -364.3208851196092
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2301/light:entrance",
+          "position": [
+            -13.275377145735026,
+            2.23,
+            -359.6909851139427
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2301/light:window",
+          "position": [
+            -15.335377145735027,
+            1.77,
+            -360.8009851139427
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2302/light:entrance",
+          "position": [
+            0.2920361423938642,
+            2.23,
+            -349.65075620001454
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2302/light:window",
+          "position": [
+            -0.8179638576061359,
+            1.77,
+            -347.59075620001454
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-b:2309/light:back_window",
+          "position": [
+            238.78093258371248,
+            2.05,
+            213.05585092457918
+          ],
+          "group": "sunset-grove-residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-b:2309/light:front_double",
+          "position": [
+            238.53093258371248,
+            2.03,
+            206.87585092457917
+          ],
+          "group": "sunset-grove-residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-b:2309/light:front_right",
+          "position": [
+            236.2109325837125,
+            2.12,
+            206.87585092457917
+          ],
+          "group": "sunset-grove-residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-b:2309/light:porch_window",
+          "position": [
+            240.45093258371247,
+            1.92,
+            211.46585092457917
+          ],
+          "group": "sunset-grove-residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-b:2309/light:right_window",
+          "position": [
+            235.31093258371249,
+            2.18,
+            210.76585092457918
+          ],
+          "group": "sunset-grove-residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-b:2309/light:garage",
+          "position": [
+            232.39093258371247,
+            2.45,
+            207.26585092457918
+          ],
+          "group": "sunset-grove-residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-b:2309/light:porch",
+          "position": [
+            240.6809325837125,
+            2.45,
+            210.52585092457917
+          ],
+          "group": "sunset-grove-residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-b:2309/light:dormer_window",
+          "position": [
+            241.06093258371249,
+            4.47,
+            210.56585092457917
+          ],
+          "group": "sunset-grove-residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2310/light:entrance",
+          "position": [
+            255.19957074011208,
+            2.23,
+            211.29333007075073
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2310/light:window",
+          "position": [
+            253.13957074011208,
+            1.77,
+            210.18333007075074
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2311/light:entrance",
+          "position": [
+            223.09515856316582,
+            2.23,
+            212.30693443755018
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2311/light:window",
+          "position": [
+            221.98515856316584,
+            1.77,
+            214.36693443755019
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2312/light:entrance",
+          "position": [
+            233.02069611120186,
+            2.23,
+            221.05855058487103
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2312/light:window",
+          "position": [
+            231.91069611120187,
+            1.77,
+            223.11855058487103
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2319/light:entrance",
+          "position": [
+            -218.64575848753324,
+            2.23,
+            335.8086090189209
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2319/light:window",
+          "position": [
+            -220.70575848753325,
+            1.77,
+            334.6986090189209
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:2320/light:entrance",
+          "position": [
+            -244.4254931950332,
+            2.925,
+            334.87691938485915
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:2320/light:side",
+          "position": [
+            -246.7354931950332,
+            1.95,
+            336.75691938485915
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:2320/light:workshop",
+          "position": [
+            -244.2254931950332,
+            2.36,
+            337.6569193848591
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2321/light:entrance",
+          "position": [
+            -229.5818279783008,
+            2.23,
+            347.0984416547936
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2321/light:window",
+          "position": [
+            -231.6418279783008,
+            1.77,
+            345.9884416547936
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-e:2328/light:door_front",
+          "position": [
+            272.6920955301119,
+            2.37,
+            -253.8815592120199
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-e:2328/light:lamp_porch",
+          "position": [
+            272.9110955301119,
+            2.35,
+            -254.7015592120199
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-e:2328/light:window_front",
+          "position": [
+            272.64809553011185,
+            1.99,
+            -255.6915592120199
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-e:2328/light:window_rear_1.35",
+          "position": [
+            267.19409553011184,
+            1.97,
+            -256.28155921201994
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-e:2328/light:window_rear_-1.3",
+          "position": [
+            267.19409553011184,
+            1.97,
+            -253.6315592120199
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-e:2328/light:window_side_1",
+          "position": [
+            269.39609553011184,
+            1.97,
+            -257.91855921201994
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-e:2328/light:window_side_-1",
+          "position": [
+            269.39609553011184,
+            1.97,
+            -251.94455921201993
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2329/light:entrance",
+          "position": [
+            287.5084931166584,
+            2.23,
+            -254.33592796677402
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2329/light:window",
+          "position": [
+            285.4484931166584,
+            1.77,
+            -255.445927966774
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2330/light:entrance",
+          "position": [
+            256.0209524917482,
+            2.23,
+            -255.89775050362417
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2330/light:window",
+          "position": [
+            254.91095249174816,
+            1.77,
+            -253.83775050362416
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-b:2335/light:back_window",
+          "position": [
+            -553.7868229237753,
+            2.05,
+            123.4475363445051
+          ],
+          "group": "sunset-grove-residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-b:2335/light:front_double",
+          "position": [
+            -559.9668229237753,
+            2.03,
+            123.6975363445051
+          ],
+          "group": "sunset-grove-residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-b:2335/light:front_right",
+          "position": [
+            -559.9668229237753,
+            2.12,
+            126.0175363445051
+          ],
+          "group": "sunset-grove-residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-b:2335/light:porch_window",
+          "position": [
+            -555.3768229237753,
+            1.92,
+            121.77753634450511
+          ],
+          "group": "sunset-grove-residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-b:2335/light:right_window",
+          "position": [
+            -556.0768229237754,
+            2.18,
+            126.9175363445051
+          ],
+          "group": "sunset-grove-residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-b:2335/light:garage",
+          "position": [
+            -559.5768229237754,
+            2.45,
+            129.8375363445051
+          ],
+          "group": "sunset-grove-residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-b:2335/light:porch",
+          "position": [
+            -556.3168229237754,
+            2.45,
+            121.5475363445051
+          ],
+          "group": "sunset-grove-residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-b:2335/light:dormer_window",
+          "position": [
+            -556.2768229237753,
+            4.47,
+            121.1675363445051
+          ],
+          "group": "sunset-grove-residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2336/light:entrance",
+          "position": [
+            -539.2475011868867,
+            2.23,
+            125.68397240993899
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2336/light:window",
+          "position": [
+            -541.3075011868866,
+            1.77,
+            124.57397240993899
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:2337/light:entrance",
+          "position": [
+            -569.4586608710277,
+            2.925,
+            119.35501963863125
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:2337/light:side",
+          "position": [
+            -571.7686608710277,
+            1.95,
+            121.23501963863124
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:2337/light:workshop",
+          "position": [
+            -569.2586608710277,
+            2.36,
+            122.13501963863125
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2338/light:entrance",
+          "position": [
+            -552.9229253057656,
+            2.23,
+            136.95812354619935
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2338/light:window",
+          "position": [
+            -554.0329253057656,
+            1.77,
+            139.01812354619935
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-d:2347/light:door_front",
+          "position": [
+            106.68700004930064,
+            2.29,
+            346.49158965380474
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-d:2347/light:lamp_left",
+          "position": [
+            107.52700004930064,
+            2.18,
+            346.70558965380474
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-d:2347/light:lamp_right",
+          "position": [
+            105.84700004930063,
+            2.18,
+            346.70558965380474
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-d:2347/light:window_front_1.875_1.75",
+          "position": [
+            108.43700004930064,
+            1.875,
+            346.4525896538047
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-d:2347/light:window_front_1.875_-1.75",
+          "position": [
+            104.93700004930064,
+            1.875,
+            346.4525896538047
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-d:2347/light:window_front_4.395_1.75",
+          "position": [
+            108.43700004930064,
+            4.395,
+            346.4525896538047
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-d:2347/light:window_front_4.395_-1.75",
+          "position": [
+            104.93700004930064,
+            4.395,
+            346.4525896538047
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-d:2347/light:window_rear_1.875_1.45",
+          "position": [
+            108.13700004930064,
+            1.875,
+            341.1585896538047
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-d:2347/light:window_rear_1.875_-1.45",
+          "position": [
+            105.23700004930063,
+            1.875,
+            341.1585896538047
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-d:2347/light:window_rear_4.395_1.45",
+          "position": [
+            108.13700004930064,
+            4.395,
+            341.1585896538047
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-d:2347/light:window_rear_4.395_-1.45",
+          "position": [
+            105.23700004930063,
+            4.395,
+            341.1585896538047
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-d:2347/light:window_side1_1.875_1.1",
+          "position": [
+            109.88400004930064,
+            1.875,
+            344.9055896538047
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-d:2347/light:window_side1_1.875_-1.35",
+          "position": [
+            109.88400004930064,
+            1.875,
+            342.45558965380474
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-d:2347/light:window_side1_4.395_1.1",
+          "position": [
+            109.88400004930064,
+            4.395,
+            344.9055896538047
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-d:2347/light:window_side1_4.395_-1.35",
+          "position": [
+            109.88400004930064,
+            4.395,
+            342.45558965380474
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-d:2347/light:window_side-1_1.875_1.1",
+          "position": [
+            103.49000004930063,
+            1.875,
+            344.9055896538047
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-d:2347/light:window_side-1_1.875_-1.35",
+          "position": [
+            103.49000004930063,
+            1.875,
+            342.45558965380474
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-d:2347/light:window_side-1_4.395_1.1",
+          "position": [
+            103.49000004930063,
+            4.395,
+            344.9055896538047
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-d:2347/light:window_side-1_4.395_-1.35",
+          "position": [
+            103.49000004930063,
+            4.395,
+            342.45558965380474
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:2348/light:entrance",
+          "position": [
+            122.03568203051178,
+            2.925,
+            339.7004642695749
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:2348/light:side",
+          "position": [
+            120.15568203051178,
+            1.95,
+            337.3904642695749
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:2348/light:workshop",
+          "position": [
+            119.25568203051178,
+            2.36,
+            339.9004642695749
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2349/light:entrance",
+          "position": [
+            93.19651849915724,
+            2.23,
+            342.5753226101897
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2349/light:window",
+          "position": [
+            91.13651849915723,
+            1.77,
+            341.4653226101897
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2350/light:entrance",
+          "position": [
+            105.96948459746226,
+            2.23,
+            356.2196060381849
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2350/light:window",
+          "position": [
+            103.90948459746225,
+            1.77,
+            355.1096060381849
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:2356/light:entrance",
+          "position": [
+            -403.97618733309275,
+            2.925,
+            153.97966466476538
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:2356/light:side",
+          "position": [
+            -406.28618733309276,
+            1.95,
+            155.85966466476538
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:2356/light:workshop",
+          "position": [
+            -403.77618733309276,
+            2.36,
+            156.75966466476538
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2357/light:entrance",
+          "position": [
+            -430.8326970372229,
+            2.23,
+            151.7023524110876
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2357/light:window",
+          "position": [
+            -432.8926970372229,
+            1.77,
+            150.5923524110876
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2358/light:entrance",
+          "position": [
+            -413.1653538532525,
+            2.23,
+            166.56711665788666
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2358/light:window",
+          "position": [
+            -414.2753538532525,
+            1.77,
+            168.62711665788666
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:2365/light:entrance",
+          "position": [
+            197.38603458384773,
+            2.925,
+            -234.3086963202752
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:2365/light:side",
+          "position": [
+            195.50603458384774,
+            1.95,
+            -236.6186963202752
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:2365/light:workshop",
+          "position": [
+            194.60603458384773,
+            2.36,
+            -234.10869632027521
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:2366/light:entrance",
+          "position": [
+            171.11295560250923,
+            2.925,
+            -235.63517454600472
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:2366/light:side",
+          "position": [
+            168.80295560250923,
+            1.95,
+            -233.75517454600472
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:2366/light:workshop",
+          "position": [
+            171.31295560250922,
+            2.36,
+            -232.85517454600472
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2367/light:entrance",
+          "position": [
+            183.3855811651024,
+            2.23,
+            -222.35569414122213
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2367/light:window",
+          "position": [
+            181.3255811651024,
+            1.77,
+            -223.46569414122212
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2372/light:entrance",
+          "position": [
+            -428.10202136456496,
+            2.23,
+            -325.5924507713575
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2372/light:window",
+          "position": [
+            -430.16202136456496,
+            1.77,
+            -326.7024507713575
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:2373/light:entrance",
+          "position": [
+            -451.5000337056701,
+            2.925,
+            -327.6323786608533
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:2373/light:side",
+          "position": [
+            -453.3800337056701,
+            1.95,
+            -329.9423786608533
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:2373/light:workshop",
+          "position": [
+            -454.28003370567006,
+            2.36,
+            -327.4323786608533
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:2374/light:entrance",
+          "position": [
+            -440.6448003535489,
+            2.925,
+            -313.73363860549404
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:2374/light:side",
+          "position": [
+            -442.52480035354887,
+            1.95,
+            -316.04363860549404
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:2374/light:workshop",
+          "position": [
+            -443.42480035354885,
+            2.36,
+            -313.53363860549405
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:2383/light:door_front",
+          "position": [
+            -72.12210614110502,
+            1.77,
+            146.0030653876493
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:2383/light:lamp_porch",
+          "position": [
+            -71.52210614110503,
+            2.08,
+            146.20306538764927
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:2383/light:window_front",
+          "position": [
+            -75.06210614110503,
+            1.85,
+            145.96806538764926
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:2383/light:window_left",
+          "position": [
+            -77.17710614110503,
+            1.85,
+            143.67806538764927
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:2383/light:window_rearL",
+          "position": [
+            -72.33710614110502,
+            1.85,
+            141.33806538764927
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:2383/light:window_rearR",
+          "position": [
+            -75.23710614110503,
+            1.85,
+            141.33806538764927
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.house-a:2383/light:window_right",
+          "position": [
+            -70.64710614110503,
+            1.85,
+            143.9380653876493
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2384/light:entrance",
+          "position": [
+            -60.079714512509355,
+            2.23,
+            143.17128640310557
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2384/light:window",
+          "position": [
+            -61.189714512509354,
+            1.77,
+            145.23128640310557
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:2385/light:entrance",
+          "position": [
+            -85.10943197502209,
+            2.925,
+            143.72591114537155
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:2385/light:side",
+          "position": [
+            -86.98943197502209,
+            1.95,
+            141.41591114537155
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:2385/light:workshop",
+          "position": [
+            -87.88943197502209,
+            2.36,
+            143.92591114537154
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2386/light:entrance",
+          "position": [
+            -74.521260531336,
+            2.23,
+            157.01229047632188
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2386/light:window",
+          "position": [
+            -76.581260531336,
+            1.77,
+            155.9022904763219
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2392/light:entrance",
+          "position": [
+            6.55173769785779,
+            2.23,
+            -261.0463016463277
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2392/light:window",
+          "position": [
+            4.49173769785779,
+            1.77,
+            -262.15630164632773
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:2393/light:entrance",
+          "position": [
+            -23.32022714640614,
+            2.925,
+            -259.7137130755971
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:2393/light:side",
+          "position": [
+            -25.200227146406142,
+            1.95,
+            -262.02371307559713
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.garage-detached:2393/light:workshop",
+          "position": [
+            -26.10022714640614,
+            2.36,
+            -259.51371307559714
+          ],
+          "group": "residential",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2394/light:entrance",
+          "position": [
+            -11.340381870258922,
+            2.23,
+            -242.61533118712478
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.shed:2394/light:window",
+          "position": [
+            -12.450381870258921,
+            1.77,
+            -240.55533118712478
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.joes-diner:2446/light:neon",
+          "position": [
+            126.277,
+            4.65,
+            -354.4
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.joes-diner:2446/light:windows",
+          "position": [
+            125.277,
+            1.9,
+            -354.35
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2447/light:cold_00",
+          "position": [
+            -173.4,
+            2.8,
+            -353.45
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2447/light:cold_01",
+          "position": [
+            -173.4,
+            2.8,
+            -354.48
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2447/light:cold_02",
+          "position": [
+            -173.4,
+            2.8,
+            -355.51
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2447/light:cold_03",
+          "position": [
+            -173.4,
+            2.8,
+            -356.54
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2447/light:cold_04",
+          "position": [
+            -173.4,
+            2.8,
+            -357.57
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2447/light:cold_05",
+          "position": [
+            -173.4,
+            2.8,
+            -358.6
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2447/light:frozen",
+          "position": [
+            -166.3,
+            1.1,
+            -357
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2447/light:staff",
+          "position": [
+            -172.49,
+            2.2,
+            -352.4
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/prop.gas-pump:2448/light:globe",
+          "position": [
+            -150,
+            2.455,
+            -352
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/prop.gas-pump:2449/light:globe",
+          "position": [
+            -170,
+            2.455,
+            -343
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/prop.gas-pump:2450/light:globe",
+          "position": [
+            -190,
+            2.455,
+            -352
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/prop.street-lamp:2451/light:lantern",
+          "position": [
+            112,
+            3.18,
+            -344
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/prop.street-lamp:2452/light:lantern",
+          "position": [
+            113,
+            3.18,
+            -358
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/prop.light-tower:2453/light:flood_L",
+          "position": [
+            262.7512322945494,
+            3.825,
+            -77.01187650588302
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/prop.light-tower:2453/light:flood_R",
+          "position": [
+            263.2533697416053,
+            3.825,
+            -77.96023455233185
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/kit.army-checkpoint:2454/light:extraFlood3",
+          "position": [
+            -327,
+            5,
+            34.7
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/kit.army-checkpoint:2454/light:extraFlood-6",
+          "position": [
+            -336,
+            5,
+            34.7
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/kit.army-checkpoint:2454/light:flood3",
+          "position": [
+            -330,
+            5.2,
+            28
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/kit.army-checkpoint:2454/light:flood-3",
+          "position": [
+            -330,
+            5.2,
+            34
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.apartment-block-b:2616/light:entry",
+          "position": [
+            565.341799527276,
+            3.35,
+            66.40582911971188
+          ],
+          "group": "fairhaven-civic",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.town-hall:2617/light:entry",
+          "position": [
+            564.5535109788771,
+            2.9,
+            -15.933547470924927
+          ],
+          "group": "fairhaven-civic",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2618/light:cold_00",
+          "position": [
+            573.1863855458869,
+            2.8,
+            -151.80501976799343
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2618/light:cold_01",
+          "position": [
+            573.1863855458869,
+            2.8,
+            -150.77501976799343
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2618/light:cold_02",
+          "position": [
+            573.1863855458869,
+            2.8,
+            -149.74501976799343
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2618/light:cold_03",
+          "position": [
+            573.1863855458869,
+            2.8,
+            -148.71501976799343
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2618/light:cold_04",
+          "position": [
+            573.1863855458869,
+            2.8,
+            -147.68501976799342
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2618/light:cold_05",
+          "position": [
+            573.1863855458869,
+            2.8,
+            -146.65501976799342
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2618/light:frozen",
+          "position": [
+            566.0863855458869,
+            1.1,
+            -148.25501976799342
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2618/light:staff",
+          "position": [
+            572.2763855458869,
+            2.2,
+            -152.8550197679934
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2619/light:bakery_display",
+          "position": [
+            564.7951122039522,
+            1.85,
+            -32.21297723087318
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2619/light:bakery_upper_-1.15",
+          "position": [
+            566.0851122039522,
+            5.35,
+            -32.372977230873175
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2619/light:bakery_upper_-2.95",
+          "position": [
+            564.2851122039522,
+            5.35,
+            -32.372977230873175
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2619/light:pharmacy_sign",
+          "position": [
+            571.5251122039522,
+            6.2,
+            -31.372977230873175
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2619/light:side_-1.55_1.95",
+          "position": [
+            562.9951122039522,
+            1.95,
+            -36.92297723087317
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2619/light:side_-1.55_5.35",
+          "position": [
+            562.9951122039522,
+            5.35,
+            -36.92297723087317
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2619/light:door_bakery",
+          "position": [
+            566.6751122039523,
+            2.1,
+            -32.192977230873176
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2620/light:cold_00",
+          "position": [
+            582.5221639090246,
+            2.8,
+            169.05700450030156
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2620/light:cold_01",
+          "position": [
+            582.5221639090246,
+            2.8,
+            170.08700450030156
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2620/light:cold_02",
+          "position": [
+            582.5221639090246,
+            2.8,
+            171.11700450030156
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2620/light:cold_03",
+          "position": [
+            582.5221639090246,
+            2.8,
+            172.14700450030156
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2620/light:cold_04",
+          "position": [
+            582.5221639090246,
+            2.8,
+            173.17700450030156
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2620/light:cold_05",
+          "position": [
+            582.5221639090246,
+            2.8,
+            174.20700450030157
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2620/light:frozen",
+          "position": [
+            575.4221639090246,
+            1.1,
+            172.60700450030157
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2620/light:staff",
+          "position": [
+            581.6121639090246,
+            2.2,
+            168.00700450030158
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.town-hall:2621/light:entry",
+          "position": [
+            572.4451296997735,
+            2.9,
+            -101.73137255956112
+          ],
+          "group": "fairhaven-civic",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.apartment-block-b:2622/light:entry",
+          "position": [
+            589.9423225433203,
+            3.35,
+            -70.40422925596046
+          ],
+          "group": "fairhaven-civic",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.church:2623/light:nave",
+          "position": [
+            566.55559403796,
+            3.1,
+            46.53580924310724
+          ],
+          "group": "fairhaven-civic",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.hospital:2624/light:windows",
+          "position": [
+            579.8568076644968,
+            5.2,
+            23.280209948034496
+          ],
+          "group": "hospital",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.hospital:2624/light:doorL",
+          "position": [
+            579.8568076644968,
+            1.9,
+            24.780209948034496
+          ],
+          "group": "hospital",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.hospital:2624/light:doorR",
+          "position": [
+            579.8568076644968,
+            1.9,
+            23.180209948034495
+          ],
+          "group": "hospital",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.hospital:2624/light:entrance",
+          "position": [
+            582.9568076644969,
+            3.35,
+            23.980209948034496
+          ],
+          "group": "hospital",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.apartment-block-b:2625/light:entry",
+          "position": [
+            566.3627943948965,
+            3.35,
+            126.00259915365763
+          ],
+          "group": "fairhaven-civic",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.apartment-block-b:2626/light:entry",
+          "position": [
+            569.560134160473,
+            3.35,
+            179.36685521627672
+          ],
+          "group": "fairhaven-civic",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.apartment-block-a:2627/light:entry",
+          "position": [
+            565.1897256849431,
+            3.35,
+            -48.16273639314022
+          ],
+          "group": "fairhaven-civic",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2628/light:bakery_display",
+          "position": [
+            570.9465445782865,
+            1.85,
+            173.56502190056267
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2628/light:bakery_upper_-1.15",
+          "position": [
+            570.7865445782866,
+            5.35,
+            172.27502190056268
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2628/light:bakery_upper_-2.95",
+          "position": [
+            570.7865445782866,
+            5.35,
+            174.07502190056266
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2628/light:pharmacy_sign",
+          "position": [
+            571.7865445782866,
+            6.2,
+            166.83502190056268
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2628/light:side_-1.55_1.95",
+          "position": [
+            566.2365445782866,
+            1.95,
+            175.36502190056268
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2628/light:side_-1.55_5.35",
+          "position": [
+            566.2365445782866,
+            5.35,
+            175.36502190056268
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2628/light:door_bakery",
+          "position": [
+            570.9665445782865,
+            2.1,
+            171.68502190056267
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2629/light:cold_00",
+          "position": [
+            568.3158750382456,
+            2.8,
+            -162.7474906880994
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2629/light:cold_01",
+          "position": [
+            569.3458750382456,
+            2.8,
+            -162.7474906880994
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2629/light:cold_02",
+          "position": [
+            570.3758750382456,
+            2.8,
+            -162.7474906880994
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2629/light:cold_03",
+          "position": [
+            571.4058750382455,
+            2.8,
+            -162.7474906880994
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2629/light:cold_04",
+          "position": [
+            572.4358750382456,
+            2.8,
+            -162.7474906880994
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2629/light:cold_05",
+          "position": [
+            573.4658750382456,
+            2.8,
+            -162.7474906880994
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2629/light:frozen",
+          "position": [
+            571.8658750382456,
+            1.1,
+            -155.6474906880994
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2629/light:staff",
+          "position": [
+            567.2658750382456,
+            2.2,
+            -161.8374906880994
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2630/light:cold_00",
+          "position": [
+            567.8673309697747,
+            2.8,
+            -179.73236840749436
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2630/light:cold_01",
+          "position": [
+            567.8673309697747,
+            2.8,
+            -180.76236840749436
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2630/light:cold_02",
+          "position": [
+            567.8673309697747,
+            2.8,
+            -181.79236840749437
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2630/light:cold_03",
+          "position": [
+            567.8673309697747,
+            2.8,
+            -182.82236840749437
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2630/light:cold_04",
+          "position": [
+            567.8673309697747,
+            2.8,
+            -183.85236840749437
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2630/light:cold_05",
+          "position": [
+            567.8673309697747,
+            2.8,
+            -184.88236840749437
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2630/light:frozen",
+          "position": [
+            574.9673309697747,
+            1.1,
+            -183.28236840749437
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2630/light:staff",
+          "position": [
+            568.7773309697747,
+            2.2,
+            -178.68236840749438
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.apartment-block-a:2631/light:entry",
+          "position": [
+            591.8728680585427,
+            3.35,
+            89.03286899822547
+          ],
+          "group": "fairhaven-civic",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.apartment-block-b:2632/light:entry",
+          "position": [
+            575.2698809711067,
+            3.35,
+            134.12888552082964
+          ],
+          "group": "fairhaven-civic",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.apartment-block-b:2633/light:entry",
+          "position": [
+            595.4275347251008,
+            3.35,
+            126.00557208805685
+          ],
+          "group": "fairhaven-civic",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2634/light:bakery_display",
+          "position": [
+            584.7925865344664,
+            1.85,
+            103.65260184110562
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2634/light:bakery_upper_-1.15",
+          "position": [
+            583.5025865344663,
+            5.35,
+            103.81260184110562
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2634/light:bakery_upper_-2.95",
+          "position": [
+            585.3025865344664,
+            5.35,
+            103.81260184110562
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2634/light:pharmacy_sign",
+          "position": [
+            578.0625865344664,
+            6.2,
+            102.81260184110562
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2634/light:side_-1.55_1.95",
+          "position": [
+            586.5925865344664,
+            1.95,
+            108.36260184110562
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2634/light:side_-1.55_5.35",
+          "position": [
+            586.5925865344664,
+            5.35,
+            108.36260184110562
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2634/light:door_bakery",
+          "position": [
+            582.9125865344663,
+            2.1,
+            103.63260184110561
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2635/light:cold_00",
+          "position": [
+            593.9974285013375,
+            2.8,
+            -75.20657781587398
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2635/light:cold_01",
+          "position": [
+            592.9674285013375,
+            2.8,
+            -75.20657781587398
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2635/light:cold_02",
+          "position": [
+            591.9374285013375,
+            2.8,
+            -75.20657781587398
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2635/light:cold_03",
+          "position": [
+            590.9074285013376,
+            2.8,
+            -75.20657781587398
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2635/light:cold_04",
+          "position": [
+            589.8774285013375,
+            2.8,
+            -75.20657781587398
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2635/light:cold_05",
+          "position": [
+            588.8474285013375,
+            2.8,
+            -75.20657781587398
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2635/light:frozen",
+          "position": [
+            590.4474285013375,
+            1.1,
+            -82.306577815874
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2635/light:staff",
+          "position": [
+            595.0474285013375,
+            2.2,
+            -76.116577815874
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.church:2636/light:nave",
+          "position": [
+            572.3997856255982,
+            3.1,
+            84.05527867158247
+          ],
+          "group": "fairhaven-civic",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2637/light:cold_00",
+          "position": [
+            575.3093441645243,
+            2.8,
+            -167.7887749963663
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2637/light:cold_01",
+          "position": [
+            574.2793441645243,
+            2.8,
+            -167.7887749963663
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2637/light:cold_02",
+          "position": [
+            573.2493441645244,
+            2.8,
+            -167.7887749963663
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2637/light:cold_03",
+          "position": [
+            572.2193441645244,
+            2.8,
+            -167.7887749963663
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2637/light:cold_04",
+          "position": [
+            571.1893441645243,
+            2.8,
+            -167.7887749963663
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2637/light:cold_05",
+          "position": [
+            570.1593441645243,
+            2.8,
+            -167.7887749963663
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2637/light:frozen",
+          "position": [
+            571.7593441645244,
+            1.1,
+            -174.8887749963663
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.supermarket:2637/light:staff",
+          "position": [
+            576.3593441645244,
+            2.2,
+            -168.6987749963663
+          ],
+          "group": "supermarket",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2638/light:bakery_display",
+          "position": [
+            579.2517103490928,
+            1.85,
+            -69.47148105770195
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2638/light:bakery_upper_-1.15",
+          "position": [
+            577.9617103490928,
+            5.35,
+            -69.31148105770195
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2638/light:bakery_upper_-2.95",
+          "position": [
+            579.7617103490928,
+            5.35,
+            -69.31148105770195
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2638/light:pharmacy_sign",
+          "position": [
+            572.5217103490928,
+            6.2,
+            -70.31148105770195
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2638/light:side_-1.55_1.95",
+          "position": [
+            581.0517103490928,
+            1.95,
+            -64.76148105770196
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2638/light:side_-1.55_5.35",
+          "position": [
+            581.0517103490928,
+            5.35,
+            -64.76148105770196
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2638/light:door_bakery",
+          "position": [
+            577.3717103490927,
+            2.1,
+            -69.49148105770196
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2639/light:bakery_display",
+          "position": [
+            588.7828316194208,
+            1.85,
+            59.17722539904193
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2639/light:bakery_upper_-1.15",
+          "position": [
+            588.9428316194208,
+            5.35,
+            60.46722539904193
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2639/light:bakery_upper_-2.95",
+          "position": [
+            588.9428316194208,
+            5.35,
+            58.667225399041925
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2639/light:pharmacy_sign",
+          "position": [
+            587.9428316194208,
+            6.2,
+            65.90722539904193
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2639/light:side_-1.55_1.95",
+          "position": [
+            593.4928316194207,
+            1.95,
+            57.377225399041926
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2639/light:side_-1.55_5.35",
+          "position": [
+            593.4928316194207,
+            5.35,
+            57.377225399041926
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2639/light:door_bakery",
+          "position": [
+            588.7628316194208,
+            2.1,
+            61.057225399041926
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.apartment-block-b:2640/light:entry",
+          "position": [
+            567.0398880287004,
+            3.35,
+            -122.51735653469716
+          ],
+          "group": "fairhaven-civic",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.apartment-block-a:2641/light:entry",
+          "position": [
+            576.2253435090985,
+            3.35,
+            159.75543608134615
+          ],
+          "group": "fairhaven-civic",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2642/light:bakery_display",
+          "position": [
+            585.2983476341486,
+            1.85,
+            -115.8002229497995
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2642/light:bakery_upper_-1.15",
+          "position": [
+            585.4583476341486,
+            5.35,
+            -114.51022294979951
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2642/light:bakery_upper_-2.95",
+          "position": [
+            585.4583476341486,
+            5.35,
+            -116.31022294979951
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2642/light:pharmacy_sign",
+          "position": [
+            584.4583476341486,
+            6.2,
+            -109.0702229497995
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2642/light:side_-1.55_1.95",
+          "position": [
+            590.0083476341485,
+            1.95,
+            -117.6002229497995
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2642/light:side_-1.55_5.35",
+          "position": [
+            590.0083476341485,
+            5.35,
+            -117.6002229497995
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/bld.mainstreet-brick:2642/light:door_bakery",
+          "position": [
+            585.2783476341486,
+            2.1,
+            -113.92022294979951
+          ],
+          "group": "sunset-grove-mainstreet",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/prop.street-lamp:2643/light:lantern",
+          "position": [
+            553,
+            3.18,
+            -150
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/prop.street-lamp:2644/light:lantern",
+          "position": [
+            553,
+            3.18,
+            -100
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/prop.street-lamp:2645/light:lantern",
+          "position": [
+            553,
+            3.18,
+            -50
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/prop.street-lamp:2646/light:lantern",
+          "position": [
+            553,
+            3.18,
+            50
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/prop.street-lamp:2647/light:lantern",
+          "position": [
+            553,
+            3.18,
+            100
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/prop.street-lamp:2648/light:lantern",
+          "position": [
+            553,
+            3.18,
+            150
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/prop.street-lamp:3077/light:lantern",
+          "position": [
+            -499.7520899306686,
+            3.18,
+            9.518458203432878
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/prop.street-lamp:3186/light:lantern",
+          "position": [
+            -240.88907583509973,
+            3.18,
+            -339.3437075404939
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/prop.street-lamp:3193/light:lantern",
+          "position": [
+            -200.75238224217276,
+            3.18,
+            -339.2505705984856
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/prop.street-lamp:3219/light:lantern",
+          "position": [
+            54.328796330562625,
+            3.18,
+            -340.86788513181256
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/prop.street-lamp:3223/light:lantern",
+          "position": [
+            114.07526703648773,
+            3.18,
+            -339.2831406323317
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/prop.street-lamp:3233/light:lantern",
+          "position": [
+            254.7849317313037,
+            3.18,
+            -339.5138294906525
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/prop.street-lamp:3397/light:lantern",
+          "position": [
+            -544.9356631018475,
+            3.18,
+            -9.041629833483752
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/prop.street-lamp:3401/light:lantern",
+          "position": [
+            -487.907682002077,
+            3.18,
+            -9.12292913675568
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/prop.street-lamp:3473/light:lantern",
+          "position": [
+            -77.57586322015936,
+            3.18,
+            232.16127168636706
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/prop.street-lamp:3493/light:lantern",
+          "position": [
+            78.13398585445759,
+            3.18,
+            231.33937650797046
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/prop.street-lamp:3495/light:lantern",
+          "position": [
+            94.73406200748514,
+            3.18,
+            232.44645747752628
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/prop.street-lamp:3503/light:lantern",
+          "position": [
+            179.98185157559982,
+            3.18,
+            231.50682021776356
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/prop.street-lamp:3623/light:lantern",
+          "position": [
+            -513.2624172880081,
+            3.18,
+            -9.382971258770906
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/prop.street-lamp:3628/light:lantern",
+          "position": [
+            -536.2303691186845,
+            3.18,
+            8.954510767445134
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/prop.street-lamp:3676/light:lantern",
+          "position": [
+            -95.32450244846206,
+            3.18,
+            -37.75804995098889
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/prop.street-lamp:3689/light:lantern",
+          "position": [
+            -5.176227789151028,
+            3.18,
+            -37.69759016658224
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/prop.street-lamp:3694/light:lantern",
+          "position": [
+            15.582600292865095,
+            3.18,
+            -38.612320880274524
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CROSSING@0,0/prop.street-lamp:3722/light:lantern",
+          "position": [
+            201.87368967276825,
+            3.18,
+            -38.43740999822428
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        }
+      ],
+      "heroLights": 0,
+      "heroShadowMaps": 0,
+      "promotionChanges": 0,
+      "practicalEffects": {
+        "beams": 0,
+        "reflections": 3,
+        "motes": 0
+      },
+      "shadowSize": 1024,
+      "preset": "L9-crossing",
+      "sunDirection": [
+        0.12702218165463844,
+        0.4356824462767121,
+        -0.8910926839414831
+      ],
+      "sunColor": "#c6d3f2",
+      "sky": "#0d1727",
+      "fog": "#2b3c52",
+      "fogNear": 200,
+      "fogFar": 1400,
+      "intensity": 0.6,
+      "shadowColor": "141a2c",
+      "coreShadowEdges": [
+        0.45,
+        -0.25
+      ],
+      "shadowRadius": 3,
+      "normalBias": 0.08,
+      "shadowArea": 18.75,
+      "fogColors": [
+        "#0d1727",
+        "#2b3c52"
+      ],
+      "rim": 0.4,
+      "fieldShadow": 0,
+      "shadowDirection": [
+        0.12702218165463844,
+        0.4356824462767121,
+        -0.8910926839414831
+      ],
+      "lightField": {
+        "strength": 1,
+        "resolution": 512,
+        "size": 60,
+        "statics": 636,
+        "litStatics": 636,
+        "candidates": 8,
+        "drawn": 8,
+        "transients": 263,
+        "capacity": 256,
+        "ms": 0.09999999962747097,
+        "center": [
+          -549.9609375,
+          0
+        ]
+      }
+    }
+  },
+  "effectiveZoom": 1.1400000000000012,
+  "depth": [
+    {
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "name": "static-body",
+      "layer": 1,
+      "bias": -4,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 3,
+      "bias": -12,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 2,
+      "bias": -8,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 4,
+      "bias": -16,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 7,
+      "bias": -28,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "name": "static-body",
+      "layer": 1,
+      "bias": -4,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 3,
+      "bias": -12,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 2,
+      "bias": -8,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 4,
+      "bias": -16,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 6,
+      "bias": -24,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 7,
+      "bias": -28,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 5,
+      "bias": -20,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "name": "static-body",
+      "layer": 1,
+      "bias": -4,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 3,
+      "bias": -12,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 7,
+      "bias": -28,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 4,
+      "bias": -16,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 2,
+      "bias": -8,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 5,
+      "bias": -20,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "name": "static-body",
+      "layer": 1,
+      "bias": -4,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 3,
+      "bias": -12,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 7,
+      "bias": -28,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 4,
+      "bias": -16,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 2,
+      "bias": -8,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "name": "static-body",
+      "layer": 2,
+      "bias": -8,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 4,
+      "bias": -16,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 6,
+      "bias": -24,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 3,
+      "bias": -12,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 5,
+      "bias": -20,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "name": "static-body",
+      "layer": 2,
+      "bias": -8,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 4,
+      "bias": -16,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 6,
+      "bias": -24,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 1,
+      "bias": -4,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 7,
+      "bias": -28,
+      "enabled": true
+    }
+  ],
+  "trackHits": [
+    {
+      "point": [
+        -549.3191852289281,
+        0.001200000056998718,
+        6.996782348869163
+      ],
+      "name": "static-body",
+      "layer": 6,
+      "bias": -24,
+      "enabled": true
+    },
+    {
+      "point": [
+        -549.3193692010493,
+        0.0010000000474938986,
+        6.996697604626511
+      ],
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "point": [
+        -549.3258082250817,
+        -0.0060000000521558405,
+        6.993731556232404
+      ],
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "point": [
+        -549.3350068307112,
+        -0.016000000052155842,
+        6.989494344301136
+      ],
+      "name": "countryside",
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "point": [
+        -549.4306723292104,
+        -0.12000000000000331,
+        6.945427340238104
+      ],
+      "name": "",
+      "bias": 0,
+      "enabled": false
+    }
+  ],
+  "frames": [
+    {
+      "now": 17630.8,
+      "tick": 1170,
+      "rendered": 1189
+    },
+    {
+      "now": 17647.5,
+      "tick": 1171,
+      "rendered": 1190
+    },
+    {
+      "now": 17664.2,
+      "tick": 1173,
+      "rendered": 1191
+    },
+    {
+      "now": 17680.8,
+      "tick": 1173,
+      "rendered": 1192
+    },
+    {
+      "now": 17697.5,
+      "tick": 1174,
+      "rendered": 1193
+    },
+    {
+      "now": 17714.2,
+      "tick": 1176,
+      "rendered": 1194
+    },
+    {
+      "now": 17730.9,
+      "tick": 1177,
+      "rendered": 1195
+    },
+    {
+      "now": 17747.5,
+      "tick": 1177,
+      "rendered": 1196
+    },
+    {
+      "now": 17764.1,
+      "tick": 1178,
+      "rendered": 1197
+    },
+    {
+      "now": 17780.8,
+      "tick": 1179,
+      "rendered": 1198
+    },
+    {
+      "now": 17797.5,
+      "tick": 1180,
+      "rendered": 1199
+    },
+    {
+      "now": 17814.2,
+      "tick": 1182,
+      "rendered": 1200
+    },
+    {
+      "now": 17830.9,
+      "tick": 1183,
+      "rendered": 1201
+    },
+    {
+      "now": 17847.5,
+      "tick": 1183,
+      "rendered": 1202
+    },
+    {
+      "now": 17864.1,
+      "tick": 1184,
+      "rendered": 1203
+    },
+    {
+      "now": 17880.8,
+      "tick": 1185,
+      "rendered": 1204
+    },
+    {
+      "now": 17897.5,
+      "tick": 1186,
+      "rendered": 1205
+    },
+    {
+      "now": 17914.2,
+      "tick": 1188,
+      "rendered": 1206
+    },
+    {
+      "now": 17930.8,
+      "tick": 1188,
+      "rendered": 1207
+    },
+    {
+      "now": 17947.5,
+      "tick": 1189,
+      "rendered": 1208
+    },
+    {
+      "now": 17964.2,
+      "tick": 1191,
+      "rendered": 1209
+    },
+    {
+      "now": 17980.8,
+      "tick": 1191,
+      "rendered": 1210
+    },
+    {
+      "now": 17997.5,
+      "tick": 1192,
+      "rendered": 1211
+    },
+    {
+      "now": 18014.1,
+      "tick": 1193,
+      "rendered": 1212
+    },
+    {
+      "now": 18030.8,
+      "tick": 1194,
+      "rendered": 1213
+    },
+    {
+      "now": 18047.5,
+      "tick": 1195,
+      "rendered": 1214
+    },
+    {
+      "now": 18064.1,
+      "tick": 1196,
+      "rendered": 1215
+    },
+    {
+      "now": 18080.8,
+      "tick": 1197,
+      "rendered": 1216
+    },
+    {
+      "now": 18097.5,
+      "tick": 1198,
+      "rendered": 1217
+    },
+    {
+      "now": 18114.2,
+      "tick": 1200,
+      "rendered": 1218
+    }
+  ],
+  "consecutive": true,
+  "corners": [
+    {
+      "x": -550,
+      "z": 7,
+      "file": "corner-0.jpg"
+    },
+    {
+      "x": -450,
+      "z": 0,
+      "file": "corner-1.jpg"
+    },
+    {
+      "x": 450,
+      "z": 0,
+      "file": "corner-2.jpg"
+    },
+    {
+      "x": -350,
+      "z": -330,
+      "file": "corner-3.jpg"
+    },
+    {
+      "x": 350,
+      "z": -330,
+      "file": "corner-4.jpg"
+    },
+    {
+      "x": -300,
+      "z": 240,
+      "file": "corner-5.jpg"
+    },
+    {
+      "x": 300,
+      "z": 240,
+      "file": "corner-6.jpg"
+    },
+    {
+      "x": -250,
+      "z": -30,
+      "file": "corner-7.jpg"
+    },
+    {
+      "x": 250,
+      "z": -30,
+      "file": "corner-8.jpg"
+    },
+    {
+      "x": -365,
+      "z": -306,
+      "file": "corner-9.jpg"
+    },
+    {
+      "x": -1,
+      "z": -337,
+      "file": "corner-10.jpg"
+    },
+    {
+      "x": -9,
+      "z": -322,
+      "file": "corner-11.jpg"
+    },
+    {
+      "x": 182,
+      "z": -322,
+      "file": "corner-12.jpg"
+    },
+    {
+      "x": 271,
+      "z": -322,
+      "file": "corner-13.jpg"
+    },
+    {
+      "x": -1,
+      "z": -342,
+      "file": "corner-14.jpg"
+    },
+    {
+      "x": 269,
+      "z": -318,
+      "file": "corner-15.jpg"
+    },
+    {
+      "x": -379,
+      "z": 132,
+      "file": "corner-16.jpg"
+    },
+    {
+      "x": -232,
+      "z": 250,
+      "file": "corner-17.jpg"
+    }
+  ],
+  "perf": {
+    "backend": "webgl",
+    "fps": 59.523809523799216,
+    "frameMs": 16.80000000000291,
+    "drawCalls": 76,
+    "triangles": 89911,
+    "geometries": 692,
+    "textures": 200,
+    "renderCpuMs": 1.699999999254942,
+    "updateCpuMs": 0.900000000372529,
+    "heapBytes": 1830000000,
+    "renderedFrames": 1362,
+    "quality": {
+      "setting": "low",
+      "tier": "low",
+      "p90Ms": 0,
+      "slowSeconds": 0,
+      "budgets": {
+        "frameMs": 33.333333333333336,
+        "infected": 100,
+        "drawCalls": 300,
+        "triangles": 500000,
+        "simMs": 6,
+        "heapMB": 250,
+        "pixelRatio": 1.5,
+        "shadowSize": 1024,
+        "bloomMips": 2,
+        "cullDistance": 45
+      }
+    },
+    "lighting": {
+      "lightFieldMs": 0.19999999925494194,
+      "lightPools": 10,
+      "lightCandidates": 10,
+      "shadowMaps": 1,
+      "heroLights": 0,
+      "heroShadow": 0,
+      "preset": "L9-crossing"
+    }
+  },
+  "errors": []
+}

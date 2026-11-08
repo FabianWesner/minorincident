@@ -77,6 +77,33 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   const noFrameTiming = process.env.PLAYTEST_NO_FRAME_TIMING === '1';
   if (noFrameTiming && (process.env.PLAYTEST_FRAME_GATE === '1' || process.env.PLAYTEST_CPU_PROFILE === '1')) throw new Error('PLAYTEST_NO_FRAME_TIMING conflicts with frame/CPU profiling');
   await page.addInitScript(noFrameTiming ? 'window.__name = f => f; window.__playtestFrames = [];' : `window.__name = f => f; (${installFrameProbe.toString()})(${frameInterval.toString()});`);
+  if (process.env.PLAYTEST_L6_RAIL_CAPTURES === '1') await page.addInitScript(() => {
+    const scope = window as unknown as { __qaL6Audit: unknown[]; __qaL6Photo: { stage: string } | null };
+    scope.__qaL6Audit = []; scope.__qaL6Photo = null;
+    const seen = new Set<string>(); let nightAt = 0, spawnCount = 0;
+    const observe = () => {
+      const g = (window.__SCENE__ as unknown as { game?: Game })?.game, w = g?.world, m = w?.missions?.state, s = m?.l6;
+      if (w?.scenario === 'L6' && s && !scope.__qaL6Photo) {
+        const people = s.survivors.map(r => { const e = w.entities.get(r.id)!; return { id: r.id, status: r.status, hidden: !!e.hidden, hp: e.health.current, ...e.transform }; });
+        const out = people.filter(r => r.status === 'out'), live = people.filter(r => !['out', 'dead', 'turned'].includes(r.status));
+        const player = w.entities.get(1)!.transform, spawns = s.spawnLog.filter(q => q.wave === 3);
+        if (spawns.length !== spawnCount) { scope.__qaL6Audit.push({ kind: 'cohort', tick: w.tick, player: { ...player }, people, spawns: spawns.slice(spawnCount) }); spawnCount = spawns.length; }
+        if (m?.phase === 'cinematic') nightAt ||= w.tick;
+        const stage = out.length && !seen.has('safe') ? 'safe'
+          : out.length && !live.length && !seen.has('last-crossed') ? 'last-crossed'
+          : out.length && !live.length && out.every(r => r.x >= 266) && !seen.has('street-clear') ? 'street-clear'
+          : m?.phase === 'cinematic' && !seen.has('night') ? 'night'
+          : nightAt && w.tick - nightAt >= 180 && m?.phase === 'cinematic' && !seen.has('night-middle') ? 'night-middle'
+          : player.x >= 108 && player.x <= 112 && !seen.has('rail-110') ? 'rail-110' : null;
+        if (stage) {
+          seen.add(stage); scope.__qaL6Audit.push({ kind: stage, tick: w.tick, phase: m?.phase, caption: m?.subtitle?.text, player: { ...player }, people, gateAt: s.gateAt });
+          scope.__qaL6Photo = { stage }; window.__SS__!.pause();
+        }
+      }
+      requestAnimationFrame(observe);
+    };
+    requestAnimationFrame(observe);
+  });
   if (process.env.PLAYTEST_ACCEPTANCE_LEDGER === '1') await page.addInitScript(`window.__name = f => f; (${installAcceptanceLedger.toString()})(${observeAttackStarts.toString()}, ${process.env.PLAYTEST_L4_CORPSE_CAPTURES === '1'});`);
   if (process.env.PLAYTEST_L6_HOLD_AUDIT === '1') await page.addInitScript(`(${installL6HoldObserver.toString()})();`);
   if (process.env.PLAYTEST_THREAT_AUDIT === '1') {
@@ -368,13 +395,13 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     if (process.env.PLAYTEST_L6_RAIL_CAPTURES === '1' && eyes.level === 'L6' && !eyes.loading) {
       const escape = await page.evaluate(() => {
         const w = (window.__SCENE__ as unknown as { game: Game }).game.world, m = w.missions!.state, s = m.l6!;
-        return { phase: m.phase, caption: m.subtitle?.text, out: s.survivors.filter(r => r.status === 'out').map(r => {
+        return { pending: (window as unknown as { __qaL6Photo?: { stage: string } }).__qaL6Photo, tick: w.tick, phase: m.phase, caption: m.subtitle?.text, out: s.survivors.filter(r => r.status === 'out').map(r => {
           const e = w.entities.get(r.id)!; return { id: r.id, hidden: !!e.hidden, ...e.transform };
         }) };
       });
-      const stage = escape.phase === 'cinematic' ? 'night'
+      const stage = escape.pending?.stage ?? (escape.phase === 'cinematic' ? 'night'
         : escape.out.length && escape.caption === 'The survivors are safe.' ? 'safe'
-        : eyes.step === 'retreat' && (eyes.player?.x ?? 0) > 95 && eyes.enemies.some(e => e.drawn && e.hp > 0) ? 'rail' : null;
+        : eyes.step === 'retreat' && (eyes.player?.x ?? 0) > 95 && eyes.enemies.some(e => e.drawn && e.hp > 0) ? 'rail' : null);
       if (stage && !l6RailCaptures.has(stage)) {
         l6RailCaptures.add(stage); await page.evaluate(() => window.__SS__!.pause());
         try {
@@ -384,7 +411,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
             log({ l6RailCapture: { stage, file, quality: o.quality, zoom, ...escape } });
           }
         } finally {
-          await page.evaluate(z => { window.__SS__!.camera.zoom(z); window.__SS__!.resume(); }, o.zoom);
+          await page.evaluate(z => { (window as unknown as { __qaL6Photo: unknown }).__qaL6Photo = null; window.__SS__!.camera.zoom(z); window.__SS__!.resume(); }, o.zoom);
         }
       }
     }
@@ -1843,6 +1870,9 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   assert.ok(handoverReady,'L8 must have no objective, destination pin or minimap marker during the calm after handover (L8-02)');
   return { runs, issues, yielded };
   } finally {
+    if (process.env.PLAYTEST_L6_RAIL_CAPTURES === '1' && !page.isClosed()) {
+      await page.evaluate(() => (window as unknown as { __qaL6Audit: unknown[] }).__qaL6Audit).then(data => writeFileSync(join(o.out, `${o.tag}-rail-transitions.json`), JSON.stringify(data))).catch(error => log({ l6RailAuditError: String(error) }));
+    }
     if (process.env.PLAYTEST_THREAT_AUDIT === '1' && !page.isClosed()) {
       await page.evaluate('window.__threatAudit').then(data => writeFileSync(join(o.out, `${o.tag}-l3l4-threat.json`), JSON.stringify(data))).catch(error => log({ threatAuditError: String(error) }));
     }

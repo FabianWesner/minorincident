@@ -1,0 +1,1301 @@
+{
+  "revision": "8db1ce18ce071f43fb719b5cd4183828c8c1e255",
+  "backend": "webgpu",
+  "tier": "high",
+  "level": "l10",
+  "state": {
+    "backend": "webgpu",
+    "quality": "high",
+    "camera": {
+      "zoom": 1,
+      "targetZoom": 1,
+      "zoomLimits": [
+        0.5,
+        1.5
+      ],
+      "fov": 25,
+      "azimuth": 0.7853981633974483,
+      "polar": 0.9424777960769379,
+      "radius": 19,
+      "regionScale": 1,
+      "focus": [
+        2363.989998500798,
+        0,
+        -75.38999990629988
+      ],
+      "target": [
+        2363.99,
+        0,
+        -75.39
+      ],
+      "position": [
+        2378.1199166495967,
+        14.518295731624086,
+        -61.2600833504032
+      ],
+      "spot": "scene-lab"
+    },
+    "lighting": {
+      "promotionBlend": 1,
+      "heroLight": "D-CURE@0,0/prop.street-lamp:1533/light:lantern",
+      "lamps": [
+        {
+          "id": "D-CURE@0,0/prop.street-lamp:25/light:lantern",
+          "position": [
+            758,
+            3.18,
+            19
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CURE@0,0/prop.street-lamp:26/light:lantern",
+          "position": [
+            943,
+            3.18,
+            86
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CURE@0,0/kit.dispersal-console:205/light:equipment",
+          "position": [
+            2707,
+            1.55,
+            39.065
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CURE@0,0/prop.cure-canister-pedestal:206/light:equipment",
+          "position": [
+            2713,
+            1.023,
+            39.5
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CURE@0,0/kit.dispersal-console:376/light:equipment",
+          "position": [
+            3999.565,
+            1.55,
+            -27
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CURE@0,0/kit.dispersal-filtration-tower:381/light:equipment",
+          "position": [
+            4032.911,
+            9.2,
+            -31
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CURE@0,0/kit.dispersal-filtration-tower:382/light:equipment",
+          "position": [
+            3968.089,
+            9.2,
+            -1.0000000000000002
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        },
+        {
+          "id": "D-CURE@0,0/kit.dispersal-turbine-hall:384/light:equipment",
+          "position": [
+            4000,
+            6.225,
+            -61.45
+          ],
+          "group": "scene-lab",
+          "broken": false,
+          "emissive": 1
+        }
+      ],
+      "heroLights": 1,
+      "heroShadowMaps": 1,
+      "promotionChanges": 1,
+      "practicalEffects": {
+        "beams": 4,
+        "reflections": 8,
+        "motes": 0
+      },
+      "shadowSize": 2048,
+      "preset": "L10-night",
+      "sunDirection": [
+        0.6062521513162876,
+        0.5233659512516495,
+        -0.5987874498474639
+      ],
+      "sunColor": "#c6d3f2",
+      "sky": "#0d1727",
+      "fog": "#2b3c52",
+      "fogNear": 200,
+      "fogFar": 1400,
+      "intensity": 0.38,
+      "shadowColor": "141a2c",
+      "coreShadowEdges": [
+        1,
+        -0.25
+      ],
+      "shadowRadius": 2,
+      "normalBias": 0.08,
+      "shadowArea": 21.5,
+      "fogColors": [
+        "#0d1727",
+        "#2b3c52"
+      ],
+      "rim": 0.4,
+      "fieldShadow": 1,
+      "shadowDirection": [
+        0.1413271202836775,
+        0.5978874321577139,
+        0.7890229803625354
+      ],
+      "lightField": {
+        "strength": 1,
+        "resolution": 1024,
+        "size": 80,
+        "statics": 1697,
+        "litStatics": 1697,
+        "candidates": 14,
+        "drawn": 14,
+        "transients": 132,
+        "capacity": 512,
+        "ms": 0.20000000018626451,
+        "center": [
+          2363.984375,
+          -75.390625
+        ]
+      }
+    }
+  },
+  "effectiveZoom": 1.3000000000000032,
+  "depth": [
+    {
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "name": "static-body",
+      "layer": 4,
+      "bias": -16,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 9,
+      "bias": -36,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 11,
+      "bias": -44,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 7,
+      "bias": -28,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 5,
+      "bias": -20,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 3,
+      "bias": -12,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 6,
+      "bias": -24,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 8,
+      "bias": -32,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 10,
+      "bias": -40,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 2,
+      "bias": -8,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 1,
+      "bias": -4,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "name": "static-body",
+      "layer": 4,
+      "bias": -16,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 9,
+      "bias": -36,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 11,
+      "bias": -44,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 7,
+      "bias": -28,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 5,
+      "bias": -20,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 3,
+      "bias": -12,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 6,
+      "bias": -24,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 10,
+      "bias": -40,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 8,
+      "bias": -32,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 1,
+      "bias": -4,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 2,
+      "bias": -8,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "name": "static-body",
+      "layer": 4,
+      "bias": -16,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 9,
+      "bias": -36,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 11,
+      "bias": -44,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 5,
+      "bias": -20,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 3,
+      "bias": -12,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 6,
+      "bias": -24,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 7,
+      "bias": -28,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 8,
+      "bias": -32,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 10,
+      "bias": -40,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 1,
+      "bias": -4,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 2,
+      "bias": -8,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "name": "static-body",
+      "layer": 4,
+      "bias": -16,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 2,
+      "bias": -8,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 3,
+      "bias": -12,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 1,
+      "bias": -4,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "name": "static-body",
+      "layer": 5,
+      "bias": -20,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 3,
+      "bias": -12,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 4,
+      "bias": -16,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "name": "static-body",
+      "layer": 4,
+      "bias": -16,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 3,
+      "bias": -12,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 2,
+      "bias": -8,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "name": "static-body",
+      "layer": 4,
+      "bias": -16,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 9,
+      "bias": -36,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 11,
+      "bias": -44,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 7,
+      "bias": -28,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 5,
+      "bias": -20,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 3,
+      "bias": -12,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 6,
+      "bias": -24,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 10,
+      "bias": -40,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 8,
+      "bias": -32,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "name": "static-body",
+      "layer": 4,
+      "bias": -16,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 9,
+      "bias": -36,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 11,
+      "bias": -44,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 7,
+      "bias": -28,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 5,
+      "bias": -20,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 3,
+      "bias": -12,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 6,
+      "bias": -24,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 8,
+      "bias": -32,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 10,
+      "bias": -40,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 1,
+      "bias": -4,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 2,
+      "bias": -8,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "name": "static-body",
+      "layer": 4,
+      "bias": -16,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 9,
+      "bias": -36,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 11,
+      "bias": -44,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 7,
+      "bias": -28,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 5,
+      "bias": -20,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 3,
+      "bias": -12,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 6,
+      "bias": -24,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 8,
+      "bias": -32,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 10,
+      "bias": -40,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 1,
+      "bias": -4,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 2,
+      "bias": -8,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "name": "static-body",
+      "layer": 4,
+      "bias": -16,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 1,
+      "bias": -4,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 3,
+      "bias": -12,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 2,
+      "bias": -8,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "name": "static-body",
+      "layer": 3,
+      "bias": -12,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 4,
+      "bias": -16,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "name": "static-body",
+      "layer": 4,
+      "bias": -16,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 3,
+      "bias": -12,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 1,
+      "bias": -4,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 2,
+      "bias": -8,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "name": "static-body",
+      "layer": 4,
+      "bias": -16,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 3,
+      "bias": -12,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 2,
+      "bias": -8,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 1,
+      "bias": -4,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "name": "static-body",
+      "layer": 4,
+      "bias": -16,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 1,
+      "bias": -4,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 3,
+      "bias": -12,
+      "enabled": true
+    },
+    {
+      "name": "static-body",
+      "layer": 2,
+      "bias": -8,
+      "enabled": true
+    }
+  ],
+  "trackHits": [
+    {
+      "point": [
+        2364.8065026917343,
+        0.04500000178813934,
+        -67.39272548551905
+      ],
+      "name": "",
+      "layer": 16,
+      "bias": -64,
+      "enabled": true
+    },
+    {
+      "point": [
+        2364.764005132029,
+        -0.001200000056998718,
+        -67.4123014054233
+      ],
+      "name": "static-body",
+      "layer": 3,
+      "bias": -12,
+      "enabled": true
+    },
+    {
+      "point": [
+        2364.759589801331,
+        -0.006000000052154064,
+        -67.41433526714826
+      ],
+      "name": "static-body",
+      "layer": 0,
+      "bias": 0,
+      "enabled": false
+    },
+    {
+      "point": [
+        2364.737513148485,
+        -0.029999999329447746,
+        -67.42450457547707
+      ],
+      "name": "horizon-ground",
+      "bias": 0,
+      "enabled": false
+    }
+  ],
+  "frames": [
+    {
+      "now": 15559.3,
+      "tick": 38161,
+      "rendered": 20
+    },
+    {
+      "now": 15576,
+      "tick": 38162,
+      "rendered": 21
+    },
+    {
+      "now": 15592.6,
+      "tick": 38163,
+      "rendered": 22
+    },
+    {
+      "now": 15609.3,
+      "tick": 38164,
+      "rendered": 23
+    },
+    {
+      "now": 15626,
+      "tick": 38165,
+      "rendered": 24
+    },
+    {
+      "now": 15642.7,
+      "tick": 38167,
+      "rendered": 25
+    },
+    {
+      "now": 15659.4,
+      "tick": 38168,
+      "rendered": 26
+    },
+    {
+      "now": 15675.9,
+      "tick": 38168,
+      "rendered": 27
+    },
+    {
+      "now": 15692.6,
+      "tick": 38169,
+      "rendered": 28
+    },
+    {
+      "now": 15709.3,
+      "tick": 38170,
+      "rendered": 29
+    },
+    {
+      "now": 15726,
+      "tick": 38171,
+      "rendered": 30
+    },
+    {
+      "now": 15742.6,
+      "tick": 38172,
+      "rendered": 31
+    },
+    {
+      "now": 15759.3,
+      "tick": 38173,
+      "rendered": 32
+    },
+    {
+      "now": 15776,
+      "tick": 38174,
+      "rendered": 33
+    },
+    {
+      "now": 15792.6,
+      "tick": 38175,
+      "rendered": 34
+    },
+    {
+      "now": 15809.3,
+      "tick": 38176,
+      "rendered": 35
+    },
+    {
+      "now": 15825.9,
+      "tick": 38177,
+      "rendered": 36
+    },
+    {
+      "now": 15842.7,
+      "tick": 38179,
+      "rendered": 37
+    },
+    {
+      "now": 15859.3,
+      "tick": 38179,
+      "rendered": 38
+    },
+    {
+      "now": 15876,
+      "tick": 38180,
+      "rendered": 39
+    },
+    {
+      "now": 15892.6,
+      "tick": 38181,
+      "rendered": 40
+    },
+    {
+      "now": 15909.3,
+      "tick": 38182,
+      "rendered": 41
+    },
+    {
+      "now": 15926,
+      "tick": 38183,
+      "rendered": 42
+    },
+    {
+      "now": 15942.6,
+      "tick": 38184,
+      "rendered": 43
+    },
+    {
+      "now": 15959.3,
+      "tick": 38185,
+      "rendered": 44
+    },
+    {
+      "now": 15976,
+      "tick": 38186,
+      "rendered": 45
+    },
+    {
+      "now": 15992.7,
+      "tick": 38188,
+      "rendered": 46
+    },
+    {
+      "now": 16009.3,
+      "tick": 38188,
+      "rendered": 47
+    },
+    {
+      "now": 16025.9,
+      "tick": 38189,
+      "rendered": 48
+    },
+    {
+      "now": 16042.7,
+      "tick": 38191,
+      "rendered": 49
+    }
+  ],
+  "consecutive": true,
+  "corners": [
+    {
+      "x": 2364,
+      "z": -75,
+      "file": "corner-0.jpg"
+    },
+    {
+      "x": 2250,
+      "z": -70,
+      "file": "corner-1.jpg"
+    },
+    {
+      "x": 2450,
+      "z": -70,
+      "file": "corner-2.jpg"
+    },
+    {
+      "x": 3740,
+      "z": -33,
+      "file": "corner-3.jpg"
+    },
+    {
+      "x": 3906,
+      "z": -39,
+      "file": "corner-4.jpg"
+    }
+  ],
+  "perf": {
+    "backend": "webgpu",
+    "fps": 59.88023952095548,
+    "frameMs": 16.700000000000728,
+    "drawCalls": 71,
+    "triangles": 140225,
+    "geometries": 1315,
+    "textures": 208,
+    "renderCpuMs": 1.900000000372529,
+    "updateCpuMs": 0.900000000372529,
+    "heapBytes": 2470000000,
+    "renderedFrames": 89,
+    "quality": {
+      "setting": "high",
+      "tier": "high",
+      "p90Ms": 0,
+      "slowSeconds": 0,
+      "budgets": {
+        "frameMs": 16.7,
+        "infected": 200,
+        "drawCalls": 600,
+        "triangles": 1500000,
+        "simMs": 4,
+        "heapMB": 400,
+        "pixelRatio": 2,
+        "shadowSize": 2048,
+        "bloomMips": 5,
+        "cullDistance": 60
+      }
+    },
+    "lighting": {
+      "lightFieldMs": 0.10000000055879354,
+      "lightPools": 34,
+      "lightCandidates": 34,
+      "shadowMaps": 1,
+      "heroLights": 0,
+      "heroShadow": 0,
+      "preset": "L10-night"
+    }
+  },
+  "mission": {
+    "tick": 0,
+    "mission": {
+      "phase": "playing",
+      "checkpoint": "cure-military",
+      "states": {
+        "charge-active": false,
+        "console-held": false,
+        "terminal-read": false,
+        "cure-carried": false,
+        "cure-installed": false,
+        "charge-ready": false,
+        "mega-dead": false,
+        "cure-released": false,
+        "epilogue-finished": false,
+        "credits-finished": false,
+        "anchor-unavailable": false
+      },
+      "steps": {
+        "crash": {
+          "status": "completed",
+          "started": 0,
+          "kills": [],
+          "events": {},
+          "interaction": 0
+        },
+        "residential-fringe": {
+          "status": "completed",
+          "started": 0,
+          "kills": [],
+          "events": {},
+          "interaction": 0
+        },
+        "industrial-area": {
+          "status": "completed",
+          "started": 0,
+          "kills": [],
+          "events": {},
+          "interaction": 0
+        },
+        "military-zone": {
+          "status": "completed",
+          "started": 0,
+          "kills": [],
+          "events": {},
+          "interaction": 0
+        },
+        "research-campus": {
+          "status": "active",
+          "started": 0,
+          "kills": [],
+          "events": {},
+          "interaction": 0
+        },
+        "research": {
+          "status": "pending",
+          "started": 0,
+          "kills": [],
+          "events": {},
+          "interaction": 0
+        },
+        "cure": {
+          "status": "pending",
+          "started": 0,
+          "kills": [],
+          "events": {},
+          "interaction": 0
+        },
+        "research-exit": {
+          "status": "pending",
+          "started": 0,
+          "kills": [],
+          "events": {},
+          "interaction": 0
+        },
+        "destroyed-corridor": {
+          "status": "pending",
+          "started": 0,
+          "kills": [],
+          "events": {},
+          "interaction": 0
+        },
+        "dispersal-complex": {
+          "status": "pending",
+          "started": 0,
+          "kills": [],
+          "events": {},
+          "interaction": 0
+        },
+        "install": {
+          "status": "pending",
+          "started": 0,
+          "kills": [],
+          "events": {},
+          "interaction": 0
+        },
+        "hold": {
+          "status": "pending",
+          "started": 0,
+          "kills": [],
+          "events": {},
+          "interaction": 0
+        },
+        "mega": {
+          "status": "pending",
+          "started": 0,
+          "kills": [],
+          "events": {},
+          "interaction": 0
+        },
+        "release": {
+          "status": "pending",
+          "started": 0,
+          "kills": [],
+          "events": {},
+          "interaction": 0
+        },
+        "epilogue": {
+          "status": "pending",
+          "started": 0,
+          "kills": [],
+          "events": {},
+          "interaction": 0
+        },
+        "credits": {
+          "status": "pending",
+          "started": 0,
+          "kills": [],
+          "events": {},
+          "interaction": 0
+        }
+      }
+    },
+    "player": {
+      "x": 547,
+      "y": 0.705,
+      "z": 0,
+      "yaw": 0.3205919885488634
+    },
+    "render": "webgpu"
+  },
+  "errors": []
+}
