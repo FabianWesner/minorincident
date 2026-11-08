@@ -46,7 +46,7 @@ try {
     let photographed = false, closeProof: unknown = null, end: unknown = null;
     for (let i = 0; i < 1800; i++) {
       const plan = await session.page.evaluate(() => {
-        const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: Game }).game, w = g.world, scope = window as unknown as Scope;
+        const g = (window.__SCENE__ as unknown as { game: Game }).game, w = g.world, scope = window as unknown as Scope;
         const p = w.entities.get(1)!, f = scope.planner.sample(), az = g.view.view.azimuth;
         const x = Math.cos(az) * f.move.x - Math.sin(az) * f.move.z, y = Math.sin(az) * f.move.x + Math.cos(az) * f.move.z;
         const keys: string[] = [];
@@ -65,6 +65,11 @@ try {
       if (plan.finished || plan.hp <= 0 || plan.tick >= 10800) break;
       if (tier === 'low' && plan.owned && !closeProof) {
         await keys([]); await fire(false); await session.page.keyboard.press('Digit7');
+        await session.page.evaluate(async () => {
+          const a = window.__SS__!, w = (window.__SCENE__ as unknown as { game: Game }).game.world, l = w.combat!.runner.loadout;
+          const wait = Math.max(l.state.RIGHT.swapUntil, l.current('RIGHT').readyAt) - w.tick;
+          await a.step(Math.max(8, wait + 8));
+        });
         const near = await session.page.evaluate(() => {
           const g = (window.__SCENE__ as unknown as { game: Game }).game, p = g.world.entities.get(1)!.transform;
           const q = g.view.project(p.x - 2, g.world.districts!.groundHeight(p.x - 2, p.z), p.z);
