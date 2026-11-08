@@ -1211,8 +1211,10 @@ export class GameView implements Lifecycle {
     // L6 keeps its mission state on the exterior apron after selecting the shared
     // L6 night key. Only the underground preset owns the emergency-darkness grade.
     lighting.subwayDarkness.value = lighting.preset === 'L6-subway' ? 1 : 0;
+    const loadout = this.world.combat?.runner.loadout;
+    const rifleTorch = this.world.scenario === 'L10' && !this.world.missions?.state.states['cure-released'] && !this.world.mountedGun?.mounted && loadout?.current(loadout.state.selectedSide).id === 'weapon.assault-rifle';
     this.character?.showHeadlamp(!!metro?.flashlight, !!metro);
-    lighting.headlampOn.value = metro?.flashlight ? 1 : 0;
+    lighting.headlampOn.value = metro?.flashlight || rifleTorch ? 1 : 0;
     // Q-303: the beam follows the drawn head (WASD + mouse aim turns the body to the cursor while it moves elsewhere).
     const headlampYaw = (this.character?.visible ? this.character.headYaw() : null) ?? this.world.entities.get(1)?.transform.yaw ?? 0;
     lighting.headlampAim.value.set(Math.cos(headlampYaw), -Math.sin(headlampYaw));
@@ -1221,7 +1223,7 @@ export class GameView implements Lifecycle {
     if (field.active) {
       const aura = timeOfDayPresets[lighting.preset].aura ?? 0;
       if (hero && aura > 0) field.push(auraLight(hero.x, hero.z, aura));
-      if (hero && this.world.missions?.state.l6?.flashlight) {
+      if (hero && (this.world.missions?.state.l6?.flashlight || rifleTorch)) {
         const yaw=headlampYaw;
         flashlight = footprint({type:'spot',color:'light_led_white',intensity:9,range:18,angle:48,flicker:'none',shadow:'hero',position:[hero.x,hero.y+1,hero.z],direction:[Math.cos(yaw),-.3,-Math.sin(yaw)]});
         flashlight.id = 'headlamp';
