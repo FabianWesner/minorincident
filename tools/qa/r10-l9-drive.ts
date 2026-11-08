@@ -12,6 +12,16 @@ import { runSession } from '../playtest/session';
 
 const [variant, tier, zoom, route, backend = 'webgl2'] = process.argv.slice(2);
 if (!variant || !['low', 'high'].includes(tier) || !['1', '1.5'].includes(zoom)) throw Error('variant low|high 1|1.5 [road|countryside|dry-shortcut] [webgl2|webgpu]');
+// A pair fits one exclusive reservation. Both children inherit its pool token.
+if (variant === 'pair') {
+  for (const [name, origin] of [['before-quiet', process.env.L9_BEFORE_ORIGIN], ['after-quiet', process.env.L9_AFTER_ORIGIN]]) {
+    if (!origin) throw Error('pair requires L9_BEFORE_ORIGIN and L9_AFTER_ORIGIN');
+    execFileSync(process.execPath, ['--import', 'tsx', 'tools/qa/r10-l9-drive.ts', name!, tier, zoom], {
+      stdio: 'inherit', env: { ...process.env, L9_DRIVE_ORIGIN: origin },
+    });
+  }
+  process.exit(0);
+}
 const tag = `${variant}-${tier}-z${zoom}${route ? `-${route}` : ''}`;
 const out = resolve(`test-results/r10-l9/${tag}`), profile = `${out}/profile`;
 mkdirSync(profile, { recursive: true });
@@ -21,10 +31,12 @@ const port = address.port; await new Promise<void>(done => socket.close(() => do
 const origin = process.env.L9_DRIVE_ORIGIN ?? `http://127.0.0.1:${port}`, save = preset('L9-default');
 save.settings.quality = tier as 'low' | 'high';
 writeFileSync(`${profile}/pool-storage.json`, JSON.stringify({ cookies: [], origins: [{ origin, localStorage: [{ name: SAVE_KEY, value: JSON.stringify(save) }] }] }));
-writeFileSync(`${out}/source.json`, JSON.stringify({ revision: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), bundle: /src="([^"]+\.js)"/.exec(readFileSync('dist/index.html', 'utf8'))?.[1], variant, tier, zoom, route: route ?? 'objective bearing', backend, input: 'real keyboard/mouse', godMode: true }, null, 2));
-const server = spawn(process.execPath, ['node_modules/vite/bin/vite.js', 'preview', '--host', '127.0.0.1', '--port', String(port), '--strictPort', '--configLoader', 'runner'], { stdio: 'ignore' });
+const server = process.env.L9_DRIVE_ORIGIN ? null : spawn(process.execPath, ['node_modules/vite/bin/vite.js', 'preview', '--host', '127.0.0.1', '--port', String(port), '--strictPort', '--configLoader', 'runner'], { stdio: 'ignore' });
 try {
   for (let i = 0; i < 100; i++) { try { if ((await fetch(origin)).ok) break; } catch { /* startup */ } await new Promise(done => setTimeout(done, 100)); }
+  const html = await (await fetch(origin)).text();
+  writeFileSync(`${out}/source.json`, JSON.stringify({ revision: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), origin,
+    bundle: /src="([^"]+\.js)"/.exec(html)?.[1], variant, tier, zoom, route: route ?? 'objective bearing', backend, input: 'real keyboard/mouse', godMode: true }, null, 2));
   Object.assign(process.env, { PLAYTEST_BACKEND: backend, PLAYTEST_GOD: '1', PLAYTEST_NO_FRAME_TIMING: '0', PLAYTEST_THREAT_AUDIT: '1', PLAYTEST_ACCEPTANCE_LEDGER: '1', PLAYTEST_SHOT_SECONDS: '10', PLAYTEST_ACCEPTANCE_CAPTURES: '0' });
   const result = await runSession({ origin, out, levels: ['L9'], quality: tier as 'low' | 'high', zoom: Number(zoom), heroine: 'female',
     entry: 'continue', profile, levelMinutes: 5, sampleSeconds: 280, stopAfterLevel: true, tag, noSkip: true,
@@ -57,4 +69,4 @@ try {
     issues: result.issues.map(i => ({ severity: i.severity, kind: i.kind, text: i.text })) };
   writeFileSync(`${out}/summary.json`, JSON.stringify(summary, null, 2)); console.log(JSON.stringify(summary));
   if (!summary.finished) process.exitCode = 1;
-} finally { server.kill('SIGTERM'); }
+} finally { server?.kill('SIGTERM'); }
