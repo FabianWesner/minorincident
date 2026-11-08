@@ -54,9 +54,9 @@ async function execute(job: StageJob): Promise<StageResult> {
         let kitingComplete = () => false;
         try { await runLevel(job.level, 'complete', job.seed, undefined, 'auto', campaignFor(job.level, job.seed), undefined, 0, {
           quality: 'low', beforeBegin: world => { kitingComplete = installKitingPolicy(world, kiting, job.level); },
-          // L4 can start a second short sample after its physical rejoin; let
-          // its route finish so this optimization preserves that receipt.
-          stopWhen: () => job.level !== 'L4' && kitingComplete(),
+          // Cinematic inputs can repeat at one sim tick (L4 has 1,227 inputs
+          // in its 1,200-tick window). Preserve the whole clock, not a frame cap.
+          stopWhen: kitingComplete,
           beforeDispose: () => { native.kiting = finishKitingReceipt(kiting); },
         }); } catch (error) { if (!(error instanceof LevelRunStopped)) throw error; }
       }

@@ -72,7 +72,7 @@ export async function proveThreatAudit(): Promise<void> {
       clearInput: () => { device = emptyInput(); },
       applyInput: (frame: InputFrame) => { device = frame; frames.push(frame); },
     } as unknown as SimWorld;
-    installKitingPolicy(world, receipt, 'L1');
+    const kitingComplete = installKitingPolicy(world, receipt, 'L1');
     world.setInput(emptyInput());
     assert(frames[0].move.x < 0 && frames[0].aim!.x > 0 && frames[0].left.held, 'retreat while aiming and firing back');
     const resolved = new ControlIntent(world).resolve(frames[0]);
@@ -94,8 +94,10 @@ export async function proveThreatAudit(): Promise<void> {
         assert(Number.isFinite(frame.aim!.x) && Number.isFinite(frame.aim!.z) && Number.isFinite(frame.aimPoint!.x) && Number.isFinite(frame.aimPoint!.z), 'losing the live pursuer query keeps fallback aim finite');
         world.infected!.active.push(...pursuers);
       }
+      if (world.tick === 1199) assert(!kitingComplete(), '1,200 input frames cannot end the encounter clock early');
       if (world.tick === 1) assert(Math.abs(frames.at(-1)!.move.x) < .01 && Math.abs(frames.at(-1)!.move.z) > .9, 'a blocked backpedal stays on clear ground along a tangent');
     }
+    assert(kitingComplete(), 'the elapsed encounter clock ends the disposable route');
     assert(Math.abs(receipt.kitingSeconds - 20) < 1e-8, 'sustain a full twenty-second chase');
     assert.equal(frames.at(-1)!.left.held, false, 'native route resumes after the sample');
     assert(Math.abs(finishKitingReceipt(receipt).attacksPerMinute - 3) < 1e-8);
