@@ -1,3 +1,4 @@
+import { cornMaterial } from '../render/Corn';
 import { groundDepth } from '../render/GroundLayers';
 import { spinNodes } from "../data/spinNodes";
 import { Box3, Color, Group, Mesh, Object3D, Vector3, type BufferGeometry, type WebGPURenderer, type Material } from "three/webgpu";
@@ -43,7 +44,7 @@ export function districtAssetUrls(id: string, definition: (id: string) => import
 }
 /** Shared presentation cache owns source geometry; per-level instance batches borrow it. */
 /** Enterable unique buildings: the roof is batched separately and lifted while the player is inside (DistrictView.updateRoofs). */
-export const ROOFED = new Set(['bld.garage-detached', 'bld.courier-depot', 'bld.clinic-annex', 'bld.cafe-corner', 'bld.fire-station', 'bld.pharmacy', 'bld.supermarket', 'bld.gym', 'int.basement-cellar']);
+export const ROOFED = new Set(['bld.garage-detached', 'bld.courier-depot', 'bld.clinic-annex', 'bld.cafe-corner', 'bld.fire-station', 'bld.pharmacy', 'bld.supermarket', 'bld.gym', 'bld.cure-motor-shelter', 'int.basement-cellar']);
 /** QA #50 (L3 supermarket, L5 pharmacy): "the building reads as a black hollow box with a lit rim". Their flat roof deck was authored
  * in the near-black UI token, so from the game camera the deck inside the light parapet cap read as an empty shell. Draw the deck
  * like every other flat roof (asphalt); the GLBs stay unchanged. */
@@ -269,6 +270,11 @@ export class DistrictAssets {
     return twin;
   }
   private finishBatch(id: string, root: Group): Group {
+    if (id === 'veg.corn-block') {
+      let material = this.sharedMaterials.get('l10-corn');
+      if (!material) { material = cornMaterial(this.materials); this.sharedMaterials.set('l10-corn', material); this.batchMaterials.add(material); }
+      root.traverse(node => { if (node instanceof Mesh) { node.material = material!; node.castShadow = false; } });
+    }
     this.share(root);
     if (id === 'kit.highway-onramp') {
       // The joining layout slab uses Materials.world's asphalt detail. The
@@ -298,7 +304,7 @@ export class DistrictAssets {
     const deck = id === 'kit.highway-onramp' || id === 'kit.dispersal-platform';
     root.traverse(node => { if (node instanceof Mesh) {
       // A shut metro leaf must read as a solid barrier even with the courier behind it.
-      if (node.material instanceof PaletteMaterial) {
+      if (node.material instanceof PaletteMaterial && id !== 'veg.corn-block') {
         if (id === 'bld.metro-entrance' && node.userData.door === 'shutter') node.material = node.material.frozenCopy().seeThrough(false);
         else if (solid) node.material = this.uncut(node.material);
         else if (deck) node.material = this.deckCut(node.material);

@@ -23,7 +23,7 @@ export class LevelEightBot {
     const boarded = zoo.passengers().every(id => car.passengers?.some(p => p.id === id && p.phase === 'seated'));
     // Cover the queue on foot; the APC has no gun. Stand clear of its door so
     // the courier's body does not obstruct passengers, then board last.
-    const target = m.state.steps.sanctuary.status === 'active' ? m.def.anchors['zoo-gate'] : boarded ? door : { x: door.x - 4, z: door.z + 2 };
+    const target = zoo.protecting() ? m.def.anchors['central-plaza'] : m.state.steps.sanctuary.status === 'active' ? calm ? w.entities.get(zoo.state.keeperId)!.transform : m.def.anchors['central-plaza'] : boarded ? door : { x: door.x - 4, z: door.z + 2 };
     if (!calm) {
       const enemies = w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && !e.emerging && !e.infectionRise && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 16 && w.infected!.director.inPlayerView(e.transform, 16, 1, 5) && w.infected!.nav.visible(p, e.transform, 0)).sort((a, b) => Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z));
       const enemy = enemies[0];

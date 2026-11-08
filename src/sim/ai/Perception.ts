@@ -1,3 +1,4 @@
+import { cornBlocksSight, inCorn } from '../../levels/L10/farm';
 import { l1v2 } from '../../data/l1v2';
 import type { HumanTarget, HumanTargetQuery, LosBlocker, LosBlockerRegistry, Vec2 } from '../outbreak/types';
 import type { SimWorld } from '../world/SimWorld';
@@ -148,10 +149,12 @@ export class Perception {
     const dx = target.x - e.transform.x, dz = target.z - e.transform.z, distance = Math.hypot(dx, dz);
     // Facing rejects most peripheral herd cues before the night lamp scan.
     if (!(distance === 0 || (dx * Math.cos(e.transform.yaw) - dz * Math.sin(e.transform.yaw)) / distance >= this.cosHalf - 1e-9)) return false;
-    return distance <= this.rangeM * (this.world.weather?.modifiers.infectedSight ?? 1) * (this.world.lightPower?.sightMultiplier(target) ?? 1);
+    const range = this.rangeM * (this.world.weather?.modifiers.infectedSight ?? 1) * (this.world.lightPower?.sightMultiplier(target) ?? 1);
+    const crop = this.world.scenario === 'L10' && (inCorn(this.world, [e.transform.x, e.transform.z]) || inCorn(this.world, [target.x, target.z]));
+    return distance <= (crop ? Math.min(3, range) : range);
   }
   /** Detection: inside the cone and range with clear line of sight. */
-  sees(e: EntitySnapshot, target: Vec2): boolean { return this.inCone(e, target) && this.lineOfSight(e.transform, target); }
+  sees(e: EntitySnapshot, target: Vec2): boolean { return this.inCone(e, target) && !(this.world.scenario === 'L10' && cornBlocksSight(this.world, [e.transform.x, e.transform.z], [target.x, target.z])) && this.lineOfSight(e.transform, target); }
   /** A chased target stays tracked inside this range in any direction while line of sight is clear (PO 10-09: "walking
    * around, although in my direct near"). A pursuer that just lunged past or was knocked round does not forget her. */
   readonly chaseKeepM = 6;
@@ -160,6 +163,7 @@ export class Perception {
   /** Keeps an already chased target: the wide tracking cone, or within `chaseKeepM` with line of sight. */
   tracks(e: EntitySnapshot, target: Vec2, targetId?: number): boolean {
     if (this.closeAwareness(e) && this.hears(e, target, targetId)) return true;
+    if (this.world.scenario === 'L10' && cornBlocksSight(this.world, [e.transform.x, e.transform.z], [target.x, target.z])) return false;
     const dx = target.x - e.transform.x, dz = target.z - e.transform.z, distance = Math.hypot(dx, dz);
     if (distance > this.rangeM * (this.world.weather?.modifiers.infectedSight ?? 1) * (this.world.lightPower?.sightMultiplier(target) ?? 1)) return false;
     const near = distance <= this.chaseKeepM || (dx * Math.cos(e.transform.yaw) - dz * Math.sin(e.transform.yaw)) / distance >= this.trackCos;

@@ -1,0 +1,583 @@
+{
+  "version": 2,
+  "level": "L8",
+  "sourceHash": "1860225dfb2ade93557b43673386a7ab2633d4e3559fb196855eb41d6b1b9420",
+  "observerHash": "2c536930d36d27fb546ce2f0ae4431df5913b794c1ea3ae24e355d457f7c11db",
+  "fixtureHash": "4bdfab18e8890a058182ed24d4761e157d72f51368e0ed46e15970460c1ede3c",
+  "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
+  "generatedAt": "2026-11-08T19:53:06.977Z",
+  "policies": [
+    {
+      "tier": "low",
+      "policy": "complete",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L8-low-complete.json"
+    },
+    {
+      "tier": "low",
+      "policy": "stationary",
+      "outcome": "tick-budget",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L8-low-stationary.json"
+    },
+    {
+      "tier": "high",
+      "policy": "complete",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L8-high-complete.json"
+    },
+    {
+      "tier": "high",
+      "policy": "stationary",
+      "outcome": "tick-budget",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L8-high-stationary.json"
+    },
+    {
+      "tier": "low",
+      "policy": "controlled-fixtures",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L8-low-fixtures.json"
+    },
+    {
+      "tier": "high",
+      "policy": "controlled-fixtures",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L8-high-fixtures.json"
+    },
+    {
+      "tier": "low",
+      "policy": "checkpoint-death-control",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L8-low-checkpoints.json"
+    },
+    {
+      "tier": "high",
+      "policy": "checkpoint-death-control",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L8-high-checkpoints.json"
+    }
+  ],
+  "inputRevision": "2eacf0c5",
+  "command": "npm run qa:accept -- --level L8 --skip-browser",
+  "exitCode": 1,
+  "rawSha256": "9e0b7853304a5ba0b9cea71f98d6591ad68ac99bc145ebc1a2c095fe5f4c0921",
+  "rows": [
+    {
+      "id": "G-05",
+      "currentStatus": "NOT CHECKED",
+      "automatedComplete": false,
+      "clauseCounts": {
+        "PASS": 4,
+        "FAIL": 0,
+        "NOT CHECKED": 0
+      },
+      "failedChecks": []
+    },
+    {
+      "id": "G-08",
+      "currentStatus": "NOT CHECKED",
+      "automatedComplete": false,
+      "clauseCounts": {
+        "PASS": 4,
+        "FAIL": 0,
+        "NOT CHECKED": 0
+      },
+      "failedChecks": []
+    },
+    {
+      "id": "G-10",
+      "currentStatus": "NOT CHECKED",
+      "automatedComplete": false,
+      "clauseCounts": {
+        "PASS": 2,
+        "FAIL": 0,
+        "NOT CHECKED": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "id": "G-11",
+      "currentStatus": "NOT CHECKED",
+      "automatedComplete": false,
+      "clauseCounts": {
+        "PASS": 6,
+        "FAIL": 0,
+        "NOT CHECKED": 0
+      },
+      "failedChecks": []
+    },
+    {
+      "id": "G-12",
+      "currentStatus": "NOT CHECKED",
+      "automatedComplete": false,
+      "clauseCounts": {
+        "PASS": 2,
+        "FAIL": 0,
+        "NOT CHECKED": 0
+      },
+      "failedChecks": []
+    },
+    {
+      "id": "G-13",
+      "currentStatus": "FAIL",
+      "automatedComplete": false,
+      "clauseCounts": {
+        "PASS": 2,
+        "FAIL": 2,
+        "NOT CHECKED": 0
+      },
+      "failedChecks": [
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L8",
+          "tier": "low",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": [
+            {
+              "phase": "step/escape",
+              "id": 356,
+              "samples": 83,
+              "median": 3.2976204382319234,
+              "groupMedian": 3.4848779338097926,
+              "ratio": 0.9462656944849851
+            },
+            {
+              "phase": "step/escape",
+              "id": 360,
+              "samples": 84,
+              "median": 2.8413365484807422,
+              "groupMedian": 3.4848779338097926,
+              "ratio": 0.8153331630111049
+            }
+          ],
+          "target": "every ratio \u22650.95; \u226510 walking samples/follower",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-low-complete.json"
+        },
+        {
+          "id": "G-13",
+          "clause": "each observed follower median versus its phase group median",
+          "level": "L8",
+          "tier": "high",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": [
+            {
+              "phase": "step/escape",
+              "id": 355,
+              "samples": 138,
+              "median": 3.2488110860874446,
+              "groupMedian": 3.4433319159639124,
+              "ratio": 0.9435079641975164
+            },
+            {
+              "phase": "step/escape",
+              "id": 356,
+              "samples": 138,
+              "median": 3.0788755336740614,
+              "groupMedian": 3.4433319159639124,
+              "ratio": 0.894155895747324
+            },
+            {
+              "phase": "step/escape",
+              "id": 357,
+              "samples": 137,
+              "median": 3.1383747445111996,
+              "groupMedian": 3.4433319159639124,
+              "ratio": 0.9114354413413136
+            }
+          ],
+          "target": "every ratio \u22650.95; \u226510 walking samples/follower",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-high-complete.json"
+        }
+      ]
+    },
+    {
+      "id": "G-16",
+      "currentStatus": "NOT CHECKED",
+      "automatedComplete": false,
+      "clauseCounts": {
+        "PASS": 4,
+        "FAIL": 0,
+        "NOT CHECKED": 0
+      },
+      "failedChecks": []
+    },
+    {
+      "id": "G-19",
+      "currentStatus": "NOT CHECKED",
+      "automatedComplete": false,
+      "clauseCounts": {
+        "PASS": 4,
+        "FAIL": 0,
+        "NOT CHECKED": 0
+      },
+      "failedChecks": []
+    },
+    {
+      "id": "G-20",
+      "currentStatus": "NOT CHECKED",
+      "automatedComplete": false,
+      "clauseCounts": {
+        "PASS": 2,
+        "FAIL": 0,
+        "NOT CHECKED": 2
+      },
+      "failedChecks": []
+    },
+    {
+      "id": "G-21",
+      "currentStatus": "NOT CHECKED",
+      "automatedComplete": false,
+      "clauseCounts": {
+        "PASS": 6,
+        "FAIL": 0,
+        "NOT CHECKED": 0
+      },
+      "failedChecks": []
+    },
+    {
+      "id": "G-22",
+      "currentStatus": "FAIL",
+      "automatedComplete": false,
+      "clauseCounts": {
+        "PASS": 0,
+        "FAIL": 4,
+        "NOT CHECKED": 0
+      },
+      "failedChecks": [
+        {
+          "id": "G-22",
+          "clause": "announcement cohort tunnel-breach",
+          "level": "L8",
+          "tier": "low",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": {
+            "seconds": 145.13333333333333,
+            "spawned": 13,
+            "firstAttackSeconds": 30.3,
+            "flags": [
+              "WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+            ]
+          },
+          "target": "\u22653 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-low-complete.json"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort tunnel-breach",
+          "level": "L8",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "FAIL",
+          "value": {
+            "seconds": 120,
+            "spawned": 13,
+            "firstAttackSeconds": 24.25,
+            "flags": [
+              "WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+            ]
+          },
+          "target": "\u22653 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-low-stationary.json"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort tunnel-breach",
+          "level": "L8",
+          "tier": "high",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": {
+            "seconds": 196.06666666666666,
+            "spawned": 25,
+            "firstAttackSeconds": 58.916666666666664,
+            "flags": [
+              "WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+              "BREACH_FEWER_THAN_THREE_OUTLETS_WITH_6"
+            ]
+          },
+          "target": "\u22653 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-high-complete.json"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort tunnel-breach",
+          "level": "L8",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "FAIL",
+          "value": {
+            "seconds": 120,
+            "spawned": 25,
+            "firstAttackSeconds": 22.966666666666665,
+            "flags": [
+              "WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+            ]
+          },
+          "target": "\u22653 admitted cohort members; real player windup within20 s",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-high-stationary.json"
+        }
+      ]
+    },
+    {
+      "id": "G-24",
+      "currentStatus": "FAIL",
+      "automatedComplete": false,
+      "clauseCounts": {
+        "PASS": 0,
+        "FAIL": 2,
+        "NOT CHECKED": 0
+      },
+      "failedChecks": [
+        {
+          "id": "G-24",
+          "clause": "production enemy-bar eligibility at distance/health boundaries",
+          "value": [
+            {
+              "archetype": "infected.alpha",
+              "near": true,
+              "farHealthy": true,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.lion",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.gorilla",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.elephant",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.zebra",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.flamingo",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            }
+          ],
+          "target": "near/full and far/damaged true; far/full, dead and healthy animals false",
+          "status": "FAIL",
+          "tier": "low",
+          "policy": "controlled-fixture",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-low-fixtures.json",
+          "level": "L8"
+        },
+        {
+          "id": "G-24",
+          "clause": "production enemy-bar eligibility at distance/health boundaries",
+          "value": [
+            {
+              "archetype": "infected.alpha",
+              "near": true,
+              "farHealthy": true,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.lion",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.gorilla",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.elephant",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.zebra",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            },
+            {
+              "archetype": "infected.flamingo",
+              "near": true,
+              "farHealthy": false,
+              "farDamaged": true,
+              "dead": false,
+              "healthyAnimal": false
+            }
+          ],
+          "target": "near/full and far/damaged true; far/full, dead and healthy animals false",
+          "status": "FAIL",
+          "tier": "high",
+          "policy": "controlled-fixture",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-high-fixtures.json",
+          "level": "L8"
+        }
+      ]
+    },
+    {
+      "id": "L8-01",
+      "currentStatus": "NOT CHECKED",
+      "automatedComplete": false,
+      "clauseCounts": {
+        "PASS": 8,
+        "FAIL": 0,
+        "NOT CHECKED": 0
+      },
+      "failedChecks": []
+    },
+    {
+      "id": "L8-02",
+      "currentStatus": "NOT CHECKED",
+      "automatedComplete": false,
+      "clauseCounts": {
+        "PASS": 8,
+        "FAIL": 0,
+        "NOT CHECKED": 0
+      },
+      "failedChecks": []
+    },
+    {
+      "id": "L8-03",
+      "currentStatus": "NOT CHECKED",
+      "automatedComplete": false,
+      "clauseCounts": {
+        "PASS": 24,
+        "FAIL": 0,
+        "NOT CHECKED": 0
+      },
+      "failedChecks": []
+    },
+    {
+      "id": "L8-04",
+      "currentStatus": "NOT CHECKED",
+      "automatedComplete": false,
+      "clauseCounts": {
+        "PASS": 8,
+        "FAIL": 0,
+        "NOT CHECKED": 0
+      },
+      "failedChecks": []
+    },
+    {
+      "id": "L8-05",
+      "currentStatus": "NOT CHECKED",
+      "automatedComplete": false,
+      "clauseCounts": {
+        "PASS": 6,
+        "FAIL": 0,
+        "NOT CHECKED": 0
+      },
+      "failedChecks": []
+    },
+    {
+      "id": "L8-06",
+      "currentStatus": "FAIL",
+      "automatedComplete": false,
+      "clauseCounts": {
+        "PASS": 10,
+        "FAIL": 4,
+        "NOT CHECKED": 0
+      },
+      "failedChecks": [
+        {
+          "id": "L8-06",
+          "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+          "level": "L8",
+          "tier": "low",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": 84.61538461538461,
+          "target": "90 \u2264 value \u2264 100",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-low-complete.json"
+        },
+        {
+          "id": "L8-06",
+          "clause": "stationary first real player attack (phase clock)",
+          "level": "L8",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "FAIL",
+          "value": {
+            "seconds": 24.25,
+            "windowSeconds": 120
+          },
+          "target": "\u226420 s",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-low-stationary.json"
+        },
+        {
+          "id": "L8-06",
+          "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+          "level": "L8",
+          "tier": "high",
+          "policy": "complete",
+          "status": "FAIL",
+          "value": 81.81818181818183,
+          "target": "90 \u2264 value \u2264 100",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-high-complete.json"
+        },
+        {
+          "id": "L8-06",
+          "clause": "stationary first real player attack (phase clock)",
+          "level": "L8",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "FAIL",
+          "value": {
+            "seconds": 22.966666666666665,
+            "windowSeconds": 120
+          },
+          "target": "\u226420 s",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-high-stationary.json"
+        }
+      ]
+    }
+  ],
+  "note": "Current statuses only; historical/manual results omitted. Raw receipt paths refer to the remote audit snapshot and its pulled test-results copy."
+}

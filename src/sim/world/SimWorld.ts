@@ -1,7 +1,10 @@
 import { SolidRegistry } from './SolidRegistry';
+import { Destruction } from '../destruction/Destruction';
 import { cloneData } from '../../core/clone';
 import { finaleGunPlacement } from '../../data/minigun';
 import { curePursuitRoute } from '../../levels/L10/district';
+import { levelTenLayouts } from '../../levels/L10/layout';
+import { inCorn } from '../../levels/L10/farm';
 import { installMegaPursuit } from '../ai/MegaPursuit';
 import { ChunkResidency } from './ChunkResidency';
 import { layoutTerrainChunks } from './TerrainChunks';
@@ -97,6 +100,7 @@ export class SimWorld implements Lifecycle {
   explosions: Explosions | null = null;
   /** PO #15 pushable small props (dynamic Rapier bodies); null outside district compositions. */
   props: PropSystem | null = null;
+  destruction: Destruction | null = null;
   /** L1 player-caused carryover applied to this level (L2 in L1's town); null = scripted canon only (src/levels/continuity.ts). */
   aftermath: L1Aftermath | null = null;
   barricades: Barricades | null = null;
@@ -239,7 +243,7 @@ export class SimWorld implements Lifecycle {
       const player = this.entities.get(1)!;
       if (player.pendingAdmission) { body.setLinvel({ x: 0, y: 0, z: 0 }, true); body.setTranslation(player.transform, true); return; }
       if (this.vehicles?.active != null || this.mountedGun?.mounted) return;
-      if (this.player) { Object.assign(this.previousPlayer!, player.transform); this.player.locomotion.speedScale = this.player.progressionSpeed * (this.props?.pushSpeed(this.effectiveInput) ?? 1) * (this.vehicles?.bicycle.speedScale ?? 1) * (this.weather?.modifiers.playerSpeed ?? 1) * Status.speed(player) * (this.combat?.effects.speedMultiplier ?? 1) * (this.infected?.playerSpeedScale() ?? 1) * (player.speedBuff && this.tick < player.speedBuff.until ? player.speedBuff.multiplier : 1); this.player.locomotion.cornerSlip = !(this.vehicles?.bicycle.riding ?? false); this.player.prePhysics(this.effectiveInput, this.tick, !Status.stunned(player, this.tick) && !(this.infected?.playerPinned() ?? false)); return; }
+      if (this.player) { Object.assign(this.previousPlayer!, player.transform); this.player.locomotion.speedScale = this.player.progressionSpeed * (this.props?.pushSpeed(this.effectiveInput) ?? 1) * (this.vehicles?.bicycle.speedScale ?? 1) * (this.weather?.modifiers.playerSpeed ?? 1) * Status.speed(player) * (this.combat?.effects.speedMultiplier ?? 1) * (this.infected?.playerSpeedScale() ?? 1) * (inCorn(this, [player.transform.x, player.transform.z]) ? .85 : 1) * (player.speedBuff && this.tick < player.speedBuff.until ? player.speedBuff.multiplier : 1); this.player.locomotion.cornerSlip = !(this.vehicles?.bicycle.riding ?? false); this.player.prePhysics(this.effectiveInput, this.tick, !Status.stunned(player, this.tick) && !(this.infected?.playerPinned() ?? false)); return; }
       this.previousPlayer = { ...player.transform };
       // Deliberately only a cube input fixture, no survivor controller (E04).
       body.setLinvel({ x: this.effectiveInput.move.x * 5, y: body.linvel().y, z: this.effectiveInput.move.z * 5 }, true);
@@ -294,7 +298,7 @@ export class SimWorld implements Lifecycle {
   }
   /** E10 composition hook; missions/controllers continue to use their existing scenario lifecycle. */
   loadComposition(composition:LevelComposition, layouts:DistrictLayout[], seed=1, aftermath:L1Aftermath|null=null, carriedSurvivors?: readonly EntitySnapshot[], carriedCompanion?: EntitySnapshot, reservedIds?: readonly number[], prepared?: DistrictWorld):void {
-    const districts=prepared??new DistrictWorld(composition,composition.id==='L7'?levelSevenLayouts(layouts):composition.id==='L5'?levelFiveLayouts(layouts):composition.id==='L4'?levelFourLayouts(layouts):composition.id==='L3'?levelThreeLayouts(layouts):composition.id==='L2'?levelTwoLayouts(layouts,aftermath):composition.id==='L1'?levelOneLayouts(layouts):layouts,seed);
+    const districts=prepared??new DistrictWorld(composition,composition.id==='L10'?levelTenLayouts(layouts):composition.id==='L7'?levelSevenLayouts(layouts):composition.id==='L5'?levelFiveLayouts(layouts):composition.id==='L4'?levelFourLayouts(layouts):composition.id==='L3'?levelThreeLayouts(layouts):composition.id==='L2'?levelTwoLayouts(layouts,aftermath):composition.id==='L1'?levelOneLayouts(layouts):layouts,seed);
     this.loadScenario('survivor',seed);
     if ((composition.id === 'L7' || composition.id === 'L8') && carriedSurvivors) this.entities.reserveIds(carriedSurvivors.map(e => e.id));
     if (carriedCompanion) this.entities.reserveIds([carriedCompanion.id]);
@@ -332,6 +336,10 @@ export class SimWorld implements Lifecycle {
     for (const slot of campaignBarricadeSlots(districts)) this.barricades!.spawn(slot);
     for (const d of districts.districts) for (const slot of d.gameplay.barricades ?? []) this.barricades!.spawn({ ...slot, a: { x: slot.a.x + d.origin[0], z: slot.a.z + d.origin[1] }, b: { x: slot.b.x + d.origin[0], z: slot.b.z + d.origin[1] } });
     installCampaignNpcs(this, carriedCompanion);
+    if (districts.districts.some(d => d.decay.placements.some(p => p.destruction))) {
+      this.destruction = new Destruction(this);
+      this.events.on('sim.tick', () => this.destruction?.update(), SimPhase.missions + .1);
+    }
     if (composition.id === 'L10') {
       installMegaPursuit(this, { route: curePursuitRoute });
       const d = districts.districts.find(d => d.id === 'D-CURE');
@@ -383,7 +391,7 @@ export class SimWorld implements Lifecycle {
     this.props?.install(next, props, true);
     this.vehicles?.rebuild(true);
     this.hazards?.debris.reset(true); this.explosions?.reset(true); this.interactables?.rebuildBlockers(next.nav, true);
-    this.barricades?.rebuild(); this.missions?.rebuildGates(); this.player!.locomotion.reset(); this.physics.world!.step(); rebuildNpcNavigation(this);
+    this.barricades?.rebuild(); this.missions?.rebuildGates(); this.player!.locomotion.reset(); this.physics.world!.step(); rebuildNpcNavigation(this); this.destruction?.rebuild(true);
   }
   setInput(patch: Partial<InputFrame>): void {
     const next = { ...this.input, ...structuredClone(patch) };
@@ -414,7 +422,7 @@ export class SimWorld implements Lifecycle {
   getState(): GameStateSnapshot {
     const entities = this.query({});
     const controls = this.controls.snapshot();
-    return { collision: this.solids.snapshot(), ...(this.chunks ? { chunks: this.chunks.snapshot(), chunkResidency: this.chunks.stats() } : {}), ...(this.missions?.l9 ? { l9: structuredClone(this.missions.l9.state) } : {}), ...(this.missions?.l8 ? { l8: structuredClone(this.missions.l8.state) } : {}), ...(this.l7Encounters ? { l7: structuredClone(this.l7Encounters.state) } : {}), ...(this.l7Departure ? { l7Departure: structuredClone(this.l7Departure.state) } : {}), ...(this.megaPursuit ? { megaPursuit: this.megaPursuit.snapshot() } : {}), weather: this.weather?.snapshot() ?? null, ...(controls ? { controls } : {}), ...(this.infected ? { ai: structuredClone(this.infected.snapshot()) } : {}), ...(entities.some(e => e.interactable || e.hazard || (e.pickup && 'kind' in e.pickup) || e.destructible) ? { interactions: { activeId: this.interactables?.activeId ?? null, debris: this.hazards?.debris.snapshot() ?? [], hazards: this.hazards?.snapshot() ?? null } } : {}), ...(this.combat ? { combat: structuredClone(this.combat.snapshot()) } : {}), ...(this.props?.items.length ? { props: this.props.snapshot() } : {}), tick: this.tick, input: { scheme: this.scheme, frame: structuredClone(this.input) }, seed: this.seed, scenario: this.scenario, player: this.getEntity(1), entities, mission: structuredClone(this.mission), progression: structuredClone(this.progression), rng: this.rng ? [this.rng.snapshot()] : [], perf: { entities: this.entities.size, bodies: this.physics.bodyCount, colliders: this.physics.colliderCount, listeners: this.events.listenerCount } };
+    return { ...(this.destruction ? { destruction: this.destruction.snapshot() } : {}), collision: this.solids.snapshot(), ...(this.chunks ? { chunks: this.chunks.snapshot(), chunkResidency: this.chunks.stats() } : {}), ...(this.missions?.l9 ? { l9: structuredClone(this.missions.l9.state) } : {}), ...(this.missions?.l8 ? { l8: structuredClone(this.missions.l8.state) } : {}), ...(this.l7Encounters ? { l7: structuredClone(this.l7Encounters.state) } : {}), ...(this.l7Departure ? { l7Departure: structuredClone(this.l7Departure.state) } : {}), ...(this.megaPursuit ? { megaPursuit: this.megaPursuit.snapshot() } : {}), weather: this.weather?.snapshot() ?? null, ...(controls ? { controls } : {}), ...(this.infected ? { ai: structuredClone(this.infected.snapshot()) } : {}), ...(entities.some(e => e.interactable || e.hazard || (e.pickup && 'kind' in e.pickup) || e.destructible) ? { interactions: { activeId: this.interactables?.activeId ?? null, debris: this.hazards?.debris.snapshot() ?? [], hazards: this.hazards?.snapshot() ?? null } } : {}), ...(this.combat ? { combat: structuredClone(this.combat.snapshot()) } : {}), ...(this.props?.items.length ? { props: this.props.snapshot() } : {}), tick: this.tick, input: { scheme: this.scheme, frame: structuredClone(this.input) }, seed: this.seed, scenario: this.scenario, player: this.getEntity(1), entities, mission: structuredClone(this.mission), progression: structuredClone(this.progression), rng: this.rng ? [this.rng.snapshot()] : [], perf: { entities: this.entities.size, bodies: this.physics.bodyCount, colliders: this.physics.colliderCount, listeners: this.events.listenerCount } };
   }
   spawnDummy(archetype: string, pos: { x: number; z: number }, opts: { hp?: number; armor?: number; yaw?: number; shield?: boolean; faction?: string; radius?: number; reactive?: boolean; ramDamage?: number } = {}): number {
     if (!this.combat) throw new Error('Load combat-arena before spawning dummies');
@@ -467,7 +475,7 @@ export class SimWorld implements Lifecycle {
     this.chunks?.dispose(); this.chunks = null;
     this.inspectionGhost = false; this.weather = null; this.lightPower = null;
     this.vehicles?.dispose(); this.vehicles = null;
-    this.carriedSurvivors = undefined; this.l7Encounters = null; this.l10Encounters = null; this.l7Departure = null; this.megaPursuit?.dispose(); this.megaPursuit = null; this.mountedGun = null; this.storyLock = null; this.missions?.dispose(); this.missions = null; this.mission = null; this.progression = null; this.infected = null; this.infectedMeleeHits = null; this.npcs = null; this.pickups = null; this.hazards = null; this.explosions = null; this.props = null; this.barricades = null; this.toys = null; this.interactables = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
+    this.carriedSurvivors = undefined; this.l7Encounters = null; this.l10Encounters = null; this.l7Departure = null; this.megaPursuit?.dispose(); this.megaPursuit = null; this.mountedGun = null; this.storyLock = null; this.missions?.dispose(); this.missions = null; this.mission = null; this.progression = null; this.infected = null; this.infectedMeleeHits = null; this.npcs = null; this.pickups = null; this.hazards = null; this.explosions = null; this.props = null; this.destruction = null; this.barricades = null; this.toys = null; this.interactables = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
     this.preparedDistricts.clear(); this.preparedNpcNavigation.clear();
     this.tick = 0; this.districts = null; this.aftermath = null; this.scenario = null; this.previousPlayer = null; this.rng = null; this.clearInput(); this.openDoors.clear();
   }

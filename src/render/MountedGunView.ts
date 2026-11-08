@@ -1,4 +1,4 @@
-import { Group, Vector3, type Object3D, type WebGPURenderer } from 'three/webgpu';
+import { BoxGeometry, Color, Mesh, Group, Vector3, type Object3D, type WebGPURenderer } from 'three/webgpu';
 import { AssetRegistry } from '../assets/registry';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { Materials } from './Materials';
@@ -17,8 +17,9 @@ export class MountedGunView extends Group {
   private muzzleNode: Object3D | null = null;
   private loading: Promise<void> | null = null;
   private disposed = false;
+  private shieldGeometry: BoxGeometry | null = null;
   private readonly scratch = new Vector3();
-  constructor(private readonly world: SimWorld, private readonly low: boolean, materials: Materials, renderer: WebGPURenderer, private readonly warm?: (model: Object3D) => Promise<void>) {
+  constructor(private readonly world: SimWorld, private readonly low: boolean, private readonly materials: Materials, renderer: WebGPURenderer, private readonly warm?: (model: Object3D) => Promise<void>) {
     super();
     this.registry = new AssetRegistry(() => undefined, { renderer, materials });
     this.visible = false;
@@ -29,9 +30,15 @@ export class MountedGunView extends Group {
       if (this.disposed) return;
       // Streaming may bring the gun into residency after the level's loading
       // warm-up. Keep it hidden until its gameplay HDR programs are ready too.
+      if (this.world.scenario === 'L10') {
+        const shield = new Mesh(this.shieldGeometry = new BoxGeometry(.12, 1.1, 1.6), this.materials.fromColor('minigun:shield', new Color('#657764')));
+        shield.position.set(.38, 1.05, 0); shield.castShadow = true;
+        (model.getObjectByName('pivot') ?? model).add(shield);
+      }
       await this.warm?.(model);
       if (this.disposed) return;
       this.model = model; this.add(model);
+
       this.yawNode = model.getObjectByName('pivot') ?? null; this.barrels = model.getObjectByName('barrels') ?? null;
       this.glow = model.getObjectByName('heatGlow') ?? null; this.muzzleNode = model.getObjectByName('muzzle') ?? null;
     });
@@ -58,5 +65,5 @@ export class MountedGunView extends Group {
     this.updateWorldMatrix(true, true);
     return this.muzzleNode.getWorldPosition(this.scratch);
   }
-  dispose(): void { this.disposed = true; this.removeFromParent(); void this.registry.dispose(); }
+  dispose(): void { this.disposed = true; this.shieldGeometry?.dispose(); this.removeFromParent(); void this.registry.dispose(); }
 }

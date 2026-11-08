@@ -5,7 +5,6 @@ import { LevelSixSubway } from '../sim/missions/LevelSixSubway';
 import { devicePrompt } from './devicePrompt';
 import { l5, l5Survivors } from '../data/l5';
 import { isMega } from '../data/megaPresentation';
-import { MegaRing } from './MegaRing';
 import { SurvivorRadar } from './SurvivorRadar';
 import { healthFraction } from './health';
 import { weatherLabels } from '../data/weather';
@@ -41,7 +40,6 @@ export class Hud {
   private readonly fullText = node('p', 'objective-full-text');
   private readonly trackerText = node('span', 'objective-text');
   private readonly map = node('div', 'minimap');
-  private readonly megaRing = new MegaRing(this.map);
   private readonly playerPin = this.pin('player', '▲');
   private readonly objectivePin = this.pin('objective');
   private readonly routePin = this.pin('route', '◆');
@@ -91,6 +89,7 @@ export class Hud {
   private damagedUntil = -1;
   private barkUntil = -1;
   private threatCount = 0;
+  private readonly discoveries: HTMLSpanElement[] = [];
   private loadedScenario: string | null = null;
   constructor(private readonly game: Game) {
     this.onboarding = new Onboarding(game.world, game.input.bindings);
@@ -134,6 +133,7 @@ export class Hud {
     this.map.append(north, this.routePin, this.playerPin, this.objectivePin, this.homePin, this.cuePin);
     // Allocated once; no entity snapshots, DOM creation, or pin lists per frame.
     for (let i = 0; i < 256; i++) { const pin = this.pin(`threat-${i}`); pin.classList.add('hud-pin-threat'); pin.hidden = true; this.threats.push(pin); this.map.append(pin); }
+    for (let i = 0; i < 16; i++) { const pin = this.pin(`discovery-${i}`, '✦'); pin.classList.add('hud-pin-discovery'); pin.hidden = true; this.discoveries.push(pin); this.map.append(pin); }
     this.tracker.className = 'hud-tracker hud-panel'; this.tracker.append(this.trackerText, this.survivorText, this.cueText);
     this.detail.className = 'hud-objective-detail hud-panel';
     this.detail.setAttribute('aria-label', 'Current objective');
@@ -299,24 +299,29 @@ export class Hud {
     const portrait = `url("/assets/ui/portrait-survivor-${player.survivor?.variant === 'male' ? 'm' : 'f'}.png")`;
     style(this.portrait, 'background-image', portrait);
     style(this.vignette, 'opacity', String(clamp((.3 - hp) / .3)));
-    this.megaRing.update(world.megaPursuit?.band() ?? null);
-    let corgi = null, pinCount = 0;
+    let corgi = null, pinCount = 0, discoveryCount = 0;
     const px = player.transform.x, pz = player.transform.z;
     for (const entity of world.entities.iterate()) {
       if (entity.archetype.includes('corgi')) corgi = entity;
-      if (isMega(entity)) continue;
+      if (world.scenario === 'L10' && entity.pickup && !entity.hidden && !('collected' in entity.pickup && entity.pickup.collected) && Math.hypot(entity.transform.x - px, entity.transform.z - pz) <= 25 && discoveryCount < this.discoveries.length) {
+        const pin = this.discoveries[discoveryCount++]; setHidden(pin, false);
+        attribute(pin, 'aria-label', 'Optional discovery'); this.place(pin, entity.transform.x, entity.transform.z, px, pz);
+      }
       if (entity.faction !== 'infected' || entity.health.current <= 0 || ((entity.hidden || entity.infected?.hidden) && !world.weather?.reveals.has(entity.id)) || Math.hypot(entity.transform.x - px, entity.transform.z - pz) > (world.weather?.reveals.has(entity.id) ? 40 : 30)) continue;
       const pin = this.threats[pinCount]; if (!pin) break; pinCount++;
-      setHidden(pin, false); attribute(pin, 'data-entity-id', String(entity.id)); this.place(pin, entity.transform.x, entity.transform.z, px, pz);
+      setHidden(pin, false); attribute(pin, 'data-entity-id', String(entity.id)); attribute(pin, 'data-mega', String(isMega(entity)));
+      attribute(pin, 'data-kind', entity.archetype === 'infected.dog' ? 'dog' : entity.archetype === 'infected.alpha' ? 'alpha' : 'regular');
+      if (isMega(entity)) pin.setAttribute('aria-label', 'Mega Alpha'); else pin.removeAttribute('aria-label');
+      this.place(pin, entity.transform.x, entity.transform.z, px, pz);
     }
     for (let i = pinCount; i < this.threatCount; i++) setHidden(this.threats[i], true);
     this.threatCount = pinCount;
-    const absentCompanion = !corgi && (world.scenario === 'L8' || world.scenario === 'L9');
-    setHidden(this.companion.parentElement!, absentCompanion); setHidden(this.corgiBadge, absentCompanion);
+    for (let i = discoveryCount; i < this.discoveries.length; i++) setHidden(this.discoveries[i], true);
     const corgiHiding = corgi?.hidden || corgi?.companion?.state === 'hide';
-    const corgiStatus = corgi ? corgiHiding ? 'Corgi · hiding' : 'Corgi · following' : 'Corgi · awaiting rescue';
+    const rejoining = !!corgi?.companion?.rejoining;
+    const corgiStatus = corgi ? rejoining ? 'Corgi · rejoining' : corgiHiding ? 'Corgi · hiding' : corgi.companion?.state === 'fetch' ? 'Corgi · fetching' : 'Corgi · following' : 'Corgi · awaiting rescue';
     text(this.companion, corgiStatus); attribute(this.corgiBadge, 'title', corgiStatus); attribute(this.corgiBadge, 'aria-label', corgiStatus);
-    attribute(this.corgiBadge, 'data-state', corgi ? corgiHiding ? 'hiding' : 'following' : 'awaiting-rescue');
+    attribute(this.corgiBadge, 'data-state', corgi ? rejoining ? 'rejoining' : corgiHiding ? 'hiding' : 'following' : 'awaiting-rescue');
     this.place(this.playerPin, px, pz, px, pz); style(this.playerPin, 'rotate', `${-player.transform.yaw + Math.PI / 2}rad`);
     const anchor = markerAnchor(mission);
     // Show the destination, leaving route discovery to the player (G-08 / Q-277).
@@ -374,7 +379,7 @@ export class Hud {
       const slot = world.combat!.runner.loadout.current(side), def = world.combat?.runner.loadout.definition(slot.id) ?? action(slot.id), selected = player.weapons!.selectedSide === side;
       const name = label(slot.id);
       const empty = !world.combat!.runner.loadout.hasAmmo(slot);
-      const stats = empty ? 'Empty' : def.magazine ? `${slot.magazine} / ${def.magazine}` : def.charges ? `${slot.charges} charges` : def.cooldown ? `${Math.max(0, (slot.readyAt - world.tick) / 60).toFixed(1)}s` : 'Ready';
+      const stats = empty ? 'Empty' : slot.id === 'weapon.flamethrower' ? `Fuel ${Math.round(slot.magazine / def.magazine * 100)}%` : def.magazine ? `${slot.magazine} / ${def.magazine}` : def.charges ? `${slot.charges} charges` : def.cooldown ? `${Math.max(0, (slot.readyAt - world.tick) / 60).toFixed(1)}s` : 'Ready';
       const until = slot.reloadUntil || slot.nextCharge || slot.readyAt;
       const duration = (slot.reloadUntil ? def.reloadTime : slot.nextCharge ? def.recharge : Math.max(def.cooldown, def.windup + def.active + def.recovery)) * 60;
       const progress = until > world.tick ? 1 - clamp((until - world.tick) / (duration || 1)) : 1;
@@ -386,10 +391,14 @@ export class Hud {
     if (signature !== this.weaponRackSignature) {
       this.weaponRackSignature = signature; this.weaponRack.replaceChildren(); this.weaponRackItems.clear();
       for (const entry of entries) {
-        const item = node('span', `weapon-rack-${entry.id}`), icon = document.createElement('img'), key = weaponKey(entry.id);
+        const item = node('button', `weapon-rack-${entry.id}`), icon = document.createElement('img'), key = weaponKey(entry.id);
         item.className = 'hud-weapon-choice'; item.dataset.weapon = entry.id;
         icon.src = actionIconUrl(action(entry.id).iconId); icon.alt = '';
         item.title = `${label(entry.id)}${key === undefined ? '' : ` · ${key}`}`; item.setAttribute('aria-label', item.title);
+        item.type = 'button'; item.tabIndex = -1; item.disabled = key === undefined;
+        // Same input path as the number key. mousedown/pointerdown never reach the canvas (HUD is a sibling), so no shot, move or aim.
+        item.addEventListener('mousedown', event => event.preventDefault()); // keep keyboard focus on the canvas so Space/Enter never re-click a slot
+        item.addEventListener('click', event => { event.preventDefault(); event.stopPropagation(); if (key !== undefined) this.game.input.selectWeaponKey(key); });
         item.append(icon);
         if (key !== undefined) { const badge = node('span', `weapon-key-${key}`, String(key)); badge.className = 'hud-weapon-key'; item.append(badge); }
         this.weaponRackItems.set(entry.id, item); this.weaponRack.append(item);
@@ -482,14 +491,8 @@ export class Hud {
       return;
     }
     if (mission?.def.id === 'L10') {
-      const active = mission.def.steps.find(step => mission.state.steps[step.id].status === 'active');
-      const target = markerAnchor(mission);
-      const ending = active?.id === 'epilogue';
-      const waiting = active && (ending || world.tick - mission.state.steps[active.id].started >= 300);
       setHidden(this.survivorText, true);
-      this.waitCue(waiting && target ? { ...target, name: ending ? 'Cure dispersal' : active.text, id: active.id } : undefined, px, pz);
-      // Navigation/console objectives already name their destination and distance in the shared tracker.
-      if (!ending) setHidden(this.cueText, true);
+      setHidden(this.cuePin, true); setHidden(this.cueText, true);
       return;
     }
     const l5 = mission?.state.l5, show = !!mission && !!l5 && l5.phase !== 'cellar';
@@ -510,6 +513,7 @@ export class Hud {
     const voicePlaying = cue && [...this.game.audio.graph.active.values()].some(voice =>
       !voice.stopped && voice.position && Math.hypot(voice.position.x - cue.x, voice.position.z - cue.z) < 0.01);
     const heard = cue && cue.until > this.game.world.tick && voicePlaying ? cue : null;
+    text(this.cuePin, '♪');
     setHidden(this.cuePin, !heard);
     if (heard) { this.place(this.cuePin, heard.x, heard.z, px, pz, true); attribute(this.cuePin, 'aria-label', 'A sign of life'); attribute(this.cuePin, 'data-survivor', heard.key); }
     let cueLabel = '';
@@ -585,6 +589,7 @@ export class Hud {
   }
   /** The same persistent cue locates people, a waiting transport, or a long finale objective. */
   private waitCue(target: { x: number; z: number; name: string; id: string } | undefined, px: number, pz: number): void {
+    text(this.cuePin, '☺');
     setHidden(this.cuePin, !target); setHidden(this.cueText, !target);
     if (!target) return;
     const distance = Math.ceil(Math.hypot(target.x - px, target.z - pz));

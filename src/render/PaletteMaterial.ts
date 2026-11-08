@@ -1,4 +1,5 @@
 // Adapted from Bruno Simon folio-2025 Materials/MeshDefaultMaterial.js (MIT).
+import { dustSurface } from './CureDust';
 import { courierForegroundOn, courierXray } from './characters/courierDepth';
 import { weatherSurface, trackMask, weatherMaterialFlags } from './WeatherView';
 import { MeshLambertNodeMaterial, NodeUpdateType, type Texture, type Node, type Color } from 'three/webgpu';
@@ -89,7 +90,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       const authored = mix(mix(weatherBase, color('#b3121f'), blood), color('#1d1a18'), this.char);
       // look.roadNeutral (L9): the mauve asphalt swatch reads as grey, dry tarmac under the moon; pools on it keep their hue.
       const roadMask = nodes?.road ?? (token === 'asphalt' && !emissive ? float(1) : undefined);
-      const surface = roadMask ? mix(authored, vec3(luminance(authored)), roadMask.min(1).mul(lighting.look.nodes.roadNeutral)) : authored;
+      const surface = dustSurface(roadMask ? mix(authored, vec3(luminance(authored)), roadMask.min(1).mul(lighting.look.nodes.roadNeutral)) : authored);
       const albedo = mix(surface, lighting.bounce, bounce);
       const ambient = mix(lighting.groundAmbient, lighting.skyAmbient, normalWorld.y.mul(0.5).add(0.5)).mul(lighting.look.nodes.ambientStrength).mul(lighting.look.nodes.hemisphereIntensity.mul(2));
       const lit = albedo.mul(lighting.color.rgb.add(ambient)).mul(lighting.intensity);

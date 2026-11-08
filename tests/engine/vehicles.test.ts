@@ -198,22 +198,25 @@ async function zooParkedBoarding(): Promise<void> {
     world.tick = 3124; advance(1);
     expect(mission.state.steps.sanctuary.status).toBe('active');
     expect(mission.state.steps.escape.status).toBe('pending');
-    expect(mission.state.marker).toBe('zoo-gate');
+    expect(mission.state.marker).toBe('central-plaza');
     expect(mission.state.steps.depart.status).toBe('pending');
     mission.restore('sanctuary');
-    expect(mission.state.marker).toBe('zoo-gate');
+    expect(mission.state.marker).toBe('central-plaza');
     expect(mission.state.steps.escape.status).toBe('pending');
     missionControls(world).teleport(1, zoo.door());
     world.tick = zoo.state.startedAt + 3599; advance(1);
     expect(mission.state.states.breached).toBe(true);
-    expect(mission.state.steps.sanctuary.status, 'camping the APC does not skip the gate after the breach').toBe('active');
+    expect(mission.state.steps.sanctuary.status, 'camping the APC does not skip the plaza after the breach').toBe('active');
     expect(mission.state.checkpoint, 'APC camping must not award the escape-route checkpoint').toBe('breach');
     expect(zoo.boarding()).toBe(false);
     expect(zoo.canBoardDriver()).toBe(false);
     expect(mission.state.steps.escape.status).toBe('pending');
-    missionControls(world).teleport(1, mission.def.anchors['zoo-gate']); advance(1);
+    missionControls(world).teleport(1, mission.def.anchors['central-plaza']); advance(1);
     expect(mission.state.steps.sanctuary.status).toBe('completed');
     expect(mission.state.steps.escape.status).toBe('active');
+    expect(mission.state.marker, 'the opening defence has no destination pin').toBeNull();
+    expect(objectiveText(mission, mission.def.steps[1].text)).toBe('Protect the group!');
+    world.tick = zoo.state.breachedAt + 1800; advance(1);
     expect(mission.state.marker).toBe('exit');
     for (const restored of [false, true]) {
       if (restored) mission.restore('sanctuary');
@@ -230,8 +233,11 @@ async function zooParkedBoarding(): Promise<void> {
       expect(car.entity.health.current, 'parking does not protect durability').toBe(health - 10);
     }
     const car = vehicles.cars.get(zoo.state.carId)!;
-    mission.setState('breached', true); zoo.state.breachedAt = world.tick; zoo.state.nextWave = Number.MAX_SAFE_INTEGER;
-    missionControls(world).teleport(1, mission.def.anchors['zoo-gate']); advance(1);
+    mission.setState('breached', true); zoo.state.breachedAt = world.tick - 1800; zoo.state.nextWave = Number.MAX_SAFE_INTEGER;
+    missionControls(world).teleport(1, mission.def.anchors['central-plaza']); advance(1);
+    // This isolated parking/transport fixture starts after the command-post retreat.
+    const hale = world.entities.get(zoo.state.haleId)!, halePost = { x: zoo.door().x - .7, z: zoo.door().z + 1.2 };
+    missionControls(world).teleport(hale.id, halePost); hale.civilian!.ally!.post = halePost; hale.civilian!.ally!.hold = true;
     missionControls(world).teleport(1, zoo.door());
     world.applyInput({ ...emptyInput(), interact: true }, 'keyboard'); advance(1);
     expect(vehicles.active, 'courier can keep covering passengers instead of boarding early').toBeNull();
@@ -247,12 +253,19 @@ async function zooParkedBoarding(): Promise<void> {
     advance(60);
     missionControls(world).teleport(1, zoo.door());
     world.applyInput({ ...emptyInput(), interact: true }, 'keyboard'); advance(1);
+    world.applyInput(emptyInput(), 'keyboard');
+    for (let i = 0; i < 24 * 60 && !zoo.canBoardDriver(); i++) advance(1);
+    expect(mission.state.states['hale-fallen'], 'the commander beat completes before the cab unlocks').toBe(true);
+    missionControls(world).teleport(1, zoo.door());
+    world.applyInput({ ...emptyInput(), interact: true }, 'keyboard'); advance(1);
     world.applyInput(emptyInput(), 'keyboard'); advance(60);
     expect(zoo.canDrive(), 'complete living group boards at the fixed destination').toBe(true);
+    expect(car.entity.vehicle!.scripted, 'the zoo departure owns the vehicle before handover').toBe(true);
     const save = preset('L9-default'); save.transport = vehicles.transfer(car.entity.id);
     const next = await loadLevel('L9', 1, save);
     try {
       const arrived = next.vehicles!.cars.get(car.entity.id)!, start = { ...arrived.entity.transform };
+      expect(arrived.entity.vehicle!.scripted, 'L9 releases the scripted departure and restores driving').toBeUndefined();
       expect(arrived.entity.health.current).toBe(car.entity.health.current);
       next.applyInput({ ...emptyInput(), drive: { throttle: 1, steer: 0 } }, 'keyboard');
       for (let i = 0; i < 90; i++) next.update();

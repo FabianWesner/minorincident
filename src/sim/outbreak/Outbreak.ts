@@ -10,6 +10,7 @@ import type { CivilianActivity, CivilianProp, CivilianState, Point } from '../np
 import { keepsLook, type Appearance } from './appearance';
 import { HumanTargets } from './humans';
 import { defendHuman } from '../npc/defence';
+import { combatHeightReachable } from '../combat/height';
 import { updateAlly } from './Allies';
 import { followSeat, leaveSeat } from '../npc/MorningRoutines';
 import { updateSurvivor } from './Survivors';
@@ -208,6 +209,7 @@ export class Outbreak {
       if (e.infection) { this.transform(e); continue; }
       if (c.state === 'grabbed') { this.held(e); continue; }
       if (c.state === 'finished' || c.state === 'infected') continue;
+      if (e.combat?.statuses.some(status => status.kind === 'stunned' && status.expires > tick)) continue;
       // L7 travel and kerb-yield orders must not walk a knocked-down evacuee
       // across the street while its displayed body is still on the ground.
       if (world.scenario === 'L7' && c.survivor?.mode === 'follow' && tick < c.knockedUntil) continue;
@@ -512,7 +514,7 @@ export class Outbreak {
     const ai = this.world.infected!, civilians = this.world.npcs!.civilians;
     if (this.world.tick < (e.civilian!.l1!.graceUntil ?? 0)) return;
     for (const a of ai.active) {
-      if (a.health.current <= 0 || a.infectionRise || a.infected?.hidden || a.attachedTo !== undefined || civilians.holds(a.id)) continue;
+      if (a.health.current <= 0 || a.infectionRise || a.infected?.hidden || a.attachedTo !== undefined || civilians.holds(a.id) || !combatHeightReachable(a, e)) continue;
       // Alpha hits a soldier's health/knockdown path rather than starting the civilian bite hold.
       if (a.archetype === 'infected.alpha' && e.civilian!.ally?.role === 'soldier') continue;
       if (a.combat && a.combat.staggerUntil > this.world.tick) continue;
@@ -522,7 +524,7 @@ export class Outbreak {
   }
   /** Public for scripted beats and tests: start the 1.0 s grab of `targetId` by infected `sourceId`. */
   grab(e: EntitySnapshot, attacker: EntitySnapshot): void {
-    if (storyProtected(this.world, e)) return;
+    if (storyProtected(this.world, e) || !combatHeightReachable(attacker, e)) return;
     const c = e.civilian!, tick = this.world.tick;
     delete c.l1!.doorAt; c.attacker = attacker.id; c.threat.x = attacker.transform.x; c.threat.z = attacker.transform.z; if (!c.ally?.gun && c.ally?.role !== 'officer' && c.ally?.role !== 'soldier') this.dropProp(e);
     this.world.npcs!.civilians.hold(attacker.id); this.rescue.delete(attacker.id);
@@ -545,7 +547,7 @@ export class Outbreak {
       if (this.world.infected!.holding(e.id) === 0) this.rescued(e);
       return;
     }
-    const broken = !attacker?.infected || attacker.health.current <= 0 || this.rescue.has(c.attacker) || (attacker.combat?.staggerUntil ?? 0) > tick
+    const broken = !attacker?.infected || attacker.health.current <= 0 || !combatHeightReachable(attacker, e) || this.rescue.has(c.attacker) || (attacker.combat?.staggerUntil ?? 0) > tick
       || Math.hypot(attacker.transform.x - e.transform.x, attacker.transform.z - e.transform.z) > Math.max(l1Pedestrians.grabBreakM, (attacker.combat?.radius ?? .35) + (e.combat?.radius ?? .35) + 1.1);
     if (broken) { this.rescue.delete(c.attacker); this.rescued(e); }
     else if (tick >= c.until) this.bite(e, attacker!);
@@ -574,6 +576,7 @@ export class Outbreak {
     return ai.pool.length > turning && ai.director.count + turning < ai.director.cap - ai.director.reserved;
   }
   private bite(e: EntitySnapshot, attacker: EntitySnapshot): void {
+    if (!combatHeightReachable(attacker, e)) { this.rescued(e); return; }
     const turns = this.canTurn(); this.state(e, 'bitten');
     this.world.npcs!.civilians.release(attacker.id);
     const event: BiteEvent = { tick: this.world.tick, type: 'outbreak.bite', sourceId: attacker.id, targetId: e.id, position: { x: e.transform.x, z: e.transform.z }, turns };

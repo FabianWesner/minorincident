@@ -71,6 +71,7 @@ export class Blasts extends Group {
   private fbCursor = 0; private puffCursor = 0; private debrisCursor = 0;
   private readonly poolOverwrites = { fireballs: 0, chunks: 0 };
   private readonly debrisExpiry = new Float64Array(DEBRIS);
+  private farmFogNext = 0;
   private puffExpiry = new Float64Array(PUFFS); private fbExpiry = new Float64Array(FIREBALLS);
   private readonly frustum = new Frustum();
   private readonly projection = new Matrix4();
@@ -189,7 +190,7 @@ export class Blasts extends Group {
         // Lit from below by the fire: low, young puffs glow orange on their undersides (spec 07 §6).
         // Round 3: the glow hugs the flames (below 3 m) so the column above them stays dark instead of peach.
         const ember = st.z.mul(float(1).sub(progress).pow(2.5)).mul(smoothstep(3, .5, positionWorld.y)).mul(normalWorld.y.negate().mul(.35).add(.75)).mul(streetSmoke.select(0, 1));
-        const smokeColor = st.z.lessThan(-1.5).select(vec3(.55, .82, .8).mul(mix(.75, 1.12, sun)).mul(ambient.max(.6)), st.z.lessThan(0).select(vec3(.2, .48, .09).mul(mix(.62, 1.12, sun)).mul(ambient), base));
+        const smokeColor = st.z.lessThan(-2.5).select(vec3(.3, .32, .34).mul(ambient.max(.4)), st.z.lessThan(-1.5).select(vec3(.25, 1, .14).mul(mix(.75, 1.12, sun)).mul(ambient.max(.6)), st.z.lessThan(0).select(vec3(.2, .48, .09).mul(mix(.62, 1.12, sun)).mul(ambient), base)));
         // Practical radiance lights the cloud; damp the player-ray contribution so
         // the readability aura does not turn the foreground smoke into a bright veil.
         // Practical light scales with the smoke's albedo: dark soot reflects little of the fire's light.
@@ -212,7 +213,7 @@ export class Blasts extends Group {
         const playableMist = st.z.lessThan(-1.5).and(this.softCureMist.greaterThan(.5));
         const groundRadius = positionGeometry.x.mul(positionGeometry.x).add(positionGeometry.z.mul(positionGeometry.z)).sqrt();
         const groundFeather = float(1).sub(smoothstep(.52, 1, groundRadius));
-        const mistOpacity = playableMist.select(.13, .2);
+        const mistOpacity = st.z.lessThan(-2.5).select(.12, playableMist.select(.13, .2));
         // A nonzero alpha floor accumulated across overlapping puffs until the
         // courier disappeared. Every foreground layer clears the subject disc.
         // vqa-1 P2 (L3 Grove Blvd): street columns hid the attackers around her (health bars over grey smoke). Follow the
@@ -473,6 +474,14 @@ export class Blasts extends Group {
     if (camera) this.frustum.setFromProjectionMatrix(this.projection.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse));
     const weather = this.world.weather;
     if (weather && (weather.kind === 'wind' || weather.kind === 'haze' || weather.kind === 'thunderstorm')) this.windNode.value.set(weather.wind.x, 0, weather.wind.z);
+    if (this.world.scenario === 'L10' && now >= this.farmFogNext && !this.world.missions?.state.states['cure-released']) {
+      this.farmFogNext = now + (this.quality === 'low' ? 2.4 : 1.2);
+      const player = this.world.entities.get(1)?.transform;
+      // Cool, low fog uses the existing smoke pool, with at most five live puffs and no extra particle capacity.
+      for (const [x, z] of [[600, -18], [702, 48], [875, -28], [1032, 42], [1164, -40]]) if (player && Math.hypot(x - player.x, z - player.z) < 35 && this.sourceVisible(x, z, 8)) {
+        this.puff(x, .25, z, .18, .015, .07, 5, 3.5, 6, -3, .3, now); break;
+      }
+    }
     this.time = now; this.clock.value = now; this.scorch.advance(now);
     const sunDirection = this.host.sunDirection?.(); if (sunDirection) this.sunNode.value.set(sunDirection.x, sunDirection.y, sunDirection.z).normalize();
     const tick = Math.floor(now * 4);
@@ -546,6 +555,14 @@ export class Blasts extends Group {
   private cureMist(now: number): void {
     const front = this.world.missions?.state.cureFront;
     if (!front) return;
+    if (front.elapsed < 8 * 60) {
+      const origin = front.fronts[0], ground = this.world.districts?.groundHeight(origin.x, origin.z) ?? 0;
+      // The opening vent column feeds the low tide; both reuse the bounded smoke instance pool.
+      if (this.sourceVisible(origin.x, origin.z, 10)) for (let i = 0; i < (this.quality === 'low' ? 2 : 4); i++) {
+        this.puff(origin.x + (this.mistRng.next() - .5) * 1.5, ground + 1 + this.mistRng.next() * 3, origin.z + (this.mistRng.next() - .5) * 1.5,
+          .15, .7, .1, 3, .6, 2.8, -1.4, .8, now);
+      }
+    }
     const focus = this.host.focus?.() ?? this.world.entities.get(1)!.transform;
     const ending = this.world.missions?.state.epilogue?.phase;
     // The playable cure spread keeps its deliberately sparse low-tier mist, so bodies

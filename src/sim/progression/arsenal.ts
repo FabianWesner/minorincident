@@ -7,6 +7,7 @@ export function transactArsenal(world: SimWorld, add: string[], remove: string[]
   if ([...add, ...remove].some(id => !catalog[id]) || add.some(id => remove.includes(id)) || remove.includes('weapon.fire-axe')) throw new Error('Invalid arsenal transaction');
   const save = world.progression?.campaign;
   if (!save || !world.combat) throw new Error('Arsenal transaction needs campaign progression and combat');
+  if (world.scenario === 'L10' && add.includes('weapon.flamethrower')) add = [...new Set([...(save.crossingHandover?.lostWeapons ?? []), ...save.ownedActions, ...add])];
   const acquired = add.filter(id => !save.ownedActions.includes(id));
   const owned = [...new Set([...save.ownedActions.filter(id => !remove.includes(id)), ...add])];
   const racks = structuredClone(save.racks), size = rackSize(save.unlockedLevel);
@@ -17,6 +18,7 @@ export function transactArsenal(world: SimWorld, add: string[], remove: string[]
   }
   for (const side of ['LEFT', 'RIGHT'] as const) if (!racks[side].length) racks[side] = ['weapon.fire-axe'];
   Object.assign(save, { ownedActions: owned, racks });
+  world.combat.rackCapacity = Math.max(world.combat.rackCapacity, size);
   world.combat.setLoadout(racks.LEFT, racks.RIGHT);
   // Match existing mission pickups: select the newly recovered weapon before snapshotting.
   const equipped = add.at(-1);

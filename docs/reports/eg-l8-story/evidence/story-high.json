@@ -1,0 +1,549 @@
+{
+  "sourceHash": "1860225dfb2ade93557b43673386a7ab2633d4e3559fb196855eb41d6b1b9420",
+  "observerHash": "2c536930d36d27fb546ce2f0ae4431df5913b794c1ea3ae24e355d457f7c11db",
+  "revision": "554993b5c9befb939dacc8b291774cf4030fa06e",
+  "tier": "high",
+  "seed": 1,
+  "flags": [],
+  "animals": [
+    {
+      "id": 397,
+      "species": "lion",
+      "healthy": true,
+      "closest": 13.121429880982554
+    },
+    {
+      "id": 398,
+      "species": "gorilla",
+      "healthy": true,
+      "closest": 14.090654052224613
+    },
+    {
+      "id": 399,
+      "species": "elephant",
+      "healthy": true,
+      "closest": 13.982517600839671
+    },
+    {
+      "id": 400,
+      "species": "zebra",
+      "healthy": true,
+      "closest": 13.567511235272617
+    },
+    {
+      "id": 401,
+      "species": "zebra",
+      "healthy": true,
+      "closest": 14.003281539493086
+    },
+    {
+      "id": 402,
+      "species": "flamingo",
+      "healthy": true,
+      "closest": 16.993215077271103
+    },
+    {
+      "id": 403,
+      "species": "flamingo",
+      "healthy": true,
+      "closest": 14.113909610575403
+    },
+    {
+      "id": 404,
+      "species": "flamingo",
+      "healthy": true,
+      "closest": 14.499704570952652
+    }
+  ],
+  "lines": [
+    {
+      "id": "L8.nadia-path",
+      "text": "Nadia: Stay on the path. They're nervous tonight \u2014 so are we.",
+      "tick": 180
+    },
+    {
+      "id": "L8.broadcast",
+      "text": "\u2026research campus past Hollow Creek reports a counter-agent\u2026 evacuation from the Hollow Creek bridge at dawn\u2026 all units\u2026",
+      "tick": 1200
+    },
+    {
+      "id": "L8.hale-greeting",
+      "text": "Major Hale: You're the courier. Heard about you. Get some rest \u2014 you've earned one night.",
+      "tick": 2280
+    },
+    {
+      "id": "L8.nadia-lion",
+      "text": "Nadia: Sixteen years old. Grumpiest cat in the state.",
+      "tick": 2651
+    },
+    {
+      "id": "L8.hale-breach",
+      "text": "Hale: Tunnels! Get the civilians to the plaza!",
+      "tick": 3600
+    },
+    {
+      "id": "L8.nadia-elephant",
+      "text": "Nadia: Not him. Not the old one\u2026",
+      "tick": 6003
+    },
+    {
+      "id": "L8.nadia-elephant",
+      "text": "Nadia: Not him. Not the old one\u2026",
+      "tick": 9914
+    },
+    {
+      "id": "L8.hale-dying",
+      "text": "Hale: Hollow Creek. Get them out.",
+      "tick": 14283
+    },
+    {
+      "id": "L8.following",
+      "text": "Something is following you.",
+      "tick": 14584
+    }
+  ],
+  "bites": [
+    {
+      "id": 402,
+      "source": 446,
+      "tick": 4799,
+      "distance": 17.05695324981706
+    },
+    {
+      "id": 403,
+      "source": 508,
+      "tick": 5690,
+      "distance": 24.8242579529619
+    },
+    {
+      "id": 404,
+      "source": 512,
+      "tick": 5694,
+      "distance": 24.666517630915486
+    },
+    {
+      "id": 399,
+      "source": 524,
+      "tick": 5824,
+      "distance": 76.10921015366873
+    },
+    {
+      "id": 401,
+      "source": 540,
+      "tick": 6863,
+      "distance": 25.900808604930145
+    },
+    {
+      "id": 400,
+      "source": 514,
+      "tick": 6881,
+      "distance": 26.661818811703228
+    },
+    {
+      "id": 397,
+      "source": 463,
+      "tick": 7044,
+      "distance": 118.09741768749804
+    },
+    {
+      "id": 402,
+      "source": 435,
+      "tick": 9049,
+      "distance": 16.989386017371782
+    },
+    {
+      "id": 399,
+      "source": 524,
+      "tick": 9744,
+      "distance": 70.76944600803695
+    },
+    {
+      "id": 404,
+      "source": 540,
+      "tick": 9797,
+      "distance": 31.180331594183684
+    },
+    {
+      "id": 403,
+      "source": 546,
+      "tick": 9844,
+      "distance": 36.63000029144697
+    },
+    {
+      "id": 401,
+      "source": 610,
+      "tick": 11156,
+      "distance": 38.71592132761873
+    },
+    {
+      "id": 400,
+      "source": 581,
+      "tick": 11238,
+      "distance": 42.359760412222634
+    },
+    {
+      "id": 398,
+      "source": 643,
+      "tick": 11353,
+      "distance": 73.36701024006646
+    }
+  ],
+  "turns": [
+    {
+      "id": 402,
+      "tick": 4960,
+      "archetype": "infected.flamingo"
+    },
+    {
+      "id": 404,
+      "tick": 5881,
+      "archetype": "infected.flamingo"
+    },
+    {
+      "id": 403,
+      "tick": 5883,
+      "archetype": "infected.flamingo"
+    },
+    {
+      "id": 399,
+      "tick": 6003,
+      "archetype": "infected.elephant"
+    },
+    {
+      "id": 401,
+      "tick": 7043,
+      "archetype": "infected.zebra"
+    },
+    {
+      "id": 400,
+      "tick": 7089,
+      "archetype": "infected.zebra"
+    },
+    {
+      "id": 397,
+      "tick": 7231,
+      "archetype": "infected.lion"
+    },
+    {
+      "id": 402,
+      "tick": 9223,
+      "archetype": "infected.flamingo"
+    },
+    {
+      "id": 399,
+      "tick": 9914,
+      "archetype": "infected.elephant"
+    },
+    {
+      "id": 404,
+      "tick": 9999,
+      "archetype": "infected.flamingo"
+    },
+    {
+      "id": 403,
+      "tick": 10017,
+      "archetype": "infected.flamingo"
+    },
+    {
+      "id": 401,
+      "tick": 11329,
+      "archetype": "infected.zebra"
+    },
+    {
+      "id": 400,
+      "tick": 11447,
+      "archetype": "infected.zebra"
+    },
+    {
+      "id": 398,
+      "tick": 11543,
+      "archetype": "infected.gorilla"
+    }
+  ],
+  "mega": [
+    {
+      "tick": 13443,
+      "x": 88,
+      "y": 4.7,
+      "z": -88
+    },
+    {
+      "tick": 13500,
+      "x": 88,
+      "y": 1.0076923076923077,
+      "z": -74.7
+    },
+    {
+      "tick": 13560,
+      "x": 88,
+      "y": 0.7,
+      "z": -60.7
+    },
+    {
+      "tick": 13620,
+      "x": 88,
+      "y": 0.7,
+      "z": -46.7
+    },
+    {
+      "tick": 13680,
+      "x": 88,
+      "y": 0.7,
+      "z": -32.7
+    },
+    {
+      "tick": 13740,
+      "x": 88,
+      "y": 0.7,
+      "z": -18.700000000000003
+    },
+    {
+      "tick": 13800,
+      "x": 88,
+      "y": 0.7,
+      "z": -4.700000000000003
+    },
+    {
+      "tick": 13860,
+      "x": 88,
+      "y": 0.7,
+      "z": 9.300000000000011
+    },
+    {
+      "tick": 13920,
+      "x": 88,
+      "y": 0.7,
+      "z": 23.299999999999997
+    },
+    {
+      "tick": 13980,
+      "x": 88,
+      "y": 0.7,
+      "z": 37.3
+    },
+    {
+      "tick": 14040,
+      "x": 88,
+      "y": 0.7,
+      "z": 51.30000000000001
+    },
+    {
+      "tick": 14100,
+      "x": 88,
+      "y": 0.7,
+      "z": 65.29999999999998
+    },
+    {
+      "tick": 14160,
+      "x": 88,
+      "y": 0.7,
+      "z": 79.30000000000001
+    },
+    {
+      "tick": 14220,
+      "x": 91.00222147135021,
+      "y": 0.7,
+      "z": 78.30451527598572
+    },
+    {
+      "tick": 14280,
+      "x": 94.64857397330246,
+      "y": 0.7,
+      "z": 78.36064930565412
+    },
+    {
+      "tick": 14340,
+      "x": 94.34146299765872,
+      "y": 0.7,
+      "z": 78.18035810904327
+    },
+    {
+      "tick": 14400,
+      "x": 93.5418056152739,
+      "y": 0.7,
+      "z": 78.89856270331796
+    },
+    {
+      "tick": 14460,
+      "x": 91.71609571882605,
+      "y": 0.7,
+      "z": 78.9917782838654
+    },
+    {
+      "tick": 14520,
+      "x": 90.38276238549271,
+      "y": 0.7,
+      "z": 80.32511161719874
+    },
+    {
+      "tick": 14580,
+      "x": 90.31609571882605,
+      "y": 0.7,
+      "z": 80.3917782838654
+    },
+    {
+      "tick": 14640,
+      "x": 89.73333333333333,
+      "y": 0.7,
+      "z": 76.70044444444444
+    },
+    {
+      "tick": 14700,
+      "x": 93.73333333333333,
+      "y": 0.7,
+      "z": 79.98044444444444
+    },
+    {
+      "tick": 14760,
+      "x": 100.53333333333333,
+      "y": 0.7,
+      "z": 80
+    },
+    {
+      "tick": 14820,
+      "x": 107.53333333333333,
+      "y": 0.7,
+      "z": 80
+    },
+    {
+      "tick": 14880,
+      "x": 114.53333333333333,
+      "y": 0.7,
+      "z": 80
+    },
+    {
+      "tick": 14940,
+      "x": 121.53333333333333,
+      "y": 0.7,
+      "z": 80
+    },
+    {
+      "tick": 15000,
+      "x": 128.53333333333333,
+      "y": 0.7,
+      "z": 80
+    },
+    {
+      "tick": 15060,
+      "x": 135.53333333333333,
+      "y": 0.7,
+      "z": 80
+    },
+    {
+      "tick": 15120,
+      "x": 136,
+      "y": 0.7,
+      "z": 80
+    },
+    {
+      "tick": 15180,
+      "x": 136,
+      "y": 0.7,
+      "z": 80
+    },
+    {
+      "tick": 15240,
+      "x": 136,
+      "y": 0.7,
+      "z": 80
+    },
+    {
+      "tick": 15300,
+      "x": 136,
+      "y": 0.7,
+      "z": 80
+    },
+    {
+      "tick": 15360,
+      "x": 136,
+      "y": 0.7,
+      "z": 80
+    }
+  ],
+  "end": {
+    "breachedAt": 7597,
+    "keeperGrabbed": true,
+    "megaShots": 31,
+    "haleFallenAt": 14343,
+    "driverAt": 14524,
+    "departed": true,
+    "carX": 146,
+    "carZ": 80,
+    "megaX": 136,
+    "megaZ": 80,
+    "alphas": 5,
+    "peak": 190,
+    "keys": [
+      "corgi",
+      "zoo-carried-0",
+      "zoo-carried-1",
+      "zoo-carried-2",
+      "zoo-carried-3",
+      "zoo-carried-4",
+      "zoo-carried-5",
+      "zoo-carried-6",
+      "zoo-carried-7",
+      "zoo-carried-8",
+      "zoo-carried-9",
+      "zoo-carried-10",
+      "zoo-carried-11",
+      "reyes"
+    ]
+  },
+  "run": {
+    "level": "L8",
+    "policy": "complete",
+    "seed": 1,
+    "completed": true,
+    "time": 256.06666666666666,
+    "deaths": 1,
+    "kills": 91,
+    "damageTaken": 150,
+    "failures": {
+      "player-died": 1
+    },
+    "objectiveTimeline": [
+      {
+        "id": "sanctuary",
+        "t": 60
+      },
+      {
+        "id": "sanctuary",
+        "t": 126.61666666666666
+      },
+      {
+        "id": "escape",
+        "t": 242.06666666666666
+      },
+      {
+        "id": "depart",
+        "t": 251.06666666666666
+      }
+    ],
+    "furthestObjective": "depart",
+    "activeObjectives": [],
+    "outcome": "complete",
+    "blocker": null,
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 1335,
+      "deferred": 306,
+      "requests": [],
+      "offenders": []
+    }
+  },
+  "inputRevision": "2eacf0c5",
+  "producerSha256": "95e1bcba8c03ed1d65cb7e8d3d430629164eff2603daa63223bae9b9e9e71b6c",
+  "rawSha256": "c48b63bec413a38cc6c1a12b6065faecf1fa7d7d898ab8bb326e926bd0ef61a5",
+  "openingAudit": {
+    "id": 402,
+    "sourceId": 446,
+    "alarmTick": 3600,
+    "biteTick": 4799,
+    "turnTick": 4960,
+    "biteAfterAlarmSeconds": 19.983333333333334,
+    "turnAfterBiteSeconds": 2.683333333333333,
+    "courierDistance": 17.05695324981706
+  }
+}

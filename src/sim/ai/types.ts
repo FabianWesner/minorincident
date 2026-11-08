@@ -2,6 +2,10 @@ import type { InfectedSpecialMove } from '../../data/infected';
 
 /** Serializable AI and crowd animation intent; all timers are fixed sim ticks. */
 export interface InfectedState {
+  /** Data-driven E07 Alpha identity; absent on legacy saves, where Brute is the default. */
+  alphaType?: import('../../data/alphaTypes').AlphaType;
+  /** Entity-owned start time keeps the shared one-second admission limit checkpoint-safe. */
+  alphaSpecialStarted?: number;
   /** L10 authored regular Alpha ownership, serialized with the entity. */
   cureRegion?: import('../../levels/L10/alphaContracts').CureRegion;
   /** Entity-owned timers survive checkpoints and chunk serialization. */
@@ -75,5 +79,8 @@ export interface InfectedSpecialAttack {
   members?: number[]; leaderId?: number; impactTick?: number; obstructionUntil?: number;
   grabbedId?: number; grabReleaseTick?: number;
   destination?: { x: number; z: number };
-  projectile?: { objectId: number; corpse: boolean; started: number; x: number; z: number; dx: number; dz: number; distance: number; range: number };
+  projectile?: { objectId: number; corpse: boolean; living?: boolean; physics?: boolean; radius?: number; restoreVelocity?: boolean; y?: number; damping?: number; lastX?: number; lastZ?: number; started: number; x: number; z: number; dx: number; dz: number; distance: number; range: number };
+  pickup?: { objectId: number; corpse: boolean; living?: boolean };
+  barrageProjectiles?: NonNullable<InfectedSpecialAttack['projectile']>[];
+  barrageRemaining?: number; barrageNextTick?: number;
 }

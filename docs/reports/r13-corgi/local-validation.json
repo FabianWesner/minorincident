@@ -1,0 +1,91 @@
+{
+  "revision": "602835dd3b69d5f0a40215df4c1ffc54dc807d8a",
+  "typecheck": {
+    "exit": 0,
+    "log": "test-results/r13-corgi/typecheck.log"
+  },
+  "checks": [
+    {
+      "name": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exit": 0,
+      "seconds": 12.19,
+      "log": "test-results/r13-corgi/lint.log"
+    },
+    {
+      "name": "test-final",
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--maxWorkers=1"
+      ],
+      "exit": 0,
+      "seconds": 101.31,
+      "log": "test-results/r13-corgi/test-final.log"
+    },
+    {
+      "name": "native-after",
+      "command": [
+        "node",
+        "--import",
+        "tsx/esm",
+        "tools/qa/r13-corgi.ts"
+      ],
+      "exit": 0,
+      "seconds": 73.86,
+      "log": "test-results/r13-corgi/native-after.log"
+    },
+    {
+      "name": "accept",
+      "command": [
+        "npm",
+        "run",
+        "qa:accept",
+        "--",
+        "--level",
+        "L10",
+        "--skip-browser"
+      ],
+      "exit": 1,
+      "seconds": 353.32,
+      "log": "test-results/r13-corgi/accept.log"
+    }
+  ],
+  "platform": "macOS; completed before remote-only instruction",
+  "interruptedThreatAudit": {
+    "revision": "602835dd3b69d5f0a40215df4c1ffc54dc807d8a",
+    "command": [
+      "node",
+      "tools/qa/test-budget.mjs",
+      "--name",
+      "qa-threat-serial",
+      "--max-seconds",
+      "3000",
+      "--",
+      "node",
+      "--import",
+      "tsx/esm",
+      "tools/qa/threat-audit.ts",
+      "--maxWorkers=1",
+      "--out",
+      "test-results/r13-corgi/threat"
+    ],
+    "exit": 130,
+    "seconds": 1009.76,
+    "workers": 1,
+    "wallBudgetSeconds": 3000,
+    "log": "test-results/r13-corgi/threat.log",
+    "defaultWrapperAttempt": {
+      "exit": 130,
+      "cancelledAfterSeconds": 190.66,
+      "reason": "600-second wrapper conflicts with serial stage-cost estimates; replaced by this identical one-worker audit with a larger caller budget",
+      "log": "test-results/r13-corgi/threat-default-budget.log"
+    },
+    "reason": "Cancelled on orchestrator instruction to move every heavy headless check remotely; no final audit receipt produced."
+  }
+}

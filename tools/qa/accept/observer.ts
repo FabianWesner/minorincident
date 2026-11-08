@@ -4,6 +4,8 @@ import type { GameEvent } from '../../../src/sim/world/types';
 import { markerAnchor } from '../../../src/sim/missions/markerAnchor';
 import { cure } from '../../../src/levels/L10/district';
 import { cureEncounters } from '../../../src/levels/L10/encounters';
+import { finale } from '../../../src/data/l10Finale';
+import { cureHangarWeapons } from '../../../src/levels/L10/mission';
 import { observeAttackStarts } from '../threat/attackStarts';
 import { L5FormationObserver } from './l5-formation';
 
@@ -25,6 +27,9 @@ export class AcceptanceObserver {
   private peakAlive = 0;
   private peakCharacters = 0;
   private firstMinute = { ticks: 0, regularPeak: 0, dogPeak: 0, alphaPeak: 0 };
+  private l10Story = { firstMegaVisibleSeconds: null as number | null, closeSections: [] as number[], seen: 0, idleEntries: [] as number[], fullArsenal: false, outsideAssaultPeak: 0, assaultPeak: 0 };
+  private l10Moved = new Set<number>();
+  private l10Seen = new Set<number>();
   private markers = new Map<string, { x: number; z: number; samples: number; maxDisplacement: number }>();
   private markerChanges: { tick: number; step: string; marker: string | null; x?: number; z?: number }[] = [];
   private markerSignature = '';
@@ -93,7 +98,7 @@ export class AcceptanceObserver {
     if (world.scenario === 'L10') world.events.on('sim.tick', () => {
       const state = world.missions!.state, player = world.entities.get(1)!;
       const console = world.missions!.def.anchors['cure-console'];
-      const inside = !!console && distance(player.transform, console) <= 25;
+      const inside = !!console && distance(player.transform, console) <= finale.holdRadius;
       const charging = !!state.states['charge-active'] && state.steps.hold?.status === 'active';
       chargeFrame = { charging, outside: !!console && !inside, dead: player.health.current <= 0,
         eligible: charging && player.health.current > 0 && inside && (state.counters['charge-ticks'] ?? 0) < 3600 };
@@ -163,7 +168,7 @@ export class AcceptanceObserver {
     const w = this.world, m = w.missions?.state;
     this.eventCounts[event.type] = (this.eventCounts[event.type] ?? 0) + 1;
     if (event.type === 'player.damaged' && m?.l6?.phase === 'retreat') this.l6RetreatDamage += event.amount;
-    if (event.type === 'checkpoint.restored') this.collected.clear();
+    if (event.type === 'checkpoint.restored') { this.collected.clear(); this.megaPrevious = null; }
     if (/^(?:l[2-6]\.|checkpoint\.|objective\.|mission.signal|dialogue.line|player\.(?:died|respawned)|vehicle\.(?:durability-hit|attack-windup)|level.completed)/.test(event.type)) this.ledger.push(structuredClone(event));
     if (event.type.startsWith('combat.') && (m?.l1?.phase === 'morning' || m?.l2?.phase === 'calm' || m?.l4 && !m.l4.gunAt || w.scenario === 'L8' && !w.missions?.l8?.state.breachedAt)) this.calm.combatEvents++;
     if (event.type === 'infected.attack') {
@@ -257,6 +262,26 @@ export class AcceptanceObserver {
       if (s.l2.released && this.releaseFirstTick === null) this.releaseFirstTick = w.tick;
     }
     if (w.scenario === 'L10') {
+      const story = this.l10Story;
+      const ordinary = alive.filter(e => !e.infected?.pursuit).length;
+      if (s.states['charge-active']) story.assaultPeak = Math.max(story.assaultPeak, ordinary);
+      else story.outsideAssaultPeak = Math.max(story.outsideAssaultPeak, ordinary);
+      for (const e of alive) {
+        if ((e.motion?.speed ?? 0) > .1) this.l10Moved.add(e.id);
+        if (e.hidden || e.infected?.hidden || !w.infected!.director.inFrame(e.transform, 1, true) || w.infected!.director.occluded(e.transform)) continue;
+        if (e.infected?.pursuit) {
+          story.firstMegaVisibleSeconds ??= w.tick / 60;
+          const section = Math.floor(player.transform.x / 500);
+          if (distance(e.transform, player.transform) < 30 && !story.closeSections.includes(section)) story.closeSections.push(section);
+        } else if (!this.l10Seen.has(e.id)) {
+          this.l10Seen.add(e.id); story.seen++;
+          if (!this.l10Moved.has(e.id)) story.idleEntries.push(e.id);
+        }
+      }
+      if (s.states['cure-carried']) {
+        const racks = [...player.weapons!.LEFT.rack, ...player.weapons!.RIGHT.rack].map(slot => slot.id);
+        story.fullArsenal ||= cureHangarWeapons.every(id => racks.includes(id));
+      }
       const r = cure.regions.find(r => player.transform.x >= r.envelope[0][0] && player.transform.x <= r.envelope[1][0]);
       if (r && !s.states['cure-released']) {
         const record = this.regionRecord(r.id);
@@ -274,7 +299,7 @@ export class AcceptanceObserver {
         }
         for (const [group, count] of groupCounts) record.regularGroupPeaks[group] = Math.max(record.regularGroupPeaks[group] ?? 0, count);
       }
-      if (w.tick <= 3600) { this.firstMinute.ticks++; this.firstMinute.regularPeak = Math.max(this.firstMinute.regularPeak, alive.filter(e => !e.archetype.includes('dog') && !e.archetype.includes('alpha')).length); this.firstMinute.dogPeak = Math.max(this.firstMinute.dogPeak, alive.filter(e => e.archetype.includes('dog')).length); this.firstMinute.alphaPeak = Math.max(this.firstMinute.alphaPeak, alive.filter(e => e.archetype.includes('alpha')).length); }
+      if (w.tick <= 3600) { this.firstMinute.ticks++; this.firstMinute.regularPeak = Math.max(this.firstMinute.regularPeak, alive.filter(e => !e.archetype.includes('dog') && !e.archetype.includes('alpha')).length); this.firstMinute.dogPeak = Math.max(this.firstMinute.dogPeak, alive.filter(e => e.archetype.includes('dog')).length); this.firstMinute.alphaPeak = Math.max(this.firstMinute.alphaPeak, alive.filter(e => e.archetype.includes('alpha') && !e.infected?.pursuit).length); }
       const boss = w.megaPursuit?.state, entity = w.megaPursuit?.entity();
       if (boss?.id && entity && boss.mode !== 'dead') {
         this.megaIntroduction ??= { tick: boss.introducedAt, distance: distance(entity.transform, player.transform), route: [...boss.route] };
@@ -299,7 +324,7 @@ export class AcceptanceObserver {
     return { initial: this.initial, final: this.final, eventCounts: this.eventCounts, ledger: this.ledger, pickups: this.pickups, duplicatePickups: this.duplicatePickups,
       peakAlive: this.peakAlive, peakCharacters: this.peakCharacters, firstMinute: this.firstMinute, markers: [...this.markers].map(([id, record]) => ({ id, ...record })), markerChanges: this.markerChanges, l5Formation: this.l5Formation.snapshot(), l4Scale: this.l4Scale,
       corgi: { ...this.corgi, ids: [...this.corgi.ids] }, phaseStarts: this.phaseStarts, phasePeaks: this.phasePeaks, births: this.births, speed: this.speed, runOut: this.runOut, regions: this.regions,
-      charge: this.charge, megaIntroduction: this.megaIntroduction, maxMegaStep: this.maxMegaStep, release: this.release, calm: this.calm, l6RetreatDamage: this.l6RetreatDamage,
+      charge: this.charge, l10Story: this.l10Story, megaIntroduction: this.megaIntroduction, maxMegaStep: this.maxMegaStep, release: this.release, calm: this.calm, l6RetreatDamage: this.l6RetreatDamage,
       l2BeforeDoors: { ...this.l2BeforeDoors, nearest: Number.isFinite(this.l2BeforeDoors.nearest) ? this.l2BeforeDoors.nearest : null }, l2Contact: this.l2Contact, l2Maximum: this.l2Maximum, l2Route: { ...this.l2Route, encounterIds: [...this.l2EncounterIds] }, releaseFirstTick: this.releaseFirstTick, maxDetailedChunks: this.maxDetailedChunks,
       l5SearchRoute: { ...this.l5SearchRoute, encounters: [...this.l5SearchRoute.encounters.values()] } };
   }

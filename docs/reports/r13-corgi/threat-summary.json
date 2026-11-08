@@ -1,0 +1,214 @@
+{
+  "revision": "602835dd3b69d5f0a40215df4c1ffc54dc807d8a",
+  "seed": 1,
+  "policy": "kiting + passive",
+  "tier": "low",
+  "workers": 1,
+  "seconds": 1925.404813437,
+  "flags": [],
+  "sourceHash": "af461613360ea843ff9fce1ac59c291db4ffebce7465e696861d656941f9a476",
+  "commandExit": 0,
+  "callerWallBudgetSeconds": 3000,
+  "stageCount": 31,
+  "stageErrors": [],
+  "levels": [
+    {
+      "level": "L1",
+      "outcome": "complete",
+      "diagnosticFlags": [],
+      "passiveOutcome": "complete",
+      "gateFlags": []
+    },
+    {
+      "level": "L2",
+      "outcome": "complete",
+      "diagnosticFlags": [],
+      "passiveOutcome": "tick-budget",
+      "gateFlags": []
+    },
+    {
+      "level": "L3",
+      "outcome": "complete",
+      "diagnosticFlags": [],
+      "passiveOutcome": "tick-budget",
+      "gateFlags": []
+    },
+    {
+      "level": "L4",
+      "outcome": "mission-failed",
+      "diagnosticFlags": [
+        "INCOMPLETE_NATIVE_POLICY:mission-failed"
+      ],
+      "passiveOutcome": "tick-budget",
+      "gateFlags": []
+    },
+    {
+      "level": "L5",
+      "outcome": "complete",
+      "diagnosticFlags": [],
+      "passiveOutcome": "tick-budget",
+      "gateFlags": []
+    },
+    {
+      "level": "L6",
+      "outcome": "complete",
+      "diagnosticFlags": [],
+      "passiveOutcome": "tick-budget",
+      "gateFlags": []
+    },
+    {
+      "level": "L7",
+      "outcome": "complete",
+      "diagnosticFlags": [],
+      "passiveOutcome": "complete",
+      "gateFlags": []
+    },
+    {
+      "level": "L8",
+      "outcome": "complete",
+      "diagnosticFlags": [],
+      "passiveOutcome": "complete",
+      "gateFlags": []
+    },
+    {
+      "level": "L9",
+      "outcome": "complete",
+      "diagnosticFlags": [],
+      "passiveOutcome": "complete",
+      "gateFlags": []
+    },
+    {
+      "level": "L10",
+      "outcome": "complete",
+      "diagnosticFlags": [],
+      "passiveOutcome": "tick-budget",
+      "gateFlags": []
+    }
+  ],
+  "stages": [
+    {
+      "id": "L5/passive/1",
+      "seconds": 183.17228688900002
+    },
+    {
+      "id": "L5/passive/2",
+      "seconds": 186.23208241
+    },
+    {
+      "id": "L5/passive/3",
+      "seconds": 167.285938982
+    },
+    {
+      "id": "L4/skilled/1",
+      "seconds": 220.96936604800004
+    },
+    {
+      "id": "L4/high-hold",
+      "seconds": 133.076515485
+    },
+    {
+      "id": "L4/passive/1",
+      "seconds": 106.8725049869999
+    },
+    {
+      "id": "L10/skilled/1",
+      "seconds": 112.6381917979999
+    },
+    {
+      "id": "L10/passive/1",
+      "seconds": 65.13580875700013
+    },
+    {
+      "id": "L3/skilled/1",
+      "seconds": 53.52199268999998
+    },
+    {
+      "id": "L2/skilled/1",
+      "seconds": 43.51310774499993
+    },
+    {
+      "id": "L3/skilled/2",
+      "seconds": 37.54502104700008
+    },
+    {
+      "id": "L3/skilled/3",
+      "seconds": 44.99947095799982
+    },
+    {
+      "id": "L8/passive/1",
+      "seconds": 47.129977905000096
+    },
+    {
+      "id": "L1/skilled/1",
+      "seconds": 33.060737802999796
+    },
+    {
+      "id": "L5/skilled/1",
+      "seconds": 41.04941587700019
+    },
+    {
+      "id": "L8/skilled/1",
+      "seconds": 32.376814136000114
+    },
+    {
+      "id": "L2/passive/1",
+      "seconds": 127.72906843300001
+    },
+    {
+      "id": "L5/skilled/2",
+      "seconds": 27.11176644399995
+    },
+    {
+      "id": "L5/skilled/3",
+      "seconds": 25.730834359999978
+    },
+    {
+      "id": "L7/skilled/1",
+      "seconds": 34.16889724999992
+    },
+    {
+      "id": "L6/skilled/1",
+      "seconds": 21.764528514999895
+    },
+    {
+      "id": "L7/passive/1",
+      "seconds": 21.971350756000028
+    },
+    {
+      "id": "L7/skilled/2",
+      "seconds": 25.42478426899994
+    },
+    {
+      "id": "L7/skilled/3",
+      "seconds": 27.969961610000116
+    },
+    {
+      "id": "L1/passive/1",
+      "seconds": 18.98822588000004
+    },
+    {
+      "id": "L9/skilled/1",
+      "seconds": 24.636640652000207
+    },
+    {
+      "id": "L7/passive/2",
+      "seconds": 15.028203971000156
+    },
+    {
+      "id": "L7/passive/3",
+      "seconds": 16.289378394
+    },
+    {
+      "id": "L9/passive/1",
+      "seconds": 13.313516415000194
+    },
+    {
+      "id": "L3/passive/1",
+      "seconds": 10.34542255800008
+    },
+    {
+      "id": "L6/passive/1",
+      "seconds": 6.3076336350000926
+    }
+  ]
+}

@@ -522,16 +522,18 @@ export class Mission {
     for (const [actor, entityId] of Object.entries(this.state.actors)) if (this.deadBosses.has(actor)) for (const step of Object.values(this.state.steps)) if (step.status === 'active' && !step.kills.includes(entityId)) step.kills.push(entityId);
     if (this.state.tier !== null) this.world.setTier(this.state.tier);
     this.world.vehicles?.rebuild(false, delta);
-    this.world.hazards?.debris.reset(); this.world.interactables?.rebuildBlockers(); this.world.barricades?.rebuild();
+    this.world.hazards?.debris.reset(); this.world.interactables?.rebuildBlockers(); this.world.barricades?.rebuild(); this.world.destruction?.rebuild();
     for (const gate of this.gateHandles.keys()) this.syncGate(gate);
     this.zones.forEach(zone => { zone.inside=this.state.volumes[zone.index];zone.entered=zone.exited=false; });
     this.l2?.restore(delta); this.l3?.restore(delta); this.l4?.restore(delta); this.l5?.restore(delta); this.l6?.restore(delta); this.l9?.rebuild();
     if (resume) {
       player.health.current = checkpoint.entities.find(e => e.id === 1)!.health.current;
       this.state.failure = checkpoint.state.failure;
-    } else this.emit({ type: 'checkpoint.restored', id });
+    }
     this.world.solids.restore();
+    this.world.npcs?.companion.respawnNear();
     this.world.solids.reservePlayerStart();
+    if (!resume) this.emit({ type: 'checkpoint.restored', id });
   }
   dispose(): void { this.l2?.dispose(); this.l3?.dispose(); this.l8?.dispose(); this.stops.forEach(stop => stop()); for(const handle of this.gateHandles.values()) {const collider=this.world.physics.world?.getCollider(handle);if(collider)this.world.physics.world!.removeCollider(collider,true);} this.gateHandles.clear(); }
 }

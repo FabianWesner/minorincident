@@ -1,0 +1,30 @@
+{
+  "priorCommit": "3063c08a82486f4afc90b4ca96cc4f8d29d9be81",
+  "priorPath": "docs/reports/fix51-verify/L10.json",
+  "priorFreshFailures": [
+    {
+      "section": "globals",
+      "id": "G-24",
+      "currentStatus": "FAIL"
+    },
+    {
+      "section": "rows",
+      "id": "L10-03",
+      "currentStatus": "FAIL"
+    }
+  ],
+  "currentPath": "acceptance/L10.json",
+  "currentFreshFailures": [
+    {
+      "section": "globals",
+      "id": "G-24",
+      "currentStatus": "FAIL"
+    },
+    {
+      "section": "rows",
+      "id": "L10-03",
+      "currentStatus": "FAIL"
+    }
+  ],
+  "note": "Both fresh failing criterion IDs predate the recovered build; this does not establish the cause of the new completion-bot stall."
+}

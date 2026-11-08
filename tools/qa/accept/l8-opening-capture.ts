@@ -80,7 +80,7 @@ try {
       const game = window.__SS__!; game.pause();
       return { tick: game.tick(), marker: game.missions.state()!.marker, text: document.querySelector('[data-testid=objective-text]')?.textContent };
     });
-    assert(first.tick <= 60 && first.marker === 'zoo-gate' && first.text?.includes('zoo gate'), `Missing first-second guidance: ${JSON.stringify(first)}`);
+    assert(first.tick <= 60 && first.marker === 'central-plaza' && first.text?.includes('central plaza'), `Missing first-second guidance: ${JSON.stringify(first)}`);
     const before = await page.evaluate(() => { const game = window.__SS__!; game.camera.follow(); game.camera.zoom(1); game.resume(); return game.getEntity(1)!.transform; });
     await page.keyboard.down('KeyW'); await page.waitForTimeout(500); await page.keyboard.up('KeyW');
     await page.evaluate(() => window.__SS__!.pause());
@@ -91,8 +91,8 @@ try {
         return { tick: game.tick(), objective: document.querySelector('[data-testid=objective-text]')?.textContent?.trim() ?? '', marker: mission.marker, tracker: !!document.querySelector<HTMLElement>('[data-testid=objective-tracker]')?.checkVisibility(), minimap: !!document.querySelector<HTMLElement>('[data-testid=minimap-objective]')?.checkVisibility(), direction: !!document.querySelector<HTMLElement>('[data-testid=mission-marker]')?.checkVisibility(), worldMarker: render.missionMarker, camera: render.camera, quality: render.quality, backend: render.backend, active: Object.entries(mission.steps).filter(([, step]) => step.status === 'active').map(([id]) => id), player: game.getEntity(1)!.transform, campaign: !!game.campaign.state() };
       });
       const name = `${progressed ? 'progressed' : 'fresh'}-${quality}-zoom-${String(zoom).replace('.', '-')}.jpg`;
-      assert(state.objective.includes('zoo gate') && /\d+\s*m/.test(state.objective), `${name}: missing gate objective/distance`);
-      assert.equal(state.marker, 'zoo-gate'); assert(state.active.includes('sanctuary'));
+      assert(state.objective.includes('central plaza') && /\d+\s*m/.test(state.objective), `${name}: missing plaza objective/distance`);
+      assert.equal(state.marker, 'central-plaza'); assert(state.active.includes('sanctuary'));
       assert(state.tracker && state.minimap && state.direction && state.worldMarker?.visible, `${name}: missing visible guidance`);
       assert.equal(state.campaign, progressed); assert.equal(state.quality, quality); assert(Math.abs(state.camera.zoom - zoom) < 1e-6);
       const moved = Math.hypot(state.player.x - before.x, state.player.z - before.z);
@@ -136,7 +136,8 @@ try {
       await page.waitForFunction(() => window.__SS__!.tick() >= 3660, undefined, { timeout: 60_000 });
       await page.keyboard.up('KeyE'); await page.evaluate(() => window.__SS__!.pause());
       const breached = await sample();
-      for (const state of [calm, breached]) assert(state.steps.sanctuary === 'active' && state.steps.escape === 'pending' && state.steps.depart === 'pending' && state.marker === 'zoo-gate' && state.driver === null && state.passengers === 0 && state.entryRing === false, `Early APC sequence break: ${JSON.stringify(state)}`);
+      for (const state of [calm, breached]) assert(state.steps.sanctuary === 'active' && state.steps.escape === 'pending' && state.steps.depart === 'pending' && state.driver === null && state.passengers === 0 && state.entryRing === false, `Early APC sequence break: ${JSON.stringify(state)}`);
+      assert(calm.marker === 'central-plaza' && breached.marker === null, 'PO 2026-11-08: the plaza destination yields to markerless defence at the alarm');
       assert(calm.checkpoint === 'sanctuary' && breached.checkpoint === 'breach' && !calm.breached && calm.infected === 0 && breached.breached && breached.infected > 0, 'The real breach must occur while APC camping remains blocked');
       earlyAttempt = { input: 'physical WASD along the south road, then hold E at the driver door; no teleport, bot, invulnerability, objective skip or time scale change', arrived, calm, breached, image: 'early-apc-52s.jpg' };
     }
