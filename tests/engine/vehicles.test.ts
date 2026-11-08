@@ -119,6 +119,9 @@ async function vehicleShovesProps(): Promise<void> {
     expect(prop.body.isSleeping()).toBe(false);
     expect(prop.body.linvel().x).toBeGreaterThan(0);
     expect(world.props!.navWalls.has(prop.entityId)).toBe(false);
+    prop.body.setLinvel({ x: 30, y: 0, z: 0 }, true);
+    world.props!.prePhysics();
+    expect(prop.body.linvel().x, 'a prop already escaping the bumper gets no additional impulse').toBe(30);
     const drums = world.props!.spawn({ id: 'ram-test-drum-stack', assetId: 'prop.cure-drum-stack', position: [10, 0, 0], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: '', visualAabb: { min: [-.65, 0, -.55], max: [.65, 2.2, .55] } });
     world.props!.updateNavigation();
     const secondId = world.vehicles!.spawn('vehicle.military-apc', { x: 6.5, z: 0 });

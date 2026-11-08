@@ -124,8 +124,9 @@ export class PropSystem {
       const contact = car.physics.collider.contactCollider(item.collider, .12);
       if (!contact) continue;
       const velocity = car.physics.body.linvel();
+      const propVelocity = item.body.linvel();
       const nx = contact.normal1.x, nz = contact.normal1.z;
-      const speed = Math.min(car.physics.def.topSpeed, velocity.x * nx + velocity.z * nz);
+      const speed = Math.min(car.physics.def.topSpeed, (velocity.x - propVelocity.x) * nx + (velocity.z - propVelocity.z) * nz);
       if (speed <= .35) continue;
       item.body.setBodyType(RAPIER.RigidBodyType.Dynamic, false);
       const impact = Math.min(item.mass * Math.min(12, speed * .7), car.physics.def.mass * speed * .08);
