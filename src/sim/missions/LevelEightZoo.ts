@@ -98,7 +98,7 @@ export class LevelEightZoo {
       // Keep the calm animals at their public-facing enclosure fences so the keeper's boulevard route passes them.
       const gateSideZ = anchor.z < 0 ? 18 : -18;
       const gateX = speciesId === 'flamingo' ? 0 : Math.sign(anchor.x) * 45;
-      const at = this.point({ x: gateX + offset * 2, z: anchor.z + gateSideZ }, radius), to = this.point({ x: at.x + 2, z: at.z }, radius);
+      const at = this.point({ x: gateX + offset * 2, z: anchor.z + gateSideZ - (speciesId === 'flamingo' && offset === 0 ? 3 : 0) }, radius), to = this.point({ x: at.x + 2, z: at.z }, radius);
       s.animals.push(civilians.spawn('cashier', at, { zooAnimal: speciesId, waypoints: [at, to] }));
     }
     const tour = [{ x: 24, z: 64 }, { x: 24, z: 0 }, { x: 45, z: 0 }, { x: -45, z: 0 }, { x: 0, z: 0 }];
@@ -106,8 +106,8 @@ export class LevelEightZoo {
     s.keeperId = outbreak.spawnPedestrian(keeper, { ...staff, walkSpeed: 4.6, waypoints: tour,
       schedule: [...tour.map(target => ({ activity: 'walk' as const, anchor: 'zoo/tour', target, ticks: 1 })),
         { activity: 'look', anchor: 'zoo/plaza', target: tour.at(-1)!, facing: { x: -4, z: 0 }, ticks: 36_000 }] });
-    const pondPost = this.point({ x: 1, z: -18 });
-    s.pondKeeperId = outbreak.spawnPedestrian(pondPost, { ...zooStaffLook(0), waypoints: [pondPost, { x: 2, z: -18 }] });
+    const pondPost = this.point({ x: 1, z: -21 });
+    s.pondKeeperId = outbreak.spawnPedestrian(pondPost, { ...zooStaffLook(0), waypoints: [pondPost, { x: 2, z: -21 }] });
     // This keeper stays with the birds during the first alarm, still fully
     // biteable and rescuable through the ordinary shared outbreak rules.
     w.entities.get(s.pondKeeperId)!.civilian!.l1!.haven = { ...pondPost, route: [], leg: 0 };
@@ -125,7 +125,7 @@ export class LevelEightZoo {
       const serviceRoutes: [number, number][][] = [
         [[-96, 32]],
         [[80, 78]], // Cross the gate-to-APC road before ordinary pursuit.
-        [[-24, -64], [0, -56], [0, -44], [-11, -40], [-11, -24], [1, -16.2]], // Enter the north gate and walk the dry shore around the pond.
+        [[-24, -64], [0, -56], [0, -44], [-11, -40], [-11, -24], [1, -19.2]], // Enter the north gate and walk the dry shore around the pond.
         [[27, 78]], // Clear the bunker onto the gate road before ordinary pursuit.
       ];
       const route = [...exit.route, ...serviceRoutes[index]];
