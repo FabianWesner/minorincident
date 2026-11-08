@@ -163,6 +163,9 @@ def build_wreck(directory, output, only_tier=None):
                     if any('khaki' in m.name for m in obj.data.materials):
                         bm=bmesh.new();bm.from_mesh(obj.data)
                         bmesh.ops.bisect_plane(bm,geom=list(bm.verts)+list(bm.edges)+list(bm.faces),dist=.0001,plane_co=(-1.50,0,0),plane_no=(1,0,0),clear_outer=True)
+                        # Imported flat GLB faces have split vertices. Keep the surviving tarp continuous at every distance tier.
+                        bmesh.ops.remove_doubles(bm,verts=list(bm.verts),dist=.00001)
+                        for face in bm.faces:face.smooth=True
                         bm.to_mesh(obj.data);bm.free()
                 if original_owner=='doorL':
                     # Torn door, laid beside the truck within its original footprint.
