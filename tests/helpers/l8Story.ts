@@ -1,6 +1,6 @@
 import { expect } from 'vitest';
 import { readFile } from 'node:fs/promises';
-import { Box3, BoxGeometry, Group, Mesh, Vector3 } from 'three/webgpu';
+import { Box3, BoxGeometry, Group, Mesh, MeshBasicNodeMaterial, Vector3 } from 'three/webgpu';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { emptyInput } from '../../src/input/InputFrame';
@@ -26,12 +26,13 @@ function gateGeometry(): void {
   split.geometry.forEach(geometry => geometry.dispose()); source.dispose(); lintelGeometry.dispose();
   const dog = new Group(), body = new Group(), clothGeometry = new BoxGeometry(.6, .3, .5);
   body.name = 'body'; body.position.y = .6; dog.add(body);
-  const cloth = new Mesh(clothGeometry); cloth.material.name = 'pal_navy'; body.add(cloth);
+  const clothMaterial = new MeshBasicNodeMaterial(); clothMaterial.name = 'pal_navy';
+  const cloth = new Mesh(clothGeometry, clothMaterial); body.add(cloth);
   const vest = k9VestModel(dog, .47);
   expect(new Box3().setFromObject(vest).getSize(new Vector3()).z).toBeCloseTo(.47);
   expect(cloth.geometry).toBe(clothGeometry);
   vest.traverse(node => { if (node instanceof Mesh) { node.geometry.dispose(); for (const material of Array.isArray(node.material) ? node.material : [node.material]) material.dispose(); } });
-  clothGeometry.dispose(); cloth.material.dispose();
+  clothGeometry.dispose(); clothMaterial.dispose();
 }
 
 /** Real input for the tour/breach, then isolated boarding to exercise the story controller without another full combat run. */
