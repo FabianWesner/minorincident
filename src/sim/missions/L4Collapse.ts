@@ -140,9 +140,9 @@ export class L4Collapse {
     const inside = world.infected!.active.filter(e => e.health.current > 0 && !e.hidden && this.h.insideRing(e.transform)).length;
     const survivors = line.soldierIds.filter(id => this.soldier(id));
     world.events.emit({ type: 'l4.beat', tick, beat: line.id, cause, soldiers: survivors.length, inside });
-    if (i === 0) { this.h.mission.radio('L4.line1'); this.fallTo(survivors, D.fallback1.map(pt), d.lines[1]); this.camera('l4-line-1'); }
+    if (i === 0) { this.h.mission.radio('L4.line1'); this.fallTo(survivors, D.fallback1.map(pt), d.lines[1]); }
     if (i === 1) { this.h.mission.radio('L4.nests'); this.fallTo(survivors, D.fallback2.map(pt), d.lines[2]); }
-    if (i === 2) { this.silenceTank(); this.h.mission.radio('L4.armor'); this.retreat(survivors); this.camera('l4-armor'); }
+    if (i === 2) { this.silenceTank(); this.h.mission.radio('L4.armor'); this.retreat(survivors); }
   }
   /** Survivors run back (shooting on the move) to the next line's posts and hold there; the next line counts them. */
   private fallTo(ids: number[], posts: Point[], next: L4Line): void {
@@ -193,8 +193,6 @@ export class L4Collapse {
       this.world.infected!.press(id, victim.id, this.world.tick + ticks(dist(at, victim.transform) / 1.6 + 20), 30);
     }
   }
-  /** Short camera beat on the collapse (mission cinematic: <= 2 s, the sim pauses, skippable after 0.5 s). Skipped while another one runs. */
-  private camera(id: string): void { if (this.h.mission.def.cinematics[id]) this.h.mission.cinematic(id); }
 
   // ------------------------------------------------------------------------------------------------ the Alphas
   /**

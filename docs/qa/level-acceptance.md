@@ -176,7 +176,7 @@ Feel: "we actually escaped" → "everyone is fighting, and it is still not enoug
 | L4-06 | hold | **Horde present:** first breach into the plaza at ~45 s (level clock, ±15 s) with ≥ 60 alive at once (~74 at the PO-accepted 10-27 level) (PO 10-27 accepted level); alive in the plaza ≥ 40 from +45 s to the line break (tune). PO: "Almost no fight action. Just two alphas, instead of the Zombie horede". | PO 10-27, Q-297 | S |
 | L4-07 | hold | combat: reachable ≥ 90 % (no clumps locked at sheds/walls); passive first attack ≤ 10 s (measured 4.87 s); passive attacks ≥ 6/min (tune). PO: "they are not attacking me" / "The Zombies are somehow locked there". Clarification: score reachability from the first physical perimeter breach/gate opening onward; every infected must have a legal ground, vault, or attack-through-barrier path once the perimeter permits it, with no permanent geometry trap. | Q-279, Q-286 | S |
 | L4-08 | hold | Alphas **8 high / 6 low**, staggered from ≥ 6 directions, ≥ 3 reach a line; no Alpha "appears out of nothing". | E22-AC12, Q-160 | S, O |
-| L4-09 | hold | Lines fall on beats: line 1 at 50–62 s, nests 110–124 s, armour 170–182 s after the turn; "Fall back!" 8 s after the third; camera beats ≤ 2 s, skippable after 0.5 s. | E22-AC13, l4.director | S |
+| L4-09 | hold | Lines fall on beats: line 1 at 50–62 s, nests 110–124 s, armour 170–182 s after the turn; "Fall back!" 8 s after the third; opening-fight camera stays on the courier through breach, line, tank and Alpha reveals; radio/HUD carries the reveal information. | E22-AC13, l4.director, PO 2026-11-08 | S |
 | L4-10 | hold | Spectacle: ≥ 2 HMGs fire, tank enters at +22 s and fires every 8–12 s (never within 15 m of player/ally), never through the barrier wall; helicopter orbits and withdraws. | E22-AC11, P1-116 | S, O |
 | L4-11 | hold | Riot infected: frontal MG hits visibly chip HP + recoil at every range incl. point blank; frontal MG kill ≤ 6 s (measured 3.7 s), flank ≤ 2 s; health bar always shown; one riot cop alone does not down a full-HP player that keeps firing (tune). PO: "I feel I have zero effect when I shoot them." | Q-281, Q-285 | S, P |
 | L4-12 | hold | Horde mix: ≥ 4 distinct infected looks in every 20-infected sample (not only suits). | Q-194 | O |
@@ -186,6 +186,7 @@ Feel: "we actually escaped" → "everyone is fighting, and it is still not enoug
 | L4-16 | bar/wait | Only the player (+ corgi) enters; door barred in 1.0 s; battle audible above ≥ 6 s (low-pass); L5 loads in the same basement. | E22-AC15 | S |
 | L4-17 | all | Corpse piles ≤ ~1 m, no stretched limbs; player never drawn under a corpse. | Q-287, Q-286, Q-195 | O |
 | L4-18 | all | Frames: `l4-plaza-safe` clean and alive; war frames read "huge mixed war"; player readable in the battle. | E22-AC19 | O, P |
+| L4-19 | all | Parked cargo truck clears the east perimeter wall, fence and sign by ≥ 0.5 m; its authored physics hull does not overlap the perimeter collider at any L4 phase. | `tests/qa/invariants/contract.test.ts` scripted convoy route/stop OBB check, PO 2026-11-08 | S |
 
 ## L5 · Aftermath (D-FAIR W5, sunset, +shotgun)
 

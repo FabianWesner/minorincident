@@ -515,13 +515,11 @@ export class LevelFourWar {
     const side = l4BreachOf(i), s = this.s; if (!side || s.phase !== 'war') return;
     const breaches = s.breaches ??= {}, b = breaches[side] ??= { announcedAt: 0, openAt: 0 };
     if (b.openAt) return;
-    const first = !Object.values(breaches).some(x => x && x.openAt);
     b.openAt = this.world.tick; b.arrivals = 0;
     s.perimeterAt = this.world.tick;
     // The perimeter opening admits the horde. The defense line falls on the
     // director's separate casualty/deadline beat, 50–62 seconds after the turn.
     this.mission.radio(`L4.breach-${side}`);
-    if (first && this.mission.def.cinematics[`l4-breach-${side}`]) this.mission.cinematic(`l4-breach-${side}`);
     this.mission.state.marker = `l4-breach-${side}`;
   }
   /**

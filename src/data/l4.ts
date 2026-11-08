@@ -162,8 +162,6 @@ export const l4 = {
     alphaHold: { north: [-39, -25] as P, south: [-21, 38] as P },
     /** The armour beat: infected swarm the tank; it goes silent once `swarm` infected are within `swarmM`. */
     swarm: 6, swarmM: 6.5, cutOff: { high: 6, low: 3 },
-    /** Readability: short camera beats (sim pauses, <= 2 s, skippable after 0.5 s) at the line-1 overrun and the swarmed tank. */
-    cameraS: 1.6,
     /** The escape window: at "Fall back!" (and on a respawn in the collapse) infected farther than `nearM` from the courier ignore her for `s` (busy with the army). */
     escape: {
       /** First street point beyond the east camp perimeter: the escape checkpoint after Fall back. */
@@ -240,9 +238,9 @@ export const l4 = {
   bots: { seeds: 20, completeMedianS: [245, 460] as P, newbieMedianS: [275, 490] as P, newbieMinSeeds: 18, newbieMaxMedianDeaths: 2 },
 } as const;
 
-/** Convoy parking: the column ends along the plaza at x = -11, head (APC) in the north. See `l4Route`. */
-// Stop 15 cm before the old endpoint so the APC's nose clears the storefront steps by >0.3 m.
-export const l4Convoy = { endX: -11, endZ: -20.85 } as const;
+/** Convoy parking: the column ends along the plaza with the APC at the north end. See `l4Route`. */
+// PO 2026-11-08: park the rear cargo truck wholly inside the east perimeter; its front bumper previously crossed the wall/sign.
+export const l4Convoy = { endX: -17.5, endZ: -20.85 } as const;
 /** The wider blast wreck turns and settles west of the intact truck, clear of the frontage. */
 export const l4FuelCrater = { x: l4.fuelTruck.x - .8, z: l4.fuelTruck.z, yaw: -Math.PI / 2 };
 
