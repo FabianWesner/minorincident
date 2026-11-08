@@ -557,7 +557,13 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   const finishLevel = async (e: Eyes) => {
     if (!run) return;
     run.finished = true; run.wallSeconds = Math.round((Date.now() - wallStart) / 1000); run.simSeconds = Math.round((e.tick - tickStart) / 60);
-    const deaths = await page.evaluate(level => { const m = window.__SS__!.missions.state(); return m?.id === level ? m.stats.deaths : null; }, run.level);
+    const deaths = await page.evaluate(level => {
+      // Auto-transition may already have replaced the mission by this poll.
+      // Its completion event retains deaths missed between physical samples.
+      const completed = (window as unknown as { __playtestCompleted?: { level: string; result: { deaths: number } }[] }).__playtestCompleted?.filter(row => row.level === level).at(-1);
+      if (completed) return completed.result.deaths;
+      const m = window.__SS__!.missions.state(); return m?.id === level ? m.stats.deaths : null;
+    }, run.level);
     if (deaths !== null) run.deaths = deaths;
     run.attacks = await page.evaluate(() => ({ ...(window as unknown as { __playtestAttacks: Record<string, number> }).__playtestAttacks }));
     run.weaponsEnd = e.player?.weapons ?? []; prevWeapons = run.weaponsEnd;
