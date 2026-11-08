@@ -241,8 +241,26 @@ async function checkPharmacyCatchup() {
         expect(w.solids.offenders).toEqual([]);
       }
       if (quality === 'high') checkNearRangeCatchup(w);
+      else checkLowBoardingCorner(w);
     } finally { w.dispose(); }
   }
+}
+
+/** Low quality must use the same walked boarding corner as high quality. */
+function checkLowBoardingCorner(w: SimWorld) {
+  const player = w.entities.get(1)!, follower = w.entities.get(w.l7Encounters!.state.roster[1].id)!;
+  follower.hidden = false; follower.civilian!.survivor!.slot = 0;
+  Object.assign(follower.transform, { x: -35, z: 50, y: .7 });
+  Object.assign(player.survivor!.velocity, { x: 0, z: -4.5 });
+  w.missions!.state.steps.departure.status = 'active';
+  const move = w.npcs!.move; let target = { x: 0, z: 0 };
+  w.npcs!.move = (_entity, at) => { target = { x: at.x, z: at.z }; return true; };
+  try {
+    for (const [x, z] of [[-42, 50], [-38, 50], [-34, 50], [-30, 50], [-30, 49]]) {
+      Object.assign(player.transform, { x, z }); w.l7Encounters!.follower(follower);
+    }
+    expect(target.x).toBeCloseTo(-31.3); expect(target.z).toBeCloseTo(49.5);
+  } finally { w.npcs!.move = move; }
 }
 
 /** A 19 m straggler needs a 60 m street detour. Other followers must not

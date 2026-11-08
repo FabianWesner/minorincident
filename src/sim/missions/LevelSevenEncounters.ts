@@ -278,7 +278,7 @@ export class LevelSevenEncounters {
     // Keep followers on their individual slots when the leader turns. Falling
     // back to the leader position sends the whole formation to one crowded point.
     const ahead = w.missions!.state.steps.departure?.status !== 'active' || Math.hypot(v.x, v.z) <= .8 || (goal.x - e.transform.x) * v.x + (goal.z - e.transform.z) * v.z >= 0;
-    const target = w.infected!.director.tier === 'high'
+    const target = w.infected!.director.tier === 'high' || w.missions!.state.steps.departure?.status === 'active'
       ? nav.clear(goal.x, goal.z, .35) ? goal : snapToClear(w, goal, .35)
       : ahead && nav.clear(goal.x, goal.z, .35) && nav.visible(e.transform, goal, .35) && nav.visible(goal, p.transform, .35) ? goal : p.transform;
     if (d > formationBack(slot) + 10 && w.tick >= this.state.waitAt) {
@@ -359,9 +359,9 @@ export class LevelSevenEncounters {
     }
     return false;
   }
-  /** Follow the courier's walked corner two abreast instead of swinging the tail across it. */
+  /** At either quality, follow the courier's walked boarding corner two abreast
+   * instead of swinging the tail across the parked vehicles. */
   private formationGoal(player: EntitySnapshot['transform'], velocity: Point, slot: number): Point {
-    if (this.world.infected!.director.tier !== 'high') return formationSlot(player, leaderHeading(player.yaw, velocity), slot);
     const last = this.trail.at(-1);
     if (last && distance(last, player) > 6) this.trail.length = 0;
     if (!last || distance(last, player) >= .4) {
