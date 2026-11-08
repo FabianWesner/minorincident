@@ -654,7 +654,7 @@ export class Vehicles {
     const car = this.cars.get(carId), actor = this.world.entities.get(actorId);
     if (!car?.physics.def.transport || (!actor?.civilian && !actor?.companion && !actor?.escort) || actor.health.current <= 0 || actor.civilian?.pet || actor.infected || actorId === 1 || !this.operable(car) || car.physics.speed >= 1 || actor.passengerOf !== undefined) return false;
     const entry = this.passengerDoor(carId);
-    if (Math.hypot(actor.transform.x - entry.x, actor.transform.z - entry.z) > .7) return false;
+    if (Math.hypot(actor.transform.x - entry.x, actor.transform.z - entry.z) > (actor.companion ? 1.2 : .7)) return false;
     const c = actor.civilian;
     const passenger: VehiclePassenger = { id: actorId, seat: (car.entity.vehicle!.passengers?.length ?? 0) % car.physics.def.transport.seats.length, phase: 'enter', started: this.world.tick, from: { ...actor.transform }, pauseUntil: c?.pauseUntil ?? 0, floorY: c?.floorY, story: c?.story ? { ...c.story } : c?.story };
     (car.entity.vehicle!.passengers ??= []).push(passenger);
@@ -675,7 +675,9 @@ export class Vehicles {
     const car = this.cars.get(carId), passenger = car?.entity.vehicle!.passengers?.find(p => p.id === actorId), actor = this.world.entities.get(actorId);
     if (!car || !passenger || !actor || passenger.phase !== 'seated') return false;
     for (const side of [1, -1]) for (let offset = 0; offset <= 4; offset++) {
-      this.localPoint(car, car.physics.def.doorX - offset * .8, side * (car.physics.def.width / 2 + .65));
+      const entry = car.physics.def.transport?.entry;
+      if (entry) this.localPoint(car, entry.x - .8 - offset * .8, entry.z + side * .9);
+      else this.localPoint(car, car.physics.def.doorX - offset * .8, side * (car.physics.def.width / 2 + .65));
       const nav = this.world.infected?.nav;
       if (nav && !nav.contains(this.position.x, this.position.z, actor.combat?.radius ?? survivor.radius)) continue;
       if (!this.world.solids.clear(this.position, actor.combat?.radius ?? survivor.radius, actorId)) continue;
@@ -701,7 +703,9 @@ export class Vehicles {
         Object.assign(actor.transform, seated); actor.hidden = true; this.world.spatial.delete(actor.id); continue;
       }
       const entering = p.phase === 'enter';
-      this.localPoint(car, car.physics.def.doorX, (p.side ?? 1) * (car.physics.def.width / 2 + .05));
+      const entry = car.physics.def.transport?.entry;
+      if (entry) this.localPoint(car, entry.x, entry.z);
+      else this.localPoint(car, car.physics.def.doorX, (p.side ?? 1) * (car.physics.def.width / 2 + .05));
       const door = { ...this.position, y: car.physics.def.stepHeight + (actor.companion ? .3 : .7), yaw: car.entity.transform.yaw };
       // The hidden walk between doorway and seat is still continuous in the authoritative snapshot.
       const toSeat = entering && elapsed > 42, toDoor = !entering && elapsed < 12;
