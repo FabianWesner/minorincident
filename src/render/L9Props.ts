@@ -39,7 +39,7 @@ export class L9Props extends Group {
       const mesh = new Mesh(this.geometry, mat); mesh.position.set(p[0], p[1], p[2]); mesh.scale.set(s[0], s[1], s[2]); mesh.rotation.z = angle; mesh.castShadow = mesh.receiveShadow = true; parent.add(mesh); return mesh;
     };
     const fixed = (mat: Material, p: number[], s: number[], angle = 0) => { const list = staticBoxes.get(mat) ?? []; list.push({ p, s, angle }); staticBoxes.set(mat, list); };
-    fixed(river, [516, -5.35, 0], [10, .08, 180]);
+    fixed(river, [516, -4.6, 0], [10, .08, 180]);
     for (let i = 0; i < 10; i++) fixed(fuel, [cfg.tanker.x - 1.5 * i, .055, cfg.tanker.z + Math.sin(i) * .4], [2, .035, .45 + i % 3 * .3]);
     // Physical ramp plates and their broken concrete landing obstacles are
     // authored together with the Rapier boxes in LevelNineDriving.rebuild.
@@ -125,7 +125,8 @@ export class L9Props extends Group {
     } else {
       const from = s.fallFrom ?? s.from;
       this.rack.position.set(from.x + Math.cos(from.yaw) * Math.min(10, fall * 5) - 2, Math.max(-4.4, from.y + .5 - fall * fall * 3), from.z + Math.min(5, fall * 2));
-      this.rack.rotation.set(fall * 2.5, from.yaw, fall * 1.7);
+      const tumble = Math.min(2.5, fall);
+      this.rack.rotation.set(tumble * 2.5, from.yaw, tumble * 1.7);
       if (this.rocket) { const slide = Math.max(0, fall - 1.8); this.rocket.position.y = Math.max(-4, -slide * 2.5); this.rocket.position.x = .15 + Math.min(3, slide * 1.5); }
     }
   }
