@@ -76,7 +76,10 @@ export class LevelTenEncounters {
       for (const slot of slots) {
         const key = `${slot.key}:${wave}`;
         slot.z += lanes[group.id] ?? 0;
-        if (this.state.spawned[key] || !ai.pool.length || ai.director.count >= ai.director.cap - ai.director.reserved - ai.director.pendingTurns - pendingScares) continue;
+        // Keep one journey slot available before the next warning, otherwise
+        // old hunters fill the cap and every later authored ambush is starved.
+        const scareReserve = assault ? pendingScares : Math.max(1, pendingScares);
+        if (this.state.spawned[key] || !ai.pool.length || ai.director.count >= ai.director.cap - ai.director.reserved - ai.director.pendingTurns - scareReserve) continue;
         if (slot.archetype === 'infected.dog' && ai.active.filter(e => e.archetype === slot.archetype && (e.health.current > 0 || (e.infected?.recoverAt ?? -1) >= 0)).length >= (assault ? 4 : 2)) continue;
         if (slot.archetype === 'infected.alpha' && ai.active.filter(e => e.archetype === slot.archetype && !e.infected?.pursuit && (e.health.current > 0 || (e.infected?.recoverAt ?? -1) >= 0)).length >= cureAlphaCap(group.region, ai.director.tier)) continue;
         const at = cureEncounterSpot(ai.nav, slot, (x, z) => !insideCureHangar({ x, z }) && chunks.resident(x, z) && ai.director.safe(slot.archetype, { x, z }), assault ? 129 : 33);
