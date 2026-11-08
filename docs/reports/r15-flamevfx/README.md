@@ -18,14 +18,18 @@ One pooled headless native Metal WebGL2 Chrome context, exclusive pool admission
 
 | Quality | Original p50 / p95 | Current p50 / p95 | Added p50 / p95 |
 | --- | ---: | ---: | ---: |
-| High | 2.9 / 3.6 ms | 3.5 / 4.3 ms | +0.6 / +0.7 ms |
-| Low | 2.3 / 3.2 ms | 2.9 / 3.7 ms | +0.6 / +0.5 ms |
+| High | 3.0 / 3.7 ms | 3.4 / 4.2 ms | +0.4 / +0.5 ms |
+| Low | 2.4 / 3.2 ms | 2.9 / 3.4 ms | +0.5 / +0.2 ms |
 
-No foreign build, Blender, test or browser work was detected at sample boundaries. Admission passed the load gate; load during the browser's own measurement was 3.6–4.0 and is retained in the receipt. These are local isolated-scene costs, not whole-campaign performance claims. Frame-45 draw calls change from 55 to 59 on high and 48 to 52 on low; the added field/fire/glow passes and shared pools stay bounded. Console errors: zero.
+Accepted windows had no detected foreign build, Blender, test or browser work at sample boundaries; 2 contended windows were discarded and retried. Admission passed the load gate (<3); boundary load during accepted windows was 6.1–7.2, retained in the receipt. These are local isolated-scene costs, not whole-campaign performance claims. Frame-45 draw calls change from 55 to 59 on high and 48 to 52 on low; the added field/fire/glow passes and shared pools stay bounded. Console errors: zero.
 
 ## Verification
 
-`npm run verify -- E27` passes: typecheck, lint and all 107 tests in 27 files. The fuel checks extend the existing weapons battery, retaining the 150-case repository budget. [Gate receipt](checks.json).
+[Completion audit](audit.json): all five rendered source hashes match the current implementation, all eight capture combinations are present, and the pool, temporal and light checks pass.
+
+`npm run verify -- E27` passes: typecheck, lint and all 107 tests in 27 files. The fuel checks extend the existing weapons battery, retaining the 150-case repository budget. [Gate receipt](checks.json). The explicit `npm run test:unit` alias also passes (107/107).
+
+The optimized QA build and WebGL2 smoke check pass (one pooled headless Metal context, one worker). [Smoke receipt](smoke.json). WebGPU remains a manual check.
 
 Automated moving/turning and night-light checks pass. Across 65 successive moving/turning frames per tier the jet-to-drawn-nozzle gap is zero. Night checks observe exactly one transient source and changing uploaded light radiance. Frozen on/off body rectangles brighten by 3.5–5.2/255 mean luminance; [runtime receipt](runtime.json), [spill measurements](light-spill.json), and [night/motion sheet](runtime.jpg).
 
@@ -38,8 +42,6 @@ Visual review of the captured WebGL2 frames:
 ## Open / Browser QA needed
 
 - Browser QA needed: independent visual review and manual WebGPU look check before merge.
-- Final native receipt refresh is pending after the render-phase attachment fix. The previous complete run is reported above; a refresh was discarded when another lane started a typecheck during admission.
-- The optimized QA build and WebGL2 smoke check pass (one pooled headless Metal context, one worker). [Smoke receipt](smoke.json). The WebGPU smoke cases were not run; WebGPU remains a manual check.
 
 No deploy or push has been performed.
 
@@ -51,6 +53,6 @@ python3 tools/scenelab/r15-flamevfx-sheet.py
 npm run verify -- E27
 ```
 
-The browser command is capped by the shared pool at ten minutes and uses private ports 4351/4352. Native timing and browser captures run before static/unit gates so test/build work does not overlap timing.
+The browser command is capped by the shared pool at ten minutes and uses private ports 4351/4352. Native timing runs in its own exclusive window; static/unit/build work must not overlap timing.
 
 Supplementary runtime reproduction: `SCENE_PORT=4351 BROWSER_POOL_JOB_ID=r15-flamevfx sh tools/e2e-lock.sh node --import tsx tools/scenelab/r15-flamevfx-runtime.ts`, then regenerate the sheets.
