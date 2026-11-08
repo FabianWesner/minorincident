@@ -77,10 +77,23 @@ export function cureFarmDecor(placements: readonly Placement[]): Placement[] {
   return out;
 }
 
-/** The vignette service road is added after crop admission. Clear its full pavement, retaining farm landmarks/scares. */
-export function clearCornFromSurfaces(placements: readonly Placement[], surfaces: DistrictLayout['surfaces']): Placement[] {
+/** Clear the later vignette pavement, retaining landmarks and moving displaced field details into surviving crops. */
+export function clearFarmFromSurfaces(placements: readonly Placement[], surfaces: DistrictLayout['surfaces']): Placement[] {
   const bounds = surfaces.map(s => ({ minX: Math.min(...s.polygon.map(p => p[0])), maxX: Math.max(...s.polygon.map(p => p[0])), minZ: Math.min(...s.polygon.map(p => p[1])), maxZ: Math.max(...s.polygon.map(p => p[1])) }));
-  return placements.filter(p => p.assetId !== 'veg.corn-block' || !bounds.some(b => p.visualAabb.min[0] < b.maxX && p.visualAabb.max[0] > b.minX && p.visualAabb.min[2] < b.maxZ && p.visualAabb.max[2] > b.minZ));
+  const onPavement = (p: Placement) => bounds.some(b => p.visualAabb.min[0] < b.maxX && p.visualAabb.max[0] > b.minX && p.visualAabb.min[2] < b.maxZ && p.visualAabb.max[2] > b.minZ);
+  const out = placements.filter(p => p.assetId !== 'veg.corn-block' || !onPavement(p));
+  const crops = out.filter(p => p.assetId === 'veg.corn-block');
+  for (const [i, p] of out.entries()) if (p.id.startsWith('decor-cure-farm-field-') && onPavement(p)) {
+    let moved = false;
+    for (const tile of [...crops].sort((a, b) => Math.hypot(a.position[0] - p.position[0], a.position[2] - p.position[2]) - Math.hypot(b.position[0] - p.position[0], b.position[2] - p.position[2]))) {
+      const dx = tile.position[0] - p.position[0], dz = tile.position[2] - p.position[2];
+      const candidate: Placement = { ...p, position: [tile.position[0], p.position[1], tile.position[2]], visualAabb: { min: [p.visualAabb.min[0] + dx, p.visualAabb.min[1], p.visualAabb.min[2] + dz], max: [p.visualAabb.max[0] + dx, p.visualAabb.max[1], p.visualAabb.max[2] + dz] } };
+      if (onPavement(candidate) || out.some(q => q.id !== p.id && q.assetId !== 'veg.corn-block' && overlaps(candidate, q, .3))) continue;
+      out[i] = candidate; moved = true; break;
+    }
+    if (!moved) throw new Error(`Cannot clear farm detail ${p.id} from the evacuation road`);
+  }
+  return out;
 }
 
 /** L10-only copy: leave the source layouts and the L1–L5 asset palette intact. */
