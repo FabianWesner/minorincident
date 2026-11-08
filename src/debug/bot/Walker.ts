@@ -1,6 +1,6 @@
 import type { SimWorld } from '../../sim/world/SimWorld';
 import { actorRadius, solidLargeCorpse } from '../../sim/world/SolidRegistry';
-import type { NavGrid } from '../../sim/ai/NavGrid';
+import { NavGrid } from '../../sim/ai/NavGrid';
 const dist = (a: { x: number; z: number }, b: { x: number; z: number }) => Math.hypot(a.x-b.x, a.z-b.z);
 export class Walker {
   private route = { path: [] as number[], goal: -1, pathIndex: 0 };
@@ -37,10 +37,17 @@ export class Walker {
     let nav = world.infected!.nav;
     if (avoidCorpses) {
       const source = nav, bodies = [...world.entities.iterate()].filter(e => solidLargeCorpse(e) && !e.hidden && Math.abs(e.transform.y - p.y) < 1.2 && dist(p, e.transform) < 35);
-      const signature = bodies.map(e => `${e.id}:${e.transform.x.toFixed(2)}:${e.transform.z.toFixed(2)}`).join('|');
+      const elevated = p.y > 2;
+      const signature = `${elevated}:` + bodies.map(e => `${e.id}:${e.transform.x.toFixed(2)}:${e.transform.z.toFixed(2)}`).join('|');
       if (!this.bodyGrid || this.bodyGrid.source !== source || this.bodyGrid.revision !== source.revision || this.bodyGrid.signature !== signature) {
         // Private planning data only. Production nav, bodies and collision are untouched.
-        const grid = source.forPlayer(.35).withClearance(.35);
+        const console = world.missions!.def.anchors['cure-console'];
+        // A ground-plane shortcut can run into the platform rail instead of
+        // going around a corpse. Plan on the supported deck until its stair.
+        const grid = elevated ? new NavGrid({ width: 24, depth: 16 }, source.walls.filter(w => w.y + w.halfY > 3.2), .35,
+          { x: console.x - 7, z: console.z - 6 }, (x, z) =>
+            [[0, 0], [-.35, 0], [.35, 0], [0, -.35], [0, .35]].every(([dx, dz]) => world.districts!.supportBelow(x + dx, z + dz, 3.1) >= 2.2), .2)
+          : source.forPlayer(.35).withClearance(.35);
         // A square around a round corpse falsely sealed the narrow return
         // beside the platform. Short inscribed strips follow its real disc.
         for (const body of bodies) {
