@@ -4,6 +4,8 @@ export { emptyInput, type InputFrame } from '../../input/InputFrame';
 export interface Transform { x: number; y: number; z: number; yaw: number }
 /** Plain components only; physics handles and render objects are never serialized. */
 export interface EntitySnapshot {
+  /** A placement-owned destruction model owns HP/parts; the existing prop body still owns motion. */
+  environmentObject?: string;
   id: number;
   /** Unsafe admission retains its identity and slot until a radius-aware placement succeeds. */
   pendingAdmission?: Transform & { writer: string; hidden?: boolean; range?: number; navigation?: boolean; colliderEnabled?: boolean; graceTicks?: number };
@@ -160,6 +162,7 @@ export interface GameStateSnapshot {
   combat?: ReturnType<import('../combat/Combat').Combat['snapshot']>;
   /** Displaced pushable props (PO #15), placement order. */
   props?: import('../interact/PropSystem').PropSnapshot;
+  destruction?: ReturnType<import('../destruction/Destruction').Destruction['snapshot']>;
   input: { scheme: Scheme; frame: InputFrame };
   seed: number;
   scenario: string | null;

@@ -3,7 +3,6 @@
 import { downed } from './Damage';
 import * as RAPIER from '@dimforge/rapier3d-compat';
 import { SimPhase } from '../../core/EventBus';
-import { destructionDamage, destructionMaterial } from '../../data/destruction';
 import { blastDamage, explosionDef, type BlastClass, type ExplosionDef } from '../../data/explosions';
 import type { ExplosionBeat } from '../../data/audioEvents';
 import type { SimWorld } from '../world/SimWorld';
@@ -62,6 +61,7 @@ export class Explosions {
     this.world.events.emit({ type: 'explosion.beat', tick, sourceId, position: { x: at.x, y: .7, z: at.z }, beat: 'crack', size });
     this.scheduled.push({ at: tick + 4, kind: 'beat', beat: 'debris', size, x: at.x, z: at.z, sourceId }, { at: tick + 15, kind: 'beat', beat: 'roar', size, x: at.x, z: at.z, sourceId });
     this.damage(d, at, r, sourceId, opts.damage !== false, opts);
+    if (opts.damage !== false || opts.actionId) this.world.destruction?.blast(opts.actionId ?? id, at, r, d.damage * (opts.multiplier ?? 1), d.impulse);
     this.queueImpulses(d, at, r);
     if (d.class === 'large' && this.world.vehicles?.cars.has(sourceId)) this.detachParts(sourceId);
     if (opts.fires !== false) this.ignite(d, at, r);
@@ -87,17 +87,13 @@ export class Explosions {
       // ensuring a boarding-ring salvo can never fail the run.
       if (target.vehicle) {
         const ownRocket = target.archetype === 'vehicle.military-apc' && sourceId === 1 && opts.actionId === 'weapon.rocket-launcher';
-        const vehicleDamage = destructionDamage(opts.actionId ?? d.id, 'metal', amount * d.vehicle);
-        if (!ownRocket) world.vehicles?.damage(id, apply ? vehicleDamage : 0);
+        if (!ownRocket) world.vehicles?.damage(id, apply ? amount * d.vehicle : 0);
         continue;
       }
       // Unbreakable movable props (cones, carts, benches) are launched by the impulse instead of vanishing at 0 HP.
       if (target.kind === 'physics-prop' && !world.props?.items.find(i => i.entityId === id)?.metadata.breakable) continue;
       if (!apply || !damage || amount <= 0) continue;
-      const actionId = opts.actionId ?? d.id;
-      const worldDamage = target.faction === 'environment' && (target.destructible || target.hazard || target.kind === 'physics-prop')
-        ? destructionDamage(actionId, destructionMaterial(target.archetype), amount) : amount;
-      damage.apply({ attackId: opts.attackId ?? 0, actionId, sourceId: world.entities.get(sourceId) ? sourceId : 1, targetId: id, origin: at, direction: { x: distance ? dx / distance : 1, z: distance ? dz / distance : 0 }, base: worldDamage, direct: id === opts.directTargetId, multiplier: opts.multiplier ?? 1, type: 'explosive', radius: r, knockback: d.knockback * scale, stagger: d.stagger });
+      damage.apply({ attackId: opts.attackId ?? 0, actionId: opts.actionId ?? d.id, sourceId: world.entities.get(sourceId) ? sourceId : 1, targetId: id, origin: at, direction: { x: distance ? dx / distance : 1, z: distance ? dz / distance : 0 }, base: amount, direct: id === opts.directTargetId, multiplier: opts.multiplier ?? 1, type: 'explosive', radius: r, knockback: d.knockback * scale, stagger: d.stagger });
     }
     // Barricade rails are not in the spatial hash: distance to the rail segment (spec 07 §5 barricade damage).
     if (!damage || d.barricade <= 0) return;

@@ -6,6 +6,8 @@ import { destructionDamage, destructionMaterial } from '../../src/data/destructi
 import type { Pickup } from '../../src/sim/interact/Pickups';
 import { NavGrid } from '../../src/sim/world/NavGrid';
 import type { GameEvent } from '../../src/sim/world/types';
+import { loadL3 } from '../../tools/sim-runner/l3Bots';
+import { rotate } from '../../src/sim/destruction/Destruction';
 import { SimWorld } from '../../src/sim/world/SimWorld';
 
 const worlds: SimWorld[] = [];
@@ -137,6 +139,42 @@ test('explosions: every class follows its damage curve, full cover shields, rail
   const fires = () => f.entities.values().filter(e => e.hazard?.kind === 'fire' && f.tick < e.hazard.activeUntil);
   expect(fires().length).toBeGreaterThan(0);
   step(f, 18 * 30 + 30 * 60 + 2); expect(fires()).toHaveLength(0);
+
+  // Production L3 placement ownership: real player input hits the facade, then a blast opens nav/LOS.
+  const {world: street, mission} = await loadL3(17, 'low'); worlds.push(street);
+  const destruction=street.destruction!, house=destruction.objects.find(o=>!o.protected&&o.placement.assetId==='bld.house-a')!;
+  expect(house).toBeDefined(); expect(destruction.objects.filter(o=>!o.protected)).toHaveLength(4);
+  const glass=house.parts.findIndex(p=>p.id==='window_front'), bounds=house.parts[glass].bounds;
+  const local=[bounds.max[0]+2,1.2,(bounds.min[2]+bounds.max[2])/2], pos=rotate(local,house.home.q), dir=rotate([-1,0,0],house.home.q);
+  move(street,house.home.p[0]+pos[0],house.home.p[2]+pos[2]);street.combat!.damage.god=true;
+  street.combat!.setLoadout(['weapon.handgun'],['weapon.grenade']);
+  street.setInput({aim:{x:dir[0],z:dir[2]},aimSource:'pointer',left:{down:true,held:true,up:false}}); step(street,40);street.clearInput();
+  expect(house.state.revision, 'real handgun input reaches the placement').toBeGreaterThan(0);
+  expect(house.state.hp[glass], 'window shatters').toBe(0);
+  const initial=destruction.snapshot(), navBefore=street.districts!.nav.cells.slice(), wallsBefore=street.interactables!.walls.length;
+  const checkpoint=mission.def.checkpoints[0]; mission.checkpoint(checkpoint);
+  street.explosions!.blast('explosion.rocket',{x:house.home.p[0],z:house.home.p[2]},{actionId:'weapon.rocket-launcher',radius:9});
+  expect(house.state.collapsed).toBe(true);expect(house.parts.every((p,i)=>p.role!=='roof'||house.state.hp[i]===0)).toBe(true);
+  expect(street.interactables!.walls.length).toBeLessThan(wallsBefore);
+  expect(street.districts!.nav.cells.some((v,i)=>v===1&&navBefore[i]===0)).toBe(true);
+  const destroyed=destruction.snapshot();
+  mission.restore(checkpoint); expect(destruction.snapshot()).toEqual(initial);
+  expect(street.interactables!.walls.length).toBe(wallsBefore);
+  street.explosions!.blast('explosion.rocket',{x:house.home.p[0],z:house.home.p[2]},{actionId:'weapon.rocket-launcher',radius:9});
+  expect(destruction.snapshot()).toEqual(destroyed); destruction.rebuild();expect(destruction.snapshot()).toEqual(destroyed);
+  const protectedObject=destruction.objects.find(o=>o.protected)!;
+  destruction.blast('weapon.rocket-launcher',{x:protectedObject.home.p[0],z:protectedObject.home.p[2]},20,1e6);
+  expect(protectedObject.state.revision).toBe(0);
+  const car=destruction.objects.find(o=>!o.protected&&o.placement.destruction!.class==='vehicle')!;
+  destruction.blast('weapon.molotov',{x:car.home.p[0],z:car.home.p[2]},4,10);
+  expect(car.state.burning).toBeGreaterThan(0);
+  // Isolate fixed-tick fire from the mission director; no rendering or wall-clock timer participates.
+  for(let tick=0;tick<310;tick++){street.tick++;destruction.update();}
+  expect(car.state.exploded).toBe(true);expect(car.state.burning).toBe(0);
+  expect(street.hazards!.debris.pieces.length).toBeLessThanOrEqual(32);
+  street.hazards!.debris.update(street.tick+481);expect(street.hazards!.debris.snapshot()).toHaveLength(0);
+  const state=destruction.snapshot(); street.setTier(street.districts!.composition.tier===6?5:6);expect(destruction.snapshot()).toEqual(state);
+
 });
 
 test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables match the layout without it, a re-preparation adds none, L9 has none; L10 crossing scenes stay clear and grounded', async () => {

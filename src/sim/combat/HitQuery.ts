@@ -152,7 +152,7 @@ export class HitQuery {
     const limit = Math.cos(arc * Math.PI / 360);
     for (const id of this.nearby(origin, range + 1e-6)) {
       const target = this.entities.get(id)!;
-      if (id === sourceId || (target.health.current <= 0 && !(id === ground && downed(target))) || (target.faction !== 'infected' && !target.civilian?.eyesGlow && !(civilianGag && target.civilian?.adult && !target.civilian.pet) && !(target.faction === 'environment' && target.combat))) continue;
+      if (target.environmentObject || id === sourceId || (target.health.current <= 0 && !(id === ground && downed(target))) || (target.faction !== 'infected' && !target.civilian?.eyesGlow && !(civilianGag && target.civilian?.adult && !target.civilian.pet) && !(target.faction === 'environment' && target.combat))) continue;
       const dx = target.transform.x - origin.x, dz = target.transform.z - origin.z, distance = Math.hypot(dx, dz);
       // Line of sight starts a little ahead of the attacker: standing against (or inside) a prop must not
       // swallow strikes at a target on its far side (QA2-01); walls between the two still block.
@@ -168,7 +168,7 @@ export class HitQuery {
     let nearest = wallDistance, hit: EntitySnapshot | null = null;
     for (const id of this.nearby(origin, range + 0.5)) {
       const target = this.entities.get(id)!;
-      if (id === sourceId || excluded?.has(id) || target.health.current <= 0 || (target.faction !== 'infected' && !target.civilian?.eyesGlow && !(target.faction === 'environment' && target.combat))) continue;
+      if (target.environmentObject || id === sourceId || excluded?.has(id) || target.health.current <= 0 || (target.faction !== 'infected' && !target.civilian?.eyesGlow && !(target.faction === 'environment' && target.combat))) continue;
       const dx = target.transform.x - origin.x, dz = target.transform.z - origin.z;
       const along = dx * direction.x + dz * direction.z, perpendicular = dx * dx + dz * dz - along * along;
       const radius = target.combat?.radius ?? 0.4;

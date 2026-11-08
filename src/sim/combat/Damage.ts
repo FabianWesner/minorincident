@@ -104,6 +104,7 @@ export class Damage {
   apply(hit: DamageEvent): number {
     const target = this.world.entities.get(hit.targetId), source = this.world.entities.get(hit.sourceId);
     if (!target || !source) return 0;
+    if (target.environmentObject) return 0; // placement parts own this prop's durability
     // L7's power weapon opens a route for the column. Civilian splash already
     // deals no HP damage, but its generic reaction knocked the living followers
     // flat for 90 ticks and shoved them into the attackers they were escaping.
