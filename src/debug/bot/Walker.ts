@@ -44,8 +44,8 @@ export class Walker {
         const console = world.missions!.def.anchors['cure-console'];
         // A ground-plane shortcut can run into the platform rail instead of
         // going around a corpse. Plan on the supported deck until its stair.
-        const grid = elevated ? new NavGrid({ width: 24, depth: 16 }, [], .35,
-          { x: console.x - 7, z: console.z - 6 }, (x, z) =>
+        const grid = elevated ? new NavGrid({ width: 30, depth: 28 }, [], .35,
+          { x: console.x - 10, z: console.z - 10 }, (x, z) =>
             [[0, 0], [-.35, 0], [.35, 0], [0, -.35], [0, .35]].every(([dx, dz]) => world.districts!.supportBelow(x + dx, z + dz, 3.1) >= 2.2), .2)
           : source.forPlayer(.35).withClearance(.35);
         // A square around a round corpse falsely sealed the narrow return

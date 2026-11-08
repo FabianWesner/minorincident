@@ -11,6 +11,7 @@ import { DestructionView } from '../../src/render/DestructionView';
 import { loadL3 } from '../../tools/sim-runner/l3Bots';
 import { rotate } from '../../src/sim/destruction/Destruction';
 import { SimWorld } from '../../src/sim/world/SimWorld';
+import { verifyDestructionRollout } from './destruction-rollout.fixture';
 
 const worlds: SimWorld[] = [];
 afterEach(() => { for (const w of worlds.splice(0)) w.dispose(); });
@@ -243,6 +244,7 @@ test('explosions: every class follows its damage curve, full cover shields, rail
   expect(destruction.impact(car.id,'boss.mega.charge',10000),'inactive tiers cannot take damage').toBe(false);
   expect(destruction.snapshot()).toEqual(state);
   street.setTier(5);expect(car.present).toBe(true);expect(tierFire.hazard!.activeUntil).toBeGreaterThan(street.tick);
+  verifyDestructionRollout();
 
 
 });

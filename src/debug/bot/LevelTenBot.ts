@@ -124,7 +124,7 @@ export class LevelTenBot {
       f.selectedSlot = { side: 'RIGHT', index }; f.aimSource = 'keyboard';
       const dx = target.transform.x - p.x, dz = target.transform.z - p.z, d = Math.hypot(dx, dz) || 1;
       f.aim = { x: dx / d, z: dz / d }; f.aimPoint = { x: target.transform.x, z: target.transform.z }; f.right.held = true;
-      if (finale && d < 10 && !gun?.mounted && !approachGun) {
+      if (finale && d < 10 && p.y <= 2 && !gun?.mounted && !approachGun) {
         const angle = Math.atan2(p.z - anchor.z, p.x - anchor.x) + Math.PI / 4;
         f.move = this.walker.step(w, { x: anchor.x + Math.cos(angle) * 18, z: anchor.z + Math.sin(angle) * 18 }, 1, 'dodge') ?? f.move;
         if (d < 8) {
