@@ -39,6 +39,7 @@ export interface SessionOptions {
   saveOnYield?: boolean;
   /** Authored road selected by a logged map assist; all driving stays WASD. */
   l9Route?: 'road' | 'countryside' | 'dry-shortcut';
+  l9Waypoints?: [number, number][];
 }
 export interface Issue { level: string; tick: number; x: number; z: number; severity: 'P0' | 'P1' | 'P2' | 'P3'; kind: string; text: string; captures: string[]; step: string | null; objective: string }
 export interface LevelRun { level: string; entry: string; heroine: string; finished: boolean; skipped: string[]; wallSeconds: number; simSeconds: number; maxNoProgressSeconds: number; deaths: number; assists: number; attacks: Record<string, number>; weaponsStart: string[]; weaponsEnd: string[]; steps: { id: string; text: string; tick: number; marker: unknown }[] }
@@ -52,6 +53,8 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   if (o.saveOnYield && (o.levels.length !== 1 || o.levels[0] !== 'L10' || !o.sampleSeconds)) throw new Error('Resume batches require one bounded L10 route');
   let yielded = false;
   const visibleOnly = process.env.PLAYTEST_VISIBLE_ONLY === '1';
+  const heapProbe = process.env.PLAYTEST_HEAP_PROBE === '1';
+  if (heapProbe && (process.env.PLAYTEST_THREAT_AUDIT !== '1' || process.env.PLAYTEST_FRAME_GATE === '1')) throw Error('Collected heap probes require paused threat captures and are diagnostic, not frame qualification');
   const l5Order = process.env.PLAYTEST_L5_ORDER?.split(',');
   if (l5Order && (new Set(l5Order).size !== 5 || l5Order.some(key => !l5Survivors.some(s => s.key === key)))) throw new Error('PLAYTEST_L5_ORDER requires all five survivor keys once');
   const plannedL5Search = (process.env.PLAYTEST_L5_TOUR === '1' || !!l5Order) && !visibleOnly;
@@ -103,10 +106,22 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     let resume = false;
     try {
       if (process.env.PLAYTEST_THREAT_AUDIT === '1') resume = await page.evaluate(() => {
+        // Exclude only the RAF interval spanning an intentional screenshot pause.
+        const audit = (window as unknown as { __threatPlaytestAudit?: { captureEpoch: number } }).__threatPlaytestAudit;
+        if (audit) audit.captureEpoch++;
         const g = (window.__SCENE__ as unknown as { game?: Game })?.game;
         if (!g || g.clock.paused || g.world.missions?.state.phase !== 'playing') return false;
         window.__SS__!.pause(); return true;
       });
+      if (heapProbe && resume) {
+        const cdp = await page.context().newCDPSession(page);
+        try {
+          await cdp.send('HeapProfiler.collectGarbage');
+          const heap = await cdp.send('Runtime.getHeapUsage');
+          const at = await page.evaluate(() => { const g = (window.__SCENE__ as unknown as { game: Game }).game; return { level: g.world.scenario, tick: g.world.tick }; });
+          log({ collectedHeap: { ...at, usedMB: heap.usedSize / 1_000_000, backingStorageMB: heap.backingStorageSize / 1_000_000 } });
+        } finally { await cdp.detach(); }
+      }
       await page.screenshot({ path: join(o.out, file), type: 'jpeg', quality: 72 });
       // Reveal diagnostics beside each capture (courier, camera, see-through cut placements, foreground state).
       if (process.env.PLAYTEST_REVEAL_AUDIT === '1') writeFileSync(join(o.out, file.replace(/\.jpg$/, '.json')), JSON.stringify(await page.evaluate(() => {
@@ -866,7 +881,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   const trail: { x: number; z: number; t: number }[] = []; let steerSign = 1, steerFlip = 0, lastErr: number | null = null, steering = false;
   let vehicleRecovery = new VehicleRecovery();
   const l9Route = crossing.routes.find(r => r.id === o.l9Route);
-  const l9Path = l9Route?.points.flatMap((a, i, points) => {
+  const l9Path = o.l9Waypoints ?? l9Route?.points.flatMap((a, i, points) => {
     const b = points[i + 1]; if (!b) return [a];
     const dx = b[0] - a[0], dz = b[1] - a[1], length = Math.hypot(dx, dz);
     const along = (p: readonly number[]) => ((p[0] - a[0]) * dx + (p[1] - a[1]) * dz) / length;
@@ -1558,7 +1573,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     if (!marketEscape && await fight(e)) { await hold(120); continue; }
     if (e.driving) {
       if (e.level === 'L9' && l9Path) {
-        if (!l9RouteLogged) { l9RouteLogged = true; run.assists++; assist('L9 authored map route', { route: o.l9Route, input: 'physical WASD; no world writes', waypoints: l9Path }); }
+        if (!l9RouteLogged) { l9RouteLogged = true; run.assists++; assist('L9 authored map route', { route: o.l9Route ?? 'open crossing clearance waypoints', input: 'physical WASD; no world writes', waypoints: l9Path }); }
         const car = e.driving;
         while (l9Waypoint < l9Path.length - 1) {
           const a = l9Path[l9Waypoint - 1], b = l9Path[l9Waypoint], c = l9Path[l9Waypoint + 1];

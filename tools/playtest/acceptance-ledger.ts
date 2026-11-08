@@ -192,6 +192,9 @@ export function installAcceptanceLedger(observeStarts: typeof observeAttackStart
     world.events.on('vehicle.durability-hit', event => {
       if (world.missions === mission && mission.def.id === 'L9') record.events.push(structuredClone(event));
     });
+    world.events.on('combat.kill', event => {
+      if (world.missions === mission && mission.def.id === 'L9') record.events.push(structuredClone(event));
+    });
     const row = () => {
       const step = mission.def.steps.find(s => mission.state.steps[s.id]?.status === 'active');
       return step && (record.steps[step.id] ??= { ticks: 0, playerWindups: 0, groupWindups: 0, playerDamage: 0, peakAlive: 0 });

@@ -5,11 +5,12 @@ import type { Game } from '../../src/Game';
 export function installThreatObserver(frameTiming = true): void {
   const root = window as unknown as {
     __SCENE__?: { game: Game };
-    __threatPlaytestAudit: { samples: unknown[]; fightFrames: unknown[] };
+    __threatPlaytestAudit: { samples: unknown[]; fightFrames: unknown[]; captureEpoch: number };
     __playtestAttacks?: Record<string, number>;
   };
   const samples: unknown[] = [], fightFrames: unknown[] = [];
-  root.__threatPlaytestAudit = { samples, fightFrames };
+  root.__threatPlaytestAudit = { samples, fightFrames, captureEpoch: 0 };
+  let previousCaptureEpoch = 0;
   let previous = 0, previousTick = -1, previousLevel: string | null = null, lastSample = 0, wasFight = false;
   const visible = (id: string) => {
     const e = document.querySelector<HTMLElement>(`[data-testid="${id}"]`);
@@ -24,9 +25,11 @@ export function installThreatObserver(frameTiming = true): void {
     const enemies = w.infected?.active.filter(e => e.health.current > 0 && !e.hidden && !e.infected?.hidden) ?? [];
     const step = m.def.steps.find(s => m.state.steps[s.id].status === 'active')?.id;
     const combatPhase = w.scenario === 'L8' && !!m.state.states.breached || w.scenario === 'L10' && !!m.state.states['charge-active']
-      || w.scenario === 'L5' && step === 'look' || w.scenario === 'L7' && step === 'corridor' || w.scenario === 'L9' && step === 'approach';
+      || w.scenario === 'L5' && step === 'look' || w.scenario === 'L7' && step === 'corridor' || w.scenario === 'L9'; // Include crash/crawl frame timings.
     const fight = playing && !!p && (combatPhase || enemies.some(e => Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 20));
-    if (frameTiming && fight && wasFight && w.scenario === previousLevel && w.tick > previousTick && previous) fightFrames.push({ level: w.scenario, tick: w.tick, step, ms: now - previous });
+    const captureEpoch = root.__threatPlaytestAudit.captureEpoch;
+    if (frameTiming && captureEpoch === previousCaptureEpoch && fight && wasFight && w.scenario === previousLevel && w.tick > previousTick && previous) fightFrames.push({ level: w.scenario, tick: w.tick, step, ms: now - previous, simMs: g.simMs, simTickMs: g.simTickMs });
+    previousCaptureEpoch = captureEpoch;
     previous = now; previousTick = w.tick; previousLevel = w.scenario; wasFight = fight;
     if (!playing || !p || now - lastSample < 500) return;
     lastSample = now;
@@ -43,7 +46,31 @@ export function installThreatObserver(frameTiming = true): void {
       return { id: e.id, state: e.infected?.state, variant: e.infected?.variant, model: e.infected?.model, appearance: f.appearance, clip: f.clip, speed: e.motion?.speed, leanDegrees: lean };
     });
     const vehicleId = w.vehicles?.active, vehicle = vehicleId == null ? undefined : w.entities.get(vehicleId);
+    // L9's objective bearing can cross the open ground between the dressed
+    // lanes. Count actual projected content there, rather than minimap dots.
+    let crossingContent;
+    if (w.scenario === 'L9') {
+      const inView = (at: { x: number; y: number; z: number }) => {
+        if (Math.hypot(at.x - p.transform.x, at.z - p.transform.z) > 35 || !api.input.visible(at)) return false;
+        const q = api.camera.project(at.x, at.y, at.z);
+        return Math.abs(q[0]) < .9 && Math.abs(q[1]) < .8;
+      };
+      const accents = (g.view.scene.getObjectByName('night-accents') as unknown as { set?: {
+        points: { kind: string; x: number; y: number; z: number }[];
+        fires: { x: number; z: number }[];
+      } } | undefined)?.set;
+      const practicals = accents?.points.filter(a => a.kind !== 'stud' && inView(a)).length ?? 0;
+      const fires = accents?.fires.filter(a => inView({ ...a, y: .6 })).length ?? 0;
+      const landmarks = w.districts?.districts.flatMap(d => d.decay.placements.filter(a => /^(veh\.|bld\.|kit\.)/.test(a.assetId)
+        && !d.decay.removed.includes(a.id) && inView({ x: a.position[0] + d.origin[0], y: (a.visualAabb.min[1] + a.visualAabb.max[1]) / 2, z: a.position[2] + d.origin[1] }))).length ?? 0;
+      const perf = api.perf();
+      crossingContent = { practicals, fires, landmarks, kills: m.state.stats.kills,
+        drawCalls: perf.drawCalls, triangles: perf.triangles, simMs: perf.simMs,
+        heapMB: perf.heapBytes === null ? null : perf.heapBytes / 1048576, liveCount: perf.infected?.liveCount ?? 0,
+        patrols: Object.keys(m.l9?.state.encounters?.ids ?? {}).filter(k => k.startsWith('crossing-patrol-')).length };
+    }
     samples.push({ level: w.scenario, tick: w.tick, seconds: m.state.stats.time, step,
+      crossingContent,
       player: { ...p.transform }, mega: w.megaPursuit ? structuredClone({ ...w.megaPursuit.state, entity: w.megaPursuit.entity()?.transform }) : null,
       followerAlarm: w.l7Encounters?.state.alarm && { ...w.l7Encounters.state.alarm }, group: w.l7Encounters?.corridorGroup(),
       followerAlarmVisible: visible('survivor-world-cue'), followerAlarmArrowVisible: visible('survivor-cue-arrow'),

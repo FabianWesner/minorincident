@@ -91,6 +91,18 @@ export function crossingAccents(placements: readonly Placement[], origin: P2 = [
   const put = (a: Omit<Accent, 'seed'> & { seed?: number }) => points.push({ ...a, x: a.x + origin[0], z: a.z + origin[1], seed: a.seed ?? Math.abs(a.x * 12.9898 + a.z * 78.233) % 6.283 });
   const fire = (x: number, z: number, radius: number, car = false) => fires.push({ x: x + origin[0], z: z + origin[1], radius, car });
   const road = crossing.routes.find(r => r.id === 'road')!;
+  // Following the city objective cuts between the three authored lanes. Its
+  // z=0 sightline used to miss all their lights, leaving a featureless drive.
+  // Flat flares mark the same open ground; small alternating brush fires give
+  // passing landmarks. No solid props/colliders or changes to the routes.
+  for (let x = -430, n = 0; x < 435; x += 17, n++) {
+    const side = n % 2 ? -1 : 1, z = side * 4.2;
+    if (free(x, z, .8)) put({ kind: 'flare', x, y: .03, z, yaw: n * .7,
+      color: '#ff7c38', glow: 9, flicker: 1, strobe: false,
+      pool: { color: '#ff8c48', intensity: 4.4, range: 5 } });
+    if (n % 4 === 2 && free(x + 4, -side * 6.2, 1.2))
+      fires.push({ x: x + 4 + origin[0], z: -side * 6.2 + origin[1], radius: .75, car: false, life: true });
+  }
   // 1) Raised edge studs on the asphalt edge lines (dress.py: ±5.55 m): faint by themselves, they glint in the headlights.
   for (const [i, b] of road.points.slice(1).entries()) {
     const a = road.points[i], d = Math.hypot(b[0] - a[0], b[1] - a[1]), ux = (b[0] - a[0]) / d, uz = (b[1] - a[1]) / d, yaw = -Math.atan2(uz, ux);

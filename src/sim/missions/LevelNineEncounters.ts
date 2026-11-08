@@ -52,7 +52,9 @@ export function updateEncounters(w: SimWorld, state: L9EncounterState): void {
   // driving intervals using the same pool, cap and offscreen placement
   // predicate. Authored risk groups/detours keep their identities.
   const patrol = state.patrol ??= { nextAt: w.tick + 300, serial: 0 };
-  const patrolSize = 3;
+  // Two staggered rows read as a pack entering the headlights, with room to
+  // steer around either side. Reuse the same safe offscreen admission/cap.
+  const patrolSize = 6;
   if (w.tick < patrol.nextAt || ai.director.count + patrolSize > ai.director.cap || ai.pool.length < patrolSize) return;
   const player = w.entities.get(1)!, active = w.vehicles?.active;
   const car = active == null ? undefined : w.entities.get(active);
@@ -62,12 +64,15 @@ export function updateEncounters(w: SimWorld, state: L9EncounterState): void {
   for (const distance of [30, 40, 50, 60, 75, 90]) for (const offset of [0, .25, -.25, .6, -.6, 1, -1]) {
     const centre = { x: car.transform.x + Math.cos(heading + offset) * distance, z: car.transform.z + Math.sin(heading + offset) * distance };
     const side = heading + offset + Math.PI / 2;
-    const group = [-1, 0, 1].map(slot => ({ x: centre.x + Math.cos(side) * slot * 1.4, z: centre.z + Math.sin(side) * slot * 1.4 }));
+    const group = [0, 1].flatMap(row => [-1, 0, 1].map(slot => ({
+      x: centre.x + Math.cos(side) * slot * 1.4 + Math.cos(heading + offset) * row * 2.2,
+      z: centre.z + Math.sin(side) * slot * 1.4 + Math.sin(heading + offset) * row * 2.2,
+    })));
     if (group.some(at => !chunks.resident(at.x, at.z) || !ai.director.safe('infected.runner', at))) continue;
     const ids = group.map(at => ai.spawn('infected.runner', at, { state: 'chase' }));
     for (const id of ids) ai.pursueTarget(id, 1);
     state.ids[`crossing-patrol-${patrol.serial++}`] = ids;
-    patrol.nextAt = w.tick + 720;
+    patrol.nextAt = w.tick + 480;
     return;
   }
 }
