@@ -87,3 +87,79 @@ Replayed the exact baseline `78219de9` in a detached worktree using production `
 | First visible close Mega | 53.12 s at `(696.0,-4.8)`. | 83.97 s at `(878.3,46.4)`. |
 
 This refines the baseline: the stall is specific to the smaller streamed navigation coverage, while the high tier independently demonstrates missed weapon delivery. The bot stops visiting a find at <2 m; the pickup used a 0.6 m trigger. The distant story objective also directed human field crossings 75–100 m away from the road finds. Both failures require correction. Opening population and first-Mega timing subclauses now have direct passing evidence; their combined acceptance rows remain FAIL until presentation and full-journey subclauses pass.
+
+
+## Review after step 2 — marked finds delivered by native input
+
+Evidence: [`evidence/after-finds-native.json`](evidence/after-finds-native.json), seed 42, **650 simulation seconds on low and high**, no health/inventory/position/mission injection. Both runs have **zero deaths**. This is an intermediate review, not a completion claim. The audit's old `finds: 21` includes 15 handover grants; the six physical finds below precede that handover. The subsequent audit distinguishes `find` from `handover`.
+
+| Physical find | Low seconds / player position | High seconds / player position | Before → after step 2 |
+|---|---|---|---|
+| Hunting rifle | 37.40 / `(694.4,22.4)` | 37.40 / `(694.4,22.4)` | FAIL → PASS |
+| Machete | 96.25 / `(935.6,-11.2)` | 96.23 / `(935.6,-11.2)` | FAIL → PASS |
+| Molotovs | 146.28 / `(1160.6,-11.9)` | 146.25 / `(1160.5,-11.9)` | FAIL → PASS |
+| Nail gun | 198.40 / `(1392.5,15.5)` | 198.50 / `(1392.7,14.9)` | FAIL → PASS |
+| Assault rifle | 329.95 / `(1955.5,16.4)` | 329.45 / `(1955.6,16.4)` | FAIL → PASS |
+| Flashbangs | 356.27 / `(2072.6,-1.3)` | 355.77 / `(2072.6,-1.3)` | FAIL → PASS |
+
+The six points now lie on the opening road and measured direct field crossings. The shared world/minimap/objective marker selects the next uncollected find while retaining the story objective text. Its pickup ring is enlarged, collection works within 4.5 m, and collection flags survive mission checkpoints. The rifle arrives inside 60 s. The low bot no longer stops at `(696,-4.8)`.
+
+| Acceptance row | Before → after step 2 | Route evidence / remaining failure |
+|---|---|---|
+| L10-01 | FAIL → FAIL | Opening peaks: 7 regulars, no dogs/ordinary Alphas on both tiers. Farm ground bake still pending. |
+| L10-02 | FAIL → FAIL | Visible close Mega at ~98.3 s, `(945,-12)`; only one close section so far; full journey/evasion not established. |
+| L10-03 | FAIL → FAIL | Natural route reaches research at 518.07 low /516.25 high and corridor at 632.58/629.87 s. Complex/finish still outside this prefix. |
+| L10-04 | FAIL → FAIL | Longest beat gap 25.55 low /24.40 high through 650 s; no corn scare stingers. Full route pending. |
+| L10-05 | FAIL → PASS | All six physical finds above; no weapon names in story objective text. |
+| L10-06 | FAIL → FAIL | Dogs are route encounters; exact bite/telegraph/cooldown bounds not yet verified by this run. |
+| L10-07 | FAIL → FAIL | Same persistent Mega follows the courier from farm through corridor; gap/hide behavior not yet demonstrated. |
+| L10-08 | FAIL → FAIL | Native route uses production framing; visual subclauses not established by this receipt. |
+| L10-09 | FAIL → FAIL | Complete Voss/Ruiz/Reyes dialogue at 518.08–570.08 low /516.27–568.27 high; cure pickup at 575.92/573.18 s `(2703.3,65)`, flamethrower and arsenal present. Cast/safety/carry subclauses still need observed checks. |
+| L10-10 | FAIL → FAIL | Prefix has not reached console hold. |
+| L10-11 | FAIL → FAIL | Prefix has not reached finale waves. |
+| L10-12 | FAIL → FAIL | Prefix has not reached the final Mega fight. |
+| L10-13 | FAIL → FAIL | Prefix has not reached release. |
+| L10-14 | FAIL → FAIL | Prefix has not reached epilogue. |
+| L10-15 | FAIL → FAIL | First checkpoint 26.78 s; measured walked spacing ≤200 m on both tiers. Restored state after a later route death still needs a direct check. |
+
+| Story beat (same demand as baseline table) | After step 2 | Native evidence / next check |
+|---|---|---|
+| Wake at wrong bank with corgi and axe | FAIL | Route starts at `(547,0)` with axe; companion/presentation observation pending. |
+| Sam opening radio | PASS | Opening continuity fallback `L10.farmstead.reyes` at 0.02 s; the standalone save has no living Sam. |
+| Mega climbs from wreck / hunts her | FAIL | Persistent hunt observed; wreck introduction presentation not observed. |
+| River exit → farms | FAIL | River exit 23.97 s `(645,-12.4)`; farm palette bake pending. |
+| Sam hiding-gap line | FAIL | Line at 96.58/96.57 s, but it currently keys off X progress rather than an observed hide. |
+| Hunting rifle farmhouse find | PASS | 37.40 s, above. |
+| Machete barn find | PASS | 96.25/96.23 s, above. |
+| Nail gun workshop find | PASS | 198.40/198.50 s, above. |
+| Molotovs shed find | PASS | 146.28/146.25 s, above. |
+| Barn HELP / graves | FAIL | No explicit route visibility receipt for the roof/graves yet. |
+| First Mega field crossing | PASS | Visible close encounter by ~98.3 s, within first three minutes. |
+| Restricted zone / warning sign | FAIL | Restricted objective begins 307.53/307.07 s `(1855,25)`; sign and dog-pack presentation not yet checked. |
+| Assault rifle with flashlight | PASS | Physical pickup 329.95/329.45 s, above; existing assault-rifle equipment presentation applies. |
+| Flashbangs | PASS | Physical pickup 356.27/355.77 s, above. |
+| Sam broken radio / hangar direction | PASS | Continuity line `L10.armory.reyes` at 416.38/415.43 s. |
+| Hangar safe-space arrival | FAIL | Indoor arrival 518.07/516.25 s `(2707,57)`; safety/cast census pending. |
+| Voss dialogue and cure handover | PASS | Exact ordered line IDs and native cure collection recorded at 518–576/516–573 s. |
+| Ruiz arsenal return | PASS | `L10.ruiz` 552.08/550.27 s; handover fills carried arsenal through ordinary cure collection. |
+| Voss flamethrower handover | PASS | `L10.voss-prototype` 559.58/557.77 s; flamethrower in native rack after cure pickup. |
+| Sam / Voss goodbye | PASS | Coming/stay/delivery lines 563.58–570.08 /561.77–568.27 s with Reyes fallback. |
+| Delivery route / Mega outside | PASS | At 640.02 s courier `(2968,4.7)` low /`(2979.9,7.7)` high; same Mega follows at 24.1/28.3 m. |
+| Install cure and hold console | FAIL | Not yet reached. |
+| Finale arsenal and hazards | FAIL | Not yet reached. |
+| Voss release line and release | FAIL | Not yet reached. |
+| Release 0–8 s | FAIL | Not yet reached. |
+| Journey wave 8–30 s | FAIL | Not yet reached. |
+| Survivors 30–50 s | FAIL | Not yet reached. |
+| Delivered 50–65 s | FAIL | Not yet reached. |
+| Title / credits / menu | FAIL | Not yet reached. |
+| Optional corgi post-credits | FAIL | Not yet reached. |
+
+| Mega rule | After step 2 | Evidence |
+|---|---|---|
+| Final arena | FAIL | Not reached in this prefix. |
+| Phase 1 arrival | FAIL | Not reached in this prefix. |
+| Phase 2 rage | FAIL | Not reached in this prefix. |
+| Phase 3 last stand | FAIL | Not reached in this prefix. |
+| Downed failure | FAIL | No finale death in this prefix. |
+| Pre-finale invulnerability / stagger / no bar | FAIL | Mega remains 3000 HP while following; stagger duration and bar presentation need direct observation. |
