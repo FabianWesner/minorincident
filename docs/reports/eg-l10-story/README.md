@@ -1,6 +1,6 @@
 # L10 story and stalker lane
 
-Status: committed implementation and passing isolated finale/ending proof; timeboxed handoff in progress. Full-route acceptance is open. No browser, push or deploy.
+Status: timeboxed handoff committed. Isolated finale/ending proof passes; full-route acceptance remains open. No browser, push or deploy.
 
 ## Source and commits
 
@@ -9,6 +9,9 @@ Binding narrative: `docs/design/story-script.md`. Gameplay: the PO 2026-11-08 se
 - `4ee39020`: story route, six placed weapons and stalker presentation.
 - `78656e6d`: merged main, including the orchestrator's story script and boss design.
 - `3ec8cdca`: protected indoor hangar, cast, exact conversation, complete arsenal, physical escape gaps and moving route encounters.
+- `387a8fa9`: permanently mortal installed-phase Mega and corrected mounted-gun input policy; passing 70/70 finale proof.
+- `83099866`: latest farm/vignette main integration through `5de85117`; overview caps retain main's low-quality rules.
+- The shared Walker experiment in `04548493` was reverted at handoff because its queued check never started. Its diagnostic evidence remains available for the follow-up lane.
 
 ## Implementation
 
@@ -40,14 +43,14 @@ All heavy checks run remotely with `MI_LOCAL_FALLBACK=0 sh tools/remote/run.sh "
 - Full default unit suite: stopped by the required 150 s cap (150.7 s, exit 124; wrapper exit 1). No assertion failure appears before the timeout. This is incomplete, not a suite pass.
 - Full-route acceptance: low/complete exhausts its 3,600 s simulation budget before the first farmhouse find (54 deaths, zero kills), while the early Mega appears at 51.92 s and ordinary idle arrivals remain zero. The other variants were stopped after that reproducible blocker; acceptance exit 143. Its receipt is preserved under `evidence/acceptance/receipts/L10-low-complete.json`.
 - Threat audit was started remotely, then stopped after 179 s because its skilled/kiting policies repeat the same blocked approach. Exit 143; no valid final threat receipt is claimed.
-- Short ordinary-input diagnostic on merged main confirms the stalled bot sends zero movement with no physical collision. `04548493` changes Walker to explicitly use the player navigation workspace; its targeted route check is the current pending check. The merged vignette/farm source has not yet received a final green full-route acceptance receipt.
+- Short ordinary-input diagnostic on merged main confirms the stalled bot sends zero movement with no physical collision (x695.99/z−4.84, starting around 36 s, first death at 63.13 s). A candidate explicit player-grid change (`04548493`) waited over seven minutes in the shared FIFO without starting; it was cancelled (exit 130) under the orchestrator's time box and reverted. Root cause remains a follow-up. The merged vignette/farm source has not received a final green full-route acceptance receipt or a fresh typecheck/lint run.
 - `tools/qa/l10-story.ts` labels injected fixtures separately from the ordinary-input route. It checks six actual pickups, gap clearance, exact Reyes dialogue, cast, indoor navigation, arsenal/save restoration, immunity, every damaging returned weapon, post-charge reinforcements and living-Sam continuity. The natural route separately measures completion, first widest-frame sighting, recurring close encounters and idle arrivals.
 
 Remote infrastructure: newly created runners initially lacked `/srv/mi/locks` and `/srv/mi/queue`, so the pool treated idle runners as occupied. Those directories were created on runners 2 and 3, restoring dispatch. Earlier sandbox Git/network restrictions are resolved; they are not current blockers.
 
 ## Done and open at handoff
 
-**Done:** source-script hangar story/continuity, six retained finds and complete arsenal, flamethrower combat/VFX, early immortal stalker and narrow escapes, revised bounded defence and protected crowd-clearing gun, permanent finale Mega mortality, green-dust healthy recovery, 65 s release-to-title sequence, bounded whole-map pullback, procedural hymn, optional corgi toy and 90 s pausable/skippable licensed credits/Thanks/menu. The isolated low/high finale proof is green; it is not a full campaign completion claim.
+**Done:** source-script hangar story/continuity, six retained finds and complete arsenal, flamethrower combat/VFX, early immortal stalker and narrow escapes, revised bounded defence and protected crowd-clearing gun, permanent finale Mega mortality, green-dust healthy recovery, 65 s release-to-title sequence, bounded whole-map pullback, procedural hymn, optional corgi toy and 90 s pausable/skippable licensed credits/Thanks/menu. The isolated low/high finale proof is green on `387a8fa9`, before the final vignette/main merge. Full campaign completion is unverified.
 
 **Open / follow-up lanes:**
 
@@ -65,3 +68,17 @@ The brief reserves browser work for the QA lane. Check both quality tiers and zo
 - Mega's visible first encounter, repeated threatening gap escapes, real-position pulsing red dot, hidden walk HP bar, roar/footstep gain and no visible spawn pop.
 - Whole arsenal selection, flamethrower fuel/readability and final machinery/fuel/electric-gate counters inside the enlarged zone.
 - Green dust, kneeling/healthy recovery and dead-body preservation; staged journey shots; saved-survivor continuity; seated courier/corgi; Delivered ✓ phone buzz; 15 s full-map pullback at both aspect ratios; panorama draw/triangle budgets; triumphant hymn and readable 90 s credit roll, skip/thanks/menu.
+
+## Handoff and reproduction
+
+The orchestrator explicitly ended this lane at the ~3 h time box and assigned leftovers to follow-up lanes. All working implementation and existing receipts are committed. No check or queued job is left running. The overall full-route goal is not claimed complete.
+
+Start the navigation follow-up with the short diagnostic, then run full acceptance/threat after resolving the approach:
+
+```sh
+MI_LOCAL_FALLBACK=0 sh tools/remote/run.sh "$PWD" \
+  --pull docs/reports/eg-l10-story/evidence -- \
+  node --import tsx/esm tools/qa/l10-route-diagnostic.ts
+```
+
+`tools/qa/l10-final-checks.sh` contains the sequential typecheck, lint, finale proof, 150 s unit-suite attempt, full acceptance and threat commands. Keep all heavy commands remote, one at a time, with one Vitest worker. No Mac fallback or browser is authorized for this lane.
