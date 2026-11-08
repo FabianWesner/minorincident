@@ -555,6 +555,14 @@ export class Blasts extends Group {
   private cureMist(now: number): void {
     const front = this.world.missions?.state.cureFront;
     if (!front) return;
+    if (front.elapsed < 8 * 60) {
+      const origin = front.fronts[0], ground = this.world.districts?.groundHeight(origin.x, origin.z) ?? 0;
+      // The opening vent column feeds the low tide; both reuse the bounded smoke instance pool.
+      if (this.sourceVisible(origin.x, origin.z, 10)) for (let i = 0; i < (this.quality === 'low' ? 2 : 4); i++) {
+        this.puff(origin.x + (this.mistRng.next() - .5) * 1.5, ground + 1 + this.mistRng.next() * 3, origin.z + (this.mistRng.next() - .5) * 1.5,
+          .15, .7, .1, 3, .6, 2.8, -1.4, .8, now);
+      }
+    }
     const focus = this.host.focus?.() ?? this.world.entities.get(1)!.transform;
     const ending = this.world.missions?.state.epilogue?.phase;
     // The playable cure spread keeps its deliberately sparse low-tier mist, so bodies
