@@ -237,6 +237,11 @@ export class CrowdView extends Group {
       const key = crowdModelKey(def); this.plannedLods.set(key, planned);
       return this.staged ? [] : planned.map(lod => this.requestBatch(def, lod));
     }));
+    if (this.world.scenario === 'L8') {
+      // The brief wall shot cannot wait for first-visibility streaming.
+      await Promise.all([['inf.mega-alpha', 'lod0'], ['infected.dog', 'lod1']].map(([id, lod]) =>
+        this.requestBatch(this.definitions.get(this.modelAliases.get(id)!)!, lod as CrowdLod)));
+    }
     const dog = this.batches.get('inf.dog:lod1'), cream = this.batches.get('inf.dog.cream:lod1');
     if (dog && cream && !dog.mesh.geometry.hasAttribute('uv')) this.sharedDogCoats = shareDogCoatPalette(dog.mesh.geometry, cream.mesh.geometry, dog.poses.clip, cream.poses.clip);
     loadMeasure('view:infected-crowd', started);
