@@ -88,8 +88,9 @@ export class LevelTenBot {
       const foot = { x: footX, z: footZ };
       const pivot = gun.placement;
       if (p.y < arena.gun.deckHeight + .2) {
-        f.move = distance(foot) > 1 && p.x > foot.x - 1
-          ? this.walker.step(w, foot, .5, 'gun-stair') ?? f.move : { x: -1, z: 0 };
+        f.move = distance(foot) > 1
+          ? p.x > foot.x - 1 ? this.walker.step(w, foot, .5, 'gun-stair') ?? f.move : { x: 1, z: 0 }
+          : { x: 0, z: 0 };
       } else {
         const dx = pivot.x - p.x, dz = pivot.z - p.z, d = Math.hypot(dx, dz) || 1;
         f.move = { x: dx / d, z: dz / d };
