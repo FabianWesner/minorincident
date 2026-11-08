@@ -1,5 +1,7 @@
 # R14 moving hits: accepted-level balance follow-up
 
+The subsequent [merge with main and current measurements](../r14-moving-m/README.md) includes the height guards, Alpha move sets, final contact recovery and revised encounter admission. This report records the accepted pre-merge version.
+
 ## Result
 
 The moving-hit floor remains **≥2 landed moving hits/minute in every on-foot level**, for both retreat fire and constant running circles. L9 remains the driving-policy N/A. L1–L5 satisfy **deaths ≤ original baseline +1 and damage ≤2× original baseline**. L6–L10 reproduce the reviewed damage, deaths, duration and furthest objective exactly; previously completed normal routes still complete.
