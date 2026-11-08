@@ -1,6 +1,7 @@
 import type { Placement } from '../../levels/districts/types';
 import type { SimWorld } from '../world/SimWorld';
 import { cure } from '../../levels/L10/district';
+import type { CureRegion } from '../../levels/L10/alphaContracts';
 
 export interface FarmScareState { [site: string]: { due: number; actor?: number } }
 const sites = new WeakMap<readonly Placement[], { id: string; x: number; z: number }[]>();
@@ -27,6 +28,9 @@ export function farmScareSites(placements: readonly Placement[]) {
     }
     list.push({ id: `corn-scare-${i}`, x, z });
   }
+  // The later route trades corn for workshop corners, quarantine wrecks and
+  // broken delivery yards. These ambushes use the same warning/admission ledger.
+  for (const [i, [x, z]] of [[1405,37],[1685,0],[2040,27],[2405,-20],[2640,32],[2840,65],[3155,72],[3440,73],[3730,0]].entries()) list.push({id:`route-ambush-${i}`,x,z});
   sites.set(placements, list); return list;
 }
 /** The scare ledger is checkpointed with LevelTenEncounters; nothing is spawned waiting in view. */
@@ -42,17 +46,20 @@ export function updateFarmScares(world: SimWorld, ledger: FarmScareState): void 
     const at = ai.nav.clear(site.x, site.z, .65) ? site : cell >= 0 && Math.hypot(ai.nav.x(cell) - site.x, ai.nav.z(cell) - site.z) <= 4 ? { x: ai.nav.x(cell), z: ai.nav.z(cell) } : null;
     if (!at) continue;
     const available = ai.pool.length > 0 && ai.director.count < ai.director.cap - ai.director.reserved - ai.director.pendingTurns;
+    const corn = site.id.startsWith('corn-'), safe = corn || ai.director.safe('infected.sprinter', at);
     if (!entry) {
       const last = Math.max(0, ...Object.values(ledger).map(s => s.due - 90));
-      if (!available || world.tick < 3600 || world.tick - last < 3600 || Math.hypot(hero.transform.x - at.x, hero.transform.z - at.z) > 30) continue;
+      if (!available || !safe || world.tick < 3600 || world.tick - last < 3600 || Math.hypot(hero.transform.x - at.x, hero.transform.z - at.z) > (corn ? 30 : 38)) continue;
       entry = ledger[site.id] = { due: world.tick + 90 };
       world.events.emit({ type: 'music.stinger', tick: world.tick, kind: 'scare', level: 'L10' });
     }
     if (world.tick < entry.due) continue;
     // A delayed admission needs a fresh warning, rather than a burst long after its sting.
-    if (!available || !world.chunks?.resident(at.x, at.z) || !ai.nav.clear(at.x, at.z, .65)) { delete ledger[site.id]; continue; }
-    const id = ai.spawn('infected.sprinter', at, { perched: false, birds: 1, cureRegion: site.x < 747 ? 'crash-outskirts' : 'residential-fringe' });
+    if (!available || !safe || !world.chunks?.resident(at.x, at.z) || !ai.nav.clear(at.x, at.z, .65)) { delete ledger[site.id]; continue; }
+    const region = ([...cure.regions].reverse().find(r=>site.x>=r.envelope[0][0])?.id ?? 'crash-outskirts') as CureRegion;
+    const id = ai.spawn('infected.sprinter', at, { perched: false, birds: 1, cureRegion: region });
     entry.actor = id;
+    world.events.emit({ type: 'mission.signal', tick: world.tick, name: `l10-scare-emerged:${site.id}` });
     if (!ai.rush(id, hero.transform, world.tick + 480)) {
       ai.press(id, 1, world.tick + 480);
       // Start the archetype chase before its first presented frame.

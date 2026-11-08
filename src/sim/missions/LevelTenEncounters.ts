@@ -40,6 +40,7 @@ export class LevelTenEncounters {
       weapons[pickup.id] = w.combat!.pickups.spawn(pickup.action, { x: at[0], z: at[1] }, false, { retain: true, reachM: 4.5 });
     }
     updateFarmScares(w, this.state.farmScares ??= {});
+    const pendingScares = Object.values(this.state.farmScares).filter(s=>s.actor===undefined).length;
 
     for (const kit of cureMedkits) {
       if (this.state.medkits[kit.id] || !chunks.resident(...kit.at)) continue;
@@ -75,7 +76,7 @@ export class LevelTenEncounters {
       for (const slot of slots) {
         const key = `${slot.key}:${wave}`;
         slot.z += lanes[group.id] ?? 0;
-        if (this.state.spawned[key] || !ai.pool.length || ai.director.count >= ai.director.cap - ai.director.reserved - ai.director.pendingTurns) continue;
+        if (this.state.spawned[key] || !ai.pool.length || ai.director.count >= ai.director.cap - ai.director.reserved - ai.director.pendingTurns - pendingScares) continue;
         if (slot.archetype === 'infected.dog' && ai.active.filter(e => e.archetype === slot.archetype && (e.health.current > 0 || (e.infected?.recoverAt ?? -1) >= 0)).length >= (assault ? 4 : 2)) continue;
         if (slot.archetype === 'infected.alpha' && ai.active.filter(e => e.archetype === slot.archetype && !e.infected?.pursuit && (e.health.current > 0 || (e.infected?.recoverAt ?? -1) >= 0)).length >= cureAlphaCap(group.region, ai.director.tier)) continue;
         const at = cureEncounterSpot(ai.nav, slot, (x, z) => !insideCureHangar({ x, z }) && chunks.resident(x, z) && ai.director.safe(slot.archetype, { x, z }), assault ? 129 : 33);

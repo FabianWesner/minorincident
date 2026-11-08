@@ -60,9 +60,13 @@ for (const quality of tiers) {
       if (world.tick - lastCombatBeat >= 1200) { addBeat('fight', e.actionId); lastCombatBeat = world.tick; }
       fightUntil = world.tick + 20 * 60;
     }),
-    world.events.on('music.stinger', e => { if (e.type === 'music.stinger' && e.kind === 'scare') { scares++; addBeat('scare', 'corn-emergence'); } }),
+    world.events.on('music.stinger', e => { if (e.type === 'music.stinger' && e.kind === 'scare') addBeat('scare-warning', world.entities.get(1)!.transform.x < 1240 ? 'corn-emergence' : 'blind-corner-emergence'); }),
     world.events.on('infected.special', e => { if (e.type === 'infected.special' && e.sourceId === world.megaPursuit?.state.id) megaActions.push({ seconds: world.tick / 60, ...e }); }),
-    world.events.on('mission.signal', e => { if (e.type === 'mission.signal' && e.name.startsWith('mega-phase-')) { const p = world.entities.get(1)!.transform, boss = world.megaPursuit?.entity(); megaPhases.push({ seconds: world.tick / 60, phase: e.name, player: { ...p }, boss: boss ? { ...boss.transform, hp: boss.health.current } : null, charge: mission.state.counters['charge-ticks'] }); } }),
+    world.events.on('mission.signal', e => {
+      if (e.type !== 'mission.signal') return;
+      if (e.name.startsWith('l10-scare-emerged:')) { scares++; addBeat('scare',e.name); }
+      if (e.name.startsWith('mega-phase-')) { const p = world.entities.get(1)!.transform, boss = world.megaPursuit?.entity(); megaPhases.push({ seconds: world.tick / 60, phase: e.name, player: { ...p }, boss: boss ? { ...boss.transform, hp: boss.health.current } : null, charge: mission.state.counters['charge-ticks'] }); }
+    }),
   ];
   const vignettes = world.districts?.districts.find(d => d.id === 'D-CURE')?.decay.placements.filter(p => p.id.startsWith('decor-cure-vignette-') || p.id.startsWith('l10-pace-vignette-')) ?? [];
   const megaBands = [80, 35, 15];
