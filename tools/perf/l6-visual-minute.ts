@@ -1,8 +1,9 @@
 /** Native Metal real-clock minute per tier; admission belongs to quiet-run.sh. */
 import assert from 'node:assert/strict';
-import { mkdirSync, writeFileSync, createWriteStream } from 'node:fs';
+import { mkdirSync, writeFileSync, createWriteStream, mkdtempSync } from 'node:fs';
 import { gzipSync, createGzip } from 'node:zlib';
 import { once } from 'node:events';
+import { resolve } from 'node:path';
 import { loadavg } from 'node:os';
 import { preset } from '../../src/sim/progression/Campaign';
 import type { Game } from '../../src/Game';
@@ -13,7 +14,8 @@ assert.equal(process.env.MI_PERF_LOCK_HELD, '1', 'Run through tools/perf/quiet-r
 assert.ok(loadavg()[0] < 4, 'The requested 1-minute load must be below4 at admission');
 const out = process.env.L6_PERF_OUT ?? 'test-results/l6-visual/perf'; mkdirSync(out, { recursive: true });
 const rows = [];
-const browser = process.env.L6_PERF_COLD ? await launchBrowser({ headless: true, args: ['--use-angle=metal', '--enable-gpu', '--enable-unsafe-webgpu', '--ignore-gpu-blocklist', '--disable-gpu-shader-disk-cache', `--disk-cache-dir=${process.cwd()}/${out}/cold-browser-cache`] }) : undefined;
+const coldCacheDirectory = process.env.L6_PERF_COLD ? resolve(mkdtempSync(`${out}/cold-browser-cache-`)) : undefined;
+const browser = coldCacheDirectory ? await launchBrowser({ headless: true, args: ['--use-angle=metal', '--enable-gpu', '--enable-unsafe-webgpu', '--ignore-gpu-blocklist', '--disable-gpu-shader-disk-cache', `--disk-cache-dir=${coldCacheDirectory}`] }) : undefined;
 try {
   for (const tier of ['low', 'high'] as const) {
     if (process.env.L6_PERF_TIER && process.env.L6_PERF_TIER !== tier) continue;
@@ -70,7 +72,7 @@ try {
         a.debug.cpuProfile(); a.missions.begin(); a.bot.start('complete'); a.resume(); requestAnimationFrame(frame);
       });
       const hostLoads: { elapsed: number; load: number[] }[] = [];
-      const started = Date.now();
+      const started = Date.now(), wallStartedAt = new Date().toISOString();
       while (Date.now() - started < 60_000) {
         const elapsed = Date.now() - started; hostLoads.push({ elapsed, load: loadavg() });
         await session.page.waitForTimeout(Math.min(1000, Math.max(1, 60_000 - elapsed)));
@@ -92,7 +94,7 @@ try {
       await cdp.detach();
       writeFileSync(`${out}/${tier}.cpuprofile.json.gz`, gzipSync(JSON.stringify({ ...profile, performanceStartedAt })));
       await session.page.screenshot({ path: `${out}/${tier}-end.png` });
-      rows.push({ tier, coldCacheRequested: !!process.env.L6_PERF_COLD, admissionLoad, finalLoad: loadavg(), inputPolicy: 'complete', hostLoads, ...result, errors: session.errors });
+      rows.push({ tier, wallStartedAt, coldCacheDirectory, coldCacheRequested: !!process.env.L6_PERF_COLD, admissionLoad, finalLoad: loadavg(), inputPolicy: 'complete', hostLoads, ...result, errors: session.errors });
       writeFileSync(`${out}/receipt.json`, JSON.stringify({ ...provenance(), method: 'Headless native Metal WebGPU, production preview, quiet-run admission, normal RAF clock for60s per tier. Ordinary mortal complete policy through the existing gameplay bot, with normal RAF input processing. No actor reposition, manual stepping or combat/stat changes during timing. Main-thread1ms CPU samples, native frame/sim/update/render/system costs, node-builder notifications (not total compiler durations), long tasks and all resource timings retained for attribution. Optional cold-cache mode disables GPU shader disk cache and uses a new browser disk-cache directory; platform driver caches remain shared.', rows }, null, 2) + '\n');
       const frames = result.frames as { ms: number; phase: string | undefined }[];
       console.log(JSON.stringify({ tier, elapsedMs: result.elapsedMs, frames: frames.length, maxMs: Math.max(...frames.map(f => f.ms)), over100: frames.filter(f => f.ms > 100).length, builds: result.builds, errors: session.errors }));

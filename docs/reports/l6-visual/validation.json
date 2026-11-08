@@ -75,5 +75,27 @@
       0
     ],
     "reason": "Trace streaming export, optional trace/cold-cache diagnostics, all resource timings; product source unchanged."
+  },
+  "wallClockProbeChecks": {
+    "commands": [
+      "npm run typecheck",
+      "npm run lint"
+    ],
+    "exitCodes": [
+      0,
+      0
+    ],
+    "reason": "After adding wall-clock measurement-start metadata; final product source remains unchanged."
+  },
+  "finalDiagnosticProbeChecks": {
+    "commands": [
+      "npm run typecheck",
+      "npm run lint"
+    ],
+    "exitCodes": [
+      0,
+      0
+    ],
+    "reason": "Final observer includes wall-clock metadata and unique cold-cache directories on repeated invocations. No product source change."
   }
 }
