@@ -12,6 +12,7 @@ import type { EntitySnapshot } from '../world/types';
 import type { Point } from '../npc/types';
 import type { Mission } from './Mission';
 import type { L6State } from './types';
+import { survivorName } from './survivorName';
 const distance = (a: Point, b: Point) => Math.hypot(a.x-b.x,a.z-b.z);
 const ticks = (s: number) => Math.round(s*60);
 /** Beat controller; all mutable state is checkpointed on the mission. Infection remains the shared outbreak system. */
@@ -472,10 +473,33 @@ export class LevelSixSubway {
     });
     return {rescued:out.length,survivors:out.map(r=>r.key),survivorsIn:s.survivors.length,survivorsLost:s.survivors.filter(r=>r.status==='dead'||r.status==='turned').length,escapedSurvivors};
   }
-  /** PO 10-20 #65: objective text while the courier is away from the retreating group. */
-  static text(mission: Pick<Mission,'state'> | null | undefined): string | null {
+  /** Locate a regroup or exit-blocking follower without moving the fixed mission destination. */
+  static regroupTarget(mission: Mission | null | undefined): EntitySnapshot | undefined {
+    const s=mission?.state.l6;
+    if(!mission||!s||(s.phase!=='retreat'&&s.phase!=='exit'))return;
+    const p=mission.world.entities.get(1)!.transform;
+    const platform=mission.def.anchors['exit-platform'];
+    const destination=mission.def.anchors[s.phase==='retreat'?'exit-platform':'night-exit'];
+    const atDestination=distance(p,destination)<=3;
+    if(!s.strayed&&!atDestination)return;
+    let nearest:EntitySnapshot|undefined;
+    for(const r of s.survivors){
+      const e=mission.world.entities.get(r.id);
+      if(r.status!=='following'||!e||e.hidden||e.health.current<=0)continue;
+      if(atDestination&&s.phase==='retreat'&&e.transform.x>platform.x)continue;
+      if(e.id===s.alarm?.id)return e;
+      if(!nearest||(atDestination?e.transform.x<nearest.transform.x:distance(e.transform,p)<distance(nearest.transform,p)))nearest=e;
+    }
+    return nearest;
+  }
+  static text(mission: Mission | null | undefined): string | null {
     const s=mission?.state.l6;
     if(!s||(s.phase!=='retreat'&&s.phase!=='exit'))return null;
+    const target=LevelSixSubway.regroupTarget(mission);
+    if(target){
+      const p=mission.world.entities.get(1)!.transform;
+      return `Rejoin ${survivorName(target)} · ${Math.ceil(distance(target.transform,p))} m`;
+    }
     if(s.strayed)return 'Stay with the group';
     const wait=s.phase==='retreat'?s.waitFor:undefined;
     return wait?.kind==='fetch'?'The group waits: help the injured survivor who fell behind'

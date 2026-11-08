@@ -131,7 +131,7 @@ test('interactions: ring, input and view predicates agree for every interact ste
         expect(activeInteractions(mission).find(i => i.step.id === 'axe')?.ring, 'optional rack keeps its ground ring').toBe(true);
       }
       if (level === 'L8') {
-        expect(objectiveText(mission, 'Bring the survivors to the armored vehicle and board')).toBe('');
+        expect(objectiveText(mission, 'Bring the survivors to the armored vehicle and board')).toBe('Stay with the group');
         expect(mission.state.marker).toBeNull();
         // The existing outlet scene exposed queued residents first becoming
         // visible on the apron. Exercise its native six-person door queue here,
@@ -250,6 +250,20 @@ test('interactions: only the open L6 gate the group is heading for offers its pr
       // "Stay with the group".
       const fixedDestination = { ...m.def.anchors['l6-next'] };
       const courier = w.entities.get(1)!;
+      Object.assign(courier.transform, { x: 400, z: 200 });
+      l6.strayed = true;
+      expect(LevelSixSubway.text(m)).toMatch(/^Rejoin .+ · \d+ m$/);
+      const follower = LevelSixSubway.regroupTarget(m)!;
+      const alarm = l6.alarm;
+      l6.alarm = { key: 'regroup-test', id: follower.id, x: -1, z: -1, kind: 'attack', text: 'Survivor under attack!', until: w.tick - 1 };
+      expect(LevelSixSubway.regroupTarget(m)?.id, 'regroup keeps locating the live survivor after the attack banner expires').toBe(follower.id);
+      follower.hidden = true;
+      expect(LevelSixSubway.regroupTarget(m)?.id, 'escaped or hidden survivors cannot keep a rescue cue').not.toBe(follower.id);
+      follower.hidden = false; l6.alarm = alarm;
+      l6.strayed = false;
+      Object.assign(courier.transform, { x: exit.x, z: exit.z });
+      expect(LevelSixSubway.regroupTarget(m), 'the exit locates its blocking follower even with a nearby group member').toBeDefined();
+      expect(LevelSixSubway.text(m)).toMatch(/^Rejoin .+ · \d+ m$/);
       Object.assign(courier.transform, { x: 400, z: 200 });
       for (let i = 0; i < 5400; i++) {
         w.update();

@@ -1,6 +1,7 @@
 import { interactionPromptPosition, type PromptRect } from './promptPosition';
 import { survivorName } from '../sim/missions/survivorName';
 import { objectiveText } from '../sim/missions/objectiveText';
+import { LevelSixSubway } from '../sim/missions/LevelSixSubway';
 import { devicePrompt } from './devicePrompt';
 import { l5, l5Survivors } from '../data/l5';
 import { isMega } from '../data/megaPresentation';
@@ -327,15 +328,14 @@ export class Hud {
     const home = mission?.def.anchors.home ?? player.survivor?.checkpoint;
     setHidden(this.homePin, !home || !!mission?.def.l8); if (home) this.place(this.homePin, home.x, home.z, px, pz, true);
     const objective = mission?.def.steps.find(step => mission.state.steps[step.id].status === 'active');
-    const l8Calm = !!mission?.def.l8 && !mission.state.states.breached;
     // L1 v2 beat 5: after the hand-over the panel shows the completed tick and no new objective.
     const done = !objective && mission?.def.l1 ? [...mission.def.steps].reverse().find(step => mission.state.steps[step.id].status === 'completed') : undefined;
-    setHidden(this.tracker, l8Calm || !objective && !done); if (done) text(this.trackerText, `✓ ${done.text}`);
+    setHidden(this.tracker, !objective && !done); if (done) text(this.trackerText, `✓ ${done.text}`);
     const remaining = mission?.def.id === 'L3' && mission.state.deadlineTicks !== null ? Math.ceil(mission.state.deadlineTicks / 60) : null;
     const deadline = remaining === null ? '' : `Gates close in ${Math.floor(remaining / 60)}:${String(remaining % 60).padStart(2, '0')} · `;
-    if (l8Calm || !objective && !done) text(this.trackerText, '');
-    const distanceAnchor = mission?.def.l3 && objective ? mission.def.anchors[objective.anchor] : anchor;
-    if (objective && !l8Calm) text(this.trackerText, `${deadline}${objectiveText(mission!, objective.text)}${distanceAnchor ? ` · ${Math.round(cellarDistance ?? Math.hypot(distanceAnchor.x - px, distanceAnchor.z - pz))}\u00a0m` : ''}`);
+    if (!objective && !done) text(this.trackerText, '');
+    const distanceAnchor = LevelSixSubway.regroupTarget(mission) ? null : mission?.def.l3 && objective ? mission.def.anchors[objective.anchor] : anchor;
+    if (objective) text(this.trackerText, `${deadline}${objectiveText(mission!, objective.text)}${distanceAnchor ? ` · ${Math.round(cellarDistance ?? Math.hypot(distanceAnchor.x - px, distanceAnchor.z - pz))}\u00a0m` : ''}`);
     const finaleStep = mission?.def.id === 'L10' ? mission.interactStepInRange() : null;
     const finaleAction = !!finaleStep && ['install', 'hold', 'release'].includes(finaleStep.id);
     setHidden(this.finaleAction, !finaleAction);
@@ -440,6 +440,15 @@ export class Hud {
     }
     const world = this.game.world;
     this.updateSurvivorCue(mission, px, pz);
+    const target = LevelSixSubway.regroupTarget(mission);
+    if (target) {
+      setHidden(this.survivorText, true);
+      setHidden(this.cuePin, true);
+      setHidden(this.cueText, true);
+      this.waitCue(target ? { ...target.transform, name: survivorName(target), id: String(target.id) } : undefined, px, pz);
+      setHidden(this.cueText, true);
+      return;
+    }
     if (world.l7Encounters && mission?.state.steps.corridor?.status === 'active') {
       const missing = world.l7Encounters.corridorGroup().missing[0];
       const target = missing && world.entities.get(missing.id);
@@ -467,12 +476,6 @@ export class Hud {
       // passengers are being escorted by the boarding AI, so a nearest-person
       // "Find" cue sends the player away from the APC while they queue there.
       setHidden(this.survivorText, true); text(this.survivorText, '');
-      setHidden(this.cuePin, true); setHidden(this.cueText, true); text(this.cueText, '');
-      return;
-    }
-    if (mission?.def.l8 && !mission.l8!.state.breachedAt && world.vehicles?.active === mission.l8!.state.carId && world.tick - mission.l8!.state.startedAt >= 300) {
-      setHidden(this.tracker, true); text(this.trackerText, '');
-      setHidden(this.survivorText, true);
       setHidden(this.cuePin, true); setHidden(this.cueText, true); text(this.cueText, '');
       return;
     }
@@ -517,13 +520,16 @@ export class Hud {
   private updateSurvivorCue(mission: Mission | null | undefined, px: number, pz: number): void {
     const tick = this.game.world.tick;
     const warning = this.game.world.l7Encounters?.state.alarm ?? mission?.state.l5?.alarm ?? mission?.state.l6?.alarm;
+    const regroup = LevelSixSubway.regroupTarget(mission);
     const alarm = warning && tick < warning.until ? warning : undefined;
-    const cue = alarm ?? mission?.state.l5?.cue;
+    const source = alarm && 'id' in alarm ? this.game.world.entities.get(alarm.id) : undefined;
+    const cue = regroup ? { key: `l6-regroup-${regroup.id}`, until: Number.MAX_SAFE_INTEGER, ...regroup.transform, text: `Rejoin ${survivorName(regroup)} · ${Math.ceil(Math.hypot(regroup.transform.x-px,regroup.transform.z-pz))} m` }
+      : alarm && source && !source.hidden ? { ...alarm, ...source.transform } : alarm ?? mission?.state.l5?.cue;
     attribute(this.survivorCue, 'data-alarm', String(!!alarm));
-    if (!cue || tick >= cue.until || !alarm && (!mission?.state.l5 || mission.state.l5.phase === 'cellar' || Math.hypot(cue.x - px, cue.z - pz) > l5.survivors.cueRangeM)) {
+    if (!cue || tick >= cue.until || !alarm && !regroup && (!mission?.state.l5 || mission.state.l5.phase === 'cellar' || Math.hypot(cue.x - px, cue.z - pz) > l5.survivors.cueRangeM)) {
       setHidden(this.survivorCue, true); return;
     }
-    const p = this.game.view.project(cue.x, .7, cue.z), behind = p[2] > 1;
+    const p = this.game.view.project(cue.x, (regroup?.transform.y ?? source?.transform.y ?? -.2) + .9, cue.z), behind = p[2] > 1;
     const sx = (p[0] + 1) * 50, sy = (1 - p[1]) * 50;
     const offscreen = behind || p[2] < -1 || Math.abs(p[0]) > 1 || Math.abs(p[1]) > 1;
     let left = sx, top = sy, offsetX = .5, offsetY = 1, arrowAngle = 0, arrowLeft = '50%', arrowTop = '100%';
@@ -551,7 +557,7 @@ export class Hud {
     const remaining = (cue.until - tick) / (60 * (alarm ? 5 : l5.survivors.pingS));
     // A grab's rescue window is only one second: urgent alarms must be fully
     // readable on arrival, rather than spending that window fading in.
-    const opacity = alarm ? Math.min(1, remaining * 6) : Math.min(1, (1 - remaining) * 6, remaining * 6);
+    const opacity = regroup ? 1 : alarm ? Math.min(1, remaining * 6) : Math.min(1, (1 - remaining) * 6, remaining * 6);
     text(this.survivorCueLine, cue.text); setHidden(this.survivorCue, false);
     const signature = `${cue.key}:${cue.until}:${innerWidth}:${innerHeight}:${mission?.state.l5?.found}:${this.tracker.textContent}`;
     if (signature !== this.cueLayoutSignature) {
