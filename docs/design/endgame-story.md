@@ -126,3 +126,7 @@ PO: "Which [weapons] are not used yet? (maybe a fire thrower...). How could we m
 - In the hangar, when the researchers hand over the cure, the army re-equips her: **all her weapons come back** (the full campaign arsenal plus what she found) for the delivery and the Mega fight.
 - **Decided (PO "I think a flame thrower would be great", choice left to the orchestrator):** the researchers hand her an experimental flamethrower with the cure — the signature weapon of the final push and the Mega fight (new model + fire VFX + burn damage over time; short range cone, fuel gauge; can set dry corn ablaze, so it is issued only after the corn chapter). Walk weapons as listed above.
 - This replaces the earlier "weapons from story scenes (dead officer, Sam, armory, convoy)" sequence for the known arsenal.
+
+## PO direction 2026-11-08 — the Mega must be present (binding)
+
+PO: "More than 1000s in L10 and I didn't see the mega alpha yet." → The Mega stalks the whole of L10, not only the finale: a first sighting within the first 2–3 minutes (on a ridge / crossing the road ahead / smashing through a barn in the corn), 2–3 close encounters along the way that force the player to hide or flee (it cannot be killed before the finale; set pieces like it tearing a farmhouse apart or throwing a car), the red pulsing minimap dot when it's near, audio tells (footsteps, roars) between sightings, and it arrives at the hangar/dispersal complex for the final fight. Target L10 length ~15 min.
