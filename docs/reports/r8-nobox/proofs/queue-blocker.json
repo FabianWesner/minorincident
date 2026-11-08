@@ -1,0 +1,11 @@
+{
+  "time": "2026-11-08T05:14:21.365807+00:00",
+  "fifo": "FIFO r8-threatfast pid=9605 waiting=1012070ms worktree=/Users/wesner/Workspace/minorincident/.claude/worktrees/r8-threatfast\nFIFO r8-nobox pid=14539 waiting=863078ms worktree=/Users/wesner/Workspace/minorincident/.claude/worktrees/r8-nobox\nFIFO r8-nobox pid=14654 waiting=854621ms worktree=/Users/wesner/Workspace/minorincident/.claude/worktrees/r8-nobox\nlocal slot: free\nlocal admission: waiting (GPU/browser reservation active)\n",
+  "priorPid": 9605,
+  "priorProcess": "  PID  PPID ELAPSED STAT COMMAND\n 9605 60290   16:54 Ss   sh tools/remote/run.sh /Users/wesner/Workspace/minorincident/.claude/worktrees/r8-threatfast --pull test-results/qa-threat-r8-runner --env QA_THREAT_REVISION=7326320fbaf38b88a0bbc6ca931b5a107ccc0984 --env QA_THREAT_MAIN_REVISION=ac0a9e261ba81c3eaf03eb52d8ab7ef560ffa50a --env QA_THREAT_SOURCE_MATCHES_MAIN=true -- npm run qa:threat -- --maxWorkers=4 --out test-results/qa-threat-r8-runner\n",
+  "freeRunner": "94.130.181.173",
+  "poolTryExit": 0,
+  "ourNativeLog": "[runner] queued FIFO 01794113997139672000-14539.json; remote preferred, eligible Mac CPU fallback\n",
+  "ourVerifyLog": "[runner] queued FIFO 01794114005596874000-14654.json; remote preferred, eligible Mac CPU fallback\n",
+  "checksStarted": false
+}
