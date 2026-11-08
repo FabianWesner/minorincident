@@ -1,7 +1,7 @@
 import { survivor } from '../../data/survivor';
 import { worldAssets } from '../../assets/worldDefinitions';
 import { SimPhase } from '../../core/EventBus';
-import { l4, l4RoutePose, type l4Route } from '../../data/l4';
+import { l4, l4ConvoyPose, l4ConvoyStations, type l4Route } from '../../data/l4';
 import { resetResponse } from '../locomotion/MotionResponse';
 import { leaveSeat } from '../npc/MorningRoutines';
 import type { Point } from '../npc/types';
@@ -29,9 +29,10 @@ export function convoyOverlaps(t: Point & { yaw: number }, i: number, p: Point, 
 
 /** L4's scripted vehicles yield to actors; pedestrians use the existing siren kerb-walk order. */
 export class L4ConvoyClearance {
+  private readonly stops: number[];
   private readonly previous = new Map<number, Transform>();
   private installed = false;
-  constructor(private readonly world: SimWorld, private readonly state: () => L4State, private readonly route: ReturnType<typeof l4Route>) {}
+  constructor(private readonly world: SimWorld, private readonly state: () => L4State, private readonly route: ReturnType<typeof l4Route>) { this.stops = l4ConvoyStations(route.length).end; }
 
   install(): void {
     // Population is authored before the first frame. Resolve unsafe spawn points before they can be seen.
@@ -118,7 +119,7 @@ export class L4ConvoyClearance {
   private swept(p: Point, radius: number, distance: number): boolean {
     const s = this.state();
     for (let i = 0; i < s.convoyS.length; i++) for (let d = 0; d <= distance; d += 1) {
-      if (convoyOverlaps(l4RoutePose(this.route, Math.min(s.convoyS[i] + d, this.route.length)), i, p, radius + .2)) return true;
+      if (convoyOverlaps(l4ConvoyPose(this.route, Math.min(s.convoyS[i] + d, this.route.length), i, this.stops[i]), i, p, radius + .2)) return true;
     }
     return this.overlaps(p, radius);
   }
@@ -152,7 +153,7 @@ export class L4ConvoyClearance {
   speedLimit(): number {
     const s = this.state(), actors = [...this.world.entities.iterate()].filter(actor).map(e => ({ p: e.transform, r: convoyFootprint(e) + .05 })), distance = this.lookahead();
     for (let d = 0; d <= distance; d += .5) for (let i = 0; i < s.convoyS.length; i++) {
-      const p = l4RoutePose(this.route, s.convoyS[i] + d);
+      const p = l4ConvoyPose(this.route, s.convoyS[i] + d, i, this.stops[i]);
       if (actors.some(a => convoyOverlaps(p, i, a.p, a.r))) return Math.sqrt(2 * l4.convoy.brakeMs2 * .8 * Math.max(0, d - .5));
     }
     return Infinity;
