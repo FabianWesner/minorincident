@@ -48,7 +48,7 @@ export async function l3SharedSeeds(tier: 'low' | 'high', seedOneCampaign: Retur
         const kiteCampaign = preset('L3-default'); kiteCampaign.seed = seed; kiteCampaign.settings.quality = tier;
         let kitingComplete = () => false;
         const kiteWorld = await loadLevel('L3', seed, kiteCampaign, 0, {
-          quality: tier, beforeBegin: value => { kitingComplete = installKitingPolicy(value, kiting, 'L3'); },
+          quality: tier, beforeBegin: value => { kitingComplete = installKitingPolicy(value, kiting, 'L3', process.env.MI_THREAT_KITING_STYLE === 'circles' ? 'circles' : 'retreat'); },
         });
         try {
           // This disposable route contributes only the kiting receipt.

@@ -9,6 +9,7 @@ import type { EntitySnapshot, GameEvent } from '../../src/sim/world/types';
 import { clickable } from '../../src/input/ClickPick';
 import { l1v2 } from '../../src/data/l1v2';
 import { l3 } from '../../src/data/l3';
+import { megaAlpha } from '../../src/data/megaAlpha';
 import { alphaTypeFor, alphaTypes } from '../../src/data/alphaTypes';
 import { PropSystem } from '../../src/sim/interact/PropSystem';
 import { damageAmount } from '../../src/sim/combat/Damage';
@@ -42,8 +43,14 @@ async function alphaTypeContracts() {
     expect(alphaTypes.armoured.moves).toContain('alpha.shield-bash');
     for (const [type, definition] of Object.entries(alphaTypes)) for (const move of definition.moves) {
       const moveWorld = await arena(), alpha = moveWorld.entities.get(moveWorld.infected!.spawn('infected.alpha', { x: 8, z: 0 }, { alphaType: type as keyof typeof alphaTypes, state: 'chase' }))!;
-      const target = { id: 1, x: 0, z: 0 }, area = { x: 8, z: 0, radius: 2, dx: -1, dz: 0 };
+      const player = moveWorld.entities.get(1)!;
+      Object.assign(player.survivor!.velocity, { x: 3, z: 1.5 });
+      const target = { id: 1, x: player.transform.x, z: player.transform.z }, area = { x: 8, z: 0, radius: 2, dx: -1, dz: 0 };
       expect(moveWorld.infected!.startSpecial(alpha.id, move, target, area), `${type}.${move}`).toBe(true);
+      const locked = { id: 1, x: target.x + 3 * infectedSpecialMoves[move].windup / 60, z: target.z + 1.5 * infectedSpecialMoves[move].windup / 60 };
+      expect(alpha.infected!.specialAttack!.target, `${type}.${move}: predicts the moving target`).toEqual(locked);
+      target.x += 10; player.survivor!.velocity.x = -3;
+      expect(alpha.infected!.specialAttack!.target, `${type}.${move}: target stays locked`).toEqual(locked);
       if (move === 'alpha.roar' || move === 'alpha.grab-human') expect(alpha.infected!.specialAttack!.area.radius).toBe(move === 'alpha.roar' ? 8 : 2.5);
       expect(moveWorld.infected!.startSpecial(alpha.id, move, target, area), `${type}.${move}: overlap`).toBe(false);
       expect(moveWorld.events.events().some(event => event.type === 'telegraph' && event.sourceId === alpha.id && event.special === move), `${type}.${move}`).toBe(true);
@@ -285,8 +292,38 @@ test('every human and animal role validates and spawns with its catalog health a
       expect(cue).toMatchObject({ target: { id: 1 }, duration: .35 });
       step(w, 59);
       const damage = w.events.events().filter(event => event.type === 'combat.hit' && event.targetId === 1 && event.amount > 0);
-      expect(damage.length > 0).toBe(!moving);
+      expect(damage.length > 0, 'an out-of-reach runner can still be outrun').toBe(!moving);
+      if (!moving) expect(damage[0]).toMatchObject({ amount: 10 });
     }
+    const close = await arena(1, false); close.scenario = 'L2';
+    const reaching = spawn(close, 'runner', 1.3);
+    close.setInput({ move: { x: -1, z: 0 } }); step(close, 20);
+    expect(close.events.events().some(event => event.type === 'combat.hit' && event.sourceId === reaching.id), 'windup stays readable').toBe(false);
+    step(close, 40);
+    const graze = close.events.events().find(event => event.type === 'combat.hit' && event.sourceId === reaching.id && event.amount > 0);
+    expect(graze, 'movement connects with a glancing hit').toMatchObject({ amount: 1 });
+    expect(reaching.infected!.cooldown, 'a moving graze gives this attacker a two-second recovery').toBeGreaterThanOrEqual(graze!.tick + 120);
+    const planted = await arena(1, false); planted.scenario = 'L2';
+    const fullContact = spawn(planted, 'runner', 1.3); step(planted, 60);
+    expect(planted.events.events().find(event => event.type === 'combat.hit' && event.sourceId === fullContact.id && event.amount > 0), 'a planted target still takes the authored wound').toMatchObject({ amount: 10 });
+
+    const late = await arena(1, false); late.scenario = 'L6';
+    const unchanged = spawn(late, 'runner', 1.3);
+    late.setInput({ move: { x: -1, z: 0 } }); step(late, 60);
+    expect(late.events.events().find(event => event.type === 'combat.hit' && event.sourceId === unchanged.id && event.amount > 0), 'later campaigns retain their authored moving damage').toMatchObject({ amount: 10 });
+
+    const closing = await arena(1, false); closing.scenario = 'L2';
+    const pursuer = spawn(closing, 'runner', 8);
+    let warningDistance = 0;
+    closing.events.on('telegraph', event => {
+      if (event.type === 'telegraph' && event.sourceId === pursuer.id) {
+        const player = closing.entities.get(1)!.transform;
+        warningDistance = Math.hypot(pursuer.transform.x - player.x, pursuer.transform.z);
+        expect(Math.hypot(event.target!.x - player.x, event.target!.z - player.z), 'ordinary lunge lead is bounded').toBeLessThanOrEqual(1.600001);
+      }
+    });
+    for (let i = 0; i < 240 && !warningDistance; i++) { closing.setInput({ move: { x: -1, z: 0 }, walk: true }); closing.update(); }
+    expect(warningDistance, 'a closing pursuer must warn before entering the old contact-only start ring').toBeGreaterThan(l1v2.infected.lungeRangeM);
   }
 
   {
@@ -339,6 +376,30 @@ test('every human and animal role validates and spawns with its catalog health a
     expect(contacts[i].distance, 'actual bite reach').toBeLessThanOrEqual(2);
     expect(contacts[i].amount, 'unarmored bite damage').toBe(10);
     if (i) expect(contacts[i].tick - contacts[i - 1].tick, 'bite cooldown').toBeGreaterThanOrEqual(120);
+  }
+
+  // Shared attack families must connect with actual running input. A cue or
+  // attempted attack is insufficient: require accepted damage while moving.
+  for (const role of [...infectedDefinitions.filter(def => def.special !== 'scream').map(def => def.id.slice(9)), 'mega-alpha']) {
+    const w = await arena(1, false), player = w.entities.get(1)!;
+    player.health.current = player.health.max = 10_000;
+    const attacker = spawn(w, role === 'mega-alpha' ? 'alpha' : role, 1.3);
+    attacker.infected!.hidden = false; attacker.infected!.perched = false;
+    if (role === 'mega-alpha') { attacker.infected!.pursuit = true; attacker.infected!.speed = megaAlpha.cruiseMs; }
+    let movingHits = 0, pendingHits = 0;
+    w.events.on('infected.attack', event => {
+      if (event.type === 'infected.attack' && event.sourceId === attacker.id && event.targetId === 1 && event.amount > 0) pendingHits++;
+    });
+    for (let i = 0; i < 600; i++) {
+      const dx = player.transform.x + 3, dz = player.transform.z, radius = Math.hypot(dx, dz), correction = (3 - radius) * 2;
+      const x = -dz + dx * correction, z = dx + dz * correction, length = Math.hypot(x, z);
+      const before = { x: player.transform.x, z: player.transform.z };
+      w.setInput({ move: { x: x / length, z: z / length } }); w.update();
+      if (Math.hypot(player.transform.x - before.x, player.transform.z - before.z) * 60 > .2) movingHits += pendingHits;
+      pendingHits = 0;
+    }
+    expect(movingHits, `${role}: a running circle cannot suppress every attack`).toBeGreaterThan(0);
+    w.dispose(); worlds.pop();
   }
 });
 

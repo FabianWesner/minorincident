@@ -1,6 +1,8 @@
 // Engine core: the fixed-step clock, event bus, seeded RNG, service lifecycle and spatial hash
 // sit under every system and every level. A change here shifts the whole simulation.
-import { expect, test } from 'vitest';
+import { expect, test, vi } from 'vitest';
+import { AudioGraph } from '../../src/audio/AudioGraph';
+import { audioCues } from '../../src/data/audioCues';
 import { Clock } from '../../src/core/Clock';
 import { EventBus } from '../../src/core/EventBus';
 import { Rng } from '../../src/core/Rng';
@@ -51,7 +53,7 @@ test('event bus: priority order, idempotent unsubscribe, 10k ring and snapshot i
   expect(bus.events()).toEqual([]); expect(bus.listenerCount).toBe(0);
 });
 
-test('rng streams are seeded per name; services init/update in order and reset/dispose in reverse', async () => {
+test('rng streams are seeded per name; services respect lifecycle order and audio rejects recurring background noise', async () => {
   const a = new Rng(1, 'fixture'), b = new Rng(1, 'fixture'), other = new Rng(1, 'ai');
   expect(Array.from({ length: 100 }, () => a.next())).toEqual(Array.from({ length: 100 }, () => b.next()));
   expect(other.next()).not.toBe(new Rng(1, 'fixture').next());
@@ -60,6 +62,24 @@ test('rng streams are seeded per name; services init/update in order and reset/d
   for (const name of ['a', 'b']) services.add({ init: () => { calls.push(`init ${name}`); }, update: () => { calls.push(`update ${name}`); }, reset: () => { calls.push(`reset ${name}`); }, dispose: () => { calls.push(`dispose ${name}`); } });
   await services.init(); services.update(); services.reset(); services.dispose();
   expect(calls).toEqual(['init a', 'init b', 'update a', 'update b', 'reset b', 'reset a', 'dispose b', 'dispose a']);
+
+  // Web Audio is a device boundary: hold voice admission closed and check that
+  // unwanted background noise is rejected before allocating any node or voice.
+  const canAdd = vi.fn(() => false), graph = { limiter: { canAdd } } as unknown as AudioGraph;
+  const play = (id: string, loop?: boolean) => AudioGraph.prototype.play.call(graph, audioCues[id], {} as AudioBuffer, { loop });
+  const beds = Object.values(audioCues).filter(cue => cue.loop && cue.bus === 'ambience');
+  expect(beds.length).toBeGreaterThan(10);
+  for (const cue of beds) expect(play(cue.id), cue.id).toBeNull();
+  for (const id of ['vehicle.fire', 'vehicle.sputter', 'weather.gust', 'ambient.sprinkler', 'ambient.lawnmower', 'ambient.basketball', 'ambient.news', 'ambient.megaphone', 'ambient.radio', 'ambient.glass', 'ambient.power', 'ambient.automatic', 'ambient.collapse', 'ambient.debris'])
+    expect(play(id), id).toBeNull();
+  expect(play('ambient.gunshot', true)).toBeNull();
+  expect(canAdd).not.toHaveBeenCalled();
+  for (const id of ['ambient.gunshot', 'weather.thunder', 'action.weapon.handgun', 'telegraph.runner', 'weapon.minigun-whir', 'vehicle.engine-low', 'generator.idle']) {
+    play(id);
+    expect(canAdd, id).toHaveBeenCalledTimes(1);
+    canAdd.mockClear();
+  }
+
 });
 
 test('spatial hash: negative cells, moves, stable insertion order, no stale ids, conservative contact bounds', () => {

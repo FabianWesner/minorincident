@@ -80,6 +80,7 @@ export class Npcs {
     // while the courier moved nearly twenty metres away.
     const routeFollower = !!(e.civilian?.ally?.follow || e.companion) && !!this.world.missions?.def.l3
       || this.world.scenario === 'L5' && !!e.companion
+      || this.world.scenario === 'L9' && !!e.companion
       || this.world.scenario === 'L7' && (!!e.companion || e.civilian?.survivor?.mode === 'follow');
     const cell = routeFollower ? nav.nearestCell(e.transform.x, e.transform.z, footprint) : -1;
     const flowNext = routeFollower && distance > 30 ? nav.flowNext(cell) : -1;

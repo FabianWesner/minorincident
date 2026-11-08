@@ -736,6 +736,12 @@ test('materials: palette program keys match Three through weather and node chang
     const field = new LightField();
     try {
       field.strength.value = 1; field.push(moving); expect(field.heroAt(focus.x, focus.z)).toBe(moving);
+      const drivingHeadlight = { ...moving, id: 'vehicle-3-light:headL', drivenHeadlight: true, x: 0, z: 0, aimX: 6, radius: 3, stretch: 3 };
+      field.push(drivingHeadlight);
+      expect(field.heroStrength(drivingHeadlight, 15, 0)).toBe(0);
+      expect(field.heroAt(15, 0)).toBe(drivingHeadlight);
+      drivingHeadlight.on = false; expect(field.heroAt(15, 0)).toBeNull();
+      drivingHeadlight.on = true;
       const beam = { ...moving, x: 0, z: 0, aimX: 6, radius: 3, stretch: 3 };
       expect(field.heroStrength(beam, 0, 0)).toBeGreaterThan(.02);
       expect(field.heroStrength({ ...beam, stretch: 1 }, 0, 0)).toBe(0);

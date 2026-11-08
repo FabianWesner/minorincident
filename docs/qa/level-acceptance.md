@@ -176,7 +176,7 @@ Feel: "we actually escaped" → "everyone is fighting, and it is still not enoug
 | L4-06 | hold | **Horde present:** first breach into the plaza at ~45 s (level clock, ±15 s) with ≥ 60 alive at once (~74 at the PO-accepted 10-27 level) (PO 10-27 accepted level); alive in the plaza ≥ 40 from +45 s to the line break (tune). PO: "Almost no fight action. Just two alphas, instead of the Zombie horede". | PO 10-27, Q-297 | S |
 | L4-07 | hold | combat: reachable ≥ 90 % (no clumps locked at sheds/walls); passive first attack ≤ 10 s (measured 4.87 s); passive attacks ≥ 6/min (tune). PO: "they are not attacking me" / "The Zombies are somehow locked there". Clarification: score reachability from the first physical perimeter breach/gate opening onward; every infected must have a legal ground, vault, or attack-through-barrier path once the perimeter permits it, with no permanent geometry trap. | Q-279, Q-286 | S |
 | L4-08 | hold | Alphas **8 high / 6 low**, staggered from ≥ 6 directions, ≥ 3 reach a line; no Alpha "appears out of nothing". | E22-AC12, Q-160 | S, O |
-| L4-09 | hold | Lines fall on beats: line 1 at 50–62 s, nests 110–124 s, armour 170–182 s after the turn; "Fall back!" 8 s after the third; camera beats ≤ 2 s, skippable after 0.5 s. | E22-AC13, l4.director | S |
+| L4-09 | hold | Lines fall on beats: line 1 at 50–62 s, nests 110–124 s, armour 170–182 s after the turn; "Fall back!" 8 s after the third; opening-fight camera stays on the courier through breach, line, tank and Alpha reveals; radio/HUD carries the reveal information. | E22-AC13, l4.director, PO 2026-11-08 | S |
 | L4-10 | hold | Spectacle: ≥ 2 HMGs fire, tank enters at +22 s and fires every 8–12 s (never within 15 m of player/ally), never through the barrier wall; helicopter orbits and withdraws. | E22-AC11, P1-116 | S, O |
 | L4-11 | hold | Riot infected: frontal MG hits visibly chip HP + recoil at every range incl. point blank; frontal MG kill ≤ 6 s (measured 3.7 s), flank ≤ 2 s; health bar always shown; one riot cop alone does not down a full-HP player that keeps firing (tune). PO: "I feel I have zero effect when I shoot them." | Q-281, Q-285 | S, P |
 | L4-12 | hold | Horde mix: ≥ 4 distinct infected looks in every 20-infected sample (not only suits). | Q-194 | O |
@@ -185,7 +185,7 @@ Feel: "we actually escaped" → "everyone is fighting, and it is still not enoug
 | L4-15 | hide | Camera never snaps to top-down; sandbag/pallet structures are textured, solid and readable (no void beyond). | PO #25, Q-282, Q-283 | O |
 | L4-16 | bar/wait | Only the player (+ corgi) enters; door barred in 1.0 s; battle audible above ≥ 6 s (low-pass); L5 loads in the same basement. | E22-AC15 | S |
 | L4-17 | all | Corpse piles ≤ ~1 m, no stretched limbs; player never drawn under a corpse. | Q-287, Q-286, Q-195 | O |
-| L4-18 | all | Frames: `l4-plaza-safe` clean and alive; war frames read "huge mixed war"; player readable in the battle. | E22-AC19 | O, P |
+| L4-18 | all | Frames: `l4-plaza-safe` clean and alive; war frames read "huge mixed war"; player readable in the battle; parked cargo truck clears the east perimeter wall, fence and sign by ≥ 0.5 m, including its authored physics hull (PO 2026-11-08). | E22-AC19, `tests/qa/invariants/contract.test.ts` scripted convoy route/stop OBB check | O, P, S |
 
 ## L5 · Aftermath (D-FAIR W5, sunset, +shotgun)
 
@@ -296,25 +296,38 @@ Feel: "false sanctuary → internal mass outbreak with infected animals; fight t
 
 ## L9 · The Crossing (D-CROSSING, dry night, driving the APC)
 
-Feel: "open-country drive: smash through or steer around; the APC survives until the forced crash". Competent **2–5 min** (tune; measured 128 s), deaths **0**.
+Feel: "open-country drive: read the road, choose a route, shake off boarders, and reach the evacuation bridge before the horde". Competent **6–8 min** (PO 2026-11-08), deaths **0–1** (tune).
 
 | Step | Objective text | Player does |
 |---|---|---|
 | `approach` | Drive toward the city | drives road / countryside / dry shortcut |
-| `reach-outskirts` | Get clear of the wreck | crash at the collapsed bridge, crawls away |
+| `route` | Choose a crossing | drives through the authored road / countryside / shortcut set piece |
+| `pit-stop` | Repair under attack (optional) | holds E in the gas-station bay while defending from the hatch |
+| `evacuation` | Get the survivors to the bridgehead | pulls into the timed gate; passengers run to the trucks, Sam stays aboard |
+| `bridge` | Shake off the Mega Alpha | drives the bridge deck as the horde and Mega board |
+| `reach-outskirts` | Crawl clear of the wreck | survives the moving bridge collapse, loses the arsenal, crawls out with the axe |
 
 | ID | Step | Criterion (expected value) | Source | Check |
 |---|---|---|---|---|
 | L9-01 | approach | Driving control ≤ 0.5 s after load; roster + durability carried; corgi never inside the hull; rider's legs inside the cab. | E31-AC02, Q-137, Q-316 | S, O |
 | L9-02 | approach | Groups on routes: road 2 × 6, countryside 3 × 6, shortcut 6 × 8 incl. 2 Alphas; each avoidable by a detour ≥ 20 m. | l9Groups, E31-AC05 | S |
 | L9-03 | approach | Threat present: on every route ≥ 1 group or wanderer in the camera frame per 60 s of driving (tune; 11-01 strip showed 0 in frame for 30 s). | orch. | S, O |
-| L9-04 | approach | Every contact onset −10 durability (no per-tick billing); stopped/surrounded attacks 10 dmg, ≥ 0.6 s windup; safe route ends with more HP than the shortcut. | E31-AC06/07/11 | S |
+| L9-04 | approach | PO 2026-11-08: regular contact onsets cost 10 durability, brute/armored/riot 40, elephant 80, bloated 60 (no per-tick billing); stopped/surrounded attacks cost 10, ≥ 0.6 s windup; safe driving preserves more durability. | l9-l10-concept §core verbs; E31-AC06/07/11 | S |
 | L9-05 | approach | **0 HP never breaks down:** speed 60 % ± 2 %, heavy smoke, still drivable. | PO 10-13, E31-AC09 | S |
 | | | **Conflict:** PO 10-11 / epic-31 breakdown + on-foot → PO 10-13 "survives until the final scripted crash" wins. | | |
 | L9-06 | approach | APC cannot wedge off-road before the bridge; no giant flat arrow over it; HUD bar matches durability. | Q-139, Q-146, E31-AC08 | S, O |
-| L9-07 | reach-outskirts | Crash exactly once (full or 0 HP); APC falls whole (no floating wheels/vanishing hull); "Get clear of the wreck" appears only after the crash. | E31-AC15, Q-136, Q-273 | S, O |
+| L9-07 | reach-outskirts | Crash exactly once (full or 0 HP); APC falls whole (no floating wheels/vanishing hull); the crawl objective appears before the player-controlled crawl. | E31-AC15, Q-136, Q-273 | S, O |
 | L9-08 | reach-outskirts | L10 starts on foot with exactly [axe], ordinary health, corgi safe. | E31-AC15 | S |
 | L9-09 | all | Terrain seams ≤ 2 cm, ≤ 25 / 9 detailed chunks, no input freeze on streaming. | E31-AC12/13 | S |
+| L9-10 | approach | PO 2026-11-08: moving mixed infected (travellers, soldiers, walkers, runners, dogs and shortcut zoo infected) are admitted ≥ 100 m from the APC, outside the zoom-0.5 frame, and never first appear idle in that frame. | l9-l10-concept §shared rule; PO 2026-11-08 | S |
+| L9-11 | approach | PO 2026-11-08: hull boarders use a 3 s climb, then damage the courier for 10 HP at 1 s intervals; sharp steering, scraping a solid edge, or a handbrake turn shakes them off. Low durability opens two extra hull slots. | l9-l10-concept §L9-A; PO 2026-11-08 | S, O |
+| L9-12 | route | PO 2026-11-08: light barricades visibly break/push aside and solid concrete/wreck barriers stop the APC; road offers tanker + overpass choice, countryside has a closing fire line, shortcut has a zebra stampede and ditch jump. Each route resolves to the same bridgehead. | l9-l10-concept §driving challenges; PO 2026-11-08 | S, O |
+| L9-13 | pit-stop | PO 2026-11-08: repair only progresses while E is held in the marked bay, adds up to 300 durability over 20 s, pauses on release, and attracts a defendable hatch fight using the current weapon. A healthy APC can skip it. | l9-l10-concept §L9 sequence; PO 2026-11-08 | S |
+| L9-14 | route | PO 2026-11-08: an infected school bus pursues the APC, rams for 40 durability and spills infected when slowed; stopping it against a wreck/tanker ends the chase. | l9-l10-concept §driving challenges; PO 2026-11-08 | S, O |
+| L9-15 | evacuation | PO 2026-11-08: the bridgehead gate closes after 60 s; late arrival can break the side fence at a durability cost. Living passengers visibly disembark and reach the trucks; Sam and the corgi remain with the courier. | docs/design/story-script.md §L9; l9-l10-concept §L9 sequence; PO 2026-11-08 | S, O |
+| L9-16 | bridge | PO 2026-11-08: Mega Alpha boards mid-span and cannot be shaken off; the bridge collapses section by section behind the moving APC, then tilts under the APC's actual heading/velocity. No cross-map trigger or positional lerp. | l9-l10-concept §L9 ending; PO 2026-11-08 | S, O |
+| L9-17 | reach-outskirts | PO 2026-11-08: rear weapon rack and duffel visibly fall into the river; objective text appears before the player-controlled 5–8 s crawl; axe is visible on her back and all other weapons are absent. Wreck explodes after she clears it. | docs/design/story-script.md §L9; PO 2026-11-08 | S, O |
+| L9-18 | handover | PO 2026-11-08: evacuation passengers are already accounted for at the bridgehead (no off-screen shelter); L10 begins with the courier alone except the safe corgi and axe, while Sam's radio establishes the research-site trail. | docs/design/story-script.md §L10; PO 2026-11-08 | S |
 
 ## L10 · The Cure (D-CURE, farms → restricted zone → safe hangar → dispersal)
 
@@ -371,7 +384,7 @@ Feel: "open-country drive: smash through or steer around; the APC survives until
 | L6 | 14 |
 | L7 | 12 |
 | L8 | 11 |
-| L9 | 9 |
+| L9 | 18 |
 | L10 | 15 |
 
 ## How to use

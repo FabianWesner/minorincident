@@ -1,0 +1,48 @@
+{
+  "scope": "QA evaluator only; canonical native receipts remain unchanged",
+  "sourceHash": "115f672aaa058f298b9c4a4477360000f354bfe3cb4ebe4e4dc1d1562b69f6c3",
+  "evaluatorSha256": "c09b826e42cd92052854816222d9bce03a41689703fda081724e792fcf04a5a7",
+  "passed": true,
+  "rows": [
+    {
+      "name": "native low, one completed attempt",
+      "expected": "PASS",
+      "actual": "PASS"
+    },
+    {
+      "name": "native high, completed after death retries",
+      "expected": "PASS",
+      "actual": "PASS"
+    },
+    {
+      "name": "missed eligible increment",
+      "expected": "FAIL",
+      "actual": "FAIL"
+    },
+    {
+      "name": "extra increment",
+      "expected": "FAIL",
+      "actual": "FAIL"
+    },
+    {
+      "name": "invalid outside/dead increment",
+      "expected": "FAIL",
+      "actual": "FAIL"
+    },
+    {
+      "name": "charge exceeds cap",
+      "expected": "FAIL",
+      "actual": "FAIL"
+    },
+    {
+      "name": "insufficient eligible time",
+      "expected": "FAIL",
+      "actual": "FAIL"
+    },
+    {
+      "name": "unfinished charge is unqualified",
+      "expected": "NOT CHECKED",
+      "actual": "NOT CHECKED"
+    }
+  ]
+}

@@ -8,7 +8,7 @@ import { L4HoldCensus } from './l4-hold';
 import { l3SharedSeeds, type L3SharedSeed } from './l3SharedSeeds';
 import { runSeed } from './followerPaceSeeds';
 import type { FollowerPaceSeed } from './followerPace';
-import { installKitingPolicy, finishKitingReceipt, type KitingReceipt } from './kiting';
+import { installKitingPolicy, finishKitingReceipt, type KitingReceipt, type KitingStyle } from './kiting';
 
 export interface StageJob {
   id: string; level: RunnerLevel; kind: 'native' | 'follower' | 'l3' | 'high-hold'; seed: number; passive: boolean;
@@ -23,6 +23,7 @@ export interface StageResult {
   native?: NativeStage; l3?: L3SharedSeed; follower?: FollowerPaceSeed; highHold?: ReturnType<L4HoldCensus['finish']>;
 }
 export const stageId = (level: RunnerLevel, passive: boolean, seed = 1): string => `${level}/${passive ? 'passive' : 'skilled'}/${seed}`;
+const kitingStyle: KitingStyle = process.env.MI_THREAT_KITING_STYLE === 'circles' ? 'circles' : 'retreat';
 const campaignFor = (level: RunnerLevel, seed: number) => {
   const campaign = level === 'L1' ? newCampaign('female', seed) : preset(`${level}-default` as ProgressionPreset);
   campaign.seed = seed; campaign.settings.quality = 'low'; return campaign;
@@ -53,7 +54,7 @@ async function execute(job: StageJob): Promise<StageResult> {
         native.kiting = kiting;
         let kitingComplete = () => false;
         try { await runLevel(job.level, 'complete', job.seed, undefined, 'auto', campaignFor(job.level, job.seed), undefined, 0, {
-          quality: 'low', beforeBegin: world => { kitingComplete = installKitingPolicy(world, kiting, job.level); },
+          quality: 'low', beforeBegin: world => { kitingComplete = installKitingPolicy(world, kiting, job.level, kitingStyle); },
           // Cinematic inputs can repeat at one sim tick (L4 has 1,227 inputs
           // in its 1,200-tick window). Preserve the whole clock, not a frame cap.
           stopWhen: () => kitingComplete(),

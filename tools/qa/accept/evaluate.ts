@@ -427,12 +427,30 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
     }
     case 'L9': {
       const hits = observation.ledger.filter(event => event.type === 'vehicle.durability-hit');
-      add('L9-04', 'actual contact/attack durability transactions', hits, 'after = max(0, before−10) for contact and attack', hits.length ? hits.every(event => event.type !== 'vehicle.durability-hit' || event.source === 'obstacle' || event.after === Math.max(0, event.before - 10)) : undefined);
+      const archetypes = new Map(observation.final.census.map(e => [e.id, e.archetype]));
+      add('L9-04', 'actual contact/attack durability transactions', hits, 'PO 2026-11-08: attack/regular contact 10; heavy contact 40; elephant 80; bloated 60; each clamped at zero', hits.length ? hits.every(event => {
+        if (event.type !== 'vehicle.durability-hit' || event.source === 'obstacle') return true;
+        const archetype = archetypes.get(event.targetId), heavy = ['infected.brute', 'infected.armored', 'infected.riot'].includes(archetype ?? '');
+        const amount = event.source === 'attack' ? 10 : archetype === 'infected.elephant' ? 80 : archetype === 'infected.bloated' ? 60 : heavy ? 40 : 10;
+        return event.after === Math.max(0, event.before - amount);
+      }) : undefined);
       const signals = observation.ledger.filter(event => event.type === 'mission.signal');
       number('L9-07', 'crash impact count on ordinary route', signals.filter(event => event.type === 'mission.signal' && event.name === 'l9.crash-impact').length, 1, 1);
       const wreckObjective = observation.ledger.find(event => event.type === 'objective.started' && event.id === 'reach-outskirts'), impact = signals.find(event => event.type === 'mission.signal' && event.name === 'l9.crash-impact');
       add('L9-07', 'wreck objective starts after crash impact', { objectiveTick: wreckObjective?.tick, impactTick: impact?.tick }, 'objectiveTick ≥ impactTick', wreckObjective && impact ? wreckObjective.tick >= impact.tick : undefined);
       number('L9-09', 'detailed resident chunk peak', observation.maxDetailedChunks, 0, low ? 9 : 25);
+      const driving = final.l9?.driving;
+      const signalTick = (name: string) => signals.find(event => event.type === 'mission.signal' && event.name === `l9.${name}`)?.tick;
+      if (competent && receipt.run?.completed) {
+        add('L9-14', 'ordinary route activates native school-bus pursuit', { bus: driving?.busId, tick: signalTick('bus-chase') }, 'one existing bus enters pursuit; ram/spill/collision termination require separate coverage', !!driving?.busId && signalTick('bus-chase') !== undefined);
+        const evacuated = signals.filter(event => event.type === 'mission.signal' && event.name === 'l9.survivor-evacuated').map(event => event.type === 'mission.signal' ? event.actorId : undefined);
+        add('L9-15', 'completed evacuation ledger matches actual truck arrival signals', { evacuated, ledger: driving?.evacuated, sam: driving?.samId, completeAt: signalTick('evacuation-complete') }, 'all ledger IDs have one truck arrival; companion excluded; visual transfer and late fence remain open', !!driving?.evacuationDone && evacuated.length === driving.evacuated.length && driving.evacuated.every(id => id !== driving.samId && evacuated.filter(other => other === id).length === 1));
+        const mega = signalTick('mega-boarded'), collapse = signalTick('bridge-collapse'), impact = signalTick('crash-impact');
+        add('L9-16', 'Mega landing precedes deck collapse and impact', { mega, collapse, impact }, 'landing < collapse < impact; physical motion and span readability remain open', mega !== undefined && collapse !== undefined && impact !== undefined && mega < collapse && collapse < impact);
+        const weapons = [...new Set([...(final.racks?.LEFT ?? []), ...(final.racks?.RIGHT ?? [])])];
+        add('L9-17', 'completed crossing retains only the axe in carried racks', { weapons, lostAt: signalTick('weapons-lost'), clearAt: signalTick('crawl-finished') }, 'exactly [axe], with loss before clearance; rendered rack and input causality remain open', weapons.length === 1 && weapons[0] === 'weapon.fire-axe' && (signalTick('weapons-lost') ?? Infinity) < (signalTick('crawl-finished') ?? -Infinity));
+      }
+      add('L9-13', 'ordinary optional repair stays within its finite tick budget', driving?.repairTicks ?? null, '1..1200 held ticks; zero means the optional bay was skipped', driving?.repairTicks ? driving.repairTicks <= 1200 : undefined);
       break;
     }
     case 'L10': {
@@ -459,7 +477,10 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
       // A moving competent player can clear arrivals before reaching the crowd
       // cap. Use the separately labelled survival-protected stationary policy for peak coverage.
       number('L10-11', 'bounded final assault crowd peak', !competent && state.states['charge-active'] ? story?.assaultPeak : null, 1, low ? 14 : 22);
-      add('L10-10', 'actual eligible charge ticks and increments', observation.charge, '3600 eligible ticks; 3600 increments; no invalid increment', observation.charge.maximum === 3600 ? observation.charge.eligibleTicks === 3600 && observation.charge.incrementTicks === 3600 && observation.charge.invalidIncrements === 0 : undefined);
+      // Observer totals span retries; E32 resets the device counter on death.
+      // Every eligible tick must still advance once, and a completed charge caps at 3600.
+      const charge = observation.charge;
+      add('L10-10', 'actual eligible charge ticks and increments', charge, 'charge reaches3600; one increment per eligible tick across attempts; no invalid increment', charge.maximum < 3600 ? undefined : charge.maximum === 3600 && charge.eligibleTicks >= 3600 && charge.incrementTicks === charge.eligibleTicks && charge.invalidIncrements === 0);
       add('L10-13', 'release transaction observed prerequisites', observation.release, 'charge3600 + installed + Mega dead + player at console', observation.release ? observation.release.charge === 3600 && observation.release.installed && observation.release.dead && observation.release.distance <= 2.5 : undefined);
       const front = state.cureFront;
       add('L10-14', 'native cure radius speed', front ? { elapsed: front.elapsed, radius: front.radius } : null, '10 m/s playable; accelerated journey montage', front && front.elapsed > 0 ? front.radius === cureRadius(front.elapsed) : undefined);
@@ -578,7 +599,7 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
   ['L4-04', ['complete', 'stationary'].flatMap(policy => ['soldiers at turn', 'civilian census at turn excluding soldiers', 'actual armed civilian share at turn', 'every war tick observed from turn through line break', 'war living infected plus reserved slots and pending turns', 'war living character identity census'].map(clause => ({ clause, policy })))],
   ['L4-09', [
     ...['line1 actual beat after first turn', 'nests actual beat after first turn', 'armor actual beat after first turn', 'fallback after third line break'].map(clause => ({ clause, policy: 'complete' })),
-    { clause: 'native camera beat duration and half-second input gate', policy: 'controlled-fixture' },
+    { clause: 'opening-fight has no gameplay camera takeover', policy: 'controlled-fixture' },
   ]],
   ['L6-05', [
     ...['complete', 'stationary'].flatMap(policy => ['combat hard rule on actual player windups', 'real player/group windups per minute', 'minimum bounded-path reachable share within30m (path≤2.5×direct)'].map(clause => ({ clause, policy }))),

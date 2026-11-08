@@ -230,6 +230,7 @@ export class VehicleView extends Group {
       const decay = car.entity.vehicle!.decay;
       if (!record || record.lod !== lod || record.decay !== decay) { if (!this.pending.has(id)) { this.pending.set(id, this.addCar(id).finally(() => { this.pending.delete(id); })); } record = this.records.get(id); if (!record) continue; }
       const body = car.physics, p = body.transform, prev = body.previous, state = car.entity.vehicle!;
+      record.parent.visible = !car.entity.hidden;
       if (body.body.isKinematic()) {
         const feel = record.feel, elapsed = (this.world.tick - feel.tick) / 60;
         if (elapsed > 0) { feel.accel = (state.speed - feel.speed) / elapsed; feel.speed = state.speed; feel.tick = this.world.tick; }
@@ -412,7 +413,7 @@ export class VehicleView extends Group {
         const light = footprint({ ...a, ...(level ? { color: 'light_led_white' as const } : {}), position: lampPosition.toArray(), direction: lampDirection.toArray() }, this.world.districts?.groundHeight(lampPosition.x, lampPosition.z) ?? 0, id * 3.1);
         // A moving driven headlight can promote the single nearby shadow map.
         // Stable ids let Lighting follow its position without counting every frame as a new promotion.
-        if (driven && a.type === 'spot') { light.hero = true; light.id = `vehicle-${id}-${a.name}`; }
+        if (driven && a.type === 'spot') { light.hero = true; light.drivenHeadlight = true; light.id = `vehicle-${id}-${a.name}`; }
         if (level) { light.r *= .6; light.g *= .6; light.b *= .6; }
         if (/brake/i.test(a.name) && !car.entity.vehicle!.braking) { light.r *= .3; light.g *= .3; light.b *= .3; }
         field.push(light);

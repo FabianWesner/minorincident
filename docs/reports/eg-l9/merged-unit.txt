@@ -1,0 +1,90 @@
+
+> test
+> node tools/qa/test-budget.mjs --name test --max-seconds 240 -- node node_modules/vitest/vitest.mjs run --project default --configLoader runner --maxWorkers=1
+
+[test-budget] 150/150 test cases ({"vitest":129,"e2e":9,"invariantsBrowser":12}), 43/45 files
+
+ RUN  v5.0.3 /srv/mi/jobs/eg-l9-c35cc7-78543-1794169749
+
+ ✓  default  tests/shared/render-contracts.test.ts (14 tests) 1797ms
+   ✓ corpse pages: bodies persist past the old cap, bounds stay conservative, culling restores identity/pose/tint, normals survive vec4 padding 1262ms
+ ✓  default  tests/engine/l4-contact.test.ts (1 test) 13171ms
+   ✓ L4: every contact archetype interrupts approach/lure and attacks within 3 s; soldiers remain biteable and corgi protected 13169ms
+ ✓  default  tests/engine/infected-ai.test.ts (5 tests) 3820ms
+   ✓ every human and animal role validates and spawns with its catalog health and speed; every attack is telegraphed 1393ms
+   ✓ perception: sight cone, facing-independent gunshots, silent melee misses, bounded kill noise, screamer radius 1888ms
+   ✓ melee knocks down for a seeded 10-20 s, respects the L2 recovery pool, then up at full HP; explosives and burns kill for good 339ms
+ ✓  default  tests/engine/missions.test.ts (6 tests) 48748ms
+   ✓ graph timing: parallel tasks join in any order; a timeout fires exactly at 120 s, retry restores the timer, completion cancels it 1213ms
+   ✓ interactions: ring, input and view predicates agree for every interact step of every level 34535ms
+   ✓ interactions: only the open L6 gate the group is heading for offers its prompt 8990ms
+   ✓ checkpoints: death restores objectives, HP, charges and escorts; a boss killed before or after C stays dead 3742ms
+ ✓  default  tests/engine/world-systems.test.ts (5 tests) 16705ms
+   ✓ explosions: every class follows its damage curve, full cover shields, rails take damage, chains are paced and capped, fires burn out 5820ms
+   ✓ look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables match the layout without it, a re-preparation adds none, L9 has none; L10 crossing scenes stay clear and grounded 10572ms
+ ✓  default  tests/engine/combat.test.ts (7 tests) 790ms
+ ✓  default  tests/engine/npcs.test.ts (3 tests) 9927ms
+   ✓ civilians: seeded grab → bite → down → glowing eyes → rising → infected cycle in place; panic flees; a kill during the grab saves 1532ms
+   ✓ escort: shared combat pace, follows through a maze, a 2 s stand revives to 50 %, unattended 20 s down fails the mission 957ms
+   ✓ corgi: warns of an offscreen threat within 18 m with a unit direction 7435ms
+ ✓  default  tests/engine/vehicles.test.ts (2 tests) 14130ms
+   ✓ handling: deterministic scripted drives, speed-dependent steering for every vehicle, braking before reverse, flip recovery 380ms
+   ✓ enter, drive and exit: door dwell, input ownership (no attacks while driving), capsule-safe exit on the free side; bike stand-to-mount needs an approach 13748ms
+stdout | tests/shared/asset-contract.test.ts > the asset validator rejects every contract violation, and every production asset passes it
+prune: Removed types... Accessor (2)
+
+stdout | tests/shared/asset-contract.test.ts > the asset validator rejects every contract violation, and every production asset passes it
+prune: Removed types... Accessor (2)
+
+ ✓  default  tests/shared/asset-contract.test.ts (3 tests) 9364ms
+   ✓ crowd atlas cleanup preserves enclosed eye paint and its authored alpha class 503ms
+   ✓ uniform and civilian faces and yellow bare arms share the per-person skin class 456ms
+   ✓ the asset validator rejects every contract violation, and every production asset passes it 8403ms
+ ✓  default  tests/tools/gate-tools.test.ts (8 tests | 1 skipped) 18237ms
+   ✓ browser pool admission backs off under WindowServer pressure, keeps a one-context floor, recovers only after three cool samples 5725ms
+   ✓ scene gate resume requires identical rows, revision and backend identities 2500ms
+   ✓ scene gate rejects stale, failed, malformed and incomplete child results 3003ms
+   ✓ scene gate rejects invalid arguments and empty selections before running children 5546ms
+   ✓ build-cache publication never leaves an interrupted copy looking complete 1135ms
+stdout | tests/engine/save-progression.test.ts > L1–L10 starts clamp progressed saves and fresh handovers to story weapons, keeping eligible carry-over and selection
+[campaign] selected action weapon.handgun unavailable (not in destination rack); falling back to weapon.fists
+[campaign] selected action weapon.handgun unavailable (not in destination rack); falling back to weapon.bat
+[campaign] selected action weapon.handgun unavailable (not in destination rack); falling back to weapon.fire-axe
+[campaign] selected action weapon.handgun unavailable (not in destination rack); falling back to weapon.fire-axe
+
+stdout | tests/engine/save-progression.test.ts > selection fallback: lost or empty weapons fall back to the best usable owned weapon, never an empty finite gun
+[campaign] selected action weapon.shotgun unavailable (not in destination rack); falling back to weapon.rocket-launcher
+
+stdout | tests/engine/save-progression.test.ts > bare hands are innate: key 1 selects fists without them entering the carried racks
+[campaign] selected action weapon.fists unavailable (not in destination rack); falling back to weapon.rocket-launcher
+
+ ✓  default  tests/engine/save-progression.test.ts (6 tests) 334ms
+ ✓  default  tests/engine/collision.test.ts (4 tests) 1605ms
+   ✓ admission: parked vehicle hulls exclude bodies, coincident spawns separate, a thin wall never admits a body through it 1355ms
+ ✓  default  tests/engine/input.test.ts (5 tests) 44ms
+ ✓  default  tests/engine/navigation.test.ts (4 tests) 20937ms
+   ✓ A*: budgeted search resumes across ticks within its expansion budget; connectivity tells a long route from an enclosed yard 20686ms
+ ✓  default  tests/tools/qa-drivers.test.ts (3 tests) 73ms
+ ✓  default  tests/engine/spawn-director.test.ts (4 tests) 7375ms
+   ✓ a 150-infected migration follows its spline on time and fans out at the goal 1218ms
+   ✓ pooling: spawn/kill cycles reuse prewarmed records, keep every corpse, and refresh borrowed collision radii 5870ms
+ ✓  default  tests/engine/determinism.test.ts (4 tests) 16472ms
+   ✓ render rate does not change the simulation: 600 ticks hash the same at 30, 60 and 144 Hz 390ms
+   ✓ a serialized recording replays the identical state hash at every tick; snapshots are copies; reset frees everything 583ms
+   ✓ real levels replay deterministically: same seed and script give the same hash on L1, L4 and L10 15491ms
+ ✓  default  tests/engine/aim-assist.test.ts (3 tests) 402ms
+   ✓ keyboard fire at all eight facings: Off shoots along the facing, Default lands on the zombie in front 365ms
+ ✓  default  tests/engine/director-pressure.test.ts (3 tests) 994ms
+   ✓ director pressure brings every native role to its human without replacing its combat role 400ms
+   ✓ native routing clears thin doorways and yields failed shared searches 587ms
+ ✓  default  tests/engine/input-log-codec.test.ts (2 tests) 1287ms
+   ✓ input log codec (2)
+     ✓ round-trips every InputFrame field and scheme exactly, with float64 precision and commands at their sample index 444ms
+     ✓ cuts independent chunks under the upload cap, decodes them in order, survives gzip and rejects gaps and garbage 840ms
+ ✓  default  tests/engine/player.test.ts (3 tests) 2356ms
+   ✓ walls: a 72-direction capsule sweep never penetrates the wall ring; sliding keeps 60 % tangential speed; head-on corners slip 2096ms
+Browser reservation reached its 234s batch limit (10-minute maximum including cleanup); split the batch into smaller commands.
+[test-budget] test: 245.1 s (budget 240 s)
+[test-budget] FAIL: test failed (exit 124)
+[test-budget] FAIL: test took 245.1 s, over the 240 s budget
+[test-budget] See docs/qa/test-strategy.md: merge into an existing test or delete one before adding another.

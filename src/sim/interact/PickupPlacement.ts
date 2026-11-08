@@ -1,14 +1,14 @@
 import { worldAssets } from '../../assets/worldDefinitions';
 import { vehicleDef } from '../../data/vehicles';
 import { l2TruckPath } from '../../data/l2';
-import { l4, l4Route, l4RoutePose, l4ConvoyStations } from '../../data/l4';
+import { l4, l4Route, l4RoutePose, l4ConvoyStations, l4ConvoyPose } from '../../data/l4';
 import type { Vec2 } from '../../input/InputFrame';
 import type { SimWorld } from '../world/SimWorld';
 
 export const pickupFootprint = .45;
 interface Hull { x: number; z: number; yaw: number; length: number; width: number }
 const route = l4Route(), stations = l4ConvoyStations(route.length);
-const l4Stops: Hull[] = l4.convoy.vehicles.map((v, i) => ({ ...l4RoutePose(route, stations.start[i] + stations.travel), length: v.len, width: v.wid }));
+const l4Stops: Hull[] = l4.convoy.vehicles.map((v, i) => ({ ...l4ConvoyPose(route, stations.end[i], i, stations.end[i]), length: v.len, width: v.wid }));
 /** Reserve the travel corridor as well as every stop: no pack can appear in a passing wheel. */
 const l4Lane: Hull[] = Array.from({ length: Math.ceil(route.length / 2) + 1 }, (_, i) => ({ ...l4RoutePose(route, Math.min(route.length, i * 2)), length: 3, width: 4 }));
 const truck = vehicleDef('vehicle.fire-engine');

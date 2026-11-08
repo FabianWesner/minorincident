@@ -32,6 +32,7 @@ export class HumanTargets implements HumanTargetQuery {
     this.tick = this.world.tick; this.list.length = 0; this.byId.clear();
     for (const e of this.world.entities.iterate()) {
       if (!isLiveHuman(e) || this.world.missions?.state.l3?.waitingIds?.includes(e.id) || e.id === 1 && this.world.inspectionGhost) continue;
+      if (this.world.missions?.l9?.driving.protectsCrew(e)) continue;
       let target = this.records.get(e);
       if (!target) {
         target = { id: e.id, kind: e.id === 1 ? 'player' : e.civilian?.zooAnimal ? 'animal' : 'civilian', position: { x: e.transform.x, z: e.transform.z }, facing: e.transform.yaw };

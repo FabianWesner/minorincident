@@ -10,6 +10,8 @@ export class LevelTenStory {
   constructor(private readonly mission: Mission) {}
   private savedSam(): EntitySnapshot | undefined {
     const save = this.mission.world.progression?.campaign;
+    const research = save?.crossingHandover?.researchCompanion;
+    if (research) return research.civilian?.survivor?.key === 'sam' && research.health.current > 0 && !research.infection && !research.infected ? research : undefined;
     const roster = save?.crossingHandover?.shelteredPassengers ?? save?.results?.L8?.escapedSurvivors ?? save?.results?.L7?.escapedSurvivors ?? [];
     return roster.find(e => e.civilian?.survivor?.key === 'sam' && e.health.current > 0 && !e.infection && !e.infected);
   }

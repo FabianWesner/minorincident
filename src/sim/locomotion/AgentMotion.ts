@@ -67,6 +67,7 @@ function stepSupport(world: SimWorld, e: EntitySnapshot): number {
 }
 /** Feet support is resolved before the final collision commit, and again after a contact correction. */
 export function groundAgent(world: SimWorld, e: EntitySnapshot): void {
+  if (world.scenario === 'L9' && world.missions?.l9?.driving.ownsPose(e)) return;
   if (world.districts && !e.infected && !e.survivor) e.transform.y = (e.companion ? .3 : .7) + (e.civilian?.floorY ?? ((e.companion || e.civilian?.story || e.civilian?.supportFeet) ? stepSupport(world, e) : world.districts.groundHeight(e.transform.x, e.transform.z)));
 }
 function actor(e: EntitySnapshot): boolean { return !e.corpse && !!(e.infected || e.civilian || e.companion || e.escort); }
@@ -181,8 +182,9 @@ export function installAgentMotion(world: SimWorld): void {
       if (world.scenario === 'L7' && world.missions?.state.steps.departure?.status === 'active' && e.civilian?.survivor?.mode === 'follow' && response?.updatedAt === world.tick && blocker && (solidLargeCorpse(blocker) || blocker.civilian?.survivor?.mode === 'follow') && distance / FIXED_DT <= .12 && !forced(e, world.tick, world)) {
         response.vx = dx / FIXED_DT; response.vz = dz / FIXED_DT; response.ax = response.az = 0;
       }
-      motion.velocity.x = dx / FIXED_DT; motion.velocity.z = dz / FIXED_DT; motion.speed = distance / FIXED_DT;
-      motion.moving = motion.speed > (motion.moving ? .04 : .12); if (distance < 3) motion.distance += distance;
+      const carried = world.scenario === 'L9' && e.attachedTo !== undefined;
+      motion.velocity.x = carried ? 0 : dx / FIXED_DT; motion.velocity.z = carried ? 0 : dz / FIXED_DT; motion.speed = carried ? 0 : distance / FIXED_DT;
+      motion.moving = motion.speed > (motion.moving ? .04 : .12); if (!carried && distance < 3) motion.distance += distance;
     }
     if (world.scenario === 'L5') for (const e of world.entities.iterate()) if (e.companion) {
       const c = e.companion;

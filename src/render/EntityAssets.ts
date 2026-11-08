@@ -17,6 +17,7 @@ const assetIds = new Set(manifest.map(asset => asset.id));
 export const productionObstacleAssets: Record<string, string> = {
   'obstacle.cone': 'prop.traffic-cone', 'obstacle.fence': 'prop.picket-fence',
   'obstacle.barricade': 'prop.barricade', 'obstacle.trash-can': 'prop.trash-bin', 'obstacle.mailbox': 'prop.mailbox-blue',
+  'obstacle.jersey-barrier': 'prop.jersey-barrier', 'obstacle.truck': 'veh.military-truck',
 };
 const actorAssets: Record<string, string> = {
   'escort.alvarez': 'npc.mrs-alvarez', 'escort.brother': 'npc.brother',

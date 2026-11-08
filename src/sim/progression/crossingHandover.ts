@@ -11,11 +11,12 @@ export function commitCrossingHandover(save: CampaignSave, world: SimWorld): voi
   const player = world.entities.get(1)!;
   const lostWeapons = [...new Set([...save.ownedActions, ...player.weapons?.LEFT.rack.map(s => s.id) ?? [], ...player.weapons?.RIGHT.rack.map(s => s.id) ?? []])]
     .filter(id => catalog[id]?.category !== 'ability' && id !== 'weapon.fire-axe');
-  const passengerIds = save.transport?.occupants.filter(e => e.id !== 1).map(e => e.id) ?? [];
+  const passengerIds = crash.state.driving?.evacuated ?? save.transport?.occupants.filter(e => e.id !== 1).map(e => e.id) ?? [];
   const shelteredPassengers = passengerIds.map(id => world.getEntity(id) ?? save.transport!.occupants.find(e => e.id === id)!)
     .filter(e => e.health.current > 0 && !e.companion);
   const corgi = [...world.entities.iterate()].find(e => e.companion) ?? save.transport?.occupants.find(e => e.companion);
-  save.crossingHandover = { applied: true, ...(corgi ? { corgi: structuredClone(corgi) } : {}), checkpoint: 'cure-crash', anchor: { ...player.transform }, preCrashDurability: crash.state.preCrashDurability, lostWeapons, shelteredPassengers: structuredClone(shelteredPassengers) };
+  const researchCompanion = crash.state.driving?.samId ? world.getEntity(crash.state.driving.samId) : undefined;
+  save.crossingHandover = { applied: true, ...(corgi ? { corgi: structuredClone(corgi) } : {}), ...(researchCompanion && researchCompanion.health.current > 0 && !researchCompanion.infected ? { researchCompanion: structuredClone(researchCompanion) } : {}), checkpoint: 'cure-crash', anchor: { ...player.transform }, preCrashDurability: crash.state.preCrashDurability, lostWeapons, shelteredPassengers: structuredClone(shelteredPassengers) };
   save.ownedActions = ['weapon.fire-axe', ...save.ownedActions.filter(id => catalog[id]?.category === 'ability')];
   save.racks = { LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.fire-axe'] };
   if (save.selectedAction && save.selectedAction !== 'weapon.fire-axe') logSelectionFallback(save.selectedAction, 'weapon.fire-axe', 'scripted crossing arsenal loss');

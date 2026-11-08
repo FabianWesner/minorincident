@@ -91,7 +91,48 @@ test('enter, drive and exit: door dwell, input ownership (no attacks while drivi
   expect(await vehicleShovesProps(), 'vehicle-to-prop simulation repeats exactly').toEqual(shoved);
   await bikeMountIntent();
   await zooParkedBoarding();
+  await apcBoarders();
 });
+
+// L9 boarders create pressure in the cab, and the driver can clear the hull with a snap turn.
+async function apcBoarders(): Promise<void> {
+  const world = await loadLevel('L9', 1, preset('L9-default'));
+  try {
+    const id = world.missions!.l9!.state.carId, car = world.vehicles!.cars.get(id)!;
+    const dogId = world.infected!.spawn('infected.dog', { x: car.entity.transform.x, z: car.entity.transform.z + car.physics.def.width / 2 + .4 }, { state: 'chase' });
+    const dog = world.entities.get(dogId)!;
+    Object.assign(dog.transform, { x: car.entity.transform.x, y: car.entity.transform.y + .7, z: car.entity.transform.z + car.physics.def.width / 2 + .4 });
+    world.spatial.set(dogId, dog.transform.x, dog.transform.z);
+    for (let i = 0; i < 30 && !car.entity.vehicle!.attached.includes(dogId); i++) world.update();
+    expect(car.entity.vehicle!.attached, 'a dog that reaches the hull boards it').toContain(dogId);
+    expect(car.entity.vehicle!.attached, 'a hull slot is reserved once').toHaveLength(1);
+    const climbAt = car.entity.vehicle!.apcBoarders![dogId].startedAt;
+    for (let i = 0; i < 90; i++) world.update();
+    expect(car.entity.vehicle!.apcBoarders![dogId].startedAt, 'overlap does not restart the climb').toBe(climbAt);
+    for (let i = 0; i < 240 && world.entities.get(1)!.health.current === world.entities.get(1)!.health.max; i++) world.update();
+    expect(world.entities.get(1)!.health.current, 'a boarder bites after its climb').toBeLessThan(world.entities.get(1)!.health.max);
+    const turn = emptyInput(); turn.drive = { throttle: 1, steer: 1 };
+    car.physics.body.setLinvel({ x: 8, y: 0, z: 0 }, true); car.physics.body.setAngvel({ x: 0, y: 1, z: 0 }, true);
+    world.applyInput(turn, 'keyboard'); world.update();
+    expect(car.entity.vehicle!.attached, 'a sharp turn shakes the dog off').not.toContain(dogId);
+    expect(dog.attachedTo).toBeUndefined();
+    car.physics.body.setLinvel({ x: 0, y: 0, z: 0 }, true); car.physics.body.setAngvel({ x: 0, y: 0, z: 0 }, true); car.physics.postPhysics();
+    world.missions!.l9!.driving.state.stallAt = world.tick;
+    const targetId = world.infected!.spawn('infected.runner', { x: car.entity.transform.x + 12, z: car.entity.transform.z }, { state: 'chase' });
+    const target = world.entities.get(targetId)!;
+    for (let i = 0; i < 120 && target.health.current === target.health.max; i++) {
+      const origin = world.entities.get(1)!.transform, dx = target.transform.x - origin.x, dz = target.transform.z - origin.z, length = Math.hypot(dx, dz) || 1;
+      world.applyInput({ ...emptyInput(), brake: true, selectedWeaponKey: 5, aim: { x: dx / length, z: dz / length }, aimSource: 'keyboard', activeAttack: true, left: { down: true, held: true, up: false } }, 'keyboard'); world.update();
+    }
+    expect(target.health.current, 'carried hatch fire actually reaches ground enemies').toBeLessThan(target.health.max);
+    const wheelRotation = car.physics.wheels[0].rotation;
+    const roll = { x: Math.SQRT1_2, y: 0, z: 0, w: Math.SQRT1_2 };
+    world.vehicles!.scriptPose(id, { ...car.entity.transform, yaw: 0 }, 3, roll);
+    expect(car.physics.speed, 'scripted departure retains its speed').toBe(3);
+    expect(car.physics.wheels[0].rotation, 'scripted departure turns its wheels').toBeGreaterThan(wheelRotation);
+    expect(car.physics.rotation, 'scripted crash retains the whole-hull roll').toEqual(roll);
+  } finally { world.dispose(); }
+}
 
 async function screenRelativeSteering(): Promise<void> {
   const world = new SimWorld(); await world.init(); world.loadScenario('drive-course');

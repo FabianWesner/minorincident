@@ -238,8 +238,13 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       const zoo = game.world.missions?.l8, vehicles = game.world.vehicles;
       if (!zoo || !vehicles) throw new Error('Load L8 before preparing its boarding fixture');
       if (!zoo.advance()) throw new Error('Could not advance L8 to the breach');
-      // This isolated boarding fixture skips the gate walk; ordinary play must reach it after the breach.
+      // This isolated shader fixture starts after the gate walk and Hale's
+      // key handover/death. Ordinary play and the native story test own that beat.
       game.world.missions!.completeObjective('sanctuary');
+      game.world.missions!.setState('hale-keys', true); game.world.missions!.setState('hale-fallen', true);
+      zoo.state.departureAt = 0;
+      const hale = game.world.entities.get(zoo.state.haleId);
+      if (hale?.civilian) { hale.health.current = 0; hale.civilian.state = 'finished'; }
       const entry = vehicles.passengerDoor(zoo.state.carId), passengers = zoo.passengers();
       for (const id of passengers) {
         const actor = game.world.entities.get(id);

@@ -7,6 +7,7 @@ import { cadenceStride, gaitShape, strides } from './clips';
 import { PawContacts } from './PawContacts';
 import { CourierGroundContacts, type GaitStyle } from './CourierGroundContacts';
 import { authoredSoles } from './footSoles';
+import { LimbIK } from './LimbIK';
 import type { CrowdPosePalette } from './CrowdPosePalette';
 
 /** Presentation-only pose layers on top of the baked clip (zombie move set, hunch). Body space: +x forward, +z lateral. */
@@ -15,6 +16,8 @@ export interface CrowdLayers {
   lean?: number; roll?: number;
   /** Fit a locomotion hunch to this hip-to-head angle (rad), before planting the feet. */
   maxBodyLean?: number;
+  /** Authored hip-to-shoulder pitch for a heavy locomotion silhouette (rad). */
+  bodyLean?: number;
   /** Flinch 0..1 away from a hit coming along (hitX, hitZ) in body space. */
   flinch?: number; hitX?: number; hitZ?: number;
   /** Pelvis lunge forward over the planted feet (m, negative coils back). */
@@ -23,6 +26,8 @@ export interface CrowdLayers {
   lurch?: number;
   /** Seconds into the gorilla chest-beat telegraph. */
   chestBeat?: number;
+  /** Low, wide arm carriage for the Mega Alpha's heavy lope. */
+  heavyGait?: number;
   trunkSwipe?: number;
   throwPose?: number;
   /** Riot shield arm pulled aside during its short break window. */
@@ -89,6 +94,7 @@ export class CrowdLocomotion {
   private readonly point = new Vector3();
   private readonly rotation = new Quaternion();
   private readonly rig: CharacterRig;
+  private readonly soleLegs: LimbIK[] = [];
   private readonly contacts = new Map<number, GroundContacts>();
   private readonly heldPoses = new Map<number, { clip: string; frame: number; instance: Matrix4; time: number; seen: number }>();
   private prunedAt = -1;
@@ -157,7 +163,7 @@ export class CrowdLocomotion {
     });
     this.frame.updateMatrixWorld(true);
   }
-  private load(pose: Float32Array, instance: Matrix4, layers?: CrowdLayers, phase = 0): void {
+  private load(pose: Float32Array, instance: Matrix4, layers?: CrowdLayers, phase = 0, style?: GaitStyle): void {
     this.nodes.forEach((_, i) => this.world[i].fromArray(pose, i * 16));
     // Siblings share a parent pose; invert it once for this figure.
     for (const [parent, inverse] of this.parentInverses) inverse.copy(this.world[parent]).invert();
@@ -177,7 +183,15 @@ export class CrowdLocomotion {
       this.layer(layers, phase);
     }
     this.frame.updateMatrixWorld(true);
-    if (layers?.maxBodyLean && this.rig.hip && this.rig.head) {
+    if (layers?.bodyLean !== undefined && this.rig.hip && this.rig.armL && this.rig.armR) {
+      const hip = this.rig.hip;
+      this.inverse.copy(hip.parent!.matrixWorld).invert();
+      const shoulders = this.point.setFromMatrixPosition(this.rig.armL.matrixWorld);
+      shoulders.add(this.scale.setFromMatrixPosition(this.rig.armR.matrixWorld)).multiplyScalar(.5).applyMatrix4(this.inverse).sub(hip.position);
+      const pitch = Math.atan2(shoulders.x, shoulders.y);
+      hip.quaternion.premultiply(this.rotation.setFromAxisAngle(Z, pitch - layers.bodyLean));
+      hip.updateWorldMatrix(false, true);
+    } else if (layers?.maxBodyLean && this.rig.hip && this.rig.head) {
       // Some short civilian rigs inherit a much deeper baked lurch than the
       // infected atlas. Fit the actual body line, preserving its heading and
       // all animation below the bound; the contact solve then replants feet.
@@ -195,6 +209,12 @@ export class CrowdLocomotion {
         hip.quaternion.premultiply(this.rotation.setFromUnitVectors(head, target));
         hip.updateWorldMatrix(false, true);
       }
+    }
+    if (style?.pelvisHeight !== undefined && this.rig.hip) {
+      const hip = this.rig.hip, parentScale = hip.parent!.getWorldScale(this.scale).y;
+      const targetY = this.frame.matrixWorld.elements[13] + style.pelvisHeight;
+      hip.position.y += (targetY - hip.matrixWorld.elements[13]) / parentScale;
+      hip.updateWorldMatrix(false, true);
     }
   }
   private store(pose: Float32Array, instance: Matrix4): void {
@@ -224,7 +244,7 @@ export class CrowdLocomotion {
     if (!hip || !torso) return;
     // Ordinary contacts never alter the arms. Retain their atlas matrices;
     // special upper-body layers acquire TRS only when they actually change it.
-    if (layers.throwPose || layers.chestBeat || layers.shieldBreak) for (const node of [this.rig.armL, this.rig.armR, this.rig.foreArmL, this.rig.foreArmR]) {
+    if (layers.throwPose || layers.chestBeat || layers.shieldBreak || layers.heavyGait) for (const node of [this.rig.armL, this.rig.armR, this.rig.foreArmL, this.rig.foreArmR]) {
       if (node && !node.matrixAutoUpdate) { node.matrix.decompose(node.position, node.quaternion, node.scale); node.matrixAutoUpdate = true; }
     }
     const parentScale = this.scale.setFromMatrixScale(hip.parent!.matrixWorld).y / this.scale.setFromMatrixScale(this.frame.matrixWorld).y || 1;
@@ -236,6 +256,13 @@ export class CrowdLocomotion {
       const swing = Math.sin(phase * Math.PI * 2), push = Math.abs(Math.cos(phase * Math.PI * 2));
       torso.quaternion.premultiply(this.rotation.setFromAxisAngle(X, swing * .16 * lurch)).premultiply(this.rotation.setFromAxisAngle(Z, -(.1 + .1 * push) * lurch));
       head?.quaternion.premultiply(this.rotation.setFromAxisAngle(X, -swing * .1 * lurch));
+    }
+    if (layers.heavyGait) {
+      const weight = layers.heavyGait, swing = Math.sin(phase * Math.PI * 2);
+      for (const [arm, forearm, side] of [[this.rig.armL, this.rig.foreArmL, 1], [this.rig.armR, this.rig.foreArmR, -1]] as const) {
+        if (arm) arm.quaternion.slerp(this.rest[this.nodes.indexOf(arm)].quaternion, .85 * weight).premultiply(this.rotation.setFromAxisAngle(X, side * .25 * weight)).premultiply(this.rotation.setFromAxisAngle(Z, (.2 + side * swing * .12) * weight));
+        if (forearm) forearm.quaternion.slerp(this.rest[this.nodes.indexOf(forearm)].quaternion, .65 * weight).premultiply(this.rotation.setFromAxisAngle(Z, -.15 * weight));
+      }
     }
     if (layers.trunkSwipe !== undefined && layers.trunkSwipe !== 0) {
       const trunk = this.model.getObjectByName('trunk');
@@ -268,7 +295,7 @@ export class CrowdLocomotion {
     }
   }
   /** Legacy stance plants (mid band): world-space stance heels, no yaw lock or turn steps. */
-  correct(id: number, pose: Float32Array, instance: Matrix4, phase: number, name: string, scale: number, speed: number, layers?: CrowdLayers, time?: number): void {
+  correct(id: number, pose: Float32Array, instance: Matrix4, phase: number, name: string, scale: number, speed: number, layers?: CrowdLayers, time?: number, style?: GaitStyle): void {
     // Authored long articulated legs (zebra) stay attached at their shoulder/hip.
     // Their atlas grounds the complete pose; single-joint paw translation cannot preserve those pivots.
     if (this.animal && this.preserveAnimalJoints) return;
@@ -280,8 +307,8 @@ export class CrowdLocomotion {
       const left = previous.contacts.contact(0), right = previous.contacts.contact(1);
       if (left && right) contacts.inherit(phase, [left, right]);
     }
-    this.load(pose, instance, layers, phase);
-    const stride = cadenceStride(this.fourLegs ? 'corgi-trot' : name, scale, speed), run = /run|sprint|flee/.test(name) ? 1 : 0;
+    this.load(pose, instance, layers, phase, style);
+    const stride = cadenceStride(this.fourLegs ? 'corgi-trot' : name, scale, speed, style?.stepRate), run = /run|sprint|flee/.test(name) ? 1 : 0;
     if (this.animal) {
       let paws = this.paws.get(id);
       if (!paws) { paws = new PawContacts(this.frame, this.model); this.paws.set(id, paws); }
@@ -290,15 +317,15 @@ export class CrowdLocomotion {
       if (speed > .06 && strides[name]) paws.update(phase, stride, this.fourLegs ? 'corgi-trot' : name);
       else paws.hold(1 / 60, this.groundedAnimal);
       if (this.animalSkin && time !== undefined) this.footwork.animalContacts.set(id, { contacts: paws, owner: this, time });
-    } else if (contacts && strides[name] && speed > .06) contacts.update(phase, stride, run, 1, this.stance(name, stride, this.scale.setFromMatrixScale(this.frame.matrixWorld).y), true);
+    } else if (contacts && strides[name] && speed > .06) contacts.update(phase, stride, run, 1, style?.stance ?? this.stance(name, stride, this.scale.setFromMatrixScale(this.frame.matrixWorld).y), true, style);
     if (contacts && time !== undefined) this.footwork.far.set(id, { contacts, owner: this, time });
     // Humans always keep the sole correction; large authored quadrupeds retain it after paw/contact pose layers.
-    if (!this.animal || ((this.groundedAnimal || this.pawSoles.length) && (gaitStyles[name] || standingClips.has(name)))) this.ground();
+    if (!this.animal || ((this.groundedAnimal || this.pawSoles.length) && (gaitStyles[name] || standingClips.has(name)))) this.ground(style);
     this.store(pose, instance);
   }
-  /** Pose layers (hunch, lunge, flinch) pivot the legs with the pelvis: lift the pelvis by whatever heel or toe they
-   * pushed under the floor (QA: infected feet 2-6 cm under the floor at melee range). Same sole points as the probe. */
-  private ground(): void {
+  /** Ground the drawn soles after pose layers. Heavy locomotion fits each leg
+   * independently, retaining its steady pelvis instead of bobbing the whole body. */
+  private ground(style?: GaitStyle): void {
     const { hip, footL, footR } = this.rig;
     // The elderly's skinned run soles reach 0.53 mm below the rigid contact probes.
     // Give that model's contact target 1 mm of clearance for the weighted shoe edge.
@@ -316,8 +343,16 @@ export class CrowdLocomotion {
     const floor = this.frame.matrixWorld.elements[13] + soleClearance;
     let deficit = 0;
     for (const [side, foot] of [footL, footR].entries()) {
-      if (this.solePoints) for (const point of this.solePoints[side]) deficit = Math.max(deficit, floor - this.point.copy(point).applyMatrix4(foot.matrixWorld).y);
-      else for (const x of [-.05, .085]) deficit = Math.max(deficit, floor - this.point.set(x, -this.sole, 0).applyMatrix4(foot.matrixWorld).y);
+      let footDeficit = 0;
+      if (this.solePoints) for (const point of this.solePoints[side]) footDeficit = Math.max(footDeficit, floor - this.point.copy(point).applyMatrix4(foot.matrixWorld).y);
+      else for (const x of [-.05, .085]) footDeficit = Math.max(footDeficit, floor - this.point.set(x, -this.sole, 0).applyMatrix4(foot.matrixWorld).y);
+      if (style?.pelvisHeight !== undefined && footDeficit > 1e-4) {
+        const leg = this.soleLegs[side] ??= new LimbIK(side ? this.rig.legR : this.rig.legL, side ? this.rig.shinR : this.rig.shinL, foot);
+        foot.getWorldQuaternion(this.rotation);
+        this.point.setFromMatrixPosition(foot.matrixWorld).y += footDeficit;
+        this.scale.set(1, 0, 0).transformDirection(this.frame.matrixWorld);
+        leg.solve(this.point, this.scale, this.rotation, 1, true);
+      } else deficit = Math.max(deficit, footDeficit);
     }
     if (deficit > 1e-4) { hip.position.y += deficit / this.scale.setFromMatrixScale(hip.parent!.matrixWorld).y; updateWorldTranslation(hip); }
   }
@@ -394,11 +429,12 @@ export class CrowdLocomotion {
         // Walk/run clip switches blend the gait shape (stance, knee flex) over ~0.15 s instead of jumping.
         if (gait) { const k = 1 - Math.exp(-dt / .15); state.run += (gait.run - state.run) * k; state.stance += (gait.stance - state.stance) * k; }
         const row = poses.correct(id, frame, blend[0], blend[1], pose => {
-          this.load(pose, instance, layers, phase);
-          const stride = moving ? cadenceStride(clip, scale, speed) : 0;
+          this.load(pose, instance, layers, phase, style);
+          const stride = moving ? cadenceStride(clip, scale, speed, style?.stepRate) : 0;
           // load() and layer() have already refreshed the complete rig.
-          footwork.contacts.update(moving ? phase : 0, stride, footwork.run, footwork.weight, moving ? speed : 0, dt, { stance: footwork.stance, knee: gait?.knee, maxSwing: .4, ...style }, true);
-          this.ground();
+          // An optional style with cleared fields must retain the shared defaults.
+          footwork.contacts.update(moving ? phase : 0, stride, footwork.run, footwork.weight, moving ? speed : 0, dt, { ...style, stance: style?.stance ?? footwork.stance, knee: style?.knee ?? gait?.knee, maxSwing: style?.maxSwing ?? .4 }, true);
+          this.ground(style);
           this.store(pose, instance);
         });
         // Never draw a broken solve: a non-finite pose collapses the figure to nothing on the GPU. Drop the
@@ -409,7 +445,7 @@ export class CrowdLocomotion {
       this.footwork.states.delete(id);
     }
     if ((strides[clip] && speed > .06) || layers || this.animal && !this.preserveAnimalJoints && standingClips.has(clip)) {
-      const row = poses.correct(id, frame, blend[0], blend[1], pose => this.correct(id, pose, instance, phase, clip, scale, speed, layers, time));
+      const row = poses.correct(id, frame, blend[0], blend[1], pose => this.correct(id, pose, instance, phase, clip, scale, speed, layers, time, style));
       blend[1] = 1; return row;
     }
     this.reset(id);

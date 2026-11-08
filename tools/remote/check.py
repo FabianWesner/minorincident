@@ -52,6 +52,71 @@ class SchedulerChecks(unittest.TestCase):
 
     def ticket(self): return slot.enqueue(os.getpid(), str(self.wt))
 
+    def test_detached_launch_releases_mac_ticket_before_remote_slot(self):
+        subprocess.run(['git', 'init', '-q', str(self.wt)], check=True)
+        subprocess.run(['git', '-C', str(self.wt), 'add', 'package.json'], check=True)
+        commands = self.root / 'bin'; commands.mkdir()
+        scripts = {
+            'python3': f'''import os, sys
+if any(a.endswith('/pool.py') for a in sys.argv): sys.exit(0)
+if any(a.endswith('/local-slot.py') for a in sys.argv) and 'choose' in sys.argv:
+ assert sys.argv[sys.argv.index('--') + 1:] == ['true'], sys.argv
+ print('192.0.2.1'); sys.exit(0)
+os.execv({sys.executable!r}, [{sys.executable!r}, *sys.argv[1:]])
+''',
+            'ssh': '''import os, pathlib, sys
+command = sys.argv[-1]
+if 'while [ ! -f' in command:
+ sys.exit('must not wait for a busy host slot while holding the Mac FIFO')
+if 'MI_STATE' in command:
+ tickets = pathlib.Path(os.environ['MI_LOCAL_QUEUE']) / 'tickets'
+ if list(tickets.glob('*.json')): sys.exit('Mac FIFO ticket still held while following detached job')
+ print('MI_STATE 0')
+''',
+            'rsync': '', 'scp': '',
+        }
+        for name, body in scripts.items():
+            path = commands / name
+            path.write_text(f'#!{sys.executable}\n' + body)
+            path.chmod(0o755)
+        env = dict(os.environ, PATH=str(commands) + os.pathsep + os.environ['PATH'],
+                   MI_LOCAL_QUEUE=str(self.root / 'detached-queue'), MI_RUNNER_KEY='/dev/null')
+        run = subprocess.run(['sh', str(HERE / 'run.sh'), str(self.wt), '--env', 'FIXTURE=yes', '--', '--', 'true'],
+                             env=env, capture_output=True, text=True, timeout=15)
+        self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
+        self.assertIn('done exit=0', run.stdout)
+
+    def test_empty_doubled_separator_rejected_before_enqueue(self):
+        run = subprocess.run(['sh', str(HERE / 'run.sh'), str(self.wt), '--', '--'],
+                             capture_output=True, text=True, timeout=5)
+        self.assertEqual(run.returncode, 64)
+        self.assertNotIn('queued FIFO', run.stdout)
+
+    def test_stalled_head_yields_without_losing_ticket_or_wait_time(self):
+        a, b, c = self.ticket(), self.ticket(), self.ticket()
+        queued = json.loads(a.read_text())['queuedNs']
+        start = time.time_ns()
+        with patch.object(slot.time, 'time_ns', return_value=start):
+            self.assertTrue(slot.first(a))
+        with patch.object(slot.time, 'time_ns', return_value=start + 59_000_000_000):
+            self.assertFalse(slot.first(b))
+        with patch.object(slot.time, 'time_ns', return_value=start + 60_000_000_000):
+            self.assertTrue(slot.first(b))  # A different waiter advances a hung head.
+            self.assertFalse(slot.first(a))
+        self.assertEqual(json.loads(a.read_text())['queuedNs'], queued)
+        self.assertTrue(a.exists())
+        with patch.object(slot.time, 'time_ns', return_value=start + 120_000_000_000):
+            self.assertTrue(slot.first(c))
+        c.unlink()
+        self.assertTrue(slot.first(a))  # Yielded jobs retain a future turn.
+
+    def test_remote_probe_timeout_and_selection_race(self):
+        with patch.object(slot.subprocess, 'run', side_effect=subprocess.TimeoutExpired('pool', 45)):
+            self.assertEqual(slot.remote_pick(), '')
+        ticket = self.ticket()
+        with patch.object(slot, 'first', side_effect=[True, False]), patch.object(slot, 'remote_pick', return_value='192.0.2.1'):
+            self.assertIsNone(slot.choose(ticket, self.wt, ['true']))
+
     def test_adapter_uses_worktree_vitest_installation(self):
         # A tiny fake API proves resolution without starting any CPU workers.
         package = self.wt / 'node_modules/vitest'; package.mkdir(parents=True)

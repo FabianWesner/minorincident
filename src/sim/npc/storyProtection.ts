@@ -12,6 +12,7 @@ export function storyProtected(world: SimWorld, entity: EntitySnapshot): boolean
   const s = world.missions?.state;
   if (!s || s.phase === 'result' || s.phase === 'progression') return false;
   const id = entity.id;
+  if (world.missions?.l9?.driving.protectsCrew(entity)) return true;
   if (s.id === 'L8' && id === s.actors.privateReyes) return true;
   if (s.id === 'L8' && id === s.actors.majorHale && !s.states['hale-fallen']) return true;
   if (s.id === 'L10' && Object.entries(s.actors).some(([key, actor]) => key.startsWith('hangar-') && actor === id)) return true;

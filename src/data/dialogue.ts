@@ -74,10 +74,20 @@ export const dialogue: Record<string, string> = {
   'L8.nadia-elephant': 'Nadia: Not him. Not the old one…',
   'L8.courier-elephant': 'I\'m sorry.',
   'L8.following': 'Something is following you.',
-  'L9.briefing': 'The zoo is lost behind you. The armored vehicle’s radio loops one army broadcast: the research campus past the next city has a cure. Cross the countryside toward it; every hit costs armor.',
+  'L9.briefing': 'Bridge is forty klicks. Dawn\'s in two hours. Floor it.',
+  'L9.clingers': 'They\'re on the roof!',
+  'L9.hold-on': 'Hold on to something.',
+  'L9.bus.dale': 'That\'s my kid\'s school bus.',
+  'L9.bus.dale-beat': 'It\'s not anymore.',
+  'L9.stall.sam': 'Thirty seconds! Give me thirty seconds!',
+  'L9.gate': 'Gate closes in sixty. Anyone not through stays.',
+  'L9.okafor': 'You came back for us. Every time.',
+  'L9.sam-stays': 'Someone has to watch your back. And somebody has to see what\'s on that campus.',
+  'L9.end-caption': 'Everything went into the river. Almost everything.',
   'L7.start': 'Night. While you were underground, Fairhaven was overrun. The rocket launcher in the wrecked army truck by the exit is your way through.',
   'L10.crash': 'Get away from the river. Find a way through the farms.',
   'L10.briefing': 'Get away from the river. Find a way through the farms.',
+  'L10.mega-roar': 'Something is following you.',
   'L10.farmstead': 'Sam (radio): “You alive? …Good. Don\'t stop moving. That thing doesn\'t sleep.”',
   'L10.hide-gap': 'Sam (radio): “It can\'t fit where you fit. Use that.”',
   'L10.armory': 'Sam (radio, breaking up): “…the hangar… they\'re still there… lights on…”',
@@ -96,6 +106,7 @@ export const dialogue: Record<string, string> = {
   'L10.sam-coming': `Sam: "I'm coming."`,
   'L10.voss-stay': `Voss: "You're bleeding into my floor. You're staying."`,
   'L10.sam-delivery': `Sam: "Go finish your delivery."`,
+
 };
 // The script's continuity rule changes the speaker, preserving every spoken line.
 for (const id of ['L10.farmstead', 'L10.hide-gap', 'L10.armory', 'L10.sam-coming', 'L10.sam-delivery']) dialogue[`${id}.reyes`] = dialogue[id].replace(/^Sam/, 'Private Reyes');

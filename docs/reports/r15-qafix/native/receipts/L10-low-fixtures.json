@@ -1,0 +1,488 @@
+{
+  "version": 1,
+  "level": "L10",
+  "tier": "low",
+  "sourceHash": "115f672aaa058f298b9c4a4477360000f354bfe3cb4ebe4e4dc1d1562b69f6c3",
+  "fixtureHash": "4bdfab18e8890a058182ed24d4761e157d72f51368e0ed46e15970460c1ede3c",
+  "checks": [
+    {
+      "id": "G-24",
+      "clause": "production enemy-bar eligibility at distance/health boundaries",
+      "value": [
+        {
+          "archetype": "infected.alpha",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.lion",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.gorilla",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.elephant",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.zebra",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.flamingo",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        }
+      ],
+      "target": "near/full and far/damaged true; far/full, dead and healthy animals false",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "G-12",
+      "clause": "35-follower production eligibility and cap",
+      "value": {
+        "eligible": 35,
+        "cap": "Infinity"
+      },
+      "target": "35/35 eligible; no finite follower cap (pixels still unreviewed)",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "isolated ground/shelf weapon approach with E continuously false",
+      "value": [
+        {
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        },
+        {
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        }
+      ],
+      "target": "one collection per specimen; ground≤1.5 m; shelf≤2.2 m",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "G-11",
+      "clause": "pickup remains removed for 120 ticks after transaction",
+      "value": [
+        {
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        },
+        {
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        }
+      ],
+      "target": "one transaction and no original entity",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "L10-13",
+      "clause": "release predicate missing-prerequisite matrix",
+      "value": [
+        {
+          "missing": "none",
+          "released": true,
+          "expected": true,
+          "consoleRadius": 2
+        },
+        {
+          "missing": "charge",
+          "released": false,
+          "expected": false,
+          "consoleRadius": 2
+        },
+        {
+          "missing": "installed",
+          "released": false,
+          "expected": false,
+          "consoleRadius": 2
+        },
+        {
+          "missing": "boss",
+          "released": false,
+          "expected": false,
+          "consoleRadius": 2
+        },
+        {
+          "missing": "console",
+          "released": false,
+          "expected": false,
+          "consoleRadius": 2
+        },
+        {
+          "missing": "input",
+          "released": false,
+          "expected": false,
+          "consoleRadius": 2
+        }
+      ],
+      "target": "release only with charge3600, installed cure, dead Mega, console range and fresh E",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "L10-10",
+      "clause": "charge inside/outside/dead/resume boundary and pause instruction",
+      "value": {
+        "inside": 1,
+        "outside": 1,
+        "dead": 1,
+        "resumed": 2,
+        "instruction": "Back to the dispersal console · Charge paused · 0/60 s"
+      },
+      "target": "1/1/1/2 ticks; outside instruction says Charge paused",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "L10-14",
+      "clause": "cure native species mortality and healthy immunity",
+      "value": {
+        "species": [
+          {
+            "role": "runner",
+            "id": 38,
+            "reached": 24,
+            "dead": 24,
+            "hp": 0
+          },
+          {
+            "role": "dog",
+            "id": 39,
+            "reached": 48,
+            "dead": 48,
+            "hp": 0
+          },
+          {
+            "role": "alpha",
+            "id": 40,
+            "reached": 72,
+            "dead": 72,
+            "hp": 0
+          },
+          {
+            "role": "lion",
+            "id": 41,
+            "reached": 96,
+            "dead": 96,
+            "hp": 0
+          },
+          {
+            "role": "gorilla",
+            "id": 42,
+            "reached": 120,
+            "dead": 120,
+            "hp": 0
+          },
+          {
+            "role": "elephant",
+            "id": 43,
+            "reached": 144,
+            "dead": 144,
+            "hp": 0
+          },
+          {
+            "role": "zebra",
+            "id": 44,
+            "reached": 168,
+            "dead": 168,
+            "hp": 0
+          },
+          {
+            "role": "flamingo",
+            "id": 45,
+            "reached": 192,
+            "dead": 192,
+            "hp": 0
+          }
+        ],
+        "healthyChecked": 37,
+        "harmed": []
+      },
+      "target": "regular, dog, Alpha and all zoo species die≤1 tick after front; healthy/player/corgi unchanged",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "L10-06",
+      "clause": "native dog speed ratio",
+      "value": 1.1,
+      "target": "1.1× run",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "L10-06",
+      "clause": "actual dog hit damage/reach",
+      "value": [
+        {
+          "tick": 40,
+          "amount": 10,
+          "reach": 1.08,
+          "attackId": 1
+        },
+        {
+          "tick": 199,
+          "amount": 10,
+          "reach": 1.08,
+          "attackId": 2
+        },
+        {
+          "tick": 358,
+          "amount": 10,
+          "reach": 1.08,
+          "attackId": 3
+        },
+        {
+          "tick": 517,
+          "amount": 10,
+          "reach": 1.08,
+          "attackId": 4
+        }
+      ],
+      "target": "10 HP each; reach≤2 m",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "L10-06",
+      "clause": "actual dog telegraph duration",
+      "value": [
+        {
+          "type": "telegraph",
+          "tick": 1,
+          "sourceId": 2,
+          "attackId": 1,
+          "special": "pounce",
+          "duration": 0.65,
+          "target": {
+            "id": 1,
+            "x": 0,
+            "z": 0
+          }
+        },
+        {
+          "type": "telegraph",
+          "tick": 160,
+          "sourceId": 2,
+          "attackId": 2,
+          "special": "pounce",
+          "duration": 0.65,
+          "target": {
+            "id": 1,
+            "x": -7.628862874753395e-8,
+            "z": -7.628862874753395e-8
+          }
+        },
+        {
+          "type": "telegraph",
+          "tick": 319,
+          "sourceId": 2,
+          "attackId": 3,
+          "special": "pounce",
+          "duration": 0.65,
+          "target": {
+            "id": 1,
+            "x": 0,
+            "z": 0
+          }
+        },
+        {
+          "type": "telegraph",
+          "tick": 478,
+          "sourceId": 2,
+          "attackId": 4,
+          "special": "pounce",
+          "duration": 0.65,
+          "target": {
+            "id": 1,
+            "x": -7.628862874753395e-8,
+            "z": -7.628862874753395e-8
+          }
+        }
+      ],
+      "target": "≥0.6 s",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "L10-06",
+      "clause": "dog cooldown between hit and next windup",
+      "value": [
+        2,
+        2,
+        2
+      ],
+      "target": "≥2 s",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "L10-10",
+      "clause": "minigun rounds and heat per full-speed second",
+      "value": {
+        "rounds": 20,
+        "heat": 0.12500000000000017
+      },
+      "target": "20 rounds; heat+0.125",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "L10-10",
+      "clause": "minigun overheat lock",
+      "value": {
+        "heat": 1,
+        "locked": true
+      },
+      "target": "locked at100%",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "L10-10",
+      "clause": "minigun unlock threshold",
+      "value": {
+        "lockedAt40": true,
+        "afterCooling": {
+          "heat": 0.39666666666666667,
+          "locked": false
+        }
+      },
+      "target": "still locked at40%, unlock below40%",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "L10-12",
+      "clause": "Mega conventional damage floor",
+      "value": {
+        "hp": 3000,
+        "remaining": [
+          2700,
+          2700,
+          2700,
+          2700,
+          2700,
+          2700,
+          2700,
+          2700,
+          2700,
+          2700,
+          2700,
+          2700,
+          2700,
+          2700,
+          2700,
+          2700,
+          2700,
+          2700,
+          2700,
+          2700
+        ]
+      },
+      "target": "never below90% HP",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "L10-12",
+      "clause": "Mega direct rocket9/10 HP threshold",
+      "value": {
+        "hp": 3000,
+        "remaining": [
+          2700,
+          2400,
+          2100,
+          1800,
+          1500,
+          1200,
+          900,
+          600,
+          300,
+          0
+        ]
+      },
+      "target": "survives9; dies on10",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/r15-qafix/native/receipts/L10-low-fixtures.json"
+    }
+  ],
+  "errors": []
+}

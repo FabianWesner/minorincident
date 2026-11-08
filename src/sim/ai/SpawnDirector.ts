@@ -10,7 +10,7 @@ import type { EntitySnapshot } from '../world/types';
 import type { CoverWall } from '../combat/HitQuery';
 /** Conservative ground camera footprint, authored with the gameplay camera. Expanded 10% at query time. */
 export interface CameraEnvelope { x: number; z: number; halfWidth: number; halfDepth: number; yaw: number }
-interface Request { archetype: string; position: { x: number; z: number }; options: InfectedSpawn; turning?: boolean; migration?: { group: Migration; index: number } }
+interface Request { archetype: string; position: { x: number; y?: number; z: number }; options: InfectedSpawn; turning?: boolean; migration?: { group: Migration; index: number } }
 const silhouetteOffsets = [-.5, .5], silhouetteHeights = [.1, 1.9];
 const silhouetteAxes = ['x', 'y', 'z'] as const;
 export interface Migration {
@@ -174,7 +174,7 @@ export class SpawnDirector {
     const player = this.ai.world.entities.get(1)!;
     return Math.hypot(target.x - player.transform.x, target.z - player.transform.z) >= 18 && (this.offscreen(target) || this.occluded(target)) && this.ai.infectedNav.clear(target.x, target.z, infectedDef(id).radius);
   }
-  request(archetype: string, position: { x: number; z: number }, options: InfectedSpawn = {}): void {
+  request(archetype: string, position: { x: number; y?: number; z: number }, options: InfectedSpawn = {}): void {
     infectedDef(archetype);
     if (this.ai.world.scenario === 'L10' && archetype === 'infected.alpha' && options.variant !== megaAlpha.asset && !options.cureRegion) throw new RangeError('L10 regular Alpha requires an authored cure region');
     if (options.cureRegion) cureAlphaCap(options.cureRegion, this.tier);

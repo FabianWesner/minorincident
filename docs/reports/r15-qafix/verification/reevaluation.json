@@ -1,0 +1,32 @@
+{
+  "job": "/srv/mi/jobs/r15-qafix-46b3b5-53248-1794170795",
+  "runner": "2.31.107.230",
+  "sourceHash": "115f672aaa058f298b9c4a4477360000f354bfe3cb4ebe4e4dc1d1562b69f6c3",
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "status": 0
+    },
+    {
+      "command": "npm run lint",
+      "status": 0
+    },
+    {
+      "command": "node --import tsx/esm tools/qa/r15-charge-verdict.ts",
+      "status": 0,
+      "controlsPassed": 8
+    },
+    {
+      "command": "npm run qa:accept -- --level L10 --policy complete --skip-browser --reuse",
+      "status": 1,
+      "freshFailures": [
+        "G-22",
+        "L10-03"
+      ]
+    }
+  ],
+  "staticLogSha256": "1e59de30962a1b18878488788cac5503737592c00b0fbea6e1aa7e717fb630de",
+  "evaluatorSha256": "c09b826e42cd92052854816222d9bce03a41689703fda081724e792fcf04a5a7",
+  "canonicalReceiptsUnchanged": true,
+  "liveMacTicketReleasedWhileRunning": true
+}
