@@ -1,6 +1,6 @@
 # R12 natural group movement
 
-**Status: implementation, integration, unit gates and native motion/boarding checks complete. Follower regression verdict remains pending remote audit comparison; no merged-ready claim yet.**
+**Status: NOT merged-ready. Correction `ff834fdc` is awaiting its final native audit. L7 pace coverage remains unqualified on both main and lane.**
 
 PO: “Group dynamic in general is strange... They move too parallel...”
 
@@ -55,12 +55,39 @@ The L7 samples stop early on the failed low route; they are not a full departure
 
 `npm run verify -- E08` passes: typecheck, lint, **107 tests / 27 files** ([checks](checks.json)). The current verifier runs those native gates without launching a browser. Regressions cover all 48 slots' clearance, preserved remaining reaction time across checkpoint clock rebasing, and occluded-threat idle glances. Updated QA tools also pass typecheck and ESLint.
 
-## Pending follower audit
+## Native follower audit
 
 The requested full `sh tools/remote/run.sh "$PWD" -- npm run qa:threat` ran on the merged source and stopped at **600.8 s**, child exit 124, before aggregate receipts were written ([timeout receipt](standard-audit-timeout.json)). Existing local `test-results/qa-threat/audit.json` belongs to old revision `8f83d2eb` and is explicitly excluded from current evidence.
 
-A dedicated remote batch now covers **all six requested levels: L2, L3, L5, L6, L7, L8**, using the same evaluator, native policies, pace seeds and thresholds, with 1200 s of wall time for observation. The first clean-main six-level comparison also timed out at 600.7 s before aggregation ([receipt](main-audit-timeout.json)); its replacement has the same 1200 s allowance and covers those same six levels. Their pace, waiting, coverage and stranding rows must be reviewed before claiming no regression. Live batch logs: `test-results/r12-group/focused-threat.log` and `current-main-focused.log`. The original clean-main timeout log is `current-main-threat.log`. No gameplay criterion or checked-in timing budget was changed.
+The first dedicated remote batch covered **all six requested levels: L2, L3, L5, L6, L7, L8**, using the same evaluator, native policies, pace seeds and thresholds, with 1200 s of wall time for observation. The first clean-main six-level comparison also timed out at 600.7 s before aggregation ([receipt](main-audit-timeout.json)); its replacement has the same 1200 s allowance and covers those same six levels. Both completed; the comparison is summarized below. Historical batch logs: `test-results/r12-group/focused-threat.log` and `current-main-focused.log`. The original clean-main timeout log is `current-main-threat.log`. No gameplay criterion or checked-in timing budget was changed.
 
 Browser QA needed
 
 No browser, push or deployment was used for this verification.
+
+## Completed first comparison
+
+Both extended audits completed: lane 1041.8 s, main 543.3 s. [Full follower comparison before correction](follower-comparison-before.json) retains all relevant flags, waiting rows, pace votes and phase medians. L2/L3 are unchanged; L5 has no pace flags; L6 loses its five exit slow-follower flags but its waiting share rises (absolute stationary-far time falls from 535.85 s to 516.52 s). L7 retains main's required-ID coverage failures because all three mortal seeds fail; those missing votes are not counted as passing. L8 adds slow-follower flags and requires correction. Earlier timing/gate receipts remain historical evidence for their recorded source.
+
+## Response correction
+
+`ff834fdc` preserves the exact authored response for mission catch-up/boarding and uses the existing follower response throughout L8's moving loose formation. Ordinary following elsewhere retains personal acceleration; loose slots, sway, staggered starts and idle glances remain. A regression check exercises injured and uninjured followers under urgent L8, ordinary L8 and ordinary L6 response.
+
+The corrected quiet fixtures seat all 24 L7 followers in 8.18 s and all 13 L8 passengers in 21.38 s, in both tiers, with zero collision invariant failures, no assists/recoveries, and maximum visible steps below 0.091 m/tick (L7) / 0.165 m/tick (L8). [Corrected boarding receipts](fixed-boarding.json).
+
+The corrected source also passes typecheck, lint and all **107 tests / 27 files** ([corrected checks](fixed-checks.json)).
+
+Final six-level comparison uses unchanged evaluator/policies/thresholds and the same 1200 s observational wall allowance. Source hash `6b2594804f64d3b297636a55b0115dd610e3a1b77c2a8da024ac52899be505ed` is independently confirmed inside its remote job ([fingerprint](remote-fixed-runtime.json)). Baseline remains clean `78219de9`; no observer or threshold was changed.
+
+### Corrected motion samples
+
+L2/L3/L5/L6 response paths are unchanged by `ff834fdc`; the preceding six-level receipts remain their motion evidence. Rerun L7/L8 rows use the corrected source ([receipts](fixed-native-metrics.json)):
+
+| Level / tier | Outcome | NN CV | Facing R | Rails |
+| --- | --- | ---: | ---: | ---: |
+| L7 / high | mission-failed | 0.465 | 0.997 | 9.1% |
+| L7 / low | mission-failed | 0.247 | 0.965 | 6.6% |
+| L8 / high | tick-budget | 0.308 | 0.963 | 5.9% |
+| L8 / low | complete | 0.331 | 0.943 | 5.4% |
+
+L8 low now completes at 213.6 s. L8 high still exhausts its route budget; L7 still fails both mortal routes. Motion samples on incomplete routes do not qualify missing pace votes.
