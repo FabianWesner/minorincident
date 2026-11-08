@@ -261,6 +261,10 @@ test('interactions: only the open L6 gate the group is heading for offers its pr
       expect(LevelSixSubway.regroupTarget(m)?.id, 'escaped or hidden survivors cannot keep a rescue cue').not.toBe(follower.id);
       follower.hidden = false; l6.alarm = alarm;
       l6.strayed = false;
+      Object.assign(courier.transform, { x: exit.x, z: exit.z });
+      expect(LevelSixSubway.regroupTarget(m), 'the exit locates its blocking follower even with a nearby group member').toBeDefined();
+      expect(LevelSixSubway.text(m)).toMatch(/^Rejoin .+ · \d+ m$/);
+      Object.assign(courier.transform, { x: 400, z: 200 });
       for (let i = 0; i < 5400; i++) {
         w.update();
         expect(m.state.marker).toBe('l6-next');

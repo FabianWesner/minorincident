@@ -440,8 +440,8 @@ export class Hud {
     }
     const world = this.game.world;
     this.updateSurvivorCue(mission, px, pz);
-    if (mission?.state.l6?.strayed && (mission.state.l6.phase === 'retreat' || mission.state.l6.phase === 'exit')) {
-      const target = LevelSixSubway.regroupTarget(mission);
+    const target = LevelSixSubway.regroupTarget(mission);
+    if (target) {
       setHidden(this.survivorText, true);
       setHidden(this.cuePin, true);
       setHidden(this.cueText, true);
