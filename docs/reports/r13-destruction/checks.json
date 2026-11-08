@@ -1,7 +1,7 @@
 {
-  "sourceCommit": "a0f76924",
-  "mergedMain": "a7b70c78",
-  "runner": "2.31.107.230",
+  "sourceCommit": "25d8db51",
+  "mergedMain": "2c178f95",
+  "runner": "2.31.170.171",
   "typecheck": "pass",
   "lint": "pass",
   "unit": {
@@ -9,7 +9,7 @@
     "skipped": 1,
     "filesPassed": 27,
     "budgetSeconds": 240,
-    "elapsedSeconds": 176.7
+    "elapsedSeconds": 210.7
   },
   "caseBudget": {
     "cases": 150,
@@ -60,5 +60,13 @@
     ],
     "identicalNativeReports": true,
     "scope": "bounded diagnostic, not full gate"
+  },
+  "latestFullThreat": {
+    "sourceCommit": "25d8db51",
+    "mainSource": "2c178f95",
+    "status": "timeout",
+    "elapsedSeconds": 600.6,
+    "budgetSeconds": 600,
+    "receipt": "full-threat-final.json"
   }
 }

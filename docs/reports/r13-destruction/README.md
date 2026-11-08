@@ -13,14 +13,14 @@ Architecture and extension instructions: [destruction design](../../design/destr
 
 ## Verification
 
-Code-check source: `a0f76924`, with main `a7b70c78` merged in `5628370e`.
+Code-check source: `25d8db51`, merging main `2c178f95` (including follower/boarding fixes and farm work).
 
-- Hetzner: typecheck and lint pass; unit suite **106 passed, 1 skipped, 27 files**, 176.7 s within 240 s. The skip is the macOS-only legacy browser-lock test. [Compact checks](checks.json).
+- Hetzner: typecheck and lint pass; unit suite **106 passed, 1 skipped, 27 files**, 210.7 s within 240 s. The skip is the macOS-only legacy browser-lock test. [Compact checks](checks.json).
 - Case budget: **150/150**, files **43/45**. No browser launched.
 - Threat diagnostics below used `cd84315b`, before the subsequent lifecycle fixes. They are not final-source full-gate evidence.
 - [L1–L3 threat receipt](threat-1.json): L1/L2 have zero gameplay flags. L3 has the existing competent-survival-rate flag. [Exact merged-main L3 comparison](main-l3.json) reproduces that flag plus a density flag; there are **zero new L3 audit flags**. The comparison reverses the branch's complete `src/` diff in a private remote job; `public/` is unchanged.
 - [L5 threat receipt](threat-3.json): zero gameplay flags across the skilled/passive multi-seed checks.
-- **Full threat gate unresolved:** the full command timed out at 600.2 s before producing a receipt. Smaller L4/L6/L8 and L7/L9/L10 batches also timed out (601.2 s and 600.9 s), waiting on the L8 and L10 skilled stages. Completed stages are not claimed as complete level verdicts. Their temporary output paths collided with a completed batch, so both mismatched receipts were discarded. Future retries must use job-relative output paths.
+- **Full threat gate unresolved:** after merging updated main, the complete four-worker audit again timed out at **600.6 s** (600 s limit, child exit 124), without a final audit receipt. [Final command result and completed stages](full-threat-final.json). The earlier full command timed out at 600.2 s before producing a receipt. Smaller L4/L6/L8 and L7/L9/L10 batches also timed out (601.2 s and 600.9 s), waiting on the L8 and L10 skilled stages. Completed stages are not claimed as complete level verdicts. Their temporary output paths collided with a completed batch, so both mismatched receipts were discarded. Future retries must use job-relative output paths.
 - Partial-selection markers remain in the retained diagnostic receipts. These are not a passing full gate. No zero-new-flags claim is made for the entire campaign.
 
 Commands used the prescribed `sh tools/remote/run.sh "$PWD" -- ...` wrapper with `MI_LOCAL_FALLBACK=0`. The temporary remote Git snapshot enabled tests requiring `HEAD`; no local build or worktree was created.
@@ -31,7 +31,7 @@ Existing world-system tests cover real handgun, shotgun, axe and MG input; block
 
 ## Timeout investigation
 
-A bounded native-route comparison at `5fbd7b2f` versus merged main `a7b70c78` produced identical reports for L8 and L10 over 180 simulated seconds ([comparison receipt](route-comparison.json)). Both reproduce L8's escape stall. This establishes equivalence only for that measured window; it does not prove a complete route or full threat pass. The remaining gate needs the upstream route/performance issue resolved or runner conditions that allow the prescribed audit to finish. Limits were not raised.
+A bounded native-route comparison at `5fbd7b2f` versus merged main `a7b70c78` produced identical reports for L8 and L10 over 180 simulated seconds ([comparison receipt](route-comparison.json)). Both reproduce L8's escape stall. This establishes equivalence only for that measured window; it does not prove a complete route or full threat pass. Updated main was subsequently merged and the complete audit retried; it still exceeded 600 s. The remaining gate needs runner capacity/performance that lets the prescribed audit finish, or a PO-approved runtime allowance. Limits were not raised.
 
 ## Browser QA needed
 
@@ -46,6 +46,8 @@ No capture or visual pass is claimed. The model uses discrete parts; parked-car 
 
 ## Status and handoff
 
-Implementation is complete and unit-verified. The brief's full threat-gate requirement remains blocked by the timed-out runs; it needs a successful runner audit before the entire brief can be marked complete. Browser QA is deliberately deferred under the latest instruction. No deploy or push.
+Implementation is complete and unit-verified. The brief's full threat-gate requirement remains blocked after repeated complete runs and bounded diagnostics, including a retry after merging updated main. An orchestrator decision on runner capacity or an approved runtime allowance is needed before the entire brief can be marked complete. Browser QA is deliberately deferred under the latest instruction. No deploy or push.
 
 Commits since restart: `5628370e` (merge main/shared prop ownership), `cd84315b` (boss policies and impact hook). Follow-up commits `467ca896`, `5fbd7b2f`, `6dac81e3`, `d550a07c`, and `a0f76924` cover movable-body lifecycle, LOS invalidation, absent-tier ownership and fire resumption/caps. Earlier commits on this branch contain the L3 sim/render integration and regression coverage.
+
+Final integration commit: `25d8db51` retains both destruction extraction filtering and the new low-tier farm scatter filtering. All local processes from this lane have ended; no push or deployment was performed.
