@@ -497,8 +497,6 @@ export class LevelEightZoo {
     // response: civilian steering overshoots these changing targets.
     if (this.breached) c.survivor!.briskAt = w.tick;
     const goal = formationSlot(p.transform, leaderHeading(p.transform.yaw, velocity), slot);
-    // The shared mover brakes at four times its remaining distance. Feed the moving slot a quarter-second ahead.
-    if (this.breached && !boarding && velocity) { goal.x += velocity.x * .25; goal.z += velocity.z * .25; }
     let target = boarding ? door : w.infected!.nav.clear(goal.x, goal.z, .35) ? goal : p.transform;
     let queueIndex = 0;
     if (boarding) {
