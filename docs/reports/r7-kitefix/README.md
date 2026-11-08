@@ -38,7 +38,7 @@ The initial complete audit also reported L3 competent attack-band coverage at 1/
 ## Validation and delivery
 
 - Initial complete `npm run qa:threat`: 9 flags before the harness split and L8 response changes.
-- Final complete `npm run qa:threat`: pending.
-- `npm run typecheck`, `npm run lint`, and `npm test` (maximum 4 workers, 150-second budget): pending.
+- A later `npm run qa:threat` passed the 150-case budget check but hit the 600-second execution limit (exit 124) before the full matrix completed. This is not a complete gate result. An uncapped full audit is queued through the remote runner.
+- `npm run lint`: passed. `npm run typecheck`: passed before the final L8 courier-only range guard; rerun after the audit. `npm test` (maximum 4 workers, 150-second budget): pending.
 - No deploy or push.
 - The `r6-kite` supporting report, JSON receipts, and driver sheet are included under `docs/reports/r6-kite/` and `test-results/r6-kite/`.
