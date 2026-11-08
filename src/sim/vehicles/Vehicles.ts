@@ -196,7 +196,7 @@ export class Vehicles {
     }
   }
   /** Mission-owned fall: suppress ordinary controls/contact destruction and retain the existing vehicle view. */
-  scriptPose(id: number, pose: EntitySnapshot['transform']): void {
+  scriptPose(id: number, pose: EntitySnapshot['transform'], speed = 0): void {
     const car = this.cars.get(id)!; car.entity.vehicle!.scripted = true;
     const b = car.physics;
     b.body.setBodyType(RAPIER.RigidBodyType.KinematicPositionBased, true);
@@ -206,7 +206,8 @@ export class Vehicles {
     Object.assign(b.rotation, { x: 0, y: Math.sin(pose.yaw / 2), z: 0, w: Math.cos(pose.yaw / 2) });
     b.body.setTranslation(pose, true); b.body.setNextKinematicTranslation(pose);
     b.body.setRotation(b.rotation, true); b.body.setNextKinematicRotation(b.rotation);
-    b.speed = b.forwardSpeed = 0; car.entity.vehicle!.speed = car.entity.vehicle!.forwardSpeed = 0;
+    b.speed = b.forwardSpeed = speed; car.entity.vehicle!.speed = car.entity.vehicle!.forwardSpeed = speed;
+    for (const wheel of b.wheels) wheel.rotation += speed / 60 / b.def.wheelRadius;
     this.world.spatial.set(id, pose.x, pose.z);
     if (this.active === id) {
       const player = this.world.entities.get(1)!; Object.assign(player.transform, pose);

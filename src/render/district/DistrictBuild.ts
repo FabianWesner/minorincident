@@ -27,6 +27,7 @@ import { HeightStepEdges } from '../HeightStepEdges';
 import { batchPerimeterPosts, type PerimeterBox } from '../PerimeterPosts';
 import { NightAccents, nightAccents } from '../NightAccents';
 import { fairhavenDressing } from './FairhavenDressing';
+import { zooExitGate } from './zooExitGate';
 import { removeL7LakeWall } from './l7LakeWall';
 import { cureAprons } from '../../levels/L10/forecourts';
 
@@ -49,6 +50,7 @@ export class DistrictParts {
   /** The drawn ground (baked roads, paving, lawns) for tyre contacts: see GroundField. */
   readonly ground = new GroundField();
   readonly mergedLayout: Mesh[] = [];
+  readonly zooGateLeaves: Group[] = [];
   readonly ownedGeometry: BufferGeometry[] = [];
   readonly perimeterPosts: InstancedMesh[] = [];
   readonly ownedMaterials: Material[] = [];
@@ -207,6 +209,7 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
       for (const scene of scenes) {
         const clone = cloneLayoutGeometry(scene);
         if (d.id === 'D-FAIR' && deps.world.composition.tier === 6) parts.ownedGeometry.push(...removeL7LakeWall(clone, d.layout, d.decay.removed));
+        if (d.id === 'D-ZOO') { const gate = zooExitGate(clone); parts.zooGateLeaves.push(...gate.leaves); parts.ownedGeometry.push(...gate.geometry); }
         // Baked layout nodes never move; avoid recomposing every hidden placement marker each frame.
         clone.traverse(o => { o.updateMatrix(); o.matrixAutoUpdate = false; });
         // PO 2026-10-12: the Grove back alleys were baked in the near-black UI token and read as a hole in the ground next to the

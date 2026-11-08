@@ -18,6 +18,7 @@ import { loadLevel, runnerLevels } from '../../tools/sim-runner/levels';
 import { missionSandbox } from '../fixtures/scenarios/mission-sandbox';
 import { objectiveText } from '../../src/sim/missions/objectiveText';
 import { markerAnchor } from '../../src/sim/missions/markerAnchor';
+import { checkL8Story } from '../helpers/l8Story';
 import { emergeResident, emergeSpeedMs, walkResidents } from '../../src/sim/outbreak/HouseEmergence';
 
 let world: SimWorld | undefined;
@@ -138,8 +139,9 @@ test('interactions: ring, input and view predicates agree for every interact ste
         // The existing outlet scene exposed queued residents first becoming
         // visible on the apron. Exercise its native six-person door queue here,
         // without adding another registered case or relaxing the scene gate.
-        expect(mission.state.marker).toBe('zoo-gate');
-        expect(objectiveText(mission, mission.def.steps[0].text)).toBe('Lead the group to the zoo gate');
+        expect(mission.state.marker).toBe('central-plaza');
+        expect(objectiveText(mission, mission.def.steps[0].text)).toBe('Follow Nadia to the central plaza');
+        await checkL8Story();
         mission.completeObjective('sanctuary');
         expect(mission.state.states.breached, 'debug graph advancement still reconstructs the real breach checkpoint').toBe(true);
         mission.restore('sanctuary');

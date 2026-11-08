@@ -51,19 +51,17 @@ export function objectiveText(mission: Mission, fallback: string): string {
   }
   if (mission.def.l8) {
     const zoo=mission.l8!, seated=w.vehicles!.active===zoo.state.carId;
-    const gate = mission.def.anchors['zoo-gate'], player = w.entities.get(1)!.transform;
-    if (s.steps.sanctuary.status === 'active' && !s.states.breached && Math.hypot(player.x - gate.x, player.z - gate.z) <= gate.radius) return 'Wait with the group at the zoo gate';
+    if (zoo.protecting()) return 'Protect the group!';
+    if (zoo.state.departureFrom) return 'Something is following you.';
     if (!seated && zoo.boarding() && !zoo.canBoardDriver()) {
       const ids = zoo.passengers(), car = w.vehicles!.cars.get(zoo.state.carId)!.entity.vehicle!;
       const aboard = ids.filter(id => car.passengers?.some(p => p.id === id && p.phase === 'seated')).length;
-      return `Cover the survivors while they board · ${aboard}/${ids.length} aboard · ${ids.length - aboard} still to board`;
+      return `Cover the survivors while they board · ${aboard}/${ids.length} aboard`;
     }
-    if(s.steps.depart?.status==='active') {
-      const ids=zoo.passengers(),car=w.vehicles!.cars.get(zoo.state.carId)!.entity.vehicle!;
-      const missing=ids.filter(id=>!car.passengers?.some(p=>p.id===id&&p.phase==='seated'));
-      const text=`${zoo.state.breachedAt ? 'The zoo is breached · ' : ''}${seated ? fallback : 'Return to the armored vehicle and board'}`;
-      const waiting=missing.length?` · ${missing.length} still to board`:'';
-      return `${text} · ${ids.length-missing.length}/${ids.length} aboard${waiting}`;
+    if (s.steps.depart?.status === 'active') {
+      const ids = zoo.passengers(), car = w.vehicles!.cars.get(zoo.state.carId)!.entity.vehicle!;
+      const aboard = ids.filter(id => car.passengers?.some(p => p.id === id && p.phase === 'seated')).length;
+      return `Cover the survivors while they board · ${aboard}/${ids.length} aboard`;
     }
   }
   return fallback;

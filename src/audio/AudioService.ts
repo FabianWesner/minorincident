@@ -706,6 +706,8 @@ export class AudioService implements Lifecycle {
             this.updateArc(player.transform, t);
         const metro=this.world.missions?.state.l6;
         if(metro?.phase==='shelter'&&this.world.tick-this.metroAmbientAt>=600){this.metroAmbientAt=this.world.tick;this.play('dialogue.radio',{position:{x:-4,z:2},gain:.15,lowpass:1800});}
+        const zooCalm = this.world.missions?.state.id === 'L8' && !this.world.missions.state.states.breached;
+        if (zooCalm) this.loop('l8:animals', 'bed.zoo-animals', { position: player.transform, gain: 0.65 }); else this.stopLoop('l8:animals');
         const ambient = metro || this.arc && this.arc.phase !== 'calm' ? null : this.ambience.update(t);
         if (ambient)
             this.play(ambient.cue, { position: { x: player.transform.x + ambient.x, z: player.transform.z + ambient.z }, gain: this.level === 'L5' ? dbGain(l5.audio.quietDb) : 1 });
