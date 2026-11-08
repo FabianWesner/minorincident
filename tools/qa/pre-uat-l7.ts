@@ -58,9 +58,11 @@ try {
     console.log(`[pre-uat-l7] ${cell.name}: begin`);
     try {
       const result = await runSession({ origin, out, levels: ['L7'], quality: cell.quality, zoom: cell.zoom, heroine: cell.character, entry: save ? 'continue' : 'debug', profile, levelMinutes: 9, sampleSeconds: 480, stopAfterLevel: true, tag: cell.name, noSkip: true });
+      if (!result.runs.some(run => run.level === 'L7' && run.finished && run.skipped.length === 0)) process.exitCode = 1;
       writeFileSync(resolve(out, 'result.json'), JSON.stringify(result, null, 2));
       console.log(`[pre-uat-l7] ${cell.name}: ${JSON.stringify(result.runs.map(r => ({ finished: r.finished, deaths: r.deaths, maxNoProgressSeconds: r.maxNoProgressSeconds })))}`);
     } catch (error) {
+      process.exitCode = 1;
       writeFileSync(resolve(out, 'error.json'), JSON.stringify({ error: String(error) }));
       console.error(`[pre-uat-l7] ${cell.name}: ${String(error)}`);
     }
