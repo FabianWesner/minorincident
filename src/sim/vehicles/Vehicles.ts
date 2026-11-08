@@ -381,6 +381,12 @@ export class Vehicles {
         delete target.attachedTo; const boarder = state.apcBoarders?.[id], side = boarder?.side ?? (id % 2 ? 1 : -1);
         target.transform.x = boarder ? target.transform.x + Math.sin(p.yaw) * side * .9 : p.x + Math.sin(p.yaw) * side * 2;
         target.transform.z = boarder ? target.transform.z + Math.cos(p.yaw) * side * .9 : p.z + Math.cos(p.yaw) * side * 2;
+        if (state.floor && boarder && target.health.current > 0) {
+          target.transform.y = (this.world.districts?.groundHeight(target.transform.x, target.transform.z) ?? 0) + .7;
+          // A real fall has a recovery window. Immediate reattachment while
+          // the handbrake slowed the APC made a successful shake-off useless.
+          this.world.combat?.damage.apply({ attackId: this.world.tick, actionId: car.entity.archetype, sourceId: car.entity.id, targetId: id, origin: p, direction: { x: Math.sin(p.yaw) * side, z: Math.cos(p.yaw) * side }, base: 1, multiplier: 1, type: 'vehicle', knockback: .5, stagger: 2, knockdownTicks: 120 });
+        }
         this.world.spatial.set(id, target.transform.x, target.transform.z);
       }
       this.world.events.emit({ type: 'vehicle.shaken', tick: this.world.tick, sourceId: car.entity.id, targetId: id });

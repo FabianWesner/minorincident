@@ -138,7 +138,7 @@ export class LevelNineDriving {
     for (const id of s.trucks) {
       w.interactables!.unblock(id);
       const truck = w.entities.get(id);
-      if (truck && !s.evacuationDone) w.interactables!.block(id, { ...truck.transform, y: .9, halfX: 1.429, halfY: .9, halfZ: 3.464 });
+      if (truck && !s.evacuationDone) w.interactables!.block(id, { x: truck.transform.x, z: truck.transform.z, y: .9, halfX: 1.429, halfY: .9, halfZ: 3.464 });
     }
     w.interactables!.unblock(s.tankerId);
     if (!s.tankerExploded) w.interactables!.block(s.tankerId, { ...cfg.tanker, y: 1, halfX: 1.4, halfY: 1, halfZ: 4, entityId: s.tankerId });
