@@ -13,7 +13,7 @@ export class Companion {
   private readonly courierProgress = { x: NaN, z: NaN, tick: 0 };
   private yieldUntil = 0;
   private readonly idleNearby: number[] = [];
-  private readonly rejoinProgress = new WeakMap<EntitySnapshot, { distance: number; tick: number; attempt: number }>();
+  private readonly rejoinProgress = new WeakMap<EntitySnapshot, { distance: number; tick: number; attempt: number; farAt?: number }>();
   constructor(readonly world: SimWorld) {
     world.events.on('cinematic.completed', () => {
       if (!world.entities.get(1)?.hidden) this.respawnNear();
@@ -280,10 +280,14 @@ export class Companion {
     const unseen = ai.director.offscreen(e.transform, e.transform.y - .3);
     if (gap <= 35 && !unseen) { this.rejoinProgress.delete(e); return; }
     let progress = this.rejoinProgress.get(e);
-    if (!progress || w.tick < progress.tick || gap < progress.distance - .5) {
+    if (!progress || w.tick < progress.tick) {
       progress = { distance: gap, tick: w.tick, attempt: 0 }; this.rejoinProgress.set(e, progress);
+    } else if (gap < progress.distance - .5) {
+      progress.distance = gap; progress.tick = w.tick;
     }
-    if (w.tick - progress.tick < 360 || w.tick < progress.attempt || !unseen) return;
+    if (gap > 35) progress.farAt ??= w.tick; else delete progress.farAt;
+    const stalled = w.tick - progress.tick >= 360, separated = progress.farAt !== undefined && w.tick - progress.farAt >= 360;
+    if (!stalled && !separated || w.tick < progress.attempt || !unseen) return;
     progress.attempt = w.tick + 60;
     const v = player.survivor?.velocity, speed = Math.hypot(v?.x ?? 0, v?.z ?? 0);
     const heading = speed > .5 ? Math.atan2(v!.z, v!.x) : -player.transform.yaw;
