@@ -60,7 +60,7 @@ export class L8BossArenas {
         if (distance(carrier.transform, victim.transform) < 1.8 && victim.civilian!.state !== 'grabbed') w.npcs!.civilians.outbreak!.grab(victim, carrier);
       }
       const live = arena.ids.map(id => w.entities.get(id)).filter((e): e is EntitySnapshot => !!e?.infected && e.health.current > 0);
-      if (arena.phase === 0 && live.length && distance(player.transform, def.entry) < 12 && distance(player.transform, def.centre) < def.radius) {
+      if (arena.phase === 0 && live.length && (distance(player.transform, def.entry) < 12 && distance(player.transform, def.centre) < def.radius || live.some(e => e.infected!.provoked?.id === 1 && (e.infected!.provoked?.until ?? 0) > w.tick))) {
         arena.phase = 1; arena.startedAt = w.tick; arena.nextAt = w.tick + 90; arena.rocket = 0;
         w.combat!.pickups.spawn('weapon.rocket-launcher', def.entry, false, { arenaAmmo: arena.id, retain: true });
         for (const e of live) e.infected!.arenaBoss!.engaged = true;
@@ -101,7 +101,7 @@ export class L8BossArenas {
     const def = l8BossArenas.find(a => a.id === boss.arena)!, p = w.entities.get(1)!, b = e.infected!;
     const roofHarasser = arena.id === 'monkey' && (boss.slot === 2 || boss.slot === 5);
     if (roofHarasser) {
-      if (!boss.roof && !boss.traversal && !boss.scattered) this.traverse(e, { x: -12, y: 4.8, z: boss.slot === 2 ? 12.5 : 15.5 }, true);
+      if (arena.phase > 0 && arena.phase < 3 && !boss.roof && !boss.traversal && !boss.scattered) this.traverse(e, { x: -12, y: 4.8, z: boss.slot === 2 ? 12.5 : 15.5 }, true);
       if (boss.roof && boss.scattered && !boss.traversal) this.traverse(e, { x: -6, y: .7, z: 14 }, false);
       if (boss.traversal) { this.traverseStep(e); return true; }
       if (boss.roof) {
