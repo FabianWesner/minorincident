@@ -73,6 +73,7 @@ async function alphaTypeContracts() {
       expect(w.events.events().filter(e => e.type === 'combat.hit' && e.attackId === attackId && e.sourceId === alpha.id), `${move}: no early damage`).toHaveLength(0);
       for (let i = 0; i < 240 && alpha.infected!.specialAttack?.stage !== 'recovery'; i++) advance(1);
       expect(alpha.infected!.specialAttack?.stage, `${move}: finishes`).toBe('recovery');
+      expect(alpha.infected!.specialAttack!.projectile, `${move}: releases projectile ownership`).toBeUndefined();
       expect(alpha.infected!.specialAttack!.recoveryUntil - w.tick, `${move}: punish duration`).toBeGreaterThanOrEqual(48);
       expect(ai.startSpecial(alpha.id, move, { id: 1, x: 0, z: 0 }, { x, z: 0, radius: 1, dx: -1, dz: 0 }), `${move}: cooldown`).toBe(false);
       if (move === 'alpha.roar') {
@@ -89,6 +90,11 @@ async function alphaTypeContracts() {
         expect(w.events.events().some(e => e.type === 'infected.attack' && e.sourceId === alpha.id && e.targetId === 1 && e.amount > 0), `${move}: real contact`).toBe(true);
         if (move === 'alpha.grab-human') expect(Math.hypot(player.transform.x, player.transform.z)).toBeGreaterThan(5);
         if (move === 'alpha.pounce') expect(ai.playerPinned()).toBe(true);
+      }
+      if (move === 'alpha.grab-throw') {
+        Object.assign(missile!.transform, { x: 5, z: 5 }); // Another thrower can now move this retained corpse.
+        ai.cancelSpecial(alpha.id);
+        expect([missile!.transform.x, missile!.transform.z], 'the old throw cannot reclaim a reused corpse').toEqual([5, 5]);
       }
       w.dispose(); worlds.splice(worlds.indexOf(w), 1);
     }

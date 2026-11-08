@@ -1572,6 +1572,7 @@ export class InfectedSystem {
   finishSpecial(sourceId: number): boolean {
     const e = this.world.entities.get(sourceId), b = e?.infected, a = b?.specialAttack;
     if (!e || !b || !a || a.stage !== 'active') return false;
+    this.props.settleSpecial(a);
     if (a.move === 'lion.pounce' || a.move === 'alpha.pounce') e.transform.y = (this.world.districts?.pavingHeight(e.transform.x, e.transform.z) ?? 0) + .7;
     if (e.locomotion) resetResponse(e.locomotion);
     a.stage = 'recovery'; a.recoveryUntil = Math.max(this.world.tick + (b.pursuit ? megaAlpha.recoveryTicks : b.alphaType ? 48 : infectedSpecialRecoveryTicks), a.obstructionUntil ?? 0);
