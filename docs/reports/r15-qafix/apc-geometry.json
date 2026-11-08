@@ -1,10 +1,92 @@
 {
-  "scope": "CPU geometry rays from approximate seated eye to the two QA close cameras; no rendered/visual claim",
+  "scope": "CPU geometry rays from approximate seated eye to the gameplay angle and two QA close cameras; no rendered/visual claim",
+  "modelSha256": "b2fde333b9a01878c23ad7e710673156e44e3796f59c47de86870f8c67ed6726",
+  "cabCodeSha256": "ab8b7397447025ea174b9ddfc8fc0735bec329298144022ccd9b8f1fd9f66560",
   "passed": true,
+  "roofOpaque": true,
   "rows": [
     {
       "label": "before",
+      "azimuth": 45,
+      "radius": 28.5,
+      "height": 1.9,
+      "opaque": [
+        {
+          "name": "transportRoof",
+          "at": [
+            1.0459844372483824,
+            2.2200000286102295,
+            0.8013709612992483
+          ]
+        },
+        {
+          "name": "transportRoof",
+          "at": [
+            1.1089814535213827,
+            2.2799999713897705,
+            0.8653779497783018
+          ]
+        }
+      ],
+      "glazing": [],
+      "clear": false
+    },
+    {
+      "label": "before",
+      "azimuth": 45,
+      "radius": 28.5,
+      "height": 2,
+      "opaque": [
+        {
+          "name": "transportRoof",
+          "at": [
+            0.9425551396718058,
+            2.2200000286102295,
+            0.6962834785890891
+          ]
+        },
+        {
+          "name": "transportRoof",
+          "at": [
+            1.0059791999391678,
+            2.2799999713897705,
+            0.7607243574592161
+          ]
+        }
+      ],
+      "glazing": [],
+      "clear": false
+    },
+    {
+      "label": "before",
+      "azimuth": 45,
+      "radius": 28.5,
+      "height": 2.1,
+      "opaque": [
+        {
+          "name": "transportRoof",
+          "at": [
+            0.8377140191788184,
+            2.2200000286102295,
+            0.5897615385269568
+          ]
+        },
+        {
+          "name": "transportRoof",
+          "at": [
+            0.9015709526447582,
+            2.2799999713897705,
+            0.6546422304465495
+          ]
+        }
+      ],
+      "glazing": [],
+      "clear": false
+    },
+    {
+      "label": "before",
       "azimuth": 80,
+      "radius": 7,
       "height": 1.9,
       "opaque": [
         {
@@ -30,6 +112,7 @@
     {
       "label": "before",
       "azimuth": 80,
+      "radius": 7,
       "height": 2,
       "opaque": [
         {
@@ -55,6 +138,7 @@
     {
       "label": "before",
       "azimuth": 80,
+      "radius": 7,
       "height": 2.1,
       "opaque": [
         {
@@ -80,6 +164,7 @@
     {
       "label": "before",
       "azimuth": 110,
+      "radius": 7,
       "height": 1.9,
       "opaque": [
         {
@@ -105,6 +190,7 @@
     {
       "label": "before",
       "azimuth": 110,
+      "radius": 7,
       "height": 2,
       "opaque": [
         {
@@ -130,6 +216,7 @@
     {
       "label": "before",
       "azimuth": 110,
+      "radius": 7,
       "height": 2.1,
       "opaque": [
         {
@@ -154,7 +241,62 @@
     },
     {
       "label": "after",
+      "azimuth": 45,
+      "radius": 28.5,
+      "height": 1.9,
+      "opaque": [],
+      "glazing": [
+        {
+          "name": "transportWindshield",
+          "at": [
+            0.9913703075529668,
+            2.1679841578509063,
+            0.745881254373141
+          ]
+        }
+      ],
+      "clear": true
+    },
+    {
+      "label": "after",
+      "azimuth": 45,
+      "radius": 28.5,
+      "height": 2,
+      "opaque": [],
+      "glazing": [
+        {
+          "name": "transportWindshield",
+          "at": [
+            0.9199336850052175,
+            2.1985998536629983,
+            0.6732993553101536
+          ]
+        }
+      ],
+      "clear": true
+    },
+    {
+      "label": "after",
+      "azimuth": 45,
+      "radius": 28.5,
+      "height": 2.1,
+      "opaque": [],
+      "glazing": [
+        {
+          "name": "transportWindshield",
+          "at": [
+            0.8478273937861507,
+            2.2295025503382995,
+            0.6000370514047517
+          ]
+        }
+      ],
+      "clear": true
+    },
+    {
+      "label": "after",
       "azimuth": 80,
+      "radius": 7,
       "height": 1.9,
       "opaque": [],
       "glazing": [
@@ -172,6 +314,7 @@
     {
       "label": "after",
       "azimuth": 80,
+      "radius": 7,
       "height": 2,
       "opaque": [],
       "glazing": [
@@ -189,6 +332,7 @@
     {
       "label": "after",
       "azimuth": 80,
+      "radius": 7,
       "height": 2.1,
       "opaque": [],
       "glazing": [
@@ -206,6 +350,7 @@
     {
       "label": "after",
       "azimuth": 110,
+      "radius": 7,
       "height": 1.9,
       "opaque": [],
       "glazing": [
@@ -223,6 +368,7 @@
     {
       "label": "after",
       "azimuth": 110,
+      "radius": 7,
       "height": 2,
       "opaque": [],
       "glazing": [
@@ -240,6 +386,7 @@
     {
       "label": "after",
       "azimuth": 110,
+      "radius": 7,
       "height": 2.1,
       "opaque": [],
       "glazing": [

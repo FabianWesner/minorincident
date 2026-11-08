@@ -1,5 +1,6 @@
 /** CPU ray proof of cab construction; visual approval still belongs to Browser QA. */
 import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { BoxGeometry, Mesh, MeshBasicMaterial, Raycaster, Vector3, DoubleSide } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
@@ -17,9 +18,9 @@ for (const [label, model] of [['before', before], ['after', scene]] as const) {
   model.traverse(node => { if (node instanceof Mesh) for (const material of Array.isArray(node.material) ? node.material : [node.material]) material.side = DoubleSide; });
   const body = model.getObjectByName('body')!;
   const bodyMeshes = new Set(); body.traverse(node => bodyMeshes.add(node));
-  for (const azimuth of [80, 110]) for (const height of [1.9, 2, 2.1]) {
+  for (const { azimuth, radius, targetY } of [{ azimuth: 45, radius: 28.5, targetY: 0 }, { azimuth: 80, radius: 7, targetY: 1 }, { azimuth: 110, radius: 7, targetY: 1 }]) for (const height of [1.9, 2, 2.1]) {
     const angle = azimuth * Math.PI / 180, polar = 54 * Math.PI / 180;
-    const camera = new Vector3(7 * Math.sin(polar) * Math.sin(angle), 1 + 7 * Math.cos(polar), 7 * Math.sin(polar) * Math.cos(angle));
+    const camera = new Vector3(radius * Math.sin(polar) * Math.sin(angle), targetY + radius * Math.cos(polar), radius * Math.sin(polar) * Math.cos(angle));
     const eye = new Vector3(.71, height, .46), direction = camera.clone().sub(eye).normalize();
     const hits = new Raycaster(eye, direction, 0, eye.distanceTo(camera)).intersectObject(model, true);
     const opaque = [], glazing = [];
@@ -31,11 +32,13 @@ for (const [label, model] of [['before', before], ['after', scene]] as const) {
       const cell = { name: mesh.name || 'original-body', at: hit.point.toArray() };
       if (alpha < .4) glazing.push(cell); else opaque.push(cell);
     }
-    rows.push({ label, azimuth, height, opaque, glazing, clear: opaque.length === 0 && glazing.length > 0 });
+    rows.push({ label, azimuth, radius, height, opaque, glazing, clear: opaque.length === 0 && glazing.length > 0 });
   }
 }
 const passed = rows.filter(row => row.label === 'after').every(row => row.clear);
+const roof = scene.getObjectByName('transportRoof') as Mesh;
+const roofOpaque = Array.from(roof.geometry.getAttribute('cabOpacity').array).every(value => value === 1);
 mkdirSync('docs/reports/r15-qafix', { recursive: true });
-writeFileSync('docs/reports/r15-qafix/apc-geometry.json', JSON.stringify({ scope: 'CPU geometry rays from approximate seated eye to the two QA close cameras; no rendered/visual claim', passed, rows }, null, 2) + '\n');
+writeFileSync('docs/reports/r15-qafix/apc-geometry.json', JSON.stringify({ scope: 'CPU geometry rays from approximate seated eye to the gameplay angle and two QA close cameras; no rendered/visual claim', modelSha256: createHash('sha256').update(bytes).digest('hex'), cabCodeSha256: createHash('sha256').update(readFileSync('src/render/transportModel.ts')).digest('hex'), passed, roofOpaque, rows }, null, 2) + '\n');
 console.log(JSON.stringify(rows.map(({ opaque, glazing, ...row }) => ({ ...row, opaque: opaque.map(hit => hit.name), glazing: glazing.map(hit => hit.name) }))));
-if (!passed) process.exitCode = 1;
+if (!passed || !roofOpaque) process.exitCode = 1;
