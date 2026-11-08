@@ -251,7 +251,12 @@ async function checkPharmacyCourier() {
     // North is the physical exit that the surrounding friendly column sealed.
     for (let tick = 0; tick < 300; tick++) {
       for (const e of w.entities.iterate()) if (e.id !== 1 && !live.has(e.id)) e.hidden = true;
+      const before = new Map([...live].map(id => [id, { ...w.entities.get(id)!.transform }]));
       const input = emptyInput(); input.move.z = -1; w.applyInput(input, 'keyboard'); w.update();
+      for (const [id, old] of before) {
+        const at = w.entities.get(id)!.transform;
+        expect(Math.hypot(at.x - old.x, at.z - old.z), 'pharmacy followers leave continuously without popping').toBeLessThanOrEqual(.1);
+      }
     }
     expect(pharmacyColumn.player.z - p.transform.z, 'the recorded pharmacy body jam clears along its open north side').toBeGreaterThan(3);
     expect(w.solids.offenders).toEqual([]);
