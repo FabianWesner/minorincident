@@ -1,4 +1,6 @@
 /** Controlled native checks complement the mortal arena runs; setup mutations never count as combat victories. */
+import { OrthographicCamera } from 'three';
+import { Vfx } from '../../src/render/vfx/Vfx';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { L8ArenaBot } from '../../src/debug/bot/L8ArenaBot';
 import { emptyInput } from '../../src/input/InputFrame';
@@ -124,11 +126,17 @@ try {
     const payloadId = w.infected!.spawn('infected.runner', { x: 58.7, z: -22 }, { state: 'chase' });
     const payload = w.entities.get(payloadId)!;
     arena.phase = 1; arena.cycle = 1; arena.nextAt = w.tick;
-    let lifted = false, flight = false, landed = false, rolling = false, landingDistance = 0;
+    const camera = new OrthographicCamera(), fx = new Vfx(w, { camera: () => camera, flash: () => {}, detach: () => {}, blood: () => {}, clearGore: () => {}, shake: () => {} });
+    const marks: {x:number;z:number;aspect?:number;shape:number}[] = [], spawn = fx.telegraphs.spawn.bind(fx.telegraphs);
+    fx.telegraphs.spawn = (...args) => { marks.push({x:args[2],z:args[4],aspect:args[12],shape:args[9]}); return spawn(...args); };
+    let lifted = false, flight = false, landed = false, rolling = false, landingDistance = 0, markedLanding = false;
+
     for (let n = 0; n < 500 && !landed; n++) {
       step(w); const a = e.infected!.specialAttack;
       if (a?.projectile?.objectId === payloadId) {
         lifted ||= a.stage === 'telegraph' && payload.infected!.thrownBy === e.id;
+        const mark = marks.at(-1), projectile = a.projectile;
+        if (mark && projectile && mark.aspect === 1 && mark.shape === 1) markedLanding ||= Math.hypot(mark.x-projectile.x-projectile.dx*projectile.range,mark.z-projectile.z-projectile.dz*projectile.range) < .01;
         flight ||= a.stage === 'active' && payload.transform.y > 1;
         if (flight && payload.infected!.thrownBy === undefined) {
           landed = payload.health.current > 0; rolling = payload.combat!.staggerUntil - w.tick === 36 && payload.combat!.reaction?.heavy === true && payload.combat!.reaction.until - w.tick === 36;
@@ -136,6 +144,8 @@ try {
         }
       }
     }
+    check('arena throw ground mark uses the actual short landing endpoint', markedLanding, { marks, markedLanding });
+    fx.dispose();
     check('gorilla lifts a real living infected, lands it nearby and gives it a 0.6s roll', lifted && flight && landed && rolling && landingDistance >= 1 && landingDistance <= 3, { payloadId, lifted, flight, landed, rolling, landingDistance, hp: payload.health.current, at: payload.transform });
   } finally { w.dispose(); }
 } catch (error) { errors.push(`gorilla living missile: ${String(error)}`); }

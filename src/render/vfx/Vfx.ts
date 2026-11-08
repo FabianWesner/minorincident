@@ -403,7 +403,9 @@ export class Vfx extends Group {
       : directional && area ? source?.infected?.pursuit ? Math.min(megaAlpha.moves['alpha.charge'].range, megaAlpha.moves['alpha.charge'].speed)
       : destination ? Math.hypot(destination.x - area.x, destination.z - area.z)
       : move === 'elephant.charge' ? 16 : move === 'zebra.stampede' ? 15 : move === 'lion.pounce' ? Math.min(8, Math.hypot(target!.x - area.x, target!.z - area.z)) : 12 : 0;
-    const position = arenaThrow && target ? target : directional && area ? { x: area.x + area.dx * length / 2, z: area.z + area.dz * length / 2 } : 'position' in event ? event.position : area ?? source?.transform;
+    const flight = arenaThrow ? source?.infected?.specialAttack?.projectile : undefined;
+    const landing = flight ? { x: flight.x + flight.dx * flight.range, z: flight.z + flight.dz * flight.range } : target;
+    const position = arenaThrow && landing ? landing : directional && area ? { x: area.x + area.dx * length / 2, z: area.z + area.dz * length / 2 } : 'position' in event ? event.position : area ?? source?.transform;
     if (!position) return;
     const radius = directional ? Math.max(.1, length / 2) : 'radius' in event ? event.radius : area?.radius ?? (kind === 'bloated' || kind === 'splash' ? 3 : source ? Math.max(this.world.missions?.def.l1 ? 1 : 2, infectedDef(source.archetype).range) : 2);
     const angle = area ? Math.atan2(area.dz, area.dx) : 'angle' in event ? event.angle : Math.atan2(source?.infected?.dz ?? 0, source?.infected?.dx ?? 1);
@@ -411,7 +413,7 @@ export class Vfx extends Group {
     const width = throwing ? 2 : move === 'elephant.charge' ? 3.5 : move === 'zebra.stampede' ? source?.infected?.arenaBoss ? (area?.radius ?? .75) * 2 : 1.5 : (area?.radius ?? 1) * 2;
     const ground = this.world.districts?.groundHeight(position.x, position.z) ?? 0;
     if (move === 'zebra.stampede' && source) this.burst(source.transform.x, source.transform.y - .5, source.transform.z, 0xb9ab8e, this.quality === 'low' ? 3 : 6, .5, 1, 0, particleShape.smoke, .6, .2);
-    const slot = this.telegraphs.spawn(this.time, 1e9, position.x, ground + .065, position.z, angle, 'duration' in event ? event.duration : .6, 0, radius * 2, shape, this.telegraphColor(kind), 0, directional ? width / (radius * 2) : kind === 'charge' ? .3 : 1, true);
+    const slot = this.telegraphs.spawn(this.time, 1e9, position.x, ground + .065, position.z, angle, 'duration' in event ? event.duration : .6, 0, radius * 2, shape, this.telegraphColor(kind), 0, arenaThrow ? 1 : directional ? width / (radius * 2) : kind === 'charge' ? .3 : 1, true);
     if (slot < 0) return;
     this.visible = true;
     this.tells.set(event.attackId, { slot, kind, spawned: this.time, x: position.x, z: position.z, angle, shape, radius, resolves: this.time + ('duration' in event ? event.duration : .6), ...(event.sourceId !== undefined ? { sourceId: event.sourceId } : {}) });
