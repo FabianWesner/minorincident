@@ -100,7 +100,7 @@ try {
     arena.phase = 1; arena.nextAt = w.tick + 30; arena.cycle = 0;
     const charges: unknown[] = [];
     w.events.on('infected.special', event => { if (event.type === 'infected.special' && event.sourceId === e.id && event.move === 'elephant.charge' && event.stage === 'recovery') charges.push({ tick: w.tick, a: structuredClone(e.infected!.specialAttack), boss: { ...e.transform }, courier: { ...p.transform }, neighbors: w.entities.values().filter(v => v.id !== e.id && v.health.current > 0 && Math.hypot(v.transform.x-e.transform.x,v.transform.z-e.transform.z)<6).map(v=>({id:v.id,role:v.archetype,at:{...v.transform},radius:v.combat?.radius})), staticAhead: w.solids.sweep(e, { x: e.infected!.specialAttack!.area.dx, z: e.infected!.specialAttack!.area.dz }, 14 / 60, e.combat!.radius, false, false) }); });
-    const bot = new L8ArenaBot(w), contacts: unknown[] = []; let previous = 0;
+    const bot = new L8ArenaBot(w), contacts: { barrier?: string; [key: string]: unknown }[] = []; let previous = 0;
     for (let n = 0; n < 300 * 60 && e.health.current > 0 && p.health.current > 0; n++) {
       const f = emptyInput();
       // Use the same visible-cue movement policy as the skilled fighter, with both firing buttons left off.
@@ -108,9 +108,9 @@ try {
       if (p.transform.x + f.move.x * 2 < -80 || p.transform.x + f.move.x * 2 > -40) f.move.x = 0;
       if (p.transform.z + f.move.z * 2 < 14 || p.transform.z + f.move.z * 2 > 50) f.move.z = 0;
       w.applyInput(f, 'keyboard'); step(w);
-      if (arena.wallHits > previous) { previous = arena.wallHits; contacts.push({ tick: w.tick, hits: previous, boss: { ...e.transform }, courier: { ...p.transform }, hp: e.health.current }); }
+      if (arena.wallHits > previous) { previous = arena.wallHits; contacts.push({ tick: w.tick, hits: previous, barrier: arena.wallContacts?.at(-1), boss: { ...e.transform }, courier: { ...p.transform }, hp: e.health.current }); }
     }
-    check('three real sidestepped wall charges kill without firing', arena.wallHits === 3 && e.health.current === 0, { contacts, wallHits: arena.wallHits, hp: e.health.current, courierHP: p.health.current, finalBoss: e.transform, finalCourier: p.transform, finalAttack: e.infected!.specialAttack, phase: arena.phase, current: zoo.state.arenas.find(a => a.id === arena.id), tick: w.tick, missionPhase: w.missions!.state.phase, charges });
+    check('three real sidestepped wall charges kill without firing', arena.wallHits === 3 && e.health.current === 0 && contacts.every(c => !!c.barrier && !c.barrier.includes('bush')), { contacts, wallHits: arena.wallHits, hp: e.health.current, courierHP: p.health.current, finalBoss: e.transform, finalCourier: p.transform, finalAttack: e.infected!.specialAttack, phase: arena.phase, current: zoo.state.arenas.find(a => a.id === arena.id), tick: w.tick, missionPhase: w.missions!.state.phase, charges });
   } finally { w.dispose(); }
 } catch (error) { errors.push(`elephant wall tactic: ${String(error)}`); }
 

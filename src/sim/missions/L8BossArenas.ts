@@ -1,5 +1,7 @@
 import { l8BossArenas, type L8BossId } from '../../data/l8Bosses';
 import type { InfectedSpecialMove } from '../../data/infected';
+import { propFootprint } from '../interact/PropSystem';
+import { boxContact, type SolidBox } from '../world/SolidGeometry';
 import { Status } from '../combat/Status';
 import { resetResponse } from '../locomotion/MotionResponse';
 import type { EntitySnapshot } from '../world/types';
@@ -8,7 +10,7 @@ import { requireClearPoint } from './missionHelpers';
 
 export interface L8ArenaState {
   id: L8BossId; ids: number[]; carrier: number; phase: 0 | 1 | 2 | 3; startedAt: number; endedAt: number;
-  nextAt: number; cycle: number; wallHits: number; carrierRetryAt?: number; rocket: number; grabs: number; counters: number;
+  nextAt: number; cycle: number; wallHits: number; wallContacts?: string[]; carrierRetryAt?: number; rocket: number; grabs: number; counters: number;
   lane?: { x: number; side: 1 | -1; staging: boolean };
   track?: { x: number; z: number; vx: number; vz: number; turn: number; at: number };
 }
@@ -138,7 +140,7 @@ export class L8BossArenas {
     if (b.specialAttack?.move === 'gorilla.roar' && b.specialAttack.stage === 'telegraph' && b.grabHits > 0) { arena.counters++; this.recover(e, 120); return true; }
     if (b.specialAttack) { this.advanceMove(e, arena); return true; }
     if (Status.stunned(e, w.tick)) return true;
-    if (w.tick < boss.readyAt) { if (arena.id === 'elephant') this.walk(e, this.predict(e, .8, arena), arena.phase === 2 ? 6 : 5); return true; }
+    if (w.tick < boss.readyAt) { if (arena.id === 'elephant') this.walk(e, this.predict(e, .8, arena), 5); return true; }
     if (boss.followUpThrow) { delete boss.followUpThrow; this.scavenge(e); }
     if (boss.approach) {
       const move = boss.approach, radius = move === 'gorilla.roar' ? 8 : 5;
@@ -188,7 +190,7 @@ export class L8BossArenas {
       this.hunt(e, true); boss.readyAt = w.tick + 360;
     } else if (arena.id === 'elephant' && distance(e.transform, p.transform) < 4) {
       this.start(e, 'elephant.swipe', 42, 0, 5.5); boss.readyAt = w.tick + 420;
-    } else if (arena.id === 'elephant') this.walk(e, this.predict(e, .8, arena), arena.phase === 2 ? 6 : 5);
+    } else if (arena.id === 'elephant') this.walk(e, this.predict(e, .8, arena), 5);
     else this.orbit(e, arena, p.transform, arena.id === 'flamingo' ? 6 : 4);
     return true;
   }
@@ -325,13 +327,30 @@ export class L8BossArenas {
     }
     if (clear + .001 < step || travelled + step >= range || w.tick - a.activeTick > (range / speed + 1) * 60) {
       const side = Math.abs((p.transform.x - a.area.x) * a.area.dz - (p.transform.z - a.area.z) * a.area.dx);
+      const barrier = arena.id === 'elephant' && staticClear + .001 < step ? this.elephantBarrier(e) : undefined;
       // A near wall/truck still counts after a real lured run and sidestep; the elephant need not pass the old bait pose.
-      if (arena.id === 'elephant' && staticClear + .001 < step && distance(e.transform, a.area) >= 1 && side > a.area.radius + .35) {
-        arena.wallHits++; arena.counters++; this.announce('Elephant staggered — fire now!');
+      if (arena.id === 'elephant' && barrier && distance(e.transform, a.area) >= 1 && side > a.area.radius + .35) {
+        (arena.wallContacts ??= []).push(barrier); arena.wallHits++; arena.counters++; this.announce('Elephant staggered — fire now!');
         if (arena.wallHits >= 3) w.combat!.damage.apply({ sourceId: 1, targetId: e.id, attackId: a.attackId, actionId: 'arena.elephant.wall', origin: p.transform, direction: { x: a.area.dx, z: a.area.dz }, base: e.health.max * 10, multiplier: 1, type: 'status', knockback: 0, stagger: 0, permanent: true });
       }
       this.recover(e, 120);
     }
+  }
+  /** A decorative bush can stop a charge, but only authored walls/fences or the yard truck count toward the tactic. */
+  private elephantBarrier(e: EntitySnapshot): string | undefined {
+    const out = { depth: 0, nx: 0, nz: 0, inside: false };
+    const touches = (b: SolidBox) => b.y + b.halfY > e.transform.y - .6 && b.y - b.halfY < e.transform.y + .65 && boxContact(b, e.transform.x, e.transform.z, e.combat!.radius + .03, out).depth >= 0;
+    for (const d of this.w.districts?.districts ?? []) for (const c of d.decay.colliders) {
+      if (!/wall|fence/.test(c.id)) continue;
+      const { min, max } = c.aabb;
+      if (touches({ x: (min[0]+max[0])/2+d.origin[0], z: (min[2]+max[2])/2+d.origin[1], y: (min[1]+max[1])/2, halfX: (max[0]-min[0])/2, halfZ: (max[2]-min[2])/2, halfY: (max[1]-min[1])/2 })) return c.id;
+    }
+    for (const p of this.w.props?.items ?? []) {
+      if (!/wall|fence/.test(p.assetId) && !p.id.endsWith('/l8-elephant-truck') || !p.body.isEnabled()) continue;
+      const b = propFootprint(p);
+      if (touches(b.navFootprint ? { ...b, ...b.navFootprint } : b)) return p.id;
+    }
+    return undefined;
   }
   private hit(e: EntitySnapshot, amount: number, stun: number): void {
     const w = this.w, a = e.infected!.specialAttack!, p = w.entities.get(1)!;
