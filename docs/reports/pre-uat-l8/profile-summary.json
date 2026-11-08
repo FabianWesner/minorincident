@@ -1,0 +1,281 @@
+{
+  "source": {
+    "sourceHash": "2da492ddbc6fe86c57886d1d2b7efa296226de1166b3385e19914a88a183681e",
+    "observerHash": "41aaabb1d7cb661cd4318a0a9b026a885ed999be82913d2b6e47122269a40024",
+    "revision": "c463d5950421d1faca38b90ffdb327d90aa3110e",
+    "input": {
+      "level": "L8",
+      "tier": "low",
+      "backend": "webgl2",
+      "zoom": 1.5,
+      "source": "keep",
+      "courierGodMode": false,
+      "movingCoverRoute": false,
+      "noSkip": true,
+      "frameTiming": true
+    }
+  },
+  "commandExit": 1,
+  "exitReason": "Optional PLAYTEST_SHADER_GUARD=1 rejects 84 playing-state node builds, including deliberate low/high capture-matrix rebuilds. Not a zero-build pass.",
+  "captureConfound": "PLAYTEST_ACCEPTANCE_CAPTURES default 1 swaps low/high while paused, then restores low. This diagnostic is not a stable-quality benchmark.",
+  "cpuProfile": {
+    "file": "test-results/vqa59/pre-uat-l8-profiled-low/pre-uat-l8-profiled-low.cpuprofile",
+    "sha256": "7490626b2744cdc4978f4dc0d8db0cf476d85f36c4b5fb69932ea43a0249e990"
+  },
+  "frames": [
+    {
+      "tick": 2618,
+      "atMs": 54653.3,
+      "playMs": 1166.6000000000058,
+      "idleMs": 1121.84,
+      "idleFraction": 0.9616,
+      "top": [
+        {
+          "function": "(idle)",
+          "url": "",
+          "line": 0,
+          "weightedMs": 1121.84
+        },
+        {
+          "function": "query",
+          "url": "index-BMW1bjo9.js",
+          "line": 11,
+          "weightedMs": 10.64
+        },
+        {
+          "function": "",
+          "url": "",
+          "line": 0,
+          "weightedMs": 4.91
+        },
+        {
+          "function": "_renderObjectDirect",
+          "url": "three-webgpu-DhgMgiIh.js",
+          "line": 44,
+          "weightedMs": 3.42
+        },
+        {
+          "function": "values",
+          "url": "index-BMW1bjo9.js",
+          "line": 11,
+          "weightedMs": 3.13
+        }
+      ]
+    },
+    {
+      "tick": 2623,
+      "atMs": 55203.2,
+      "playMs": 549.8999999999942,
+      "idleMs": 462.82,
+      "idleFraction": 0.8416,
+      "top": [
+        {
+          "function": "(idle)",
+          "url": "",
+          "line": 0,
+          "weightedMs": 462.82
+        },
+        {
+          "function": "(program)",
+          "url": "",
+          "line": 0,
+          "weightedMs": 6.87
+        },
+        {
+          "function": "",
+          "url": "",
+          "line": 0,
+          "weightedMs": 4.43
+        },
+        {
+          "function": "update",
+          "url": "index-BMW1bjo9.js",
+          "line": 8,
+          "weightedMs": 3.94
+        },
+        {
+          "function": "elementFromPoint",
+          "url": "",
+          "line": 0,
+          "weightedMs": 3.61
+        }
+      ]
+    },
+    {
+      "tick": 4730,
+      "atMs": 91951.8,
+      "playMs": 583.3000000000029,
+      "idleMs": 564.28,
+      "idleFraction": 0.9674,
+      "top": [
+        {
+          "function": "(idle)",
+          "url": "",
+          "line": 0,
+          "weightedMs": 564.28
+        },
+        {
+          "function": "sightMultiplier",
+          "url": "index-BMW1bjo9.js",
+          "line": 9,
+          "weightedMs": 3.01
+        },
+        {
+          "function": "wrote",
+          "url": "infected-1TfrDWR2.js",
+          "line": 1,
+          "weightedMs": 1.51
+        },
+        {
+          "function": "emit",
+          "url": "infected-1TfrDWR2.js",
+          "line": 1,
+          "weightedMs": 1.51
+        },
+        {
+          "function": "values",
+          "url": "index-BMW1bjo9.js",
+          "line": 11,
+          "weightedMs": 1.51
+        }
+      ]
+    },
+    {
+      "tick": 5902,
+      "atMs": 111767.6,
+      "playMs": 349.90000000000873,
+      "idleMs": 333.27,
+      "idleFraction": 0.9525,
+      "top": [
+        {
+          "function": "(idle)",
+          "url": "",
+          "line": 0,
+          "weightedMs": 333.27
+        },
+        {
+          "function": "query",
+          "url": "index-BMW1bjo9.js",
+          "line": 11,
+          "weightedMs": 3.02
+        },
+        {
+          "function": "(program)",
+          "url": "",
+          "line": 0,
+          "weightedMs": 2.61
+        },
+        {
+          "function": "setFromRotationMatrix",
+          "url": "three-core-DHyOKRez.js",
+          "line": 5,
+          "weightedMs": 1.51
+        },
+        {
+          "function": "_renderObjectDirect",
+          "url": "three-webgpu-DhgMgiIh.js",
+          "line": 44,
+          "weightedMs": 1.47
+        }
+      ]
+    },
+    {
+      "tick": 5907,
+      "atMs": 112184.3,
+      "playMs": 416.6999999999971,
+      "idleMs": 377.15,
+      "idleFraction": 0.9051,
+      "top": [
+        {
+          "function": "(idle)",
+          "url": "",
+          "line": 0,
+          "weightedMs": 377.15
+        },
+        {
+          "function": "(program)",
+          "url": "",
+          "line": 0,
+          "weightedMs": 6.91
+        },
+        {
+          "function": "sight",
+          "url": "install-D_xPDhwq.js",
+          "line": 1,
+          "weightedMs": 4.84
+        },
+        {
+          "function": "_renderObjectDirect",
+          "url": "three-webgpu-DhgMgiIh.js",
+          "line": 44,
+          "weightedMs": 3.1
+        },
+        {
+          "function": "Vi",
+          "url": "infected-1TfrDWR2.js",
+          "line": 1,
+          "weightedMs": 2.89
+        }
+      ]
+    }
+  ],
+  "buildsByTick": {
+    "60": 3,
+    "359": 1,
+    "384": 1,
+    "404": 1,
+    "419": 1,
+    "435": 1,
+    "457": 1,
+    "463": 1,
+    "464": 1,
+    "487": 1,
+    "507": 1,
+    "522": 1,
+    "537": 1,
+    "555": 1,
+    "578": 1,
+    "579": 1,
+    "601": 1,
+    "602": 1,
+    "625": 1,
+    "628": 22,
+    "3642": 1,
+    "4245": 22,
+    "5129": 1,
+    "6003": 1,
+    "6029": 1,
+    "7631": 15
+  },
+  "steadyQualityFollowup": {
+    "label": "pre-uat-l8-steady-low",
+    "commandExit": 0,
+    "source": {
+      "sourceHash": "2da492ddbc6fe86c57886d1d2b7efa296226de1166b3385e19914a88a183681e",
+      "observerHash": "41aaabb1d7cb661cd4318a0a9b026a885ed999be82913d2b6e47122269a40024",
+      "revision": "c463d5950421d1faca38b90ffdb327d90aa3110e",
+      "input": {
+        "level": "L8",
+        "tier": "low",
+        "backend": "webgl2",
+        "zoom": 1.5,
+        "source": "keep",
+        "courierGodMode": false,
+        "movingCoverRoute": false,
+        "noSkip": true,
+        "frameTiming": true
+      }
+    },
+    "wallSeconds": 149,
+    "finished": true,
+    "deaths": 0,
+    "assists": 0,
+    "escapedHumans": 22,
+    "gameplayFramesOver200ms": [],
+    "cpuProfile": {
+      "file": "test-results/vqa59/pre-uat-l8-steady-low/pre-uat-l8-steady-low.cpuprofile",
+      "sha256": "55de9cfebbb1421b7f61223ce75de335fa7ad2acd8c5ba0278c4caca0a8b3dd2"
+    },
+    "method": "PLAYTEST_ACCEPTANCE_CAPTURES=0 PLAYTEST_SHOT_SECONDS=1000; low WebGL2 only, no god mode, CPU profile on, optional node-build guard off. One owned context, shared machine load >6. Not a quiet/cold high-tier qualification."
+  }
+}

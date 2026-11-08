@@ -44,7 +44,7 @@ export interface VehicleState {
   braced?: boolean; driver: number | null; attached: number[]; damage: 'normal' | 'smoking' | 'burning' | 'exploded';
   explodeAt: number | null; stuck: boolean; recoveringUntil: number;
 }
-interface Car { entity: EntitySnapshot; physics: VehicleBody; doorTicks: number; noEnterUntil: number; hits: Map<number, number>; crashAt: number }
+interface Car { entity: EntitySnapshot; physics: VehicleBody; doorTicks: number; noEnterUntil: number; hits: Map<number, number>; crashAt: number; zooParked?: boolean }
 export interface CarTransition { carId: number; kind: 'enter' | 'exit'; tick: number; side: number; from: { x: number; y: number; z: number; yaw: number }; }
 /** E09 fixed-phase owner; player movement/combat are suspended only while driving. */
 export class Vehicles {
@@ -113,6 +113,8 @@ export class Vehicles {
     if (!player || player.health.current <= 0) return false;
     for (const car of this.cars.values()) {
       if (!this.operable(car) || car.physics.speed >= 1 || this.world.tick < car.noEnterUntil) continue;
+      const zoo = this.world.missions?.l8;
+      if (zoo?.state.carId === car.entity.id && !zoo.canBoardDriver()) continue;
       this.localPoint(car, car.physics.def.doorX, car.physics.def.width / 2 + .55);
       if (Math.hypot(player.transform.x - this.position.x, player.transform.z - this.position.z) <= .7) return true;
     }
@@ -136,6 +138,14 @@ export class Vehicles {
       // The floor vehicle has no voluntary exit until the scripted crash.
       if (this.active === car.entity.id && frame.interact && !state.floor && !departingZoo) this.exit(car);
       const waitingForBoarding=zoo?.state.carId===car.entity.id&&!zoo.canDrive();
+      // L8's destination is fixed. Blasts must not slide/rotate its doorway away
+      // from that marker while the group boards. Keep suspension and damage live;
+      // release the parking hold for departure. A rebuilt body reapplies it here.
+      if (zoo?.state.carId === car.entity.id && car.zooParked !== waitingForBoarding) {
+        car.zooParked = waitingForBoarding;
+        car.physics.body.setEnabledTranslations(!waitingForBoarding, true, !waitingForBoarding, true);
+        car.physics.body.setEnabledRotations(!waitingForBoarding, !waitingForBoarding, !waitingForBoarding, true);
+      }
       if (this.operable(car) && this.active === car.entity.id && !waitingForBoarding) {
         if (scheme === 'keyboard' || scheme === 'mouse-keyboard') {
           drive.throttle = frame.drive?.throttle ?? frame.move.x;
@@ -154,7 +164,7 @@ export class Vehicles {
         drive.handbrake = frame.handbrake ?? frame.right.held;
         if ((scheme !== 'mouse-only' && frame.left.down) || (car.physics.def.emergency && this.world.tick % 60 === 0)) this.noise(car);
         if (state.recoveringUntil > this.world.tick && !drive.brake) { drive.throttle = -.8; drive.steer = .6; drive.brake = false; }
-      } else if (this.active === null && player.health.current > 0 && this.operable(car) && this.world.tick >= car.noEnterUntil && car.physics.speed < 1) {
+      } else if (this.active === null && player.health.current > 0 && this.operable(car) && this.world.tick >= car.noEnterUntil && car.physics.speed < 1 && (zoo?.state.carId !== car.entity.id || zoo.canBoardDriver())) {
         this.localPoint(car, car.physics.def.doorX, car.physics.def.width / 2 + .55);
         const near = Math.hypot(player.transform.x - this.position.x, player.transform.z - this.position.z) <= .7;
         const still = Math.hypot(frame.move.x, frame.move.z) < .05;

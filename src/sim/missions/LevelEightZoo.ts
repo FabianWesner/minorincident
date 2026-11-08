@@ -165,6 +165,11 @@ export class LevelEightZoo {
   passengers(): number[] {
     return [...[...this.w.entities.iterate()].filter(e=>e.companion&&e.health.current>0).map(e=>e.id), ...this.roster()];
   }
+  /** The unarmed cab would remove the courier's cover fire before the queue is safe. */
+  canBoardDriver(): boolean {
+    const car = this.w.entities.get(this.state.carId)?.vehicle;
+    return this.breached && this.passengers().every(id => car?.passengers?.some(p => p.id === id && p.phase === 'seated'));
+  }
   /** E30 departure starts only after the breach and the complete group has boarded. */
   canDrive(): boolean { return this.breached && this.w.vehicles!.groupBoarded(this.state.carId,this.passengers()); }
   /** The completed boarding group shares the courier's run-out protection until handover. */

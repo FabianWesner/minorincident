@@ -462,7 +462,7 @@ export class Hud {
       }
       return;
     }
-    if (mission?.def.l8 && mission.state.steps.depart?.status === 'active') {
+    if (mission?.def.l8 && (mission.state.steps.depart?.status === 'active' || mission.l8!.boarding())) {
       // The objective line already shows the exact aboard count. The remaining
       // passengers are being escorted by the boarding AI, so a nearest-person
       // "Find" cue sends the player away from the APC while they queue there.
