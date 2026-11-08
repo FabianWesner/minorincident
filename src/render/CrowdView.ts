@@ -695,7 +695,7 @@ export class CrowdView extends Group {
       if (!batch) continue;
       const b = e.infected ?? { state: e.health.current <= 0 || e.civilian?.state === 'finished' ? 'dead' : e.combat.attacking ? 'attack' : 'idle', until: 0, deadAt: e.civilian?.entered ?? 0, legLost: false, special: '', detached: false, variant: '', birdAlive: [], birdPositions: [], dx: 0, dz: 0 };
       const specialAttack = e.infected?.specialAttack;
-      const physical = specialAttack && (e.infected?.pursuit && specialAttack.move === 'alpha.grab-throw' || ['alpha.charge', 'alpha.ground-slam', 'lion.pounce', 'lion.flank', 'gorilla.pound', 'gorilla.roar', 'elephant.charge', 'elephant.swipe', 'zebra.stampede'].includes(specialAttack.move)) ? specialAttack : undefined;
+      const physical = specialAttack && (e.infected?.pursuit && specialAttack.move === 'alpha.grab-throw' || ['alpha.charge', 'alpha.ground-slam', 'alpha.pounce', 'alpha.grab-human', 'alpha.shield-bash', 'lion.pounce', 'lion.flank', 'gorilla.pound', 'gorilla.roar', 'elephant.charge', 'elephant.swipe', 'zebra.stampede'].includes(specialAttack.move)) ? specialAttack : undefined;
       const feedback = this.feedback.get(e.id);
       const renderTick = Math.max(0, this.world.tick + alpha - 1);
       const tick = distance > 35 ? Math.floor(this.world.tick / 2) * 2 : this.world.tick;
