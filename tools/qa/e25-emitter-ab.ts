@@ -4,11 +4,12 @@ import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 const baseline = process.env.E25_BEFORE_REF ?? 'ac0a9e26';
 const afterOnly = process.argv.includes('--after-only');
+if (process.argv.includes('--resume-high') && !afterOnly) throw Error('--resume-high requires --after-only');
 const paths = execFileSync('git', ['diff', '--name-only', baseline, '--', 'public/assets/models'], { encoding: 'utf8' }).trim().split('\n').filter(p => p.endsWith('.glb'));
 paths.push('src/data/lightAnchors.json', 'src/assets/staticBakes.json');
 const repaired = new Map<string, Buffer>(afterOnly ? [] : paths.map(path => [path, readFileSync(path)] as const));
 const capture = (phase: string) => {
-  for (const tier of ['high', 'low']) execFileSync(process.execPath, ['--import', 'tsx/esm', 'tools/qa/e25-emitter-visual.ts', ...(tier === 'low' ? ['--low'] : [])], {
+  for (const tier of ['high', 'low']) execFileSync(process.execPath, ['--import', 'tsx/esm', 'tools/qa/e25-emitter-visual.ts', ...(tier === 'low' ? ['--low'] : []), ...(phase === 'after' && tier === 'high' && process.argv.includes('--resume-high') ? ['--resume'] : [])], {
     stdio: 'inherit', env: { ...process.env, E25_BEFORE_REF: baseline, E25_FIXTURE_FILE: 'docs/reports/e25-emitters/evidence/visual-fixtures.json', E25_OUT: `test-results/epics/E25/emitters-${phase}` },
   });
 };

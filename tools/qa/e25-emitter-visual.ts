@@ -46,7 +46,26 @@ if (process.argv.includes('--list')) { console.log(JSON.stringify(fixtures, null
 const fixturePath = process.env.E25_FIXTURE_FILE;
 const rows = fixturePath ? JSON.parse(readFileSync(fixturePath, 'utf8')) as typeof fixtures : fixtures;
 const s = new SceneSession({ backend: 'webgl2', tier }), results: unknown[] = [];
+type SavedCapture = { name: string; zoom: number; tier: string; kind: string; camera: { zoom: number }; actualRadius: number; calibratedZoom: number; errors: string[]; path: string; sha256: string };
+const saved = process.argv.includes('--resume') ? JSON.parse(readFileSync(`${out}/captures.json`, 'utf8')) as SavedCapture[] : [];
+for (const r of saved) {
+  if (r.tier !== tier || r.errors.length || ![1, 1.5].includes(r.zoom) || !r.camera ||
+      !(Math.abs(r.camera.zoom - r.zoom) < 1e-6) || !(Math.abs(r.calibratedZoom - r.zoom) < 1e-6) ||
+      r.kind === 'prop' && !(Math.abs(r.actualRadius - cameraFraming.radiusM * r.zoom) < 1e-6) ||
+      !r.path.startsWith(`${out}/`) || createHash('sha256').update(readFileSync(r.path)).digest('hex') !== r.sha256) throw Error(`Cannot resume invalid capture ${r.name}`);
+}
+const done = new Set(saved.map(r => r.name));
+for (const name of done) if (saved.filter(r => r.name === name).length !== 2 || new Set(saved.filter(r => r.name === name).map(r => r.zoom)).size !== 2) throw Error(`Cannot resume incomplete zoom pair ${name}`);
+results.push(...saved);
 let cameraBase: CameraPose;
+async function openFrozen() {
+  await s.open(); await s.page.evaluate('globalThis.__name = (fn) => fn');
+  await s.page.evaluate(() => {
+    const game = (window.__SCENE__ as unknown as { game: Game }).game, reset = game.clock.reset.bind(game.clock);
+    game.clock.reset = () => { reset(); game.clock.pause(); }; game.clock.resume = () => {}; game.clock.pause();
+  });
+}
+
 async function capture(name: string, zoom: number, detail: object) {
   // Presets ignore follow-camera zoom. Scale the actual pose about its fixed target,
   // matching View's production zoom convention (1.5 means 1.5 times the radius).
@@ -91,17 +110,18 @@ async function capture(name: string, zoom: number, detail: object) {
   const metrics = { tick: state.tick, tier: state.tier, lods: state.lods, camera: state.camera, baseRadius, actualRadius, calibratedZoom: actualRadius / baseRadius }; results.push({ name, zoom, ...detail, ...metrics, path, sha256: createHash('sha256').update(bytes).digest('hex'), errors: [...s.errors] });
 }
 try {
-  await s.open(); await s.page.evaluate('globalThis.__name = (fn) => fn');
-  await s.page.evaluate(() => {
-    const game = (window.__SCENE__ as unknown as { game: Game }).game, reset = game.clock.reset.bind(game.clock);
-    game.clock.reset = () => { reset(); game.clock.pause(); }; game.clock.resume = () => {}; game.clock.pause();
-  });
+  await openFrozen(); let batchRows = 0;
   for (const row of rows) {
+    if (done.has(row.name)) continue;
+    // Keep each lease well below the shared ten-minute browser cap.
+    if (batchRows >= 24) { await s.close(); await openFrozen(); batchRows = 0; }
     await s.load(row.spec); await s.ready(); await s.step(1);
     for (const zoom of [1, 1.5]) await capture(row.name, zoom, { level: row.level, asset: row.asset, decay: row.decay, placement: row.placement, kind: 'prop' });
-    console.log(`${tier} ${row.name}`);
+    console.log(`${tier} ${row.name}`); batchRows++;
   }
   for (const [level, suffix] of [['L1', ''], ['L2', 'l2-streets-w1'], ['L4', 'l4-plaza-safe'], ['L5', 'pair-plaza']]) {
+    if (process.env.E25_NATIVE_LEVEL && level !== process.env.E25_NATIVE_LEVEL) continue;
+    if (done.has(`native-${level}`)) continue;
     await s.close(); await s.open(); await s.page.evaluate('globalThis.__name = (fn) => fn');
     await s.page.evaluate(async ({ level, tier }: { level: string; tier: 'high' | 'low' }) => {
       window.__SS__!.settings.set({ quality: tier });
