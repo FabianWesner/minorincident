@@ -135,7 +135,7 @@ export class LevelEightZoo {
     this.mission.setState('apc-destroyed', w.entities.get(s.carId)!.health.current <= 0);
     const seated=this.w.vehicles!.active===s.carId;
     this.mission.setState('player-boarded',seated);
-    if(seated || !this.breached)this.mission.state.marker=null;
+    if(seated)this.mission.state.marker=null;
     else if(this.mission.state.steps.escape.status==='active'||this.mission.state.steps.depart.status==='active')this.mission.state.marker='exit';
     if (!this.breached) return;
     if (t >= s.nextWave) {
@@ -168,7 +168,7 @@ export class LevelEightZoo {
   /** The unarmed cab would remove the courier's cover fire before the queue is safe. */
   canBoardDriver(): boolean {
     const car = this.w.entities.get(this.state.carId)?.vehicle;
-    return this.breached && this.passengers().every(id => car?.passengers?.some(p => p.id === id && p.phase === 'seated'));
+    return this.breached && this.mission.state.steps.escape.status === 'active' && this.passengers().every(id => car?.passengers?.some(p => p.id === id && p.phase === 'seated'));
   }
   /** E30 departure starts only after the breach and the complete group has boarded. */
   canDrive(): boolean { return this.breached && this.w.vehicles!.groupBoarded(this.state.carId,this.passengers()); }
@@ -176,7 +176,7 @@ export class LevelEightZoo {
   departing(): boolean { return this.mission.state.runOutUntil !== undefined || this.mission.state.phase !== 'playing'; }
   /** At the pickup, the evacuation queue owns movement instead of civilian flee/defence. */
   boarding(): boolean {
-    return this.breached && (this.w.vehicles!.active === this.state.carId || distance(this.w.entities.get(1)!.transform, this.door()) < 12);
+    return this.breached && (this.mission.state.steps.escape.status === 'active' || this.mission.state.steps.depart.status === 'active') && (this.w.vehicles!.active === this.state.carId || distance(this.w.entities.get(1)!.transform, this.door()) < 12);
   }
   /** Cheat/test path (`completeObjective` before the breach): call the tunnel breach now so the escape objective becomes active. */
   advance(): boolean {

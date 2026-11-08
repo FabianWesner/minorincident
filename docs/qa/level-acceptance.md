@@ -283,8 +283,7 @@ Feel: "false sanctuary → internal mass outbreak with infected animals; fight t
 | ID | Step | Criterion (expected value) | Source | Check |
 |---|---|---|---|---|
 | L8-01 | escape (calm) | L7 roster and arsenal arrive exactly; companions at full health; no weapon pickup in L8; start weapon = last weapon (not the bat). | E30-AC03, Q-198 | S |
-| L8-02 | escape (calm) | Exactly 60 active sim seconds with the opening objective visible, without waypoint or scripted attack. | E30-AC04 | S |
-| | | **Check:** the code starts `escape` (waypoint on) at level start; verify the marker/text stay hidden for the 60 s calm, else FAIL. | | |
+| L8-02 | sanctuary → escape | **PO 2026-11-08:** from control return, the tracker names the zoo gate and shows its distance; the fixed world marker/edge arrow and minimap target point there during the 60 active-second calm. The APC objective and its markers activate only after the internal breach at 60 s; the APC cannot be boarded/driven and survivors cannot queue there before that transition. No scripted attack/conversion/breach begins early, and movement/weapon selection stay available. Pause and sanctuary restore preserve the remaining calm time. | E30-AC04/07/14 | S, O |
 | L8-03 | escape (calm) | ≥ 20 civilians, ≥ 6 soldiers, ≥ 4 staff, ≥ 8 animals (all 5 species, ≥ 2 zebras, ≥ 3 flamingos); outside-wall infected cannot cross; nobody idle > 3 s. | E30-AC05/06 | S, O |
 | L8-04 | escape (breach) | Breach at 60 s ± 1 tick at ≥ 3 tunnel outlets ≥ 20 m apart within 1 s; **6 / 3 per point** (≥ 18 / ≥ 9); no pop-in. | E30-AC07 | S |
 | L8-05 | escape (breach) | Attacks hit civilians, soldiers, staff and animals; animals turn in 2.5–3.5 s keeping id/species; 3–5 Alphas over the run; concurrent ≤ 200 / 100. | E30-AC08/09/11 | S |

@@ -51,8 +51,6 @@ export function objectiveText(mission: Mission, fallback: string): string {
   }
   if (mission.def.l8) {
     const zoo=mission.l8!, seated=w.vehicles!.active===zoo.state.carId;
-    // E30-AC04: keep the opening group objective visible through the sanctuary minute.
-    if(!zoo.state.breachedAt)return 'Stay with the group';
     if (!seated && zoo.boarding() && !zoo.canBoardDriver()) {
       const ids = zoo.passengers(), car = w.vehicles!.cars.get(zoo.state.carId)!.entity.vehicle!;
       const aboard = ids.filter(id => car.passengers?.some(p => p.id === id && p.phase === 'seated')).length;

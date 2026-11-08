@@ -131,12 +131,15 @@ test('interactions: ring, input and view predicates agree for every interact ste
         expect(activeInteractions(mission).find(i => i.step.id === 'axe')?.ring, 'optional rack keeps its ground ring').toBe(true);
       }
       if (level === 'L8') {
-        expect(objectiveText(mission, 'Bring the survivors to the armored vehicle and board')).toBe('Stay with the group');
-        expect(mission.state.marker).toBeNull();
+        mission.begin();
+        expect(mission.state.steps.sanctuary.status).toBe('active');
+        expect(mission.state.steps.escape.status).toBe('pending');
+        expect(mission.state.steps.depart.status).toBe('pending');
         // The existing outlet scene exposed queued residents first becoming
         // visible on the apron. Exercise its native six-person door queue here,
         // without adding another registered case or relaxing the scene gate.
-        mission.begin();
+        expect(mission.state.marker).toBe('zoo-gate');
+        expect(objectiveText(mission, mission.def.steps[0].text)).toBe('Lead the group to the zoo gate');
         const source = mission.l8!.state.outlets[2];
         const house = { ...source, ids: [] as number[], walking: [], route: [], ox: source.sx, oz: source.sz, speedMs: emergeSpeedMs };
         const first = new Map<number, number>();

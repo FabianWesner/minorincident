@@ -177,7 +177,7 @@ Every move scene checks activation/impact/expiry and two activations separated b
 | `T-E30-01` | `@E30-AC01` | Graph (arrival/calm → internal breach → fight to vehicle → board/depart) is completable with 0–35 carried survivors, no kill-all objective or fail timer. |
 | `T-E30-02` | `@E30-AC02` | `complete` finishes one seed from `L8-default` without cheats, ≥ 60 % of carried group survives (orchestrator default) |
 | `T-E30-03` | `@E30-AC03` | L7 bus arrives at D-ZOO |
-| `T-E30-04` | `@E30-AC04` | For exactly 60 active sim seconds after control returns there is no objective/waypoint/forced tutorial or scripted attack/conversion/breach |
+| `T-E30-04` | `@E30-AC04` | From control return, the zoo-gate objective, distance, fixed world marker/edge arrow and minimap target are visible; APC objective/guidance and boarding/group queuing unlock only at the 60-second breach, with no early scripted attack/conversion/breach |
 | `T-E30-05` | `@E30-AC05` | Before breach, strong closed walls, ≥ 20 local civilians, ≥ 6 soldiers, ≥ 4 staff, ≥ 8 normal animals incl |
 | `T-E30-06` | `@E30-AC06` | Outside-wall infected fixture cannot cross the perimeter or damage inside occupants during calm |
 | `T-E30-07` | `@E30-AC07` | First breach begins at 60 s ± 1 tick, at ≥ 3 inside tunnel points ≥ 20 m apart within a 1 s window |

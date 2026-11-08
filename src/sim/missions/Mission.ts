@@ -199,9 +199,9 @@ export class Mission {
     const current = this.def.steps.find(s => this.state.steps[s.id].status === 'active');
     if(this.markerObjective!==(current?.id??null)){
       this.markerObjective=current?.id??null;
-      this.state.marker=this.def.l8&&!this.state.states.breached||current?.waypoint===false?null:current?.anchor??null;
+      this.state.marker=current?.waypoint===false?null:current?.anchor??null;
     }
-    if(this.pendingMarker){this.state.marker=this.def.l8&&!this.state.states.breached?null:this.pendingMarker;this.pendingMarker=null;}
+    if(this.pendingMarker){this.state.marker=this.pendingMarker;this.pendingMarker=null;}
   }
   private complete(def: ObjectiveDef, cheat = false): void {
     this.state.steps[def.id].status = 'completed'; this.state.completedObjectives.push(def.id);
