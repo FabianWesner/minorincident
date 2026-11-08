@@ -155,11 +155,22 @@ export class L8BossArenas {
     }
     if (arena.id === 'gorilla' && boss.barrage && !boss.scavengeId) this.scavenge(e);
     if (boss.scavengeId) {
+      if (arena.id === 'gorilla') {
+        const progress = boss.scavengeProgress;
+        if (!progress || distance(e.transform, progress) > .25) boss.scavengeProgress = { x: e.transform.x, z: e.transform.z, at: w.tick };
+        else if (w.tick - progress.at >= 120) {
+          // A displaced prop can leave a locally blocked route. Resume the fight
+          // rather than spending the whole phase trying to walk through cover.
+          delete boss.scavengeId; delete boss.scavengeProgress; boss.barrage = 0;
+          boss.approach = 'gorilla.pound'; b.path.length = 0; b.goal = -1;
+          return true;
+        }
+      }
       const object = w.entities.get(boss.scavengeId), prop = w.props?.items.find(p => p.entityId === boss.scavengeId);
       const pose = prop?.body.translation() ?? object?.transform;
-      if (!pose) delete boss.scavengeId;
+      if (!pose) { delete boss.scavengeId; delete boss.scavengeProgress; }
       else if (distance(e.transform, pose) > 2.4) { this.walk(e, pose, arena.phase === 2 ? 5.5 : 4); return true; }
-      else { delete boss.scavengeId; this.start(e, arena.id === 'monkey' ? 'monkey.debris' : 'gorilla.grab-throw', arena.phase === 2 ? 36 : 48, 0, 1); return true; }
+      else { delete boss.scavengeId; delete boss.scavengeProgress; this.start(e, arena.id === 'monkey' ? 'monkey.debris' : 'gorilla.grab-throw', arena.phase === 2 ? 36 : 48, 0, 1); return true; }
     }
     if (boss.smashId) {
       const object = w.destruction?.objects.find(o => o.id === boss.smashId);
@@ -269,7 +280,7 @@ export class L8BossArenas {
   }
   private scavenge(e: EntitySnapshot): void {
     const object = this.w.infected!.props.nearestObject(e, 25, (e.infected!.arenaBoss!.barrage ?? 0) > 0);
-    if (object) e.infected!.arenaBoss!.scavengeId = object.id;
+    if (object) { e.infected!.arenaBoss!.scavengeId = object.id; delete e.infected!.arenaBoss!.scavengeProgress; }
     else { e.infected!.arenaBoss!.barrage = 0; if (e.archetype === 'infected.monkey') this.start(e, 'monkey.grab', 60, 10, .8); else e.infected!.arenaBoss!.approach = 'gorilla.pound'; }
   }
   private start(e: EntitySnapshot, move: InfectedSpecialMove, windup: number, range: number, radius: number, axis?: { x: number; z: number }): void {
