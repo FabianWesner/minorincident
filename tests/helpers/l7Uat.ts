@@ -183,6 +183,19 @@ async function checkL7CourierYield() {
     expect(yielded.size, 'blocking followers physically step sideways through ordinary swept walking').toBeGreaterThan(0);
     expect(Math.hypot(player.transform.x - start.x, player.transform.z - start.z), 'the courier walks through the follower column instead of remaining boxed in').toBeGreaterThan(9);
     expect(w.solids.offenders).toEqual([]);
+    // A legitimate enemy/environment knockdown also owns an already-issued
+    // kerb-yield order. Only forced impact motion may continue during the fall.
+    const knocked = w.entities.get(roster[0].id)!, c = knocked.civilian!;
+    c.knockedUntil = w.tick + 90;
+    c.vehicleYield = { target: { x: knocked.transform.x + 2, z: knocked.transform.z }, until: w.tick + 120 };
+    const move = vi.spyOn(w.npcs!, 'move');
+    try {
+      w.npcs!.civilians.outbreak!.update();
+      expect(move.mock.calls.filter(([e]) => e.id === knocked.id), 'a knocked-down follower receives no voluntary walking order').toHaveLength(0);
+      w.tick = c.knockedUntil; move.mockClear();
+      w.npcs!.civilians.outbreak!.update();
+      expect(move.mock.calls.some(([e]) => e.id === knocked.id), 'ordinary walking resumes when the existing timer expires').toBe(true);
+    } finally { move.mockRestore(); }
   } finally { w.dispose(); }
 }
 

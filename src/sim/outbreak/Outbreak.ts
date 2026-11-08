@@ -208,6 +208,9 @@ export class Outbreak {
       if (e.infection) { this.transform(e); continue; }
       if (c.state === 'grabbed') { this.held(e); continue; }
       if (c.state === 'finished' || c.state === 'infected') continue;
+      // L7 travel and kerb-yield orders must not walk a knocked-down evacuee
+      // across the street while its displayed body is still on the ground.
+      if (world.scenario === 'L7' && c.survivor?.mode === 'follow' && tick < c.knockedUntil) continue;
       if (c.state === 'calm') this.shelterCower(e);
       if (world.missions?.state.l3?.waitingIds?.includes(e.id)) { this.routine(e); continue; }
       if (c.zooAnimal) { this.animalRoutine(e); continue; }
