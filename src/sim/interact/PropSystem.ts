@@ -2,7 +2,7 @@
 import { clearOfL2Script } from '../../levels/continuity';
 import { overlapsRoad } from '../../levels/districts/validate';
 import * as RAPIER from '@dimforge/rapier3d-compat';
-import { pushableProps } from '../../data/pushableProps';
+import { movableProps as pushableProps } from '../../data/pushableProps';
 import type { Placement } from '../../levels/districts/types';
 import type { DistrictWorld } from '../world/DistrictWorld';
 import type { SimWorld } from '../world/SimWorld';

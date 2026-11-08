@@ -19,7 +19,7 @@ import {
 import { crossValidate } from "../../levels/districts/crossValidate";
 import { placementColliders } from "../../levels/districts/staticCollision";
 import { bakeNav } from "./NavGrid";
-import { pushableProps } from "../../data/pushableProps";
+import { pushableProps, movableProps } from "../../data/pushableProps";
 /** Sim-side level assembly. Render consumes the same immutable loaded layouts/placements. */
 /** Horizontal reach of a walkable support past its collider edge (m): closes authoring seams between tiled slabs. */
 export const supportSeam = .03;
@@ -76,7 +76,7 @@ export class DistrictWorld {
         decay.colliders = decay.colliders.filter(c => !replaced.has(c.id.split('/')[0]));
       }
       // Pushable props are dynamic bodies (PropSystem): no static collider, no nav-grid footprint.
-      const pushables = decay.placements.filter((p) => pushableProps[p.assetId] && !p.decor);
+      const pushables = decay.placements.filter((p) => (pushableProps[p.assetId] || p.destruction && !p.destruction.indestructible && movableProps[p.assetId]) && !p.decor);
       const pushed = new Set(pushables.map((p) => p.id));
       decay.colliders = placementColliders(decay.placements, decay.colliders).filter((c) => !pushed.has(c.id.split("/")[0]));
       // Destructible structures own removable parts; supports remain in the immutable ground bake.

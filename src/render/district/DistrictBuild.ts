@@ -315,6 +315,7 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
         for (const p of d.decay.placements) {
           const lit = d.decay.lights.includes(p.lightGroup), key = `${p.assetId}:${lit}:${p.decay ?? ''}`;
           const reference = new Object3D(); reference.position.fromArray(p.position); reference.rotation.y = p.yaw; reference.scale.fromArray(p.scale);
+          reference.userData.placementId = `${d.id}/${p.id}`;
           const first = anchorsFor(p.assetId)[0];
           if (first) reference.userData.lightBase = deps.materials.lamps.base(placedLightId(d.id, d.origin, p.id, first.name), anchorsFor(p.assetId));
           if (p.tint) reference.userData.tint = p.tint;
