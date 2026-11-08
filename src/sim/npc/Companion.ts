@@ -1,3 +1,4 @@
+import { inCorn } from '../../levels/L10/farm';
 import { actorRadius } from '../world/SolidRegistry';
 import { infectedDef } from '../../data/infected';
 import { l1v2 } from '../../data/l1v2';
@@ -270,8 +271,10 @@ export class Companion {
     const tuning = l1v2.corgi, ai = this.world.infected!, w = c.warn ??= { stage: 'none', threat: -1, nervousUntil: 0 };
     let threat: EntitySnapshot | null = null, best: number = tuning.stiffenM;
     for (const enemy of ai.active) {
-      if (enemy.health.current <= 0 || enemy.infected?.hidden || ai.director.visible(enemy.transform)) continue;
+      if (enemy.health.current <= 0 || enemy.infected?.hidden) continue;
       const d = Math.hypot(enemy.transform.x - player.x, enemy.transform.z - player.z);
+      const concealed = this.world.scenario === 'L10' && d > 3 && inCorn(this.world, [enemy.transform.x, enemy.transform.z]);
+      if (ai.director.visible(enemy.transform) && !concealed) continue;
       if (d <= best) { best = d; threat = enemy; }
     }
     if (!threat) {

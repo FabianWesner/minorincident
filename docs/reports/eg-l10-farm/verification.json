@@ -1,0 +1,230 @@
+{
+  "initialRemote": {
+    "sourceRevision": "63faae107f839658cba93488b08312897df9665d",
+    "remoteSnapshot": "abc473f91623e62e68582b095afd910d59c78076",
+    "host": "mi-runner-1",
+    "checks": [
+      {
+        "name": "typecheck",
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0,
+        "seconds": 73.95,
+        "outputTail": "\n> typecheck\n> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json\n"
+      },
+      {
+        "name": "lint",
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exitCode": 0,
+        "seconds": 33.84,
+        "outputTail": "\n> lint\n> eslint src tests tools functions *.config.ts eslint.config.js\n"
+      },
+      {
+        "name": "unit",
+        "command": [
+          "npm",
+          "test",
+          "--",
+          "--maxWorkers=1"
+        ],
+        "exitCode": 1,
+        "seconds": 199.98,
+        "outputTail": " \u2713  default  tests/engine/core.test.ts (4 tests) 105ms\n \u2713  default  tests/engine/l10-camera-framing.test.ts (3 tests) 175ms\n \u2713  default  tests/shared/architecture.test.ts (2 tests) 2548ms\n   \u2713 the sim import graph never reaches renderer, UI, debug or DOM code (Three math, synchronous save codecs and Rapier) 1901ms\n   \u2713 lint rejects unseeded randomness, DOM and renderer imports in the sim 645ms\n \u2713  default  tests/tools/browser-pool-client.test.ts (1 test) 7ms\n \u2713  default  tests/tools/playtest-finale-retreat.test.ts (1 test) 6ms\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af Failed Tests 1 \u23af\u23af\u23af\u23af\u23af\u23af\u23af\n\n FAIL   default  tests/tools/gate-tools.test.ts > browser pool admission backs off under WindowServer pressure, keeps a one-context floor, recovers only after three cool samples\nAssertionError: expected 'STALE' to be 'FRESH' // Object.is equality\n\nExpected: \"FRESH\"\nReceived: \"STALE\"\n\n \u276f tests/tools/gate-tools.test.ts:68:75\n     66|   const reviewed: ReviewDecision = { ...review, row: 'L1-01', commit: \u2026\n     67|   expect(reviewFreshness(reviewed, 'L1')).toBe('FRESH');\n     68|   expect(reviewFreshness({ ...reviewed, sourceDigest: undefined }, 'L1\u2026\n       |                                                                           ^\n     69|   expect(reviewFreshness({ ...reviewed, sourceDigest: '1'.repeat(64) }\u2026\n     70|   expect(reviewFreshness({ ...reviewed, sourceDigest: undefined, commi\u2026\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af[1/1]\u23af\n\n\n Test Files  1 failed | 26 passed (27)\n      Tests  1 failed | 105 passed | 1 skipped (107)\n   Start at  17:30:14\n   Duration  193.85s (tests 90%, transform 5%, import 5%, setup 1%)\n\n[test-budget] test: 199.7 s (budget 240 s)\n[test-budget] FAIL: test failed (exit 1)\n[test-budget] See docs/qa/test-strategy.md: merge into an existing test or delete one before adding another."
+      },
+      {
+        "name": "farm-native",
+        "command": [
+          "node",
+          "--import",
+          "tsx/esm",
+          "tools/qa/eg-l10-farm.ts"
+        ],
+        "exitCode": 0,
+        "seconds": 6.95,
+        "outputTail": "{\"status\":\"PASS\",\"audioPcmHash\":\"454f5b2655b5762515327384485a390d5024bacd5a15d1c28dd49750e5a30b6d\",\"cropTiles\":208,\"farmPieces\":35,\"bareTrees\":292,\"checks\":[\"walkable corn without colliders\",\"14/16m perception capped at 3m in crop\",\"crop crossing breaks sight and tracking; close hearing retained\",\"courier and shared NPC/sprinter locomotion 0.85 speed; mown lane 1.0\",\"A* terrain cost 1/0.85\",\"corgi warns about an on-screen crop-concealed threat\",\"four checkpointed fair scare telegraphs\",\"five distinct synthesized stingers\",\"rock only during finale\",\"all source LOD caps\"],\"scares\":{\"corn-scare-0\":{\"due\":92,\"actor\":101},\"corn-scare-1\":{\"due\":92,\"actor\":102},\"corn-scare-2\":{\"due\":92,\"actor\":103},\"corn-scare-3\":{\"due\":92,\"actor\":104}}}"
+      },
+      {
+        "name": "acceptance",
+        "command": [
+          "npm",
+          "run",
+          "qa:accept",
+          "--",
+          "--level",
+          "L10",
+          "--skip-browser"
+        ],
+        "exitCode": 143,
+        "seconds": 1479.88,
+        "outputTail": "\n> qa:accept\n> node --import tsx/esm tools/qa/accept.ts --level L10 --skip-browser\n\n[qa:accept] L10 low/complete: native global and level observation\n[qa:accept] L10 low/complete: tick-budget\n[qa:accept] L10 low/stationary: native global and level observation\n[qa:accept] L10 low/stationary: tick-budget\n[qa:accept] L10 high/complete: native global and level observation\nTerminated"
+      }
+    ],
+    "testBudget": {
+      "name": "test",
+      "cases": 150,
+      "counts": {
+        "vitest": 129,
+        "e2e": 9,
+        "invariantsBrowser": 12
+      },
+      "files": 43,
+      "limits": {
+        "cases": 150,
+        "files": 45,
+        "seconds": 240
+      },
+      "command": [
+        "node",
+        "node_modules/vitest/vitest.mjs",
+        "run",
+        "--project",
+        "default",
+        "--configLoader",
+        "runner",
+        "--maxWorkers=1"
+      ],
+      "seconds": 199.679238691,
+      "exitCode": 1,
+      "signal": null,
+      "failures": [
+        "test failed (exit 1)"
+      ],
+      "at": "2026-11-08T17:33:28.266Z"
+    }
+  },
+  "finalRemote": {
+    "sourceRevision": "29d310863a3c4eb6b11d56f51bd0012a83b5fa47",
+    "remoteSnapshot": "990a06c7601d1100bd0e12f64f3735cde5a0dc8d",
+    "host": "mi-runner-2",
+    "checks": [
+      {
+        "name": "typecheck",
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 2,
+        "seconds": 58.86,
+        "outputTail": "\n> typecheck\n> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json\n\ntools/qa/eg-l10-farm.ts(100,28): error TS2339: Property 'actor' does not exist on type 'never'.\ntools/qa/eg-l10-farm.ts(100,69): error TS2339: Property 'due' does not exist on type 'never'."
+      },
+      {
+        "name": "lint",
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exitCode": 0,
+        "seconds": 40.65,
+        "outputTail": "\n> lint\n> eslint src tests tools functions *.config.ts eslint.config.js\n"
+      },
+      {
+        "name": "unit",
+        "command": [
+          "npm",
+          "test",
+          "--",
+          "--maxWorkers=1"
+        ],
+        "exitCode": 0,
+        "seconds": 232.14,
+        "outputTail": " \u2713  default  tests/tools/qa-drivers.test.ts (3 tests) 213ms\n \u2713  default  tests/engine/spawn-director.test.ts (4 tests) 12800ms\n   \u2713 a 150-infected migration follows its spline on time and fans out at the goal 2044ms\n   \u2713 pooling: spawn/kill cycles reuse prewarmed records, keep every corpse, and refresh borrowed collision radii 10198ms\n \u2713  default  tests/engine/determinism.test.ts (4 tests) 16833ms\n   \u2713 render rate does not change the simulation: 600 ticks hash the same at 30, 60 and 144 Hz 491ms\n   \u2713 a serialized recording replays the identical state hash at every tick; snapshots are copies; reset frees everything 837ms\n   \u2713 real levels replay deterministically: same seed and script give the same hash on L1, L4 and L10 15495ms\n \u2713  default  tests/engine/aim-assist.test.ts (3 tests) 601ms\n   \u2713 keyboard fire at all eight facings: Off shoots along the facing, Default lands on the zombie in front 565ms\n \u2713  default  tests/engine/director-pressure.test.ts (3 tests) 1149ms\n   \u2713 director pressure brings every native role to its human without replacing its combat role 391ms\n   \u2713 native routing clears thin doorways and yields failed shared searches 748ms\n \u2713  default  tests/engine/input-log-codec.test.ts (2 tests) 1197ms\n   \u2713 input log codec (2)\n     \u2713 round-trips every InputFrame field and scheme exactly, with float64 precision and commands at their sample index 410ms\n     \u2713 cuts independent chunks under the upload cap, decodes them in order, survives gzip and rejects gaps and garbage 785ms\n \u2713  default  tests/engine/player.test.ts (3 tests) 2310ms\n   \u2713 walls: a 72-direction capsule sweep never penetrates the wall ring; sliding keeps 60 % tangential speed; head-on corners slip 2032ms\n \u2713  default  tests/tools/test-budget-tools.test.ts (1 test) 24494ms\n   \u2713 test budget collection is passive, rejects missing counts and bounds collection with child cleanup 24493ms\n \u2713  default  tests/engine/core.test.ts (4 tests) 125ms\n \u2713  default  tests/engine/l10-camera-framing.test.ts (3 tests) 183ms\n \u2713  default  tests/shared/architecture.test.ts (2 tests) 3359ms\n   \u2713 the sim import graph never reaches renderer, UI, debug or DOM code (Three math, synchronous save codecs and Rapier) 2522ms\n   \u2713 lint rejects unseeded randomness, DOM and renderer imports in the sim 835ms\n \u2713  default  tests/tools/browser-pool-client.test.ts (1 test) 8ms\n \u2713  default  tests/tools/playtest-finale-retreat.test.ts (1 test) 4ms\n\n Test Files  27 passed (27)\n      Tests  106 passed | 1 skipped (107)\n   Start at  18:13:27\n   Duration  225.17s (tests 91%, import 4%, transform 4%, setup 1%)\n\n[test-budget] test: 231.9 s (budget 240 s)"
+      },
+      {
+        "name": "farm-native",
+        "command": [
+          "node",
+          "--import",
+          "tsx/esm",
+          "tools/qa/eg-l10-farm.ts"
+        ],
+        "exitCode": 0,
+        "seconds": 6.97,
+        "outputTail": "{\"status\":\"PASS\",\"audioPcmHash\":\"454f5b2655b5762515327384485a390d5024bacd5a15d1c28dd49750e5a30b6d\",\"cropTiles\":208,\"farmPieces\":35,\"bareTrees\":292,\"checks\":[\"walkable corn without colliders\",\"14/16m perception capped at 3m in crop\",\"crop crossing breaks sight and tracking; close hearing retained\",\"courier and shared NPC/sprinter locomotion 0.85 speed; mown lane 1.0\",\"A* terrain cost 1/0.85\",\"corgi warns about an on-screen crop-concealed threat\",\"four checkpointed fair scare telegraphs\",\"live-clock retry and delayed admission replay pending telegraphs\",\"five distinct synthesized stingers\",\"rock only during finale\",\"all source LOD caps\"],\"scares\":{\"corn-scare-0\":{\"due\":92,\"actor\":101},\"corn-scare-1\":{\"due\":192,\"actor\":102},\"corn-scare-2\":{\"due\":292,\"actor\":103},\"corn-scare-3\":{\"due\":392,\"actor\":104}}}"
+      }
+    ],
+    "testBudget": {
+      "name": "test",
+      "cases": 150,
+      "counts": {
+        "vitest": 129,
+        "e2e": 9,
+        "invariantsBrowser": 12
+      },
+      "files": 43,
+      "limits": {
+        "cases": 150,
+        "files": 45,
+        "seconds": 240
+      },
+      "command": [
+        "node",
+        "node_modules/vitest/vitest.mjs",
+        "run",
+        "--project",
+        "default",
+        "--configLoader",
+        "runner",
+        "--maxWorkers=1"
+      ],
+      "seconds": 231.85208310299998,
+      "exitCode": 0,
+      "signal": null,
+      "failures": [],
+      "at": "2026-11-08T18:17:12.460Z"
+    }
+  },
+  "acceptance": "INCOMPLETE: older-revision partial receipts; see acceptance-summary.json. No full L10 acceptance verdict.",
+  "auditFollowupRemote": {
+    "sourceRevision": "7703153a623294ad773a95f01313a2a11e18d558",
+    "remoteSnapshot": "570fe1c13122a2f25cff8acfb316e8925e06d15a",
+    "host": "mi-runner-3",
+    "checks": [
+      {
+        "name": "typecheck",
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0,
+        "seconds": 61.85,
+        "outputTail": "\n> typecheck\n> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json\n"
+      },
+      {
+        "name": "lint",
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exitCode": 0,
+        "seconds": 29.99,
+        "outputTail": "\n> lint\n> eslint src tests tools functions *.config.ts eslint.config.js\n"
+      },
+      {
+        "name": "farm-native",
+        "command": [
+          "node",
+          "--import",
+          "tsx/esm",
+          "tools/qa/eg-l10-farm.ts"
+        ],
+        "exitCode": 0,
+        "seconds": 4.89,
+        "outputTail": "{\"status\":\"PASS\",\"audioPcmHash\":\"454f5b2655b5762515327384485a390d5024bacd5a15d1c28dd49750e5a30b6d\",\"cropTiles\":208,\"farmPieces\":35,\"bareTrees\":292,\"checks\":[\"walkable corn without colliders\",\"14/16m perception capped at 3m in crop\",\"crop crossing breaks sight and tracking; close hearing retained\",\"courier and shared NPC/sprinter locomotion 0.85 speed; mown lane 1.0\",\"A* terrain cost 1/0.85\",\"corgi warns about an on-screen crop-concealed threat\",\"four checkpointed fair scare telegraphs\",\"live-clock retry and delayed admission replay pending telegraphs\",\"five distinct synthesized stingers\",\"rock only during finale\",\"all source LOD caps\"],\"scares\":{\"corn-scare-0\":{\"due\":92,\"actor\":101},\"corn-scare-1\":{\"due\":192,\"actor\":102},\"corn-scare-2\":{\"due\":292,\"actor\":103},\"corn-scare-3\":{\"due\":392,\"actor\":104}}}"
+      }
+    ]
+  },
+  "componentStatus": "PASS",
+  "runtimeRevision": "29d310863a3c4eb6b11d56f51bd0012a83b5fa47",
+  "checkedHarnessRevision": "7703153a623294ad773a95f01313a2a11e18d558"
+}

@@ -1,9 +1,10 @@
+import { updateFarmScares, type FarmScareState } from './FarmScares';
 import { cure } from '../../levels/L10/district';
 import { cureEncounters, cureEncounterSlots, cureEncounterSpot, cureMedkits } from '../../levels/L10/encounters';
 import { cureAlphaCap } from '../../levels/L10/alphaContracts';
 import type { SimWorld } from '../world/SimWorld';
 
-export interface CureEncounterState { spawned: Record<string, number>; medkits: Record<string, number>; released?: string[]; laneOffsets?: Record<string, number>; patrol?: { nextSeconds: number; serial: number } }
+export interface CureEncounterState { farmScares?: FarmScareState; spawned: Record<string, number>; medkits: Record<string, number>; released?: string[]; laneOffsets?: Record<string, number>; patrol?: { nextSeconds: number; serial: number } }
 /** Existing director owns cap/pool/safe placement; existing chunks own actor/pickup sleep and wake.
  * Road groups are once-only. The charging console draws fresh assault ranks every ten charge seconds. */
 export class LevelTenEncounters {
@@ -11,7 +12,11 @@ export class LevelTenEncounters {
   private assaultSlots: { key: string; slots: ReturnType<typeof cureEncounterSlots> } | null = null;
   constructor(private readonly world: SimWorld) {}
   snapshot(): CureEncounterState { return structuredClone(this.state); }
-  restore(value: unknown): void { this.state = structuredClone(value as CureEncounterState); }
+  restore(value: unknown): void {
+    this.state = structuredClone(value as CureEncounterState);
+    // Retries retain the live clock. Replay pending telegraphs instead of restoring an expired deadline.
+    for (const [id, scare] of Object.entries(this.state.farmScares ?? {})) if (scare.actor === undefined) delete this.state.farmScares![id];
+  }
   update(): void {
     const w = this.world, ai = w.infected, chunks = w.chunks;
     if (!ai || !chunks || w.missions?.state.phase !== 'playing' || w.missions.state.states['cure-released']) return;
@@ -30,6 +35,7 @@ export class LevelTenEncounters {
     const resident = depth.resident[low ? 'low' : 'high'][1];
     const cap = resident + (current.id === 'residential-fringe' ? depth.dogs?.[1] ?? 0 : 0);
     ai.director.levelCap = low ? cap * 2 : cap;
+    if (directorTick) updateFarmScares(w, this.state.farmScares ??= {});
 
     for (const kit of cureMedkits) {
       if (this.state.medkits[kit.id] || !chunks.resident(...kit.at)) continue;

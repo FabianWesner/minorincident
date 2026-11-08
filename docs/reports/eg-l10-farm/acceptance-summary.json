@@ -1,0 +1,211 @@
+{
+  "status": "INCOMPLETE",
+  "sourceRevision": "63faae107f839658cba93488b08312897df9665d",
+  "stopReason": "Superseded by scare retry/admission fixes; stopped the older-revision sweep during high/complete. Low policies reached the tick budget at the finale. No full acceptance verdict is claimed.",
+  "policies": [
+    {
+      "receipt": "docs/reports/eg-l10-farm/acceptance/receipts/L10-low-complete.json",
+      "revision": "abc473f91623e62e68582b095afd910d59c78076",
+      "sourceHash": "92cc106325315e22e54cd338ec444dc1b7e1bd9dfce6cb541dce83a014642b8b",
+      "observerHash": "2c536930d36d27fb546ce2f0ae4431df5913b794c1ea3ae24e355d457f7c11db",
+      "tier": "low",
+      "policy": "complete",
+      "outcome": "tick-budget",
+      "completed": false,
+      "time": 3600,
+      "deaths": 169,
+      "furthestObjective": "hold",
+      "blocker": {
+        "objective": "hold",
+        "detail": "tick-budget: Charge the dispersal system",
+        "player": {
+          "x": 3989.600850224495,
+          "z": -34.432433515787125
+        },
+        "distance": 14.456139980022435,
+        "actors": {}
+      },
+      "regions": [
+        {
+          "id": "crash-outskirts",
+          "seconds": 66.04999999999754,
+          "travelSeconds": 62.799999999997716,
+          "combatSeconds": 3.21666666666666,
+          "interactionSeconds": 0.03333333333333333,
+          "holdSeconds": 0,
+          "epilogueSeconds": 0,
+          "otherSeconds": 0,
+          "metres": 296.44077342764035
+        },
+        {
+          "id": "residential-fringe",
+          "seconds": 121.36666666666106,
+          "travelSeconds": 93.26666666666266,
+          "combatSeconds": 28.099999999999685,
+          "interactionSeconds": 0,
+          "holdSeconds": 0,
+          "epilogueSeconds": 0,
+          "otherSeconds": 0,
+          "metres": 543.0703822284006
+        },
+        {
+          "id": "industrial-area",
+          "seconds": 164.7000000000232,
+          "travelSeconds": 48.09999999999855,
+          "combatSeconds": 116.583333333328,
+          "interactionSeconds": 0.016666666666666666,
+          "holdSeconds": 0,
+          "epilogueSeconds": 0,
+          "otherSeconds": 0,
+          "metres": 740.1545552636434
+        },
+        {
+          "id": "military-zone",
+          "seconds": 181.2333333333697,
+          "travelSeconds": 136.800000000001,
+          "combatSeconds": 44.41666666666543,
+          "interactionSeconds": 0.016666666666666666,
+          "holdSeconds": 0,
+          "epilogueSeconds": 0,
+          "otherSeconds": 0,
+          "metres": 813.0622066026029
+        },
+        {
+          "id": "research-campus",
+          "seconds": 127.58333333332737,
+          "travelSeconds": 82.69999999999659,
+          "combatSeconds": 44.83333333333207,
+          "interactionSeconds": 0.05,
+          "holdSeconds": 0,
+          "epilogueSeconds": 0,
+          "otherSeconds": 0,
+          "metres": 573.3105051192175
+        },
+        {
+          "id": "destroyed-corridor",
+          "seconds": 217.0166666667315,
+          "travelSeconds": 164.48333333335637,
+          "combatSeconds": 52.53333333333163,
+          "interactionSeconds": 0,
+          "holdSeconds": 0,
+          "epilogueSeconds": 0,
+          "otherSeconds": 0,
+          "metres": 963.563386245578
+        },
+        {
+          "id": "dispersal-complex",
+          "seconds": 2722.0500000070488,
+          "travelSeconds": 59.266666666664584,
+          "combatSeconds": 11.200000000000136,
+          "interactionSeconds": 0.016666666666666666,
+          "holdSeconds": 2651.566666672818,
+          "epilogueSeconds": 0,
+          "otherSeconds": 0,
+          "metres": 20408.208945146413
+        }
+      ]
+    },
+    {
+      "receipt": "docs/reports/eg-l10-farm/acceptance/receipts/L10-low-stationary.json",
+      "revision": "abc473f91623e62e68582b095afd910d59c78076",
+      "sourceHash": "92cc106325315e22e54cd338ec444dc1b7e1bd9dfce6cb541dce83a014642b8b",
+      "observerHash": "2c536930d36d27fb546ce2f0ae4431df5913b794c1ea3ae24e355d457f7c11db",
+      "tier": "low",
+      "policy": "stationary",
+      "outcome": "tick-budget",
+      "completed": false,
+      "time": 1247.9666666666667,
+      "deaths": 0,
+      "furthestObjective": "mega",
+      "blocker": {
+        "objective": "mega",
+        "detail": "tick-budget: Kill the Mega Alpha",
+        "player": {
+          "x": 4003.453125,
+          "z": -28.272567749023438
+        },
+        "distance": 3.647426485275023,
+        "actors": {}
+      },
+      "regions": [
+        {
+          "id": "crash-outskirts",
+          "seconds": 66.04999999999754,
+          "travelSeconds": 8.483333333333334,
+          "combatSeconds": 57.549999999998015,
+          "interactionSeconds": 0.016666666666666666,
+          "holdSeconds": 0,
+          "epilogueSeconds": 0,
+          "otherSeconds": 0,
+          "metres": 296.44077342764035
+        },
+        {
+          "id": "residential-fringe",
+          "seconds": 122.74999999999432,
+          "travelSeconds": 0,
+          "combatSeconds": 122.74999999999432,
+          "interactionSeconds": 0,
+          "holdSeconds": 0,
+          "epilogueSeconds": 0,
+          "otherSeconds": 0,
+          "metres": 543.1065180546796
+        },
+        {
+          "id": "industrial-area",
+          "seconds": 170.36666666669439,
+          "travelSeconds": 0,
+          "combatSeconds": 170.36666666669439,
+          "interactionSeconds": 0,
+          "holdSeconds": 0,
+          "epilogueSeconds": 0,
+          "otherSeconds": 0,
+          "metres": 739.9846986193235
+        },
+        {
+          "id": "military-zone",
+          "seconds": 196.23333333338164,
+          "travelSeconds": 0,
+          "combatSeconds": 196.23333333338164,
+          "interactionSeconds": 0,
+          "holdSeconds": 0,
+          "epilogueSeconds": 0,
+          "otherSeconds": 0,
+          "metres": 813.1831229964392
+        },
+        {
+          "id": "research-campus",
+          "seconds": 132.24999999999739,
+          "travelSeconds": 0,
+          "combatSeconds": 132.24999999999739,
+          "interactionSeconds": 0,
+          "holdSeconds": 0,
+          "epilogueSeconds": 0,
+          "otherSeconds": 0,
+          "metres": 573.1926671245371
+        },
+        {
+          "id": "destroyed-corridor",
+          "seconds": 240.6000000000836,
+          "travelSeconds": 0,
+          "combatSeconds": 240.6000000000836,
+          "interactionSeconds": 0,
+          "holdSeconds": 0,
+          "epilogueSeconds": 0,
+          "otherSeconds": 0,
+          "metres": 963.3267043995895
+        },
+        {
+          "id": "dispersal-complex",
+          "seconds": 319.7000000000379,
+          "travelSeconds": 0,
+          "combatSeconds": 76.7666666666636,
+          "interactionSeconds": 0,
+          "holdSeconds": 242.9333333334188,
+          "epilogueSeconds": 0,
+          "otherSeconds": 0,
+          "metres": 334.04142787332864
+        }
+      ]
+    }
+  ]
+}
