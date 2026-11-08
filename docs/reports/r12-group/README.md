@@ -11,7 +11,7 @@
 
 ## L7 fallback verification
 
-Every tested native final hash **and follower phase receipt** matches clean `eb835fc1` ([low comparison](d-gate-equivalence.json), [high comparison](d-gate-high-equivalence.json)).
+Every tested native final hash **and follower phase receipt** matches clean `eb835fc1` ([low comparison](d-velocity-L7-low-equivalence.json), [high comparison](d-velocity-L7-high-equivalence.json)).
 
 | Quality / seed | Lane and main outcome | Time | Matching final native hash |
 | --- | --- | ---: | --- |
@@ -32,11 +32,32 @@ The final `6fc09518` snapshot passes typecheck, lint and **107 tests / 27 files*
 
 Its six-level audit completed in 410.6 s; clean main completed in 504.2 s. [Comparison before the velocity correction](d-follower-comparison-before-l5.json): L7 is identical; L8 removes main's slow-follower IDs 354/359/365; L5's new ID-28 pace vote is the reason for the final correction. Both snapshots retain diagnostic partial-selection and baseline flags. Neither is a passing complete threat gate.
 
-The final `6fc09518` unit gates and boarding fixtures pass. Its six-level audit and refreshed motion receipts are pending. The evaluator, seed validity and thresholds are unchanged.
+The final `6fc09518` unit gates and boarding fixtures pass. All ten refreshed motion probes are collected; its six-level audit is pending. The evaluator, seed validity and thresholds are unchanged.
+
+## Native motion and roster measurements
+
+[Final-source motion receipts](d-velocity-native-metrics.json), [current-main comparison receipts](d-main-native-metrics.json). NN CV measures nearest-neighbor spacing variety. Facing R is direction concentration (1 means identical facing). Rails measures two-second lateral windows under 10 cm. These are descriptive measurements, not invented acceptance thresholds. L2 samples six scripted firefighters; L3 samples four police; other rows sample human followers.
+
+| Level / tier | Outcome / seconds | NN CV | Moving facing R | Rails main → lane |
+| --- | --- | ---: | ---: | --- |
+| L2 / low | complete / 148.3 | 0.558 | 0.607 | — |
+| L2 / high | complete / 155.9 | 0.550 | 0.775 | — |
+| L3 / low | complete / 193.4 | 0.169 | 0.948 | 20.9% |
+| L3 / high | complete / 351.9 | 0.366 | 0.929 | 7.7% |
+| L5 / low | complete / 228.3 | 0.193 | 0.944 | 14.7% → 15.4% |
+| L5 / high | complete / 258.0 | 0.139 | 0.956 | 25.7% → 22.2% |
+| L6 / low | complete / 296.7 | 0.237 | 0.987 | 51.7% → 9.3% |
+| L6 / high | complete / 296.7 | 0.237 | 0.987 | 51.7% → 9.3% |
+| L8 / low | complete / 194.5 | 0.253 | 0.917 | 39.2% → 6.0% |
+| L8 / high | tick-budget / 247.6 | 0.225 | 0.940 | 43.7% → 6.4% |
+
+L8 high reaches its native route budget on both snapshots. L5 low's rail share is slightly higher; its moving facing concentration is lower. The measurements do not claim every metric improved.
+
+The final L6 run rescues **22/29 (75.9%)** in **296.7 s**, versus main's 24/29 in 339.2 s. All remaining living followers exit; seven turn versus main's five ([roster comparison](d-velocity-L6-roster-comparison.json)). This meets E24-AC02's 3–5 minute / ≥60% exit thresholds, while retaining the casualty difference explicitly. The earlier 70% reference concerned straggler rejoining, not the overall rescue threshold. The final L6 diagnostic has no slow rows and a 45.5% stationary-far upper bound versus main's 53.0%; this is not a causal wait measurement or an all-criteria pass.
 
 ## Done / open handoff
 
 - **Done:** main integration, authorized L7 fallback, native low/high parity over all three seeds, and corrective velocity handling.
-- **Open:** final `6fc09518` audit/motion receipts; current-main L7 courier deaths and known pace/wait/coverage flags.
+- **Open:** final `6fc09518` aggregate audit receipt; current-main L7 courier deaths and known pace/wait/coverage flags.
 - **Browser QA needed.** No browser was used.
 - No push or deployment.
