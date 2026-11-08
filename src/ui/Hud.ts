@@ -5,7 +5,6 @@ import { LevelSixSubway } from '../sim/missions/LevelSixSubway';
 import { devicePrompt } from './devicePrompt';
 import { l5, l5Survivors } from '../data/l5';
 import { isMega } from '../data/megaPresentation';
-import { MegaRing } from './MegaRing';
 import { SurvivorRadar } from './SurvivorRadar';
 import { healthFraction } from './health';
 import { weatherLabels } from '../data/weather';
@@ -41,7 +40,6 @@ export class Hud {
   private readonly fullText = node('p', 'objective-full-text');
   private readonly trackerText = node('span', 'objective-text');
   private readonly map = node('div', 'minimap');
-  private readonly megaRing = new MegaRing(this.map);
   private readonly playerPin = this.pin('player', '▲');
   private readonly objectivePin = this.pin('objective');
   private readonly routePin = this.pin('route', '◆');
@@ -299,15 +297,15 @@ export class Hud {
     const portrait = `url("/assets/ui/portrait-survivor-${player.survivor?.variant === 'male' ? 'm' : 'f'}.png")`;
     style(this.portrait, 'background-image', portrait);
     style(this.vignette, 'opacity', String(clamp((.3 - hp) / .3)));
-    this.megaRing.update(world.megaPursuit?.band() ?? null);
     let corgi = null, pinCount = 0;
     const px = player.transform.x, pz = player.transform.z;
     for (const entity of world.entities.iterate()) {
       if (entity.archetype.includes('corgi')) corgi = entity;
-      if (isMega(entity)) continue;
       if (entity.faction !== 'infected' || entity.health.current <= 0 || ((entity.hidden || entity.infected?.hidden) && !world.weather?.reveals.has(entity.id)) || Math.hypot(entity.transform.x - px, entity.transform.z - pz) > (world.weather?.reveals.has(entity.id) ? 40 : 30)) continue;
       const pin = this.threats[pinCount]; if (!pin) break; pinCount++;
-      setHidden(pin, false); attribute(pin, 'data-entity-id', String(entity.id)); this.place(pin, entity.transform.x, entity.transform.z, px, pz);
+      setHidden(pin, false); attribute(pin, 'data-entity-id', String(entity.id)); attribute(pin, 'data-mega', String(isMega(entity)));
+      if (isMega(entity)) pin.setAttribute('aria-label', 'Mega Alpha'); else pin.removeAttribute('aria-label');
+      this.place(pin, entity.transform.x, entity.transform.z, px, pz);
     }
     for (let i = pinCount; i < this.threatCount; i++) setHidden(this.threats[i], true);
     this.threatCount = pinCount;

@@ -1,17 +1,17 @@
 import { cure } from '../../levels/L10/district';
-import { cureEncounters, cureEncounterSlots, cureEncounterSpot, cureMedkits } from '../../levels/L10/encounters';
+import { cureEncounters, cureEncounterSlots, cureEncounterSpot, cureMedkits, cureWeaponPickups } from '../../levels/L10/encounters';
 import { cureAlphaCap } from '../../levels/L10/alphaContracts';
 import type { SimWorld } from '../world/SimWorld';
 
-export interface CureEncounterState { spawned: Record<string, number>; medkits: Record<string, number>; released?: string[]; laneOffsets?: Record<string, number>; patrol?: { nextSeconds: number; serial: number } }
+export interface CureEncounterState { spawned: Record<string, number>; medkits: Record<string, number>; weapons?: Record<string, number>; released?: string[]; laneOffsets?: Record<string, number>; patrol?: { nextSeconds: number; serial: number } }
 /** Existing director owns cap/pool/safe placement; existing chunks own actor/pickup sleep and wake.
  * Road groups are once-only. The charging console draws fresh assault ranks every ten charge seconds. */
 export class LevelTenEncounters {
-  state: CureEncounterState = { spawned: {}, medkits: {} };
+  state: CureEncounterState = { spawned: {}, medkits: {}, weapons: {} };
   private assaultSlots: { key: string; slots: ReturnType<typeof cureEncounterSlots> } | null = null;
   constructor(private readonly world: SimWorld) {}
   snapshot(): CureEncounterState { return structuredClone(this.state); }
-  restore(value: unknown): void { this.state = structuredClone(value as CureEncounterState); }
+  restore(value: unknown): void { this.state = structuredClone(value as CureEncounterState); this.state.weapons ??= {}; }
   update(): void {
     const w = this.world, ai = w.infected, chunks = w.chunks;
     if (!ai || !chunks || w.missions?.state.phase !== 'playing' || w.missions.state.states['cure-released']) return;
@@ -19,6 +19,12 @@ export class LevelTenEncounters {
     const charging = !!w.missions.state.states['charge-active'] && !w.missions.state.states['charge-ready'];
     if (!directorTick && !charging) return;
     const player = w.entities.get(1)!;
+    const weaponPickups = this.state.weapons ??= {};
+    for (const pickup of cureWeaponPickups) {
+      const position = cure.anchors[pickup.anchor];
+      if (weaponPickups[pickup.id] || !position || !chunks.resident(...position)) continue;
+      weaponPickups[pickup.id] = w.combat!.pickups.spawn(pickup.action, { x: position[0], z: position[1] }, false, { retain: true });
+    }
     // The generic town cap (15 high / 7 low) starves these once-only
     // encounters. Use the authored budget of the region the courier occupies,
     // including its special infected and the continuously pursuing Mega.

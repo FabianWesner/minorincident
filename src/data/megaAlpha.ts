@@ -1,18 +1,16 @@
 import { survivor } from './survivor';
 
 /**
- * E32 §5.4 Mega Alpha pursuit (lane L10-S3). PO 2026-10-13, verbatim: "The Mega Alpha always knows approximately where the player is.
- * Unlike normal zombies, it does not rely on normal sight rules. It constantly follows the player. However, its normal movement speed is
- * only around 70% of the player's running speed. This means the player can stay ahead of it. The player can never permanently escape it.
- * It is always coming."
- * Distances in metres, times in seconds unless a name says ticks. Orchestrator defaults, changeable after measurement.
+ * E32 §5.4 Mega Alpha pursuit. The 2026-11-08 story direction makes it a fast stalker:
+ * it keeps pace with a runner on open ground, while tight gaps and alternate routes create temporary escapes. It cannot be permanently escaped.
+ * Distances in metres, times in seconds unless a name says ticks.
  */
 export const megaAlpha = {
   /** It is an Alpha (shared E07 bar, resistance table and special scheduler) drawn with the derived hero model: same height and footprint as the Alpha (PO 10-15), heavier and darker. */
   archetype: 'infected.alpha',
   asset: 'inf.mega-alpha',
-  /** Cruise = 0.7 × the nominal uninjured run (survivor.speed), never a momentary walk/slow speed. */
-  cruiseFactor: 0.7,
+  /** Fast enough to keep pace with a nominal uninjured run; terrain gaps create the escape window. */
+  cruiseFactor: 1.05,
   get cruiseMs(): number { return survivor.speed * this.cruiseFactor; },
   /** E32-AC12: ten direct rockets, independent of stock Alpha resistance/upgrades. */
   hp: 3000,

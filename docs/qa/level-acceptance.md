@@ -316,21 +316,21 @@ Feel: "open-country drive: smash through or steer around; the APC survives until
 | L9-08 | reach-outskirts | L10 starts on foot with exactly [axe], ordinary health, corgi safe. | E31-AC15 | S |
 | L9-09 | all | Terrain seams ≤ 2 cm, ≤ 25 / 9 detailed chunks, no input freeze on streaming. | E31-AC12/13 | S |
 
-## L10 · The Cure (D-CURE, 7 regions, axe → arsenal → minigun)
+## L10 · The Cure (D-CURE, farms → restricted zone → safe hangar → dispersal)
 
-Feel: "vulnerable again → rebuild the arsenal → hunted by the Mega Alpha → stand your ground → the world becomes safe". Newbie no-death **45–50 min** incl. epilogue (E32-AC04); competent **25–50 min** (tune; complete bot 19.5 min); deaths competent **0–3** (tune).
+**PO 2026-11-08:** Feel: "alone in the corn → cross broken farms → breach the Area 51 perimeter → meet researchers in a safe hangar → carry the cure through the Mega's hunt". Target about **15 min**, without idle timing padding.
 
 | Step | Objective text | Player does |
 |---|---|---|
-| `crash` | Leave the wreck on foot | R1 crash outskirts, axe only |
-| `residential-fringe` | Recover the handgun at the checkpoint | R2 |
-| `industrial-area` | Recover the shotgun at the checkpoint | R3 |
-| `military-zone` | Recover the machine gun at the checkpoint | R4 |
-| `research-campus` | Reach the research campus | R5 entry |
-| `research` | Play the research recording | terminal |
-| `cure` | Pack the cure canister | backpack |
-| `research-exit` | Get the cure out of the laboratory | lab exit |
-| `destroyed-corridor` | Carry the cure down the corridor and grab the rocket launcher | R6 |
+| `crash` | Get away from the river | R1 wreck and corn fields, axe only |
+| `farmstead` | Find a way through the farms | farmhouses, barns, workshops and town edge; Sam checks in over radio |
+| `farm-route` | Cross the broken farms | place-specific farm weapon finds; use a tight gap to escape the Mega |
+| `restricted-zone` | Get through the restricted zone | Area 51-style perimeter, guard tower and checkpoint locker |
+| `research-hangar` | Enter the hangar | sealed safe space, Dr. Voss, Sam and guards; no infected inside |
+| `research` | Hear the researchers’ account | Voss explains the failed sample and hands over the cure |
+| `cure` | Take the cure and re-equip for the delivery | Ruiz returns the bridge arsenal; Voss issues the experimental flamethrower |
+| `research-exit` | Carry the cure out of the hangar | hangar exit |
+| `delivery-corridor` | Carry the cure to the dispersal complex | wrecked delivery route; the Mega is waiting outside |
 | `dispersal-complex` | Bring the cure to the dispersal complex | R7 |
 | `install` | Install the cure in the dispersal device | install point |
 | `hold` | Charge the dispersal system | 60 s within 25 m, minigun |
@@ -341,19 +341,20 @@ Feel: "vulnerable again → rebuild the arsenal → hunted by the Mega Alpha →
 
 | ID | Step | Criterion (expected value) | Source | Check |
 |---|---|---|---|---|
-| L10-01 | crash | First minute ≤ 8 regulars, no dogs/Alphas; R1 concurrent 4–8 (both tiers), singles/pairs. | E32-AC02, §4 | S |
-| L10-02 | crash | Mega Alpha introduced by roar/impact by 2:00 (authored 1:30), ≥ 80 m behind on a reachable route. | E32-AC10, megaAlpha | S |
-| L10-03 | regions | Concurrent local infected per region (high / low): R2 12–24 / 8–16 (+1–2 dogs after pickup); R3 25–45 / 16–28 (2–4 dogs, 1 Alpha); R4 45–75 / 28–45 (groups 10–20, 2–4 dogs, 1–2 Alphas); R5 55–85 / 35–55 (2–4 dogs, 1–2 Alphas); R6 80–130 / 50–75 (groups 20–35, 3–5 dogs, 2–3 Alphas); R7 peak 140–190 / 75–95. | E32 §4 | S |
-| L10-04 | regions | combat in every region: reachable ≥ 90 %; attacks on player ≥ 2/min in R1–R2, ≥ 4/min from R3 (tune); no region crossable with 0 attacks. | orch. | S |
-| L10-05 | regions | Weapons only at their named checkpoints, taken on approach, snapshot with the pickup; picking one up spawns nothing. | E32-AC05/06, G-10 | S |
+| L10-01 | crash | First minute ≤ 8 regulars, no dogs/Alphas; the opening reads as a wreck beside dry corn, broken farm buildings and dead livestock. | E32-AC02, PO 2026-11-08 | S, O |
+| L10-02 | crash | Mega first sighting by 3:00, then 2–3 close encounters across the journey; terrain gaps let the player evade it. It cannot be killed and has no HP bar before the finale. | E32-AC10, PO 2026-11-08 | S, O |
+| L10-03 | regions | Seven route regions connect in order: creek/corn → farmstead and broken farms → restricted military zone → safe research hangar → dispersal route/complex. Total target ≈15 min with no idle padding. | E32-AC03, PO 2026-11-08 | S, O |
+| L10-04 | regions | Quiet survival-horror pacing: 30–60 s quiet stretches, authored scares about every 60–120 s, small moving groups (normally 8–15 concurrent); finale is the only crowd fight. | PO 2026-11-08, l9-l10-concept | S |
+| L10-05 | regions | Farmhouse rifle, barn machete, workshop nail gun and shed Molotov; guard-tower assault rifle and checkpoint flashbangs. Mission objectives remain story goals and name no weapon. | story-script.md, PO 2026-11-08 | S, O |
 | L10-06 | regions | Dogs: 1.1× run, ≥ 0.6 s telegraph, ≤ 2 m reach, ≥ 2 s cooldown, 10 HP/bite; low, distinct from the corgi. | E32-AC07 | S, O |
-| L10-07 | regions | Mega: cruise 0.7× run ± 2 % whenever it is on camera or within 200 m of the courier (orchestrator 2026-11-04: hidden far pursuit beyond 200 m may run faster than cruise (up to 1.15× in the regions, up to 1.35× catch-up on the final delivery approach, sweep-c6 (was 6×)) so the walking arrival of L10-11 holds; it follows connected nav links, never relocates, and the player never sees that speed), always pursuing (no LOS), never trapped, never teleports; minimap shows only a pulsing distance ring; roar/impacts every 20–35 s, louder when closer. | E32-AC10/13/14 | S |
+| L10-07 | regions | Mega pursues without LOS and takes longer routes around tight alleys, fence gaps, culverts and doorways; staying still draws it in. A red pulsing minimap dot shows its real position while near, with footsteps/roars between sightings. | E32-AC10/13/14, PO 2026-11-08 | S, O |
 | L10-08 | regions | Road regions framed ×1.3 (verges/fields in frame), base × max zoom ≤ 2.0; not in the finale. Suit crowds readable at night, slam telegraph is a ground effect. | lessons 10-30, Q-179, Q-147 | O |
-| L10-09 | research → corridor | Recording explains the airborne cure (subtitles); canister is a visible backpack, no slot, no slowdown, restored on death. | E32-AC15/16 | S, O |
+| L10-09 | hangar | Sealed hangar is a safe space with Dr. Elena Voss, Sam and two guards; lab containers, quarantine tents, generators and emergency lights. Cure handoff is indoors. Voss explains that the sample came from the campus, the container failed, and the dispersal complex is two kilometres east. No infected spawn inside. | story-script.md, PO 2026-11-08 | S, O |
+| L10-09b | hangar → dispersal | Sergeant Ruiz returns the bridge arsenal; Voss adds the experimental flamethrower. The canister stays a visible zero-slot backpack item with no movement penalty. | story-script.md, PO 2026-11-08 | S |
 | L10-10 | hold | Charge = exactly 3,600 ticks while alive within 25 m; pauses outside with an instruction; minigun 20 rounds/s, heat +12.5 %/s, lock at 100 %, unlock < 40 %. | E32-AC19/20 | S |
 | L10-11 | hold | Assault: infected at the capped peak (140–190 / 75–95), reachable ≥ 90 %, attacks on player ≥ 8/min (tune); Mega reaches the arena ~140 s after activation (orchestrator 2026-11-04: "~140 s" = 120–160 s, by walking; no relocation). | E32-AC21, PO 10-16 | S |
 | | | **Conflict:** E32 §5.7 "Mega arrives 10–40 s after activation" → PO 10-16 "keep the current ~143 s build-up" wins. | | |
-| L10-12 | mega | Mega survives 9 direct rockets, dies on the 10th; conventional/minigun never below 90 % HP; charge/slam/grab only inside 12 m; no frame > 200 ms at fight and death; corpse reads as the creature. | E32-AC11/12, Q-180, Q-124 | S, O |
+| L10-12 | mega | Mega health bar appears only for the finale. Returned arsenal and final fight cover make the encounter survivable; it is killable at the dispersal complex. | E32-AC11/12, PO 2026-11-08 | S, O |
 | L10-13 | release | Release only with charge 60 + Mega dead + cure installed, player at the console. | E32-AC22 | S |
 | L10-14 | epilogue | Mist front ~10 m/s; every touched infected dies within 1 tick (dogs, Alphas, zoo species); no harm to healthy/player/corgi; player keeps control 120–180 s; camera pulls out in the last 30–45 s; then title and credits. | E32-AC23/25/26 | S, O, P |
 | L10-15 | all | Death in any region respawns at that region's checkpoint (never level start), with the loadout, cure and boss state of that checkpoint. | E32-AC27 | S |

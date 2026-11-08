@@ -6,7 +6,7 @@ export const weaponOrder = [
   'weapon.fists', 'weapon.kick', 'weapon.bat', 'weapon.fire-axe',
   'weapon.crowbar', 'weapon.machete', 'weapon.knife', 'weapon.nail-bat', 'weapon.shovel', 'weapon.police-baton', 'weapon.katana',
   'weapon.handgun', 'weapon.pistol', 'weapon.smg', 'weapon.army-mg', 'weapon.shotgun',
-  'weapon.hunting-rifle', 'weapon.assault-rifle', 'weapon.machine-gun', 'weapon.rotary-minigun', 'weapon.rocket-launcher', 'weapon.nail-gun',
+  'weapon.hunting-rifle', 'weapon.assault-rifle', 'weapon.machine-gun', 'weapon.rotary-minigun', 'weapon.flamethrower', 'weapon.rocket-launcher', 'weapon.nail-gun',
   'weapon.grenade', 'weapon.molotov', 'weapon.pipe-bomb', 'weapon.firecracker-lure', 'weapon.smoke-grenade', 'weapon.flashbang',
   'ability.corgi-lure', 'ability.ground-slam', 'ability.shield-bubble', 'ability.adrenaline', 'ability.turret',
 ] as const;

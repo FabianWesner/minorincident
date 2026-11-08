@@ -4,7 +4,7 @@ import type { Point } from '../districts/types';
 /** D1–D3 own R1–R6. D4 appends to the same authored route/cell contract. */
 export const cure = authored as unknown as {
   chunkSize: number; bounds: Point[]; start: Point;
-  regions: { id: string; envelope: [Point, Point]; checkpoint: string; weapon?: string; minutes: number; route: Point[] }[];
+  regions: { id: string; envelope: [Point, Point]; checkpoint: string; minutes: number; route: Point[] }[];
   anchors: Record<string, Point>;
   threatDepth: { region: string; routeStart: number; routeEnd: number; resident: { high: [number, number]; low: [number, number] }; dogs?: [number, number]; alphas: [number, number]; alphasLow?: [number, number]; groupSize?: [number, number] }[];
   detours: { id: string; region: string; route: Point[] }[];
@@ -22,7 +22,7 @@ const pursuitShortcuts: [Point, Point][] = [
 ];
 export const curePursuitRoute = {
   // The final delivery approach closes the distant pursuit gap along these
-  // reachable links; the camera/200m band retains ordinary 0.7× cruise.
+  // reachable links; nearby pursuit uses the fast-stalker cruise speed.
   pressure: { from: pursuitNodeId(cure.regions[5].route[0]), trailM: 120 },
   nodes: pursuitPoints.map(([x, z], i) => ({ id: `cure-route-${i}`, x, z })),
   links: [

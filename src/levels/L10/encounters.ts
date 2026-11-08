@@ -4,7 +4,8 @@ import type { Point } from '../districts/types';
 import type { NavGrid } from '../../sim/ai/NavGrid';
 import { infectedDef } from '../../data/infected';
 
-/** R1–R6 resident peaks and R7 console assault, authored independently of arsenal changes.
+/** Survival-horror encounters for the PO 2026-11-08 fifteen-minute route.
+ * Small moving groups punctuate quiet travel; the final console assault remains the only crowd fight.
  * Low quality thins ordinary humans and stages early corridor patrols at the horde approach.
  * Dogs and regular Alpha encounters keep their mechanics/counts.
  * Checkpoint forecourts and the service/motor-pool roads remain clear of authored groups. */
@@ -20,18 +21,17 @@ export const cureEncounters: readonly CureEncounter[] = [
   { id: 'crash-bend', region: 'crash-outskirts', at: [652, 33], regular: [2, 2], dogs: 0, alphas: 0 },
   { id: 'crash-road-pair', region: 'crash-outskirts', at: [622, -12.5], regular: [2, 2], dogs: 0, alphas: 0 },
   { id: 'crash-pair', region: 'crash-outskirts', at: [712, 33], regular: [2, 2], dogs: 0, alphas: 0 },
-  { id: 'fringe-patrol', region: 'residential-fringe', at: [862, 80], regular: [6, 4], dogs: 2, alphas: 0, tough: 2 },
-  { id: 'fringe-hedges', region: 'residential-fringe', at: [982, 80], regular: [6, 4], dogs: 0, alphas: 0, tough: 2 },
-  { id: 'fringe-exit', region: 'residential-fringe', at: [1132, 25], regular: [6, 4], dogs: 0, alphas: 0, tough: 2 },
-  { id: 'depot-workers', region: 'industrial-area', at: [1372, 100], regular: [25, 16], dogs: 2, alphas: 1, tough: 2 },
-  { id: 'depot-alpha', region: 'industrial-area', at: [1517, 100], regular: [4, 2], dogs: 1, alphas: 0, tough: 2 },
-  { id: 'depot-exit', region: 'industrial-area', at: [1682, 100], regular: [4, 3], dogs: 0, alphas: 0, tough: 2 },
-  { id: 'military-breach', region: 'military-zone', at: [2012, -75], regular: [18, 16], dogs: 2, alphas: 1 },
-  { id: 'military-column', region: 'military-zone', at: [2112, -75], regular: [18, 14], dogs: 1, alphas: 0 },
-  { id: 'military-exit', region: 'military-zone', at: [2252, -75], regular: [18, 10], dogs: 0, alphas: 1 },
-  { id: 'research-approach', region: 'research-campus', at: [2617, 45], regular: [22, 22], dogs: 2, alphas: 1 },
-  { id: 'research-lab', region: 'research-campus', at: [2672, 45], releaseWith: 'research-approach', regular: [22, 22], dogs: 0, alphas: 0 },
-  { id: 'research-quarantine', region: 'research-campus', at: [2857, -5], regular: [22, 10], dogs: 2, alphas: 1 },
+  { id: 'fringe-patrol', region: 'residential-fringe', at: [862, 80], regular: [3, 2], dogs: 2, alphas: 0, tough: 1 },
+  { id: 'fringe-hedges', region: 'residential-fringe', at: [982, 80], regular: [3, 2], dogs: 0, alphas: 0, tough: 1 },
+  { id: 'fringe-exit', region: 'residential-fringe', at: [1132, 25], regular: [3, 2], dogs: 0, alphas: 0, tough: 1 },
+  { id: 'depot-workers', region: 'industrial-area', at: [1372, 100], regular: [8, 6], dogs: 2, alphas: 1, tough: 2 },
+  { id: 'depot-alpha', region: 'industrial-area', at: [1517, 100], regular: [2, 1], dogs: 1, alphas: 0, tough: 1 },
+  { id: 'depot-exit', region: 'industrial-area', at: [1682, 100], regular: [2, 1], dogs: 0, alphas: 0, tough: 1 },
+  { id: 'military-breach', region: 'military-zone', at: [2012, -75], regular: [5, 4], dogs: 2, alphas: 1 },
+  { id: 'military-column', region: 'military-zone', at: [2112, -75], regular: [5, 3], dogs: 1, alphas: 0 },
+  { id: 'military-exit', region: 'military-zone', at: [2252, -75], regular: [5, 3], dogs: 0, alphas: 1 },
+  { id: 'research-approach', region: 'research-campus', at: [2617, 45], regular: [4, 3], dogs: 2, alphas: 1 },
+  { id: 'research-quarantine', region: 'research-campus', at: [2857, -5], regular: [5, 3], dogs: 2, alphas: 1 },
   // The checkpoint bearing is also a playable route. Most travellers cross
   // these open forecourts directly instead of following the winding service
   // road (75–100 m away). Once-only patrols cover that actual corridor; the
@@ -40,16 +40,15 @@ export const cureEncounters: readonly CureEncounter[] = [
     ['residential-fringe', 25, [822, 897, 972, 1047, 1122, 1197]],
     ['industrial-area', 25, [1322, 1397, 1472, 1547, 1622, 1697, 1772]],
     ['military-zone', 25, [1922, 1997, 2072, 2147, 2222, 2297, 2372]],
-    ['research-campus', -5, [2532, 2607, 2682, 2757, 2832]],
+    ['research-campus', -5, [2532, 2607, 2832]],
   ] as [CureRegion, number, number[]][]).flatMap(([region, z, stations]) => stations.map((x, i): CureEncounter => ({
-    id: `${region}-direct-${i}`, region, at: [x, z], regular: region === 'residential-fringe' ? [3, 2] : [8, 6],
-    dogs: region === 'residential-fringe' ? 0 : 2, alphas: 0, tough: region === 'residential-fringe' ? 0 : 2,
+    id: `${region}-direct-${i}`, region, at: [x, z], regular: region === 'residential-fringe' ? [2, 1] : [2, 1],
+    dogs: region === 'residential-fringe' ? 0 : 1, alphas: 0, tough: region === 'residential-fringe' ? 0 : 1,
   }))),
-  // The three full groups enter together at the first road breach: 20–35
-  // members per group, with enough approach distance for the line to engage.
-  { id: 'corridor-line', region: 'destroyed-corridor', at: [3060, 84], regular: [32, 20], dogs: 2, alphas: 1 },
-  { id: 'corridor-breach', region: 'destroyed-corridor', at: [3060, 95], regular: [32, 20], dogs: 2, alphas: 1 },
-  { id: 'corridor-exit', region: 'destroyed-corridor', at: [3060, 106], regular: [32, 20], dogs: 1, alphas: 1 },
+  // Small ranks occupy the first road breach; the large crowd is reserved for the finale.
+  { id: 'corridor-line', region: 'destroyed-corridor', at: [3060, 84], regular: [8, 5], dogs: 2, alphas: 1 },
+  { id: 'corridor-breach', region: 'destroyed-corridor', at: [3060, 95], regular: [5, 3], dogs: 2, alphas: 0 },
+  { id: 'corridor-exit', region: 'destroyed-corridor', at: [3060, 106], regular: [4, 3], dogs: 1, alphas: 1 },
   // Small fixed packs occupy the long approach/exit stretches between the
   // retained corridor hordes. Every member is once-only and the director
   // separately limits concurrent regional dogs. Their fixed X stations cover
@@ -63,7 +62,7 @@ export const cureEncounters: readonly CureEncounter[] = [
   ...([[3755, -25], [3820, -41], [3890, -41], [3920, -41], [3955, -25], [3970, -25]] as Point[]).map((at, i): CureEncounter => ({
     id: `complex-approach-${i}`, region: 'dispersal-complex', at, regular: [2, 2], dogs: 2, alphas: 0,
   })),
-  { id: 'dispersal-assault', assault: true, region: 'dispersal-complex', at: cure.anchors['cure-console'], regular: [178, 88], dogs: 4, alphas: 3, alphasLow: 2 },
+  { id: 'dispersal-assault', assault: true, region: 'dispersal-complex', at: cure.anchors['cure-console'], regular: [44, 26], dogs: 4, alphas: 3, alphasLow: 2 },
 ];
 export const cureMedkits = [
   { id: 'crash-approach', at: [732, 29] as Point },
@@ -72,6 +71,16 @@ export const cureMedkits = [
   { id: 'industrial-service', at: [1517, -55] as Point },
   { id: 'military-motor-pool', at: [2137, 110] as Point },
 ];
+
+/** L10 story pickups; the placed objects are retained in the courier's rack and never respawn after collection. */
+export const cureWeaponPickups = [
+  { id: 'farmhouse-rifle', action: 'weapon.hunting-rifle', anchor: 'farmhouse-rifle' },
+  { id: 'barn-machete', action: 'weapon.machete', anchor: 'barn-machete' },
+  { id: 'workshop-nailgun', action: 'weapon.nail-gun', anchor: 'workshop-nailgun' },
+  { id: 'shed-molotov', action: 'weapon.molotov', anchor: 'shed-molotov' },
+  { id: 'guard-tower-rifle', action: 'weapon.assault-rifle', anchor: 'guard-tower-rifle' },
+  { id: 'checkpoint-flashbang', action: 'weapon.flashbang', anchor: 'checkpoint-flashbang' },
+] as const;
 
 /** Stable slots allow a full cap/blocked cell to defer individual members without losing or duplicating a group. */
 export function cureEncounterSlots(group: CureEncounter, tier: 'high' | 'low') {
