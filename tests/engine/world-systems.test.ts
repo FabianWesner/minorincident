@@ -147,10 +147,37 @@ test('explosions: every class follows its damage curve, full cover shields, rail
   const glass=house.parts.findIndex(p=>p.id==='window_front'), bounds=house.parts[glass].bounds;
   const local=[bounds.max[0]+2,1.2,(bounds.min[2]+bounds.max[2])/2], pos=rotate(local,house.home.q), dir=rotate([-1,0,0],house.home.q);
   move(street,house.home.p[0]+pos[0],house.home.p[2]+pos[2]);street.combat!.damage.god=true;
+  const pristine=destruction.snapshot();
   street.combat!.setLoadout(['weapon.handgun'],['weapon.grenade']);
   street.setInput({aim:{x:dir[0],z:dir[2]},aimSource:'pointer',left:{down:true,held:true,up:false}}); step(street,40);street.clearInput();
   expect(house.state.revision, 'real handgun input reaches the placement').toBeGreaterThan(0);
   expect(house.state.hp[glass], 'window shatters').toBe(0);
+  const fireAt=(weapon:string, local:number[], aim:number[], ticks:number) => {
+    const p=rotate(local,house.home.q),d=rotate(aim,house.home.q);
+    move(street,house.home.p[0]+p[0],house.home.p[2]+p[2]);street.combat!.setLoadout([weapon],['weapon.grenade']);
+    street.setInput({aim:{x:d[0],z:d[2]},aimSource:'pointer',left:{down:true,held:true,up:false}});step(street,ticks);street.clearInput();
+  };
+  destruction.restore(pristine);
+  fireAt('weapon.shotgun',local,[-1,0,0],25);
+  expect(house.state.hp[glass], 'pellets shatter the exposed front window').toBe(0);
+  const door=house.parts.findIndex(p=>p.role==='door'), db=house.parts[door].bounds;
+  // The authored porch shell stands ahead of this recessed door; successive swings clear it first.
+  fireAt('weapon.fire-axe',[db.max[0]+1.2,1.2,(db.min[2]+db.max[2])/2],[-1,0,0],180);
+  expect(house.state.hp[door], 'axe breaches a timber door').toBe(0);
+  const mgPosition=rotate([-5,1.2,0],house.home.q), mgDirection=rotate([1,0,0],house.home.q);
+  const origin={x:house.home.p[0]+mgPosition[0],y:1.2,z:house.home.p[2]+mgPosition[2]}, direction={x:mgDirection[0],y:0,z:mgDirection[2]};
+  const covered=destruction.trace(origin,direction,3)!; expect(covered.object.id).toBe(house.id);
+  expect(destruction.strike('weapon.army-mg',14,origin,direction,3), 'unrelated yard cover stops the round').toBe(false);
+  const exposed=house.parts.filter(p=>p.role==='structure').flatMap(p=>[0,2].flatMap(axis=>[-1,1].map(sign=>{
+    const at=p.bounds.min.map((v,i)=>(v+p.bounds.max[i])/2);at[1]=1.2;at[axis]=p.bounds[sign<0?'min':'max'][axis]+sign*.2;
+    const way=[0,0,0];way[axis]=-sign;const a=rotate(at,house.home.q),d=rotate(way,house.home.q);
+    return {origin:{x:house.home.p[0]+a[0],y:1.2,z:house.home.p[2]+a[2]},direction:{x:d[0],y:0,z:d[2]}};
+  }))).find(ray=>{const hit=destruction.trace(ray.origin,ray.direction,2);return hit&&hit.object.id===house.id&&house.parts[hit.part].role==='structure'&&hit.distance>.05&&street.combat!.query.clearDistance(ray.origin,ray.direction,2)>=hit.distance-.08;});
+  expect(exposed, 'at least one surviving facade is exposed').toBeDefined();
+  const thinWall=destruction.trace(exposed!.origin,exposed!.direction,2)!;
+  for(let i=0;i<40&&house.state.hp[thinWall.part]>0;i++)destruction.strike('weapon.army-mg',14,exposed!.origin,exposed!.direction,2);
+  expect(house.state.hp[thinWall.part], 'sustained MG fire chews a thin wall').toBe(0);
+  expect(house.state.marks.length).toBeLessThanOrEqual(8);
   const initial=destruction.snapshot(), navBefore=street.districts!.nav.cells.slice(), wallsBefore=street.interactables!.walls.length;
   const checkpoint=mission.def.checkpoints[0]; mission.checkpoint(checkpoint);
   street.explosions!.blast('explosion.rocket',{x:house.home.p[0],z:house.home.p[2]},{actionId:'weapon.rocket-launcher',radius:9});

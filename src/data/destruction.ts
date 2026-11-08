@@ -16,6 +16,7 @@ export const weaponDestructionResponse: Readonly<Record<string, Partial<Record<D
   'weapon.shotgun': { glass: 1.2, wood: .28, metal: .08, brick: .04, concrete: .02 },
   'weapon.army-mg': { glass: .45, wood: .2, metal: .09, brick: .025, concrete: .01 },
   'weapon.machine-gun': { glass: .45, wood: .2, metal: .09, brick: .025, concrete: .01 },
+  'weapon.rotary-minigun': { glass: .45, wood: .2, metal: .09, brick: .025, concrete: .01 },
   'weapon.rocket-launcher': { glass: 4, wood: 3, metal: 2.4, brick: 2.2, concrete: 1.5 },
   'weapon.grenade': { glass: 2, wood: 1.5, metal: 1.1, brick: .9, concrete: .7 },
   'weapon.pipe-bomb': { glass: 2.5, wood: 2, metal: 1.4, brick: 1.2, concrete: .9 },

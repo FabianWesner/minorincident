@@ -1,4 +1,4 @@
-import { BufferGeometry, Float32BufferAttribute, Group, Mesh, Object3D, Matrix4, CircleGeometry, MeshBasicNodeMaterial, Vector3, DoubleSide } from 'three/webgpu';
+import { BufferGeometry, InterleavedBuffer, InterleavedBufferAttribute, Group, Mesh, Object3D, Matrix4, CircleGeometry, MeshBasicNodeMaterial, Vector3, DoubleSide } from 'three/webgpu';
 import type { Destruction, DestructionObject } from '../sim/destruction/Destruction';
 import type { DestructionPart } from '../data/destructionModel';
 import type { Aabb } from '../levels/districts/types';
@@ -17,6 +17,13 @@ function plane(poly: Vertex[], axis: number, value: number, keepAbove: boolean):
   return [inside, outside];
 }
 function cut(poly: Vertex[], box: Aabb): { inside: Vertex[]; outside: Vertex[][] } {
+  let contained = true;
+  for (let axis=0;axis<3;axis++) {
+    let lo=Infinity, hi=-Infinity;for(const vertex of poly){lo=Math.min(lo,vertex[axis]);hi=Math.max(hi,vertex[axis]);}
+    if(hi<box.min[axis] || lo>box.max[axis]) return {inside:[],outside:[poly]};
+    contained &&= lo>=box.min[axis] && hi<=box.max[axis];
+  }
+  if(contained) return {inside:poly,outside:[]};
   let inside = poly; const outside: Vertex[][] = [];
   for (let axis = 0; axis < 3 && inside.length >= 3; axis++) for (const side of ['min','max'] as const) {
     const [a,b] = plane(inside,axis,box[side][axis],side === 'min'); inside = a; if (b.length >= 3) outside.push(b);
@@ -54,7 +61,14 @@ function split(source: BufferGeometry, parts: DestructionPart[]): Slice {
     for(const polygon of remaining) emit(polygon,-1,material);
   }
   const geometry=new BufferGeometry();
-  for(let i=0;i<names.length;i++) geometry.setAttribute(names[i],new Float32BufferAttribute(values[i],sizes[i]));
+  const stride=sizes.reduce((a,b)=>a+b,0), countVertices=values[0].length/3, packed=new Float32Array(countVertices*stride);
+  let offset=0;
+  const buffer=new InterleavedBuffer(packed,stride);
+  for(let a=0;a<names.length;a++) {
+    for(let v=0;v<countVertices;v++) for(let c=0;c<sizes[a];c++) packed[v*stride+offset+c]=values[a][v*sizes[a]+c];
+    geometry.setAttribute(names[a],new InterleavedBufferAttribute(buffer,sizes[a],offset));offset+=sizes[a];
+  }
+  geometry.userData={...source.userData};
   geometry.setIndex(indices); geometry.computeBoundingBox(); geometry.computeBoundingSphere();
   return {geometry,triangles,indices};
 }
@@ -71,6 +85,7 @@ export class DestructionView extends Group {
     prototype.updateWorldMatrix(true,true); inverse.copy(prototype.matrixWorld).invert();
     prototype.traverse(node=>{
       if(!(node instanceof Mesh)) return;
+      for(let parent: Object3D | null=node;parent;parent=parent.parent) if(!parent.visible)return;
       const source=node.geometry.clone().applyMatrix4(new Matrix4().multiplyMatrices(inverse,node.matrixWorld));
       const slice=split(source,object.parts); source.dispose(); slices.push(slice);
       const mesh=new Mesh(slice.geometry,node.material); mesh.castShadow=node.castShadow; mesh.receiveShadow=node.receiveShadow; model.add(mesh);
