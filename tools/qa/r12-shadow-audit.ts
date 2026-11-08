@@ -29,7 +29,12 @@ const fixture: SceneSpec = { name: 'shadow-dominance', seed: 1, time: 'night', g
   camera: { mode: 'game', target: 'courier', zoom: 1 } };
 const lin = (v: number) => v <= 10 ? v / 3294.6 : ((v / 255 + .055) / 1.055) ** 2.4;
 const lum = (p: PNG, x: number, y: number) => { const i = (Math.round(y) * p.width + Math.round(x)) * 4; return .2126 * lin(p.data[i]) + .7152 * lin(p.data[i + 1]) + .0722 * lin(p.data[i + 2]); };
-const hue = (c: number[]) => { const hi = Math.max(...c), lo = Math.min(...c), d = hi - lo; return d ? (((hi === c[0] ? (c[1] - c[2]) / d : hi === c[1] ? (c[2] - c[0]) / d + 2 : (c[0] - c[1]) / d + 4) * 60 + 360) % 360 : 0; };
+const hue = (c: number[]) => {
+  const hi = Math.max(...c), lo = Math.min(...c), d = hi - lo;
+  if (!d) return 0;
+  const sector = hi === c[0] ? (c[1] - c[2]) / d : hi === c[1] ? (c[2] - c[0]) / d + 2 : (c[0] - c[1]) / d + 4;
+  return (sector * 60 + 360) % 360;
+};
 const failures: string[] = previous?.failures ?? [];
 let session: SceneSession | undefined;
 async function capture(s: SceneSession, label: string, sheet = true) {
@@ -131,6 +136,45 @@ try {
         }
       }
       if (phase === 'before') await s.page.evaluate(() => { const l = ((window.__SCENE__ as unknown as { game: Game }).game.view as unknown as { lighting: Lighting }).lighting as unknown as Record<string, unknown>; Object.assign(l, l.qaRestore); delete l.qaRestore; });
+    }
+    if (backend === 'webgl2' && process.env.R12_MATRIX !== '0') {
+      await s.load({ name: 'forty-lights', size: 300, ground: 'asphalt', time: 'night', dof: false, actors: [{ id: 'courier', kind: 'courier', at: [0, 0] }], camera: { mode: 'follow', actor: 'courier', zoom: 1 } });
+      await s.ready();
+      const walk = await s.page.evaluate(async () => {
+        const g = (window.__SCENE__ as unknown as { game: Game }).game, l = (g.view as unknown as { lighting: Lighting }).lighting;
+        const fields: FieldLight[] = Array.from({ length: 40 }, (_, i) => ({ id: `walk-${i}`, x: i * 3, y: 3.4, z: 3.5, radius: 5, aimX: 0, aimZ: 0, stretch: 1, r: 1, g: .9, b: .7, on: true, hero: true, flicker: 0, strobe: false, seed: i }));
+        for (const f of fields) g.world.lightPower!.register({ id: f.id!, group: 'walk', x: f.x, y: f.y!, z: f.z, range: 10, breakable: true }, true);
+        l.field.setStatic(fields); l.set('night');
+        const gl = (g.view.renderer.backend as unknown as { gl: WebGL2RenderingContext }).gl, pixel = new Uint8Array(16);
+        const width = g.view.renderer.domElement.width, height = g.view.renderer.domElement.height;
+        const linear = (v: number) => v <= 10 ? v / 3294.6 : ((v / 255 + .055) / 1.055) ** 2.4;
+        const previous = new Map<number, { frame: number; value: number }>(), changes: number[] = [], fades: number[] = [];
+        let maxDelta = 0, maps = 0, lastId: string | null = null, fadeAt = -1, maxChangesPerSecond = 0;
+        for (let frame = 0; frame < 3600; frame++) {
+          g.world.setInput({ move: { x: 1, z: 0 }, walk: true }); g.world.update(); g.view.advance(1 / 60); g.view.renderer.nextNodeFrame(); g.view.update(1);
+          const state = l.getState();
+          maps = Math.max(maps, Number(l.sun.visible && l.sun.shadow.autoUpdate) + Number(l.spot.visible && l.spot.shadow.autoUpdate));
+          if (state.heroLight !== lastId) { if (lastId !== null) fadeAt = frame; lastId = state.heroLight; changes.push(frame); }
+          if (fadeAt >= 0 && state.promotionBlend >= 1) { fades.push((frame - fadeAt) / 60 * 1000); fadeAt = -1; }
+          maxChangesPerSecond = Math.max(maxChangesPerSecond, changes.filter(f => frame - f < 60).length);
+          for (const [i, f] of fields.entries()) {
+            const q = g.view.project(f.x, .05, f.z), sx = (q[0] + 1) * width / 2 - .5, sy = (1 - q[1]) * height / 2 - .5;
+            const x = Math.floor(sx), y = Math.floor(sy), tx = sx - x, ty = sy - y;
+            if (x < 4 || y < 4 || x >= width - 4 || y >= height - 4 || q[2] < -1 || q[2] > 1) continue;
+            gl.readPixels(x, height - 2 - y, 2, 2, gl.RGBA, gl.UNSIGNED_BYTE, pixel);
+            const v = [0, 4, 8, 12].map(j => .2126 * linear(pixel[j]) + .7152 * linear(pixel[j + 1]) + .0722 * linear(pixel[j + 2]));
+            const value = (v[2] * (1 - tx) + v[3] * tx) * (1 - ty) + (v[0] * (1 - tx) + v[1] * tx) * ty;
+            const before = previous.get(i);
+            if (before?.frame === frame - 1 && before.value > .001) maxDelta = Math.max(maxDelta, Math.abs(value - before.value) / before.value);
+            previous.set(i, { frame, value });
+          }
+          if (frame % 60 === 0) await new Promise<void>(r => requestAnimationFrame(() => r()));
+        }
+        g.world.setInput({ move: { x: 0, z: 0 } });
+        return { distance: g.world.entities.get(1)!.transform.x, maps, changes: changes.length, maxChangesPerSecond, fadeMs: fades, maxPoolFrameDelta: maxDelta };
+      });
+      rows.push({ label: `60s forty-lamp walk ${backend}/${tier}`, ...walk });
+      if (walk.distance < 119 || walk.maps > 1 || walk.changes !== 40 || walk.maxChangesPerSecond > 2 || walk.fadeMs.length !== 39 || walk.fadeMs.some(ms => ms < 299 || ms > 318) || walk.maxPoolFrameDelta > .15) failures.push(`${backend}/${tier}: E25 walk/crossfade gate failed`);
     }
     if (process.env.R12_MATRIX !== '0') {
       const scenes = ['catalog/atmosphere-l5', 'catalog/qa-l6-po-headlamp', 'catalog/qa-l6-exit-approach', 'catalog/qa-l7-entry-night-exit', 'l8-district/walk', 'catalog/night-read-l9-road', 'catalog/night-read-l10-r1', 'catalog/world-fill-l8-driveout'];

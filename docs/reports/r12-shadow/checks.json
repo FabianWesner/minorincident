@@ -24,5 +24,19 @@
   "unitTests": 107,
   "unitFiles": 27,
   "inventoryCases": 150,
-  "vitestWorkers": 2
+  "vitestWorkers": 2,
+  "producerChecks": {
+    "typecheck": 0,
+    "lint": 0
+  },
+  "selectionProbe": {
+    "ticks": 3600,
+    "lights": 40,
+    "changes": 40,
+    "maximumChangesPerSecond": 2,
+    "maximumRefreshedMaps": 1,
+    "fades": 39,
+    "minimumFadeMs": 300,
+    "maximumFadeMs": 316.66666666666663
+  }
 }
