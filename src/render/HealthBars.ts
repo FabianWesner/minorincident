@@ -1,4 +1,4 @@
-import { Box3, DataTexture, RGBAFormat, type Texture, Group, InstancedMesh, Matrix4, MeshBasicNodeMaterial, PlaneGeometry, Vector3, NoToneMapping, SRGBColorSpace, type PerspectiveCamera } from 'three/webgpu';
+import { Box3, Frustum, DataTexture, RGBAFormat, type Texture, Group, InstancedMesh, Matrix4, MeshBasicNodeMaterial, PlaneGeometry, Vector3, NoToneMapping, SRGBColorSpace, type PerspectiveCamera } from 'three/webgpu';
 import { color as colorNode, vec4, renderOutput, uniform, texture, viewportUV, Fn, Discard } from 'three/tsl';
 import { Ray, ShapeType, type Collider } from '@dimforge/rapier3d-compat';
 import { infectedDefinitions } from '../data/infected';
@@ -42,6 +42,7 @@ export class HealthBars extends Group {
   private readonly fillGain = uniform(1);
   private readonly bounds = new Box3();
   private readonly projection = new Matrix4();
+  private readonly frustum = new Frustum();
   private readonly point = new Vector3();
   private readonly center = new Vector3();
   private readonly barScale = new Vector3();
@@ -113,6 +114,7 @@ export class HealthBars extends Group {
       for (const target of this.l10Bars) this.l4BarIds.add(target.id);
     }
     this.projection.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
+    this.frustum.setFromProjectionMatrix(this.projection);
     this.heroScreen.left = Infinity; this.heroScreen.top = Infinity; this.heroScreen.right = -Infinity; this.heroScreen.bottom = -Infinity;
     if (this.courierBounds?.(this.heroBounds) ?? !!pickBodies.bounds(player.id, this.heroBounds)) {
       for (const x of [this.heroBounds.min.x, this.heroBounds.max.x]) for (const y of [this.heroBounds.min.y, this.heroBounds.max.y]) for (const z of [this.heroBounds.min.z, this.heroBounds.max.z]) {
@@ -131,18 +133,19 @@ export class HealthBars extends Group {
       // Riot/Alpha/Mega bars remain mandatory (L4-11/G-24, E32), including healthy threats.
       if (capped && e.faction === 'infected' && !mandatoryBar(e) && !this.l4BarIds.has(e.id)) continue;
       if (!pickBodies.bounds(e.id, this.bounds)) continue;
+      const follower = isFollower(e), evacuee = follower && this.world.scenario === 'L7';
       // E32-AC09: the Mega's bar is larger; regular Alphas retain their E07 size and shared pool.
       const size = barSize(width, height, !!e.infected?.pursuit);
       // Use the actual displayed bounds, including pose blending and interpolated movement.
       this.bounds.getCenter(this.center);
       this.point.copy(this.center).project(camera);
-      if (this.point.z < -1 || this.point.z > 1 || Math.abs(this.point.x) > 1 || Math.abs(this.point.y) > 1) continue;
+      if ((this.point.z < -1 || this.point.z > 1 || Math.abs(this.point.x) > 1 || Math.abs(this.point.y) > 1) &&
+          !(evacuee && this.frustum.intersectsBox(this.bounds))) continue;
       const projectedTop = pickBodies.top(e.id, this.projection);
       if (projectedTop === null) continue;
       const top = (1 - projectedTop) * height / 2;
       let x = (this.point.x + 1) * width / 2, y = top - 2 - (size.height + 4) / 2;
-      const follower = isFollower(e), pip = follower && compactFollowers;
-      const evacuee = follower && this.world.scenario === 'L7';
+      const pip = follower && compactFollowers;
       const displaySize = pip ? followerPipSize : size;
       if (pip) y = top - 2 - displaySize.height / 2;
       // A visible body can extend above the frame at close zoom. Keep its

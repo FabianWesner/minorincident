@@ -144,6 +144,12 @@ function checkL7FollowerBars(w: SimWorld) {
     bars.update(camera, 1280, 720, () => true);
     expect(bars.count, 'every known evacuee retains a bar through occluders').toBe(boxes.size);
     expect(ray).not.toHaveBeenCalled();
+    // A head still on screen cannot lose its bar when the torso centre slips
+    // below the frame. The UI keeps the existing viewport clamp.
+    camera.position.set(0, 1, 10); camera.lookAt(0, 1, 0); camera.updateMatrixWorld();
+    boxes.values().next().value!.set(new Vector3(-.3, -3.3, -.3), new Vector3(.3, -1.8, .3));
+    bars.update(camera, 1280, 720, () => true);
+    expect(bars.count, 'partially visible edge-of-frame evacuees retain their bars').toBe(boxes.size);
   } finally { bars.dispose(); bounds.mockRestore(); top.mockRestore(); ray.mockRestore(); }
 }
 
