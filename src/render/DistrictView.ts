@@ -31,6 +31,7 @@ import { seeThrough } from './SeeThrough';
 import { terrainPrefetchSeconds } from '../sim/world/TerrainChunks';
 import type { NightAccents } from './NightAccents';
 import { buildDistrict, DistrictParts, freezeBatch, type DressingEntry, type LodBatch } from './district/DistrictBuild';
+import { poseZooExitGate } from './district/zooExitGate';
 import { DistrictOcclusion } from './district/DistrictOcclusion';
 
 // Repeated fence panels dominated V1 (109k faces in each view/shadow pass).
@@ -521,6 +522,7 @@ export class DistrictView extends Group {
   marketDoorOpenness(): number | null { return this.marketDoorK; }
   /** Scene Lab door gate: every market door placement with its pose and leaf batches. */
   marketDoorPlacements(): { pose: number | null; leaves: string[] }[] { return this.lodBatches.filter(e => e.id === 'kit.market-doors').flatMap(e => e.refs.map(ref => ({ pose: ref.userData.marketDoorPose ?? null, leaves: e.hero.doors }))); }
+  zooExit(openness: number): void { poseZooExitGate(this.parts.zooGateLeaves, openness); }
   /** The exit streams in late in L6; every new placement must receive its current pose. */
   northgate(closed: boolean): void {
     for (const e of this.lodBatches) if (e.id === 'int.metro-exit') for (const ref of e.refs) {

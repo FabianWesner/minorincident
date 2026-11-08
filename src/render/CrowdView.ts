@@ -1,4 +1,5 @@
 import { livingStencil } from './characters/figureStencil';
+import { K9Vest } from './characters/K9Vest';
 import { paintedSkinMask } from './characters/paintedSkin';
 import { crowdRegionOf, crowdRegionSkin, crowdRegionTint } from './characters/crowdRegions';
 import { crowdLimbParts } from '../assets/crowdParts';
@@ -125,6 +126,7 @@ export class CrowdView extends Group {
   private entityRevision = -1;
   private frozenRevision = -1;
   private readonly figures: EntitySnapshot[] = [];
+  private k9Vest?: K9Vest;
   private readonly shadows: InstancedMesh;
   private readonly feedback = new Map<number, { mask: number; strength: number; at: number }>();
   private readonly caps = new InstancedMesh(new BoxGeometry(.18, .06, .18), new MeshBasicNodeMaterial({ color: '#b3121f' }), 1750);
@@ -187,6 +189,12 @@ export class CrowdView extends Group {
       for (const asset of alphaLooks['inf.mega-alpha']) l1Roles.add(asset);
       l1Roles.add('inf.dog');
     }
+    if (this.world.scenario === 'L8') {
+      // These story actors enter after Begin; register their actual models
+      // behind the loading card along with the healthy sanctuary animals.
+      l1Roles.add('infected.dog'); l1Roles.add('inf.dog-k9');
+      l1Roles.add('inf.mega-alpha');
+    }
     if (alphaLevel)
       for (const def of allDefinitions) if (alphaLooks['inf.alpha'].includes(def.asset)) l1Roles.add(def.id);
     const grove = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L6';
@@ -201,6 +209,10 @@ export class CrowdView extends Group {
         const mesh = new InstancedMesh(new BufferGeometry(), this.shading?.shaded(vec3(1)) ?? new MeshBasicNodeMaterial(), 350);
         mesh.count = 0; mesh.visible = false; this.heroSlots.set(key, mesh); this.add(mesh);
       }
+    }
+    if (this.world.scenario === 'L8') {
+      this.modelAliases.set('inf.dog-k9', this.modelAliases.get('infected.dog')!);
+      this.k9Vest = new K9Vest(); this.add(this.k9Vest); await this.k9Vest.init(this.registry, this.shading);
     }
     // Both tiers need a clean near silhouette; Alpha bodies and corpses retain the authored model.
     const lods: ('lod0' | 'lod1' | 'lod2')[] = !this.low && grove ? ['lod0', 'lod1', 'lod2'] : ['lod1', 'lod2'];
@@ -225,6 +237,11 @@ export class CrowdView extends Group {
       const key = crowdModelKey(def); this.plannedLods.set(key, planned);
       return this.staged ? [] : planned.map(lod => this.requestBatch(def, lod));
     }));
+    if (this.world.scenario === 'L8') {
+      // The brief wall shot cannot wait for first-visibility streaming.
+      await Promise.all([['inf.mega-alpha', 'lod0'], ['infected.dog', 'lod1']].map(([id, lod]) =>
+        this.requestBatch(this.definitions.get(this.modelAliases.get(id)!)!, lod as CrowdLod)));
+    }
     const dog = this.batches.get('inf.dog:lod1'), cream = this.batches.get('inf.dog.cream:lod1');
     if (dog && cream && !dog.mesh.geometry.hasAttribute('uv')) this.sharedDogCoats = shareDogCoatPalette(dog.mesh.geometry, cream.mesh.geometry, dog.poses.clip, cream.poses.clip);
     loadMeasure('view:infected-crowd', started);
@@ -617,6 +634,7 @@ export class CrowdView extends Group {
     for (const batch of this.batches.values()) { batch.count = 0; batch.probe.begin(); }
     this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60);
     this.shadows.count = 0; this.caps.count = 0; this.texturedCaps = 0;
+    this.k9Vest?.begin(this.world);
     for (const [id, feedback] of this.feedback) { const e = this.world.entities.get(id); if (!e?.combat || e.hidden || e.infected?.hidden) this.feedback.delete(id); else if (e.health.current > 0) feedback.mask = 0; }
     const player = this.world.entities.get(1)!;
     const focus = view?.cameraTarget ?? player.transform;
@@ -755,6 +773,7 @@ export class CrowdView extends Group {
           const mask = this.goreEnabled && b.legLost && !isMega(e) ? 4 : 0;
           const hidden = crowdLimbParts(batch.animal).flatMap((names, bit) => mask & 1 << bit ? names : []);
           this.staticCorpses.place(e, `${key}:${death}:${mask}`, frozenSource, batch.mesh.material as MeshLambertNodeMaterial, this.corpseClips.get(key) ?? batch.poses.clip, frame, this.transform, tint, [0, 0, 0], String(e.id), hidden, !batch.animal ? look : undefined, near);
+          this.k9Vest?.place(e, batch.poses, frame, [0, 1], this.transform);
           continue;
         }
         // Close pixel band (hysteresis): the courier's footwork plus the zombie move set; further out stance plants only.
@@ -797,6 +816,7 @@ export class CrowdView extends Group {
         pose.cadence = this.low && canHoldCrowdPose(e, this.world.tick) ? 2 : 1;
         pose.holdDistanceM = distantHold ? .08 : .05;
         frame = batch.locomotion.present(e.id, batch.poses, pose); }
+        this.k9Vest?.place(e, batch.poses, frame, blend, this.transform);
         if (!batch.animal && !batch.mesh.geometry.userData.inlineAccessories ) this.accessories?.place(e, batch.lod as 'lod0' | 'lod1' | 'lod2', batch.poses, frame, blend, this.transform, !!((feedback?.mask ?? 0) & 16));
         batch.probe.add(e.id, clip, phase, this.transform, batch.poses, frame, ...blend, batch.mesh.geometry, (feedback?.mask ?? 0) | (b.legLost ? 4 : 0));
         const figure = batch.probe.figures.at(-1);
@@ -859,7 +879,7 @@ export class CrowdView extends Group {
     return { telegraphs: [0, 0], figures: [...this.batches.values()].flatMap(b => b.probe.figures).concat(this.staticCorpses.snapshot().figures), instances, meshDrawCalls: draws + accessoryDrawCalls, bodyMeshDrawCalls: draws, accessoryDrawCalls, objects, staticCorpsePages: this.staticCorpses.children.length, texturedCorpsePages: this.staticCorpses.children.filter(mesh => mesh instanceof InstancedMesh && mesh.geometry.hasAttribute('uv')).length, nonInstancedMeshes: nonInstanced, caps: this.caps.count + this.texturedCaps, flashes: [...this.feedback.values()].filter(f => f.strength > 0).length, batches: [...this.batches.values()].map((b) => ({ id: b.role, lod: b.lod, instances: b.count, layout: crowdVertexLayout(b.mesh.geometry, b.mesh.instanceMatrix), source: 'glb', atlas: b.mesh.userData.crowdAtlas ? { ...b.mesh.userData.crowdAtlas, width: b.mesh.userData.preRenderTextures[1].image.width, height: b.mesh.userData.preRenderTextures[1].image.height, decodedBytesWithMips: (b.mesh.userData.preRenderTextures[1].image.width ** 2 * 4 * 4 - 4) / 3 } : null })).concat([...this.heroSlots.keys()].map(id => ({ id, lod: 'lod0', instances: 0, layout: { buffers: 0, locations: 0, webgpu: true, webgl2: true }, source: 'pending', atlas: null }))), assets: this.logs };
   }
   dispose(): void {
-    this.disposed = true; this.staticCorpses.dispose();
+    this.disposed = true; this.staticCorpses.dispose(); this.k9Vest?.dispose();
     for (const mesh of this.heroSlots.values()) { mesh.geometry.dispose(); (mesh.material as MeshLambertNodeMaterial).dispose(); mesh.dispose(); }
     this.heroSlots.clear();
     for (const geometry of this.corpseGeometry.values()) geometry.dispose();

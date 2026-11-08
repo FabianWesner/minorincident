@@ -1,0 +1,300 @@
+{
+  "revision": "2eacf0c5",
+  "mainRevision": "a7b70c78",
+  "sourceMatchesMain": false,
+  "seed": 1,
+  "policy": "kiting + passive",
+  "tier": "low",
+  "workers": 1,
+  "seconds": 172.09902105400002,
+  "flags": [
+    "L8/step/escape:SLOW_FOLLOWER:354",
+    "L8/phase/breached:SLOW_FOLLOWER:354",
+    "L8/wave/tunnel-breach:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+    "L8/phase/breached:SLOW_FOLLOWER:354",
+    "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+  ],
+  "command": "npm run qa:threat -- --levels L8 --maxWorkers=1 --out test-results/eg-l8-story-audits/threat",
+  "exitCode": 1,
+  "sourceHash": "1860225dfb2ade93557b43673386a7ab2633d4e3559fb196855eb41d6b1b9420",
+  "rawSha256": "1040c35e5db52317e8fe93c21537dcea9a5a1420785264d3c376285c6e184bb4",
+  "levels": [
+    {
+      "level": "L8",
+      "quality": "low",
+      "flags": [
+        "step/escape:SLOW_FOLLOWER:354",
+        "step/escape:SLOW_FOLLOWER:360",
+        "phase/breached:SLOW_FOLLOWER:354",
+        "phase/breached:SLOW_FOLLOWER:360",
+        "wave/tunnel-breach:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+      ],
+      "passiveFlags": [
+        "step/escape:SLOW_FOLLOWER:354",
+        "phase/breached:SLOW_FOLLOWER:354",
+        "wave/tunnel-breach:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+        "phase/breached:SLOW_FOLLOWER:354"
+      ],
+      "wallSeconds": 172.091,
+      "nativeStateHash": "867f82fe",
+      "kiting": {
+        "kitingSeconds": 20.000000000000146,
+        "attacks": 3,
+        "attacksPerMinute": 8.999999999999934,
+        "samples": 1200,
+        "diagnostics": {
+          "startTick": 4415,
+          "endTick": 5614,
+          "firingFrames": 1,
+          "playerAttackStarts": 1,
+          "framesWithoutThreats": 0
+        }
+      },
+      "run": {
+        "outcome": "complete",
+        "completed": true,
+        "time": 205.13333333333333,
+        "furthestObjective": "depart",
+        "damageTaken": 20,
+        "playerDeaths": null
+      },
+      "passiveRun": {
+        "outcome": "tick-budget",
+        "completed": false,
+        "time": 150,
+        "furthestObjective": "escape",
+        "damageTaken": 0,
+        "playerDeaths": null
+      },
+      "observation": {
+        "phases": [
+          {
+            "key": "step/sanctuary",
+            "seconds": 60,
+            "attacks": 0,
+            "groupAttacks": 0,
+            "attacksPerMinute": 0,
+            "groupAttacksPerMinute": 0,
+            "firstAttackSeconds": null,
+            "flags": []
+          },
+          {
+            "key": "phase/sanctuary",
+            "seconds": 60,
+            "attacks": 0,
+            "groupAttacks": 0,
+            "attacksPerMinute": 0,
+            "groupAttacksPerMinute": 0,
+            "firstAttackSeconds": null,
+            "flags": []
+          },
+          {
+            "key": "step/escape",
+            "seconds": 131.13333333333333,
+            "attacks": 48,
+            "groupAttacks": 1,
+            "attacksPerMinute": 21.96237925775292,
+            "groupAttacksPerMinute": 0.45754956786985257,
+            "firstAttackSeconds": 30.3,
+            "flags": [
+              "SLOW_FOLLOWER:354",
+              "SLOW_FOLLOWER:360"
+            ]
+          },
+          {
+            "key": "phase/breached",
+            "seconds": 131.13333333333333,
+            "attacks": 48,
+            "groupAttacks": 1,
+            "attacksPerMinute": 21.96237925775292,
+            "groupAttacksPerMinute": 0.45754956786985257,
+            "firstAttackSeconds": 30.3,
+            "flags": [
+              "SLOW_FOLLOWER:354",
+              "SLOW_FOLLOWER:360"
+            ]
+          },
+          {
+            "key": "step/depart",
+            "seconds": 9,
+            "attacks": 0,
+            "groupAttacks": 0,
+            "attacksPerMinute": 0,
+            "groupAttacksPerMinute": 0,
+            "firstAttackSeconds": null,
+            "flags": []
+          },
+          {
+            "key": "phase/boarding",
+            "seconds": 9,
+            "attacks": 0,
+            "groupAttacks": 0,
+            "attacksPerMinute": 0,
+            "groupAttacksPerMinute": 0,
+            "firstAttackSeconds": null,
+            "flags": []
+          },
+          {
+            "key": "phase/run-out",
+            "seconds": 5,
+            "attacks": 0,
+            "groupAttacks": 0,
+            "attacksPerMinute": 0,
+            "groupAttacksPerMinute": 0,
+            "firstAttackSeconds": null,
+            "flags": []
+          }
+        ],
+        "flaggedWaves": [
+          {
+            "key": "tunnel-breach",
+            "source": "L8 breachedAt/story.say",
+            "startSeconds": 60,
+            "observedSeconds": 145.13333333333333,
+            "expected": 12,
+            "spawned": 13,
+            "firstAttackSeconds": 30.3,
+            "members": [
+              "411@2",
+              "413@3",
+              "415@4",
+              "417@5",
+              "419@6",
+              "421@7",
+              "423@8",
+              "425@1",
+              "426@9",
+              "428@10",
+              "430@11",
+              "432@12",
+              "434@13"
+            ],
+            "flags": [
+              "WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+            ],
+            "outletCohorts": [
+              {
+                "outlet": 0,
+                "spawned": 3
+              },
+              {
+                "outlet": 1,
+                "spawned": 3
+              },
+              {
+                "outlet": 2,
+                "spawned": 4
+              },
+              {
+                "outlet": 3,
+                "spawned": 3
+              }
+            ],
+            "scheduledStreamSeconds": 0,
+            "visibleWithinTwoSeconds": 0,
+            "spawnedWithinEighteenSeconds": 13
+          }
+        ]
+      },
+      "passiveObservation": {
+        "phases": [
+          {
+            "key": "step/sanctuary",
+            "seconds": 60,
+            "attacks": 0,
+            "groupAttacks": 0,
+            "attacksPerMinute": 0,
+            "groupAttacksPerMinute": 0,
+            "firstAttackSeconds": null,
+            "flags": []
+          },
+          {
+            "key": "phase/sanctuary",
+            "seconds": 60,
+            "attacks": 0,
+            "groupAttacks": 0,
+            "attacksPerMinute": 0,
+            "groupAttacksPerMinute": 0,
+            "firstAttackSeconds": null,
+            "flags": []
+          },
+          {
+            "key": "step/escape",
+            "seconds": 90,
+            "attacks": 475,
+            "groupAttacks": 34,
+            "attacksPerMinute": 316.6666666666667,
+            "groupAttacksPerMinute": 22.666666666666668,
+            "firstAttackSeconds": 24.25,
+            "flags": [
+              "SLOW_FOLLOWER:354"
+            ]
+          },
+          {
+            "key": "phase/breached",
+            "seconds": 90,
+            "attacks": 475,
+            "groupAttacks": 34,
+            "attacksPerMinute": 316.6666666666667,
+            "groupAttacksPerMinute": 22.666666666666668,
+            "firstAttackSeconds": 24.25,
+            "flags": [
+              "SLOW_FOLLOWER:354"
+            ]
+          }
+        ],
+        "flaggedWaves": [
+          {
+            "key": "tunnel-breach",
+            "source": "L8 breachedAt/story.say",
+            "startSeconds": 60,
+            "observedSeconds": 90,
+            "expected": 12,
+            "spawned": 13,
+            "firstAttackSeconds": 24.25,
+            "members": [
+              "411@2",
+              "413@3",
+              "415@4",
+              "417@5",
+              "419@6",
+              "421@7",
+              "423@8",
+              "425@1",
+              "426@9",
+              "428@10",
+              "430@11",
+              "432@12",
+              "434@13"
+            ],
+            "flags": [
+              "WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+            ],
+            "outletCohorts": [
+              {
+                "outlet": 0,
+                "spawned": 3
+              },
+              {
+                "outlet": 1,
+                "spawned": 3
+              },
+              {
+                "outlet": 2,
+                "spawned": 4
+              },
+              {
+                "outlet": 3,
+                "spawned": 3
+              }
+            ],
+            "scheduledStreamSeconds": 0,
+            "visibleWithinTwoSeconds": 0,
+            "spawnedWithinEighteenSeconds": 13
+          }
+        ]
+      }
+    }
+  ],
+  "note": "L8-only diagnostic; PARTIAL_LEVEL_SELECTION is expected for this requested scope. Original flags, including duplicate follower entries, are preserved. Full native receipts remain in test-results/eg-l8-story-audits/threat."
+}

@@ -711,7 +711,7 @@ export class GameView implements Lifecycle {
       // E19 story beats: ease the game camera onto the beat (between courier and the other actor, a little closer),
       // then back to the follow camera; no cut, same isometric angle.
       // L7-E2: the departure shot takes the camera (it follows the bus), then hands it back.
-      const shot = this.world.missions?.l9?.cameraPose() ?? this.world.l7Departure?.cameraPose();
+      const shot = this.world.missions?.l9?.cameraPose() ?? this.world.missions?.l8?.cameraPose() ?? this.world.l7Departure?.cameraPose();
       if (shot) { this.view.cinematic(shot); this.departureShot = true; } else if (this.departureShot) { this.departureShot = false; this.view.follow(); }
       const beat = this.world.missions?.state.l1?.beat;
       if (beat && this.world.storyLock && !this.view.spot) {
@@ -946,6 +946,8 @@ export class GameView implements Lifecycle {
   }
   private syncMission(): void {
     const mission = this.world.missions, cinematic = mission?.state.cinematic;
+    const departure = mission?.l8?.state;
+    if (departure) this.districts?.zooExit(departure.departureFrom ? Math.min(1, (this.world.tick - departure.chaseAt) / 90) : 0);
     if (cinematic && this.cinematicId !== cinematic.id) {
       this.cinematicId = cinematic.id;
       const pose = mission!.def.cinematics[cinematic.id], player = this.world.entities.get(1);
