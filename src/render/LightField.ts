@@ -20,6 +20,8 @@ export interface FieldLight {
   on: boolean;
   /** Source height and `shadow: hero` eligibility (the night hero-shadow selection). */
   y?: number; hero?: boolean;
+  /** Transient radiance multiplier, including its remaining lifetime. */
+  shadowGain?: number;
   /** Window spill stays on the outward side of its source facade. */
   facadeX?: number; facadeZ?: number;
 }
@@ -86,6 +88,7 @@ export class LightField {
   private readonly pool: FieldLight[] = [];
   private readonly weights: number[] = [];
   private time = 0;
+  private transientId = 0;
   private tier: 'high' | 'low' = 'high';
   private drawn = 0;
   private candidates = 0;
@@ -179,20 +182,41 @@ export class LightField {
   /** E27 hook (explosions, Molotovs, muzzle flashes): a pool that fades out linearly over `ttl` seconds.
    * `ttl = Infinity` keeps it until `remove()`. `intensity` uses the §6 0..10 scale. */
   addTransient(position: { x: number; z: number }, hex: string, intensity: number, radius: number, ttl: number, flicker = false): TransientLight {
-    const c = linear(hex), entry = { light: { x: position.x, z: position.z, r: c.r, g: c.g, b: c.b, radius, aimX: 0, aimZ: 0, stretch: 1, flicker: flicker ? 1 : 0, strobe: false, seed: this.transients.length * 7.13, on: true } as FieldLight, born: this.time, ttl, intensity };
+    const c = linear(hex), entry = { light: { id: `transient-${this.transientId++}`, x: position.x, y: 1.2, z: position.z, r: c.r, g: c.g, b: c.b, radius, aimX: 0, aimZ: 0, stretch: 1, flicker: flicker ? 1 : 0, strobe: false, seed: this.transients.length * 7.13, on: true, hero: flicker && ttl >= .3, shadowGain: intensity * fieldGain } as FieldLight, born: this.time, ttl, intensity };
     this.transients.push(entry);
-    return { remove: () => { const i = this.transients.indexOf(entry); if (i >= 0) this.transients.splice(i, 1); } };
+    return { remove: () => { entry.light.on = false; const i = this.transients.indexOf(entry); if (i >= 0) this.transients.splice(i, 1); } };
   }
   get active(): boolean { return this.strength.value > 0 || this.transients.length > 0; }
-  /** The lit `shadow: hero` light whose pool covers (x, z) most strongly, for the single night shadow map. */
+  /** Mean pool radiance at the focus, matching the field's elliptical falloff and visibility rays.
+   * Ignore flicker here so a fire or strobe cannot churn the shadow source every frame. */
+  heroStrength(l: FieldLight, x: number, z: number): number {
+    if (!l.on || !l.hero) return 0;
+    if (l.visibility) {
+      const dx = x - l.x, dz = z - l.z, distance = Math.hypot(dx, dz);
+      const ray = (Math.atan2(dz, dx) / (Math.PI * 2) + 1) % 1 * 64;
+      const reach = (index: number) => { const p = l.visibility![1 + (index + 64) % 64]; return Math.hypot(p[0] - l.x, p[1] - l.z); };
+      const column = Math.floor(ray);
+      if (distance > Math.min(reach(column - 1), reach(column), reach(column + 1), reach(column + 2))) return 0;
+    }
+    const dx = x - l.x - l.aimX, dz = z - l.z - l.aimZ, aim = Math.hypot(l.aimX, l.aimZ);
+    const along = aim > .001 ? (dx * l.aimX + dz * l.aimZ) / aim : dz;
+    const across = aim > .001 ? (dx * l.aimZ - dz * l.aimX) / aim : dx;
+    const d = Math.hypot(across, along / l.stretch) / l.radius;
+    return Math.max(0, 1 - d * d) ** 2 * (.2126 * l.r + .7152 * l.g + .0722 * l.b) * Number(d < 1) * (l.shadowGain ?? 1);
+  }
+  /** The strongest visible eligible pool at the focus, for the single night shadow map. */
   heroAt(x: number, z: number): FieldLight | null {
     if (this.strength.value <= 0) return null;
-    let best: FieldLight | null = null, score = 0;
-    for (const l of this.statics) {
-      if (!l.on || !l.hero) continue;
-      const d = Math.hypot(l.x + l.aimX - x, l.z + l.aimZ - z) / l.radius;
-      const s = d < .85 ? (1 - d) * (l.r + l.g + l.b) : 0;
+    let best: FieldLight | null = null, score = .02;
+    const consider = (l: FieldLight) => {
+      const s = this.heroStrength(l, x, z);
       if (s > score) { score = s; best = l; }
+    };
+    for (const l of this.statics) consider(l);
+    for (const l of this.dynamics) consider(l);
+    for (const t of this.transients) {
+      t.light.shadowGain = t.intensity * fieldGain * (Number.isFinite(t.ttl) ? Math.max(0, 1 - (this.time - t.born) / t.ttl) : 1);
+      consider(t.light);
     }
     return best;
   }
@@ -201,7 +225,7 @@ export class LightField {
   update(focusX: number, focusZ: number, time: number): void {
     const start = performance.now();
     this.time = time;
-    for (let i = this.transients.length - 1; i >= 0; i--) if (this.time - this.transients[i].born >= this.transients[i].ttl) this.transients.splice(i, 1);
+    for (let i = this.transients.length - 1; i >= 0; i--) if (this.time - this.transients[i].born >= this.transients[i].ttl) { this.transients[i].light.on = false; this.transients.splice(i, 1); }
     this.enabled.value = Number(this.active);
     const extent = this.extent.value, texel = extent / this.target.width;
     // Snap the window to whole texels so static pools do not shimmer as the camera follows.

@@ -1,0 +1,37 @@
+{
+  "quietBrowser": {
+    "status": "UNMEASURED",
+    "attempts": 2,
+    "admissionStart": "2026-11-08T15:47:54Z",
+    "admissionEnd": "2026-11-08T16:07:19Z",
+    "firstExitCode": 75,
+    "firstReason": "600-second exclusive reservation limit reached while host not quiet",
+    "secondExitCode": 75,
+    "secondReason": "540-second admission timeout; load 27.24/27.75/29.72, quiet false",
+    "browserFrameRunsStarted": 0
+  },
+  "renderCensus": {
+    "status": "UNMEASURED",
+    "exitCode": 1,
+    "at": "2026-11-08T16:08:07Z",
+    "headless": true,
+    "requestedBackend": "webgpu",
+    "requestedTier": "high",
+    "reason": "Chromium exited SIGTRAP at launch: FATAL mach_port_rendezvous_mac.cc:159, bootstrap_check_in org.chromium.Chromium.MachPortRendezvousServer: unknown error code (141). No page or render counters collected."
+  },
+  "productionReplay": {
+    "status": "UNAVAILABLE",
+    "note": "No batch59 replay/checkpoint payload supplied. Counter samples cannot reconstruct entity positions, AI/RNG state, prior inputs or carried survivor loadout. Native hold is a constructed density fixture, not an exact reproduction."
+  },
+  "finalContinuation": {
+    "job": "r12-l8perf-d",
+    "browserRunsStarted": 0,
+    "heavyExecution": "Sequential commands through tools/remote/run.sh; Mac fallback disabled; Vitest/threat workers 1.",
+    "sourceWorktreeRevision": "ed4aad7709cf973541f5454e00a20d56c7335dc2",
+    "remoteSnapshot": "01862ac2a4d64eb98ebbb94e5c09cf8aa189f49b",
+    "note": "Remote snapshot is a private actual Git commit for history-dependent tests; it is not a source-worktree commit or a performance baseline.",
+    "verifiedRuntimeSourceHash": "c42a86e9cb7754a9940e72e8a7ca82ddc5176f85b474dac4e549114a65f5ae16",
+    "verifiedObserverHash": "2c536930d36d27fb546ce2f0ae4431df5913b794c1ea3ae24e355d457f7c11db",
+    "allChecksTerminal": true
+  }
+}
