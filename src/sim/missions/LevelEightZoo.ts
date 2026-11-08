@@ -81,7 +81,7 @@ export class LevelEightZoo {
         [[-96, 32]],
         [[80, 78]], // Cross the gate-to-APC road before ordinary pursuit.
         [[-30, -64]],
-        [[24, 66.5]], // Clear the west side of the bunker, then let native pursuit intercept the gate road.
+        [[27, 78]], // Clear the bunker onto the gate road before ordinary pursuit.
       ];
       const route = [...exit.route, ...serviceRoutes[index]];
       const last = route.at(-1);
