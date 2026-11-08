@@ -1,0 +1,202 @@
+{
+  "accept": {
+    "exitCode": 1,
+    "generatedAt": "2026-11-08T16:03:28.782Z",
+    "sourceHash": "5520a22d136e41a2a43829c418c49b1b956f8664c19a13e3ef6b475863493c4d",
+    "policies": [
+      {
+        "tier": "low",
+        "policy": "complete",
+        "outcome": "complete",
+        "error": null
+      },
+      {
+        "tier": "low",
+        "policy": "stationary",
+        "outcome": "tick-budget",
+        "error": null
+      },
+      {
+        "tier": "high",
+        "policy": "complete",
+        "outcome": "complete",
+        "error": null
+      },
+      {
+        "tier": "high",
+        "policy": "stationary",
+        "outcome": "tick-budget",
+        "error": null
+      },
+      {
+        "tier": "low",
+        "policy": "controlled-fixtures",
+        "outcome": "complete",
+        "error": null
+      },
+      {
+        "tier": "high",
+        "policy": "controlled-fixtures",
+        "outcome": "complete",
+        "error": null
+      },
+      {
+        "tier": "low",
+        "policy": "checkpoint-death-control",
+        "outcome": "complete",
+        "error": null
+      },
+      {
+        "tier": "high",
+        "policy": "checkpoint-death-control",
+        "outcome": "complete",
+        "error": null
+      }
+    ],
+    "rows": [
+      {
+        "id": "L8-01",
+        "status": "NOT CHECKED",
+        "currentStatus": "NOT CHECKED",
+        "automatedComplete": false,
+        "expected": "L7 roster and arsenal arrive exactly; companions at full health; no weapon pickup in L8; start weapon = last weapon (not the bat).",
+        "remaining": "NEXT: Run the real L7-to-L8 handover from the carried campaign save; compare roster IDs, HP, rack and selected weapon, and census L8 pickups.",
+        "currentCheckCounts": {
+          "PASS": 8
+        }
+      },
+      {
+        "id": "L8-02",
+        "status": "NOT CHECKED",
+        "currentStatus": "NOT CHECKED",
+        "automatedComplete": false,
+        "expected": "Exactly 60 active sim seconds with the opening objective visible, without waypoint or scripted attack.",
+        "remaining": "NEXT: Use the real-input threat/handover observer for 60 active seconds: require no objective text, tracker, world/HUD/minimap marker or scripted attack.",
+        "currentCheckCounts": {
+          "PASS": 4
+        }
+      },
+      {
+        "id": "L8-03",
+        "status": "NOT CHECKED",
+        "currentStatus": "NOT CHECKED",
+        "automatedComplete": false,
+        "expected": "\u2265 20 civilians, \u2265 6 soldiers, \u2265 4 staff, \u2265 8 animals (all 5 species, \u2265 2 zebras, \u2265 3 flamingos); outside-wall infected cannot cross; nobody idle > 3 s.",
+        "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L8 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: \u2265 20 civilians, \u2265 6 soldiers, \u2265 4 staff, \u2265 8 animals (all 5 species, \u2265 2 zebras, \u2265 3 flamingos); outside-wall infected cannot cross; nobody idle > 3 s.",
+        "currentCheckCounts": {
+          "PASS": 24
+        }
+      },
+      {
+        "id": "L8-04",
+        "status": "NOT CHECKED",
+        "currentStatus": "NOT CHECKED",
+        "automatedComplete": false,
+        "expected": "Breach at 60 s \u00b1 1 tick at \u2265 3 tunnel outlets \u2265 20 m apart within 1 s; **6 / 3 per point** (\u2265 18 / \u2265 9); no pop-in.",
+        "remaining": "Current native admitted-cohort ledger. NEXT: current-source low/high entrance frame strips and event timestamps for all spacing/opening/visibility clauses.",
+        "currentCheckCounts": {
+          "PASS": 8
+        }
+      },
+      {
+        "id": "L8-05",
+        "status": "NOT CHECKED",
+        "currentStatus": "NOT CHECKED",
+        "automatedComplete": false,
+        "expected": "Attacks hit civilians, soldiers, staff and animals; animals turn in 2.5\u20133.5 s keeping id/species; 3\u20135 Alphas over the run; concurrent \u2264 200 / 100.",
+        "remaining": "NEXT: Track same-ID/species animal turns at 2.5-3.5 seconds, all four victim classes, Alpha admissions and concurrent caps through a full native/real-input outbreak.",
+        "currentCheckCounts": {
+          "PASS": 6
+        }
+      },
+      {
+        "id": "L8-06",
+        "status": "FAIL",
+        "currentStatus": "PASS",
+        "automatedComplete": true,
+        "expected": "combat: reachable \u2265 90 %; passive first attack \u2264 20 s after the breach (measured 15.7 s from level start sample); attacks on player + group \u2265 4/min (tune).",
+        "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
+        "currentCheckCounts": {
+          "PASS": 14
+        }
+      },
+      {
+        "id": "L8-07",
+        "status": "NOT CHECKED",
+        "currentStatus": "NOT CHECKED",
+        "automatedComplete": false,
+        "expected": "\u2265 2 escape paths \u2265 2.5 m wide from each enclosure; marker points at the APC (fixed).",
+        "remaining": "NEXT: Physically walk both >=2.5 m escape paths from every enclosure and log the fixed APC marker, including a screenshot-only route review.",
+        "currentCheckCounts": {}
+      },
+      {
+        "id": "L8-08",
+        "status": "NOT CHECKED",
+        "currentStatus": "NOT CHECKED",
+        "automatedComplete": false,
+        "expected": "Infected animals read as enemies (lion snarl, wounds visible from the iso camera); zebra legs clean at PO zooms; player readable at night (rim/accents).",
+        "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L8 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Infected animals read as enemies (lion snarl, wounds visible from the iso camera); zebra legs clean at PO zooms; player readable at night (rim/accents).",
+        "currentCheckCounts": {}
+      },
+      {
+        "id": "L8-09",
+        "status": "NOT CHECKED",
+        "currentStatus": "NOT CHECKED",
+        "automatedComplete": false,
+        "expected": "Every living group member boards; missing survivors visible or marked during the wait; APC has no gun.",
+        "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Record actual boarding of every living follower, late/missing-member guidance and APC weapon inventory through real-input departure.",
+        "currentCheckCounts": {}
+      },
+      {
+        "id": "L8-10",
+        "status": "NOT CHECKED",
+        "currentStatus": "NOT CHECKED",
+        "automatedComplete": false,
+        "expected": "L8 \u2192 L9 handover \u2264 6 s inside the same APC (durability kept).",
+        "remaining": "NEXT: Time the actual saved APC L8-to-L9 handover with tools/qa/release-ab-handover.mjs; compare durability and vehicle identity, requiring <=6 seconds.",
+        "currentCheckCounts": {}
+      },
+      {
+        "id": "L8-11",
+        "status": "NOT CHECKED",
+        "currentStatus": "NOT CHECKED",
+        "automatedComplete": false,
+        "expected": "Frames: strong sanctuary, then mixed battle; Opus \"is it stunning?\" pass.",
+        "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L8 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Frames: strong sanctuary, then mixed battle; Opus \"is it stunning?\" pass.",
+        "currentCheckCounts": {}
+      }
+    ],
+    "note": "0 fresh failing rows; 10 incomplete. Historical L8-06 FAIL remains in aggregate status, current automated checks PASS. Historical/manual reviews were not refreshed by this job."
+  },
+  "threat": {
+    "exitCode": 1,
+    "flags": [
+      "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+    ],
+    "seconds": 46.67440812499999,
+    "levels": [
+      {
+        "level": "L8",
+        "passiveFlags": [],
+        "kiting": {
+          "kitingSeconds": 20.000000000000146,
+          "attacks": 6,
+          "attacksPerMinute": 17.99999999999987,
+          "samples": 1200,
+          "diagnostics": {
+            "startTick": 3646,
+            "endTick": 4845,
+            "firingFrames": 1,
+            "playerAttackStarts": 1,
+            "framesWithoutThreats": 0
+          }
+        },
+        "wallSeconds": 45.935,
+        "skilledOutcome": "complete",
+        "passiveOutcome": "complete",
+        "flags": [],
+        "quality": "low"
+      }
+    ]
+  }
+}

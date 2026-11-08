@@ -1,0 +1,130 @@
+[
+  {
+    "name": "typecheck",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "exitCode": 134,
+    "seconds": 73.97,
+    "timedOut": false,
+    "outputTail": "V8 heap exhaustion under the initial explicit 1536 MiB cap; rerun with 4096 MiB passes."
+  },
+  {
+    "name": "lint",
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "exitCode": 0,
+    "seconds": 38.08,
+    "timedOut": false,
+    "outputTail": "\n> lint\n> eslint src tests tools functions *.config.ts eslint.config.js\n\n"
+  },
+  {
+    "name": "test",
+    "command": [
+      "node",
+      "tools/qa/test-budget.mjs",
+      "--name",
+      "test",
+      "--max-seconds",
+      "150",
+      "--",
+      "node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "--project",
+      "default",
+      "--configLoader",
+      "runner",
+      "--maxWorkers=4"
+    ],
+    "exitCode": 0,
+    "seconds": 73.94,
+    "timedOut": false,
+    "outputTail": "[test-budget] 150/150 test cases ({\"vitest\":129,\"e2e\":9,\"invariantsBrowser\":12}), 43/45 files\n\n RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/r12-l8perf\n\n\n Test Files  27 passed (27)\n      Tests  107 passed (107)\n   Start at  16:58:22\n   Duration  67.36s (tests 89%, transform 7%, import 4%)\n\n[test-budget] test: 73.8 s (budget 150 s)\n"
+  },
+  {
+    "name": "qa:accept",
+    "command": [
+      "npm",
+      "run",
+      "qa:accept",
+      "--",
+      "--level",
+      "L8",
+      "--skip-browser"
+    ],
+    "exitCode": 1,
+    "seconds": 252.58,
+    "timedOut": false,
+    "outputTail": "\n> qa:accept\n> node --import tsx/esm tools/qa/accept.ts --level L8 --skip-browser\n\n[qa:accept] L8 low/complete: native global and level observation\n[qa:accept] L8 low/complete: complete\n[qa:accept] L8 low/stationary: native global and level observation\n[qa:accept] L8 low/stationary: tick-budget\n[qa:accept] L8 high/complete: native global and level observation\n[qa:accept] L8 high/complete: complete\n[qa:accept] L8 high/stationary: native global and level observation\n[qa:accept] L8 high/stationary: tick-budget\n[qa:accept] L8 low/fixtures: 4 clauses, 0 errors\n[qa:accept] L8 high/fixtures: 4 clauses, 0 errors\n[qa:accept:checkpoint] L8 low/sanctuary: PASS\n[qa:accept:checkpoint] L8 low/breach: PASS\n[qa:accept:checkpoint] L8 low/escape-route: PASS\n[qa:accept] L8 low/checkpoints: 3 clauses; control identical; 0 errors\n[qa:accept:checkpoint] L8 high/sanctuary: PASS\n[qa:accept:checkpoint] L8 high/breach: PASS\n[qa:accept:checkpoint] L8 high/escape-route: PASS\n[qa:accept] L8 high/checkpoints: 3 clauses; control identical; 0 errors\n[qa:accept] L8: 0 fresh failing rows; 10 incomplete rows; /private/tmp/r12-l8perf-accept/L8.json\n"
+  },
+  {
+    "name": "qa:threat",
+    "command": [
+      "npm",
+      "run",
+      "qa:threat",
+      "--",
+      "--levels",
+      "L8",
+      "--maxWorkers",
+      "2",
+      "--out",
+      "/private/tmp/r12-l8perf-threat"
+    ],
+    "exitCode": 1,
+    "seconds": 51.93,
+    "timedOut": false,
+    "outputTail": "\n> qa:threat\n> node tools/qa/test-budget.mjs --name qa-threat --max-seconds 600 -- node --import tsx/esm tools/qa/threat-audit.ts --levels L8 --maxWorkers 2 --out /private/tmp/r12-l8perf-threat\n\n[test-budget] 150/150 test cases ({\"vitest\":129,\"e2e\":9,\"invariantsBrowser\":12}), 43/45 files\n[qa:threat:stage] L8/skilled/1: 39.004s\n[qa:threat:stage] L8/passive/1: 45.935s\n[qa:threat] L8: skilled complete, passive complete, 0 passive flags (45.9s)\n[qa:threat] 46.7s; 1 fail flags; /private/tmp/r12-l8perf-threat/README.md\n[test-budget] qa-threat: 51.6 s (budget 600 s)\n[test-budget] FAIL: qa-threat failed (exit 1)\n[test-budget] See docs/qa/test-strategy.md: merge into an existing test or delete one before adding another.\n"
+  },
+  {
+    "name": "typecheck-final",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "exitCode": 0,
+    "seconds": 37.38,
+    "outputTail": "\n> typecheck\n> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json\n\n"
+  },
+  {
+    "name": "lint-final",
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "exitCode": 0,
+    "seconds": 32.8,
+    "outputTail": "\n> lint\n> eslint src tests tools functions *.config.ts eslint.config.js\n\n"
+  },
+  {
+    "name": "test-final",
+    "command": [
+      "node",
+      "tools/qa/test-budget.mjs",
+      "--name",
+      "test",
+      "--max-seconds",
+      "150",
+      "--",
+      "node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "--project",
+      "default",
+      "--configLoader",
+      "runner",
+      "--maxWorkers=4"
+    ],
+    "exitCode": 0,
+    "seconds": 69.66,
+    "outputTail": "[test-budget] 150/150 test cases ({\"vitest\":129,\"e2e\":9,\"invariantsBrowser\":12}), 43/45 files\n\n RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/r12-l8perf\n\n\n Test Files  27 passed (27)\n      Tests  107 passed (107)\n   Start at  17:07:40\n   Duration  63.65s (tests 89%, transform 6%, import 5%, setup 1%)\n\n[test-budget] test: 69.6 s (budget 150 s)\n"
+  }
+]
