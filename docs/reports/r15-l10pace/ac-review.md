@@ -73,3 +73,17 @@ The script names the following observable beats. “Actual route” means a norm
 ## Baseline conclusion
 
 The observed native route is not an acceptable playthrough: it makes little progress, stalls before the first farmhouse weapon, then dies; later reporting shows the run can reach `hold` but still fails to complete. Fixture pickup tests and authored placements do not satisfy route-accessible acquisition. The baseline has no evidence for a reliable 20–40s beat cadence, route checkpoint spacing, or delivered arsenal. The user-requested fixes therefore start with route completion and route-visible finds, then pacing/checkpoints/farm presentation, then threat and finale behavior. This is the pre-fix review; the same rows must be rerun after fixes.
+
+## Fresh baseline replay (seed 42, 180 s per tier)
+
+Replayed the exact baseline `78219de9` in a detached worktree using production `LevelTenBot.sample()` → `world.applyInput()` → `world.update()`. No position, mission, health or inventory writes were made. Evidence: [`evidence/before-native.json`](evidence/before-native.json). The first audit version reads `world.tick` after disposal, so its top-level `seconds: 0` is a reporting defect; `gameplaySeconds`, event ticks and the trace establish the actual 180 s run.
+
+| Observation | Low baseline | High baseline |
+|---|---|---|
+| Navigation | Stalls at `(695.99,-4.84)` by ~36 s with zero movement; at 170 s is again stationary at `(688.61,0.12)` after retries. | Larger streamed grid permits progress; `(1212.26,33.69)` at 170 s. |
+| Finds | **0/6**, axe only, 2 deaths. | **1/6**: machete at 118.82 s, `(1006.4,80.0)`; farmhouse rifle was passed without collection. |
+| First checkpoint | None beyond crash in 180 s. | 45.65 s; later measured walking gap reaches **572 m**. |
+| Opening ordinary population | Peak 6 regulars, 0 dogs, 0 ordinary Alphas. | Peak 7 regulars, 0 dogs, 0 ordinary Alphas. |
+| First visible close Mega | 53.12 s at `(696.0,-4.8)`. | 83.97 s at `(878.3,46.4)`. |
+
+This refines the baseline: the stall is specific to the smaller streamed navigation coverage, while the high tier independently demonstrates missed weapon delivery. The bot stops visiting a find at <2 m; the pickup used a 0.6 m trigger. The distant story objective also directed human field crossings 75–100 m away from the road finds. Both failures require correction. Opening population and first-Mega timing subclauses now have direct passing evidence; their combined acceptance rows remain FAIL until presentation and full-journey subclauses pass.

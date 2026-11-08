@@ -1,0 +1,2179 @@
+{
+  "generatedAt": "2026-11-08T20:58:48.458Z",
+  "revision": "runner-manifest",
+  "seed": 42,
+  "tiers": [
+    "low",
+    "high"
+  ],
+  "results": [
+    {
+      "quality": "low",
+      "seed": 42,
+      "outcome": "tick-budget",
+      "completed": false,
+      "seconds": 0,
+      "gameplaySeconds": 180,
+      "deaths": 0,
+      "fights": 2,
+      "finds": 3,
+      "scares": 0,
+      "megaMoments": 1,
+      "opening": {
+        "peakRegulars": 7,
+        "peakDogs": 0,
+        "peakAlphas": 0
+      },
+      "trace": [
+        {
+          "seconds": 0.016666666666666666,
+          "x": 547.010009765625,
+          "z": 0,
+          "y": 0.7099999785423279,
+          "hp": 100,
+          "active": "crash",
+          "move": {
+            "x": 1,
+            "z": 0
+          },
+          "waypoint": 1,
+          "checkpoint": "cure-crash",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe"
+          ],
+          "mega": null
+        },
+        {
+          "seconds": 10.016666666666667,
+          "x": 591.8372802734375,
+          "z": 0,
+          "y": 0.7099999785423279,
+          "hp": 92.03333333333322,
+          "active": "crash",
+          "move": {
+            "x": 1,
+            "z": 0
+          },
+          "waypoint": 1,
+          "checkpoint": "cure-crash",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe"
+          ],
+          "mega": null
+        },
+        {
+          "seconds": 20.016666666666666,
+          "x": 627.3025512695312,
+          "z": -11.209232330322266,
+          "y": 0.7099999785423279,
+          "hp": 100,
+          "active": "crash",
+          "move": {
+            "x": 0.9978598193331214,
+            "z": -0.06538945603436865
+          },
+          "waypoint": 3,
+          "checkpoint": "cure-crash",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe"
+          ],
+          "mega": null
+        },
+        {
+          "seconds": 30.016666666666666,
+          "x": 667.4181518554688,
+          "z": 3.0241901874542236,
+          "y": 0.7099999785423279,
+          "hp": 100,
+          "active": "farmstead",
+          "move": {
+            "x": 0.8193143146147226,
+            "z": 0.5733446205096959
+          },
+          "waypoint": 4,
+          "checkpoint": "cure-pace-1",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe"
+          ],
+          "mega": null
+        },
+        {
+          "seconds": 40.016666666666666,
+          "x": 705.683349609375,
+          "z": 23.591167449951172,
+          "y": 0.7099999785423279,
+          "hp": 100,
+          "active": "farmstead",
+          "move": {
+            "x": 0.9984558772871047,
+            "z": -0.055550527547792425
+          },
+          "waypoint": 5,
+          "checkpoint": "cure-pace-1",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe",
+            "weapon.hunting-rifle"
+          ],
+          "mega": null
+        },
+        {
+          "seconds": 50.016666666666666,
+          "x": 750.66796875,
+          "z": 22.494699478149414,
+          "y": 0.7099999785423279,
+          "hp": 100,
+          "active": "farmstead",
+          "move": {
+            "x": 0.9998977910457659,
+            "z": -0.014297113757601428
+          },
+          "waypoint": 5,
+          "checkpoint": "cure-residential",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe",
+            "weapon.hunting-rifle"
+          ],
+          "mega": {
+            "id": 110,
+            "x": 692.2400201806249,
+            "z": 24.5014516413181,
+            "hp": 3000,
+            "distance": 58.46240012409618,
+            "state": "chase"
+          }
+        },
+        {
+          "seconds": 60.016666666666666,
+          "x": 795.6634521484375,
+          "z": 21.71025848388672,
+          "y": 0.7099999785423279,
+          "hp": 100,
+          "active": "farmstead",
+          "move": {
+            "x": 0.9991159048999196,
+            "z": -0.0420405587024561
+          },
+          "waypoint": 5,
+          "checkpoint": "cure-residential",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe",
+            "weapon.hunting-rifle"
+          ],
+          "mega": {
+            "id": 110,
+            "x": 746.2209842167877,
+            "z": 23.309503035737027,
+            "hp": 3000,
+            "distance": 49.468325404331665,
+            "state": "chase"
+          }
+        },
+        {
+          "seconds": 70.01666666666667,
+          "x": 830.0797729492188,
+          "z": 20.112380981445312,
+          "y": 0.7099999785423279,
+          "hp": 90.86666666666662,
+          "active": "farmstead",
+          "move": {
+            "x": 0.9989227418842512,
+            "z": -0.04640426431320299
+          },
+          "waypoint": 5,
+          "checkpoint": "cure-residential",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe",
+            "weapon.hunting-rifle"
+          ],
+          "mega": {
+            "id": 110,
+            "x": 800.2007712829603,
+            "z": 22.147533622819843,
+            "hp": 3000,
+            "distance": 29.94823178162557,
+            "state": "chase"
+          }
+        },
+        {
+          "seconds": 80.01666666666667,
+          "x": 875.0138549804688,
+          "z": 18.024559020996094,
+          "y": 0.7099999785423279,
+          "hp": 100,
+          "active": "farmstead",
+          "move": {
+            "x": 0.998923084198113,
+            "z": -0.0463968948974979
+          },
+          "waypoint": 5,
+          "checkpoint": "cure-pace-2",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe",
+            "weapon.hunting-rifle"
+          ],
+          "mega": {
+            "id": 110,
+            "x": 844.622822763555,
+            "z": 19.66561200586039,
+            "hp": 3000,
+            "distance": 30.435306703048425,
+            "state": "chase"
+          }
+        },
+        {
+          "seconds": 90.01666666666667,
+          "x": 913.1759643554688,
+          "z": 2.95715594291687,
+          "y": 0.7099999785423279,
+          "hp": 100,
+          "active": "farmstead",
+          "move": {
+            "x": 0.8408887018416856,
+            "z": -0.5412080848573906
+          },
+          "waypoint": 5,
+          "checkpoint": "cure-pace-2",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe",
+            "weapon.hunting-rifle"
+          ],
+          "mega": {
+            "id": 110,
+            "x": 896.7369189546564,
+            "z": 16.407910526595717,
+            "hp": 3000,
+            "distance": 21.240645295290044,
+            "state": "chase"
+          }
+        },
+        {
+          "seconds": 100.01666666666667,
+          "x": 952.4692993164062,
+          "z": -11.409931182861328,
+          "y": 0.7099999785423279,
+          "hp": 100,
+          "active": "farmstead",
+          "move": {
+            "x": 0.9996965227663217,
+            "z": 0.024634576694669546
+          },
+          "waypoint": 6,
+          "checkpoint": "cure-pace-2",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe",
+            "weapon.hunting-rifle",
+            "weapon.machete"
+          ],
+          "mega": {
+            "id": 110,
+            "x": 934.6552535525757,
+            "z": -12.339273262946984,
+            "hp": 3000,
+            "distance": 17.838270745161026,
+            "state": "chase"
+          }
+        },
+        {
+          "seconds": 110.01666666666667,
+          "x": 997.4580688476562,
+          "z": -10.93179702758789,
+          "y": 0.7099999785423279,
+          "hp": 100,
+          "active": "farmstead",
+          "move": {
+            "x": 0.9999796756383249,
+            "z": -0.00637560273783927
+          },
+          "waypoint": 6,
+          "checkpoint": "cure-pace-2",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe",
+            "weapon.hunting-rifle",
+            "weapon.machete"
+          ],
+          "mega": {
+            "id": 110,
+            "x": 981.1574305656152,
+            "z": -9.858675093500423,
+            "hp": 3000,
+            "distance": 16.33592357619741,
+            "state": "chase"
+          }
+        },
+        {
+          "seconds": 120.01666666666667,
+          "x": 1042.4503173828125,
+          "z": -10.896577835083008,
+          "y": 0.7099999785423279,
+          "hp": 100,
+          "active": "farmstead",
+          "move": {
+            "x": 0.9999992817851358,
+            "z": 0.0011985112485222746
+          },
+          "waypoint": 6,
+          "checkpoint": "cure-pace-3",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe",
+            "weapon.hunting-rifle",
+            "weapon.machete"
+          ],
+          "mega": {
+            "id": 110,
+            "x": 1017.7255169283369,
+            "z": -10.24853237375859,
+            "hp": 3000,
+            "distance": 24.733291742782235,
+            "state": "chase"
+          }
+        },
+        {
+          "seconds": 130.01666666666668,
+          "x": 1087.4210205078125,
+          "z": -10.842790603637695,
+          "y": 0.7099999785423279,
+          "hp": 100,
+          "active": "farmstead",
+          "move": {
+            "x": 0.9999992800700401,
+            "z": 0.001199941415885827
+          },
+          "waypoint": 6,
+          "checkpoint": "cure-pace-3",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe",
+            "weapon.hunting-rifle",
+            "weapon.machete"
+          ],
+          "mega": {
+            "id": 110,
+            "x": 1056.080860011317,
+            "z": -9.7223878644141,
+            "hp": 3000,
+            "distance": 31.36018115770619,
+            "state": "chase"
+          }
+        },
+        {
+          "seconds": 140.01666666666668,
+          "x": 1132.3917236328125,
+          "z": -11.380698204040527,
+          "y": 0.7099999785423279,
+          "hp": 100,
+          "active": "farmstead",
+          "move": {
+            "x": 0.9998196973878564,
+            "z": -0.01898875233540802
+          },
+          "waypoint": 6,
+          "checkpoint": "cure-pace-3",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe",
+            "weapon.hunting-rifle",
+            "weapon.machete"
+          ],
+          "mega": {
+            "id": 110,
+            "x": 1104.5604772280835,
+            "z": -10.191605503906356,
+            "hp": 3000,
+            "distance": 27.856636873288412,
+            "state": "chase"
+          }
+        },
+        {
+          "seconds": 150.01666666666668,
+          "x": 1177.2691650390625,
+          "z": -10.263258934020996,
+          "y": 0.7099999785423279,
+          "hp": 100,
+          "active": "farmstead",
+          "move": {
+            "x": 0.9929325598914187,
+            "z": 0.11867995410967372
+          },
+          "waypoint": 7,
+          "checkpoint": "cure-pace-3",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe",
+            "weapon.hunting-rifle",
+            "weapon.machete",
+            "weapon.molotov"
+          ],
+          "mega": {
+            "id": 110,
+            "x": 1147.1553868359724,
+            "z": -11.152841864627382,
+            "hp": 3000,
+            "distance": 30.12691480147493,
+            "state": "chase"
+          }
+        },
+        {
+          "seconds": 160.01666666666668,
+          "x": 1221.9569091796875,
+          "z": -5.043745040893555,
+          "y": 0.7099999785423279,
+          "hp": 100,
+          "active": "farmstead",
+          "move": {
+            "x": 0.9927063322208451,
+            "z": 0.12055761265319173
+          },
+          "waypoint": 7,
+          "checkpoint": "cure-pace-3",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe",
+            "weapon.hunting-rifle",
+            "weapon.machete",
+            "weapon.molotov"
+          ],
+          "mega": {
+            "id": 110,
+            "x": 1186.037815598108,
+            "z": -6.560982648230069,
+            "hp": 3000,
+            "distance": 35.95112367756236,
+            "state": "chase"
+          }
+        },
+        {
+          "seconds": 170.01666666666668,
+          "x": 1266.57958984375,
+          "z": 0.663572371006012,
+          "y": 0.7099999785423279,
+          "hp": 100,
+          "active": "farmstead",
+          "move": {
+            "x": 0.9916058545708546,
+            "z": 0.12929744460276565
+          },
+          "waypoint": 7,
+          "checkpoint": "cure-industrial",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe",
+            "weapon.hunting-rifle",
+            "weapon.machete",
+            "weapon.molotov"
+          ],
+          "mega": {
+            "id": 110,
+            "x": 1234.4861033145137,
+            "z": -4.260893140184437,
+            "hp": 3000,
+            "distance": 32.46909666395382,
+            "state": "chase"
+          }
+        }
+      ],
+      "routeMetresTravelled": 795.0653537756699,
+      "canonicalRouteMetres": 4298.651172031666,
+      "checkpoints": [
+        {
+          "id": "cure-crash",
+          "tick": 0,
+          "seconds": 0,
+          "routeMetres": 0,
+          "x": 547,
+          "z": 0
+        },
+        {
+          "id": "cure-pace-1",
+          "tick": 1607,
+          "seconds": 26.783333333333335,
+          "routeMetres": 119.98505594026754,
+          "x": 655.4808959960938,
+          "z": -5.2731781005859375
+        },
+        {
+          "id": "cure-residential",
+          "tick": 2859,
+          "seconds": 47.65,
+          "routeMetres": 213.87764226140575,
+          "x": 740.0162353515625,
+          "z": 22.581275939941406
+        },
+        {
+          "id": "cure-pace-2",
+          "tick": 4416,
+          "seconds": 73.6,
+          "routeMetres": 320.1094633678387,
+          "x": 846.18115234375,
+          "z": 19.363985061645508
+        },
+        {
+          "id": "cure-pace-3",
+          "tick": 7125,
+          "seconds": 118.75,
+          "routeMetres": 520.0264600761234,
+          "x": 1036.7540283203125,
+          "z": -10.903390884399414
+        },
+        {
+          "id": "cure-pace-4",
+          "tick": 9792,
+          "seconds": 163.2,
+          "routeMetres": 719.979592703998,
+          "x": 1236.173583984375,
+          "z": -3.286849021911621
+        },
+        {
+          "id": "cure-industrial",
+          "tick": 9804,
+          "seconds": 163.4,
+          "routeMetres": 720.8792101475573,
+          "x": 1237.065673828125,
+          "z": -3.1707143783569336
+        }
+      ],
+      "checkpointGaps": [
+        {
+          "metres": 120,
+          "directMetres": 108.6,
+          "from": "cure-crash",
+          "to": "cure-pace-1"
+        },
+        {
+          "metres": 93.9,
+          "directMetres": 89,
+          "from": "cure-pace-1",
+          "to": "cure-residential"
+        },
+        {
+          "metres": 106.2,
+          "directMetres": 106.2,
+          "from": "cure-residential",
+          "to": "cure-pace-2"
+        },
+        {
+          "metres": 199.9,
+          "directMetres": 193,
+          "from": "cure-pace-2",
+          "to": "cure-pace-3"
+        },
+        {
+          "metres": 200,
+          "directMetres": 199.6,
+          "from": "cure-pace-3",
+          "to": "cure-pace-4"
+        },
+        {
+          "metres": 0.9,
+          "directMetres": 0.9,
+          "from": "cure-pace-4",
+          "to": "cure-industrial"
+        }
+      ],
+      "maxCheckpointGapM": 200,
+      "timeToFirstCheckpoint": 26.783333333333335,
+      "beats": [
+        {
+          "tick": 1,
+          "seconds": 0.016666666666666666,
+          "distance": 0,
+          "kind": "radio",
+          "detail": "L10.farmstead.reyes",
+          "x": 547,
+          "z": 0,
+          "subject": {
+            "x": 547.010009765625,
+            "z": 0
+          }
+        },
+        {
+          "tick": 61,
+          "seconds": 1.0166666666666666,
+          "distance": 4.3,
+          "kind": "vignette",
+          "detail": "decor-cure-vignette-r1-road-0-message-wall",
+          "x": 551.3,
+          "z": 0,
+          "subject": {
+            "x": 559,
+            "z": -7
+          }
+        },
+        {
+          "tick": 91,
+          "seconds": 1.5166666666666666,
+          "distance": 6.6,
+          "kind": "vignette",
+          "detail": "decor-cure-vignette-r1-road-0",
+          "x": 553.6,
+          "z": 0,
+          "subject": {
+            "x": 559.5,
+            "z": -10.7
+          }
+        },
+        {
+          "tick": 241,
+          "seconds": 4.016666666666667,
+          "distance": 17.8,
+          "kind": "encounter",
+          "detail": "infected.runner",
+          "x": 564.8,
+          "z": 0,
+          "subject": {
+            "x": 573.8269030169287,
+            "z": -3.1922338955035348
+          }
+        },
+        {
+          "tick": 325,
+          "seconds": 5.416666666666667,
+          "distance": 24.1,
+          "kind": "fight",
+          "detail": "weapon.fire-axe",
+          "x": 571.1,
+          "z": 0,
+          "subject": {
+            "x": 571.1339111328125,
+            "z": 0
+          }
+        },
+        {
+          "tick": 751,
+          "seconds": 12.516666666666667,
+          "distance": 56.1,
+          "kind": "vignette",
+          "detail": "decor-cure-vignette-r1-road-200",
+          "x": 603.1,
+          "z": 0,
+          "subject": {
+            "x": 609.5,
+            "z": -11
+          }
+        },
+        {
+          "tick": 871,
+          "seconds": 14.516666666666667,
+          "distance": 65.1,
+          "kind": "encounter",
+          "detail": "infected.runner",
+          "x": 612.1,
+          "z": 0,
+          "subject": {
+            "x": 603.0433165338842,
+            "z": 7.50617514036446
+          }
+        },
+        {
+          "tick": 1321,
+          "seconds": 22.016666666666666,
+          "distance": 98.6,
+          "kind": "vignette",
+          "detail": "decor-cure-vignette-r1-road-2-message-wall",
+          "x": 636.3,
+          "z": -11.8,
+          "subject": {
+            "x": 641.5,
+            "z": -23.5
+          }
+        },
+        {
+          "tick": 1351,
+          "seconds": 22.516666666666666,
+          "distance": 100.9,
+          "kind": "vignette",
+          "detail": "decor-cure-vignette-r1-road-2",
+          "x": 638.5,
+          "z": -11.9,
+          "subject": {
+            "x": 644.5,
+            "z": -21.5
+          }
+        },
+        {
+          "tick": 1438,
+          "seconds": 23.966666666666665,
+          "distance": 107.3,
+          "kind": "objective",
+          "detail": "crash",
+          "x": 645,
+          "z": -12.4,
+          "subject": {
+            "x": 645.0370483398438,
+            "z": -12.371399879455566
+          }
+        },
+        {
+          "tick": 1607,
+          "seconds": 26.783333333333335,
+          "distance": 120,
+          "kind": "checkpoint",
+          "detail": "cure-pace-1",
+          "x": 655.5,
+          "z": -5.3,
+          "subject": {
+            "x": 655.4808959960938,
+            "z": -5.2731781005859375
+          }
+        },
+        {
+          "tick": 1771,
+          "seconds": 29.516666666666666,
+          "distance": 132.4,
+          "kind": "encounter",
+          "detail": "infected.runner",
+          "x": 665.6,
+          "z": 1.7,
+          "subject": {
+            "x": 657.438935215664,
+            "z": 6.694333231754931
+          }
+        },
+        {
+          "tick": 2244,
+          "seconds": 37.4,
+          "distance": 167.8,
+          "kind": "find",
+          "detail": "weapon.hunting-rifle",
+          "x": 694.4,
+          "z": 22.4,
+          "subject": {
+            "x": 694.4170532226562,
+            "z": 22.397607803344727
+          }
+        },
+        {
+          "tick": 2251,
+          "seconds": 37.516666666666666,
+          "distance": 168.3,
+          "kind": "fight",
+          "detail": "weapon.hunting-rifle",
+          "x": 694.8,
+          "z": 22.7,
+          "subject": {
+            "x": 694.8417358398438,
+            "z": 22.706132888793945
+          }
+        },
+        {
+          "tick": 2341,
+          "seconds": 39.016666666666666,
+          "distance": 175.1,
+          "kind": "vignette",
+          "detail": "decor-cure-vignette-r1-road-4-message-wall",
+          "x": 701.2,
+          "z": 23.8,
+          "subject": {
+            "x": 704,
+            "z": 8
+          }
+        },
+        {
+          "tick": 2371,
+          "seconds": 39.516666666666666,
+          "distance": 177.3,
+          "kind": "vignette",
+          "detail": "decor-cure-vignette-r1-road-4",
+          "x": 703.4,
+          "z": 23.7,
+          "subject": {
+            "x": 707,
+            "z": 10
+          }
+        },
+        {
+          "tick": 2859,
+          "seconds": 47.65,
+          "distance": 213.9,
+          "kind": "checkpoint",
+          "detail": "cure-residential",
+          "x": 740,
+          "z": 22.6,
+          "subject": {
+            "x": 740.0162353515625,
+            "z": 22.581275939941406
+          }
+        },
+        {
+          "tick": 3121,
+          "seconds": 52.016666666666666,
+          "distance": 233.6,
+          "kind": "vignette",
+          "detail": "decor-cure-vignette-r2-road-0",
+          "x": 759.7,
+          "z": 22.4,
+          "subject": {
+            "x": 762,
+            "z": 10
+          }
+        },
+        {
+          "tick": 3391,
+          "seconds": 56.516666666666666,
+          "distance": 253.9,
+          "kind": "vignette",
+          "detail": "decor-cure-vignette-crossing-0-400",
+          "x": 779.9,
+          "z": 22.1,
+          "subject": {
+            "x": 788.6786541325887,
+            "z": 16.48490079632191
+          }
+        },
+        {
+          "tick": 3793,
+          "seconds": 63.21666666666667,
+          "distance": 279.2,
+          "kind": "fight",
+          "detail": "weapon.hunting-rifle",
+          "x": 805.2,
+          "z": 21.3,
+          "subject": {
+            "x": 805.2330932617188,
+            "z": 21.26725196838379
+          }
+        },
+        {
+          "tick": 3841,
+          "seconds": 64.01666666666667,
+          "distance": 281.2,
+          "kind": "encounter",
+          "detail": "infected.firefighter",
+          "x": 807.2,
+          "z": 21.2,
+          "subject": {
+            "x": 816.8844821384483,
+            "z": 25.495073254158825
+          }
+        },
+        {
+          "tick": 4081,
+          "seconds": 68.01666666666667,
+          "distance": 295.1,
+          "kind": "vignette",
+          "detail": "decor-cure-vignette-r2-road-1",
+          "x": 821.1,
+          "z": 20.5,
+          "subject": {
+            "x": 826,
+            "z": 30
+          }
+        },
+        {
+          "tick": 4081,
+          "seconds": 68.01666666666667,
+          "distance": 295.1,
+          "kind": "vignette",
+          "detail": "decor-cure-vignette-r2-road-1-broken-door",
+          "x": 821.1,
+          "z": 20.5,
+          "subject": {
+            "x": 822,
+            "z": 33
+          }
+        },
+        {
+          "tick": 4416,
+          "seconds": 73.6,
+          "distance": 320.1,
+          "kind": "checkpoint",
+          "detail": "cure-pace-2",
+          "x": 846.2,
+          "z": 19.4,
+          "subject": {
+            "x": 846.18115234375,
+            "z": 19.363985061645508
+          }
+        },
+        {
+          "tick": 5775,
+          "seconds": 96.25,
+          "distance": 418.8,
+          "kind": "find",
+          "detail": "weapon.machete",
+          "x": 935.6,
+          "z": -11.2,
+          "subject": {
+            "x": 935.57568359375,
+            "z": -11.211287498474121
+          }
+        },
+        {
+          "tick": 5795,
+          "seconds": 96.58333333333333,
+          "distance": 420.3,
+          "kind": "radio",
+          "detail": "L10.hide-gap.reyes",
+          "x": 937,
+          "z": -11.5,
+          "subject": {
+            "x": 937.04052734375,
+            "z": -11.524635314941406
+          }
+        },
+        {
+          "tick": 5898,
+          "seconds": 98.3,
+          "distance": 428.1,
+          "kind": "Mega",
+          "detail": "close-call-15m",
+          "x": 944.7,
+          "z": -11.6,
+          "subject": {
+            "x": 930.4690246088508,
+            "z": -8.743061077100998
+          }
+        },
+        {
+          "tick": 5951,
+          "seconds": 99.18333333333334,
+          "distance": 432,
+          "kind": "fight",
+          "detail": "weapon.hunting-rifle",
+          "x": 948.7,
+          "z": -11.5,
+          "subject": {
+            "x": 948.7213134765625,
+            "z": -11.494074821472168
+          }
+        },
+        {
+          "tick": 6121,
+          "seconds": 102.01666666666667,
+          "distance": 444.8,
+          "kind": "encounter",
+          "detail": "infected.armored",
+          "x": 961.5,
+          "z": -11.2,
+          "subject": {
+            "x": 964.8906597908594,
+            "z": -3.1193208377568484
+          }
+        },
+        {
+          "tick": 7125,
+          "seconds": 118.75,
+          "distance": 520,
+          "kind": "checkpoint",
+          "detail": "cure-pace-3",
+          "x": 1036.8,
+          "z": -10.9,
+          "subject": {
+            "x": 1036.7540283203125,
+            "z": -10.903390884399414
+          }
+        },
+        {
+          "tick": 7151,
+          "seconds": 119.18333333333334,
+          "distance": 522,
+          "kind": "fight",
+          "detail": "weapon.hunting-rifle",
+          "x": 1038.7,
+          "z": -10.9,
+          "subject": {
+            "x": 1038.7027587890625,
+            "z": -10.901060104370117
+          }
+        },
+        {
+          "tick": 8411,
+          "seconds": 140.18333333333334,
+          "distance": 616.4,
+          "kind": "fight",
+          "detail": "weapon.hunting-rifle",
+          "x": 1133.1,
+          "z": -11.4,
+          "subject": {
+            "x": 1133.1412353515625,
+            "z": -11.394936561584473
+          }
+        },
+        {
+          "tick": 8777,
+          "seconds": 146.28333333333333,
+          "distance": 643.9,
+          "kind": "find",
+          "detail": "weapon.molotov",
+          "x": 1160.6,
+          "z": -11.9,
+          "subject": {
+            "x": 1160.5733642578125,
+            "z": -11.915990829467773
+          }
+        },
+        {
+          "tick": 9792,
+          "seconds": 163.2,
+          "distance": 720,
+          "kind": "checkpoint",
+          "detail": "cure-pace-4",
+          "x": 1236.2,
+          "z": -3.3,
+          "subject": {
+            "x": 1236.173583984375,
+            "z": -3.286849021911621
+          }
+        },
+        {
+          "tick": 9804,
+          "seconds": 163.4,
+          "distance": 720.9,
+          "kind": "checkpoint",
+          "detail": "cure-industrial",
+          "x": 1237.1,
+          "z": -3.2,
+          "subject": {
+            "x": 1237.065673828125,
+            "z": -3.1707143783569336
+          }
+        },
+        {
+          "tick": 10079,
+          "seconds": 167.98333333333332,
+          "distance": 741.5,
+          "kind": "fight",
+          "detail": "weapon.hunting-rifle",
+          "x": 1257.5,
+          "z": -0.5,
+          "subject": {
+            "x": 1257.5093994140625,
+            "z": -0.5095365643501282
+          }
+        }
+      ],
+      "longestBeatGapSeconds": 22.65,
+      "longestGap": {
+        "seconds": 22.65,
+        "from": {
+          "tick": 4416,
+          "seconds": 73.6,
+          "distance": 320.1,
+          "kind": "checkpoint",
+          "detail": "cure-pace-2",
+          "x": 846.2,
+          "z": 19.4,
+          "subject": {
+            "x": 846.18115234375,
+            "z": 19.363985061645508
+          }
+        },
+        "to": {
+          "tick": 5775,
+          "seconds": 96.25,
+          "distance": 418.8,
+          "kind": "find",
+          "detail": "weapon.machete",
+          "x": 935.6,
+          "z": -11.2,
+          "subject": {
+            "x": 935.57568359375,
+            "z": -11.211287498474121
+          }
+        }
+      },
+      "activeAtEnd": "farmstead",
+      "limits": {
+        "beatGapSeconds": 40,
+        "checkpointGapMetres": 250,
+        "firstCheckpointSeconds": 60
+      }
+    },
+    {
+      "quality": "high",
+      "seed": 42,
+      "outcome": "tick-budget",
+      "completed": false,
+      "seconds": 0,
+      "gameplaySeconds": 180,
+      "deaths": 0,
+      "fights": 2,
+      "finds": 3,
+      "scares": 0,
+      "megaMoments": 1,
+      "opening": {
+        "peakRegulars": 7,
+        "peakDogs": 0,
+        "peakAlphas": 0
+      },
+      "trace": [
+        {
+          "seconds": 0.016666666666666666,
+          "x": 547.010009765625,
+          "z": 0,
+          "y": 0.7099999785423279,
+          "hp": 100,
+          "active": "crash",
+          "move": {
+            "x": 1,
+            "z": 0
+          },
+          "waypoint": 1,
+          "checkpoint": "cure-crash",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe"
+          ],
+          "mega": null
+        },
+        {
+          "seconds": 10.016666666666667,
+          "x": 591.8372802734375,
+          "z": 0,
+          "y": 0.7099999785423279,
+          "hp": 92.03333333333322,
+          "active": "crash",
+          "move": {
+            "x": 1,
+            "z": 0
+          },
+          "waypoint": 1,
+          "checkpoint": "cure-crash",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe"
+          ],
+          "mega": null
+        },
+        {
+          "seconds": 20.016666666666666,
+          "x": 627.3025512695312,
+          "z": -11.209232330322266,
+          "y": 0.7099999785423279,
+          "hp": 100,
+          "active": "crash",
+          "move": {
+            "x": 0.9978598193331214,
+            "z": -0.06538945603436865
+          },
+          "waypoint": 3,
+          "checkpoint": "cure-crash",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe"
+          ],
+          "mega": null
+        },
+        {
+          "seconds": 30.016666666666666,
+          "x": 667.4181518554688,
+          "z": 3.0241901874542236,
+          "y": 0.7099999785423279,
+          "hp": 100,
+          "active": "farmstead",
+          "move": {
+            "x": 0.8193143146147226,
+            "z": 0.5733446205096959
+          },
+          "waypoint": 4,
+          "checkpoint": "cure-pace-1",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe"
+          ],
+          "mega": null
+        },
+        {
+          "seconds": 40.016666666666666,
+          "x": 705.689453125,
+          "z": 23.6928768157959,
+          "y": 0.7099999785423279,
+          "hp": 100,
+          "active": "farmstead",
+          "move": {
+            "x": 0.9997672567290329,
+            "z": -0.021573881720830437
+          },
+          "waypoint": 5,
+          "checkpoint": "cure-pace-1",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe",
+            "weapon.hunting-rifle"
+          ],
+          "mega": null
+        },
+        {
+          "seconds": 50.016666666666666,
+          "x": 750.69677734375,
+          "z": 22.7224178314209,
+          "y": 0.7099999785423279,
+          "hp": 100,
+          "active": "farmstead",
+          "move": {
+            "x": 0.9997671689154931,
+            "z": -0.021577950753025286
+          },
+          "waypoint": 5,
+          "checkpoint": "cure-residential",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe",
+            "weapon.hunting-rifle"
+          ],
+          "mega": {
+            "id": 112,
+            "x": 692.1644402091465,
+            "z": 24.54621516734048,
+            "hp": 3000,
+            "distance": 58.560743908879694,
+            "state": "chase"
+          }
+        },
+        {
+          "seconds": 60.016666666666666,
+          "x": 795.6849365234375,
+          "z": 21.67913055419922,
+          "y": 0.7099999785423279,
+          "hp": 100,
+          "active": "farmstead",
+          "move": {
+            "x": 0.9996961186958387,
+            "z": -0.02465096883442241
+          },
+          "waypoint": 5,
+          "checkpoint": "cure-residential",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe",
+            "weapon.hunting-rifle"
+          ],
+          "mega": {
+            "id": 112,
+            "x": 746.1465405937522,
+            "z": 23.368953103549092,
+            "hp": 3000,
+            "distance": 49.56720863166042,
+            "state": "chase"
+          }
+        },
+        {
+          "seconds": 70.01666666666667,
+          "x": 830.1616821289062,
+          "z": 20.121017456054688,
+          "y": 0.7099999785423279,
+          "hp": 90.86666666666662,
+          "active": "farmstead",
+          "move": {
+            "x": 0.998917227221141,
+            "z": -0.04652282408482096
+          },
+          "waypoint": 5,
+          "checkpoint": "cure-residential",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe",
+            "weapon.hunting-rifle"
+          ],
+          "mega": {
+            "id": 112,
+            "x": 800.1249317135463,
+            "z": 22.15008296469731,
+            "hp": 3000,
+            "distance": 30.105206897694455,
+            "state": "chase"
+          }
+        },
+        {
+          "seconds": 80.01666666666667,
+          "x": 875.0957641601562,
+          "z": 18.02789306640625,
+          "y": 0.7099999785423279,
+          "hp": 100,
+          "active": "farmstead",
+          "move": {
+            "x": 0.9989175365670253,
+            "z": -0.04651618147339208
+          },
+          "waypoint": 5,
+          "checkpoint": "cure-pace-2",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe",
+            "weapon.hunting-rifle"
+          ],
+          "mega": {
+            "id": 112,
+            "x": 845.275682779507,
+            "z": 19.641745023145226,
+            "hp": 3000,
+            "distance": 29.863719990765002,
+            "state": "chase"
+          }
+        },
+        {
+          "seconds": 90.01666666666667,
+          "x": 913.2324829101562,
+          "z": 2.9210708141326904,
+          "y": 0.7099999785423279,
+          "hp": 100,
+          "active": "farmstead",
+          "move": {
+            "x": 0.8408836475231526,
+            "z": -0.5412159377994689
+          },
+          "waypoint": 5,
+          "checkpoint": "cure-pace-2",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe",
+            "weapon.hunting-rifle"
+          ],
+          "mega": {
+            "id": 112,
+            "x": 896.6751970245614,
+            "z": 16.443356140760976,
+            "hp": 3000,
+            "distance": 21.37746281372197,
+            "state": "chase"
+          }
+        },
+        {
+          "seconds": 100.01666666666667,
+          "x": 952.545654296875,
+          "z": -11.366761207580566,
+          "y": 0.7099999785423279,
+          "hp": 100,
+          "active": "farmstead",
+          "move": {
+            "x": 0.9997431021714549,
+            "z": 0.02266560523338407
+          },
+          "waypoint": 6,
+          "checkpoint": "cure-pace-2",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe",
+            "weapon.hunting-rifle",
+            "weapon.machete"
+          ],
+          "mega": {
+            "id": 112,
+            "x": 934.4625664859561,
+            "z": -11.769538852278128,
+            "hp": 3000,
+            "distance": 18.08757293305187,
+            "state": "chase"
+          }
+        },
+        {
+          "seconds": 110.01666666666667,
+          "x": 997.53759765625,
+          "z": -10.83543872833252,
+          "y": 0.7099999785423279,
+          "hp": 100,
+          "active": "farmstead",
+          "move": {
+            "x": 0.9999998694608874,
+            "z": 0.0005109581278223009
+          },
+          "waypoint": 6,
+          "checkpoint": "cure-pace-2",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe",
+            "weapon.hunting-rifle",
+            "weapon.machete"
+          ],
+          "mega": {
+            "id": 112,
+            "x": 984.0107887007646,
+            "z": -10.247330542192135,
+            "hp": 3000,
+            "distance": 13.539587577057357,
+            "state": "chase"
+          }
+        },
+        {
+          "seconds": 120.01666666666667,
+          "x": 1042.52978515625,
+          "z": -10.812004089355469,
+          "y": 0.7099999785423279,
+          "hp": 100,
+          "active": "farmstead",
+          "move": {
+            "x": 0.999999871315504,
+            "z": 0.0005073154595196696
+          },
+          "waypoint": 6,
+          "checkpoint": "cure-pace-3",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe",
+            "weapon.hunting-rifle",
+            "weapon.machete"
+          ],
+          "mega": {
+            "id": 112,
+            "x": 1011.9906355338749,
+            "z": -10.37331646704018,
+            "hp": 3000,
+            "distance": 30.542300281540484,
+            "state": "chase"
+          }
+        },
+        {
+          "seconds": 130.01666666666668,
+          "x": 1087.50048828125,
+          "z": -10.789115905761719,
+          "y": 0.7099999785423279,
+          "hp": 100,
+          "active": "farmstead",
+          "move": {
+            "x": 0.9999998717995531,
+            "z": 0.0005063604227059567
+          },
+          "waypoint": 6,
+          "checkpoint": "cure-pace-3",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe",
+            "weapon.hunting-rifle",
+            "weapon.machete"
+          ],
+          "mega": {
+            "id": 112,
+            "x": 1055.2283432258378,
+            "z": -10.648592103829607,
+            "hp": 3000,
+            "distance": 32.272450997971596,
+            "state": "chase"
+          }
+        },
+        {
+          "seconds": 140.01666666666668,
+          "x": 1132.47119140625,
+          "z": -11.382463455200195,
+          "y": 0.7099999785423279,
+          "hp": 100,
+          "active": "farmstead",
+          "move": {
+            "x": 0.9998198463916211,
+            "z": -0.01898090517955133
+          },
+          "waypoint": 6,
+          "checkpoint": "cure-pace-3",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe",
+            "weapon.hunting-rifle",
+            "weapon.machete"
+          ],
+          "mega": {
+            "id": 112,
+            "x": 1101.0952798681985,
+            "z": -10.017127115863923,
+            "hp": 3000,
+            "distance": 31.405604088492606,
+            "state": "chase"
+          }
+        },
+        {
+          "seconds": 150.01666666666668,
+          "x": 1177.397705078125,
+          "z": -10.833648681640625,
+          "y": 0.7099999785423279,
+          "hp": 100,
+          "active": "farmstead",
+          "move": {
+            "x": 0.9999306402581034,
+            "z": 0.01177771934710419
+          },
+          "waypoint": 7,
+          "checkpoint": "cure-pace-3",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe",
+            "weapon.hunting-rifle",
+            "weapon.machete",
+            "weapon.molotov"
+          ],
+          "mega": {
+            "id": 112,
+            "x": 1145.066455483257,
+            "z": -10.976497081922028,
+            "hp": 3000,
+            "distance": 32.33156516519294,
+            "state": "chase"
+          }
+        },
+        {
+          "seconds": 160.01666666666668,
+          "x": 1222.348388671875,
+          "z": -10.287019729614258,
+          "y": 0.7099999785423279,
+          "hp": 100,
+          "active": "farmstead",
+          "move": {
+            "x": 0.9998942091705483,
+            "z": 0.014545462082865937
+          },
+          "waypoint": 7,
+          "checkpoint": "cure-pace-3",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe",
+            "weapon.hunting-rifle",
+            "weapon.machete",
+            "weapon.molotov"
+          ],
+          "mega": {
+            "id": 112,
+            "x": 1192.2178095230033,
+            "z": -8.136702606341544,
+            "hp": 3000,
+            "distance": 30.207212111961944,
+            "state": "chase"
+          }
+        },
+        {
+          "seconds": 170.01666666666668,
+          "x": 1267.319091796875,
+          "z": -9.632417678833008,
+          "y": 0.7099999785423279,
+          "hp": 100,
+          "active": "farmstead",
+          "move": {
+            "x": 0.9998942555627183,
+            "z": 0.014542272610476291
+          },
+          "waypoint": 7,
+          "checkpoint": "cure-industrial",
+          "charge": 0,
+          "rack": [
+            "weapon.fire-axe",
+            "weapon.hunting-rifle",
+            "weapon.machete",
+            "weapon.molotov"
+          ],
+          "mega": {
+            "id": 112,
+            "x": 1235.5182832203902,
+            "z": -8.450994098256848,
+            "hp": 3000,
+            "distance": 31.822746389885467,
+            "state": "chase"
+          }
+        }
+      ],
+      "routeMetresTravelled": 795.6303986333257,
+      "canonicalRouteMetres": 4298.651172031666,
+      "checkpoints": [
+        {
+          "id": "cure-crash",
+          "tick": 0,
+          "seconds": 0,
+          "routeMetres": 0,
+          "x": 547,
+          "z": 0
+        },
+        {
+          "id": "cure-pace-1",
+          "tick": 1607,
+          "seconds": 26.783333333333335,
+          "routeMetres": 119.98505594026754,
+          "x": 655.4808959960938,
+          "z": -5.2731781005859375
+        },
+        {
+          "id": "cure-residential",
+          "tick": 2859,
+          "seconds": 47.65,
+          "routeMetres": 213.88573294261272,
+          "x": 740.0450439453125,
+          "z": 22.95209312438965
+        },
+        {
+          "id": "cure-pace-2",
+          "tick": 4415,
+          "seconds": 73.58333333333333,
+          "routeMetres": 320.09678564636084,
+          "x": 846.1881713867188,
+          "z": 19.374469757080078
+        },
+        {
+          "id": "cure-pace-3",
+          "tick": 7124,
+          "seconds": 118.73333333333333,
+          "routeMetres": 520.011836219333,
+          "x": 1036.758544921875,
+          "z": -10.81494140625
+        },
+        {
+          "id": "cure-pace-4",
+          "tick": 9791,
+          "seconds": 163.18333333333334,
+          "routeMetres": 719.9076510793476,
+          "x": 1236.589111328125,
+          "z": -10.079729080200195
+        },
+        {
+          "id": "cure-industrial",
+          "tick": 9797,
+          "seconds": 163.28333333333333,
+          "routeMetres": 720.3574057506299,
+          "x": 1237.038818359375,
+          "z": -10.073183059692383
+        }
+      ],
+      "checkpointGaps": [
+        {
+          "metres": 120,
+          "directMetres": 108.6,
+          "from": "cure-crash",
+          "to": "cure-pace-1"
+        },
+        {
+          "metres": 93.9,
+          "directMetres": 89.2,
+          "from": "cure-pace-1",
+          "to": "cure-residential"
+        },
+        {
+          "metres": 106.2,
+          "directMetres": 106.2,
+          "from": "cure-residential",
+          "to": "cure-pace-2"
+        },
+        {
+          "metres": 199.9,
+          "directMetres": 192.9,
+          "from": "cure-pace-2",
+          "to": "cure-pace-3"
+        },
+        {
+          "metres": 199.9,
+          "directMetres": 199.8,
+          "from": "cure-pace-3",
+          "to": "cure-pace-4"
+        },
+        {
+          "metres": 0.4,
+          "directMetres": 0.4,
+          "from": "cure-pace-4",
+          "to": "cure-industrial"
+        }
+      ],
+      "maxCheckpointGapM": 199.9,
+      "timeToFirstCheckpoint": 26.783333333333335,
+      "beats": [
+        {
+          "tick": 1,
+          "seconds": 0.016666666666666666,
+          "distance": 0,
+          "kind": "radio",
+          "detail": "L10.farmstead.reyes",
+          "x": 547,
+          "z": 0,
+          "subject": {
+            "x": 547.010009765625,
+            "z": 0
+          }
+        },
+        {
+          "tick": 61,
+          "seconds": 1.0166666666666666,
+          "distance": 4.3,
+          "kind": "vignette",
+          "detail": "decor-cure-vignette-r1-road-0-message-wall",
+          "x": 551.3,
+          "z": 0,
+          "subject": {
+            "x": 559,
+            "z": -7
+          }
+        },
+        {
+          "tick": 91,
+          "seconds": 1.5166666666666666,
+          "distance": 6.6,
+          "kind": "vignette",
+          "detail": "decor-cure-vignette-r1-road-0",
+          "x": 553.6,
+          "z": 0,
+          "subject": {
+            "x": 559.5,
+            "z": -10.7
+          }
+        },
+        {
+          "tick": 241,
+          "seconds": 4.016666666666667,
+          "distance": 17.8,
+          "kind": "encounter",
+          "detail": "infected.runner",
+          "x": 564.8,
+          "z": 0,
+          "subject": {
+            "x": 573.8269030169287,
+            "z": -3.1922338955035348
+          }
+        },
+        {
+          "tick": 325,
+          "seconds": 5.416666666666667,
+          "distance": 24.1,
+          "kind": "fight",
+          "detail": "weapon.fire-axe",
+          "x": 571.1,
+          "z": 0,
+          "subject": {
+            "x": 571.1339111328125,
+            "z": 0
+          }
+        },
+        {
+          "tick": 751,
+          "seconds": 12.516666666666667,
+          "distance": 56.1,
+          "kind": "vignette",
+          "detail": "decor-cure-vignette-r1-road-200",
+          "x": 603.1,
+          "z": 0,
+          "subject": {
+            "x": 609.5,
+            "z": -11
+          }
+        },
+        {
+          "tick": 871,
+          "seconds": 14.516666666666667,
+          "distance": 65.1,
+          "kind": "encounter",
+          "detail": "infected.runner",
+          "x": 612.1,
+          "z": 0,
+          "subject": {
+            "x": 603.0433165338842,
+            "z": 7.50617514036446
+          }
+        },
+        {
+          "tick": 1321,
+          "seconds": 22.016666666666666,
+          "distance": 98.6,
+          "kind": "vignette",
+          "detail": "decor-cure-vignette-r1-road-2-message-wall",
+          "x": 636.3,
+          "z": -11.8,
+          "subject": {
+            "x": 641.5,
+            "z": -23.5
+          }
+        },
+        {
+          "tick": 1351,
+          "seconds": 22.516666666666666,
+          "distance": 100.9,
+          "kind": "vignette",
+          "detail": "decor-cure-vignette-r1-road-2",
+          "x": 638.5,
+          "z": -11.9,
+          "subject": {
+            "x": 644.5,
+            "z": -21.5
+          }
+        },
+        {
+          "tick": 1438,
+          "seconds": 23.966666666666665,
+          "distance": 107.3,
+          "kind": "objective",
+          "detail": "crash",
+          "x": 645,
+          "z": -12.4,
+          "subject": {
+            "x": 645.0370483398438,
+            "z": -12.371399879455566
+          }
+        },
+        {
+          "tick": 1607,
+          "seconds": 26.783333333333335,
+          "distance": 120,
+          "kind": "checkpoint",
+          "detail": "cure-pace-1",
+          "x": 655.5,
+          "z": -5.3,
+          "subject": {
+            "x": 655.4808959960938,
+            "z": -5.2731781005859375
+          }
+        },
+        {
+          "tick": 1621,
+          "seconds": 27.016666666666666,
+          "distance": 121.1,
+          "kind": "encounter",
+          "detail": "infected.runner",
+          "x": 656.3,
+          "z": -4.7,
+          "subject": {
+            "x": 650.270795746704,
+            "z": 2.932461123009754
+          }
+        },
+        {
+          "tick": 2244,
+          "seconds": 37.4,
+          "distance": 167.8,
+          "kind": "find",
+          "detail": "weapon.hunting-rifle",
+          "x": 694.4,
+          "z": 22.4,
+          "subject": {
+            "x": 694.4170532226562,
+            "z": 22.397607803344727
+          }
+        },
+        {
+          "tick": 2251,
+          "seconds": 37.516666666666666,
+          "distance": 168.3,
+          "kind": "fight",
+          "detail": "weapon.hunting-rifle",
+          "x": 694.8,
+          "z": 22.7,
+          "subject": {
+            "x": 694.8417358398438,
+            "z": 22.706132888793945
+          }
+        },
+        {
+          "tick": 2341,
+          "seconds": 39.016666666666666,
+          "distance": 175.1,
+          "kind": "vignette",
+          "detail": "decor-cure-vignette-r1-road-4-message-wall",
+          "x": 701.2,
+          "z": 23.8,
+          "subject": {
+            "x": 704,
+            "z": 8
+          }
+        },
+        {
+          "tick": 2371,
+          "seconds": 39.516666666666666,
+          "distance": 177.3,
+          "kind": "vignette",
+          "detail": "decor-cure-vignette-r1-road-4",
+          "x": 703.4,
+          "z": 23.7,
+          "subject": {
+            "x": 707,
+            "z": 10
+          }
+        },
+        {
+          "tick": 2859,
+          "seconds": 47.65,
+          "distance": 213.9,
+          "kind": "checkpoint",
+          "detail": "cure-residential",
+          "x": 740,
+          "z": 23,
+          "subject": {
+            "x": 740.0450439453125,
+            "z": 22.95209312438965
+          }
+        },
+        {
+          "tick": 3121,
+          "seconds": 52.016666666666666,
+          "distance": 233.6,
+          "kind": "vignette",
+          "detail": "decor-cure-vignette-r2-road-0",
+          "x": 759.7,
+          "z": 22.5,
+          "subject": {
+            "x": 762,
+            "z": 10
+          }
+        },
+        {
+          "tick": 3391,
+          "seconds": 56.516666666666666,
+          "distance": 253.9,
+          "kind": "vignette",
+          "detail": "decor-cure-vignette-crossing-0-400",
+          "x": 779.9,
+          "z": 22.1,
+          "subject": {
+            "x": 788.6786541325887,
+            "z": 16.48490079632191
+          }
+        },
+        {
+          "tick": 3726,
+          "seconds": 62.1,
+          "distance": 276.4,
+          "kind": "fight",
+          "detail": "weapon.hunting-rifle",
+          "x": 802.5,
+          "z": 21.4,
+          "subject": {
+            "x": 802.4948120117188,
+            "z": 21.409711837768555
+          }
+        },
+        {
+          "tick": 3841,
+          "seconds": 64.01666666666667,
+          "distance": 281.2,
+          "kind": "encounter",
+          "detail": "infected.firefighter",
+          "x": 807.2,
+          "z": 21.2,
+          "subject": {
+            "x": 816.9062283789074,
+            "z": 25.62296034298868
+          }
+        },
+        {
+          "tick": 4081,
+          "seconds": 68.01666666666667,
+          "distance": 295.1,
+          "kind": "vignette",
+          "detail": "decor-cure-vignette-r2-road-1",
+          "x": 821.2,
+          "z": 20.5,
+          "subject": {
+            "x": 826,
+            "z": 30
+          }
+        },
+        {
+          "tick": 4081,
+          "seconds": 68.01666666666667,
+          "distance": 295.1,
+          "kind": "vignette",
+          "detail": "decor-cure-vignette-r2-road-1-broken-door",
+          "x": 821.2,
+          "z": 20.5,
+          "subject": {
+            "x": 822,
+            "z": 33
+          }
+        },
+        {
+          "tick": 4415,
+          "seconds": 73.58333333333333,
+          "distance": 320.1,
+          "kind": "checkpoint",
+          "detail": "cure-pace-2",
+          "x": 846.2,
+          "z": 19.4,
+          "subject": {
+            "x": 846.1881713867188,
+            "z": 19.374469757080078
+          }
+        },
+        {
+          "tick": 5774,
+          "seconds": 96.23333333333333,
+          "distance": 418.8,
+          "kind": "find",
+          "detail": "weapon.machete",
+          "x": 935.6,
+          "z": -11.2,
+          "subject": {
+            "x": 935.57861328125,
+            "z": -11.212886810302734
+          }
+        },
+        {
+          "tick": 5794,
+          "seconds": 96.56666666666666,
+          "distance": 420.3,
+          "kind": "radio",
+          "detail": "L10.hide-gap.reyes",
+          "x": 937,
+          "z": -11.5,
+          "subject": {
+            "x": 937.0436401367188,
+            "z": -11.524768829345703
+          }
+        },
+        {
+          "tick": 5900,
+          "seconds": 98.33333333333333,
+          "distance": 428.3,
+          "kind": "Mega",
+          "detail": "close-call-15m",
+          "x": 945,
+          "z": -11.5,
+          "subject": {
+            "x": 930.5517936545575,
+            "z": -8.808914319473283
+          }
+        },
+        {
+          "tick": 5952,
+          "seconds": 99.2,
+          "distance": 432.1,
+          "kind": "fight",
+          "detail": "weapon.hunting-rifle",
+          "x": 948.9,
+          "z": -11.5,
+          "subject": {
+            "x": 948.873046875,
+            "z": -11.450078010559082
+          }
+        },
+        {
+          "tick": 6121,
+          "seconds": 102.01666666666667,
+          "distance": 444.9,
+          "kind": "encounter",
+          "detail": "infected.armored",
+          "x": 961.5,
+          "z": -11.2,
+          "subject": {
+            "x": 964.9533840699196,
+            "z": -3.091946737910774
+          }
+        },
+        {
+          "tick": 7124,
+          "seconds": 118.73333333333333,
+          "distance": 520,
+          "kind": "checkpoint",
+          "detail": "cure-pace-3",
+          "x": 1036.8,
+          "z": -10.8,
+          "subject": {
+            "x": 1036.758544921875,
+            "z": -10.81494140625
+          }
+        },
+        {
+          "tick": 7286,
+          "seconds": 121.43333333333334,
+          "distance": 532.2,
+          "kind": "fight",
+          "detail": "weapon.hunting-rifle",
+          "x": 1048.9,
+          "z": -10.8,
+          "subject": {
+            "x": 1048.900634765625,
+            "z": -10.808761596679688
+          }
+        },
+        {
+          "tick": 8629,
+          "seconds": 143.81666666666666,
+          "distance": 632.8,
+          "kind": "fight",
+          "detail": "weapon.hunting-rifle",
+          "x": 1149.6,
+          "z": -11.7,
+          "subject": {
+            "x": 1149.56005859375,
+            "z": -11.706955909729004
+          }
+        },
+        {
+          "tick": 8775,
+          "seconds": 146.25,
+          "distance": 643.8,
+          "kind": "find",
+          "detail": "weapon.molotov",
+          "x": 1160.5,
+          "z": -11.9,
+          "subject": {
+            "x": 1160.5029296875,
+            "z": -11.91469669342041
+          }
+        },
+        {
+          "tick": 9791,
+          "seconds": 163.18333333333334,
+          "distance": 719.9,
+          "kind": "checkpoint",
+          "detail": "cure-pace-4",
+          "x": 1236.6,
+          "z": -10.1,
+          "subject": {
+            "x": 1236.589111328125,
+            "z": -10.079729080200195
+          }
+        },
+        {
+          "tick": 9797,
+          "seconds": 163.28333333333333,
+          "distance": 720.4,
+          "kind": "checkpoint",
+          "detail": "cure-industrial",
+          "x": 1237,
+          "z": -10.1,
+          "subject": {
+            "x": 1237.038818359375,
+            "z": -10.073183059692383
+          }
+        },
+        {
+          "tick": 9847,
+          "seconds": 164.11666666666667,
+          "distance": 724.1,
+          "kind": "fight",
+          "detail": "weapon.hunting-rifle",
+          "x": 1240.8,
+          "z": -10,
+          "subject": {
+            "x": 1240.786376953125,
+            "z": -10.018632888793945
+          }
+        }
+      ],
+      "longestBeatGapSeconds": 22.65,
+      "longestGap": {
+        "seconds": 22.65,
+        "from": {
+          "tick": 4415,
+          "seconds": 73.58333333333333,
+          "distance": 320.1,
+          "kind": "checkpoint",
+          "detail": "cure-pace-2",
+          "x": 846.2,
+          "z": 19.4,
+          "subject": {
+            "x": 846.1881713867188,
+            "z": 19.374469757080078
+          }
+        },
+        "to": {
+          "tick": 5774,
+          "seconds": 96.23333333333333,
+          "distance": 418.8,
+          "kind": "find",
+          "detail": "weapon.machete",
+          "x": 935.6,
+          "z": -11.2,
+          "subject": {
+            "x": 935.57861328125,
+            "z": -11.212886810302734
+          }
+        }
+      },
+      "activeAtEnd": "farmstead",
+      "limits": {
+        "beatGapSeconds": 40,
+        "checkpointGapMetres": 250,
+        "firstCheckpointSeconds": 60
+      }
+    }
+  ]
+}
