@@ -26,6 +26,7 @@ export async function checkL7Navigation() {
   await checkFollowerBites();
   await checkCorpseCatchup();
   await checkPharmacyCatchup();
+  await checkL7CourierYield();
   const w = await loadLevel('L7', 29);
   try {
     const launcher = [...w.entities.iterate()].find(e => e.pickup && 'actionId' in e.pickup && e.pickup.actionId === 'weapon.rocket-launcher');
@@ -104,6 +105,33 @@ export async function checkL7Navigation() {
         previous = next;
       }
     }
+  } finally { w.dispose(); }
+}
+
+/** A dense L7 column cannot hold the courier inside its own body ring. */
+async function checkL7CourierYield() {
+  const w = await loadLevel('L7', 1, undefined, 0, { quality: 'low' });
+  try {
+    const player = w.entities.get(1)!, roster = w.l7Encounters!.state.roster;
+    for (const e of w.entities.iterate()) if (e.id !== 1 && !roster.some(r => r.id === e.id)) e.hidden = true;
+    Object.assign(player.transform, { x: -30, z: 50, y: .7 });
+    w.physics.playerBody!.setTranslation(player.transform, true); w.physics.playerBody!.setNextKinematicTranslation(player.transform);
+    w.solids.remember(player, 'test.l7-courier-yield'); w.spatial.set(1, -30, 50);
+    Object.assign(player.survivor!.velocity, { x: 0, z: 0 });
+    roster.forEach((row, slot) => {
+      const e = w.entities.get(row.id)!, inner = slot < 8, count = inner ? 8 : 16, angle = (inner ? slot : slot - 8) * Math.PI * 2 / count, radius = inner ? .9 : 1.8;
+      Object.assign(e.transform, { x: -30 + Math.cos(angle) * radius, z: 50 + Math.sin(angle) * radius, y: .7 });
+      w.solids.remember(e, 'test.l7-courier-yield'); w.spatial.set(e.id, e.transform.x, e.transform.z);
+      delete e.locomotion; e.civilian!.path.length = 0; e.civilian!.goal = -1; e.civilian!.l1!.target = null;
+    });
+    const start = { x: player.transform.x, z: player.transform.z };
+    for (let tick = 0; tick < 60; tick++) { w.applyInput(emptyInput(), 'keyboard'); w.update(); }
+    expect(Math.hypot(player.transform.x - start.x, player.transform.z - start.z), 'followers yield without moving a stationary courier').toBeLessThan(.01);
+    for (let tick = 0; tick < 180; tick++) {
+      const input = emptyInput(); input.move.x = 1;
+      w.applyInput(input, 'keyboard'); w.update();
+    }
+    expect(Math.hypot(player.transform.x - start.x, player.transform.z - start.z), 'the courier walks through the follower column instead of remaining boxed in').toBeGreaterThan(9);
   } finally { w.dispose(); }
 }
 

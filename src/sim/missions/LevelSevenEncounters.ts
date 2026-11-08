@@ -254,6 +254,7 @@ export class LevelSevenEncounters {
   follower(e: EntitySnapshot): boolean {
     const r = this.state.roster.find(r => r.id === e.id);
     if (!r || r.status !== 'following') return false;
+    if (e.passengerOf === undefined && this.yieldToCourier(e)) return true;
     if (this.world.l7Departure?.claims(e)) return true;
     const w = this.world, p = w.entities.get(1)!, c = e.civilian!, s = c.survivor!;
     s.briskAt = w.tick;
@@ -329,6 +330,31 @@ export class LevelSevenEncounters {
     }
     w.spatial.set(e.id, e.transform.x, e.transform.z);
     return true;
+  }
+  /** The courier can reverse through her column before boarding owns it. A
+   * formation target behind her otherwise asks the front rank to walk into her.
+   * Step sideways using ordinary swept walking; stationary players stay put. */
+  private yieldToCourier(e: EntitySnapshot): boolean {
+    const w = this.world, move = w.inputFrame.move, speed = Math.hypot(move.x, move.z);
+    if (speed < .1) return false;
+    const p = w.entities.get(1)!.transform, dx = e.transform.x - p.x, dz = e.transform.z - p.z;
+    if (Math.abs(e.transform.y - p.y) >= 1.2) return false;
+    const hx = move.x / speed, hz = move.z / speed, along = dx * hx + dz * hz, lateral = dz * hx - dx * hz;
+    if (along < -.3 || along > 2.2 || Math.abs(lateral) > 1) return false;
+    const side = lateral ? Math.sign(lateral) : e.civilian!.survivor!.slot % 2 ? 1 : -1;
+    const nav = w.infected!.nav, radius = actorRadius(e);
+    for (const sign of [side, -side]) {
+      const shift = sign * 1.3 - lateral;
+      const target = { x: e.transform.x - hz * shift, z: e.transform.z + hx * shift };
+      if (!nav.clear(target.x, target.z, radius) || !nav.visible(e.transform, target, radius)) continue;
+      const c = e.civilian!;
+      c.vehicleYield = { target, until: w.tick + 15 };
+      c.state = 'calm'; c.story = null; c.survivor!.cover = false; c.survivor!.briskAt = w.tick;
+      w.npcs!.move(e, target, 5.2, c, .1);
+      w.spatial.set(e.id, e.transform.x, e.transform.z);
+      return true;
+    }
+    return false;
   }
   /** Follow the courier's walked corner two abreast instead of swinging the tail across it. */
   private formationGoal(player: EntitySnapshot['transform'], velocity: Point, slot: number): Point {
