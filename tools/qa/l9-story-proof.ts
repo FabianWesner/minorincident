@@ -57,6 +57,13 @@ async function crossingStorySequence(): Promise<void> {
     for (let i = 0; i < 1320; i++) { w.applyInput({ ...defend(), interactHeld: true }, 'keyboard'); w.update(); player.health.current = player.health.max; }
     assert.equal(driving.repairTicks, 1200, 'the bay has a finite twenty-second repair budget');
     assert.ok(Math.abs((car.entity.health.current + repairDamage - 500) - (300)) < 10 ** -(3), 'exactly 300 durability is restored across hold, pause and resume');
+    const campaign = structuredClone(w.progression!.campaign!); campaign.l9Crash = l9.save();
+    const fresh = await loadLevel('L9', 7, campaign);
+    try {
+      assert.equal(fresh.npcs!.companion.forceSafe, true, 'fresh save resume keeps the corgi protected');
+      assert.equal(fresh.missions!.l9!.driving.state.repairTicks, 1200);
+      assert.ok(driving.roster.every(id => !!fresh.entities.get(id)), 'fresh save restores every carried identity');
+    } finally { fresh.dispose(); }
     place(457, 0); w.applyInput(fire, 'keyboard');
     for (let i = 0; i < 3000 && !driving.evacuationDone; i++) { w.applyInput(defend(), 'keyboard'); w.update(); player.health.current = player.health.max; }
     assert.equal(driving.evacuationDone, true, `the living civilians actually reach the trucks: ${JSON.stringify({ evacuated: driving.evacuated, entering: driving.truckEntering, hugAt: driving.hugAt, hugDone: driving.hugDone, roster: driving.roster.map(id => { const e = w.entities.get(id); return { id, key: e?.civilian?.survivor?.key, p: e?.transform, health: e?.health.current, passengerOf: e?.passengerOf, state: e?.civilian?.state }; }), dog: [...w.entities.iterate()].find(e => e.companion) })}`);

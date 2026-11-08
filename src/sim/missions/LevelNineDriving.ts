@@ -52,9 +52,9 @@ export class LevelNineDriving {
     const civilians = w.npcs!.civilians;
     const outbreak = civilians.outbreak ??= new Outbreak(w, { refuges: [], tier: w.infected!.director.tier });
     w.infected!.configureL1v2(outbreak.humans);
+    w.npcs!.companion.forceSafe = true;
     if (s.prepared) { this.rebuild(); return; }
     s.prepared = true;
-    w.npcs!.companion.forceSafe = true;
     const vehicle = this.car.entity.vehicle!;
     const nav = w.infected!.nav, warmCell = nav.nearestCell(this.car.entity.transform.x, this.car.entity.transform.z, .35);
     if (warmCell < 0) throw new Error('L9 cast needs resident entry navigation');
