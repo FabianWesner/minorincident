@@ -611,7 +611,10 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
           if (fresh) for (const region of result.regions) add('L10-04', `${region.region} bounded-path reachability`, { pathSamples: region.pathSamples, minimumPercent: region.minimumPercent }, '≥90%; read-only canonical-state control identical', region.pathSamples > 0 ? region.minimumPercent >= 90 : undefined, proofPath);
         }
       }
-      add('L10-10', 'actual eligible charge ticks and increments', observation.charge, '3600 eligible ticks; 3600 increments; no invalid increment', observation.charge.maximum === 3600 ? observation.charge.eligibleTicks === 3600 && observation.charge.incrementTicks === 3600 && observation.charge.invalidIncrements === 0 : undefined);
+      // Observer totals span retries; E32 resets the device counter on death.
+      // Every eligible tick must still advance once, and a completed charge caps at 3600.
+      const charge = observation.charge;
+      add('L10-10', 'actual eligible charge ticks and increments', charge, 'charge reaches3600; one increment per eligible tick across attempts; no invalid increment', charge.maximum < 3600 ? undefined : charge.maximum === 3600 && charge.eligibleTicks >= 3600 && charge.incrementTicks === charge.eligibleTicks && charge.invalidIncrements === 0);
       add('L10-13', 'release transaction observed prerequisites', observation.release, 'charge3600 + installed + Mega dead + player at console', observation.release ? observation.release.charge === 3600 && observation.release.installed && observation.release.dead && observation.release.distance <= 2.5 : undefined);
       const front = state.cureFront;
       add('L10-14', 'native cure radius speed', front ? { elapsed: front.elapsed, radius: front.radius } : null, '10 m/s', front && front.elapsed > 0 ? Math.abs(front.radius / (front.elapsed / 60) - 10) < 1e-6 : undefined);
