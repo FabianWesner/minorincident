@@ -25,13 +25,16 @@ export function openTransportCab(model: Object3D, def: VehicleDef): void {
   let glazed = false;
   model.traverse(node => { if (node instanceof Mesh && (Array.isArray(node.material) ? node.material : [node.material]).some(m => m.transparent && m.opacity < .4)) glazed = true; });
   if (glazed) return;
+  const apc = def.id === 'vehicle.military-apc';
   for (const [name, side] of [['exitL', 1], ['exitR', -1]] as const) model.getObjectByName(name)?.position.set(def.doorX, 0, side * (def.width / 2 + .55));
   model.updateMatrixWorld(true);
   const inverse = model.matrixWorld.clone().invert();
   model.getObjectByName('body')!.traverse(node => {
     if (!(node instanceof Mesh)) return;
     const local = uniform(new Matrix4().multiplyMatrices(inverse, node.matrixWorld)).mul(vec4(positionGeometry, 1)).xyz;
-    const cab = local.x.greaterThan(.15).and(local.x.lessThan(1.3)).and(local.y.greaterThan(1.65)).and(local.z.abs().lessThan(1.3));
+    // The APC's sloping front armor lies at x=1.4..2.2, ahead of the old
+    // x=1.3 cut. Clear that shell before fitting the glazed front below.
+    const cab = local.x.greaterThan(.15).and(local.x.lessThan(apc ? 2.25 : 1.3)).and(local.y.greaterThan(1.65)).and(local.z.abs().lessThan(1.3));
     const doorway = local.x.sub(def.doorX).abs().lessThan(.48).and(local.y.greaterThan(.55)).and(local.y.lessThan(2.25)).and(local.z.abs().greaterThan(1.1));
     for (const m of Array.isArray(node.material) ? node.material : [node.material]) {
       const material = m as MeshLambertNodeMaterial;
@@ -40,8 +43,7 @@ export function openTransportCab(model: Object3D, def: VehicleDef): void {
   });
   // Roof and door glazing share one vertex-opacity material (four APC materials including its lamps).
   const doorMaterial = Object.assign(new MeshLambertNodeMaterial({ vertexColors: true, side: DoubleSide, transparent: true, depthWrite: false, opacityNode: attribute('cabOpacity', 'float') }), { emissiveNode: attribute('cabCrack', 'float').mul(.16) }); doorMaterial.forceSinglePass = true;
-  const apc = def.id === 'vehicle.military-apc';
-  const roofGeometry = new BoxGeometry(1.21, .06, apc ? 2.5 : 1.96).translate(.725, 2.25, 0);
+  const roofGeometry = new BoxGeometry(apc ? .71 : 1.21, .06, apc ? 2.5 : 1.96).translate(apc ? .475 : .725, 2.25, 0);
   const roofColor = new Color(apc ? '#7b8250' : '#568e8d').toArray(), count = roofGeometry.getAttribute('position').count;
   roofGeometry.setAttribute('color', new BufferAttribute(new Float32Array(Array.from({ length: count }, () => roofColor).flat()), 3));
   roofGeometry.setAttribute('cabCrack', new BufferAttribute(new Float32Array(count), 1));
@@ -51,7 +53,10 @@ export function openTransportCab(model: Object3D, def: VehicleDef): void {
   roofGeometry.setAttribute('cabOpacity', new BufferAttribute(new Float32Array(count).fill(apc ? 1 : .22), 1));
   const roof = new Mesh(roofGeometry, doorMaterial); roof.name = 'transportRoof'; roof.userData.transportCabPart = true; model.add(roof);
   if (apc) {
-    const windshield = new PlaneGeometry(2.42, .6).rotateY(Math.PI / 2).translate(1.3, 1.95, 0);
+    // Follow the armored nose: lower edge (2.2,1.65), upper edge (.8,2.25).
+    // The pane meets the opaque roof rather than sitting behind the old armor.
+    const slope = Math.atan2(1.4, .6), paneHeight = Math.hypot(1.4, .6);
+    const windshield = new PlaneGeometry(2.42, paneHeight).rotateY(Math.PI / 2).rotateZ(slope).translate(1.5, 1.95, 0);
     const n = windshield.getAttribute('position').count;
     windshield.setAttribute('color', new BufferAttribute(new Float32Array(Array.from({ length: n }, () => roofColor).flat()), 3));
     windshield.setAttribute('cabCrack', new BufferAttribute(new Float32Array(n), 1));
@@ -59,8 +64,8 @@ export function openTransportCab(model: Object3D, def: VehicleDef): void {
     const glass = new Mesh(windshield, doorMaterial); glass.name = 'transportWindshield'; glass.userData.transportCabPart = true; model.add(glass);
     // Close the window edges against the replacement roof and existing front
     // armor. A floating pane still reads as a missing cab at close zoom.
-    const posts = [-1.215, 1.215].map(z => new BoxGeometry(.08, .66, .07).translate(1.3, 1.95, z));
-    posts.push(new BoxGeometry(.08, .07, 2.5).translate(1.3, 1.65, 0));
+    const posts = [-1.215, 1.215].map(z => new BoxGeometry(.08, paneHeight + .06, .07).rotateZ(slope).translate(1.5, 1.95, z));
+    posts.push(new BoxGeometry(.08, .07, 2.5).translate(2.2, 1.65, 0));
     const frame = mergeGeometries(posts)!; for (const p of posts) p.dispose();
     const frameCount = frame.getAttribute('position').count;
     frame.setAttribute('color', new BufferAttribute(new Float32Array(Array.from({ length: frameCount }, () => roofColor).flat()), 3));
