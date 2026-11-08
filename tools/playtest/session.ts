@@ -1231,7 +1231,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       if (e.level === 'L7' && process.env.PLAYTEST_L7_ROSTER_AUDIT === '1') log({ l7Roster: await page.evaluate(() => {
         const w = (window.__SCENE__ as unknown as { game: Game }).game.world, s = w.l7Encounters?.state, p = w.entities.get(1)!.transform;
         const live = s?.roster.filter(r => r.status === 'following') ?? [];
-        return { tick: w.tick, following: live.length, dead: s?.roster.filter(r => r.status === 'dead').length, turned: s?.roster.filter(r => r.status === 'turned').length,
+        return { level: w.scenario, tick: w.tick, following: live.length, dead: s?.roster.filter(r => r.status === 'dead').length, turned: s?.roster.filter(r => r.status === 'turned').length,
           near18: live.filter(r => { const f = w.entities.get(r.id); return f && Math.hypot(f.transform.x - p.x, f.transform.z - p.z) <= 18; }).length,
           boarded: w.l7Departure?.state.boarded.length ?? 0, departure: w.l7Departure?.state.phase, blockedBy: w.solids.blockingBody(1)?.id, move: { ...w.inputFrame.move },
           survivor: { variant: w.entities.get(1)!.survivor!.variant, gearTier: w.entities.get(1)!.survivor!.gearTier },
