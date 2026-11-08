@@ -197,7 +197,20 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   expect(cureVignetteCatalogue.every(v => v.pieces.length >= 3 && v.pieces.length <= 8)).toBe(true);
   const vignetteGroups = new Set(vignettes.map(p => p.id.replace(/-\d+$/, '')));
   expect(vignetteGroups.size).toBeGreaterThanOrEqual(85); // ~20/km over the 4.3 km authored route.
-  expect(vignettes.every(p => p.decor && !p.decorSolid)).toBe(true);
+  expect(vignettes.every(p => p.decor && p.fixed)).toBe(true);
+  expect(placementColliders(vignettes, []).every(c => c.aabb.physicsOnly)).toBe(true);
+  const { cureVignetteDecals } = await import('../../src/levels/L10/vignettes');
+  const { CureVignetteDecals } = await import('../../src/render/district/CureVignetteDecals');
+  const { DataTexture } = await import('three/webgpu');
+  const rows = cureVignetteDecals(vignettes), paint = rows.filter(r=>!r.ground), casings = rows.filter(r=>r.cell===12);
+  expect(paint).toHaveLength(35);
+  expect(casings.filter(r=>r.highOnly)).toHaveLength(casings.length/2);
+  const sample=casings[0],pair=casings.filter(r=>r.scene===sample.scene);
+  const decals=new CureVignetteDecals(pair,new DataTexture(new Uint8Array([255,255,255,255]),1,1));
+  const focus={x:sample.position[0],z:sample.position[2]};
+  decals.update(focus,false);expect(decals.visibleIds()).toHaveLength(2);
+  decals.update(focus,true);expect(decals.visibleIds()).toHaveLength(1);
+  decals.update({x:0,z:0},true);expect(decals.visibleIds()).toHaveLength(0);decals.dispose();
   expect(apron.some(p => p.position[0] > 3900 && p.roadLife)).toBe(true);
   expect(stories.filter(q => q.fieldLight).length).toBeGreaterThan(60);
   for (const li of cureCrossingLines.keys()) expect(stories.some(q => q.id.startsWith(`decor-cure-cross-${li}-`) && q.fieldLight)).toBe(true);

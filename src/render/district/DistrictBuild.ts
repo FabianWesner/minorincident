@@ -29,6 +29,8 @@ import { NightAccents, nightAccents } from '../NightAccents';
 import { fairhavenDressing } from './FairhavenDressing';
 import { removeL7LakeWall } from './l7LakeWall';
 import { cureAprons } from '../../levels/L10/forecourts';
+import { cureVignetteDecals } from '../../levels/L10/vignettes';
+import { CureVignetteDecals } from './CureVignetteDecals';
 
 const crownTokens = new Map<string, [PaletteToken, PaletteToken]>(Object.values(worldAssets).flatMap(asset => asset.foliage ? [[asset.foliage.colors.join(':'), asset.foliage.tokens ?? ['foliageDark', 'foliageLight']]] : []));
 
@@ -57,13 +59,14 @@ export class DistrictParts {
   ambient?: AmbientLife;
   /** L9 night accents (studs, flares, lanterns, blinkers); render-only. */
   accents?: NightAccents;
+  cureDecals?: CureVignetteDecals;
   terrain?: TerrainView;
   stepEdges?: HeightStepEdges;
   terrainHorizon?: Group;
   maxBarTerrainHeight = 0;
   /** Releases exactly what the build created; the registry's shared assets are borrowed and never touched. */
   dispose(): void {
-    this.terrain?.dispose(); this.stepEdges?.dispose(); this.ambient?.dispose(); this.accents?.dispose();
+    this.terrain?.dispose(); this.stepEdges?.dispose(); this.ambient?.dispose(); this.accents?.dispose(); this.cureDecals?.dispose();
     for (const b of this.batches) b.dispose();
     for (const b of this.dressingBatches) b.dispose(); this.dressingBatches.length = 0;
     for (const g of this.grass) g.dispose();
@@ -90,6 +93,11 @@ export interface DistrictBuildDeps {
 
 /** Load the district's layout GLBs and assets and assemble its static batches into `parts`, in the established scene order. */
 export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDeps, seed: number, focus?: { x: number; z: number }, heroAtSpawn = false): Promise<void> {
+  const cureDistrict=deps.world.districts.find(d=>d.id==='D-CURE');
+  if(cureDistrict){
+    const rows=cureVignetteDecals(cureDistrict.decay.placements).map(d=>({...d,position:[d.position[0]+cureDistrict.origin[0],d.position[1],d.position[2]+cureDistrict.origin[1]] as [number,number,number]}));
+    if(rows.length){parts.cureDecals=await CureVignetteDecals.load(rows);parts.cureDecals.update(focus??{x:deps.world.playerStart[0],z:deps.world.playerStart[1]},deps.low());deps.view.add(parts.cureDecals);}
+  }
   if (deps.world.composition.id === 'L7') {
     parts.maxBarTerrainHeight = Math.max(0, ...deps.world.districts.flatMap(d => [...d.layout.surfaces.map(s => s.height ?? 0), ...d.decay.colliders.filter(c => c.walkable).map(c => c.aabb.max[1])]));
   }
@@ -319,6 +327,7 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
         for (const p of d.decay.placements) {
           const lit = d.decay.lights.includes(p.lightGroup), key = `${p.assetId}:${lit}:${p.decay ?? ''}`;
           const reference = new Object3D(); reference.position.fromArray(p.position); reference.rotation.y = p.yaw; reference.scale.fromArray(p.scale);
+          if (p.highOnly) reference.userData.highOnly = true;
           const first = anchorsFor(p.assetId)[0];
           if (first) reference.userData.lightBase = deps.materials.lamps.base(placedLightId(d.id, d.origin, p.id, first.name), anchorsFor(p.assetId));
           if (p.tint) reference.userData.tint = p.tint;

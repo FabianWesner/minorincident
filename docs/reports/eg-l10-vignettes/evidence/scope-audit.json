@@ -1,0 +1,171 @@
+{
+  "constructionMs": 87.98,
+  "scenes": 195,
+  "newPlacements": 580,
+  "staticBodies": 167,
+  "wallMessages": 35,
+  "highScatter": 40,
+  "lowScatter": 20,
+  "highCasings": 164,
+  "lowCasings": 82,
+  "physicsOnlyColliders": 34,
+  "newLights": 0,
+  "missed": [],
+  "regions": [
+    {
+      "region": "crash-outskirts",
+      "routeMetres": 250,
+      "eligibleMetres": 250,
+      "smallScenes": 5,
+      "scenesPerKm": 20,
+      "overlandBodies": 5,
+      "bodiesPerKm": 20,
+      "large": 2,
+      "messages": 5
+    },
+    {
+      "region": "residential-fringe",
+      "routeMetres": 600,
+      "eligibleMetres": 600,
+      "smallScenes": 12,
+      "scenesPerKm": 20,
+      "overlandBodies": 12,
+      "bodiesPerKm": 20,
+      "large": 2,
+      "messages": 5
+    },
+    {
+      "region": "industrial-area",
+      "routeMetres": 750,
+      "eligibleMetres": 750,
+      "smallScenes": 15,
+      "scenesPerKm": 20,
+      "overlandBodies": 15,
+      "bodiesPerKm": 20,
+      "large": 2,
+      "messages": 5
+    },
+    {
+      "region": "military-zone",
+      "routeMetres": 800,
+      "eligibleMetres": 800,
+      "smallScenes": 16,
+      "scenesPerKm": 20,
+      "overlandBodies": 16,
+      "bodiesPerKm": 20,
+      "large": 3,
+      "messages": 5
+    },
+    {
+      "region": "research-campus",
+      "routeMetres": 550,
+      "eligibleMetres": 550,
+      "smallScenes": 11,
+      "scenesPerKm": 20,
+      "overlandBodies": 11,
+      "bodiesPerKm": 20,
+      "large": 2,
+      "messages": 5
+    },
+    {
+      "region": "destroyed-corridor",
+      "routeMetres": 1000,
+      "eligibleMetres": 1000,
+      "smallScenes": 20,
+      "scenesPerKm": 20,
+      "overlandBodies": 20,
+      "bodiesPerKm": 20,
+      "large": 2,
+      "messages": 5
+    },
+    {
+      "region": "dispersal-complex",
+      "routeMetres": 348.7,
+      "eligibleMetres": 278.7,
+      "smallScenes": 6,
+      "scenesPerKm": 21.53,
+      "overlandBodies": 6,
+      "bodiesPerKm": 21.53,
+      "large": 2,
+      "messages": 5
+    }
+  ],
+  "routeCoverage": [
+    {
+      "id": "r1-road",
+      "length": 250,
+      "nearBodies": 7
+    },
+    {
+      "id": "r2-road",
+      "length": 600,
+      "nearBodies": 15
+    },
+    {
+      "id": "r3-road",
+      "length": 750,
+      "nearBodies": 18
+    },
+    {
+      "id": "r4-road",
+      "length": 800,
+      "nearBodies": 21
+    },
+    {
+      "id": "r5-road",
+      "length": 550,
+      "nearBodies": 16
+    },
+    {
+      "id": "r6-road",
+      "length": 1000,
+      "nearBodies": 25
+    },
+    {
+      "id": "r7-road",
+      "length": 348.6511720316663,
+      "nearBodies": 13
+    },
+    {
+      "id": "crossing-0",
+      "length": 519.7817533127234,
+      "nearBodies": 12
+    },
+    {
+      "id": "crossing-1",
+      "length": 657.5165869979531,
+      "nearBodies": 15
+    },
+    {
+      "id": "crossing-2",
+      "length": 670.0694073155946,
+      "nearBodies": 22
+    },
+    {
+      "id": "crossing-3",
+      "length": 282.5927838254211,
+      "nearBodies": 10
+    },
+    {
+      "id": "crossing-4",
+      "length": 158.33953320557242,
+      "nearBodies": 3
+    },
+    {
+      "id": "crossing-5",
+      "length": 851.6328049609656,
+      "nearBodies": 18
+    },
+    {
+      "id": "crossing-6",
+      "length": 246.01829200285084,
+      "nearBodies": 11
+    },
+    {
+      "id": "crossing-7",
+      "length": 222.6852858796832,
+      "nearBodies": 7
+    }
+  ],
+  "validation": "Native data/asset/clearance audit; GPU timing and gameplay visual captures are pending under the no-browser rule."
+}
