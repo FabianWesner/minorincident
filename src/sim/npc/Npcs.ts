@@ -63,8 +63,7 @@ export class Npcs {
         speed = Math.min(speed, leaderSpeed + catchUp);
     }
     const survivor = e.civilian?.survivor;
-    // R12 remains disabled for L7: its authored queue and encounter lanes stay exact.
-    if (this.world.scenario !== 'L7' && survivor?.mode === 'follow' && !e.civilian!.vehicleYield && stop <= .5) {
+    if (survivor?.mode === 'follow' && !e.civilian!.vehicleYield && stop <= .5) {
       // r12-group: a resting follower sets off a personal beat after it is asked to.
       if (this.reacting(e, target, stop)) return true;
       target = this.sway(e, target, nav);

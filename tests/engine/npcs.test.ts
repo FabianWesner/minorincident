@@ -108,7 +108,7 @@ test('escort: shared combat pace, follows through a maze, a 2 s stand revives to
   {
   // r12-group: the follower formation is a loose, persistent cluster (not the 1.2 m parade lattice) with body room between slots.
   const heading = { x: 1, z: 0 }, slots = Array.from({ length: 48 }, (_, i) => formationSlot({ x: 0, z: 0 }, heading, i));
-  // L7 keeps its authored targets while the other levels retain loose slots.
+  // Scripted queue fixtures can still request exact authored targets.
   for (let slot = 0; slot < 48; slot++) expect(formationSlot({ x: 0, z: 0 }, heading, slot, false))
     .toEqual({ x: -formationBack(slot), z: (slot % 3 - 1) * 1.2 });
   expect(slots).toEqual(Array.from({ length: 48 }, (_, i) => formationSlot({ x: 0, z: 0 }, heading, i)));
@@ -134,9 +134,9 @@ test('escort: shared combat pace, follows through a maze, a 2 s stand revives to
   for (let i = 0; i < 20; i++) { w.npcs!.move(follower, goal, 3, c, 0); w.tick++; }
   expect(follower.transform.x).toBeLessThan(start.x - .05);
   w.scenario = 'L7'; c.survivor!.restAt = w.tick - 60; delete c.survivor!.stirAt;
-  const beforeL7 = follower.transform.x;
-  w.npcs!.move(follower, { x: beforeL7 - 4, z: follower.transform.z }, 3, c, 0);
-  expect(follower.transform.x).toBeLessThan(beforeL7); // no personal start delay in the gated level
+  const beforeL7 = { ...follower.transform }, goalL7 = { x: beforeL7.x - 4, z: beforeL7.z };
+  w.npcs!.move(follower, goalL7, 3, c, 0);
+  expect(follower.transform).toEqual(beforeL7); // L7 uses the same staggered starts as the rest of the group levels.
   w.scenario = 'L6';
   // Standing, it looks toward a nearby infected before anything else.
   const enemy = w.entities.get(w.infected!.spawn('infected.runner', { x: follower.transform.x, z: follower.transform.z + 6 }))!;
