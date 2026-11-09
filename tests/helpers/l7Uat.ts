@@ -278,6 +278,9 @@ async function checkFollowerBites() {
     for (const e of [...w.infected!.active]) { w.solids.forget(e); w.infected!.release(e); }
     const roster = w.l7Encounters!.state.roster, follower = w.entities.get(roster[0].id)!;
     for (const row of roster.slice(1)) { const e = w.entities.get(row.id)!; e.hidden = true; w.solids.forget(e); }
+    // Keep this isolated mortality fixture on its only evacuee: the courier
+    // must not steal the runner's target between the longer sequence of bites.
+    w.inspectionGhost = true;
     const runner = w.entities.get(w.infected!.spawn('infected.runner', { x: follower.transform.x + 1.2, y: follower.transform.y, z: follower.transform.z }, { state: 'chase' }))!;
     const wounds = new Map<number, number[]>(), alarms: string[] = [];
     w.events.on('infected.attack', e => { if (e.type === 'infected.attack' && e.special === 'bite') wounds.set(e.targetId, [...wounds.get(e.targetId) ?? [], w.entities.get(e.targetId)!.health.current]); });
