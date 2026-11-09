@@ -90,8 +90,11 @@ export class HealthBars extends Group {
     for (const layer of [...this.enemyMeshes, ...this.followerMeshes]) layer.count = 0;
     if (this.world.l7Departure?.cinematic || this.world.storyLock || this.world.missions?.state.cinematic || this.world.missions?.state.epilogue) return;
     const player = this.world.entities.get(1); if (!player) return;
+    // PO 2026-11-09: "show a health bar for 'my' police officers" — the L3 squad uses the follower bars.
+    const squad = new Set(this.world.missions?.state.l3?.squadIds ?? []);
+    const ally = (e: EntitySnapshot) => isFollower(e) || (squad.has(e.id) && e.health.current > 0 && !e.hidden && !e.corpse && !e.infection);
     let followerCount = 0;
-    for (const e of this.world.entities.iterate()) if (isFollower(e)) followerCount++;
+    for (const e of this.world.entities.iterate()) if (ally(e)) followerCount++;
     const compactFollowers = followerCount > followerBarsAlwaysMax;
     const full = true;
     const l10 = this.world.scenario === 'L10';
@@ -137,12 +140,12 @@ export class HealthBars extends Group {
     const sheltered = !!this.world.missions?.state.l5?.shutterAt;
     for (const e of this.world.entities.iterate()) {
       if (sheltered && e.civilian?.survivor) continue;
-      if (!megaBarAllowed(this.world, e) || !barEligible(e, player.transform, this.definitions.get(e.archetype)?.bar === true, full)) continue;
+      if (!megaBarAllowed(this.world, e) || !(squad.has(e.id) ? ally(e) : barEligible(e, player.transform, this.definitions.get(e.archetype)?.bar === true, full))) continue;
       if (l10 && e.faction === 'infected' && !this.l10BarIds.has(e.id)) continue;
       // Riot/Alpha/Mega bars remain mandatory (L4-11/G-24, E32), including healthy threats.
       if (capped && e.faction === 'infected' && !mandatoryBar(e) && !this.l4BarIds.has(e.id)) continue;
       if (!pickBodies.bounds(e.id, this.bounds)) continue;
-      const follower = isFollower(e), evacuee = follower && this.world.scenario === 'L7';
+      const follower = ally(e), evacuee = follower && this.world.scenario === 'L7';
       // E32-AC09: the Mega's bar is larger; regular Alphas retain their E07 size and shared pool.
       const size = barSize(width, height, !!e.infected?.pursuit);
       // Use the actual displayed bounds, including pose blending and interpolated movement.
