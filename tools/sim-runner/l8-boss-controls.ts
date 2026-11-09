@@ -82,6 +82,16 @@ try {
 try {
   const { w, m, zoo, p, arena, e } = await fixture('gorilla');
   try {
+    const northWall = w.destruction!.objects.find(o => o.id === 'D-ZOO/l8-yard-north-wall')!;
+    const intactYard = w.destruction!.snapshot();
+    northWall.protected = false; w.destruction!.impact(northWall.id, 'boss.elephant.charge', 1000);
+    const brokenYard = w.destruction!.snapshot();
+    w.destruction!.restore(intactYard);
+    const intactAgain = northWall.protected && !northWall.state.collapsed && northWall.state.hp.every(hp => hp > 0);
+    w.destruction!.restore(brokenYard);
+    const brokenAgain = !northWall.protected && northWall.state.collapsed;
+    w.destruction!.restore(intactYard);
+    check('north wall restores both intact protection and the breached checkpoint', intactAgain && brokenAgain, { intactAgain, brokenAgain });
     const healthy = w.entities.get(zoo.state.animals[0])!;
     check('healthy animal has no enemy bar', !barEligible(healthy, healthy.transform, true), { id: healthy.id, infected: !!healthy.infected });
     const def = l8BossArenas.find(a => a.id === 'gorilla')!;

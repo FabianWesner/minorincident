@@ -448,7 +448,7 @@ export class DistrictView extends Group {
   syncDestruction(destruction: Destruction): void {
     for (const o of destruction.objects) {
       if (o.placement.id === 'l10-find-farm-barn') this.barnRoofVisible = !o.state.collapsed && o.parts.some((p, i) => p.role === 'roof' && o.state.hp[i] > 0);
-      if (o.protected || this.destructionActive.get(o.id) === (o.state.revision > 0)) continue;
+      if (o.protected && !this.destructionActive.get(o.id) || this.destructionActive.get(o.id) === (o.state.revision > 0)) continue;
       const entry = this.lodBatches.find(e => e.refs.some(r => r.userData.placementId === o.id));
       const ref = entry?.refs.find(r => r.userData.placementId === o.id);
       if (!entry || !ref) continue;

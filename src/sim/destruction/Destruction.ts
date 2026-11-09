@@ -56,7 +56,7 @@ export class Destruction {
       this.objects.push(object);
       const prop = world.props?.items.find(item => item.id === id);
       if (prop) { this.propLinks.set(id, prop); world.entities.get(prop.entityId)!.environmentObject = id; }
-      if (!prop && !object.protected) for (const { part, box } of colliders) this.blockers.push({ object, part, box, id: -1000000 - this.blockers.length, handle: -1, wall: this.wall(object, box), active: false });
+      if (!prop && (!object.protected || p.destruction.bossBreakable)) for (const { part, box } of colliders) this.blockers.push({ object, part, box, id: -1000000 - this.blockers.length, handle: -1, wall: this.wall(object, box), active: false });
     }
     this.reconcile();
   }
@@ -239,8 +239,14 @@ export class Destruction {
   restore(snapshot:unknown):void {
     const saved=snapshot as ReturnType<Destruction['snapshot']>;
     for(const o of this.objects) {
-      const entry=saved.find(s=>s.id===o.id); if(!entry) continue;
-      o.state=structuredClone(entry.state);
+      const entry=saved.find(s=>s.id===o.id);
+      if(!entry) {
+        // Protected props can be unlocked by a scripted boss impact. An earlier
+        // checkpoint omitted them, so restore their original intact protection.
+        if(o.protected || !o.placement.destruction!.indestructible) continue;
+        o.protected=true;
+        o.state={hp:o.parts.map(p=>p.hp),burning:0,fireClock:0,exploded:false,collapsed:false,revision:0,marks:[]};
+      } else { o.protected=false; o.state=structuredClone(entry.state); }
       this.rebaseFire(o);
     }
     this.reconcile();

@@ -1613,6 +1613,7 @@ export class InfectedSystem {
   /** Rebase serialized timers when a checkpoint is restored at a later world tick. */
   restoreSpecialTimers(b: InfectedState, delta: number): void {
     if (b.arenaBoss?.scavengeProgress) b.arenaBoss.scavengeProgress.at += delta;
+    if (b.arenaBoss?.motionProgress) b.arenaBoss.motionProgress.at += delta;
     if (b.arenaBoss?.hunt) b.arenaBoss.hunt.until += delta;
     if (b.arenaBoss?.traversal) b.arenaBoss.traversal.start += delta;
     if (b.arenaBoss) { b.arenaBoss.exposedUntil += delta; b.arenaBoss.readyAt += delta; }

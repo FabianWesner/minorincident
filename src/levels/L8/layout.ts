@@ -6,7 +6,7 @@ export function levelEightLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
   return structuredClone(layouts).map(layout => {
     if (layout.district !== 'D-ZOO' || layout.placements.some(p => p.id === 'l8-gorilla-pillar-0')) return layout;
     // Keep planted bushes beside the yard, rather than creating elephant-sized charge stops in its wall-bait lanes.
-    for (const [id, x, z] of [['prop.garden-bush:220', -85, 20], ['prop.garden-bush:222', -35, 44]] as const) {
+    for (const [id, x, z] of [['prop.garden-bush:220', -85, 20], ['prop.garden-bush:222', -35, 44], ['prop.wheelbarrow:426', 112, 38], ['prop.crates:427', 112, 42], ['prop.hose-reel:425', 112, 34]] as const) {
       const bush = layout.placements.find(p => p.id === id); if (!bush) continue;
       const dx = x - bush.position[0], dz = z - bush.position[2]; bush.position[0] = x; bush.position[2] = z;
       bush.visualAabb.min[0] += dx; bush.visualAabb.max[0] += dx; bush.visualAabb.min[2] += dz; bush.visualAabb.max[2] += dz;
@@ -41,7 +41,7 @@ export function levelEightLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     for (const [i, [x, z]] of [[59, -29], [64, -35], [55, -34], [61, -40]].entries()) add(`l8-gorilla-throw-${i}`, 'prop.bench', x, z);
     for (let i = 0; i < 3; i++) add(`l8-gorilla-light-${i}`, 'prop.folding-chair', 58 + i * 2, -31);
     const wall = worldAssets['prop.cure-garden-wall'].dimensions;
-    add('l8-yard-north-wall', 'prop.cure-garden-wall', 88, 46, [8 / wall.x, 3 / wall.y, .5 / wall.z], 0, { class: 'concrete', indestructible: true });
+    add('l8-yard-north-wall', 'prop.cure-garden-wall', 88, 46, [8 / wall.x, 3 / wall.y, .5 / wall.z], 0, { class: 'concrete', indestructible: true, bossBreakable: true });
     layout.placements.at(-1)!.fixed = true;
     add('l8-elephant-truck', 'veh.box-truck', 100, 54, [1, 1, 1], Math.PI / 2);
     for (const [i, [x, z]] of [[-64, -30], [-55, -36], [-66, -40]].entries()) add(`l8-lion-cover-${i}`, 'prop.jersey-barrier', x, z, [1.1, 1.4, 1.6], i * Math.PI / 3);

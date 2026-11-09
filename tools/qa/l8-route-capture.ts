@@ -45,7 +45,7 @@ try {
         move: plan.frame.move, dx: direction.x - origin.x, dy: direction.y - origin.y, target, fire: !!(plan.frame.left.held || plan.frame.right.held), interact: plan.frame.interact,
         weapon, actualWeapon: entries.find(e => e.side === player.weapons!.selectedSide && e.index === player.weapons![e.side].index)?.id,
         damagedWeapons: [...new Set(audit.hits.filter(e => e.arena === active?.id && e.amount > 0).map(e => e.id))], marker: (state.mission as { marker?: string })?.marker,
-        arena: active?.id ?? 'boarding', arenaPhase: active?.phase ?? 3, arenaHP: active?.ids.map(id => ss.getEntity(id)?.health.current), arenas: zoo.arenas.map(a => ({ id: a.id, phase: a.phase })),
+        hale: ss.getEntity(zoo.haleId)?.transform, carrier: active && ss.getEntity(active.carrier)?.transform, animal: active && ss.getEntity(active.ids[0])?.transform, arena: active?.id ?? 'boarding', arenaPhase: active?.phase ?? 3, arenaHP: active?.ids.map(id => ss.getEntity(id)?.health.current), arenas: zoo.arenas.map(a => ({ id: a.id, phase: a.phase })),
         objective: [...document.querySelectorAll('[data-testid=objective-text],[data-testid=mission-tracker]')].map(e => e.textContent).find(text => text?.trim()) ?? '', departed: (state.mission as { states: Record<string, boolean> })?.states.departed,
       };
     });
@@ -62,6 +62,7 @@ try {
       await session.page.evaluate(() => window.__SS__!.step(8));
       const file = `${weaponPicture}-tick-${row.tick}.jpg`; await session.page.screenshot({ path: `${out}/${file}`, type: 'jpeg', quality: 75 }); captures.push(file); weaponPictures.add(weaponPicture);
     }
+    if (n % 250 === 0) console.log(JSON.stringify({ tier, progress: row.tick, arena: row.arena, phase: row.arenaPhase, hale: row.hale, carrier: row.carrier, animal: row.animal }));
     if (n % 50 === 0) { frames.push(row); writeFileSync(`${out}/progress.json`, JSON.stringify({ tier, captures, frames }, null, 2)); }
     if (row.departed || row.phase === 'progression' || row.phase === 'result') break;
     const keys = Math.hypot(row.move.x, row.move.z) > .05 ? dodgeWalkKeys(row.dx, row.dy) : [];

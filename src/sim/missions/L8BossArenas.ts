@@ -202,6 +202,17 @@ export class L8BossArenas {
     }
     boss.engaged = arena.phase !== 3 && !(arena.id === 'lion' && boss.slot === 1 && arena.phase < 2 || arena.id === 'monkey' && boss.slot === 6 && arena.phase < 2);
     if (p.health.current <= 0 || arena.phase === 3) return true;
+    if (arena.id === 'zebra') {
+      const progress = boss.motionProgress;
+      if (!progress || b.specialAttack || distance(e.transform, progress) > .02) boss.motionProgress = { ...e.transform, at: w.tick };
+      else if (w.tick - progress.at >= 90) {
+        // A blocked fence approach becomes a new, visible charge at the courier.
+        // Never leave a herd member waiting indefinitely for its navigation goal.
+        this.start(e, 'zebra.stampede', 60, 36, .9);
+        boss.motionProgress = { ...e.transform, at: w.tick }; return true;
+      }
+    }
+
     if (arena.id === 'lion' && boss.slot === 1 && arena.phase < 2) { this.walk(e, { x: -66, z: -42 }, 3); return true; }
     if (arena.id === 'monkey' && boss.slot === def.count - 1 && arena.phase < 2) { this.walk(e, { x: -22, z: 14 }, 3.5); return true; }
     if (arena.id === 'monkey' && boss.slot === 6 && arena.phase === 2 && !boss.leaderEntered) {
@@ -415,7 +426,7 @@ export class L8BossArenas {
     const range = distance(a.area, a.destination!), travelled = distance(e.transform, a.area);
     const speed = arena.id === 'elephant' ? 14 : arena.id === 'zebra' ? 15 : arena.id === 'flamingo' ? arena.phase === 2 ? 21 : 17 : 12;
     const step = Math.min(speed / 60, Math.max(0, range - travelled));
-    if (arena.id === 'elephant' && !arena.breachAt && e.transform.x > 84 && e.transform.x < 92 && e.transform.z < 46 && e.transform.z + e.combat!.radius + step >= 45.75) {
+    if (arena.id === 'elephant' && !arena.breachAt && e.transform.x > 84 && e.transform.x < 92 && e.transform.z < 46 && e.transform.z + e.combat!.radius + step >= 45.35) {
       const wall = w.destruction?.objects.find(o => o.id === 'D-ZOO/l8-yard-north-wall');
       if (wall) {
         // This military wall is protected from incidental player fire until the
