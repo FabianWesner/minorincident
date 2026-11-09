@@ -55,19 +55,20 @@ async function campaignRampTraversal(): Promise<void> {
     const l3 = await slopeWorld('L3', quality);
     const ramps = l3.districts!.districts.flatMap(d => d.decay.placements.filter(p => p.assetId === 'kit.highway-onramp')).sort((a, b) => a.position[0] - b.position[0]);
     expect(ramps.map(r => r.id)).toEqual(['kit.highway-onramp:991', 'kit.highway-onramp:992']);
-    for (const ramp of ramps) {
-      const points = Array.from({ length: 51 }, (_, i) => highwayPoint(ramp, 1 - i / 50)), player = l3.entities.get(1)!;
+    for (const ramp of ramps) for (const walk of [false, true]) {
+      const foot = highwayPoint(ramp, 1), gait = walk ? 'walking' : 'running';
+      const points: [number, number, number][] = [[foot[0] + 4.5 * Math.cos(ramp.yaw), 0, foot[2] - 4.5 * Math.sin(ramp.yaw)], ...Array.from({ length: 51 }, (_, i) => highwayPoint(ramp, 1 - i / 50))], player = l3.entities.get(1)!;
       const [x, surfaceY, z] = points[0]!;
       Object.assign(player.transform, { x, y: surfaceY + .705, z });
       l3.physics.playerBody!.setTranslation(player.transform, true); l3.solids.remember(player, `ramp-traversal:${ramp.id}`); l3.player!.locomotion.reset();
       let waypoint = 1;
-      for (let tick = 0; tick < 1500 && waypoint < points.length; tick++) {
+      for (let tick = 0; tick < 2200 && waypoint < points.length; tick++) {
         const [tx, , tz] = points[waypoint]!, dx = tx - player.transform.x, dz = tz - player.transform.z, distance = Math.hypot(dx, dz) || 1;
-        l3.setInput({ move: { x: dx / distance, z: dz / distance } }); l3.update();
+        l3.setInput({ move: { x: dx / distance, z: dz / distance }, walk }); l3.update();
         if (Math.hypot(tx - player.transform.x, tz - player.transform.z) < .35) waypoint++;
       }
       l3.clearInput();
-      expect(waypoint, `${quality} ${ramp.id} reaches the far end of its authored centreline`).toBe(points.length);
+      expect(waypoint, `${quality} ${ramp.id} ${gait} climbs the entry lips and reaches the far end of its authored centreline`).toBe(points.length);
       expect(Math.hypot(player.transform.x - points.at(-1)![0], player.transform.z - points.at(-1)![2])).toBeLessThan(.6);
       expect(player.transform.y, `${quality} ${ramp.id} arrives on the elevated deck`).toBeGreaterThan(points.at(-1)![1] + .6);
     }
