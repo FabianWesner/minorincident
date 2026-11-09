@@ -1,6 +1,7 @@
 // Adapted from folio-2025 PreRenderer.js by Bruno Simon (MIT), commit 41046b5.
 import { InstancedMesh, Light, LineSegments, Matrix4, Mesh, Sprite, Vector2, Vector3, type Camera, type Object3D, type Scene, type Texture } from 'three/webgpu';
 import type { Renderer } from './Renderer';
+import { AttributeType } from 'three/src/renderers/common/Constants.js';
 
 /** Warm hidden variants while loading. The real render pass also uploads buffers/textures
  * and compiles shadow and soft-particle programs in their actual HDR/MSAA context. */
@@ -160,6 +161,22 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
     // As with incremental warm-up, compile the other graphs first and let that draw
     // build the depth-dependent leaves against their actual target.
     const candidates = warmCandidates(leaves).filter(leaf => renderer.selectedBackend !== 'webgpu' || !leaf.userData.preRenderNeedsDepth);
+    // bufferData can flush native WebGL links queued by compileAsync. Upload
+    // resident geometry first, like the pose atlases below. Three's attribute
+    // cache retains the normal version tracking and geometry disposal owners.
+    if (renderer.selectedBackend === 'webgl' && !background && !cooperative) {
+      const attributes = (renderer as unknown as { _attributes: { update(attribute: unknown, type: number): void } })._attributes;
+      const uploaded = new Set<unknown>();
+      const upload = (attribute: import('three').BufferAttribute | import('three').InterleavedBufferAttribute | null | undefined, type: number): void => {
+        if (!attribute?.count || uploaded.has(attribute)) return;
+        uploaded.add(attribute); attributes.update(attribute, type);
+      };
+      for (const leaf of leaves) if (leaf instanceof Mesh || leaf instanceof Sprite || leaf instanceof LineSegments) {
+        for (const attribute of Object.values(leaf.geometry.attributes as import('three').BufferGeometry['attributes'])) upload(attribute, AttributeType.VERTEX);
+        upload(leaf.geometry.index, AttributeType.INDEX);
+        if (leaf instanceof InstancedMesh) { upload(leaf.instanceMatrix, AttributeType.VERTEX); upload(leaf.instanceColor, AttributeType.VERTEX); }
+      }
+    }
     // Shared pose materials change their texture in onBeforeRender. Explicitly
     // warm every batch's atlas before compilation, rather than only the last binding.
     // Upload before linking: a first texSubImage2D otherwise flushes queued native
