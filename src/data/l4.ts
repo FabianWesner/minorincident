@@ -1,8 +1,7 @@
-import { l3 } from './l3';
 import { l1Pedestrians } from './npcs';
 
 /** Exterior horde roster, shared with render preloading so every combat archetype keeps its silhouette. */
-export const l4InfectedArchetypes = ['infected.runner', 'infected.crawler', 'infected.sprinter', 'infected.riot', 'infected.firefighter', 'infected.hazmat'] as const;
+export const l4InfectedArchetypes = ['infected.runner', 'infected.crawler', 'infected.sprinter', 'infected.riot', 'infected.firefighter', 'infected.hazmat', 'infected.brute', 'infected.armored', 'infected.butcher'] as const;
 /** Already-infected arrivals: suit, fatigues and the five skinned civilian bodies with the infected material. */
 export const l4InfectedLooks = ['inf.common-worker', 'npc.national-guard', ...l1Pedestrians.models] as const;
 /** Two registered responder bodies share the same firefighter combat role. */
@@ -83,8 +82,6 @@ export const l4 = {
   /** Beat 4: the outbreak follows the convoy. From turn + `fromS` infected come from the street edges, escalating. */
   war: {
     fromS: 0, waveEveryS: 11,
-    /** Exterior arrivals must survive crossing the army's overlapping firing lanes; courier damage stays unchanged. */
-    arrivalAllyResist: .2,
     /** G-22: the first three arrivals through each later breach (south, north) are fast runners that press the courier across the camp;
      * allies engage them only within `selfDefenceM` (contact) until their first windup or `untilS` after admission. Their damage
      * resistance, counts and caps are unchanged. The first (west) breach opens beside the courier and keeps its ordinary cohort. */
@@ -93,8 +90,6 @@ export const l4 = {
     waveSize: [6, 9, 12, 14, 14, 14, 14, 14, 14, 14] as readonly number[], edgesPerWave: 3, waveScale: 2.5,
     /** Keep slots free for bites; downed infected retain their own slots until they recover. */
     headroom: 12, /** The low tier keeps half the high-tier bite margin. */ headroomLow: 6,
-    /** Retained downed-body budget: recycle repeat regular downings above it (PO #118), preserving first recoveries and authored Alphas. */
-    downedSlots: 10,
     /** Corpse-pile telemetry cells; bodies persist for the whole level (PO 10-14). */
     heap: { cellM: 4 },
     /** Seconds the streets keep emerging after the line break (collapse). */
@@ -107,8 +102,6 @@ export const l4 = {
      * only when a source is out of view or occluded and at least `minM` from the courier.
      */
     group: [2, 5] as P, groupEveryS: [2, 4] as P, perimeterPressure: { everyS: 1, group: [14, 16] as P, minM: 6, bodyField: { radiusM: 6, count: 40, activeFloor: 8, outerCount: 115 } },
-    /** Infected hit like L3's (the PO found earlier levels too hard: a sensible player finishes with few deaths). */
-    infectedDamage: l3.infectedDamage,
     emergeLeashM: 26,
   },
   /**

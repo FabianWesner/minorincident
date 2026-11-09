@@ -178,15 +178,15 @@ export class LevelFiveAftermath {
       if (!alpha && at.x > -66 && at.x < -40 && at.z > -34 && at.z < 40) continue;
       // The authored pairs are intentional; added singles must remain separated after road snapping too.
       if (g.spread && (!reachable[ai.nav.startCell(at, .45)] || occupied.some(p => dist(p, at) < 4) || l5Survivors.some(survivor => dist(this.anchor(`l5-ring-${survivor.key}`), at) < 4) || dist(this.anchor('l5-out'), at) < 15)) continue;
-      const id = alpha ? ai.spawn('infected.alpha', at) : o.spawnPedestrian(at), e = this.entity(id)!;
-      if (!alpha) o.turnNow(e);
+      const role = alpha ? 'infected.alpha' : g.archetype;
+      const id = role ? ai.spawn(role, at) : o.spawnPedestrian(at), e = this.entity(id)!;
+      if (!role) o.turnNow(e);
       if (!e.infected) continue;
       // Keep the town encounter bounded without cancelling targets inside normal sight.
       if (alpha) e.infected.territory = { x: at.x, z: at.z, radius: Math.max(l5.infected.leashM, ai.hearing.rangeM) };
       // Admission may shift around a body; retain that clear street pose as
       // the wander home rather than the rejected raw point inside a shell.
       const brain = e.infected.l1; if (brain) { brain.homeX = e.transform.x; brain.homeZ = e.transform.z; brain.leashM = l5.infected.leashM; }
-      if (e.combat) e.combat.damageMultiplier = l5.infected.damage;
       s.infectedIds.push(id); occupied.push(at); left--;
     }
   }

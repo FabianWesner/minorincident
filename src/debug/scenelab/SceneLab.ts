@@ -240,7 +240,6 @@ export class SceneLab {
     if (focus) world.chunks?.update(focus);
     if (spec.infectedCap !== undefined) world.requireInfected().director.levelCap = spec.infectedCap;
     // An L2 layout scene plays with the L2 infected toughness (the mission sets it in LevelTwoRescue; scenes have no mission).
-    if (spec.layout?.level === 'L2') world.infectedMeleeHits = l2.infectedMeleeHits;
     // Hand-overs move in the missions phase, like the L1 story beats, so AgentMotion publishes their walking speed.
     world.events.on('sim.tick', () => this.driveHandovers(), SimPhase.missions);
     const combat = world.requireCombat();
@@ -546,7 +545,6 @@ export class SceneLab {
         // A named Mega look is drawn exactly (the shipped Mega variant otherwise takes a look by entity id, CrowdView.alphaKey).
         if (a.look?.model && alphaLooks['inf.mega-alpha'].includes(a.look.model)) world.entities.get(entity)!.infected!.model = a.look.model;
         // L3 layout fixtures have no mission controller to apply the corridor's contact damage.
-        if (world.scenario === 'L3') world.entities.get(entity)!.combat!.damageMultiplier = l3.infectedDamage;
       } else {
         entity = world.npcs!.companion.spawn(); const dog = world.entities.get(entity)!;
         if (a.at) this.teleport(dog, at);

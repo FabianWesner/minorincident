@@ -253,20 +253,6 @@ export class LevelFourWar {
       s.evacueeIds.push(id);
     }
   }
-  /**
-   * PO #118 ("Zero Zombies"): the director's strict count keeps a slot for every downed infected, but the army re-downs each one as it
-   * gets up, so ~75 bodies pinned the war cap and no wave ever emerged. Beyond `downedSlots` repeat regular downings are finished off
-   * (they stay as corpses, PO 10-14) so their slots return to the waves. First recoveries and the authored Alphas retain their timers:
-   * removing those prevented the close pressure and repeated Alpha attacks needed to break the army.
-   */
-  private finishDowned(): void {
-    const downed = this.infected.active.filter(e => e.health.current <= 0 && (e.infected?.recoverAt ?? -1) >= 0);
-    if (downed.length <= l4.war.downedSlots) return;
-    downed.sort((a, b) => a.infected!.deadAt - b.infected!.deadAt);
-    // Preserve the first get-up and the authored Alpha jobs. Repeat regular downings return cap slots;
-    // retaining those would pin the low-tier cap and starve the next flank/alarm wave.
-    for (const e of downed.filter(e => e.archetype !== 'infected.alpha' && e.infected!.downs > 1).slice(0, downed.length - l4.war.downedSlots)) e.infected!.recoverAt = -1;
-  }
   private alarmInfected(): number { return this.low ? l4.calm.alarmInfected.low : l4.calm.alarmInfected.high; }
   private queueSchedule(slot: readonly number[]): CivilianActivity[] {
     const p = this.snap({ x: slot[0], z: slot[1] }, .35), table = { x: l4Crowd.queue.table[0], z: l4Crowd.queue.table[1] };
@@ -952,7 +938,7 @@ export class LevelFourWar {
     if (looks) {
       e.infected!.model = balancedCrowdModel(looks, neighbours.map(e => ({ model: e.infected!.model ?? e.infected!.variant, x: e.transform.x, z: e.transform.z })), at, e.id);
     }
-    if (e.combat) { e.combat.staggerUntil = world.tick; e.combat.allyResist = l4.war.arrivalAllyResist; }
+    if (e.combat) e.combat.staggerUntil = world.tick;
     return id;
   }
   /**
@@ -1000,7 +986,6 @@ export class LevelFourWar {
     // The opening alarm remainder and every later arrival come from street or
     // breach sources; tent interiors are never an infected source.
     if (tick % 10 === 0) {
-      this.finishDowned();
       if (s.phase === 'war') { this.spawnAlarmStreet(); this.emergePerimeterPressure(); this.flushGroups(); }
       else {
         // The broken line keeps flooding through its open breaches while the
@@ -1525,8 +1510,6 @@ export class LevelFourWar {
       if (s.phase === 'collapse') this.retireIdleForCollapse();
       if (tick % 20 === 0) this.clearGap();
       if (s.phase === 'cellar') this.cellarUpdate();
-      // L4 infected hit like L3's (section 5.1 tuning; PO: a sensible player finishes with few deaths).
-      if (tick % 15 === 0) for (const e of this.infected.active) if (e.combat && e.health.current > 0 && e.combat.damageMultiplier === 1) e.combat.damageMultiplier = l4.war.infectedDamage;
     }
   }
 

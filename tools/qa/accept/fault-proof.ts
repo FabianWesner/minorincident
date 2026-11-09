@@ -85,8 +85,8 @@ await fault('Alpha bar disabled', 'production enemy-bar eligibility at distance/
     } finally { world.dispose(); }
   };
   assert(l3HumansPass(await sample()), 'native L3 admission baseline must pass');
-  const config = l3.infected as unknown as { maxRegularMs: number; sprinterEvery: number };
-  for (const [key, bad, name] of [['maxRegularMs', 4.5, 'L3 regular speed exceeds4m/s'], ['sprinterEvery', 10, 'L3 sprinter frequency doubles']] as const) {
+  const config = l3.infected as { sprinterEvery: number };
+  for (const [key, bad, name] of [['sprinterEvery', 10, 'L3 sprinter frequency doubles']] as const) {
     const before = config[key];
     try {
       config[key] = bad;

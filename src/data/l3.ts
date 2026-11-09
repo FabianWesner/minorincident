@@ -48,8 +48,7 @@ export const l3 = {
     gun: { damage: 15, shotS: 1 / 1.5, rangeM: 22, nearM: 15, hitNear: .6, hitFar: .25 },
     /** The squad follows 3-8 m around/behind the courier; running beyond its band is a regroup order. */
     squad: { gun: { damage: 25, shotS: .35, rangeM: 22, nearM: 15, hitNear: .85, hitFar: .55 }, s1HitNear: .9, size: 4, minFollowM: 3, maxFollowM: 6, engageM: 18, leashM: 8, separatedM: 40, separatedS: 3, moveMs: 6.2, slowerMs: 0, breakoutS: 12,
-      /** PO 2026-11-07: a bite on a following officer costs 40 HP (the third bite turns him at 100 HP) and shoves the biter off 0.75 s (L7 evacuee rule). */
-      bite: { damage: 40, shoveTicks: 45 } },
+    },
     moveMs: 3.6,
   },
   /** Section 5.10: soldiers at the army checkpoint cover the last 20 m before the zone line. */
@@ -121,14 +120,8 @@ export const l3 = {
       [131.75, -6], [138.75, -.5], [162, -2.6], [201, -1.8],
     ] as readonly P[],
   },
-  /** Multiplier on the infected hit (L1: 10 per hit, 0.9 s cycle): PO 10-09: was 1.8 (the L2 value), too punishing; 1.1 still hits harder than L1 but a straight-line player survives a few bites. */
-  infectedDamage: 1.1,
-  /** The courier outruns regulars; one in twenty humans is a sprinter. Humans recover near the upper end of the epic's 10–20 s window. */
-  // Later retreat crowds commit at body contact rather than repeatedly
-  // winding up two metres behind the moving courier.
-  // PO 2026-11-07 (r6-l3): 1.4 m, was 0.9 m. 0.9 m lay inside the 1.08 m melee separation ring (CharacterSeparation.meleeRing), so
-  // after the fallback no runner could ever commit to a windup on a moving courier ("I can just walk through it").
-  infected: { maxRegularMs: 4, retreatLungeM: { low: 1.4, high: 1.4 }, sprinterEvery: 20, recoverS: [18, 20] as P },
+  /** One in twenty admitted humans is a sprinter; ordinary stats and recovery are shared. */
+  infected: { sprinterEvery: 20 },
   /**
    * PO 10-09: a courier who keeps dying at one spot is not meant to hit the same wall for 20 deaths. From the `fromDeaths`-th death at the same checkpoint on,
    * every respawn thins the infected (living or still waiting at their doors) between `aheadM` metres ahead of the courier by

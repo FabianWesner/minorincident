@@ -1,10 +1,9 @@
 import { megaAlpha } from '../../data/megaAlpha';
 import { insideCureHangar } from '../../data/l10Story';
-import { alphaDamageMultiplier, humanInfected, riotShieldResponse } from '../../data/infected';
+import { alphaDamageMultiplier, riotShieldResponse } from '../../data/infected';
 import { cureCanKill, storyProtected } from '../npc/storyProtection';
 import { Status } from './Status';
 import { l1v2 } from '../../data/l1v2';
-import { l7Encounters } from '../../data/l7';
 import { combatHeightReachable } from './height';
 // Splash falloff/impulse adapted from Bruno Simon folio-2025 Explosions.js (MIT, 41046b5).
 import type { Vec2 } from '../../input/InputFrame';
@@ -64,17 +63,15 @@ export function damageAmount(hit: DamageEvent, target: EntitySnapshot, shieldOpe
 export class Damage {
   god = false;
   private amount(hit: DamageEvent, target: EntitySnapshot): number {
-    // L4/L6 riot counter: a flinch lowers the shield, and a muzzle inside its
+    // Shared riot counter: a flinch lowers the shield, and a muzzle inside its
     // forward edge can shoot past it at contact distance. Hit origins are body
     // centres: 0.8 m includes the raised gun's barrel and the shield offset.
     const origin = hit.shotOrigin ?? hit.origin;
     const glance = this.shieldGlance(hit, target);
-    const open = (this.world.scenario === 'L4' || this.world.scenario === 'L6') && !!target.combat?.shield &&
+    const open = !!target.combat?.shield &&
       (glance || Status.stunned(target, this.world.tick) || this.world.tick < (target.combat.shieldBrokenUntil ?? 0) || Math.hypot(origin.x - target.transform.x, origin.z - target.transform.z) <= target.combat.radius + .8);
-    const faceDot = target.archetype === 'infected.riot' && (this.world.scenario === 'L4' || this.world.scenario === 'L6') ? Math.cos(riotShieldResponse.faceHalfAngleDeg * Math.PI / 180) : 0.5;
-    // Retain other levels' authored segment-origin shield behavior, especially
-    // the frozen L5 balance. Shield counters use the original launch point only.
-    const directionalHit = (this.world.scenario === 'L4' || this.world.scenario === 'L6') && target.combat?.shield && hit.shotOrigin ? { ...hit, origin } : hit;
+    const faceDot = target.archetype === 'infected.riot' ? Math.cos(riotShieldResponse.faceHalfAngleDeg * Math.PI / 180) : 0.5;
+    const directionalHit = target.combat?.shield && hit.shotOrigin ? { ...hit, origin } : hit;
     if (target.infected?.pursuit && this.world.scenario === 'L10' && !this.world.missions?.state.states['cure-installed']) return 0;
     let amount = damageAmount(directionalHit, target, open, faceDot, this.world.scenario === 'L10' && !!this.world.missions?.state.states['cure-installed']);
     if (this.world.scenario === 'L10' && target.infected?.pursuit && target.infected.megaPhase === 2 && !target.infected.megaArmourBroken && !hit.actionId.includes('flamethrower') && !hit.actionId.startsWith('environment.')) {
@@ -86,9 +83,9 @@ export class Damage {
     if (arena && hit.actionId !== 'arena.elephant.wall') amount *= this.world.tick < arena.exposedUntil ? 1.8 : .18;
     return glance ? amount * riotShieldResponse.chipFraction : amount;
   }
-  /** True only for an actual frontal L4/L6 riot shield firearm hit outside contact and break windows. */
+  /** True only for an actual frontal riot shield firearm hit outside contact and break windows. */
   private shieldGlance(hit: DamageEvent, target: EntitySnapshot): boolean {
-    if (this.world.scenario !== 'L4' && this.world.scenario !== 'L6' || target.archetype !== 'infected.riot' || !target.combat?.shield || hit.type !== 'bullet' ||
+    if (target.archetype !== 'infected.riot' || !target.combat?.shield || hit.type !== 'bullet' ||
         Status.stunned(target, this.world.tick) || this.world.tick < (target.combat.shieldBrokenUntil ?? 0)) return false;
     const origin = hit.shotOrigin ?? hit.origin, dx = origin.x - target.transform.x, dz = origin.z - target.transform.z, distance = Math.hypot(dx, dz);
     if (distance <= target.combat.radius + .8) return false;
@@ -114,13 +111,6 @@ export class Damage {
     if (resident) this.world.events.emit({ type: 'combat.kill', tick: this.world.tick, attackId: 0, actionId: 'cure', sourceId: 1, targetId: target.id, position: { ...target.transform }, direction: { x: 0, z: 0 }, knockback: 0, amount, damageType: 'status' });
   }
   constructor(private readonly world: SimWorld) {}
-  /** Per-level toughness (L2): a melee hit does at most maxHP / hits, so the weapon needs `hits` hits to down a normal infected. */
-  private meleeCap(hit: DamageEvent, target: EntitySnapshot): number | undefined {
-    const hits = this.world.infectedMeleeHits;
-    if (!hits || hit.type !== 'melee' || target.faction !== 'infected' || target.archetype === 'infected.crow') return undefined;
-    const count = hits[hit.actionId];
-    return count ? target.health.max / count : undefined;
-  }
   apply(hit: DamageEvent): number {
     const target = this.world.entities.get(hit.targetId), source = this.world.entities.get(hit.sourceId);
     if (!target || !source) return 0;
@@ -148,15 +138,11 @@ export class Damage {
       if (hit.type === 'melee' && source.transform.y < target.transform.y - 1.2) return 0;
       if ((dx * gun.aim.x + dz * gun.aim.z) / distance >= 0 && (hit.type !== 'melee' || distance > 2.2)) return 0;
       // An infected which climbed the stair can reach the gunner from behind. Leave and clear the stairs.
-      hit = { ...hit, base: hit.base * .25, knockback: 0, stagger: 0, knockdown: false, knockdownTicks: 0 };
+      hit = { ...hit, knockback: 0, stagger: 0, knockdown: false, knockdownTicks: 0 };
     }
     // E31 hull attacks own infected melee against the APC; seated people are inside its armor.
     const transportId = target.id === 1 ? this.world.vehicles?.active : target.passengerOf;
     if (target.hidden && transportId != null && source.kind === 'infected' && hit.type === 'melee' && this.world.entities.get(transportId)?.archetype === 'vehicle.military-apc') return 0;
-    // Newer campaign PO: shotgun HP depletion kills ordinary human infected permanently.
-    if (source.id === 1 && hit.actionId === 'weapon.shotgun' && /^L(?:[5-9]|10)$/.test(this.world.scenario ?? '') && target.archetype !== 'infected.alpha' && humanInfected.some(d => d.id === target.archetype)) hit = { ...hit, permanent: true };
-    if (this.world.scenario === 'L4' && source.id === 1 && target.archetype === 'infected.riot' &&
-        (hit.actionId === 'weapon.army-mg' && hit.type === 'bullet' || hit.type === 'melee')) hit = { ...hit, permanent: true };
     if (storyProtected(this.world, target)) {
       if (hit.knockback > 0) this.world.knockback(target, hit.direction, hit.knockback);
       return 0;
@@ -165,7 +151,7 @@ export class Damage {
     // The installed cure makes the final Mega mortal with every returned weapon.
     if (this.world.scenario === 'L10' && target.infected?.pursuit && this.world.missions?.state.states['cure-installed']) hit = { ...hit, permanent: true };
     if (target.health.current <= 0) {
-      // Explosives, fire, L5+ campaign shotgun hits and the L4 machine gun on a riot cop finish a downed infected.
+      // Explosives and lethal fire finish a downed infected in every level.
       if (downed(target) && this.amount(hit, target) > 0) {
         if (!lethal(hit)) { this.world.infected!.down(target, false); return 0; }
         this.world.infected!.down(target, true);
@@ -214,12 +200,9 @@ export class Damage {
     let amount = this.amount(hit, target);
     const shieldBlocked = hit.type === 'bullet' && target.combat?.shield && amount === 0;
     if (target.combat?.allyResist !== undefined && hit.sourceId !== 1) amount *= target.combat.allyResist;
-    const cap = this.meleeCap(hit, target); if (cap !== undefined) amount = Math.min(amount, cap);
     if (amount > 0 && target.archetype === 'infected.crow' && this.world.infected) amount = this.world.infected.hitFlock(target, hit.origin, hit.direction, hit.radius ?? 30, hit.type === 'explosive' ? 360 : hit.spread ?? 0);
     if (target.id === 1 && this.world.combat?.effects.shielded(target.transform)) amount = 0;
     if (target.id === 1 && (this.god || this.world.inspectionGhost)) amount = 0;
-    if (target.id === 1 && this.world.scenario === 'L7' && this.world.l7Encounters?.state.started === false &&
-        (this.world.missions?.state.stats.time ?? Infinity) < l7Encounters.openingGraceSeconds) amount = 0;
     if (target.id === 1 && this.world.player) amount = this.world.player.damage(amount, this.world.tick, hit.actionId === 'infected.zebra.stampede');
     else { amount = Math.min(amount, target.health.current); target.health.current -= amount; }
     // Keep ordinary player melee in reach even after knockback upgrades. Special
