@@ -277,6 +277,7 @@ async function checkFollowerBites() {
     checkFriendlyRocketReaction(w);
     for (const e of [...w.infected!.active]) { w.solids.forget(e); w.infected!.release(e); }
     const roster = w.l7Encounters!.state.roster, follower = w.entities.get(roster[0].id)!;
+    for (const row of roster.slice(1)) { const e = w.entities.get(row.id)!; e.hidden = true; w.solids.forget(e); }
     const runner = w.entities.get(w.infected!.spawn('infected.runner', { x: follower.transform.x + 1.2, y: follower.transform.y, z: follower.transform.z }, { state: 'chase' }))!;
     const wounds = new Map<number, number[]>(), alarms: string[] = [];
     w.events.on('infected.attack', e => { if (e.type === 'infected.attack' && e.special === 'bite') wounds.set(e.targetId, [...wounds.get(e.targetId) ?? [], w.entities.get(e.targetId)!.health.current]); });
@@ -288,7 +289,7 @@ async function checkFollowerBites() {
     }
     const lost = roster.find(r => r.status !== 'following');
     expect(lost, 'one unopposed runner still kills an evacuee').toBeDefined();
-    expect(wounds.get(lost!.id), 'the tenth ordinary bite is still fatal; every earlier bite visibly costs health').toEqual([90, 80, 70, 60, 50, 40, 30, 20, 10]);
+    expect(wounds.get(lost!.id), 'the twentieth ordinary bite is still fatal; every earlier bite visibly costs health').toEqual([95, 90, 85, 80, 75, 70, 65, 60, 55, 50, 45, 40, 35, 30, 25, 20, 15, 10, 5]);
     expect(staggered, 'the biter reels after a survived bite').toBe(true);
     expect(alarms.filter(kind => kind !== 'wait'), 'a loss beside the courier is not "behind you"').toEqual([]);
   } finally { w.dispose(); }

@@ -318,7 +318,7 @@ test('every human and animal role validates and spawns with its catalog health a
       if (moving) ruined.setInput({ move: { x: -1, z: 0 } });
       step(ruined, 60);
       expect(ruined.events.events().find(event => event.type === 'combat.hit' && event.sourceId === runner.id && event.amount > 0),
-        'L7 regular lunges chip courier health, including during Alpha stun').toMatchObject({ amount: 2 });
+        'L7 regular lunges chip courier health, including during Alpha stun').toMatchObject({ amount: 1.5 });
     }
 
     const closing = await arena(1, false); closing.scenario = 'L2';
