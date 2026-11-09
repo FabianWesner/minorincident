@@ -79,7 +79,11 @@ export async function measureL10Entry(page: Page, origin: string, entry: 'debug'
       const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: Game }).game, m = g.world.missions!; a.pause();
       const at = m.def.anchors['crawl-end']; g.world.vehicles!.destroyScripted(m.l9!.state.carId, { ...at, y: .72, yaw: 0 });
       m.l9!.state.phase = 'done'; m.l9!.state.finished = true; g.world.storyLock = null;
-      a.cheats.completeObjective('approach'); a.cheats.completeObjective('reach-outskirts'); await a.step(1); a.resume();
+      // Staging the crash owner must also publish the state that activates
+      // the crawl objective, before asking the mission to complete it.
+      m.setState('crash-impacted', true);
+      a.cheats.completeObjective('approach'); await a.step(1);
+      a.cheats.completeObjective('reach-outskirts'); await a.step(1); a.resume();
     });
   }
   await page.waitForFunction(() => { const g = (window.__SCENE__ as unknown as { game: { world: Game['world']; loading: boolean } }).game; return g.world.scenario === 'L10' && !g.loading; });
