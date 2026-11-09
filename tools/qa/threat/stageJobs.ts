@@ -30,6 +30,7 @@ const campaignFor = (level: RunnerLevel, seed: number) => {
 };
 async function execute(job: StageJob): Promise<StageResult> {
   const start = performance.now(), startedAt = Date.now();
+  console.log(`[qa:threat:stage] start ${job.id}`);
   const result: StageResult = { job, seconds: 0, startedAt, endedAt: startedAt };
   try {
     if (job.kind === 'follower') result.follower = await runSeed({ ...job, tier: 'low' });

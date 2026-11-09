@@ -1,0 +1,39 @@
+{
+  "target": "M3",
+  "epics": [
+    "E06",
+    "E07",
+    "E10",
+    "E14",
+    "E15",
+    "E16",
+    "E17",
+    "E22",
+    "E23",
+    "E24",
+    "E25",
+    "E27",
+    "E28",
+    "E29",
+    "E30",
+    "E31",
+    "E32"
+  ],
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "status": 0,
+      "seconds": 49.976
+    },
+    {
+      "command": "npm run lint",
+      "status": 0,
+      "seconds": 25.841
+    },
+    {
+      "command": "npm test",
+      "status": 0,
+      "seconds": 87.353
+    }
+  ]
+}
