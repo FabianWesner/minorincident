@@ -11,6 +11,7 @@ export class LevelNineBot {
   private avoid: { x: number; z: number; until: number } | null = null;
   private blockedAt: number | null = null;
   private reverseUntil = 0;
+  private bridgeApproach = 0;
   readonly path: readonly Point[];
   readonly length: number;
   constructor(private readonly w: SimWorld, routeId = 'road', detour = false, private readonly throttle = .7, readonly profile = 'complete') {
@@ -57,6 +58,7 @@ export class LevelNineBot {
     if (l9.state.phase === 'crawl') { const end = w.missions!.def.anchors['crawl-end'], dx = end.x - w.entities.get(1)!.transform.x, dz = end.z - w.entities.get(1)!.transform.z, length = Math.hypot(dx, dz) || 1; f.move = { x: dx / length, z: dz / length }; return f; }
     if (l9.state.phase !== 'driving') return f;
     const driving = l9.driving.state;
+    if (!driving.evacuationDone) this.bridgeApproach = 0;
     if (l9.driving.hatch) {
       f.brake = true; f.selectedWeaponKey = 5;
       const origin = w.entities.get(1)!.transform;
@@ -84,10 +86,17 @@ export class LevelNineBot {
     // Camp is beyond the final bend; never turn back into the horde to visit
     // that approach waypoint after the evacuation has already completed.
     if (driving.evacuationDone) this.index = this.path.length - 1;
-    const bridgeAlignX = l9Course.bridge.x - 12;
-    let target: Point = driving.evacuationDone
-      ? p.x < bridgeAlignX ? [bridgeAlignX, 0] : [l9Course.bridge.endX + 4, 0]
-      : this.path[this.index];
+    let target: Point = this.path[this.index];
+    if (driving.evacuationDone) {
+      // Leave along the open gate side before turning toward the bridge.
+      // Cutting diagonally to its centreline drives into the evacuation
+      // barricades/trucks, where the pursuing bus pins the APC broadside.
+      const approach: Point[] = [[l9Course.bridge.x - 12, l9Course.gate.sideZ],
+        [l9Course.bridge.x - 8, l9Course.bridge.halfZ - 2], [l9Course.bridge.endX + 4, 0]];
+      if (Math.abs(p.z) < 3 && Math.cos(p.yaw) > .7) this.bridgeApproach = 2;
+      while (this.bridgeApproach < 2 && Math.hypot(approach[this.bridgeApproach][0] - p.x, approach[this.bridgeApproach][1] - p.z) < 4) this.bridgeApproach++;
+      target = approach[this.bridgeApproach];
+    }
     // The APC cannot turn sharply enough from the old x=405 trigger when the
     // evacuation gate is closed at x=440; it stalls against the barrier first.
     // Begin the same side approach one vehicle length earlier so every route
