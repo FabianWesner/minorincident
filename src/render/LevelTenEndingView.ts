@@ -22,6 +22,7 @@ const tableaux: Item[][] = [
 export class LevelTenEndingView extends Group {
   private readonly registry: AssetRegistry;
   private readonly shots: Group[] = [];
+  private readonly roads: Mesh[] = [];
   private readonly actors: { root: Object3D; mixer: AnimationMixer; shot: number; cured: boolean; stood: boolean; x: number; z: number }[] = [];
   private hidden = new Map<Object3D, boolean>();
   private readonly dustMaterial = new MeshBasicNodeMaterial({ color: '#64ff32', transparent: true, opacity: .18, depthWrite: false });
@@ -52,20 +53,24 @@ export class LevelTenEndingView extends Group {
     const roster = save?.crossingHandover?.shelteredPassengers ?? save?.results?.L8?.escapedSurvivors ?? [];
     for (let i = 0; i < tableaux.length; i++) {
       const group = new Group(); group.visible = false; this.shots.push(group); this.add(group);
-      const floor = new Mesh(new BoxGeometry(85, .15, 65), new MeshBasicNodeMaterial({ color: i === 1 ? '#405e68' : '#8d9167' }));
+      const floor = new Mesh(new BoxGeometry(220, .15, 180), new MeshBasicNodeMaterial({ color: i === 1 ? '#405e68' : i === 6 ? '#777b79' : '#8d9167' }));
       floor.position.y = -.14; group.add(floor);
+      if (i !== 1 && i !== 6) {
+        const road = new Mesh(new BoxGeometry(220, .025, 7), new MeshBasicNodeMaterial({ color: i === 0 ? '#8b795e' : '#4e4c51' }));
+        road.position.set(0, -.045, -2); group.add(road); this.roads.push(road);
+      }
       for (const item of tableaux[i]) await this.item(group, item, i);
-      if (i < 5) for (let n = 0; n < 4; n++) await this.item(group, [n === 2 ? 'npc.national-guard' : n === 3 ? 'npc.paramedic' : 'npc.civilian-man-a', n * 3 - 5, 3 + n % 2 * 2], i, true);
+      if (i < 5) for (let n = 0; n < 4; n++) await this.item(group, [n === 2 ? 'npc.national-guard' : n === 3 ? 'npc.paramedic' : 'npc.civilian-man-a', n * 4 - 6, 2 + n % 2 * 3], i, true);
       if (i === 2) {
         // Nadia's keeper cap left on the enclosure fence.
         const cap = new Mesh(new BoxGeometry(.45, .12, .4), new MeshBasicNodeMaterial({ color: '#8b774a' })); cap.position.set(-5, 1.7, 0); group.add(cap);
       }
       if (i === 5) for (const [n, key] of ['mia', 'rosa', 'dale', 'okafor'].entries()) {
         const person = roster.find(e => e.civilian?.survivor?.key === key && e.health.current > 0 && !e.infected && !e.infection);
-        if (person) await this.item(group, [person.civilian!.model ?? 'npc.civilian-man-a', n * 2 - 3, 3], i);
+        if (person) await this.item(group, [person.civilian!.model ?? 'npc.civilian-man-a', n * 5 - 7.5, n % 2 ? 5 : 2], i);
       }
       if (i === 6) for (const [id, x] of [['npc.lab-tech-b', -2], ['npc.national-guard', 2], [this.world.missions!.state.states['sam-alive'] ? 'npc.sam.aftermath' : 'npc.lab-guard', 0]] as const) await this.item(group, [id, x, 3], i);
-      if (i === 7) for (let n = 0; n < 6; n++) await this.item(group, [n % 2 ? 'npc.depot-clerk' : 'npc.civilian-woman-a', n * 2 - 5, 3], i);
+      if (i === 7) for (let n = 0; n < 6; n++) await this.item(group, [n % 2 ? 'npc.depot-clerk' : 'npc.civilian-woman-a', n * 3.5 - 8.75, n % 2 ? 5 : 2], i);
     }
     for (const group of this.shots) await this.warm(group);
     this.ready = true;
@@ -91,8 +96,10 @@ export class LevelTenEndingView extends Group {
       if (this.hidden.size) { for (const [child, visible] of this.hidden) child.visible = visible; this.hidden.clear(); view.follow(); }
       this.visible = false;
       const pull = epiloguePull(ticks), console = this.world.missions?.def.anchors['cure-console'];
-      if (console && state?.epilogue?.phase === 'thanks') {
-        view.cinematic({ position: [console.x + 6, 4, console.z + 1], target: [console.x, .7, console.z - 6] });
+      if (console && (state?.epilogue?.phase === 'thanks' || ticks >= 45 * 60 && pull === 0)) {
+        const aspect = Math.max(1, 1 / view.camera.aspect);
+        view.camera.far = 600; view.camera.updateProjectionMatrix();
+        view.cinematic({ position: [console.x + 20 * aspect, 1 + 16 * aspect, console.z + 3 + 22 * aspect], target: [console.x + 2, 1, console.z + 3] });
       } else if (console && pull > 0) {
         // Fit the complete long L10 rectangle at every aspect ratio, with a generous margin.
         const bounds = this.world.districts!.nav, centreX = (bounds.min[0] + bounds.max[0]) / 2, centreZ = (bounds.min[1] + bounds.max[1]) / 2;
@@ -109,6 +116,7 @@ export class LevelTenEndingView extends Group {
     this.disposed = true; for (const [child, visible] of this.hidden) child.visible = visible;
     for (const actor of this.actors) { actor.mixer.stopAllAction(); actor.mixer.uncacheRoot(actor.root); }
     for (const shot of this.shots) { const floor = shot.children[0] as Mesh; floor?.geometry.dispose(); (floor?.material as MeshBasicNodeMaterial)?.dispose(); }
+    for (const road of this.roads) { road.geometry.dispose(); (road.material as MeshBasicNodeMaterial).dispose(); }
     this.dust.geometry.dispose(); this.dustMaterial.dispose(); this.removeFromParent(); void this.registry.dispose(); cureDust.radius.value = -1;
   }
 }

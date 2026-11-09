@@ -64,7 +64,7 @@ export class CourierPresenter {
     const closingPose = closing ? { ...survivor, scriptedClip: 'npc-sit' as const, animation: 'idle' as const, velocity: { x: 0, z: 0 } } : undefined;
     if (closing) {
       const console = this.world.missions!.def.anchors['cure-console'];
-      character.position.set(console.x - .5, .5, console.z - 6); character.rotation.y = 0;
+      character.position.set(console.x + 3, 0, console.z + 5); character.rotation.y = 0;
     }
     character.update(closingPose ?? carPose?.pose ?? (stopped && this.frozenPose ? this.frozenPose : survivor), stopped ? this.hitStopTick : this.world.tick, stopped ? 1 : alpha,
       riding === undefined ? undefined : { pedal: bicycle?.presentedRide?.pedal ?? bike?.pedal ?? this.world.tick * .12, steer: bicycle?.presentedRide?.steer ?? bike?.steer ?? 0 }, !!input.strafe && !carPose && riding === undefined);
