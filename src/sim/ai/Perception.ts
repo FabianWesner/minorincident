@@ -130,11 +130,10 @@ export class Perception {
   playerBiasM = 0;
   private readonly cosHalf = Math.cos(l1v2.infected.visionConeDeg / 2 * Math.PI / 180);
   constructor(private readonly world: SimWorld) { this.humans = new WorldHumans(world); }
-  /** L7 infected stay on the courier's line; a person already at grab range still interrupts the focus. */
+  /** L7 infected prefer the courier when ordinary senses can detect her. Followers remain huntable when she leaves. */
   targetPriority(e: EntitySnapshot, id: number, position: Vec2): number {
     const distance = Math.hypot(position.x - e.transform.x, position.z - e.transform.z);
     if (this.world.scenario !== 'L7') return distance;
-    if (id !== 1 && distance <= 1.5) return distance - 30;
     return distance + (id === 1 ? this.playerBiasM : 0);
   }
   /** Real courier/ally gunshots expand Alpha hearing for one second; L5 still uses courier shots only. */

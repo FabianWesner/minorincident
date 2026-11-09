@@ -69,8 +69,8 @@ export class LevelSevenEncounters {
     this.prepared = true;
     const w = this.world, ai = w.infected!, director = ai.director;
     // Keep the infected pressure on the courier while she leads the evacuation
-    // column. The shared perception query still permits a follower at contact
-    // range to interrupt; this bias only prevents nearby rows stealing focus.
+    // column. Ordinary sight/hearing still gates the preference, so leaving
+    // the group behind exposes it to the same hunts and completed bites.
     ai.hearing.playerBiasM = -18;
     director.levelCap = 200; director.strict = true; director.ambientTarget = 0; director.reserved = 0; director.pendingTurns = 0;
     w.npcs!.setAmbient(0);

@@ -432,8 +432,8 @@ test('perception: sight cone, facing-independent gunshots, silent melee misses, 
   expect(near.infected!.state).not.toBe('idle'); expect(beyond.infected!.state).toBe('idle');
   expect(n.events.events().some(e => e.type === 'noise' && e.actionId === 'weapon.bat' && e.radius === 6)).toBe(true);
 
-  // L7 can pull attention off the moving column, while a human already at
-  // grab contact still interrupts. Exercise the actual sight/hearing choices.
+  // L7 pulls attention off the moving column while the courier is detectable.
+  // Leaving the normal sensory range exposes followers to ordinary hunts.
   const escort = await arena(1, false); escort.scenario = 'L7'; escort.infected!.configureL1v2();
   const hearing = escort.infected!.hearing; hearing.playerBiasM = -18;
   const escortRunner = spawn(escort, 'runner', 10), alpha = spawn(escort, 'alpha', 10);
@@ -447,10 +447,13 @@ test('perception: sight cone, facing-independent gunshots, silent melee misses, 
   expect(hearing.closest(escortRunner, 999)?.id).toBe(1);
   expect(hearing.closestHeard(alpha)?.id).toBe(1);
   humans[1].position.x = 8.5;
+  expect(hearing.closest(escortRunner, 999)?.id).toBe(1);
+  expect(hearing.closestHeard(alpha)?.id).toBe(1);
+  humans[0].position.x = -10;
   expect(hearing.closest(escortRunner, 1)?.id).toBe(999);
   expect(hearing.closestHeard(alpha)?.id).toBe(999);
   // L3's existing positive player bias must still draw pressure to its police.
-  escort.scenario = 'L3'; hearing.playerBiasM = 4; humans[1].position.x = -2;
+  escort.scenario = 'L3'; hearing.playerBiasM = 4; humans[0].position.x = 0; humans[1].position.x = -2;
   expect(hearing.closest(escortRunner, 0)?.id).toBe(999);
   escort.scenario = 'L6'; hearing.playerBiasM = 0;
   expect(hearing.closest(escortRunner, 0)?.id).toBe(1);
