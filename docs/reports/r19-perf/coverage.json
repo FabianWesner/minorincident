@@ -1,0 +1,42 @@
+{
+  "closedAt": "2026-11-09T14:58:11.413465+00:00",
+  "reason": "Orchestrator ordered finish current capture, commit report, end; remaining work goes to follow-up lane.",
+  "goalAchieved": false,
+  "frozenGameRevision": "49078834",
+  "cold": {
+    "qualified": 2,
+    "required": 20,
+    "allQualifiedPassBrief5PercentRule": true,
+    "unmeasured": 18
+  },
+  "native": {
+    "qualified": 6,
+    "required": 16,
+    "allQualifiedPassInheritedTolerance": true,
+    "unmeasured": 10
+  },
+  "charge": {
+    "qualified": 2,
+    "required": 2,
+    "allPassInheritedTolerance": true,
+    "lowP95IncreaseMs": 0.1
+  },
+  "ending": {
+    "qualified": 2,
+    "required": 2,
+    "allPass": true,
+    "allTableauxAndPanorama": true
+  },
+  "lamps": {
+    "qualified": 4,
+    "required": 4,
+    "allPass": true
+  },
+  "L7Events": {
+    "qualified": 0,
+    "required": 6
+  },
+  "strictColdMedianParity": false,
+  "strictEveryP95NoIncrease": false,
+  "followUp": "README.md#follow-up-lane"
+}
