@@ -130,7 +130,7 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   if (a.forceUntil > tick && !audibleThreat) { if (c.story?.clip !== forcing) c.story = { clip: forcing, start: tick - (e.id * 17) % 40 }; return true; }
   const leader = a.follow ? world.entities.get(a.follow.targetId) : undefined, follower = !!a.follow && !!leader && leader.health.current > 0;
   const leaderMoving = follower && Math.hypot(leader!.survivor?.velocity.x ?? 0, leader!.survivor?.velocity.z ?? 0) > .5;
-  const squadRun = follower && !!world.missions?.def.l3 && leaderMoving;
+  const squadRun = follower && (!!world.missions?.def.l3 || world.scenario === 'L7') && leaderMoving;
   // Visible threats within the escort's engagement range interrupt regrouping.
   let forced: EntitySnapshot | undefined;
   // Breakout (the first seconds after the fallback call): the squad gets out with the player instead of holding the yard.
@@ -171,7 +171,13 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
       const fx = Math.cos(e.transform.yaw), fz = -Math.sin(e.transform.yaw);
       const compound = world.missions?.def.l3 && a.role === 'soldier';
       const alphaPriority = (candidate: EntitySnapshot | undefined) => {
-        if (a.role !== 'soldier' || candidate?.archetype !== 'infected.alpha') return 0;
+        if (a.role !== 'soldier') return 0;
+        // The evacuation detail rescues an active grab before returning to its Alpha target.
+        if (world.scenario === 'L7' && candidate?.infected?.l1?.mode === 'bite' &&
+            world.l7Encounters?.state.roster.some(r => r.status === 'following' && r.id === candidate.infected!.l1!.biteTargetId)) return 4;
+        if (world.scenario === 'L7' && candidate && candidate.health.current > 0 &&
+            (dist(candidate.transform, e.transform) <= 2.5 || player && dist(candidate.transform, player.transform) <= 4)) return 2;
+        if (candidate?.archetype !== 'infected.alpha') return 0;
         if (finishable(candidate)) return 3;
         const p = candidate.transform, wall = l4.perimeter;
         return world.missions?.def.l4 && p.x > wall.x0 && p.x < wall.x1 && p.z > wall.z0 && p.z < wall.z1 ? 2 : 1;
@@ -359,7 +365,7 @@ function regroup(world: SimWorld, e: EntitySnapshot, a: AllyState, p: Point, unt
     // L3's armed retreat can aim behind while walking forward. Keep its
     // formation behind the travel direction instead of swinging every slot
     // across the courier whenever she switches targets.
-    const forward = moving && world.missions?.def.l3 && velocity
+    const forward = moving && (world.missions?.def.l3 || world.scenario === 'L7') && velocity
       ? -Math.atan2(velocity.z, velocity.x) : leader.transform.yaw;
     // The closer rest slots fix the 3–6 m calm-follow band. During a fight
     // retain the prior depth so officers do not move into the infected line.

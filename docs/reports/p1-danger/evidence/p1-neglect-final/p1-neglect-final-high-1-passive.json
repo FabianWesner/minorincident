@@ -1,0 +1,2070 @@
+{
+  "sourceHash": "a5a5b24077dc4e1bf8bf92feeff118a06042e2550d0c69f19219defb1b0cbfbd",
+  "observerHash": "f6f19f3a30a061c07b0e90a71d614f36498a80c2bdf41074dd826884cc2d7165",
+  "revision": "manifest-only",
+  "diagnosticHash": "c1f7a9340ab11397cf5c403cc9bc7972bb943107cabd61bdca6397797d16fccc",
+  "generatedAt": "2026-11-09T18:27:45.355Z",
+  "summary": {
+    "tag": "p1-neglect-final",
+    "tier": "high",
+    "seed": 1,
+    "passive": true,
+    "mortalPassive": false,
+    "maxSeconds": 120,
+    "completed": false,
+    "outcome": "tick-budget",
+    "seconds": 120,
+    "deaths": 0,
+    "acceptedHits": 0,
+    "acceptedDamage": 0,
+    "damageBySource": {},
+    "alphaLandedHits": 6,
+    "alphaLandedDamage": 150,
+    "rockets": 0,
+    "rocketKills": 0,
+    "gunDowns": 0,
+    "recoveries": 191,
+    "grabs": 151,
+    "minFollowerHp": 0,
+    "longestQuietSeconds": 10.816666666666668,
+    "courierAttacks": 1560,
+    "groupAttacks": 151,
+    "alphaAttacks": 96,
+    "boarded": 0,
+    "alphaAttacksPerMinute": 48,
+    "courierAttacksPerMinute": 780,
+    "groupAttacksPerMinute": 75.5,
+    "attackDirections": {
+      "west": 529,
+      "south": 382,
+      "north": 412,
+      "east": 388
+    },
+    "simultaneousDirections": 4,
+    "alphas": [
+      {
+        "id": 75,
+        "hp": 450,
+        "alphaType": "brute",
+        "tick": 1
+      },
+      {
+        "id": 108,
+        "hp": 450,
+        "alphaType": "thrower",
+        "tick": 791
+      }
+    ],
+    "nativeStateHash": "754c17a4"
+  },
+  "pacing": {
+    "beats": [
+      {
+        "seconds": 0,
+        "kind": "radio",
+        "detail": "L7.start"
+      },
+      {
+        "seconds": 0.03333333333333333,
+        "kind": "fight",
+        "detail": "npc.cashier/weapon.pistol -> infected.runner"
+      },
+      {
+        "seconds": 0.23333333333333334,
+        "kind": "pickup",
+        "detail": "weapon.rocket-launcher"
+      },
+      {
+        "seconds": 10.033333333333333,
+        "kind": "fight",
+        "detail": "infected.alpha/infected.alpha -> npc.cashier"
+      },
+      {
+        "seconds": 20.85,
+        "kind": "fight",
+        "detail": "npc.cashier/weapon.pistol -> infected.runner"
+      },
+      {
+        "seconds": 36.13333333333333,
+        "kind": "fight",
+        "detail": "npc.cashier/weapon.pistol -> infected.runner"
+      },
+      {
+        "seconds": 47.4,
+        "kind": "fight",
+        "detail": "npc.cashier/weapon.pistol -> infected.runner"
+      },
+      {
+        "seconds": 57.416666666666664,
+        "kind": "fight",
+        "detail": "npc.cashier/weapon.pistol -> infected.runner"
+      },
+      {
+        "seconds": 67.76666666666667,
+        "kind": "fight",
+        "detail": "npc.cashier/weapon.pistol -> infected.runner"
+      },
+      {
+        "seconds": 77.86666666666666,
+        "kind": "fight",
+        "detail": "npc.cashier/weapon.pistol -> infected.runner"
+      },
+      {
+        "seconds": 87.9,
+        "kind": "fight",
+        "detail": "npc.cashier/weapon.pistol -> infected.runner"
+      },
+      {
+        "seconds": 97.96666666666667,
+        "kind": "fight",
+        "detail": "npc.cashier/weapon.pistol -> infected.runner"
+      },
+      {
+        "seconds": 108.06666666666666,
+        "kind": "fight",
+        "detail": "npc.cashier/weapon.pistol -> infected.runner"
+      },
+      {
+        "seconds": 118.25,
+        "kind": "fight",
+        "detail": "npc.cashier/weapon.pistol -> infected.runner"
+      }
+    ],
+    "longestQuietSeconds": 10.816666666666668,
+    "quietFrom": 10.033333333333333,
+    "quietTo": 20.85,
+    "passes": false
+  },
+  "run": {
+    "level": "L7",
+    "policy": "complete",
+    "seed": 1,
+    "completed": false,
+    "time": 120,
+    "deaths": 0,
+    "kills": 0,
+    "damageTaken": 0,
+    "failures": {
+      "tick-budget": 1
+    },
+    "objectiveTimeline": [],
+    "furthestObjective": "bus-departure",
+    "activeObjectives": [],
+    "outcome": "tick-budget",
+    "blocker": {
+      "objective": "bus-departure",
+      "detail": "{\"phase\":\"waiting\",\"hp\":100,\"roster\":[{\"id\":51,\"key\":\"shelter-0\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":184.8478274262259,\"z\":16.535009693520358,\"y\":3.55,\"yaw\":-1.4933378531258343}},{\"id\":52,\"key\":\"shelter-1\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":181.77000533844222,\"z\":15.16110860085197,\"y\":3.55,\"yaw\":-2.941177718112634}},{\"id\":53,\"key\":\"shelter-2\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":184.18169047016505,\"z\":17.115705560392758,\"y\":3.55,\"yaw\":-0.16263374084898993}},{\"id\":54,\"key\":\"shelter-3\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":185.82885025681827,\"z\":16.162719283250393,\"y\":3.7,\"yaw\":-1.5653629263600406}},{\"id\":55,\"key\":\"shelter-4\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":184.35419396204443,\"z\":15.854068646464437,\"y\":3.55,\"yaw\":-0.9074910256428448}},{\"id\":56,\"key\":\"shelter-5\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":184.79055504983359,\"z\":16.563109336961176,\"y\":3.55,\"yaw\":-1.4060585367559997}},{\"id\":57,\"key\":\"shelter-6\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":186.18726165561685,\"z\":16.44140651194158,\"y\":3.7,\"yaw\":-1.8109892229549631}},{\"id\":58,\"key\":\"shelter-7\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":184.43503529648532,\"z\":16.724519085681727,\"y\":3.55,\"yaw\":-0.8287460451642795}},{\"id\":59,\"key\":\"shelter-8\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":187.65559804491934,\"z\":16.623684035439762,\"y\":3.7,\"yaw\":-2.4106603309956185}},{\"id\":60,\"key\":\"shelter-9\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":183.1554303877046,\"z\":15.076458857388868,\"y\":3.55,\"yaw\":-2.9771256929135133}},{\"id\":61,\"key\":\"shelter-10\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":185.69500617013722,\"z\":16.46196692536589,\"y\":3.7,\"yaw\":-1.367252789770684}},{\"id\":62,\"key\":\"shelter-11\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":186.479416531139,\"z\":15.804188708746608,\"y\":3.7,\"yaw\":-0.764391870089331}},{\"id\":63,\"key\":\"shelter-12\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":186.60653663033517,\"z\":17.838917559639505,\"y\":3.7,\"yaw\":1.180581156108992}},{\"id\":64,\"key\":\"shelter-13\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":185.4262169111933,\"z\":17.727469473667693,\"y\":3.7,\"yaw\":2.386237035179101}},{\"id\":65,\"key\":\"shelter-14\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":185.04733280268673,\"z\":15.958756504371062,\"y\":3.7,\"yaw\":-1.4022104427076378}},{\"id\":66,\"key\":\"shelter-15\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":180.86197210858316,\"z\":13.065931741275193,\"y\":3.55,\"yaw\":-1.6047538371342194}},{\"id\":67,\"key\":\"shelter-16\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":186.79263614535148,\"z\":17.39707272986993,\"y\":3.7,\"yaw\":2.8757182185351016}},{\"id\":68,\"key\":\"shelter-17\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":182.4703805747766,\"z\":13.85277065405443,\"y\":3.55,\"yaw\":-2.6384540603794173}},{\"id\":69,\"key\":\"shelter-18\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":181.37722225245923,\"z\":17.07272659904789,\"y\":3.55,\"yaw\":2.0863655480894834}},{\"id\":70,\"key\":\"shelter-19\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":181.89144622784232,\"z\":16.060402902897692,\"y\":3.55,\"yaw\":2.9179382410441814}},{\"id\":71,\"key\":\"shelter-20\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":185.69013774254896,\"z\":17.840842735342882,\"y\":3.7,\"yaw\":2.485315205285831}},{\"id\":72,\"key\":\"shelter-21\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":186.05908178928587,\"z\":16.49100821637493,\"y\":3.7,\"yaw\":-1.9063343652012277}},{\"id\":73,\"key\":\"shelter-22\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":185.17579285100973,\"z\":16.3597501610897,\"y\":3.7,\"yaw\":-1.8742512196616485}},{\"id\":74,\"key\":\"shelter-23\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":186.30951001276864,\"z\":16.62086077118873,\"y\":3.7,\"yaw\":4.555547562225812}}]}",
+      "player": {
+        "x": 180.43408203125,
+        "y": 3.569999933242798,
+        "z": 15.380148887634277,
+        "yaw": -3.1457052788903144
+      }
+    },
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 197,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    }
+  },
+  "observation": {
+    "ticks": 7200,
+    "followerWait": {
+      "windows": [
+        {
+          "key": "step/rocket|phase/pickup",
+          "escortTicks": 14,
+          "stationaryFarTicks": 0
+        },
+        {
+          "key": "step/corridor|phase/encounters",
+          "escortTicks": 7179,
+          "stationaryFarTicks": 1211,
+          "first": {
+            "tick": 166,
+            "playerX": 263.714599609375,
+            "playerZ": 15.100539207458496,
+            "followerId": 66,
+            "followerX": 274.1028951982017,
+            "followerZ": 15.924440850317675
+          }
+        }
+      ],
+      "escortTicks": 7193,
+      "stationaryFarTicks": 1211,
+      "upperBoundPercent": 16.835812595579036,
+      "followers": [
+        {
+          "id": 20,
+          "escortTicks": 4800,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 51,
+          "escortTicks": 4120,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 52,
+          "escortTicks": 3778,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 53,
+          "escortTicks": 4281,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 54,
+          "escortTicks": 4116,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 55,
+          "escortTicks": 4630,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 56,
+          "escortTicks": 4160,
+          "stationaryFarTicks": 2
+        },
+        {
+          "id": 57,
+          "escortTicks": 3967,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 58,
+          "escortTicks": 2931,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 59,
+          "escortTicks": 2856,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 60,
+          "escortTicks": 3220,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 61,
+          "escortTicks": 3171,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 62,
+          "escortTicks": 3129,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 63,
+          "escortTicks": 2908,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 64,
+          "escortTicks": 2939,
+          "stationaryFarTicks": 2
+        },
+        {
+          "id": 65,
+          "escortTicks": 2776,
+          "stationaryFarTicks": 10
+        },
+        {
+          "id": 66,
+          "escortTicks": 2853,
+          "stationaryFarTicks": 12
+        },
+        {
+          "id": 67,
+          "escortTicks": 2534,
+          "stationaryFarTicks": 1110
+        },
+        {
+          "id": 68,
+          "escortTicks": 2464,
+          "stationaryFarTicks": 1046
+        },
+        {
+          "id": 69,
+          "escortTicks": 2311,
+          "stationaryFarTicks": 909
+        },
+        {
+          "id": 70,
+          "escortTicks": 2185,
+          "stationaryFarTicks": 795
+        },
+        {
+          "id": 71,
+          "escortTicks": 1964,
+          "stationaryFarTicks": 584
+        },
+        {
+          "id": 72,
+          "escortTicks": 1853,
+          "stationaryFarTicks": 475
+        },
+        {
+          "id": 73,
+          "escortTicks": 1614,
+          "stationaryFarTicks": 286
+        },
+        {
+          "id": 74,
+          "escortTicks": 1592,
+          "stationaryFarTicks": 229
+        },
+        {
+          "id": 96,
+          "escortTicks": 6850,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 97,
+          "escortTicks": 4289,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 98,
+          "escortTicks": 6803,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 99,
+          "escortTicks": 661,
+          "stationaryFarTicks": 2
+        }
+      ]
+    },
+    "phases": [
+      {
+        "key": "step/rocket",
+        "label": "rocket: Recover the rocket launcher beside the exit",
+        "threat": false,
+        "startSeconds": 0,
+        "seconds": 0.23333333333333334,
+        "spawned": 0,
+        "initial": 21,
+        "observed": 21,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": null,
+        "flags": []
+      },
+      {
+        "key": "phase/pickup",
+        "label": "controller: pickup",
+        "threat": false,
+        "startSeconds": 0,
+        "seconds": 0.23333333333333334,
+        "spawned": 0,
+        "initial": 21,
+        "observed": 21,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": null,
+        "flags": []
+      },
+      {
+        "key": "step/corridor",
+        "label": "corridor: Bring the group to the evacuation corridor",
+        "threat": true,
+        "startSeconds": 0.23333333333333334,
+        "seconds": 119.76666666666667,
+        "spawned": 111,
+        "initial": 20,
+        "observed": 132,
+        "reachableEver": 0,
+        "within2_5m": 42,
+        "attacks": 1560,
+        "attacksPerMinute": 781.5196214862232,
+        "firstAttackSeconds": 1.3833333333333333,
+        "groupAttacks": 369,
+        "groupAttacksPerMinute": 184.85944892847203,
+        "firstGroupAttackSeconds": 3.566666666666667,
+        "followerSpeeds": [
+          {
+            "id": 20,
+            "samples": 39,
+            "median": 4.499817279660794
+          },
+          {
+            "id": 51,
+            "samples": 44,
+            "median": 4.4998251608593485
+          },
+          {
+            "id": 52,
+            "samples": 42,
+            "median": 4.599999999998444
+          },
+          {
+            "id": 53,
+            "samples": 44,
+            "median": 4.499817631715713
+          },
+          {
+            "id": 54,
+            "samples": 42,
+            "median": 4.499817631936355
+          },
+          {
+            "id": 55,
+            "samples": 42,
+            "median": 4.499817947558117
+          },
+          {
+            "id": 56,
+            "samples": 41,
+            "median": 4.499826187419752
+          },
+          {
+            "id": 57,
+            "samples": 45,
+            "median": 4.499817631367836
+          },
+          {
+            "id": 58,
+            "samples": 44,
+            "median": 4.499817631557152
+          },
+          {
+            "id": 59,
+            "samples": 47,
+            "median": 4.499817624654058
+          },
+          {
+            "id": 60,
+            "samples": 45,
+            "median": 4.499817631255286
+          },
+          {
+            "id": 61,
+            "samples": 46,
+            "median": 4.499817620444519
+          },
+          {
+            "id": 62,
+            "samples": 45,
+            "median": 4.4998176312501705
+          },
+          {
+            "id": 63,
+            "samples": 47,
+            "median": 4.49981763060727
+          },
+          {
+            "id": 64,
+            "samples": 46,
+            "median": 4.4998176312527285
+          },
+          {
+            "id": 65,
+            "samples": 45,
+            "median": 4.49981762465065
+          },
+          {
+            "id": 66,
+            "samples": 40,
+            "median": 4.499817631336323
+          },
+          {
+            "id": 67,
+            "samples": 45,
+            "median": 4.4998176312501705
+          },
+          {
+            "id": 68,
+            "samples": 38,
+            "median": 4.4998176312527285
+          },
+          {
+            "id": 69,
+            "samples": 46,
+            "median": 4.4998175928259725
+          },
+          {
+            "id": 70,
+            "samples": 43,
+            "median": 4.499817629623943
+          },
+          {
+            "id": 71,
+            "samples": 46,
+            "median": 4.4998175945032735
+          },
+          {
+            "id": 72,
+            "samples": 43,
+            "median": 4.4998208519891465
+          },
+          {
+            "id": 73,
+            "samples": 43,
+            "median": 4.499817630561275
+          },
+          {
+            "id": 74,
+            "samples": 45,
+            "median": 4.4998176280336
+          },
+          {
+            "id": 96,
+            "samples": 44,
+            "median": 4.497381354457206
+          },
+          {
+            "id": 97,
+            "samples": 45,
+            "median": 4.49981526283677
+          },
+          {
+            "id": 98,
+            "samples": 46,
+            "median": 4.499817626257423
+          },
+          {
+            "id": 99,
+            "samples": 9,
+            "median": 4.313567845040067
+          }
+        ],
+        "followerMin": 4.497381354457206,
+        "followerMedian": 4.4998176312501705,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": null,
+        "flags": []
+      },
+      {
+        "key": "phase/encounters",
+        "label": "controller: encounters",
+        "threat": false,
+        "startSeconds": 0.23333333333333334,
+        "seconds": 119.76666666666667,
+        "spawned": 111,
+        "initial": 20,
+        "observed": 132,
+        "reachableEver": 0,
+        "within2_5m": 42,
+        "attacks": 1560,
+        "attacksPerMinute": 781.5196214862232,
+        "firstAttackSeconds": 1.3833333333333333,
+        "groupAttacks": 369,
+        "groupAttacksPerMinute": 184.85944892847203,
+        "firstGroupAttackSeconds": 3.566666666666667,
+        "followerSpeeds": [
+          {
+            "id": 20,
+            "samples": 39,
+            "median": 4.499817279660794
+          },
+          {
+            "id": 51,
+            "samples": 44,
+            "median": 4.4998251608593485
+          },
+          {
+            "id": 52,
+            "samples": 42,
+            "median": 4.599999999998444
+          },
+          {
+            "id": 53,
+            "samples": 44,
+            "median": 4.499817631715713
+          },
+          {
+            "id": 54,
+            "samples": 42,
+            "median": 4.499817631936355
+          },
+          {
+            "id": 55,
+            "samples": 42,
+            "median": 4.499817947558117
+          },
+          {
+            "id": 56,
+            "samples": 41,
+            "median": 4.499826187419752
+          },
+          {
+            "id": 57,
+            "samples": 45,
+            "median": 4.499817631367836
+          },
+          {
+            "id": 58,
+            "samples": 44,
+            "median": 4.499817631557152
+          },
+          {
+            "id": 59,
+            "samples": 47,
+            "median": 4.499817624654058
+          },
+          {
+            "id": 60,
+            "samples": 45,
+            "median": 4.499817631255286
+          },
+          {
+            "id": 61,
+            "samples": 46,
+            "median": 4.499817620444519
+          },
+          {
+            "id": 62,
+            "samples": 45,
+            "median": 4.4998176312501705
+          },
+          {
+            "id": 63,
+            "samples": 47,
+            "median": 4.49981763060727
+          },
+          {
+            "id": 64,
+            "samples": 46,
+            "median": 4.4998176312527285
+          },
+          {
+            "id": 65,
+            "samples": 45,
+            "median": 4.49981762465065
+          },
+          {
+            "id": 66,
+            "samples": 40,
+            "median": 4.499817631336323
+          },
+          {
+            "id": 67,
+            "samples": 45,
+            "median": 4.4998176312501705
+          },
+          {
+            "id": 68,
+            "samples": 38,
+            "median": 4.4998176312527285
+          },
+          {
+            "id": 69,
+            "samples": 46,
+            "median": 4.4998175928259725
+          },
+          {
+            "id": 70,
+            "samples": 43,
+            "median": 4.499817629623943
+          },
+          {
+            "id": 71,
+            "samples": 46,
+            "median": 4.4998175945032735
+          },
+          {
+            "id": 72,
+            "samples": 43,
+            "median": 4.4998208519891465
+          },
+          {
+            "id": 73,
+            "samples": 43,
+            "median": 4.499817630561275
+          },
+          {
+            "id": 74,
+            "samples": 45,
+            "median": 4.4998176280336
+          },
+          {
+            "id": 96,
+            "samples": 44,
+            "median": 4.497381354457206
+          },
+          {
+            "id": 97,
+            "samples": 45,
+            "median": 4.49981526283677
+          },
+          {
+            "id": 98,
+            "samples": 46,
+            "median": 4.499817626257423
+          },
+          {
+            "id": 99,
+            "samples": 9,
+            "median": 4.313567845040067
+          }
+        ],
+        "followerMin": 4.497381354457206,
+        "followerMedian": 4.4998176312501705,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": null,
+        "flags": []
+      }
+    ],
+    "waves": []
+  },
+  "final": {
+    "departure": "waiting",
+    "boarded": 0,
+    "arrivals": [
+      {
+        "id": 75,
+        "group": 701,
+        "alpha": true,
+        "tick": 1,
+        "x": 259,
+        "z": 12,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 76,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 273,
+        "z": 9.5,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 77,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 273,
+        "z": 20.5,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 78,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 271.6,
+        "z": 9.5,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 79,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 271.6,
+        "z": 20.5,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 80,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 259,
+        "z": 10,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 81,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 259,
+        "z": 20,
+        "offscreen": true,
+        "safe": false
+      },
+      {
+        "id": 82,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 259,
+        "z": 8.2,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 83,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 259,
+        "z": 21.8,
+        "offscreen": true,
+        "safe": false
+      },
+      {
+        "id": 84,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 259,
+        "z": 6.4,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 85,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 259,
+        "z": 23.6,
+        "offscreen": true,
+        "safe": false
+      },
+      {
+        "id": 86,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 250,
+        "z": 10,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 87,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 250,
+        "z": 20,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 88,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 250.35355339059328,
+        "z": 8.553553390593272,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 89,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 250,
+        "z": 21.8,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 90,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 248.5,
+        "z": 6.4,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 91,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 250,
+        "z": 23.6,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 92,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 241,
+        "z": 10,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 93,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 241,
+        "z": 20,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 94,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 241,
+        "z": 8.2,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 95,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 241,
+        "z": 21.8,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 108,
+        "group": 702,
+        "alpha": true,
+        "tick": 790,
+        "x": 173,
+        "z": 12,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 109,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 158.9,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 110,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 161.7,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 111,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 164.5,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 112,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 167.3,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 113,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 170.1,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 114,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 172.9,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 115,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 175.7,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 116,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 178.5,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 117,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 181.3,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 118,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 184.1,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 119,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 161.9,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 120,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 164.7,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 121,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 167.5,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 122,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 170.3,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 123,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 173.1,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 124,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 175.9,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 125,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 178.7,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 126,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 181.5,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 127,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 184.3,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 128,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 187.1,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 129,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 158.9,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 130,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 161.7,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 131,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 164.5,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 132,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 167.3,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 133,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 170.1,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 134,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 172.9,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 135,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 175.7,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 136,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 178.5,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 137,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 181.3,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 138,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 184.1,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 139,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 162.65,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 140,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 165.45,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 141,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 168.25,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 142,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 171.05,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 143,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 173.85,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 144,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 210.9,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 145,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 213.7,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 146,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 216.5,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 147,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 219.3,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 148,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 222.1,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 149,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 224.9,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 150,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 227.7,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 151,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 230.5,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 152,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 233.3,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 153,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 236.1,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 154,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 225.9,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 155,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 228.7,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 156,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 231.5,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 157,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 234.3,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 158,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 237.1,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 159,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 239.9,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 160,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 242.7,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 161,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 245.25,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 162,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 248.3,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 163,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 251.1,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 164,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 234.9,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 165,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 237.7,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 166,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 240.25,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 167,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 243.3,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 168,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 246.1,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 169,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 248.9,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 170,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 251.7,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 171,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 254.5,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 172,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 257.3,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 173,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 260.1,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 174,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 249.9,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 175,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 252.7,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 176,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 255.5,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 177,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 258.3,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 178,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 261.1,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 179,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 263.9,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 180,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 266.7,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 181,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 269.5,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 182,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 272.3,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 183,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 275.1,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 184,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 258.9,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 185,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 261.7,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 186,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 264.5,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 187,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 267.3,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 188,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 270.1,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 189,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 272.9,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 190,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 275.7,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 191,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 278.5,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 192,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 281.3,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 193,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 284.1,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      }
+    ],
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 197,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    },
+    "roster": [
+      {
+        "id": 51,
+        "key": "shelter-0",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 52,
+        "key": "shelter-1",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 60,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 53,
+        "key": "shelter-2",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 54,
+        "key": "shelter-3",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 55,
+        "key": "shelter-4",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 60,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 56,
+        "key": "shelter-5",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 57,
+        "key": "shelter-6",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 60,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 58,
+        "key": "shelter-7",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 59,
+        "key": "shelter-8",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 60,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 60,
+        "key": "shelter-9",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 60,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 61,
+        "key": "shelter-10",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 62,
+        "key": "shelter-11",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 60,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 63,
+        "key": "shelter-12",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 60,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 64,
+        "key": "shelter-13",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 65,
+        "key": "shelter-14",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 60,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 66,
+        "key": "shelter-15",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 35,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 67,
+        "key": "shelter-16",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 68,
+        "key": "shelter-17",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 60,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 69,
+        "key": "shelter-18",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 60,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 70,
+        "key": "shelter-19",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 60,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 71,
+        "key": "shelter-20",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 72,
+        "key": "shelter-21",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 73,
+        "key": "shelter-22",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 74,
+        "key": "shelter-23",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": false
+      }
+    ],
+    "escaped": []
+  }
+}

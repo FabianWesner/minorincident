@@ -24,8 +24,8 @@ const story = {
   techRole: 'delivery-driver', techModel: 'npc.lab-tech-a', techTint: '#f1f1ec',
   /** Fair moment (QA1-05): windows burst first, the side door next, the front door (and the technician) last. */
   exitDelayS: { 'lab-exit-window': 3, 'lab-exit-side': 3.5, 'lab-exit-front': 4.5 } as Record<string, number>,
-  /** Grace for a player at the door: exits are disoriented ~3 s, bites on the player hit softly for the first 8 s. */
-  graceDamage: .25, graceS: 8, staggerS: 1.5,
+  /** Grace for a player at the door: exits are disoriented ~3 s, the first rush has an eight-second regrouping window. */
+  graceS: 8, staggerS: 1.5,
   blastPushM: 3.2, blastPushRangeM: 12,
   eventOrder: ['l1.flicker', 'l1.blast', 'l1.ringing', 'l1.smoke', 'l1.screams'] as const,
 };
@@ -140,7 +140,6 @@ export class LevelOneOutbreak {
     if (l1.runs.length) this.run(tick);
     if (l1.graceUntil && tick >= l1.graceUntil) {
       l1.graceUntil = 0;
-      for (const id of l1.exitIds) { const e = world.entities.get(id); if (e?.combat && e.infected) e.combat.damageMultiplier = 1; }
     }
     if (l1.phase === 'spread' && tick % 300 === 0 && l1.graceUntil === 0 && world.npcs?.civilians.outbreak?.stats.bites === 0) {
       // Robust start: until the first bite, idle exit infected are re-sent to the nearest pedestrian wherever they are.
@@ -250,7 +249,7 @@ export class LevelOneOutbreak {
         const player = world.entities.get(1)!.transform, chase = l1.labExit && i !== 4;
         const target = chase ? { x: player.x, z: player.z } : this.pedestrianTarget(from) ?? this.farPoint(from, rad);
         const exiting = world.entities.get(id);
-        if (exiting?.combat) { exiting.combat.damageMultiplier = story.graceDamage; exiting.combat.staggerUntil = tick + Math.round(story.staggerS * TICKS); }
+        if (exiting?.combat) { exiting.combat.staggerUntil = tick + Math.round(story.staggerS * TICKS); }
         if (i === 0) {
           // The technician is still inside: scripted indoor leg to the front door, then the real infected AI is rushed outward.
           l1.runs.push({ id, dx: target.x, dz: target.z, speed, until: tick + 60 * TICKS, via: { x: at.x, z: at.z } });

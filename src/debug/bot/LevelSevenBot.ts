@@ -15,6 +15,7 @@ export class LevelSevenBot {
   private readonly route = [{ x: 88, z: 15 }, { x: 88, z: 46 }, { x: -30, z: 47 }, { x: -36, z: 47 }, { x: -36, z: 41.7 }, { x: -50, z: 41.7 }, { x: -50, z: 47 }, { x: l7CorridorAnchors['l7-bus-boarding'].position[0], z: l7CorridorAnchors['l7-bus-boarding'].position[2] }];
   private waypoint = 0;
   private avoidCorpses = false;
+  private closeCombat = false;
   finished = false;
   constructor(private readonly w: SimWorld, readonly profile = 'complete') {}
   sample(): InputFrame {
@@ -24,9 +25,9 @@ export class LevelSevenBot {
     const blocker = w.solids.blockingBody(1);
     if (blocker && solidLargeCorpse(blocker)) this.avoidCorpses = true;
     const pickup = w.l7Encounters!.state.started ? undefined : [...w.entities.iterate()].find(e => e.pickup && 'actionId' in e.pickup && e.pickup.actionId === l7Rocket.action);
-    // Tight corners resolve to half-metre nav cells; require the whole swept
-    // route, without waiting forever for an unreachable exact cell centre.
-    if (!pickup && this.waypoint < this.route.length - 1 && distance(p.transform, this.route[this.waypoint]) < (this.waypoint >= 3 ? .7 : 2)) this.waypoint++;
+    // Walk each corner through normal navigation. A body can occupy its exact
+    // point, so accept a body-width approach before advancing the route.
+    if (!pickup && this.waypoint < this.route.length - 1 && distance(p.transform, this.route[this.waypoint]) < (this.waypoint >= 3 ? 1.8 : 2)) this.waypoint++;
     const goal = pickup?.transform ?? this.route[this.waypoint];
     if (!this.avoidCorpses && !pickup && this.waypoint >= 3 && w.infected!.nav.visible(p.transform, goal, .35)) {
       const dx = goal.x - p.transform.x, dz = goal.z - p.transform.z, d = Math.hypot(dx, dz);
@@ -37,10 +38,21 @@ export class LevelSevenBot {
     if (rocket >= 0) f.selectedSlot = { side: 'RIGHT', index: rocket };
     const enemies = w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && !e.emerging && !e.infectionRise && distance(e.transform, p.transform) < 24 && w.infected!.nav.visible(p.transform, e.transform, 0)).sort((a, b) => distance(a.transform, p.transform) - distance(b.transform, p.transform));
     if (enemies[0] && this.profile !== 'evade-only') {
-      const close = distance(enemies[0].transform, p.transform) < 6;
+      const nearest = distance(enemies[0].transform, p.transform);
+      if (nearest < 6) this.closeCombat = true;
+      else if (nearest > 9) this.closeCombat = false;
       const backup = p.weapons!.RIGHT.rack.findIndex(s => s.id === 'weapon.shotgun');
-      if (close && backup >= 0) f.selectedSlot = { side: 'RIGHT', index: backup };
-      strikeAt(f, enemies[0], 'RIGHT', p.transform, false);
+      const axe = p.weapons!.LEFT.rack.findIndex(s => s.id === 'weapon.fire-axe');
+      // Use the carried crowd counter when surrounded. All attacks still use
+      // ordinary input, weapon timing, cover and live collision.
+      const surrounded = enemies.filter(e => distance(e.transform, p.transform) <= 2.5).length >= 3;
+      if (surrounded && axe >= 0) {
+        f.selectedSlot = { side: 'LEFT', index: axe };
+        strikeAt(f, enemies[0], 'LEFT', p.transform, false);
+      } else {
+        if (this.closeCombat && backup >= 0) f.selectedSlot = { side: 'RIGHT', index: backup };
+        strikeAt(f, enemies[0], 'RIGHT', p.transform, false);
+      }
     }
     const followers = w.l7Encounters!.state.roster.filter(r => r.status === 'following' && !w.l7Departure!.state.boarded.includes(r.id));
     // Deaths leave holes in the original slots; the surviving tail keeps its row.

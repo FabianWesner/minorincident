@@ -105,8 +105,12 @@ export class LevelEightZoo {
       // Keep the calm animals at their public-facing enclosure fences so the keeper's boulevard route passes them.
       const gateSideZ = anchor.z < 0 ? 18 : -18;
       const gateX = speciesId === 'flamingo' ? 0 : Math.sign(anchor.x) * 45;
-      const at = this.point({ x: gateX + offset * 2, z: anchor.z + gateSideZ - (speciesId === 'flamingo' && offset === 0 ? 3 : 0) }, radius), to = this.point({ x: at.x + 2, z: at.z }, radius);
-      s.animals.push(civilians.spawn('cashier', at, { zooAnimal: speciesId, waypoints: [at, to] }));
+      const at = this.point({ x: gateX + offset * 2, z: anchor.z + gateSideZ - (speciesId === 'flamingo' && offset === 0 ? 3 : 0) }, radius);
+      // Individual small loops keep animals within their habitat and avoid
+      // the synchronized straight-line movement that read as a parade.
+      const phase = offset + species.indexOf(speciesId);
+      const waypoints = Array.from({ length: 4 }, (_, n) => ({ x: at.x + Math.cos((phase + n) * Math.PI / 2) * 1.4, z: at.z + Math.sin((phase + n) * Math.PI / 2) * 1.4 }));
+      s.animals.push(civilians.spawn('cashier', at, { zooAnimal: speciesId, waypoints }));
     }
     this.bosses.prepare();
     const tour = [{ x: 24, z: 64 }, { x: 24, z: 0 }, { x: 45, z: 0 }, { x: -45, z: 0 }, { x: 0, z: 0 }];

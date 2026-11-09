@@ -69,6 +69,7 @@ test('caps: waves queue and resume inside both tier caps; reserved slots wait fo
   d.reserved = 0; step(r, 1); expect(d.count).toBe(6); expect(d.queue).toHaveLength(0);
 
   const n = await arena(), ai = n.infected!, runner = spawn(n, 'runner', 2, 0, 'idle'); runner.health.current = 0;
+  ai.down(runner, false);
   const nurse = spawn(n, 'nurse', 1); ai.director.levelCap = 1;
   step(n, 25); expect(ai.director.count).toBe(1); expect(runner.health.current).toBe(0); expect(nurse.infected!.reviveUsed).toBe(false);
   ai.director.levelCap = 2; step(n, 100); expect(ai.director.count).toBe(2); expect(runner.health.current).toBe(runner.health.max);

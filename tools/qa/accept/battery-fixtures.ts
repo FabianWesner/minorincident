@@ -1,3 +1,4 @@
+import { l1v2 } from '../../../src/data/l1v2';
 import { armyLineVerdict } from '../threat/l3ArmyLine';
 import { l3SeedVerdict } from '../threat/l3SeedVote';
 import { loadL2, runL2 } from '../../sim-runner/l2Bots';
@@ -13,7 +14,7 @@ export function l3HumanCensus(humans: { archetype: string; speed: number }[]) {
   const regularMax = Math.max(0, ...humans.filter(e => e.archetype === 'infected.runner').map(e => e.speed));
   return { count, sprinters, fraction: count ? sprinters / count : null, regularMax };
 }
-export const l3HumansPass = (census: ReturnType<typeof l3HumanCensus>) => census.count > 0 && census.regularMax <= 4 && census.fraction! <= .05;
+export const l3HumansPass = (census: ReturnType<typeof l3HumanCensus>) => census.count > 0 && census.regularMax <= l1v2.speedTiers.athletic.baseMs * l1v2.speedTiers.factor.max && census.fraction! <= .05;
 
 /** PO 11-05: a real squad hit replaces the old kill-share floor; segment kills are not required. */
 export function l3SegmentOnePass(report: Pick<ReturnType<typeof runL3>, 's1' | 'outcome' | 'deaths'>): boolean | undefined {
@@ -208,7 +209,7 @@ export async function batteryFixtures(level: RunnerLevel, tier: Tier, add: Add, 
             'each tier wave has exact expected total; all five directions represented; exactly20% station-door admissions retain police look',
             report.outcome === 'complete' ? waveCensus.every(row => row.admitted === row.expected && Object.values(row.byDirection).every(count => count > 0) && row.station === row.expected / 5 && row.stationPoliceLook === row.station && row.missingAppearance === 0) : undefined);
           const census = l3HumanCensus(humans);
-          add('L3-09', 'native L3 human speed and admitted sprinter fraction', { ...census, outcome: report.outcome, counting: 'spawn transactions; checkpoint-reused IDs are separate admissions' }, 'regular≤4m/s; sprinters≤5% of actual admissions', census.regularMax > 4 ? false : census.count && report.outcome === 'complete' ? l3HumansPass(census) : undefined);
+          add('L3-09', 'native L3 human speed and admitted sprinter fraction', { ...census, outcome: report.outcome, counting: 'spawn transactions; checkpoint-reused IDs are separate admissions' }, 'regulars use shared tier speed bounds; sprinters≤5% of actual admissions', census.regularMax > l1v2.speedTiers.athletic.baseMs * l1v2.speedTiers.factor.max ? false : census.count && report.outcome === 'complete' ? l3HumansPass(census) : undefined);
           const density = report.density;
           add('L3-08', 'authored segment populations before admission/death relief', density.prepopulated, `${l3.density.targets.join('/')} each±20% (PO 2026-11-07); these are pending population slots, not simultaneous live entities`, density.prepopulated.every(n => n > 0) ? density.prepopulated.every((n, i) => Math.abs(n - l3.density.targets[i]) <= l3.density.targets[i] * .2) : undefined);
           // fix66-a: one pushable bag shifts the squad's losses between seeds, so the ">= 2 at the army line" clause (PO 2026-11-07; was "<= 2") is measured on

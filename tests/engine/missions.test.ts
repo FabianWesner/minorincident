@@ -423,7 +423,7 @@ test('checkpoints: death restores objectives, HP, charges and escorts; a boss ki
     expect(restored.leaderX, 'the retreat leader advances after checkpoint retry').toBeGreaterThan(leaderX);
     expect(restored.survivors.every(r => r.status !== 'shelter'), 'no survivor remains in the shelter-only state').toBe(true);
   } finally { w.dispose(); }
-  await shelterRecoveryIsScoped();
+  await shelterRecoveryIsShared();
   await northgateSurvivorsStayVisible();
 });
 
@@ -450,7 +450,7 @@ async function northgateSurvivorsStayVisible(): Promise<void> {
   } finally { w.dispose(); }
 }
 
-async function shelterRecoveryIsScoped(): Promise<void> {
+async function shelterRecoveryIsShared(): Promise<void> {
   const w = await loadMissionLevel('L6', 1);
   try {
     const m = w.missions!, ai = w.infected!, s = m.state.l6!;
@@ -471,12 +471,16 @@ async function shelterRecoveryIsScoped(): Promise<void> {
     expect(old.health.current).toBeGreaterThan(0); expect(hatch.health.current).toBeGreaterThan(0);
     s.phase = 'fails'; hit(old); hit(hatch); m.l6!.update();
     expect(old.infected!.knockdowns).toBe(2); expect(hatch.infected!.knockdowns).toBe(2);
-    expect(old.infected!.recoverAt, 'the recovery exception starts with retreat').toBeGreaterThan(w.tick);
+    expect(old.infected!.recoverAt, 'a repeated nonlethal down still schedules recovery').toBeGreaterThan(w.tick);
     s.phase = 'retreat'; m.l6!.update();
-    expect(old.infected!.recoverAt).toBe(-1);
+    expect(old.infected!.recoverAt, 'retreat cannot turn an ordinary down into a permanent death').toBeGreaterThan(w.tick);
     expect(hatch.infected!.recoverAt, 'new hatch cohorts retain ordinary recovery').toBeGreaterThan(w.tick);
     for (let i = 0; i < 180; i++) w.update();
-    expect(w.entities.get(old.id), 'the finished shelter member keeps its corpse identity').toMatchObject({ id: old.id, corpse: true, health: { current: 0 } });
+    expect(w.entities.get(old.id), 'the shelter member keeps its identity and recovery').toMatchObject({ id: old.id, health: { current: 0 } });
+    expect(w.entities.get(old.id)!.corpse).toBeFalsy();
+    const nextUp = Math.max(old.infected!.recoverAt, hatch.infected!.recoverAt);
+    while (w.tick <= nextUp) w.update();
+    expect(old.health.current).toBeGreaterThan(0); expect(hatch.health.current).toBeGreaterThan(0);
     expect(w.entities.get(hatch.id)!.corpse).toBeFalsy();
     // The completion driver counters a visible heavy attack through the real
     // selector, and keeps its shotgun through knockback instead of swapping

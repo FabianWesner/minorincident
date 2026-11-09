@@ -1,0 +1,2730 @@
+{
+  "sourceHash": "9d6da3afbedd430f35953435f079efca220121704135d64b73a96baa324ef229",
+  "observerHash": "f6f19f3a30a061c07b0e90a71d614f36498a80c2bdf41074dd826884cc2d7165",
+  "revision": "a607405b8282b135ba01453cccba2b5dbc08c070",
+  "method": "Pooled headless WebGL2/Metal. Production L8 and complete-policy input to tick 3211. The yard shots move only the paused courier/camera; animal state and positions are unchanged.",
+  "hashes": {
+    "amb.monkey:lod0:infected": {
+      "path": "/assets/civilians/amb.monkey.lod0.infected.655aed56fad7a52a.bin.gz",
+      "sha256": "655aed56fad7a52a8120754f2adf5b25751f7e162fbe5383b85da34f1fbf3506"
+    },
+    "amb.monkey:lod1:infected": {
+      "path": "/assets/civilians/amb.monkey.lod1.infected.c40d0bf899b724e7.bin.gz",
+      "sha256": "c40d0bf899b724e70f54668dea712c4b7a02afc55a508992b4b5abc47523dcf2"
+    },
+    "amb.monkey:lod2:infected": {
+      "path": "/assets/civilians/amb.monkey.lod2.infected.9eff9c93a7b6de20.bin.gz",
+      "sha256": "9eff9c93a7b6de20b8d824979872d4989aac62934e7397889d9d80afb8949761"
+    },
+    "inf.monkey:lod0:infected": {
+      "path": "/assets/civilians/inf.monkey.lod0.infected.9cc789ab78a95505.bin.gz",
+      "sha256": "9cc789ab78a955057d1d715739e21cc2255941ef3fa73e11b101075c536b8802"
+    },
+    "inf.monkey:lod1:infected": {
+      "path": "/assets/civilians/inf.monkey.lod1.infected.8b85f14fe62a464f.bin.gz",
+      "sha256": "8b85f14fe62a464f8ba18b6da95c4893d2b76b0e2ace4db3ce734dd2b557a4aa"
+    },
+    "inf.monkey:lod2:infected": {
+      "path": "/assets/civilians/inf.monkey.lod2.infected.6f6eee36bcdfa17f.bin.gz",
+      "sha256": "6f6eee36bcdfa17f3ae9efe1246cb7e22d85811effb36eca23e8e25c2ca57047"
+    }
+  },
+  "captures": [
+    {
+      "file": "low-tour-z1.png",
+      "subject": "tour",
+      "zoom": 1,
+      "tick": 3211,
+      "player": {
+        "x": -22.783226013183594,
+        "y": 0.84,
+        "z": -0.5753380656242371,
+        "yaw": -6.308621644897432
+      },
+      "quality": "low",
+      "backend": "webgl",
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          2
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          -22.783226013183594,
+          0.12,
+          -0.5753380656242371
+        ],
+        "target": [
+          -22.783226013183594,
+          0.12,
+          -0.5753380656242371
+        ],
+        "position": [
+          -11.914059359647592,
+          11.28791979355699,
+          10.293828587911767
+        ],
+        "spot": null
+      },
+      "perf": {
+        "drawCalls": 121,
+        "triangles": 136282,
+        "lighting": {
+          "lightFieldMs": 0.09999999403953552,
+          "lightPools": 10,
+          "lightCandidates": 10,
+          "shadowMaps": 1,
+          "heroLights": 1,
+          "heroShadow": 1,
+          "preset": "L8-zoo"
+        }
+      },
+      "breached": false,
+      "animals": [
+        {
+          "id": 397,
+          "species": "lion",
+          "at": {
+            "x": -45.26997805988496,
+            "z": -13.166260087322286,
+            "y": 0.7,
+            "yaw": 107.44442480340797
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 398,
+          "species": "gorilla",
+          "at": {
+            "x": 44.664552494320425,
+            "z": -13.219851602539983,
+            "y": 0.7,
+            "yaw": 78.84573295883112
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 399,
+          "species": "elephant",
+          "at": {
+            "x": -45.20644818201481,
+            "z": 13.699267993783966,
+            "y": 0.7,
+            "yaw": 82.54376950528103
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 400,
+          "species": "zebra",
+          "at": {
+            "x": 44.661325739809506,
+            "z": 13.277028306535865,
+            "y": 0.7,
+            "yaw": 82.9834416830829
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 401,
+          "species": "zebra",
+          "at": {
+            "x": 46.67114197753168,
+            "z": 13.28262076208012,
+            "y": 0.7,
+            "yaw": -34.127173302758614
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 402,
+          "species": "flamingo",
+          "at": {
+            "x": 1.4436323117149343,
+            "z": -16.952507803361552,
+            "y": 0.7,
+            "yaw": -27.445516818198282
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 403,
+          "species": "flamingo",
+          "at": {
+            "x": 1.9395207386937452,
+            "z": -12.543143141199259,
+            "y": 0.82,
+            "yaw": -22.818482180450868
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 404,
+          "species": "flamingo",
+          "at": {
+            "x": 2.546024055814871,
+            "z": -14.068057608858586,
+            "y": 0.7,
+            "yaw": -24.39111878911064
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 405,
+          "species": "flamingo",
+          "at": {
+            "x": 2.7615338887756105,
+            "z": -16.999999912730075,
+            "y": 0.7,
+            "yaw": 2.140002268748238
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 406,
+          "species": "flamingo",
+          "at": {
+            "x": 4.140748166823575,
+            "z": -17,
+            "y": 0.7,
+            "yaw": -3.066592653589793
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 407,
+          "species": "flamingo",
+          "at": {
+            "x": 5.440748166823574,
+            "z": -17,
+            "y": 0.7,
+            "yaw": -3.066592653589793
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 408,
+          "species": "flamingo",
+          "at": {
+            "x": 6.7407481668235745,
+            "z": -17,
+            "y": 0.7,
+            "yaw": -3.066592653589793
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 409,
+          "species": "zebra",
+          "at": {
+            "x": 47.72513187103203,
+            "z": 14.020914644243726,
+            "y": 0.7,
+            "yaw": -4.600837732343775
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 410,
+          "species": "zebra",
+          "at": {
+            "x": 49.172497008892734,
+            "z": 14.000001012976158,
+            "y": 0.7,
+            "yaw": -34.48251981948337
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 411,
+          "species": "monkey",
+          "at": {
+            "x": -16.294698770229758,
+            "z": 26.264527809757496,
+            "y": 0.7,
+            "yaw": -0.44684357529050284
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 412,
+          "species": "monkey",
+          "at": {
+            "x": -15.885940059566304,
+            "z": 25.703029550254826,
+            "y": 0.7,
+            "yaw": -9.77383982394355
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 413,
+          "species": "monkey",
+          "at": {
+            "x": -15.36938064523529,
+            "z": 27.035572597429397,
+            "y": 1.2462499999999999,
+            "yaw": 9.426914641234514
+          },
+          "healthy": true,
+          "activity": "climb"
+        },
+        {
+          "id": 414,
+          "species": "monkey",
+          "at": {
+            "x": -15.292601269798007,
+            "z": 25.86288328926908,
+            "y": 0.7,
+            "yaw": 7.6722022942227515
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 415,
+          "species": "monkey",
+          "at": {
+            "x": -11.774758811531076,
+            "z": 28.786700019004698,
+            "y": 0.7,
+            "yaw": 56.94134612106685
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 416,
+          "species": "monkey",
+          "at": {
+            "x": -11.794367936327728,
+            "z": 27.704717338741883,
+            "y": 0.7,
+            "yaw": 51.44101051157959
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 417,
+          "species": "monkey",
+          "at": {
+            "x": -16.092101923030125,
+            "z": 23.969864883270848,
+            "y": 0.7,
+            "yaw": 11.235754018334877
+          },
+          "healthy": true,
+          "activity": "groom"
+        },
+        {
+          "id": 418,
+          "species": "lioness",
+          "at": {
+            "x": -42.15925183317644,
+            "z": -14,
+            "y": 0.7,
+            "yaw": -3.066592653589793
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        }
+      ],
+      "resources": [],
+      "requestedResources": [
+        "http://127.0.0.1:50822/assets/models/skinned/amb.monkey.lod2.low.glb",
+        "http://127.0.0.1:50822/assets/civilians/amb.monkey.lod2.infected.9eff9c93a7b6de20.bin.gz",
+        "http://127.0.0.1:50822/assets/civilians/amb.monkey.lod1.infected.c40d0bf899b724e7.bin.gz",
+        "http://127.0.0.1:50822/assets/models/skinned/amb.monkey.lod1.low.glb",
+        "http://127.0.0.1:50822/assets/civilians/inf.monkey.lod1.infected.8b85f14fe62a464f.bin.gz",
+        "http://127.0.0.1:50822/assets/models/skinned/inf.monkey.lod1.low.glb",
+        "http://127.0.0.1:50822/assets/models/skinned/inf.monkey.lod2.low.glb",
+        "http://127.0.0.1:50822/assets/civilians/inf.monkey.lod2.infected.6f6eee36bcdfa17f.bin.gz"
+      ],
+      "errors": []
+    },
+    {
+      "file": "low-tour-z1.5.png",
+      "subject": "tour",
+      "zoom": 1.5,
+      "tick": 3211,
+      "player": {
+        "x": -22.783226013183594,
+        "y": 0.84,
+        "z": -0.5753380656242371,
+        "yaw": -6.308621644897432
+      },
+      "quality": "low",
+      "backend": "webgl",
+      "camera": {
+        "zoom": 1.5,
+        "targetZoom": 1.5,
+        "zoomLimits": [
+          0.5,
+          2
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 28.5,
+        "regionScale": 1,
+        "focus": [
+          -22.783226013183594,
+          0.12,
+          -0.5753380656242371
+        ],
+        "target": [
+          -22.783226013183594,
+          0.12,
+          -0.5753380656242371
+        ],
+        "position": [
+          -6.479476032879592,
+          16.871879690335486,
+          15.728411914679768
+        ],
+        "spot": null
+      },
+      "perf": {
+        "drawCalls": 126,
+        "triangles": 139850,
+        "lighting": {
+          "lightFieldMs": 0.20000000298023224,
+          "lightPools": 10,
+          "lightCandidates": 10,
+          "shadowMaps": 1,
+          "heroLights": 1,
+          "heroShadow": 1,
+          "preset": "L8-zoo"
+        }
+      },
+      "breached": false,
+      "animals": [
+        {
+          "id": 397,
+          "species": "lion",
+          "at": {
+            "x": -45.26997805988496,
+            "z": -13.166260087322286,
+            "y": 0.7,
+            "yaw": 107.44442480340797
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 398,
+          "species": "gorilla",
+          "at": {
+            "x": 44.664552494320425,
+            "z": -13.219851602539983,
+            "y": 0.7,
+            "yaw": 78.84573295883112
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 399,
+          "species": "elephant",
+          "at": {
+            "x": -45.20644818201481,
+            "z": 13.699267993783966,
+            "y": 0.7,
+            "yaw": 82.54376950528103
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 400,
+          "species": "zebra",
+          "at": {
+            "x": 44.661325739809506,
+            "z": 13.277028306535865,
+            "y": 0.7,
+            "yaw": 82.9834416830829
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 401,
+          "species": "zebra",
+          "at": {
+            "x": 46.67114197753168,
+            "z": 13.28262076208012,
+            "y": 0.7,
+            "yaw": -34.127173302758614
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 402,
+          "species": "flamingo",
+          "at": {
+            "x": 1.4436323117149343,
+            "z": -16.952507803361552,
+            "y": 0.7,
+            "yaw": -27.445516818198282
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 403,
+          "species": "flamingo",
+          "at": {
+            "x": 1.9395207386937452,
+            "z": -12.543143141199259,
+            "y": 0.82,
+            "yaw": -22.818482180450868
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 404,
+          "species": "flamingo",
+          "at": {
+            "x": 2.546024055814871,
+            "z": -14.068057608858586,
+            "y": 0.7,
+            "yaw": -24.39111878911064
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 405,
+          "species": "flamingo",
+          "at": {
+            "x": 2.7615338887756105,
+            "z": -16.999999912730075,
+            "y": 0.7,
+            "yaw": 2.140002268748238
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 406,
+          "species": "flamingo",
+          "at": {
+            "x": 4.140748166823575,
+            "z": -17,
+            "y": 0.7,
+            "yaw": -3.066592653589793
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 407,
+          "species": "flamingo",
+          "at": {
+            "x": 5.440748166823574,
+            "z": -17,
+            "y": 0.7,
+            "yaw": -3.066592653589793
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 408,
+          "species": "flamingo",
+          "at": {
+            "x": 6.7407481668235745,
+            "z": -17,
+            "y": 0.7,
+            "yaw": -3.066592653589793
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 409,
+          "species": "zebra",
+          "at": {
+            "x": 47.72513187103203,
+            "z": 14.020914644243726,
+            "y": 0.7,
+            "yaw": -4.600837732343775
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 410,
+          "species": "zebra",
+          "at": {
+            "x": 49.172497008892734,
+            "z": 14.000001012976158,
+            "y": 0.7,
+            "yaw": -34.48251981948337
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 411,
+          "species": "monkey",
+          "at": {
+            "x": -16.294698770229758,
+            "z": 26.264527809757496,
+            "y": 0.7,
+            "yaw": -0.44684357529050284
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 412,
+          "species": "monkey",
+          "at": {
+            "x": -15.885940059566304,
+            "z": 25.703029550254826,
+            "y": 0.7,
+            "yaw": -9.77383982394355
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 413,
+          "species": "monkey",
+          "at": {
+            "x": -15.36938064523529,
+            "z": 27.035572597429397,
+            "y": 1.2462499999999999,
+            "yaw": 9.426914641234514
+          },
+          "healthy": true,
+          "activity": "climb"
+        },
+        {
+          "id": 414,
+          "species": "monkey",
+          "at": {
+            "x": -15.292601269798007,
+            "z": 25.86288328926908,
+            "y": 0.7,
+            "yaw": 7.6722022942227515
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 415,
+          "species": "monkey",
+          "at": {
+            "x": -11.774758811531076,
+            "z": 28.786700019004698,
+            "y": 0.7,
+            "yaw": 56.94134612106685
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 416,
+          "species": "monkey",
+          "at": {
+            "x": -11.794367936327728,
+            "z": 27.704717338741883,
+            "y": 0.7,
+            "yaw": 51.44101051157959
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 417,
+          "species": "monkey",
+          "at": {
+            "x": -16.092101923030125,
+            "z": 23.969864883270848,
+            "y": 0.7,
+            "yaw": 11.235754018334877
+          },
+          "healthy": true,
+          "activity": "groom"
+        },
+        {
+          "id": 418,
+          "species": "lioness",
+          "at": {
+            "x": -42.15925183317644,
+            "z": -14,
+            "y": 0.7,
+            "yaw": -3.066592653589793
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        }
+      ],
+      "resources": [],
+      "requestedResources": [
+        "http://127.0.0.1:50822/assets/models/skinned/amb.monkey.lod2.low.glb",
+        "http://127.0.0.1:50822/assets/civilians/amb.monkey.lod2.infected.9eff9c93a7b6de20.bin.gz",
+        "http://127.0.0.1:50822/assets/civilians/amb.monkey.lod1.infected.c40d0bf899b724e7.bin.gz",
+        "http://127.0.0.1:50822/assets/models/skinned/amb.monkey.lod1.low.glb",
+        "http://127.0.0.1:50822/assets/civilians/inf.monkey.lod1.infected.8b85f14fe62a464f.bin.gz",
+        "http://127.0.0.1:50822/assets/models/skinned/inf.monkey.lod1.low.glb",
+        "http://127.0.0.1:50822/assets/models/skinned/inf.monkey.lod2.low.glb",
+        "http://127.0.0.1:50822/assets/civilians/inf.monkey.lod2.infected.6f6eee36bcdfa17f.bin.gz"
+      ],
+      "errors": []
+    },
+    {
+      "file": "low-primate-yard-z1.png",
+      "subject": "primate-yard",
+      "zoom": 1,
+      "tick": 3211,
+      "player": {
+        "x": -8.5,
+        "y": 0.72,
+        "z": 25.95,
+        "yaw": -6.308621644897432
+      },
+      "quality": "low",
+      "backend": "webgl",
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          2
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          -8.5,
+          0,
+          25.95
+        ],
+        "target": [
+          -15.2,
+          0.3,
+          26
+        ],
+        "position": [
+          -4.330833346463997,
+          11.467919793556991,
+          36.869166653536
+        ],
+        "spot": null
+      },
+      "perf": {
+        "drawCalls": 95,
+        "triangles": 125894,
+        "lighting": {
+          "lightFieldMs": 0.09999999403953552,
+          "lightPools": 11,
+          "lightCandidates": 11,
+          "shadowMaps": 1,
+          "heroLights": 1,
+          "heroShadow": 1,
+          "preset": "L8-zoo"
+        }
+      },
+      "breached": false,
+      "animals": [
+        {
+          "id": 397,
+          "species": "lion",
+          "at": {
+            "x": -45.26997805988496,
+            "z": -13.166260087322286,
+            "y": 0.7,
+            "yaw": 107.44442480340797
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 398,
+          "species": "gorilla",
+          "at": {
+            "x": 44.664552494320425,
+            "z": -13.219851602539983,
+            "y": 0.7,
+            "yaw": 78.84573295883112
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 399,
+          "species": "elephant",
+          "at": {
+            "x": -45.20644818201481,
+            "z": 13.699267993783966,
+            "y": 0.7,
+            "yaw": 82.54376950528103
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 400,
+          "species": "zebra",
+          "at": {
+            "x": 44.661325739809506,
+            "z": 13.277028306535865,
+            "y": 0.7,
+            "yaw": 82.9834416830829
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 401,
+          "species": "zebra",
+          "at": {
+            "x": 46.67114197753168,
+            "z": 13.28262076208012,
+            "y": 0.7,
+            "yaw": -34.127173302758614
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 402,
+          "species": "flamingo",
+          "at": {
+            "x": 1.4436323117149343,
+            "z": -16.952507803361552,
+            "y": 0.7,
+            "yaw": -27.445516818198282
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 403,
+          "species": "flamingo",
+          "at": {
+            "x": 1.9395207386937452,
+            "z": -12.543143141199259,
+            "y": 0.82,
+            "yaw": -22.818482180450868
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 404,
+          "species": "flamingo",
+          "at": {
+            "x": 2.546024055814871,
+            "z": -14.068057608858586,
+            "y": 0.7,
+            "yaw": -24.39111878911064
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 405,
+          "species": "flamingo",
+          "at": {
+            "x": 2.7615338887756105,
+            "z": -16.999999912730075,
+            "y": 0.7,
+            "yaw": 2.140002268748238
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 406,
+          "species": "flamingo",
+          "at": {
+            "x": 4.140748166823575,
+            "z": -17,
+            "y": 0.7,
+            "yaw": -3.066592653589793
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 407,
+          "species": "flamingo",
+          "at": {
+            "x": 5.440748166823574,
+            "z": -17,
+            "y": 0.7,
+            "yaw": -3.066592653589793
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 408,
+          "species": "flamingo",
+          "at": {
+            "x": 6.7407481668235745,
+            "z": -17,
+            "y": 0.7,
+            "yaw": -3.066592653589793
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 409,
+          "species": "zebra",
+          "at": {
+            "x": 47.72513187103203,
+            "z": 14.020914644243726,
+            "y": 0.7,
+            "yaw": -4.600837732343775
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 410,
+          "species": "zebra",
+          "at": {
+            "x": 49.172497008892734,
+            "z": 14.000001012976158,
+            "y": 0.7,
+            "yaw": -34.48251981948337
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 411,
+          "species": "monkey",
+          "at": {
+            "x": -16.294698770229758,
+            "z": 26.264527809757496,
+            "y": 0.7,
+            "yaw": -0.44684357529050284
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 412,
+          "species": "monkey",
+          "at": {
+            "x": -15.885940059566304,
+            "z": 25.703029550254826,
+            "y": 0.7,
+            "yaw": -9.77383982394355
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 413,
+          "species": "monkey",
+          "at": {
+            "x": -15.36938064523529,
+            "z": 27.035572597429397,
+            "y": 1.2462499999999999,
+            "yaw": 9.426914641234514
+          },
+          "healthy": true,
+          "activity": "climb"
+        },
+        {
+          "id": 414,
+          "species": "monkey",
+          "at": {
+            "x": -15.292601269798007,
+            "z": 25.86288328926908,
+            "y": 0.7,
+            "yaw": 7.6722022942227515
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 415,
+          "species": "monkey",
+          "at": {
+            "x": -11.774758811531076,
+            "z": 28.786700019004698,
+            "y": 0.7,
+            "yaw": 56.94134612106685
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 416,
+          "species": "monkey",
+          "at": {
+            "x": -11.794367936327728,
+            "z": 27.704717338741883,
+            "y": 0.7,
+            "yaw": 51.44101051157959
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 417,
+          "species": "monkey",
+          "at": {
+            "x": -16.092101923030125,
+            "z": 23.969864883270848,
+            "y": 0.7,
+            "yaw": 11.235754018334877
+          },
+          "healthy": true,
+          "activity": "groom"
+        },
+        {
+          "id": 418,
+          "species": "lioness",
+          "at": {
+            "x": -42.15925183317644,
+            "z": -14,
+            "y": 0.7,
+            "yaw": -3.066592653589793
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        }
+      ],
+      "resources": [],
+      "requestedResources": [
+        "http://127.0.0.1:50822/assets/models/skinned/amb.monkey.lod2.low.glb",
+        "http://127.0.0.1:50822/assets/civilians/amb.monkey.lod2.infected.9eff9c93a7b6de20.bin.gz",
+        "http://127.0.0.1:50822/assets/civilians/amb.monkey.lod1.infected.c40d0bf899b724e7.bin.gz",
+        "http://127.0.0.1:50822/assets/models/skinned/amb.monkey.lod1.low.glb",
+        "http://127.0.0.1:50822/assets/civilians/inf.monkey.lod1.infected.8b85f14fe62a464f.bin.gz",
+        "http://127.0.0.1:50822/assets/models/skinned/inf.monkey.lod1.low.glb",
+        "http://127.0.0.1:50822/assets/models/skinned/inf.monkey.lod2.low.glb",
+        "http://127.0.0.1:50822/assets/civilians/inf.monkey.lod2.infected.6f6eee36bcdfa17f.bin.gz"
+      ],
+      "errors": []
+    },
+    {
+      "file": "low-primate-yard-z1.5.png",
+      "subject": "primate-yard",
+      "zoom": 1.5,
+      "tick": 3211,
+      "player": {
+        "x": -8.5,
+        "y": 0.72,
+        "z": 25.95,
+        "yaw": -6.308621644897432
+      },
+      "quality": "low",
+      "backend": "webgl",
+      "camera": {
+        "zoom": 1.5,
+        "targetZoom": 1.5,
+        "zoomLimits": [
+          0.5,
+          2
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 28.5,
+        "regionScale": 1,
+        "focus": [
+          -8.5,
+          0,
+          25.95
+        ],
+        "target": [
+          -15.2,
+          0.3,
+          26
+        ],
+        "position": [
+          1.103749980304002,
+          17.051879690335486,
+          42.303749980304005
+        ],
+        "spot": null
+      },
+      "perf": {
+        "drawCalls": 99,
+        "triangles": 118836,
+        "lighting": {
+          "lightFieldMs": 0,
+          "lightPools": 11,
+          "lightCandidates": 11,
+          "shadowMaps": 1,
+          "heroLights": 1,
+          "heroShadow": 1,
+          "preset": "L8-zoo"
+        }
+      },
+      "breached": false,
+      "animals": [
+        {
+          "id": 397,
+          "species": "lion",
+          "at": {
+            "x": -45.26997805988496,
+            "z": -13.166260087322286,
+            "y": 0.7,
+            "yaw": 107.44442480340797
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 398,
+          "species": "gorilla",
+          "at": {
+            "x": 44.664552494320425,
+            "z": -13.219851602539983,
+            "y": 0.7,
+            "yaw": 78.84573295883112
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 399,
+          "species": "elephant",
+          "at": {
+            "x": -45.20644818201481,
+            "z": 13.699267993783966,
+            "y": 0.7,
+            "yaw": 82.54376950528103
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 400,
+          "species": "zebra",
+          "at": {
+            "x": 44.661325739809506,
+            "z": 13.277028306535865,
+            "y": 0.7,
+            "yaw": 82.9834416830829
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 401,
+          "species": "zebra",
+          "at": {
+            "x": 46.67114197753168,
+            "z": 13.28262076208012,
+            "y": 0.7,
+            "yaw": -34.127173302758614
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 402,
+          "species": "flamingo",
+          "at": {
+            "x": 1.4436323117149343,
+            "z": -16.952507803361552,
+            "y": 0.7,
+            "yaw": -27.445516818198282
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 403,
+          "species": "flamingo",
+          "at": {
+            "x": 1.9395207386937452,
+            "z": -12.543143141199259,
+            "y": 0.82,
+            "yaw": -22.818482180450868
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 404,
+          "species": "flamingo",
+          "at": {
+            "x": 2.546024055814871,
+            "z": -14.068057608858586,
+            "y": 0.7,
+            "yaw": -24.39111878911064
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 405,
+          "species": "flamingo",
+          "at": {
+            "x": 2.7615338887756105,
+            "z": -16.999999912730075,
+            "y": 0.7,
+            "yaw": 2.140002268748238
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 406,
+          "species": "flamingo",
+          "at": {
+            "x": 4.140748166823575,
+            "z": -17,
+            "y": 0.7,
+            "yaw": -3.066592653589793
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 407,
+          "species": "flamingo",
+          "at": {
+            "x": 5.440748166823574,
+            "z": -17,
+            "y": 0.7,
+            "yaw": -3.066592653589793
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 408,
+          "species": "flamingo",
+          "at": {
+            "x": 6.7407481668235745,
+            "z": -17,
+            "y": 0.7,
+            "yaw": -3.066592653589793
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 409,
+          "species": "zebra",
+          "at": {
+            "x": 47.72513187103203,
+            "z": 14.020914644243726,
+            "y": 0.7,
+            "yaw": -4.600837732343775
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 410,
+          "species": "zebra",
+          "at": {
+            "x": 49.172497008892734,
+            "z": 14.000001012976158,
+            "y": 0.7,
+            "yaw": -34.48251981948337
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 411,
+          "species": "monkey",
+          "at": {
+            "x": -16.294698770229758,
+            "z": 26.264527809757496,
+            "y": 0.7,
+            "yaw": -0.44684357529050284
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 412,
+          "species": "monkey",
+          "at": {
+            "x": -15.885940059566304,
+            "z": 25.703029550254826,
+            "y": 0.7,
+            "yaw": -9.77383982394355
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 413,
+          "species": "monkey",
+          "at": {
+            "x": -15.36938064523529,
+            "z": 27.035572597429397,
+            "y": 1.2462499999999999,
+            "yaw": 9.426914641234514
+          },
+          "healthy": true,
+          "activity": "climb"
+        },
+        {
+          "id": 414,
+          "species": "monkey",
+          "at": {
+            "x": -15.292601269798007,
+            "z": 25.86288328926908,
+            "y": 0.7,
+            "yaw": 7.6722022942227515
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 415,
+          "species": "monkey",
+          "at": {
+            "x": -11.774758811531076,
+            "z": 28.786700019004698,
+            "y": 0.7,
+            "yaw": 56.94134612106685
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 416,
+          "species": "monkey",
+          "at": {
+            "x": -11.794367936327728,
+            "z": 27.704717338741883,
+            "y": 0.7,
+            "yaw": 51.44101051157959
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 417,
+          "species": "monkey",
+          "at": {
+            "x": -16.092101923030125,
+            "z": 23.969864883270848,
+            "y": 0.7,
+            "yaw": 11.235754018334877
+          },
+          "healthy": true,
+          "activity": "groom"
+        },
+        {
+          "id": 418,
+          "species": "lioness",
+          "at": {
+            "x": -42.15925183317644,
+            "z": -14,
+            "y": 0.7,
+            "yaw": -3.066592653589793
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        }
+      ],
+      "resources": [],
+      "requestedResources": [
+        "http://127.0.0.1:50822/assets/models/skinned/amb.monkey.lod2.low.glb",
+        "http://127.0.0.1:50822/assets/civilians/amb.monkey.lod2.infected.9eff9c93a7b6de20.bin.gz",
+        "http://127.0.0.1:50822/assets/civilians/amb.monkey.lod1.infected.c40d0bf899b724e7.bin.gz",
+        "http://127.0.0.1:50822/assets/models/skinned/amb.monkey.lod1.low.glb",
+        "http://127.0.0.1:50822/assets/civilians/inf.monkey.lod1.infected.8b85f14fe62a464f.bin.gz",
+        "http://127.0.0.1:50822/assets/models/skinned/inf.monkey.lod1.low.glb",
+        "http://127.0.0.1:50822/assets/models/skinned/inf.monkey.lod2.low.glb",
+        "http://127.0.0.1:50822/assets/civilians/inf.monkey.lod2.infected.6f6eee36bcdfa17f.bin.gz"
+      ],
+      "errors": []
+    },
+    {
+      "file": "high-tour-z1.png",
+      "subject": "tour",
+      "zoom": 1,
+      "tick": 3211,
+      "player": {
+        "x": -22.783226013183594,
+        "y": 0.84,
+        "z": -0.5753380656242371,
+        "yaw": -6.308621644897432
+      },
+      "quality": "high",
+      "backend": "webgl",
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          2
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          -22.783226013183594,
+          0.12,
+          -0.5753380656242371
+        ],
+        "target": [
+          -22.783226013183594,
+          0.12,
+          -0.5753380656242371
+        ],
+        "position": [
+          -11.914059359647592,
+          11.28791979355699,
+          10.293828587911767
+        ],
+        "spot": null
+      },
+      "perf": {
+        "drawCalls": 138,
+        "triangles": 198578,
+        "lighting": {
+          "lightFieldMs": 0.09999999403953552,
+          "lightPools": 12,
+          "lightCandidates": 12,
+          "shadowMaps": 1,
+          "heroLights": 1,
+          "heroShadow": 1,
+          "preset": "L8-zoo"
+        }
+      },
+      "breached": false,
+      "animals": [
+        {
+          "id": 397,
+          "species": "lion",
+          "at": {
+            "x": -45.26997805988496,
+            "z": -13.166260087322286,
+            "y": 0.7,
+            "yaw": 107.44442480340797
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 398,
+          "species": "gorilla",
+          "at": {
+            "x": 44.664552494320425,
+            "z": -13.219851602539983,
+            "y": 0.7,
+            "yaw": 78.84573295883112
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 399,
+          "species": "elephant",
+          "at": {
+            "x": -45.20644818201481,
+            "z": 13.699267993783966,
+            "y": 0.7,
+            "yaw": 82.54376950528103
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 400,
+          "species": "zebra",
+          "at": {
+            "x": 44.661325739809506,
+            "z": 13.277028306535865,
+            "y": 0.7,
+            "yaw": 82.9834416830829
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 401,
+          "species": "zebra",
+          "at": {
+            "x": 46.67114197753168,
+            "z": 13.28262076208012,
+            "y": 0.7,
+            "yaw": -34.127173302758614
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 402,
+          "species": "flamingo",
+          "at": {
+            "x": 1.4436323117149343,
+            "z": -16.952507803361552,
+            "y": 0.7,
+            "yaw": -27.445516818198282
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 403,
+          "species": "flamingo",
+          "at": {
+            "x": 1.9395207386937452,
+            "z": -12.543143141199259,
+            "y": 0.82,
+            "yaw": -22.818482180450868
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 404,
+          "species": "flamingo",
+          "at": {
+            "x": 2.546024055814871,
+            "z": -14.068057608858586,
+            "y": 0.7,
+            "yaw": -24.39111878911064
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 405,
+          "species": "flamingo",
+          "at": {
+            "x": 2.7615338887756105,
+            "z": -16.999999912730075,
+            "y": 0.7,
+            "yaw": 2.140002268748238
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 406,
+          "species": "flamingo",
+          "at": {
+            "x": 4.140748166823575,
+            "z": -17,
+            "y": 0.7,
+            "yaw": -3.066592653589793
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 407,
+          "species": "flamingo",
+          "at": {
+            "x": 5.440748166823574,
+            "z": -17,
+            "y": 0.7,
+            "yaw": -3.066592653589793
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 408,
+          "species": "flamingo",
+          "at": {
+            "x": 6.7407481668235745,
+            "z": -17,
+            "y": 0.7,
+            "yaw": -3.066592653589793
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 409,
+          "species": "zebra",
+          "at": {
+            "x": 47.72513187103203,
+            "z": 14.020914644243726,
+            "y": 0.7,
+            "yaw": -4.600837732343775
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 410,
+          "species": "zebra",
+          "at": {
+            "x": 49.172497008892734,
+            "z": 14.000001012976158,
+            "y": 0.7,
+            "yaw": -34.48251981948337
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 411,
+          "species": "monkey",
+          "at": {
+            "x": -16.294698770229758,
+            "z": 26.264527809757496,
+            "y": 0.7,
+            "yaw": -0.44684357529050284
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 412,
+          "species": "monkey",
+          "at": {
+            "x": -15.885940059566304,
+            "z": 25.703029550254826,
+            "y": 0.7,
+            "yaw": -9.77383982394355
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 413,
+          "species": "monkey",
+          "at": {
+            "x": -15.36938064523529,
+            "z": 27.035572597429397,
+            "y": 1.2462499999999999,
+            "yaw": 9.426914641234514
+          },
+          "healthy": true,
+          "activity": "climb"
+        },
+        {
+          "id": 414,
+          "species": "monkey",
+          "at": {
+            "x": -15.292601269798007,
+            "z": 25.86288328926908,
+            "y": 0.7,
+            "yaw": 7.6722022942227515
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 415,
+          "species": "monkey",
+          "at": {
+            "x": -11.774758811531076,
+            "z": 28.786700019004698,
+            "y": 0.7,
+            "yaw": 56.94134612106685
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 416,
+          "species": "monkey",
+          "at": {
+            "x": -11.794367936327728,
+            "z": 27.704717338741883,
+            "y": 0.7,
+            "yaw": 51.44101051157959
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 417,
+          "species": "monkey",
+          "at": {
+            "x": -16.092101923030125,
+            "z": 23.969864883270848,
+            "y": 0.7,
+            "yaw": 11.235754018334877
+          },
+          "healthy": true,
+          "activity": "groom"
+        },
+        {
+          "id": 418,
+          "species": "lioness",
+          "at": {
+            "x": -42.15925183317644,
+            "z": -14,
+            "y": 0.7,
+            "yaw": -3.066592653589793
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        }
+      ],
+      "resources": [],
+      "requestedResources": [
+        "http://127.0.0.1:50822/assets/civilians/amb.monkey.lod2.infected.9eff9c93a7b6de20.bin.gz",
+        "http://127.0.0.1:50822/assets/models/skinned/amb.monkey.lod2.glb",
+        "http://127.0.0.1:50822/assets/models/skinned/amb.monkey.lod0.glb",
+        "http://127.0.0.1:50822/assets/models/skinned/amb.monkey.lod1.glb",
+        "http://127.0.0.1:50822/assets/civilians/amb.monkey.lod0.infected.655aed56fad7a52a.bin.gz",
+        "http://127.0.0.1:50822/assets/civilians/amb.monkey.lod1.infected.c40d0bf899b724e7.bin.gz",
+        "http://127.0.0.1:50822/assets/civilians/inf.monkey.lod0.infected.9cc789ab78a95505.bin.gz",
+        "http://127.0.0.1:50822/assets/models/skinned/inf.monkey.lod0.glb",
+        "http://127.0.0.1:50822/assets/models/skinned/inf.monkey.lod1.glb",
+        "http://127.0.0.1:50822/assets/models/skinned/inf.monkey.lod2.glb",
+        "http://127.0.0.1:50822/assets/civilians/inf.monkey.lod1.infected.8b85f14fe62a464f.bin.gz",
+        "http://127.0.0.1:50822/assets/civilians/inf.monkey.lod2.infected.6f6eee36bcdfa17f.bin.gz"
+      ],
+      "errors": []
+    },
+    {
+      "file": "high-tour-z1.5.png",
+      "subject": "tour",
+      "zoom": 1.5,
+      "tick": 3211,
+      "player": {
+        "x": -22.783226013183594,
+        "y": 0.84,
+        "z": -0.5753380656242371,
+        "yaw": -6.308621644897432
+      },
+      "quality": "high",
+      "backend": "webgl",
+      "camera": {
+        "zoom": 1.5,
+        "targetZoom": 1.5,
+        "zoomLimits": [
+          0.5,
+          2
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 28.5,
+        "regionScale": 1,
+        "focus": [
+          -22.783226013183594,
+          0.12,
+          -0.5753380656242371
+        ],
+        "target": [
+          -22.783226013183594,
+          0.12,
+          -0.5753380656242371
+        ],
+        "position": [
+          -6.479476032879592,
+          16.871879690335486,
+          15.728411914679768
+        ],
+        "spot": null
+      },
+      "perf": {
+        "drawCalls": 139,
+        "triangles": 178355,
+        "lighting": {
+          "lightFieldMs": 0,
+          "lightPools": 12,
+          "lightCandidates": 12,
+          "shadowMaps": 1,
+          "heroLights": 1,
+          "heroShadow": 1,
+          "preset": "L8-zoo"
+        }
+      },
+      "breached": false,
+      "animals": [
+        {
+          "id": 397,
+          "species": "lion",
+          "at": {
+            "x": -45.26997805988496,
+            "z": -13.166260087322286,
+            "y": 0.7,
+            "yaw": 107.44442480340797
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 398,
+          "species": "gorilla",
+          "at": {
+            "x": 44.664552494320425,
+            "z": -13.219851602539983,
+            "y": 0.7,
+            "yaw": 78.84573295883112
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 399,
+          "species": "elephant",
+          "at": {
+            "x": -45.20644818201481,
+            "z": 13.699267993783966,
+            "y": 0.7,
+            "yaw": 82.54376950528103
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 400,
+          "species": "zebra",
+          "at": {
+            "x": 44.661325739809506,
+            "z": 13.277028306535865,
+            "y": 0.7,
+            "yaw": 82.9834416830829
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 401,
+          "species": "zebra",
+          "at": {
+            "x": 46.67114197753168,
+            "z": 13.28262076208012,
+            "y": 0.7,
+            "yaw": -34.127173302758614
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 402,
+          "species": "flamingo",
+          "at": {
+            "x": 1.4436323117149343,
+            "z": -16.952507803361552,
+            "y": 0.7,
+            "yaw": -27.445516818198282
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 403,
+          "species": "flamingo",
+          "at": {
+            "x": 1.9395207386937452,
+            "z": -12.543143141199259,
+            "y": 0.82,
+            "yaw": -22.818482180450868
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 404,
+          "species": "flamingo",
+          "at": {
+            "x": 2.546024055814871,
+            "z": -14.068057608858586,
+            "y": 0.7,
+            "yaw": -24.39111878911064
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 405,
+          "species": "flamingo",
+          "at": {
+            "x": 2.7615338887756105,
+            "z": -16.999999912730075,
+            "y": 0.7,
+            "yaw": 2.140002268748238
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 406,
+          "species": "flamingo",
+          "at": {
+            "x": 4.140748166823575,
+            "z": -17,
+            "y": 0.7,
+            "yaw": -3.066592653589793
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 407,
+          "species": "flamingo",
+          "at": {
+            "x": 5.440748166823574,
+            "z": -17,
+            "y": 0.7,
+            "yaw": -3.066592653589793
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 408,
+          "species": "flamingo",
+          "at": {
+            "x": 6.7407481668235745,
+            "z": -17,
+            "y": 0.7,
+            "yaw": -3.066592653589793
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 409,
+          "species": "zebra",
+          "at": {
+            "x": 47.72513187103203,
+            "z": 14.020914644243726,
+            "y": 0.7,
+            "yaw": -4.600837732343775
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 410,
+          "species": "zebra",
+          "at": {
+            "x": 49.172497008892734,
+            "z": 14.000001012976158,
+            "y": 0.7,
+            "yaw": -34.48251981948337
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 411,
+          "species": "monkey",
+          "at": {
+            "x": -16.294698770229758,
+            "z": 26.264527809757496,
+            "y": 0.7,
+            "yaw": -0.44684357529050284
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 412,
+          "species": "monkey",
+          "at": {
+            "x": -15.885940059566304,
+            "z": 25.703029550254826,
+            "y": 0.7,
+            "yaw": -9.77383982394355
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 413,
+          "species": "monkey",
+          "at": {
+            "x": -15.36938064523529,
+            "z": 27.035572597429397,
+            "y": 1.2462499999999999,
+            "yaw": 9.426914641234514
+          },
+          "healthy": true,
+          "activity": "climb"
+        },
+        {
+          "id": 414,
+          "species": "monkey",
+          "at": {
+            "x": -15.292601269798007,
+            "z": 25.86288328926908,
+            "y": 0.7,
+            "yaw": 7.6722022942227515
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 415,
+          "species": "monkey",
+          "at": {
+            "x": -11.774758811531076,
+            "z": 28.786700019004698,
+            "y": 0.7,
+            "yaw": 56.94134612106685
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 416,
+          "species": "monkey",
+          "at": {
+            "x": -11.794367936327728,
+            "z": 27.704717338741883,
+            "y": 0.7,
+            "yaw": 51.44101051157959
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 417,
+          "species": "monkey",
+          "at": {
+            "x": -16.092101923030125,
+            "z": 23.969864883270848,
+            "y": 0.7,
+            "yaw": 11.235754018334877
+          },
+          "healthy": true,
+          "activity": "groom"
+        },
+        {
+          "id": 418,
+          "species": "lioness",
+          "at": {
+            "x": -42.15925183317644,
+            "z": -14,
+            "y": 0.7,
+            "yaw": -3.066592653589793
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        }
+      ],
+      "resources": [],
+      "requestedResources": [
+        "http://127.0.0.1:50822/assets/civilians/amb.monkey.lod2.infected.9eff9c93a7b6de20.bin.gz",
+        "http://127.0.0.1:50822/assets/models/skinned/amb.monkey.lod2.glb",
+        "http://127.0.0.1:50822/assets/models/skinned/amb.monkey.lod0.glb",
+        "http://127.0.0.1:50822/assets/models/skinned/amb.monkey.lod1.glb",
+        "http://127.0.0.1:50822/assets/civilians/amb.monkey.lod0.infected.655aed56fad7a52a.bin.gz",
+        "http://127.0.0.1:50822/assets/civilians/amb.monkey.lod1.infected.c40d0bf899b724e7.bin.gz",
+        "http://127.0.0.1:50822/assets/civilians/inf.monkey.lod0.infected.9cc789ab78a95505.bin.gz",
+        "http://127.0.0.1:50822/assets/models/skinned/inf.monkey.lod0.glb",
+        "http://127.0.0.1:50822/assets/models/skinned/inf.monkey.lod1.glb",
+        "http://127.0.0.1:50822/assets/models/skinned/inf.monkey.lod2.glb",
+        "http://127.0.0.1:50822/assets/civilians/inf.monkey.lod1.infected.8b85f14fe62a464f.bin.gz",
+        "http://127.0.0.1:50822/assets/civilians/inf.monkey.lod2.infected.6f6eee36bcdfa17f.bin.gz"
+      ],
+      "errors": []
+    },
+    {
+      "file": "high-primate-yard-z1.png",
+      "subject": "primate-yard",
+      "zoom": 1,
+      "tick": 3211,
+      "player": {
+        "x": -8.5,
+        "y": 0.72,
+        "z": 25.95,
+        "yaw": -6.308621644897432
+      },
+      "quality": "high",
+      "backend": "webgl",
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          2
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          -8.5,
+          0,
+          25.95
+        ],
+        "target": [
+          -15.2,
+          0.3,
+          26
+        ],
+        "position": [
+          -4.330833346463997,
+          11.467919793556991,
+          36.869166653536
+        ],
+        "spot": null
+      },
+      "perf": {
+        "drawCalls": 113,
+        "triangles": 166473,
+        "lighting": {
+          "lightFieldMs": 0.09999999403953552,
+          "lightPools": 17,
+          "lightCandidates": 17,
+          "shadowMaps": 1,
+          "heroLights": 1,
+          "heroShadow": 1,
+          "preset": "L8-zoo"
+        }
+      },
+      "breached": false,
+      "animals": [
+        {
+          "id": 397,
+          "species": "lion",
+          "at": {
+            "x": -45.26997805988496,
+            "z": -13.166260087322286,
+            "y": 0.7,
+            "yaw": 107.44442480340797
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 398,
+          "species": "gorilla",
+          "at": {
+            "x": 44.664552494320425,
+            "z": -13.219851602539983,
+            "y": 0.7,
+            "yaw": 78.84573295883112
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 399,
+          "species": "elephant",
+          "at": {
+            "x": -45.20644818201481,
+            "z": 13.699267993783966,
+            "y": 0.7,
+            "yaw": 82.54376950528103
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 400,
+          "species": "zebra",
+          "at": {
+            "x": 44.661325739809506,
+            "z": 13.277028306535865,
+            "y": 0.7,
+            "yaw": 82.9834416830829
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 401,
+          "species": "zebra",
+          "at": {
+            "x": 46.67114197753168,
+            "z": 13.28262076208012,
+            "y": 0.7,
+            "yaw": -34.127173302758614
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 402,
+          "species": "flamingo",
+          "at": {
+            "x": 1.4436323117149343,
+            "z": -16.952507803361552,
+            "y": 0.7,
+            "yaw": -27.445516818198282
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 403,
+          "species": "flamingo",
+          "at": {
+            "x": 1.9395207386937452,
+            "z": -12.543143141199259,
+            "y": 0.82,
+            "yaw": -22.818482180450868
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 404,
+          "species": "flamingo",
+          "at": {
+            "x": 2.546024055814871,
+            "z": -14.068057608858586,
+            "y": 0.7,
+            "yaw": -24.39111878911064
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 405,
+          "species": "flamingo",
+          "at": {
+            "x": 2.7615338887756105,
+            "z": -16.999999912730075,
+            "y": 0.7,
+            "yaw": 2.140002268748238
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 406,
+          "species": "flamingo",
+          "at": {
+            "x": 4.140748166823575,
+            "z": -17,
+            "y": 0.7,
+            "yaw": -3.066592653589793
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 407,
+          "species": "flamingo",
+          "at": {
+            "x": 5.440748166823574,
+            "z": -17,
+            "y": 0.7,
+            "yaw": -3.066592653589793
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 408,
+          "species": "flamingo",
+          "at": {
+            "x": 6.7407481668235745,
+            "z": -17,
+            "y": 0.7,
+            "yaw": -3.066592653589793
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 409,
+          "species": "zebra",
+          "at": {
+            "x": 47.72513187103203,
+            "z": 14.020914644243726,
+            "y": 0.7,
+            "yaw": -4.600837732343775
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 410,
+          "species": "zebra",
+          "at": {
+            "x": 49.172497008892734,
+            "z": 14.000001012976158,
+            "y": 0.7,
+            "yaw": -34.48251981948337
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 411,
+          "species": "monkey",
+          "at": {
+            "x": -16.294698770229758,
+            "z": 26.264527809757496,
+            "y": 0.7,
+            "yaw": -0.44684357529050284
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 412,
+          "species": "monkey",
+          "at": {
+            "x": -15.885940059566304,
+            "z": 25.703029550254826,
+            "y": 0.7,
+            "yaw": -9.77383982394355
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 413,
+          "species": "monkey",
+          "at": {
+            "x": -15.36938064523529,
+            "z": 27.035572597429397,
+            "y": 1.2462499999999999,
+            "yaw": 9.426914641234514
+          },
+          "healthy": true,
+          "activity": "climb"
+        },
+        {
+          "id": 414,
+          "species": "monkey",
+          "at": {
+            "x": -15.292601269798007,
+            "z": 25.86288328926908,
+            "y": 0.7,
+            "yaw": 7.6722022942227515
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 415,
+          "species": "monkey",
+          "at": {
+            "x": -11.774758811531076,
+            "z": 28.786700019004698,
+            "y": 0.7,
+            "yaw": 56.94134612106685
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 416,
+          "species": "monkey",
+          "at": {
+            "x": -11.794367936327728,
+            "z": 27.704717338741883,
+            "y": 0.7,
+            "yaw": 51.44101051157959
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 417,
+          "species": "monkey",
+          "at": {
+            "x": -16.092101923030125,
+            "z": 23.969864883270848,
+            "y": 0.7,
+            "yaw": 11.235754018334877
+          },
+          "healthy": true,
+          "activity": "groom"
+        },
+        {
+          "id": 418,
+          "species": "lioness",
+          "at": {
+            "x": -42.15925183317644,
+            "z": -14,
+            "y": 0.7,
+            "yaw": -3.066592653589793
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        }
+      ],
+      "resources": [],
+      "requestedResources": [
+        "http://127.0.0.1:50822/assets/civilians/amb.monkey.lod2.infected.9eff9c93a7b6de20.bin.gz",
+        "http://127.0.0.1:50822/assets/models/skinned/amb.monkey.lod2.glb",
+        "http://127.0.0.1:50822/assets/models/skinned/amb.monkey.lod0.glb",
+        "http://127.0.0.1:50822/assets/models/skinned/amb.monkey.lod1.glb",
+        "http://127.0.0.1:50822/assets/civilians/amb.monkey.lod0.infected.655aed56fad7a52a.bin.gz",
+        "http://127.0.0.1:50822/assets/civilians/amb.monkey.lod1.infected.c40d0bf899b724e7.bin.gz",
+        "http://127.0.0.1:50822/assets/civilians/inf.monkey.lod0.infected.9cc789ab78a95505.bin.gz",
+        "http://127.0.0.1:50822/assets/models/skinned/inf.monkey.lod0.glb",
+        "http://127.0.0.1:50822/assets/models/skinned/inf.monkey.lod1.glb",
+        "http://127.0.0.1:50822/assets/models/skinned/inf.monkey.lod2.glb",
+        "http://127.0.0.1:50822/assets/civilians/inf.monkey.lod1.infected.8b85f14fe62a464f.bin.gz",
+        "http://127.0.0.1:50822/assets/civilians/inf.monkey.lod2.infected.6f6eee36bcdfa17f.bin.gz"
+      ],
+      "errors": []
+    },
+    {
+      "file": "high-primate-yard-z1.5.png",
+      "subject": "primate-yard",
+      "zoom": 1.5,
+      "tick": 3211,
+      "player": {
+        "x": -8.5,
+        "y": 0.72,
+        "z": 25.95,
+        "yaw": -6.308621644897432
+      },
+      "quality": "high",
+      "backend": "webgl",
+      "camera": {
+        "zoom": 1.5,
+        "targetZoom": 1.5,
+        "zoomLimits": [
+          0.5,
+          2
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 28.5,
+        "regionScale": 1,
+        "focus": [
+          -8.5,
+          0,
+          25.95
+        ],
+        "target": [
+          -15.2,
+          0.3,
+          26
+        ],
+        "position": [
+          1.103749980304002,
+          17.051879690335486,
+          42.303749980304005
+        ],
+        "spot": null
+      },
+      "perf": {
+        "drawCalls": 121,
+        "triangles": 164115,
+        "lighting": {
+          "lightFieldMs": 0.20000000298023224,
+          "lightPools": 17,
+          "lightCandidates": 17,
+          "shadowMaps": 1,
+          "heroLights": 1,
+          "heroShadow": 1,
+          "preset": "L8-zoo"
+        }
+      },
+      "breached": false,
+      "animals": [
+        {
+          "id": 397,
+          "species": "lion",
+          "at": {
+            "x": -45.26997805988496,
+            "z": -13.166260087322286,
+            "y": 0.7,
+            "yaw": 107.44442480340797
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 398,
+          "species": "gorilla",
+          "at": {
+            "x": 44.664552494320425,
+            "z": -13.219851602539983,
+            "y": 0.7,
+            "yaw": 78.84573295883112
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 399,
+          "species": "elephant",
+          "at": {
+            "x": -45.20644818201481,
+            "z": 13.699267993783966,
+            "y": 0.7,
+            "yaw": 82.54376950528103
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 400,
+          "species": "zebra",
+          "at": {
+            "x": 44.661325739809506,
+            "z": 13.277028306535865,
+            "y": 0.7,
+            "yaw": 82.9834416830829
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 401,
+          "species": "zebra",
+          "at": {
+            "x": 46.67114197753168,
+            "z": 13.28262076208012,
+            "y": 0.7,
+            "yaw": -34.127173302758614
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 402,
+          "species": "flamingo",
+          "at": {
+            "x": 1.4436323117149343,
+            "z": -16.952507803361552,
+            "y": 0.7,
+            "yaw": -27.445516818198282
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 403,
+          "species": "flamingo",
+          "at": {
+            "x": 1.9395207386937452,
+            "z": -12.543143141199259,
+            "y": 0.82,
+            "yaw": -22.818482180450868
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 404,
+          "species": "flamingo",
+          "at": {
+            "x": 2.546024055814871,
+            "z": -14.068057608858586,
+            "y": 0.7,
+            "yaw": -24.39111878911064
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 405,
+          "species": "flamingo",
+          "at": {
+            "x": 2.7615338887756105,
+            "z": -16.999999912730075,
+            "y": 0.7,
+            "yaw": 2.140002268748238
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 406,
+          "species": "flamingo",
+          "at": {
+            "x": 4.140748166823575,
+            "z": -17,
+            "y": 0.7,
+            "yaw": -3.066592653589793
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 407,
+          "species": "flamingo",
+          "at": {
+            "x": 5.440748166823574,
+            "z": -17,
+            "y": 0.7,
+            "yaw": -3.066592653589793
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 408,
+          "species": "flamingo",
+          "at": {
+            "x": 6.7407481668235745,
+            "z": -17,
+            "y": 0.7,
+            "yaw": -3.066592653589793
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 409,
+          "species": "zebra",
+          "at": {
+            "x": 47.72513187103203,
+            "z": 14.020914644243726,
+            "y": 0.7,
+            "yaw": -4.600837732343775
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 410,
+          "species": "zebra",
+          "at": {
+            "x": 49.172497008892734,
+            "z": 14.000001012976158,
+            "y": 0.7,
+            "yaw": -34.48251981948337
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 411,
+          "species": "monkey",
+          "at": {
+            "x": -16.294698770229758,
+            "z": 26.264527809757496,
+            "y": 0.7,
+            "yaw": -0.44684357529050284
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 412,
+          "species": "monkey",
+          "at": {
+            "x": -15.885940059566304,
+            "z": 25.703029550254826,
+            "y": 0.7,
+            "yaw": -9.77383982394355
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 413,
+          "species": "monkey",
+          "at": {
+            "x": -15.36938064523529,
+            "z": 27.035572597429397,
+            "y": 1.2462499999999999,
+            "yaw": 9.426914641234514
+          },
+          "healthy": true,
+          "activity": "climb"
+        },
+        {
+          "id": 414,
+          "species": "monkey",
+          "at": {
+            "x": -15.292601269798007,
+            "z": 25.86288328926908,
+            "y": 0.7,
+            "yaw": 7.6722022942227515
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 415,
+          "species": "monkey",
+          "at": {
+            "x": -11.774758811531076,
+            "z": 28.786700019004698,
+            "y": 0.7,
+            "yaw": 56.94134612106685
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 416,
+          "species": "monkey",
+          "at": {
+            "x": -11.794367936327728,
+            "z": 27.704717338741883,
+            "y": 0.7,
+            "yaw": 51.44101051157959
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        },
+        {
+          "id": 417,
+          "species": "monkey",
+          "at": {
+            "x": -16.092101923030125,
+            "z": 23.969864883270848,
+            "y": 0.7,
+            "yaw": 11.235754018334877
+          },
+          "healthy": true,
+          "activity": "groom"
+        },
+        {
+          "id": 418,
+          "species": "lioness",
+          "at": {
+            "x": -42.15925183317644,
+            "z": -14,
+            "y": 0.7,
+            "yaw": -3.066592653589793
+          },
+          "healthy": true,
+          "activity": "idle/walk"
+        }
+      ],
+      "resources": [],
+      "requestedResources": [
+        "http://127.0.0.1:50822/assets/civilians/amb.monkey.lod2.infected.9eff9c93a7b6de20.bin.gz",
+        "http://127.0.0.1:50822/assets/models/skinned/amb.monkey.lod2.glb",
+        "http://127.0.0.1:50822/assets/models/skinned/amb.monkey.lod0.glb",
+        "http://127.0.0.1:50822/assets/models/skinned/amb.monkey.lod1.glb",
+        "http://127.0.0.1:50822/assets/civilians/amb.monkey.lod0.infected.655aed56fad7a52a.bin.gz",
+        "http://127.0.0.1:50822/assets/civilians/amb.monkey.lod1.infected.c40d0bf899b724e7.bin.gz",
+        "http://127.0.0.1:50822/assets/civilians/inf.monkey.lod0.infected.9cc789ab78a95505.bin.gz",
+        "http://127.0.0.1:50822/assets/models/skinned/inf.monkey.lod0.glb",
+        "http://127.0.0.1:50822/assets/models/skinned/inf.monkey.lod1.glb",
+        "http://127.0.0.1:50822/assets/models/skinned/inf.monkey.lod2.glb",
+        "http://127.0.0.1:50822/assets/civilians/inf.monkey.lod1.infected.8b85f14fe62a464f.bin.gz",
+        "http://127.0.0.1:50822/assets/civilians/inf.monkey.lod2.infected.6f6eee36bcdfa17f.bin.gz"
+      ],
+      "errors": []
+    }
+  ]
+}

@@ -3,7 +3,7 @@ import { K9Vest } from './characters/K9Vest';
 import { paintedSkinMask } from './characters/paintedSkin';
 import { crowdRegionOf, crowdRegionSkin, crowdRegionTint } from './characters/crowdRegions';
 import { crowdLimbParts } from '../assets/crowdParts';
-import { crowdTexture, interleaveTexturedCrowd, crowdSurfaceBindings } from './characters/crowdTexture';
+import { crowdTexture, crowdTextureForDraw, interleaveTexturedCrowd, crowdSurfaceBindings } from './characters/crowdTexture';
 import { shareDogCoatPalette } from './characters/shareDogCoatPalette';
 import { dogCoats, dogCoat } from '../data/dogAppearance';
 import { isMega } from '../data/megaPresentation';
@@ -171,7 +171,8 @@ export class CrowdView extends Group {
     // Their unused default batch need not delay the level's loading card.
     if (this.world.scenario === 'L4') for (const model of [...l4InfectedArchetypes.filter(id => id !== 'infected.sprinter'), ...l4InfectedLooks, ...l4FirefighterLooks]) l1Roles.add(model);
     // Register the later shielded subway responder in the streamed cast plan.
-    if (this.world.scenario === 'L6') l1Roles.add('infected.riot');
+    if (this.world.scenario === 'L5') l1Roles.add('infected.butcher');
+    if (this.world.scenario === 'L6') for (const role of ['infected.riot', 'infected.armored']) l1Roles.add(role);
     // Ordinary and turned pedestrians keep their CivilianCrowd batches (keepsLook
     // below). Only explicit infected model overrides need this view's NPC assets.
     for (const species of animals) { l1Roles.add(`healthy.${species}`); l1Roles.add(`infected.${species}`); }
@@ -424,7 +425,8 @@ export class CrowdView extends Group {
       if (!baked.clip.binds || !baked.geometry.hasAttribute('_skin')) throw new Error(`${asset} is missing the v2 skinned crowd contract`);
       this.accessories?.registerSkull(asset, baked.geometry);
       const poses = new CrowdPosePalette(baked.clip, capacity), texture = poses.texture;
-      const sharedPose = baked.texture ? poseTexture(texture) : undefined;
+      const zooSurface = this.world.scenario === 'L8' && /^(infected|healthy)\.(lion|gorilla|elephant|zebra|flamingo|monkey|lioness)$/.test(def.id);
+      const sharedPose = baked.texture ? zooSurface ? crowdTextureForDraw(poseTexture(texture), true) : poseTexture(texture) : undefined;
       const instanceData = new InstancedInterleavedBuffer(new Float32Array(capacity * 8), 8, 1).setUsage(StreamDrawUsage);
       const tint = new InterleavedBufferAttribute(instanceData, 4, 4);
       // Pack frame, detached leg, gore mask and flash into one slot: WebGL2 guarantees 16 attributes.
@@ -446,7 +448,6 @@ export class CrowdView extends Group {
       // L10 Alpha looks/LODs use the same shader layout and bind their own atlas
       // per draw. A new hero look must not build this graph during the charge.
       // L8 keeps its existing intermediate-band sharing policy.
-      const zooSurface = this.world.scenario === 'L8' && /^(infected|healthy)\.(lion|gorilla|elephant|zebra|flamingo|monkey|lioness)$/.test(def.id);
       const ordinarySurface = regularInfectedModels.some(model => model === asset);
       const sharedAlpha = (this.world.scenario === 'L8' || this.world.scenario === 'L10') && alpha;
       const sharedSurface = (this.world.scenario === 'L4' || ordinarySurface) && infectedAtlas || zooSurface || sharedAlpha && (this.world.scenario === 'L10' || lod === 'lod1');
@@ -459,7 +460,7 @@ export class CrowdView extends Group {
       if (!material) {
       const paletteColor = textured ? parts.y.equal(-4).or(parts.y.equal(-5)).or(parts.y.lessThanEqual(-10)).select(crowdAppearanceColor(true), attribute('color', 'vec3')) : dogPalette ? variant.x.mod(2).greaterThan(.5).select(attribute('_dogCream', 'vec3'), attribute('color', 'vec3')) : human ? crowdAppearanceColor(true) : attribute('color', 'vec3');
       const atlasUV = attribute('uv', 'vec2');
-      const sourceAtlas = atlas && !infectedAtlas ? sampleTexture(atlas, atlasUV) : undefined;
+      const sourceAtlas = atlas && !infectedAtlas ? zooSurface ? crowdTextureForDraw(sampleTexture(atlas, atlasUV)) : sampleTexture(atlas, atlasUV) : undefined;
       const sourceColor = sourceAtlas ? paletteColor.mul(mix(vec3(1), sourceAtlas.rgb, parts.y.equal(-4).or(parts.y.equal(-5)).or(parts.y.lessThanEqual(-10)).select(0, 1))) : paletteColor;
       // Keep the infected eye swatch out of the lit albedo. A bounded red
       // emitter avoids the pink centres from luminance-normalized swatches.
@@ -560,7 +561,7 @@ export class CrowdView extends Group {
         // Each living or frozen draw binds its own pose and colour atlas.
         const binding = sharedSkin, atlas = baked.texture;
         bindSurface = () => { binding.pose.value = texture; binding.atlas.value = atlas; };
-        const surface = { bind: bindSurface, textures: [atlas], bindRow: poses.bindRow };
+        const surface = { bind: bindSurface, textures: [atlas], pose: texture, bindRow: poses.bindRow };
         crowdSurfaceBindings.set(mesh.geometry, surface);
         const body = this.corpseGeometry.get(key);
         if (body && (!sharedAlpha || this.world.scenario === 'L10' && lod === 'lod0')) crowdSurfaceBindings.set(body, surface);
@@ -745,7 +746,9 @@ export class CrowdView extends Group {
       if (physical?.stage === 'telegraph') clip = 'windup';
       else if ((physical?.move === 'alpha.ground-slam' || physical?.move === 'gorilla.pound') && physical.stage === 'recovery') clip = 'swing';
       else if (physical?.move === 'elephant.swipe' && physical.stage === 'recovery') clip = 'swing';
-      if (e.civilian?.zooAnimal) clip = e.civilian.state === 'finished' ? death : e.infection ? 'idle' : motion.speed > .06 ? 'walk' : 'idle';
+      if (e.civilian?.zooAnimal) clip = e.civilian.state === 'finished' ? death : e.infection ? 'idle' : e.civilian.zooAnimal === 'monkey' && motion.speed > 1.3 ? 'run' : motion.speed > .06 ? 'walk' : 'idle';
+      const primateStory = e.civilian?.zooAnimal === 'monkey' && !e.infection && e.health.current > 0 ? e.civilian.story : null;
+      if (primateStory?.clip === 'swing' || primateStory?.clip === 'windup') clip = primateStory.clip;
       if (e.infectionRise) clip = 'infection-rise';
       if (b.special === 'dive') clip = 'run';
       // E32 dog: authored gallop while it runs, authored gather / spring / snap during the pounce (telegraph = the gather).
@@ -760,7 +763,7 @@ export class CrowdView extends Group {
       const megaRate = 1.05 + (megaCycleRate - 1.05) * megaRun;
       const duration = authoredClips.get(clip)?.duration ?? 1;
       const dogWindupTicks = Math.ceil(batch.windup * 60), dogBiteT = renderTick - (b.until - dogWindupTicks);
-      const phase = clip === 'dog-lunge-bite' ? Math.max(0, Math.min(1, dogBiteT < dogWindupTicks ? .4 * dogBiteT / dogWindupTicks : .4 + .6 * (dogBiteT - dogWindupTicks) / 24)) : clip === 'zebra-rear-kick' && specialAttack ? Math.min(1, (renderTick - specialAttack.startTick) / (specialAttack.activeTick - specialAttack.startTick + 36)) : clip === 'zebra-stampede' && specialAttack ? .5 + ((renderTick - specialAttack.activeTick) / 32 % 1) / 3 : e.infectionRise ? Math.min(1, (this.world.tick - e.infectionRise.started) / (e.infectionRise.until - e.infectionRise.started)) : b.state === 'dead' ? (reaction?.groundDeath ? 1 : Math.min(1, (this.world.tick - b.deadAt) / 60 / duration)) - InfectedMoves.stir(e, renderTick, duration) : clip === 'windup' ? e.infected?.specialAttack ? Math.min(1, (renderTick - e.infected.specialAttack.startTick) / (e.infected.specialAttack.activeTick - e.infected.specialAttack.startTick)) : Math.max(0, Math.min(1, 1 - (b.until - this.world.tick) / (batch.windup * 60))) : reaction && clip === 'get-up' ? Math.min(1, (age - .7) / getUpSpan(reaction)) : reaction && ['flung', 'knockdown', 'stagger-left', 'stagger-right'].includes(clip) ? Math.min(1, age / (reaction.heavy ? .48 : (reaction.until - reaction.started) / 60)) : strides[clip] ? this.gait.sample(e.id, gaitDistance, batch.animal ? clip === 'dog-gallop' ? 'corgi-gallop' : 'corgi-trot' : clip, batch.strideScale, motion.speed, heavyGait ? megaRate : undefined) : (renderTick / 60 + e.id * .137) / duration % 1;
+      const phase = primateStory ? Math.max(0, (renderTick - primateStory.start) / 96) % 1 : clip === 'dog-lunge-bite' ? Math.max(0, Math.min(1, dogBiteT < dogWindupTicks ? .4 * dogBiteT / dogWindupTicks : .4 + .6 * (dogBiteT - dogWindupTicks) / 24)) : clip === 'zebra-rear-kick' && specialAttack ? Math.min(1, (renderTick - specialAttack.startTick) / (specialAttack.activeTick - specialAttack.startTick + 36)) : clip === 'zebra-stampede' && specialAttack ? .5 + ((renderTick - specialAttack.activeTick) / 32 % 1) / 3 : e.infectionRise ? Math.min(1, (this.world.tick - e.infectionRise.started) / (e.infectionRise.until - e.infectionRise.started)) : b.state === 'dead' ? (reaction?.groundDeath ? 1 : Math.min(1, (this.world.tick - b.deadAt) / 60 / duration)) - InfectedMoves.stir(e, renderTick, duration) : clip === 'windup' ? e.infected?.specialAttack ? Math.min(1, (renderTick - e.infected.specialAttack.startTick) / (e.infected.specialAttack.activeTick - e.infected.specialAttack.startTick)) : Math.max(0, Math.min(1, 1 - (b.until - this.world.tick) / (batch.windup * 60))) : reaction && clip === 'get-up' ? Math.min(1, (age - .7) / getUpSpan(reaction)) : reaction && ['flung', 'knockdown', 'stagger-left', 'stagger-right'].includes(clip) ? Math.min(1, age / (reaction.heavy ? .48 : (reaction.until - reaction.started) / 60)) : strides[clip] ? this.gait.sample(e.id, gaitDistance, batch.animal ? clip === 'dog-gallop' ? 'corgi-gallop' : 'corgi-trot' : clip, batch.strideScale, motion.speed, heavyGait ? megaRate : undefined) : (renderTick / 60 + e.id * .137) / duration % 1;
       let frame = infectedClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
       const tint = batch.animal ? batch.role === 'inf.dog' && batch.lod === 'lod1' ? this.dogCoatTints[Number(key === 'inf.dog.cream')] : batch.shirt : crowdShirt(e.id);
       const presented = this.presentation.sample(e.id, e.transform, this.world.tick, alpha);

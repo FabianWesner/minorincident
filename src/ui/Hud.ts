@@ -270,7 +270,9 @@ export class Hud {
     // L8's APC takes damage while the courier is still on foot at the boarding
     // ring. Keep its durability visible throughout the escape, not only after
     // entering the driver's seat.
-    const l8CarId = mission?.def.l8 ? mission.l8?.state.carId : undefined;
+    // Only once the escape to the APC has begun (PO 2026-11-09: the bar showed during the calm tour).
+    const l8Escape = !!mission?.def.l8 && (mission.state.steps.escape?.status === 'active' || mission.state.steps.depart?.status === 'active');
+    const l8CarId = l8Escape ? mission!.l8?.state.carId : undefined;
     const escapeApc = l8CarId ? world.entities.get(l8CarId) : undefined;
     const apc = driven?.archetype === 'vehicle.military-apc' ? driven
       : escapeApc?.archetype === 'vehicle.military-apc' && escapeApc.health.current > 0 ? escapeApc : null;
@@ -279,7 +281,7 @@ export class Hud {
       const fraction = clamp(apc.health.current / apc.health.max), floor = !!apc.vehicle?.floor && apc.health.current <= 0;
       style(this.durability.fill, 'width', `${fraction * 100}%`);
       const warning = !floor && fraction <= .25 ? ' · CRITICAL' : '';
-      text(this.durability.label, floor ? 'Barely functional' : `Armor ${Math.ceil(apc.health.current)} / ${apc.health.max}${warning}`);
+      text(this.durability.label, floor ? 'APC barely functional' : `APC armor ${Math.ceil(apc.health.current)} / ${apc.health.max}${warning}`);
       attribute(this.durability.root, 'aria-valuenow', String(fraction * 100)); attribute(this.durability.root, 'aria-valuetext', floor ? 'Barely functional' : `${Math.ceil(apc.health.current)} of ${apc.health.max}`);
       attribute(this.durabilityPanel, 'data-stage', String(apc.vehicle?.stage ?? 0)); attribute(this.durabilityPanel, 'data-floor', String(floor));
       attribute(this.durabilityPanel, 'data-warning', String(!floor && fraction <= .25));

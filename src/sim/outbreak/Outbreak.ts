@@ -560,11 +560,41 @@ export class Outbreak {
   }
   /** Healthy animals stay in their authored enclosure loop; no hostile brain or human refuge removal. */
   private animalRoutine(e: EntitySnapshot): void {
-    const c = e.civilian!, target = c.waypoints[c.waypoint];
+    const c = e.civilian!, tick = this.world.tick, monkey = c.zooAnimal === 'monkey' && !!this.world.missions?.l8;
+    if (monkey) {
+      const activity = c.animalActivity;
+      if (activity?.kind === 'climb') {
+        const ground = this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0;
+        const height = this.world.missions?.l8?.state.breachedAt ? 0 : Math.max(0, Math.min(1, (tick - activity.started) / 80, (activity.until - tick) / 80)) * 1.15;
+        const support = c.floorY ?? ground;
+        c.floorY = support + Math.max(-.025, Math.min(.025, ground + height - support));
+        if ((tick < activity.until && !this.world.missions?.l8?.state.breachedAt) || c.floorY > ground + .01) {
+          this.face(e, { x: -16, z: 27 }, .1);
+          c.story = { clip: 'windup', start: activity.started }; return;
+        }
+        delete c.floorY; delete c.animalActivity; c.story = null;
+      } else if (activity && tick >= activity.until) { delete c.animalActivity; c.story = null; }
+      if (!c.animalActivity && this.heard.some(noise => Math.hypot(noise.x - e.transform.x, noise.z - e.transform.z) < 12)) {
+        c.animalActivity = { kind: 'scatter', started: tick, until: tick + 100 + e.id % 60 };
+        c.pauseUntil = tick; c.waypoint = (c.waypoint + 1) % c.waypoints.length;
+      }
+    }
+    const target = c.waypoints[c.waypoint];
     if (this.world.tick >= c.pauseUntil && target) {
-      if (Math.hypot(target.x - e.transform.x, target.z - e.transform.z) <= .2 || !this.world.npcs!.move(e, target, c.l1!.walkSpeed, c, .08)) {
+      const arrived = Math.hypot(target.x - e.transform.x, target.z - e.transform.z) <= .2;
+      const speed = c.l1!.walkSpeed * (c.animalActivity?.kind === 'scatter' ? 2.3 : 1);
+      if (arrived || !this.world.npcs!.move(e, target, speed, c, .08)) {
+        if (monkey && c.animalActivity?.kind !== 'scatter') {
+          const climbing = arrived && c.waypoint === 2 && !this.world.missions?.l8?.state.breachedAt;
+          const grooming = !climbing && (e.id + c.waypoint) % 3 !== 0;
+          const duration = 120 + (e.id * 29 + c.waypoint * 53) % 240;
+          if (climbing || grooming) {
+            c.animalActivity = { kind: climbing ? 'climb' : 'groom', started: tick, until: tick + duration };
+            c.story = { clip: climbing ? 'windup' : 'swing', start: tick };
+          }
+          c.pauseUntil = tick + duration;
+        } else c.pauseUntil = tick + 90;
         c.waypoint = (c.waypoint + 1) % c.waypoints.length;
-        c.pauseUntil = this.world.tick + 90;
         this.face(e, c.waypoints[c.waypoint], .2);
       }
     } else if (target) this.face(e, target, .2);

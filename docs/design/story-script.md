@@ -37,20 +37,22 @@ hatches, army dogs among them — turned K9s that still wear their vests.
 - The player watches a keeper get pulled down at the flamingo pond, and a flamingo turn.
 
 **Beat 3 · Zoo outbreak (the animal fights).** The animals she just admired turn, one enclosure after another.
-Each is a fight with its own rules (see `endgame-story.md`, arena table): flamingo swarm, zebra stampede, the monkey
-pack, the lion that stalks, the gorilla that throws, the elephant that charges. Rockets are scarce here.
+Each is a boss fight with its own rules (see `boss-and-alpha-moves.md`): flamingo flock, zebra herd, monkey pack, the lion
+and lioness, the gorilla. Every arena blocks the way on until its boss falls. Normal ammunition for every weapon.
 - Objective: *Lead the group to the armored vehicle.*
-- Nadia (if alive): "Not him. Not the old one…" (the elephant)
-- Courier (first and only spoken line in L8, after the elephant falls): "I'm sorry."
 
-**Beat 4 · Hold at the APC.** The group boards; she covers them, boarding last.
-- Objective: *Cover the survivors while they board · n/N aboard.*
-- Then something comes over the north wall. Bigger than any Alpha. Soldiers empty their magazines into it; it does not slow.
-  It reaches Hale at the APC door.
+**Beat 4 · The old elephant (final boss, at the APC).** PO 2026-11-09: "Let's use some of the animals as L8 boss instead of the Mega."
+The group reaches the APC — then the infected elephant smashes through the north wall into the vehicle yard. Soldiers fire;
+it charges the APC and crushes Major Hale at the door. The courier must bring it down (charges into walls/the truck, then damage)
+while the survivors board behind her.
+- Nadia (if alive): "Not him. Not the old one…"
 - Hale (dying, pressing the keys into her hand): "Hollow Creek. Get them out."
+- Courier (first and only spoken line in L8, after the elephant falls): "I'm sorry."
+- Objective: *Bring down the elephant!* → *Cover the survivors while they board · n/N aboard.*
 
-**Beat 5 · Departure.** She drives out through the east gate. In the mirror the thing is running after them.
-- Caption: *Something is following you.*
+**Beat 5 · Departure.** She drives out through the east gate, past the burning zoo.
+- Caption: *Hollow Creek. Forty kilometres.*
+The Mega does **not** appear in L8 (PO 2026-11-09). Its first appearance is in L9.
 
 ## L9 — The Crossing ("The last time she has everything")
 
@@ -58,6 +60,7 @@ She drives the APC across open country at night with the survivors aboard, racin
 This is the level where she has every weapon and every friend — and the level that takes them.
 
 - Opening (Sam, from the back): "Bridge is forty klicks. Dawn's in two hours. Floor it."
+- First sighting of the Mega (L9, PO 2026-11-09 moved it out of L8): something huge crosses the road behind the APC in the headlights' edge, keeps pace along the fields, and is gone. Mia: "What was that?" Sam: "Don't look. Drive." It reappears twice at a distance before the bridge.
 - Clingers on the hull — Mia: "They're on the roof!" — Courier: "Hold on to something."
 - The school bus full of infected behind them — Dale: "That's my kid's school bus." (beat) "It's not anymore."
 - Stall on the rail tracks: she climbs into the hatch and fights while Sam restarts the engine. — Sam: "Thirty seconds! Give me thirty seconds!"

@@ -55,10 +55,18 @@ export async function checkL7Navigation() {
     expect(residents.length).toBeGreaterThan(0);
     expect(residents.every(e => e.appearance?.entityId === e.id && e.appearance.asset.startsWith('npc.'))).toBe(true);
     const alphas = w.infected!.active.filter(e => e.archetype === 'infected.alpha');
-    expect(alphas.length).toBeGreaterThanOrEqual(2);
+    expect(alphas, 'only the pickup Alpha occupies the opening cap').toHaveLength(1);
     expect(alphas.every(e => e.health.max === 450 && e.health.current === 450), 'L7 Alpha toughness is level-local').toBe(true);
-    const finalMouths = new Set(w.infected!.active.filter(e => e.infected?.pack === 700 && e.archetype === 'infected.runner').map(e => Math.round(e.transform.z)));
-    expect(finalMouths.size).toBeGreaterThanOrEqual(3);
+    expect(w.infected!.active.some(e => e.infected?.pack === 700), 'the final horde does not occupy opening slots').toBe(false);
+    w.l7Encounters!.start();
+    Object.assign(w.entities.get(1)!.transform, { x: 85, z: 46 });
+    w.l7Encounters!.update();
+    const queuedFinal = w.infected!.director.queue.filter(entry => entry.options.pack === 700);
+    const residentFinal = w.infected!.active.filter(e => e.infected?.pack === 700);
+    const finals = [...queuedFinal.filter(e => e.archetype === 'infected.runner').map(e => e.position), ...residentFinal.filter(e => e.archetype === 'infected.runner').map(e => e.transform)];
+    expect(finals, 'the full high-tier horde is requested on approach').toHaveLength(120);
+    expect(queuedFinal.filter(e => e.archetype === 'infected.alpha').length + residentFinal.filter(e => e.archetype === 'infected.alpha').length).toBe(2);
+    expect(new Set(finals.map(e => Math.round(e.z))).size, 'final arrivals approach from both verges and the road').toBeGreaterThanOrEqual(3);
     const district = w.districts!;
     const destinations = Object.entries(w.missions!.def.anchors);
     const heightReach = new Map(destinations.map(([name, at]) => {
@@ -281,6 +289,9 @@ async function checkFollowerBites() {
       const e = w.entities.get(row.id)!;
       e.hidden = true; e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; w.solids.forget(e);
     }
+    // The level's soldier cover is excluded from this explicitly unopposed
+    // bite fixture; the native route audits exercise their real protection.
+    for (const e of w.entities.iterate()) if (e.civilian?.ally && !roster.some(r => r.id === e.id)) { delete e.civilian!.ally; e.hidden = true; w.solids.forget(e); }
     // Keep this isolated mortality fixture on its only evacuee: the courier
     // must not steal the runner's target between the longer sequence of bites.
     w.inspectionGhost = true;
@@ -295,7 +306,7 @@ async function checkFollowerBites() {
     }
     const lost = roster.find(r => r.status !== 'following');
     expect(lost, 'one unopposed runner still kills an evacuee').toBeDefined();
-    expect(wounds.get(lost!.id), 'the twentieth ordinary bite is still fatal; every earlier bite visibly costs health').toEqual([95, 90, 85, 80, 75, 70, 65, 60, 55, 50, 45, 40, 35, 30, 25, 20, 15, 10, 5]);
+    expect(wounds.get(lost!.id), 'the third ordinary bite is fatal; earlier bites cost the PROD 34 HP').toEqual([66, 32]);
     expect(staggered, 'the biter reels after a survived bite').toBe(true);
     expect(alarms.filter(kind => kind !== 'wait'), 'a loss beside the courier is not "behind you"').toEqual([]);
   } finally { w.dispose(); }

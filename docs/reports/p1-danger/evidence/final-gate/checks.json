@@ -1,0 +1,25 @@
+{
+  "target": "E07",
+  "epics": [
+    "E07"
+  ],
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "status": 0,
+      "seconds": 55.64
+    },
+    {
+      "command": "npm run lint",
+      "status": 0,
+      "seconds": 34.388
+    },
+    {
+      "command": "npm test",
+      "status": 0,
+      "seconds": 119.12
+    }
+  ],
+  "sourceHash": "2933f5a9283f67f96b3753fe1d117b37f67071ef225753d4a407d39b5547c470",
+  "unitContractHash": "bb8c60848b450ac36e0279505f409d21a020a93448ecda0c1307338ecf8d3508"
+}

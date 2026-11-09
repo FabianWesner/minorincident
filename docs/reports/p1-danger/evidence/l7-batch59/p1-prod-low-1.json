@@ -1,0 +1,3322 @@
+{
+  "sourceHash": "9b58c0d04518a0f6b968275f398f43624e3a1937ffd8d52d18e915ba93fd5e08",
+  "observerHash": "c5a362e3d52e79071bf1929b2bc5b74039562ce775fef21a715df6ad763a46d7",
+  "revision": "manifest-only",
+  "diagnosticHash": "6e5c750c21ec1eb3b612d220055863b4f4bfcb4d3da1d929b6c18e339678e30b",
+  "generatedAt": "2026-11-09T17:40:08.583Z",
+  "summary": {
+    "tag": "p1-prod",
+    "tier": "low",
+    "seed": 1,
+    "passive": false,
+    "mortalPassive": false,
+    "completed": true,
+    "outcome": "complete",
+    "seconds": 102.66666666666667,
+    "deaths": 0,
+    "acceptedHits": 0,
+    "acceptedDamage": 0,
+    "damageBySource": {},
+    "rockets": 74,
+    "rocketKills": 203,
+    "gunDowns": 0,
+    "recoveries": 8,
+    "grabs": 0,
+    "minFollowerHp": 100,
+    "longestQuietSeconds": 20.85,
+    "courierAttacks": 9,
+    "groupAttacks": 0,
+    "alphaAttacks": 1,
+    "boarded": 24,
+    "alphaAttacksPerMinute": 0.5844155844155844,
+    "courierAttacksPerMinute": 5.259740259740259,
+    "groupAttacksPerMinute": 0,
+    "attackDirections": {
+      "north": 4,
+      "west": 4,
+      "south": 1
+    },
+    "simultaneousDirections": 3,
+    "alphas": [
+      {
+        "id": 75,
+        "hp": 300,
+        "tick": 1
+      },
+      {
+        "id": 76,
+        "hp": 300,
+        "tick": 1
+      },
+      {
+        "id": 137,
+        "hp": 300,
+        "tick": 1
+      },
+      {
+        "id": 173,
+        "hp": 300,
+        "tick": 16
+      },
+      {
+        "id": 244,
+        "hp": 300,
+        "tick": 1339
+      }
+    ],
+    "nativeStateHash": "dbbf1dd5"
+  },
+  "pacing": {
+    "beats": [
+      {
+        "seconds": 0,
+        "kind": "radio",
+        "detail": "L7.start"
+      },
+      {
+        "seconds": 0.11666666666666667,
+        "kind": "fight",
+        "detail": "player.survivor/weapon.shotgun -> infected.runner"
+      },
+      {
+        "seconds": 0.23333333333333334,
+        "kind": "pickup",
+        "detail": "weapon.rocket-launcher"
+      },
+      {
+        "seconds": 16.516666666666666,
+        "kind": "fight",
+        "detail": "player.survivor/weapon.rocket-launcher -> infected.runner"
+      },
+      {
+        "seconds": 27.816666666666666,
+        "kind": "fight",
+        "detail": "player.survivor/weapon.rocket-launcher -> infected.runner"
+      },
+      {
+        "seconds": 52.733333333333334,
+        "kind": "fight",
+        "detail": "player.survivor/weapon.rocket-launcher -> infected.runner"
+      },
+      {
+        "seconds": 73.93333333333334,
+        "kind": "fight",
+        "detail": "player.survivor/weapon.rocket-launcher -> infected.runner"
+      },
+      {
+        "seconds": 84,
+        "kind": "fight",
+        "detail": "hazard.fire/hazard.fire -> infected.runner"
+      },
+      {
+        "seconds": 95,
+        "kind": "fight",
+        "detail": "hazard.fire/hazard.fire -> infected.runner"
+      }
+    ],
+    "longestQuietSeconds": 20.85,
+    "quietFrom": 31.883333333333333,
+    "quietTo": 52.733333333333334,
+    "passes": true
+  },
+  "run": {
+    "level": "L7",
+    "policy": "complete",
+    "seed": 1,
+    "completed": true,
+    "time": 102.66666666666667,
+    "deaths": 0,
+    "kills": 0,
+    "damageTaken": 0,
+    "failures": {},
+    "objectiveTimeline": [],
+    "furthestObjective": "bus-departure",
+    "activeObjectives": [],
+    "outcome": "complete",
+    "blocker": null,
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 254,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    }
+  },
+  "observation": {
+    "ticks": 6160,
+    "followerWait": {
+      "escortTicks": 5619,
+      "stationaryFarTicks": 126,
+      "upperBoundPercent": 2.2423918846769886,
+      "followers": [
+        {
+          "id": 20,
+          "escortTicks": 5019,
+          "stationaryFarTicks": 36
+        },
+        {
+          "id": 51,
+          "escortTicks": 5373,
+          "stationaryFarTicks": 54
+        },
+        {
+          "id": 52,
+          "escortTicks": 5193,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 53,
+          "escortTicks": 5283,
+          "stationaryFarTicks": 4
+        },
+        {
+          "id": 54,
+          "escortTicks": 5313,
+          "stationaryFarTicks": 6
+        },
+        {
+          "id": 55,
+          "escortTicks": 5253,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 56,
+          "escortTicks": 5223,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 57,
+          "escortTicks": 5178,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 58,
+          "escortTicks": 5268,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 59,
+          "escortTicks": 5298,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 60,
+          "escortTicks": 5328,
+          "stationaryFarTicks": 4
+        },
+        {
+          "id": 61,
+          "escortTicks": 5208,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 62,
+          "escortTicks": 5343,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 63,
+          "escortTicks": 5418,
+          "stationaryFarTicks": 126
+        },
+        {
+          "id": 64,
+          "escortTicks": 5358,
+          "stationaryFarTicks": 13
+        },
+        {
+          "id": 65,
+          "escortTicks": 5388,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 66,
+          "escortTicks": 5238,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 67,
+          "escortTicks": 5403,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 68,
+          "escortTicks": 5433,
+          "stationaryFarTicks": 83
+        },
+        {
+          "id": 69,
+          "escortTicks": 5448,
+          "stationaryFarTicks": 4
+        },
+        {
+          "id": 70,
+          "escortTicks": 5463,
+          "stationaryFarTicks": 4
+        },
+        {
+          "id": 71,
+          "escortTicks": 5493,
+          "stationaryFarTicks": 61
+        },
+        {
+          "id": 72,
+          "escortTicks": 5478,
+          "stationaryFarTicks": 45
+        },
+        {
+          "id": 73,
+          "escortTicks": 5508,
+          "stationaryFarTicks": 29
+        },
+        {
+          "id": 74,
+          "escortTicks": 5523,
+          "stationaryFarTicks": 4
+        }
+      ]
+    },
+    "phases": [
+      {
+        "key": "step/rocket",
+        "label": "rocket: Recover the rocket launcher beside the exit",
+        "threat": false,
+        "startSeconds": 0,
+        "seconds": 0.23333333333333334,
+        "spawned": 0,
+        "initial": 98,
+        "observed": 98,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": null,
+        "flags": []
+      },
+      {
+        "key": "phase/pickup",
+        "label": "controller: pickup",
+        "threat": false,
+        "startSeconds": 0,
+        "seconds": 0.23333333333333334,
+        "spawned": 0,
+        "initial": 98,
+        "observed": 98,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": null,
+        "flags": []
+      },
+      {
+        "key": "step/corridor",
+        "label": "corridor: Bring the group to the evacuation corridor",
+        "threat": true,
+        "startSeconds": 0.23333333333333334,
+        "seconds": 72.96666666666667,
+        "spawned": 107,
+        "initial": 99,
+        "observed": 204,
+        "reachableEver": 0,
+        "within2_5m": 1,
+        "attacks": 9,
+        "attacksPerMinute": 7.400639561443581,
+        "firstAttackSeconds": 0.5833333333333334,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 20,
+            "samples": 126,
+            "median": 4.499816895343827
+          },
+          {
+            "id": 51,
+            "samples": 140,
+            "median": 4.500033748120395
+          },
+          {
+            "id": 52,
+            "samples": 140,
+            "median": 4.49981689453125
+          },
+          {
+            "id": 53,
+            "samples": 140,
+            "median": 4.500024173378234
+          },
+          {
+            "id": 54,
+            "samples": 143,
+            "median": 4.49981689540607
+          },
+          {
+            "id": 55,
+            "samples": 143,
+            "median": 4.499837804996482
+          },
+          {
+            "id": 56,
+            "samples": 143,
+            "median": 4.499866549989848
+          },
+          {
+            "id": 57,
+            "samples": 143,
+            "median": 4.499987490917244
+          },
+          {
+            "id": 58,
+            "samples": 143,
+            "median": 4.49981689453125
+          },
+          {
+            "id": 59,
+            "samples": 143,
+            "median": 4.4996694780566395
+          },
+          {
+            "id": 60,
+            "samples": 143,
+            "median": 4.500044685305979
+          },
+          {
+            "id": 61,
+            "samples": 146,
+            "median": 4.49981689453125
+          },
+          {
+            "id": 62,
+            "samples": 146,
+            "median": 4.499816894535513
+          },
+          {
+            "id": 63,
+            "samples": 143,
+            "median": 4.5025543643501145
+          },
+          {
+            "id": 64,
+            "samples": 146,
+            "median": 4.499881773418293
+          },
+          {
+            "id": 65,
+            "samples": 146,
+            "median": 4.500019195148342
+          },
+          {
+            "id": 66,
+            "samples": 146,
+            "median": 4.49998742269957
+          },
+          {
+            "id": 67,
+            "samples": 146,
+            "median": 4.499816894567914
+          },
+          {
+            "id": 68,
+            "samples": 146,
+            "median": 4.49981689453125
+          },
+          {
+            "id": 69,
+            "samples": 146,
+            "median": 4.499987422699539
+          },
+          {
+            "id": 70,
+            "samples": 146,
+            "median": 4.49981689453125
+          },
+          {
+            "id": 71,
+            "samples": 146,
+            "median": 4.49981689453125
+          },
+          {
+            "id": 72,
+            "samples": 146,
+            "median": 4.499862793872353
+          },
+          {
+            "id": 73,
+            "samples": 146,
+            "median": 4.49981689453125
+          },
+          {
+            "id": 74,
+            "samples": 146,
+            "median": 4.49981689453125
+          }
+        ],
+        "followerMin": 4.4996694780566395,
+        "followerMedian": 4.49981689540607,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": null,
+        "flags": []
+      },
+      {
+        "key": "phase/encounters",
+        "label": "controller: encounters",
+        "threat": false,
+        "startSeconds": 0.23333333333333334,
+        "seconds": 84.45,
+        "spawned": 107,
+        "initial": 99,
+        "observed": 204,
+        "reachableEver": 0,
+        "within2_5m": 1,
+        "attacks": 9,
+        "attacksPerMinute": 6.394316163410302,
+        "firstAttackSeconds": 0.5833333333333334,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 20,
+            "samples": 147,
+            "median": 4.499816894544892
+          },
+          {
+            "id": 51,
+            "samples": 163,
+            "median": 4.500022238550273
+          },
+          {
+            "id": 52,
+            "samples": 163,
+            "median": 4.499816894531252
+          },
+          {
+            "id": 53,
+            "samples": 160,
+            "median": 4.5000447142649005
+          },
+          {
+            "id": 54,
+            "samples": 163,
+            "median": 4.499905597319917
+          },
+          {
+            "id": 55,
+            "samples": 163,
+            "median": 4.499907850778238
+          },
+          {
+            "id": 56,
+            "samples": 163,
+            "median": 4.4999874877028345
+          },
+          {
+            "id": 57,
+            "samples": 166,
+            "median": 4.499987685192991
+          },
+          {
+            "id": 58,
+            "samples": 161,
+            "median": 4.49981689453125
+          },
+          {
+            "id": 59,
+            "samples": 166,
+            "median": 4.500356342705553
+          },
+          {
+            "id": 60,
+            "samples": 163,
+            "median": 4.500044685305979
+          },
+          {
+            "id": 61,
+            "samples": 169,
+            "median": 4.499907974484567
+          },
+          {
+            "id": 62,
+            "samples": 165,
+            "median": 4.4998168945397765
+          },
+          {
+            "id": 63,
+            "samples": 166,
+            "median": 4.502084945241237
+          },
+          {
+            "id": 64,
+            "samples": 166,
+            "median": 4.49992145080815
+          },
+          {
+            "id": 65,
+            "samples": 166,
+            "median": 4.500044709622917
+          },
+          {
+            "id": 66,
+            "samples": 169,
+            "median": 4.49998749091725
+          },
+          {
+            "id": 67,
+            "samples": 166,
+            "median": 4.499907403085318
+          },
+          {
+            "id": 68,
+            "samples": 166,
+            "median": 4.499817703789553
+          },
+          {
+            "id": 69,
+            "samples": 169,
+            "median": 4.499987492929181
+          },
+          {
+            "id": 70,
+            "samples": 169,
+            "median": 4.499816894587525
+          },
+          {
+            "id": 71,
+            "samples": 166,
+            "median": 4.49981689453125
+          },
+          {
+            "id": 72,
+            "samples": 169,
+            "median": 4.4999056001971605
+          },
+          {
+            "id": 73,
+            "samples": 169,
+            "median": 4.499816894587525
+          },
+          {
+            "id": 74,
+            "samples": 169,
+            "median": 4.499817100702345
+          }
+        ],
+        "followerMin": 4.49981689453125,
+        "followerMedian": 4.499907850778238,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": null,
+        "flags": []
+      },
+      {
+        "key": "step/departure",
+        "label": "departure: Get everyone aboard the bus",
+        "threat": false,
+        "startSeconds": 73.2,
+        "seconds": 29.466666666666665,
+        "spawned": 0,
+        "initial": 59,
+        "observed": 61,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 20,
+            "samples": 24,
+            "median": 4.352041303809315
+          },
+          {
+            "id": 51,
+            "samples": 26,
+            "median": 4.475639601839022
+          },
+          {
+            "id": 52,
+            "samples": 26,
+            "median": 4.535161875373381
+          },
+          {
+            "id": 53,
+            "samples": 23,
+            "median": 4.600000000000046
+          },
+          {
+            "id": 54,
+            "samples": 23,
+            "median": 4.600000000000021
+          },
+          {
+            "id": 55,
+            "samples": 23,
+            "median": 4.600000000000033
+          },
+          {
+            "id": 56,
+            "samples": 23,
+            "median": 4.600000000000105
+          },
+          {
+            "id": 57,
+            "samples": 26,
+            "median": 4.600000000000149
+          },
+          {
+            "id": 58,
+            "samples": 21,
+            "median": 4.599999999999949
+          },
+          {
+            "id": 59,
+            "samples": 26,
+            "median": 4.599999999999961
+          },
+          {
+            "id": 60,
+            "samples": 23,
+            "median": 4.500175703184622
+          },
+          {
+            "id": 61,
+            "samples": 26,
+            "median": 4.5999999999998575
+          },
+          {
+            "id": 62,
+            "samples": 22,
+            "median": 4.5043950379223014
+          },
+          {
+            "id": 63,
+            "samples": 26,
+            "median": 4.499716288611328
+          },
+          {
+            "id": 64,
+            "samples": 23,
+            "median": 4.599999999999931
+          },
+          {
+            "id": 65,
+            "samples": 23,
+            "median": 4.599999999999986
+          },
+          {
+            "id": 66,
+            "samples": 26,
+            "median": 4.599999999999996
+          },
+          {
+            "id": 67,
+            "samples": 23,
+            "median": 4.600000000000164
+          },
+          {
+            "id": 68,
+            "samples": 23,
+            "median": 4.6000000000000085
+          },
+          {
+            "id": 69,
+            "samples": 26,
+            "median": 4.600000000000009
+          },
+          {
+            "id": 70,
+            "samples": 26,
+            "median": 4.591258342054121
+          },
+          {
+            "id": 71,
+            "samples": 23,
+            "median": 4.59999999999982
+          },
+          {
+            "id": 72,
+            "samples": 26,
+            "median": 4.575807547621011
+          },
+          {
+            "id": 73,
+            "samples": 26,
+            "median": 4.600000000000063
+          },
+          {
+            "id": 74,
+            "samples": 26,
+            "median": 4.600000000000005
+          }
+        ],
+        "followerMin": 4.352041303809315,
+        "followerMedian": 4.599999999999961,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": null,
+        "flags": [
+          "SLOW_FOLLOWER:20"
+        ]
+      },
+      {
+        "key": "phase/boarding",
+        "label": "controller: boarding",
+        "threat": false,
+        "startSeconds": 84.68333333333334,
+        "seconds": 8.983333333333333,
+        "spawned": 0,
+        "initial": 1,
+        "observed": 2,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 20,
+            "samples": 3,
+            "median": 4.563033065130609
+          },
+          {
+            "id": 51,
+            "samples": 3,
+            "median": 4.600019120574477
+          },
+          {
+            "id": 52,
+            "samples": 3,
+            "median": 4.599999999999675
+          },
+          {
+            "id": 53,
+            "samples": 3,
+            "median": 4.600023671983986
+          },
+          {
+            "id": 54,
+            "samples": 3,
+            "median": 4.600000000000082
+          },
+          {
+            "id": 55,
+            "samples": 3,
+            "median": 4.6000242379194525
+          },
+          {
+            "id": 56,
+            "samples": 3,
+            "median": 4.599995506385918
+          },
+          {
+            "id": 57,
+            "samples": 3,
+            "median": 4.600013019479802
+          },
+          {
+            "id": 58,
+            "samples": 3,
+            "median": 4.707503731563597
+          },
+          {
+            "id": 59,
+            "samples": 3,
+            "median": 4.600025579892252
+          },
+          {
+            "id": 60,
+            "samples": 3,
+            "median": 4.5443097542608175
+          },
+          {
+            "id": 61,
+            "samples": 3,
+            "median": 4.599989739047993
+          },
+          {
+            "id": 62,
+            "samples": 3,
+            "median": 4.519335309234091
+          },
+          {
+            "id": 63,
+            "samples": 3,
+            "median": 4.600004197418373
+          },
+          {
+            "id": 64,
+            "samples": 3,
+            "median": 4.540982826918605
+          },
+          {
+            "id": 65,
+            "samples": 3,
+            "median": 4.599981063018593
+          },
+          {
+            "id": 66,
+            "samples": 3,
+            "median": 4.72499999999991
+          },
+          {
+            "id": 67,
+            "samples": 3,
+            "median": 4.7249999999998575
+          },
+          {
+            "id": 68,
+            "samples": 3,
+            "median": 2.5893594460296754
+          },
+          {
+            "id": 69,
+            "samples": 3,
+            "median": 4.48676184004184
+          },
+          {
+            "id": 70,
+            "samples": 3,
+            "median": 4.562343900400221
+          },
+          {
+            "id": 71,
+            "samples": 3,
+            "median": 2.0500000000000447
+          },
+          {
+            "id": 72,
+            "samples": 3,
+            "median": 4.599723690327185
+          },
+          {
+            "id": 73,
+            "samples": 3,
+            "median": 4.6000128482637335
+          },
+          {
+            "id": 74,
+            "samples": 3,
+            "median": 4.517962744365163
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": null,
+        "flags": []
+      },
+      {
+        "key": "phase/departing",
+        "label": "controller: departing",
+        "threat": false,
+        "startSeconds": 93.66666666666667,
+        "seconds": 9,
+        "spawned": 0,
+        "initial": 1,
+        "observed": 1,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": null,
+        "flags": []
+      },
+      {
+        "key": "phase/done",
+        "label": "controller: done",
+        "threat": false,
+        "startSeconds": 102.66666666666667,
+        "seconds": 0,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": null,
+        "flags": []
+      }
+    ],
+    "waves": []
+  },
+  "final": {
+    "departure": "done",
+    "boarded": 24,
+    "arrivals": [
+      {
+        "id": 75,
+        "group": 700,
+        "alpha": true,
+        "tick": 1,
+        "x": -64,
+        "z": 50,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 76,
+        "group": 700,
+        "alpha": true,
+        "tick": 1,
+        "x": -43,
+        "z": 41.7,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 77,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -76.6,
+        "z": 36,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 78,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -73.8,
+        "z": 36,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 79,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -71,
+        "z": 36,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 80,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -70.2,
+        "z": 36,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 81,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -63.400000000000006,
+        "z": 36,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 82,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -62.6,
+        "z": 36,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 83,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -59.8,
+        "z": 36,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 84,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -57,
+        "z": 36,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 85,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -54.2,
+        "z": 36,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 86,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -50.93806023374435,
+        "z": 36.19134171618254,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 87,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -76.6,
+        "z": 40,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 88,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -73.8,
+        "z": 40,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 89,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -71,
+        "z": 40,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 90,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -68.2,
+        "z": 40,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 91,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -65.4,
+        "z": 40,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 92,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -62.6,
+        "z": 40,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 93,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -59.8,
+        "z": 40,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 94,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -57,
+        "z": 40,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 95,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -54.2,
+        "z": 40,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 96,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -51.4,
+        "z": 40,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 97,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -76.6,
+        "z": 44,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 98,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -73.8,
+        "z": 44,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 99,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -71,
+        "z": 44,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 100,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -68.2,
+        "z": 44,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 101,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -66.46066017177982,
+        "z": 45.06066017177982,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 102,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -61.83463313526982,
+        "z": 45.84775906502257,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 103,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -58.3,
+        "z": 44,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 104,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -57,
+        "z": 44,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 105,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -54.2,
+        "z": 44,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 106,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -51.4,
+        "z": 44,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 107,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -77.66066017177981,
+        "z": 49.06066017177982,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 108,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -73.3,
+        "z": 48,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 109,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -71,
+        "z": 48,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 110,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -68.2,
+        "z": 48,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 111,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -65.4,
+        "z": 48,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 112,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -62.6,
+        "z": 48,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 113,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -59.8,
+        "z": 48,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 114,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -57,
+        "z": 48,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 115,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -54.2,
+        "z": 48,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 116,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -51.4,
+        "z": 48,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 117,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -76.79134171618254,
+        "z": 52.46193976625565,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 118,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -74.72387953251129,
+        "z": 52.38268343236509,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 119,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -70.53806023374436,
+        "z": 52.19134171618254,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 120,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -70.04775906502257,
+        "z": 52.76536686473018,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 121,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -66.16536686473019,
+        "z": 50.15224093497743,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 122,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -62.6,
+        "z": 52,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 123,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -59.3,
+        "z": 52,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 124,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -57,
+        "z": 52,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 125,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -54.2,
+        "z": 52,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 126,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -52.107106781186545,
+        "z": 52.707106781186546,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 127,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -76.6,
+        "z": 56,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 128,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -73.8,
+        "z": 56,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 129,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -71,
+        "z": 56,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 130,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -68.2,
+        "z": 56,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 131,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -65.4,
+        "z": 56,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 132,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -62.6,
+        "z": 56,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 133,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -59.8,
+        "z": 56,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 134,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -55.93933982822018,
+        "z": 57.06066017177982,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 135,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -53.7,
+        "z": 56,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 136,
+        "group": 700,
+        "alpha": false,
+        "tick": 1,
+        "x": -51.4,
+        "z": 56,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 137,
+        "group": 701,
+        "alpha": true,
+        "tick": 1,
+        "x": 259,
+        "z": 12,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 138,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 273,
+        "z": 9.5,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 139,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 273,
+        "z": 20.5,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 140,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 271.6,
+        "z": 9.5,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 141,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 271.6,
+        "z": 20.5,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 142,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 259,
+        "z": 10,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 143,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 259,
+        "z": 20,
+        "offscreen": true,
+        "safe": false
+      },
+      {
+        "id": 144,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 259,
+        "z": 8.2,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 145,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 259,
+        "z": 21.8,
+        "offscreen": true,
+        "safe": false
+      },
+      {
+        "id": 146,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 259,
+        "z": 6.4,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 147,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 259,
+        "z": 23.6,
+        "offscreen": true,
+        "safe": false
+      },
+      {
+        "id": 148,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 259,
+        "z": 4.6,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 149,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 259,
+        "z": 25.4,
+        "offscreen": true,
+        "safe": false
+      },
+      {
+        "id": 150,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 259,
+        "z": 2.8000000000000007,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 151,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 259,
+        "z": 27.2,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 152,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 257.4,
+        "z": 10,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 153,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 257.4,
+        "z": 20,
+        "offscreen": true,
+        "safe": false
+      },
+      {
+        "id": 154,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 257.4,
+        "z": 8.2,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 155,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 257.4,
+        "z": 21.8,
+        "offscreen": true,
+        "safe": false
+      },
+      {
+        "id": 156,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 257.4,
+        "z": 6.4,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 157,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 257.4,
+        "z": 23.6,
+        "offscreen": true,
+        "safe": false
+      },
+      {
+        "id": 158,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 257.4,
+        "z": 4.6,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 159,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 257.4,
+        "z": 25.4,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 160,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 257.4,
+        "z": 2.8000000000000007,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 161,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 257.4,
+        "z": 27.2,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 162,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 255.8,
+        "z": 10,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 163,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 255.8,
+        "z": 20,
+        "offscreen": true,
+        "safe": false
+      },
+      {
+        "id": 164,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 255.8,
+        "z": 8.2,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 165,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 255.8,
+        "z": 21.8,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 166,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 255.8,
+        "z": 6.4,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 167,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 255.8,
+        "z": 23.6,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 168,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 255.8,
+        "z": 4.6,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 169,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 255.8,
+        "z": 25.4,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 170,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 255.8,
+        "z": 2.8000000000000007,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 171,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 255.8,
+        "z": 27.2,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 172,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 254.2,
+        "z": 10,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 173,
+        "group": 702,
+        "alpha": true,
+        "tick": 15,
+        "x": 173,
+        "z": 12,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 174,
+        "group": 702,
+        "alpha": false,
+        "tick": 15,
+        "x": 160.4,
+        "z": 14.2,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 175,
+        "group": 702,
+        "alpha": false,
+        "tick": 129,
+        "x": 163.2,
+        "z": 14.2,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 176,
+        "group": 702,
+        "alpha": false,
+        "tick": 161,
+        "x": 166,
+        "z": 14.2,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 177,
+        "group": 702,
+        "alpha": false,
+        "tick": 180,
+        "x": 168.8,
+        "z": 14.2,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 178,
+        "group": 702,
+        "alpha": false,
+        "tick": 180,
+        "x": 171.6,
+        "z": 14.2,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 179,
+        "group": 702,
+        "alpha": false,
+        "tick": 219,
+        "x": 174.4,
+        "z": 14.2,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 180,
+        "group": 702,
+        "alpha": false,
+        "tick": 219,
+        "x": 177.2,
+        "z": 14.2,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 181,
+        "group": 702,
+        "alpha": false,
+        "tick": 219,
+        "x": 180,
+        "z": 14.2,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 182,
+        "group": 702,
+        "alpha": false,
+        "tick": 219,
+        "x": 182.8,
+        "z": 14.2,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 183,
+        "group": 702,
+        "alpha": false,
+        "tick": 219,
+        "x": 185.6,
+        "z": 14.2,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 184,
+        "group": 702,
+        "alpha": false,
+        "tick": 219,
+        "x": 160.4,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 185,
+        "group": 702,
+        "alpha": false,
+        "tick": 219,
+        "x": 163.2,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 186,
+        "group": 702,
+        "alpha": false,
+        "tick": 219,
+        "x": 166,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 187,
+        "group": 702,
+        "alpha": false,
+        "tick": 219,
+        "x": 168.8,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 188,
+        "group": 702,
+        "alpha": false,
+        "tick": 219,
+        "x": 171.6,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 189,
+        "group": 702,
+        "alpha": false,
+        "tick": 219,
+        "x": 174.4,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 190,
+        "group": 702,
+        "alpha": false,
+        "tick": 240,
+        "x": 177.2,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 191,
+        "group": 702,
+        "alpha": false,
+        "tick": 240,
+        "x": 180,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 192,
+        "group": 702,
+        "alpha": false,
+        "tick": 240,
+        "x": 182.8,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 193,
+        "group": 702,
+        "alpha": false,
+        "tick": 251,
+        "x": 185.6,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 194,
+        "group": 702,
+        "alpha": false,
+        "tick": 251,
+        "x": 160.4,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 195,
+        "group": 702,
+        "alpha": false,
+        "tick": 251,
+        "x": 163.2,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 196,
+        "group": 702,
+        "alpha": false,
+        "tick": 251,
+        "x": 166,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 197,
+        "group": 702,
+        "alpha": false,
+        "tick": 251,
+        "x": 168.8,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 198,
+        "group": 702,
+        "alpha": false,
+        "tick": 251,
+        "x": 171.6,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 199,
+        "group": 702,
+        "alpha": false,
+        "tick": 251,
+        "x": 174.4,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 200,
+        "group": 702,
+        "alpha": false,
+        "tick": 251,
+        "x": 177.2,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 201,
+        "group": 702,
+        "alpha": false,
+        "tick": 251,
+        "x": 180,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 202,
+        "group": 702,
+        "alpha": false,
+        "tick": 251,
+        "x": 182.8,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 203,
+        "group": 702,
+        "alpha": false,
+        "tick": 251,
+        "x": 185.6,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 204,
+        "group": 702,
+        "alpha": false,
+        "tick": 286,
+        "x": 160.4,
+        "z": 15.8,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 205,
+        "group": 702,
+        "alpha": false,
+        "tick": 286,
+        "x": 163.2,
+        "z": 15.8,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 206,
+        "group": 702,
+        "alpha": false,
+        "tick": 286,
+        "x": 166,
+        "z": 15.8,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 207,
+        "group": 702,
+        "alpha": false,
+        "tick": 286,
+        "x": 168.8,
+        "z": 15.8,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 208,
+        "group": 702,
+        "alpha": false,
+        "tick": 286,
+        "x": 171.6,
+        "z": 15.8,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 209,
+        "group": 703,
+        "alpha": false,
+        "tick": 309,
+        "x": 100.4,
+        "z": 14.2,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 210,
+        "group": 703,
+        "alpha": false,
+        "tick": 331,
+        "x": 103.2,
+        "z": 14.2,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 211,
+        "group": 703,
+        "alpha": false,
+        "tick": 1113,
+        "x": 106,
+        "z": 14.2,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 212,
+        "group": 703,
+        "alpha": false,
+        "tick": 1113,
+        "x": 108.8,
+        "z": 14.2,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 213,
+        "group": 703,
+        "alpha": false,
+        "tick": 1113,
+        "x": 111.6,
+        "z": 14.2,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 214,
+        "group": 703,
+        "alpha": false,
+        "tick": 1113,
+        "x": 114.4,
+        "z": 14.2,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 215,
+        "group": 703,
+        "alpha": false,
+        "tick": 1133,
+        "x": 117.2,
+        "z": 14.2,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 216,
+        "group": 703,
+        "alpha": false,
+        "tick": 1133,
+        "x": 120,
+        "z": 14.2,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 217,
+        "group": 703,
+        "alpha": false,
+        "tick": 1133,
+        "x": 122.8,
+        "z": 14.2,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 218,
+        "group": 703,
+        "alpha": false,
+        "tick": 1158,
+        "x": 125.6,
+        "z": 14.2,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 219,
+        "group": 703,
+        "alpha": false,
+        "tick": 1158,
+        "x": 100.4,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 220,
+        "group": 703,
+        "alpha": false,
+        "tick": 1158,
+        "x": 103.2,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 221,
+        "group": 703,
+        "alpha": false,
+        "tick": 1206,
+        "x": 106,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 222,
+        "group": 703,
+        "alpha": false,
+        "tick": 1206,
+        "x": 108.8,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 223,
+        "group": 703,
+        "alpha": false,
+        "tick": 1206,
+        "x": 111.6,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 224,
+        "group": 703,
+        "alpha": false,
+        "tick": 1206,
+        "x": 114.4,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 225,
+        "group": 703,
+        "alpha": false,
+        "tick": 1206,
+        "x": 117.2,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 226,
+        "group": 703,
+        "alpha": false,
+        "tick": 1206,
+        "x": 120,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 227,
+        "group": 703,
+        "alpha": false,
+        "tick": 1230,
+        "x": 122.8,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 228,
+        "group": 703,
+        "alpha": false,
+        "tick": 1230,
+        "x": 125.6,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 229,
+        "group": 703,
+        "alpha": false,
+        "tick": 1230,
+        "x": 100.4,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 230,
+        "group": 703,
+        "alpha": false,
+        "tick": 1230,
+        "x": 103.2,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 231,
+        "group": 703,
+        "alpha": false,
+        "tick": 1230,
+        "x": 106,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 232,
+        "group": 703,
+        "alpha": false,
+        "tick": 1257,
+        "x": 108.8,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 233,
+        "group": 703,
+        "alpha": false,
+        "tick": 1257,
+        "x": 111.6,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 234,
+        "group": 703,
+        "alpha": false,
+        "tick": 1257,
+        "x": 114.4,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 235,
+        "group": 703,
+        "alpha": false,
+        "tick": 1263,
+        "x": 117.2,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 236,
+        "group": 703,
+        "alpha": false,
+        "tick": 1263,
+        "x": 120,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 237,
+        "group": 703,
+        "alpha": false,
+        "tick": 1285,
+        "x": 122.8,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 238,
+        "group": 703,
+        "alpha": false,
+        "tick": 1322,
+        "x": 125.6,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 239,
+        "group": 703,
+        "alpha": false,
+        "tick": 1322,
+        "x": 100.4,
+        "z": 15.8,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 240,
+        "group": 703,
+        "alpha": false,
+        "tick": 1322,
+        "x": 103.2,
+        "z": 15.8,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 241,
+        "group": 703,
+        "alpha": false,
+        "tick": 1322,
+        "x": 106,
+        "z": 15.8,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 242,
+        "group": 703,
+        "alpha": false,
+        "tick": 1322,
+        "x": 108.8,
+        "z": 15.8,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 243,
+        "group": 703,
+        "alpha": false,
+        "tick": 1322,
+        "x": 111.6,
+        "z": 15.8,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 244,
+        "group": 704,
+        "alpha": true,
+        "tick": 1338,
+        "x": 35,
+        "z": 43,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 245,
+        "group": 704,
+        "alpha": false,
+        "tick": 1338,
+        "x": 22.78268343236509,
+        "z": 44.97387953251128,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 246,
+        "group": 704,
+        "alpha": false,
+        "tick": 1381,
+        "x": 25.582683432365094,
+        "z": 44.97387953251128,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 247,
+        "group": 704,
+        "alpha": false,
+        "tick": 1629,
+        "x": 28,
+        "z": 44.05,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 248,
+        "group": 704,
+        "alpha": false,
+        "tick": 1629,
+        "x": 30.8,
+        "z": 44.05,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 249,
+        "group": 704,
+        "alpha": false,
+        "tick": 1658,
+        "x": 33.6,
+        "z": 44.05,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 250,
+        "group": 704,
+        "alpha": false,
+        "tick": 1706,
+        "x": 36.4,
+        "z": 44.05,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 251,
+        "group": 704,
+        "alpha": false,
+        "tick": 1706,
+        "x": 39.2,
+        "z": 44.05,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 252,
+        "group": 704,
+        "alpha": false,
+        "tick": 1706,
+        "x": 42.38268343236509,
+        "z": 44.97387953251128,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 253,
+        "group": 704,
+        "alpha": false,
+        "tick": 1791,
+        "x": 45.18268343236509,
+        "z": 44.97387953251128,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 254,
+        "group": 704,
+        "alpha": false,
+        "tick": 1791,
+        "x": 47.6,
+        "z": 44.05,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 255,
+        "group": 704,
+        "alpha": false,
+        "tick": 1791,
+        "x": 22.4,
+        "z": 45.35,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 256,
+        "group": 704,
+        "alpha": false,
+        "tick": 1791,
+        "x": 25.200000000000003,
+        "z": 45.35,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 257,
+        "group": 704,
+        "alpha": false,
+        "tick": 1791,
+        "x": 28,
+        "z": 45.35,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 258,
+        "group": 704,
+        "alpha": false,
+        "tick": 1855,
+        "x": 30.8,
+        "z": 45.35,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 259,
+        "group": 704,
+        "alpha": false,
+        "tick": 1855,
+        "x": 33.6,
+        "z": 45.35,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 260,
+        "group": 704,
+        "alpha": false,
+        "tick": 1855,
+        "x": 36.4,
+        "z": 45.35,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 261,
+        "group": 704,
+        "alpha": false,
+        "tick": 1855,
+        "x": 39.2,
+        "z": 45.35,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 262,
+        "group": 704,
+        "alpha": false,
+        "tick": 1855,
+        "x": 42,
+        "z": 45.35,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 263,
+        "group": 704,
+        "alpha": false,
+        "tick": 1918,
+        "x": 44.8,
+        "z": 45.35,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 264,
+        "group": 704,
+        "alpha": false,
+        "tick": 1918,
+        "x": 47.6,
+        "z": 45.35,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 265,
+        "group": 704,
+        "alpha": false,
+        "tick": 1918,
+        "x": 22.4,
+        "z": 46.65,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 266,
+        "group": 704,
+        "alpha": false,
+        "tick": 1918,
+        "x": 25.200000000000003,
+        "z": 46.65,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 267,
+        "group": 704,
+        "alpha": false,
+        "tick": 1918,
+        "x": 28,
+        "z": 46.65,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 268,
+        "group": 704,
+        "alpha": false,
+        "tick": 1918,
+        "x": 30.8,
+        "z": 46.65,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 269,
+        "group": 704,
+        "alpha": false,
+        "tick": 1918,
+        "x": 33.6,
+        "z": 46.65,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 270,
+        "group": 704,
+        "alpha": false,
+        "tick": 1932,
+        "x": 36.4,
+        "z": 46.65,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 271,
+        "group": 704,
+        "alpha": false,
+        "tick": 1978,
+        "x": 39.2,
+        "z": 46.65,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 272,
+        "group": 704,
+        "alpha": false,
+        "tick": 1978,
+        "x": 42.25,
+        "z": 46.65,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 273,
+        "group": 704,
+        "alpha": false,
+        "tick": 1978,
+        "x": 44.8,
+        "z": 46.65,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 274,
+        "group": 704,
+        "alpha": false,
+        "tick": 1978,
+        "x": 47.6,
+        "z": 46.65,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 275,
+        "group": 704,
+        "alpha": false,
+        "tick": 1978,
+        "x": 22.4,
+        "z": 47.95,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 276,
+        "group": 704,
+        "alpha": false,
+        "tick": 1978,
+        "x": 25.200000000000003,
+        "z": 47.95,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 277,
+        "group": 704,
+        "alpha": false,
+        "tick": 1978,
+        "x": 28,
+        "z": 47.95,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 278,
+        "group": 704,
+        "alpha": false,
+        "tick": 2000,
+        "x": 30.8,
+        "z": 47.95,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 279,
+        "group": 704,
+        "alpha": false,
+        "tick": 2000,
+        "x": 33.6,
+        "z": 47.95,
+        "offscreen": true,
+        "safe": true
+      }
+    ],
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 254,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    },
+    "roster": [
+      {
+        "id": 51,
+        "key": "shelter-0",
+        "injured": false,
+        "status": "following",
+        "passed": false,
+        "hp": 100,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": true
+      },
+      {
+        "id": 52,
+        "key": "shelter-1",
+        "injured": false,
+        "status": "following",
+        "passed": false,
+        "hp": 100,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": true
+      },
+      {
+        "id": 53,
+        "key": "shelter-2",
+        "injured": false,
+        "status": "following",
+        "passed": false,
+        "hp": 100,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": true
+      },
+      {
+        "id": 54,
+        "key": "shelter-3",
+        "injured": false,
+        "status": "following",
+        "passed": false,
+        "hp": 100,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": true
+      },
+      {
+        "id": 55,
+        "key": "shelter-4",
+        "injured": false,
+        "status": "following",
+        "passed": false,
+        "hp": 100,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": true
+      },
+      {
+        "id": 56,
+        "key": "shelter-5",
+        "injured": false,
+        "status": "following",
+        "passed": false,
+        "hp": 100,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": true
+      },
+      {
+        "id": 57,
+        "key": "shelter-6",
+        "injured": false,
+        "status": "following",
+        "passed": false,
+        "hp": 100,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": true
+      },
+      {
+        "id": 58,
+        "key": "shelter-7",
+        "injured": false,
+        "status": "following",
+        "passed": false,
+        "hp": 100,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": true
+      },
+      {
+        "id": 59,
+        "key": "shelter-8",
+        "injured": false,
+        "status": "following",
+        "passed": false,
+        "hp": 100,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": true
+      },
+      {
+        "id": 60,
+        "key": "shelter-9",
+        "injured": false,
+        "status": "following",
+        "passed": false,
+        "hp": 100,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": true
+      },
+      {
+        "id": 61,
+        "key": "shelter-10",
+        "injured": false,
+        "status": "following",
+        "passed": false,
+        "hp": 100,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": true
+      },
+      {
+        "id": 62,
+        "key": "shelter-11",
+        "injured": false,
+        "status": "following",
+        "passed": false,
+        "hp": 100,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": true
+      },
+      {
+        "id": 63,
+        "key": "shelter-12",
+        "injured": false,
+        "status": "following",
+        "passed": false,
+        "hp": 100,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": true
+      },
+      {
+        "id": 64,
+        "key": "shelter-13",
+        "injured": false,
+        "status": "following",
+        "passed": false,
+        "hp": 100,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": true
+      },
+      {
+        "id": 65,
+        "key": "shelter-14",
+        "injured": false,
+        "status": "following",
+        "passed": false,
+        "hp": 100,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": true
+      },
+      {
+        "id": 66,
+        "key": "shelter-15",
+        "injured": false,
+        "status": "following",
+        "passed": false,
+        "hp": 100,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": true
+      },
+      {
+        "id": 67,
+        "key": "shelter-16",
+        "injured": false,
+        "status": "following",
+        "passed": false,
+        "hp": 100,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": true
+      },
+      {
+        "id": 68,
+        "key": "shelter-17",
+        "injured": false,
+        "status": "following",
+        "passed": false,
+        "hp": 100,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": true
+      },
+      {
+        "id": 69,
+        "key": "shelter-18",
+        "injured": false,
+        "status": "following",
+        "passed": false,
+        "hp": 100,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": true
+      },
+      {
+        "id": 70,
+        "key": "shelter-19",
+        "injured": false,
+        "status": "following",
+        "passed": false,
+        "hp": 100,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": true
+      },
+      {
+        "id": 71,
+        "key": "shelter-20",
+        "injured": false,
+        "status": "following",
+        "passed": false,
+        "hp": 100,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": true
+      },
+      {
+        "id": 72,
+        "key": "shelter-21",
+        "injured": false,
+        "status": "following",
+        "passed": false,
+        "hp": 100,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": true
+      },
+      {
+        "id": 73,
+        "key": "shelter-22",
+        "injured": false,
+        "status": "following",
+        "passed": false,
+        "hp": 100,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": true
+      },
+      {
+        "id": 74,
+        "key": "shelter-23",
+        "injured": false,
+        "status": "following",
+        "passed": false,
+        "hp": 100,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": true
+      }
+    ],
+    "escaped": [
+      57,
+      52,
+      61,
+      56,
+      66,
+      55,
+      58,
+      53,
+      59,
+      54,
+      60,
+      62,
+      64,
+      51,
+      65,
+      67,
+      63,
+      68,
+      69,
+      70,
+      72,
+      71,
+      73,
+      74
+    ]
+  }
+}

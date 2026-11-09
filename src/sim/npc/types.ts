@@ -20,6 +20,8 @@ export interface Civilian {
   /** Stair entry: support the body on the higher tread under either walking foot. */
   supportFeet?: boolean;
   zooAnimal?: ZooSpecies;
+  /** Healthy primate activity, with a checkpoint-safe clock. Climbing uses floorY as its physical support. */
+  animalActivity?: { kind: 'groom' | 'climb' | 'scatter'; started: number; until: number };
   state: CivilianState; ambient: boolean; adult: boolean; pet: 'dog' | 'cat' | null; owner: number | null;
   model?: string; variant: string; routine: string; waypoints: Point[]; waypoint: number; pauseUntil: number;
   /** Story beat presentation (render-only): a scripted clip from `start` and an optional hand prop. */

@@ -86,8 +86,6 @@ export const l2 = {
   },
   /** Section 5.5: the street escape. */
   escape: {
-    /** During break-away both tiers close to arm's reach before committing a lunge. */
-    lungeM: 1.6,
     /** PO 10-23 / Q-168: six solitary figures along the ordinary market → Juniper → Elm walk.
      * Split the former pairs between roadside corners: high retains six infected, low gains two singles.
      * Prepared on break-away, before the courier can see these street corners; the bridge cluster remains separate. */
@@ -106,8 +104,6 @@ export const l2 = {
   /** Section 5.5: the dense cluster on the Elm Street approach to the bridge and its two openings. */
   /** Home at the Elm/Larch junction: far enough (> 16 m) from the people behind the line that they never see them. */
   cluster: { home: [48, 30] as P, count: 13, radiusM: 7, triggerM: 30 },
-  /** Downed bodies that may stand again use a separate bounded pool; excess oldest bodies stay dead. */
-  recovering: { high: 24, low: 12 },
   /** Section 5.6: the police bridge checkpoint at the east end of Elm Street. */
   /** Officers hold fire until the evacuee is this close to the gate (they do not clear the approach from the line). */
   checkpoint: { gateX: 76, gateZ: [24.6, 35.6] as P, closeWithinS: 1.5, holdS: 2, officers: 4, civilians: 8, policeVehicles: 3, shootM: 15, coverM: 20,
@@ -116,14 +112,6 @@ export const l2 = {
     gun: { damage: 20, shotS: .6, rangeM: 22, nearM: 12, hitNear: .7, hitFar: .3 }, lineM: 10, gunfireM: 20, gunfireHoldS: 6, gunfireGapS: .5,
     /** Arrival draws the approach horde to the fixed police line, with the riverside bypass still open. */
     hordeTriggerM: 22, hordeRushS: 18 },
-  /** Multiplier on the infected hit (L1: 10 per hit, 0.9 s cycle). Starting tuning for the 'fight everything' failure. */
-  infectedDamage: 1.8,
-  /**
-   * PO 10-09 "the final fight is far too easy": melee hits that knock down a normal infected (40 HP runner). Damage.ts caps each
-   * melee hit at maxHP / hits, so axe damage is capped at maxHP / 2.4, bat at / 4 and fists at / 8. Guns, kicks and L1 are unchanged.
-   */
-  // PO 10-10: axe x1.25.
-  infectedMeleeHits: { 'weapon.fire-axe': 2.4, 'weapon.bat': 4, 'weapon.fists': 8 } as Readonly<Record<string, number>>,
   /**
    * PO 10-09 (as l3.mercy): the escape and cluster checkpoints wait for a calm moment (nothing alive within `calmM`, health >= `calmHealth`).
    * From the `fromDeaths`-th respawn at the same checkpoint on, each respawn releases `stepFrac` (max `maxFrac`) of the infected within `nearM` of the courier.

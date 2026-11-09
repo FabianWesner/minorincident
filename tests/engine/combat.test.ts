@@ -214,12 +214,12 @@ test('explosives: landing clamps to range, fuse, distance falloff, cover line of
 
 });
 
-test('damage modifiers: front shield ±60°, armor and multipliers, stun/slow/toxic, capped burning stacks and water', async () => {
-  for (const degrees of [-60, 0, 60, 61, 90, 180]) {
+test('damage modifiers: shared riot shield ±35°, armor and multipliers, stun/slow/toxic, capped burning stacks and water', async () => {
+  for (const degrees of [-65, -60, -20, 0, 20, 60, 65, 90, 180]) {
     const w = await arena(); equip(w, ['weapon.pistol']);
     const id = w.spawnDummy('infected.riot', { x: 3, z: 0 }, { yaw: Math.PI + degrees * Math.PI / 180 });
-    fire(w); expect(health(w, id), `${degrees}°`).toBe(Math.abs(degrees) <= 60 ? 100 : 80);
-    expect(w.events.events().some(event => event.type === 'combat.hit' && event.targetId === id && event.blocked), `${degrees}° block feedback`).toBe(Math.abs(degrees) <= 60);
+    fire(w); expect(health(w, id), `${degrees}°`).toBeCloseTo(Math.abs(degrees) <= riotShieldResponse.faceHalfAngleDeg ? 100 - 20 * riotShieldResponse.chipFraction : 80);
+    expect(w.events.events().some(event => event.type === 'combat.hit' && event.targetId === id && event.shieldGlance), `${degrees}° shield feedback`).toBe(Math.abs(degrees) <= riotShieldResponse.faceHalfAngleDeg);
   }
   const mg = await arena(); mg.loadScenario('horde-arena', 1); equip(mg, ['weapon.army-mg']);
   mg.scenario = 'L4';
@@ -235,8 +235,8 @@ test('damage modifiers: front shield ±60°, armor and multipliers, stun/slow/to
   }
   expect(health(mg, riot)).toBe(0);
   expect(mg.events.events().filter(event => event.type === 'combat.hit' && event.targetId === riot && event.amount > 0)).toHaveLength(17);
-  expect(mg.events.events().some(event => event.type === 'combat.kill' && event.targetId === riot && event.downed === undefined)).toBe(true);
-  expect(mg.entities.get(riot)!.infected!.recoverAt).toBe(-1);
+  expect(mg.events.events().some(event => event.type === 'combat.kill' && event.targetId === riot && event.downed !== undefined)).toBe(true);
+  expect(mg.entities.get(riot)!.infected!.recoverAt).toBeGreaterThan(mg.tick);
   const front = await arena(); front.loadScenario('horde-arena', 1); equip(front, ['weapon.army-mg']); front.scenario = 'L4';
   const frontRiot = front.infected!.spawn('infected.riot', { x: 3, z: 0 }, { yaw: Math.PI });
   const frontPlayer = front.entities.get(1)!; Object.assign(frontPlayer.transform, { x: 0, z: 0 });
@@ -305,31 +305,31 @@ test('damage modifiers: front shield ±60°, armor and multipliers, stun/slow/to
       origin: melee.entities.get(1)!.transform, direction: { x: 1, z: 0 }, base: meleeDamage, multiplier: 1, type: 'melee', knockback: 0, stagger: .2 });
   }
   expect(health(melee, meleeRiot)).toBe(0);
-  expect(melee.entities.get(meleeRiot)!.infected!.recoverAt).toBe(-1);
+  expect(melee.entities.get(meleeRiot)!.infected!.recoverAt).toBeGreaterThan(melee.tick);
   // The barrel can pass the shield at physical contact; a melee flinch opens
-  // a frontal firing window until stagger expires. L5 retains its old shield.
-  for (const level of ['L4', 'L5']) {
+  // a frontal firing window until stagger expires in every level.
+  for (const level of Array.from({ length: 10 }, (_, i) => `L${i + 1}`)) {
     const counter = await arena(); counter.scenario = level;
     const id = counter.spawnDummy('infected.riot', { x: 0, z: 0 }, { hp: 500, yaw: 0 });
     const target = counter.entities.get(id)!;
     const bullet = { attackId: 1, actionId: 'weapon.army-mg', sourceId: 1, targetId: id,
       origin: { x: 1.05, z: 0 }, direction: { x: -1, z: 0 }, base: 14, multiplier: 1, type: 'bullet' as const, knockback: 0, stagger: 0 };
-    expect(counter.combat!.damage.apply(bullet), `${level} point blank`).toBe(level === 'L4' ? 14 : 0);
+    expect(counter.combat!.damage.apply(bullet), `${level} point blank`).toBe(14);
     bullet.origin.x = 3;
-    expect(counter.combat!.damage.apply({ ...bullet, type: 'melee', actionId: 'weapon.bat', stagger: .5 })).toBe(14);
-    expect(counter.combat!.damage.apply(bullet), `${level} stagger window`).toBe(level === 'L4' ? 14 : 0);
+    expect(counter.combat!.damage.apply({ ...bullet, type: 'melee', actionId: 'weapon.fire-axe', stagger: .5 })).toBe(14);
+    expect(counter.combat!.damage.apply(bullet), `${level} stagger window`).toBe(14);
     counter.tick += 31;
-    expect(counter.combat!.damage.apply(bullet), `${level} raised shield`).toBe(level === 'L4' ? 14 * .18 : 0);
+    expect(counter.combat!.damage.apply(bullet), `${level} raised shield`).toBe(14 * .18);
     expect(counter.combat!.damage.apply({ ...bullet, type: 'explosive' })).toBe(14);
     expect(counter.combat!.damage.apply({ ...bullet, type: 'status', permanent: true })).toBe(14);
-    expect(counter.combat!.damage.apply({ ...bullet, shotOrigin: { x: -3, z: 0 } }), `${level} launch-origin correction stays L4-only`).toBe(level === 'L4' ? 14 : 0);
+    expect(counter.combat!.damage.apply({ ...bullet, shotOrigin: { x: -3, z: 0 } }), `${level} shared launch-origin correction`).toBe(14);
     expect(target.combat!.shield).toBe(true);
     for (const distance of [3, 2.5, 1.5, 1.05, 1, .5]) {
       const flight = await arena(); flight.scenario = level; equip(flight, ['weapon.army-mg']);
       Object.assign(flight.entities.get(1)!.transform, { x: distance, z: 0 });
       const id = flight.spawnDummy('infected.riot', { x: 0, z: 0 });
       fire(flight, 'LEFT', { x: -1, z: 0 }); step(flight, 5);
-      expect(health(flight, id), `${level} actual projectile from ${distance} m`).toBe(level === 'L4' ? distance < 1.15 ? 86 : 97.48 : 100);
+      expect(health(flight, id), `${level} actual projectile from ${distance} m`).toBe(distance < 1.15 ? 86 : 97.48);
     }
   }
   const w = await arena(); equip(w, ['weapon.pistol']); const id = dummy(w, 5), target = w.entities.get(id)!;
