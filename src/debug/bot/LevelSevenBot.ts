@@ -56,7 +56,13 @@ export class LevelSevenBot {
     // otherwise stopping the leader can leave a settled tail outside the band.
     const limit = Math.max(12, rows * 1.2 + 5, 2.3 + Math.floor(tail / 2) + 2);
     // Reach the bus door before waiting for the last stragglers; the shipped boarding queue owns their recovery there.
-    if (!pickup && this.waypoint < this.route.length - 1 && distance(p.transform, goal) > 10 && followers.some(r => { const e = w.entities.get(r.id); return e && distance(e.transform, p.transform) > limit; })) f.move = { x: 0, z: 0 };
+    if (!pickup && this.waypoint < this.route.length - 1 && distance(p.transform, goal) > 10) {
+      const gap = followers.reduce((n, r) => Math.max(n, distance(w.entities.get(r.id)!.transform, p.transform)), 0);
+      // Ease into the same wait band instead of repeatedly running to its
+      // edge, stopping the whole party, and making every rank restart.
+      const pace = Math.max(0, Math.min(1, (limit - gap) / 1.5));
+      f.move.x *= pace; f.move.z *= pace;
+    }
     // Clear a firing lane instead of running into a crowd or waiting inside
     // its bites. Reuse the same connected six-metre dodge as the war bot.
     if (!pickup && followers.length && this.profile !== 'evade-only') {
