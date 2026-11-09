@@ -106,13 +106,13 @@ export class LevelTenEndingView extends Group {
         const bounds = this.world.districts!.nav, centreX = (bounds.min[0] + bounds.max[0]) / 2, centreZ = (bounds.min[1] + bounds.max[1]) / 2;
         const halfX = (bounds.max[0] - bounds.min[0]) / 2, halfZ = (bounds.max[1] - bounds.min[1]) / 2;
         const height = Math.max(halfX / Math.max(.35, view.camera.aspect), halfZ) / Math.tan(view.camera.fov * Math.PI / 360) * 1.2;
-        const aspect = Math.max(1, 1 / view.camera.aspect), baseHeight = 22 * aspect;
-        const x = console.x + (centreX - console.x) * pull, z = console.z + (centreZ - console.z) * pull;
+        const aspect = Math.max(1, (16 / 9) / view.camera.aspect), baseHeight = 1 + 22 * aspect;
+        const x = console.x + 4 + (centreX - console.x - 4) * pull, z = console.z + 3 + (centreZ - console.z - 3) * pull;
         // At kilometre heights the gameplay near plane loses the millimetre
         // separation between terrain layers. Keep depth precision on the map.
         view.camera.near = Math.max(.1, (baseHeight + height * pull) * .05);
         view.camera.far = Math.max(600, height * 3); view.camera.updateProjectionMatrix();
-        view.cinematic({ position: [x + 16 * aspect * (1 - pull), baseHeight + height * pull, z + 18 * aspect * (1 - pull)], target: [x, 0, z] });
+        view.cinematic({ position: [x - 24 * aspect * (1 - pull), baseHeight + height * pull, z + 24 * aspect * (1 - pull)], target: [x, 1 - pull, z] });
       }
     }
   }
