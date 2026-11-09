@@ -137,6 +137,12 @@ test('escort: shared combat pace, follows through a maze, a 2 s stand revives to
   const beforeL7 = { ...follower.transform }, goalL7 = { x: beforeL7.x - 4, z: beforeL7.z };
   w.npcs!.move(follower, goalL7, 3, c, 0);
   expect(follower.transform).toEqual(beforeL7); // L7 uses the same staggered starts as the rest of the group levels.
+  const danger = w.entities.get(w.infected!.spawn('infected.runner', { x: p.transform.x + 18, z: p.transform.z }))!;
+  expect(Math.hypot(danger.transform.x - follower.transform.x, danger.transform.z - follower.transform.z)).toBeGreaterThan(20);
+  w.tick++; c.survivor!.restAt = w.tick - 60; delete c.survivor!.stirAt;
+  w.npcs!.move(follower, goalL7, 3, c, 0);
+  expect(follower.transform.x, 'the tail sets off immediately when the courier is threatened').toBeLessThan(beforeL7.x);
+  w.infected!.release(danger);
   w.scenario = 'L6';
   // Standing, it looks toward a nearby infected before anything else.
   const enemy = w.entities.get(w.infected!.spawn('infected.runner', { x: follower.transform.x, z: follower.transform.z + 6 }))!;
