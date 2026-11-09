@@ -337,7 +337,11 @@ export class LevelNineDriving {
       const e = w.entities.get(id); if (!alive(e) || e.passengerOf || s.evacuated.includes(id)) continue;
       if (e.civilian?.survivor?.key === 'rosa' && !s.hugDone && !this.hugCorgi(e)) continue;
       const slot = s.roster.filter(other => other !== s.samId).indexOf(id);
-      const target = { x: cfg.evacuation.truckX + slot % 3 * 9 + 1.8, z: cfg.evacuation.truckZ + 1 + Math.floor(slot / 3) * 1.1 };
+      // The bus can push the camp wreck into the eastern boarding lane.
+      // Use the clear side of the actual truck, outside its body/nav margin;
+      // routing to the blocked side only reaches a nearby cell and circles.
+      const target = { x: cfg.evacuation.truckX + slot % 3 * 9 + 2.5, z: cfg.evacuation.truckZ + 1 + Math.floor(slot / 3) * 1.1 };
+      if (!w.infected!.nav.clear(target.x, target.z, .5) || !w.solids.clear({ ...target, y: e.transform.y }, .35, e.id, false)) target.x -= 5;
       e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; if (e.civilian!.survivor) e.civilian!.survivor!.mode = 'hidden';
       if (s.truckEntering[id] === undefined) w.npcs!.move(e, target, 3, e.civilian!, .6, 1600);
       w.spatial.set(id, e.transform.x, e.transform.z);
