@@ -547,11 +547,11 @@ export class LevelTwoRescue {
       for (const id of s.crewIds) {
         const e = world.entities.get(id), a = e?.civilian?.ally; if (!e || !a || e.hidden) continue;
         // Seated crew have no station routine: its expiry otherwise makes them exit inside the moving truck.
-        if (!a.run) { e.hidden = true; e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; world.spatial.delete(id); }
+        if (!a.run) { e.hidden = true; e.passengerOf = s.truckId; e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; world.spatial.delete(id); }
       }
       const crewIn = s.crewIds.every(id => world.entities.get(id)?.hidden !== false);
       if (s.seated && (crewIn || tick - s.alarmAt > ticks(l2.calm.crewToTruckMaxS + 6))) {
-        for (const id of s.crewIds) { const e = world.entities.get(id); if (e) { e.hidden = true; e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; world.spatial.delete(id); } }
+        for (const id of s.crewIds) { const e = world.entities.get(id); if (e) { e.hidden = true; e.passengerOf = s.truckId; e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; world.spatial.delete(id); } }
         s.phase = 'ride'; s.departAt = tick; this.parkNav(false); world.events.emit({ type: 'l2.truckDeparted', tick });
       }
       if (s.seated) this.carry(world.entities.get(s.truckId)!.transform.x, world.entities.get(s.truckId)!.transform.z);
