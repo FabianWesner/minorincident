@@ -20,6 +20,7 @@ import { objectiveText } from '../../src/sim/missions/objectiveText';
 import { markerAnchor } from '../../src/sim/missions/markerAnchor';
 import { checkL8Story } from '../helpers/l8Story';
 import { emergeResident, emergeSpeedMs, walkResidents } from '../../src/sim/outbreak/HouseEmergence';
+import { validateSave } from '../../src/sim/progression/Save';
 
 let world: SimWorld | undefined;
 afterEach(() => { world?.dispose(); world = undefined; });
@@ -234,6 +235,17 @@ test('interactions: ring, input and view predicates agree for every interact ste
       }
       if (['L2', 'L3', 'L4', 'L5'].includes(level)) expect(checked, level).toBeGreaterThan(0);
       if (level === 'L10') {
+        // A retained farm find must enter campaign ownership before the next
+        // checkpoint captures its arsenal, matching the live held rack.
+        Object.assign(player.transform, { x: 547, y: .71, z: 0 });
+        levelWorld.combat!.pickups.spawn('weapon.hunting-rifle', player.transform, false, { retain: true });
+        levelWorld.combat!.pickups.update();
+        const campaign = levelWorld.progression!.campaign!;
+        expect(campaign.ownedActions).toContain('weapon.hunting-rifle');
+        expect(campaign.racks.RIGHT).toContain('weapon.hunting-rifle');
+        mission.checkpoint('cure-residential');
+        campaign.cureResume = mission.saveResume(true);
+        expect(validateSave(campaign), 'farm find and checkpoint remain a loadable save').toBe(true);
         expect(mission.def.steps.find(s => s.id === 'mega')!.waypoint).toBe(false);
         // A legacy resume's serialized marker must not reveal a distant boss.
         mission.def.anchors['cure-mega'] = { x: -150, z: 80, radius: 2 };
