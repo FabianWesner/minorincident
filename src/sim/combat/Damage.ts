@@ -80,7 +80,7 @@ export class Damage {
       if (!(back && (target.infected.megaWeakTicks ?? 0) > 0)) amount *= .35;
     }
     const arena = target.infected?.arenaBoss;
-    if (arena && hit.actionId !== 'arena.elephant.wall') amount *= this.world.tick < arena.exposedUntil ? 1.8 : .18;
+    if (arena && hit.actionId !== 'arena.elephant.wall') amount *= this.world.tick < arena.exposedUntil ? 1.8 : .6;
     return glance ? amount * riotShieldResponse.chipFraction : amount;
   }
   /** True only for an actual frontal riot shield firearm hit outside contact and break windows. */
@@ -229,11 +229,11 @@ export class Damage {
       const from = { x: target.transform.x, z: target.transform.z };
       if (knockback > 0 && target.faction !== 'environment') this.world.knockback(target, hit.direction, knockback, hit.actionId === 'weapon.shotgun' ? 8 : 1);
       if (target.combat && target.faction === 'infected' && (!mega || megaReact || target.health.current === 0)) {
-        const heavy = target.health.current === 0 || !mega && ( (!!special && target.archetype !== 'infected.alpha') || (!normal && (hit.type === 'explosive' || hit.type === 'vehicle')));
+        const heavy = target.health.current === 0 || !target.infected?.arenaBoss && !mega && ( (!!special && target.archetype !== 'infected.alpha') || (!normal && (hit.type === 'explosive' || hit.type === 'vehicle')));
         const downed = target.combat.reaction?.heavy && target.combat.reaction.until > this.world.tick;
         const previous = target.combat.reaction?.index ?? target.id % 3;
         if (downed && target.health.current === 0) target.combat.reaction!.groundDeath = true;
-        else if (!downed || heavy) target.combat.reaction = { index: (previous + 1) % 6, started: this.world.tick, until: this.world.tick + (heavy ? 80 : Math.max(1, Math.ceil(stagger * 60))), direction: { ...hit.direction }, from, to: { x: target.transform.x, z: target.transform.z }, heavy };
+        else if (!downed || heavy) target.combat.reaction = { index: (previous + 1) % 6, started: this.world.tick, until: this.world.tick + (heavy ? 80 : Math.max(target.infected?.arenaBoss ? 8 : 1, Math.ceil(stagger * 60))), direction: { ...hit.direction }, from, to: { x: target.transform.x, z: target.transform.z }, heavy };
         if (heavy) target.combat.staggerUntil = Math.max(target.combat.staggerUntil, this.world.tick + 80);
         // A kicked body sweeps its existing knockback corridor and staggers the next
         // infected it tumbles into. No new physics bodies or navigation rules.

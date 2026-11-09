@@ -120,8 +120,8 @@ export class Vehicles {
       if (!this.operable(car) || car.physics.speed >= 1 || this.world.tick < car.noEnterUntil) continue;
       const zoo = this.world.missions?.l8;
       if (zoo?.state.carId === car.entity.id && !zoo.canBoardDriver()) continue;
-      this.localPoint(car, car.physics.def.doorX, car.physics.def.width / 2 + .55);
-      if (Math.hypot(player.transform.x - this.position.x, player.transform.z - this.position.z) <= .7) return true;
+      this.localPoint(car, car.physics.def.doorX, car.physics.def.width / 2 + (zoo?.state.carId === car.entity.id ? 1 : .55));
+      if (Math.hypot(player.transform.x - this.position.x, player.transform.z - this.position.z) <= (zoo?.state.carId === car.entity.id ? 2 : .7)) return true;
     }
     return false;
   }
@@ -150,6 +150,11 @@ export class Vehicles {
         car.zooParked = waitingForBoarding;
         car.physics.body.setEnabledTranslations(!waitingForBoarding, true, !waitingForBoarding, true);
         car.physics.body.setEnabledRotations(!waitingForBoarding, !waitingForBoarding, !waitingForBoarding, true);
+      }
+      if (waitingForBoarding) {
+        const velocity = car.physics.body.linvel();
+        car.physics.body.setLinvel({ x: 0, y: velocity.y, z: 0 }, true);
+        car.physics.body.setAngvel({ x: 0, y: 0, z: 0 }, true);
       }
       if (this.operable(car) && this.active === car.entity.id && !waitingForBoarding) {
         if ((scheme === 'keyboard' || scheme === 'mouse-keyboard') && Math.hypot(frame.move.x, frame.move.z) > .05) {
@@ -186,8 +191,8 @@ export class Vehicles {
         if ((scheme !== 'mouse-only' && frame.left.down) || (car.physics.def.emergency && this.world.tick % 60 === 0)) this.noise(car);
         if (state.recoveringUntil > this.world.tick && !drive.brake) { drive.throttle = -.8; drive.steer = .6; drive.brake = false; }
       } else if (this.active === null && player.health.current > 0 && this.operable(car) && this.world.tick >= car.noEnterUntil && car.physics.speed < 1 && (zoo?.state.carId !== car.entity.id || zoo.canBoardDriver())) {
-        this.localPoint(car, car.physics.def.doorX, car.physics.def.width / 2 + .55);
-        const near = Math.hypot(player.transform.x - this.position.x, player.transform.z - this.position.z) <= .7;
+        this.localPoint(car, car.physics.def.doorX, car.physics.def.width / 2 + (zoo?.state.carId === car.entity.id ? 1 : .55));
+        const near = Math.hypot(player.transform.x - this.position.x, player.transform.z - this.position.z) <= (zoo?.state.carId === car.entity.id ? 2 : .7);
         const still = Math.hypot(frame.move.x, frame.move.z) < .05;
         car.doorTicks = near && still ? car.doorTicks + 1 : 0;
         if (near && (car.doorTicks >= 36 || frame.interact)) this.enter(car);
@@ -494,7 +499,7 @@ export class Vehicles {
       target.combat!.attacking = tick >= climb.nextHit - 36;
       if (occupied && tick >= climb.nextHit) {
         const player = this.world.entities.get(1)!;
-        if (player.health.current > 0) this.world.player?.damage(10, tick, true);
+        if (player.health.current > 0 && !player.hidden) this.world.player?.damage(10, tick, true);
         climb.nextHit = tick + 60;
       }
     }

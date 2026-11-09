@@ -24,6 +24,10 @@ export class LevelEightBot {
       this.breachHoldStarted ||= w.tick;
       if (w.tick - this.breachHoldStarted < 60 * 60) return f;
     }
+    if (!calm && !zoo.protecting() && this.profile === 'complete') {
+      const next = zoo.state.arenas.find(a => a.phase !== 3);
+      if (next) return this.arenas.sample(next.id);
+    }
     if (!calm && !zoo.protecting()) {
       const arena = zoo.state.arenas.find(a => a.phase !== 3);
       if (arena && this.profile === 'arena-tour') return this.arenas.sample(arena.id);
@@ -35,10 +39,12 @@ export class LevelEightBot {
     // driver's side door as this origin leaves the rear evacuees >10 m away
     // on the redesigned north-facing APC. Board the driver last.
     let target = zoo.protecting() ? m.def.anchors['central-plaza'] : m.state.steps.sanctuary.status === 'active' ? calm ? w.entities.get(zoo.state.keeperId)!.transform : m.def.anchors['central-plaza'] : boarded ? door : { x: passengerDoor.x - 4, z: passengerDoor.z + 2 };
+    if (!calm && !zoo.protecting() && this.profile === 'runner') target = p.x < 85 ? { x: 90, z: 60 } : { x: passengerDoor.x - 4, z: passengerDoor.z + 2 };
     if (zoo.protecting()) this.escapeLeg = 0;
-    if (!calm && !zoo.protecting() && !boarded) {
+    if (!calm && !zoo.protecting() && !boarded && this.profile !== 'runner') {
       // Stay on the public service boulevard; the shortest grid route cuts across the zebra paddock.
-      const road = [{ x: 26, z: 8 }, { x: 26, z: 62 }, { x: 84, z: 64 }];
+      const road = [{ x: 26, z: 8 }, { x: 26, z: 60 }, { x: 88, z: 60 }];
+      if (p.x > 85 && p.z > 46) this.escapeLeg = road.length;
       while (this.escapeLeg < road.length && Math.hypot(p.x - road[this.escapeLeg].x, p.z - road[this.escapeLeg].z) < 2) this.escapeLeg++;
       if (this.escapeLeg < road.length) target = road[this.escapeLeg];
     }
@@ -51,19 +57,19 @@ export class LevelEightBot {
     if (!calm) {
       const enemies = w.infected!.active.filter(e => e.health.current > 0 && (!e.infected!.arenaBoss || e.infected!.arenaBoss.engaged) && !e.hidden && !e.emerging && !e.infectionRise && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 16 && w.infected!.director.inPlayerView(e.transform, 16, 1, 5) && w.infected!.nav.visible(p, e.transform, 0)).sort((a, b) => Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z));
       const enemy = enemies[0];
-      if (enemy && this.profile !== 'evade-only') {
+      if (enemy && this.profile !== 'evade-only' && this.profile !== 'runner') {
         const gun = w.combat!.runner.loadout.activeEntries().find(e => e.id === 'weapon.army-mg');
         if (gun) { f.selectedSlot = { side: gun.side, index: gun.index }; strikeAt(f, enemy, gun.side, p, false); }
       }
       const live = zoo.roster().map(id => w.entities.get(id)).filter(e => e && e.health.current > 0 && !e.infected && e.passengerOf === undefined);
-      if (!returning && Math.hypot(p.x - target.x, p.z - target.z) > 10 && live.some(e => Math.hypot(e!.transform.x - p.x, e!.transform.z - p.z) > Math.max(12, Math.ceil(live.length / 3) * 1.2 + 5))) return f;
+      if (this.profile !== 'runner' && !returning && Math.hypot(p.x - target.x, p.z - target.z) > 10 && live.some(e => Math.hypot(e!.transform.x - p.x, e!.transform.z - p.z) > Math.max(12, Math.ceil(live.length / 3) * 1.2 + 5))) return f;
     }
     f.move = this.walker.step(w, target, calm ? 1 : .35, calm ? 'explore' : `apc-${this.escapeLeg}`) ?? f.move;
     if (!calm) {
       const cue = w.infected!.active.find(e => e.health.current > 0 && e.infected!.state === 'attack' && (e.infected!.heardTargetId ?? e.infected!.l1?.targetId ?? 1) === 1 && Math.hypot(e.transform.x-p.x,e.transform.z-p.z) < 4);
       if (cue) { const b=cue.infected!, a={x:-b.dz,z:b.dx}, other={x:b.dz,z:-b.dx}; f.move=w.solids.sweep(player,a,2) >= w.solids.sweep(player,other,2) ? a : other; }
     }
-    if (!calm && boarded && Math.hypot(p.x - door.x, p.z - door.z) < .6) { f.move = { x: 0, z: 0 }; f.interact = true; }
+    if (!calm && boarded && Math.hypot(p.x - door.x, p.z - door.z) < 1.8) { f.move = { x: 0, z: 0 }; f.interact = true; }
     return f;
   }
 }

@@ -2,7 +2,6 @@
 import { OrthographicCamera } from 'three';
 import { Vfx } from '../../src/render/vfx/Vfx';
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { L8ArenaBot } from '../../src/debug/bot/L8ArenaBot';
 import { emptyInput } from '../../src/input/InputFrame';
 import { barEligible } from '../../src/render/HealthBars';
 import { l8BossArenas, type L8BossId } from '../../src/data/l8Bosses';
@@ -30,6 +29,44 @@ async function fixture(id: L8BossId, nadiaAlive = true) {
   return { w, zoo, m: w.missions!, p: w.entities.get(1)!, arena, e, lines };
 }
 const hit = (w: SimWorld, e: EntitySnapshot, base: number, type: 'bullet' | 'melee' = 'bullet') => w.combat!.damage.apply({ sourceId: 1, targetId: e.id, attackId: w.infected!.arenaAttackId(), actionId: type === 'melee' ? 'weapon.fire-axe' : 'weapon.handgun', origin: w.entities.get(1)!.transform, direction: { x: 1, z: 0 }, base, multiplier: 1, type, knockback: 0, stagger: 0 });
+// Isolated weapon capability matrix: real selectors, repeated triggers, hit queries,
+// projectiles and damage; courier protection keeps this separate from mortal completion.
+for (const def of l8BossArenas) {
+  const { w, zoo, m, p, arena, e } = await fixture(def.id);
+  try {
+    for (const actor of w.entities.iterate()) if (actor.civilian?.ally) delete actor.civilian.ally; // Isolate this weapon's damage from rifle support.
+    w.combat!.damage.god = true; m.state.states.breached = true; m.state.states['hale-keys'] = true; m.state.states['hale-fallen'] = true;
+    zoo.state.breachedAt = w.tick || 1; zoo.state.nextWave = Number.MAX_SAFE_INTEGER;
+    arena.phase = 1; arena.nextAt = Number.MAX_SAFE_INTEGER;
+    w.combat!.runner.loadout.collect('RIGHT', 'weapon.hunting-rifle', true);
+    const shots = new Map<string, number>(), damage = new Map<string, number>(), reactions = new Map<string, number>();
+    w.events.on('combat.attack', event => { if (event.type === 'combat.attack' && event.sourceId === 1) shots.set(event.actionId, (shots.get(event.actionId) ?? 0) + 1); });
+    w.events.on('combat.hit', event => {
+      if (event.type !== 'combat.hit' || event.sourceId !== 1 || event.targetId !== e.id || event.amount <= 0) return;
+      damage.set(event.actionId, (damage.get(event.actionId) ?? 0) + event.amount);
+
+    });
+    for (const weapon of ['weapon.shotgun', 'weapon.army-mg', 'weapon.hunting-rifle', 'weapon.rocket-launcher']) {
+      const distance = weapon === 'weapon.rocket-launcher' ? 12 : 6;
+      const offset = [{ x: 0, z: distance }, { x: distance, z: 0 }, { x: 0, z: -distance }, { x: -distance, z: 0 }].find(d => w.solids.clear({ x: e.transform.x + d.x, y: .7, z: e.transform.z + d.z }, .35, p.id, false) && w.combat!.query.visible({ x: e.transform.x + d.x, z: e.transform.z + d.z }, e.transform));
+      if (!offset) throw Error(`${def.id}: no clear weapon fixture origin`);
+      w.solids.relocate(p, { x: e.transform.x + offset.x, y: .7, z: e.transform.z + offset.z }, 'qa.weapon-origin', 1);
+      const slot = w.combat!.runner.loadout.activeEntries().find(entry => entry.id === weapon)!;
+      for (let n = 0; n < 600 && ((shots.get(weapon) ?? 0) < 2 || !(damage.get(weapon)! > 0)); n++) {
+        const f = emptyInput(), dx = e.transform.x - p.transform.x, dz = e.transform.z - p.transform.z, length = Math.hypot(dx, dz) || 1;
+        f.selectedSlot = slot; f.aim = { x: dx / length, z: dz / length }; f.aimPoint = { x: e.transform.x, z: e.transform.z }; f.aimSource = 'pointer'; f.strafe = true; f[slot.side === 'LEFT' ? 'left' : 'right'].held = true;
+        f.move = length > 8 ? { x: dx / length, z: dz / length } : length < (weapon === 'weapon.rocket-launcher' ? 8 : 4) ? { x: -dx / length, z: -dz / length } : f.move;
+        w.applyInput(f, 'keyboard'); step(w);
+        if ((damage.get(weapon) ?? 0) > 0 && (e.combat!.reaction?.until ?? 0) > w.tick) reactions.set(weapon, (reactions.get(weapon) ?? 0) + 1);
+      }
+      const value = { boss: def.id, weapon, shots: shots.get(weapon) ?? 0, damage: damage.get(weapon) ?? 0, reactions: reactions.get(weapon) ?? 0, hp: e.health.current };
+      check(`${def.id} loses health and reacts to repeated ${weapon}`, value.shots >= 2 && value.damage > 0 && value.reactions > 0, value);
+      // Allow an in-flight second rocket to resolve before the next selector.
+      w.applyInput(emptyInput(), 'keyboard'); step(w, 45);
+    }
+  } catch (error) { errors.push(`weapon matrix ${def.id}: ${String(error)}`); }
+  finally { w.dispose(); }
+}
 try {
   const w = new SimWorld(); await w.init(); w.loadScenario('horde-arena', 1808);
   try {
@@ -46,6 +83,16 @@ try {
 try {
   const { w, m, zoo, p, arena, e } = await fixture('gorilla');
   try {
+    const northWall = w.destruction!.objects.find(o => o.id === 'D-ZOO/l8-yard-north-wall')!;
+    const intactYard = w.destruction!.snapshot();
+    northWall.protected = false; w.destruction!.impact(northWall.id, 'boss.elephant.charge', 1000);
+    const brokenYard = w.destruction!.snapshot();
+    w.destruction!.restore(intactYard);
+    const intactAgain = northWall.protected && !northWall.state.collapsed && northWall.state.hp.every(hp => hp > 0);
+    w.destruction!.restore(brokenYard);
+    const brokenAgain = !northWall.protected && northWall.state.collapsed;
+    w.destruction!.restore(intactYard);
+    check('north wall restores both intact protection and the breached checkpoint', intactAgain && brokenAgain, { intactAgain, brokenAgain });
     const healthy = w.entities.get(zoo.state.animals[0])!;
     check('healthy animal has no enemy bar', !barEligible(healthy, healthy.transform, true), { id: healthy.id, infected: !!healthy.infected });
     const def = l8BossArenas.find(a => a.id === 'gorilla')!;
@@ -53,13 +100,8 @@ try {
     m.state.states.breached = true; zoo.state.breachedAt = w.tick; zoo.state.nextWave = Number.MAX_SAFE_INTEGER;
     step(w);
     check('engagement sets arena-entry checkpoint and health bar', m.state.checkpoint === 'arena-gorilla' && barEligible(e, p.transform, true), { checkpoint: m.state.checkpoint, arenaPhase: arena.phase, bar: barEligible(e, p.transform, true) });
-    const rackCount = w.combat!.runner.loadout.activeEntries().length;
-    const pickup = w.entities.values().filter(e => e.pickup && 'arenaAmmo' in e.pickup && e.pickup.arenaAmmo === 'gorilla');
-    check('one rocket pickup is present at entry', pickup.length === 1, pickup.map(e => ({ id: e.id, at: e.transform })));
-    if (pickup[0]) w.solids.relocate(p, { ...pickup[0].transform, y: .7 }, 'qa.arena.ammo-contact', 1);
-    step(w);
-    const one = zoo.bosses.spendRocket(), second = zoo.bosses.spendRocket();
-    check('pickup grants one rocket without changing the campaign rack', one && !second && w.combat!.runner.loadout.activeEntries().length === rackCount, { one, second, rackCount, after: w.combat!.runner.loadout.activeEntries().length, stock: arena.rocket });
+    const specialPickups = w.entities.values().filter(e => e.pickup && 'arenaAmmo' in e.pickup);
+    check('arena uses the campaign launcher with no arena ammunition pickup', specialPickups.length === 0 && w.combat!.runner.loadout.activeEntries().some(x => x.id === 'weapon.rocket-launcher'), { specialPickups: specialPickups.length, rack: w.combat!.runner.loadout.activeEntries().map(x => x.id) });
     const pillar = w.destruction!.objects.find(o => o.id.includes('l8-gorilla-pillar-0'))!;
     const beforeHP = [...pillar.state.hp];
     w.destruction!.impact(pillar.id, 'boss.gorilla.smash', 1000);
@@ -70,9 +112,8 @@ try {
     for (let n = 0; n < 600 && (m.state.stats.deaths === beforeDeaths || p.health.current <= 0); n++) step(w);
     const restored = zoo.state.arenas.find(a => a.id === 'gorilla')!, restoredBoss = w.entities.get(restored.ids[0])!;
     const restoredPillar = w.destruction!.objects.find(o => o.id === pillar.id)!;
-    const restoredPickups = w.entities.values().filter(e => e.pickup && 'arenaAmmo' in e.pickup && e.pickup.arenaAmmo === 'gorilla').length;
-    check('mortal retry restores entry, phase, boss HP, cover and rocket pickup', m.state.stats.deaths === beforeDeaths + 1 && Math.hypot(p.transform.x - def.entry.x, p.transform.z - def.entry.z) <= 1.5 && restored.phase === 1 && restoredBoss.health.current === restoredBoss.health.max && !restoredPillar.state.collapsed && restored.rocket + restoredPickups === 1,
-      { deaths: m.state.stats.deaths - beforeDeaths, at: p.transform, phase: restored.phase, hp: restoredBoss.health, pillarHP: restoredPillar.state.hp, stock: restored.rocket, pickups: w.entities.values().filter(e => e.pickup && 'arenaAmmo' in e.pickup && e.pickup.arenaAmmo === 'gorilla').length });
+    check('mortal retry restores entry, phase, boss HP and cover without an ammo gate', m.state.stats.deaths === beforeDeaths + 1 && Math.hypot(p.transform.x - def.entry.x, p.transform.z - def.entry.z) <= 1.5 && restored.phase === 1 && restoredBoss.health.current === restoredBoss.health.max && !restoredPillar.state.collapsed && !w.entities.values().some(e => e.pickup && 'arenaAmmo' in e.pickup),
+      { deaths: m.state.stats.deaths - beforeDeaths, at: p.transform, phase: restored.phase, hp: restoredBoss.health, pillarHP: restoredPillar.state.hp });
     // Ordinary firearm hit during the windup interrupts the chest-beat; its recovery must be more vulnerable than its prowl.
     w.solids.relocate(restoredBoss, { x: 60, z: -22, y: .7 }, 'qa.arena.roar-source', 2);
     w.solids.relocate(p, { x: 60, z: -16, y: .7 }, 'qa.arena.roar-target', 1);
@@ -135,23 +176,48 @@ try {
 try {
   const { w, zoo, p, arena, e } = await fixture('elephant');
   try {
+    w.missions!.state.states['hale-keys'] = true; w.missions!.state.states['hale-fallen'] = true; // Post-Hale combat tactic, isolated from the opening charge.
     w.missions!.state.states.breached = true; zoo.state.breachedAt = w.tick; zoo.state.nextWave = Number.MAX_SAFE_INTEGER;
-    w.solids.relocate(e, { x: -60, z: 25, y: .7 }, 'qa.elephant.lure-source', 2);
-    w.solids.relocate(p, { x: -44, z: 25, y: .7 }, 'qa.elephant.lure-target', 2);
+    w.solids.relocate(e, { x: 100, z: 80, y: .7 }, 'qa.elephant.lure-source', 2);
+    w.solids.relocate(p, { x: 110, z: 80, y: .7 }, 'qa.elephant.lure-target', 2);
     arena.phase = 1; arena.nextAt = w.tick + 30; arena.cycle = 0;
     const charges: unknown[] = [];
     w.events.on('infected.special', event => { if (event.type === 'infected.special' && event.sourceId === e.id && event.move === 'elephant.charge' && event.stage === 'recovery') charges.push({ tick: w.tick, a: structuredClone(e.infected!.specialAttack), boss: { ...e.transform }, courier: { ...p.transform }, neighbors: w.entities.values().filter(v => v.id !== e.id && v.health.current > 0 && Math.hypot(v.transform.x-e.transform.x,v.transform.z-e.transform.z)<6).map(v=>({id:v.id,role:v.archetype,at:{...v.transform},radius:v.combat?.radius})), staticAhead: w.solids.sweep(e, { x: e.infected!.specialAttack!.area.dx, z: e.infected!.specialAttack!.area.dz }, 14 / 60, e.combat!.radius, false, false) }); });
-    const bot = new L8ArenaBot(w), contacts: { barrier?: string; [key: string]: unknown }[] = []; let previous = 0;
-    for (let n = 0; n < 300 * 60 && e.health.current > 0 && p.health.current > 0; n++) {
+    const contacts: { barrier?: string; [key: string]: unknown }[] = []; let previous = 0;
+    for (let n = 0; n < 30 * 60 && arena.wallHits === 0 && e.health.current > 0 && p.health.current > 0; n++) {
       const f = emptyInput();
-      // Use the same visible-cue movement policy as the skilled fighter, with both firing buttons left off.
-      f.move = bot.sample('elephant').move;
-      if (p.transform.x + f.move.x * 2 < -80 || p.transform.x + f.move.x * 2 > -40) f.move.x = 0;
-      if (p.transform.z + f.move.z * 2 < 14 || p.transform.z + f.move.z * 2 > 50) f.move.z = 0;
+      // Read the live cue, sidestep the charge lane, and hold the lure position between attacks.
+      const attack = e.infected!.specialAttack;
+      if (attack && (attack.stage === 'telegraph' || attack.stage === 'active')) {
+        if (attack.move === 'elephant.charge') {
+          const dx = p.transform.x - attack.area.x, dz = p.transform.z - attack.area.z;
+          const sign = dx * -attack.area.dz + dz * attack.area.dx >= 0 ? 1 : -1;
+          const first = { x: -attack.area.dz * sign, z: attack.area.dx * sign }, other = { x: -first.x, z: -first.z };
+          f.move = w.solids.sweep(p, first, 3) >= w.solids.sweep(p, other, 3) ? first : other;
+        } else if (attack.move === 'elephant.swipe') {
+          const dx = p.transform.x - attack.area.x, dz = p.transform.z - attack.area.z, d = Math.hypot(dx, dz) || 1;
+          f.move = { x: dx / d, z: dz / d };
+        }
+      }
+      if (p.transform.x + f.move.x * 2 < 106 || p.transform.x + f.move.x * 2 > 114) f.move.x = 0;
+      if (p.transform.z + f.move.z * 2 < 76 || p.transform.z + f.move.z * 2 > 88) f.move.z = 0;
       w.applyInput(f, 'keyboard'); step(w);
       if (arena.wallHits > previous) { previous = arena.wallHits; contacts.push({ tick: w.tick, hits: previous, barrier: arena.wallContacts?.at(-1), boss: { ...e.transform }, courier: { ...p.transform }, hp: e.health.current }); }
     }
-    check('three real sidestepped wall charges kill without firing', arena.wallHits === 3 && e.health.current === 0 && contacts.every(c => !!c.barrier && !c.barrier.includes('bush')), { contacts, wallHits: arena.wallHits, hp: e.health.current, courierHP: p.health.current, finalBoss: e.transform, finalCourier: p.transform, finalAttack: e.infected!.specialAttack, phase: arena.phase, current: zoo.state.arenas.find(a => a.id === arena.id), tick: w.tick, missionPhase: w.missions!.state.phase, charges });
+    for (let expected = 2; expected <= 3; expected++) {
+      // Independent lure setup; retain the actual wall-hit ledger and HP.
+      w.solids.relocate(e, { x: 100, z: 80, y: .7 }, 'qa.elephant.repeat-source', 2);
+      w.solids.relocate(p, { x: 110, z: 80, y: .7 }, 'qa.elephant.repeat-lure', 2, false);
+      w.previousPlayer = { ...p.transform }; w.player!.locomotion.reset();
+      delete e.infected!.specialAttack; e.infected!.arenaBoss!.readyAt = 0; arena.nextAt = w.tick + 30;
+      for (let n = 0; n < 300 && arena.wallHits < expected && e.health.current > 0; n++) {
+        const f = emptyInput(), a = w.entities.get(e.id)!.infected!.specialAttack;
+        if (a && ['telegraph', 'active'].includes(a.stage) && p.transform.z < 86) f.move = { x: 0, z: 1 };
+        w.applyInput(f, 'keyboard'); step(w);
+        if (arena.wallHits > previous) { previous = arena.wallHits; contacts.push({ tick: w.tick, hits: previous, barrier: arena.wallContacts?.at(-1), hp: e.health.current }); }
+      }
+    }
+    check('three actual sidestepped wall collisions permanently finish the elephant (independent lure setup)', arena.wallHits === 3 && e.health.current === 0 && e.infected!.recoverAt < 0 && contacts.every(c => !!c.barrier && !c.barrier.includes('bush')), { contacts, wallHits: arena.wallHits, hp: e.health.current, courierHP: p.health.current, charges });
   } finally { w.dispose(); }
 } catch (error) { errors.push(`elephant wall tactic: ${String(error)}`); }
 
@@ -191,9 +257,9 @@ try {
 
 for (const alive of [true, false]) {
   try {
-    const { w, e, lines } = await fixture('elephant', alive);
+    const { w, e, lines, zoo, arena } = await fixture('elephant', alive);
     try {
-      hit(w, e, 1e9); step(w, 2);
+      arena.phase = 1; zoo.update(); hit(w, e, 1e9); step(w, 2);
       check(`elephant dialogue continuity (Nadia ${alive ? 'alive' : 'dead'})`, lines.includes('L8.nadia-elephant') === alive && lines.filter(id => id === 'L8.courier-elephant').length === 1 && e.health.current === 0, { lines, hp: e.health.current, nadiaAlive: alive });
     } finally { w.dispose(); }
   } catch (error) { errors.push(`dialogue ${alive}: ${String(error)}`); }

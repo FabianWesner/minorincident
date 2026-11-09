@@ -1,0 +1,5419 @@
+{
+  "tier": "low",
+  "captures": [
+    "flamingo-phase-0-tick-0.jpg",
+    "flamingo-phase-1-tick-5196.jpg",
+    "flamingo-weapon.handgun-tick-5472.jpg",
+    "flamingo-weapon.shotgun-tick-5528.jpg",
+    "flamingo-weapon.army-mg-tick-5728.jpg",
+    "flamingo-phase-2-tick-8016.jpg",
+    "flamingo-weapon.rocket-launcher-tick-8124.jpg",
+    "flamingo-cleared-tick-8216.jpg",
+    "zebra-phase-0-tick-8216.jpg",
+    "zebra-phase-1-tick-10880.jpg",
+    "zebra-weapon.handgun-tick-10904.jpg",
+    "zebra-weapon.shotgun-tick-10924.jpg",
+    "zebra-weapon.army-mg-tick-11004.jpg",
+    "zebra-phase-2-tick-13328.jpg",
+    "zebra-cleared-tick-14240.jpg",
+    "monkey-phase-0-tick-14240.jpg",
+    "monkey-phase-1-tick-15296.jpg",
+    "monkey-weapon.handgun-tick-15320.jpg",
+    "monkey-weapon.shotgun-tick-15424.jpg",
+    "monkey-weapon.army-mg-tick-15456.jpg",
+    "monkey-weapon.rocket-launcher-tick-15656.jpg",
+    "monkey-phase-2-tick-17296.jpg",
+    "monkey-cleared-tick-18508.jpg",
+    "lion-phase-0-tick-18508.jpg",
+    "lion-phase-1-tick-23092.jpg",
+    "lion-weapon.army-mg-tick-23380.jpg",
+    "lion-phase-2-tick-23916.jpg",
+    "lion-weapon.shotgun-tick-24552.jpg",
+    "lion-cleared-tick-25928.jpg",
+    "gorilla-phase-0-tick-25928.jpg",
+    "gorilla-phase-1-tick-28184.jpg",
+    "gorilla-weapon.shotgun-tick-28304.jpg",
+    "gorilla-weapon.rocket-launcher-tick-28408.jpg",
+    "gorilla-weapon.army-mg-tick-28452.jpg",
+    "gorilla-phase-2-tick-30056.jpg",
+    "gorilla-cleared-tick-33260.jpg",
+    "elephant-phase-0-tick-33260.jpg",
+    "elephant-phase-1-tick-34784.jpg",
+    "wall-breach-tick-34856.jpg",
+    "elephant-weapon.handgun-tick-34880.jpg",
+    "elephant-weapon.shotgun-tick-35236.jpg",
+    "hale-keys-tick-35327.jpg",
+    "elephant-weapon.army-mg-tick-35346.jpg",
+    "elephant-weapon.rocket-launcher-tick-35402.jpg",
+    "hale-fallen-tick-35458.jpg",
+    "elephant-phase-2-tick-36514.jpg",
+    "elephant-cleared-tick-38482.jpg",
+    "boarding-phase-3-tick-38482.jpg",
+    "boarding-weapon.army-mg-tick-38482.jpg"
+  ],
+  "frames": [
+    {
+      "tick": 0,
+      "phase": "playing",
+      "player": {
+        "x": 0,
+        "y": 0.705,
+        "z": 70,
+        "yaw": 0.3205919885488634
+      },
+      "hp": 100,
+      "move": {
+        "x": 0.6,
+        "z": -0.8
+      },
+      "dx": 648.0437840745291,
+      "dy": -54.0316791689707,
+      "target": null,
+      "fire": false,
+      "interact": false,
+      "actualWeapon": "weapon.rocket-launcher",
+      "damagedWeapons": [],
+      "marker": "central-plaza",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4,
+        "z": 0,
+        "y": 0.82,
+        "yaw": 5.386527245543647
+      },
+      "animal": {
+        "x": 0,
+        "z": -17,
+        "y": 0.7,
+        "yaw": 0
+      },
+      "arena": "flamingo",
+      "arenaPhase": 0,
+      "arenaHP": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 0
+        },
+        {
+          "id": "zebra",
+          "phase": 0
+        },
+        {
+          "id": "monkey",
+          "phase": 0
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Follow Nadia to the central plaza · 70 m",
+      "departed": false
+    },
+    {
+      "tick": 600,
+      "phase": "playing",
+      "player": {
+        "x": 25.45581817626953,
+        "y": 0.8399999737739563,
+        "z": 48.323265075683594,
+        "yaw": 1.5707963267948966
+      },
+      "hp": 100,
+      "move": {
+        "x": -0.14726657144947822,
+        "z": -0.9890968390069376
+      },
+      "dx": 311.1905504160966,
+      "dy": -247.98982276299986,
+      "target": null,
+      "fire": false,
+      "interact": false,
+      "actualWeapon": "weapon.rocket-launcher",
+      "damagedWeapons": [],
+      "marker": "central-plaza",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4,
+        "z": 0.6431806327067872,
+        "y": 0.82,
+        "yaw": 1.5707919314021317
+      },
+      "animal": {
+        "x": 1.4563460477694328,
+        "z": -16.93864220610479,
+        "y": 0.7,
+        "yaw": -8.666467392711354
+      },
+      "arena": "flamingo",
+      "arenaPhase": 0,
+      "arenaHP": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 0
+        },
+        {
+          "id": "zebra",
+          "phase": 0
+        },
+        {
+          "id": "monkey",
+          "phase": 0
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Follow Nadia to the central plaza · 55 m",
+      "departed": false
+    },
+    {
+      "tick": 1200,
+      "phase": "playing",
+      "player": {
+        "x": 25.45581817626953,
+        "y": 0.8399999737739563,
+        "z": 3.322967052459717,
+        "yaw": 1.5707963267948966
+      },
+      "hp": 100,
+      "move": {
+        "x": -0.45017330870719724,
+        "z": -0.8929412030630094
+      },
+      "dx": 154.25472581812562,
+      "dy": -282.1833918247201,
+      "target": null,
+      "fire": false,
+      "interact": false,
+      "actualWeapon": "weapon.rocket-launcher",
+      "damagedWeapons": [],
+      "marker": "central-plaza",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4,
+        "z": 0.4983601994433734,
+        "y": 0.82,
+        "yaw": 1.5707948547867527
+      },
+      "animal": {
+        "x": 0.023883939772712557,
+        "z": -18.421943331744107,
+        "y": 0.7,
+        "yaw": -13.290956747015137
+      },
+      "arena": "flamingo",
+      "arenaPhase": 0,
+      "arenaHP": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 0
+        },
+        {
+          "id": "zebra",
+          "phase": 0
+        },
+        {
+          "id": "monkey",
+          "phase": 0
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Follow Nadia to the central plaza · 26 m",
+      "departed": false
+    },
+    {
+      "tick": 1800,
+      "phase": "playing",
+      "player": {
+        "x": 31.123512268066406,
+        "y": 0.8399999737739563,
+        "z": 0.5616370439529419,
+        "yaw": -3.141592653589794
+      },
+      "hp": 100,
+      "move": {
+        "x": -0.9993671387157761,
+        "z": 0.03557136566176136
+      },
+      "dx": -397.42143053898434,
+      "dy": -217.3546226578684,
+      "target": null,
+      "fire": false,
+      "interact": false,
+      "actualWeapon": "weapon.rocket-launcher",
+      "damagedWeapons": [],
+      "marker": "central-plaza",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4,
+        "z": 0.3534360238584614,
+        "y": 0.82,
+        "yaw": 1.5707958338223476
+      },
+      "animal": {
+        "x": -1.317641889941089,
+        "z": -16.9105283049885,
+        "y": 0.7,
+        "yaw": -17.4847368212757
+      },
+      "arena": "flamingo",
+      "arenaPhase": 0,
+      "arenaHP": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 0
+        },
+        {
+          "id": "zebra",
+          "phase": 0
+        },
+        {
+          "id": "monkey",
+          "phase": 0
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Follow Nadia to the central plaza · 31 m",
+      "departed": false
+    },
+    {
+      "tick": 2400,
+      "phase": "playing",
+      "player": {
+        "x": -13.876588821411133,
+        "y": 0.8399999737739563,
+        "z": 0.5616370439529419,
+        "yaw": -3.141592653589794
+      },
+      "hp": 100,
+      "move": {
+        "x": -0.9993209864628804,
+        "z": 0.036845162706321606
+      },
+      "dx": -398.00639880073084,
+      "dy": -217.11247158590646,
+      "target": null,
+      "fire": false,
+      "interact": false,
+      "actualWeapon": "weapon.rocket-launcher",
+      "damagedWeapons": [],
+      "marker": "central-plaza",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -5.062658704533713,
+        "z": 0.8918388490508401,
+        "y": 0.82,
+        "yaw": 1.4992316478261727
+      },
+      "animal": {
+        "x": 1.486343213628965,
+        "z": -17.149837935557024,
+        "y": 0.7,
+        "yaw": -21.184840767358263
+      },
+      "arena": "flamingo",
+      "arenaPhase": 0,
+      "arenaHP": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 0
+        },
+        {
+          "id": "zebra",
+          "phase": 0
+        },
+        {
+          "id": "monkey",
+          "phase": 0
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Follow Nadia to the central plaza · 14 m",
+      "departed": false
+    },
+    {
+      "tick": 3000,
+      "phase": "playing",
+      "player": {
+        "x": -35.54685974121094,
+        "y": 0.8399999737739563,
+        "z": -0.5973219871520996,
+        "yaw": -6.283185307179586
+      },
+      "hp": 100,
+      "move": {
+        "x": 0.9926455169464119,
+        "z": 0.1210573322281256
+      },
+      "dx": 595.2711968069137,
+      "dy": 445.54545315660755,
+      "target": null,
+      "fire": false,
+      "interact": false,
+      "actualWeapon": "weapon.rocket-launcher",
+      "damagedWeapons": [],
+      "marker": "central-plaza",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.000002220456985,
+        "z": 1.1672540751629827,
+        "y": 0.82,
+        "yaw": 1.5710389177713309
+      },
+      "animal": {
+        "x": 0.0534091883227663,
+        "z": -18.448795889032578,
+        "y": 0.7,
+        "yaw": -25.878994555927832
+      },
+      "arena": "flamingo",
+      "arenaPhase": 0,
+      "arenaHP": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 0
+        },
+        {
+          "id": "zebra",
+          "phase": 0
+        },
+        {
+          "id": "monkey",
+          "phase": 0
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Follow Nadia to the central plaza · 36 m",
+      "departed": false
+    },
+    {
+      "tick": 3600,
+      "phase": "playing",
+      "player": {
+        "x": 0.6033098697662354,
+        "y": 0.8399999737739563,
+        "z": -0.5973219871520996,
+        "yaw": -6.283185307179586
+      },
+      "hp": 100,
+      "move": {
+        "x": -0.502758224805196,
+        "z": 0.4977683226267497
+      },
+      "dx": -483.1428979554014,
+      "dy": -1.416307972903951,
+      "target": null,
+      "fire": false,
+      "interact": false,
+      "actualWeapon": "weapon.rocket-launcher",
+      "damagedWeapons": [],
+      "marker": null,
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.101905647430352,
+        "z": 1.1635329692512228,
+        "y": 0.82,
+        "yaw": 1.5814621095009882
+      },
+      "animal": {
+        "x": -1.1780457318020767,
+        "z": -16.758414253878886,
+        "y": 0.7,
+        "yaw": -29.102057956663636
+      },
+      "arena": "flamingo",
+      "arenaPhase": 0,
+      "arenaHP": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 0
+        },
+        {
+          "id": "zebra",
+          "phase": 0
+        },
+        {
+          "id": "monkey",
+          "phase": 0
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Protect the group!",
+      "departed": false
+    },
+    {
+      "tick": 4200,
+      "phase": "playing",
+      "player": {
+        "x": 0.034088894724845886,
+        "y": 0.8399999737739563,
+        "z": -0.028101012110710144,
+        "yaw": -8.639379797371932
+      },
+      "hp": 100,
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "dx": 0,
+      "dy": 0,
+      "target": null,
+      "fire": false,
+      "interact": false,
+      "actualWeapon": "weapon.rocket-launcher",
+      "damagedWeapons": [],
+      "marker": null,
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": 1.5100563119913522
+      },
+      "animal": {
+        "x": 0.7198692814617764,
+        "z": -16.31388218160467,
+        "y": 0.7,
+        "yaw": -33.77874243933337
+      },
+      "arena": "flamingo",
+      "arenaPhase": 0,
+      "arenaHP": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 0
+        },
+        {
+          "id": "zebra",
+          "phase": 0
+        },
+        {
+          "id": "monkey",
+          "phase": 0
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Protect the group!",
+      "departed": false
+    },
+    {
+      "tick": 4800,
+      "phase": "playing",
+      "player": {
+        "x": 0.034088894724845886,
+        "y": 0.8399999737739563,
+        "z": -0.028101012110710144,
+        "yaw": 1.5072593841399753
+      },
+      "hp": 100,
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "dx": 0,
+      "dy": 0,
+      "target": {
+        "x": 1351.9060530682702,
+        "y": 29.85649986219211
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.army-mg",
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [],
+      "marker": null,
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": 1.5100563119913522
+      },
+      "carrier": {
+        "x": 1.7600060353822502,
+        "z": -14.659387565995258,
+        "y": 0.7,
+        "yaw": -0.9010706014974116
+      },
+      "animal": {
+        "x": -1.13720865916888,
+        "z": -17.3533440633723,
+        "y": 0.7,
+        "yaw": -36.82988885281065
+      },
+      "arena": "flamingo",
+      "arenaPhase": 0,
+      "arenaHP": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 0
+        },
+        {
+          "id": "zebra",
+          "phase": 0
+        },
+        {
+          "id": "monkey",
+          "phase": 0
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Protect the group!",
+      "departed": false
+    },
+    {
+      "tick": 5400,
+      "phase": "playing",
+      "player": {
+        "x": 1.1336396932601929,
+        "y": 0.8399999737739563,
+        "z": -1.1276518106460571,
+        "yaw": -1.7461655323930354
+      },
+      "hp": 90,
+      "move": {
+        "x": 0.39354437378855883,
+        "z": -0.9193056215749859
+      },
+      "dx": 559.5378897733805,
+      "dy": -132.6145308324935,
+      "target": {
+        "x": 494.6655938086369,
+        "y": 402.5397557177043
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.shotgun",
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [],
+      "marker": "arena-flamingo",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": 1.5100563119913522
+      },
+      "carrier": {
+        "x": -8.203139564152249,
+        "z": -58.74558632953193,
+        "y": 0.7,
+        "yaw": -0.32297955828421926
+      },
+      "animal": {
+        "x": -1.13720865916888,
+        "z": -17.3533440633723,
+        "y": 0.7,
+        "yaw": -36.82988885281065
+      },
+      "arena": "flamingo",
+      "arenaPhase": 1,
+      "arenaHP": [
+        0,
+        100,
+        100,
+        780,
+        780,
+        780,
+        100
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 1
+        },
+        {
+          "id": "zebra",
+          "phase": 0
+        },
+        {
+          "id": "monkey",
+          "phase": 0
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Flamingo flock — Step sideways out of the shadow lane; sweep the birds as they land. · Flamingo flock · Phase 1 · 8 m",
+      "departed": false
+    },
+    {
+      "tick": 6024,
+      "phase": "playing",
+      "player": {
+        "x": 3.690716028213501,
+        "y": 0.7100003957748413,
+        "z": -11.374333381652832,
+        "yaw": 3.1204781145860894
+      },
+      "hp": 100,
+      "move": {
+        "x": 0.9984448830051008,
+        "z": 0.05574778561458997
+      },
+      "dx": 620.0358120713465,
+      "dy": 408.4722780560515,
+      "target": {
+        "x": 442.0138564154851,
+        "y": 232.2324388721474
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.shotgun",
+      "actualWeapon": "weapon.shotgun",
+      "damagedWeapons": [
+        "weapon.handgun",
+        "weapon.shotgun",
+        "weapon.army-mg"
+      ],
+      "marker": "arena-flamingo",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": -2.803243109201642
+      },
+      "carrier": {
+        "x": -0.8772018740481189,
+        "z": -20.0085346993744,
+        "y": 0.7,
+        "yaw": -0.40669939335884636
+      },
+      "animal": {
+        "x": -1.13720865916888,
+        "z": -17.3533440633723,
+        "y": 0.7,
+        "yaw": -36.82988885281065
+      },
+      "arena": "flamingo",
+      "arenaPhase": 1,
+      "arenaHP": [
+        0,
+        763.2,
+        638.4000000000001,
+        763.2,
+        583.1999999999997,
+        497.99999999999983,
+        401.9999999999996
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 1
+        },
+        {
+          "id": "zebra",
+          "phase": 0
+        },
+        {
+          "id": "monkey",
+          "phase": 0
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Flamingo flock — Step sideways out of the shadow lane; sweep the birds as they land. · Flamingo flock · Phase 1 · 4 m",
+      "departed": false
+    },
+    {
+      "tick": 6624,
+      "phase": "playing",
+      "player": {
+        "x": 2.7304694652557373,
+        "y": 0.7099999785423279,
+        "z": -22.885400772094727,
+        "yaw": 1.094331237156017
+      },
+      "hp": 70,
+      "move": {
+        "x": -0.4897133228460224,
+        "z": 0.8718835136800716
+      },
+      "dx": -728.831557060314,
+      "dy": 119.80999204591365,
+      "target": {
+        "x": 783.8574664580489,
+        "y": 332.11856221123276
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.army-mg",
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [
+        "weapon.handgun",
+        "weapon.shotgun",
+        "weapon.army-mg"
+      ],
+      "marker": "arena-flamingo",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": -2.803243109201642
+      },
+      "animal": {
+        "x": -1.13720865916888,
+        "z": -17.3533440633723,
+        "y": 0.7,
+        "yaw": -36.82988885281065
+      },
+      "arena": "flamingo",
+      "arenaPhase": 1,
+      "arenaHP": [
+        0,
+        359.3999999999998,
+        541.5000000000001,
+        718.2000000000002,
+        503.9999999999999,
+        405.6000000000001,
+        368.3999999999997
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 1
+        },
+        {
+          "id": "zebra",
+          "phase": 0
+        },
+        {
+          "id": "monkey",
+          "phase": 0
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Flamingo flock — Step sideways out of the shadow lane; sweep the birds as they land. · Flamingo flock · Phase 1 · 14 m",
+      "departed": false
+    },
+    {
+      "tick": 7224,
+      "phase": "playing",
+      "player": {
+        "x": -0.006203517317771912,
+        "y": 0.7099999785423279,
+        "z": -30.511016845703125,
+        "yaw": -2.116178498514328
+      },
+      "hp": 82.99999999999926,
+      "move": {
+        "x": -0.988897130213848,
+        "z": 0.14860170205894674
+      },
+      "dx": -462.45373383381354,
+      "dy": -198.59586278585573,
+      "target": {
+        "x": 1027.032536027937,
+        "y": 513.245050980852
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.army-mg",
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [
+        "weapon.handgun",
+        "weapon.shotgun",
+        "weapon.army-mg"
+      ],
+      "marker": "arena-flamingo",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": -2.803243109201642
+      },
+      "animal": {
+        "x": -1.13720865916888,
+        "z": -17.3533440633723,
+        "y": 0.7,
+        "yaw": -36.82988885281065
+      },
+      "arena": "flamingo",
+      "arenaPhase": 1,
+      "arenaHP": [
+        0,
+        262.50000000000006,
+        501.9000000000002,
+        197.4,
+        384.9000000000001,
+        250.8000000000002,
+        0
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 1
+        },
+        {
+          "id": "zebra",
+          "phase": 0
+        },
+        {
+          "id": "monkey",
+          "phase": 0
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Flamingo flock — Step sideways out of the shadow lane; sweep the birds as they land. · Flamingo flock · Phase 1 · 22 m",
+      "departed": false
+    },
+    {
+      "tick": 7824,
+      "phase": "playing",
+      "player": {
+        "x": 0.7429401874542236,
+        "y": 0.7099999785423279,
+        "z": -35.986385345458984,
+        "yaw": -1.38712043293977
+      },
+      "hp": 100,
+      "move": {
+        "x": -0.8331725467164274,
+        "z": -0.5530131168408781
+      },
+      "dx": -100.33066060160672,
+      "dy": -288.645522384321,
+      "target": {
+        "x": 349.64636137845264,
+        "y": 503.35007111128846
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.shotgun",
+      "actualWeapon": "weapon.shotgun",
+      "damagedWeapons": [
+        "weapon.handgun",
+        "weapon.shotgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "marker": "arena-flamingo",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": -2.8133748132850633
+      },
+      "animal": {
+        "x": -1.13720865916888,
+        "z": -17.3533440633723,
+        "y": 0.7,
+        "yaw": -36.82988885281065
+      },
+      "arena": "flamingo",
+      "arenaPhase": 1,
+      "arenaHP": [
+        0,
+        0,
+        453.3000000000003,
+        0,
+        230.74298983558495,
+        111.14428801846839,
+        0
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 1
+        },
+        {
+          "id": "zebra",
+          "phase": 0
+        },
+        {
+          "id": "monkey",
+          "phase": 0
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Flamingo flock — Step sideways out of the shadow lane; sweep the birds as they land. · Flamingo flock · Phase 1 · 27 m",
+      "departed": false
+    },
+    {
+      "tick": 8432,
+      "phase": "playing",
+      "player": {
+        "x": -4.196839332580566,
+        "y": 0.7099999785423279,
+        "z": -22.11414909362793,
+        "yaw": -0.7853981633974484
+      },
+      "hp": 81.06666666666604,
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "dx": 0,
+      "dy": 0,
+      "target": null,
+      "fire": false,
+      "interact": false,
+      "actualWeapon": "weapon.shotgun",
+      "damagedWeapons": [],
+      "marker": "arena-zebra",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": 2.776404516378977
+      },
+      "carrier": {
+        "x": -10.124490294269592,
+        "z": -40.323784426028304,
+        "y": 0.7,
+        "yaw": -2.7873676260071654
+      },
+      "animal": {
+        "x": 43.75569841027496,
+        "z": 12.196007288540741,
+        "y": 0.7,
+        "yaw": -38.03198763361721
+      },
+      "arena": "zebra",
+      "arenaPhase": 0,
+      "arenaHP": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 0
+        },
+        {
+          "id": "monkey",
+          "phase": 0
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Zebra herd — Leave the dust lane. The fence turns the herd; shoot the stragglers. · 71 m",
+      "departed": false
+    },
+    {
+      "tick": 9032,
+      "phase": "playing",
+      "player": {
+        "x": 22.82835578918457,
+        "y": 0.8399999737739563,
+        "z": -7.489206790924072,
+        "yaw": -7.850462293418876e-17
+      },
+      "hp": 100,
+      "move": {
+        "x": 0.9787298762626843,
+        "z": 0.2051531849882683
+      },
+      "dx": 542.3825749937245,
+      "dy": 484.5077540093146,
+      "target": null,
+      "fire": false,
+      "interact": false,
+      "actualWeapon": "weapon.shotgun",
+      "damagedWeapons": [],
+      "marker": "arena-zebra",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": -2.8133748132850633
+      },
+      "animal": {
+        "x": 44.73131597869021,
+        "z": 12.089566266216385,
+        "y": 0.7,
+        "yaw": -38.86189812099193
+      },
+      "arena": "zebra",
+      "arenaPhase": 0,
+      "arenaHP": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 0
+        },
+        {
+          "id": "monkey",
+          "phase": 0
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Zebra herd — Leave the dust lane. The fence turns the herd; shoot the stragglers. · 40 m",
+      "departed": false
+    },
+    {
+      "tick": 9632,
+      "phase": "playing",
+      "player": {
+        "x": 59.426475524902344,
+        "y": 0.8399999737739563,
+        "z": 9.486799240112305,
+        "yaw": -1.5707963267948968
+      },
+      "hp": 100,
+      "move": {
+        "x": 0.025466768124099565,
+        "z": 0.9996756692654442
+      },
+      "dx": -644.2902038494849,
+      "dy": 398.3056307794509,
+      "target": null,
+      "fire": false,
+      "interact": false,
+      "actualWeapon": "weapon.shotgun",
+      "damagedWeapons": [],
+      "marker": "arena-zebra",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": 1.231826437908378
+      },
+      "carrier": {
+        "x": 29.44322906519221,
+        "z": 44.92340605828588,
+        "y": 0.7,
+        "yaw": 1.3332401311785673
+      },
+      "animal": {
+        "x": 46.67743115512578,
+        "z": 13.247587592008937,
+        "y": 0.7,
+        "yaw": -33.73407459991738
+      },
+      "arena": "zebra",
+      "arenaPhase": 0,
+      "arenaHP": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 0
+        },
+        {
+          "id": "monkey",
+          "phase": 0
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Zebra herd — Leave the dust lane. The fence turns the herd; shoot the stragglers. · 2 m",
+      "departed": false
+    },
+    {
+      "tick": 10232,
+      "phase": "playing",
+      "player": {
+        "x": 59.426475524902344,
+        "y": 0.7049999833106995,
+        "z": 27.636899948120117,
+        "yaw": -1.5707963267948968
+      },
+      "hp": 100,
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "dx": 0,
+      "dy": 0,
+      "target": null,
+      "fire": false,
+      "interact": false,
+      "actualWeapon": "weapon.shotgun",
+      "damagedWeapons": [],
+      "marker": "arena-zebra",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": 1.5813512822945683
+      },
+      "carrier": {
+        "x": 46.21091309511535,
+        "z": 12.243591309247092,
+        "y": 0.7,
+        "yaw": -0.6027290044929868
+      },
+      "animal": {
+        "x": 47.83570935754093,
+        "z": 13.227167610762912,
+        "y": 0.7,
+        "yaw": -28.827972779341707
+      },
+      "arena": "zebra",
+      "arenaPhase": 0,
+      "arenaHP": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 0
+        },
+        {
+          "id": "monkey",
+          "phase": 0
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Zebra herd — Leave the dust lane. The fence turns the herd; shoot the stragglers. · 20 m",
+      "departed": false
+    },
+    {
+      "tick": 10832,
+      "phase": "playing",
+      "player": {
+        "x": 59.426475524902344,
+        "y": 0.7049999833106995,
+        "z": 27.636899948120117,
+        "yaw": -1.5707963267948968
+      },
+      "hp": 100,
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "dx": 0,
+      "dy": 0,
+      "target": null,
+      "fire": false,
+      "interact": false,
+      "actualWeapon": "weapon.shotgun",
+      "damagedWeapons": [],
+      "marker": "arena-zebra",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": -2.0932550593811285
+      },
+      "carrier": {
+        "x": 57.49965250264463,
+        "z": 19.551717778707513,
+        "y": 0.7,
+        "yaw": -1.3081795099843532
+      },
+      "animal": {
+        "x": 56.04317102954787,
+        "z": 20.653887339119372,
+        "y": 0.7,
+        "yaw": -26.44904558214767
+      },
+      "arena": "zebra",
+      "arenaPhase": 0,
+      "arenaHP": [
+        1242.5,
+        1250,
+        1250,
+        1250
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 0
+        },
+        {
+          "id": "monkey",
+          "phase": 0
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Zebra herd — Leave the dust lane. The fence turns the herd; shoot the stragglers. · 20 m",
+      "departed": false
+    },
+    {
+      "tick": 11456,
+      "phase": "playing",
+      "player": {
+        "x": 60.821632385253906,
+        "y": 0.7049999833106995,
+        "z": 39.525028228759766,
+        "yaw": -1.5654982632424757
+      },
+      "hp": 100,
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "dx": 0,
+      "dy": 0,
+      "target": {
+        "x": 158.1316684763906,
+        "y": 646.7443833824381
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.army-mg",
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [
+        "weapon.shotgun",
+        "weapon.handgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "marker": "arena-zebra",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": -2.6659589908831944
+      },
+      "animal": {
+        "x": 59.66856596339172,
+        "z": 46.14967936799905,
+        "y": 0.7,
+        "yaw": 0.7413700849530358
+      },
+      "arena": "zebra",
+      "arenaPhase": 1,
+      "arenaHP": [
+        573.0227345595738,
+        1137.9915124974525,
+        1139.5952294663432,
+        1072.192183922537
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 1
+        },
+        {
+          "id": "monkey",
+          "phase": 0
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Zebra herd — Leave the dust lane. The fence turns the herd; shoot the stragglers. · Zebra herd · Phase 1 · 32 m",
+      "departed": false
+    },
+    {
+      "tick": 12056,
+      "phase": "playing",
+      "player": {
+        "x": 59.46552658081055,
+        "y": 0.7049999833106995,
+        "z": 25.621004104614258,
+        "yaw": 1.9871882809171382
+      },
+      "hp": 100,
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "dx": 0,
+      "dy": 0,
+      "target": {
+        "x": 1230.155191612635,
+        "y": 107.09269510669603
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.army-mg",
+      "actualWeapon": "weapon.shotgun",
+      "damagedWeapons": [
+        "weapon.shotgun",
+        "weapon.handgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "marker": "arena-zebra",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": 1.5561960480622847
+      },
+      "animal": {
+        "x": 63.32002507124633,
+        "z": 22.55590447818073,
+        "y": 0.7,
+        "yaw": 1.5707963267948966
+      },
+      "arena": "zebra",
+      "arenaPhase": 1,
+      "arenaHP": [
+        0,
+        1057.8915124974517,
+        1122.195229466343,
+        704.9921839225374
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 1
+        },
+        {
+          "id": "monkey",
+          "phase": 0
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Zebra herd — Leave the dust lane. The fence turns the herd; shoot the stragglers. · Zebra herd · Phase 1 · 18 m",
+      "departed": false
+    },
+    {
+      "tick": 12656,
+      "phase": "playing",
+      "player": {
+        "x": 55.71876525878906,
+        "y": 0.7049999833106995,
+        "z": 39.0261344909668,
+        "yaw": -0.9433765239917693
+      },
+      "hp": 34.3333333333333,
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "dx": 0,
+      "dy": 0,
+      "target": {
+        "x": 318.82840411773736,
+        "y": 651.9937152960092
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.army-mg",
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [
+        "weapon.shotgun",
+        "weapon.handgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "marker": "arena-zebra",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": 0.8351081343006508
+      },
+      "animal": {
+        "x": 63.32002507124633,
+        "z": 22.55590447818073,
+        "y": 0.7,
+        "yaw": 1.5707963267948966
+      },
+      "arena": "zebra",
+      "arenaPhase": 1,
+      "arenaHP": [
+        0,
+        694.5915124974522,
+        1021.3952294663421,
+        587.3921839225377
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 1
+        },
+        {
+          "id": "monkey",
+          "phase": 0
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Zebra herd — Leave the dust lane. The fence turns the herd; shoot the stragglers. · Zebra herd · Phase 1 · 31 m",
+      "departed": false
+    },
+    {
+      "tick": 13256,
+      "phase": "playing",
+      "player": {
+        "x": 54.219093322753906,
+        "y": 0.7049999833106995,
+        "z": 27.232696533203125,
+        "yaw": 1.0298350019614742
+      },
+      "hp": 54.33333333333216,
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "dx": 0,
+      "dy": 0,
+      "target": {
+        "x": 1230.2085733053323,
+        "y": 305.00020373656633
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.army-mg",
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [
+        "weapon.shotgun",
+        "weapon.handgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "marker": "arena-zebra",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": 2.408465222257162
+      },
+      "animal": {
+        "x": 63.32002507124633,
+        "z": 22.55590447818073,
+        "y": 0.7,
+        "yaw": 1.5707963267948966
+      },
+      "arena": "zebra",
+      "arenaPhase": 1,
+      "arenaHP": [
+        0,
+        552.6915124974525,
+        970.9952294663423,
+        91.79218392253779
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 1
+        },
+        {
+          "id": "monkey",
+          "phase": 0
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Zebra herd — Leave the dust lane. The fence turns the herd; shoot the stragglers. · Zebra herd · Phase 1 · 20 m",
+      "departed": false
+    },
+    {
+      "tick": 13856,
+      "phase": "playing",
+      "player": {
+        "x": 57.96421432495117,
+        "y": 0.7049999833106995,
+        "z": 31.098283767700195,
+        "yaw": 1.1212629652148092
+      },
+      "hp": 74.33333333333103,
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "dx": 0,
+      "dy": 0,
+      "target": {
+        "x": 1220.7354182603808,
+        "y": 234.6984406049938
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.army-mg",
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [
+        "weapon.shotgun",
+        "weapon.handgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "marker": "arena-zebra",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": -2.7136406257948464
+      },
+      "animal": {
+        "x": 63.32002507124633,
+        "z": 22.55590447818073,
+        "y": 0.7,
+        "yaw": 1.5707963267948966
+      },
+      "arena": "zebra",
+      "arenaPhase": 2,
+      "arenaHP": [
+        0,
+        420.6915124974529,
+        0,
+        0
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 2
+        },
+        {
+          "id": "monkey",
+          "phase": 0
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Zebra herd — Leave the dust lane. The fence turns the herd; shoot the stragglers. · Zebra herd · Phase 2 · 23 m",
+      "departed": false
+    },
+    {
+      "tick": 14456,
+      "phase": "playing",
+      "player": {
+        "x": 46.21754455566406,
+        "y": 0.7099999785423279,
+        "z": 11.906721115112305,
+        "yaw": -3.9269908169872423
+      },
+      "hp": 94.33333333332989,
+      "move": {
+        "x": -0.8731454600587104,
+        "z": -0.48745974764985767
+      },
+      "dx": -138.46891898625609,
+      "dy": -282.49024945684613,
+      "target": null,
+      "fire": false,
+      "interact": false,
+      "actualWeapon": "weapon.shotgun",
+      "damagedWeapons": [],
+      "marker": "arena-monkey",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": 0.7664980343620774
+      },
+      "carrier": {
+        "x": -10.329528006148076,
+        "z": 25.65474708502554,
+        "y": 0.7,
+        "yaw": -3.1329966062737573
+      },
+      "animal": {
+        "x": -7.951333904437818,
+        "z": 16.119043848808197,
+        "y": 0.7,
+        "yaw": 196.37194822260503
+      },
+      "arena": "monkey",
+      "arenaPhase": 0,
+      "arenaHP": [
+        840,
+        840,
+        840,
+        840,
+        840,
+        840,
+        1680
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 0
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Monkey pack — Use the doorway to stop the pack surrounding you. Melee shakes off a grab. · 45 m",
+      "departed": false
+    },
+    {
+      "tick": 15056,
+      "phase": "playing",
+      "player": {
+        "x": 22.494953155517578,
+        "y": 0.8399999737739563,
+        "z": 11.660871505737305,
+        "yaw": -3.141592653589794
+      },
+      "hp": 100,
+      "move": {
+        "x": -0.987212739728807,
+        "z": 0.15940830128052674
+      },
+      "dx": -457.3484660901137,
+      "dy": -193.7411177258723,
+      "target": null,
+      "fire": false,
+      "interact": false,
+      "actualWeapon": "weapon.shotgun",
+      "damagedWeapons": [],
+      "marker": "arena-monkey",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": 1.6946455096952873
+      },
+      "carrier": {
+        "x": -17.229932726673532,
+        "z": 37.25165350459049,
+        "y": 0.7,
+        "yaw": -2.884115462013959
+      },
+      "animal": {
+        "x": -5.6815999535777,
+        "z": 19.48445490061053,
+        "y": 0.7,
+        "yaw": 191.5508639547147
+      },
+      "arena": "monkey",
+      "arenaPhase": 0,
+      "arenaHP": [
+        840,
+        840,
+        840,
+        840,
+        840,
+        840,
+        1680
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 0
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Monkey pack — Use the doorway to stop the pack surrounding you. Melee shakes off a grab. · 22 m",
+      "departed": false
+    },
+    {
+      "tick": 15688,
+      "phase": "playing",
+      "player": {
+        "x": -0.7582205533981323,
+        "y": 0.7049999833106995,
+        "z": 17.33006477355957,
+        "yaw": 2.9715804839228563
+      },
+      "hp": 100,
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "dx": 0,
+      "dy": 0,
+      "target": {
+        "x": 242.675965393516,
+        "y": 24.553792861250756
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.army-mg",
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [
+        "weapon.handgun",
+        "weapon.shotgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "marker": "arena-monkey",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": -1.669513159113658
+      },
+      "carrier": {
+        "x": -7.77430079647629,
+        "z": 37.2172670203382,
+        "y": 0.7,
+        "yaw": 0.0063284585300098384
+      },
+      "animal": {
+        "x": 4.070941956468646,
+        "z": 11.087795870594391,
+        "y": 0.7,
+        "yaw": -1.6628497740308117
+      },
+      "arena": "monkey",
+      "arenaPhase": 1,
+      "arenaHP": [
+        738.8183949473147,
+        764.4,
+        696,
+        683.0112428703275,
+        436.79999999999944,
+        840,
+        1680
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 1
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Monkey pack — Use the doorway to stop the pack surrounding you. Melee shakes off a grab. · Monkey pack · Phase 1 · 4 m",
+      "departed": false
+    },
+    {
+      "tick": 16288,
+      "phase": "playing",
+      "player": {
+        "x": -4.688023090362549,
+        "y": 0.7099999785423279,
+        "z": 19.829851150512695,
+        "yaw": 0.1678711407109968
+      },
+      "hp": 100,
+      "move": {
+        "x": 0.4301076422447958,
+        "z": -0.9027776116423263
+      },
+      "dx": 586.8523359286776,
+      "dy": -123.3004296324265,
+      "target": {
+        "x": 549.0591599533866,
+        "y": 490.6436875271922
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.army-mg",
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [
+        "weapon.handgun",
+        "weapon.shotgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "marker": "arena-monkey",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": 0.7690554721405035
+      },
+      "animal": {
+        "x": -1.9139060892216664,
+        "z": 12.916552453810185,
+        "y": 0.7,
+        "yaw": 5.575177171733954
+      },
+      "arena": "monkey",
+      "arenaPhase": 1,
+      "arenaHP": [
+        610.7183949473149,
+        545.9999999999999,
+        553.2000000000004,
+        329.0112428703276,
+        404.9999999999995,
+        664.2000000000002,
+        1680
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 1
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Monkey pack — Use the doorway to stop the pack surrounding you. Melee shakes off a grab. · Monkey pack · Phase 1 · 8 m",
+      "departed": false
+    },
+    {
+      "tick": 16888,
+      "phase": "playing",
+      "player": {
+        "x": -12.44645881652832,
+        "y": 0.7099999785423279,
+        "z": 18.384313583374023,
+        "yaw": -0.20246977676559333
+      },
+      "hp": 45,
+      "move": {
+        "x": 0.9966209816904374,
+        "z": -0.08213780405141627
+      },
+      "dx": 653.3112131330461,
+      "dy": 324.78350057048027,
+      "target": {
+        "x": 729.8389830170102,
+        "y": 440.73393227223903
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.army-mg",
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [
+        "weapon.handgun",
+        "weapon.shotgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "marker": "arena-monkey",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": -0.6035512220856116
+      },
+      "animal": {
+        "x": -10.319585843775094,
+        "z": 18.763228758046743,
+        "y": 0.7,
+        "yaw": 2.932232400227315
+      },
+      "arena": "monkey",
+      "arenaPhase": 1,
+      "arenaHP": [
+        100.41839494731576,
+        0,
+        429.6000000000007,
+        162.27124287032763,
+        380.9999999999995,
+        630.6000000000003,
+        1680
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 1
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Monkey pack — Use the doorway to stop the pack surrounding you. Melee shakes off a grab. · Monkey pack · Phase 1 · 14 m",
+      "departed": false
+    },
+    {
+      "tick": 17488,
+      "phase": "playing",
+      "player": {
+        "x": -11.255086898803711,
+        "y": 0.7049999833106995,
+        "z": 18.70381736755371,
+        "yaw": -3.0729767028365416
+      },
+      "hp": 60.99999999999909,
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "dx": 0,
+      "dy": 0,
+      "target": {
+        "x": 344.01780416595625,
+        "y": 204.10194557810894
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.army-mg",
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [
+        "weapon.handgun",
+        "weapon.shotgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "marker": "arena-monkey",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": 0.7610107050555917
+      },
+      "animal": {
+        "x": -10.104856073848557,
+        "z": 18.71309192423582,
+        "y": 0.7,
+        "yaw": 2.932232400227315
+      },
+      "arena": "monkey",
+      "arenaPhase": 2,
+      "arenaHP": [
+        0,
+        0,
+        329.10000000000093,
+        0,
+        0,
+        620.1000000000003,
+        1549.4999999999986
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 2
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Monkey pack — Use the doorway to stop the pack surrounding you. Melee shakes off a grab. · Monkey pack · Phase 2 · 13 m",
+      "departed": false
+    },
+    {
+      "tick": 18088,
+      "phase": "playing",
+      "player": {
+        "x": -9.845868110656738,
+        "y": 0.7099999785423279,
+        "z": 19.151086807250977,
+        "yaw": 0.35581475841506677
+      },
+      "hp": 80.99999999999795,
+      "move": {
+        "x": 0.4224809181647199,
+        "z": 0.9063718187293199
+      },
+      "dx": -330.7750090696013,
+      "dy": 542.7886045127018,
+      "target": {
+        "x": 1347.505020904211,
+        "y": 530.5347791260633
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.army-mg",
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [
+        "weapon.handgun",
+        "weapon.shotgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "marker": "arena-monkey",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": -1.7165906053924356
+      },
+      "animal": {
+        "x": -10.104856073848557,
+        "z": 18.71309192423582,
+        "y": 0.7,
+        "yaw": 2.932232400227315
+      },
+      "arena": "monkey",
+      "arenaPhase": 2,
+      "arenaHP": [
+        0,
+        0,
+        303.900000000001,
+        0,
+        0,
+        157.80000000000027,
+        1277.399999999996
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 2
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Monkey pack — Use the doorway to stop the pack surrounding you. Melee shakes off a grab. · Monkey pack · Phase 2 · 12 m",
+      "departed": false
+    },
+    {
+      "tick": 18688,
+      "phase": "playing",
+      "player": {
+        "x": -13.262288093566895,
+        "y": 0.7049999833106995,
+        "z": 19.096561431884766,
+        "yaw": -2.518980425738068
+      },
+      "hp": 86.59999999999707,
+      "move": {
+        "x": -0.9851386771320316,
+        "z": -0.17176084192431765
+      },
+      "dx": -306.1581658546194,
+      "dy": -256.1753755679657,
+      "target": null,
+      "fire": false,
+      "interact": false,
+      "actualWeapon": "weapon.shotgun",
+      "damagedWeapons": [],
+      "marker": "arena-lion",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": -1.2578035877607734
+      },
+      "animal": {
+        "x": -61.988577497805586,
+        "z": -28.784254892365457,
+        "y": 0.7,
+        "yaw": 75.47929287767073
+      },
+      "arena": "lion",
+      "arenaPhase": 0,
+      "arenaHP": [
+        3200,
+        3200
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Lion and lioness — Keep your back to the rocks. Dodge sideways at the glint and fire after the landing. · 54 m",
+      "departed": false
+    },
+    {
+      "tick": 19288,
+      "phase": "playing",
+      "player": {
+        "x": -39.51396179199219,
+        "y": 0.7099999785423279,
+        "z": 15.143706321716309,
+        "yaw": 2.868504419924067
+      },
+      "hp": 100,
+      "move": {
+        "x": -0.9956498602934702,
+        "z": -0.0931737929763142
+      },
+      "dx": -339.218459211302,
+      "dy": -241.02688919607994,
+      "target": {
+        "x": 446.39612965031347,
+        "y": 163.1527357291686
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.shotgun",
+      "actualWeapon": "weapon.shotgun",
+      "damagedWeapons": [],
+      "marker": "arena-lion",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": 0.6599534215135789
+      },
+      "animal": {
+        "x": -65.83270209228614,
+        "z": -28.553130703466294,
+        "y": 0.7,
+        "yaw": 71.85943128000902
+      },
+      "arena": "lion",
+      "arenaPhase": 0,
+      "arenaHP": [
+        3200,
+        3200
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Lion and lioness — Keep your back to the rocks. Dodge sideways at the glint and fire after the landing. · 31 m",
+      "departed": false
+    },
+    {
+      "tick": 19888,
+      "phase": "playing",
+      "player": {
+        "x": -56.390445709228516,
+        "y": 0.7049997970461845,
+        "z": 7.375443458557129,
+        "yaw": 1.5707963267948966
+      },
+      "hp": 100,
+      "move": {
+        "x": -0.22854751216338343,
+        "z": -0.9735327599438696
+      },
+      "dx": 279.3131769656146,
+      "dy": -264.9081756482633,
+      "target": null,
+      "fire": false,
+      "interact": false,
+      "actualWeapon": "weapon.shotgun",
+      "damagedWeapons": [],
+      "marker": "arena-lion",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": -1.5547703307372238
+      },
+      "animal": {
+        "x": -58.89473657434967,
+        "z": -27.12860290979904,
+        "y": 0.7,
+        "yaw": 66.3385639423453
+      },
+      "arena": "lion",
+      "arenaPhase": 0,
+      "arenaHP": [
+        3200,
+        3200
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Lion and lioness — Keep your back to the rocks. Dodge sideways at the glint and fire after the landing. · 16 m",
+      "departed": false
+    },
+    {
+      "tick": 20488,
+      "phase": "playing",
+      "player": {
+        "x": -56.390445709228516,
+        "y": 0.7049997970461845,
+        "z": 7.375443458557129,
+        "yaw": 1.5707963267948966
+      },
+      "hp": 100,
+      "move": {
+        "x": -0.22854751216338343,
+        "z": -0.9735327599438696
+      },
+      "dx": 279.3062295175713,
+      "dy": -264.9019191308154,
+      "target": null,
+      "fire": false,
+      "interact": false,
+      "actualWeapon": "weapon.shotgun",
+      "damagedWeapons": [],
+      "marker": "arena-lion",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": 2.645510355721796
+      },
+      "animal": {
+        "x": -56.8497986186109,
+        "z": -30.45507728532413,
+        "y": 0.7,
+        "yaw": 62.806227017361785
+      },
+      "arena": "lion",
+      "arenaPhase": 0,
+      "arenaHP": [
+        3200,
+        3200
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Lion and lioness — Keep your back to the rocks. Dodge sideways at the glint and fire after the landing. · 16 m",
+      "departed": false
+    },
+    {
+      "tick": 21088,
+      "phase": "playing",
+      "player": {
+        "x": -56.390445709228516,
+        "y": 0.7049998035654426,
+        "z": 7.373947620391846,
+        "yaw": 1.5707963267948966
+      },
+      "hp": 100,
+      "move": {
+        "x": -0.22856858745248135,
+        "z": -0.9735278120474923
+      },
+      "dx": 279.2956328422167,
+      "dy": -264.9046759390028,
+      "target": null,
+      "fire": false,
+      "interact": false,
+      "actualWeapon": "weapon.shotgun",
+      "damagedWeapons": [],
+      "marker": "arena-lion",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": 0.6324662663727371
+      },
+      "animal": {
+        "x": -63.68891603264727,
+        "z": -28.715204444473994,
+        "y": 0.7,
+        "yaw": 56.55538499235603
+      },
+      "arena": "lion",
+      "arenaPhase": 0,
+      "arenaHP": [
+        3200,
+        3200
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Lion and lioness — Keep your back to the rocks. Dodge sideways at the glint and fire after the landing. · 16 m",
+      "departed": false
+    },
+    {
+      "tick": 21688,
+      "phase": "playing",
+      "player": {
+        "x": -56.390445709228516,
+        "y": 0.704999715089798,
+        "z": 7.3707990646362305,
+        "yaw": 1.5707963267948966
+      },
+      "hp": 100,
+      "move": {
+        "x": -0.2286129607028017,
+        "z": -0.9735173928588535
+      },
+      "dx": 279.2733176930103,
+      "dy": -264.9104771990952,
+      "target": null,
+      "fire": false,
+      "interact": false,
+      "actualWeapon": "weapon.shotgun",
+      "damagedWeapons": [],
+      "marker": "arena-lion",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": 3.12883292032778
+      },
+      "animal": {
+        "x": -64.24397292099621,
+        "z": -27.979176649174423,
+        "y": 0.7,
+        "yaw": 53.1088913100725
+      },
+      "arena": "lion",
+      "arenaPhase": 0,
+      "arenaHP": [
+        3200,
+        3200
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Lion and lioness — Keep your back to the rocks. Dodge sideways at the glint and fire after the landing. · 16 m",
+      "departed": false
+    },
+    {
+      "tick": 22288,
+      "phase": "playing",
+      "player": {
+        "x": -56.390445709228516,
+        "y": 0.7049998193979263,
+        "z": 7.368442058563232,
+        "yaw": 1.5707963267948966
+      },
+      "hp": 100,
+      "move": {
+        "x": -0.2286461894458716,
+        "z": -0.9735095890908742
+      },
+      "dx": 279.2566083745512,
+      "dy": -264.91482226617194,
+      "target": null,
+      "fire": false,
+      "interact": false,
+      "actualWeapon": "weapon.shotgun",
+      "damagedWeapons": [],
+      "marker": "arena-lion",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": -0.3873543868000093
+      },
+      "animal": {
+        "x": -57.46690668328025,
+        "z": -28.001513605468936,
+        "y": 0.7,
+        "yaw": 48.30101230457431
+      },
+      "arena": "lion",
+      "arenaPhase": 0,
+      "arenaHP": [
+        3200,
+        3200
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Lion and lioness — Keep your back to the rocks. Dodge sideways at the glint and fire after the landing. · 16 m",
+      "departed": false
+    },
+    {
+      "tick": 22888,
+      "phase": "playing",
+      "player": {
+        "x": -56.39059829711914,
+        "y": 0.7099999785423279,
+        "z": 8.59803295135498,
+        "yaw": -1.5707963267948968
+      },
+      "hp": 100,
+      "move": {
+        "x": -0.873401569372098,
+        "z": 0.48700071726677774
+      },
+      "dx": -606.1396949151965,
+      "dy": -102.72676145420473,
+      "target": null,
+      "fire": false,
+      "interact": false,
+      "actualWeapon": "weapon.shotgun",
+      "damagedWeapons": [],
+      "marker": "arena-lion",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": 2.777770321904061
+      },
+      "animal": {
+        "x": -58.48581555176628,
+        "z": -30.30664182996634,
+        "y": 0.7,
+        "yaw": 44.329390177297974
+      },
+      "arena": "lion",
+      "arenaPhase": 0,
+      "arenaHP": [
+        3200,
+        3200
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 0
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Lion and lioness — Keep your back to the rocks. Dodge sideways at the glint and fire after the landing. · 17 m",
+      "departed": false
+    },
+    {
+      "tick": 23496,
+      "phase": "playing",
+      "player": {
+        "x": -62.0810661315918,
+        "y": 0.7099999785423279,
+        "z": -14.617743492126465,
+        "yaw": 0.0609527208188777
+      },
+      "hp": 100,
+      "move": {
+        "x": -0.9982096966068245,
+        "z": 0.059811383532831275
+      },
+      "dx": -408.9579704215739,
+      "dy": -213.56478691561003,
+      "target": {
+        "x": 909.6823907973808,
+        "y": 502.7656098356327
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.army-mg",
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [
+        "weapon.handgun",
+        "weapon.shotgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "marker": "arena-lion",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": 1.8608258179563368
+      },
+      "animal": {
+        "x": -57.95623169696998,
+        "z": -14.864898028109469,
+        "y": 0.7,
+        "yaw": -1.3202067082228097
+      },
+      "arena": "lion",
+      "arenaPhase": 1,
+      "arenaHP": [
+        2808.4849178857967,
+        3200
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 1
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Lion and lioness — Keep your back to the rocks. Dodge sideways at the glint and fire after the landing. · Lion and lioness · Phase 1 · 7 m",
+      "departed": false
+    },
+    {
+      "tick": 24096,
+      "phase": "playing",
+      "player": {
+        "x": -68.14979553222656,
+        "y": 0.7099999785423279,
+        "z": -20.993972778320312,
+        "yaw": -0.4731777658566561
+      },
+      "hp": 100,
+      "move": {
+        "x": -0.4528793005672662,
+        "z": 0.8915718362071021
+      },
+      "dx": -721.0906799592739,
+      "dy": 136.54534165686954,
+      "target": {
+        "x": 804.4754414491783,
+        "y": 681.1663403419809
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.army-mg",
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [
+        "weapon.handgun",
+        "weapon.shotgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "marker": "arena-lion",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": -0.18629137327151626
+      },
+      "animal": {
+        "x": -63.208739146242394,
+        "z": -18.50269585639591,
+        "y": 0.7,
+        "yaw": 2.6716004878723676
+      },
+      "arena": "lion",
+      "arenaPhase": 2,
+      "arenaHP": [
+        1259.5849178857934,
+        3200
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 2
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Lion and lioness — Keep your back to the rocks. Dodge sideways at the glint and fire after the landing. · Lion and lioness · Phase 2 · 15 m",
+      "departed": false
+    },
+    {
+      "tick": 24704,
+      "phase": "playing",
+      "player": {
+        "x": -73.6716079711914,
+        "y": 0.7099999785423279,
+        "z": -23.22579574584961,
+        "yaw": -0.4276811740033815
+      },
+      "hp": 100,
+      "move": {
+        "x": -0.9151274801313378,
+        "z": -0.4031646005150602
+      },
+      "dx": -182.03082489656617,
+      "dy": -279.49927096871374,
+      "target": {
+        "x": 796.2939960293929,
+        "y": 617.0662471785483
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.army-mg",
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [
+        "weapon.handgun",
+        "weapon.shotgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "marker": "arena-lion",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": -1.3479541946300209
+      },
+      "animal": {
+        "x": -63.5344183468189,
+        "z": -22.73685843039859,
+        "y": 0.7,
+        "yaw": 1.2753252480347539
+      },
+      "arena": "lion",
+      "arenaPhase": 2,
+      "arenaHP": [
+        28.684917885791833,
+        2703.8000000000006
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 2
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Lion and lioness — Keep your back to the rocks. Dodge sideways at the glint and fire after the landing. · Lion and lioness · Phase 2 · 20 m",
+      "departed": false
+    },
+    {
+      "tick": 25304,
+      "phase": "playing",
+      "player": {
+        "x": -76.61680603027344,
+        "y": 0.7049999833106995,
+        "z": -28.552339553833008,
+        "yaw": -1.97253437346998
+      },
+      "hp": 100,
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "dx": 0,
+      "dy": 0,
+      "target": {
+        "x": 117.45839446356143,
+        "y": 483.9250395311333
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.army-mg",
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [
+        "weapon.handgun",
+        "weapon.shotgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "marker": "arena-lion",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": -0.08913383202211235
+      },
+      "animal": {
+        "x": -72.65236838174127,
+        "z": -27.65724151348747,
+        "y": 0.7,
+        "yaw": 2.7842201786673355
+      },
+      "arena": "lion",
+      "arenaPhase": 2,
+      "arenaHP": [
+        0,
+        1244.5999999999951
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 2
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Lion and lioness — Keep your back to the rocks. Dodge sideways at the glint and fire after the landing. · Lion and lioness · Phase 2 · 26 m",
+      "departed": false
+    },
+    {
+      "tick": 25904,
+      "phase": "playing",
+      "player": {
+        "x": -65.08440399169922,
+        "y": 0.7049999833106995,
+        "z": -32.580322265625,
+        "yaw": 1.916941774809176
+      },
+      "hp": 100,
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "dx": 0,
+      "dy": 0,
+      "target": {
+        "x": 797.9915478477155,
+        "y": 162.48755545308651
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.army-mg",
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [
+        "weapon.handgun",
+        "weapon.shotgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "marker": "arena-lion",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": 2.124997955004256
+      },
+      "animal": {
+        "x": -72.65236838174127,
+        "z": -27.65724151348747,
+        "y": 0.7,
+        "yaw": 2.7842201786673355
+      },
+      "arena": "lion",
+      "arenaPhase": 2,
+      "arenaHP": [
+        0,
+        20.599999999995006
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 2
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Lion and lioness — Keep your back to the rocks. Dodge sideways at the glint and fire after the landing. · Lion and lioness · Phase 2 · 25 m",
+      "departed": false
+    },
+    {
+      "tick": 26504,
+      "phase": "playing",
+      "player": {
+        "x": -47.67848205566406,
+        "y": 0.7099999785423279,
+        "z": -9.407271385192871,
+        "yaw": -7.850462293418876e-17
+      },
+      "hp": 100,
+      "move": {
+        "x": 0.9999922429109939,
+        "z": 0.003938796496332834
+      },
+      "dx": 645.4037879053452,
+      "dy": 382.33883972640734,
+      "target": null,
+      "fire": false,
+      "interact": false,
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [],
+      "marker": "arena-gorilla",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": -1.2564028431601328
+      },
+      "animal": {
+        "x": 42.75426972945376,
+        "z": -10.747471775698813,
+        "y": 0.7,
+        "yaw": -23.834521026795745
+      },
+      "arena": "gorilla",
+      "arenaPhase": 0,
+      "arenaHP": [
+        5995.5
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 3
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Gorilla — Hit the chest-beat to interrupt it. Put a pillar between you and a throw. · 108 m",
+      "departed": false
+    },
+    {
+      "tick": 27104,
+      "phase": "playing",
+      "player": {
+        "x": -12.975335121154785,
+        "y": 0.7099999785423279,
+        "z": -7.918801307678223,
+        "yaw": -7.850462293418876e-17
+      },
+      "hp": 100,
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "dx": 0,
+      "dy": 0,
+      "target": null,
+      "fire": false,
+      "interact": false,
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [],
+      "marker": "arena-gorilla",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": 2.057827707756696
+      },
+      "animal": {
+        "x": 42.75426972945376,
+        "z": -10.747471775698813,
+        "y": 0.7,
+        "yaw": -23.834521026795745
+      },
+      "arena": "gorilla",
+      "arenaPhase": 0,
+      "arenaHP": [
+        5995.5
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 3
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Gorilla — Hit the chest-beat to interrupt it. Put a pillar between you and a throw. · 73 m",
+      "departed": false
+    },
+    {
+      "tick": 27704,
+      "phase": "playing",
+      "player": {
+        "x": 21.06470489501953,
+        "y": 0.8299999833106995,
+        "z": -7.874277114868164,
+        "yaw": 0.2634904439117839
+      },
+      "hp": 100,
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "dx": 0,
+      "dy": 0,
+      "target": null,
+      "fire": false,
+      "interact": false,
+      "actualWeapon": "weapon.shotgun",
+      "damagedWeapons": [],
+      "marker": "arena-gorilla",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": 1.0321530199419326
+      },
+      "animal": {
+        "x": 42.75426972945376,
+        "z": -10.747471775698813,
+        "y": 0.7,
+        "yaw": -23.834521026795745
+      },
+      "arena": "gorilla",
+      "arenaPhase": 0,
+      "arenaHP": [
+        5995.5
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 3
+        },
+        {
+          "id": "gorilla",
+          "phase": 0
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Gorilla — Hit the chest-beat to interrupt it. Put a pillar between you and a throw. · 39 m",
+      "departed": false
+    },
+    {
+      "tick": 28304,
+      "phase": "playing",
+      "player": {
+        "x": 53.694644927978516,
+        "y": 0.7099999785423279,
+        "z": -11.128975868225098,
+        "yaw": 3.1364620112804933
+      },
+      "hp": 100,
+      "move": {
+        "x": 0.16599710814807442,
+        "z": -0.98612623942702
+      },
+      "dx": 461.0263440289899,
+      "dy": -192.53655614342688,
+      "target": {
+        "x": 185.33764725718981,
+        "y": 92.78020474834123
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.shotgun",
+      "actualWeapon": "weapon.shotgun",
+      "damagedWeapons": [
+        "weapon.handgun",
+        "weapon.shotgun"
+      ],
+      "marker": "arena-gorilla",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": 1.8596481539866736
+      },
+      "animal": {
+        "x": 43.97300073713098,
+        "z": -10.938224921511898,
+        "y": 0.7,
+        "yaw": -25.124210848820773
+      },
+      "arena": "gorilla",
+      "arenaPhase": 1,
+      "arenaHP": [
+        5966.1
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 3
+        },
+        {
+          "id": "gorilla",
+          "phase": 1
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Gorilla — Hit the chest-beat to interrupt it. Put a pillar between you and a throw. · Gorilla · Phase 1 · 7 m",
+      "departed": false
+    },
+    {
+      "tick": 28928,
+      "phase": "playing",
+      "player": {
+        "x": 60.3484001159668,
+        "y": 0.7049999833106995,
+        "z": -16.765085220336914,
+        "yaw": -2.7622342161707842
+      },
+      "hp": 100,
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "dx": 0,
+      "dy": 0,
+      "target": {
+        "x": 53.85373017719516,
+        "y": 211.83132722186653
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.army-mg",
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [
+        "weapon.handgun",
+        "weapon.shotgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "marker": "arena-gorilla",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": -0.7235493045069145
+      },
+      "animal": {
+        "x": 52.41710763278579,
+        "z": -13.604342901909094,
+        "y": 0.7,
+        "yaw": 0.5666997734493501
+      },
+      "arena": "gorilla",
+      "arenaPhase": 1,
+      "arenaHP": [
+        4626.17421882722
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 3
+        },
+        {
+          "id": "gorilla",
+          "phase": 1
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Gorilla — Hit the chest-beat to interrupt it. Put a pillar between you and a throw. · Gorilla · Phase 1 · 9 m",
+      "departed": false
+    },
+    {
+      "tick": 29528,
+      "phase": "playing",
+      "player": {
+        "x": 60.98478317260742,
+        "y": 0.7049999833106995,
+        "z": -18.539945602416992,
+        "yaw": 1.8880184107805542
+      },
+      "hp": 100,
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "dx": 0,
+      "dy": 0,
+      "target": {
+        "x": 950.299193582439,
+        "y": -6.726102642474778
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.army-mg",
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [
+        "weapon.handgun",
+        "weapon.shotgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "marker": "arena-gorilla",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": -0.08913383202211235
+      },
+      "animal": {
+        "x": 57.219677697148846,
+        "z": -29.75525839674546,
+        "y": 0.7,
+        "yaw": -0.23459229103359447
+      },
+      "arena": "gorilla",
+      "arenaPhase": 1,
+      "arenaHP": [
+        3728.8742188272286
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 3
+        },
+        {
+          "id": "gorilla",
+          "phase": 1
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Gorilla — Hit the chest-beat to interrupt it. Put a pillar between you and a throw. · Gorilla · Phase 1 · 11 m",
+      "departed": false
+    },
+    {
+      "tick": 30128,
+      "phase": "playing",
+      "player": {
+        "x": 60.98478317260742,
+        "y": 0.7049999833106995,
+        "z": -18.539945602416992,
+        "yaw": -0.11050213304997523
+      },
+      "hp": 100,
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "dx": 0,
+      "dy": 0,
+      "target": {
+        "x": 1127.4076777784646,
+        "y": 971.9078112369316
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.army-mg",
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [
+        "weapon.handgun",
+        "weapon.shotgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "marker": "arena-gorilla",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": 0.10377636086323482
+      },
+      "animal": {
+        "x": 57.24522987336735,
+        "z": -29.750827220098806,
+        "y": 0.7,
+        "yaw": 2.555221914511752
+      },
+      "arena": "gorilla",
+      "arenaPhase": 2,
+      "arenaHP": [
+        2914.0742188272197
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 3
+        },
+        {
+          "id": "gorilla",
+          "phase": 2
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Gorilla — Hit the chest-beat to interrupt it. Put a pillar between you and a throw. · Gorilla · Phase 2 · 11 m",
+      "departed": false
+    },
+    {
+      "tick": 30728,
+      "phase": "playing",
+      "player": {
+        "x": 62.71294403076172,
+        "y": 0.7049999833106995,
+        "z": -21.139131546020508,
+        "yaw": 2.099620533017719
+      },
+      "hp": 100,
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "dx": 0,
+      "dy": 0,
+      "target": {
+        "x": 252.87785904469905,
+        "y": 266.23408733441437
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.shotgun",
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [
+        "weapon.handgun",
+        "weapon.shotgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "marker": "arena-gorilla",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": -0.129356104187799
+      },
+      "animal": {
+        "x": 57.24522987336735,
+        "z": -29.750827220098806,
+        "y": 0.7,
+        "yaw": 2.555221914511752
+      },
+      "arena": "gorilla",
+      "arenaPhase": 2,
+      "arenaHP": [
+        2611.6742188272165
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 3
+        },
+        {
+          "id": "gorilla",
+          "phase": 2
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Gorilla — Hit the chest-beat to interrupt it. Put a pillar between you and a throw. · Gorilla · Phase 2 · 13 m",
+      "departed": false
+    },
+    {
+      "tick": 31328,
+      "phase": "playing",
+      "player": {
+        "x": 62.14373016357422,
+        "y": 0.7049999833106995,
+        "z": -21.708358764648438,
+        "yaw": -0.695216232903505
+      },
+      "hp": 100,
+      "move": {
+        "x": -0.7679075121672676,
+        "z": -0.6405607330746069
+      },
+      "dx": -45.97200328796896,
+      "dy": -298.86225742130995,
+      "target": {
+        "x": 680.2768861736604,
+        "y": 621.8381445233891
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.shotgun",
+      "actualWeapon": "weapon.shotgun",
+      "damagedWeapons": [
+        "weapon.handgun",
+        "weapon.shotgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "marker": "arena-gorilla",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": 0.8799449409043588
+      },
+      "animal": {
+        "x": 57.24522987336735,
+        "z": -29.750827220098806,
+        "y": 0.7,
+        "yaw": 2.555221914511752
+      },
+      "arena": "gorilla",
+      "arenaPhase": 2,
+      "arenaHP": [
+        1935.1742188272092
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 3
+        },
+        {
+          "id": "gorilla",
+          "phase": 2
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Gorilla — Hit the chest-beat to interrupt it. Put a pillar between you and a throw. · Gorilla · Phase 2 · 14 m",
+      "departed": false
+    },
+    {
+      "tick": 31928,
+      "phase": "playing",
+      "player": {
+        "x": 62.71294403076172,
+        "y": 0.7049999833106995,
+        "z": -23.416040420532227,
+        "yaw": 2.2828610976441346
+      },
+      "hp": 100,
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "dx": 0,
+      "dy": 0,
+      "target": {
+        "x": 678.661697032826,
+        "y": 50.67276541088982
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.army-mg",
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [
+        "weapon.handgun",
+        "weapon.shotgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "marker": "arena-gorilla",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": -0.16964689554434
+      },
+      "animal": {
+        "x": 57.24522987336735,
+        "z": -29.750827220098806,
+        "y": 0.7,
+        "yaw": 2.555221914511752
+      },
+      "arena": "gorilla",
+      "arenaPhase": 2,
+      "arenaHP": [
+        1321.9742188272025
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 3
+        },
+        {
+          "id": "gorilla",
+          "phase": 2
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Gorilla — Hit the chest-beat to interrupt it. Put a pillar between you and a throw. · Gorilla · Phase 2 · 16 m",
+      "departed": false
+    },
+    {
+      "tick": 32528,
+      "phase": "playing",
+      "player": {
+        "x": 65.05696868896484,
+        "y": 0.7049999833106995,
+        "z": -26.56513214111328,
+        "yaw": 2.7132699552423336
+      },
+      "hp": 100,
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "dx": 0,
+      "dy": 0,
+      "target": {
+        "x": 433.3164758346594,
+        "y": 65.29795441355103
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.army-mg",
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [
+        "weapon.handgun",
+        "weapon.shotgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "marker": "arena-gorilla",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": 0.7608250542352154
+      },
+      "animal": {
+        "x": 57.24522987336735,
+        "z": -29.750827220098806,
+        "y": 0.7,
+        "yaw": 2.555221914511752
+      },
+      "arena": "gorilla",
+      "arenaPhase": 2,
+      "arenaHP": [
+        725.5742188272002
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 3
+        },
+        {
+          "id": "gorilla",
+          "phase": 2
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Gorilla — Hit the chest-beat to interrupt it. Put a pillar between you and a throw. · Gorilla · Phase 2 · 19 m",
+      "departed": false
+    },
+    {
+      "tick": 33128,
+      "phase": "playing",
+      "player": {
+        "x": 65.05696868896484,
+        "y": 0.7049999833106995,
+        "z": -26.56513214111328,
+        "yaw": 2.754372811478628
+      },
+      "hp": 100,
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "dx": 0,
+      "dy": 0,
+      "target": {
+        "x": 429.9743026577055,
+        "y": 66.5238944367489
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.army-mg",
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [
+        "weapon.handgun",
+        "weapon.shotgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "marker": "arena-gorilla",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": -4.076929764890588,
+        "z": 0.7137092864141957,
+        "y": 0.82,
+        "yaw": 1.8421244216013737
+      },
+      "animal": {
+        "x": 57.24522987336735,
+        "z": -29.750827220098806,
+        "y": 0.7,
+        "yaw": 2.555221914511752
+      },
+      "arena": "gorilla",
+      "arenaPhase": 2,
+      "arenaHP": [
+        129.17421882720134
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 3
+        },
+        {
+          "id": "gorilla",
+          "phase": 2
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Defeat Gorilla — Hit the chest-beat to interrupt it. Put a pillar between you and a throw. · Gorilla · Phase 2 · 19 m",
+      "departed": false
+    },
+    {
+      "tick": 33728,
+      "phase": "playing",
+      "player": {
+        "x": 85.37024688720703,
+        "y": 0.7099999785423279,
+        "z": -11.487920761108398,
+        "yaw": -0.7853981633974484
+      },
+      "hp": 100,
+      "move": {
+        "x": 0.35047307912639286,
+        "z": 0.9365728059300382
+      },
+      "dx": -419.20022125731987,
+      "dy": 548.123771085319,
+      "target": null,
+      "fire": false,
+      "interact": false,
+      "actualWeapon": "weapon.shotgun",
+      "damagedWeapons": [],
+      "marker": "arena-elephant",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": 39.56683032108861,
+        "z": 0.7466785811777966,
+        "y": 0.82,
+        "yaw": -0.00018871425494453332
+      },
+      "carrier": {
+        "x": -69.40724316905002,
+        "z": 22.90883002631795,
+        "y": 0.7,
+        "yaw": 0.4379655462955869
+      },
+      "animal": {
+        "x": -48.30693389904633,
+        "z": 12.473343466343477,
+        "y": 0.7,
+        "yaw": -157.80673670432594
+      },
+      "arena": "elephant",
+      "arenaPhase": 0,
+      "arenaHP": [
+        100
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 3
+        },
+        {
+          "id": "gorilla",
+          "phase": 3
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Bring down the elephant! — Lure his charge into the truck or perimeter wall. Three impacts stop him. · 58 m",
+      "departed": false
+    },
+    {
+      "tick": 34328,
+      "phase": "playing",
+      "player": {
+        "x": 89.6382827758789,
+        "y": 0.7099999785423279,
+        "z": 25.77420997619629,
+        "yaw": -0.7853981633974484
+      },
+      "hp": 100,
+      "move": {
+        "x": 0.503922682349098,
+        "z": 0.8637487656802122
+      },
+      "dx": -266.24419992876744,
+      "dy": 605.04407069966,
+      "target": null,
+      "fire": false,
+      "interact": false,
+      "actualWeapon": "weapon.shotgun",
+      "damagedWeapons": [],
+      "marker": "arena-elephant",
+      "wallBreached": false,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": 62.095017798611835,
+        "z": 47.739706892917006,
+        "y": 0.7,
+        "yaw": -1.4668924022828445
+      },
+      "carrier": {
+        "x": -50.25242852280364,
+        "z": 12.688248325247473,
+        "y": 0.7,
+        "yaw": 1.322011179161259
+      },
+      "animal": {
+        "x": -47.576445119236496,
+        "z": 12.986019583303758,
+        "y": 0.7,
+        "yaw": -157.15653920758913
+      },
+      "arena": "elephant",
+      "arenaPhase": 0,
+      "arenaHP": [
+        5000
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 3
+        },
+        {
+          "id": "gorilla",
+          "phase": 3
+        },
+        {
+          "id": "elephant",
+          "phase": 0
+        }
+      ],
+      "objective": "Bring down the elephant! — Lure his charge into the truck or perimeter wall. Three impacts stop him. · 21 m",
+      "departed": false
+    },
+    {
+      "tick": 34936,
+      "phase": "playing",
+      "player": {
+        "x": 89.54304504394531,
+        "y": 0.7050989270210266,
+        "z": 57.24400329589844,
+        "yaw": 1.703265661919258
+      },
+      "hp": 30,
+      "move": {
+        "x": -0.9905666328230551,
+        "z": 0.13703191576269622
+      },
+      "dx": -452.1383098602503,
+      "dy": -201.16661854226572,
+      "target": {
+        "x": 761.814256312105,
+        "y": 398.497941890263
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.shotgun",
+      "actualWeapon": "weapon.shotgun",
+      "damagedWeapons": [
+        "weapon.handgun"
+      ],
+      "marker": "arena-elephant",
+      "wallBreached": true,
+      "haleKeys": false,
+      "haleFallen": false,
+      "hale": {
+        "x": 92.29267851632481,
+        "z": 73.9617619215791,
+        "y": 0.82,
+        "yaw": 2.1611083585902615
+      },
+      "carrier": {
+        "x": -52.18341600112423,
+        "z": 14.887948176052902,
+        "y": 0.7,
+        "yaw": -5.699821697270883
+      },
+      "animal": {
+        "x": 91.04634327538952,
+        "z": 56.792461716824164,
+        "y": 0.7,
+        "yaw": -1.4333318877386771
+      },
+      "arena": "elephant",
+      "arenaPhase": 1,
+      "arenaHP": [
+        4976
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 3
+        },
+        {
+          "id": "gorilla",
+          "phase": 3
+        },
+        {
+          "id": "elephant",
+          "phase": 1
+        }
+      ],
+      "objective": "Bring down the elephant! — Lure his charge into the truck or perimeter wall. Three impacts stop him. · Elephant · Phase 1 · 13 m",
+      "departed": false
+    },
+    {
+      "tick": 35530,
+      "phase": "playing",
+      "player": {
+        "x": 106.01885986328125,
+        "y": 0.7099999785423279,
+        "z": 61.3484001159668,
+        "yaw": -2.2416101686840912
+      },
+      "hp": 43.16666666666613,
+      "move": {
+        "x": 0.8115703076489591,
+        "z": 0.5842547695505567
+      },
+      "dx": 170.2996455639253,
+      "dy": 624.7909645089442,
+      "target": {
+        "x": -1033.5712018745378,
+        "y": 377.6367831397258
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.army-mg",
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [
+        "weapon.handgun",
+        "weapon.shotgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "marker": "arena-elephant",
+      "wallBreached": true,
+      "haleKeys": true,
+      "haleFallen": true,
+      "hale": {
+        "x": 94.16224676131871,
+        "z": 74.12892567287226,
+        "y": 0.82,
+        "yaw": 1.2514263296820307
+      },
+      "carrier": {
+        "x": -46.47618885143961,
+        "z": 22.349855914207662,
+        "y": 0.7,
+        "yaw": -3.5175200978729513
+      },
+      "animal": {
+        "x": 92.31385839299783,
+        "z": 74.94185343436416,
+        "y": 0.82,
+        "yaw": 0.946834830285902
+      },
+      "arena": "elephant",
+      "arenaPhase": 1,
+      "arenaHP": [
+        4281.820611287496
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 3
+        },
+        {
+          "id": "gorilla",
+          "phase": 3
+        },
+        {
+          "id": "elephant",
+          "phase": 1
+        }
+      ],
+      "objective": "Bring down the elephant! — Lure his charge into the truck or perimeter wall. Three impacts stop him. · Elephant · Phase 1 · 18 m",
+      "departed": false
+    },
+    {
+      "tick": 36130,
+      "phase": "playing",
+      "player": {
+        "x": 103.634521484375,
+        "y": 0.7099999785423279,
+        "z": 62.95704650878906,
+        "yaw": -2.4221781269840648
+      },
+      "hp": 63.166666666664995,
+      "move": {
+        "x": 0.9768019102316154,
+        "z": -0.21414487658561165
+      },
+      "dx": 698.5828105971311,
+      "dy": 265.501283359875,
+      "target": {
+        "x": -518.7824172738726,
+        "y": 317.8863534590828
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.army-mg",
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [
+        "weapon.handgun",
+        "weapon.shotgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "marker": "arena-elephant",
+      "wallBreached": true,
+      "haleKeys": true,
+      "haleFallen": true,
+      "hale": {
+        "x": 94.16224676131871,
+        "z": 74.12892567287226,
+        "y": 0.82,
+        "yaw": 1.2514263296820307
+      },
+      "carrier": {
+        "x": -51.34545830437464,
+        "z": 14.674556066841504,
+        "y": 0.7,
+        "yaw": -8.965346444901375
+      },
+      "animal": {
+        "x": 93.32684792747592,
+        "z": 72.0352689217501,
+        "y": 0.82,
+        "yaw": 1.5707978419694608
+      },
+      "arena": "elephant",
+      "arenaPhase": 1,
+      "arenaHP": [
+        3223.420611287501
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 3
+        },
+        {
+          "id": "gorilla",
+          "phase": 3
+        },
+        {
+          "id": "elephant",
+          "phase": 1
+        }
+      ],
+      "objective": "Bring down the elephant! — Lure his charge into the truck or perimeter wall. Three impacts stop him. · Elephant · Phase 1 · 19 m",
+      "departed": false
+    },
+    {
+      "tick": 36730,
+      "phase": "playing",
+      "player": {
+        "x": 107.24616241455078,
+        "y": 0.7099999785423279,
+        "z": 56.435237884521484,
+        "yaw": -0.48508799641381917
+      },
+      "hp": 83.16666666666386,
+      "move": {
+        "x": -0.979871763373059,
+        "z": -0.19962797234899676
+      },
+      "dx": -290.91845913553504,
+      "dy": -265.95623646504174,
+      "target": {
+        "x": 713.4758893923002,
+        "y": 461.21027311408
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.army-mg",
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [
+        "weapon.handgun",
+        "weapon.shotgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "marker": "arena-elephant",
+      "wallBreached": true,
+      "haleKeys": true,
+      "haleFallen": true,
+      "hale": {
+        "x": 94.16224676131871,
+        "z": 74.12892567287226,
+        "y": 0.82,
+        "yaw": 1.2514263296820307
+      },
+      "carrier": {
+        "x": -57.08216101488427,
+        "z": 10.334610032142386,
+        "y": 0.7,
+        "yaw": -10.808346014453079
+      },
+      "animal": {
+        "x": 109.13731491786079,
+        "z": 56.82051987115505,
+        "y": 0.7,
+        "yaw": 2.9095404250155514
+      },
+      "arena": "elephant",
+      "arenaPhase": 2,
+      "arenaHP": [
+        2215.420611287498
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 3
+        },
+        {
+          "id": "gorilla",
+          "phase": 3
+        },
+        {
+          "id": "elephant",
+          "phase": 2
+        }
+      ],
+      "objective": "Bring down the elephant! — Lure his charge into the truck or perimeter wall. Three impacts stop him. · Elephant · Phase 2 · 15 m",
+      "departed": false
+    },
+    {
+      "tick": 37330,
+      "phase": "playing",
+      "player": {
+        "x": 103.29997253417969,
+        "y": 0.7099999785423279,
+        "z": 62.76881790161133,
+        "yaw": 0.7947576356074361
+      },
+      "hp": 100,
+      "move": {
+        "x": 0.986883867408574,
+        "z": -0.16143181919527516
+      },
+      "dx": 710.2964649954565,
+      "dy": 301.1612347444806,
+      "target": {
+        "x": 1127.6873602275257,
+        "y": 339.78353777563365
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.army-mg",
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [
+        "weapon.handgun",
+        "weapon.shotgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "marker": "arena-elephant",
+      "wallBreached": true,
+      "haleKeys": true,
+      "haleFallen": true,
+      "hale": {
+        "x": 94.16224676131871,
+        "z": 74.12892567287226,
+        "y": 0.82,
+        "yaw": 1.2514263296820307
+      },
+      "carrier": {
+        "x": -56.445786736397196,
+        "z": 22.543381554892264,
+        "y": 0.7,
+        "yaw": -14.51246830236256
+      },
+      "animal": {
+        "x": 106.70086175052585,
+        "z": 58.37473185704079,
+        "y": 0.7,
+        "yaw": -1.9610185065657548
+      },
+      "arena": "elephant",
+      "arenaPhase": 2,
+      "arenaHP": [
+        1795.420611287495
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 3
+        },
+        {
+          "id": "gorilla",
+          "phase": 3
+        },
+        {
+          "id": "elephant",
+          "phase": 2
+        }
+      ],
+      "objective": "Bring down the elephant! — Lure his charge into the truck or perimeter wall. Three impacts stop him. · Elephant · Phase 2 · 18 m",
+      "departed": false
+    },
+    {
+      "tick": 37930,
+      "phase": "playing",
+      "player": {
+        "x": 109.82795715332031,
+        "y": 0.7049999833106995,
+        "z": 66.90548706054688,
+        "yaw": 3.0017851430703515
+      },
+      "hp": 100,
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "dx": 0,
+      "dy": 0,
+      "target": {
+        "x": 539.4048735977574,
+        "y": 159.17701989834964
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.shotgun",
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [
+        "weapon.handgun",
+        "weapon.shotgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "marker": "arena-elephant",
+      "wallBreached": true,
+      "haleKeys": true,
+      "haleFallen": true,
+      "hale": {
+        "x": 94.16224676131871,
+        "z": 74.12892567287226,
+        "y": 0.82,
+        "yaw": 1.2514263296820307
+      },
+      "carrier": {
+        "x": -55.85277620271567,
+        "z": 27.272382659322393,
+        "y": 0.7,
+        "yaw": -12.405282856823465
+      },
+      "animal": {
+        "x": 104.02052170021295,
+        "z": 68.89662106794258,
+        "y": 0.7,
+        "yaw": -1.853942185879036
+      },
+      "arena": "elephant",
+      "arenaPhase": 2,
+      "arenaHP": [
+        728.6206112874921
+      ],
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 3
+        },
+        {
+          "id": "gorilla",
+          "phase": 3
+        },
+        {
+          "id": "elephant",
+          "phase": 2
+        }
+      ],
+      "objective": "Bring down the elephant! — Lure his charge into the truck or perimeter wall. Three impacts stop him. · Elephant · Phase 2 · 25 m",
+      "departed": false
+    },
+    {
+      "tick": 38538,
+      "phase": "playing",
+      "player": {
+        "x": 110.03792572021484,
+        "y": 0.7049999833106995,
+        "z": 67.72142791748047,
+        "yaw": 2.178168155905864
+      },
+      "hp": 100,
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "dx": 0,
+      "dy": 0,
+      "target": {
+        "x": 883.3084826001382,
+        "y": 137.59735432700256
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.army-mg",
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [
+        "weapon.army-mg",
+        "weapon.shotgun",
+        "weapon.rocket-launcher",
+        "weapon.handgun"
+      ],
+      "marker": "exit",
+      "wallBreached": true,
+      "haleKeys": true,
+      "haleFallen": true,
+      "hale": {
+        "x": 94.16224676131871,
+        "z": 74.12892567287226,
+        "y": 0.82,
+        "yaw": 1.2514263296820307
+      },
+      "boarding": [
+        {
+          "id": 422,
+          "at": {
+            "x": 98.62975851312048,
+            "z": 38.74904040262228,
+            "y": 0.82,
+            "yaw": -1.7699147320103752
+          }
+        }
+      ],
+      "arena": "boarding",
+      "arenaPhase": 3,
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 3
+        },
+        {
+          "id": "gorilla",
+          "phase": 3
+        },
+        {
+          "id": "elephant",
+          "phase": 3
+        }
+      ],
+      "objective": "Cover the survivors while they board · 0/2 aboard · 18 m",
+      "departed": false
+    },
+    {
+      "tick": 39138,
+      "phase": "playing",
+      "player": {
+        "x": 110.03792572021484,
+        "y": 0.7049999833106995,
+        "z": 67.72142791748047,
+        "yaw": 2.5731615945516
+      },
+      "hp": 100,
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "dx": 0,
+      "dy": 0,
+      "target": {
+        "x": 546.5384096988482,
+        "y": 110.78892698584102
+      },
+      "fire": true,
+      "interact": false,
+      "weapon": "weapon.army-mg",
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [
+        "weapon.army-mg",
+        "weapon.shotgun",
+        "weapon.rocket-launcher",
+        "weapon.handgun"
+      ],
+      "marker": "exit",
+      "wallBreached": true,
+      "haleKeys": true,
+      "haleFallen": true,
+      "hale": {
+        "x": 94.16224676131871,
+        "z": 74.12892567287226,
+        "y": 0.82,
+        "yaw": 1.2514263296820307
+      },
+      "boarding": [
+        {
+          "id": 422,
+          "at": {
+            "x": 107.37084078631968,
+            "z": 51.76521738586521,
+            "y": 0.7,
+            "yaw": 2.8964226319289246
+          }
+        }
+      ],
+      "arena": "boarding",
+      "arenaPhase": 3,
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 3
+        },
+        {
+          "id": "gorilla",
+          "phase": 3
+        },
+        {
+          "id": "elephant",
+          "phase": 3
+        }
+      ],
+      "objective": "Cover the survivors while they board · 0/2 aboard · 18 m",
+      "departed": false
+    },
+    {
+      "tick": 39738,
+      "phase": "playing",
+      "player": {
+        "x": 107.08333333333333,
+        "y": 0.9954342842102051,
+        "z": 74,
+        "yaw": -1.570796461153735
+      },
+      "hp": 100,
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "dx": 0,
+      "dy": 0,
+      "target": null,
+      "fire": false,
+      "interact": false,
+      "actualWeapon": "weapon.army-mg",
+      "damagedWeapons": [
+        "weapon.army-mg",
+        "weapon.shotgun",
+        "weapon.rocket-launcher",
+        "weapon.handgun"
+      ],
+      "marker": null,
+      "wallBreached": true,
+      "haleKeys": true,
+      "haleFallen": true,
+      "hale": {
+        "x": 94.16224676131871,
+        "z": 74.12892567287226,
+        "y": 0.82,
+        "yaw": 1.2514263296820307
+      },
+      "boarding": [],
+      "arena": "boarding",
+      "arenaPhase": 3,
+      "arenas": [
+        {
+          "id": "flamingo",
+          "phase": 3
+        },
+        {
+          "id": "zebra",
+          "phase": 3
+        },
+        {
+          "id": "monkey",
+          "phase": 3
+        },
+        {
+          "id": "lion",
+          "phase": 3
+        },
+        {
+          "id": "gorilla",
+          "phase": 3
+        },
+        {
+          "id": "elephant",
+          "phase": 3
+        }
+      ],
+      "objective": "Something is following you.",
+      "departed": false
+    }
+  ]
+}

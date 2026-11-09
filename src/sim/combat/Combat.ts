@@ -99,9 +99,6 @@ export class Combat {
     const closeEnemy = this.query.melee(source.id, source.transform, attack.aim, 5, 30, 1000).some(target => target.faction === 'infected'
       && !target.hidden && !target.infected?.hidden && Math.hypot(target.transform.x - source.transform.x, target.transform.z - source.transform.z) < 5);
     if (!closePoint && !closeEnemy) {
-      if (this.world.missions?.l8 && !this.world.missions.l8.bosses.spendRocket()) {
-        this.world.events.emit({ type: 'combat.empty', tick: this.world.tick, sourceId: source.id, actionId: attack.def.id, position: { ...source.transform } }); return false;
-      }
       return true;
     }
     this.world.events.emit({ type: 'combat.empty', tick: this.world.tick, sourceId: source.id, actionId: attack.def.id, position: { ...source.transform }, reason: 'too-close' });

@@ -11,7 +11,7 @@ import { pursueCrossingVehicle } from './LevelNineEncounters';
 import { Outbreak } from '../outbreak/Outbreak';
 
 export interface L9DrivingState {
-  prepared: boolean; roster: number[]; samId: number; megaId: number; soldiers: number[]; trucks: number[];
+  prepared: boolean; roster: number[]; samId: number; megaId: number; soldiers: number[]; trucks: number[]; megaSightings?: number[]; megaSighting?: { index: number; startedAt: number; roadZ: number };
   boardersCalled: boolean; route: string | null; checkpoints: string[];
   stallAt: number | null; restarted: boolean; repairTicks: number; repairActive: boolean; hatchOpen?: boolean;
   gateAt: number | null; gateClosed: boolean; gateId: number; bridgeGateId: number; fenceBroken: boolean;
@@ -46,7 +46,7 @@ export class LevelNineDriving {
   private get car() { return this.w.vehicles!.cars.get(this.mission.l9!.state.carId)!; }
   private signal(name: string, actorId?: number) { this.w.events.emit({ type: 'mission.signal', tick: this.w.tick, name: `l9.${name}`, ...(actorId === undefined ? {} : { actorId }) }); }
   private line(id: string, delay = 0): void { this.state.lines.push({ id, at: this.w.tick + delay }); }
-  private checkpoint(id: string): void { if (!this.state.checkpoints.includes(id)) { this.state.checkpoints.push(id); this.mission.checkpoint(id); } }
+  private checkpoint(id: string): void { if (this.w.entities.get(1)!.health.current > 0 && this.w.vehicles!.active === this.mission.l9!.state.carId && !this.state.checkpoints.includes(id)) { this.state.checkpoints.push(id); this.mission.checkpoint(id); } }
   prepare(): void {
     const s = this.state, w = this.w;
     w.npcs!.setAmbient(0); w.infected!.director.levelCap = 200; w.infected!.director.ambientTarget = 0; w.infected!.director.strict = true;
@@ -277,6 +277,28 @@ export class LevelNineDriving {
   };
   private bus(): void {
     const s = this.state, w = this.w, car = this.car, p = car.entity.transform;
+    // The first glimpse crosses the road behind the APC; the next two pace
+    // the distant fields. The staged actor cannot block or fight the convoy.
+    const sightings = s.megaSightings ??= [], mega = w.entities.get(s.megaId);
+    if (mega && p.x < 400) {
+      if (!s.megaSighting) for (const [index, x] of [-260, -90, 100].entries()) {
+        if (sightings.includes(index) || p.x < x || p.x > x + 24) continue;
+        sightings.push(index); s.megaSighting = { index, startedAt: w.tick, roadZ: p.z };
+        if (index === 0) { this.line('L9.mega-what'); this.line('L9.mega-drive', 120); }
+        this.signal(`mega-sighting-${index + 1}`, mega.id); break;
+      }
+      const sighting = s.megaSighting;
+      if (sighting) {
+        const t = (w.tick - sighting.startedAt) / 180;
+        if (t < 1) {
+          const z = sighting.index === 0 ? sighting.roadZ - 12 + t * 24 : p.z + (sighting.index === 1 ? -26 : 28);
+          Object.assign(mega.transform, { x: p.x - 20, y: .7, z, yaw: sighting.index === 0 ? -Math.PI / 3 : p.yaw });
+          mega.hidden = false; mega.infected!.hidden = false; mega.infected!.state = 'chase';
+          mega.contactExempt = car.entity.id; mega.combat!.damageMultiplier = 0;
+          w.spatial.set(mega.id, mega.transform.x, mega.transform.z);
+        } else { mega.hidden = true; mega.infected!.hidden = true; w.spatial.delete(mega.id); delete s.megaSighting; }
+      }
+    }
     if (s.busLineAt === null && p.x > 110 && p.x < 330) {
       const at = { x: p.x - Math.cos(p.yaw) * 110, z: p.z + Math.sin(p.yaw) * 110 };
       if (!w.chunks?.resident(at.x, at.z) || !w.infected!.nav.clear(at.x, at.z, 2)) return;
@@ -437,6 +459,7 @@ export class LevelNineDriving {
   restore(delta: number): void {
     const s = this.state;
     for (const key of ['stallAt', 'gateAt', 'evacuationAt', 'busStoppedAt', 'busLineAt', 'tankerFuseAt', 'fireAt', 'hugAt'] as const) if (s[key] !== null) s[key]! += delta;
+    if (s.megaSighting) s.megaSighting.startedAt += delta;
     s.busHitAt += delta; s.nextWave += delta; for (const l of s.lines) l.at += delta;
     for (const id of Object.keys(s.truckEntering)) s.truckEntering[Number(id)] += delta;
   }

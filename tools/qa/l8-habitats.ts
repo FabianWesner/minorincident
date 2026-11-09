@@ -6,7 +6,7 @@ import { emptyInput } from '../../src/input/InputFrame';
 import { loadLevel } from '../../tests/qa/invariants/world';
 import { provenance } from './accept/probe';
 
-const out = 'docs/reports/p1-l8apes'; mkdirSync(out, { recursive: true });
+const out = process.env.L8_HABITAT_OUT ?? 'docs/reports/p1-l8apes'; mkdirSync(out, { recursive: true });
 for (const quality of ['low', 'high'] as const) {
   const w = await loadLevel('L8', 1808, quality), zoo = w.missions!.l8!, bot = new LevelEightBot(w);
   const rows = zoo.state.animals.map(id => {

@@ -21,6 +21,8 @@ Current E25 emitter contract repair: [E25-AC02 report](e25-emitters/README.md).
 
 Cold-load matrix and threat runtime: [r20-loadtime report](r20-loadtime/README.md).
 
+L8 arena route, elephant finale and physical input checks: [p1-l8rework report](p1-l8rework/README.md).
+
 ## Retained report subtrees
 
 | Subtree | Required use |

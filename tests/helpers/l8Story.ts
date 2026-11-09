@@ -1,4 +1,5 @@
 import { expect } from 'vitest';
+import { playHaleCharge } from './l8Finale';
 import { readFile } from 'node:fs/promises';
 import { Box3, BoxGeometry, Group, Mesh, MeshBasicNodeMaterial, Vector3 } from 'three/webgpu';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
@@ -119,46 +120,21 @@ export async function checkL8Story(): Promise<void> {
     const hale = world.entities.get(zoo.state.haleId)!, halePost = { x: zoo.door().x - .7, z: zoo.door().z + 1.2 };
     Object.assign(hale.transform, halePost); hale.civilian!.ally!.run = null; hale.civilian!.ally!.post = halePost;
     mission.state.phase = 'playing'; car.health.current = car.health.max; car.vehicle!.damage = 'normal'; car.vehicle!.driver = null;
-    car.vehicle!.passengers = ids.map((id, seat) => ({ id, seat, phase: 'seated' as const, started: world.tick, pauseUntil: 0, from: { ...world.entities.get(id)!.transform } }));
+    car.vehicle!.passengers = ids.map((id, seat) => ({ id, seat: seat % world.vehicles!.cars.get(carId)!.physics.def.transport!.seats.length, phase: 'seated' as const, started: world.tick, pauseUntil: 0, from: { ...world.entities.get(id)!.transform } }));
     world.vehicles!.active = null;
     expect(zoo.canBoardDriver()).toBe(false);
-    zoo.update();
-    expect(zoo.state.megaId).toBeGreaterThan(0);
-    expect(world.entities.get(zoo.state.megaId)!.transform.z).toBeLessThan(-86);
-    expect(world.entities.get(zoo.state.megaId)!.transform.y).toBeGreaterThan(4);
-    expect(zoo.cameraPose()!.target[2], 'the live reveal camera follows the wall crossing').toBeLessThan(-86);
-    expect(zoo.canBoardDriver(), 'the courier covers the scene on foot').toBe(false);
-    world.tick = zoo.state.sightingAt + 14 * 60; mission.state.phase = 'playing'; mission.state.cinematic = null; zoo.update();
+    expect([...world.entities.iterate()].some(e => e.archetype === 'infected.mega-alpha' || e.infected?.variant === 'inf.mega-alpha')).toBe(false);
+    for (const arena of zoo.state.arenas) arena.phase = 3;
+    const charge = playHaleCharge(world);
+    expect(charge.distance).toBeLessThan(6); expect(charge.move).toBe('elephant.charge');
     expect(mission.state.states['hale-keys']).toBe(true);
-    expect(world.entities.get(zoo.state.haleId)!.civilian!.story!.clip).toBe('npc-give');
-    world.tick = zoo.state.sightingAt + 15 * 60; zoo.update();
     expect(mission.state.states['hale-fallen']).toBe(true);
     expect(world.entities.get(zoo.state.haleId)!.health.current).toBe(0);
-    expect(lines).toContain('L8.hale-dying');
-    world.tick = zoo.state.departureAt; zoo.update();
-    expect(zoo.canBoardDriver()).toBe(true); expect(lines).not.toContain('L8.following');
-    car.vehicle!.driver = 1; world.vehicles!.active = carId;
-    zoo.update();
-    expect(lines).toContain('L8.following'); expect(zoo.cameraPose()).not.toBeNull();
-    const megaFrom = { ...world.entities.get(zoo.state.megaId)!.transform };
-    const wheelFrom = world.vehicles!.cars.get(carId)!.physics.wheels[0].rotation;
-    // Exercise the story and AgentMotion together: scripted displacement must
-    // enter the distance-driven gait once, not once in each publisher.
-    mission.state.phase = 'playing'; mission.state.cinematic = null;
-    world.applyInput(emptyInput(), 'keyboard'); world.update();
-    const movingMega = world.entities.get(zoo.state.megaId)!, beforeMotion = movingMega.motion!.distance, beforePosition = { ...movingMega.transform };
-    world.update();
-    const travelled = Math.hypot(movingMega.transform.x - beforePosition.x, movingMega.transform.z - beforePosition.z);
-    expect(travelled, 'the scripted Mega actually moves during the measured tick').toBeGreaterThan(.05);
-    expect(movingMega.motion!.distance - beforeMotion, 'Mega gait distance equals resolved story displacement').toBeCloseTo(travelled, 6);
-    for (let i = 2; i < 480; i++) { world.tick++; zoo.update(); }
-    expect(car.transform.x, 'the APC physically exits through the east gate').toBeGreaterThan(116);
-    expect(car.transform.z).toBe(80); expect(mission.state.states.departed).toBe(true);
-    expect(world.vehicles!.cars.get(carId)!.physics.wheels[0].rotation).toBeGreaterThan(wheelFrom + 1);
-    expect(world.events.events().some(event => event.type === 'vehicle.sound' && event.sourceId === carId && event.phase === 'engine' && event.speed > 0)).toBe(true);
-    const mega = world.entities.get(zoo.state.megaId)!;
-    expect(mega.hidden).not.toBe(true); expect(mega.transform.x).toBeGreaterThan(megaFrom.x);
-    expect(car.transform.x - mega.transform.x, 'the Mega stays visible behind the APC').toBeLessThan(15);
+    expect(lines).toContain('L8.hale-dying'); expect(lines).toContain('L8.courier-elephant');
+    expect(zoo.canBoardDriver()).toBe(true);
+    car.vehicle!.driver = 1; world.vehicles!.active = carId; zoo.update();
+    expect(lines).toContain('L8.departure'); expect(zoo.cameraPose()).toBeNull();
+    expect([...world.entities.iterate()].some(e => e.archetype === 'infected.mega-alpha' || e.infected?.variant === 'inf.mega-alpha')).toBe(false);
     expect(car.vehicle!.passengers!.map(seat => seat.id)).toEqual(ids);
 
     world.storyLock = { scripted: null, skip: false };
@@ -166,6 +142,6 @@ export async function checkL8Story(): Promise<void> {
     expect(world.storyLock).toBeNull();
     expect([zoo.state.keeperId, zoo.state.haleId, zoo.state.reyesId]).toEqual(cast);
     for (const id of cast) expect(world.entities.get(id)!.health.current).toBeGreaterThan(0);
-    expect(zoo.state.megaId).toBe(0); expect(zoo.state.greetingAt - world.tick).toBe(180);
+    expect(zoo.state.greetingAt - world.tick).toBe(180);
   } finally { off(); offBite(); offTurn(); world.dispose(); }
 }

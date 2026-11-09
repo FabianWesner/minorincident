@@ -4,7 +4,7 @@ import { staticCollision } from '../assets/staticCollision';
 import type { Aabb, Placement } from '../levels/districts/types';
 import type { DestructionMaterial } from './destruction';
 export type DestructionClass = 'timber' | 'masonry' | 'concrete' | 'vehicle' | 'wood-prop' | 'metal-prop' | 'pillar' | 'machinery' | 'fuel-tank';
-export interface DestructionPolicy { class: DestructionClass; indestructible?: boolean }
+export interface DestructionPolicy { class: DestructionClass; indestructible?: boolean; /** Protected until a scripted boss impact; destruction owns its removable collider. */ bossBreakable?: boolean }
 export interface DestructionPart { id: string; role: 'glass' | 'door' | 'roof' | 'structure'; material: DestructionMaterial; hp: number; bounds: Aabb }
 export const destructionClasses: Record<DestructionClass, { material: DestructionMaterial; hp: number; burnTicks: number; collapse: number; explosion?: string }> = {
   timber: { material: 'wood', hp: 85, burnTicks: 720, collapse: .35 },

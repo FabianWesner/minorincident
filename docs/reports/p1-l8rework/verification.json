@@ -1,0 +1,108 @@
+{
+  "sourceHash": "a0c5ff7f57fe38ebd13e9787131069cdedda449176511dd88a1510b72d07883c",
+  "revision": "8f11eaeefde00b59cd54f3078996f9bfca3bbf0d",
+  "goal": "L8 arenas gate the route, bosses fightable, elephant finale, no Mega",
+  "goalChecksPass": true,
+  "checks": [
+    {
+      "name": "mortal L8 low, survival, activity, story, no Mega",
+      "pass": true,
+      "evidence": "native-low.json"
+    },
+    {
+      "name": "mortal L8 high, survival, activity, story, no Mega",
+      "pass": true,
+      "evidence": "native-high.json"
+    },
+    {
+      "name": "43 boss controls, including 24 repeated weapon combinations",
+      "pass": true,
+      "evidence": "controls/low-controls.json"
+    },
+    {
+      "name": "route-gates.json",
+      "pass": true,
+      "evidence": "route-gates.json"
+    },
+    {
+      "name": "boarding-column.json",
+      "pass": true,
+      "evidence": "boarding-column.json"
+    },
+    {
+      "name": "boarding-corpse.json",
+      "pass": true,
+      "evidence": "boarding-corpse.json"
+    },
+    {
+      "name": "boarding-contact.json",
+      "pass": true,
+      "evidence": "boarding-contact.json"
+    },
+    {
+      "name": "native-l9.json",
+      "pass": true,
+      "evidence": "native-l9.json"
+    },
+    {
+      "name": "habitats/native-low.json",
+      "pass": true,
+      "evidence": "habitats/native-low.json"
+    },
+    {
+      "name": "habitats/native-high.json",
+      "pass": true,
+      "evidence": "habitats/native-high.json"
+    },
+    {
+      "name": "both physical browser routes, four repeated damaging guns per arena",
+      "pass": true,
+      "evidence": "browser-summary.json"
+    },
+    {
+      "name": "physical story replay and Hale midpoint",
+      "pass": true,
+      "evidence": "story-low/receipt.json"
+    },
+    {
+      "name": "typecheck, lint, 107 unit tests",
+      "pass": true,
+      "evidence": "checks/verify-E30.json"
+    },
+    {
+      "name": "six personally reviewed contact sheets and matching panel hashes",
+      "pass": true,
+      "evidence": "contact-sheets/manifest.json"
+    }
+  ],
+  "artifactSha256": {
+    "native-low.json": "9e60784d4329ce2ccb13943de1742d78dcb2f57309b4eec585e524367ceb0745",
+    "native-high.json": "832a1b11fd9a987a38b1411c110ab5e09cc9a4d96d16273ce1241b1fcf55b667",
+    "controls/low-controls.json": "68e1f823fd8d5a355791273524aa0caf8187734da6002f7dead1f4d32c2d896c",
+    "route-gates.json": "dd90a2d158ea3627dfc99daf79a6c72506015d6d853585189d95924ba756e9b9",
+    "boarding-column.json": "b9d9d66b9aa7e2344c2f90e55e35cf9d00a2245f76c00086e0b43dbac386cdef",
+    "boarding-corpse.json": "f5c6a4c5e762c8b12bbca5dd37190947b59020a8875b8f85b4a2f9b8e79f82a6",
+    "boarding-contact.json": "f50de9f1e880715ebe3ea3b7c569becd113806460f7600badf8bccbac781b787",
+    "native-l9.json": "aaa3c2f99027a7212ef2dd9bd13e309693ff95f3f482f0da0ea7a5bb67d3be21",
+    "habitats/native-low.json": "b1b472f10c97a65a8882d537a47f21b21d012e0cf460d56e8cb703f635c415ec",
+    "habitats/native-high.json": "c5223390fd50c64bbaf4502046f72fe40d00bdf06c74d6a011baf29d63774eca",
+    "browser-summary.json": "86c34fe13a0c10f182d70a59cd35ceb3b0397669fd858e78c7c9adbd5308b509",
+    "story-low/receipt.json": "dc948af5cc2f52d8d110aad62a9b2dd36ae178d8e02be7409c37b8bc3c721916",
+    "checks/verify-E30.json": "1fd62c44a237d69af765a080d5039938aa66d640f866ab7c1b2721e9d4a16625",
+    "contact-sheets/manifest.json": "d8e2885c7edc483232bd85cd5662d969a69369294885790b20de0f0749d01855"
+  },
+  "remainingFindings": [
+    "Low physical weapon-rotation run lost all 12 carried civilians; native skilled routes retained 9/12 and 10/12, and high physical run retained all 12.",
+    "Dense crowds, flashes and camera-edge targets reduce boss readability; see per-arena visual notes."
+  ],
+  "captureTools": {
+    "primary": {
+      "revision": "8f11eaee",
+      "sha256": "d51a582be2253ec82983767d02f06379dcb0cce337ccf7894ec8ba4daf339a73"
+    },
+    "story": {
+      "revision": "bfa70858",
+      "sha256": "877dc4a6811d3a310c6395e38e8594e4ade62d427d04fd87e0c28208fd5f2937"
+    }
+  }
+}

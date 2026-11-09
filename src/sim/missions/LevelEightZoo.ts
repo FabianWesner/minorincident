@@ -1,3 +1,4 @@
+import { l3 } from '../../data/l3';
 import { l8BossArenas } from '../../data/l8Bosses';
 import type { Mission } from './Mission';
 import { FIXED_DT } from '../../core/Clock';
@@ -13,7 +14,7 @@ import { Outbreak } from '../outbreak/Outbreak';
 import { zooStaffLook } from '../../data/zooStaff';
 import { readyCarriedAlly, allyState, updateAlly } from '../outbreak/Allies';
 import { layoutHouseDoors, doorExit, emergeResident, walkResidents, type HouseEmergence } from '../outbreak/HouseEmergence';
-import { formationSlot, leaderHeading, requireClearPoint } from './missionHelpers';
+import { corpseDetour, formationSlot, leaderHeading, requireClearPoint } from './missionHelpers';
 import { L8BossArenas, type L8ArenaState } from './L8BossArenas';
 
 export interface L8ZooState {
@@ -22,20 +23,21 @@ export interface L8ZooState {
   roster: number[]; guards: number[]; animals: number[]; outlets: HouseEmergence[];
   arrivals: { id: number; outlet: number; tick: number; alpha: boolean }[];
   escapeCheckpoint: boolean;
-  keeperId: number; pondKeeperId: number; haleId: number; reyesId: number; dogId: number; megaId: number; broadcastAt: number; greetingAt: number; lionSpoken: boolean; haleGreetingAt: number;
-  sightingAt: number; departureAt: number; chaseAt: number; departureFrom: Transform | null; turnedAnimalId: number; animalInterceptionId: number; animalBiteStarted: boolean; keeperAttacked: boolean;
+  keeperId: number; pondKeeperId: number; haleId: number; reyesId: number; dogId: number; broadcastAt: number; greetingAt: number; lionSpoken: boolean; haleGreetingAt: number;
+  departureAt: number; chaseAt: number; departureFrom: Transform | null; haleFallAt: number; turnedAnimalId: number; animalInterceptionId: number; animalBiteStarted: boolean; keeperAttacked: boolean;
 }
 const distance = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
 /** Zoo story owns timing/entrances; the shared outbreak owns all bites, rescues and same-id transformations. */
 export class LevelEightZoo {
   readonly bosses: L8BossArenas;
-  state: L8ZooState = { arenas: [], startedAt: 0, breachedAt: 0, nextWave: 0, alphas: 0, carId: 0, busId: 0, roster: [], guards: [], animals: [], outlets: [], arrivals: [], escapeCheckpoint: false, keeperId: 0, pondKeeperId: 0, haleId: 0, reyesId: 0, dogId: 0, megaId: 0, broadcastAt: 0, greetingAt: 0, lionSpoken: false, haleGreetingAt: 0, sightingAt: 0, departureAt: 0, chaseAt: 0, departureFrom: null, turnedAnimalId: 0, animalInterceptionId: 0, animalBiteStarted: false, keeperAttacked: false };
+  state: L8ZooState = { arenas: [], startedAt: 0, breachedAt: 0, nextWave: 0, alphas: 0, carId: 0, busId: 0, roster: [], guards: [], animals: [], outlets: [], arrivals: [], escapeCheckpoint: false, keeperId: 0, pondKeeperId: 0, haleId: 0, reyesId: 0, dogId: 0, broadcastAt: 0, greetingAt: 0, lionSpoken: false, haleGreetingAt: 0, departureAt: 0, chaseAt: 0, departureFrom: null, haleFallAt: 0, turnedAnimalId: 0, animalInterceptionId: 0, animalBiteStarted: false, keeperAttacked: false };
   private prepared = false;
   private rosterCacheTick = -1;
   private rosterCacheRevision = -1;
   private rosterCache: number[] = [];
   private passengersCache: number[] = [];
   private readonly seatedPassengers = new Set<number>();
+  private readonly boardingDetours = new Map<number, { goal: Point; path: Point[]; tick: number }>();
   private readonly cacheStops: (() => void)[] = [];
   constructor(private readonly mission: Mission) {
     this.bosses = new L8BossArenas(mission);
@@ -95,7 +97,7 @@ export class LevelEightZoo {
       const soldier = i >= 20 && i < 26, staff = i >= 26;
       const id = outbreak.spawnPedestrian(at, { ...(staff ? zooStaffLook(i - 26) : {}), role: soldier ? 'soldier' : staff ? zooStaffLook(i - 26).role : 'cashier', model: soldier ? 'npc.national-guard' : staff ? zooStaffLook(i - 26).model : undefined,
         child: i === 18 || i === 19, handProp: soldier ? 'rifle' : staff ? zooStaffLook(i - 26).handProp : null, waypoints: [at, target], faces: [target, at] });
-      if (soldier) { w.entities.get(id)!.civilian!.ally = allyState('soldier', at); if (i < 23) s.guards.push(id); }
+      if (soldier) { w.entities.get(id)!.civilian!.ally = { ...allyState('soldier', at), gun: { ...l3.soldiers.gun }, weapon: 'rifle' }; s.guards.push(id); }
     }
     const species: ZooSpecies[] = ['lion', 'gorilla', 'elephant', 'zebra', 'zebra', 'flamingo', 'flamingo', 'flamingo'];
     const offsets = new Map<ZooSpecies, number>();
@@ -106,8 +108,6 @@ export class LevelEightZoo {
       const gateSideZ = anchor.z < 0 ? 18 : -18;
       const gateX = speciesId === 'flamingo' ? 0 : Math.sign(anchor.x) * 45;
       const at = this.point({ x: gateX + offset * 2, z: anchor.z + gateSideZ - (speciesId === 'flamingo' && offset === 0 ? 3 : 0) }, radius);
-      // Individual small loops keep animals within their habitat and avoid
-      // the synchronized straight-line movement that read as a parade.
       const phase = offset + species.indexOf(speciesId);
       const waypoints = Array.from({ length: 4 }, (_, n) => ({ x: at.x + Math.cos((phase + n) * Math.PI / 2) * 1.4, z: at.z + Math.sin((phase + n) * Math.PI / 2) * 1.4 }));
       s.animals.push(civilians.spawn('cashier', at, { zooAnimal: speciesId, waypoints }));
@@ -126,7 +126,7 @@ export class LevelEightZoo {
     for (const [key, x] of [['majorHale', -4], ['privateReyes', -2]] as const) {
       const at = this.point({ x, z: 0 });
       const id = outbreak.spawnPedestrian(at, { role: 'soldier', model: 'npc.national-guard', handProp: 'rifle', waypoints: [at, { x, z: 2 }] });
-      w.entities.get(id)!.civilian!.ally = allyState('soldier', at);
+      w.entities.get(id)!.civilian!.ally = { ...allyState('soldier', at), gun: { ...l3.soldiers.gun }, weapon: 'rifle' };
       this.mission.state.actors[key] = id;
       if (key === 'majorHale') s.haleId = id; else s.reyesId = id;
     }
@@ -148,7 +148,9 @@ export class LevelEightZoo {
     });
     if (s.outlets.length < 3) throw new Error('Zoo requires at least three tunnel outlets');
     // The carried group has just unloaded from L7's evacuation bus inside the perimeter.
-    const bus = spawnSetPiece(w, 'veh.evac-bus', { x: start.x - 10, z: start.z, y: w.districts!.groundHeight(start.x - 10, start.z) + .7 });
+    // Leave the APC's west-side driver door clear for the final approach.
+    const busX = start.x - 16;
+    const bus = spawnSetPiece(w, 'veh.evac-bus', { x: busX, z: start.z, y: w.districts!.groundHeight(busX, start.z) + .7 });
     s.busId = bus.id;
     const wall = { x: bus.transform.x, y: 1.5, z: bus.transform.z, halfX: 4.68, halfY: 1.5, halfZ: 1.48 };
     w.physics.addBlocker(wall);
@@ -164,7 +166,7 @@ export class LevelEightZoo {
     this.mission.checkpoint('sanctuary');
   }
   door(): Point {
-    const car = this.w.vehicles!.cars.get(this.state.carId)!, p = car.entity.transform, def = car.physics.def, z = def.width / 2 + .55;
+    const car = this.w.vehicles!.cars.get(this.state.carId)!, p = car.entity.transform, def = car.physics.def, z = def.width / 2 + 1;
     return { x: p.x + Math.cos(p.yaw) * def.doorX + Math.sin(p.yaw) * z, z: p.z - Math.sin(p.yaw) * def.doorX + Math.cos(p.yaw) * z };
   }
   /** The torus clears the solid hull while remaining within the real door's boarding reach. */
@@ -215,7 +217,7 @@ export class LevelEightZoo {
     if (s.broadcastAt && t >= s.broadcastAt && distance(player.transform, this.mission.def.anchors['central-plaza']) < 25) { s.broadcastAt = 0; this.mission.radio('L8.broadcast'); }
     if (s.haleGreetingAt && t >= s.haleGreetingAt && !s.broadcastAt && distance(player.transform, this.mission.def.anchors['central-plaza']) < 18) { s.haleGreetingAt = 0; this.mission.radio('L8.hale-greeting'); }
     const elephant = w.entities.get(s.animals[2]);
-    if (elephant?.infected && !this.mission.state.states['elephant-turning']) {
+    if (elephant?.infected && s.arenas.some(a => a.id === 'elephant' && a.phase > 0) && !this.mission.state.states['elephant-turning']) {
       this.mission.setState('elephant-turning', true);
       if (keeper?.civilian && !keeper.infection && keeper.health.current > 0) this.mission.radio('L8.nadia-elephant');
     }
@@ -226,108 +228,58 @@ export class LevelEightZoo {
     if (!s.keeperAttacked && dog?.infected && !dog.emerging && dog.health.current > 0 && victim?.civilian && !victim.infection && victim.health.current > 0 && distance(dog.transform, victim.transform) <= 2) {
       w.npcs!.civilians.outbreak!.grab(victim, dog); s.keeperAttacked = true;
     }
-    // Passenger completion deliberately excludes the driver: she covers this beat on foot, then boards last.
-    if (!s.megaId && this.breached && !this.protecting() && this.mission.state.steps.escape.status === 'active' && this.passengersSeated() && hale && distance(hale.transform, this.door()) < 4 && distance(player.transform, this.door()) < 2) {
-      s.sightingAt = t; s.departureAt = t + 18 * 60;
-      s.megaId = w.infected!.spawn('infected.alpha', this.point({ x: 88, z: -80 }), { variant: 'inf.mega-alpha', state: 'chase', perched: false });
-      const mega = w.entities.get(s.megaId)!;
-      mega.infected!.model = 'inf.mega-alpha'; // One recurring creature, independent of the pooled entity ID.
-      Object.assign(mega.transform, { x: 88, y: 4.7, z: -88, yaw: -Math.PI / 2 });
-      mega.health.current = mega.health.max = 1_000_000;
-      mega.emerging = true; mega.contactExempt = s.haleId; mega.combat!.damageMultiplier = 0;
-      w.npcs!.civilians.hold(mega.id);
+    const elephantArena = s.arenas.find(a => a.id === 'elephant');
+    const elephantDefeated = elephantArena?.phase === 3;
+    if (elephantArena && elephantArena.phase > 0 && elephant && hale && elephant.infected?.specialAttack?.move === 'elephant.charge' && distance(hale.transform, this.door()) < 2.5 && distance(elephant.transform, hale.transform) < 6 && !this.mission.state.states['hale-keys'] && hale?.civilian && hale.health.current > 0) {
+      this.mission.setState('hale-keys', true); this.mission.radio('L8.hale-dying');
+      hale.civilian.story = { clip: 'npc-give', start: t - 24 };
+      hale.civilian.knockedUntil = t + 120;
+      hale.transform.yaw = -Math.atan2(player.transform.z - hale.transform.z, player.transform.x - hale.transform.x);
+      hale.motion = { velocity: { x: 0, z: 0 }, speed: 0, moving: false, distance: hale.motion?.distance ?? 0 };
+      const shot = this.mission.def.cinematics['l8-hale'];
+      shot.target = [hale.transform.x, 1, hale.transform.z]; shot.position = [hale.transform.x + 16, 12, hale.transform.z + 18];
+      this.mission.cinematic('l8-hale');
+      s.haleFallAt = t + 120;
     }
-    const mega = w.entities.get(s.megaId);
-    if (mega) {
-      // Scripted entrance/chase owns this actor, including after a checkpoint rebuild.
-      w.npcs!.civilians.hold(mega.id); mega.health.current = mega.health.max;
-      // Once over the wall it is a legal target for the defending soldiers.
-      // The civilian hold keeps its ordinary attack brain out of this scene.
-      mega.emerging = t - s.sightingAt < 60;
-      mega.infected!.perched = mega.emerging; // The authored vault owns height until its feet reach the ground.
-      if (!this.mission.state.states['hale-fallen']) {
-        const elapsed = t - s.sightingAt, f = Math.min(1, elapsed / (14 * 60));
-        const target = hale?.transform ?? { x: 88, z: 70 };
-        const road = Math.min(1, elapsed / 720), approach = Math.max(0, Math.min(1, (elapsed - 720) / 120));
-        const x = 88 + (target.x - 1.6 - 88) * approach;
-        const z = elapsed <= 720 ? -88 + 168 * road : 80 + (target.z - 80) * approach;
-        const y = elapsed < 21 ? 4.7 : elapsed < 60 ? .7 + 4 * (60 - elapsed) / 39 : .7;
-        this.megaPose(x, z, y);
-        if (f === 1 && hale?.civilian) {
-          if (!this.mission.state.states['hale-keys']) {
-            this.mission.setState('hale-keys', true); this.mission.radio('L8.hale-dying');
-            // The short camera beat freezes simulation: hold the readable
-            // handover pose and face the courier, then let the fatal beat land.
-            hale.civilian.story = { clip: 'npc-give', start: t - 24 };
-            hale.civilian.knockedUntil = t + 60;
-            hale.transform.yaw = -Math.atan2(player.transform.z - hale.transform.z, player.transform.x - hale.transform.x);
-            hale.motion = { velocity: { x: 0, z: 0 }, speed: 0, moving: false, distance: hale.motion?.distance ?? 0 };
-            const shot = this.mission.def.cinematics['l8-hale'];
-            shot.target = [hale.transform.x, 1, hale.transform.z]; shot.position = [hale.transform.x + 16, 12, hale.transform.z + 18];
-            this.mission.cinematic('l8-hale');
-          }
-          if (elapsed >= 15 * 60) {
-            hale.health.current = 0; hale.civilian.state = 'finished'; hale.civilian.story = { clip: 'death-side', start: t };
-            this.mission.setState('hale-fallen', true);
-          }
-        }
-      }
+    if (this.mission.state.states['hale-keys'] && !this.mission.state.states['hale-fallen'] && s.haleFallAt && t >= s.haleFallAt && hale?.civilian) {
+      hale.health.current = 0; hale.civilian.state = 'finished';
+      hale.civilian.story = { clip: 'death-side', start: t };
+      this.mission.setState('hale-fallen', true); s.haleFallAt = 0;
     }
-    if (mega && hale && this.mission.state.states['hale-fallen'] && !s.departureFrom) {
-      // It strides past the fallen commander, leaving the real cab door clear for the last boarding.
-      const f = Math.max(0, Math.min(1, (t - s.sightingAt - 15 * 60) / 180));
-      this.megaPose(hale.transform.x - 1.6 - 4 * f, hale.transform.z + 4 * f, .7);
+    if (!this.mission.state.states['elephant-fallen'] && elephantDefeated) {
+      this.mission.setState('elephant-fallen', true); this.mission.radio('L8.courier-elephant');
     }
-    if (s.departureAt && t >= s.departureAt) s.departureAt = 0;
-    if (s.megaId && !s.departureAt && this.mission.state.states['hale-fallen'] && w.vehicles!.groupBoarded(s.carId, this.passengers())) {
+    if (elephantDefeated && this.mission.state.states['hale-fallen'] &&
+        this.mission.state.steps.escape.status === 'active' && this.passengersSeated() &&
+        w.vehicles!.active === s.carId && !s.departureFrom) {
+      s.departureAt = t;
+    }
+    if ((s.departureAt || s.departureFrom) && this.mission.state.states['hale-fallen'] && this.passengersSeated() &&
+        w.vehicles!.active === s.carId) {
       if (!s.departureFrom) {
         s.chaseAt = t; s.departureFrom = { ...w.entities.get(s.carId)!.transform };
-        if (mega) mega.doorLane = { x: 116, z: 80, ox: 1, oz: 0, half: 2.7, start: -3, end: 3 };
         w.storyLock = { scripted: null, skip: false }; w.clearInput();
-        this.mission.radio('L8.following');
+        this.mission.radio('L8.departure');
       }
-      const elapsed = t - s.chaseAt, from = s.departureFrom, lead = Math.min(1, elapsed / 120), run = Math.max(0, Math.min(1, (elapsed - 120) / 360));
-      // The courtyard-facing door keeps the approach clear. Depart along the parked heading, then turn toward the exit.
-      const c1 = { x: from.x + Math.cos(from.yaw) * 6, z: from.z - Math.sin(from.yaw) * 6 }, c2 = { x: 100, z: 80 }, u = 1 - lead;
-      const x = elapsed <= 120 ? u ** 3 * from.x + 3 * u * u * lead * c1.x + 3 * u * lead * lead * c2.x + lead ** 3 * 104 : 104 + 42 * run;
-      const z = elapsed <= 120 ? u ** 3 * from.z + 3 * u * u * lead * c1.z + 3 * u * lead * lead * c2.z + lead ** 3 * 80 : 80;
-      const vx = 3 * u * u * (c1.x - from.x) + 6 * u * lead * (c2.x - c1.x) + 3 * lead * lead * (104 - c2.x);
-      const vz = 3 * u * u * (c1.z - from.z) + 6 * u * lead * (c2.z - c1.z) + 3 * lead * lead * (80 - c2.z);
-      const yaw = elapsed <= 120 ? -Math.atan2(vz, vx) : 0;
+      const elapsed = t - s.chaseAt, from = s.departureFrom, run = Math.max(0, Math.min(1, elapsed / 360));
+      const x = from.x + 42 * run, z = from.z;
       const previous = w.entities.get(s.carId)!.transform;
       const speed = Math.hypot(x - previous.x, z - previous.z) * 60;
-      w.vehicles!.scriptPose(s.carId, { x, y: from.y, z, yaw }, speed);
+      w.vehicles!.scriptPose(s.carId, { x, y: from.y, z, yaw: from.yaw }, speed);
       const car = w.entities.get(s.carId)!; car.vehicle!.braking = false;
       if (elapsed % 6 === 0) emitEngine(w, s.carId, speed, true);
-      if (mega) {
-        const dx = x - 10 - mega.transform.x, dz = z - mega.transform.z, d = Math.hypot(dx, dz), step = Math.min(d, 11 * FIXED_DT);
-        this.megaPose(mega.transform.x + dx / (d || 1) * step, mega.transform.z + dz / (d || 1) * step, .7);
-      }
       if (elapsed >= 480) { this.mission.setState('departed', true); w.storyLock = null; }
     }
-  }
-  private megaPose(x: number, z: number, y: number): void {
-    const mega = this.w.entities.get(this.state.megaId)!, dx = x - mega.transform.x, dz = z - mega.transform.z;
-    Object.assign(mega.transform, { x, y, z });
-    if (Math.hypot(dx, dz) > .001) mega.transform.yaw = -Math.atan2(dz, dx);
-    // AgentMotion publishes the resolved displacement in cleanup. Incrementing
-    // gait distance here as well doubled the Mega's scripted running cadence.
-    this.w.spatial.set(mega.id, x, z);
-  }
-  /** The departure camera retains both the APC and the pursuing silhouette. */
-  cameraPose(): { position: [number, number, number]; target: [number, number, number] } | null {
-    // Keep simulation live while the shot follows the actual wall crossing.
-    if (this.state.megaId && this.w.tick - this.state.sightingAt < 90 && !this.state.departureFrom) {
-      const mega = this.w.entities.get(this.state.megaId)!.transform;
-      return { position: [mega.x + 26, 20, mega.z + 26], target: [mega.x, mega.y + 1, mega.z] };
-    }
-    if (!this.state.departureFrom) return null;
-    const car = this.w.entities.get(this.state.carId)!.transform;
-    return { position: [car.x + 10, 12, car.z + 22], target: [car.x - 6, 1, car.z] };
   }
   update(): void {
     const w = this.w, s = this.state, ai = w.infected!, t = w.tick;
     this.bosses.update();
+    const hale = w.entities.get(s.haleId);
+    if (this.breached && s.arenas.every(a => a.id === 'elephant' || a.phase === 3) && !this.mission.state.states['hale-keys'] && hale?.civilian && hale.health.current > 0 && distance(hale.transform, this.door()) > 1.8) {
+      // Hale's retreat remains physical while he fires. Repeated rifle windups
+      // must not pin him hundreds of metres behind the final door staging.
+      if (!this.approachBoardingSpot(hale, this.door(), 6)) w.npcs!.move(hale, this.door(), 6, hale.civilian, .2, 48000);
+    }
     this.story();
     let pending = 0; for (const e of w.entities.iterate()) if (e.infection && !e.infected) pending++;
     ai.director.pendingTurns = pending;
@@ -355,13 +307,25 @@ export class LevelEightZoo {
     const seated=this.w.vehicles!.active===s.carId;
     this.mission.setState('player-boarded',seated);
     if(seated || this.protecting())this.mission.state.marker=null;
-    else if(this.mission.state.steps.escape.status==='active'||this.mission.state.steps.depart.status==='active')this.mission.state.marker='exit';
+    else if(this.mission.state.steps.escape.status==='active'||this.mission.state.steps.depart.status==='active') {
+      const next = s.arenas.find(a => a.phase !== 3);
+      const step = this.mission.def.steps.find(value => value.id === 'escape');
+      if (next) {
+        const def = l8BossArenas.find(value => value.id === next.id)!;
+        if (step) { step.text = `${next.id === 'elephant' ? 'Bring down the elephant!' : `Defeat ${def.name}`} — ${def.counter}`; step.anchor = `arena-${next.id}`; step.waypoint = true; }
+        this.mission.state.marker = `arena-${next.id}`;
+      } else {
+        if (step) { const ids = this.passengers(), seats = w.entities.get(s.carId)!.vehicle!.passengers ?? []; const count = ids.filter(id => seats.some(seat => seat.id === id && seat.phase === 'seated')).length; step.text = `Cover the survivors while they board · ${count}/${ids.length} aboard`; step.anchor = 'exit'; step.waypoint = false; }
+        this.mission.state.marker = 'exit';
+      }
+    }
     if (!this.breached) return;
+    this.escortGuards();
     if (t >= s.nextWave) {
       // The animal arenas carry the outbreak after the first tunnel surge (PO 11-08).
       // Four ordinary arrivals sustain the opening, without turning the zoo into another horde slaughter.
       s.nextWave = t + 36_000;
-      s.outlets.forEach((outlet, i) => this.release(outlet, i));
+      s.outlets.forEach((outlet, i) => this.release(outlet, i, i < 3 && s.alphas < 3));
     }
     for (const [index, outlet] of s.outlets.entries()) for (const id of walkResidents(w, outlet, t)) {
       if (w.entities.get(id)?.infected?.arenaCarrier) { ai.pursueTarget(id, w.entities.get(id)!.infected!.arenaCarrier!); continue; }
@@ -388,8 +352,28 @@ export class LevelEightZoo {
     }
     const player = w.entities.get(1)!;
     if (!s.escapeCheckpoint && this.mission.state.steps.escape.status === 'active' && distance(player.transform, this.door()) < 12) { s.escapeCheckpoint = true; this.mission.checkpoint('escape-route'); }
-    if (w.vehicles!.groupBoarded(s.carId, this.passengers()) && (!s.sightingAt || !s.departureAt)) this.mission.setState('aboard', true);
+    if (w.vehicles!.groupBoarded(s.carId, this.passengers()) && !s.departureAt) this.mission.setState('aboard', true);
   }
+  /** The existing evacuation detail covers the living column, using its shared rifle rules. */
+  private escortGuards(): void {
+    if (!this.breached || this.departing()) return;
+    const group = this.state.roster.map(id => this.w.entities.get(id)).filter((e): e is EntitySnapshot => !!e && e.health.current > 0 && !e.infected && !e.infection && e.passengerOf === undefined);
+    if (!group.length) return;
+    const x = group.reduce((n, e) => n + e.transform.x, 0) / group.length, z = group.reduce((n, e) => n + e.transform.z, 0) / group.length;
+    for (const [i, id] of this.state.guards.entries()) {
+      const guard = this.w.entities.get(id), ally = guard?.civilian?.ally;
+      if (!guard || guard.health.current <= 0 || !ally) continue;
+      const angle = i * Math.PI / 3;
+      const radius = this.boarding() ? 6 : 4;
+      const desired = { x: x + Math.cos(angle) * radius, z: z + Math.sin(angle) * radius };
+      if (!ally.post || distance(ally.post, desired) >= 2) {
+        const at = this.point(desired); ally.post = at; ally.run = at; ally.runSpeed = 6; ally.hold = true;
+      }
+      if (ally.run && distance(guard.transform, ally.run) > 2 && distance(guard.transform, ally.run) < 20) this.w.npcs!.move(guard, ally.run, 6, guard.civilian!, .3, 2400);
+    }
+  }
+  /** L8 no longer owns a Mega Alpha reveal; L9 is its first appearance. */
+  cameraPose(): { position: [number, number, number]; target: [number, number, number] } | null { return null; }
   private reyesFallback(): void {
     const s = this.state, w = this.w, reyes = w.entities.get(s.reyesId);
     if (!reyes?.civilian || reyes.civilian.survivor) return;
@@ -413,10 +397,10 @@ export class LevelEightZoo {
   /** The unarmed cab would remove the courier's cover fire before the queue is safe. */
   canBoardDriver(): boolean {
     const car = this.w.entities.get(this.state.carId)?.vehicle;
-    return this.breached && (this.mission.state.steps.escape.status === 'active' || this.mission.state.steps.depart.status === 'active') && this.passengers().every(id => car?.passengers?.some(p => p.id === id && p.phase === 'seated')) && !!this.mission.state.states['hale-fallen'] && !this.state.departureAt;
+    return this.breached && this.state.arenas.every(a => a.phase === 3) && (this.mission.state.steps.escape.status === 'active' || this.mission.state.steps.depart.status === 'active') && this.passengers().every(id => car?.passengers?.some(p => p.id === id && p.phase === 'seated')) && !!this.mission.state.states['hale-fallen'];
   }
   /** E30 departure starts only after the breach and the complete group has boarded. */
-  canDrive(): boolean { return this.breached && this.mission.state.steps.sanctuary.status === 'completed' && this.w.vehicles!.groupBoarded(this.state.carId,this.passengers()); }
+  canDrive(): boolean { return this.breached && this.state.arenas.every(a => a.phase === 3) && this.mission.state.steps.sanctuary.status === 'completed' && this.w.vehicles!.groupBoarded(this.state.carId,this.passengers()); }
   /** The completed boarding group shares the courier's run-out protection until handover. */
   departing(): boolean { return !!this.state.departureFrom || this.mission.state.runOutUntil !== undefined || this.mission.state.phase !== 'playing'; }
   /** At the pickup, the evacuation queue owns movement instead of civilian flee/defence. */
@@ -434,13 +418,28 @@ export class LevelEightZoo {
     if (!this.boarding()) return false;
     const w = this.w, door = w.vehicles!.passengerDoor(this.state.carId);
     if (distance(e.transform, door) < .7) w.vehicles!.boardPassenger(this.state.carId, e.id);
-    else if (!this.approachBoardingSpot(e, door, 8)) w.npcs!.move(e, door, 8, e.companion!, .2);
+    else { const target = this.boardingTarget(e, door); if (!this.approachBoardingSpot(e, target, 8)) w.npcs!.move(e, target, 8, e.companion!, .2, 2400); }
     return true;
   }
   /** Newly rescued zoo residents also belong to the complete living group. */
   roster(): number[] {
     this.refreshRoster();
     return [...this.rosterCache];
+  }
+  private boardingTarget(e: EntitySnapshot, goal: Point): Point {
+    const w = this.w;
+    // Large fallen animals stay solid but do not enter the static nav grid.
+    // Retain swept detour legs so a companion cannot hold the queue against
+    // the elephant's body after winning the fight.
+    let detour = this.boardingDetours.get(e.id);
+    if (detour && (w.tick < detour.tick || Math.hypot(detour.goal.x - goal.x, detour.goal.z - goal.z) > .5)) { this.boardingDetours.delete(e.id); detour = undefined; }
+    while (detour?.path.length && Math.hypot(e.transform.x - detour.path[0].x, e.transform.z - detour.path[0].z) < .3) detour.path.shift();
+    if (!detour?.path.length) {
+      const path = corpseDetour(w, e, goal);
+      if (path) { detour = { goal: { ...goal }, path, tick: w.tick }; this.boardingDetours.set(e.id, detour); }
+      else { this.boardingDetours.delete(e.id); detour = undefined; }
+    }
+    return detour?.path[0] ?? goal;
   }
   /** The parked nav AABB encloses free space beside a rotated hull. Use the
    * canonical physical sweep for the final clear approach, without changing
@@ -503,11 +502,20 @@ export class LevelEightZoo {
     // response: civilian steering overshoots these changing targets.
     if (this.breached) c.survivor!.briskAt = w.tick;
     const goal = formationSlot(p.transform, leaderHeading(p.transform.yaw, velocity), slot);
-    // Keep the evacuees outside the charging yard; a packed escort must not become an elephant-proof wall.
-    const elephant = s.arenas.find(a => a.id === 'elephant' && a.phase > 0 && a.phase < 3);
-    const yard = l8BossArenas.find(a => a.id === 'elephant')!;
-    if (!boarding && elephant && distance(p.transform, yard.centre) < yard.radius)
-      Object.assign(goal, formationSlot(yard.entry, { x: 0, z: 1 }, slot));
+    // Keep the evacuees on the courier's rear flank, within the camera and rifle
+    // detail's defence. Sending them all the way back to a distant entry left
+    // them outside the fight's visible rescue window. The elephant yard retains
+    // its outside holding point so the column cannot block the opening charge.
+    const encounter = s.arenas.find(a => a.phase > 0 && a.phase < 3);
+    const arena = l8BossArenas.find(a => a.id === encounter?.id);
+    if (!boarding && arena && distance(p.transform, arena.centre) < arena.radius + 8) {
+      const dx = arena.centre.x - arena.entry.x, dz = arena.centre.z - arena.entry.z, length = Math.hypot(dx, dz) || 1;
+      const heading = { x: dx / length, z: dz / length };
+      const flank = { x: p.transform.x - heading.z * 6, z: p.transform.z + heading.x * 6 };
+      const other = { x: p.transform.x + heading.z * 6, z: p.transform.z - heading.x * 6 };
+      const hold = arena.id === 'elephant' ? arena.entry : w.infected!.nav.clear(flank.x, flank.z, .4) ? flank : other;
+      Object.assign(goal, formationSlot(hold, heading, slot));
+    }
     let target = boarding ? door : w.infected!.nav.clear(goal.x, goal.z, .35) ? goal : p.transform;
     let queueIndex = 0;
     if (boarding) {
@@ -529,12 +537,16 @@ export class LevelEightZoo {
         // Keep the complete roster near the APC instead of stretching a
         // two-column queue beyond G-13's ten-metre waiting distance. Metre
         // spacing leaves the ordinary 0.35 m capsules clear in both axes.
-        const columns = Math.max(2, Math.ceil((passengers.length - 1) / 6));
-        const row = Math.floor((queueIndex - 1) / columns), side = ((queueIndex - 1) % columns - (columns - 1) / 2);
-        const queue = { x: door.x + dx / length * (1 + row) - dz / length * side, z: door.z + dz / length * (1 + row) + dx / length * side };
+        const columns = Math.max(2, Math.ceil((passengers.length - 1) / 12) * 2);
+        const column = (queueIndex - 1) % columns, row = Math.floor((queueIndex - 1) / columns), half = columns / 2;
+        // A 2.5 m centre passage lets the current head (including the corgi's
+        // long capsule) reach the entry before the waiting rows advance.
+        const side = (column < half ? -1 : 1) * (1.6 + column % half * .9);
+        const queue = { x: door.x + dx / length * (2 + row * 1.2) - dz / length * side, z: door.z + dz / length * (2 + row * 1.2) + dx / length * side };
         target = w.infected!.nav.clear(queue.x, queue.z, actorRadius(e)) && w.solids.clear({ ...queue, y: e.transform.y }, actorRadius(e), e.id, false) ? queue : e.transform;
       }
     }
+    if (boarding) target = this.boardingTarget(e, target);
     if (boarding && queueIndex === 0 && distance(e.transform, door) < .7) w.vehicles!.boardPassenger(s.carId, e.id);
     else if (distance(e.transform, target) > .3) {
       // The roster is healed on arrival and must keep pace through the long
@@ -576,11 +588,9 @@ export class LevelEightZoo {
     for (const [id, door] of data.doors) this.w.openDoors.set(id, { ...door, at: door.at + delta });
     // A checkpoint restored on tick zero can have a legitimate breach time of zero.
     this.state.startedAt += delta; if (this.breached) this.state.breachedAt += delta; if (this.state.nextWave) this.state.nextWave += delta;
-    for (const key of ['broadcastAt', 'greetingAt', 'haleGreetingAt', 'departureAt'] as const) if (this.state[key]) this.state[key] += delta;
-    if (this.state.megaId) this.state.sightingAt += delta;
+    for (const key of ['broadcastAt', 'greetingAt', 'haleGreetingAt', 'departureAt', 'haleFallAt'] as const) if (this.state[key]) this.state[key] += delta;
     if (this.state.departureFrom) this.state.chaseAt += delta;
     this.w.storyLock = this.state.departureFrom && !this.mission.state.states.departed ? { scripted: null, skip: false } : null;
-    if (this.state.megaId) this.w.npcs!.civilians.hold(this.state.megaId);
     for (const arrival of this.state.arrivals) arrival.tick += delta;
     for (const outlet of this.state.outlets) { outlet.next += delta; for (const walk of outlet.walking ?? []) walk.until += delta; }
     this.w.infected!.director.levelCap = 200; this.w.infected!.director.strict = true; this.w.infected!.director.reserved = 1;
