@@ -35,7 +35,12 @@ export class AssetMaterials {
         }
         const parts: string[] = [source.name]; for (let part: Object3D | null = node; part; part = part.parent) parts.push(part.userData.name ?? part.name);
         const label = parts.join(' ');
-        const surfaceClass = (/chrome|metal|grill|rim|bumper/i.test(label) || (vehicle && source.name === 'pal_sidewalk')) ? 2 : (vehicle && !/wheel|tire|rubber|seat|interior|emi_/i.test(label)) || (/mall/.test(root.userData.assetId ?? '') && /floor|tile/i.test(label)) ? 1 : 0;
+        const metal = /chrome|metal|grill|rim|bumper/i.test(label) || (vehicle && source.name === 'pal_sidewalk');
+        // Vehicle cloth keeps its authored folds without the paint shader's
+        // sharp environment highlight (L4 canvas otherwise reads as chrome).
+        const reflective = vehicle && !/wheel|tire|rubber|seat|interior|emi_|canvas|khaki|cloth|fabric|tarp/i.test(label);
+        const mallFloor = /mall/.test(root.userData.assetId ?? '') && /floor|tile/i.test(label);
+        const surfaceClass = metal ? 2 : reflective || mallFloor ? 1 : 0;
         const token = match[2] as PaletteToken;
         let open = false;
         if (root.userData.diner && token === 'survivorRed') for (let parent = node.parent; parent; parent = parent.parent) if (parent.name === 'door_front') { open = true; break; }
