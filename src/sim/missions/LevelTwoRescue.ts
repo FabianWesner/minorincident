@@ -248,7 +248,7 @@ export class LevelTwoRescue {
     if (id === 'board') this.board();
     if (id === 'axe') this.takeAxe();
     if (id === 'ride' && (this.s.phase === 'ride' || this.s.phase === 'alarm')) {
-      for (const c of this.s.crewIds) { const e = this.world.entities.get(c); if (e) { e.hidden = true; e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; this.world.spatial.delete(c); } }
+      for (const c of this.s.crewIds) { const e = this.world.entities.get(c); if (e) { e.hidden = true; e.passengerOf = this.s.truckId; e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; this.world.spatial.delete(c); } }
       if (!this.s.seated) this.board();
       this.s.phase = 'ride'; this.s.departAt ||= this.world.tick; this.s.rideS = this.routeInfo().length; this.ride();
     }
@@ -338,7 +338,7 @@ export class LevelTwoRescue {
     if (this.s.seated) {
       relocatePlayer(world, x, z);
     }
-    for (const e of world.entities.iterate()) if (e.companion || (e.hidden && this.s.crewIds.includes(e.id))) { e.hidden = true; e.transform.x = x; e.transform.z = z; world.spatial.delete(e.id); }
+    for (const e of world.entities.iterate()) if (e.companion || (e.hidden && this.s.crewIds.includes(e.id))) { e.hidden = true; if (this.s.crewIds.includes(e.id)) e.passengerOf = this.s.truckId; e.transform.x = x; e.transform.z = z; world.spatial.delete(e.id); }
   }
   private arrive(): void {
     const { world } = this.mission, tick = world.tick, s = this.s;
@@ -364,7 +364,7 @@ export class LevelTwoRescue {
     for (const [i, id] of s.crewIds.entries()) {
       const e = world.entities.get(id); if (!e?.civilian?.ally) continue;
       const lx = 2.8 - i * 1.15, lz = 1.9 + (i % 2) * .9, p = this.snap({ x: t.x + Math.cos(t.yaw) * lx + Math.sin(t.yaw) * lz, z: t.z - Math.sin(t.yaw) * lx + Math.cos(t.yaw) * lz }, .35);
-      e.hidden = false; Object.assign(e.transform, p); world.solids.admit(e, 'l2.passenger.exit');
+      e.hidden = false; delete e.passengerOf; Object.assign(e.transform, p); world.solids.admit(e, 'l2.passenger.exit');
       // Three to the chained front doors, three to the loading door: an urgent run, not a jog.
       const [x, z] = l2.rescue.crewDoors[i];
       e.civilian!.ally.run = this.snap({ x, z }, .35); e.civilian!.ally.runSpeed = l2.rescue.crewRunMs; e.civilian!.pauseUntil = 0;
