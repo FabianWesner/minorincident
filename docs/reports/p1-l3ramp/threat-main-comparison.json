@@ -1,0 +1,81 @@
+{
+  "method": "Private remote job of the merged lane with PropSystem.ts restored byte-for-byte from main f691bf05. All other simulation source matches main; remaining on-ramp differences are glTF metadata and collider provenance only (collision boxes unchanged). No edits to main or the lane runtime during comparison.",
+  "command": "npm run qa:threat -- --maxWorkers=4 --levels L3",
+  "sameNativeStateHash": true,
+  "sameArmyResults": true,
+  "sameFlags": true,
+  "fixed": {
+    "revision": "2c27c39791ce1af6d6ecdb0c6f1c1bb3eae1abed",
+    "sourceHash": "aa6da073183463029220446487367218547954f6b1445f98dcab6989547fdbd7",
+    "nativeStateHash": "1cf74210",
+    "completed": true,
+    "seconds": 230.38333333333333,
+    "flags": [
+      "L3/criterion/L3-06 squad counts/losses:FAIL",
+      "L3/criterion/L3-11 native competent rate:FAIL",
+      "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+    ],
+    "army": {
+      "seeds": [
+        {
+          "seed": 1,
+          "valid": true,
+          "army": 2,
+          "attacksPerMinute": 38.99147727272727
+        },
+        {
+          "seed": 2,
+          "valid": true,
+          "army": 0,
+          "attacksPerMinute": 40.13407169921306
+        },
+        {
+          "seed": 3,
+          "valid": true,
+          "army": 0,
+          "attacksPerMinute": 10.027855153203342
+        }
+      ],
+      "measured": 3,
+      "within": 1,
+      "pass": false
+    }
+  },
+  "mainSimulation": {
+    "revision": "f691bf058fb8e444d401ddc443e41fef3484c35f",
+    "sourceHash": "d4d3c35de55b5a7dc58908f466437eceeea695d7343ed5e075233e0812d02587",
+    "nativeStateHash": "1cf74210",
+    "completed": true,
+    "seconds": 230.38333333333333,
+    "flags": [
+      "L3/criterion/L3-06 squad counts/losses:FAIL",
+      "L3/criterion/L3-11 native competent rate:FAIL",
+      "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+    ],
+    "army": {
+      "seeds": [
+        {
+          "seed": 1,
+          "valid": true,
+          "army": 2,
+          "attacksPerMinute": 38.99147727272727
+        },
+        {
+          "seed": 2,
+          "valid": true,
+          "army": 0,
+          "attacksPerMinute": 40.13407169921306
+        },
+        {
+          "seed": 3,
+          "valid": true,
+          "army": 0,
+          "attacksPerMinute": 10.027855153203342
+        }
+      ],
+      "measured": 3,
+      "within": 1,
+      "pass": false
+    }
+  }
+}
