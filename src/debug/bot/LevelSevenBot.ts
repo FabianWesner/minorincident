@@ -4,6 +4,8 @@ import { l7Rocket } from '../../data/l7';
 import { l7CorridorAnchors } from '../../levels/L7/corridor';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import { Walker } from './Walker';
+import { corpseDetour } from '../../sim/missions/missionHelpers';
+import { solidLargeCorpse } from '../../sim/world/SolidRegistry';
 
 const distance = (a: { x: number; z: number }, b: { x: number; z: number }) => Math.hypot(a.x - b.x, a.z - b.z);
 
@@ -59,10 +61,17 @@ export class LevelSevenBot {
     if (!pickup && this.waypoint < this.route.length - 1 && distance(p.transform, goal) > 10 && followers.some(r => { const e = w.entities.get(r.id); return e && distance(e.transform, p.transform) > limit; })) f.move = { x: 0, z: 0 };
     // Clear a firing lane instead of running into a crowd or waiting inside
     // its bites. Reuse the same connected six-metre dodge as the war bot.
-    if (!pickup && followers.length && this.profile !== 'evade-only') {
+    if (!pickup && this.profile !== 'evade-only') {
       if (this.detour && (w.tick >= this.detour.until || distance(p.transform, this.detour) < .8)) this.detour = null;
+      // Static route visibility does not include a fallen Alpha. Reuse the
+      // followers' swept body detour when contact identifies that obstruction.
+      const blocker = w.solids.blockingBody(1);
+      if (!this.detour && blocker && solidLargeCorpse(blocker)) {
+        const around = corpseDetour(w, p, goal);
+        if (around?.length) this.detour = { ...around[0], until: w.tick + 45 };
+      }
       const alpha = enemies.find(e => e.archetype === 'infected.alpha' && e.infected?.specialAttack?.stage === 'telegraph' && distance(e.transform, p.transform) < 14);
-      if (!this.detour && (alpha || enemies[0] && distance(enemies[0].transform, p.transform) < 6)) {
+      if (followers.length && !this.detour && (alpha || enemies[0] && distance(enemies[0].transform, p.transform) < 6)) {
         const at = this.walker.detour(w, goal, (alpha ?? enemies[0]).transform);
         if (at) this.detour = { ...at, until: w.tick + 45 };
       }
