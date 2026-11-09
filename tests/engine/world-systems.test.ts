@@ -53,6 +53,12 @@ test('doors: locked hint, key requirement, open/close updates navigation and col
   expect(w.entities.get(id)!.interactable!.open).toBe(false);
   expect(w.physics.colliderCount).toBe(colliders + 1);
   expect(nav.hash).toBe(closedHash);
+  const overlap = { x: -1, z: 0, halfX: .4, halfZ: .4 };
+  nav.block(100, overlap); nav.block(101, overlap);
+  const overlapHash = nav.hash;
+  expect(overlapHash).not.toBe(closedHash);
+  nav.unblock(100); expect(nav.hash).toBe(overlapHash);
+  nav.unblock(101); expect(nav.hash).toBe(closedHash);
 });
 
 test('pickups: exact one-time effects with caps, rack join/replacement, dead players wait, inventory survives respawn', async () => {
