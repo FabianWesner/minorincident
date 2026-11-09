@@ -98,7 +98,7 @@ export class LevelTenEndingView extends Group {
       this.visible = false;
       const pull = epiloguePull(ticks), console = this.world.missions?.def.anchors['cure-console'];
       if (console && (state?.epilogue?.phase === 'thanks' || ticks >= 45 * 60 && pull === 0)) {
-        const aspect = Math.max(1, 1 / view.camera.aspect);
+        const aspect = Math.max(1, (16 / 9) / view.camera.aspect);
         view.camera.near = .1; view.camera.far = 600; view.camera.updateProjectionMatrix();
         view.cinematic({ position: [console.x + 4 - 24 * aspect, 1 + 22 * aspect, console.z + 3 + 24 * aspect], target: [console.x + 4, 1, console.z + 3] });
       } else if (console && pull > 0) {
