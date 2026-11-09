@@ -147,7 +147,17 @@ export class WaveObserver {
       }
     }
     if (this.level === 'L10' && state.states['charge-active']) {
+      const opening = !this.waves.has('dispersal-assault');
       const wave = this.wave('dispersal-assault', t, 'L10 charge-active (not first spawn)');
+      // G-22 measures the threat present at announcement. Evaded journey
+      // hunters can already occupy the arena's cap, so the opening cohort
+      // includes those actual nearby actors as well as subsequent admissions.
+      if (opening) {
+        const player = w.entities.get(1)!;
+        for (const e of w.infected!.active) if (e.health.current > 0 && !e.hidden && !e.infected?.hidden && !e.pendingAdmission && !e.infected?.pursuit
+          && Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) <= 30)
+          this.add(wave, e.id, `opening/${this.identity(e)}`);
+      }
       for (const [key, id] of Object.entries(w.l10Encounters!.state.spawned)) if (key.startsWith('dispersal-assault:')) this.add(wave, id, key);
     }
     for (const wave of this.waves.values()) for (const [token, id] of wave.members) {
