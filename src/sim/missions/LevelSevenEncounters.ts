@@ -1,9 +1,10 @@
-import { readyCarriedAlly } from '../outbreak/Allies';
+import { allyState, readyCarriedAlly } from '../outbreak/Allies';
 import { Outbreak } from '../outbreak/Outbreak';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { Point } from '../npc/types';
 import { l7Encounters, l7Rocket } from '../../data/l7';
+import { l3 } from '../../data/l3';
 import { infectedHumanBite } from '../../data/infected';
 import { corpseDetour, formationBack, formationSlot, leaderHeading, requireClearPoint, snapToClear } from './missionHelpers';
 import { NavGrid } from '../ai/NavGrid';
@@ -16,6 +17,7 @@ export interface L7EncounterState {
   finalReady: boolean;
   passageReady: boolean;
   waitAt: number;
+  requestedGroups?: number[];
   alarm?: { key: string; id: number; x: number; z: number; text: string; until: number; kind: 'wait' | 'attack' | 'lost' };
 }
 const distance = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
@@ -122,9 +124,23 @@ export class LevelSevenEncounters {
     // Residents are already standing in the city when the level becomes
     // playable. Deferring the nearest group through the offscreen spawn gate
     // admitted it one victim at a time at rocket range and removed all contact.
-    const low = director.tier === 'low';
-    this.group(l7Encounters.finalGroup, l7Encounters.horde, low ? 60 : 120, 2, true);
-    this.group(l7Encounters.firstStreetGroup, l7Encounters.streets[0], low ? 35 : 70, 1, true);
+    this.state.requestedGroups = [l7Encounters.firstStreetGroup];
+    this.group(l7Encounters.firstStreetGroup, l7Encounters.streets[0], 20, 1, true);
+    // Four ordinary rifle soldiers cover the column; pairs hold the road junction and boarding approach.
+    // These are support soldiers, not extra evacuees in the incoming campaign roster, and can be grabbed or killed.
+    for (let slot = 0; slot < 8; slot++) {
+      const at = this.clearPoint(slot < 4
+        ? { x: leader.x + 3 + (slot >> 1) * 2, z: leader.z + (slot % 2 ? 4 : -4) }
+        : { x: slot < 6 ? -63 : 45, z: slot % 2 ? 51 : 42 }, .4);
+      const guard = w.entities.get(outbreak.spawnPedestrian(at, { model: 'npc.national-guard', role: 'cashier' }))!;
+      guard.health.current = guard.health.max = l3.soldiers.hp;
+      guard.civilian!.ally = { ...allyState('soldier', at, true), gun: { ...l3.soldiers.gun }, weapon: 'rifle', engaged: true,
+        ...(slot < 4 ? { follow: { targetId: 1, slot, minM: 3, maxM: 6, engageM: 18, leashM: 9, moveMs: 5.2 } } : {}) };
+      w.solids.admit(guard, 'l7.column.guard');
+    }
+    // Roadside aid at the bend gives the courier a physical resupply stop
+    // between the long street fight and the final Alpha corridor.
+    for (const at of [{ x: 0, z: 47 }, { x: 65, z: 46 }, { x: -36, z: 41.7 }, { x: -70.5, z: 47.5 }]) w.pickups!.spawn('medkit', this.clearPoint(at, .3));
     // Asset loading must see the residents' final pedestrian models. Waiting
     // for the first AI tick discovers new living/corpse graphs during pickup.
     outbreak.dressInfected();
@@ -146,7 +162,8 @@ export class LevelSevenEncounters {
       const at = group === l7Encounters.finalGroup
         ? i ? { x: -43, z: 41.7 } : { x: -64, z: 50 }
         : { x: centre.x, z: centre.z + (i ? 3 : -3) };
-      admit('infected.alpha', streetPoint(at, .55), { pack: group, state: 'idle', yaw: Math.PI });
+      admit('infected.alpha', streetPoint(at, .55), { pack: group, state: 'idle', yaw: Math.PI,
+        alphaType: group === l7Encounters.finalGroup ? i ? 'thrower' : 'brute' : group === l7Encounters.firstStreetGroup + 1 ? 'thrower' : 'brute' });
     }
     // Only the final horde spans the wide corridor. Street packs stay on the
     // road; the wide rows put Lakeshore residents behind frontage obstacles.
@@ -160,9 +177,9 @@ export class LevelSevenEncounters {
         // following a courier who walks on was dragged through the whole pack. A close cluster (4 low / 5 high) waits on
         // both kerbs just west of the pickup, clear of the party's middle lane, for the first contact; the rest stands on
         // both verges ahead of the courier, ranks stepping back west. Arming sends only the verge ranks at her.
-        const close = ai.director.tier === 'low' ? 4 : 5, j = i - close;
+        const close = 4, j = i - close;
         p = j < 0 ? { x: centre.x + 14 - (i >> 1) * 1.4, z: centre.z + (i % 2 ? 1 : -1) * 5.5 }
-          : { x: centre.x - Math.floor(j / 10) * 1.6, z: centre.z + (j % 2 ? 1 : -1) * (5 + (j % 10 >> 1) * 1.8) };
+          : { x: centre.x - Math.floor(j / 6) * 9, z: centre.z + (j % 2 ? 1 : -1) * (5 + (j % 6 >> 1) * 1.8) };
       } else {
         const row = Math.floor(i / 10);
         // High and low tiers both enter through the road and its two verges.
@@ -172,6 +189,9 @@ export class LevelSevenEncounters {
         const spacing = group === l7Encounters.finalGroup ? 10 : 6.5;
         p.z = centre.z + flank * spacing;
         p.x += (row % 2 ? 1 : -1) * (group === l7Encounters.finalGroup ? 3.5 : 1.5);
+        // Reinforcements trail in separated road ranks, rather than reaching
+        // the escort as a single simultaneous surround after one rocket clear.
+        if (group >= l7Encounters.firstStreetGroup + 4) p.x += row * 12;
       }
       // A ruined frontage may hide a cell; search locally rather than putting a figure in its mesh.
       admit('infected.runner', streetPoint(p, .35), { pack: group, state: 'idle', yaw: Math.PI });
@@ -182,25 +202,43 @@ export class LevelSevenEncounters {
     if (this.state.started) return;
     this.state.started = true;
     this.world.events.emit({ type: 'mission.signal', tick: this.world.tick, name: 'l7.armed' });
-    // fix69-r (L7-05): arming (the launcher pickup) sets the opening verge ranks on the courier, so they close in within
-    // seconds instead of waiting for their idle leash. The close cluster east of the anchor keeps its own native notice;
-    // pressing it too drove it through the following party.
-    const firstStreet = this.world.infected!.active.filter(e => e.infected!.pack === l7Encounters.firstStreetGroup && e.health.current > 0);
-    for (const e of firstStreet) if (e.transform.x <= l7Encounters.streets[0].x + 2) this.world.infected!.press(e.id, 1, this.world.tick + 20 * 60);
-    if (this.world.infected!.director.tier === 'high') {
-    // One high-tier kerb runner needs the same focus as the opening verge ranks;
-    // otherwise nearby survivor targets delay first courier contact.
-      const player = this.world.entities.get(1)!;
-      const close = firstStreet.filter(e => e.archetype === 'infected.runner' && e.transform.x > l7Encounters.streets[0].x + 2)
-        .sort((a, b) => distance(a.transform, player.transform) - distance(b.transform, player.transform));
-      // r5-l7: evacuees now survive their first bites, so a kerb runner that reaches the party first stays busy
-      // with it; two pressed runners keep the courier's first contact inside L7-05's 10 s.
-      for (const e of close.slice(0, 2)) this.world.infected!.press(e.id, 1, this.world.tick + 20 * 60);
+    // Engage a readable advance party; the remaining ranks acquire humans
+    // naturally as the courier clears westward through their road positions.
+    const player = this.world.entities.get(1)!;
+    const opening = this.world.infected!.active.filter(e => e.infected!.pack === l7Encounters.firstStreetGroup && e.health.current > 0)
+      .sort((a, b) => distance(a.transform, player.transform) - distance(b.transform, player.transform));
+    const count = 6;
+    for (const e of opening.filter(e => e.archetype === 'infected.runner').slice(0, count)) this.world.infected!.press(e.id, 1, this.world.tick + 20 * 60);
+    for (const e of opening.filter(e => e.archetype === 'infected.alpha')) this.world.infected!.press(e.id, 1, this.world.tick + 20 * 60);
+  }
+  /** Admit each offscreen block ahead of the column, preserving the total authored population. */
+  private advanceEncounters(): void {
+    if (!this.state.started) return;
+    const p = this.world.entities.get(1)!.transform, low = this.world.infected!.director.tier === 'low';
+    const requested = this.state.requestedGroups ??= [l7Encounters.firstStreetGroup];
+    for (const [i, threshold] of [225, 165, 95].entries()) {
+      const group = l7Encounters.firstStreetGroup + i + 1;
+      if (p.x > threshold || requested.includes(group)) continue;
+      requested.push(group);
+      this.group(group, l7Encounters.streets[i + 1], 35, i !== 1 ? 1 : 0);
     }
-    const low = this.world.infected!.director.tier === 'low';
-    // Final horde is present before approach. Its Alphas get slots before ordinary queued arrivals.
-    const streetCount = low ? 140 : 280;
-    l7Encounters.streets.slice(1).forEach((p, i) => this.group(l7Encounters.firstStreetGroup + i + 1, p, streetCount / 4, i !== 1 ? 1 : 0));
+    // The opening's remaining ranks follow from the east once the column
+    // clears pickup; high-tier blocks also release a second approach behind it.
+    const rearGroup = l7Encounters.firstStreetGroup + 4;
+    if (p.x <= 185 && !requested.includes(rearGroup)) {
+      requested.push(rearGroup);
+      this.group(rearGroup, { x: 225, z: 15 }, low ? 15 : 50, 0);
+    }
+    if (!low) for (const [i, centre] of l7Encounters.streets.slice(1).entries()) {
+      const group = l7Encounters.firstStreetGroup + i + 11;
+      if (p.x > centre.x - 35 || requested.includes(group)) continue;
+      requested.push(group);
+      this.group(group, { x: centre.x + 10, z: centre.z }, 35, 0);
+    }
+    if (p.x <= 85 && !requested.includes(l7Encounters.finalGroup)) {
+      requested.push(l7Encounters.finalGroup);
+      this.group(l7Encounters.finalGroup, l7Encounters.horde, low ? 60 : 120, 2);
+    }
   }
   /** Run before AI so external explosion fixtures and combat ticks share the same active-pool cap. */
   reserveSlots(): void {
@@ -216,11 +254,13 @@ export class LevelSevenEncounters {
     if (speaker && s.alarm && s.alarm.kind !== 'lost') { s.alarm.x = speaker.transform.x; s.alarm.z = speaker.transform.z; }
     this.reserveSlots();
     if (!s.started && w.combat!.runner.loadout.activeEntries().some(e => e.id === 'weapon.rocket-launcher')) this.start();
-    for (const e of ai.active) if (e.infected!.pack >= l7Encounters.finalGroup && e.infected!.pack <= l7Encounters.firstStreetGroup + 3 && !this.seen.has(`${e.infected!.pack}:${e.id}`)) {
+    this.advanceEncounters();
+    for (const e of ai.active) if (e.infected!.pack >= l7Encounters.finalGroup && e.infected!.pack <= l7Encounters.firstStreetGroup + 13 && !this.seen.has(`${e.infected!.pack}:${e.id}`)) {
       this.seen.add(`${e.infected!.pack}:${e.id}`);
       // Idle residents stay on their authored block until a human or noise
       // starts a pursuit. The shared unrestricted wander can cross half the
       // district during the approach and leave the final corridor empty.
+      if (e.infected!.pack >= l7Encounters.firstStreetGroup + 4) ai.press(e.id, 1, w.tick + 20 * 60);
       const brain = e.infected!.l1;
       if (brain) brain.leashM = 5;
       s.arrivals.push({ id: e.id, group: e.infected!.pack, alpha: e.archetype === 'infected.alpha', tick: w.tick, x: e.transform.x, z: e.transform.z, offscreen: ai.director.offscreen(e.transform), safe: ai.director.safe(e.archetype, e.transform) });
@@ -294,10 +334,7 @@ export class LevelSevenEncounters {
     const nav = this.followerNavigation();
     // Keep followers on their individual slots when the leader turns. Falling
     // back to the leader position sends the whole formation to one crowded point.
-    const ahead = w.missions!.state.steps.departure?.status !== 'active' || Math.hypot(v.x, v.z) <= .8 || (goal.x - e.transform.x) * v.x + (goal.z - e.transform.z) * v.z >= 0;
-    const target = w.infected!.director.tier === 'high' || w.missions!.state.steps.departure?.status === 'active'
-      ? nav.clear(goal.x, goal.z, .35) ? goal : snapToClear(w, goal, .35)
-      : ahead && nav.clear(goal.x, goal.z, .35) && nav.visible(e.transform, goal, .35) && nav.visible(goal, p.transform, .35) ? goal : p.transform;
+    const target = nav.clear(goal.x, goal.z, .35) ? goal : snapToClear(w, goal, .35);
     if (d > formationBack(slot) + 10 && w.tick >= this.state.waitAt) {
       this.state.waitAt = w.tick + 300;
       this.warn(e, 'wait');
@@ -406,7 +443,7 @@ export class LevelSevenEncounters {
       this.trail.push({ x: player.x, z: player.z });
       if (this.trail.length > 128) this.trail.shift();
     }
-    if (this.world.missions!.state.steps.departure?.status === 'active') {
+    if (this.state.started || this.world.missions!.state.steps.departure?.status === 'active') {
       let remaining = 2.3 + Math.floor(slot / 2), newer: Point = player;
       for (let i = this.trail.length - 1; i >= 0; i--) {
         const older = this.trail[i], length = distance(older, newer);
@@ -423,7 +460,11 @@ export class LevelSevenEncounters {
         remaining -= length; newer = older;
       }
     }
-    return formationSlot(player, leaderHeading(player.yaw, velocity), slot, false);
+    const previous = this.trail.at(-2), newest = this.trail.at(-1);
+    const walked = previous && newest ? { x: newest.x - previous.x, z: newest.z - previous.z } : velocity;
+    const heading = Math.hypot(velocity.x, velocity.z) > .8 ? leaderHeading(player.yaw, velocity)
+      : Math.hypot(walked.x, walked.z) > .01 ? { x: walked.x / Math.hypot(walked.x, walked.z), z: walked.z / Math.hypot(walked.x, walked.z) } : leaderHeading(player.yaw);
+    return formationSlot(player, heading, slot, false);
   }
   /** Rounded physical bodies can be separated into a gap the conservative
    * crowd bake closes. Find a short real walk back to the connected flow,
