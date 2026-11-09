@@ -1,0 +1,119 @@
+{
+  "purpose": "Complete unchanged-target audit control; runtime margin remains unqualified",
+  "commandSeconds": 598.9651055779999,
+  "auditSeconds": 592.707571414,
+  "workers": 4,
+  "completeStages": 31,
+  "stageErrors": [],
+  "levels": [
+    "L1",
+    "L2",
+    "L3",
+    "L4",
+    "L5",
+    "L6",
+    "L7",
+    "L8",
+    "L9",
+    "L10"
+  ],
+  "sourceHash": "6d6cf683a28506aa79ea60a6ef7ff289a7a52145c437bc372d3dbad6fc590513",
+  "observerHash": "93e2fc396815d84144b28631afc9cb882dcb67d80125e5e839e3984d6ee1e6c5",
+  "flags": [
+    "L5/step/look:SLOW_FOLLOWER:28",
+    "L5/phase/search:SLOW_FOLLOWER:28",
+    "L6/wave/l6.breach2:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+    "L6/wave/entry-2@3850:L6_ENTRY_COUNT_MISMATCH",
+    "L6/wave/entry-5@4584:L6_ENTRY_COUNT_MISMATCH",
+    "L6/wave/entry-3@5893:L6_ENTRY_COUNT_MISMATCH",
+    "L7/FOLLOWER_WAIT_UPPER_BOUND_OVER_10_PERCENT",
+    "L7/step/departure:SLOW_FOLLOWER:20",
+    "L7/step/departure:SLOW_FOLLOWER:74",
+    "L10/KITING_LANDED_HITS_BELOW_2:0.00"
+  ],
+  "nativeStateHashes": [
+    {
+      "path": "/levels/0/nativeStateHash",
+      "value": "fd9463a7"
+    },
+    {
+      "path": "/levels/1/nativeStateHash",
+      "value": "d881c150"
+    },
+    {
+      "path": "/levels/2/nativeStateHash",
+      "value": "131ec498"
+    },
+    {
+      "path": "/levels/3/nativeStateHash",
+      "value": "779ae81d"
+    },
+    {
+      "path": "/levels/4/nativeStateHash",
+      "value": "9c5eaec1"
+    },
+    {
+      "path": "/levels/4/followerPaceSeeds/0/nativeStateHash",
+      "value": "9c5eaec1"
+    },
+    {
+      "path": "/levels/4/followerPaceSeeds/1/nativeStateHash",
+      "value": "7e5795b6"
+    },
+    {
+      "path": "/levels/4/followerPaceSeeds/2/nativeStateHash",
+      "value": "30013020"
+    },
+    {
+      "path": "/levels/4/passiveFollowerPaceSeeds/1/nativeStateHash",
+      "value": "524beaaf"
+    },
+    {
+      "path": "/levels/4/passiveFollowerPaceSeeds/2/nativeStateHash",
+      "value": "38c4e29d"
+    },
+    {
+      "path": "/levels/5/nativeStateHash",
+      "value": "df7f88e8"
+    },
+    {
+      "path": "/levels/6/nativeStateHash",
+      "value": "86e5c678"
+    },
+    {
+      "path": "/levels/6/followerPaceSeeds/0/nativeStateHash",
+      "value": "86e5c678"
+    },
+    {
+      "path": "/levels/6/followerPaceSeeds/1/nativeStateHash",
+      "value": "2dcf4821"
+    },
+    {
+      "path": "/levels/6/followerPaceSeeds/2/nativeStateHash",
+      "value": "33dee696"
+    },
+    {
+      "path": "/levels/6/passiveFollowerPaceSeeds/1/nativeStateHash",
+      "value": "bfdfd24f"
+    },
+    {
+      "path": "/levels/6/passiveFollowerPaceSeeds/2/nativeStateHash",
+      "value": "e9ff0c69"
+    },
+    {
+      "path": "/levels/7/nativeStateHash",
+      "value": "594f1f80"
+    },
+    {
+      "path": "/levels/8/nativeStateHash",
+      "value": "09b9b991"
+    },
+    {
+      "path": "/levels/9/nativeStateHash",
+      "value": "298b3d7d"
+    }
+  ],
+  "auditSha256": "5622a19d3022a0341a46cf1f1bb5274e78f7beebbc0c7536c0fce147aa692fff",
+  "stagesSha256": "c042e6c4f8df2446aa107fc898490e35da9cabe5c01c52f5976cb8f5dc056099",
+  "rawRoot": "test-results/r20-loadtime/threat-matched-schedule"
+}

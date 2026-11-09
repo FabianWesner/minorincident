@@ -84,16 +84,17 @@ export async function runStages(levels: readonly RunnerLevel[], maxWorkers: numb
     if (level === 'L5' || level === 'L7') for (const passive of [false, true]) for (const seed of [2, 3])
       jobs.push({ id: stageId(level, passive, seed), level, kind: 'follower', seed, passive });
   }
-  // Measured redesigned-route profiles: start long jobs first, including the
-  // slower L3 third seed, so it cannot become a late tail behind short routes.
+  // Current runner profiles: L7's extra passive seeds can consume the full
+  // native window, like L5. Schedule them before the shorter routes; the old
+  // 20-second estimates left both seeds running after all other work finished.
   const nativeCosts: Record<RunnerLevel, readonly [number, number]> = {
-    L1: [35, 25], L2: [55, 45], L3: [65, 15], L4: [250, 115], L5: [50, 200],
-    L6: [30, 10], L7: [40, 30], L8: [65, 40], L9: [25, 35], L10: [75, 60],
+    L1: [40, 25], L2: [55, 45], L3: [60, 15], L4: [160, 115], L5: [40, 220],
+    L6: [25, 10], L7: [40, 40], L8: [70, 40], L9: [50, 55], L10: [95, 60],
   };
   const cost = (job: StageJob) => {
     if (job.kind === 'high-hold') return 145;
-    if (job.kind === 'l3' && job.seed > 1) return job.seed === 3 ? 140 : 55;
-    if (job.kind === 'follower') return job.level === 'L5' ? job.passive ? 190 : 40 : job.passive ? 20 : 25;
+    if (job.kind === 'l3' && job.seed > 1) return job.seed === 3 ? 110 : 45;
+    if (job.kind === 'follower') return job.passive ? job.level === 'L5' ? 200 : 160 : job.level === 'L5' ? 40 : 30;
     return nativeCosts[job.level][job.passive ? 1 : 0];
   };
   jobs.sort((a, b) => cost(b) - cost(a));

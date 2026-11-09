@@ -1,0 +1,261 @@
+{
+  "at": "2026-11-09T19:51:47.631409+00:00",
+  "reservations": 18,
+  "samplingReservations": 12,
+  "sampledProfiles": 99,
+  "foreignInvalidatedReservations": 12,
+  "newQualifiedCells": 0,
+  "newMeasuredCells": 0,
+  "wholeReservationExclusion": true,
+  "attempts": [
+    {
+      "reservation": "test-results/r20-loadtime/qualification-extension-1/L10-webgpu-a0",
+      "samples": 5,
+      "sides": {
+        "prod": 5,
+        "candidate": 0
+      },
+      "code": 75,
+      "validQuiet": false,
+      "foreignCommands": [
+        "node /Users/wesner/Workspace/minorincident/.claude/worktrees/p1-l8rework/node_modules/.bin/tsc --noEmit"
+      ]
+    },
+    {
+      "reservation": "test-results/r20-loadtime/qualification-extension-1/L10-webgpu-a1",
+      "samples": 8,
+      "sides": {
+        "prod": 8,
+        "candidate": 0
+      },
+      "code": 1,
+      "validQuiet": true,
+      "foreignCommands": [],
+      "annotation": {
+        "at": "2026-11-09T18:32:21.188355+00:00",
+        "reason": "Foreign simulation probe overlapped this reservation; old classifier omitted tools/qa scripts. Whole reservation excluded.",
+        "foreignProcessSnapshot": [
+          "77798 29979       00:50  97.3 node --import tsx tools/qa/r12-l8story/story-probe.ts high /private/tmp/l8-story-gated-high2.json"
+        ],
+        "action": "SIGTERM owned collector process group 78387"
+      }
+    },
+    {
+      "reservation": "test-results/r20-loadtime/qualification-extension-2/L10-webgpu-a0",
+      "samples": 0,
+      "sides": {
+        "prod": 0,
+        "candidate": 0
+      },
+      "code": 143,
+      "validQuiet": null,
+      "foreignCommands": [],
+      "annotation": {
+        "at": "2026-11-09T18:36:34.023422+00:00",
+        "reason": "Admission deadlock after scanner update: idle browser client waiting behind owned exclusive reservation; zero samples collected. Restart with CPU-aware probe classification and retained waiting-client metadata.",
+        "action": "SIGTERM owned admission observer 84322"
+      }
+    },
+    {
+      "reservation": "test-results/r20-loadtime/qualification-extension-3/L10-webgpu-a0",
+      "samples": 5,
+      "sides": {
+        "prod": 5,
+        "candidate": 0
+      },
+      "code": 75,
+      "validQuiet": false,
+      "foreignCommands": [
+        "/Users/wesner/Library/Caches/ms-playwright/chromium_headless_shell-1243/chrome-headless-shell-mac-arm64/chrome-headless-shell --disable-field-trial-config --disable-background-netw",
+        "node /Users/wesner/Workspace/minorincident/.claude/worktrees/p1-l8rework/node_modules/.bin/tsc --noEmit"
+      ]
+    },
+    {
+      "reservation": "test-results/r20-loadtime/qualification-extension-3/L10-webgpu-a1",
+      "samples": 0,
+      "sides": {
+        "prod": 0,
+        "candidate": 0
+      },
+      "code": 75,
+      "validQuiet": false,
+      "foreignCommands": [
+        "node /Users/wesner/Workspace/minorincident/.claude/worktrees/p1-l3ramp/node_modules/.bin/tsc --noEmit"
+      ]
+    },
+    {
+      "reservation": "test-results/r20-loadtime/qualification-extension-3/L10-webgpu-a2",
+      "samples": 1,
+      "sides": {
+        "prod": 1,
+        "candidate": 0
+      },
+      "code": 75,
+      "validQuiet": false,
+      "foreignCommands": [
+        "node --import tsx tools/qa/r12-l8story/story-probe.ts low docs/reports/p1-l8rework/native-low.json",
+        "node /Users/wesner/Workspace/minorincident/.claude/worktrees/p1-l8rework/node_modules/.bin/tsc --noEmit",
+        "node /Users/wesner/Workspace/minorincident/.claude/worktrees/p1-l8rework/node_modules/.bin/vite build --configLoader runner"
+      ]
+    },
+    {
+      "reservation": "test-results/r20-loadtime/qualification-extension-4/L10-webgpu-a0",
+      "samples": 5,
+      "sides": {
+        "prod": 5,
+        "candidate": 0
+      },
+      "code": 75,
+      "validQuiet": false,
+      "foreignCommands": [
+        "node --import tsx tools/qa/r12-l8story/story-probe.ts low docs/reports/p1-l8rework/native-low.json",
+        "node /Users/wesner/Workspace/minorincident/.claude/worktrees/p1-l8rework/node_modules/.bin/tsc --noEmit",
+        "node /Users/wesner/Workspace/minorincident/.claude/worktrees/p1-l8rework/node_modules/.bin/vite build --configLoader runner"
+      ]
+    },
+    {
+      "reservation": "test-results/r20-loadtime/qualification-extension-4/L10-webgpu-a1",
+      "samples": 13,
+      "sides": {
+        "prod": 13,
+        "candidate": 0
+      },
+      "code": 75,
+      "validQuiet": false,
+      "foreignCommands": [
+        "node /Users/wesner/Workspace/minorincident/.claude/worktrees/p1-l8rework/node_modules/.bin/tsc --noEmit"
+      ]
+    },
+    {
+      "reservation": "test-results/r20-loadtime/qualification-extension-4/L10-webgpu-a2",
+      "samples": 13,
+      "sides": {
+        "prod": 13,
+        "candidate": 0
+      },
+      "code": 75,
+      "validQuiet": false,
+      "foreignCommands": [
+        "node /Users/wesner/Workspace/minorincident/.claude/worktrees/p1-l3ramp/node_modules/.bin/eslint src tests tools functions playwright.config.ts vite.config.ts vitest.config.ts eslin"
+      ]
+    },
+    {
+      "reservation": "test-results/r20-loadtime/qualification-extension-5/L10-webgpu-a0",
+      "samples": 26,
+      "sides": {
+        "prod": 20,
+        "candidate": 6
+      },
+      "code": 75,
+      "validQuiet": false,
+      "foreignCommands": [
+        "node --import tsx tools/qa/l8-route-capture.ts low",
+        "node /Users/wesner/Workspace/minorincident/.claude/worktrees/p1-l8rework/node_modules/.bin/tsc --noEmit"
+      ]
+    },
+    {
+      "reservation": "test-results/r20-loadtime/qualification-extension-5/L10-webgpu-a1",
+      "samples": 0,
+      "sides": {
+        "prod": 0,
+        "candidate": 0
+      },
+      "code": null,
+      "validQuiet": null,
+      "foreignCommands": [],
+      "annotation": {
+        "at": "2026-11-09T19:18:22.431063+00:00",
+        "reason": "End the pending unmeasured paired admission; switch future work to shorter single-configuration reservations. No sample-level salvage.",
+        "action": "Terminate own matrix driver 87299 and own browser wrapper 36911"
+      }
+    },
+    {
+      "reservation": "test-results/r20-loadtime/qualification-extension-6/L1-webgpu-low-a0",
+      "samples": 1,
+      "sides": {
+        "prod": 1,
+        "candidate": 0
+      },
+      "code": 75,
+      "validQuiet": false,
+      "foreignCommands": [
+        "node --import tsx tools/qa/r12-l8story/story-probe.ts high /private/tmp/l8-rifle-early.json",
+        "node /Users/wesner/Workspace/minorincident/.claude/worktrees/p1-l8rework/node_modules/.bin/tsc --noEmit"
+      ]
+    },
+    {
+      "reservation": "test-results/r20-loadtime/qualification-extension-6/L1-webgpu-low-a1",
+      "samples": 0,
+      "sides": {
+        "prod": 0,
+        "candidate": 0
+      },
+      "code": 124,
+      "validQuiet": null,
+      "foreignCommands": []
+    },
+    {
+      "reservation": "test-results/r20-loadtime/qualification-extension-7/L1-webgpu-high-a0",
+      "samples": 2,
+      "sides": {
+        "prod": 2,
+        "candidate": 0
+      },
+      "code": 75,
+      "validQuiet": false,
+      "foreignCommands": [
+        "node --import tsx tools/qa/r12-l8story/story-probe.ts low /private/tmp/l8-low-flock-diagnostic.json"
+      ]
+    },
+    {
+      "reservation": "test-results/r20-loadtime/qualification-extension-7/L1-webgpu-low-a0",
+      "samples": 0,
+      "sides": {
+        "prod": 0,
+        "candidate": 0
+      },
+      "code": 75,
+      "validQuiet": null,
+      "foreignCommands": []
+    },
+    {
+      "reservation": "test-results/r20-loadtime/qualification-extension-7/L4-webgl2-low-a0",
+      "samples": 11,
+      "sides": {
+        "prod": 11,
+        "candidate": 0
+      },
+      "code": 75,
+      "validQuiet": false,
+      "foreignCommands": [
+        "node --import tsx tools/qa/l9-sightings.ts",
+        "node /Users/wesner/Workspace/minorincident/.claude/worktrees/p1-l8rework/node_modules/.bin/tsc --noEmit"
+      ]
+    },
+    {
+      "reservation": "test-results/r20-loadtime/qualification-extension-7/L7-webgl2-high-a0",
+      "samples": 0,
+      "sides": {
+        "prod": 0,
+        "candidate": 0
+      },
+      "code": 75,
+      "validQuiet": null,
+      "foreignCommands": []
+    },
+    {
+      "reservation": "test-results/r20-loadtime/qualification-extension-7/L7-webgl2-low-a0",
+      "samples": 9,
+      "sides": {
+        "prod": 9,
+        "candidate": 0
+      },
+      "code": 75,
+      "validQuiet": false,
+      "foreignCommands": [
+        "node --import tsx tools/qa/l9-sightings.ts"
+      ]
+    }
+  ],
+  "archive": "/Users/wesner/Workspace/mi-evidence-archive/test-results/r20-loadtime-b"
+}
