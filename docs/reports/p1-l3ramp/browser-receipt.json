@@ -1,0 +1,57 @@
+{
+  "method": "The native skilled input policy first reaches the real seed 1 segment-3b snapshot, then stops. Restore that snapshot and walk the full S-ramp with production keyboard WASD in headless pooled WebGL2. No teleport, cheats, or movement override. One settled top-of-ramp capture per quality tier.",
+  "runs": [
+    {
+      "tier": "low",
+      "checkpoint": "segment-3b",
+      "setup": {
+        "tick": 8280,
+        "player": {
+          "x": 111.61937713623047,
+          "y": 0.8500000238418579,
+          "z": -22.83915138244629,
+          "yaw": -0.004428603375818638
+        }
+      },
+      "reachedTop": true,
+      "final": {
+        "tick": 9492,
+        "player": {
+          "x": 167.3251953125,
+          "y": 6.420000076293945,
+          "z": -0.3911343812942505,
+          "yaw": -0.7853981633974484
+        },
+        "objective": "active"
+      },
+      "screenshot": "test-results/qa/l3-ramp-courier/l3-ramp-top-low.png",
+      "consoleErrors": []
+    },
+    {
+      "tier": "high",
+      "checkpoint": "segment-3b",
+      "setup": {
+        "tick": 8280,
+        "player": {
+          "x": 101.26270294189453,
+          "y": 0.8500000238418579,
+          "z": -22.885282516479492,
+          "yaw": 0.1545087994929619
+        }
+      },
+      "reachedTop": true,
+      "final": {
+        "tick": 9699,
+        "player": {
+          "x": 167.2631072998047,
+          "y": 6.420000076293945,
+          "z": -0.11534108221530914,
+          "yaw": -0.7853981633974484
+        },
+        "objective": "active"
+      },
+      "screenshot": "test-results/qa/l3-ramp-courier/l3-ramp-top-high.png",
+      "consoleErrors": []
+    }
+  ]
+}

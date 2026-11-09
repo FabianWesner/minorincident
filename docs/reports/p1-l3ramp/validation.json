@@ -1,0 +1,34 @@
+{
+  "revision": "c9994ba3137d3762b72556f4b0021fb559be2e60",
+  "recordedAt": "2026-11-09T17:59:46.177882+00:00",
+  "testFileSha256": "91be3d261d9a6908c2f79604fcf5e1ff183104bf38b9d13d20d0dbb72b399432",
+  "typecheck": {
+    "command": "npm run typecheck",
+    "exitCode": 0
+  },
+  "lint": {
+    "command": "npm run lint",
+    "exitCode": 0
+  },
+  "unit": {
+    "command": "node tools/remote/cpu-run.mjs run --project default --configLoader runner --maxWorkers=2 --reporter=default --reporter=json --outputFile=test-results/qa/l3-ramp-courier/unit.json",
+    "admission": "shared FIFO and local CPU slot; admitted at load 4.76 and 4.45 GiB free RAM; each test file gated for GPU/quiet work",
+    "exitCode": 0,
+    "files": 27,
+    "tests": 107,
+    "passed": 107,
+    "failed": 0,
+    "raw": "unit.json"
+  },
+  "epicVerify": {
+    "command": "npm run verify -- E21",
+    "host": "mi-runner-1",
+    "exitCode": 1,
+    "limitations": [
+      "runner checkout initially lacks Git HEAD required by existing tooling test",
+      "existing navigation test exceeded 30 seconds under runner load",
+      "Northgate fixture controller dependency was then fixed; final local full suite passed"
+    ]
+  },
+  "productionDiffFromCab3405c": true
+}
