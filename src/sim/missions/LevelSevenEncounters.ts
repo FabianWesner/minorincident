@@ -3,7 +3,7 @@ import { Outbreak } from '../outbreak/Outbreak';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { Point } from '../npc/types';
-import { l7Departure, l7Encounters, l7Rocket } from '../../data/l7';
+import { l7Encounters, l7Rocket } from '../../data/l7';
 import { corpseDetour, formationBack, formationSlot, leaderHeading, requireClearPoint, snapToClear } from './missionHelpers';
 import { NavGrid } from '../ai/NavGrid';
 import { actorRadius, solidLargeCorpse } from '../world/SolidRegistry';
@@ -349,11 +349,7 @@ export class LevelSevenEncounters {
       // one evacuee into a straggler the player has to babysit.
       // Every slot has the same catch-up speed through street corners.
       const budget = d > l7FollowerRangeM ? w.infected!.director.tier === 'low' ? 200 : 400 : 1600;
-      // Use the departure's authored approach pace inside the column. A far
-      // straggler still has the existing catch-up headroom; nearby people need
-      // room to turn without sprinting into the next rank's moving slot.
-      const speed = w.missions!.state.steps.departure?.status === 'active' && d <= l7FollowerRangeM ? l7Departure.followMs : 5.2;
-      w.npcs!.move(e, destination, speed, c, 0, budget, nav);
+      w.npcs!.move(e, destination, 5.2, c, 0, budget, nav);
     }
     w.spatial.set(e.id, e.transform.x, e.transform.z);
     return true;
@@ -449,7 +445,9 @@ export class LevelSevenEncounters {
       }
     }
     const heading = leaderHeading(player.yaw, velocity), goal = formationSlot(player, heading, slot);
-    const offset = moving ? swayOffset(e.id, this.world.tick) : 0, nav = this.followerNavigation();
+    // Relaxed slots guarantee .9 m between centres. Limit independent sway
+    // to .08 m each so neighbours keep body clearance even at opposite peaks.
+    const offset = moving ? swayOffset(e.id, this.world.tick, .08) : 0, nav = this.followerNavigation();
     const wandered = { x: goal.x - heading.z * offset, z: goal.z + heading.x * offset };
     return nav.clear(wandered.x, wandered.z, .4) && nav.visible(goal, wandered, .35) ? wandered : goal;
   }
