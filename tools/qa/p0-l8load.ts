@@ -33,13 +33,13 @@ const identity = {
 async function snapshot(page: Page) {
   return page.evaluate(() => {
     const api = window.__SS__!, state = api.getState(), perf = api.perf(), mission = api.missions.state();
-    return { tick: api.tick(), backend: perf.backend, quality: state.render.quality, paused: perf.paused,
+    return { tick: api.tick(), backend: perf.backend, webgl2: perf.backend === 'webgl' ? document.querySelector('canvas')?.getContext('webgl2') instanceof WebGL2RenderingContext : null, quality: state.render.quality, paused: perf.paused,
       renderedFrames: perf.renderedFrames, contextLost: perf.contextLost,
       player: api.getEntity(1), bot: api.bot.status(), mission };
   });
 }
 type Snapshot = Awaited<ReturnType<typeof snapshot>>;
-const cells: { cell: string; pass: boolean; error?: string; loaded?: Snapshot; begin?: Snapshot; final?: Snapshot; wallSeconds?: number; errors: string[]; warnings: string[]; requests: { path: string; status: number }[] }[] = [];
+const cells: { cell: string; pass: boolean; error?: string; loaded?: Snapshot; begin?: Snapshot; final?: Snapshot; wallSeconds?: number; movedMetres?: number; errors: string[]; warnings: string[]; requests: { path: string; status: number }[] }[] = [];
 let browser: Awaited<ReturnType<typeof launchBrowser>> | undefined;
 try {
   let ready = false;
@@ -53,6 +53,7 @@ try {
     const cell = `${quality}-${backend}`, context = await browser.newContext({ viewport: { width: 1280, height: 720 }, deviceScaleFactor: 1 });
     const page = await context.newPage(), guard = attachErrorGuard(page);
     const result: typeof cells[number] = { cell, pass: false, errors: guard.errors, warnings: [], requests: [] };
+    const expectedBackend = backend === 'webgl2' ? 'webgl' : 'webgpu';
     console.log(`[L8] loading ${cell}`);
     page.on('console', message => { if (/PLACEHOLDER BOX|\[assets\].*fallback/i.test(message.text())) result.warnings.push(message.text()); });
     page.on('response', response => {
@@ -72,7 +73,8 @@ try {
         api.pause(); await api.screenshotReady(); api.bot.start('complete');
       }, campaign);
       result.loaded = await snapshot(page);
-      assert.equal(result.loaded.backend, backend, `${cell}: actual backend`);
+      assert.equal(result.loaded.backend, expectedBackend, `${cell}: actual backend`);
+      if (backend === 'webgl2') assert.equal(result.loaded.webgl2, true, `${cell}: actual WebGL2 context`);
       assert.equal(result.loaded.quality, quality, `${cell}: actual quality`);
       await page.screenshot({ path: `${out}/${cell}-loaded.jpg`, type: 'jpeg', quality: 70 });
       await page.getByTestId('mission-button').click({ timeout: 120_000 });
@@ -84,7 +86,11 @@ try {
       result.final = await snapshot(page); result.wallSeconds = (Date.now() - started) / 1000;
       assert(result.final.tick - result.begin.tick >= 3600, `${cell}: 60 simulation seconds`);
       assert(result.final.player && result.final.player.health.current > 0, `${cell}: courier remains alive`);
-      assert.equal(result.final.backend, backend); assert.equal(result.final.quality, quality);
+      const before = result.begin.player!.transform, after = result.final.player.transform;
+      result.movedMetres = Math.hypot(after.x - before.x, after.z - before.z);
+      assert(result.movedMetres > .1, `${cell}: bot moves the courier during play`);
+      assert.equal(result.final.backend, expectedBackend); assert.equal(result.final.quality, quality);
+      if (backend === 'webgl2') assert.equal(result.final.webgl2, true);
       assert.equal(result.final.contextLost, false);
       assert(result.final.renderedFrames - result.begin.renderedFrames > 60, `${cell}: scene keeps rendering`);
       for (const id of assets) assert(result.requests.some(request => request.path.includes(`/${id}.lod`) && request.path.endsWith(quality === 'low' ? '.low.glb' : '.glb') && (quality === 'low' || !request.path.endsWith('.low.glb')) && request.status === 200), `${cell}: fetched ${id} at requested tier`);
