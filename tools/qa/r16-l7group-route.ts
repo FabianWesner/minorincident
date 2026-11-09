@@ -20,16 +20,20 @@ for (const seed of seeds) {
   const campaign = preset('L7-default'); campaign.seed = seed; campaign.settings.quality = tier;
   let observer: ThreatObserver | undefined, observation: ReturnType<ThreatObserver['finish']> | undefined;
   let nativeStateHash = '', collision: unknown, final: unknown;
-  const samples: unknown[] = [], damage: unknown[] = [], signals: unknown[] = [];
+  const samples: unknown[] = [], damage: unknown[] = [], signals: unknown[] = [], shots: unknown[] = [], hits: unknown[] = [];
   const run = await runLevel('L7', 'complete', seed, undefined, 'auto', campaign, undefined, 0, {
     quality: tier,
     beforeBegin: w => {
       observer = new ThreatObserver(w, 'L7', { paths: false });
       w.events.on('combat.hit', e => {
-        if (e.type !== 'combat.hit' || e.targetId !== 1) return;
+        if (e.type !== 'combat.hit') return;
+        if (e.sourceId === 1) { const target = w.entities.get(e.targetId); hits.push({ ...e, target: target?.archetype, faction: target?.faction }); }
+        if (e.targetId !== 1) return;
         const target = w.entities.get(1)!, source = w.entities.get(e.sourceId);
         damage.push({ ...e, player: { ...target.transform }, hp: target.health.current, source: source && { id: source.id, type: source.archetype, at: { ...source.transform } } });
       });
+      w.events.on('combat.attack', e => { if (e.type === 'combat.attack' && e.sourceId === 1) shots.push({ ...e }); });
+      w.events.on('combat.empty', e => { if (e.type === 'combat.empty' && e.sourceId === 1) shots.push({ ...e }); });
       w.events.on('mission.signal', e => { if (e.type === 'mission.signal') signals.push({ ...e }); });
       const update = w.update.bind(w);
       w.update = (...args: Parameters<typeof w.update>) => {
@@ -37,6 +41,7 @@ for (const seed of seeds) {
         if (w.tick % 30) return;
         const p = w.entities.get(1)!, blocker = w.solids.blockingBody(1);
         samples.push({ tick: w.tick, player: { ...p.transform }, hp: p.health.current, speed: p.motion?.speed,
+          weapon: w.combat!.runner.loadout.current('RIGHT').id, ready: { ...w.combat!.runner.gunReady },
           move: { ...w.inputFrame.move }, blocker: blocker && { id: blocker.id, type: blocker.archetype },
           steps: Object.entries(w.missions!.state.steps).filter(([, s]) => s.status === 'active').map(([id]) => id),
           bus: w.l7Departure!.state.phase, boarded: w.l7Departure!.state.boarded.length,
@@ -52,7 +57,7 @@ for (const seed of seeds) {
     },
   });
   const vote = votes.at(-1)!; vote.valid = run.completed; vote.outcome = run.outcome; vote.time = run.time;
-  const receipt = { ...identity, tag, tier, seed, generatedAt: new Date().toISOString(), run, nativeStateHash, collision, final, observation, signals, damage };
+  const receipt = { ...identity, tag, tier, seed, generatedAt: new Date().toISOString(), run, nativeStateHash, collision, final, observation, signals, damage, shots, hits };
   writeFileSync(`${out}/${tag}-${tier}-${seed}.json`, JSON.stringify(receipt, null, 2) + '\n');
   writeFileSync(`${out}/${tag}-${tier}-${seed}-trace.json.gz`, gzipSync(JSON.stringify(samples)));
   console.log(JSON.stringify({ tag, tier, seed, outcome: run.outcome, time: run.time, damage: damage.length, waitPercent: observation?.followerWait?.upperBoundPercent, nativeStateHash }));

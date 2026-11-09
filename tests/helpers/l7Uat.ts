@@ -420,7 +420,17 @@ function checkLowBoardingCorner(w: SimWorld) {
     for (const [x, z] of [[-42, 50], [-38, 50], [-34, 50], [-30, 50], [-30, 49]]) {
       Object.assign(player.transform, { x, z }); w.l7Encounters!.follower(follower);
     }
-    expect(target.x).toBeCloseTo(-31.3); expect(target.z).toBeCloseTo(49.5);
+    // Natural slots may wander inside this walked leg, but must not cut
+    // diagonally across the parked bus when the courier has rounded it.
+    const sides: number[] = [];
+    for (let sample = 0; sample < 60; sample++) {
+      w.tick += 10; w.l7Encounters!.follower(follower);
+      expect(target.x).toBeGreaterThan(-31.55); expect(target.x).toBeLessThan(-31.05);
+      expect(target.z).toBeGreaterThan(49.15); expect(target.z).toBeLessThan(49.85);
+      expect(w.infected!.nav.clear(target.x, target.z, .35)).toBe(true);
+      sides.push(target.z);
+    }
+    expect(Math.max(...sides) - Math.min(...sides), 'the corridor slot wanders instead of remaining on a rail').toBeGreaterThan(.1);
   } finally { w.npcs!.move = move; }
 }
 

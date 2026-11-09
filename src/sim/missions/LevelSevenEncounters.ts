@@ -7,6 +7,7 @@ import { l7Encounters, l7Rocket } from '../../data/l7';
 import { corpseDetour, formationBack, formationSlot, leaderHeading, requireClearPoint, snapToClear } from './missionHelpers';
 import { NavGrid } from '../ai/NavGrid';
 import { actorRadius, solidLargeCorpse } from '../world/SolidRegistry';
+import { looseSlotOffset, swayOffset } from '../outbreak/groupNature';
 
 export interface L7EncounterState {
   started: boolean;
@@ -289,7 +290,7 @@ export class LevelSevenEncounters {
     if (this.walkPocketRoute(e)) return true;
     const d = distance(e.transform, p.transform), slot = s.slot, v = p.survivor!.velocity;
     // Departure slots follow the walked corridor around the parked bus.
-    const goal = this.formationGoal(p.transform, v, slot);
+    const goal = this.formationGoal(p.transform, v, e);
     const nav = this.followerNavigation();
     // Keep followers on their individual slots when the leader turns. Falling
     // back to the leader position sends the whole formation to one crowded point.
@@ -398,7 +399,8 @@ export class LevelSevenEncounters {
   }
   /** At either quality, follow the courier's walked boarding corner two abreast
    * instead of swinging the tail across the parked vehicles. */
-  private formationGoal(player: EntitySnapshot['transform'], velocity: Point, slot: number): Point {
+  private formationGoal(player: EntitySnapshot['transform'], velocity: Point, e: EntitySnapshot): Point {
+    const slot = e.civilian!.survivor!.slot, loose = looseSlotOffset(slot);
     const last = this.trail.at(-1);
     if (last && distance(last, player) > 6) this.trail.length = 0;
     if (!last || distance(last, player) >= .4) {
@@ -406,12 +408,14 @@ export class LevelSevenEncounters {
       if (this.trail.length > 128) this.trail.shift();
     }
     if (this.world.missions!.state.steps.departure?.status === 'active') {
-      let remaining = 2.3 + Math.floor(slot / 2), newer: Point = player;
+      let remaining = 2.3 + Math.floor(slot / 2) + loose.back * .25, newer: Point = player;
       for (let i = this.trail.length - 1; i >= 0; i--) {
         const older = this.trail[i], length = distance(older, newer);
         if (length >= remaining && length > 0) {
           const hx = (newer.x - older.x) / length, hz = (newer.z - older.z) / length;
-          const side = slot % 2 - .5;
+          // Keep paired body room while varying each follower along the
+          // local trail tangent, including when the courier rounds the bus.
+          const side = (slot % 2 - .5) * 1.2 + loose.side * .2 + swayOffset(e.id, this.world.tick, .12);
           const centre = { x: newer.x - hx * remaining, z: newer.z - hz * remaining };
           const goal = { x: centre.x - hz * side, z: centre.z + hx * side };
           const nav = this.followerNavigation();
@@ -422,7 +426,10 @@ export class LevelSevenEncounters {
         remaining -= length; newer = older;
       }
     }
-    return formationSlot(player, leaderHeading(player.yaw, velocity), slot);
+    const heading = leaderHeading(player.yaw, velocity), goal = formationSlot(player, heading, slot);
+    const offset = swayOffset(e.id, this.world.tick), nav = this.followerNavigation();
+    const wandered = { x: goal.x - heading.z * offset, z: goal.z + heading.x * offset };
+    return nav.clear(wandered.x, wandered.z, .4) && nav.visible(goal, wandered, .35) ? wandered : goal;
   }
   /** Rounded physical bodies can be separated into a gap the conservative
    * crowd bake closes. Find a short real walk back to the connected flow,

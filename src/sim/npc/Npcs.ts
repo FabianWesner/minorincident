@@ -146,8 +146,9 @@ export class Npcs {
   /** Walking followers wander slowly to either side of their slot instead of moving on parallel rails. */
   private sway(e: EntitySnapshot, target: Point, nav: NavGrid): Point {
     const v = this.world.entities.get(1)?.survivor?.velocity, speed = v ? Math.hypot(v.x, v.z) : 0;
-    // Calm L5 already includes slot wander in its bounded tracking velocity.
-    if (!v || speed <= .8 || this.world.scenario === 'L5' && e.civilian?.survivor?.briskAt === this.world.tick) return target;
+    // L5 solves wander in its bounded velocity; L7 solves it on the walked
+    // trail before clearance checks. Do not displace their detours or bus queues.
+    if (!v || speed <= .8 || this.world.scenario === 'L7' || this.world.scenario === 'L5' && e.civilian?.survivor?.briskAt === this.world.tick) return target;
     const offset = swayOffset(e.id, this.world.tick, this.world.scenario === 'L5' ? .18 : .28);
     const swayed = { x: target.x - v.z / speed * offset, z: target.z + v.x / speed * offset };
     return nav.clear(swayed.x, swayed.z, .4) && nav.visible(e.transform, swayed, .35) ? swayed : target;

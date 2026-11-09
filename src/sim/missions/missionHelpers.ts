@@ -85,7 +85,7 @@ export function leaderHeading(yaw: number, velocity?: Point): Point {
 export function formationBack(slot: number): number { return 2.3 + Math.floor(slot / 3) * 1.2; }
 
 /** Three-column follower formation behind the leader, loosened per slot into a
- * cluster of pairs. Scripted L7 staging/travel passes false to retain authored targets. */
+ * cluster of pairs. Arrival staging can pass false to retain authored clearance. */
 export function formationSlot(leader: Point, heading: Point, slot: number, natural = true): Point {
   const loose = natural ? looseSlotOffset(slot) : { back: 0, side: 0 }, back = formationBack(slot) + loose.back, side = (slot % 3 - 1) * 1.2 + loose.side;
   return { x: leader.x - heading.x * back - heading.z * side, z: leader.z - heading.z * back + heading.x * side };
