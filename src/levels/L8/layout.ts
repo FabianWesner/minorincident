@@ -21,11 +21,11 @@ export function levelEightLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
       layout.placements.push({ id, assetId, position: [x, y, z], yaw, scale, minTier: 0, maxTier: 6, lightGroup: layout.lightGroups[0]?.id ?? 'zoo', allowRoad: true,
         visualAabb: { min: [x - hx, y, z - hz], max: [x + hx, y + dim.y * scale[1], z + hz] }, ...(destruction ? { destruction } : {}) });
     };
-    // The primate yard is behind the house, away from the public tour path.
-    // Its east service entrance preserves the real post-breach contact route.
+    // The primate yard sits behind the house, away from the public tour path.
+    // Its east service entrance stays available for the post-breach encounter.
     (layout.zones ??= {})['enclosure-monkey'] = [[-20, 20], [-10.48, 20], [-10.48, 31.9], [-20, 31.9]];
     const fencePanels: [number, number, number][] = [];
-    for (let x = -18.81; x <= -11.67; x += 2.38) { fencePanels.push([x, 20, 0], [x, 31.9, 0]); }
+    for (let x = -18.81; x <= -11.67; x += 2.38) fencePanels.push([x, 20, 0], [x, 31.9, 0]);
     for (let i = 0; i < 5; i++) {
       const z = 21.19 + i * 2.38;
       fencePanels.push([-20, z, Math.PI / 2]);
@@ -40,7 +40,7 @@ export function levelEightLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     for (const [i, [x, z]] of [[55, -28], [65, -28], [55, -38], [65, -38]].entries()) add(`l8-gorilla-pillar-${i}`, 'prop.cure-garden-wall', x, z, [.25, 1.55, 1.6], 0, { class: 'pillar' });
     for (const [i, [x, z]] of [[59, -29], [64, -35], [55, -34], [61, -40]].entries()) add(`l8-gorilla-throw-${i}`, 'prop.bench', x, z);
     for (let i = 0; i < 3; i++) add(`l8-gorilla-light-${i}`, 'prop.folding-chair', 58 + i * 2, -31);
-    add('l8-elephant-truck', 'veh.box-truck', -68, 32, [1, 1, 1], Math.PI / 2);
+    add('l8-elephant-truck', 'veh.box-truck', 100, 54, [1, 1, 1], Math.PI / 2);
     for (const [i, [x, z]] of [[-64, -30], [-55, -36], [-66, -40]].entries()) add(`l8-lion-cover-${i}`, 'prop.jersey-barrier', x, z, [1.1, 1.4, 1.6], i * Math.PI / 3);
     for (let i = 0; i < 5; i++) add(`l8-monkey-debris-${i}`, 'prop.bench', -3 + i * 1.5, 20, [.35, .35, .35]);
     for (let i = 0; i < 2; i++) {

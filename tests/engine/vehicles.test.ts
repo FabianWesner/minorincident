@@ -258,7 +258,8 @@ async function zooParkedBoarding(): Promise<void> {
     expect(mission.state.marker, 'the opening defence has no destination pin').toBeNull();
     expect(objectiveText(mission, mission.def.steps[1].text)).toBe('Protect the group!');
     world.tick = zoo.state.breachedAt + 1800; advance(1);
-    expect(mission.state.marker).toBe('exit');
+    expect(mission.state.marker).toBe('arena-flamingo');
+    expect(mission.def.steps.find(step => step.id === 'escape')!.text).toMatch(/^Defeat Flamingo flock/);
     for (const restored of [false, true]) {
       if (restored) mission.restore('sanctuary');
       advance(60);
@@ -274,6 +275,10 @@ async function zooParkedBoarding(): Promise<void> {
       expect(car.entity.health.current, 'parking does not protect durability').toBe(health - 10);
     }
     const car = vehicles.cars.get(zoo.state.carId)!;
+    // This parking/transport fixture isolates the completed-arena commander
+    // and boarding beats; normal progression gates the same step behind all six fights.
+    for (const arena of zoo.state.arenas) arena.phase = 3;
+    mission.state.steps.sanctuary.status = 'completed'; mission.state.steps.escape.status = 'active';
     mission.setState('breached', true); zoo.state.breachedAt = world.tick - 1800; zoo.state.nextWave = Number.MAX_SAFE_INTEGER;
     missionControls(world).teleport(1, mission.def.anchors['central-plaza']); advance(1);
     // This isolated parking/transport fixture starts after the command-post retreat.

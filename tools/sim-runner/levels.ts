@@ -80,6 +80,7 @@ export async function loadLevel(level: RunnerLevel, seed: number, campaign?: Cam
     }
     if(campaign)applyCampaign(world,campaign);
     if (!campaign && level === 'L10') applyCampaign(world, preset('L10-default'));
+    if (!campaign && level === 'L9') applyCampaign(world, preset('L9-default'));
     if (!campaign && level === 'L8') applyCampaign(world, preset('L8-default'));
     if (!campaign && level === 'L7') applyCampaign(world, preset('L7-default'));
     if (!campaign && level === 'L6') applyCampaign(world, preset('L6-default'));

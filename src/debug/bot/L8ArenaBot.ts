@@ -17,7 +17,7 @@ export class L8ArenaBot {
 
     if (!arena.phase) {
       if (Math.hypot(p.transform.x - def.entry.x, p.transform.z - def.entry.z) < 2) this.entered.add(id);
-      f.move = this.walker.step(w, this.entered.has(id) ? def.centre : def.entry, this.entered.has(id) ? 5 : 1, `arena-${id}-${this.entered.has(id)}`) ?? f.move;
+      f.move = this.walker.step(w, this.entered.has(id) ? def.centre : def.entry, this.entered.has(id) ? 5 : 1.25, `arena-${id}-${this.entered.has(id)}`) ?? f.move;
       if (intruder) { const gun = w.combat!.runner.loadout.activeEntries().find(e => e.id === 'weapon.shotgun') ?? w.combat!.runner.loadout.activeEntries().find(e => e.id === 'weapon.army-mg'); if (gun) { f.selectedSlot = { side: gun.side, index: gun.index }; strikeAt(f, intruder, gun.side, p.transform, false); } }
       return f;
     }
