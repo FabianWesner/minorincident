@@ -261,7 +261,7 @@ export class LevelSevenEncounters {
     // touching runner can grab as soon as the first hold releases. Push the
     // contact cluster off together; Alphas and their thrown actors keep control.
     for (const attacker of w.infected!.active) {
-      if (attacker.archetype !== 'infected.runner' || attacker.health.current <= 0 || attacker.hidden || attacker.attachedTo !== undefined || attacker.infected!.thrownBy !== undefined) continue;
+      if (attacker.archetype !== 'infected.runner' || attacker.health.current <= 0 || attacker.hidden || attacker.emerging || attacker.infectionRise || attacker.pendingAdmission || attacker.attachedTo !== undefined || attacker.infected!.thrownBy !== undefined) continue;
       const dx = attacker.transform.x - target.transform.x, dz = attacker.transform.z - target.transform.z, length = Math.hypot(dx, dz);
       if (attacker.id !== biter.id && (length > contactM || Math.abs(attacker.transform.y - target.transform.y) > 1.2)) continue;
       if (attacker.combat) attacker.combat.staggerUntil = Math.max(attacker.combat.staggerUntil, w.tick + shoveTicks);
