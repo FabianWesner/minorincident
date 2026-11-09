@@ -31,10 +31,19 @@ export class LevelSevenBot {
     if (rocket >= 0) f.selectedSlot = { side: 'RIGHT', index: rocket };
     const enemies = w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && !e.emerging && !e.infectionRise && distance(e.transform, p.transform) < 24 && w.infected!.nav.visible(p.transform, e.transform, 0)).sort((a, b) => distance(a.transform, p.transform) - distance(b.transform, p.transform));
     if (enemies[0] && this.profile !== 'evade-only') {
-      const close = distance(enemies[0].transform, p.transform) < 6;
-      const backup = p.weapons!.RIGHT.rack.findIndex(s => s.id === 'weapon.shotgun');
-      if (close && backup >= 0) f.selectedSlot = { side: 'RIGHT', index: backup };
-      strikeAt(f, enemies[0], 'RIGHT', p.transform, false);
+      const axe = p.weapons!.LEFT.rack.findIndex(s => s.id === 'weapon.fire-axe');
+      // A point-blank mob is inside the launcher's arming distance. The
+      // shotgun hits one narrow bearing while the rest keep biting; use the
+      // carried axe's crowd sweep to make room, as in the subway controller.
+      if (axe >= 0 && enemies.filter(e => distance(e.transform, p.transform) < 2.5).length >= 3) {
+        f.selectedSlot = { side: 'LEFT', index: axe };
+        strikeAt(f, enemies[0], 'LEFT', p.transform, false);
+      } else {
+        const close = distance(enemies[0].transform, p.transform) < 6;
+        const backup = p.weapons!.RIGHT.rack.findIndex(s => s.id === 'weapon.shotgun');
+        if (close && backup >= 0) f.selectedSlot = { side: 'RIGHT', index: backup };
+        strikeAt(f, enemies[0], 'RIGHT', p.transform, false);
+      }
     }
     const followers = w.l7Encounters!.state.roster.filter(r => r.status === 'following' && !w.l7Departure!.state.boarded.includes(r.id));
     const limit = Math.max(12, Math.ceil(followers.length / 3) * 1.2 + 5);

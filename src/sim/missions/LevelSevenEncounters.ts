@@ -401,6 +401,7 @@ export class LevelSevenEncounters {
    * instead of swinging the tail across the parked vehicles. */
   private formationGoal(player: EntitySnapshot['transform'], velocity: Point, e: EntitySnapshot): Point {
     const slot = e.civilian!.survivor!.slot, loose = looseSlotOffset(slot);
+    const moving = Math.hypot(velocity.x, velocity.z) > .8;
     const last = this.trail.at(-1);
     if (last && distance(last, player) > 6) this.trail.length = 0;
     if (!last || distance(last, player) >= .4) {
@@ -415,7 +416,7 @@ export class LevelSevenEncounters {
           const hx = (newer.x - older.x) / length, hz = (newer.z - older.z) / length;
           // Keep paired body room while varying each follower along the
           // local trail tangent, including when the courier rounds the bus.
-          const side = (slot % 2 - .5) * 1.2 + loose.side * .2 + swayOffset(e.id, this.world.tick, .12);
+          const side = (slot % 2 - .5) * 1.2 + loose.side * .2 + (moving ? swayOffset(e.id, this.world.tick, .12) : 0);
           const centre = { x: newer.x - hx * remaining, z: newer.z - hz * remaining };
           const goal = { x: centre.x - hz * side, z: centre.z + hx * side };
           const nav = this.followerNavigation();
@@ -427,7 +428,7 @@ export class LevelSevenEncounters {
       }
     }
     const heading = leaderHeading(player.yaw, velocity), goal = formationSlot(player, heading, slot);
-    const offset = swayOffset(e.id, this.world.tick), nav = this.followerNavigation();
+    const offset = moving ? swayOffset(e.id, this.world.tick) : 0, nav = this.followerNavigation();
     const wandered = { x: goal.x - heading.z * offset, z: goal.z + heading.x * offset };
     return nav.clear(wandered.x, wandered.z, .4) && nav.visible(goal, wandered, .35) ? wandered : goal;
   }
