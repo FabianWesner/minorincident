@@ -3,7 +3,7 @@ import { l5Survivors } from './l5';
 export const l6 = {
   shelter: { high: 24, low: 24 }, breach: { model: 'npc.civilian-man-a.aftermath', first: [30, 40], secondDelay: [20, 30], abandonS: 15, telegraphS: 2, streamS: 10 },
   follow: { speed: 2.2, stragglerM: 15, collectM: 3, rejoinM: 5, strayM: 15, regroupM: 10, strayDwellS: 2, aheadM: 12, columnM: 25, gateGroupM: 8 },
-  infected: { high: 30, low: 30 }, pressure: { group: 3, intervalS: 40, aheadM: 18, behindM: 18 }, tunnel: { start: 30, end: 246, z: 15, width: 6.9 },
+  infected: { high: 48, low: 30 }, pressure: { group: 3, intervalS: 40, aheadM: 18, behindM: 18 }, tunnel: { start: 30, end: 246, z: 15, width: 6.9 },
   exit: { centerZ: 15.9, approachZ: 14.1 }, gates: [90, 150, 210],
   /** PO 10-20 #64: a closed entry hatch takes one bash per second from its waiting arrivals and breaks after `hits` (8 s). */
   hatch: { hits: 8, hitS: 1, promptM: 1.8, standM: .9 }, checkpoints: ['shelter', 'abandon', 'gate-90', 'mid-tunnel', 'gate-150', 'gate-210', 'exit-platform'], caption: 'Night. Still alive.',

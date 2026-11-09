@@ -143,7 +143,7 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly authored wave cens
     const player = w.entities.get(1)!;
     Object.assign(player.transform, { x: 3, z: 0 }); w.spatial.set(1, 3, 0);
     w.physics.playerBody!.setTranslation(player.transform, true); followFrustum(w);
-    expect(c.spawn(60, [0, 1], 1), 'hold arrivals reserve every authored maintenance slot').toBe(48);
+    expect(c.spawn(60, [0, 1], 1), 'hold arrivals fill the tier cap').toBe(l6.infected[tier]);
     expect(c.spawn(1, [0, 1], 2)).toBe(0);
     for (const entry of state.entries!) {
       const door = l6Doors[entry.door];
