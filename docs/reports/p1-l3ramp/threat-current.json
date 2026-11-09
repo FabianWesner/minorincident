@@ -1,0 +1,4272 @@
+{
+  "command": "npm run qa:threat:remote -- --levels L3",
+  "exitCode": 1,
+  "flags": [
+    "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+  ],
+  "sourceHash": "67aa78241f000fa5821c9b902ea59fc3371594411af427bda5bc09262205a7ec",
+  "revision": "19d8775eaf980a3414b4365c537d0a703f453834",
+  "L3": {
+    "level": "L3",
+    "quality": "low",
+    "definitions": [
+      {
+        "id": "armory",
+        "text": "Take a handgun from the armory",
+        "type": "interact"
+      },
+      {
+        "id": "defend",
+        "text": "Help defend the station",
+        "type": "custom"
+      },
+      {
+        "id": "checkpoint",
+        "text": "Get inside the army checkpoint",
+        "type": "reach"
+      }
+    ],
+    "run": {
+      "collision": {
+        "failures": 0,
+        "pending": 0,
+        "admitted": 2544,
+        "deferred": 0,
+        "requests": [],
+        "offenders": []
+      },
+      "level": "L3",
+      "policy": "complete",
+      "seed": 1,
+      "completed": true,
+      "time": 193.4,
+      "deaths": 0,
+      "kills": 0,
+      "damageTaken": 36.300000000000004,
+      "failures": {},
+      "objectiveTimeline": [
+        {
+          "id": "armory",
+          "t": 4.45
+        },
+        {
+          "id": "defend",
+          "t": 35.65
+        },
+        {
+          "id": "checkpoint",
+          "t": 188.4
+        }
+      ],
+      "furthestObjective": "checkpoint",
+      "activeObjectives": [],
+      "outcome": "complete",
+      "blocker": null
+    },
+    "observation": {
+      "ticks": 11604,
+      "l3Squad": {
+        "initial": 4,
+        "army": 2,
+        "losses": [
+          {
+            "id": 33,
+            "cause": "bite",
+            "tick": 6311
+          },
+          {
+            "id": 31,
+            "cause": "bite",
+            "tick": 6630
+          }
+        ]
+      },
+      "followerWait": {
+        "windows": [
+          {
+            "key": "step/armory|phase/yard",
+            "escortTicks": 267,
+            "stationaryFarTicks": 0
+          },
+          {
+            "key": "phase/yard",
+            "escortTicks": 300,
+            "stationaryFarTicks": 0
+          },
+          {
+            "key": "step/defend|phase/attack",
+            "escortTicks": 1572,
+            "stationaryFarTicks": 1,
+            "first": {
+              "tick": 2139,
+              "playerX": -134.94863891601562,
+              "playerZ": 0.6140632629394531,
+              "followerId": 30,
+              "followerX": -140.3310837352786,
+              "followerZ": -12.161021482570225
+            }
+          },
+          {
+            "key": "step/checkpoint|phase/fallback",
+            "escortTicks": 505,
+            "stationaryFarTicks": 142,
+            "first": {
+              "tick": 2140,
+              "playerX": -134.94863891601562,
+              "playerZ": 0.6140632629394531,
+              "followerId": 30,
+              "followerX": -140.33054447263433,
+              "followerZ": -12.159741557515325
+            }
+          },
+          {
+            "key": "step/checkpoint|phase/corridor",
+            "escortTicks": 8660,
+            "stationaryFarTicks": 28,
+            "first": {
+              "tick": 6403,
+              "playerX": -2.7777533531188965,
+              "playerZ": -22.747610092163086,
+              "followerId": 31,
+              "followerX": -14.420317324562921,
+              "followerZ": -23.6118155366941
+            }
+          },
+          {
+            "key": "phase/run-out",
+            "escortTicks": 299,
+            "stationaryFarTicks": 0
+          }
+        ],
+        "escortTicks": 11603,
+        "stationaryFarTicks": 171,
+        "upperBoundPercent": 1.473756787037835,
+        "followers": [
+          {
+            "id": 23,
+            "escortTicks": 11603,
+            "stationaryFarTicks": 0
+          },
+          {
+            "id": 30,
+            "escortTicks": 9456,
+            "stationaryFarTicks": 54
+          },
+          {
+            "id": 31,
+            "escortTicks": 4255,
+            "stationaryFarTicks": 28
+          },
+          {
+            "id": 32,
+            "escortTicks": 9436,
+            "stationaryFarTicks": 0
+          },
+          {
+            "id": 33,
+            "escortTicks": 3958,
+            "stationaryFarTicks": 89
+          }
+        ]
+      },
+      "phases": [
+        {
+          "key": "step/armory",
+          "label": "armory: Take a handgun from the armory",
+          "threat": false,
+          "startSeconds": 0,
+          "seconds": 4.45,
+          "spawned": 0,
+          "initial": 0,
+          "observed": 0,
+          "reachableEver": 0,
+          "within2_5m": 0,
+          "attacks": 0,
+          "attacksPerMinute": 0,
+          "firstAttackSeconds": null,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstGroupAttackSeconds": null,
+          "followerSpeeds": [
+            {
+              "id": 23,
+              "samples": 8,
+              "median": 4.503053135172177
+            }
+          ],
+          "followerMin": null,
+          "followerMedian": null,
+          "maxBlockedSeconds": 0,
+          "blockedEvidence": null,
+          "last": {
+            "tick": 241,
+            "alive": 0,
+            "reachable": 0,
+            "playerX": -139.9105224609375,
+            "playerZ": -6.853206157684326,
+            "positions": []
+          },
+          "flags": []
+        },
+        {
+          "key": "phase/yard",
+          "label": "controller: yard",
+          "threat": false,
+          "startSeconds": 0,
+          "seconds": 9.45,
+          "spawned": 1,
+          "initial": 0,
+          "observed": 1,
+          "reachableEver": 0,
+          "within2_5m": 0,
+          "attacks": 0,
+          "attacksPerMinute": 0,
+          "firstAttackSeconds": null,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstGroupAttackSeconds": null,
+          "followerSpeeds": [
+            {
+              "id": 23,
+              "samples": 13,
+              "median": 4.41987066776027
+            }
+          ],
+          "followerMin": 4.41987066776027,
+          "followerMedian": 4.41987066776027,
+          "maxBlockedSeconds": 0,
+          "blockedEvidence": null,
+          "last": {
+            "tick": 507,
+            "alive": 0,
+            "reachable": 0,
+            "playerX": -134.94863891601562,
+            "playerZ": 0.6140632629394531,
+            "positions": []
+          },
+          "flags": []
+        },
+        {
+          "key": "step/defend",
+          "label": "defend: Help defend the station",
+          "threat": true,
+          "startSeconds": 9.45,
+          "seconds": 26.2,
+          "spawned": 33,
+          "initial": 1,
+          "observed": 34,
+          "reachableEver": 34,
+          "within2_5m": 7,
+          "attacks": 7,
+          "attacksPerMinute": 16.03053435114504,
+          "firstAttackSeconds": 23.866666666666667,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstGroupAttackSeconds": null,
+          "followerSpeeds": [],
+          "followerMin": null,
+          "followerMedian": null,
+          "boundedPaths": {
+            "samples": 14,
+            "minimumPercent": 100,
+            "worstTick": 2127,
+            "nearby": 15,
+            "reachable": 15,
+            "blockedIds": [],
+            "blockedPositions": []
+          },
+          "maxBlockedSeconds": 0,
+          "blockedEvidence": null,
+          "last": {
+            "tick": 2127,
+            "alive": 18,
+            "reachable": 18,
+            "playerX": -134.94863891601562,
+            "playerZ": 0.6140632629394531,
+            "positions": []
+          },
+          "flags": []
+        },
+        {
+          "key": "phase/attack",
+          "label": "controller: attack",
+          "threat": false,
+          "startSeconds": 9.45,
+          "seconds": 26.2,
+          "spawned": 33,
+          "initial": 1,
+          "observed": 34,
+          "reachableEver": 34,
+          "within2_5m": 7,
+          "attacks": 7,
+          "attacksPerMinute": 16.03053435114504,
+          "firstAttackSeconds": 23.866666666666667,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstGroupAttackSeconds": null,
+          "followerSpeeds": [],
+          "followerMin": null,
+          "followerMedian": null,
+          "boundedPaths": {
+            "samples": 14,
+            "minimumPercent": 100,
+            "worstTick": 2127,
+            "nearby": 15,
+            "reachable": 15,
+            "blockedIds": [],
+            "blockedPositions": []
+          },
+          "maxBlockedSeconds": 0,
+          "blockedEvidence": null,
+          "last": {
+            "tick": 2127,
+            "alive": 18,
+            "reachable": 18,
+            "playerX": -134.94863891601562,
+            "playerZ": 0.6140632629394531,
+            "positions": []
+          },
+          "flags": []
+        },
+        {
+          "key": "step/checkpoint",
+          "label": "checkpoint: Get inside the army checkpoint",
+          "threat": false,
+          "startSeconds": 35.65,
+          "seconds": 152.75,
+          "spawned": 1118,
+          "initial": 18,
+          "observed": 1151,
+          "reachableEver": 438,
+          "within2_5m": 20,
+          "attacks": 23,
+          "attacksPerMinute": 9.034369885433716,
+          "firstAttackSeconds": 0.03333333333333333,
+          "groupAttacks": 12,
+          "groupAttacksPerMinute": 4.713584288052373,
+          "firstGroupAttackSeconds": 0.6666666666666666,
+          "followerSpeeds": [
+            {
+              "id": 30,
+              "samples": 210,
+              "median": 4.500043917214537
+            },
+            {
+              "id": 31,
+              "samples": 84,
+              "median": 4.49998923182404
+            },
+            {
+              "id": 33,
+              "samples": 83,
+              "median": 4.4998812254791085
+            },
+            {
+              "id": 23,
+              "samples": 209,
+              "median": 4.4949613238414585
+            },
+            {
+              "id": 32,
+              "samples": 211,
+              "median": 4.500005623286093
+            }
+          ],
+          "followerMin": 4.4949613238414585,
+          "followerMedian": 4.49998923182404,
+          "boundedPaths": {
+            "samples": 77,
+            "minimumPercent": 0,
+            "worstTick": 11284,
+            "nearby": 7,
+            "reachable": 0,
+            "blockedIds": [
+              731,
+              871,
+              925,
+              969,
+              1019,
+              1091,
+              1197
+            ],
+            "blockedPositions": [
+              {
+                "identity": "731@315",
+                "id": 731,
+                "x": 199.87435355772078,
+                "z": 4.353548210930272,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "871@385",
+                "id": 871,
+                "x": 199.07015361671253,
+                "z": 5.450986668240806,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "925@412",
+                "id": 925,
+                "x": 200.4173119162394,
+                "z": 3.5843475782606244,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "969@434",
+                "id": 969,
+                "x": 200.87487365666436,
+                "z": 2.7821436132275594,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1019@459",
+                "id": 1019,
+                "x": 203.74413406608295,
+                "z": 3.0936877439841743,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1091@495",
+                "id": 1091,
+                "x": 202.9013010658176,
+                "z": 4.181933766557895,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1197@548",
+                "id": 1197,
+                "x": 199.99431088806045,
+                "z": 2.517706558759932,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              }
+            ]
+          },
+          "maxBlockedSeconds": 16,
+          "blockedEvidence": {
+            "tick": 11284,
+            "alive": 42,
+            "reachable": 0,
+            "playerX": 226.44639587402344,
+            "playerZ": 1.106583595275879,
+            "positions": [
+              {
+                "identity": "731@315",
+                "id": 731,
+                "x": 199.87435355772078,
+                "z": 4.353548210930272,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "871@385",
+                "id": 871,
+                "x": 199.07015361671253,
+                "z": 5.450986668240806,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "925@412",
+                "id": 925,
+                "x": 200.4173119162394,
+                "z": 3.5843475782606244,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "929@414",
+                "id": 929,
+                "x": 191.84500080278337,
+                "z": 2.16682562842219,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "963@431",
+                "id": 963,
+                "x": 181.87423234508933,
+                "z": 1.6195222152100845,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "969@434",
+                "id": 969,
+                "x": 200.87487365666436,
+                "z": 2.7821436132275594,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "977@438",
+                "id": 977,
+                "x": 191.8691901008824,
+                "z": -0.7753122402848813,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "981@440",
+                "id": 981,
+                "x": 181.32956680995676,
+                "z": 1.51076227894456,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1019@459",
+                "id": 1019,
+                "x": 203.74413406608295,
+                "z": 3.0936877439841743,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1091@495",
+                "id": 1091,
+                "x": 202.9013010658176,
+                "z": 4.181933766557895,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1197@548",
+                "id": 1197,
+                "x": 199.99431088806045,
+                "z": 2.517706558759932,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1851@849",
+                "id": 1851,
+                "x": 180.42532716587152,
+                "z": 1.144738927007235,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1853@850",
+                "id": 1853,
+                "x": 181.42195521173005,
+                "z": 2.1351370228732685,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1855@851",
+                "id": 1855,
+                "x": 183.97749400066292,
+                "z": 2.384617341514364,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1857@852",
+                "id": 1857,
+                "x": 185.16127124816566,
+                "z": 4.010534122281607,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1859@853",
+                "id": 1859,
+                "x": 184.52693883211347,
+                "z": 3.7121662521189904,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2025@928",
+                "id": 2025,
+                "x": 190.53537835419073,
+                "z": 3.432128739398704,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2157@988",
+                "id": 2157,
+                "x": 177.71664410176191,
+                "z": 0.260637287615582,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2159@989",
+                "id": 2159,
+                "x": 163.66455735522908,
+                "z": -2.5557864944844866,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2161@990",
+                "id": 2161,
+                "x": 161.3750138809913,
+                "z": -3.0294408778479864,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2163@991",
+                "id": 2163,
+                "x": 162.1296228848219,
+                "z": -3.0117553882583636,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2165@992",
+                "id": 2165,
+                "x": 146.98615403649652,
+                "z": 1.6284641483458149,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2327@1065",
+                "id": 2327,
+                "x": 195.9842130564346,
+                "z": -2.674760367468465,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2329@1066",
+                "id": 2329,
+                "x": 191.06064293660293,
+                "z": 2.9259582556296926,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2331@1067",
+                "id": 2331,
+                "x": 189.77659669979064,
+                "z": 3.031562110281482,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2333@1068",
+                "id": 2333,
+                "x": 189.07629096955336,
+                "z": 2.9040935087825663,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2335@1069",
+                "id": 2335,
+                "x": 189.9614402605769,
+                "z": 3.9834237280737597,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2467@1129",
+                "id": 2467,
+                "x": 183.25527031710473,
+                "z": 2.9485231951073168,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2469@1130",
+                "id": 2469,
+                "x": 183.90543681119246,
+                "z": 3.198722230967526,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2471@1131",
+                "id": 2471,
+                "x": 186.99696640054475,
+                "z": 4.344753642737859,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2473@1132",
+                "id": 2473,
+                "x": 191.2348979722081,
+                "z": 0.8037005749280473,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2475@1133",
+                "id": 2475,
+                "x": 184.8399272879145,
+                "z": 3.0705433984735575,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2495@1143",
+                "id": 2495,
+                "x": 182.47080168858767,
+                "z": 1.9876336363830307,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2497@1144",
+                "id": 2497,
+                "x": 183.58248745841803,
+                "z": 1.7250248978096232,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2499@1145",
+                "id": 2499,
+                "x": 182.9166853318197,
+                "z": 1.4713095547204982,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2501@1146",
+                "id": 2501,
+                "x": 182.58753603048928,
+                "z": 2.735141090707354,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2503@1147",
+                "id": 2503,
+                "x": 183.1373418458178,
+                "z": 2.250705672013448,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2505@1148",
+                "id": 2505,
+                "x": 171.6483119665098,
+                "z": -0.535853535360445,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2507@1149",
+                "id": 2507,
+                "x": 173.86345232449844,
+                "z": -0.40006964471877776,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2509@1150",
+                "id": 2509,
+                "x": 176.32222973722048,
+                "z": -0.12203659000436701,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2511@1151",
+                "id": 2511,
+                "x": 170.72304580525002,
+                "z": -0.6098456479000537,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2513@1152",
+                "id": 2513,
+                "x": 172.45794512989067,
+                "z": -0.7041857152255208,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              }
+            ]
+          },
+          "last": {
+            "tick": 11284,
+            "alive": 42,
+            "reachable": 0,
+            "playerX": 226.44639587402344,
+            "playerZ": 1.106583595275879,
+            "positions": [
+              {
+                "identity": "731@315",
+                "id": 731,
+                "x": 199.87435355772078,
+                "z": 4.353548210930272,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "871@385",
+                "id": 871,
+                "x": 199.07015361671253,
+                "z": 5.450986668240806,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "925@412",
+                "id": 925,
+                "x": 200.4173119162394,
+                "z": 3.5843475782606244,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "929@414",
+                "id": 929,
+                "x": 191.84500080278337,
+                "z": 2.16682562842219,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "963@431",
+                "id": 963,
+                "x": 181.87423234508933,
+                "z": 1.6195222152100845,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "969@434",
+                "id": 969,
+                "x": 200.87487365666436,
+                "z": 2.7821436132275594,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "977@438",
+                "id": 977,
+                "x": 191.8691901008824,
+                "z": -0.7753122402848813,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "981@440",
+                "id": 981,
+                "x": 181.32956680995676,
+                "z": 1.51076227894456,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1019@459",
+                "id": 1019,
+                "x": 203.74413406608295,
+                "z": 3.0936877439841743,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1091@495",
+                "id": 1091,
+                "x": 202.9013010658176,
+                "z": 4.181933766557895,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1197@548",
+                "id": 1197,
+                "x": 199.99431088806045,
+                "z": 2.517706558759932,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1851@849",
+                "id": 1851,
+                "x": 180.42532716587152,
+                "z": 1.144738927007235,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1853@850",
+                "id": 1853,
+                "x": 181.42195521173005,
+                "z": 2.1351370228732685,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1855@851",
+                "id": 1855,
+                "x": 183.97749400066292,
+                "z": 2.384617341514364,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1857@852",
+                "id": 1857,
+                "x": 185.16127124816566,
+                "z": 4.010534122281607,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1859@853",
+                "id": 1859,
+                "x": 184.52693883211347,
+                "z": 3.7121662521189904,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2025@928",
+                "id": 2025,
+                "x": 190.53537835419073,
+                "z": 3.432128739398704,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2157@988",
+                "id": 2157,
+                "x": 177.71664410176191,
+                "z": 0.260637287615582,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2159@989",
+                "id": 2159,
+                "x": 163.66455735522908,
+                "z": -2.5557864944844866,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2161@990",
+                "id": 2161,
+                "x": 161.3750138809913,
+                "z": -3.0294408778479864,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2163@991",
+                "id": 2163,
+                "x": 162.1296228848219,
+                "z": -3.0117553882583636,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2165@992",
+                "id": 2165,
+                "x": 146.98615403649652,
+                "z": 1.6284641483458149,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2327@1065",
+                "id": 2327,
+                "x": 195.9842130564346,
+                "z": -2.674760367468465,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2329@1066",
+                "id": 2329,
+                "x": 191.06064293660293,
+                "z": 2.9259582556296926,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2331@1067",
+                "id": 2331,
+                "x": 189.77659669979064,
+                "z": 3.031562110281482,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2333@1068",
+                "id": 2333,
+                "x": 189.07629096955336,
+                "z": 2.9040935087825663,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2335@1069",
+                "id": 2335,
+                "x": 189.9614402605769,
+                "z": 3.9834237280737597,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2467@1129",
+                "id": 2467,
+                "x": 183.25527031710473,
+                "z": 2.9485231951073168,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2469@1130",
+                "id": 2469,
+                "x": 183.90543681119246,
+                "z": 3.198722230967526,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2471@1131",
+                "id": 2471,
+                "x": 186.99696640054475,
+                "z": 4.344753642737859,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2473@1132",
+                "id": 2473,
+                "x": 191.2348979722081,
+                "z": 0.8037005749280473,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2475@1133",
+                "id": 2475,
+                "x": 184.8399272879145,
+                "z": 3.0705433984735575,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2495@1143",
+                "id": 2495,
+                "x": 182.47080168858767,
+                "z": 1.9876336363830307,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2497@1144",
+                "id": 2497,
+                "x": 183.58248745841803,
+                "z": 1.7250248978096232,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2499@1145",
+                "id": 2499,
+                "x": 182.9166853318197,
+                "z": 1.4713095547204982,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2501@1146",
+                "id": 2501,
+                "x": 182.58753603048928,
+                "z": 2.735141090707354,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2503@1147",
+                "id": 2503,
+                "x": 183.1373418458178,
+                "z": 2.250705672013448,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2505@1148",
+                "id": 2505,
+                "x": 171.6483119665098,
+                "z": -0.535853535360445,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2507@1149",
+                "id": 2507,
+                "x": 173.86345232449844,
+                "z": -0.40006964471877776,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2509@1150",
+                "id": 2509,
+                "x": 176.32222973722048,
+                "z": -0.12203659000436701,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2511@1151",
+                "id": 2511,
+                "x": 170.72304580525002,
+                "z": -0.6098456479000537,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2513@1152",
+                "id": 2513,
+                "x": 172.45794512989067,
+                "z": -0.7041857152255208,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              }
+            ]
+          },
+          "flags": []
+        },
+        {
+          "key": "phase/fallback",
+          "label": "controller: fallback",
+          "threat": false,
+          "startSeconds": 35.65,
+          "seconds": 8.416666666666666,
+          "spawned": 7,
+          "initial": 18,
+          "observed": 29,
+          "reachableEver": 26,
+          "within2_5m": 3,
+          "attacks": 3,
+          "attacksPerMinute": 21.386138613861387,
+          "firstAttackSeconds": 0.03333333333333333,
+          "groupAttacks": 2,
+          "groupAttacksPerMinute": 14.257425742574258,
+          "firstGroupAttackSeconds": 0.6666666666666666,
+          "followerSpeeds": [
+            {
+              "id": 30,
+              "samples": 6,
+              "median": 2.480409868648408
+            },
+            {
+              "id": 31,
+              "samples": 6,
+              "median": 2.106743286436977
+            },
+            {
+              "id": 33,
+              "samples": 6,
+              "median": 3.602719805452404
+            },
+            {
+              "id": 23,
+              "samples": 5,
+              "median": 1.3096466294146234
+            },
+            {
+              "id": 32,
+              "samples": 5,
+              "median": 1.6499629905227646
+            }
+          ],
+          "followerMin": null,
+          "followerMedian": null,
+          "boundedPaths": {
+            "samples": 5,
+            "minimumPercent": 100,
+            "worstTick": 2619,
+            "nearby": 2,
+            "reachable": 2,
+            "blockedIds": [],
+            "blockedPositions": []
+          },
+          "maxBlockedSeconds": 0,
+          "blockedEvidence": null,
+          "last": {
+            "tick": 2619,
+            "alive": 7,
+            "reachable": 7,
+            "playerX": -127.41647338867188,
+            "playerZ": 0.7985413074493408,
+            "positions": []
+          },
+          "flags": []
+        },
+        {
+          "key": "phase/corridor",
+          "label": "controller: corridor",
+          "threat": false,
+          "startSeconds": 44.06666666666667,
+          "seconds": 144.33333333333334,
+          "spawned": 1111,
+          "initial": 7,
+          "observed": 1149,
+          "reachableEver": 420,
+          "within2_5m": 17,
+          "attacks": 20,
+          "attacksPerMinute": 8.314087759815243,
+          "firstAttackSeconds": 56.516666666666666,
+          "groupAttacks": 10,
+          "groupAttacksPerMinute": 4.157043879907621,
+          "firstGroupAttackSeconds": 56.96666666666667,
+          "followerSpeeds": [
+            {
+              "id": 23,
+              "samples": 204,
+              "median": 4.4970728028072795
+            },
+            {
+              "id": 30,
+              "samples": 204,
+              "median": 4.50005967223895
+            },
+            {
+              "id": 31,
+              "samples": 78,
+              "median": 4.500007456758109
+            },
+            {
+              "id": 32,
+              "samples": 206,
+              "median": 4.500060579354269
+            },
+            {
+              "id": 33,
+              "samples": 77,
+              "median": 4.499983406961353
+            }
+          ],
+          "followerMin": 4.4970728028072795,
+          "followerMedian": 4.500007456758109,
+          "boundedPaths": {
+            "samples": 72,
+            "minimumPercent": 0,
+            "worstTick": 11284,
+            "nearby": 7,
+            "reachable": 0,
+            "blockedIds": [
+              731,
+              871,
+              925,
+              969,
+              1019,
+              1091,
+              1197
+            ],
+            "blockedPositions": [
+              {
+                "identity": "731@315",
+                "id": 731,
+                "x": 199.87435355772078,
+                "z": 4.353548210930272,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "871@385",
+                "id": 871,
+                "x": 199.07015361671253,
+                "z": 5.450986668240806,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "925@412",
+                "id": 925,
+                "x": 200.4173119162394,
+                "z": 3.5843475782606244,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "969@434",
+                "id": 969,
+                "x": 200.87487365666436,
+                "z": 2.7821436132275594,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1019@459",
+                "id": 1019,
+                "x": 203.74413406608295,
+                "z": 3.0936877439841743,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1091@495",
+                "id": 1091,
+                "x": 202.9013010658176,
+                "z": 4.181933766557895,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1197@548",
+                "id": 1197,
+                "x": 199.99431088806045,
+                "z": 2.517706558759932,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              }
+            ]
+          },
+          "maxBlockedSeconds": 16,
+          "blockedEvidence": {
+            "tick": 11284,
+            "alive": 42,
+            "reachable": 0,
+            "playerX": 226.44639587402344,
+            "playerZ": 1.106583595275879,
+            "positions": [
+              {
+                "identity": "731@315",
+                "id": 731,
+                "x": 199.87435355772078,
+                "z": 4.353548210930272,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "871@385",
+                "id": 871,
+                "x": 199.07015361671253,
+                "z": 5.450986668240806,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "925@412",
+                "id": 925,
+                "x": 200.4173119162394,
+                "z": 3.5843475782606244,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "929@414",
+                "id": 929,
+                "x": 191.84500080278337,
+                "z": 2.16682562842219,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "963@431",
+                "id": 963,
+                "x": 181.87423234508933,
+                "z": 1.6195222152100845,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "969@434",
+                "id": 969,
+                "x": 200.87487365666436,
+                "z": 2.7821436132275594,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "977@438",
+                "id": 977,
+                "x": 191.8691901008824,
+                "z": -0.7753122402848813,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "981@440",
+                "id": 981,
+                "x": 181.32956680995676,
+                "z": 1.51076227894456,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1019@459",
+                "id": 1019,
+                "x": 203.74413406608295,
+                "z": 3.0936877439841743,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1091@495",
+                "id": 1091,
+                "x": 202.9013010658176,
+                "z": 4.181933766557895,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1197@548",
+                "id": 1197,
+                "x": 199.99431088806045,
+                "z": 2.517706558759932,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1851@849",
+                "id": 1851,
+                "x": 180.42532716587152,
+                "z": 1.144738927007235,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1853@850",
+                "id": 1853,
+                "x": 181.42195521173005,
+                "z": 2.1351370228732685,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1855@851",
+                "id": 1855,
+                "x": 183.97749400066292,
+                "z": 2.384617341514364,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1857@852",
+                "id": 1857,
+                "x": 185.16127124816566,
+                "z": 4.010534122281607,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1859@853",
+                "id": 1859,
+                "x": 184.52693883211347,
+                "z": 3.7121662521189904,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2025@928",
+                "id": 2025,
+                "x": 190.53537835419073,
+                "z": 3.432128739398704,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2157@988",
+                "id": 2157,
+                "x": 177.71664410176191,
+                "z": 0.260637287615582,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2159@989",
+                "id": 2159,
+                "x": 163.66455735522908,
+                "z": -2.5557864944844866,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2161@990",
+                "id": 2161,
+                "x": 161.3750138809913,
+                "z": -3.0294408778479864,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2163@991",
+                "id": 2163,
+                "x": 162.1296228848219,
+                "z": -3.0117553882583636,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2165@992",
+                "id": 2165,
+                "x": 146.98615403649652,
+                "z": 1.6284641483458149,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2327@1065",
+                "id": 2327,
+                "x": 195.9842130564346,
+                "z": -2.674760367468465,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2329@1066",
+                "id": 2329,
+                "x": 191.06064293660293,
+                "z": 2.9259582556296926,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2331@1067",
+                "id": 2331,
+                "x": 189.77659669979064,
+                "z": 3.031562110281482,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2333@1068",
+                "id": 2333,
+                "x": 189.07629096955336,
+                "z": 2.9040935087825663,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2335@1069",
+                "id": 2335,
+                "x": 189.9614402605769,
+                "z": 3.9834237280737597,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2467@1129",
+                "id": 2467,
+                "x": 183.25527031710473,
+                "z": 2.9485231951073168,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2469@1130",
+                "id": 2469,
+                "x": 183.90543681119246,
+                "z": 3.198722230967526,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2471@1131",
+                "id": 2471,
+                "x": 186.99696640054475,
+                "z": 4.344753642737859,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2473@1132",
+                "id": 2473,
+                "x": 191.2348979722081,
+                "z": 0.8037005749280473,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2475@1133",
+                "id": 2475,
+                "x": 184.8399272879145,
+                "z": 3.0705433984735575,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2495@1143",
+                "id": 2495,
+                "x": 182.47080168858767,
+                "z": 1.9876336363830307,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2497@1144",
+                "id": 2497,
+                "x": 183.58248745841803,
+                "z": 1.7250248978096232,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2499@1145",
+                "id": 2499,
+                "x": 182.9166853318197,
+                "z": 1.4713095547204982,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2501@1146",
+                "id": 2501,
+                "x": 182.58753603048928,
+                "z": 2.735141090707354,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2503@1147",
+                "id": 2503,
+                "x": 183.1373418458178,
+                "z": 2.250705672013448,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2505@1148",
+                "id": 2505,
+                "x": 171.6483119665098,
+                "z": -0.535853535360445,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2507@1149",
+                "id": 2507,
+                "x": 173.86345232449844,
+                "z": -0.40006964471877776,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2509@1150",
+                "id": 2509,
+                "x": 176.32222973722048,
+                "z": -0.12203659000436701,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2511@1151",
+                "id": 2511,
+                "x": 170.72304580525002,
+                "z": -0.6098456479000537,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2513@1152",
+                "id": 2513,
+                "x": 172.45794512989067,
+                "z": -0.7041857152255208,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              }
+            ]
+          },
+          "last": {
+            "tick": 11284,
+            "alive": 42,
+            "reachable": 0,
+            "playerX": 226.44639587402344,
+            "playerZ": 1.106583595275879,
+            "positions": [
+              {
+                "identity": "731@315",
+                "id": 731,
+                "x": 199.87435355772078,
+                "z": 4.353548210930272,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "871@385",
+                "id": 871,
+                "x": 199.07015361671253,
+                "z": 5.450986668240806,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "925@412",
+                "id": 925,
+                "x": 200.4173119162394,
+                "z": 3.5843475782606244,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "929@414",
+                "id": 929,
+                "x": 191.84500080278337,
+                "z": 2.16682562842219,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "963@431",
+                "id": 963,
+                "x": 181.87423234508933,
+                "z": 1.6195222152100845,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "969@434",
+                "id": 969,
+                "x": 200.87487365666436,
+                "z": 2.7821436132275594,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "977@438",
+                "id": 977,
+                "x": 191.8691901008824,
+                "z": -0.7753122402848813,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "981@440",
+                "id": 981,
+                "x": 181.32956680995676,
+                "z": 1.51076227894456,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1019@459",
+                "id": 1019,
+                "x": 203.74413406608295,
+                "z": 3.0936877439841743,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1091@495",
+                "id": 1091,
+                "x": 202.9013010658176,
+                "z": 4.181933766557895,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1197@548",
+                "id": 1197,
+                "x": 199.99431088806045,
+                "z": 2.517706558759932,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1851@849",
+                "id": 1851,
+                "x": 180.42532716587152,
+                "z": 1.144738927007235,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1853@850",
+                "id": 1853,
+                "x": 181.42195521173005,
+                "z": 2.1351370228732685,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1855@851",
+                "id": 1855,
+                "x": 183.97749400066292,
+                "z": 2.384617341514364,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1857@852",
+                "id": 1857,
+                "x": 185.16127124816566,
+                "z": 4.010534122281607,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "1859@853",
+                "id": 1859,
+                "x": 184.52693883211347,
+                "z": 3.7121662521189904,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2025@928",
+                "id": 2025,
+                "x": 190.53537835419073,
+                "z": 3.432128739398704,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2157@988",
+                "id": 2157,
+                "x": 177.71664410176191,
+                "z": 0.260637287615582,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2159@989",
+                "id": 2159,
+                "x": 163.66455735522908,
+                "z": -2.5557864944844866,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2161@990",
+                "id": 2161,
+                "x": 161.3750138809913,
+                "z": -3.0294408778479864,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2163@991",
+                "id": 2163,
+                "x": 162.1296228848219,
+                "z": -3.0117553882583636,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2165@992",
+                "id": 2165,
+                "x": 146.98615403649652,
+                "z": 1.6284641483458149,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2327@1065",
+                "id": 2327,
+                "x": 195.9842130564346,
+                "z": -2.674760367468465,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2329@1066",
+                "id": 2329,
+                "x": 191.06064293660293,
+                "z": 2.9259582556296926,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2331@1067",
+                "id": 2331,
+                "x": 189.77659669979064,
+                "z": 3.031562110281482,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2333@1068",
+                "id": 2333,
+                "x": 189.07629096955336,
+                "z": 2.9040935087825663,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2335@1069",
+                "id": 2335,
+                "x": 189.9614402605769,
+                "z": 3.9834237280737597,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2467@1129",
+                "id": 2467,
+                "x": 183.25527031710473,
+                "z": 2.9485231951073168,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2469@1130",
+                "id": 2469,
+                "x": 183.90543681119246,
+                "z": 3.198722230967526,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2471@1131",
+                "id": 2471,
+                "x": 186.99696640054475,
+                "z": 4.344753642737859,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2473@1132",
+                "id": 2473,
+                "x": 191.2348979722081,
+                "z": 0.8037005749280473,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2475@1133",
+                "id": 2475,
+                "x": 184.8399272879145,
+                "z": 3.0705433984735575,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2495@1143",
+                "id": 2495,
+                "x": 182.47080168858767,
+                "z": 1.9876336363830307,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2497@1144",
+                "id": 2497,
+                "x": 183.58248745841803,
+                "z": 1.7250248978096232,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2499@1145",
+                "id": 2499,
+                "x": 182.9166853318197,
+                "z": 1.4713095547204982,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2501@1146",
+                "id": 2501,
+                "x": 182.58753603048928,
+                "z": 2.735141090707354,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2503@1147",
+                "id": 2503,
+                "x": 183.1373418458178,
+                "z": 2.250705672013448,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2505@1148",
+                "id": 2505,
+                "x": 171.6483119665098,
+                "z": -0.535853535360445,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2507@1149",
+                "id": 2507,
+                "x": 173.86345232449844,
+                "z": -0.40006964471877776,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2509@1150",
+                "id": 2509,
+                "x": 176.32222973722048,
+                "z": -0.12203659000436701,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2511@1151",
+                "id": 2511,
+                "x": 170.72304580525002,
+                "z": -0.6098456479000537,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              },
+              {
+                "identity": "2513@1152",
+                "id": 2513,
+                "x": 172.45794512989067,
+                "z": -0.7041857152255208,
+                "playerX": 226.44639587402344,
+                "playerZ": 1.106583595275879
+              }
+            ]
+          },
+          "flags": []
+        },
+        {
+          "key": "phase/run-out",
+          "label": "level-end run-out",
+          "threat": false,
+          "startSeconds": 188.4,
+          "seconds": 5,
+          "spawned": 48,
+          "initial": 42,
+          "observed": 90,
+          "reachableEver": 0,
+          "within2_5m": 0,
+          "attacks": 0,
+          "attacksPerMinute": 0,
+          "firstAttackSeconds": null,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstGroupAttackSeconds": null,
+          "followerSpeeds": [
+            {
+              "id": 23,
+              "samples": 5,
+              "median": 1.376376152252681
+            },
+            {
+              "id": 30,
+              "samples": 5,
+              "median": 4.559135498298631
+            },
+            {
+              "id": 32,
+              "samples": 5,
+              "median": 2.2567111184370345
+            }
+          ],
+          "followerMin": null,
+          "followerMedian": null,
+          "boundedPaths": {
+            "samples": 3,
+            "minimumPercent": 0,
+            "worstTick": 11544,
+            "nearby": 9,
+            "reachable": 0,
+            "blockedIds": [
+              731,
+              871,
+              925,
+              969,
+              1019,
+              1091,
+              1197,
+              2327,
+              2333
+            ],
+            "blockedPositions": [
+              {
+                "identity": "731@315",
+                "id": 731,
+                "x": 199.87435355772078,
+                "z": 4.353548210930272,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "871@385",
+                "id": 871,
+                "x": 199.07015361671253,
+                "z": 5.450986668240806,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "925@412",
+                "id": 925,
+                "x": 200.4173119162394,
+                "z": 3.5843475782606244,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "969@434",
+                "id": 969,
+                "x": 200.87487365666436,
+                "z": 2.7821436132275594,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "1019@459",
+                "id": 1019,
+                "x": 203.74413406608295,
+                "z": 3.0936877439841743,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "1091@495",
+                "id": 1091,
+                "x": 202.9013010658176,
+                "z": 4.181933766557895,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "1197@548",
+                "id": 1197,
+                "x": 199.99431088806045,
+                "z": 2.517706558759932,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2327@1065",
+                "id": 2327,
+                "x": 200.86301094563822,
+                "z": -2.3322534235199575,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2333@1068",
+                "id": 2333,
+                "x": 195.35187166524804,
+                "z": -2.1893732466981253,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              }
+            ]
+          },
+          "maxBlockedSeconds": 4,
+          "blockedEvidence": {
+            "tick": 11544,
+            "alive": 83,
+            "reachable": 0,
+            "playerX": 225.15115356445312,
+            "playerZ": 0.11557384580373764,
+            "positions": [
+              {
+                "identity": "731@315",
+                "id": 731,
+                "x": 199.87435355772078,
+                "z": 4.353548210930272,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "871@385",
+                "id": 871,
+                "x": 199.07015361671253,
+                "z": 5.450986668240806,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "925@412",
+                "id": 925,
+                "x": 200.4173119162394,
+                "z": 3.5843475782606244,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "929@414",
+                "id": 929,
+                "x": 190.29825803356607,
+                "z": 1.539027347622639,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "963@431",
+                "id": 963,
+                "x": 182.38675577957247,
+                "z": 1.778226012029585,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "969@434",
+                "id": 969,
+                "x": 200.87487365666436,
+                "z": 2.7821436132275594,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "977@438",
+                "id": 977,
+                "x": 190.817385134303,
+                "z": 2.3717470211101785,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "981@440",
+                "id": 981,
+                "x": 186.15709016972693,
+                "z": 3.643525484578896,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "1019@459",
+                "id": 1019,
+                "x": 203.74413406608295,
+                "z": 3.0936877439841743,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "1091@495",
+                "id": 1091,
+                "x": 202.9013010658176,
+                "z": 4.181933766557895,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "1197@548",
+                "id": 1197,
+                "x": 199.99431088806045,
+                "z": 2.517706558759932,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "1851@849",
+                "id": 1851,
+                "x": 181.17325943425632,
+                "z": 2.816580949268037,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "1853@850",
+                "id": 1853,
+                "x": 180.97454098062556,
+                "z": 3.476000398807726,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "1855@851",
+                "id": 1855,
+                "x": 184.41420998819257,
+                "z": 3.072381940192392,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "1857@852",
+                "id": 1857,
+                "x": 185.16740651367294,
+                "z": 2.8125037320391573,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "1859@853",
+                "id": 1859,
+                "x": 183.7293406804389,
+                "z": 4.067574459900284,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2025@928",
+                "id": 2025,
+                "x": 191.28989750953167,
+                "z": 1.1747530273120845,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2157@988",
+                "id": 2157,
+                "x": 180.64237466896435,
+                "z": -0.4718618465155755,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2159@989",
+                "id": 2159,
+                "x": 177.6004233726174,
+                "z": 0.3557920580333353,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2161@990",
+                "id": 2161,
+                "x": 175.1334309047871,
+                "z": -0.27971176365303985,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2163@991",
+                "id": 2163,
+                "x": 176.05508379719078,
+                "z": -0.054816664314914124,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2165@992",
+                "id": 2165,
+                "x": 157.61809083226677,
+                "z": -1.2834013382824787,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2327@1065",
+                "id": 2327,
+                "x": 200.86301094563822,
+                "z": -2.3322534235199575,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2331@1067",
+                "id": 2331,
+                "x": 190.38655998279876,
+                "z": 0.3271985558860345,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2333@1068",
+                "id": 2333,
+                "x": 195.35187166524804,
+                "z": -2.1893732466981253,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2335@1069",
+                "id": 2335,
+                "x": 191.2227776266593,
+                "z": 2.9436368069440864,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2467@1129",
+                "id": 2467,
+                "x": 183.16420476009128,
+                "z": 3.0854982063857186,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2469@1130",
+                "id": 2469,
+                "x": 184.355822453137,
+                "z": 3.7530564342212154,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2471@1131",
+                "id": 2471,
+                "x": 191.07446259837238,
+                "z": -0.45462504725195546,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2473@1132",
+                "id": 2473,
+                "x": 191.17555008223246,
+                "z": 0.48314210643962496,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2475@1133",
+                "id": 2475,
+                "x": 184.98576372535072,
+                "z": 3.4913351777247623,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2495@1143",
+                "id": 2495,
+                "x": 182.88075906607628,
+                "z": 2.275580767635119,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2497@1144",
+                "id": 2497,
+                "x": 184.2356569646151,
+                "z": 2.4065359252408496,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2499@1145",
+                "id": 2499,
+                "x": 183.14405142491444,
+                "z": 1.6259053611609011,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2501@1146",
+                "id": 2501,
+                "x": 182.50465577755716,
+                "z": 2.8480194923117947,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2503@1147",
+                "id": 2503,
+                "x": 183.54831457185173,
+                "z": 2.4895215227727503,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2505@1148",
+                "id": 2505,
+                "x": 181.38284629131854,
+                "z": 0.8037517999529668,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2507@1149",
+                "id": 2507,
+                "x": 181.2625255300405,
+                "z": 1.4759928125113766,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2509@1150",
+                "id": 2509,
+                "x": 181.72322633896053,
+                "z": 2.0043447450908283,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2511@1151",
+                "id": 2511,
+                "x": 180.6802225261389,
+                "z": 0.5046589192208051,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2513@1152",
+                "id": 2513,
+                "x": 180.60490006898866,
+                "z": 1.1820726783484066,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2515@1153",
+                "id": 2515,
+                "x": -62.993801324732814,
+                "z": 28.138196497741692,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2517@1154",
+                "id": 2517,
+                "x": -75.04641611562955,
+                "z": 24.229641611562936,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2519@1155",
+                "id": 2519,
+                "x": -67.00528526104505,
+                "z": 0.49599786114340483,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2521@1156",
+                "id": 2521,
+                "x": -49.21265343073886,
+                "z": 1.0041465873776463,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2523@1157",
+                "id": 2523,
+                "x": -43.94832495308027,
+                "z": -0.14724553618815414,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2525@1158",
+                "id": 2525,
+                "x": -72.72933892496567,
+                "z": -0.20134184192565793,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2527@1159",
+                "id": 2527,
+                "x": -81.4233800994899,
+                "z": -1.7033443491529745,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2529@1160",
+                "id": 2529,
+                "x": -70.96349008060636,
+                "z": -31.06344971641034,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2531@1161",
+                "id": 2531,
+                "x": -76.58920898765041,
+                "z": -22.04613483048845,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2533@1162",
+                "id": 2533,
+                "x": -36.23065965019239,
+                "z": -25.698731210694202,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2535@1163",
+                "id": 2535,
+                "x": -48.86928238588469,
+                "z": -22.85204802027833,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2537@1164",
+                "id": 2537,
+                "x": -48.62509363245728,
+                "z": -32.72777442933002,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2539@1165",
+                "id": 2539,
+                "x": -38.06873675754175,
+                "z": -31.66226401090828,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2541@1166",
+                "id": 2541,
+                "x": -60.02694291404782,
+                "z": -31.05446844441721,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2543@1167",
+                "id": 2543,
+                "x": -67.31937413966256,
+                "z": -22.47058785718843,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2545@1168",
+                "id": 2545,
+                "x": -41.11476486894497,
+                "z": 25.044779538007887,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2547@1169",
+                "id": 2547,
+                "x": -31.23631672578563,
+                "z": 24.202042797517148,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2549@1170",
+                "id": 2549,
+                "x": -21.715428512236723,
+                "z": 26.832571574960504,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2551@1171",
+                "id": 2551,
+                "x": -48.28491389603705,
+                "z": 31.009410429634503,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2553@1172",
+                "id": 2553,
+                "x": -64.53454470741207,
+                "z": 25.782877446081866,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2555@1173",
+                "id": 2555,
+                "x": -74.13157970021607,
+                "z": 24.138157970021602,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2557@1174",
+                "id": 2557,
+                "x": -48.288178130525814,
+                "z": 3.223003618536609,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2559@1175",
+                "id": 2559,
+                "x": -44.70507243103155,
+                "z": -2.321573163827931,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2561@1176",
+                "id": 2561,
+                "x": -69.87340030095199,
+                "z": 2.4182925060467424,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2563@1177",
+                "id": 2563,
+                "x": -73.37169857126972,
+                "z": -4.014578998484669,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2565@1178",
+                "id": 2565,
+                "x": -79.21670059014488,
+                "z": -23.67567891989536,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2567@1179",
+                "id": 2567,
+                "x": -35.468836208532856,
+                "z": -23.96952743106172,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2569@1180",
+                "id": 2569,
+                "x": -69.03790396796778,
+                "z": -31.71956288071994,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2571@1181",
+                "id": 2571,
+                "x": -21.206833321452322,
+                "z": 24.796131351716085,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2573@1182",
+                "id": 2573,
+                "x": -32.789481421066974,
+                "z": 24.54181644712917,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2575@1183",
+                "id": 2575,
+                "x": -47.026497830387335,
+                "z": -23.636095421950134,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2577@1184",
+                "id": 2577,
+                "x": -50.46954503681717,
+                "z": -32.61848442414823,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2579@1185",
+                "id": 2579,
+                "x": -42.90875493583997,
+                "z": 24.128902529437966,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2581@1186",
+                "id": 2581,
+                "x": -46.44015737032941,
+                "z": 31.83023117170119,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2583@1187",
+                "id": 2583,
+                "x": -64.40384482609527,
+                "z": 23.999836743383227,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2585@1188",
+                "id": 2585,
+                "x": -68.74167961680755,
+                "z": 3.615680323361766,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2587@1189",
+                "id": 2587,
+                "x": -72.75,
+                "z": 24,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2589@1190",
+                "id": 2589,
+                "x": -46.825,
+                "z": 3.6,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2591@1191",
+                "id": 2591,
+                "x": -44.11941066053123,
+                "z": -3.617773559657351,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2593@1192",
+                "id": 2593,
+                "x": -34.19,
+                "z": -23.4,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2595@1193",
+                "id": 2595,
+                "x": -78.11916862846601,
+                "z": -23.394650380407285,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2597@1194",
+                "id": 2597,
+                "x": -69.56274985917221,
+                "z": -32.60631051454413,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              }
+            ]
+          },
+          "last": {
+            "tick": 11544,
+            "alive": 83,
+            "reachable": 0,
+            "playerX": 225.15115356445312,
+            "playerZ": 0.11557384580373764,
+            "positions": [
+              {
+                "identity": "731@315",
+                "id": 731,
+                "x": 199.87435355772078,
+                "z": 4.353548210930272,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "871@385",
+                "id": 871,
+                "x": 199.07015361671253,
+                "z": 5.450986668240806,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "925@412",
+                "id": 925,
+                "x": 200.4173119162394,
+                "z": 3.5843475782606244,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "929@414",
+                "id": 929,
+                "x": 190.29825803356607,
+                "z": 1.539027347622639,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "963@431",
+                "id": 963,
+                "x": 182.38675577957247,
+                "z": 1.778226012029585,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "969@434",
+                "id": 969,
+                "x": 200.87487365666436,
+                "z": 2.7821436132275594,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "977@438",
+                "id": 977,
+                "x": 190.817385134303,
+                "z": 2.3717470211101785,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "981@440",
+                "id": 981,
+                "x": 186.15709016972693,
+                "z": 3.643525484578896,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "1019@459",
+                "id": 1019,
+                "x": 203.74413406608295,
+                "z": 3.0936877439841743,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "1091@495",
+                "id": 1091,
+                "x": 202.9013010658176,
+                "z": 4.181933766557895,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "1197@548",
+                "id": 1197,
+                "x": 199.99431088806045,
+                "z": 2.517706558759932,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "1851@849",
+                "id": 1851,
+                "x": 181.17325943425632,
+                "z": 2.816580949268037,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "1853@850",
+                "id": 1853,
+                "x": 180.97454098062556,
+                "z": 3.476000398807726,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "1855@851",
+                "id": 1855,
+                "x": 184.41420998819257,
+                "z": 3.072381940192392,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "1857@852",
+                "id": 1857,
+                "x": 185.16740651367294,
+                "z": 2.8125037320391573,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "1859@853",
+                "id": 1859,
+                "x": 183.7293406804389,
+                "z": 4.067574459900284,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2025@928",
+                "id": 2025,
+                "x": 191.28989750953167,
+                "z": 1.1747530273120845,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2157@988",
+                "id": 2157,
+                "x": 180.64237466896435,
+                "z": -0.4718618465155755,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2159@989",
+                "id": 2159,
+                "x": 177.6004233726174,
+                "z": 0.3557920580333353,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2161@990",
+                "id": 2161,
+                "x": 175.1334309047871,
+                "z": -0.27971176365303985,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2163@991",
+                "id": 2163,
+                "x": 176.05508379719078,
+                "z": -0.054816664314914124,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2165@992",
+                "id": 2165,
+                "x": 157.61809083226677,
+                "z": -1.2834013382824787,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2327@1065",
+                "id": 2327,
+                "x": 200.86301094563822,
+                "z": -2.3322534235199575,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2331@1067",
+                "id": 2331,
+                "x": 190.38655998279876,
+                "z": 0.3271985558860345,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2333@1068",
+                "id": 2333,
+                "x": 195.35187166524804,
+                "z": -2.1893732466981253,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2335@1069",
+                "id": 2335,
+                "x": 191.2227776266593,
+                "z": 2.9436368069440864,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2467@1129",
+                "id": 2467,
+                "x": 183.16420476009128,
+                "z": 3.0854982063857186,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2469@1130",
+                "id": 2469,
+                "x": 184.355822453137,
+                "z": 3.7530564342212154,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2471@1131",
+                "id": 2471,
+                "x": 191.07446259837238,
+                "z": -0.45462504725195546,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2473@1132",
+                "id": 2473,
+                "x": 191.17555008223246,
+                "z": 0.48314210643962496,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2475@1133",
+                "id": 2475,
+                "x": 184.98576372535072,
+                "z": 3.4913351777247623,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2495@1143",
+                "id": 2495,
+                "x": 182.88075906607628,
+                "z": 2.275580767635119,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2497@1144",
+                "id": 2497,
+                "x": 184.2356569646151,
+                "z": 2.4065359252408496,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2499@1145",
+                "id": 2499,
+                "x": 183.14405142491444,
+                "z": 1.6259053611609011,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2501@1146",
+                "id": 2501,
+                "x": 182.50465577755716,
+                "z": 2.8480194923117947,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2503@1147",
+                "id": 2503,
+                "x": 183.54831457185173,
+                "z": 2.4895215227727503,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2505@1148",
+                "id": 2505,
+                "x": 181.38284629131854,
+                "z": 0.8037517999529668,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2507@1149",
+                "id": 2507,
+                "x": 181.2625255300405,
+                "z": 1.4759928125113766,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2509@1150",
+                "id": 2509,
+                "x": 181.72322633896053,
+                "z": 2.0043447450908283,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2511@1151",
+                "id": 2511,
+                "x": 180.6802225261389,
+                "z": 0.5046589192208051,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2513@1152",
+                "id": 2513,
+                "x": 180.60490006898866,
+                "z": 1.1820726783484066,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2515@1153",
+                "id": 2515,
+                "x": -62.993801324732814,
+                "z": 28.138196497741692,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2517@1154",
+                "id": 2517,
+                "x": -75.04641611562955,
+                "z": 24.229641611562936,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2519@1155",
+                "id": 2519,
+                "x": -67.00528526104505,
+                "z": 0.49599786114340483,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2521@1156",
+                "id": 2521,
+                "x": -49.21265343073886,
+                "z": 1.0041465873776463,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2523@1157",
+                "id": 2523,
+                "x": -43.94832495308027,
+                "z": -0.14724553618815414,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2525@1158",
+                "id": 2525,
+                "x": -72.72933892496567,
+                "z": -0.20134184192565793,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2527@1159",
+                "id": 2527,
+                "x": -81.4233800994899,
+                "z": -1.7033443491529745,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2529@1160",
+                "id": 2529,
+                "x": -70.96349008060636,
+                "z": -31.06344971641034,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2531@1161",
+                "id": 2531,
+                "x": -76.58920898765041,
+                "z": -22.04613483048845,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2533@1162",
+                "id": 2533,
+                "x": -36.23065965019239,
+                "z": -25.698731210694202,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2535@1163",
+                "id": 2535,
+                "x": -48.86928238588469,
+                "z": -22.85204802027833,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2537@1164",
+                "id": 2537,
+                "x": -48.62509363245728,
+                "z": -32.72777442933002,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2539@1165",
+                "id": 2539,
+                "x": -38.06873675754175,
+                "z": -31.66226401090828,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2541@1166",
+                "id": 2541,
+                "x": -60.02694291404782,
+                "z": -31.05446844441721,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2543@1167",
+                "id": 2543,
+                "x": -67.31937413966256,
+                "z": -22.47058785718843,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2545@1168",
+                "id": 2545,
+                "x": -41.11476486894497,
+                "z": 25.044779538007887,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2547@1169",
+                "id": 2547,
+                "x": -31.23631672578563,
+                "z": 24.202042797517148,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2549@1170",
+                "id": 2549,
+                "x": -21.715428512236723,
+                "z": 26.832571574960504,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2551@1171",
+                "id": 2551,
+                "x": -48.28491389603705,
+                "z": 31.009410429634503,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2553@1172",
+                "id": 2553,
+                "x": -64.53454470741207,
+                "z": 25.782877446081866,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2555@1173",
+                "id": 2555,
+                "x": -74.13157970021607,
+                "z": 24.138157970021602,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2557@1174",
+                "id": 2557,
+                "x": -48.288178130525814,
+                "z": 3.223003618536609,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2559@1175",
+                "id": 2559,
+                "x": -44.70507243103155,
+                "z": -2.321573163827931,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2561@1176",
+                "id": 2561,
+                "x": -69.87340030095199,
+                "z": 2.4182925060467424,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2563@1177",
+                "id": 2563,
+                "x": -73.37169857126972,
+                "z": -4.014578998484669,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2565@1178",
+                "id": 2565,
+                "x": -79.21670059014488,
+                "z": -23.67567891989536,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2567@1179",
+                "id": 2567,
+                "x": -35.468836208532856,
+                "z": -23.96952743106172,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2569@1180",
+                "id": 2569,
+                "x": -69.03790396796778,
+                "z": -31.71956288071994,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2571@1181",
+                "id": 2571,
+                "x": -21.206833321452322,
+                "z": 24.796131351716085,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2573@1182",
+                "id": 2573,
+                "x": -32.789481421066974,
+                "z": 24.54181644712917,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2575@1183",
+                "id": 2575,
+                "x": -47.026497830387335,
+                "z": -23.636095421950134,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2577@1184",
+                "id": 2577,
+                "x": -50.46954503681717,
+                "z": -32.61848442414823,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2579@1185",
+                "id": 2579,
+                "x": -42.90875493583997,
+                "z": 24.128902529437966,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2581@1186",
+                "id": 2581,
+                "x": -46.44015737032941,
+                "z": 31.83023117170119,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2583@1187",
+                "id": 2583,
+                "x": -64.40384482609527,
+                "z": 23.999836743383227,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2585@1188",
+                "id": 2585,
+                "x": -68.74167961680755,
+                "z": 3.615680323361766,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2587@1189",
+                "id": 2587,
+                "x": -72.75,
+                "z": 24,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2589@1190",
+                "id": 2589,
+                "x": -46.825,
+                "z": 3.6,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2591@1191",
+                "id": 2591,
+                "x": -44.11941066053123,
+                "z": -3.617773559657351,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2593@1192",
+                "id": 2593,
+                "x": -34.19,
+                "z": -23.4,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2595@1193",
+                "id": 2595,
+                "x": -78.11916862846601,
+                "z": -23.394650380407285,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              },
+              {
+                "identity": "2597@1194",
+                "id": 2597,
+                "x": -69.56274985917221,
+                "z": -32.60631051454413,
+                "playerX": 225.15115356445312,
+                "playerZ": 0.11557384580373764
+              }
+            ]
+          },
+          "flags": []
+        }
+      ],
+      "waves": [
+        {
+          "key": "station-0",
+          "source": "L3 scheduled wave.at (before admission)",
+          "startSeconds": 9.45,
+          "observedSeconds": 183.95,
+          "expected": 15,
+          "spawned": 15,
+          "firstAttackSeconds": 23.866666666666667,
+          "members": [
+            "105@1",
+            "107@2",
+            "109@3",
+            "111@4",
+            "113@5",
+            "115@6",
+            "117@7",
+            "119@8",
+            "121@9",
+            "123@10",
+            "125@11",
+            "127@12",
+            "129@13",
+            "131@14",
+            "134@16"
+          ],
+          "flags": [
+            "WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+          ],
+          "scheduledStreamSeconds": 16.733333333333334,
+          "visibleWithinTwoSeconds": 5,
+          "spawnedWithinEighteenSeconds": 15
+        },
+        {
+          "key": "station-1",
+          "source": "L3 scheduled wave.at (before admission)",
+          "startSeconds": 29.45,
+          "observedSeconds": 163.95,
+          "expected": 25,
+          "spawned": 25,
+          "firstAttackSeconds": 4.4,
+          "members": [
+            "136@17",
+            "138@18",
+            "140@19",
+            "142@20",
+            "144@21",
+            "146@22",
+            "148@23",
+            "150@24",
+            "152@25",
+            "154@26",
+            "156@27",
+            "158@28",
+            "160@29",
+            "162@30",
+            "164@31",
+            "166@32",
+            "168@33",
+            "170@34",
+            "172@35",
+            "174@36",
+            "176@37",
+            "179@39",
+            "181@40",
+            "183@41",
+            "185@42"
+          ],
+          "flags": [],
+          "scheduledStreamSeconds": 15.933333333333334,
+          "visibleWithinTwoSeconds": 5,
+          "spawnedWithinEighteenSeconds": 25
+        },
+        {
+          "key": "station-2",
+          "source": "L3 scheduled wave.at (before admission)",
+          "startSeconds": 49.45,
+          "observedSeconds": 143.95,
+          "expected": 35,
+          "spawned": 35,
+          "firstAttackSeconds": null,
+          "members": [
+            "187@43",
+            "189@44",
+            "191@45",
+            "193@46",
+            "195@47",
+            "197@48",
+            "199@49",
+            "201@50",
+            "203@51",
+            "205@52",
+            "207@53",
+            "209@54",
+            "211@55",
+            "213@56",
+            "215@57",
+            "217@58",
+            "219@59",
+            "221@60",
+            "223@61",
+            "225@62",
+            "227@63",
+            "229@64",
+            "231@65",
+            "233@66",
+            "235@67",
+            "237@68",
+            "241@70",
+            "243@71",
+            "245@72",
+            "247@73",
+            "249@74",
+            "251@75",
+            "253@76",
+            "255@77",
+            "257@78"
+          ],
+          "flags": [
+            "WAVE_NO_ATTACK_WITHIN_20_SECONDS"
+          ],
+          "scheduledStreamSeconds": 16.65,
+          "visibleWithinTwoSeconds": 2,
+          "spawnedWithinEighteenSeconds": 35
+        }
+      ]
+    },
+    "flags": [
+      "wave/station-0:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+      "wave/station-2:WAVE_NO_ATTACK_WITHIN_20_SECONDS"
+    ],
+    "passiveRun": {
+      "level": "L3",
+      "policy": "complete",
+      "seed": 1,
+      "completed": false,
+      "time": 70,
+      "deaths": 0,
+      "kills": 0,
+      "damageTaken": 0,
+      "failures": {
+        "tick-budget": 1
+      },
+      "objectiveTimeline": [
+        {
+          "id": "armory",
+          "t": 4.45
+        },
+        {
+          "id": "defend",
+          "t": 36.55
+        }
+      ],
+      "furthestObjective": "checkpoint",
+      "activeObjectives": [
+        "checkpoint"
+      ],
+      "outcome": "tick-budget",
+      "blocker": {
+        "objective": "checkpoint",
+        "detail": "tick-budget: Get inside the army checkpoint",
+        "player": {
+          "x": -134.94863891601562,
+          "z": 0.6140632629394531
+        },
+        "distance": 359.94916270382276,
+        "actors": {}
+      },
+      "collision": {
+        "failures": 0,
+        "pending": 0,
+        "admitted": 203,
+        "deferred": 0,
+        "requests": [],
+        "offenders": []
+      }
+    },
+    "passiveObservation": {
+      "ticks": 4200,
+      "l3Squad": {
+        "initial": 4,
+        "army": null,
+        "losses": []
+      },
+      "followerWait": {
+        "windows": [
+          {
+            "key": "step/armory|phase/yard",
+            "escortTicks": 267,
+            "stationaryFarTicks": 0
+          },
+          {
+            "key": "phase/yard",
+            "escortTicks": 300,
+            "stationaryFarTicks": 0
+          },
+          {
+            "key": "step/defend|phase/attack",
+            "escortTicks": 1626,
+            "stationaryFarTicks": 1,
+            "first": {
+              "tick": 2193,
+              "playerX": -134.94863891601562,
+              "playerZ": 0.6140632629394531,
+              "followerId": 30,
+              "followerX": -141.35102963608222,
+              "followerZ": -12.400191089654108
+            }
+          },
+          {
+            "key": "step/checkpoint|phase/fallback",
+            "escortTicks": 2007,
+            "stationaryFarTicks": 156,
+            "first": {
+              "tick": 2194,
+              "playerX": -134.94863891601562,
+              "playerZ": 0.6140632629394531,
+              "followerId": 30,
+              "followerX": -141.38217839371868,
+              "followerZ": -12.412612519247608
+            }
+          }
+        ],
+        "escortTicks": 4200,
+        "stationaryFarTicks": 157,
+        "upperBoundPercent": 3.738095238095238,
+        "followers": [
+          {
+            "id": 23,
+            "escortTicks": 4200,
+            "stationaryFarTicks": 0
+          },
+          {
+            "id": 30,
+            "escortTicks": 1882,
+            "stationaryFarTicks": 126
+          },
+          {
+            "id": 31,
+            "escortTicks": 2008,
+            "stationaryFarTicks": 0
+          },
+          {
+            "id": 32,
+            "escortTicks": 1901,
+            "stationaryFarTicks": 0
+          },
+          {
+            "id": 33,
+            "escortTicks": 1954,
+            "stationaryFarTicks": 103
+          }
+        ]
+      },
+      "phases": [
+        {
+          "key": "step/armory",
+          "label": "armory: Take a handgun from the armory",
+          "threat": false,
+          "startSeconds": 0,
+          "seconds": 4.45,
+          "spawned": 0,
+          "initial": 0,
+          "observed": 0,
+          "reachableEver": 0,
+          "within2_5m": 0,
+          "attacks": 0,
+          "attacksPerMinute": 0,
+          "firstAttackSeconds": null,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstGroupAttackSeconds": null,
+          "followerSpeeds": [
+            {
+              "id": 23,
+              "samples": 8,
+              "median": 4.503053135172177
+            }
+          ],
+          "followerMin": null,
+          "followerMedian": null,
+          "maxBlockedSeconds": 0,
+          "blockedEvidence": null,
+          "last": {
+            "tick": 241,
+            "alive": 0,
+            "reachable": 0,
+            "playerX": -139.9105224609375,
+            "playerZ": -6.853206157684326,
+            "positions": []
+          },
+          "flags": []
+        },
+        {
+          "key": "phase/yard",
+          "label": "controller: yard",
+          "threat": false,
+          "startSeconds": 0,
+          "seconds": 9.45,
+          "spawned": 1,
+          "initial": 0,
+          "observed": 1,
+          "reachableEver": 0,
+          "within2_5m": 0,
+          "attacks": 0,
+          "attacksPerMinute": 0,
+          "firstAttackSeconds": null,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstGroupAttackSeconds": null,
+          "followerSpeeds": [
+            {
+              "id": 23,
+              "samples": 13,
+              "median": 4.41987066776027
+            }
+          ],
+          "followerMin": 4.41987066776027,
+          "followerMedian": 4.41987066776027,
+          "maxBlockedSeconds": 0,
+          "blockedEvidence": null,
+          "last": {
+            "tick": 507,
+            "alive": 0,
+            "reachable": 0,
+            "playerX": -134.94863891601562,
+            "playerZ": 0.6140632629394531,
+            "positions": []
+          },
+          "flags": []
+        },
+        {
+          "key": "step/defend",
+          "label": "defend: Help defend the station",
+          "threat": true,
+          "startSeconds": 9.45,
+          "seconds": 27.1,
+          "spawned": 34,
+          "initial": 1,
+          "observed": 35,
+          "reachableEver": 34,
+          "within2_5m": 11,
+          "attacks": 36,
+          "attacksPerMinute": 79.70479704797047,
+          "firstAttackSeconds": 3.35,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstGroupAttackSeconds": null,
+          "followerSpeeds": [],
+          "followerMin": null,
+          "followerMedian": null,
+          "boundedPaths": {
+            "samples": 14,
+            "minimumPercent": 100,
+            "worstTick": 2127,
+            "nearby": 21,
+            "reachable": 21,
+            "blockedIds": [],
+            "blockedPositions": []
+          },
+          "maxBlockedSeconds": 0,
+          "blockedEvidence": null,
+          "last": {
+            "tick": 2127,
+            "alive": 24,
+            "reachable": 24,
+            "playerX": -134.94863891601562,
+            "playerZ": 0.6140632629394531,
+            "positions": []
+          },
+          "flags": []
+        },
+        {
+          "key": "phase/attack",
+          "label": "controller: attack",
+          "threat": false,
+          "startSeconds": 9.45,
+          "seconds": 27.1,
+          "spawned": 34,
+          "initial": 1,
+          "observed": 35,
+          "reachableEver": 34,
+          "within2_5m": 11,
+          "attacks": 36,
+          "attacksPerMinute": 79.70479704797047,
+          "firstAttackSeconds": 3.35,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstGroupAttackSeconds": null,
+          "followerSpeeds": [],
+          "followerMin": null,
+          "followerMedian": null,
+          "boundedPaths": {
+            "samples": 14,
+            "minimumPercent": 100,
+            "worstTick": 2127,
+            "nearby": 21,
+            "reachable": 21,
+            "blockedIds": [],
+            "blockedPositions": []
+          },
+          "maxBlockedSeconds": 0,
+          "blockedEvidence": null,
+          "last": {
+            "tick": 2127,
+            "alive": 24,
+            "reachable": 24,
+            "playerX": -134.94863891601562,
+            "playerZ": 0.6140632629394531,
+            "positions": []
+          },
+          "flags": []
+        },
+        {
+          "key": "step/checkpoint",
+          "label": "checkpoint: Get inside the army checkpoint",
+          "threat": false,
+          "startSeconds": 36.55,
+          "seconds": 33.45,
+          "spawned": 49,
+          "initial": 24,
+          "observed": 84,
+          "reachableEver": 78,
+          "within2_5m": 27,
+          "attacks": 149,
+          "attacksPerMinute": 267.2645739910314,
+          "firstAttackSeconds": 0.16666666666666666,
+          "groupAttacks": 27,
+          "groupAttacksPerMinute": 48.4304932735426,
+          "firstGroupAttackSeconds": 0.16666666666666666,
+          "followerSpeeds": [],
+          "followerMin": null,
+          "followerMedian": null,
+          "boundedPaths": {
+            "samples": 17,
+            "minimumPercent": 100,
+            "worstTick": 4113,
+            "nearby": 35,
+            "reachable": 35,
+            "blockedIds": [],
+            "blockedPositions": []
+          },
+          "maxBlockedSeconds": 0,
+          "blockedEvidence": null,
+          "last": {
+            "tick": 4113,
+            "alive": 46,
+            "reachable": 45,
+            "playerX": -134.94863891601562,
+            "playerZ": 0.6140632629394531,
+            "positions": [
+              {
+                "identity": "260@80",
+                "id": 260,
+                "x": -98.74956695512837,
+                "z": -22.390162632997917,
+                "playerX": -134.94863891601562,
+                "playerZ": 0.6140632629394531
+              }
+            ]
+          },
+          "flags": []
+        },
+        {
+          "key": "phase/fallback",
+          "label": "controller: fallback",
+          "threat": false,
+          "startSeconds": 36.55,
+          "seconds": 33.45,
+          "spawned": 49,
+          "initial": 24,
+          "observed": 84,
+          "reachableEver": 78,
+          "within2_5m": 27,
+          "attacks": 149,
+          "attacksPerMinute": 267.2645739910314,
+          "firstAttackSeconds": 0.16666666666666666,
+          "groupAttacks": 27,
+          "groupAttacksPerMinute": 48.4304932735426,
+          "firstGroupAttackSeconds": 0.16666666666666666,
+          "followerSpeeds": [],
+          "followerMin": null,
+          "followerMedian": null,
+          "boundedPaths": {
+            "samples": 17,
+            "minimumPercent": 100,
+            "worstTick": 4113,
+            "nearby": 35,
+            "reachable": 35,
+            "blockedIds": [],
+            "blockedPositions": []
+          },
+          "maxBlockedSeconds": 0,
+          "blockedEvidence": null,
+          "last": {
+            "tick": 4113,
+            "alive": 46,
+            "reachable": 45,
+            "playerX": -134.94863891601562,
+            "playerZ": 0.6140632629394531,
+            "positions": [
+              {
+                "identity": "260@80",
+                "id": 260,
+                "x": -98.74956695512837,
+                "z": -22.390162632997917,
+                "playerX": -134.94863891601562,
+                "playerZ": 0.6140632629394531
+              }
+            ]
+          },
+          "flags": []
+        }
+      ],
+      "waves": [
+        {
+          "key": "station-0",
+          "source": "L3 scheduled wave.at (before admission)",
+          "startSeconds": 9.45,
+          "observedSeconds": 60.55,
+          "expected": 15,
+          "spawned": 15,
+          "firstAttackSeconds": 3.35,
+          "members": [
+            "105@1",
+            "107@2",
+            "109@3",
+            "111@4",
+            "113@5",
+            "115@6",
+            "117@7",
+            "119@8",
+            "121@9",
+            "123@10",
+            "125@11",
+            "127@12",
+            "129@13",
+            "131@14",
+            "134@16"
+          ],
+          "flags": [],
+          "scheduledStreamSeconds": 16.733333333333334,
+          "visibleWithinTwoSeconds": 5,
+          "spawnedWithinEighteenSeconds": 15
+        },
+        {
+          "key": "station-1",
+          "source": "L3 scheduled wave.at (before admission)",
+          "startSeconds": 29.45,
+          "observedSeconds": 40.55,
+          "expected": 25,
+          "spawned": 25,
+          "firstAttackSeconds": 3.433333333333333,
+          "members": [
+            "136@17",
+            "138@18",
+            "140@19",
+            "142@20",
+            "144@21",
+            "146@22",
+            "148@23",
+            "150@24",
+            "152@25",
+            "154@26",
+            "156@27",
+            "158@28",
+            "160@29",
+            "162@30",
+            "164@31",
+            "166@32",
+            "168@33",
+            "170@34",
+            "172@35",
+            "174@36",
+            "176@37",
+            "178@38",
+            "180@39",
+            "182@40",
+            "185@42"
+          ],
+          "flags": [],
+          "scheduledStreamSeconds": 15.933333333333334,
+          "visibleWithinTwoSeconds": 5,
+          "spawnedWithinEighteenSeconds": 25
+        },
+        {
+          "key": "station-2",
+          "source": "L3 scheduled wave.at (before admission)",
+          "startSeconds": 49.45,
+          "observedSeconds": 20.55,
+          "expected": 35,
+          "spawned": 35,
+          "firstAttackSeconds": 9.433333333333334,
+          "members": [
+            "188@44",
+            "190@45",
+            "192@46",
+            "194@47",
+            "196@48",
+            "198@49",
+            "200@50",
+            "202@51",
+            "204@52",
+            "206@53",
+            "208@54",
+            "210@55",
+            "212@56",
+            "214@57",
+            "216@58",
+            "218@59",
+            "220@60",
+            "222@61",
+            "224@62",
+            "226@63",
+            "228@64",
+            "230@65",
+            "232@66",
+            "234@67",
+            "236@68",
+            "238@69",
+            "240@70",
+            "242@71",
+            "244@72",
+            "246@73",
+            "248@74",
+            "250@75",
+            "252@76",
+            "254@77",
+            "256@78"
+          ],
+          "flags": [],
+          "scheduledStreamSeconds": 16.65,
+          "visibleWithinTwoSeconds": 5,
+          "spawnedWithinEighteenSeconds": 35
+        }
+      ]
+    },
+    "passiveFlags": [],
+    "kiting": {
+      "kitingSeconds": 20.000000000000146,
+      "attacks": 2,
+      "attacksPerMinute": 5.9999999999999565,
+      "samples": 1200,
+      "style": "retreat",
+      "minimumHordeSize": 3,
+      "minimumMoveSpeedMps": 0.05,
+      "diagnostics": {
+        "startTick": 666,
+        "endTick": 1865,
+        "firingFrames": 1200,
+        "playerAttackStarts": 60,
+        "framesWithoutThreats": 807,
+        "movingSeconds": 20.000000000000146,
+        "immobilizedSeconds": 0,
+        "distanceMeters": 39.88332330081732,
+        "bodyAvoidanceFrames": 0,
+        "phases": [
+          "step/defend",
+          "phase/attack"
+        ]
+      },
+      "hits": 1,
+      "stationaryHits": 0,
+      "hitsPerMinute": 2.9999999999999782
+    },
+    "wallSeconds": 142.936,
+    "nativeStateHash": "131ec498",
+    "l3Army": {
+      "seeds": [
+        {
+          "seed": 1,
+          "valid": true,
+          "army": 2,
+          "attacksPerMinute": 9.034369885433716
+        },
+        {
+          "seed": 2,
+          "valid": true,
+          "army": 4,
+          "attacksPerMinute": 8.672798948751643
+        },
+        {
+          "seed": 3,
+          "valid": true,
+          "army": 0,
+          "attacksPerMinute": 231.1960926945859
+        }
+      ],
+      "measured": 3,
+      "within": 2,
+      "pass": true
+    },
+    "l3SurvivalSeeds": [
+      {
+        "seed": 1,
+        "valid": true,
+        "s1": {
+          "completed": true,
+          "officerHits": 118,
+          "officerKills": 23,
+          "playerKills": 25,
+          "damage": 11
+        },
+        "density": {
+          "prepopulated": [
+            125,
+            240,
+            710
+          ],
+          "near30": [
+            11,
+            21,
+            32
+          ],
+          "maxConcurrent": 100,
+          "cap": 100
+        }
+      },
+      {
+        "seed": 2,
+        "valid": true,
+        "s1": {
+          "completed": true,
+          "officerHits": 149,
+          "officerKills": 34,
+          "playerKills": 15,
+          "damage": 4.4
+        },
+        "density": {
+          "prepopulated": [
+            125,
+            240,
+            710
+          ],
+          "near30": [
+            11,
+            22,
+            21
+          ],
+          "maxConcurrent": 100,
+          "cap": 100
+        }
+      },
+      {
+        "seed": 3,
+        "valid": true,
+        "s1": {
+          "completed": true,
+          "officerHits": 40,
+          "officerKills": 9,
+          "playerKills": 24,
+          "damage": 55
+        },
+        "density": {
+          "prepopulated": [
+            125,
+            240,
+            710
+          ],
+          "near30": [
+            13,
+            29,
+            40
+          ],
+          "maxConcurrent": 100,
+          "cap": 100
+        }
+      }
+    ]
+  }
+}

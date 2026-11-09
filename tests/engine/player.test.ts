@@ -85,6 +85,7 @@ async function campaignRampTraversal(): Promise<void> {
     l3.clearInput();
     expect(recoveryPoint, `${quality} reported L3 pose can rejoin the bend and reach the deck`).toBe(recovery.length);
     expect(reported.transform.y).toBeGreaterThan(6.3);
+    await rampContacts(quality);
 
     const metro = await slopeWorld('L5', quality);
     const entrance = metro.districts!.districts.flatMap(d => d.decay.placements).find(p => p.id === 'bld.metro-entrance:225')!, player = metro.entities.get(1)!;
@@ -128,6 +129,41 @@ async function campaignRampTraversal(): Promise<void> {
     expect(courier.transform.x, `${quality} dispersal stair reaches its deck`).toBeLessThan(platform.position[0] + 4.6);
     expect(platformTop, `${quality} dispersal stair reaches the raised platform`).toBeGreaterThan(3.5);
   }
+}
+
+/** Bodies and light props at the lips and bends must not turn a traversable ramp into a fixed wall. */
+async function rampContacts(quality: 'low' | 'high'): Promise<void> {
+  const w = await slopeWorld('L3', quality), player = w.entities.get(1)!;
+  const ramp = w.districts!.districts.flatMap(d => d.decay.placements).find(p => p.id === 'kit.highway-onramp:991')!;
+  const points: [number, number, number][] = [[139, 0, 0], ...Array.from({ length: 61 }, (_, i) => highwayPoint(ramp, 1 - i / 60))];
+  const obstacles: [number, number, number][] = [[140, .15, 0], [142, .5, 0], ...[.98, .9, .75, .5, .4, .3, .15, .02].map(t => highwayPoint(ramp, t))];
+  for (const [i, [x, y, z]] of obstacles.entries()) {
+    w.props!.spawn({ id: `ramp-cone-${i}`, assetId: 'prop.traffic-cone', position: [x, y, z], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: '', visualAabb: { min: [x, y, z], max: [x, y + .65, z] } });
+    for (const permanent of [false, true]) {
+      const id = w.infected!.spawn('infected.runner', { x, y: y + .7, z }, { state: 'idle', offNav: true });
+      w.combat!.damage.apply({ attackId: 1000 + i * 2 + Number(permanent), actionId: 'weapon.handgun', sourceId: 1, targetId: id, origin: { x, z }, direction: { x: 1, z: 0 }, base: 1000, multiplier: 1, type: 'bullet', permanent, knockback: 0, stagger: 0 });
+    }
+    if (i < 4) w.hazards!.debris.spawn(1000 + i, { x, z }, w.tick, { y: y + .1 });
+  }
+  expect(w.infected!.active.filter(e => e.health.current <= 0 && e.infected!.recoverAt >= 0)).toHaveLength(10);
+  expect(w.infected!.active.filter(e => e.health.current <= 0 && e.infected!.recoverAt < 0)).toHaveLength(10);
+  Object.assign(player.transform, { x: 139, y: .705, z: 0 });
+  w.physics.playerBody!.setTranslation(player.transform, true); w.solids.remember(player, 'ramp-contacts'); w.player!.locomotion.reset();
+  let waypoint = 1;
+  for (let tick = 0; tick < 1800 && waypoint < points.length; tick++) {
+    const [x, , z] = points[waypoint]!, dx = x - player.transform.x, dz = z - player.transform.z, distance = Math.hypot(dx, dz) || 1;
+    w.setInput({ move: { x: dx / distance, z: dz / distance } }); w.update();
+    if (Math.hypot(x - player.transform.x, z - player.transform.z) < .4) waypoint++;
+  }
+  w.clearInput();
+  expect(waypoint, `${quality} courier pushes light props past the entry lips and bends, crossing downed infected, corpses and debris`).toBe(points.length);
+  expect(player.transform.y).toBeGreaterThan(6.3);
+  expect(w.props!.items.filter(p => p.id.startsWith('ramp-cone-')).some(p => Math.hypot(p.pose.p[0] - p.home.p[0], p.pose.p[2] - p.home.p[2]) > .5)).toBe(true);
+  const { x, z } = player.transform;
+  const below = w.props!.spawn({ id: 'under-deck-cone', assetId: 'prop.traffic-cone', position: [x + .5, 0, z], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: '', visualAabb: { min: [x, 0, z], max: [x + 1, .65, z] } });
+  w.props!.pushSpeed({ ...w.inputFrame, move: { x: 1, z: 0 } });
+  expect(below.body.isSleeping(), 'walking on the deck cannot shove a light prop on the street below').toBe(true);
+  expect(below.body.linvel().x).toBe(0);
 }
 
 /** Keep production level transforms, static colliders, Rapier, and movement input;

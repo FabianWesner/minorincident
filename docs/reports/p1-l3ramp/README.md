@@ -1,54 +1,39 @@
-# p1-l3ramp — L3 ascent investigation
+# p1-l3ramp — invisible L3 on-ramp
 
-Baseline: `cab3405c`. Branch: `lane/p1-l3ramp`. No changes to `src/`, `public/`, or specs.
+Baseline: `cab3405c`. Branch: `lane/p1-l3ramp`. No specs changes, push, or deployment.
 
-The reported L3 failure has **not reproduced**. From a real seed 1 `segment-3b` snapshot, production keyboard WASD reaches the highway's upper landing on both low and high. The native skilled route also completes L3. These results establish a working route on the reported gameplay baseline; they do not establish the cause of the PO's stuck session or a production repair.
+## Cause and repair
 
-## Browser evidence
+**`fd0ad256` introduced the regression when it rebuilt the on-ramp LODs.** The new LODs preserve lantern meshes under `lampHead1`–`lampHead3`. Those nodes carry descriptive metadata `extras.pivot: "lamp center"`. Three's GLTFLoader treats `pivot` as a numeric transform, reads characters as coordinates, and produces NaN lantern transforms. These poison the complete ramp's bounding box and culling sphere. Both ramps disappear while their physical road and rails remain active.
 
-The capture command is `SCENE_PORT=4347 sh tools/e2e-lock.sh node --import tsx tools/qa/l3-ramp-courier.ts`. It uses the shared headless Metal/WebGL2 pool at zoom 1.5. The native skilled input policy first reaches a genuine calm-moment `segment-3b` snapshot. After restoring that snapshot and stopping the policy, production keyboard input follows the connected street approach and the full authored S-curve. Mission actors and static collision remain active; no god mode, teleport, or movement override is used. WebGPU remains a manual check under repository policy.
+This explains the misleading initial result: native centreline traversal passed, including restoration, while the PO and browser captures showed clear-looking ground where the solid rails actually stand. At the reported `(159.34, -1.32, y 5.69)` pose, the baseline submits **zero ramp instances**. After repair it submits **two LOD2 instances / 28,042 triangles**, with the S-curve and rails visible.
 
-| Quality | Start tick / position (x, y, z) | Top tick / position | Console errors |
-|---|---|---|---|
-| low | 8280 / (111.62, 0.85, -22.84) | 9492 / (167.33, 6.42, -0.39) | 0 |
-| high | 8280 / (101.26, 0.85, -22.89) | 9699 / (167.26, 6.42, -0.12) | 0 |
+- Rename the descriptive metadata to `pivot_note` in the authoring script and all six source/shipped GLBs. **All binary geometry chunks and all other glTF JSON values are unchanged.** Refresh the collider provenance hash; its collision boxes are unchanged.
+- Retain a regression in the existing render-contract case: load all three shipped LODs with the production Three loader, check every mesh world transform, then check the production static batch's culling bounds are finite.
+- The comparison identifies the asset change directly: both LODs are finite at `fd0ad256^` and invalid at `fd0ad256`. [Comparison](render-bisect.json) · [Exact model changes](model-repair.json) · [Baseline culling](render-before.json) · [Repaired pose](render-after.json).
 
-[Low capture](l3-ramp-top-low.png) · [High capture](l3-ramp-top-high.png) · [Raw receipt](browser-receipt.json)
+## Restore and contact coverage
 
-## Native L3 completion
+The pooled headless WebGL2 run reaches a genuine seed-1 `segment-3b` snapshot through the native skilled policy. It stops the bot and walks the complete ramp with production WASD. **Death/respawn and Restart level followed by the mission Retry button pass on both low and high**, arriving on the visible deck at y **6.42**, with live infected, downed bodies, police and the corgi retained. Restart level reloads L3's beginning; death and Retry restore the checkpoint. [Four browser runs](browser-receipt.json) · [Native death/retry restores](native-restores.json).
 
-`npm run qa:threat:remote -- --levels L3` ran on `mi-runner-3` (`2.31.107.230`). Seed 1 completed in **193.4 simulation seconds**, with **zero deaths**, **36.3 damage**, no mission failures, and **zero collision failures**. The army-line aggregate passed (2/3 valid seeds within its band); passive acceptance flags were empty.
+Local captures: `test-results/qa/l3-ramp-courier/l3-ramp-top-{low,high}.png`. The report directory retains ignored local copies. `l3-ramp-visual.ts` separately poses the courier at the reported coordinates to diagnose rendering; that positioning is **not** movement proof. Automated browser verification uses WebGL2/Metal per repository policy; GLTF parsing and the repaired transforms are shared with WebGPU.
 
-The command exits 1 because a partial level selection is deliberately diagnostic: the audit's only aggregate acceptance flag is `PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate`. This is not a green all-level threat gate. The retained level diagnostics additionally include `wave/station-0:WAVE_FIRST_ATTACK_OVER_20_SECONDS` and `wave/station-2:WAVE_NO_ATTACK_WITHIN_20_SECONDS`; neither is a ramp/completion failure. [Receipt](threat-receipt.json).
+The requested obstacle investigation also found a separate physical obstruction: a light cone wedges against the ramp's fine steps because the capsule's lower cap pushes it downward. Give touching light props the existing horizontal push impulse, retaining full courier speed. A 3D contact check excludes props on the road below a deck. The same restored fixture changes from indefinitely blocked at x **143.28** to arrival at the ramp top. This secondary repair is not attributed to the PO screenshot. [Before/after](prop-before-after.json).
 
-`main` advanced during this lane. The audit's `sourceMatchesMain: false` compares against that newer main, while the lane's production sources remain byte-for-byte unchanged from `cab3405c` (`git diff cab3405c HEAD -- src public` is empty).
+All fourteen native restored obstacle runs pass (seven cases on both qualities): downed infected, permanent corpses, followers, props, debris, a live crowd, and waiting at the reported bend. [Obstacle receipts](native-obstacles.json).
 
-## Investigation and bisect limitation
+The existing movement regression additionally crosses ten cones, ten downed infected, ten permanently killed infected and destruction debris placed at the lips and bends, on low/high. It checks arrival and that walking above a cone cannot push it on the street below.
 
-- `cac84c2d` rasterizes heights for trap-rescue reachability. Courier grounding still calls `DistrictWorld.groundBelow` through the production controller, rather than the new rescue-height cache.
-- The destruction rollout (`07036f6f`, merged by `52e0e349`) explicitly excludes L3's `D-CORRIDOR`.
-- `374c7da3` clears contact history for inactive actors. It does not change the ramp support strips or courier movement controller.
-- The r14 height merge (`32222f42`) changes attack/AI height handling, rather than the courier's slope controller. The successful browser traversals retain live mission crowds.
-- `fd0ad256` rebuilt the ramp's distance models. Both requested qualities remain traversable in the current browser captures.
+## Authored route scope
 
-The supplied (159.34, 5.69, -1.32) pose is near the outside of the S-curve. A native straight-east diagnostic progressed to approximately (166.99, -2.81) before meeting the rail; following the authored bend reaches the landing. This does **not** prove which input, collision, or runtime condition caused the PO's failure. A failing baseline is required for an honest behavioral bisect, so no culprit commit or production fix is claimed. An input replay or saved failing session would resolve the remaining uncertainty.
-
-Follow-up comparison exercised the actual rescue path as well as courier grounding: across all **154,560 L3 nav cells**, the rasterized height array matches the old point-sampled `Float32Array`, and the optimized flood matches the pre-`cac84c2d` eight-neighbor flood with **zero reachability differences**. The reported pose maps to cell 75422, which is closed in both versions; `TrapRescue.update` explicitly ignores closed cells. The three runtime on-ramp GLB blob hashes also match `cab3405c`, excluding accidental stale/modified worktree binaries from this reproduction.
-
-## Regression coverage and remaining scope
-
-The existing movement case now drives the production `SimWorld`/Rapier controller with ordinary movement frames on both quality settings. It covers both L3 on-ramps from the ground before their entry lips at both running and walking pace, recovery from the exact reported pose, L5 metro ingress, the separate L6 exit stairs and escalator, the L7 Northgate terraced road, and the L10 dispersal-platform stairs. It checks horizontal arrival and ascent height. Static level geometry and transforms are loaded through `loadComposition`; cinematics, encounter controllers, and soft actor obstacles are isolated, with the native audit and browser runs supplying the live-mission evidence.
-
-This is coverage of the known gameplay elevation routes, **not an exhaustive certification of every stair depicted by an asset in L1–L10**. For example, the L4/L5 cellar has an authored solid `dressing:cellar-stair` block rather than a traversable tread route; sealed station arrivals and building entrance dressing also need classification before asserting every authored staircase is climbable. The brief's blanket all-authored-stairs requirement therefore remains open. No accepted level geometry was changed speculatively to satisfy that broader assertion.
-
-[Candidate inventory](authored-slope-candidates.json) now enumerates all ten production layout transformations/world tiers. It includes 19 asset-note candidates, named layout stair/ramp colliders, and the two mission-built L9 vehicle jump ramps. A concrete additional probe found that L1 `bld.house-c:67` (scale 0.8) stops at the first porch tread: after 100 movement ticks it advances about 0.05 m and stands at y 0.92 rather than the y 1.408 landing. Its collision contains a single body-height box across the entire plot. That is distinct from the working L3 highway and needs a scope decision about decorative stair flights before changing accepted collision across levels. The cellar's deliberate solid stair block is explicitly authored in `layouts/D-FAIR/layout.py`; E22's art-direction addendum preserves that yard's navigation.
+Production movement covers both L3 on-ramps from before their entry lips at walking/running pace, recovery from the reported pose, L5 metro ingress, the separate L6 exit stairs/escalator, L7's raised Northgate road and L10's dispersal-platform stairs, on both quality settings. The user's follow-up explicitly leaves decorative/sealed flights non-climbable. L1 porch dressing, the solid cellar stair block and sealed station approaches retain their authored collision. L9's driving jumps are vehicle routes. [Inventory](authored-slope-candidates.json).
 
 ## Validation
 
-- Focused movement/wall/health file, including both gaits from the ramp entry lips: 3/3 passed locally through the shared CPU admission adapter.
-- Final **`npm run verify -- E21`: passed on `8247260f`**, including typecheck, lint, and the complete default unit suite. It was admitted locally through the shared FIFO/CPU slot after browser/quiet work cleared. [Checks](epic-checks.json) · [Budget receipt](test-budget.json).
-- Remote full-suite attempts exposed the runner's commit-less checkout (`git rev-parse HEAD` in an existing tooling test) and a pre-existing navigation-test timeout under runner load. An additional fixture failure in the new Northgate test was corrected by isolating its mission controllers; the focused final file passes.
-- Final complete local default suite, including walking/running entry-lip ascents: **107/107 tests, 27/27 files passed**, 37.56 seconds, at most four workers. The earlier two-worker full suite also passed in 60.37 seconds; [its raw result](unit.json) is retained separately from the [latest validation/provenance](validation.json).
-- Earlier remote `npm run verify -- E21` attempts returned nonzero for the listed issues; they are not represented as green remote gates. The final exact E21 command passes locally.
+- Typecheck and lint: passed.
+- Selected asset validation: all three LODs pass, zero errors. [Receipt](asset-validation.json).
+- Browser: all four production restore/UI ascents pass; no console errors. Low/high top captures visually reviewed: the courier stands on the visible ramp and both rails read clearly.
+- Requested remote `qa:threat --levels L3`: skilled L3 completes in **193.40 simulated seconds**; every measured L3 criterion passes. The command exits **1 solely for `PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate`**, with no L3 failure flag. This is not a green all-level threat gate. [Current receipt](threat-current.json).
+- Full unit/E21 validation: pre-merge run passes typecheck, lint and 105 tests, with one movement-case 30-second timeout. Repeating after merging main. The private runner receives authentic source HEAD commit/tree objects and runtime blobs so provenance tests work. No test is weakened.
 
-No deploy or push. This lane is an investigation/regression handoff; the reported cause and exhaustive authored-stair requirement remain unproven.
+Earlier `unit.json`, `validation.json`, `epic-checks.json` and `threat-receipt.json` document the previous geometry-only investigation. They do not validate this repair; final receipts will supersede them.
