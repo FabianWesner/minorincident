@@ -295,7 +295,7 @@ export class LevelSevenEncounters {
     // Keep followers on their individual slots when the leader turns. Falling
     // back to the leader position sends the whole formation to one crowded point.
     const ahead = w.missions!.state.steps.departure?.status !== 'active' || Math.hypot(v.x, v.z) <= .8 || (goal.x - e.transform.x) * v.x + (goal.z - e.transform.z) * v.z >= 0;
-    const target = w.infected!.director.tier === 'high' || w.missions!.state.steps.departure?.status === 'active'
+    const target = w.missions!.state.steps.departure?.status === 'active'
       ? nav.clear(goal.x, goal.z, .35) ? goal : snapToClear(w, goal, .35)
       : ahead && nav.clear(goal.x, goal.z, .35) && nav.visible(e.transform, goal, .35) && nav.visible(goal, p.transform, .35) ? goal : p.transform;
     if (d > formationBack(slot) + 10 && w.tick >= this.state.waitAt) {
