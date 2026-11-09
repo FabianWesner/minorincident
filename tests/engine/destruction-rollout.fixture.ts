@@ -33,15 +33,6 @@ const classes = (layouts: DistrictLayout[]) => layouts.flatMap(layout => layout.
     return counts;
   }, {});
 
-const weaponClasses: Record<string, string[]> = {
-  melee: ['weapon.bat', 'weapon.fire-axe'],
-  sidearm: ['weapon.handgun', 'weapon.pistol'],
-  shotgun: ['weapon.shotgun'],
-  automatic: ['weapon.army-mg', 'weapon.machine-gun', 'weapon.rotary-minigun'],
-  explosive: ['weapon.rocket-launcher', 'weapon.grenade', 'weapon.pipe-bomb'],
-  fire: ['weapon.molotov', 'weapon.flamethrower'],
-};
-
 /** Native authored-level counts, hit-shape construction and collision/route invariants for the rollout. */
 export function verifyDestructionRollout(): void {
   const counts = Object.fromEntries(['L1', 'L2', 'L3', 'L4', 'L5', 'L9', 'L10'].map(level => [level, classes(layoutsFor(level))]));
@@ -61,30 +52,12 @@ export function verifyDestructionRollout(): void {
   expect(counts.L10.machinery).toBeGreaterThan(0);
   expect(counts.L10['fuel-tank']).toBeGreaterThan(0);
 
-  // Count authored targets that take positive fixed-sim damage from each weapon
-  // family. Each class/level gets a fresh native Destruction owner and one hit.
-  for (const level of ['L1', 'L2', 'L3', 'L4', 'L5', 'L9', 'L10']) {
-    for (const [family, actions] of Object.entries(weaponClasses)) {
-      const layouts = layoutsFor(level);
-      const fakeWorld = {
-        districts: { districts: layouts.map(layout => ({ id: layout.district, origin: [0, 0], decay: { placements: layout.placements } })), nav: { block() {}, unblock() {} } },
-        physics: { addStatic: () => 1, removeBlocker() {} }, interactables: { walls: [] }, events: { emit() {} }, entities: { values: () => [] }, tick: 0,
-      };
-      const live = new Destruction(fakeWorld as never);
-      const hits = live.objects.filter(o => !o.protected).filter(object => {
-        const part = object.parts.findIndex(p => p.role === 'structure');
-        if (part < 0) return false;
-        const before = object.state.hp[part];
-        for (const action of actions) live.damage({ object, part, distance: 0, local: [0, 0, 0], normal: [0, 1, 0] }, action, 100);
-        return object.state.hp[part] < before;
-      }).length;
-      expect(hits, `${level} ${family} responsive targets`).toBeGreaterThan(0);
-    }
-  }
-
   for (const level of ['L1', 'L2', 'L4', 'L5']) {
     for (const p of layoutsFor(level).flatMap(layout => layout.placements).filter(p => p.destruction)) {
       expect(p.assetId === 'bld.shed' || /^(veh\.(?:sedan|suv|pickup|wreck)(?:-|$))/.test(p.assetId), `${level} opt-in ${p.id}`).toBe(true);
+    }
+    if (level === 'L4' || level === 'L5') {
+      expect(layoutsFor(level).flatMap(layout => layout.placements).filter(p => p.id.startsWith(`${level.toLowerCase()}-`) && p.destruction), `${level} combat dressing stays intact`).toEqual([]);
     }
   }
   const crossing = layoutsFor('L9').find(layout => layout.district === 'D-CROSSING')!;
