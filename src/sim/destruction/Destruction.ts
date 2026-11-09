@@ -35,18 +35,28 @@ export class Destruction {
   private readonly propLinks = new Map<string, PushProp>();
   private readonly disabledProps = new Set<string>();
   constructor(private readonly world: SimWorld) {
+    // Local bounds depend on the asset/class, not the placement transform or HP.
+    // Repeated buildings borrow those immutable templates; damage remains object-owned.
+    const templates = new Map<string, { parts: DestructionPart[]; colliders: DestructionObject['query']; query: DestructionObject['query'] }>();
     for (const d of world.districts?.districts ?? []) for (const p of d.decay.placements) {
       if (!p.destruction) continue;
-      const dims = worldAssets[p.assetId].dimensions;
-      const parts: DestructionPart[] = p.destruction.indestructible ? [{ id: 'protected', role: 'structure', material: 'concrete', hp: 1,
-        bounds: { min: [-dims.x/2,0,-dims.z/2], max: [dims.x/2,dims.y,dims.z/2] } }] : destructionParts(p);
-      const id = `${d.id}/${p.id}`, query = p.destruction.indestructible ? [{part:0,box:parts[0].bounds}] : partColliders(p.assetId, parts);
-      const object: DestructionObject = { id, placement: p, parts, query: [...query, ...parts.flatMap((part,i)=>part.role === 'structure' && query.some(c=>c.part===i) ? [] : [{part:i,box:part.bounds}])], protected: !!p.destruction.indestructible, present: true,
+      const key = `${p.assetId}/${p.destruction.class}/${!!p.destruction.indestructible}`;
+      let template = templates.get(key);
+      if (!template) {
+        const dims = worldAssets[p.assetId].dimensions;
+        const parts: DestructionPart[] = p.destruction.indestructible ? [{ id: 'protected', role: 'structure', material: 'concrete', hp: 1,
+          bounds: { min: [-dims.x/2,0,-dims.z/2], max: [dims.x/2,dims.y,dims.z/2] } }] : destructionParts(p);
+        const colliders = p.destruction.indestructible ? [{part:0,box:parts[0].bounds}] : partColliders(p.assetId, parts);
+        template = { parts, colliders, query: [...colliders, ...parts.flatMap((part,i)=>part.role === 'structure' && colliders.some(c=>c.part===i) ? [] : [{part:i,box:part.bounds}])] };
+        templates.set(key, template);
+      }
+      const { parts, colliders, query } = template, id = `${d.id}/${p.id}`;
+      const object: DestructionObject = { id, placement: p, parts, query, protected: !!p.destruction.indestructible, present: true,
         home: { p: [p.position[0] + d.origin[0], p.position[1], p.position[2] + d.origin[1]], q: [0, Math.sin(p.yaw / 2), 0, Math.cos(p.yaw / 2)] }, state: { hp: parts.map(p => p.hp), burning: 0, fireClock: 0, exploded: false, collapsed: false, revision: 0, marks: [] } };
       this.objects.push(object);
       const prop = world.props?.items.find(item => item.id === id);
       if (prop) { this.propLinks.set(id, prop); world.entities.get(prop.entityId)!.environmentObject = id; }
-      if (!prop && !object.protected) for (const { part, box } of query) this.blockers.push({ object, part, box, id: -1000000 - this.blockers.length, handle: -1, wall: this.wall(object, box), active: false });
+      if (!prop && !object.protected) for (const { part, box } of colliders) this.blockers.push({ object, part, box, id: -1000000 - this.blockers.length, handle: -1, wall: this.wall(object, box), active: false });
     }
     this.reconcile();
   }

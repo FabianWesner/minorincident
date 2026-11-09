@@ -76,6 +76,12 @@ export function verifyDestructionRollout(): void {
       physics: { addStatic: () => 1, removeBlocker() {} }, interactables: { walls: [] }, events: { emit() {} }, tick: 0,
     };
     const live = new Destruction(fakeWorld as never);
+    const repeated = live.objects.find((object, i, all) => all.slice(i + 1).some(other => other.placement.assetId === object.placement.assetId && other.protected === object.protected && other.placement.destruction!.class === object.placement.destruction!.class))!;
+    const sibling = live.objects.find(other => other !== repeated && other.placement.assetId === repeated.placement.assetId && other.protected === repeated.protected && other.placement.destruction!.class === repeated.placement.destruction!.class)!;
+    expect(repeated.parts).toBe(sibling.parts);
+    expect(repeated.state.hp).not.toBe(sibling.state.hp);
+    const hp = sibling.state.hp[0]; repeated.state.hp[0] = 0;
+    expect(sibling.state.hp[0], 'shared templates never share damage').toBe(hp);
     const byClass = live.objects.filter(o => !o.protected).reduce<Record<string, number>>((result, object) => {
       const key = object.placement.destruction!.class;
       result[key] = (result[key] ?? 0) + 1;
