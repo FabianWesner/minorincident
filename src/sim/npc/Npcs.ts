@@ -63,7 +63,8 @@ export class Npcs {
         speed = Math.min(speed, leaderSpeed + catchUp);
     }
     const survivor = e.civilian?.survivor;
-    if (survivor?.mode === 'follow' && !e.civilian!.vehicleYield && stop <= .5) {
+    // R12 remains disabled for L7: its authored queue and encounter lanes stay exact.
+    if (this.world.scenario !== 'L7' && survivor?.mode === 'follow' && !e.civilian!.vehicleYield && stop <= .5) {
       // r12-group: a resting follower sets off a personal beat after it is asked to.
       if (this.reacting(e, target, stop)) return true;
       target = this.sway(e, target, nav);
@@ -146,9 +147,8 @@ export class Npcs {
   /** Walking followers wander slowly to either side of their slot instead of moving on parallel rails. */
   private sway(e: EntitySnapshot, target: Point, nav: NavGrid): Point {
     const v = this.world.entities.get(1)?.survivor?.velocity, speed = v ? Math.hypot(v.x, v.z) : 0;
-    // L5 solves wander in its bounded velocity; L7 solves it on the walked
-    // trail before clearance checks. Do not displace their detours or bus queues.
-    if (!v || speed <= .8 || this.world.scenario === 'L7' || this.world.scenario === 'L5' && e.civilian?.survivor?.briskAt === this.world.tick) return target;
+    // Calm L5 already includes slot wander in its bounded tracking velocity.
+    if (!v || speed <= .8 || this.world.scenario === 'L5' && e.civilian?.survivor?.briskAt === this.world.tick) return target;
     const offset = swayOffset(e.id, this.world.tick, this.world.scenario === 'L5' ? .18 : .28);
     const swayed = { x: target.x - v.z / speed * offset, z: target.z + v.x / speed * offset };
     return nav.clear(swayed.x, swayed.z, .4) && nav.visible(e.transform, swayed, .35) ? swayed : target;

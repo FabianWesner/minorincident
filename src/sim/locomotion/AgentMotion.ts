@@ -21,7 +21,7 @@ export const l5FollowerTracking = { ...followerTracking, omega: 22 } as const;
  * individual temperament; it must not dilute an urgent controller's steering limits. */
 export function trackingFor(world: SimWorld, e: EntitySnapshot): Parameters<typeof respond>[3] {
   const s = e.civilian?.survivor;
-  if (world.scenario === 'L7' && e.companion) return followerTracking;
+  if (world.scenario === 'L7') return e.companion ? followerTracking : undefined;
   if (world.scenario === 'L5' && (e.companion || s?.briskAt === world.tick)) return l5FollowerTracking;
   if (s?.mode !== 'follow' || world.scenario === 'L5') return undefined;
   // The authored subway convoy already controls pace and injury; retain its shared response.
@@ -93,7 +93,7 @@ export function installAgentMotion(world: SimWorld): void {
     const nav = world.infected!.nav;
     for (const e of world.entities.iterate()) if (actor(e) && !forced(e, world.tick, world) && e.locomotion && e.locomotion.updatedAt !== world.tick) {
       const yaw = e.transform.yaw;
-      moveAgent(e, 0, 0, e.infected ? world.infected!.infectedNav : nav, world.tick, actorRadius(e), false, trackingFor(world, e)); world.spatial.set(e.id, e.transform.x, e.transform.z);
+      moveAgent(e, 0, 0, e.infected ? world.infected!.infectedNav : nav, world.tick, actorRadius(e), false, world.scenario === 'L7' ? undefined : trackingFor(world, e)); world.spatial.set(e.id, e.transform.x, e.transform.z);
       // Braking retains the authored approach distance. The windup owns facing,
       // so residual steering must not turn the strike away from its victim.
       if (e.infected?.state === 'attack') e.transform.yaw = yaw;
@@ -127,14 +127,6 @@ export function installAgentMotion(world: SimWorld): void {
           const at = { x: p.x, z: p.z };
           world.infected!.nav.move(at, dx / distance * limit, dz / distance * limit, e.combat?.radius ?? .35);
           Object.assign(e.transform, at); world.spatial.set(e.id, at.x, at.z);
-          if (l7Follower && e.locomotion) {
-            // Feed the resolved approach bound back into steering. Retaining
-            // the faster pre-clamp velocity makes a moving slot overshoot,
-            // brake and restart while its neighbours keep walking.
-            e.locomotion.vx = (at.x - p.x) / FIXED_DT;
-            e.locomotion.vz = (at.z - p.z) / FIXED_DT;
-            e.locomotion.ax = e.locomotion.az = 0;
-          }
         }
       }
       groundAgent(world, e);
@@ -148,7 +140,7 @@ export function installAgentMotion(world: SimWorld): void {
         // Followers and gunners can overwrite walking yaw with an aim/formation pose. Leave other controllers and passive nudges alone.
         if (!c || c.pet || c.zooAnimal || e.infected || e.health.current <= 0) continue;
         if (!c.survivor && !ally?.follow && !ally?.gun && ally?.role !== 'officer' && ally?.role !== 'soldier') continue;
-        if (c.survivor?.mode === 'follow') idleSurvivor(world, e);
+        if (world.scenario !== 'L7' && c.survivor?.mode === 'follow') idleSurvivor(world, e);
         if (motion?.updatedAt !== world.tick || Math.hypot(motion.vx, motion.vz) <= .12) { if (ally) delete ally.aimMoveAt; continue; }
       }
       // A waiting Metro pet sidesteps for the queue while retaining the shaft-facing pose.

@@ -9,7 +9,6 @@ import { preset } from '../../src/sim/progression/Campaign';
 import { missionControls } from '../../src/sim/missions/controls';
 import { adultMaleStandingHeight, civilianHeight, fitCivilianHeight, heroineStandingHeight } from '../../src/render/npc/figureHeight';
 import { SimWorld } from '../../src/sim/world/SimWorld';
-import { SimPhase } from '../../src/core/EventBus';
 import { actorRadius, solidLargeCorpse } from '../../src/sim/world/SolidRegistry';
 import { followerInCombat, updateSurvivor } from '../../src/sim/outbreak/Survivors';
 import { formationBack, formationSlot } from '../../src/sim/missions/missionHelpers';
@@ -109,7 +108,7 @@ test('escort: shared combat pace, follows through a maze, a 2 s stand revives to
   {
   // r12-group: the follower formation is a loose, persistent cluster (not the 1.2 m parade lattice) with body room between slots.
   const heading = { x: 1, z: 0 }, slots = Array.from({ length: 48 }, (_, i) => formationSlot({ x: 0, z: 0 }, heading, i));
-  // Scripted queue fixtures can still request exact authored targets.
+  // L7 keeps its authored targets while the other levels retain loose slots.
   for (let slot = 0; slot < 48; slot++) expect(formationSlot({ x: 0, z: 0 }, heading, slot, false))
     .toEqual({ x: -formationBack(slot), z: (slot % 3 - 1) * 1.2 });
   expect(slots).toEqual(Array.from({ length: 48 }, (_, i) => formationSlot({ x: 0, z: 0 }, heading, i)));
@@ -135,9 +134,9 @@ test('escort: shared combat pace, follows through a maze, a 2 s stand revives to
   for (let i = 0; i < 20; i++) { w.npcs!.move(follower, goal, 3, c, 0); w.tick++; }
   expect(follower.transform.x).toBeLessThan(start.x - .05);
   w.scenario = 'L7'; c.survivor!.restAt = w.tick - 60; delete c.survivor!.stirAt;
-  const beforeL7 = { ...follower.transform }, goalL7 = { x: beforeL7.x - 4, z: beforeL7.z };
-  w.npcs!.move(follower, goalL7, 3, c, 0);
-  expect(follower.transform).toEqual(beforeL7); // L7 uses the same staggered starts as the rest of the group levels.
+  const beforeL7 = follower.transform.x;
+  w.npcs!.move(follower, { x: beforeL7 - 4, z: follower.transform.z }, 3, c, 0);
+  expect(follower.transform.x).toBeLessThan(beforeL7); // no personal start delay in the gated level
   w.scenario = 'L6';
   // Standing, it looks toward a nearby infected before anything else.
   const enemy = w.entities.get(w.infected!.spawn('infected.runner', { x: follower.transform.x, z: follower.transform.z + 6 }))!;
@@ -179,59 +178,6 @@ test('escort: shared combat pace, follows through a maze, a 2 s stand revives to
     w.npcs!.move(group[0], { x: at.x + 2, z: at.z }, 3, group[0].civilian!, 0);
     expect(move).toHaveBeenCalled(); expect(move.mock.calls[0][2]).toBeCloseTo(0, 10);
     move.mockRestore();
-  }
-  {
-  const w = await loadRunnerLevel('L7', 1, undefined, 0, { quality: 'low' }); worlds.push(w);
-  for (const e of w.infected!.active) e.hidden = true;
-  const follower = w.entities.get(w.l7Encounters!.state.roster[0].id)!, start = { ...follower.transform };
-  for (const r of w.l7Encounters!.state.roster.slice(1)) w.entities.get(r.id)!.hidden = true;
-  w.missions!.state.steps.rocket.status = w.missions!.state.steps.corridor.status = 'completed';
-  w.missions!.state.steps.departure.status = 'active';
-  const remove = w.events.on('sim.tick', () => {
-    // Supply an over-cap step immediately before the authored pace clamp.
-    follower.transform.x = start.x + 8 / 60; follower.transform.z = start.z;
-    follower.locomotion = { vx: 8, vz: 0, ax: 10, az: 0, omega: 0, updatedAt: w.tick };
-  }, SimPhase.cleanup + .25);
-  step(w, 1); remove();
-  const actual = (follower.transform.x - start.x) * 60;
-  expect(actual).toBeLessThanOrEqual(4.6 + 1e-8);
-  expect(actual).toBeGreaterThan(4.5);
-  expect(follower.locomotion!.vx, 'the next steering step starts from resolved, capped motion').toBeCloseTo(actual, 8);
-  expect(follower.locomotion!.ax).toBe(0);
-  // A blocked encounter slot holds its separate road position through a dodge.
-  w.missions!.state.steps.departure.status = 'pending';
-  w.missions!.state.steps.corridor.status = 'active';
-  const launcher = [...w.entities.iterate()].find(e => e.pickup && 'actionId' in e.pickup && e.pickup.actionId === 'weapon.rocket-launcher')!;
-  w.entities.delete(launcher.id);
-  const tail = w.entities.get(w.l7Encounters!.state.roster.at(-1)!.id)!, player = w.entities.get(1)!;
-  Object.assign(player.transform, { x: 259, z: 15 });
-  Object.assign(tail.transform, { x: 272, z: 15 });
-  const origin = { ...player.transform };
-  Object.assign(player.survivor!.velocity, { x: -4.5, z: 0 });
-  let target = { x: 0, z: 0 };
-  const move = vi.spyOn(w.npcs!, 'move').mockImplementation((_e, at) => { target = { x: at.x, z: at.z }; return true; });
-  w.l7Encounters!.follower(tail);
-  expect(move).toHaveBeenCalled();
-  const safe = { ...target };
-  expect(Math.hypot(safe.x - player.transform.x, safe.z - player.transform.z)).toBeGreaterThan(2);
-  expect(w.infected!.nav.visible(player.transform, safe, .35)).toBe(true);
-  const blocked = Array.from({ length: 16 }, (_, i) => ({ x: Math.cos(i * Math.PI / 8), z: Math.sin(i * Math.PI / 8) })).find(heading => {
-    const at = formationSlot(player.transform, heading, tail.civilian!.survivor!.slot);
-    return !w.infected!.nav.clear(at.x, at.z, .35) || !w.infected!.nav.visible(player.transform, at, .35);
-  });
-  expect(blocked).toBeDefined();
-  player.transform.x--;
-  Object.assign(player.survivor!.velocity, { x: blocked!.x * 4.5, z: blocked!.z * 4.5 });
-  expect(Math.hypot(tail.transform.x - player.transform.x, tail.transform.z - player.transform.z)).toBeLessThan(18);
-  w.l7Encounters!.follower(tail);
-  const carried = { x: safe.x + player.transform.x - origin.x, z: safe.z + player.transform.z - origin.z };
-  expect(target.x, 'a frontage cannot recall the tail onto the courier').toBeCloseTo(carried.x, 8);
-  expect(target.z).toBeCloseTo(carried.z, 8);
-  Object.assign(player.survivor!.velocity, { x: 0, z: 0 }); player.transform.yaw += Math.PI;
-  w.l7Encounters!.follower(tail);
-  expect(target.x, 'stationary weapon aiming does not swing the walking column').toBeCloseTo(carried.x, 8);
-  expect(target.z).toBeCloseTo(carried.z, 8);
-  move.mockRestore();
   }
   {
   const w = await world(), p = w.entities.get(1)!;

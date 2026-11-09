@@ -65,9 +65,7 @@ export class KinematicController {
     this.fallSpeed -= this.physics.world!.gravity.y * FIXED_DT;
     this.displacement.y = -Math.max(.02, this.fallSpeed * FIXED_DT);
     let hover = -Infinity;
-    {
-      // A stun locks controls, not the floor. Logical supports (including
-      // Northgate's raised road) must still hold an incapacitated capsule.
+    if (enabled) {
       // Thin paving edges can defeat Rapier autostep at low joystick speeds.
       // Start a bounded upward sweep at the capsule's leading foot, using the
       // same GLB support tops as NPC grounding. The sweep still tests all solids.

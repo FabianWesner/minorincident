@@ -23,25 +23,6 @@ test('movement: fast acceleration and stop, capped diagonal speed, 720°/s turni
   a.clearInput(); p.transform.yaw = 0; a.setInput({ move: { x: -1, z: 0 }, aim: { x: 1, z: 0 } }); step(a, 1);
   expect(Math.abs(p.transform.yaw)).toBeCloseTo(4 * Math.PI / 60);
   step(a, 14); expect(Math.abs(p.transform.yaw)).toBeCloseTo(Math.PI);
-
-  // L7 Northgate has logical raised supports. Losing control to a stun must
-  // not drop the capsule through them, or leave it trapped under the road.
-  const raised = await setup(), courier = raised.entities.get(1)!;
-  courier.transform.y = 3.9 + survivor.height / 2 + .005;
-  raised.physics.playerBody!.setTranslation(courier.transform, true);
-  raised.solids.remember(courier, 'test.raised-stun');
-  raised.player!.locomotion.groundHeight = () => 3.9;
-  courier.combat = { radius: survivor.radius, armor: 0, shield: false, staggerUntil: raised.tick + 90, attacking: false, damageMultiplier: 1, statuses: [] };
-  raised.setInput({ move: { x: 1, z: 0 } });
-  for (let tick = 0; tick < 89; tick++) {
-    step(raised, 1);
-    expect(courier.transform.y).toBeGreaterThanOrEqual(4.6);
-    expect(courier.transform.x).toBeCloseTo(0);
-  }
-  // A real missing floor still permits the ordinary fall during the stun.
-  raised.player!.locomotion.groundHeight = () => 0;
-  courier.combat!.staggerUntil = raised.tick + 90;
-  step(raised, 60); expect(courier.transform.y).toBeLessThan(1);
 });
 
 test('walls: a 72-direction capsule sweep never penetrates the wall ring; sliding keeps 60 % tangential speed; head-on corners slip', async () => {
