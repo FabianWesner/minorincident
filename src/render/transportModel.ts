@@ -1,4 +1,4 @@
-import { BoxGeometry, DoubleSide, BufferAttribute, Color, Group, Matrix4, Mesh, MeshLambertNodeMaterial, PlaneGeometry, type Object3D } from 'three/webgpu';
+import { BoxGeometry, DoubleSide, BufferAttribute, BufferGeometry, Color, Group, Matrix4, Mesh, MeshLambertNodeMaterial, PlaneGeometry, TorusGeometry, type Object3D } from 'three/webgpu';
 import { attribute, uniform, vec4, positionGeometry } from 'three/tsl';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import type { VehicleDef } from '../data/vehicles';
@@ -43,7 +43,7 @@ export function openTransportCab(model: Object3D, def: VehicleDef): void {
   });
   // Roof and door glazing share one vertex-opacity material (four APC materials including its lamps).
   const doorMaterial = Object.assign(new MeshLambertNodeMaterial({ vertexColors: true, side: DoubleSide, transparent: true, depthWrite: false, opacityNode: attribute('cabOpacity', 'float') }), { emissiveNode: attribute('cabCrack', 'float').mul(.16) }); doorMaterial.forceSinglePass = true;
-  const roofGeometry = new BoxGeometry(apc ? .71 : 1.21, .06, apc ? 2.5 : 1.96).translate(apc ? .475 : .725, 2.25, 0);
+  const roofGeometry = new BoxGeometry(apc ? 1.33 : 1.21, .06, apc ? 2.5 : 1.96).translate(apc ? .785 : .725, 2.25, 0);
   const roofColor = new Color(apc ? '#7b8250' : '#568e8d').toArray(), count = roofGeometry.getAttribute('position').count;
   roofGeometry.setAttribute('color', new BufferAttribute(new Float32Array(Array.from({ length: count }, () => roofColor).flat()), 3));
   roofGeometry.setAttribute('cabCrack', new BufferAttribute(new Float32Array(count), 1));
@@ -53,25 +53,52 @@ export function openTransportCab(model: Object3D, def: VehicleDef): void {
   roofGeometry.setAttribute('cabOpacity', new BufferAttribute(new Float32Array(count).fill(apc ? 1 : .22), 1));
   const roof = new Mesh(roofGeometry, doorMaterial); roof.name = 'transportRoof'; roof.userData.transportCabPart = true; model.add(roof);
   if (apc) {
-    // Follow the armored nose: lower edge (2.2,1.65), upper edge (.8,2.25).
+    // A short, steep windscreen meets the full opaque cab roof. The former
+    // shallow pane across most of the cab read as an open top at game zoom.
     // The pane meets the opaque roof rather than sitting behind the old armor.
-    const slope = Math.atan2(1.4, .6), paneHeight = Math.hypot(1.4, .6);
-    const windshield = new PlaneGeometry(2.42, paneHeight).rotateY(Math.PI / 2).rotateZ(slope).translate(1.5, 1.95, 0);
+    const slope = Math.atan2(.75, .6), paneHeight = Math.hypot(.75, .6);
+    const windshield = new PlaneGeometry(2.42, paneHeight).rotateY(Math.PI / 2).rotateZ(slope).translate(1.825, 1.95, 0);
     const n = windshield.getAttribute('position').count;
-    windshield.setAttribute('color', new BufferAttribute(new Float32Array(Array.from({ length: n }, () => roofColor).flat()), 3));
+    const glassColor = new Color('#7c9da0').toArray();
+    windshield.setAttribute('color', new BufferAttribute(new Float32Array(Array.from({ length: n }, () => glassColor).flat()), 3));
     windshield.setAttribute('cabCrack', new BufferAttribute(new Float32Array(n), 1));
-    windshield.setAttribute('cabOpacity', new BufferAttribute(new Float32Array(n).fill(.22), 1));
+    windshield.setAttribute('cabOpacity', new BufferAttribute(new Float32Array(n).fill(.3), 1));
     const glass = new Mesh(windshield, doorMaterial); glass.name = 'transportWindshield'; glass.userData.transportCabPart = true; model.add(glass);
     // Close the window edges against the replacement roof and existing front
     // armor. A floating pane still reads as a missing cab at close zoom.
-    const posts = [-1.215, 1.215].map(z => new BoxGeometry(.08, paneHeight + .06, .07).rotateZ(slope).translate(1.5, 1.95, z));
+    const posts = [-1.215, 1.215].map(z => new BoxGeometry(.08, paneHeight + .06, .07).rotateZ(slope).translate(1.825, 1.95, z));
     posts.push(new BoxGeometry(.08, .07, 2.5).translate(2.2, 1.65, 0));
+    posts.push(new BoxGeometry(.08, .08, 2.5).translate(1.45, 2.25, 0));
+    posts.push(new BoxGeometry(.045, paneHeight, .045).rotateZ(slope).translate(1.825,1.95,0));
     const frame = mergeGeometries(posts)!; for (const p of posts) p.dispose();
     const frameCount = frame.getAttribute('position').count;
     frame.setAttribute('color', new BufferAttribute(new Float32Array(Array.from({ length: frameCount }, () => roofColor).flat()), 3));
     frame.setAttribute('cabCrack', new BufferAttribute(new Float32Array(frameCount), 1));
     frame.setAttribute('cabOpacity', new BufferAttribute(new Float32Array(frameCount).fill(1), 1));
     const trim = new Mesh(frame, doorMaterial); trim.name = 'transportWindowFrame'; trim.userData.transportCabPart = true; model.add(trim);
+    for (const z of [-1.245, 1.245]) {
+      const cheek = new BufferGeometry();
+      cheek.setAttribute('position', new BufferAttribute(new Float32Array([1.19,1.65,z, 2.2,1.65,z, 1.45,2.25,z, 1.19,2.25,z]), 3));
+      cheek.setIndex([0,1,2,0,2,3]); cheek.computeVertexNormals();
+      cheek.setAttribute('color', new BufferAttribute(new Float32Array(Array.from({ length: 4 }, () => glassColor).flat()), 3));
+      cheek.setAttribute('cabCrack', new BufferAttribute(new Float32Array(4), 1));
+      cheek.setAttribute('cabOpacity', new BufferAttribute(new Float32Array(4).fill(.22), 1));
+      const glass = new Mesh(cheek, doorMaterial); glass.userData.transportCabPart = true; model.add(glass);
+    }
+    // Seat and wheel make the bent knees and driving grip read through glazing.
+    const driverSeat = model.getObjectByName('driverSeat')!;
+    driverSeat.position.y = 1.25;
+    const seatZ = driverSeat.position.z;
+    const seatParts = [
+      new BoxGeometry(.5,.1,.5).translate(.71,1.21,seatZ),
+      new BoxGeometry(.1,.55,.5).translate(.44,1.46,seatZ),
+      new BoxGeometry(.5,.12,.1).translate(1.4,1.47,seatZ),
+    ];
+    const interior = mergeGeometries(seatParts)!; for (const part of seatParts) part.dispose();
+    const seatMaterial = new MeshLambertNodeMaterial({ color: '#292c23' });
+    const seat = new Mesh(interior, seatMaterial); seat.userData.transportCabPart = true; model.add(seat);
+    const wheel = new Mesh(new TorusGeometry(.18,.025,5,16).rotateY(Math.PI / 2), seatMaterial);
+    wheel.name = 'steeringWheel'; wheel.position.set(1.16,1.58,seatZ); wheel.userData.transportCabPart = true; model.add(wheel);
   }
   // Keep the sealed troop compartment separate from the opened driver cab.
   // Without its rear wall, the cab opening exposed disconnected fragments of

@@ -3,7 +3,6 @@ import { cureDust } from './CureDust';
 import { updateCorn } from './Corn';
 import { solidLargeCorpse } from '../sim/world/SolidRegistry';
 import { l6Doors, l6Entries } from '../data/l6';
-import { l5 as l5Config } from '../data/l5';
 import { MilitaryPerimeter } from './MilitaryPerimeter';
 import { l3, l3AttackView } from '../data/l3';
 import { l2RescueView } from '../data/l2';
@@ -738,10 +737,10 @@ export class GameView implements Lifecycle {
         this.storyFraming = true;
       } else if (this.storyFraming) { this.storyFraming = false; this.view.follow(); }
       // l5-finale (PO 11-01: "Check the camera view and needd movements at the end of L5. It'S a bit strange."): the Metro
-      // ending stays on the game camera. It used to cut to a reverse wide shot of the residents (the group filing in was off
-      // screen while the HUD asked to stand still), then to a close shot over the shutter, then onto a red shaft. Now the
-      // camera keeps its angle and the player's zoom and only eases its target: toward the group while it files in, then
-      // onto the kiosk front, so the lowering shutter and the closed entrance end the level.
+      // ending retains the player's zoom. It used to cut to a reverse wide shot of the residents (the group filing in was off
+      // screen while the HUD asked to stand still), then to a close shot over the shutter, then onto a red shaft. Ease the
+      // target toward the group while it files in and turn across the stairs to separate the silhouettes, then frame
+      // the kiosk front, so the lowering shutter and the closed entrance end the level.
       const metro = this.world.scenario === 'L5' ? this.world.missions?.state.l5 : null;
       const door = metro?.metroAt ? this.world.missions?.def.anchors['l5-metro-shutter'] : undefined;
       if (door && metro) {
@@ -753,12 +752,8 @@ export class GameView implements Lifecycle {
         }
         const pet = this.companionId >= 0 ? this.world.entities.get(this.companionId) : undefined;
         if (!metro.shutterAt && pet?.companion && !pet.hidden) { x += pet.transform.x; z += pet.transform.z; n++; }
-        // Introduce the waiting community during its existing three-second
-        // arrival view, keeping the same game-camera angle and player zoom.
-        if (!metro.shutterAt && this.world.tick < metro.metroAt + l5Config.metro.occupantViewS * 60) for (const id of metro.stationIds) {
-          const resident = this.world.entities.get(id);
-          if (resident && !resident.hidden) { x += resident.transform.x; z += resident.transform.z; n++; }
-        }
+        // Keep the rescued group as the focal subject. Averaging the much
+        // larger community below pulled the entrance to the edge of the HUD.
         // Group centre (stragglers still on the street), then just inside the shutter (leaf and the group behind it); the courier
         // stays within a quarter radius of that target.
         x = metro.shutterAt ? door.x : x / n; z = metro.shutterAt ? door.z - 1.2 : z / n;
@@ -767,7 +762,11 @@ export class GameView implements Lifecycle {
         if (!this.l5Focus) this.l5Focus = new Vector3(p.x, feet, p.z);
         const k = 1 - Math.exp(-2.5 * seconds), f = this.l5Focus;
         f.x += (x - f.x) * k; f.y += (feet - f.y) * k; f.z += (z - f.z) * k;
-        this.l5Offset.setFromSphericalCoords(this.view.radius, this.view.polar, this.view.azimuth).add(f);
+        // Look along the front of the stairs rather than down the queue: the
+        // five unchanged simulation slots then have distinct screen silhouettes.
+        const arrival = Math.min(1, Math.max(0, (this.world.tick - metro.metroAt) / 120));
+        const angle = this.view.azimuth + (Math.PI * .43 - this.view.azimuth) * arrival * arrival * (3 - 2 * arrival);
+        this.l5Offset.setFromSphericalCoords(this.view.radius, this.view.polar, angle).add(f);
         this.view.cinematic({ position: this.l5Offset.toArray() as [number, number, number], target: f.toArray() as [number, number, number] });
       } else if (this.l5Focus) { this.l5Focus = null; this.view.follow(); }
       const rescue = this.world.scenario === 'L3' && !!this.world.missions?.state.l3?.finaleAt && !this.world.missions.state.l3.barrierClosedAt && player.transform.x >= 195;
@@ -1254,6 +1253,9 @@ export class GameView implements Lifecycle {
     const shadowFocus = hero ?? this.view.focus;
     lighting.setHeroLight(field.active ? field.heroAt(shadowFocus.x, shadowFocus.z) ?? flashlight : null, shadowFocus, this.world.tick / 60);
     this.districts?.accents?.update(this.world.tick / 60);
+    // Northgate begins on a raised road: sea-level attenuation left the truck
+    // body dark even beside its lantern. Other presets retain their baseline.
+    field.groundHeight.value = this.world.scenario === 'L7' ? this.world.districts?.groundHeight(this.view.focus.x, this.view.focus.z) ?? 0 : 0;
     field.update(this.view.focus.x, this.view.focus.z, this.world.tick / 60);
     field.render(this.renderer);
   }

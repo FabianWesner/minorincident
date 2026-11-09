@@ -1,0 +1,5354 @@
+{
+  "fix": "L4-canvas",
+  "sheet": "L4-canvas.jpg",
+  "sha256": "ad26b04ea0eac9147f2f6ccb7176782da9efabbbeafd7384f3a5b4908956fd4e",
+  "method": "Uniformly resized full screenshots with labels. Requested zoom and actual authored camera are separate. No cropping or retouching.",
+  "reviewed": true,
+  "cells": [
+    {
+      "label": "rear-arrival-t1949",
+      "requestedZoom": 1,
+      "radius": 19,
+      "state": {
+        "tick": 1949,
+        "position": {
+          "x": -21.99052619934082,
+          "y": 0.7099999785423279,
+          "z": 1.0752074718475342,
+          "yaw": 2.7672181102622244
+        },
+        "backend": "webgl",
+        "quality": "low",
+        "camera": {
+          "zoom": 1,
+          "targetZoom": 1,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 19,
+          "regionScale": 1,
+          "focus": [
+            -21.60562882953863,
+            1.7741557492123746e-18,
+            1.226435829302012
+          ],
+          "target": [
+            -10.9,
+            1,
+            8.2
+          ],
+          "position": [
+            -0.030833346463998268,
+            12.16791979355699,
+            19.069166653536
+          ],
+          "spot": null,
+          "inspection": {
+            "position": [
+              -0.030833346463998268,
+              12.16791979355699,
+              19.069166653536
+            ],
+            "target": [
+              -10.9,
+              1,
+              8.2
+            ]
+          }
+        },
+        "actorModels": {
+          "companion": "glb",
+          "actors": [
+            {
+              "id": 30,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -20.849501856197186
+              ],
+              "yaw": -4.712388980384688,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 31,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -11.539501856196576
+              ],
+              "yaw": -4.712388980384688,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 33,
+              "lod": "lod1",
+              "position": [
+                -10.900332028139214,
+                0,
+                8.199999987076023
+              ],
+              "yaw": -3.139129532558316,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 32,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -0.3945018561967264
+              ],
+              "yaw": -4.712388965169803,
+              "passengers": [],
+              "wheels": [
+                {
+                  "name": "wheelFL",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelFR",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRL",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRR",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                }
+              ],
+              "source": "glb"
+            },
+            {
+              "id": 34,
+              "lod": "lod1",
+              "position": [
+                6.744667778318745,
+                0,
+                5.7
+              ],
+              "yaw": -3.1415926338501423,
+              "passengers": [],
+              "wheels": [
+                {
+                  "name": "wheelFL",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelFR",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRL",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRR",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                }
+              ],
+              "source": "glb"
+            },
+            {
+              "id": 98,
+              "lod": "lod2",
+              "position": [
+                16.3,
+                0,
+                -45
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 99,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                6.15
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 100,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                9.2
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 101,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                12.25
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            }
+          ],
+          "placeholders": []
+        },
+        "draws": 161,
+        "triangles": 171900,
+        "vehicles": [
+          {
+            "id": 77,
+            "asset": "vehicle.sedan",
+            "at": {
+              "x": -30,
+              "z": 43.29999923706055,
+              "y": 0.7354345321655273,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 78,
+            "asset": "vehicle.suv",
+            "at": {
+              "x": -6,
+              "z": 43.29999923706055,
+              "y": 0.7354345321655273,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 79,
+            "asset": "vehicle.pickup",
+            "at": {
+              "x": -38,
+              "z": -42.599998474121094,
+              "y": 0.7354345321655273,
+              "yaw": 3.141592653589793
+            }
+          },
+          {
+            "id": 80,
+            "asset": "vehicle.sedan",
+            "at": {
+              "x": 30,
+              "z": -42.599998474121094,
+              "y": 0.7354345321655273,
+              "yaw": 3.141592653589793
+            }
+          },
+          {
+            "id": 81,
+            "asset": "vehicle.suv",
+            "at": {
+              "x": 15.800000190734863,
+              "z": 14,
+              "y": 0.7354346513748169,
+              "yaw": -1.570796461153735
+            }
+          },
+          {
+            "id": 82,
+            "asset": "vehicle.pickup",
+            "at": {
+              "x": -59.70000076293945,
+              "z": 20,
+              "y": 0.7354346513748169,
+              "yaw": -1.570796461153735
+            }
+          }
+        ],
+        "placeholders": []
+      },
+      "sha256": "2ab89d550cd70b7224dbc875f2f38859303a4210f9e60116286873ca64f98c6e",
+      "tier": "low",
+      "backend": "webgl2",
+      "receipt": "L4-truck-low-webgl2.json",
+      "actualCamera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          -21.60562882953863,
+          1.7741557492123746e-18,
+          1.226435829302012
+        ],
+        "target": [
+          -10.9,
+          1,
+          8.2
+        ],
+        "position": [
+          -0.030833346463998268,
+          12.16791979355699,
+          19.069166653536
+        ],
+        "spot": null,
+        "inspection": {
+          "position": [
+            -0.030833346463998268,
+            12.16791979355699,
+            19.069166653536
+          ],
+          "target": [
+            -10.9,
+            1,
+            8.2
+          ]
+        }
+      },
+      "cell": 1,
+      "rawOriginal": "/private/tmp/r17-polish/L4-truck-low-webgl2/1-rear-arrival-t1949-z1.jpg"
+    },
+    {
+      "label": "rear-arrival-t1949",
+      "requestedZoom": 1.5,
+      "radius": 28.5,
+      "state": {
+        "tick": 1949,
+        "position": {
+          "x": -21.99052619934082,
+          "y": 0.7099999785423279,
+          "z": 1.0752074718475342,
+          "yaw": 2.7672181102622244
+        },
+        "backend": "webgl",
+        "quality": "low",
+        "camera": {
+          "zoom": 1,
+          "targetZoom": 1,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 19,
+          "regionScale": 1,
+          "focus": [
+            -21.60562882953863,
+            1.7741557492123746e-18,
+            1.226435829302012
+          ],
+          "target": [
+            -10.9,
+            1,
+            8.2
+          ],
+          "position": [
+            5.403749980304001,
+            17.751879690335485,
+            24.503749980304004
+          ],
+          "spot": null,
+          "inspection": {
+            "position": [
+              5.403749980304001,
+              17.751879690335485,
+              24.503749980304004
+            ],
+            "target": [
+              -10.9,
+              1,
+              8.2
+            ]
+          }
+        },
+        "actorModels": {
+          "companion": "glb",
+          "actors": [
+            {
+              "id": 30,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -20.849501856197186
+              ],
+              "yaw": -4.712388980384688,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 31,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -11.539501856196576
+              ],
+              "yaw": -4.712388980384688,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 33,
+              "lod": "lod1",
+              "position": [
+                -10.900332028139214,
+                0,
+                8.199999987076023
+              ],
+              "yaw": -3.139129532558316,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 32,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -0.3945018561967264
+              ],
+              "yaw": -4.712388965169803,
+              "passengers": [],
+              "wheels": [
+                {
+                  "name": "wheelFL",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelFR",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRL",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRR",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                }
+              ],
+              "source": "glb"
+            },
+            {
+              "id": 34,
+              "lod": "lod1",
+              "position": [
+                6.744667778318745,
+                0,
+                5.7
+              ],
+              "yaw": -3.1415926338501423,
+              "passengers": [],
+              "wheels": [
+                {
+                  "name": "wheelFL",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelFR",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRL",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRR",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                }
+              ],
+              "source": "glb"
+            },
+            {
+              "id": 98,
+              "lod": "lod2",
+              "position": [
+                16.3,
+                0,
+                -45
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 99,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                6.15
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 100,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                9.2
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 101,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                12.25
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            }
+          ],
+          "placeholders": []
+        },
+        "draws": 197,
+        "triangles": 234439,
+        "vehicles": [
+          {
+            "id": 77,
+            "asset": "vehicle.sedan",
+            "at": {
+              "x": -30,
+              "z": 43.29999923706055,
+              "y": 0.7354345321655273,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 78,
+            "asset": "vehicle.suv",
+            "at": {
+              "x": -6,
+              "z": 43.29999923706055,
+              "y": 0.7354345321655273,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 79,
+            "asset": "vehicle.pickup",
+            "at": {
+              "x": -38,
+              "z": -42.599998474121094,
+              "y": 0.7354345321655273,
+              "yaw": 3.141592653589793
+            }
+          },
+          {
+            "id": 80,
+            "asset": "vehicle.sedan",
+            "at": {
+              "x": 30,
+              "z": -42.599998474121094,
+              "y": 0.7354345321655273,
+              "yaw": 3.141592653589793
+            }
+          },
+          {
+            "id": 81,
+            "asset": "vehicle.suv",
+            "at": {
+              "x": 15.800000190734863,
+              "z": 14,
+              "y": 0.7354346513748169,
+              "yaw": -1.570796461153735
+            }
+          },
+          {
+            "id": 82,
+            "asset": "vehicle.pickup",
+            "at": {
+              "x": -59.70000076293945,
+              "z": 20,
+              "y": 0.7354346513748169,
+              "yaw": -1.570796461153735
+            }
+          }
+        ],
+        "placeholders": []
+      },
+      "sha256": "7130cf322009a4e7561d3842fdb815cb95d106443c86cb5dc54b614a83bcf54c",
+      "tier": "low",
+      "backend": "webgl2",
+      "receipt": "L4-truck-low-webgl2.json",
+      "actualCamera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          -21.60562882953863,
+          1.7741557492123746e-18,
+          1.226435829302012
+        ],
+        "target": [
+          -10.9,
+          1,
+          8.2
+        ],
+        "position": [
+          5.403749980304001,
+          17.751879690335485,
+          24.503749980304004
+        ],
+        "spot": null,
+        "inspection": {
+          "position": [
+            5.403749980304001,
+            17.751879690335485,
+            24.503749980304004
+          ],
+          "target": [
+            -10.9,
+            1,
+            8.2
+          ]
+        }
+      },
+      "cell": 2,
+      "rawOriginal": "/private/tmp/r17-polish/L4-truck-low-webgl2/2-rear-arrival-t1949-z1.5.jpg"
+    },
+    {
+      "label": "front-arrival-t1949",
+      "requestedZoom": 1,
+      "radius": 19,
+      "state": {
+        "tick": 1952,
+        "position": {
+          "x": -40.82792282104492,
+          "y": 0.7070000171661377,
+          "z": 8.189029693603516,
+          "yaw": 2.7672181102622244
+        },
+        "backend": "webgl",
+        "quality": "low",
+        "camera": {
+          "zoom": 1,
+          "targetZoom": 1,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 19,
+          "regionScale": 1,
+          "focus": [
+            -40.82792282104492,
+            0,
+            8.189029693603516
+          ],
+          "target": [
+            -11,
+            1,
+            -11.54
+          ],
+          "position": [
+            -0.1308333464639979,
+            12.16791979355699,
+            -0.6708333464639953
+          ],
+          "spot": null,
+          "inspection": {
+            "position": [
+              -0.1308333464639979,
+              12.16791979355699,
+              -0.6708333464639953
+            ],
+            "target": [
+              -11,
+              1,
+              -11.54
+            ]
+          }
+        },
+        "actorModels": {
+          "companion": "glb",
+          "actors": [
+            {
+              "id": 30,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -20.849501856197186
+              ],
+              "yaw": -4.712388980384688,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 31,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -11.539501856196576
+              ],
+              "yaw": -4.712388980384688,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 33,
+              "lod": "lod1",
+              "position": [
+                -10.900332028139214,
+                0,
+                8.199999987076023
+              ],
+              "yaw": -3.139129532558316,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 32,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -0.3945018561967264
+              ],
+              "yaw": -4.712388965169803,
+              "passengers": [],
+              "wheels": [
+                {
+                  "name": "wheelFL",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelFR",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRL",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRR",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                }
+              ],
+              "source": "glb"
+            },
+            {
+              "id": 34,
+              "lod": "lod1",
+              "position": [
+                6.744667778318745,
+                0,
+                5.7
+              ],
+              "yaw": -3.1415926338501423,
+              "passengers": [],
+              "wheels": [
+                {
+                  "name": "wheelFL",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelFR",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRL",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRR",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                }
+              ],
+              "source": "glb"
+            },
+            {
+              "id": 98,
+              "lod": "lod2",
+              "position": [
+                16.3,
+                0,
+                -45
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 99,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                6.15
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 100,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                9.2
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 101,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                12.25
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            }
+          ],
+          "placeholders": []
+        },
+        "draws": 141,
+        "triangles": 163808,
+        "vehicles": [
+          {
+            "id": 77,
+            "asset": "vehicle.sedan",
+            "at": {
+              "x": -30,
+              "z": 43.29999923706055,
+              "y": 0.7354345321655273,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 78,
+            "asset": "vehicle.suv",
+            "at": {
+              "x": -6,
+              "z": 43.29999923706055,
+              "y": 0.7354345321655273,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 79,
+            "asset": "vehicle.pickup",
+            "at": {
+              "x": -38,
+              "z": -42.599998474121094,
+              "y": 0.7354345321655273,
+              "yaw": 3.141592653589793
+            }
+          },
+          {
+            "id": 80,
+            "asset": "vehicle.sedan",
+            "at": {
+              "x": 30,
+              "z": -42.599998474121094,
+              "y": 0.7354345321655273,
+              "yaw": 3.141592653589793
+            }
+          },
+          {
+            "id": 81,
+            "asset": "vehicle.suv",
+            "at": {
+              "x": 15.800000190734863,
+              "z": 14,
+              "y": 0.7354346513748169,
+              "yaw": -1.570796461153735
+            }
+          },
+          {
+            "id": 82,
+            "asset": "vehicle.pickup",
+            "at": {
+              "x": -59.70000076293945,
+              "z": 20,
+              "y": 0.7354346513748169,
+              "yaw": -1.570796461153735
+            }
+          }
+        ],
+        "placeholders": []
+      },
+      "sha256": "f9571d576312a18b97f6a70a52b684e146d897f5112f93dc81d669fc8b12cce3",
+      "tier": "low",
+      "backend": "webgl2",
+      "receipt": "L4-truck-low-webgl2.json",
+      "actualCamera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          -40.82792282104492,
+          0,
+          8.189029693603516
+        ],
+        "target": [
+          -11,
+          1,
+          -11.54
+        ],
+        "position": [
+          -0.1308333464639979,
+          12.16791979355699,
+          -0.6708333464639953
+        ],
+        "spot": null,
+        "inspection": {
+          "position": [
+            -0.1308333464639979,
+            12.16791979355699,
+            -0.6708333464639953
+          ],
+          "target": [
+            -11,
+            1,
+            -11.54
+          ]
+        }
+      },
+      "cell": 3,
+      "rawOriginal": "/private/tmp/r17-polish/L4-truck-low-webgl2/7-front-arrival-t1949-z1.jpg"
+    },
+    {
+      "label": "front-arrival-t1949",
+      "requestedZoom": 1.5,
+      "radius": 28.5,
+      "state": {
+        "tick": 1952,
+        "position": {
+          "x": -40.82792282104492,
+          "y": 0.7070000171661377,
+          "z": 8.189029693603516,
+          "yaw": 2.7672181102622244
+        },
+        "backend": "webgl",
+        "quality": "low",
+        "camera": {
+          "zoom": 1,
+          "targetZoom": 1,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 19,
+          "regionScale": 1,
+          "focus": [
+            -40.82792282104492,
+            0,
+            8.189029693603516
+          ],
+          "target": [
+            -11,
+            1,
+            -11.54
+          ],
+          "position": [
+            5.303749980304001,
+            17.751879690335485,
+            4.763749980304006
+          ],
+          "spot": null,
+          "inspection": {
+            "position": [
+              5.303749980304001,
+              17.751879690335485,
+              4.763749980304006
+            ],
+            "target": [
+              -11,
+              1,
+              -11.54
+            ]
+          }
+        },
+        "actorModels": {
+          "companion": "glb",
+          "actors": [
+            {
+              "id": 30,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -20.849501856197186
+              ],
+              "yaw": -4.712388980384688,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 31,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -11.539501856196576
+              ],
+              "yaw": -4.712388980384688,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 33,
+              "lod": "lod1",
+              "position": [
+                -10.900332028139214,
+                0,
+                8.199999987076023
+              ],
+              "yaw": -3.139129532558316,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 32,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -0.3945018561967264
+              ],
+              "yaw": -4.712388965169803,
+              "passengers": [],
+              "wheels": [
+                {
+                  "name": "wheelFL",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelFR",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRL",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRR",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                }
+              ],
+              "source": "glb"
+            },
+            {
+              "id": 34,
+              "lod": "lod1",
+              "position": [
+                6.744667778318745,
+                0,
+                5.7
+              ],
+              "yaw": -3.1415926338501423,
+              "passengers": [],
+              "wheels": [
+                {
+                  "name": "wheelFL",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelFR",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRL",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRR",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                }
+              ],
+              "source": "glb"
+            },
+            {
+              "id": 98,
+              "lod": "lod2",
+              "position": [
+                16.3,
+                0,
+                -45
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 99,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                6.15
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 100,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                9.2
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 101,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                12.25
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            }
+          ],
+          "placeholders": []
+        },
+        "draws": 160,
+        "triangles": 204711,
+        "vehicles": [
+          {
+            "id": 77,
+            "asset": "vehicle.sedan",
+            "at": {
+              "x": -30,
+              "z": 43.29999923706055,
+              "y": 0.7354345321655273,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 78,
+            "asset": "vehicle.suv",
+            "at": {
+              "x": -6,
+              "z": 43.29999923706055,
+              "y": 0.7354345321655273,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 79,
+            "asset": "vehicle.pickup",
+            "at": {
+              "x": -38,
+              "z": -42.599998474121094,
+              "y": 0.7354345321655273,
+              "yaw": 3.141592653589793
+            }
+          },
+          {
+            "id": 80,
+            "asset": "vehicle.sedan",
+            "at": {
+              "x": 30,
+              "z": -42.599998474121094,
+              "y": 0.7354345321655273,
+              "yaw": 3.141592653589793
+            }
+          },
+          {
+            "id": 81,
+            "asset": "vehicle.suv",
+            "at": {
+              "x": 15.800000190734863,
+              "z": 14,
+              "y": 0.7354346513748169,
+              "yaw": -1.570796461153735
+            }
+          },
+          {
+            "id": 82,
+            "asset": "vehicle.pickup",
+            "at": {
+              "x": -59.70000076293945,
+              "z": 20,
+              "y": 0.7354346513748169,
+              "yaw": -1.570796461153735
+            }
+          }
+        ],
+        "placeholders": []
+      },
+      "sha256": "086b868a9e7b6c89c3c0c00bbe54f1b4327dfd4d5c41be7e7a7e5b2ce7956949",
+      "tier": "low",
+      "backend": "webgl2",
+      "receipt": "L4-truck-low-webgl2.json",
+      "actualCamera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          -40.82792282104492,
+          0,
+          8.189029693603516
+        ],
+        "target": [
+          -11,
+          1,
+          -11.54
+        ],
+        "position": [
+          5.303749980304001,
+          17.751879690335485,
+          4.763749980304006
+        ],
+        "spot": null,
+        "inspection": {
+          "position": [
+            5.303749980304001,
+            17.751879690335485,
+            4.763749980304006
+          ],
+          "target": [
+            -11,
+            1,
+            -11.54
+          ]
+        }
+      },
+      "cell": 4,
+      "rawOriginal": "/private/tmp/r17-polish/L4-truck-low-webgl2/8-front-arrival-t1949-z1.5.jpg"
+    },
+    {
+      "label": "rear-arrival-t1949",
+      "requestedZoom": 1,
+      "radius": 19,
+      "state": {
+        "tick": 1949,
+        "position": {
+          "x": -21.99052619934082,
+          "y": 0.7099999785423279,
+          "z": 1.0752074718475342,
+          "yaw": 2.7672181102622244
+        },
+        "backend": "webgpu",
+        "quality": "low",
+        "camera": {
+          "zoom": 1,
+          "targetZoom": 1,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 19,
+          "regionScale": 1,
+          "focus": [
+            -21.60562882953863,
+            1.7741557492123746e-18,
+            1.226435829302012
+          ],
+          "target": [
+            -10.9,
+            1,
+            8.2
+          ],
+          "position": [
+            -0.030833346463998268,
+            12.16791979355699,
+            19.069166653536
+          ],
+          "spot": null,
+          "inspection": {
+            "position": [
+              -0.030833346463998268,
+              12.16791979355699,
+              19.069166653536
+            ],
+            "target": [
+              -10.9,
+              1,
+              8.2
+            ]
+          }
+        },
+        "actorModels": {
+          "companion": "glb",
+          "actors": [
+            {
+              "id": 30,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -20.849501856197186
+              ],
+              "yaw": -4.712388980384688,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 31,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -11.539501856196576
+              ],
+              "yaw": -4.712388980384688,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 33,
+              "lod": "lod1",
+              "position": [
+                -10.900332028139214,
+                0,
+                8.199999987076023
+              ],
+              "yaw": -3.139129532558316,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 98,
+              "lod": "lod2",
+              "position": [
+                16.3,
+                0,
+                -45
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 32,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -0.3945018561967264
+              ],
+              "yaw": -4.712388965169803,
+              "passengers": [],
+              "wheels": [
+                {
+                  "name": "wheelFL",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelFR",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRL",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRR",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                }
+              ],
+              "source": "glb"
+            },
+            {
+              "id": 34,
+              "lod": "lod1",
+              "position": [
+                6.744667778318745,
+                0,
+                5.7
+              ],
+              "yaw": -3.1415926338501423,
+              "passengers": [],
+              "wheels": [
+                {
+                  "name": "wheelFL",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelFR",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRL",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRR",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                }
+              ],
+              "source": "glb"
+            },
+            {
+              "id": 99,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                6.15
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 100,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                9.2
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 101,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                12.25
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            }
+          ],
+          "placeholders": []
+        },
+        "draws": 161,
+        "triangles": 171900,
+        "vehicles": [
+          {
+            "id": 77,
+            "asset": "vehicle.sedan",
+            "at": {
+              "x": -30,
+              "z": 43.29999923706055,
+              "y": 0.7354345321655273,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 78,
+            "asset": "vehicle.suv",
+            "at": {
+              "x": -6,
+              "z": 43.29999923706055,
+              "y": 0.7354345321655273,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 79,
+            "asset": "vehicle.pickup",
+            "at": {
+              "x": -38,
+              "z": -42.599998474121094,
+              "y": 0.7354345321655273,
+              "yaw": 3.141592653589793
+            }
+          },
+          {
+            "id": 80,
+            "asset": "vehicle.sedan",
+            "at": {
+              "x": 30,
+              "z": -42.599998474121094,
+              "y": 0.7354345321655273,
+              "yaw": 3.141592653589793
+            }
+          },
+          {
+            "id": 81,
+            "asset": "vehicle.suv",
+            "at": {
+              "x": 15.800000190734863,
+              "z": 14,
+              "y": 0.7354346513748169,
+              "yaw": -1.570796461153735
+            }
+          },
+          {
+            "id": 82,
+            "asset": "vehicle.pickup",
+            "at": {
+              "x": -59.70000076293945,
+              "z": 20,
+              "y": 0.7354346513748169,
+              "yaw": -1.570796461153735
+            }
+          }
+        ],
+        "placeholders": []
+      },
+      "sha256": "a5b0107140aa155676fcb3233fa16feeff9e096a39530da6189b6d7da14d6142",
+      "tier": "low",
+      "backend": "webgpu",
+      "receipt": "L4-truck-low-webgpu.json",
+      "actualCamera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          -21.60562882953863,
+          1.7741557492123746e-18,
+          1.226435829302012
+        ],
+        "target": [
+          -10.9,
+          1,
+          8.2
+        ],
+        "position": [
+          -0.030833346463998268,
+          12.16791979355699,
+          19.069166653536
+        ],
+        "spot": null,
+        "inspection": {
+          "position": [
+            -0.030833346463998268,
+            12.16791979355699,
+            19.069166653536
+          ],
+          "target": [
+            -10.9,
+            1,
+            8.2
+          ]
+        }
+      },
+      "cell": 5,
+      "rawOriginal": "/private/tmp/r17-polish/L4-truck-low-webgpu/1-rear-arrival-t1949-z1.jpg"
+    },
+    {
+      "label": "rear-arrival-t1949",
+      "requestedZoom": 1.5,
+      "radius": 28.5,
+      "state": {
+        "tick": 1949,
+        "position": {
+          "x": -21.99052619934082,
+          "y": 0.7099999785423279,
+          "z": 1.0752074718475342,
+          "yaw": 2.7672181102622244
+        },
+        "backend": "webgpu",
+        "quality": "low",
+        "camera": {
+          "zoom": 1,
+          "targetZoom": 1,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 19,
+          "regionScale": 1,
+          "focus": [
+            -21.60562882953863,
+            1.7741557492123746e-18,
+            1.226435829302012
+          ],
+          "target": [
+            -10.9,
+            1,
+            8.2
+          ],
+          "position": [
+            5.403749980304001,
+            17.751879690335485,
+            24.503749980304004
+          ],
+          "spot": null,
+          "inspection": {
+            "position": [
+              5.403749980304001,
+              17.751879690335485,
+              24.503749980304004
+            ],
+            "target": [
+              -10.9,
+              1,
+              8.2
+            ]
+          }
+        },
+        "actorModels": {
+          "companion": "glb",
+          "actors": [
+            {
+              "id": 30,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -20.849501856197186
+              ],
+              "yaw": -4.712388980384688,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 31,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -11.539501856196576
+              ],
+              "yaw": -4.712388980384688,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 33,
+              "lod": "lod1",
+              "position": [
+                -10.900332028139214,
+                0,
+                8.199999987076023
+              ],
+              "yaw": -3.139129532558316,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 98,
+              "lod": "lod2",
+              "position": [
+                16.3,
+                0,
+                -45
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 32,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -0.3945018561967264
+              ],
+              "yaw": -4.712388965169803,
+              "passengers": [],
+              "wheels": [
+                {
+                  "name": "wheelFL",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelFR",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRL",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRR",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                }
+              ],
+              "source": "glb"
+            },
+            {
+              "id": 34,
+              "lod": "lod1",
+              "position": [
+                6.744667778318745,
+                0,
+                5.7
+              ],
+              "yaw": -3.1415926338501423,
+              "passengers": [],
+              "wheels": [
+                {
+                  "name": "wheelFL",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelFR",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRL",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRR",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                }
+              ],
+              "source": "glb"
+            },
+            {
+              "id": 99,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                6.15
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 100,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                9.2
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 101,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                12.25
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            }
+          ],
+          "placeholders": []
+        },
+        "draws": 197,
+        "triangles": 234439,
+        "vehicles": [
+          {
+            "id": 77,
+            "asset": "vehicle.sedan",
+            "at": {
+              "x": -30,
+              "z": 43.29999923706055,
+              "y": 0.7354345321655273,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 78,
+            "asset": "vehicle.suv",
+            "at": {
+              "x": -6,
+              "z": 43.29999923706055,
+              "y": 0.7354345321655273,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 79,
+            "asset": "vehicle.pickup",
+            "at": {
+              "x": -38,
+              "z": -42.599998474121094,
+              "y": 0.7354345321655273,
+              "yaw": 3.141592653589793
+            }
+          },
+          {
+            "id": 80,
+            "asset": "vehicle.sedan",
+            "at": {
+              "x": 30,
+              "z": -42.599998474121094,
+              "y": 0.7354345321655273,
+              "yaw": 3.141592653589793
+            }
+          },
+          {
+            "id": 81,
+            "asset": "vehicle.suv",
+            "at": {
+              "x": 15.800000190734863,
+              "z": 14,
+              "y": 0.7354346513748169,
+              "yaw": -1.570796461153735
+            }
+          },
+          {
+            "id": 82,
+            "asset": "vehicle.pickup",
+            "at": {
+              "x": -59.70000076293945,
+              "z": 20,
+              "y": 0.7354346513748169,
+              "yaw": -1.570796461153735
+            }
+          }
+        ],
+        "placeholders": []
+      },
+      "sha256": "a46372ff97dfe398b26a98abb66f901a26bafe056d13c6d1077b3f504befded1",
+      "tier": "low",
+      "backend": "webgpu",
+      "receipt": "L4-truck-low-webgpu.json",
+      "actualCamera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          -21.60562882953863,
+          1.7741557492123746e-18,
+          1.226435829302012
+        ],
+        "target": [
+          -10.9,
+          1,
+          8.2
+        ],
+        "position": [
+          5.403749980304001,
+          17.751879690335485,
+          24.503749980304004
+        ],
+        "spot": null,
+        "inspection": {
+          "position": [
+            5.403749980304001,
+            17.751879690335485,
+            24.503749980304004
+          ],
+          "target": [
+            -10.9,
+            1,
+            8.2
+          ]
+        }
+      },
+      "cell": 6,
+      "rawOriginal": "/private/tmp/r17-polish/L4-truck-low-webgpu/2-rear-arrival-t1949-z1.5.jpg"
+    },
+    {
+      "label": "front-arrival-t1949",
+      "requestedZoom": 1,
+      "radius": 19,
+      "state": {
+        "tick": 1952,
+        "position": {
+          "x": -40.82792282104492,
+          "y": 0.7070000171661377,
+          "z": 8.189029693603516,
+          "yaw": 2.7672181102622244
+        },
+        "backend": "webgpu",
+        "quality": "low",
+        "camera": {
+          "zoom": 1,
+          "targetZoom": 1,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 19,
+          "regionScale": 1,
+          "focus": [
+            -40.82792282104492,
+            0,
+            8.189029693603516
+          ],
+          "target": [
+            -11,
+            1,
+            -11.54
+          ],
+          "position": [
+            -0.1308333464639979,
+            12.16791979355699,
+            -0.6708333464639953
+          ],
+          "spot": null,
+          "inspection": {
+            "position": [
+              -0.1308333464639979,
+              12.16791979355699,
+              -0.6708333464639953
+            ],
+            "target": [
+              -11,
+              1,
+              -11.54
+            ]
+          }
+        },
+        "actorModels": {
+          "companion": "glb",
+          "actors": [
+            {
+              "id": 30,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -20.849501856197186
+              ],
+              "yaw": -4.712388980384688,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 31,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -11.539501856196576
+              ],
+              "yaw": -4.712388980384688,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 33,
+              "lod": "lod1",
+              "position": [
+                -10.900332028139214,
+                0,
+                8.199999987076023
+              ],
+              "yaw": -3.139129532558316,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 98,
+              "lod": "lod2",
+              "position": [
+                16.3,
+                0,
+                -45
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 32,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -0.3945018561967264
+              ],
+              "yaw": -4.712388965169803,
+              "passengers": [],
+              "wheels": [
+                {
+                  "name": "wheelFL",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelFR",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRL",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRR",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                }
+              ],
+              "source": "glb"
+            },
+            {
+              "id": 34,
+              "lod": "lod1",
+              "position": [
+                6.744667778318745,
+                0,
+                5.7
+              ],
+              "yaw": -3.1415926338501423,
+              "passengers": [],
+              "wheels": [
+                {
+                  "name": "wheelFL",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelFR",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRL",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRR",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                }
+              ],
+              "source": "glb"
+            },
+            {
+              "id": 99,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                6.15
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 100,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                9.2
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 101,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                12.25
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            }
+          ],
+          "placeholders": []
+        },
+        "draws": 141,
+        "triangles": 163808,
+        "vehicles": [
+          {
+            "id": 77,
+            "asset": "vehicle.sedan",
+            "at": {
+              "x": -30,
+              "z": 43.29999923706055,
+              "y": 0.7354345321655273,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 78,
+            "asset": "vehicle.suv",
+            "at": {
+              "x": -6,
+              "z": 43.29999923706055,
+              "y": 0.7354345321655273,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 79,
+            "asset": "vehicle.pickup",
+            "at": {
+              "x": -38,
+              "z": -42.599998474121094,
+              "y": 0.7354345321655273,
+              "yaw": 3.141592653589793
+            }
+          },
+          {
+            "id": 80,
+            "asset": "vehicle.sedan",
+            "at": {
+              "x": 30,
+              "z": -42.599998474121094,
+              "y": 0.7354345321655273,
+              "yaw": 3.141592653589793
+            }
+          },
+          {
+            "id": 81,
+            "asset": "vehicle.suv",
+            "at": {
+              "x": 15.800000190734863,
+              "z": 14,
+              "y": 0.7354346513748169,
+              "yaw": -1.570796461153735
+            }
+          },
+          {
+            "id": 82,
+            "asset": "vehicle.pickup",
+            "at": {
+              "x": -59.70000076293945,
+              "z": 20,
+              "y": 0.7354346513748169,
+              "yaw": -1.570796461153735
+            }
+          }
+        ],
+        "placeholders": []
+      },
+      "sha256": "c204f0237a0aa0597c06045e3d018f4db84d8ed4a69ea706285d431c2a26f3ee",
+      "tier": "low",
+      "backend": "webgpu",
+      "receipt": "L4-truck-low-webgpu.json",
+      "actualCamera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          -40.82792282104492,
+          0,
+          8.189029693603516
+        ],
+        "target": [
+          -11,
+          1,
+          -11.54
+        ],
+        "position": [
+          -0.1308333464639979,
+          12.16791979355699,
+          -0.6708333464639953
+        ],
+        "spot": null,
+        "inspection": {
+          "position": [
+            -0.1308333464639979,
+            12.16791979355699,
+            -0.6708333464639953
+          ],
+          "target": [
+            -11,
+            1,
+            -11.54
+          ]
+        }
+      },
+      "cell": 7,
+      "rawOriginal": "/private/tmp/r17-polish/L4-truck-low-webgpu/7-front-arrival-t1949-z1.jpg"
+    },
+    {
+      "label": "front-arrival-t1949",
+      "requestedZoom": 1.5,
+      "radius": 28.5,
+      "state": {
+        "tick": 1952,
+        "position": {
+          "x": -40.82792282104492,
+          "y": 0.7070000171661377,
+          "z": 8.189029693603516,
+          "yaw": 2.7672181102622244
+        },
+        "backend": "webgpu",
+        "quality": "low",
+        "camera": {
+          "zoom": 1,
+          "targetZoom": 1,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 19,
+          "regionScale": 1,
+          "focus": [
+            -40.82792282104492,
+            0,
+            8.189029693603516
+          ],
+          "target": [
+            -11,
+            1,
+            -11.54
+          ],
+          "position": [
+            5.303749980304001,
+            17.751879690335485,
+            4.763749980304006
+          ],
+          "spot": null,
+          "inspection": {
+            "position": [
+              5.303749980304001,
+              17.751879690335485,
+              4.763749980304006
+            ],
+            "target": [
+              -11,
+              1,
+              -11.54
+            ]
+          }
+        },
+        "actorModels": {
+          "companion": "glb",
+          "actors": [
+            {
+              "id": 30,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -20.849501856197186
+              ],
+              "yaw": -4.712388980384688,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 31,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -11.539501856196576
+              ],
+              "yaw": -4.712388980384688,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 33,
+              "lod": "lod1",
+              "position": [
+                -10.900332028139214,
+                0,
+                8.199999987076023
+              ],
+              "yaw": -3.139129532558316,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 98,
+              "lod": "lod2",
+              "position": [
+                16.3,
+                0,
+                -45
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 32,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -0.3945018561967264
+              ],
+              "yaw": -4.712388965169803,
+              "passengers": [],
+              "wheels": [
+                {
+                  "name": "wheelFL",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelFR",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRL",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRR",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                }
+              ],
+              "source": "glb"
+            },
+            {
+              "id": 34,
+              "lod": "lod1",
+              "position": [
+                6.744667778318745,
+                0,
+                5.7
+              ],
+              "yaw": -3.1415926338501423,
+              "passengers": [],
+              "wheels": [
+                {
+                  "name": "wheelFL",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelFR",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRL",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRR",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                }
+              ],
+              "source": "glb"
+            },
+            {
+              "id": 99,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                6.15
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 100,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                9.2
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 101,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                12.25
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            }
+          ],
+          "placeholders": []
+        },
+        "draws": 160,
+        "triangles": 204711,
+        "vehicles": [
+          {
+            "id": 77,
+            "asset": "vehicle.sedan",
+            "at": {
+              "x": -30,
+              "z": 43.29999923706055,
+              "y": 0.7354345321655273,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 78,
+            "asset": "vehicle.suv",
+            "at": {
+              "x": -6,
+              "z": 43.29999923706055,
+              "y": 0.7354345321655273,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 79,
+            "asset": "vehicle.pickup",
+            "at": {
+              "x": -38,
+              "z": -42.599998474121094,
+              "y": 0.7354345321655273,
+              "yaw": 3.141592653589793
+            }
+          },
+          {
+            "id": 80,
+            "asset": "vehicle.sedan",
+            "at": {
+              "x": 30,
+              "z": -42.599998474121094,
+              "y": 0.7354345321655273,
+              "yaw": 3.141592653589793
+            }
+          },
+          {
+            "id": 81,
+            "asset": "vehicle.suv",
+            "at": {
+              "x": 15.800000190734863,
+              "z": 14,
+              "y": 0.7354346513748169,
+              "yaw": -1.570796461153735
+            }
+          },
+          {
+            "id": 82,
+            "asset": "vehicle.pickup",
+            "at": {
+              "x": -59.70000076293945,
+              "z": 20,
+              "y": 0.7354346513748169,
+              "yaw": -1.570796461153735
+            }
+          }
+        ],
+        "placeholders": []
+      },
+      "sha256": "c925bce759cc1f3164c818e2f632a36f8649ecf15f1fe85344cbadc8257c15cc",
+      "tier": "low",
+      "backend": "webgpu",
+      "receipt": "L4-truck-low-webgpu.json",
+      "actualCamera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          -40.82792282104492,
+          0,
+          8.189029693603516
+        ],
+        "target": [
+          -11,
+          1,
+          -11.54
+        ],
+        "position": [
+          5.303749980304001,
+          17.751879690335485,
+          4.763749980304006
+        ],
+        "spot": null,
+        "inspection": {
+          "position": [
+            5.303749980304001,
+            17.751879690335485,
+            4.763749980304006
+          ],
+          "target": [
+            -11,
+            1,
+            -11.54
+          ]
+        }
+      },
+      "cell": 8,
+      "rawOriginal": "/private/tmp/r17-polish/L4-truck-low-webgpu/8-front-arrival-t1949-z1.5.jpg"
+    },
+    {
+      "label": "rear-arrival-t1949",
+      "requestedZoom": 1,
+      "radius": 19,
+      "state": {
+        "tick": 1949,
+        "position": {
+          "x": -21.99052619934082,
+          "y": 0.7099999785423279,
+          "z": 1.0752074718475342,
+          "yaw": 2.7672181102622244
+        },
+        "backend": "webgl",
+        "quality": "high",
+        "camera": {
+          "zoom": 1,
+          "targetZoom": 1,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 19,
+          "regionScale": 1,
+          "focus": [
+            -21.60562882953863,
+            1.7741557492123746e-18,
+            1.226435829302012
+          ],
+          "target": [
+            -10.9,
+            1,
+            8.2
+          ],
+          "position": [
+            -0.030833346463998268,
+            12.16791979355699,
+            19.069166653536
+          ],
+          "spot": null,
+          "inspection": {
+            "position": [
+              -0.030833346463998268,
+              12.16791979355699,
+              19.069166653536
+            ],
+            "target": [
+              -10.9,
+              1,
+              8.2
+            ]
+          }
+        },
+        "actorModels": {
+          "companion": "glb",
+          "actors": [
+            {
+              "id": 30,
+              "lod": "lod2",
+              "position": [
+                -11,
+                0,
+                -20.849501856197186
+              ],
+              "yaw": -4.712388980384688,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 31,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -11.539501856196576
+              ],
+              "yaw": -4.712388980384688,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 33,
+              "lod": "lod0",
+              "position": [
+                -10.900332028139214,
+                0,
+                8.199999987076023
+              ],
+              "yaw": -3.139129532558316,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 142,
+              "lod": "lod2",
+              "position": [
+                16.3,
+                0,
+                -45
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 34,
+              "lod": "lod1",
+              "position": [
+                6.744667778318745,
+                0,
+                5.7
+              ],
+              "yaw": -3.1415926338501423,
+              "passengers": [],
+              "wheels": [
+                {
+                  "name": "wheelFL",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelFR",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRL",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRR",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                }
+              ],
+              "source": "glb"
+            },
+            {
+              "id": 32,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -0.3945018561967264
+              ],
+              "yaw": -4.712388965169803,
+              "passengers": [],
+              "wheels": [
+                {
+                  "name": "wheelFL",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelFR",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRL",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRR",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                }
+              ],
+              "source": "glb"
+            },
+            {
+              "id": 143,
+              "lod": "lod0",
+              "position": [
+                -6.7,
+                0,
+                6.15
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 144,
+              "lod": "lod0",
+              "position": [
+                -6.7,
+                0,
+                9.2
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 145,
+              "lod": "lod0",
+              "position": [
+                -6.7,
+                0,
+                12.25
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            }
+          ],
+          "placeholders": []
+        },
+        "draws": 184,
+        "triangles": 402045,
+        "vehicles": [
+          {
+            "id": 121,
+            "asset": "vehicle.sedan",
+            "at": {
+              "x": -30,
+              "z": 43.29999923706055,
+              "y": 0.7354345321655273,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 122,
+            "asset": "vehicle.suv",
+            "at": {
+              "x": -6,
+              "z": 43.29999923706055,
+              "y": 0.7354345321655273,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 123,
+            "asset": "vehicle.pickup",
+            "at": {
+              "x": -38,
+              "z": -42.599998474121094,
+              "y": 0.7354345321655273,
+              "yaw": 3.141592653589793
+            }
+          },
+          {
+            "id": 124,
+            "asset": "vehicle.sedan",
+            "at": {
+              "x": 30,
+              "z": -42.599998474121094,
+              "y": 0.7354345321655273,
+              "yaw": 3.141592653589793
+            }
+          },
+          {
+            "id": 125,
+            "asset": "vehicle.suv",
+            "at": {
+              "x": 15.800000190734863,
+              "z": 14,
+              "y": 0.7354346513748169,
+              "yaw": -1.570796461153735
+            }
+          },
+          {
+            "id": 126,
+            "asset": "vehicle.pickup",
+            "at": {
+              "x": -59.70000076293945,
+              "z": 20,
+              "y": 0.7354346513748169,
+              "yaw": -1.570796461153735
+            }
+          }
+        ],
+        "placeholders": []
+      },
+      "sha256": "c15b2862caf41a8e7c82894c46beed4fadcaa20e0385f65a852e9b6bebaf21d2",
+      "tier": "high",
+      "backend": "webgl2",
+      "receipt": "L4-truck-high-webgl2.json",
+      "actualCamera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          -21.60562882953863,
+          1.7741557492123746e-18,
+          1.226435829302012
+        ],
+        "target": [
+          -10.9,
+          1,
+          8.2
+        ],
+        "position": [
+          -0.030833346463998268,
+          12.16791979355699,
+          19.069166653536
+        ],
+        "spot": null,
+        "inspection": {
+          "position": [
+            -0.030833346463998268,
+            12.16791979355699,
+            19.069166653536
+          ],
+          "target": [
+            -10.9,
+            1,
+            8.2
+          ]
+        }
+      },
+      "cell": 9,
+      "rawOriginal": "/private/tmp/r17-polish/L4-truck-high-webgl2/1-rear-arrival-t1949-z1.jpg"
+    },
+    {
+      "label": "rear-arrival-t1949",
+      "requestedZoom": 1.5,
+      "radius": 28.5,
+      "state": {
+        "tick": 1949,
+        "position": {
+          "x": -21.99052619934082,
+          "y": 0.7099999785423279,
+          "z": 1.0752074718475342,
+          "yaw": 2.7672181102622244
+        },
+        "backend": "webgl",
+        "quality": "high",
+        "camera": {
+          "zoom": 1,
+          "targetZoom": 1,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 19,
+          "regionScale": 1,
+          "focus": [
+            -21.60562882953863,
+            1.7741557492123746e-18,
+            1.226435829302012
+          ],
+          "target": [
+            -10.9,
+            1,
+            8.2
+          ],
+          "position": [
+            5.403749980304001,
+            17.751879690335485,
+            24.503749980304004
+          ],
+          "spot": null,
+          "inspection": {
+            "position": [
+              5.403749980304001,
+              17.751879690335485,
+              24.503749980304004
+            ],
+            "target": [
+              -10.9,
+              1,
+              8.2
+            ]
+          }
+        },
+        "actorModels": {
+          "companion": "glb",
+          "actors": [
+            {
+              "id": 30,
+              "lod": "lod2",
+              "position": [
+                -11,
+                0,
+                -20.849501856197186
+              ],
+              "yaw": -4.712388980384688,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 31,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -11.539501856196576
+              ],
+              "yaw": -4.712388980384688,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 33,
+              "lod": "lod0",
+              "position": [
+                -10.900332028139214,
+                0,
+                8.199999987076023
+              ],
+              "yaw": -3.139129532558316,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 142,
+              "lod": "lod2",
+              "position": [
+                16.3,
+                0,
+                -45
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 34,
+              "lod": "lod1",
+              "position": [
+                6.744667778318745,
+                0,
+                5.7
+              ],
+              "yaw": -3.1415926338501423,
+              "passengers": [],
+              "wheels": [
+                {
+                  "name": "wheelFL",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelFR",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRL",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRR",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                }
+              ],
+              "source": "glb"
+            },
+            {
+              "id": 32,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -0.3945018561967264
+              ],
+              "yaw": -4.712388965169803,
+              "passengers": [],
+              "wheels": [
+                {
+                  "name": "wheelFL",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelFR",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRL",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRR",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                }
+              ],
+              "source": "glb"
+            },
+            {
+              "id": 143,
+              "lod": "lod0",
+              "position": [
+                -6.7,
+                0,
+                6.15
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 144,
+              "lod": "lod0",
+              "position": [
+                -6.7,
+                0,
+                9.2
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 145,
+              "lod": "lod0",
+              "position": [
+                -6.7,
+                0,
+                12.25
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            }
+          ],
+          "placeholders": []
+        },
+        "draws": 224,
+        "triangles": 499403,
+        "vehicles": [
+          {
+            "id": 121,
+            "asset": "vehicle.sedan",
+            "at": {
+              "x": -30,
+              "z": 43.29999923706055,
+              "y": 0.7354345321655273,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 122,
+            "asset": "vehicle.suv",
+            "at": {
+              "x": -6,
+              "z": 43.29999923706055,
+              "y": 0.7354345321655273,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 123,
+            "asset": "vehicle.pickup",
+            "at": {
+              "x": -38,
+              "z": -42.599998474121094,
+              "y": 0.7354345321655273,
+              "yaw": 3.141592653589793
+            }
+          },
+          {
+            "id": 124,
+            "asset": "vehicle.sedan",
+            "at": {
+              "x": 30,
+              "z": -42.599998474121094,
+              "y": 0.7354345321655273,
+              "yaw": 3.141592653589793
+            }
+          },
+          {
+            "id": 125,
+            "asset": "vehicle.suv",
+            "at": {
+              "x": 15.800000190734863,
+              "z": 14,
+              "y": 0.7354346513748169,
+              "yaw": -1.570796461153735
+            }
+          },
+          {
+            "id": 126,
+            "asset": "vehicle.pickup",
+            "at": {
+              "x": -59.70000076293945,
+              "z": 20,
+              "y": 0.7354346513748169,
+              "yaw": -1.570796461153735
+            }
+          }
+        ],
+        "placeholders": []
+      },
+      "sha256": "10b5d60def3393feae6a66f6bfbbf62e75efe613383d1a0052e43fa9d976d305",
+      "tier": "high",
+      "backend": "webgl2",
+      "receipt": "L4-truck-high-webgl2.json",
+      "actualCamera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          -21.60562882953863,
+          1.7741557492123746e-18,
+          1.226435829302012
+        ],
+        "target": [
+          -10.9,
+          1,
+          8.2
+        ],
+        "position": [
+          5.403749980304001,
+          17.751879690335485,
+          24.503749980304004
+        ],
+        "spot": null,
+        "inspection": {
+          "position": [
+            5.403749980304001,
+            17.751879690335485,
+            24.503749980304004
+          ],
+          "target": [
+            -10.9,
+            1,
+            8.2
+          ]
+        }
+      },
+      "cell": 10,
+      "rawOriginal": "/private/tmp/r17-polish/L4-truck-high-webgl2/2-rear-arrival-t1949-z1.5.jpg"
+    },
+    {
+      "label": "front-arrival-t1949",
+      "requestedZoom": 1,
+      "radius": 19,
+      "state": {
+        "tick": 1955,
+        "position": {
+          "x": -16.799999237060547,
+          "y": 0.7049999833106995,
+          "z": 8.199999809265137,
+          "yaw": 2.7672181102622244
+        },
+        "backend": "webgl",
+        "quality": "high",
+        "camera": {
+          "zoom": 1,
+          "targetZoom": 1,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 19,
+          "regionScale": 1,
+          "focus": [
+            -16.799999237060547,
+            0,
+            8.199999809265137
+          ],
+          "target": [
+            -11,
+            1,
+            -11.54
+          ],
+          "position": [
+            -0.1308333464639979,
+            12.16791979355699,
+            -0.6708333464639953
+          ],
+          "spot": null,
+          "inspection": {
+            "position": [
+              -0.1308333464639979,
+              12.16791979355699,
+              -0.6708333464639953
+            ],
+            "target": [
+              -11,
+              1,
+              -11.54
+            ]
+          }
+        },
+        "actorModels": {
+          "companion": "glb",
+          "actors": [
+            {
+              "id": 30,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -20.849501856197186
+              ],
+              "yaw": -4.712388980384688,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 31,
+              "lod": "lod0",
+              "position": [
+                -11,
+                0,
+                -11.539501856196576
+              ],
+              "yaw": -4.712388980384688,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 33,
+              "lod": "lod1",
+              "position": [
+                -10.900332028139214,
+                0,
+                8.199999987076023
+              ],
+              "yaw": -3.139129532558316,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 142,
+              "lod": "lod2",
+              "position": [
+                16.3,
+                0,
+                -45
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 34,
+              "lod": "lod2",
+              "position": [
+                6.744667778318745,
+                0,
+                5.7
+              ],
+              "yaw": -3.1415926338501423,
+              "passengers": [],
+              "wheels": [
+                {
+                  "name": "wheelFL",
+                  "spin": -443.55445946427034,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelFR",
+                  "spin": -443.55445946427034,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRL",
+                  "spin": -443.55445946427034,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRR",
+                  "spin": -443.55445946427034,
+                  "steer": 0
+                }
+              ],
+              "source": "glb"
+            },
+            {
+              "id": 32,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -0.3945018561967264
+              ],
+              "yaw": -4.712388965169803,
+              "passengers": [],
+              "wheels": [
+                {
+                  "name": "wheelFL",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelFR",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRL",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRR",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                }
+              ],
+              "source": "glb"
+            },
+            {
+              "id": 143,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                6.15
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 144,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                9.2
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 145,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                12.25
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            }
+          ],
+          "placeholders": []
+        },
+        "draws": 161,
+        "triangles": 381326,
+        "vehicles": [
+          {
+            "id": 121,
+            "asset": "vehicle.sedan",
+            "at": {
+              "x": -30,
+              "z": 43.29999923706055,
+              "y": 0.7354345321655273,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 122,
+            "asset": "vehicle.suv",
+            "at": {
+              "x": -6,
+              "z": 43.29999923706055,
+              "y": 0.7354345321655273,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 123,
+            "asset": "vehicle.pickup",
+            "at": {
+              "x": -38,
+              "z": -42.599998474121094,
+              "y": 0.7354345321655273,
+              "yaw": 3.141592653589793
+            }
+          },
+          {
+            "id": 124,
+            "asset": "vehicle.sedan",
+            "at": {
+              "x": 30,
+              "z": -42.599998474121094,
+              "y": 0.7354345321655273,
+              "yaw": 3.141592653589793
+            }
+          },
+          {
+            "id": 125,
+            "asset": "vehicle.suv",
+            "at": {
+              "x": 15.800000190734863,
+              "z": 14,
+              "y": 0.7354346513748169,
+              "yaw": -1.570796461153735
+            }
+          },
+          {
+            "id": 126,
+            "asset": "vehicle.pickup",
+            "at": {
+              "x": -59.70000076293945,
+              "z": 20,
+              "y": 0.7354346513748169,
+              "yaw": -1.570796461153735
+            }
+          }
+        ],
+        "placeholders": []
+      },
+      "sha256": "e904fa8398d7661d3f1ea748a09ca46164bed051f1a7b579f9f24e634239e804",
+      "tier": "high",
+      "backend": "webgl2",
+      "receipt": "L4-truck-high-webgl2.json",
+      "actualCamera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          -16.799999237060547,
+          0,
+          8.199999809265137
+        ],
+        "target": [
+          -11,
+          1,
+          -11.54
+        ],
+        "position": [
+          -0.1308333464639979,
+          12.16791979355699,
+          -0.6708333464639953
+        ],
+        "spot": null,
+        "inspection": {
+          "position": [
+            -0.1308333464639979,
+            12.16791979355699,
+            -0.6708333464639953
+          ],
+          "target": [
+            -11,
+            1,
+            -11.54
+          ]
+        }
+      },
+      "cell": 11,
+      "rawOriginal": "/private/tmp/r17-polish/L4-truck-high-webgl2/10-front-arrival-t1949-z1.jpg"
+    },
+    {
+      "label": "front-arrival-t1949",
+      "requestedZoom": 1.5,
+      "radius": 28.5,
+      "state": {
+        "tick": 1955,
+        "position": {
+          "x": -16.799999237060547,
+          "y": 0.7049999833106995,
+          "z": 8.199999809265137,
+          "yaw": 2.7672181102622244
+        },
+        "backend": "webgl",
+        "quality": "high",
+        "camera": {
+          "zoom": 1,
+          "targetZoom": 1,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 19,
+          "regionScale": 1,
+          "focus": [
+            -16.799999237060547,
+            0,
+            8.199999809265137
+          ],
+          "target": [
+            -11,
+            1,
+            -11.54
+          ],
+          "position": [
+            5.303749980304001,
+            17.751879690335485,
+            4.763749980304006
+          ],
+          "spot": null,
+          "inspection": {
+            "position": [
+              5.303749980304001,
+              17.751879690335485,
+              4.763749980304006
+            ],
+            "target": [
+              -11,
+              1,
+              -11.54
+            ]
+          }
+        },
+        "actorModels": {
+          "companion": "glb",
+          "actors": [
+            {
+              "id": 30,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -20.849501856197186
+              ],
+              "yaw": -4.712388980384688,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 31,
+              "lod": "lod0",
+              "position": [
+                -11,
+                0,
+                -11.539501856196576
+              ],
+              "yaw": -4.712388980384688,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 33,
+              "lod": "lod1",
+              "position": [
+                -10.900332028139214,
+                0,
+                8.199999987076023
+              ],
+              "yaw": -3.139129532558316,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 142,
+              "lod": "lod2",
+              "position": [
+                16.3,
+                0,
+                -45
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 34,
+              "lod": "lod2",
+              "position": [
+                6.744667778318745,
+                0,
+                5.7
+              ],
+              "yaw": -3.1415926338501423,
+              "passengers": [],
+              "wheels": [
+                {
+                  "name": "wheelFL",
+                  "spin": -443.55445946427034,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelFR",
+                  "spin": -443.55445946427034,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRL",
+                  "spin": -443.55445946427034,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRR",
+                  "spin": -443.55445946427034,
+                  "steer": 0
+                }
+              ],
+              "source": "glb"
+            },
+            {
+              "id": 32,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -0.3945018561967264
+              ],
+              "yaw": -4.712388965169803,
+              "passengers": [],
+              "wheels": [
+                {
+                  "name": "wheelFL",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelFR",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRL",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRR",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                }
+              ],
+              "source": "glb"
+            },
+            {
+              "id": 143,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                6.15
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 144,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                9.2
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 145,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                12.25
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            }
+          ],
+          "placeholders": []
+        },
+        "draws": 194,
+        "triangles": 446119,
+        "vehicles": [
+          {
+            "id": 121,
+            "asset": "vehicle.sedan",
+            "at": {
+              "x": -30,
+              "z": 43.29999923706055,
+              "y": 0.7354345321655273,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 122,
+            "asset": "vehicle.suv",
+            "at": {
+              "x": -6,
+              "z": 43.29999923706055,
+              "y": 0.7354345321655273,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 123,
+            "asset": "vehicle.pickup",
+            "at": {
+              "x": -38,
+              "z": -42.599998474121094,
+              "y": 0.7354345321655273,
+              "yaw": 3.141592653589793
+            }
+          },
+          {
+            "id": 124,
+            "asset": "vehicle.sedan",
+            "at": {
+              "x": 30,
+              "z": -42.599998474121094,
+              "y": 0.7354345321655273,
+              "yaw": 3.141592653589793
+            }
+          },
+          {
+            "id": 125,
+            "asset": "vehicle.suv",
+            "at": {
+              "x": 15.800000190734863,
+              "z": 14,
+              "y": 0.7354346513748169,
+              "yaw": -1.570796461153735
+            }
+          },
+          {
+            "id": 126,
+            "asset": "vehicle.pickup",
+            "at": {
+              "x": -59.70000076293945,
+              "z": 20,
+              "y": 0.7354346513748169,
+              "yaw": -1.570796461153735
+            }
+          }
+        ],
+        "placeholders": []
+      },
+      "sha256": "755824fb9f3dfe3adae0526de901d9b8e24f9e5d5fc46206694a5916f3d21ab7",
+      "tier": "high",
+      "backend": "webgl2",
+      "receipt": "L4-truck-high-webgl2.json",
+      "actualCamera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          -16.799999237060547,
+          0,
+          8.199999809265137
+        ],
+        "target": [
+          -11,
+          1,
+          -11.54
+        ],
+        "position": [
+          5.303749980304001,
+          17.751879690335485,
+          4.763749980304006
+        ],
+        "spot": null,
+        "inspection": {
+          "position": [
+            5.303749980304001,
+            17.751879690335485,
+            4.763749980304006
+          ],
+          "target": [
+            -11,
+            1,
+            -11.54
+          ]
+        }
+      },
+      "cell": 12,
+      "rawOriginal": "/private/tmp/r17-polish/L4-truck-high-webgl2/11-front-arrival-t1949-z1.5.jpg"
+    },
+    {
+      "label": "rear-arrival-t1949",
+      "requestedZoom": 1,
+      "radius": 19,
+      "state": {
+        "tick": 1949,
+        "position": {
+          "x": -21.99052619934082,
+          "y": 0.7099999785423279,
+          "z": 1.0752074718475342,
+          "yaw": 2.7672181102622244
+        },
+        "backend": "webgpu",
+        "quality": "high",
+        "camera": {
+          "zoom": 1,
+          "targetZoom": 1,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 19,
+          "regionScale": 1,
+          "focus": [
+            -21.60562882953863,
+            1.7741557492123746e-18,
+            1.226435829302012
+          ],
+          "target": [
+            -10.9,
+            1,
+            8.2
+          ],
+          "position": [
+            -0.030833346463998268,
+            12.16791979355699,
+            19.069166653536
+          ],
+          "spot": null,
+          "inspection": {
+            "position": [
+              -0.030833346463998268,
+              12.16791979355699,
+              19.069166653536
+            ],
+            "target": [
+              -10.9,
+              1,
+              8.2
+            ]
+          }
+        },
+        "actorModels": {
+          "companion": "glb",
+          "actors": [
+            {
+              "id": 30,
+              "lod": "lod2",
+              "position": [
+                -11,
+                0,
+                -20.849501856197186
+              ],
+              "yaw": -4.712388980384688,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 31,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -11.539501856196576
+              ],
+              "yaw": -4.712388980384688,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 33,
+              "lod": "lod0",
+              "position": [
+                -10.900332028139214,
+                0,
+                8.199999987076023
+              ],
+              "yaw": -3.139129532558316,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 32,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -0.3945018561967264
+              ],
+              "yaw": -4.712388965169803,
+              "passengers": [],
+              "wheels": [
+                {
+                  "name": "wheelFL",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelFR",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRL",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRR",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                }
+              ],
+              "source": "glb"
+            },
+            {
+              "id": 142,
+              "lod": "lod2",
+              "position": [
+                16.3,
+                0,
+                -45
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 34,
+              "lod": "lod1",
+              "position": [
+                6.744667778318745,
+                0,
+                5.7
+              ],
+              "yaw": -3.1415926338501423,
+              "passengers": [],
+              "wheels": [
+                {
+                  "name": "wheelFL",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelFR",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRL",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRR",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                }
+              ],
+              "source": "glb"
+            },
+            {
+              "id": 143,
+              "lod": "lod0",
+              "position": [
+                -6.7,
+                0,
+                6.15
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 144,
+              "lod": "lod0",
+              "position": [
+                -6.7,
+                0,
+                9.2
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 145,
+              "lod": "lod0",
+              "position": [
+                -6.7,
+                0,
+                12.25
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            }
+          ],
+          "placeholders": []
+        },
+        "draws": 184,
+        "triangles": 402045,
+        "vehicles": [
+          {
+            "id": 121,
+            "asset": "vehicle.sedan",
+            "at": {
+              "x": -30,
+              "z": 43.29999923706055,
+              "y": 0.7354345321655273,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 122,
+            "asset": "vehicle.suv",
+            "at": {
+              "x": -6,
+              "z": 43.29999923706055,
+              "y": 0.7354345321655273,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 123,
+            "asset": "vehicle.pickup",
+            "at": {
+              "x": -38,
+              "z": -42.599998474121094,
+              "y": 0.7354345321655273,
+              "yaw": 3.141592653589793
+            }
+          },
+          {
+            "id": 124,
+            "asset": "vehicle.sedan",
+            "at": {
+              "x": 30,
+              "z": -42.599998474121094,
+              "y": 0.7354345321655273,
+              "yaw": 3.141592653589793
+            }
+          },
+          {
+            "id": 125,
+            "asset": "vehicle.suv",
+            "at": {
+              "x": 15.800000190734863,
+              "z": 14,
+              "y": 0.7354346513748169,
+              "yaw": -1.570796461153735
+            }
+          },
+          {
+            "id": 126,
+            "asset": "vehicle.pickup",
+            "at": {
+              "x": -59.70000076293945,
+              "z": 20,
+              "y": 0.7354346513748169,
+              "yaw": -1.570796461153735
+            }
+          }
+        ],
+        "placeholders": []
+      },
+      "sha256": "b75684d7a1870b14908d04c9178e8c8dfc460f352e2d3834b2acde2faf373e8e",
+      "tier": "high",
+      "backend": "webgpu",
+      "receipt": "L4-truck-high-webgpu.json",
+      "actualCamera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          -21.60562882953863,
+          1.7741557492123746e-18,
+          1.226435829302012
+        ],
+        "target": [
+          -10.9,
+          1,
+          8.2
+        ],
+        "position": [
+          -0.030833346463998268,
+          12.16791979355699,
+          19.069166653536
+        ],
+        "spot": null,
+        "inspection": {
+          "position": [
+            -0.030833346463998268,
+            12.16791979355699,
+            19.069166653536
+          ],
+          "target": [
+            -10.9,
+            1,
+            8.2
+          ]
+        }
+      },
+      "cell": 13,
+      "rawOriginal": "/private/tmp/r17-polish/L4-truck-high-webgpu/1-rear-arrival-t1949-z1.jpg"
+    },
+    {
+      "label": "rear-arrival-t1949",
+      "requestedZoom": 1.5,
+      "radius": 28.5,
+      "state": {
+        "tick": 1949,
+        "position": {
+          "x": -21.99052619934082,
+          "y": 0.7099999785423279,
+          "z": 1.0752074718475342,
+          "yaw": 2.7672181102622244
+        },
+        "backend": "webgpu",
+        "quality": "high",
+        "camera": {
+          "zoom": 1,
+          "targetZoom": 1,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 19,
+          "regionScale": 1,
+          "focus": [
+            -21.60562882953863,
+            1.7741557492123746e-18,
+            1.226435829302012
+          ],
+          "target": [
+            -10.9,
+            1,
+            8.2
+          ],
+          "position": [
+            5.403749980304001,
+            17.751879690335485,
+            24.503749980304004
+          ],
+          "spot": null,
+          "inspection": {
+            "position": [
+              5.403749980304001,
+              17.751879690335485,
+              24.503749980304004
+            ],
+            "target": [
+              -10.9,
+              1,
+              8.2
+            ]
+          }
+        },
+        "actorModels": {
+          "companion": "glb",
+          "actors": [
+            {
+              "id": 30,
+              "lod": "lod2",
+              "position": [
+                -11,
+                0,
+                -20.849501856197186
+              ],
+              "yaw": -4.712388980384688,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 31,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -11.539501856196576
+              ],
+              "yaw": -4.712388980384688,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 33,
+              "lod": "lod0",
+              "position": [
+                -10.900332028139214,
+                0,
+                8.199999987076023
+              ],
+              "yaw": -3.139129532558316,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 32,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -0.3945018561967264
+              ],
+              "yaw": -4.712388965169803,
+              "passengers": [],
+              "wheels": [
+                {
+                  "name": "wheelFL",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelFR",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRL",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRR",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                }
+              ],
+              "source": "glb"
+            },
+            {
+              "id": 142,
+              "lod": "lod2",
+              "position": [
+                16.3,
+                0,
+                -45
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 34,
+              "lod": "lod1",
+              "position": [
+                6.744667778318745,
+                0,
+                5.7
+              ],
+              "yaw": -3.1415926338501423,
+              "passengers": [],
+              "wheels": [
+                {
+                  "name": "wheelFL",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelFR",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRL",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRR",
+                  "spin": -432.69643513179074,
+                  "steer": 0
+                }
+              ],
+              "source": "glb"
+            },
+            {
+              "id": 143,
+              "lod": "lod0",
+              "position": [
+                -6.7,
+                0,
+                6.15
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 144,
+              "lod": "lod0",
+              "position": [
+                -6.7,
+                0,
+                9.2
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 145,
+              "lod": "lod0",
+              "position": [
+                -6.7,
+                0,
+                12.25
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            }
+          ],
+          "placeholders": []
+        },
+        "draws": 224,
+        "triangles": 499403,
+        "vehicles": [
+          {
+            "id": 121,
+            "asset": "vehicle.sedan",
+            "at": {
+              "x": -30,
+              "z": 43.29999923706055,
+              "y": 0.7354345321655273,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 122,
+            "asset": "vehicle.suv",
+            "at": {
+              "x": -6,
+              "z": 43.29999923706055,
+              "y": 0.7354345321655273,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 123,
+            "asset": "vehicle.pickup",
+            "at": {
+              "x": -38,
+              "z": -42.599998474121094,
+              "y": 0.7354345321655273,
+              "yaw": 3.141592653589793
+            }
+          },
+          {
+            "id": 124,
+            "asset": "vehicle.sedan",
+            "at": {
+              "x": 30,
+              "z": -42.599998474121094,
+              "y": 0.7354345321655273,
+              "yaw": 3.141592653589793
+            }
+          },
+          {
+            "id": 125,
+            "asset": "vehicle.suv",
+            "at": {
+              "x": 15.800000190734863,
+              "z": 14,
+              "y": 0.7354346513748169,
+              "yaw": -1.570796461153735
+            }
+          },
+          {
+            "id": 126,
+            "asset": "vehicle.pickup",
+            "at": {
+              "x": -59.70000076293945,
+              "z": 20,
+              "y": 0.7354346513748169,
+              "yaw": -1.570796461153735
+            }
+          }
+        ],
+        "placeholders": []
+      },
+      "sha256": "2d6abf73ee7a101753d84407740c4dd8157188b116081649a5436af9ddee474e",
+      "tier": "high",
+      "backend": "webgpu",
+      "receipt": "L4-truck-high-webgpu.json",
+      "actualCamera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          -21.60562882953863,
+          1.7741557492123746e-18,
+          1.226435829302012
+        ],
+        "target": [
+          -10.9,
+          1,
+          8.2
+        ],
+        "position": [
+          5.403749980304001,
+          17.751879690335485,
+          24.503749980304004
+        ],
+        "spot": null,
+        "inspection": {
+          "position": [
+            5.403749980304001,
+            17.751879690335485,
+            24.503749980304004
+          ],
+          "target": [
+            -10.9,
+            1,
+            8.2
+          ]
+        }
+      },
+      "cell": 14,
+      "rawOriginal": "/private/tmp/r17-polish/L4-truck-high-webgpu/2-rear-arrival-t1949-z1.5.jpg"
+    },
+    {
+      "label": "front-arrival-t1949",
+      "requestedZoom": 1,
+      "radius": 19,
+      "state": {
+        "tick": 1955,
+        "position": {
+          "x": -16.799999237060547,
+          "y": 0.7049999833106995,
+          "z": 8.199999809265137,
+          "yaw": 2.7672181102622244
+        },
+        "backend": "webgpu",
+        "quality": "high",
+        "camera": {
+          "zoom": 1,
+          "targetZoom": 1,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 19,
+          "regionScale": 1,
+          "focus": [
+            -16.799999237060547,
+            0,
+            8.199999809265137
+          ],
+          "target": [
+            -11,
+            1,
+            -11.54
+          ],
+          "position": [
+            -0.1308333464639979,
+            12.16791979355699,
+            -0.6708333464639953
+          ],
+          "spot": null,
+          "inspection": {
+            "position": [
+              -0.1308333464639979,
+              12.16791979355699,
+              -0.6708333464639953
+            ],
+            "target": [
+              -11,
+              1,
+              -11.54
+            ]
+          }
+        },
+        "actorModels": {
+          "companion": "glb",
+          "actors": [
+            {
+              "id": 30,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -20.849501856197186
+              ],
+              "yaw": -4.712388980384688,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 31,
+              "lod": "lod0",
+              "position": [
+                -11,
+                0,
+                -11.539501856196576
+              ],
+              "yaw": -4.712388980384688,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 33,
+              "lod": "lod1",
+              "position": [
+                -10.900332028139214,
+                0,
+                8.199999987076023
+              ],
+              "yaw": -3.139129532558316,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 32,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -0.3945018561967264
+              ],
+              "yaw": -4.712388965169803,
+              "passengers": [],
+              "wheels": [
+                {
+                  "name": "wheelFL",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelFR",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRL",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRR",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                }
+              ],
+              "source": "glb"
+            },
+            {
+              "id": 142,
+              "lod": "lod2",
+              "position": [
+                16.3,
+                0,
+                -45
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 34,
+              "lod": "lod2",
+              "position": [
+                6.744667778318745,
+                0,
+                5.7
+              ],
+              "yaw": -3.1415926338501423,
+              "passengers": [],
+              "wheels": [
+                {
+                  "name": "wheelFL",
+                  "spin": -443.55445946427034,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelFR",
+                  "spin": -443.55445946427034,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRL",
+                  "spin": -443.55445946427034,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRR",
+                  "spin": -443.55445946427034,
+                  "steer": 0
+                }
+              ],
+              "source": "glb"
+            },
+            {
+              "id": 143,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                6.15
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 144,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                9.2
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 145,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                12.25
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            }
+          ],
+          "placeholders": []
+        },
+        "draws": 161,
+        "triangles": 381326,
+        "vehicles": [
+          {
+            "id": 121,
+            "asset": "vehicle.sedan",
+            "at": {
+              "x": -30,
+              "z": 43.29999923706055,
+              "y": 0.7354345321655273,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 122,
+            "asset": "vehicle.suv",
+            "at": {
+              "x": -6,
+              "z": 43.29999923706055,
+              "y": 0.7354345321655273,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 123,
+            "asset": "vehicle.pickup",
+            "at": {
+              "x": -38,
+              "z": -42.599998474121094,
+              "y": 0.7354345321655273,
+              "yaw": 3.141592653589793
+            }
+          },
+          {
+            "id": 124,
+            "asset": "vehicle.sedan",
+            "at": {
+              "x": 30,
+              "z": -42.599998474121094,
+              "y": 0.7354345321655273,
+              "yaw": 3.141592653589793
+            }
+          },
+          {
+            "id": 125,
+            "asset": "vehicle.suv",
+            "at": {
+              "x": 15.800000190734863,
+              "z": 14,
+              "y": 0.7354346513748169,
+              "yaw": -1.570796461153735
+            }
+          },
+          {
+            "id": 126,
+            "asset": "vehicle.pickup",
+            "at": {
+              "x": -59.70000076293945,
+              "z": 20,
+              "y": 0.7354346513748169,
+              "yaw": -1.570796461153735
+            }
+          }
+        ],
+        "placeholders": []
+      },
+      "sha256": "ac4705089358f426574dec73242f5793205edd9668fcc4acd5b71c6770923712",
+      "tier": "high",
+      "backend": "webgpu",
+      "receipt": "L4-truck-high-webgpu.json",
+      "actualCamera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          -16.799999237060547,
+          0,
+          8.199999809265137
+        ],
+        "target": [
+          -11,
+          1,
+          -11.54
+        ],
+        "position": [
+          -0.1308333464639979,
+          12.16791979355699,
+          -0.6708333464639953
+        ],
+        "spot": null,
+        "inspection": {
+          "position": [
+            -0.1308333464639979,
+            12.16791979355699,
+            -0.6708333464639953
+          ],
+          "target": [
+            -11,
+            1,
+            -11.54
+          ]
+        }
+      },
+      "cell": 15,
+      "rawOriginal": "/private/tmp/r17-polish/L4-truck-high-webgpu/10-front-arrival-t1949-z1.jpg"
+    },
+    {
+      "label": "front-arrival-t1949",
+      "requestedZoom": 1.5,
+      "radius": 28.5,
+      "state": {
+        "tick": 1955,
+        "position": {
+          "x": -16.799999237060547,
+          "y": 0.7049999833106995,
+          "z": 8.199999809265137,
+          "yaw": 2.7672181102622244
+        },
+        "backend": "webgpu",
+        "quality": "high",
+        "camera": {
+          "zoom": 1,
+          "targetZoom": 1,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 19,
+          "regionScale": 1,
+          "focus": [
+            -16.799999237060547,
+            0,
+            8.199999809265137
+          ],
+          "target": [
+            -11,
+            1,
+            -11.54
+          ],
+          "position": [
+            5.303749980304001,
+            17.751879690335485,
+            4.763749980304006
+          ],
+          "spot": null,
+          "inspection": {
+            "position": [
+              5.303749980304001,
+              17.751879690335485,
+              4.763749980304006
+            ],
+            "target": [
+              -11,
+              1,
+              -11.54
+            ]
+          }
+        },
+        "actorModels": {
+          "companion": "glb",
+          "actors": [
+            {
+              "id": 30,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -20.849501856197186
+              ],
+              "yaw": -4.712388980384688,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 31,
+              "lod": "lod0",
+              "position": [
+                -11,
+                0,
+                -11.539501856196576
+              ],
+              "yaw": -4.712388980384688,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 33,
+              "lod": "lod1",
+              "position": [
+                -10.900332028139214,
+                0,
+                8.199999987076023
+              ],
+              "yaw": -3.139129532558316,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 32,
+              "lod": "lod1",
+              "position": [
+                -11,
+                0,
+                -0.3945018561967264
+              ],
+              "yaw": -4.712388965169803,
+              "passengers": [],
+              "wheels": [
+                {
+                  "name": "wheelFL",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelFR",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRL",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRR",
+                  "spin": -432.69738410937777,
+                  "steer": 0
+                }
+              ],
+              "source": "glb"
+            },
+            {
+              "id": 142,
+              "lod": "lod2",
+              "position": [
+                16.3,
+                0,
+                -45
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 34,
+              "lod": "lod2",
+              "position": [
+                6.744667778318745,
+                0,
+                5.7
+              ],
+              "yaw": -3.1415926338501423,
+              "passengers": [],
+              "wheels": [
+                {
+                  "name": "wheelFL",
+                  "spin": -443.55445946427034,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelFR",
+                  "spin": -443.55445946427034,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRL",
+                  "spin": -443.55445946427034,
+                  "steer": 0
+                },
+                {
+                  "name": "wheelRR",
+                  "spin": -443.55445946427034,
+                  "steer": 0
+                }
+              ],
+              "source": "glb"
+            },
+            {
+              "id": 143,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                6.15
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 144,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                9.2
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            },
+            {
+              "id": 145,
+              "lod": "lod1",
+              "position": [
+                -6.7,
+                0,
+                12.25
+              ],
+              "yaw": 1.5707963267948966,
+              "passengers": [],
+              "wheels": [],
+              "source": "glb"
+            }
+          ],
+          "placeholders": []
+        },
+        "draws": 194,
+        "triangles": 446119,
+        "vehicles": [
+          {
+            "id": 121,
+            "asset": "vehicle.sedan",
+            "at": {
+              "x": -30,
+              "z": 43.29999923706055,
+              "y": 0.7354345321655273,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 122,
+            "asset": "vehicle.suv",
+            "at": {
+              "x": -6,
+              "z": 43.29999923706055,
+              "y": 0.7354345321655273,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 123,
+            "asset": "vehicle.pickup",
+            "at": {
+              "x": -38,
+              "z": -42.599998474121094,
+              "y": 0.7354345321655273,
+              "yaw": 3.141592653589793
+            }
+          },
+          {
+            "id": 124,
+            "asset": "vehicle.sedan",
+            "at": {
+              "x": 30,
+              "z": -42.599998474121094,
+              "y": 0.7354345321655273,
+              "yaw": 3.141592653589793
+            }
+          },
+          {
+            "id": 125,
+            "asset": "vehicle.suv",
+            "at": {
+              "x": 15.800000190734863,
+              "z": 14,
+              "y": 0.7354346513748169,
+              "yaw": -1.570796461153735
+            }
+          },
+          {
+            "id": 126,
+            "asset": "vehicle.pickup",
+            "at": {
+              "x": -59.70000076293945,
+              "z": 20,
+              "y": 0.7354346513748169,
+              "yaw": -1.570796461153735
+            }
+          }
+        ],
+        "placeholders": []
+      },
+      "sha256": "ea605b1d4baca10ca75f8d3e7ee72eaf47fa45367c305be66ab9445a5450a8ed",
+      "tier": "high",
+      "backend": "webgpu",
+      "receipt": "L4-truck-high-webgpu.json",
+      "actualCamera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          -16.799999237060547,
+          0,
+          8.199999809265137
+        ],
+        "target": [
+          -11,
+          1,
+          -11.54
+        ],
+        "position": [
+          5.303749980304001,
+          17.751879690335485,
+          4.763749980304006
+        ],
+        "spot": null,
+        "inspection": {
+          "position": [
+            5.303749980304001,
+            17.751879690335485,
+            4.763749980304006
+          ],
+          "target": [
+            -11,
+            1,
+            -11.54
+          ]
+        }
+      },
+      "cell": 16,
+      "rawOriginal": "/private/tmp/r17-polish/L4-truck-high-webgpu/11-front-arrival-t1949-z1.5.jpg"
+    }
+  ],
+  "review": "PASS: all16 cells inspected; khaki diffuse fabric and retained high-tier folds, no chrome highlights; truck geometry unchanged."
+}

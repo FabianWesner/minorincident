@@ -239,8 +239,18 @@ export class LevelNineCrash {
   }
   cameraPose(): { position: [number, number, number]; target: [number, number, number] } | null {
     const s = this.state;
-    if (s.phase === 'driving' || s.phase === 'crawl' || s.phase === 'done') return null;
-    if (s.phase === 'impact') return { position: [524, 3, 14], target: [516, -3.5, 4] };
+    if (s.phase === 'driving' || s.phase === 'done') return null;
+    if (s.phase === 'crawl') {
+      const p = this.w.entities.get(1)!.transform;
+      return { position: [p.x + 14, 12, p.z - 14], target: [p.x, .35, p.z] };
+    }
+    if (s.phase === 'impact') {
+      // The landing follows the incoming velocity, so frame the actual wreck
+      // and safe crawl anchor from the far bank instead of a fixed girder.
+      const car = this.w.entities.get(s.carId)!.transform, p = this.w.entities.get(1)!.transform;
+      const x = (car.x + p.x) / 2, z = (car.z + p.z) / 2;
+      return { position: [x + 28, 22, z - 32], target: [x, 0, z] };
+    }
     const p = this.w.entities.get(s.carId)!.transform;
     return { position: [p.x + 20, 22, p.z + 20], target: [p.x, p.y, p.z] };
   }
