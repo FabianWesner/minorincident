@@ -291,6 +291,7 @@ export class DistrictView extends Group {
     this.parts.cureDecals?.update(view.cameraTarget,this.low, !this.barnRoofVisible);
     this.lodPrefetchMetres = Math.hypot(velocity.x, velocity.z) * terrainPrefetchSeconds;
     if (this.parts.terrain) {
+      this.parts.terrain.visible = !this.overview;
       this.parts.terrain.warm = this.warmHero; this.parts.terrain.swap = this.swapSlot;
       this.parts.terrain.update([view.cameraTarget.x, view.cameraTarget.z], [velocity.x, velocity.z]);
     }

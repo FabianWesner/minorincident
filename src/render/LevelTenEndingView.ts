@@ -98,16 +98,20 @@ export class LevelTenEndingView extends Group {
       const pull = epiloguePull(ticks), console = this.world.missions?.def.anchors['cure-console'];
       if (console && (state?.epilogue?.phase === 'thanks' || ticks >= 45 * 60 && pull === 0)) {
         const aspect = Math.max(1, 1 / view.camera.aspect);
-        view.camera.far = 600; view.camera.updateProjectionMatrix();
+        view.camera.near = .1; view.camera.far = 600; view.camera.updateProjectionMatrix();
         view.cinematic({ position: [console.x + 20 * aspect, 1 + 16 * aspect, console.z + 3 + 22 * aspect], target: [console.x + 2, 1, console.z + 3] });
       } else if (console && pull > 0) {
         // Fit the complete long L10 rectangle at every aspect ratio, with a generous margin.
         const bounds = this.world.districts!.nav, centreX = (bounds.min[0] + bounds.max[0]) / 2, centreZ = (bounds.min[1] + bounds.max[1]) / 2;
         const halfX = (bounds.max[0] - bounds.min[0]) / 2, halfZ = (bounds.max[1] - bounds.min[1]) / 2;
         const height = Math.max(halfX / Math.max(.35, view.camera.aspect), halfZ) / Math.tan(view.camera.fov * Math.PI / 360) * 1.2;
+        const aspect = Math.max(1, 1 / view.camera.aspect), baseHeight = 22 * aspect;
         const x = console.x + (centreX - console.x) * pull, z = console.z + (centreZ - console.z) * pull;
+        // At kilometre heights the gameplay near plane loses the millimetre
+        // separation between terrain layers. Keep depth precision on the map.
+        view.camera.near = Math.max(.1, (baseHeight + height * pull) * .05);
         view.camera.far = Math.max(600, height * 3); view.camera.updateProjectionMatrix();
-        view.cinematic({ position: [x + 16 * (1 - pull), 22 + height * pull, z + 18 * (1 - pull)], target: [x, 0, z] });
+        view.cinematic({ position: [x + 16 * aspect * (1 - pull), baseHeight + height * pull, z + 18 * aspect * (1 - pull)], target: [x, 0, z] });
       }
     }
   }
