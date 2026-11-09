@@ -46,7 +46,7 @@ export class LevelNineDriving {
   private get car() { return this.w.vehicles!.cars.get(this.mission.l9!.state.carId)!; }
   private signal(name: string, actorId?: number) { this.w.events.emit({ type: 'mission.signal', tick: this.w.tick, name: `l9.${name}`, ...(actorId === undefined ? {} : { actorId }) }); }
   private line(id: string, delay = 0): void { this.state.lines.push({ id, at: this.w.tick + delay }); }
-  private checkpoint(id: string): void { if (!this.state.checkpoints.includes(id)) { this.state.checkpoints.push(id); this.mission.checkpoint(id); } }
+  private checkpoint(id: string): void { if (this.w.entities.get(1)!.health.current > 0 && this.w.vehicles!.active === this.mission.l9!.state.carId && !this.state.checkpoints.includes(id)) { this.state.checkpoints.push(id); this.mission.checkpoint(id); } }
   prepare(): void {
     const s = this.state, w = this.w;
     w.npcs!.setAmbient(0); w.infected!.director.levelCap = 200; w.infected!.director.ambientTarget = 0; w.infected!.director.strict = true;

@@ -82,7 +82,7 @@ export class L8BossArenas {
   /** Called by the shared same-ID turn event before the ordinary infected brain can leave the enclosure. */
   turned(id: number): void {
     const arena = this.state.find(a => a.ids.includes(id)), e = this.w.entities.get(id);
-    if (!arena || !e?.infected) return;
+    if (!arena || !e?.infected || arena.phase === 3) return;
     const def = l8BossArenas.find(a => a.id === arena.id)!;
     e.health.current = e.health.max = def.hp;
     e.infected.arenaBoss = { arena: arena.id, slot: arena.ids.indexOf(id), engaged: arena.phase > 0, exposedUntil: 0, readyAt: 0 };
@@ -142,7 +142,7 @@ export class L8BossArenas {
         this.announce(`${def.name}: ${def.counter}`); this.signal(arena, 'engaged');
       }
       if (!arena.phase) continue;
-      const unturned = arena.ids.filter(id => !!w.entities.get(id)?.civilian && (w.entities.get(id)?.health.current ?? 0) > 0).length;
+      const pendingTurns = arena.ids.some(id => { const e = w.entities.get(id); return !!e?.infection || e?.civilian?.state === 'grabbed'; });
       const total = arena.ids.reduce((hp, id) => { const e = w.entities.get(id); return hp + (e?.civilian && e.health.current > 0 ? def.hp : Math.max(0, e?.health.current ?? 0)); }, 0);
       const halfDown = arena.ids.filter(id => { const e = w.entities.get(id); return e?.infected && e.health.current <= 0; }).length >= Math.ceil(def.count / 2);
       const first = w.entities.get(arena.ids[0]);
@@ -151,8 +151,11 @@ export class L8BossArenas {
         arena.phase = 2; if (arena.id === 'monkey') this.announce('The leader is coming out — stop him to scatter the pack!'); if (arena.id !== 'elephant') arena.nextAt = Math.min(arena.nextAt, w.tick + 60); this.signal(arena, 'phase-2');
       }
       const leader = w.entities.get(arena.ids.at(-1)!);
-      if (!unturned && !live.length || arena.id === 'monkey' && arena.phase === 2 && leader?.infected && leader.health.current <= 0) {
+      if (!pendingTurns && !live.length || arena.id === 'monkey' && arena.phase === 2 && leader?.infected && leader.health.current <= 0) {
         arena.phase = 3; arena.endedAt = w.tick;
+        const carrier = w.entities.get(arena.carrier);
+        if (carrier?.infected) delete carrier.infected.arenaCarrier;
+        arena.carrier = 0;
         for (const e of live) { w.infected!.cancelSpecial(e.id); e.infected!.arenaBoss!.engaged = false; e.infected!.state = 'scatter'; e.infected!.arenaBoss!.scattered = true; }
         this.signal(arena, 'cleared');
       }

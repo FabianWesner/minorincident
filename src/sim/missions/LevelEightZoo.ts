@@ -274,7 +274,7 @@ export class LevelEightZoo {
     const w = this.w, s = this.state, ai = w.infected!, t = w.tick;
     this.bosses.update();
     const hale = w.entities.get(s.haleId);
-    if (this.breached && !this.mission.state.states['hale-keys'] && hale?.civilian && hale.health.current > 0 && distance(hale.transform, this.door()) > 1.8) {
+    if (this.breached && s.arenas.every(a => a.id === 'elephant' || a.phase === 3) && !this.mission.state.states['hale-keys'] && hale?.civilian && hale.health.current > 0 && distance(hale.transform, this.door()) > 1.8) {
       // Hale's retreat remains physical while he fires. Repeated rifle windups
       // must not pin him hundreds of metres behind the final door staging.
       if (!this.approachBoardingSpot(hale, this.door(), 6)) w.npcs!.move(hale, this.door(), 6, hale.civilian, .2, 48000);
@@ -368,7 +368,7 @@ export class LevelEightZoo {
       if (!ally.post || distance(ally.post, desired) >= 2) {
         const at = this.point(desired); ally.post = at; ally.run = at; ally.runSpeed = 6; ally.hold = true;
       }
-      if (ally.run && distance(guard.transform, ally.run) > 2) this.w.npcs!.move(guard, ally.run, 6, guard.civilian!, .3, 48000);
+      if (ally.run && distance(guard.transform, ally.run) > 2 && distance(guard.transform, ally.run) < 20) this.w.npcs!.move(guard, ally.run, 6, guard.civilian!, .3, 2400);
     }
   }
   /** L8 no longer owns a Mega Alpha reveal; L9 is its first appearance. */
