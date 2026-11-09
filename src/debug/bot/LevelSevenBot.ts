@@ -4,7 +4,6 @@ import { l7Rocket } from '../../data/l7';
 import { l7CorridorAnchors } from '../../levels/L7/corridor';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import { Walker } from './Walker';
-import { corpseDetour } from '../../sim/missions/missionHelpers';
 import { solidLargeCorpse } from '../../sim/world/SolidRegistry';
 
 const distance = (a: { x: number; z: number }, b: { x: number; z: number }) => Math.hypot(a.x - b.x, a.z - b.z);
@@ -16,12 +15,15 @@ export class LevelSevenBot {
   private readonly route = [{ x: 88, z: 15 }, { x: 88, z: 46 }, { x: -30, z: 47 }, { x: -36, z: 47 }, { x: -36, z: 41.7 }, { x: -50, z: 41.7 }, { x: -50, z: 47 }, { x: l7CorridorAnchors['l7-bus-boarding'].position[0], z: l7CorridorAnchors['l7-bus-boarding'].position[2] }];
   private waypoint = 0;
   private detour: { x: number; z: number; until: number } | null = null;
+  private avoidCorpses = false;
   finished = false;
   constructor(private readonly w: SimWorld, readonly profile = 'complete') {}
   sample(): InputFrame {
     const w = this.w, p = w.entities.get(1)!, f = emptyInput();
     this.finished = w.l7Departure?.state.phase === 'done' || w.missions?.state.phase === 'result' || w.missions?.state.phase === 'progression';
     if (this.finished || w.storyLock || this.profile === 'idle' || p.health.current <= 0) return f;
+    const blocker = w.solids.blockingBody(1);
+    if (blocker && solidLargeCorpse(blocker)) this.avoidCorpses = true;
     const pickup = w.l7Encounters!.state.started ? undefined : [...w.entities.iterate()].find(e => e.pickup && 'actionId' in e.pickup && e.pickup.actionId === l7Rocket.action);
     // A dodge can already take the courier past a corridor corner. Rejoin a
     // forward clear leg instead of walking back to the missed corner and
@@ -34,10 +36,10 @@ export class LevelSevenBot {
     }
     if (!pickup && this.waypoint < this.route.length - 1 && distance(p.transform, this.route[this.waypoint]) < (this.waypoint >= 3 ? .3 : 2)) this.waypoint++;
     const goal = pickup?.transform ?? this.route[this.waypoint];
-    if (!pickup && this.waypoint >= 3 && w.infected!.nav.visible(p.transform, goal, .35)) {
+    if (!this.avoidCorpses && !pickup && this.waypoint >= 3 && w.infected!.nav.visible(p.transform, goal, .35)) {
       const dx = goal.x - p.transform.x, dz = goal.z - p.transform.z, d = Math.hypot(dx, dz);
       if (d > .2) f.move = { x: dx / d, z: dz / d };
-    } else f.move = this.walker.step(w, goal, pickup ? .5 : this.waypoint >= 3 ? .2 : 1, `${pickup ? 'pickup' : 'bus'}-${this.waypoint}`) ?? f.move;
+    } else f.move = this.walker.step(w, goal, pickup ? .5 : this.waypoint >= 3 ? .2 : 1, `${pickup ? 'pickup' : 'bus'}-${this.waypoint}`, this.avoidCorpses) ?? f.move;
     if (pickup && distance(p.transform, goal) < 1.45) { f.move = { x: 0, z: 0 }; f.interact = true; }
     const rocket = p.weapons!.RIGHT.rack.findIndex(s => s.id === l7Rocket.action);
     if (rocket >= 0) f.selectedSlot = { side: 'RIGHT', index: rocket };
@@ -63,19 +65,12 @@ export class LevelSevenBot {
     // its bites. Reuse the same connected six-metre dodge as the war bot.
     if (!pickup && this.profile !== 'evade-only') {
       if (this.detour && (w.tick >= this.detour.until || distance(p.transform, this.detour) < .8)) this.detour = null;
-      // Static route visibility does not include a fallen Alpha. Reuse the
-      // followers' swept body detour when contact identifies that obstruction.
-      const blocker = w.solids.blockingBody(1);
-      if (!this.detour && blocker && solidLargeCorpse(blocker)) {
-        const around = corpseDetour(w, p, goal);
-        if (around?.length) this.detour = { ...around[0], until: w.tick + 45 };
-      }
       const alpha = enemies.find(e => e.archetype === 'infected.alpha' && e.infected?.specialAttack?.stage === 'telegraph' && distance(e.transform, p.transform) < 14);
       if (followers.length && !this.detour && (alpha || enemies[0] && distance(enemies[0].transform, p.transform) < 6)) {
         const at = this.walker.detour(w, goal, (alpha ?? enemies[0]).transform);
         if (at) this.detour = { ...at, until: w.tick + 45 };
       }
-      if (this.detour) f.move = this.walker.step(w, this.detour, .8, `dodge-${this.detour.until}`) ?? f.move;
+      if (this.detour) f.move = this.walker.step(w, this.detour, .8, `dodge-${this.detour.until}`, this.avoidCorpses) ?? f.move;
     }
     return f;
   }
