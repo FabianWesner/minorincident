@@ -24,7 +24,7 @@ The first L9 inspection also revealed a harness limitation: teleporting the cour
 | --- | --- | --- | --- |
 | L3 | Actual weapon hits break glass, collapse a house and ignite/explode a car in all four quality/backend cells, both zooms. Other sampled buildings remain intact. Further PO corridor/evacuation checks pending. | Smoke/debris obscure the initial wreck inspection; later settled-state inspection pending. | Not established from this limited street fixture. Warm lighting and house silhouettes are coherent. |
 | L4 | Four opening matrices reach Fall back; truck arrival/wreck geometry reviewed. [Verdicts and sheet](L4.md). | Canvas looks metallic; late crowd/corpse overlap. Far LOD appearance and tank/wall controls remain unverified. | **No**: late silhouettes merge into a heap. |
-| L5 | Pending | Pending | Pending |
+| L5 | All4routes collect/transfer five; shutter replay reviewed. [Review](L5.md). | Group silhouettes overlap at the narrow shutter/post/caption composition. | **No overall:** finale needs clearer spacing/framing. |
 | L6 | All4routes reach result:27/29out after one retry. Counts and street framing pass. [Review](L6.md). | Long exit-stair bot wait followed by death/retry; ground runners remain below. | **No overall:** ordered procession and bright exit tread pattern dominate. |
 | L7 | Pending | Pending | Pending |
 | L8 | **FAIL to load**, low/high with both requested renderers. Story/arena/departure visuals blocked before Begin. | Low: missing required skinned monkey tier; high: skin semantic owner is not a weighted joint. | Cannot assess: neighborhood does not load. |
