@@ -302,6 +302,9 @@ export class LevelSevenEncounters {
       this.state.waitAt = w.tick + 300;
       this.warn(e, 'wait');
     }
+    // A moving corridor slot needs continuous steering. The half-metre
+    // arrival deadband supplied no intent for whole walking samples, then
+    // made the follower accelerate again after its slot had already moved on.
     const arrival = w.missions!.state.steps.departure?.status === 'active' ? .1 : .6;
     if (distance(e.transform, target) > arrival) {
       // Reuse the crowd's connected route across the city. Until that field
@@ -404,6 +407,7 @@ export class LevelSevenEncounters {
     const slot = e.civilian!.survivor!.slot, loose = looseSlotOffset(slot);
     const moving = Math.hypot(velocity.x, velocity.z) > .8;
     const last = this.trail.at(-1);
+    const departure = this.world.missions!.state.steps.departure?.status === 'active';
     if (last && distance(last, player) > 6) this.trail.length = 0;
     if (!last || distance(last, player) >= .4) {
       // Follow the street, not every small aim/dodge correction. A clear
@@ -420,15 +424,16 @@ export class LevelSevenEncounters {
       this.trail.push({ x: player.x, z: player.z });
       if (this.trail.length > 128) this.trail.shift();
     }
-    if (this.world.missions!.state.steps.departure?.status === 'active') {
+    if (departure) {
       let remaining = 2.3 + Math.floor(slot / 2) + loose.back * .25, newer: Point = player;
       for (let i = this.trail.length - 1; i >= 0; i--) {
         const older = this.trail[i], length = distance(older, newer);
         if (length >= remaining && length > 0) {
           const hx = (newer.x - older.x) / length, hz = (newer.z - older.z) / length;
-          // Keep paired body room while varying each follower along the
-          // local trail tangent, including when the courier rounds the bus.
-          const side = (slot % 2 - .5) * 1.2 + loose.side * .2 + (moving ? swayOffset(e.id, this.world.tick, .12) : 0);
+          // A pair drifts together through narrow turns, with a small personal
+          // sway. Independent wide offsets squeeze partners into each other
+          // or the wreck edges; keep their body room and the original lane width.
+          const side = slot % 2 - .5 + loose.side * .05 + (moving ? swayOffset(Math.floor(slot / 2), this.world.tick, .12) + swayOffset(e.id, this.world.tick, .03) : 0);
           const centre = { x: newer.x - hx * remaining, z: newer.z - hz * remaining };
           const goal = { x: centre.x - hz * side, z: centre.z + hx * side };
           const nav = this.followerNavigation();

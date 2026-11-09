@@ -21,6 +21,15 @@ export class LevelSevenBot {
     this.finished = w.l7Departure?.state.phase === 'done' || w.missions?.state.phase === 'result' || w.missions?.state.phase === 'progression';
     if (this.finished || w.storyLock || this.profile === 'idle' || p.health.current <= 0) return f;
     const pickup = w.l7Encounters!.state.started ? undefined : [...w.entities.iterate()].find(e => e.pickup && 'actionId' in e.pickup && e.pickup.actionId === l7Rocket.action);
+    // A dodge can already take the courier past a corridor corner. Rejoin a
+    // forward clear leg instead of walking back to the missed corner and
+    // dragging the column through the same turn twice.
+    if (!pickup && this.waypoint >= 3) for (let i = this.route.length - 1; i > this.waypoint; i--) {
+      const at = this.route[i], d = distance(p.transform, at);
+      if (at.x > p.transform.x || !d || !w.infected!.nav.visible(p.transform, at, .45)) continue;
+      if (w.solids.sweep(p, { x: (at.x - p.transform.x) / d, z: (at.z - p.transform.z) / d }, d) < d - .01) continue;
+      this.waypoint = i; break;
+    }
     if (!pickup && this.waypoint < this.route.length - 1 && distance(p.transform, this.route[this.waypoint]) < (this.waypoint >= 3 ? .3 : 2)) this.waypoint++;
     const goal = pickup?.transform ?? this.route[this.waypoint];
     if (!pickup && this.waypoint >= 3 && w.infected!.nav.visible(p.transform, goal, .35)) {
@@ -38,9 +47,14 @@ export class LevelSevenBot {
       strikeAt(f, enemies[0], 'RIGHT', p.transform, false);
     }
     const followers = w.l7Encounters!.state.roster.filter(r => r.status === 'following' && !w.l7Departure!.state.boarded.includes(r.id));
-    // Casualties leave holes; the last occupied row still needs its room.
+    // Casualties leave holes, not renumbered slots. Counting only the living
+    // shortened this wait band below a surviving tail's assigned row.
     const rows = followers.reduce((n, r) => Math.max(n, Math.floor(w.entities.get(r.id)!.civilian!.survivor!.slot / 3) + 1), 0);
-    const limit = Math.max(12, rows * 1.2 + 5);
+    const tail = followers.reduce((n, r) => Math.max(n, w.entities.get(r.id)!.civilian!.survivor!.slot), 0);
+    // The walking corridor is two abreast, longer than the street's three
+    // columns. Leave two metres for ordinary tracking lag behind its last row;
+    // otherwise stopping the leader can leave a settled tail outside the band.
+    const limit = Math.max(12, rows * 1.2 + 5, 2.3 + Math.floor(tail / 2) + 2);
     // Reach the bus door before waiting for the last stragglers; the shipped boarding queue owns their recovery there.
     if (!pickup && this.waypoint < this.route.length - 1 && distance(p.transform, goal) > 10 && followers.some(r => { const e = w.entities.get(r.id); return e && distance(e.transform, p.transform) > limit; })) f.move = { x: 0, z: 0 };
     // Clear a firing lane instead of running into a crowd or waiting inside
@@ -50,7 +64,7 @@ export class LevelSevenBot {
       const alpha = enemies.find(e => e.archetype === 'infected.alpha' && e.infected?.specialAttack?.stage === 'telegraph' && distance(e.transform, p.transform) < 14);
       if (!this.detour && (alpha || enemies[0] && distance(enemies[0].transform, p.transform) < 6)) {
         const at = this.walker.detour(w, goal, (alpha ?? enemies[0]).transform);
-        if (at) this.detour = { ...at, until: w.tick + 90 };
+        if (at) this.detour = { ...at, until: w.tick + 45 };
       }
       if (this.detour) f.move = this.walker.step(w, this.detour, .8, `dodge-${this.detour.until}`) ?? f.move;
     }
