@@ -90,7 +90,8 @@ export class LevelTenEndingView extends Group {
         a.mixer.setTime(age); a.root.position.set(a.x, 0, a.z + (shot >= 5 ? Math.min(age, 4) * .55 : 0));
       }
       this.dust.position.x = -28 + age * 16; this.dust.scale.setScalar(30);
-      view.cinematic({ position: [this.position.x + 27 - age * .7, 21, this.position.z + 30], target: [this.position.x, 2, this.position.z - 2] });
+      const aspect = Math.max(1, 1 / view.camera.aspect);
+      view.cinematic({ position: [this.position.x + (27 - age * .7) * aspect, 2 + 19 * aspect, this.position.z - 2 + 32 * aspect], target: [this.position.x, 2, this.position.z - 2] });
       cureDust.origin.value.set(this.position.x, this.position.z); cureDust.radius.value = 100;
     } else {
       if (this.hidden.size) { for (const [child, visible] of this.hidden) child.visible = visible; this.hidden.clear(); view.follow(); }
@@ -99,7 +100,7 @@ export class LevelTenEndingView extends Group {
       if (console && (state?.epilogue?.phase === 'thanks' || ticks >= 45 * 60 && pull === 0)) {
         const aspect = Math.max(1, 1 / view.camera.aspect);
         view.camera.near = .1; view.camera.far = 600; view.camera.updateProjectionMatrix();
-        view.cinematic({ position: [console.x + 20 * aspect, 1 + 16 * aspect, console.z + 3 + 22 * aspect], target: [console.x + 2, 1, console.z + 3] });
+        view.cinematic({ position: [console.x + 4 + 20 * aspect, 1 + 16 * aspect, console.z + 3 + 22 * aspect], target: [console.x + 4, 1, console.z + 3] });
       } else if (console && pull > 0) {
         // Fit the complete long L10 rectangle at every aspect ratio, with a generous margin.
         const bounds = this.world.districts!.nav, centreX = (bounds.min[0] + bounds.max[0]) / 2, centreZ = (bounds.min[1] + bounds.max[1]) / 2;
