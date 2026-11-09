@@ -243,6 +243,8 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       game.world.missions!.completeObjective('sanctuary');
       game.world.missions!.setState('hale-keys', true); game.world.missions!.setState('hale-fallen', true);
       zoo.state.departureAt = 0;
+      // p1-l8rework: the driver unlocks only after every arena boss (incl. the elephant) is defeated.
+      for (const arena of zoo.state.arenas) arena.phase = 3;
       const hale = game.world.entities.get(zoo.state.haleId);
       if (hale?.civilian) { hale.health.current = 0; hale.civilian.state = 'finished'; }
       const entry = vehicles.passengerDoor(zoo.state.carId), passengers = zoo.passengers();
