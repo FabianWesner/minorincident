@@ -1039,10 +1039,11 @@ export class LevelFourWar {
         const rng = new Rng(world.seed, `l4-group:${i}:${s.edgeCursor[i]}:${s.wave}`);
         const headroom = Math.max(this.headroom(), this.streetReserve() + groupReserve);
         let size = Math.min(s.pend[i], w.group[0] + Math.floor(rng.next() * (w.group[1] - w.group[0] + 1)), this.emergenceRoom(false, headroom), ai.pool.length);
-        while (size >= w.group[0] && !this.spawnRoom(this.low ? 0 : ai.director.reserved, size)) size--;
-        // Keep the quota pending until a real small group fits. A single free
-        // slot or final one-body remainder must not consume the cohort cadence.
-        if (size < w.group[0]) continue;
+        const minimum = Math.min(s.pend[i], w.group[0]);
+        while (size >= minimum && !this.spawnRoom(this.low ? 0 : ai.director.reserved, size)) size--;
+        // A cap vacancy cannot split a fresh cohort, but the final member of an
+        // authored wave must finish its approach rather than wait forever for another wave.
+        if (size < minimum) continue;
         const defenders = this.liveSoldiers(), soldiers = defenders.filter(x => this.insideRing(x.transform));
         const soldier = soldiers.slice().sort((a, b) => dist(a.transform, at) - dist(b.transform, at))[0];
         // Keep half the cohorts on the courier; send the other half to an
