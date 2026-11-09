@@ -407,7 +407,10 @@ export class LevelSevenEncounters {
     const slot = e.civilian!.survivor!.slot, loose = looseSlotOffset(slot);
     const moving = Math.hypot(velocity.x, velocity.z) > .8;
     const last = this.trail.at(-1);
-    const departure = this.world.missions!.state.steps.departure?.status === 'active';
+    // Form the narrow column on the approach street, before the objective
+    // changes. Re-forming three abreast into pairs at the corridor threshold
+    // makes the rear ranks cross and brake just as the horde arrives.
+    const departure = this.world.missions!.state.steps.departure?.status === 'active' || player.z > l7Encounters.streets.at(-1)!.z - 10;
     if (last && distance(last, player) > 6) this.trail.length = 0;
     if (!last || distance(last, player) >= .4) {
       // Follow the street, not every small aim/dodge correction. A clear
@@ -425,7 +428,7 @@ export class LevelSevenEncounters {
       if (this.trail.length > 128) this.trail.shift();
     }
     if (departure) {
-      let remaining = 2.3 + Math.floor(slot / 2) + loose.back * .25, newer: Point = player;
+      let remaining = 2.3 + Math.floor(slot / 2) * 1.1 + loose.back * .25, newer: Point = player;
       for (let i = this.trail.length - 1; i >= 0; i--) {
         const older = this.trail[i], length = distance(older, newer);
         if (length >= remaining && length > 0) {
@@ -433,7 +436,7 @@ export class LevelSevenEncounters {
           // A pair drifts together through narrow turns, with a small personal
           // sway. Independent wide offsets squeeze partners into each other
           // or the wreck edges; keep their body room and the original lane width.
-          const side = slot % 2 - .5 + loose.side * .05 + (moving ? swayOffset(Math.floor(slot / 2), this.world.tick, .12) + swayOffset(e.id, this.world.tick, .03) : 0);
+          const side = (slot % 2 - .5) * 1.2 + loose.side * .05 + (moving ? swayOffset(Math.floor(slot / 2), this.world.tick, .12) + swayOffset(e.id, this.world.tick, .03) : 0);
           const centre = { x: newer.x - hx * remaining, z: newer.z - hz * remaining };
           const goal = { x: centre.x - hz * side, z: centre.z + hx * side };
           const nav = this.followerNavigation();
