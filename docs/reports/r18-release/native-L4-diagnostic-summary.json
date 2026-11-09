@@ -1,0 +1,282 @@
+{
+  "prod": {
+    "cpuMs": {
+      "sim": {
+        "median": 2.2000000029802322,
+        "p95": 2.7999999970197678,
+        "max": 4.200000002980232
+      },
+      "update": null,
+      "render": null
+    },
+    "topSelfSeconds": [
+      [
+        [
+          "(idle)",
+          "",
+          -1
+        ],
+        25.0569
+      ],
+      [
+        [
+          "(program)",
+          "",
+          -1
+        ],
+        2.9286
+      ],
+      [
+        [
+          "update",
+          "index-Dk-iL-FG.js",
+          17
+        ],
+        1.5338
+      ],
+      [
+        [
+          "updateForRender",
+          "three-webgpu-Cy_8JUkS.js",
+          40
+        ],
+        1.5242
+      ],
+      [
+        [
+          "_renderObjectDirect",
+          "three-webgpu-Cy_8JUkS.js",
+          43
+        ],
+        1.4125
+      ],
+      [
+        [
+          "updateMatrixWorld",
+          "three-core-DQooTupI.js",
+          4
+        ],
+        1.1992
+      ],
+      [
+        [
+          "writeBuffer",
+          "",
+          -1
+        ],
+        0.9357
+      ],
+      [
+        [
+          "_update",
+          "three-webgpu-Cy_8JUkS.js",
+          32
+        ],
+        0.9154
+      ],
+      [
+        [
+          "getObjectByProperty",
+          "three-core-DQooTupI.js",
+          4
+        ],
+        0.8346
+      ],
+      [
+        [
+          "_projectObject",
+          "three-webgpu-Cy_8JUkS.js",
+          43
+        ],
+        0.6662
+      ],
+      [
+        [
+          "multiplyMatrices",
+          "three-core-DQooTupI.js",
+          4
+        ],
+        0.638
+      ],
+      [
+        [
+          "update",
+          "three-webgpu-Cy_8JUkS.js",
+          43
+        ],
+        0.6211
+      ],
+      [
+        [
+          "updateReference",
+          "three-webgpu-Cy_8JUkS.js",
+          26
+        ],
+        0.6053
+      ],
+      [
+        [
+          "emit",
+          "index-Dk-iL-FG.js",
+          0
+        ],
+        0.5485
+      ],
+      [
+        [
+          "update",
+          "index-Dk-iL-FG.js",
+          0
+        ],
+        0.5261
+      ]
+    ],
+    "profiledP95": 16.700000000004366,
+    "profiledMax": 33.399999999999636,
+    "unavailableCpuFields": [
+      "update",
+      "render"
+    ],
+    "note": "Public build compiles out GameView CPU timing; raw zero placeholders for update/render are not timings."
+  },
+  "candidate": {
+    "cpuMs": {
+      "sim": {
+        "median": 7.199999988079071,
+        "p95": 19.200000002980232,
+        "max": 29.200000002980232
+      },
+      "update": null,
+      "render": null
+    },
+    "topSelfSeconds": [
+      [
+        [
+          "cover",
+          "index-Dvfi5s_W.js",
+          5
+        ],
+        15.5787
+      ],
+      [
+        [
+          "(idle)",
+          "",
+          -1
+        ],
+        5.9357
+      ],
+      [
+        [
+          "(program)",
+          "",
+          -1
+        ],
+        2.8515
+      ],
+      [
+        [
+          "clearDistance",
+          "index-Dvfi5s_W.js",
+          5
+        ],
+        2.263
+      ],
+      [
+        [
+          "update",
+          "index-Dvfi5s_W.js",
+          17
+        ],
+        1.4331
+      ],
+      [
+        [
+          "_renderObjectDirect",
+          "three-webgpu-C2KYQN71.js",
+          43
+        ],
+        1.385
+      ],
+      [
+        [
+          "updateMatrixWorld",
+          "three-core-DM1KFlB2.js",
+          4
+        ],
+        1.347
+      ],
+      [
+        [
+          "updateForRender",
+          "three-webgpu-C2KYQN71.js",
+          40
+        ],
+        1.3352
+      ],
+      [
+        [
+          "_update",
+          "three-webgpu-C2KYQN71.js",
+          32
+        ],
+        1.0156
+      ],
+      [
+        [
+          "writeBuffer",
+          "",
+          -1
+        ],
+        0.9449
+      ],
+      [
+        [
+          "(garbage collector)",
+          "",
+          -1
+        ],
+        0.9178
+      ],
+      [
+        [
+          "updateReference",
+          "three-webgpu-C2KYQN71.js",
+          26
+        ],
+        0.7506
+      ],
+      [
+        [
+          "getObjectByProperty",
+          "three-core-DM1KFlB2.js",
+          4
+        ],
+        0.7484
+      ],
+      [
+        [
+          "update",
+          "three-webgpu-C2KYQN71.js",
+          43
+        ],
+        0.6745
+      ],
+      [
+        [
+          "_projectObject",
+          "three-webgpu-C2KYQN71.js",
+          43
+        ],
+        0.6455
+      ]
+    ],
+    "profiledP95": 33.30000000000291,
+    "profiledMax": 50.099999999998545,
+    "unavailableCpuFields": [
+      "update",
+      "render"
+    ],
+    "note": "Public build compiles out GameView CPU timing; raw zero placeholders for update/render are not timings."
+  }
+}
