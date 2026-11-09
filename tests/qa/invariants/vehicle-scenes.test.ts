@@ -23,7 +23,10 @@ test('4 vehicles: all level start poses, L8 evacuation vehicles and L9 scripted 
         const asset = e.archetype.startsWith('vehicle.') ? vehicleDef(e.archetype).asset : e.archetype.startsWith('veh.') ? e.archetype : e.appearance?.asset;
         const authored = asset ? physicsAssets[asset as keyof typeof physicsAssets] : undefined;
         const def = e.archetype.startsWith('vehicle.') ? vehicleDef(e.archetype) : null;
-        const boxes = authored?.boxes ?? (def ? [{ min: [-def.length / 2, -.3, -def.width / 2], max: [def.length / 2, .3, def.width / 2] }] : []);
+        const prop = w.props?.items.find(item => item.entityId === e.id);
+        // Decorative vehicles have authored scale; validate the installed hull rather than an unscaled catalogue box.
+        const installed = prop && [{ min: prop.center.map((v, i) => v - prop.half[i]), max: prop.center.map((v, i) => v + prop.half[i]) }];
+        const boxes = installed ?? authored?.boxes ?? (def ? [{ min: [-def.length / 2, -.3, -def.width / 2], max: [def.length / 2, .3, def.width / 2] }] : []);
         expect(boxes.length, `${level}/${label}: vehicle hull must be available`).toBeGreaterThan(0);
         poses[level] = (poses[level] ?? 0) + 1;
         for (const b of boxes) {

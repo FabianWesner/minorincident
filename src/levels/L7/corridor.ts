@@ -34,7 +34,7 @@ export const l7CorridorItems: readonly CorridorItem[] = [
   ['alley-sedan', 'veh.wreck', -79, 15, .9, 1, 'wrecked'],
   ['alley-truck-1', 'veh.military-truck', -82, 20, H + .1, 1, 'wrecked'],
   ['alley-collapse-2', 'decay.collapsed-facade', -73.4, 38, -H, 1],
-  ['alley-apc-2', 'veh.military-apc', -82, 44.5, H - .2, 1, 'wrecked'],
+  ['alley-apc-2', 'veh.military-apc', -82.25, 44.5, H - .2, 1, 'wrecked'],
   // East mouth of the corridor: broken jersey line and sandbags, passable beside the lamp posts.
   ['east-jersey-0', 'prop.jersey-barrier', -32, 52.2, H, 1],
   ['east-jersey-1', 'prop.jersey-barrier', -32.4, 43.6, H + .2, 1],
