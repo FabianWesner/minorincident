@@ -1,0 +1,8 @@
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+
+> lint
+> eslint src tests tools functions *.config.ts eslint.config.js
+
