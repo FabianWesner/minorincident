@@ -330,6 +330,13 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   const cureLayout = (await import('../../public/assets/layouts/D-CURE.layout.json')).default as unknown as import('../../src/levels/districts/types').DistrictLayout;
   const { levelTenLayouts } = await import('../../src/levels/L10/layout');
   const assembled = new DistrictWorld(compositions.L10, levelTenLayouts([cureLayout]), 42);
+  const heights = assembled.groundHeights(), nav = assembled.nav;
+  let groundMismatches = 0;
+  for (let i = 0; i < nav.cells.length; i++) if (nav.cells[i]) {
+    const x = nav.min[0] + (i % nav.width + .5) * nav.cellSize, z = nav.min[1] + (Math.floor(i / nav.width) + .5) * nav.cellSize;
+    if (heights[i] !== Math.fround(assembled.groundHeight(x, z))) groundMismatches++;
+  }
+  expect(groundMismatches, 'rasterized L10 supports and slabs match every exact nav-cell query').toBe(0);
   const actualFarm = assembled.districts[0].layout.placements;
   expect(actualFarm.filter(p => p.assetId === 'veg.corn-block').length).toBeGreaterThan(100);
   for (const [x, z] of [[1350, 19], [1650, -38.45], [3150, 51.05], [3450, 53]]) {

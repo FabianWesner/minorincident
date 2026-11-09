@@ -5,18 +5,26 @@ import type { NavGrid } from './NavGrid';
 /** Largest climb between two adjacent nav cells that still counts as walkable (kerbs, ramp lips); any drop is a one-way fall. */
 export const stepUpM = .7;
 /** Cells from which one of the goals can be reached on foot, with falls as one-way edges (backward flood from the goals). */
-export function goalReach(nav: NavGrid, height: (x: number, z: number) => number, goals: { x: number; z: number }[]): Uint8Array {
-  const w = nav.width, n = nav.cells.length, h = new Float32Array(n);
-  for (let i = 0; i < n; i++) if (nav.cells[i]) h[i] = height(nav.min[0] + (i % w + .5) * nav.cellSize, nav.min[1] + (Math.floor(i / w) + .5) * nav.cellSize);
+export function goalReach(nav: NavGrid, height: (x: number, z: number) => number, goals: { x: number; z: number }[], heights?: Float32Array): Uint8Array {
+  const w = nav.width, n = nav.cells.length, h = heights ?? new Float32Array(n);
+  if (h.length !== n) throw new RangeError('Ground samples must match the nav grid');
+  if (!heights) for (let i = 0; i < n; i++) if (nav.cells[i]) h[i] = height(nav.min[0] + (i % w + .5) * nav.cellSize, nav.min[1] + (Math.floor(i / w) + .5) * nav.cellSize);
   const can = new Uint8Array(n), queue = new Int32Array(n); let write = 0;
   for (const g of goals) { const i = nav.index(g.x, g.z); if (i >= 0 && nav.cells[i] && !can[i]) { can[i] = 1; queue[write++] = i; } }
   for (let r = 0; r < write; r++) {
     const i = queue[r], x = i % w;
-    for (let dz = -1; dz <= 1; dz++) for (let dx = -1; dx <= 1; dx++) {
-      if (!dx && !dz) continue;
-      const nx = x + dx, j = i + dz * w + dx;
-      if (nx < 0 || nx >= w || j < 0 || j >= n || !nav.cells[j] || can[j]) continue;
-      if (dx && dz && (!nav.cells[i + dx] || !nav.cells[i + dz * w])) continue;
+    let flat = true;
+    for (let direction = 0; direction < 4; direction++) {
+      const j = direction === 0 ? x > 0 ? i - 1 : -1 : direction === 1 ? x < w - 1 ? i + 1 : -1 : direction === 2 ? i - w : i + w;
+      if (j < 0 || j >= n || !nav.cells[j]) continue;
+      if (h[j] !== h[i]) flat = false;
+      if (!can[j] && h[i] - h[j] <= stepUpM) { can[j] = 1; queue[write++] = j; }
+    }
+    // On a flat neighbourhood every allowed diagonal is also a two-step
+    // cardinal route. Only height transitions need the extra directed edges.
+    if (!flat) for (let dz = -1; dz <= 1; dz += 2) for (let dx = -1; dx <= 1; dx += 2) {
+      const j = i + dz * w + dx;
+      if (x + dx < 0 || x + dx >= w || j < 0 || j >= n || !nav.cells[j] || can[j] || !nav.cells[i + dx] || !nav.cells[i + dz * w]) continue;
       if (h[i] - h[j] <= stepUpM) { can[j] = 1; queue[write++] = j; }
     }
   }
@@ -37,7 +45,7 @@ export class TrapRescue {
   private stuck = 0; private fade = 0;
   constructor(private readonly world: SimWorld, goals: { x: number; z: number }[]) {
     const d = world.districts;
-    this.can = d && goals.length ? goalReach(d.nav, (x, z) => d.groundHeight(x, z), goals) : new Uint8Array(0);
+    this.can = d && goals.length ? goalReach(d.nav, (x, z) => d.groundHeight(x, z), goals, d.groundHeights()) : new Uint8Array(0);
   }
   /** True when (x, z) is an open nav cell from which an objective can be reached on foot (never rescued from there). */
   reachable(x: number, z: number): boolean {
