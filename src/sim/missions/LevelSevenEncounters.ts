@@ -283,7 +283,7 @@ export class LevelSevenEncounters {
       const exit = { x: launcher.transform.x - l7Rocket.exitOffset[0], z: launcher.transform.z - l7Rocket.exitOffset[1] };
       const road = l7Encounters.streets[0], heading = leaderHeading(-Math.atan2(road.z - exit.z, road.x - exit.x));
       const origin = { x: exit.x - heading.x * 3.5, z: exit.z - heading.z * 3.5 };
-      w.npcs!.move(e, formationSlot(origin, heading, s.slot), 5.2, c, .3);
+      w.npcs!.move(e, formationSlot(origin, heading, s.slot, false), 5.2, c, .3);
       w.spatial.set(e.id, e.transform.x, e.transform.z);
       return true;
     }
