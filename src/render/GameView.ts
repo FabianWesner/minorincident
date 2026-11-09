@@ -44,7 +44,7 @@ import { MeshGridMaterial } from './MeshGridMaterial';
 import { PhysicsWireframe } from './PhysicsWireframe';
 import { View, playerSteers } from './View';
 import { Renderer } from './Renderer';
-import { compileLanes, preRender } from './PreRenderer';
+import { compileLanes, incrementalPreRender, preRender } from './PreRenderer';
 import { Lighting } from './Lighting';
 import { Materials } from './Materials';
 import { Lookdev } from './Lookdev';
@@ -133,6 +133,8 @@ export class GameView implements Lifecycle {
   private preparation: Promise<void> | null = null;
   private epiloguePrepared: object | null = null;
   private endingView: LevelTenEndingView | null = null;
+  private panoramaWarmup: ReturnType<typeof incrementalPreRender> | undefined;
+  private panoramaStaged = false;
   private readonly panoramaHidden = new Map<import('three/webgpu').Object3D, boolean>();
   /** Pending L1 shader warm-up while the briefing is shown (see load()). */
   warming: Promise<void> | null = null;
@@ -673,6 +675,16 @@ export class GameView implements Lifecycle {
   }
   /** Close the bay only after the player enters. No ending camera, fade or scripted movement. */
   private updateEnding(): void {
+    const consoleAt = this.world.missions?.def.anchors['cure-console'];
+    if (!this.panoramaStaged && this.world.scenario === 'L10' && consoleAt && this.world.chunks?.resident(consoleAt.x, consoleAt.z)) {
+      const root = this.districts?.prepareOverview();
+      if (root) {
+        this.panoramaStaged = true;
+        this.panoramaWarmup = incrementalPreRender(this.renderer, this.scene, this.camera,
+          () => { if (this.postFx) this.postFx.render(); else this.renderer.render(this.scene, this.camera); },
+          batch => this.postFx ? this.postFx.compile(undefined, batch) : this.renderer.compileAsync(batch, this.camera, this.scene), run => run(), root);
+      }
+    }
     if (this.world.scenario === 'L10' && this.world.missions?.state.states['cure-installed'] && this.materials && !this.endingView) {
       this.endingView = new LevelTenEndingView(this.world, this.scene, this.materials, model => this.warmHidden(model)); this.scene.add(this.endingView);
     }
@@ -1191,6 +1203,7 @@ export class GameView implements Lifecycle {
     // FRAME-updated nodes, such as the PostFx scene pass, would keep that earlier camera's image: draw this pose.
     if (this.view.consumeSnap()) this.renderer.nextNodeFrame();
     // We own RAF, so reset counters per render rather than relying on setAnimationLoop.
+    this.panoramaWarmup?.step();
     this.renderer.info.reset(); this.renderedFrames++;
     this.renderer.beginProfile(this.camera);
     const renderStart = profileStart ? performance.now() : 0;
@@ -1305,6 +1318,10 @@ export class GameView implements Lifecycle {
     if (this.world.destruction) this.districts?.syncDestruction(this.world.destruction);
     await Promise.all([this.districts?.ready(), this.crowd?.ready(), this.npcs?.ready(), this.vehicles?.ready(), this.entityAssets?.ready(), this.interactions?.synchronize(), this.syncMountedGun()]);
     if (this.world.destruction) this.districts?.syncDestruction(this.world.destruction);
+    while (this.panoramaWarmup && !this.panoramaWarmup.done) {
+      this.panoramaWarmup.step();
+      await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
+    }
     corpseLayout(this.world).settleAll();
     // Tier loads chain (LOD1 stand-in, then LOD0) and each step is requested by the next partition: settle them, so a snapshot
     // never shows a building drawn from a stand-in mesh (lod-pop: the first Scene Lab frame showed crude LOD2 shapes).
@@ -1312,6 +1329,7 @@ export class GameView implements Lifecycle {
   }
   /** Same-district transitions reuse decoded prototypes; leaving the district retires the cache. */
   reset(nextDistricts?: string): void {
+    this.panoramaWarmup?.cancel(); this.panoramaWarmup = undefined; this.panoramaStaged = false;
     this.scenePrepared = false;
     for (const stop of this.cameraStops) stop(); this.cameraStops = []; this.cameraSnap = false;
     if (this.shutter) {

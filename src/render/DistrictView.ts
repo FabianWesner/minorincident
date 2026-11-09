@@ -102,6 +102,11 @@ export class DistrictView extends Group {
   terrainState() { return this.parts.terrain?.snapshot() ?? null; }
   /** Borrowed geometry/materials: the caller warms and detaches this copy. */
   horizonForWarmup(): Group | null { return this.parts.terrainHorizon?.clone(true) ?? null; }
+  /** The panorama enters only near the finale; its pipelines can prepare with that region. */
+  prepareOverview(): Group | undefined {
+    this.overviewView?.traverse(node => { delete node.userData.preventPreRender; });
+    return this.overviewView;
+  }
   private readonly mergedLayout = this.parts.mergedLayout;
   private readonly windowMask = new MeshBasicNodeMaterial({ color: "#ffffff" });
   private readonly black = new MeshBasicNodeMaterial({ color: "#000000" });
@@ -130,7 +135,11 @@ export class DistrictView extends Group {
   async load(seed: number, focus?: { x: number; z: number }, heroAtSpawn = false): Promise<void> {
     this.phase.value = 0;
     await buildDistrict(this.parts, { view: this, world: this.world, materials: this.materials, registry: this.registry, grassMaterial: this.grassMaterial, foliage: this.foliage, low: () => this.low, instanceCapacity: this.instanceCapacity }, seed, focus, heroAtSpawn);
-    if (this.world.composition.id === 'L10') { this.overviewView = new LevelTenOverview(this.world, this.materials); this.add(this.overviewView); }
+    if (this.world.composition.id === 'L10') {
+      this.overviewView = new LevelTenOverview(this.world, this.materials);
+      this.overviewView.traverse(node => { node.userData.preventPreRender = true; });
+      this.add(this.overviewView);
+    }
     this.occlusion.tagInteriors();
     // Destruction geometry is presentation-only until an object is first hit.
     // Load it on demand so untouched placements do not delay the playable scene.
