@@ -13,12 +13,8 @@ export const l7DefaultArsenal = {
 export const l7Encounters = {
   /** Courier protection ends on launcher pickup, or after the opening eight seconds. */
   openingGraceSeconds: 8,
-  /** Dense regular crowds chip courier health; Alpha attacks retain their full damage. */
-  courierLungeDamageScale: .15,
-  /** Health one completed bite takes from an evacuee (100 HP → the twentieth bite kills), and how long the
-   * biter reels after the evacuee tears free. The shared 1 s pedestrian bite killed outright, so the shown bars never
-   * mattered and only frame-perfect range fire could keep a 24-person column alive inside the opening mob. */
-  followerBite: { damage: 5, shoveTicks: 45 },
+  /** Batch 59 bite damage; the evacuee tears free while the biter reels. */
+  followerBite: { damage: 34, shoveTicks: 45 },
   finalGroup: 700, firstStreetGroup: 701,
   horde: { x: -64, z: 46 }, passage: { x: -76, z: 46 },
   // The party forms east of the courier, behind the westbound escape heading.
