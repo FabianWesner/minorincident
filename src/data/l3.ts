@@ -44,7 +44,8 @@ export const l3 = {
    * (station posts and the squad); the courier's weapons and the army checkpoint (riflemen, mounted gun) are untouched. */
   allyDamageScale: .5,
   officers: {
-    hp: 100,
+    /** PO 2026-11-09: "2x more health for police" (was 100). Zombie numbers unchanged. */
+    hp: 200,
     gun: { damage: 15, shotS: 1 / 1.5, rangeM: 22, nearM: 15, hitNear: .6, hitFar: .25 },
     /** The squad follows 3-8 m around/behind the courier; running beyond its band is a regroup order. */
     squad: { gun: { damage: 25, shotS: .35, rangeM: 22, nearM: 15, hitNear: .85, hitFar: .55 }, s1HitNear: .9, size: 4, minFollowM: 3, maxFollowM: 6, engageM: 18, leashM: 8, separatedM: 40, separatedS: 3, moveMs: 6.2, slowerMs: 0, breakoutS: 12,
