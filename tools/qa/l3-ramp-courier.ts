@@ -4,10 +4,10 @@ import { SceneSession, stopServer } from '../scenelab/session';
 import { highwayPoint } from '../../src/levels/L3/highway';
 import type { Game } from '../../src/Game';
 
-const out = 'test-results/qa/l3-ramp-courier'; mkdirSync(out, { recursive: true });
+const out = process.env.RAMP_OUT ?? 'test-results/qa/l3-ramp-courier'; mkdirSync(out, { recursive: true });
 const receipts: unknown[] = [];
 try {
-  for (const tier of ['low', 'high'] as const) {
+  for (const tier of (process.env.RAMP_TIER ? [process.env.RAMP_TIER as 'low' | 'high'] : ['low', 'high'] as const)) {
     const session = new SceneSession({ tier, backend: 'webgl2', query: { ui: '1' } });
     try {
       await session.open(); await session.page.evaluate('window.__name=f=>f');
@@ -20,7 +20,7 @@ try {
         await api.loadLevel('L3', { seed: 1, progression: 'L3-default' });
         api.missions.begin(); api.pause(); api.camera.follow(); api.camera.zoom(1.5);
       }, tier);
-      for (const restore of ['death', 'restart-retry'] as const) {
+      for (const restore of (['death', 'restart-retry'] as const).filter(r => !process.env.RAMP_RESTORE || r === process.env.RAMP_RESTORE)) {
         if (restore === 'restart-retry') {
           await session.page.evaluate(() => { (window.__SCENE__ as unknown as { game: Game }).game.ui.pause(); });
           await session.page.getByTestId('pause-restart').click();
@@ -60,15 +60,22 @@ try {
           const approach: [number, number, number][] = route.path.map(cell => [nav.x(cell), 0, nav.z(cell)]);
           return { player: { ...player.transform }, ramp, approach, checkpoint: world.missions!.state.checkpoint, tick: world.tick };
         });
+        console.error(`[ramp] ${tier}/${restore}: segment-3b restored at tick ${routeSetup.tick}`);
         // segment-3b restores at the last calm checkpoint, before the ramp foot.
         // Follow the complete authored S-curve rather than aiming at its upper bend.
         const points: [number, number, number][] = [...routeSetup.approach, [139, 0, 0], ...Array.from({ length: 61 }, (_, i) => highwayPoint(routeSetup.ramp, 1 - i / 60))];
+        const trace: unknown[] = [];
         let waypoint = 0, checkedEdge = false;
         for (let tick = 0; tick < 1200 && waypoint < points.length; tick++) {
           const state = await session.page.evaluate(() => {
             const game = (window.__SCENE__ as unknown as { game: Game }).game;
-            return { player: { ...game.world.entities.get(1)!.transform }, azimuth: game.view.view.azimuth };
+            const p = game.world.entities.get(1)!, blocker = game.world.solids.blockingBody(1);
+            return { tick: game.world.tick, player: { ...p.transform }, hp: p.health.current, diedAt: p.survivor?.diedAt,
+              staggerUntil: p.combat?.staggerUntil, knockback: p.knockbackSlide,
+              blocker: blocker && { id: blocker.id, archetype: blocker.archetype, hp: blocker.health.current, position: { ...blocker.transform } },
+              azimuth: game.view.view.azimuth };
           });
+          trace.push({ waypoint, target: points[waypoint], ...state });
           if (restore === 'death' && !checkedEdge && state.player.x >= 158.5) {
             checkedEdge = true;
             await session.page.keyboard.down('KeyA'); await session.page.keyboard.down('KeyS');
@@ -93,7 +100,10 @@ try {
           return { tick: game.world.tick, player: { ...game.world.entities.get(1)!.transform }, objective: game.world.missions!.state.steps.checkpoint?.status,
             ramps: game.view.labProbes().districts!.lodState().filter(p => p.assetId === 'kit.highway-onramp') };
         });
+        if (process.env.RAMP_TRACE) writeFileSync(`${out}/trace-${tier}-${restore}.json`, JSON.stringify(trace, null, 2) + '\n');
         if (waypoint !== points.length || final.player.y < points.at(-1)![1] + .6 || final.ramps.find(p => p.position[0] === 155.5)?.lod === 'culled') {
+          writeFileSync(`${out}/trace-${tier}-${restore}.json`, JSON.stringify(trace, null, 2) + '\n');
+          await session.screenshot(`${out}/failure-${tier}-${restore}.png`);
           receipts.push({ tier, restore, setup, routeSetup, waypoint, target: points[waypoint], final, consoleErrors: session.errors });
           throw new Error(`${tier} courier did not reach the ramp top: ${JSON.stringify(final.player)}`);
         }
@@ -104,7 +114,7 @@ try {
     } finally { await session.close(); }
   }
 } finally {
-  if (receipts.length) writeFileSync(`${out}/receipt.json`, JSON.stringify({ method: 'The native skilled input policy first reaches the real seed 1 segment-3b snapshot, then stops. Trigger production death/respawn, then the actual pause Restart level and mission Retry buttons; walk the full S-ramp with production keyboard WASD in headless pooled WebGL2. No teleport, cheats, or movement override. One settled top-of-ramp capture per quality tier.', runs: receipts }, null, 2) + '\n');
+  if (receipts.length) writeFileSync(`${out}/receipt.json`, JSON.stringify({ method: 'The native skilled input policy first reaches the real seed 1 segment-3b snapshot, then stops. Trigger production death/respawn, then the actual pause Restart level and mission Retry buttons; walk the full S-ramp with production keyboard WASD. No teleport, cheats, or movement override. One settled top-of-ramp capture per quality tier.', renderer: process.platform === 'darwin' ? 'pooled headless WebGL2/Metal' : 'remote headless WebGL2/SwiftShader', runs: receipts }, null, 2) + '\n');
   stopServer();
 }
 console.log(JSON.stringify(receipts, null, 2));
