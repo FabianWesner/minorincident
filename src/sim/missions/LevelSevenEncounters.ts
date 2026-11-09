@@ -428,7 +428,7 @@ export class LevelSevenEncounters {
       if (this.trail.length > 128) this.trail.shift();
     }
     if (departure) {
-      let remaining = 2.3 + Math.floor(slot / 2) + loose.back * .25, newer: Point = player;
+      let remaining = 2.3 + Math.floor(slot / 2) * 1.1 + loose.back * .25, newer: Point = player;
       for (let i = this.trail.length - 1; i >= 0; i--) {
         const older = this.trail[i], length = distance(older, newer);
         if (length >= remaining && length > 0) {
