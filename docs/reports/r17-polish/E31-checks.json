@@ -1,0 +1,30 @@
+{
+  "target": "E31",
+  "epics": [
+    "E31"
+  ],
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "status": 0,
+      "seconds": 18.326
+    },
+    {
+      "command": "npm run lint",
+      "status": 0,
+      "seconds": 11.71
+    },
+    {
+      "command": "npm test",
+      "status": 0,
+      "seconds": 46.875
+    }
+  ],
+  "revision": "35d9b553004c0a32babe3a8c9e3af4ca8c0a766a",
+  "sourceTree": "032d454593fe5882d05698294cef63fd68f0f6e0",
+  "scope": "Required per-change gate for all six presentation fixes; E31 wrapper runs typecheck, lint and the shared unit suite. No new tests added.",
+  "tests": {
+    "passed": 107,
+    "files": 27
+  }
+}

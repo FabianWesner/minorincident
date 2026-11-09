@@ -1,0 +1,338 @@
+[
+  {
+    "tag": "apc-low-webgl2",
+    "command": [
+      "sh",
+      "tools/e2e-lock.sh",
+      "node",
+      "--import",
+      "tsx",
+      "docs/reports/r17-polish/apc.ts",
+      "low",
+      "webgl2"
+    ],
+    "status": 0,
+    "seconds": 4.467,
+    "startedAt": "2026-11-09T05:40:17.482248+00:00"
+  },
+  {
+    "tag": "apc-low-webgpu",
+    "command": [
+      "sh",
+      "tools/e2e-lock.sh",
+      "node",
+      "--import",
+      "tsx",
+      "docs/reports/r17-polish/apc.ts",
+      "low",
+      "webgpu"
+    ],
+    "status": 0,
+    "seconds": 6.096,
+    "startedAt": "2026-11-09T05:40:21.949388+00:00"
+  },
+  {
+    "tag": "apc-high-webgl2",
+    "command": [
+      "sh",
+      "tools/e2e-lock.sh",
+      "node",
+      "--import",
+      "tsx",
+      "docs/reports/r17-polish/apc.ts",
+      "high",
+      "webgl2"
+    ],
+    "status": 0,
+    "seconds": 5.083,
+    "startedAt": "2026-11-09T05:40:28.045810+00:00"
+  },
+  {
+    "tag": "apc-high-webgpu",
+    "command": [
+      "sh",
+      "tools/e2e-lock.sh",
+      "node",
+      "--import",
+      "tsx",
+      "docs/reports/r17-polish/apc.ts",
+      "high",
+      "webgpu"
+    ],
+    "status": 0,
+    "seconds": 4.909,
+    "startedAt": "2026-11-09T05:40:33.129404+00:00"
+  },
+  {
+    "tag": "truck-low-webgl2",
+    "command": [
+      "sh",
+      "tools/e2e-lock.sh",
+      "node",
+      "--import",
+      "tsx",
+      "docs/reports/r17-polish/truck.ts",
+      "low",
+      "webgl2"
+    ],
+    "status": 0,
+    "seconds": 18.4,
+    "startedAt": "2026-11-09T05:40:38.038356+00:00"
+  },
+  {
+    "tag": "truck-low-webgpu",
+    "command": [
+      "sh",
+      "tools/e2e-lock.sh",
+      "node",
+      "--import",
+      "tsx",
+      "docs/reports/r17-polish/truck.ts",
+      "low",
+      "webgpu"
+    ],
+    "status": 0,
+    "seconds": 16.622,
+    "startedAt": "2026-11-09T05:40:56.438233+00:00"
+  },
+  {
+    "tag": "truck-high-webgl2",
+    "command": [
+      "sh",
+      "tools/e2e-lock.sh",
+      "node",
+      "--import",
+      "tsx",
+      "docs/reports/r17-polish/truck.ts",
+      "high",
+      "webgl2"
+    ],
+    "status": 0,
+    "seconds": 27.423,
+    "startedAt": "2026-11-09T05:41:13.061258+00:00"
+  },
+  {
+    "tag": "truck-high-webgpu",
+    "command": [
+      "sh",
+      "tools/e2e-lock.sh",
+      "node",
+      "--import",
+      "tsx",
+      "docs/reports/r17-polish/truck.ts",
+      "high",
+      "webgpu"
+    ],
+    "status": 0,
+    "seconds": 28.376,
+    "startedAt": "2026-11-09T05:41:40.484895+00:00"
+  },
+  {
+    "tag": "L5-low-webgl2",
+    "command": [
+      "sh",
+      "tools/e2e-lock.sh",
+      "node",
+      "--import",
+      "tsx",
+      "docs/reports/r17-polish/route.ts",
+      "L5",
+      "low",
+      "webgl2",
+      "complete"
+    ],
+    "status": 0,
+    "seconds": 32.828,
+    "startedAt": "2026-11-09T05:52:03.240854+00:00"
+  },
+  {
+    "tag": "L5-low-webgpu",
+    "command": [
+      "sh",
+      "tools/e2e-lock.sh",
+      "node",
+      "--import",
+      "tsx",
+      "docs/reports/r17-polish/route.ts",
+      "L5",
+      "low",
+      "webgpu",
+      "complete"
+    ],
+    "status": 0,
+    "seconds": 33.261,
+    "startedAt": "2026-11-09T05:52:36.069368+00:00"
+  },
+  {
+    "tag": "L5-high-webgl2",
+    "command": [
+      "sh",
+      "tools/e2e-lock.sh",
+      "node",
+      "--import",
+      "tsx",
+      "docs/reports/r17-polish/route.ts",
+      "L5",
+      "high",
+      "webgl2",
+      "complete"
+    ],
+    "status": 0,
+    "seconds": 51.255,
+    "startedAt": "2026-11-09T05:53:09.330495+00:00"
+  },
+  {
+    "tag": "L5-high-webgpu",
+    "command": [
+      "sh",
+      "tools/e2e-lock.sh",
+      "node",
+      "--import",
+      "tsx",
+      "docs/reports/r17-polish/route.ts",
+      "L5",
+      "high",
+      "webgpu",
+      "complete"
+    ],
+    "status": 0,
+    "seconds": 50.963,
+    "startedAt": "2026-11-09T05:54:00.586077+00:00"
+  },
+  {
+    "tag": "L7-low-webgl2",
+    "command": [
+      "sh",
+      "tools/e2e-lock.sh",
+      "node",
+      "--import",
+      "tsx",
+      "docs/reports/r17-polish/route.ts",
+      "L7",
+      "low",
+      "webgl2",
+      "complete"
+    ],
+    "status": 0,
+    "seconds": 60.163,
+    "startedAt": "2026-11-09T05:54:51.549573+00:00"
+  },
+  {
+    "tag": "L7-low-webgpu",
+    "command": [
+      "sh",
+      "tools/e2e-lock.sh",
+      "node",
+      "--import",
+      "tsx",
+      "docs/reports/r17-polish/route.ts",
+      "L7",
+      "low",
+      "webgpu",
+      "complete"
+    ],
+    "status": 0,
+    "seconds": 60.094,
+    "startedAt": "2026-11-09T05:55:51.713037+00:00"
+  },
+  {
+    "tag": "L7-high-webgl2",
+    "command": [
+      "sh",
+      "tools/e2e-lock.sh",
+      "node",
+      "--import",
+      "tsx",
+      "docs/reports/r17-polish/route.ts",
+      "L7",
+      "high",
+      "webgl2",
+      "complete"
+    ],
+    "status": 0,
+    "seconds": 60.271,
+    "startedAt": "2026-11-09T05:56:51.807260+00:00"
+  },
+  {
+    "tag": "L7-high-webgpu",
+    "command": [
+      "sh",
+      "tools/e2e-lock.sh",
+      "node",
+      "--import",
+      "tsx",
+      "docs/reports/r17-polish/route.ts",
+      "L7",
+      "high",
+      "webgpu",
+      "complete"
+    ],
+    "status": 0,
+    "seconds": 59.034,
+    "startedAt": "2026-11-09T05:57:52.078834+00:00"
+  },
+  {
+    "tag": "crash-low-webgl2",
+    "command": [
+      "sh",
+      "tools/e2e-lock.sh",
+      "node",
+      "--import",
+      "tsx",
+      "docs/reports/r17-polish/crash.ts",
+      "low",
+      "webgl2"
+    ],
+    "status": 0,
+    "seconds": 112.688,
+    "startedAt": "2026-11-09T05:58:51.113712+00:00"
+  },
+  {
+    "tag": "crash-low-webgpu",
+    "command": [
+      "sh",
+      "tools/e2e-lock.sh",
+      "node",
+      "--import",
+      "tsx",
+      "docs/reports/r17-polish/crash.ts",
+      "low",
+      "webgpu"
+    ],
+    "status": 0,
+    "seconds": 106.951,
+    "startedAt": "2026-11-09T06:00:43.803255+00:00"
+  },
+  {
+    "tag": "crash-high-webgl2",
+    "command": [
+      "sh",
+      "tools/e2e-lock.sh",
+      "node",
+      "--import",
+      "tsx",
+      "docs/reports/r17-polish/crash.ts",
+      "high",
+      "webgl2"
+    ],
+    "status": 0,
+    "seconds": 21.212,
+    "startedAt": "2026-11-09T06:02:30.754506+00:00"
+  },
+  {
+    "tag": "crash-high-webgpu",
+    "command": [
+      "sh",
+      "tools/e2e-lock.sh",
+      "node",
+      "--import",
+      "tsx",
+      "docs/reports/r17-polish/crash.ts",
+      "high",
+      "webgpu"
+    ],
+    "status": 0,
+    "seconds": 20.268,
+    "startedAt": "2026-11-09T06:02:51.967296+00:00"
+  }
+]
