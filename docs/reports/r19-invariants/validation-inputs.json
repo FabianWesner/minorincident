@@ -1,0 +1,43 @@
+{
+  "runtimeCommit": "8266f0ea",
+  "nightlyInputCommit": "c1f5e5af",
+  "nightlyStatus": "PASS",
+  "sim": {
+    "inputCommit": "da7a1fa5",
+    "passed": 28,
+    "failed": 0,
+    "seconds": 291.54
+  },
+  "unit": {
+    "inputCommit": "da7a1fa5",
+    "passed": 106,
+    "skipped": 1,
+    "workers": 2,
+    "seconds": 174.2,
+    "budgetSeconds": 240
+  },
+  "typecheck": {
+    "inputCommit": "c1f5e5af",
+    "exitCode": 0
+  },
+  "lint": {
+    "inputCommit": "c1f5e5af",
+    "exitCode": 0
+  },
+  "assets": {
+    "inputCommit": "3fe250a7",
+    "entries": 1533,
+    "errors": 0
+  },
+  "testInventory": {
+    "cases": 150,
+    "caseLimit": 150,
+    "files": 44,
+    "fileLimit": 45
+  },
+  "integration": "Orchestrator owns main; all commits after da7a1fa5 stay on lane/r19-invariants.",
+  "nightlySeconds": 1118.7592185859999,
+  "nightlyExitCode": 0,
+  "completedLevels": 10,
+  "campaignCollisionFailures": 0
+}

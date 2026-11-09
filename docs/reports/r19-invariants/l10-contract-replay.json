@@ -1,0 +1,172 @@
+{
+  "diagnostic": true,
+  "allNightlyL10Assertions": true,
+  "report": {
+    "level": "L10",
+    "policy": "complete",
+    "seed": 1,
+    "completed": true,
+    "time": 1019.1666666666667,
+    "deaths": 1,
+    "kills": 35,
+    "damageTaken": 166.7999999999996,
+    "failures": {
+      "player-died": 1
+    },
+    "objectiveTimeline": [
+      {
+        "id": "crash",
+        "t": 23.966666666666665
+      },
+      {
+        "id": "farmstead",
+        "t": 313.55
+      },
+      {
+        "id": "restricted-zone",
+        "t": 472.7
+      },
+      {
+        "id": "research-hangar",
+        "t": 530.4166666666666
+      },
+      {
+        "id": "research",
+        "t": 586.4333333333333
+      },
+      {
+        "id": "cure",
+        "t": 587.35
+      },
+      {
+        "id": "research-exit",
+        "t": 612.6166666666667
+      },
+      {
+        "id": "delivery-corridor",
+        "t": 644.0333333333333
+      },
+      {
+        "id": "dispersal-complex",
+        "t": 819.75
+      },
+      {
+        "id": "install",
+        "t": 888.5666666666667
+      },
+      {
+        "id": "hold",
+        "t": 951.0166666666667
+      },
+      {
+        "id": "mega",
+        "t": 951.0333333333333
+      },
+      {
+        "id": "release",
+        "t": 954.1666666666666
+      },
+      {
+        "id": "epilogue",
+        "t": 1019.1666666666666
+      },
+      {
+        "id": "credits",
+        "t": 1120.1666666666667
+      }
+    ],
+    "furthestObjective": "credits",
+    "activeObjectives": [],
+    "outcome": "complete",
+    "blocker": null,
+    "cureReleases": 1,
+    "regions": [
+      {
+        "id": "crash-outskirts",
+        "seconds": 66.53333333333084,
+        "travelSeconds": 60.83333333333116,
+        "combatSeconds": 3.7166666666666583,
+        "interactionSeconds": 0,
+        "holdSeconds": 0,
+        "epilogueSeconds": 0,
+        "otherSeconds": 1.9833333333333312,
+        "metres": 305.3334401558203
+      },
+      {
+        "id": "residential-fringe",
+        "seconds": 103.91666666666205,
+        "travelSeconds": 93.26666666666266,
+        "combatSeconds": 10.650000000000109,
+        "interactionSeconds": 0,
+        "holdSeconds": 0,
+        "epilogueSeconds": 0,
+        "otherSeconds": 0,
+        "metres": 466.8034119375769
+      },
+      {
+        "id": "industrial-area",
+        "seconds": 138.7166666666692,
+        "travelSeconds": 46.01666666666534,
+        "combatSeconds": 92.69999999999602,
+        "interactionSeconds": 0,
+        "holdSeconds": 0,
+        "epilogueSeconds": 0,
+        "otherSeconds": 0,
+        "metres": 621.578706222161
+      },
+      {
+        "id": "military-zone",
+        "seconds": 168.33333333335943,
+        "travelSeconds": 90.14999999999617,
+        "combatSeconds": 78.18333333333018,
+        "interactionSeconds": 0,
+        "holdSeconds": 0,
+        "epilogueSeconds": 0,
+        "otherSeconds": 0,
+        "metres": 740.5129800469517
+      },
+      {
+        "id": "research-campus",
+        "seconds": 173.73333333336373,
+        "travelSeconds": 81.83333333332997,
+        "combatSeconds": 38.349999999999106,
+        "interactionSeconds": 40.28333333333233,
+        "holdSeconds": 0,
+        "epilogueSeconds": 0,
+        "otherSeconds": 13.266666666666906,
+        "metres": 536.7111718512188
+      },
+      {
+        "id": "destroyed-corridor",
+        "seconds": 173.38333333336345,
+        "travelSeconds": 150.40000000001183,
+        "combatSeconds": 22.98333333333331,
+        "interactionSeconds": 0,
+        "holdSeconds": 0,
+        "epilogueSeconds": 0,
+        "otherSeconds": 0,
+        "metres": 779.7487209812978
+      },
+      {
+        "id": "dispersal-complex",
+        "seconds": 194.55000000004696,
+        "travelSeconds": 58.53333333333129,
+        "combatSeconds": 8.51666666666667,
+        "interactionSeconds": 0.03333333333333333,
+        "holdSeconds": 62.4666666666644,
+        "epilogueSeconds": 64.9999999999976,
+        "otherSeconds": 0,
+        "metres": 1020.0488570979032
+      }
+    ],
+    "maxConcurrentInfected": 22,
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 93,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    }
+  }
+}
