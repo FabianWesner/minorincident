@@ -1,9 +1,9 @@
-import { allyState, readyCarriedAlly } from '../outbreak/Allies';
+import { readyCarriedAlly } from '../outbreak/Allies';
 import { Outbreak } from '../outbreak/Outbreak';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { Point } from '../npc/types';
-import { l7Encounters, l7FormationBack, l7Rocket } from '../../data/l7';
+import { l7Encounters, l7Rocket } from '../../data/l7';
 import { corpseDetour, formationBack, formationSlot, leaderHeading, requireClearPoint, snapToClear } from './missionHelpers';
 import { NavGrid } from '../ai/NavGrid';
 import { actorRadius, solidLargeCorpse } from '../world/SolidRegistry';
@@ -82,10 +82,6 @@ export class LevelSevenEncounters {
     // Form behind the escape direction, not the courier's briefing pose
     // facing the launcher. Otherwise the whole party crosses itself on departure.
     const road = l7Encounters.streets[0], heading = leaderHeading(-Math.atan2(road.z - leader.z, road.x - leader.x));
-    // The initial column already occupies the road behind the exit. Seed that
-    // line so an aiming turn during pickup cannot sweep its tail into a kerb.
-    for (let back = Math.max(20, formationBack(count - 1) + 3.5); back > 0; back -= .4) this.trail.push({ x: leader.x - heading.x * back, z: leader.z - heading.z * back });
-    this.trail.push({ x: leader.x, z: leader.z });
     // The launcher is three metres behind the courier along this heading.
     // Stage the column beyond its two-metre objective ring, with room for a body.
     const formation = { x: leader.x - heading.x * 3.5, z: leader.z - heading.z * 3.5 };
@@ -94,7 +90,7 @@ export class LevelSevenEncounters {
       if (source && (source.health.current <= 0 || source.infected || source.infection)) continue;
       // Preserve the authored entry clearance; loosen slots only after following starts.
       const at = this.clearPoint(formationSlot(formation, heading, slot, false), .4);
-      const e = source ? structuredClone(source) : w.entities.get(outbreak.spawnPedestrian(at, { model: slot === 0 ? 'npc.marcus.aftermath' : slot % 2 ? 'npc.civilian-man-b.aftermath' : 'npc.civilian-woman-b.aftermath', role: 'cashier' }))!;
+      const e = source ? structuredClone(source) : w.entities.get(outbreak.spawnPedestrian(at, { model: slot % 2 ? 'npc.civilian-man-b.aftermath' : 'npc.civilian-woman-b.aftermath', role: 'cashier' }))!;
       if (source) {
         if (w.entities.get(e.id)) throw new Error(`L7 incoming survivor id collision: ${e.id}`);
         w.entities.replace(e);
@@ -103,12 +99,6 @@ export class LevelSevenEncounters {
       e.hidden = false;
       e.health.current = e.health.max;
       const c = e.civilian!;
-      // Standalone L7 includes the same armed shelter guard as standalone L6.
-      // Campaign entries retain their own carried fighters and guns.
-      if (!source && slot === 0) {
-        c.ally = allyState('officer'); c.ally.weapon = 'pistol';
-        c.ally.gun = { damage: 20, shotS: .5, rangeM: 16, nearM: 16, hitNear: .5, hitFar: .5 };
-      }
       readyCarriedAlly(e, w.tick);
       delete c.floorY; c.story = null; c.path.length = 0; c.goal = -1; c.pauseUntil = 0; c.state = 'calm';
       c.entered = w.tick; c.until = 0; c.knockedUntil = 0;
@@ -264,13 +254,10 @@ export class LevelSevenEncounters {
    * the evacuee tears free. True when it survives; the bite that would empty its health kills/turns as usual. */
   woundFollower(target: EntitySnapshot, biter: EntitySnapshot): boolean {
     if (!this.state.roster.some(r => r.id === target.id && r.status === 'following')) return false;
-    const { damage, shoveTicks, shoveM } = l7Encounters.followerBite, w = this.world;
+    const { damage, shoveTicks } = l7Encounters.followerBite, w = this.world;
     if (target.health.current <= damage) return false;
     target.health.current -= damage;
     if (biter.combat) biter.combat.staggerUntil = Math.max(biter.combat.staggerUntil, w.tick + shoveTicks);
-    // Reeling in place leaves the attacker's full body sealing the escape lane.
-    const dx = biter.transform.x - target.transform.x, dz = biter.transform.z - target.transform.z, length = Math.hypot(dx, dz);
-    if (length > 0 && biter.archetype !== 'infected.alpha') w.knockback(biter, { x: dx / length, z: dz / length }, shoveM, 12);
     w.events.emit({ type: 'infected.attack', tick: w.tick, sourceId: biter.id, attackId: 0, targetId: target.id, special: 'bite', amount: damage });
     return true;
   }
@@ -286,7 +273,6 @@ export class LevelSevenEncounters {
     if (this.world.l7Departure?.claims(e)) return true;
     if (e.passengerOf === undefined && this.yieldToCourier(e)) return true;
     const w = this.world, p = w.entities.get(1)!, c = e.civilian!, s = c.survivor!;
-    this.recordTrail(p.transform);
     s.briskAt = w.tick;
     c.state = 'calm'; c.story = null; s.cover = false;
     const launcher = this.launcher();
@@ -410,25 +396,22 @@ export class LevelSevenEncounters {
     }
     return false;
   }
-  private recordTrail(player: Point): void {
+  /** At either quality, follow the courier's walked boarding corner two abreast
+   * instead of swinging the tail across the parked vehicles. */
+  private formationGoal(player: EntitySnapshot['transform'], velocity: Point, slot: number): Point {
     const last = this.trail.at(-1);
     if (last && distance(last, player) > 6) this.trail.length = 0;
     if (!last || distance(last, player) >= .4) {
       this.trail.push({ x: player.x, z: player.z });
       if (this.trail.length > 128) this.trail.shift();
     }
-  }
-  /** Follow the walked street line even while the courier aims or is stunned.
-   * Close rows stay in her cover; the boarding corner remains two abreast. */
-  private formationGoal(player: EntitySnapshot['transform'], velocity: Point, slot: number): Point {
-    const departure = this.world.missions!.state.steps.departure?.status === 'active';
-    {
-      let remaining = departure ? 2.3 + Math.floor(slot / 2) : l7FormationBack(slot), newer: Point = player;
+    if (this.world.missions!.state.steps.departure?.status === 'active') {
+      let remaining = 2.3 + Math.floor(slot / 2), newer: Point = player;
       for (let i = this.trail.length - 1; i >= 0; i--) {
         const older = this.trail[i], length = distance(older, newer);
         if (length >= remaining && length > 0) {
           const hx = (newer.x - older.x) / length, hz = (newer.z - older.z) / length;
-          const side = departure ? slot % 2 - .5 : (slot % 5 - 2) * .9;
+          const side = slot % 2 - .5;
           const centre = { x: newer.x - hx * remaining, z: newer.z - hz * remaining };
           const goal = { x: centre.x - hz * side, z: centre.z + hx * side };
           const nav = this.followerNavigation();

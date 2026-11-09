@@ -48,22 +48,6 @@ export async function checkL7Navigation() {
       }
     }
     checkL7FollowerBars(w);
-    // A stopped courier can aim to either kerb without swinging the full
-    // column into it. Check the actual follower movement orders after pickup.
-    const tail = w.entities.get(w.l7Encounters!.state.roster.at(-1)!.id)!, p = w.entities.get(1)!;
-    const yaw = p.transform.yaw, goals: { x: number; z: number }[] = [];
-    w.entities.remove(launcher!.id);
-    const movement = vi.spyOn(w.npcs!, 'move').mockImplementation((e, goal) => {
-      if (e.id === tail.id) goals.push({ x: goal.x, z: goal.z });
-      return true;
-    });
-    try {
-      p.transform.yaw = 0; w.l7Encounters!.follower(tail);
-      p.transform.yaw = Math.PI / 2; w.l7Encounters!.follower(tail);
-      expect(goals).toHaveLength(2);
-      expect(goals[0], 'aiming at another kerb does not rotate a stopped evacuation column').toEqual(goals[1]);
-      expect(goals[0].x - p.transform.x, 'the tail remains behind the westbound street route').toBeGreaterThan(5);
-    } finally { movement.mockRestore(); p.transform.yaw = yaw; w.entities.replace(launcher!); }
     // The loading renderer must see the actual resident models at tick zero;
     // discovering their pedestrian looks on the first AI tick builds new
     // living/corpse shaders during the launcher pickup (L7-01).
@@ -292,8 +276,7 @@ async function checkFollowerBites() {
   try {
     checkFriendlyRocketReaction(w);
     for (const e of [...w.infected!.active]) { w.solids.forget(e); w.infected!.release(e); }
-    const roster = w.l7Encounters!.state.roster, follower = w.entities.get(roster.find(r => !w.entities.get(r.id)!.civilian?.ally)!.id)!;
-    for (const row of roster) if (row.id !== follower.id) w.entities.get(row.id)!.hidden = true;
+    const roster = w.l7Encounters!.state.roster, follower = w.entities.get(roster[0].id)!;
     const runner = w.entities.get(w.infected!.spawn('infected.runner', { x: follower.transform.x + 1.2, y: follower.transform.y, z: follower.transform.z }, { state: 'chase' }))!;
     const wounds = new Map<number, number[]>(), alarms: string[] = [];
     w.events.on('infected.attack', e => { if (e.type === 'infected.attack' && e.special === 'bite') wounds.set(e.targetId, [...wounds.get(e.targetId) ?? [], w.entities.get(e.targetId)!.health.current]); });
