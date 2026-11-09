@@ -1,0 +1,534 @@
+{
+  "method": "Native loaded levels and Rapier. Direct normalized damage fixture: one 3000-damage structural contact per target, then 721 destruction ticks. Separate full-collapse sample per policy; no route completion claim.",
+  "results": [
+    {
+      "level": "L1",
+      "targets": 23,
+      "classes": {
+        "vehicle": 23
+      },
+      "families": [
+        {
+          "family": "melee",
+          "action": "weapon.bat",
+          "damaged": 23,
+          "brokenParts": 0,
+          "collapsed": 0,
+          "peakFires": 0,
+          "peakDebris": 0,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "sidearm",
+          "action": "weapon.handgun",
+          "damaged": 23,
+          "brokenParts": 0,
+          "collapsed": 0,
+          "peakFires": 0,
+          "peakDebris": 0,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "shotgun",
+          "action": "weapon.shotgun",
+          "damaged": 23,
+          "brokenParts": 23,
+          "collapsed": 0,
+          "peakFires": 0,
+          "peakDebris": 32,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "automatic",
+          "action": "weapon.army-mg",
+          "damaged": 23,
+          "brokenParts": 23,
+          "collapsed": 0,
+          "peakFires": 0,
+          "peakDebris": 32,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "explosive",
+          "action": "weapon.rocket-launcher",
+          "damaged": 23,
+          "brokenParts": 23,
+          "collapsed": 0,
+          "peakFires": 0,
+          "peakDebris": 32,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "fire",
+          "action": "weapon.molotov",
+          "damaged": 23,
+          "brokenParts": 322,
+          "collapsed": 23,
+          "peakFires": 24,
+          "peakDebris": 32,
+          "navigationOnlyOpens": true
+        }
+      ],
+      "collapseClasses": [
+        "vehicle"
+      ],
+      "checkpoint": true
+    },
+    {
+      "level": "L2",
+      "targets": 34,
+      "classes": {
+        "vehicle": 34
+      },
+      "families": [
+        {
+          "family": "melee",
+          "action": "weapon.bat",
+          "damaged": 34,
+          "brokenParts": 0,
+          "collapsed": 0,
+          "peakFires": 0,
+          "peakDebris": 0,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "sidearm",
+          "action": "weapon.handgun",
+          "damaged": 34,
+          "brokenParts": 0,
+          "collapsed": 0,
+          "peakFires": 0,
+          "peakDebris": 0,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "shotgun",
+          "action": "weapon.shotgun",
+          "damaged": 34,
+          "brokenParts": 34,
+          "collapsed": 0,
+          "peakFires": 0,
+          "peakDebris": 32,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "automatic",
+          "action": "weapon.army-mg",
+          "damaged": 34,
+          "brokenParts": 34,
+          "collapsed": 0,
+          "peakFires": 0,
+          "peakDebris": 32,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "explosive",
+          "action": "weapon.rocket-launcher",
+          "damaged": 34,
+          "brokenParts": 34,
+          "collapsed": 0,
+          "peakFires": 0,
+          "peakDebris": 32,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "fire",
+          "action": "weapon.molotov",
+          "damaged": 34,
+          "brokenParts": 476,
+          "collapsed": 34,
+          "peakFires": 24,
+          "peakDebris": 32,
+          "navigationOnlyOpens": true
+        }
+      ],
+      "collapseClasses": [
+        "vehicle"
+      ],
+      "checkpoint": true
+    },
+    {
+      "level": "L3",
+      "targets": 4,
+      "classes": {
+        "timber": 2,
+        "vehicle": 2
+      },
+      "families": [
+        {
+          "family": "melee",
+          "action": "weapon.bat",
+          "damaged": 4,
+          "brokenParts": 2,
+          "collapsed": 0,
+          "peakFires": 11,
+          "peakDebris": 10,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "sidearm",
+          "action": "weapon.handgun",
+          "damaged": 4,
+          "brokenParts": 2,
+          "collapsed": 0,
+          "peakFires": 11,
+          "peakDebris": 10,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "shotgun",
+          "action": "weapon.shotgun",
+          "damaged": 4,
+          "brokenParts": 4,
+          "collapsed": 0,
+          "peakFires": 11,
+          "peakDebris": 20,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "automatic",
+          "action": "weapon.army-mg",
+          "damaged": 4,
+          "brokenParts": 4,
+          "collapsed": 0,
+          "peakFires": 11,
+          "peakDebris": 20,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "explosive",
+          "action": "weapon.rocket-launcher",
+          "damaged": 4,
+          "brokenParts": 4,
+          "collapsed": 0,
+          "peakFires": 11,
+          "peakDebris": 20,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "fire",
+          "action": "weapon.molotov",
+          "damaged": 4,
+          "brokenParts": 60,
+          "collapsed": 4,
+          "peakFires": 21,
+          "peakDebris": 32,
+          "navigationOnlyOpens": true
+        }
+      ],
+      "collapseClasses": [
+        "timber",
+        "vehicle"
+      ],
+      "checkpoint": true
+    },
+    {
+      "level": "L4",
+      "targets": 9,
+      "classes": {
+        "vehicle": 6,
+        "timber": 3
+      },
+      "families": [
+        {
+          "family": "melee",
+          "action": "weapon.bat",
+          "damaged": 9,
+          "brokenParts": 3,
+          "collapsed": 0,
+          "peakFires": 0,
+          "peakDebris": 15,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "sidearm",
+          "action": "weapon.handgun",
+          "damaged": 9,
+          "brokenParts": 3,
+          "collapsed": 0,
+          "peakFires": 0,
+          "peakDebris": 15,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "shotgun",
+          "action": "weapon.shotgun",
+          "damaged": 9,
+          "brokenParts": 9,
+          "collapsed": 0,
+          "peakFires": 0,
+          "peakDebris": 32,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "automatic",
+          "action": "weapon.army-mg",
+          "damaged": 9,
+          "brokenParts": 9,
+          "collapsed": 0,
+          "peakFires": 0,
+          "peakDebris": 32,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "explosive",
+          "action": "weapon.rocket-launcher",
+          "damaged": 9,
+          "brokenParts": 9,
+          "collapsed": 0,
+          "peakFires": 0,
+          "peakDebris": 32,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "fire",
+          "action": "weapon.molotov",
+          "damaged": 9,
+          "brokenParts": 123,
+          "collapsed": 9,
+          "peakFires": 24,
+          "peakDebris": 32,
+          "navigationOnlyOpens": true
+        }
+      ],
+      "collapseClasses": [
+        "vehicle",
+        "timber"
+      ],
+      "checkpoint": true
+    },
+    {
+      "level": "L5",
+      "targets": 9,
+      "classes": {
+        "vehicle": 6,
+        "timber": 3
+      },
+      "families": [
+        {
+          "family": "melee",
+          "action": "weapon.bat",
+          "damaged": 9,
+          "brokenParts": 3,
+          "collapsed": 0,
+          "peakFires": 13,
+          "peakDebris": 15,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "sidearm",
+          "action": "weapon.handgun",
+          "damaged": 9,
+          "brokenParts": 3,
+          "collapsed": 0,
+          "peakFires": 13,
+          "peakDebris": 15,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "shotgun",
+          "action": "weapon.shotgun",
+          "damaged": 9,
+          "brokenParts": 9,
+          "collapsed": 0,
+          "peakFires": 13,
+          "peakDebris": 32,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "automatic",
+          "action": "weapon.army-mg",
+          "damaged": 9,
+          "brokenParts": 9,
+          "collapsed": 0,
+          "peakFires": 13,
+          "peakDebris": 32,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "explosive",
+          "action": "weapon.rocket-launcher",
+          "damaged": 9,
+          "brokenParts": 9,
+          "collapsed": 0,
+          "peakFires": 13,
+          "peakDebris": 32,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "fire",
+          "action": "weapon.molotov",
+          "damaged": 9,
+          "brokenParts": 123,
+          "collapsed": 9,
+          "peakFires": 24,
+          "peakDebris": 32,
+          "navigationOnlyOpens": true
+        }
+      ],
+      "collapseClasses": [
+        "vehicle",
+        "timber"
+      ],
+      "checkpoint": true
+    },
+    {
+      "level": "L9",
+      "targets": 195,
+      "classes": {
+        "timber": 37,
+        "vehicle": 72,
+        "metal-prop": 86
+      },
+      "families": [
+        {
+          "family": "melee",
+          "action": "weapon.bat",
+          "damaged": 195,
+          "brokenParts": 37,
+          "collapsed": 0,
+          "peakFires": 0,
+          "peakDebris": 32,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "sidearm",
+          "action": "weapon.handgun",
+          "damaged": 195,
+          "brokenParts": 37,
+          "collapsed": 0,
+          "peakFires": 0,
+          "peakDebris": 32,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "shotgun",
+          "action": "weapon.shotgun",
+          "damaged": 195,
+          "brokenParts": 195,
+          "collapsed": 0,
+          "peakFires": 0,
+          "peakDebris": 32,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "automatic",
+          "action": "weapon.army-mg",
+          "damaged": 195,
+          "brokenParts": 195,
+          "collapsed": 0,
+          "peakFires": 0,
+          "peakDebris": 32,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "explosive",
+          "action": "weapon.rocket-launcher",
+          "damaged": 195,
+          "brokenParts": 195,
+          "collapsed": 0,
+          "peakFires": 0,
+          "peakDebris": 32,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "fire",
+          "action": "weapon.molotov",
+          "damaged": 115,
+          "brokenParts": 1525,
+          "collapsed": 109,
+          "peakFires": 24,
+          "peakDebris": 32,
+          "navigationOnlyOpens": true
+        }
+      ],
+      "collapseClasses": [
+        "timber",
+        "vehicle",
+        "metal-prop"
+      ],
+      "checkpoint": true
+    },
+    {
+      "level": "L10",
+      "targets": 104,
+      "classes": {
+        "masonry": 2,
+        "vehicle": 75,
+        "fuel-tank": 5,
+        "machinery": 8,
+        "timber": 14
+      },
+      "families": [
+        {
+          "family": "melee",
+          "action": "weapon.bat",
+          "damaged": 104,
+          "brokenParts": 19,
+          "collapsed": 5,
+          "peakFires": 20,
+          "peakDebris": 32,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "sidearm",
+          "action": "weapon.handgun",
+          "damaged": 104,
+          "brokenParts": 19,
+          "collapsed": 5,
+          "peakFires": 20,
+          "peakDebris": 32,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "shotgun",
+          "action": "weapon.shotgun",
+          "damaged": 104,
+          "brokenParts": 102,
+          "collapsed": 13,
+          "peakFires": 20,
+          "peakDebris": 32,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "automatic",
+          "action": "weapon.army-mg",
+          "damaged": 104,
+          "brokenParts": 102,
+          "collapsed": 13,
+          "peakFires": 20,
+          "peakDebris": 32,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "explosive",
+          "action": "weapon.rocket-launcher",
+          "damaged": 104,
+          "brokenParts": 104,
+          "collapsed": 13,
+          "peakFires": 20,
+          "peakDebris": 32,
+          "navigationOnlyOpens": true
+        },
+        {
+          "family": "fire",
+          "action": "weapon.molotov",
+          "damaged": 94,
+          "brokenParts": 1221,
+          "collapsed": 94,
+          "peakFires": 24,
+          "peakDebris": 32,
+          "navigationOnlyOpens": true
+        }
+      ],
+      "collapseClasses": [
+        "masonry",
+        "vehicle",
+        "fuel-tank",
+        "machinery",
+        "timber"
+      ],
+      "checkpoint": true
+    }
+  ]
+}
