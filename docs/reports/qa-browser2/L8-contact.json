@@ -1,90 +1,97 @@
-[
-  {
-    "file": "/private/tmp/qa-browser2/L8-low-webgl2-arena-tour/load-error.jpg",
-    "label": "load-error",
-    "requestedZoom": 1.5,
-    "state": {
-      "tick": 0,
-      "position": {
-        "x": 0,
-        "z": 0
+{
+  "level": "L8",
+  "cells": [
+    {
+      "file": "/private/tmp/qa-browser2/L8-low-webgl2-arena-tour/load-error.jpg",
+      "label": "load-error",
+      "requestedZoom": 1.5,
+      "state": {
+        "tick": 0,
+        "position": {
+          "x": 0,
+          "z": 0
+        },
+        "quality": "low",
+        "backend": "webgl2"
       },
-      "quality": "low",
-      "backend": "webgl2"
+      "sha256": "18d544a366fd9a72df015dea6167b991272c9ce3a1bdcf66b40d88e84076fc69",
+      "tier": "low",
+      "backend": "webgl2",
+      "receipt": "L8-low-webgl2-arena-tour.json",
+      "sheet": "review-00.jpg",
+      "cell": 1,
+      "reviewIndex": 0,
+      "rawDeleted": true
     },
-    "sha256": "18d544a366fd9a72df015dea6167b991272c9ce3a1bdcf66b40d88e84076fc69",
-    "tier": "low",
-    "backend": "webgl2",
-    "receipt": "docs/reports/qa-browser2/L8-low-webgl2-arena-tour.json",
-    "sheet": "review-00.jpg",
-    "cell": 0,
-    "reviewIndex": 0,
-    "rawDeleted": true
-  },
-  {
-    "file": "/private/tmp/qa-browser2/L8-high-webgl2-arena-tour/load-error.jpg",
-    "label": "load-error",
-    "requestedZoom": 1.5,
-    "state": {
-      "tick": 0,
-      "position": {
-        "x": 0,
-        "z": 0
+    {
+      "file": "/private/tmp/qa-browser2/L8-high-webgl2-arena-tour/load-error.jpg",
+      "label": "load-error",
+      "requestedZoom": 1.5,
+      "state": {
+        "tick": 0,
+        "position": {
+          "x": 0,
+          "z": 0
+        },
+        "quality": "high",
+        "backend": "webgl2"
       },
-      "quality": "high",
-      "backend": "webgl2"
+      "sha256": "c8546a4a4ee766752e9649e42abba586436dc32df68db1e7fab84bb1a5969a1b",
+      "tier": "high",
+      "backend": "webgl2",
+      "receipt": "L8-high-webgl2-arena-tour.json",
+      "sheet": "review-00.jpg",
+      "cell": 2,
+      "reviewIndex": 1,
+      "rawDeleted": true
     },
-    "sha256": "c8546a4a4ee766752e9649e42abba586436dc32df68db1e7fab84bb1a5969a1b",
-    "tier": "high",
-    "backend": "webgl2",
-    "receipt": "docs/reports/qa-browser2/L8-high-webgl2-arena-tour.json",
-    "sheet": "review-00.jpg",
-    "cell": 1,
-    "reviewIndex": 1,
-    "rawDeleted": true
-  },
-  {
-    "file": "/private/tmp/qa-browser2/L8-low-webgpu-arena-tour/load-error.jpg",
-    "label": "load-error",
-    "requestedZoom": 1.5,
-    "state": {
-      "tick": 0,
-      "position": {
-        "x": 0,
-        "z": 0
+    {
+      "file": "/private/tmp/qa-browser2/L8-low-webgpu-arena-tour/load-error.jpg",
+      "label": "load-error",
+      "requestedZoom": 1.5,
+      "state": {
+        "tick": 0,
+        "position": {
+          "x": 0,
+          "z": 0
+        },
+        "quality": "low",
+        "backend": "webgpu"
       },
-      "quality": "low",
-      "backend": "webgpu"
+      "sha256": "e664656ec8981dffcd658e818ce866f5d1f1b2e54b0caef7a6203f5e6a18da7a",
+      "tier": "low",
+      "backend": "webgpu",
+      "receipt": "L8-low-webgpu-arena-tour.json",
+      "sheet": "review-00.jpg",
+      "cell": 3,
+      "reviewIndex": 2,
+      "rawDeleted": true
     },
-    "sha256": "e664656ec8981dffcd658e818ce866f5d1f1b2e54b0caef7a6203f5e6a18da7a",
-    "tier": "low",
-    "backend": "webgpu",
-    "receipt": "docs/reports/qa-browser2/L8-low-webgpu-arena-tour.json",
-    "sheet": "review-00.jpg",
-    "cell": 2,
-    "reviewIndex": 2,
-    "rawDeleted": true
-  },
-  {
-    "file": "/private/tmp/qa-browser2/L8-high-webgpu-arena-tour/load-error.jpg",
-    "label": "load-error",
-    "requestedZoom": 1.5,
-    "state": {
-      "tick": 0,
-      "position": {
-        "x": 0,
-        "z": 0
+    {
+      "file": "/private/tmp/qa-browser2/L8-high-webgpu-arena-tour/load-error.jpg",
+      "label": "load-error",
+      "requestedZoom": 1.5,
+      "state": {
+        "tick": 0,
+        "position": {
+          "x": 0,
+          "z": 0
+        },
+        "quality": "high",
+        "backend": "webgpu"
       },
-      "quality": "high",
-      "backend": "webgpu"
-    },
-    "sha256": "773bc7147a9dbfd867dcc3c82ed54de74365348abec291c33f2bc9c8b90e11e9",
-    "tier": "high",
-    "backend": "webgpu",
-    "receipt": "docs/reports/qa-browser2/L8-high-webgpu-arena-tour.json",
-    "sheet": "review-00.jpg",
-    "cell": 3,
-    "reviewIndex": 3,
-    "rawDeleted": true
-  }
-]
+      "sha256": "773bc7147a9dbfd867dcc3c82ed54de74365348abec291c33f2bc9c8b90e11e9",
+      "tier": "high",
+      "backend": "webgpu",
+      "receipt": "L8-high-webgpu-arena-tour.json",
+      "sheet": "review-00.jpg",
+      "cell": 4,
+      "reviewIndex": 3,
+      "rawDeleted": true
+    }
+  ],
+  "sheet": "L8-contact.jpg",
+  "sheetSha256": "4b912a70e07879790503e06ee5fb50abe7aff3edfe1a255f873215aa554562b8",
+  "reviewed": true,
+  "method": "Four personally reviewed loading error screenshots, uniformly resized full images with labels. No successful game scene rendered. Legacy manifest normalized; sheet unchanged."
+}
