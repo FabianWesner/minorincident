@@ -19,7 +19,9 @@ export class GroundField {
     const position = mesh.geometry.getAttribute('position') as BufferAttribute | InterleavedBufferAttribute, index = mesh.geometry.index;
     const count = index ? index.count : position.count, [a, b, c] = GroundField.v;
     for (let i = 0; i + 2 < count; i += 3) {
-      for (const [k, p] of [a, b, c].entries()) p.fromBufferAttribute(position, index ? index.getX(i + k) : i + k).applyMatrix4(mesh.matrixWorld);
+      a.fromBufferAttribute(position, index ? index.getX(i) : i).applyMatrix4(mesh.matrixWorld);
+      b.fromBufferAttribute(position, index ? index.getX(i + 1) : i + 1).applyMatrix4(mesh.matrixWorld);
+      c.fromBufferAttribute(position, index ? index.getX(i + 2) : i + 2).applyMatrix4(mesh.matrixWorld);
       if (Math.max(a.y, b.y, c.y) > maxHeight) continue;
       // Any face with a footprint (tops, kerb bevels, road paint edges); vertical walls have none. The highest face wins.
       const ux = b.x - a.x, uz = b.z - a.z, vx = c.x - a.x, vz = c.z - a.z;
