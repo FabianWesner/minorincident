@@ -253,6 +253,20 @@ test('explosions: every class follows its damage curve, full cover shields, rail
   expect(destruction.impact(car.id,'boss.mega.charge',10000),'inactive tiers cannot take damage').toBe(false);
   expect(destruction.snapshot()).toEqual(state);
   street.setTier(5);expect(car.present).toBe(true);expect(tierFire.hazard!.activeUntil).toBeGreaterThan(street.tick);
+  // A fire and a queued blast can outlive the physics chunk that owned the car.
+  destruction.restore(pristine);
+  const streamed=street.props!.items.find(p=>p.id===car.id)!;
+  const streamedState=street.props!.chunkState(streamed.entityId)!;
+  destruction.blast('weapon.rocket-launcher',{x:car.home.p[0],z:car.home.p[2]},4,3000,5);
+  street.props!.unloadChunk(streamed.entityId);
+  expect(streamed.body.isValid()).toBe(false);
+  expect(()=>{for(let tick=0;tick<310;tick++){street.tick++;destruction.update();}}).not.toThrow();
+  expect(car.state.exploded).toBe(true);
+  street.props!.loadChunk(streamed.entityId,streamedState);
+  const reloaded=street.props!.items.find(p=>p.id===car.id)!;
+  expect(reloaded.body.isValid()).toBe(true);
+  destruction.update();expect(destruction.pose(car)).toBe(reloaded.pose);
+  destruction.restore(pristine);
   verifyDestructionRollout();
 
 

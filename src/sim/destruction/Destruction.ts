@@ -72,6 +72,14 @@ export class Destruction {
     this.reconcile();
   }
   pose(object: DestructionObject): PropPose { return this.propLinks.get(object.id)?.pose ?? object.home; }
+  /** Chunks free and recreate prop bodies while fire keeps its fixed-tick owner. */
+  private activeProp(id: string): PushProp | undefined {
+    const cached = this.propLinks.get(id);
+    if (cached?.body.isValid()) return cached;
+    const prop = this.world.props?.items.find(item => item.id === id);
+    if (prop) this.propLinks.set(id, prop);
+    return prop;
+  }
   private wall(o: DestructionObject, box: Aabb): CoverWall {
     const p = o.placement, c = Math.cos(p.yaw), s = Math.sin(p.yaw), x = (box.min[0] + box.max[0]) * .5 * p.scale[0], z = (box.min[2] + box.max[2]) * .5 * p.scale[2];
     const hx = (box.max[0] - box.min[0]) * .5 * p.scale[0], hz = (box.max[2] - box.min[2]) * .5 * p.scale[2];
@@ -81,7 +89,7 @@ export class Destruction {
   private reconcile(): void {
     let propsChanged=false;
     for(const o of this.objects) {
-      const prop=this.propLinks.get(o.id); if(!prop) continue;
+      const prop=this.activeProp(o.id); if(!prop) continue;
       const gone=!o.protected&&o.placement.destruction!.class!=='vehicle'&&o.state.collapsed;
       if(gone) {
         this.disabledProps.add(o.id);
@@ -186,7 +194,7 @@ export class Destruction {
   }
   update(): void {
     for (let i=this.kicks.length-1;i>=0;i--) { const k=this.kicks[i]; if(k.at>this.world.tick) continue;
-      const prop=this.propLinks.get(k.id); prop?.body.applyTorqueImpulse({x:k.strength*.5,y:0,z:k.strength*.7},true); this.kicks.splice(i,1);
+      const prop=this.activeProp(k.id); prop?.body.applyTorqueImpulse({x:k.strength*.5,y:0,z:k.strength*.7},true); this.kicks.splice(i,1);
     }
     for(const o of this.objects) {
       if(!o.present||o.protected) continue;
@@ -205,7 +213,7 @@ export class Destruction {
         s.exploded=true;s.collapsed=true;s.hp.fill(0);s.revision++;
         const p=this.pose(o).p; this.debris(o,0,[0,1,0]);
         this.world.explosions?.blast(destructionClasses[o.placement.destruction!.class].explosion!,{x:p[0],z:p[2]});
-        const prop=this.propLinks.get(o.id); if(prop&&!prop.fixed) prop.body.applyImpulse({x:0,y:prop.mass*5,z:0},true);
+        const prop=this.activeProp(o.id); if(prop&&!prop.fixed) prop.body.applyImpulse({x:0,y:prop.mass*5,z:0},true);
       }
     }
     this.reconcile();
