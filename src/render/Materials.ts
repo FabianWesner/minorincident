@@ -40,7 +40,7 @@ export class Materials {
     let changed = false;
     for (const sheet of [0, 1]) paletteTokens.forEach((token, i) => {
       const key = worldPaletteKeys[token as keyof typeof worldPaletteKeys];
-      const value = sheet && key && (this.look.has(key) || this.look.palette[token] === palette[token]) ? this.look.values[key] : this.look.palette[token];
+      const value = this.lighting.preset === 'L10-night' && token === 'grass' ? this.look.values.grass : sheet && key && (this.look.has(key) || this.look.palette[token] === palette[token]) ? this.look.values[key] : this.look.palette[token];
       const hex = Number.parseInt(value.slice(1), 16), rgb = [hex >> 16, hex >> 8 & 255, hex & 255];
       rgb.forEach((value, channel) => { const offset = (i + sheet * paletteTokens.length) * 4 + channel; if (data[offset] !== value) { data[offset] = value; changed = true; } });
     });
