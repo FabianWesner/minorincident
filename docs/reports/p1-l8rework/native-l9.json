@@ -1,26 +1,26 @@
 {
-  "sourceHash": "7b8f8e012c7260b6923e72c36b7e0df5cfa18940d6e3ee05114cfdb399a942ec",
-  "observerHash": "9c863d51c978878788816a777d0fae61932ac68c7a6de7ff16a9289fa1bc7831",
-  "revision": "c204cdfefaa3df6c031376abcc85789cad771757",
+  "sourceHash": "3558bd907e29e570a31514aa1e20be8cae80267f47e04c29f147a3afe4e3e53a",
+  "observerHash": "b5021cad1949aa5c1cfac1bbf18b12a87dc94c77ed87b1519e1fd55f6da6073a",
+  "revision": "84f7fac8940e2c5fbe0aaef9ac4f53a6dc7dbd6e",
   "pass": true,
   "run": {
     "level": "L9",
     "policy": "complete",
     "seed": 1,
     "completed": true,
-    "time": 213.8,
+    "time": 227.58333333333334,
     "deaths": 0,
-    "kills": 13,
-    "damageTaken": 0,
+    "kills": 42,
+    "damageTaken": 10,
     "failures": {},
     "objectiveTimeline": [
       {
         "id": "approach",
-        "t": 193.56666666666666
+        "t": 207.33333333333334
       },
       {
         "id": "reach-outskirts",
-        "t": 208.8
+        "t": 222.58333333333334
       }
     ],
     "furthestObjective": "reach-outskirts",
@@ -30,7 +30,7 @@
     "collision": {
       "failures": 0,
       "pending": 0,
-      "admitted": 323,
+      "admitted": 345,
       "deferred": 0,
       "requests": [],
       "offenders": []
@@ -46,8 +46,632 @@
     ],
     "evacuated": [
       669,
-      672
+      672,
+      670
     ],
+    "driving": {
+      "prepared": true,
+      "roster": [
+        669,
+        670,
+        671,
+        672,
+        673
+      ],
+      "samId": 673,
+      "megaId": 674,
+      "soldiers": [
+        685,
+        686,
+        687,
+        688
+      ],
+      "trucks": [
+        682,
+        683,
+        684
+      ],
+      "boardersCalled": true,
+      "route": "road",
+      "checkpoints": [
+        "mid-crossing",
+        "evac-point",
+        "bridge"
+      ],
+      "stallAt": 6185,
+      "restarted": true,
+      "repairTicks": 0,
+      "repairActive": false,
+      "gateAt": 5094,
+      "gateClosed": true,
+      "gateId": 693,
+      "bridgeGateId": 694,
+      "fenceBroken": true,
+      "evacuationAt": 9123,
+      "evacuated": [
+        669,
+        672,
+        670
+      ],
+      "evacuating": [
+        669,
+        670,
+        671,
+        672
+      ],
+      "evacuationDone": true,
+      "hugAt": 9860,
+      "hugDone": true,
+      "truckEntering": {
+        "669": 10194,
+        "670": 11745,
+        "672": 10262
+      },
+      "busId": 675,
+      "busPassengers": [
+        676,
+        677,
+        678,
+        679,
+        680,
+        681
+      ],
+      "busReleased": 6,
+      "busHitAt": 12357,
+      "busStoppedAt": null,
+      "busLineAt": 4383,
+      "tankerId": 691,
+      "tankerWreckId": 692,
+      "tankerFuseAt": null,
+      "tankerExploded": false,
+      "stampede": [],
+      "fireAt": null,
+      "fireIds": [],
+      "jumped": [],
+      "jump": null,
+      "obstacleIds": [
+        695,
+        696,
+        697,
+        698,
+        699,
+        700,
+        701,
+        702,
+        703,
+        704,
+        705,
+        706,
+        707,
+        708
+      ],
+      "waves": [
+        865,
+        866,
+        867,
+        868,
+        869,
+        870,
+        871,
+        872,
+        874,
+        875,
+        876,
+        877,
+        878,
+        879,
+        880,
+        881,
+        891,
+        892,
+        893,
+        894,
+        895,
+        896,
+        897,
+        898,
+        905,
+        906,
+        907,
+        908,
+        909,
+        910,
+        911,
+        912,
+        922,
+        923,
+        924,
+        925,
+        926,
+        927,
+        928,
+        929,
+        956,
+        957,
+        958,
+        959,
+        960,
+        961,
+        962,
+        969,
+        970,
+        971,
+        972,
+        973,
+        974,
+        975,
+        976,
+        977,
+        978,
+        979,
+        980,
+        981,
+        982,
+        983,
+        984,
+        991,
+        992,
+        993,
+        994,
+        995,
+        996,
+        997,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1016,
+        1017,
+        1018,
+        1019,
+        1020,
+        1021,
+        1022,
+        1023,
+        1024,
+        1025,
+        1026,
+        1027,
+        1028,
+        1029,
+        1030,
+        1037,
+        1038,
+        1039,
+        1040,
+        1041,
+        1042,
+        1043,
+        1044
+      ],
+      "nextWave": 12003,
+      "lines": [],
+      "megaSightings": [
+        0,
+        1,
+        2
+      ],
+      "hatchOpen": false,
+      "hugSpot": {
+        "x": 444.91119631956195,
+        "z": 4.998514148737171,
+        "dogX": 444.25440636937265,
+        "dogZ": 5.240644199186009
+      }
+    },
+    "cast": [
+      {
+        "id": 1,
+        "at": {
+          "x": 547,
+          "y": 0.7049999833106995,
+          "z": 0,
+          "yaw": 0.13255153229667402
+        },
+        "hp": 100,
+        "hidden": false
+      },
+      {
+        "id": 668,
+        "at": {
+          "x": 545.7070173944569,
+          "z": 0.17211567392930224,
+          "y": 0.3,
+          "yaw": 0.13263856191423035
+        },
+        "hp": 100,
+        "hidden": false,
+        "companion": {
+          "state": "follow",
+          "courage": 100,
+          "until": 0,
+          "barkAt": 0,
+          "hurtAt": 0,
+          "pickup": null,
+          "path": [],
+          "goal": -1,
+          "pathIndex": 0,
+          "velocity": {
+            "x": 0,
+            "z": 0
+          },
+          "following": false,
+          "warn": {
+            "stage": "none",
+            "threat": -1,
+            "nervousUntil": 0
+          }
+        }
+      },
+      {
+        "id": 669,
+        "at": {
+          "x": 461.635776989767,
+          "z": -14.79470452650173,
+          "y": 0.7,
+          "yaw": 1.562450217681276
+        },
+        "hp": 100,
+        "hidden": true,
+        "passengerOf": 682,
+        "civilian": {
+          "state": "calm",
+          "ambient": false,
+          "adult": true,
+          "pet": null,
+          "owner": null,
+          "model": "npc.dale.aftermath",
+          "variant": "inf.cashier",
+          "schedule": [
+            {
+              "activity": "walk",
+              "anchor": "l1/walk",
+              "target": {
+                "x": -549.75,
+                "z": 0.25
+              },
+              "ticks": 1
+            }
+          ],
+          "scheduleStep": 0,
+          "activityUntil": 0,
+          "activityStarted": 0,
+          "lastTravelProgress": 0,
+          "routine": "shop",
+          "waypoints": [
+            {
+              "x": -549.75,
+              "z": 0.25
+            }
+          ],
+          "waypoint": 0,
+          "pauseUntil": 9007199254740991,
+          "entered": 0,
+          "until": 0,
+          "downTicks": 0,
+          "eyesGlow": false,
+          "veins": 0,
+          "attacker": 0,
+          "threat": {
+            "x": -549.75,
+            "z": 0.25
+          },
+          "path": [],
+          "goal": -1,
+          "pathIndex": 58,
+          "gore": false,
+          "knockedUntil": 0,
+          "l1": {
+            "walkSpeed": 1.232012531789951,
+            "fleeSpeed": 3.742737257108092,
+            "startleTicks": 43,
+            "refuge": null,
+            "target": null,
+            "repickAt": 0,
+            "noticed": -1
+          },
+          "survivor": {
+            "key": "dale",
+            "mode": "hidden",
+            "slot": 0,
+            "leader": 1,
+            "cover": false,
+            "waitAt": 0,
+            "foundAt": 0,
+            "restAt": 1
+          },
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 10194
+          },
+          "hold": 3
+        }
+      },
+      {
+        "id": 670,
+        "at": {
+          "x": 470.4683017886626,
+          "z": -14.813756468839635,
+          "y": 0.7,
+          "yaw": 1.4014178567065039
+        },
+        "hp": 100,
+        "hidden": true,
+        "passengerOf": 683,
+        "civilian": {
+          "state": "calm",
+          "ambient": false,
+          "adult": true,
+          "pet": null,
+          "owner": null,
+          "model": "npc.rosa.aftermath",
+          "variant": "inf.cashier",
+          "schedule": [
+            {
+              "activity": "walk",
+              "anchor": "l1/walk",
+              "target": {
+                "x": -549.75,
+                "z": 0.25
+              },
+              "ticks": 1
+            }
+          ],
+          "scheduleStep": 0,
+          "activityUntil": 0,
+          "activityStarted": 0,
+          "lastTravelProgress": 0,
+          "routine": "shop",
+          "waypoints": [
+            {
+              "x": -549.75,
+              "z": 0.25
+            }
+          ],
+          "waypoint": 0,
+          "pauseUntil": 9007199254740991,
+          "entered": 0,
+          "until": 0,
+          "downTicks": 0,
+          "eyesGlow": false,
+          "veins": 0,
+          "attacker": 0,
+          "threat": {
+            "x": -549.75,
+            "z": 0.25
+          },
+          "path": [],
+          "goal": -1,
+          "pathIndex": 92,
+          "gore": false,
+          "knockedUntil": 10697,
+          "l1": {
+            "walkSpeed": 1.38710444890894,
+            "fleeSpeed": 3.222144704312086,
+            "startleTicks": 26,
+            "refuge": null,
+            "target": null,
+            "repickAt": 0,
+            "noticed": -1
+          },
+          "survivor": {
+            "key": "rosa",
+            "mode": "hidden",
+            "slot": 1,
+            "leader": 1,
+            "cover": false,
+            "waitAt": 0,
+            "foundAt": 0,
+            "restAt": 9924
+          },
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 11745
+          },
+          "hold": 3
+        }
+      },
+      {
+        "id": 671,
+        "at": {
+          "x": 443.80909053231693,
+          "z": 11.053482073996799,
+          "y": 0.704,
+          "yaw": -3.174820213609022
+        },
+        "hp": 60,
+        "hidden": false
+      },
+      {
+        "id": 672,
+        "at": {
+          "x": 461.77295712903395,
+          "z": -13.547488362112016,
+          "y": 0.7,
+          "yaw": 1.2218156692123623
+        },
+        "hp": 100,
+        "hidden": true,
+        "passengerOf": 682,
+        "civilian": {
+          "state": "calm",
+          "ambient": false,
+          "adult": true,
+          "pet": null,
+          "owner": null,
+          "model": "npc.mia.aftermath",
+          "variant": "inf.cashier",
+          "schedule": [
+            {
+              "activity": "walk",
+              "anchor": "l1/walk",
+              "target": {
+                "x": -549.75,
+                "z": 0.25
+              },
+              "ticks": 1
+            }
+          ],
+          "scheduleStep": 0,
+          "activityUntil": 0,
+          "activityStarted": 0,
+          "lastTravelProgress": 0,
+          "routine": "shop",
+          "waypoints": [
+            {
+              "x": -549.75,
+              "z": 0.25
+            }
+          ],
+          "waypoint": 0,
+          "pauseUntil": 9007199254740991,
+          "entered": 0,
+          "until": 0,
+          "downTicks": 0,
+          "eyesGlow": false,
+          "veins": 0,
+          "attacker": 0,
+          "threat": {
+            "x": -549.75,
+            "z": 0.25
+          },
+          "path": [],
+          "goal": -1,
+          "pathIndex": 53,
+          "gore": false,
+          "knockedUntil": 0,
+          "l1": {
+            "walkSpeed": 1.2643187143374235,
+            "fleeSpeed": 3.678699480742216,
+            "startleTicks": 25,
+            "refuge": null,
+            "target": null,
+            "repickAt": 0,
+            "noticed": -1
+          },
+          "survivor": {
+            "key": "mia",
+            "mode": "hidden",
+            "slot": 3,
+            "leader": 1,
+            "cover": false,
+            "waitAt": 0,
+            "foundAt": 0,
+            "restAt": 1
+          },
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 10262
+          },
+          "hold": 0
+        }
+      },
+      {
+        "id": 673,
+        "at": {
+          "x": 539.2407965988849,
+          "z": -7.788179466236804,
+          "y": 0.7,
+          "yaw": 0.06706439277559977
+        },
+        "hp": 100,
+        "hidden": false,
+        "civilian": {
+          "state": "calm",
+          "ambient": false,
+          "adult": true,
+          "pet": null,
+          "owner": null,
+          "model": "npc.sam.aftermath",
+          "variant": "inf.cashier",
+          "schedule": [
+            {
+              "activity": "walk",
+              "anchor": "l1/walk",
+              "target": {
+                "x": -549.75,
+                "z": 0.25
+              },
+              "ticks": 1
+            }
+          ],
+          "scheduleStep": 0,
+          "activityUntil": 0,
+          "activityStarted": 0,
+          "lastTravelProgress": 0,
+          "routine": "shop",
+          "waypoints": [
+            {
+              "x": -549.75,
+              "z": 0.25
+            }
+          ],
+          "waypoint": 0,
+          "pauseUntil": 9007199254740991,
+          "entered": 0,
+          "until": 0,
+          "downTicks": 0,
+          "eyesGlow": false,
+          "veins": 0,
+          "attacker": 0,
+          "threat": {
+            "x": -549.75,
+            "z": 0.25
+          },
+          "path": [],
+          "goal": -1,
+          "pathIndex": 0,
+          "gore": false,
+          "knockedUntil": 0,
+          "l1": {
+            "walkSpeed": 1.3167227876605465,
+            "fleeSpeed": 3.4004204167053107,
+            "startleTicks": 25,
+            "refuge": null,
+            "target": null,
+            "repickAt": 0,
+            "noticed": -1
+          },
+          "survivor": {
+            "key": "sam",
+            "mode": "hidden",
+            "slot": 4,
+            "leader": 1,
+            "cover": false,
+            "waitAt": 0,
+            "foundAt": 0,
+            "restAt": 1
+          },
+          "ally": {
+            "role": "civilian",
+            "engaged": false,
+            "run": null,
+            "runSpeed": 3.8,
+            "post": null,
+            "hold": true,
+            "targetId": 0,
+            "nextAttack": 0,
+            "hits": 0,
+            "forceUntil": 0,
+            "weapon": "hunting-rifle",
+            "gun": {
+              "damage": 40,
+              "shotS": 1.5,
+              "rangeM": 35,
+              "nearM": 12,
+              "hitNear": 0.8,
+              "hitFar": 0.3
+            },
+            "lastHp": 100,
+            "strikeAt": 0,
+            "baton": false
+          }
+        }
+      }
+    ],
+    "passengers": [],
     "playerWeapons": {
       "selectedSide": "LEFT",
       "LEFT": {
@@ -162,63 +786,75 @@
       "name": "l9.gate-closed"
     },
     {
-      "tick": 9135,
+      "tick": 9123,
       "name": "l9.evacuation-started"
     },
     {
-      "tick": 9160,
+      "tick": 9153,
       "name": "l9.bus-ram"
     },
     {
-      "tick": 9938,
+      "tick": 9980,
       "name": "l9.corgi-goodbye"
     },
     {
-      "tick": 10202,
+      "tick": 10239,
       "name": "l9.survivor-evacuated"
     },
     {
-      "tick": 10254,
+      "tick": 10307,
       "name": "l9.survivor-evacuated"
     },
     {
-      "tick": 11204,
+      "tick": 11790,
+      "name": "l9.survivor-evacuated"
+    },
+    {
+      "tick": 11790,
       "name": "l9.evacuation-complete"
     },
     {
-      "tick": 11225,
+      "tick": 11877,
       "name": "l9.bus-ram"
     },
     {
-      "tick": 11345,
+      "tick": 11997,
       "name": "l9.bus-ram"
     },
     {
-      "tick": 11551,
+      "tick": 12117,
       "name": "l9.bus-ram"
     },
     {
-      "tick": 11614,
+      "tick": 12237,
+      "name": "l9.bus-ram"
+    },
+    {
+      "tick": 12357,
+      "name": "l9.bus-ram"
+    },
+    {
+      "tick": 12440,
       "name": "l9.crash-approach"
     },
     {
-      "tick": 11674,
+      "tick": 12500,
       "name": "l9.mega-boarded"
     },
     {
-      "tick": 11777,
+      "tick": 12604,
       "name": "l9.bridge-collapse"
     },
     {
-      "tick": 11777,
+      "tick": 12604,
       "name": "l9.weapons-lost"
     },
     {
-      "tick": 11867,
+      "tick": 12694,
       "name": "l9.crash-impact"
     },
     {
-      "tick": 12528,
+      "tick": 13355,
       "name": "l9.crawl-finished"
     }
   ],
@@ -252,16 +888,17 @@
       "id": "L9.stall.sam"
     },
     {
-      "tick": 8243,
+      "tick": 8257,
       "id": "L9.clingers"
     },
     {
-      "tick": 11205,
+      "tick": 11791,
       "id": "L9.sam-stays"
     },
     {
-      "tick": 12348,
+      "tick": 13175,
       "id": "L9.end-caption"
     }
-  ]
+  ],
+  "hurt": []
 }
