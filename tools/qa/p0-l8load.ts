@@ -26,6 +26,7 @@ await new Promise<void>(ready => socket.close(() => ready()));
 const server = spawn(process.execPath, [resolve('node_modules/vite/bin/vite.js'), '--host', '127.0.0.1', '--port', String(address.port), '--strictPort', '--configLoader', 'runner'], { stdio: 'ignore' });
 const identity = {
   revision: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
+  producerSha256: createHash('sha256').update(readFileSync(new URL(import.meta.url))).digest('hex'),
   generatedAt: new Date().toISOString(), assetHashes,
   method: 'One shared headless Metal browser; fresh isolated context for each quality/backend cell. L8-default campaign with requested quality before loading, native Begin click, production complete bot, normal mortal simulation for at least 3600 ticks and 60 wall seconds. No actor, health, mission, time-scale or renderer overrides.',
 };
@@ -97,7 +98,9 @@ try {
       await page.screenshot({ path: `${out}/${cell}-error.jpg`, type: 'jpeg', quality: 70 }).catch(() => {});
       console.error(`[L8] FAIL ${cell}: ${result.error}`);
     } finally {
-      cells.push(result); guard.dispose(); await context.close();
+      guard.dispose();
+      if (result.errors.length || result.warnings.length) { result.pass = false; result.error ??= 'Browser errors or asset fallbacks during capture/guard cleanup'; }
+      cells.push(result); await context.close();
       writeFileSync(`${out}/four-cells.json`, JSON.stringify({ ...identity, pass: cells.length === 4 && cells.every(row => row.pass), cells }, null, 2) + '\n');
     }
   }
