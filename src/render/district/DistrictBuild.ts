@@ -65,6 +65,7 @@ export class DistrictParts {
   terrain?: TerrainView;
   stepEdges?: HeightStepEdges;
   terrainHorizon?: Group;
+  backdrop?: Mesh;
   maxBarTerrainHeight = 0;
   /** Releases exactly what the build created; the registry's shared assets are borrowed and never touched. */
   dispose(): void {
@@ -122,6 +123,7 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
   }
   parts.ownedGeometry.push(terrain);
   const backdrop = new Mesh(terrain, deps.materials.get('grass'));
+  parts.backdrop = backdrop;
   backdrop.rotation.x = -Math.PI / 2; backdrop.position.y = -.12; backdrop.receiveShadow = true;
   deps.view.add(backdrop);
   // Bound the slice with a visible fence on the actual terrain perimeter.

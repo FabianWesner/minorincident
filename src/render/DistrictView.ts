@@ -130,7 +130,7 @@ export class DistrictView extends Group {
   async load(seed: number, focus?: { x: number; z: number }, heroAtSpawn = false): Promise<void> {
     this.phase.value = 0;
     await buildDistrict(this.parts, { view: this, world: this.world, materials: this.materials, registry: this.registry, grassMaterial: this.grassMaterial, foliage: this.foliage, low: () => this.low, instanceCapacity: this.instanceCapacity }, seed, focus, heroAtSpawn);
-    if (this.world.composition.id === 'L10') { this.overviewView = new LevelTenOverview(this.world); this.add(this.overviewView); }
+    if (this.world.composition.id === 'L10') { this.overviewView = new LevelTenOverview(this.world, this.materials); this.add(this.overviewView); }
     this.occlusion.tagInteriors();
     await Promise.all(this.world.districts.flatMap(d => d.decay.placements.filter(p => p.destruction && !p.destruction.indestructible).map(async p => {
       const source = await this.registry.asset(p.assetId, false, 'lod1', p.decay);
@@ -279,9 +279,14 @@ export class DistrictView extends Group {
   private lodPrefetchMetres = 0;
   /** Ending panorama: retain the coarse whole-level terrain and a bounded set of LOD2 landmarks. */
   overview = false;
+  setOverviewCureTide(x: number, z: number, radius: number): void { this.overviewView?.setCureTide(x, z, radius); }
   /** Static matrices are repartitioned only when the camera moves; far props use LOD2. */
   updateLods(view: View, velocity: { x: number; z: number } = { x: 0, z: 0 }): void {
     if (this.overviewView) this.overviewView.visible = this.overview;
+    if (this.overviewView) {
+      if (this.parts.backdrop) this.parts.backdrop.visible = !this.overview;
+      for (const mesh of this.parts.mergedLayout) if ((mesh.material as { token?: string }).token === 'grass') mesh.visible = !this.overview;
+    }
     this.foliage.visible = this.destructionView.visible = !this.overview;
     if (this.parts.accents) this.parts.accents.visible = !this.overview;
     if (this.parts.ambient) this.parts.ambient.visible = !this.overview;

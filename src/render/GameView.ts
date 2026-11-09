@@ -678,10 +678,22 @@ export class GameView implements Lifecycle {
     cureDust.radius.value = front?.radius ?? -1;
     if (front) cureDust.origin.value.set(front.fronts[0].x, front.fronts[0].z);
     this.endingView?.update(this.view);
-    if (this.districts) this.districts.overview = !!front && epiloguePull(front.elapsed) > 0 && this.camera.position.distanceTo(this.view.cameraTarget) > 250 && this.world.missions?.state.epilogue?.phase !== 'thanks';
+    const pull = front ? epiloguePull(front.elapsed) : 0;
+    const panorama = pull > 0 && this.world.missions?.state.epilogue?.phase !== 'thanks';
+    cureDust.cinematic.value = panorama ? pull : 0;
+    if (this.districts) {
+      this.districts.overview = !!front && pull > 0 && this.camera.position.distanceTo(this.view.cameraTarget) > 250 && this.world.missions?.state.epilogue?.phase !== 'thanks';
+      const bounds = this.world.districts?.nav;
+      if (front && bounds && panorama) {
+        const { x, z } = front.fronts[0];
+        const distance = Math.hypot(Math.max(Math.abs(bounds.min[0] - x), Math.abs(bounds.max[0] - x)), Math.max(Math.abs(bounds.min[1] - z), Math.abs(bounds.max[1] - z)));
+        const radius = 120 + distance * 1.1 * pull;
+        this.districts.setOverviewCureTide(x, z, radius);
+        cureDust.radius.value = radius;
+      }
+    }
     if (this.lighting) {
       this.lighting.panorama = !!front && epiloguePull(front.elapsed) > 0 && this.world.missions?.state.epilogue?.phase !== 'thanks';
-      if (front) this.lighting.cureDawn(front.elapsed / (8 * 60));
     }
 
     const mission = this.world.missions, door = mission?.def.anchors['fire-bay-door'];
@@ -1070,6 +1082,10 @@ export class GameView implements Lifecycle {
     this.lighting?.update(this.view); this.updateLights();
     if (!this.weather && this.lighting && this.world.weather) { this.weather = new WeatherView(this.world, this.lighting); this.scene.add(this.weather); }
     this.weather?.update(this.view, this.quality, this.vfxSettings.flashReduction ?? false);
+    // Weather restores the authored night key each frame. The released cure's
+    // dawn must be the final lighting write, including paused cinematic redraws.
+    const cureFront = this.world.missions?.state.cureFront;
+    if (cureFront) this.lighting?.cureDawn(cureFront.elapsed / (8 * 60));
     const drivenCar = this.world.vehicles?.cars.get(this.world.vehicles.active ?? -1);
     this.districts?.updateLods(this.view, drivenCar?.physics.body.linvel() ?? survivor?.velocity);
     this.districts?.cull(this.view, this.quality);

@@ -12,7 +12,7 @@ export const playerSteers = (vehicles: { active: unknown; bicycle: { riding: boo
 export const zoomLimits = [.5, 1.5] as const;
 /** Body-centre height of the courier above the feet (spawn and locomotion keep the player at ground + .72). */
 export const feetOffset = .72;
-export interface CameraPose { position: [number, number, number]; target: [number, number, number] }
+export interface CameraPose { position: [number, number, number]; target: [number, number, number]; fovDeg?: number }
 /** Narrow-FOV follow camera. Presentation seconds are supplied by Game; never read by sim. */
 export class View {
   readonly camera = new PerspectiveCamera(cameraFraming.fovDeg, 16 / 9, 0.1, 600);
@@ -75,8 +75,9 @@ export class View {
    * applied instantly on re-poses and teleports. Player zoom multiplies on top, so every zoom level scales from it. */
   framing: ((x: number, z: number) => { scale: number; fovDeg: number }) | null = null;
   regionScale = 1;
+  private cinematicFov: number | undefined;
   private applyFraming(seconds: number): void {
-    const target = this.framing?.(this.focus.x, this.focus.z), scale = target?.scale ?? 1, fov = target?.fovDeg ?? cameraFraming.fovDeg;
+    const target = this.framing?.(this.focus.x, this.focus.z), scale = target?.scale ?? 1, fov = this.blendTarget && this.cinematicFov !== undefined ? this.cinematicFov : target?.fovDeg ?? cameraFraming.fovDeg;
     const k = seconds > 0 ? 1 - Math.exp(-2 * seconds) : 1;
     this.regionScale += (scale - this.regionScale) * k;
     if (Math.abs(this.regionScale - scale) < 1e-4) this.regionScale = scale;
@@ -140,6 +141,7 @@ export class View {
     this.spot = name; this.cinematic(pose, true);
   }
   cinematic(pose: CameraPose, instant = false): void {
+    this.cinematicFov = pose.fovDeg;
     this.cinematicCamera.position.fromArray(pose.position); this.target.fromArray(pose.target);
     this.cinematicCamera.lookAt(this.target); this.blendTarget = 1;
     if (instant) this.blend = 1;
