@@ -379,6 +379,15 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   decals.update(focus,false);expect(decals.visibleIds()).toHaveLength(2);
   decals.update(focus,true);expect(decals.visibleIds()).toHaveLength(1);
   decals.update({x:0,z:0},true);expect(decals.visibleIds()).toHaveLength(0);decals.dispose();
+  const roofRows = cureVignetteDecals(actualFarm).filter(row => row.roof);
+  const roofDecal = new CureVignetteDecals(roofRows, new DataTexture(new Uint8Array([255,255,255,255]),1,1));
+  const roofFocus = { x: 944, z: -26 };
+  roofDecal.update(roofFocus, false); expect(roofDecal.visibleIds()).toContain('l10-barn-help-roof');
+  roofDecal.update(roofFocus, false, true);
+  expect(roofDecal.visibleIds()).not.toContain('l10-barn-help-roof');
+  expect(roofDecal.children.slice(1).every(child => !child.visible)).toBe(true);
+  roofDecal.update(roofFocus, false, false); expect(roofDecal.visibleIds()).toContain('l10-barn-help-roof');
+  roofDecal.dispose();
 
   expect(apron.some(p => p.position[0] > 3900 && p.roadLife)).toBe(true);
   expect(stories.filter(q => q.fieldLight).length).toBeGreaterThan(60);

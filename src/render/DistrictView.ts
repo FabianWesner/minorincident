@@ -76,6 +76,7 @@ export class DistrictView extends Group {
   private readonly lodBatches = this.parts.lodBatches;
   private readonly destructionView = new DestructionView();
   private readonly destructionActive = new Map<string, boolean>();
+  private barnRoofVisible = true;
   private readonly destructionSources = new Map<string, Group>();
   private readonly pending = new Map<LodBatch, Promise<void>>();
   private disposed = false;
@@ -277,7 +278,7 @@ export class DistrictView extends Group {
   overview = false;
   /** Static matrices are repartitioned only when the camera moves; far props use LOD2. */
   updateLods(view: View, velocity: { x: number; z: number } = { x: 0, z: 0 }): void {
-    this.parts.cureDecals?.update(view.cameraTarget,this.low);
+    this.parts.cureDecals?.update(view.cameraTarget,this.low, !this.barnRoofVisible);
     this.lodPrefetchMetres = Math.hypot(velocity.x, velocity.z) * terrainPrefetchSeconds;
     if (this.parts.terrain) {
       this.parts.terrain.warm = this.warmHero; this.parts.terrain.swap = this.swapSlot;
@@ -425,6 +426,7 @@ export class DistrictView extends Group {
   }
   syncDestruction(destruction: Destruction): void {
     for (const o of destruction.objects) {
+      if (o.placement.id === 'l10-find-farm-barn') this.barnRoofVisible = !o.state.collapsed && o.parts.some((p, i) => p.role === 'roof' && o.state.hp[i] > 0);
       if (o.protected || this.destructionActive.get(o.id) === (o.state.revision > 0)) continue;
       const entry = this.lodBatches.find(e => e.refs.some(r => r.userData.placementId === o.id));
       const ref = entry?.refs.find(r => r.userData.placementId === o.id);

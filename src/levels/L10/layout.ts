@@ -60,7 +60,9 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     place('l10-find-farm-barn', 'bld.farm-barn-ruin', 944, -26, [5, 2.1, 4], 0, [1, 1, 1], true);
     place('l10-find-farm-shed', 'bld.farm-barn-ruin', 1170, -26, [5, 2.1, 4], 0, [.7, .7, .7], true);
     place('l10-find-farm-workshop', 'bld.farm-house-ruin', 1407, 32, [4, 1.4, 3.5], 0, [1, 1, 1], true);
-    for (let i = 0; i < 3; i++) place(`l10-barn-grave-${i}`, 'prop.l10-grave-cross', 942 + i * 2, -26, [.4, .6, .5], 0, [1, 1, 1], true);
+    // The camera approaches from +X/+Z. Graves sit beyond the east eave and
+    // beside the silo, visible even while the roof remains intact.
+    for (let i = 0; i < 3; i++) place(`l10-barn-grave-${i}`, 'prop.l10-grave-cross', 951, -29 + i * 3, [.4, .6, .5], 0, [1, 1, 1], true);
     const tower = place('l10-find-guard-tower', 'kit.guard-tower', 1965, 16, [1.54, 2.45, 1.4], 0, [1, 1, 1], true);
     tower.decorSolid = true;
     place('l10-find-checkpoint-locker', 'prop.crates', 2080, 3, [1, 1, .6], 0, [1, 1, 1], true);
