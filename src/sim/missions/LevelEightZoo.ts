@@ -140,7 +140,7 @@ export class LevelEightZoo {
       const last = route.at(-1);
       // Alarm runners clear the entrance briskly; the larger high-tier queue
       // must still contact the courier within twenty seconds.
-      return { ...door, ...exit, route, ox: last?.[0] ?? exit.ox, oz: last?.[1] ?? exit.oz, next: 0, ids: [], speedMs: index === 2 ? 5.6 : index === 3 ? 6.8 : 4.2 };
+      return { ...door, ...exit, route, finishRoute: true, ox: last?.[0] ?? exit.ox, oz: last?.[1] ?? exit.oz, next: 0, ids: [], speedMs: index === 2 ? 5.6 : index === 3 ? 6.8 : 4.2 };
     });
     if (s.outlets.length < 3) throw new Error('Zoo requires at least three tunnel outlets');
     // The carried group has just unloaded from L7's evacuation bus inside the perimeter.

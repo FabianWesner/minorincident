@@ -36,6 +36,8 @@ export interface HouseDoor {
 export interface HouseEmergence extends HouseDoor {
   /** L4 tent aisles must finish the authored walk before ordinary AI takes over. */
   strictRoute?: boolean;
+  /** Long service approaches hand off only after the last authored leg. */
+  finishRoute?: boolean;
   /** Tick of the next resident; `ids` the residents out (or on their way out) so far. */
   next: number; ids: number[];
   /** Walk-out pace (m/s), default `emergeSpeedMs` (a stumble); the lab staff burst out running. */
@@ -194,7 +196,8 @@ export function walkResidents(world: SimWorld, house: HouseEmergence, tick: numb
       const [tx, tz] = route[w.leg], dx = tx - p.x, dz = tz - p.z, d = Math.hypot(dx, dz), m = Math.min(step, d);
       if (d > 1e-6) { p.x += dx / d * m; p.z += dz / d * m; p.yaw = -Math.atan2(dz, dx); }
       p.y = .7 + (world.districts?.groundHeight(p.x, p.z) ?? 0); world.spatial.set(e.id, p.x, p.z);
-      if (d <= step) w.leg++;
+      // A shared service turn must accept a body-sized arrival: separation can keep two walkers circling its exact centre.
+      if (d <= step || house.finishRoute && d <= actorRadius(e) + .2) w.leg++;
     } else if (e.pendingAdmission && !world.solids.clear(p, actorRadius(e), e.id, false)) {
       // The authored route was baked for a pedestrian. A wider resident keeps
       // walking along its final leg until its whole footprint clears the gate.
@@ -216,7 +219,7 @@ export function walkResidents(world: SimWorld, house: HouseEmergence, tick: numb
     if (e.combat) e.combat.staggerUntil = Math.max(e.combat.staggerUntil ?? 0, tick + 2);
     // Released at the end of the walk only, never inside the house (the AI would snap the body onto the nearest nav cell).
     const outside = (p.x - house.x) * house.nx + (p.z - house.z) * house.nz > 0;
-    if (w.leg >= route.length || (!house.strictRoute && outside && tick >= w.until)) {
+    if (w.leg >= route.length || (!house.strictRoute && !house.finishRoute && outside && tick >= w.until)) {
       if (house.strictRoute && !world.solids.admit(e, 'house.exit', 0, false)) continue;
       if (!e.pendingAdmission && !house.strictRoute) clearDoorWall(world, house, e, w.leg < 0 ? end : -Infinity);
       if (e.pendingAdmission) {
