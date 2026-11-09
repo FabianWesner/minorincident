@@ -86,8 +86,6 @@ export const l2 = {
   },
   /** Section 5.5: the street escape. */
   escape: {
-    /** During break-away both tiers close to arm's reach before committing a lunge. */
-    lungeM: 1.6,
     /** PO 10-23 / Q-168: six solitary figures along the ordinary market → Juniper → Elm walk.
      * Split the former pairs between roadside corners: high retains six infected, low gains two singles.
      * Prepared on break-away, before the courier can see these street corners; the bridge cluster remains separate. */
