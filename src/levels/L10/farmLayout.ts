@@ -118,13 +118,13 @@ export function cureRoadsideFarmDecor(occupied: readonly Placement[]): Placement
     [cure.anchors['cure-corridor'], cure.anchors['corridor-breach'], cure.anchors['cure-complex']]];
   for (const line of lines) for (let i = 1; i < line.length; i++) {
     const a = line[i - 1], b = line[i], dx = b[0] - a[0], dz = b[1] - a[1], length = Math.hypot(dx, dz);
-    for (let along = 10; along < length; along += 28) {
+    for (let along = 10; along < length; along += 14) {
       const x = a[0] + dx * along / length, z = a[1] + dz * along / length;
       if (!((x >= 1250 && x <= 1750) || (x >= 3050 && x <= 3650))) continue;
       const side = Math.floor((station + along) / 56) % 2 ? -1 : 1;
-      for (const lateral of [12, 16, 20]) {
-        const crop = piece(`decor-cure-route-corn-${Math.round(station + along)}`, 'veg.corn-block', x - dz / length * side * lateral, z + dx / length * side * lateral, dx > 0 ? 0 : Math.PI);
-        if (occupied.some(p => overlaps(crop, p, .5)) || out.some(p => overlaps(crop, p, .5))) continue;
+      for (const [lateral, direction] of [10, 14, 18, 22].flatMap(offset => [[offset, side], [offset, -side]])) {
+        const crop = piece(`decor-cure-route-corn-${Math.round(station + along)}`, 'veg.corn-block', x - dz / length * direction * lateral, z + dx / length * direction * lateral, dx > 0 ? 0 : Math.PI);
+        if (occupied.some(p => p.visualAabb.max[1] > .8 && overlaps(crop, p, .5)) || out.some(p => overlaps(crop, p, .5))) continue;
         out.push(crop);
         if (out.filter(p => p.assetId === 'veg.corn-block').length % 6 === 0) out.push(piece(`${crop.id}-scarecrow`, 'prop.farm-scarecrow', crop.position[0], crop.position[2]));
         break;

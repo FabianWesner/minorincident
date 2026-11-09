@@ -332,6 +332,9 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   const assembled = new DistrictWorld(compositions.L10, levelTenLayouts([cureLayout]), 42);
   const actualFarm = assembled.districts[0].layout.placements;
   expect(actualFarm.filter(p => p.assetId === 'veg.corn-block').length).toBeGreaterThan(100);
+  for (const [x, z] of [[1350, 19], [1650, -38.45], [3150, 51.05], [3450, 53]]) {
+    expect(actualFarm.some(p => p.id.startsWith('decor-cure-route-corn-') && Math.hypot(p.position[0] - x, p.position[2] - z) < 25), `crop edge near QA route ${x}`).toBe(true);
+  }
   expect(actualFarm.some(p => p.id.startsWith('decor-cure-vignette-'))).toBe(true);
   expect(actualFarm.filter(p => p.id.startsWith('l10-barn-grave-'))).toHaveLength(3);
   expect(actualFarm.some(p => p.id === 'l10-find-farm-barn')).toBe(true);
