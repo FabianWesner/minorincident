@@ -21,7 +21,7 @@ export const l5FollowerTracking = { ...followerTracking, omega: 22 } as const;
  * individual temperament; it must not dilute an urgent controller's steering limits. */
 export function trackingFor(world: SimWorld, e: EntitySnapshot): Parameters<typeof respond>[3] {
   const s = e.civilian?.survivor;
-  if (world.scenario === 'L7') return e.companion ? followerTracking : undefined;
+  if (world.scenario === 'L7' && e.companion) return followerTracking;
   if (world.scenario === 'L5' && (e.companion || s?.briskAt === world.tick)) return l5FollowerTracking;
   if (s?.mode !== 'follow' || world.scenario === 'L5') return undefined;
   // The authored subway convoy already controls pace and injury; retain its shared response.
