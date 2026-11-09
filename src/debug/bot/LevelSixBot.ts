@@ -41,7 +41,9 @@ export class LevelSixBot {
       const closeArmor=!!this.shotgunTarget&&d<=8&&shotgun>=0,side=closeArmor?'RIGHT':d<2.2?'LEFT':'RIGHT';
       const mg=rack.findIndex(slot=>slot.id==='weapon.army-mg'),index=closeArmor?shotgun:mg;
       if(side==='RIGHT'&&index>=0)f.selectedSlot={side:'RIGHT',index};
-      strikeAt(f,e,side,p);return f;
+      strikeAt(f,e,side,p);
+      // Keep covering the column while retreating; replenishing pursuers must not pin the courier in place.
+      if(s.phase!=='retreat'&&s.phase!=='exit')return f;
     }
     if(s.phase==='shelter'||s.phase==='first'||s.phase==='fails'){go({x:0,z:4},.6,'shelter');return f;}
     if(fights){
