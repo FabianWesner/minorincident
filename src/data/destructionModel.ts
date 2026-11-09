@@ -56,11 +56,14 @@ export function destructionParts(p: Pick<Placement, 'assetId' | 'destruction'>):
   if (!parts.some(p => p.role === 'roof') && ['timber', 'masonry', 'concrete'].includes(policy.class)) parts.push({ id: 'roof', role: 'roof', material: def.material, hp: def.hp, bounds: { min: [-d.x, d.y * .65, -d.z], max: [d.x, d.y + .2, d.z] } });
   // A small fixed grid bounds both state and first-damage splitting cost. Each cell can breach independently.
   const fixture = ['pillar', 'machinery', 'fuel-tank'].includes(policy.class);
+  const generatedStart = parts.length;
   const nx = fixture ? 1 : policy.class === 'vehicle' ? 3 : 4, nz = fixture ? 1 : policy.class === 'vehicle' ? 2 : 4;
   for (let x = 0; x < nx; x++) for (let z = 0; z < nz; z++) parts.push({ id: `shell-${x}-${z}`, role: 'structure', material: def.material, hp: def.hp,
     bounds: { min: [-d.x / 2 + d.x * x / nx, -.2, -d.z / 2 + d.z * z / nz], max: [-d.x / 2 + d.x * (x + 1) / nx, d.y + .2, -d.z / 2 + d.z * (z + 1) / nz] } });
   const occupied = new Set(partColliders(p.assetId, parts).map(c => c.part));
-  return parts.filter((part, i) => part.role !== 'structure' || occupied.has(i));
+  // Authored visual wall zones can be breakable without introducing collision
+  // into a deliberately walk-through ruin. Only generated empty shell cells go.
+  return parts.filter((part, i) => part.role !== 'structure' || i < generatedStart || occupied.has(i));
 }
 export function partAt(parts: readonly DestructionPart[], point: readonly number[]): number { return parts.findIndex(p => contains(p.bounds, point, .001)); }
 /** Exact owned portions of the original compound collider; ground supports remain immutable. */

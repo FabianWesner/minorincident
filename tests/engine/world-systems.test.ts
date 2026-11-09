@@ -11,6 +11,7 @@ import { DestructionView } from '../../src/render/DestructionView';
 import { loadL3 } from '../../tools/sim-runner/l3Bots';
 import { rotate } from '../../src/sim/destruction/Destruction';
 import { SimWorld } from '../../src/sim/world/SimWorld';
+import { verifyDestructionRollout } from './destruction-rollout.fixture';
 
 const worlds: SimWorld[] = [];
 afterEach(() => { for (const w of worlds.splice(0)) w.dispose(); });
@@ -38,6 +39,7 @@ test('interaction: rings fill and decay, complete once, nearest instant wins in 
 test('doors: locked hint, key requirement, open/close updates navigation and colliders in the same tick', async () => {
   const w = await world(), nav = new NavGrid([-3, -1], [4, 2]); nav.cells.fill(1); w.interactables!.nav = nav;
   const id = w.interactables!.spawn('door', { x: 1, z: 0 }, { key: 'key.house', halfX: .4, halfZ: 2 });
+  const closedHash = nav.hash;
   expect(nav.flood([-2, 0])[nav.index(3, 0)]).toBe(0);
   w.setInput({ interact: true }); step(w, 1);
   expect(w.entities.get(id)!.interactable!.hint).toBe('locked'); expect(w.entities.get(id)!.interactable!.open).toBe(false);
@@ -45,10 +47,18 @@ test('doors: locked hint, key requirement, open/close updates navigation and col
   w.interactables!.giveItem('key.house'); w.setInput({ interact: true }); step(w, 1); w.clearInput();
   expect(w.entities.get(id)!.interactable!.open).toBe(true);
   expect(nav.flood([-2, 0])[nav.index(3, 0)]).toBe(1);
+  expect(nav.hash).not.toBe(closedHash);
   const colliders = w.physics.colliderCount;
   move(w, -3); step(w, 1); move(w, 0); w.setInput({ interact: true }); step(w, 1);
   expect(w.entities.get(id)!.interactable!.open).toBe(false);
   expect(w.physics.colliderCount).toBe(colliders + 1);
+  expect(nav.hash).toBe(closedHash);
+  const overlap = { x: -1, z: 0, halfX: .4, halfZ: .4 };
+  nav.block(100, overlap); nav.block(101, overlap);
+  const overlapHash = nav.hash;
+  expect(overlapHash).not.toBe(closedHash);
+  nav.unblock(100); expect(nav.hash).toBe(overlapHash);
+  nav.unblock(101); expect(nav.hash).toBe(closedHash);
 });
 
 test('pickups: exact one-time effects with caps, rack join/replacement, dead players wait, inventory survives respawn', async () => {
@@ -243,6 +253,7 @@ test('explosions: every class follows its damage curve, full cover shields, rail
   expect(destruction.impact(car.id,'boss.mega.charge',10000),'inactive tiers cannot take damage').toBe(false);
   expect(destruction.snapshot()).toEqual(state);
   street.setTier(5);expect(car.present).toBe(true);expect(tierFire.hazard!.activeUntil).toBeGreaterThan(street.tick);
+  verifyDestructionRollout();
 
 
 });

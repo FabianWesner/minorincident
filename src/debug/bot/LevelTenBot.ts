@@ -99,12 +99,15 @@ export class LevelTenBot {
     }
     if (active.id !== 'hold' && gun?.mounted) { f.interact = true; return f; }
     const rack = player.weapons!.RIGHT.rack, target = active.id === 'mega' ? threats.find(isMega) ?? threats[0] : threats[0];
-    if (['mega', 'release'].includes(active.id) && p.y > 2) {
+    if (['mega', 'release'].includes(active.id) && p.y > .9) {
       // Interaction console is 2 m east of the assembly origin. Use the
       // shipped stair anchors, rather than translating them from that marker.
       const [topX, topZ] = cure.anchors['dispersal-stair-top'], [footX, footZ] = cure.anchors['dispersal-stair-foot'];
       const top = { x: topX, z: topZ }, foot = { x: footX, z: footZ };
-      if (p.x < top.x - .25 || Math.abs(p.z - top.z) > .25) f.move = this.walker.step(w, top, .2, 'descend-landing', true) ?? { x: 0, z: 0 };
+      // Once on the ramp, continue to its foot even after a lateral shove.
+      // Asking the ground/deck grid for the top from mid-ramp can return a
+      // zero move forever because neither grid owns that sloped support.
+      if (p.x < top.x - .25 || p.y >= arena.gun.deckHeight + .2 && Math.abs(p.z - top.z) > .25) f.move = this.walker.step(w, top, .2, 'descend-landing', true) ?? { x: 0, z: 0 };
       else {
         const dx = foot.x - p.x, dz = foot.z - p.z, d = Math.hypot(dx, dz) || 1;
         f.move = { x: dx / d, z: dz / d };
@@ -124,7 +127,7 @@ export class LevelTenBot {
       f.selectedSlot = { side: 'RIGHT', index }; f.aimSource = 'keyboard';
       const dx = target.transform.x - p.x, dz = target.transform.z - p.z, d = Math.hypot(dx, dz) || 1;
       f.aim = { x: dx / d, z: dz / d }; f.aimPoint = { x: target.transform.x, z: target.transform.z }; f.right.held = true;
-      if (finale && d < 10 && !gun?.mounted && !approachGun) {
+      if (finale && d < 10 && p.y <= .9 && !gun?.mounted && !approachGun) {
         const angle = Math.atan2(p.z - anchor.z, p.x - anchor.x) + Math.PI / 4;
         f.move = this.walker.step(w, { x: anchor.x + Math.cos(angle) * 18, z: anchor.z + Math.sin(angle) * 18 }, 1, 'dodge') ?? f.move;
         if (d < 8) {

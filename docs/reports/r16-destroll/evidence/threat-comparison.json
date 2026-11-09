@@ -1,0 +1,70 @@
+{
+  "method": "Deep exact comparison of every receipt field except wallSeconds and nativeStateHash (including nested seed state hashes). Baselines disable the rollout call before fresh-world construction; matching architecture per pair. Partial selections intentionally retain PARTIAL_LEVEL_SELECTION diagnostic exit 1.",
+  "levels": [
+    {
+      "level": "L1",
+      "architecture": "Mac arm64",
+      "allThreatAndRouteMetricsExact": true,
+      "canonicalSHA256": "56cf2f39a07e44f62b867faccaec7133d1191e8a6652f121da359bef88d1db73",
+      "baselineRawSHA256": "65144e3dea0654a722b1ebf4df00257fa76c2488c8993212eaa0ddb1cc27e76e",
+      "rolloutRawSHA256": "5902f48faf811074973b3db456680d800bbf4163190cda40bacbf36b232b4794",
+      "baselineFlags": [],
+      "rolloutFlags": [],
+      "passiveFlags": []
+    },
+    {
+      "level": "L2",
+      "architecture": "Mac arm64",
+      "allThreatAndRouteMetricsExact": true,
+      "canonicalSHA256": "a676d0fdd2c33a759891690d980922269511947c35466866b4e2b13b8b4a13cf",
+      "baselineRawSHA256": "904eaf40fa69bc855da283305117022b183220b097a6ca1ec25f3e9a44ce53dc",
+      "rolloutRawSHA256": "53d53d80eb16c8688c60283dbb1141bf131048a27b5e2d32c924701567cb41fe",
+      "baselineFlags": [],
+      "rolloutFlags": [],
+      "passiveFlags": []
+    },
+    {
+      "level": "L3",
+      "architecture": "Mac arm64",
+      "allThreatAndRouteMetricsExact": true,
+      "canonicalSHA256": "eccf7e95eabdaca3989ee31f330b8ef369e04dc61d20b4aa995424e12ddd3d42",
+      "baselineRawSHA256": "2c11c593d6b5f14d619b3df63913e1ad80931c231b587452c0b0c667010fa5fc",
+      "rolloutRawSHA256": "40b7a8641209671516894a510a3ab76262a879db32d547a7c320a2d57ab1dfa1",
+      "baselineFlags": [
+        "wave/station-0:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+        "wave/station-2:WAVE_NO_ATTACK_WITHIN_20_SECONDS"
+      ],
+      "rolloutFlags": [
+        "wave/station-0:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+        "wave/station-2:WAVE_NO_ATTACK_WITHIN_20_SECONDS"
+      ],
+      "passiveFlags": []
+    },
+    {
+      "level": "L4",
+      "architecture": "Linux x86_64",
+      "allThreatAndRouteMetricsExact": true,
+      "canonicalSHA256": "c2714b6158f50e8bc259e5b370807ed30bb24942959fa807216c54a30a2e0959",
+      "baselineRawSHA256": "7d47eef0cb8b5c1403884aea183797ff6c2f6aed10893af94880fd504f72cc5e",
+      "rolloutRawSHA256": "0a13628f9f19f90e9d5b0451285fbeb08d31b1a86906e88f3e768868258bcb53",
+      "baselineFlags": [
+        "wave/breach-north:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+      ],
+      "rolloutFlags": [
+        "wave/breach-north:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+      ],
+      "passiveFlags": []
+    },
+    {
+      "level": "L5",
+      "architecture": "Linux x86_64",
+      "allThreatAndRouteMetricsExact": true,
+      "canonicalSHA256": "ad464f12cc0ea81919976d16f4c7f17c234a2b9e823848f0c1e8ec1bc85ec089",
+      "baselineRawSHA256": "e5d721defd044931b028c11e215d4f7ba736134b73d7148bf96df34df5dd42a5",
+      "rolloutRawSHA256": "b8aa0c44d8773f936197959d1a6de9045e869de295c5352668ee6fe96ef9dfae",
+      "baselineFlags": [],
+      "rolloutFlags": [],
+      "passiveFlags": []
+    }
+  ]
+}

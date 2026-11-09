@@ -7,6 +7,8 @@ import { LevelTenBot } from '../../src/debug/bot/LevelTenBot';
 import { followTenFrustum } from '../sim-runner/l10';
 
 const rows = [];
+const stopStep = process.env.R15_STOP_STEP ?? 'hold';
+if (stopStep !== 'hold' && stopStep !== 'mega') throw new Error('R15_STOP_STEP must be hold or mega');
 for (const tier of ['low', 'high'] as const) {
   const world = await loadLevel('L10', 1, tier);
   try {
@@ -30,9 +32,9 @@ for (const tier of ['low', 'high'] as const) {
         const p = world.entities.get(1)!;
         samples.push({ tick: world.tick, at: { ...p.transform }, hp: p.health.current, move: input.move, charge: mission.state.counters['charge-ticks'], active: mission.state.states['charge-active'], objective: mission.def.steps.find(step => mission.state.steps[step.id].status === 'active')?.id, mounted: world.mountedGun?.mounted, canMount: world.mountedGun?.canMount(), deaths: mission.state.stats.deaths });
       }
-      if (mission.state.steps.hold.status === 'completed') break;
+      if (mission.state.steps[stopStep].status === 'completed') break;
     }
-    rows.push({ tier, scope: 'installed-checkpoint fixture at installation anchor; normal bot inputs and mortal combat', mounted, shots, hits, peakCharge, deaths: mission.state.stats.deaths, hold: mission.state.steps.hold.status, samples });
+    rows.push({ tier, scope: 'installed-checkpoint fixture at installation anchor; normal bot inputs and mortal combat', stopStep, mounted, shots, hits, peakCharge, deaths: mission.state.stats.deaths, hold: mission.state.steps.hold.status, mega: mission.state.steps.mega.status, samples });
   } finally { world.dispose(); }
 }
 const root = process.env.R15_OUT ?? 'docs/reports/r15-qafix';

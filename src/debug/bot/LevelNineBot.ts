@@ -11,6 +11,7 @@ export class LevelNineBot {
   private avoid: { x: number; z: number; until: number } | null = null;
   private blockedAt: number | null = null;
   private reverseUntil = 0;
+  private bridgeApproach = 0;
   readonly path: readonly Point[];
   readonly length: number;
   constructor(private readonly w: SimWorld, routeId = 'road', detour = false, private readonly throttle = .7, readonly profile = 'complete') {
@@ -57,19 +58,25 @@ export class LevelNineBot {
     if (l9.state.phase === 'crawl') { const end = w.missions!.def.anchors['crawl-end'], dx = end.x - w.entities.get(1)!.transform.x, dz = end.z - w.entities.get(1)!.transform.z, length = Math.hypot(dx, dz) || 1; f.move = { x: dx / length, z: dz / length }; return f; }
     if (l9.state.phase !== 'driving') return f;
     const driving = l9.driving.state;
+    if (!driving.evacuationDone) this.bridgeApproach = 0;
     if (l9.driving.hatch) {
       f.brake = true; f.selectedWeaponKey = 5;
       const origin = w.entities.get(1)!.transform;
       const humans = [origin, ...driving.roster.map(id => w.entities.get(id)).filter(e => e?.civilian && !e.hidden && !e.passengerOf && e.health.current > 0 && !e.infected).map(e => e!.transform)];
       const risk = (p: { x: number; z: number }) => Math.min(...humans.map(h => Math.hypot(p.x - h.x, p.z - h.z)));
-      const target = w.infected!.active.filter(e => !e.hidden && !e.infected?.hidden && e.health.current > 0 && e.id !== driving.megaId && Math.hypot(e.transform.x - origin.x, e.transform.z - origin.z) < 30).sort((a, b) => risk(a.transform) - risk(b.transform))[0];
+      // A climbing body will bite the courier even after the hatch closes.
+      // Clear those visible hull attackers before covering the walking crew.
+      const target = w.infected!.active.filter(e => !e.hidden && !e.infected?.hidden && e.health.current > 0 && e.id !== driving.megaId && Math.hypot(e.transform.x - origin.x, e.transform.z - origin.z) < 30)
+        .sort((a, b) => Number(b.attachedTo === car.id) - Number(a.attachedTo === car.id) || risk(a.transform) - risk(b.transform))[0];
       if (target) { const dx = target.transform.x - origin.x, dz = target.transform.z - origin.z, length = Math.hypot(dx, dz) || 1; f.aim = { x: dx / length, z: dz / length }; f.aimSource = 'keyboard'; f.activeAttack = true; f.left = { down: true, held: true, up: false }; }
       return f;
     }
     if (!l9.driving.holding(car.id) && car.vehicle!.speed < 1) this.blockedAt ??= w.tick; else this.blockedAt = null;
     if (this.blockedAt !== null && w.tick - this.blockedAt >= 90) { this.reverseUntil = w.tick + 90; this.blockedAt = null; this.avoid = null; }
     if (w.tick < this.reverseUntil) { f.drive = { throttle: -.8, steer: .6 }; return f; }
-    if (car.vehicle!.attached.length && car.vehicle!.speed > 2.25) {
+    // Keep the short bridge departure aligned. Repeated handbrake shakes here
+    // turn the APC off the bridge lane while the pursuing bus keeps ramming it.
+    if (!driving.evacuationDone && car.vehicle!.attached.length && car.vehicle!.speed > 2.25) {
       f.drive = { throttle: .4, steer: w.tick % 120 < 60 ? 1 : -1 }; f.handbrake = true; return f;
     }
     const p = car.transform;
@@ -79,12 +86,26 @@ export class LevelNineBot {
     // Camp is beyond the final bend; never turn back into the horde to visit
     // that approach waypoint after the evacuation has already completed.
     if (driving.evacuationDone) this.index = this.path.length - 1;
-    let target: Point = driving.evacuationDone ? [l9Course.bridge.x + 4, 0] : this.path[this.index];
-    if (p.x > 405 && Math.abs(p.z) < 35 && !driving.evacuationDone) {
+    let target: Point = this.path[this.index];
+    if (driving.evacuationDone) {
+      // Leave along the open gate side before turning toward the bridge.
+      // Cutting diagonally to its centreline drives into the evacuation
+      // barricades/trucks, where the pursuing bus pins the APC broadside.
+      const approach: Point[] = [[l9Course.bridge.x - 12, l9Course.gate.sideZ],
+        [l9Course.bridge.x - 8, l9Course.bridge.halfZ - 2], [l9Course.bridge.endX + 4, 0]];
+      if (Math.abs(p.z) < 3 && Math.cos(p.yaw) > .7) this.bridgeApproach = 2;
+      while (this.bridgeApproach < 2 && Math.hypot(approach[this.bridgeApproach][0] - p.x, approach[this.bridgeApproach][1] - p.z) < 4) this.bridgeApproach++;
+      target = approach[this.bridgeApproach];
+    }
+    // The APC cannot turn sharply enough from the old x=405 trigger when the
+    // evacuation gate is closed at x=440; it stalls against the barrier first.
+    // Begin the same side approach one vehicle length earlier so every route
+    // can reach the evac point without taking repeated stationary hull attacks.
+    if (p.x > l9Course.gate.x - 55 && Math.abs(p.z) < 35 && !driving.evacuationDone) {
       if (driving.gateClosed && p.x < l9Course.gate.x + 4) target = [l9Course.gate.x + 6, l9Course.gate.sideZ];
       else target = [l9Course.evacuation.x, l9Course.evacuation.z];
       const distance = Math.hypot(target[0] - p.x, target[1] - p.z);
-      if (target[0] === l9Course.evacuation.x && (distance < 5 || car.vehicle!.speed > Math.max(1, distance * .6))) { f.brake = true; return f; }
+      if (target[0] === l9Course.evacuation.x && (distance < l9Course.evacuation.radius - 1 || car.vehicle!.speed > Math.max(1, distance * .6))) { f.brake = true; return f; }
     }
     // Read nearby moving heavy bodies, just as the driver reads solid road
     // furniture. Ploughing into the same brute after every restart is not a
@@ -108,7 +129,7 @@ export class LevelNineBot {
     if (this.avoid) target = [this.avoid.x, this.avoid.z];
     const dx = target[0] - p.x, dz = target[1] - p.z, want = -Math.atan2(dz, dx);
     const delta = Math.atan2(Math.sin(want - p.yaw), Math.cos(want - p.yaw));
-    f.drive = { throttle: this.throttle, steer: Math.max(-1, Math.min(1, delta * 2)) };
+    f.drive = { throttle: driving.evacuationDone ? 1 : this.throttle, steer: Math.max(-1, Math.min(1, delta * 2)) };
     return f;
   }
 }

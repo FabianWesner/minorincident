@@ -20,10 +20,12 @@ try {
   if (zero) world.vehicles!.damage(car.entity.id, car.entity.health.max);
   const signals: { tick: number; name: string; actorId?: number }[] = [], hits: unknown[] = [], samples: unknown[] = [];
   let grabs = 0, shakes = 0, playerHits = 0, peakAlive = 0, peakChunks = 0;
+  const playerDamage: unknown[] = [];
   world.events.on('mission.signal', e => { if (e.type === 'mission.signal' && e.name.startsWith('l9.')) signals.push({ tick: e.tick, name: e.name, actorId: e.actorId }); });
   world.events.on('vehicle.durability-hit', e => { if (e.type === 'vehicle.durability-hit') hits.push(e); });
   world.events.on('vehicle.grabbed', () => grabs++); world.events.on('vehicle.shaken', () => shakes++);
-  world.events.on('player.damaged', () => playerHits++);
+  world.events.on('player.damaged', event => { playerHits++; playerDamage.push(event); });
+  world.events.on('combat.hit', event => { if (event.type === 'combat.hit' && event.targetId === 1) playerDamage.push(event); });
   world.events.on('level.completed', e => { if (e.type === 'level.completed' && e.id === 'L9') completeCampaignLevel(world.progression!.campaign!, 9, e.result, world); });
   const admissions: { tick: number; id: number; archetype: string; distance: number; state: string; hidden: boolean }[] = [];
   const spawn = world.infected!.spawn.bind(world.infected);
@@ -54,7 +56,7 @@ try {
   const result = {
     ...provenance(), route, tier, zero, risky, seed: 1, method: 'Production LevelNineBot inputs, native Rapier/AI and normal campaign state. --zero is one explicit initial damage fixture; no immortality, teleports, actor writes or objective skips.',
     completed: state.finished && !!world.progression?.campaign?.crossingHandover, seconds: world.tick / 60, hp: world.entities.get(1)!.health.current, durability: car.entity.health.current,
-    peakAlive, peakChunks, grabs, shakes, playerHits, signals, hits, samples, collision, finalStateHash: stateHash(final), driving: state.driving,
+    peakAlive, peakChunks, grabs, shakes, playerHits, playerDamage, signals, hits, samples, collision, finalStateHash: stateHash(final), driving: state.driving,
     admissions: { actors: admissions, violations: admissions.filter(e => !e.hidden && (e.distance < 100 || e.state === 'idle')) },
     firstNear: { method: 'First shown native actor within a conservative 45 m radius; this is a headless proxy, not a rendered max-zoom frustum.', actors: firstNear, idle: firstNear.filter(e => e.state === 'idle') },
     cpu: { p95: durations[Math.floor(durations.length * .95)], max: durations[durations.length - 1], note: 'Shared runner diagnostic; rendering and device performance are not measured.' },

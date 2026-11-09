@@ -17,7 +17,11 @@ export class NavGrid {
   readonly width: number;
   readonly height: number;
   readonly cells: Uint8Array;
-  hash = "";
+  private hashValue = "";
+  private hashDirty = false;
+  /** Cells change immediately; a batch of blocker edits needs only one hash pass. */
+  get hash(): string { if (this.hashDirty) this.rehash(); return this.hashValue; }
+  set hash(value: string) { this.hashValue = value; this.hashDirty = false; }
   private readonly blocks = new Map<number, number[]>();
   private readonly occupancy = new Map<number, { count: number; base: number }>();
   /** Dynamic blockers preserve baked occupancy and overlapping doors/fences. */
@@ -34,14 +38,16 @@ export class NavGrid {
       const index = z * this.width + x, cell = this.occupancy.get(index) ?? { count: 0, base: this.cells[index] };
       cell.count++; this.occupancy.set(index, cell); this.cells[index] = 0; indices.push(index);
     }
-    this.blocks.set(id, indices); this.rehash();
+    this.blocks.set(id, indices); this.hashDirty = true;
   }
   unblock(id: number): void {
-    for (const index of this.blocks.get(id) ?? []) {
+    const indices = this.blocks.get(id);
+    if (!indices) return;
+    for (const index of indices) {
       const cell = this.occupancy.get(index)!;
       if (--cell.count === 0) { this.cells[index] = cell.base; this.occupancy.delete(index); }
     }
-    this.blocks.delete(id); this.rehash();
+    this.blocks.delete(id); this.hashDirty = true;
   }
   private rehash(): void {
     let hash = (2166136261 ^ this.hashSeed) >>> 0;
