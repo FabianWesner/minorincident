@@ -18,16 +18,18 @@ export class HitQuery {
     this.area.x = origin.x; this.area.z = origin.z; this.area.r = range;
     return this.spatial.query(this.area, this.neighbors);
   }
-  /** Static walls bucketed on an 8 m grid (rebuilt when the array changes; `invalidate` after in-place edits). */
-  private grid: { cells: Map<number, number[]>; length: number; first: CoverWall | undefined; last: CoverWall | undefined } | null = null;
+  /** Cover walls bucketed on an 8 m grid; blocker mutations invalidate the shared index. */
+  private grid: { cells: Map<number, number[]>; walls: readonly CoverWall[]; length: number; first: CoverWall | undefined; last: CoverWall | undefined; dynamicLength: number; dynamicFirst: CoverWall | undefined; dynamicLast: CoverWall | undefined } | null = null;
   private stamps = new Uint32Array(0);
   private stamp = 0;
   private readonly candidates: number[] = [];
   invalidate(): void { this.grid = null; }
   private static key(x: number, z: number): number { return (x + 4096) * 8192 + z + 4096; }
   private index() {
-    const w = this.walls;
-    if (this.grid && this.grid.length === w.length && this.grid.first === w[0] && this.grid.last === w[w.length - 1]) return this.grid;
+    const fixed = this.walls, dynamic = this.dynamicWalls;
+    if (this.grid && this.grid.length === fixed.length && this.grid.first === fixed[0] && this.grid.last === fixed[fixed.length - 1]
+      && this.grid.dynamicLength === dynamic.length && this.grid.dynamicFirst === dynamic[0] && this.grid.dynamicLast === dynamic[dynamic.length - 1]) return this.grid;
+    const w = [...fixed, ...dynamic];
     const cells = new Map<number, number[]>();
     w.forEach((wall, i) => {
       for (let x = Math.floor((wall.x - wall.halfX) / 8); x <= Math.floor((wall.x + wall.halfX) / 8); x++) for (let z = Math.floor((wall.z - wall.halfZ) / 8); z <= Math.floor((wall.z + wall.halfZ) / 8); z++) {
@@ -35,13 +37,13 @@ export class HitQuery {
       }
     });
     if (this.stamps.length < w.length) this.stamps = new Uint32Array(w.length);
-    return this.grid = { cells, length: w.length, first: w[0], last: w[w.length - 1] };
+    return this.grid = { cells, walls: w, length: fixed.length, first: fixed[0], last: fixed[fixed.length - 1], dynamicLength: dynamic.length, dynamicFirst: dynamic[0], dynamicLast: dynamic[dynamic.length - 1] };
   }
   /** Segment vs XYZ slabs (range measured along XZ); returns first solid cover distance, or the whole segment. */
   clearDistance(origin: RayPoint, direction: RayPoint, range: number, ignoreId?: number, padding = 0): number {
     let closest = range;
-    // Static walls: only those in the 8 m cells overlapping the segment's bounds (a wall crossing the segment shares a cell with it).
-    if (this.walls.length > 64) {
+    // Both authored cover and destruction/door blockers share the same exact tests.
+    if (this.walls.length + this.dynamicWalls.length > 64) {
       const grid = this.index(), ex = origin.x + direction.x * range, ez = origin.z + direction.z * range;
       if (++this.stamp === 0xffffffff) { this.stamps.fill(0); this.stamp = 1; }
       const list = this.candidates; list.length = 0;
@@ -55,29 +57,30 @@ export class HitQuery {
         let nextZ = dz ? ((z + (stepZ > 0 ? 1 : 0)) * 8 - origin.z) / dz : Infinity;
         for (;;) {
           const cell = grid.cells.get(HitQuery.key(x, z));
-          if (cell) for (const i of cell) if (this.stamps[i] !== this.stamp) { this.stamps[i] = this.stamp; closest = this.cover(this.walls[i], origin, direction, range, closest, ignoreId, padding); }
+          if (cell) for (const i of cell) if (this.stamps[i] !== this.stamp) { this.stamps[i] = this.stamp; closest = this.cover(grid.walls[i], origin, direction, range, closest, ignoreId, padding); }
           if (x === endX && z === endZ) break;
           if (x === endX) nextX = Infinity;
           if (z === endZ) nextZ = Infinity;
           // A later cell cannot hide a nearer wall. Keep a conservative boundary
-          // margin; dynamic cover is still evaluated after the static traversal.
+          // margin; every indexed wall retains its exact rotated-footprint test.
           if (range > 0 && Math.min(nextX, nextZ) * range > closest + 1e-8) break;
           if (Math.abs(nextX - nextZ) <= 1e-12) {
             // A corner-touch can hit a wall in either side cell (including mixed-sign rays).
             for (const [cx, cz] of [[x + stepX, z], [x, z + stepZ]]) {
               const side = grid.cells.get(HitQuery.key(cx, cz));
-              if (side) for (const i of side) if (this.stamps[i] !== this.stamp) { this.stamps[i] = this.stamp; closest = this.cover(this.walls[i], origin, direction, range, closest, ignoreId, padding); }
+              if (side) for (const i of side) if (this.stamps[i] !== this.stamp) { this.stamps[i] = this.stamp; closest = this.cover(grid.walls[i], origin, direction, range, closest, ignoreId, padding); }
             }
             x += stepX; z += stepZ; nextX += deltaX; nextZ += deltaZ;
           } else if (nextX < nextZ) { x += stepX; nextX += deltaX; }
           else { z += stepZ; nextZ += deltaZ; }
         }
-      } else for (let x = Math.floor((Math.min(origin.x, ex) - padding) / 8); x <= Math.floor((Math.max(origin.x, ex) + padding) / 8); x++) for (let z = Math.floor((Math.min(origin.z, ez) - padding) / 8); z <= Math.floor((Math.max(origin.z, ez) + padding) / 8); z++) {
+      // Padding is applied in a rotated wall's local axes. Its world-space
+      // expansion can reach sqrt(2) times that value at a 45-degree corner.
+      } else for (let x = Math.floor((Math.min(origin.x, ex) - padding * Math.SQRT2) / 8); x <= Math.floor((Math.max(origin.x, ex) + padding * Math.SQRT2) / 8); x++) for (let z = Math.floor((Math.min(origin.z, ez) - padding * Math.SQRT2) / 8); z <= Math.floor((Math.max(origin.z, ez) + padding * Math.SQRT2) / 8); z++) {
         const cell = grid.cells.get(HitQuery.key(x, z));
         if (cell) for (const i of cell) if (this.stamps[i] !== this.stamp) { this.stamps[i] = this.stamp; list.push(i); }
       }
-      for (const i of list) closest = this.cover(this.walls[i], origin, direction, range, closest, ignoreId, padding);
-      for (const wall of this.dynamicWalls) closest = this.cover(wall, origin, direction, range, closest, ignoreId, padding);
+      for (const i of list) closest = this.cover(grid.walls[i], origin, direction, range, closest, ignoreId, padding);
       return closest;
     }
     for (const walls of this.wallGroups) for (const wall of walls) closest = this.cover(wall, origin, direction, range, closest, ignoreId, padding);

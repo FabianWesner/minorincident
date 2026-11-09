@@ -29,6 +29,31 @@ const walls = (w: SimWorld) => w.combat!.query.walls as CoverWall[];
 const attacks = (w: SimWorld) => w.events.events().filter(e => e.type === 'combat.attack');
 const forehand = () => comboDefinition(rosterAction('weapon.bat'), 0);
 
+/** Broad-phase cover must agree with the exact wall tests, including rotated padding and mutable doors. */
+async function checkDynamicCover(): Promise<void> {
+  const w = await arena(), q = w.combat!.query, devices = w.interactables!;
+  for (let i = 0; i < 100; i++) {
+    const x = Math.sin(i * 2.4) * 40, z = Math.cos(i * 1.7) * 40, yaw = i * .37;
+    const hx = .3 + i % 4, hz = .2 + i % 3, c = Math.abs(Math.cos(yaw)), s = Math.abs(Math.sin(yaw));
+    devices.block(-9000 - i, { x, z, y: 1, halfX: c * hx + s * hz, halfZ: s * hx + c * hz, halfY: 1,
+      navFootprint: { x, z, halfX: hx, halfZ: hz, yaw } });
+  }
+  const compare = () => {
+    for (let i = 0; i < 512; i++) {
+      const origin = { x: Math.sin(i * 1.23) * 48, z: Math.cos(i * 2.17) * 48, y: .7 + i % 3 };
+      const direction = { x: Math.cos(i * .83), z: Math.sin(i * .83), y: (i % 5 - 2) * .03 }, range = 1 + i % 80;
+      const padding = i % 2 ? .6 : 0, ignoreId = i % 3 ? undefined : -9000 - i % 100;
+      const exact = [...q.walls, ...q.dynamicWalls].reduce((distance, wall) => wall.entityId !== undefined && wall.entityId === ignoreId ? distance : Math.min(distance, q.wallDistance(wall, origin, direction, range, padding)), range);
+      expect(q.clearDistance(origin, direction, range, ignoreId, padding), `dynamic ray ${i}`).toBeCloseTo(exact, 8);
+    }
+  };
+  compare();
+  // Same-length replacement with unchanged first/last entries must still retire the old buckets.
+  devices.unblock(-9050); devices.block(-9100, { x: 8, z: 0, y: 1, halfX: .1, halfZ: 2, halfY: 1 });
+  compare();
+  devices.rebuildBlockers(); compare();
+}
+
 /** Fuel is a real, cover-clipped hazard that persists after trigger release. */
 async function checkFlamethrowerFuel(): Promise<void> {
   const w = await arena(); equip(w, ['weapon.flamethrower']);
@@ -329,6 +354,7 @@ test('damage modifiers: front shield ±60°, armor and multipliers, stun/slow/to
 });
 
 test('every weapon category fires and hits; swept projectiles never tunnel; full cover stops melee, hitscan and projectiles', async () => {
+  await checkDynamicCover();
   await checkFlamethrowerFuel();
   await checkFuelPool();
   await checkRaisedMountedGun();

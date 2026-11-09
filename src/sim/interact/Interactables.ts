@@ -72,13 +72,13 @@ export class Interactables {
     this.authoredWalls.set(id, wall);
     if (this.blockers.has(id)) return;
     const handle = this.world.physics.addBlocker(wall);
-    this.blockers.set(id, { wall, handle }); this.walls.push(wall);
+    this.blockers.set(id, { wall, handle }); this.walls.push(wall); this.world.combat?.query.invalidate();
     this.nav?.block(id, wall);
     this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id, blocked: true, wall });
   }
   unblock(id: number): void {
     const b = this.blockers.get(id); if (!b) return;
-    this.world.physics.removeBlocker(b.handle); this.walls.splice(this.walls.indexOf(b.wall), 1); this.blockers.delete(id); this.nav?.unblock(id);
+    this.world.physics.removeBlocker(b.handle); this.walls.splice(this.walls.indexOf(b.wall), 1); this.blockers.delete(id); this.nav?.unblock(id); this.world.combat?.query.invalidate();
     this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id, blocked: false, wall: b.wall });
   }
   /** E12 checkpoints and tier rebuilds reconcile collider/nav state with restored components. */
