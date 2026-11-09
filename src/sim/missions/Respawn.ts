@@ -46,6 +46,15 @@ function clearThreat(world: SimWorld, at: Spot): void {
     // Downed infected that will recover are threats too: leaving their bodies inside the ring revived them beside the courier.
     const pushed = d < r.clearM;
     if (pushed) {
+      if (world.missions?.l9 && e.attachedTo !== undefined) {
+        const vehicle = world.entities.get(e.attachedTo)?.vehicle;
+        if (vehicle) {
+          vehicle.attached = vehicle.attached.filter(id => id !== e.id);
+          if (vehicle.apcBoarders) delete vehicle.apcBoarders[e.id];
+          delete e.attachedTo;
+          e.transform.y = (world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .7;
+        }
+      }
       const k = d > .1 ? 1 / d : 0, dx = k ? (e.transform.x - at.x) * k : Math.cos(e.id), dz = k ? (e.transform.z - at.z) * k : Math.sin(e.id);
       // Keep the outward direction when possible; beside walls or parked vehicles that entire ray can be blocked.
       // Try neighboring bearings too so cover never leaves a live or recovering body inside the clear ring.
@@ -95,8 +104,15 @@ function clearThreat(world: SimWorld, at: Spot): void {
 export function respawnAtCheckpoint(world: SimWorld, anchor: Spot, worldKept = true): void {
   const player = world.entities.get(1)!;
   if (world.missions?.state.checkpoint !== 'cure-disperse-ready') clearThreat(world, anchor);
-  const at = snap(world, anchor);
   if (player.survivor) player.survivor.invulnerableUntil = world.tick + ticks(respawnRule.graceS);
+  if (world.missions?.l9?.state.phase === 'driving' && world.vehicles?.active != null) {
+    // The checkpoint restored the occupied APC. An on-foot admission at the
+    // same anchor is inside its hull and would suppress all driving input.
+    world.missions.l9.driving.poseHatch();
+    world.physics.playerCollider!.setEnabled(false);
+    return;
+  }
+  const at = snap(world, anchor);
   if (!at) {
     Object.assign(player.transform, anchor, { y: player.survivor?.checkpoint.y ?? player.transform.y });
     world.solids.admit(player, 'checkpoint.respawn', respawnRule.snapM);

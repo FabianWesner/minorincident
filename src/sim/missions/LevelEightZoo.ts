@@ -521,9 +521,12 @@ export class LevelEightZoo {
         // Keep the complete roster near the APC instead of stretching a
         // two-column queue beyond G-13's ten-metre waiting distance. Metre
         // spacing leaves the ordinary 0.35 m capsules clear in both axes.
-        const columns = Math.max(2, Math.ceil((passengers.length - 1) / 6));
-        const row = Math.floor((queueIndex - 1) / columns), side = ((queueIndex - 1) % columns - (columns - 1) / 2);
-        const queue = { x: door.x + dx / length * (1 + row) - dz / length * side, z: door.z + dz / length * (1 + row) + dx / length * side };
+        const columns = Math.max(2, Math.ceil((passengers.length - 1) / 12) * 2);
+        const column = (queueIndex - 1) % columns, row = Math.floor((queueIndex - 1) / columns), half = columns / 2;
+        // A 2.5 m centre passage lets the current head (including the corgi's
+        // long capsule) reach the entry before the waiting rows advance.
+        const side = (column < half ? -1 : 1) * (1.6 + column % half * .9);
+        const queue = { x: door.x + dx / length * (2 + row * 1.2) - dz / length * side, z: door.z + dz / length * (2 + row * 1.2) + dx / length * side };
         target = w.infected!.nav.clear(queue.x, queue.z, actorRadius(e)) && w.solids.clear({ ...queue, y: e.transform.y }, actorRadius(e), e.id, false) ? queue : e.transform;
       }
     }

@@ -97,10 +97,10 @@ export class LevelNineBot {
       // Leave along the open gate side before turning toward the bridge.
       // Cutting diagonally to its centreline drives into the evacuation
       // barricades/trucks, where the pursuing bus pins the APC broadside.
-      const approach: Point[] = [[l9Course.bridge.x - 20, l9Course.gate.sideZ],
-        [l9Course.bridge.x - 12, 0], [l9Course.bridge.endX + 4, 0]];
-      if (Math.abs(p.z) < 3 && Math.cos(p.yaw) > .7) this.bridgeApproach = 2;
-      while (this.bridgeApproach < 2 && Math.hypot(approach[this.bridgeApproach][0] - p.x, approach[this.bridgeApproach][1] - p.z) < 4) this.bridgeApproach++;
+      const approach: Point[] = [[l9Course.bridge.x - 12, l9Course.gate.sideZ],
+        [l9Course.bridge.x - 8, 0], [l9Course.bridge.endX + 4, 0]];
+      if (Math.abs(p.z) < 4.5 && Math.cos(p.yaw) > .85) this.bridgeApproach = 2;
+      while (this.bridgeApproach < 2 && Math.hypot(approach[this.bridgeApproach][0] - p.x, approach[this.bridgeApproach][1] - p.z) < (this.bridgeApproach === 0 ? 14 : 12)) this.bridgeApproach++;
       target = approach[this.bridgeApproach];
     }
     // The APC cannot turn sharply enough from the old x=405 trigger when the
@@ -117,7 +117,8 @@ export class LevelNineBot {
     // furniture. Ploughing into the same brute after every restart is not a
     // completion policy for the revised stop-on-impact mechanic.
     if (this.avoid && (w.tick >= this.avoid.until || Math.hypot(this.avoid.x - p.x, this.avoid.z - p.z) < 4)) this.avoid = null;
-    if (!this.avoid) {
+    if (driving.evacuationDone) this.avoid = null;
+    if (!this.avoid && !driving.evacuationDone) {
       const c = Math.cos(p.yaw), s = Math.sin(p.yaw);
       const heavy = p.x < 405 ? w.infected!.active.find(e => {
         const dx = e.transform.x - p.x, dz = e.transform.z - p.z, ahead = dx * c - dz * s;
@@ -135,7 +136,7 @@ export class LevelNineBot {
     if (this.avoid) target = [this.avoid.x, this.avoid.z];
     const dx = target[0] - p.x, dz = target[1] - p.z, want = -Math.atan2(dz, dx);
     const delta = Math.atan2(Math.sin(want - p.yaw), Math.cos(want - p.yaw));
-    f.drive = { throttle: driving.evacuationDone ? .45 : this.throttle, steer: Math.max(-1, Math.min(1, delta * 2)) };
+    f.drive = { throttle: driving.evacuationDone ? Math.abs(delta) > .8 ? .45 : 1 : this.throttle, steer: Math.max(-1, Math.min(1, delta * 2)) };
     if (driving.evacuationDone && car.vehicle!.attached.length && car.vehicle!.speed > 2) f.handbrake = true;
     return f;
   }

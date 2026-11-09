@@ -176,6 +176,7 @@ try {
 try {
   const { w, zoo, p, arena, e } = await fixture('elephant');
   try {
+    w.missions!.state.states['hale-keys'] = true; w.missions!.state.states['hale-fallen'] = true; // Post-Hale combat tactic, isolated from the opening charge.
     w.missions!.state.states.breached = true; zoo.state.breachedAt = w.tick; zoo.state.nextWave = Number.MAX_SAFE_INTEGER;
     w.solids.relocate(e, { x: 100, z: 80, y: .7 }, 'qa.elephant.lure-source', 2);
     w.solids.relocate(p, { x: 110, z: 80, y: .7 }, 'qa.elephant.lure-target', 2);
