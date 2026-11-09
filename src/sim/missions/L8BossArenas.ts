@@ -202,13 +202,13 @@ export class L8BossArenas {
     }
     boss.engaged = arena.phase !== 3 && !(arena.id === 'lion' && boss.slot === 1 && arena.phase < 2 || arena.id === 'monkey' && boss.slot === 6 && arena.phase < 2);
     if (p.health.current <= 0 || arena.phase === 3) return true;
-    if (arena.id === 'zebra') {
+    if (arena.id === 'zebra' || arena.id === 'elephant') {
       const progress = boss.motionProgress;
       if (!progress || b.specialAttack || distance(e.transform, progress) > .02) boss.motionProgress = { ...e.transform, at: w.tick };
       else if (w.tick - progress.at >= 90) {
         // A blocked fence approach becomes a new, visible charge at the courier.
-        // Never leave a herd member waiting indefinitely for its navigation goal.
-        this.start(e, 'zebra.stampede', 60, 36, .9);
+        // Never leave a large animal waiting indefinitely for its navigation goal.
+        this.start(e, arena.id === 'elephant' ? 'elephant.charge' : 'zebra.stampede', 60, arena.id === 'elephant' ? 44 : 36, arena.id === 'elephant' ? 1.75 : .9);
         boss.motionProgress = { ...e.transform, at: w.tick }; return true;
       }
     }

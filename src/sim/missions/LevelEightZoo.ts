@@ -1,3 +1,4 @@
+import { l3 } from '../../data/l3';
 import { l8BossArenas } from '../../data/l8Bosses';
 import type { Mission } from './Mission';
 import { FIXED_DT } from '../../core/Clock';
@@ -95,7 +96,7 @@ export class LevelEightZoo {
       const soldier = i >= 20 && i < 26, staff = i >= 26;
       const id = outbreak.spawnPedestrian(at, { ...(staff ? zooStaffLook(i - 26) : {}), role: soldier ? 'soldier' : staff ? zooStaffLook(i - 26).role : 'cashier', model: soldier ? 'npc.national-guard' : staff ? zooStaffLook(i - 26).model : undefined,
         child: i === 18 || i === 19, handProp: soldier ? 'rifle' : staff ? zooStaffLook(i - 26).handProp : null, waypoints: [at, target], faces: [target, at] });
-      if (soldier) { w.entities.get(id)!.civilian!.ally = allyState('soldier', at); if (i < 23) s.guards.push(id); }
+      if (soldier) { w.entities.get(id)!.civilian!.ally = { ...allyState('soldier', at), gun: { ...l3.soldiers.gun }, weapon: 'rifle' }; if (i < 23) s.guards.push(id); }
     }
     const species: ZooSpecies[] = ['lion', 'gorilla', 'elephant', 'zebra', 'zebra', 'flamingo', 'flamingo', 'flamingo'];
     const offsets = new Map<ZooSpecies, number>();
@@ -124,7 +125,7 @@ export class LevelEightZoo {
     for (const [key, x] of [['majorHale', -4], ['privateReyes', -2]] as const) {
       const at = this.point({ x, z: 0 });
       const id = outbreak.spawnPedestrian(at, { role: 'soldier', model: 'npc.national-guard', handProp: 'rifle', waypoints: [at, { x, z: 2 }] });
-      w.entities.get(id)!.civilian!.ally = allyState('soldier', at);
+      w.entities.get(id)!.civilian!.ally = { ...allyState('soldier', at), gun: { ...l3.soldiers.gun }, weapon: 'rifle' };
       this.mission.state.actors[key] = id;
       if (key === 'majorHale') s.haleId = id; else s.reyesId = id;
     }
@@ -312,6 +313,7 @@ export class LevelEightZoo {
       }
     }
     if (!this.breached) return;
+    this.escortGuards();
     if (t >= s.nextWave) {
       // The animal arenas carry the outbreak after the first tunnel surge (PO 11-08).
       // Four ordinary arrivals sustain the opening, without turning the zoo into another horde slaughter.
@@ -344,6 +346,20 @@ export class LevelEightZoo {
     const player = w.entities.get(1)!;
     if (!s.escapeCheckpoint && this.mission.state.steps.escape.status === 'active' && distance(player.transform, this.door()) < 12) { s.escapeCheckpoint = true; this.mission.checkpoint('escape-route'); }
     if (w.vehicles!.groupBoarded(s.carId, this.passengers()) && !s.departureAt) this.mission.setState('aboard', true);
+  }
+  /** The existing evacuation detail covers the living column, using its shared rifle rules. */
+  private escortGuards(): void {
+    if (!this.breached || this.boarding() || this.state.arenas.every(a => a.phase === 3)) return;
+    const group = this.state.roster.map(id => this.w.entities.get(id)).filter((e): e is EntitySnapshot => !!e && e.health.current > 0 && !e.infected && !e.infection);
+    if (!group.length) return;
+    const x = group.reduce((n, e) => n + e.transform.x, 0) / group.length, z = group.reduce((n, e) => n + e.transform.z, 0) / group.length;
+    for (const [i, id] of this.state.guards.entries()) {
+      const guard = this.w.entities.get(id), ally = guard?.civilian?.ally;
+      if (!guard || guard.health.current <= 0 || !ally) continue;
+      const desired = { x: x + (i === 0 ? -4 : i === 1 ? 4 : 0), z: z + (i === 2 ? 4 : 0) };
+      if (ally.post && distance(ally.post, desired) < 2) continue;
+      const at = this.point(desired); ally.post = at; ally.run = at; ally.runSpeed = 6; ally.hold = true;
+    }
   }
   /** L8 no longer owns a Mega Alpha reveal; L9 is its first appearance. */
   cameraPose(): { position: [number, number, number]; target: [number, number, number] } | null { return null; }
@@ -460,11 +476,15 @@ export class LevelEightZoo {
     // response: civilian steering overshoots these changing targets.
     if (this.breached) c.survivor!.briskAt = w.tick;
     const goal = formationSlot(p.transform, leaderHeading(p.transform.yaw, velocity), slot);
-    // Keep the evacuees outside the charging yard; a packed escort must not become an elephant-proof wall.
-    const elephant = s.arenas.find(a => a.id === 'elephant' && a.phase > 0 && a.phase < 3);
-    const yard = l8BossArenas.find(a => a.id === 'elephant')!;
-    if (!boarding && elephant && distance(p.transform, yard.centre) < yard.radius)
-      Object.assign(goal, formationSlot(yard.entry, { x: 0, z: 1 }, slot));
+    // Evacuees cover the public entry while the courier fights inside an animal
+    // enclosure. They rejoin on its clear signal instead of forming a body wall
+    // around the boss; ordinary infected can still attack this defended position.
+    const encounter = s.arenas.find(a => a.phase > 0 && a.phase < 3);
+    const arena = l8BossArenas.find(a => a.id === encounter?.id);
+    if (!boarding && arena && distance(p.transform, arena.centre) < arena.radius + 8) {
+      const dx = arena.centre.x - arena.entry.x, dz = arena.centre.z - arena.entry.z, length = Math.hypot(dx, dz) || 1;
+      Object.assign(goal, formationSlot(arena.entry, { x: dx / length, z: dz / length }, slot));
+    }
     let target = boarding ? door : w.infected!.nav.clear(goal.x, goal.z, .35) ? goal : p.transform;
     let queueIndex = 0;
     if (boarding) {

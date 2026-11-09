@@ -11,19 +11,24 @@ const tier = process.argv[2] ?? 'high', out = process.argv[3] ?? `test-results/e
 if (tier !== 'low' && tier !== 'high') throw new Error('Usage: story-probe.ts low|high [output.json]');
 const identity = provenance(), campaign = preset('L8-default'); campaign.settings.quality = tier;
 const probeSha256 = createHash('sha256').update(readFileSync(new URL(import.meta.url))).digest('hex');
+const carried: number[] = [];
+const groupStages: { tick: number; stage: string; alive: number }[] = [];
+let lastGroupStage = '';
 const animals: { id: number; species: string; healthy: boolean; closest: number }[] = [];
 const lines: { id: string; text: string; tick: number }[] = [], bites: { id: number; source: number; tick: number; distance: number }[] = [];
 const turns: { id: number; tick: number; archetype: string }[] = [], forbiddenMega: { tick: number; id: number }[] = [];
 const end = { breachedAt: 0, keeperGrabbed: false, haleFallenAt: -1, driverAt: -1, departed: false, carX: 0, carZ: 0, elephantPhase: 0, alphas: 0, peak: 0, keys: [] as string[] };
 const finale: { tick: number; kind: string; haleDoorDistance?: number; wallCollapsed?: boolean; elephant?: unknown }[] = [];
+let carriedAlive = 0;
 let finalState: unknown;
 const activity = new Map<number, { arena: string; x: number; z: number; idle: number; maxIdle: number; at: number }>();
-const run = await runLevel('L8', 'complete', 1, 1200, 'auto', campaign, undefined, 0, {
+const run = await runLevel('L8', 'complete', 1, Number(process.env.L8_STORY_SECONDS ?? 1200), 'auto', campaign, undefined, 0, {
   quality: tier,
   beforeBegin: world => {
     const mission = world.missions!; mission.prepare(); const zoo = mission.l8!;
     world.events.on('mission.signal', e => { if (e.type === 'mission.signal' && e.name === 'l8.elephant-wall-breach') finale.push({ tick: world.tick, kind: 'wall-breach', wallCollapsed: world.destruction!.objects.find(o => o.id === 'D-ZOO/l8-yard-north-wall')?.state.collapsed }); });
     world.events.on('dialogue.line', e => { if (e.type === 'dialogue.line' && e.id === 'L8.hale-dying') { const h = world.entities.get(zoo.state.haleId)!; const d = zoo.door(); finale.push({ tick: world.tick, kind: 'hale-keys', haleDoorDistance: Math.hypot(h.transform.x-d.x,h.transform.z-d.z), elephant: { ...world.entities.get(zoo.state.animals[2])!.transform } }); } });
+    carried.push(...zoo.state.roster.filter(id => world.entities.get(id)?.civilian?.survivor?.key !== 'reyes'));
     for (const id of zoo.state.animals) {
       const e = world.entities.get(id)!;
       animals.push({ id, species: e.civilian!.zooAnimal!, healthy: e.health.current > 0 && !e.infected && !e.infection, closest: Infinity });
@@ -38,6 +43,8 @@ const run = await runLevel('L8', 'complete', 1, 1200, 'auto', campaign, undefine
     world.events.on('civilian.grabbed', event => { if (event.type === 'civilian.grabbed' && event.targetId === zoo.state.pondKeeperId) end.keeperGrabbed = true; });
     world.events.on('sim.tick', () => {
       const s = zoo.state, player = world.entities.get(1)!.transform;
+      const stage = s.arenas.map(a => `${a.id}:${a.phase}`).join(',');
+      if (stage !== lastGroupStage) { lastGroupStage = stage; groupStages.push({ tick: world.tick, stage, alive: carried.filter(id => { const e = world.entities.get(id); return e && e.health.current > 0 && !e.infected && !e.infection; }).length }); }
       if (!mission.state.states.breached) for (const row of animals) {
         const e = world.entities.get(row.id)!; row.closest = Math.min(row.closest, Math.hypot(player.x - e.transform.x, player.z - e.transform.z));
       }
@@ -57,6 +64,7 @@ const run = await runLevel('L8', 'complete', 1, 1200, 'auto', campaign, undefine
   },
   beforeDispose: world => {
     const zoo = world.missions!.l8!, s = zoo.state, car = world.entities.get(s.carId)!;
+    carriedAlive = carried.filter(id => { const e = world.entities.get(id); return e && e.health.current > 0 && !e.infected && !e.infection; }).length;
     Object.assign(end, { breachedAt: s.breachedAt, departed: !!world.missions!.state.states.departed, carX: car.transform.x, carZ: car.transform.z, elephantPhase: s.arenas.find(a => a.id === 'elephant')?.phase ?? 0, alphas: s.alphas,
       keys: (car.vehicle!.passengers ?? []).map(seat => world.entities.get(seat.id)?.civilian?.survivor?.key ?? 'corgi') });
     finalState = { tick: world.tick, objective: world.missions!.def.steps.filter(step => world.missions!.state.steps[step.id].status === 'active').map(step => step.id), zoo: s,
@@ -71,6 +79,7 @@ const flags: string[] = [];
 if ([...activity.values()].some(row => row.maxIdle > 120)) flags.push('ENGAGED_BOSS_IDLE_OVER_2S');
 if (!finale.some(e => e.kind === 'wall-breach' && e.wallCollapsed)) flags.push('MISSING_PHYSICAL_WALL_BREACH');
 if (!finale.some(e => e.kind === 'hale-keys' && e.haleDoorDistance! < 2.5)) flags.push('HALE_NOT_AT_APC_DOOR');
+if (carried.length && carriedAlive / carried.length < .6) flags.push('CARRIED_SURVIVAL_UNDER_60_PERCENT');
 if (!run.completed) flags.push(`INCOMPLETE:${run.outcome}`);
 if (animals.length < 8 || !['lion', 'gorilla', 'elephant', 'zebra', 'flamingo'].every(species => animals.some(row => row.species === species)) || animals.some(row => !row.healthy)) flags.push('CALM_ANIMAL_CENSUS');
 if (animals.some(row => row.species !== 'monkey' && row.closest > 18)) flags.push('ANIMALS_NOT_PASSED_ON_REAL_ROUTE');
@@ -86,6 +95,6 @@ if (end.haleFallenAt < 0 || end.driverAt <= end.haleFallenAt) flags.push('DRIVER
 if (!end.departed || end.elephantPhase !== 3 || end.carX <= 116 || end.carZ < 70 || end.carZ > 80) flags.push('MISSING_ELEPHANT_GATED_ESCAPE');
 if (end.peak > (tier === 'low' ? 100 : 200) || end.alphas < 3 || end.alphas > 5) flags.push('POPULATION_BUDGET');
 mkdirSync(dirname(out), { recursive: true });
-writeFileSync(out, JSON.stringify({ ...identity, probeSha256, tier, seed: 1, flags, finale, activity: [...activity].map(([id, row]) => ({ id, ...row })), animals, lines, bites, turns, forbiddenMega, end, run, openingAlarmTick, finalState }, null, 2) + '\n');
+writeFileSync(out, JSON.stringify({ ...identity, probeSha256, tier, seed: 1, flags, groupStages, carried: { initial: carried.length, alive: carriedAlive }, finale, activity: [...activity].map(([id, row]) => ({ id, ...row })), animals, lines, bites, turns, forbiddenMega, end, run, openingAlarmTick, finalState }, null, 2) + '\n');
 console.log(JSON.stringify({ tier, outcome: run.outcome, seconds: run.time, flags, output: out }));
 process.exitCode = flags.length ? 1 : 0;
