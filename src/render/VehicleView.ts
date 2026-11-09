@@ -115,6 +115,12 @@ export class VehicleView extends Group {
     }));
     this.update(1); await this.ready();
   }
+  /** Obstacle fragments must exercise their ordinary box pipeline before the first impact. */
+  prewarmDebris(at: Vector3): () => void {
+    const mesh = new Mesh(this.propGeometry, this.materials.get('woodWarm'));
+    mesh.name = 'vehicle-debris-warmup'; mesh.position.copy(this.worldToLocal(at.clone())); mesh.scale.setScalar(.5); this.add(mesh);
+    return () => mesh.removeFromParent();
+  }
   /** Both occluding and ridden hull graphs belong to the level warm-up. */
   prewarmReveal(enabled: boolean): () => void {
     const saved = [...this.reveal.values()].map(({ on }) => [on, on.value] as const);

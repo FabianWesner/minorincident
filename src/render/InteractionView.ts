@@ -108,6 +108,14 @@ export class InteractionView extends Group {
     this.coverage.className = 'interaction-meter'; this.coverage.hidden = true; this.coverage.setAttribute('role', 'meter'); this.coverage.setAttribute('aria-label', 'Slot coverage'); this.coverage.setAttribute('aria-valuemin', '0'); this.coverage.setAttribute('aria-valuemax', '100'); this.coverage.append(this.coverageFill);
     this.meter.append(this.meterFill); this.panel.append(this.label, this.coverage, this.meter, this.caption); document.querySelector('#game')!.append(this.panel);
   }
+  /** Destruction fragments use plain boxes rather than the world's instanced surface layout. */
+  prewarmDebris(at: Vector3): () => void {
+    const meshes = (['woodWarm', 'windowGlow', 'sidewalk', 'brick'] as const).map((token, i) => {
+      const mesh = new Mesh(this.box, this.materials.get(token)); mesh.name = `destruction-debris-warmup:${token}`;
+      mesh.position.copy(this.worldToLocal(at.clone())); mesh.position.x += i * .5; mesh.scale.setScalar(.4); this.add(mesh); return mesh;
+    });
+    return () => { for (const mesh of meshes) mesh.removeFromParent(); };
+  }
   /** Warm every service-gate detail tier before L6 begins; later swaps use the registry's cached prototypes. */
   async prewarmServiceGates(): Promise<() => void> {
     const lods: AssetQuality[] = this.low ? ['lod1', 'lod2'] : ['lod0', 'lod1', 'lod2'];

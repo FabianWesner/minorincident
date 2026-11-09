@@ -348,11 +348,11 @@ export class GameView implements Lifecycle {
     await this.syncMountedGun(); this.mountedGunView?.update();
     // One loading scope owns every prewarm restoration: each runs once (a failed acquisition releases the earlier ones,
     // warm-up setup errors and the foreground tail go through the same call).
-    const prewarmed: { occupants?: () => void; crash?: () => void; corgi?: () => void; held?: () => void; medkits?: () => void; gates?: () => void } = {};
+    const prewarmed: { occupants?: () => void; crash?: () => void; corgi?: () => void; held?: () => void; medkits?: () => void; gates?: () => void; vehicleDebris?: () => void; debris?: () => void } = {};
     const restorePrewarmed = (): void => {
-      const { gates, occupants, crash, corgi, held, medkits } = prewarmed;
+      const { gates, occupants, crash, corgi, held, medkits, vehicleDebris, debris } = prewarmed;
       for (const key of Object.keys(prewarmed) as (keyof typeof prewarmed)[]) delete prewarmed[key];
-      gates?.(); occupants?.(); crash?.(); corgi?.(); held?.(); medkits?.();
+      gates?.(); occupants?.(); crash?.(); corgi?.(); held?.(); medkits?.(); vehicleDebris?.(); debris?.();
     };
     let corgiPrewarmed = false;
     try {
@@ -362,6 +362,8 @@ export class GameView implements Lifecycle {
       // Put the rigid prototype in front of the loading camera, clear of the
       // boarding vehicle/ground that would otherwise hide its first fragments.
       const corgiFocus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(12).add(this.camera.position);
+      prewarmed.vehicleDebris = this.vehicles?.prewarmDebris(corgiFocus);
+      if (this.world.destruction) prewarmed.debris = this.interactions?.prewarmDebris(corgiFocus);
       prewarmed.corgi = this.npcs?.prewarmCorgi(corgiFocus); corgiPrewarmed = !!prewarmed.corgi;
       // Issued and racked weapons the courier is not holding yet: their held (courier-fill) materials.
       prewarmed.held = this.actions?.prewarmHeld(this.camera.getWorldDirection(new Vector3()).multiplyScalar(10).add(this.camera.position));
