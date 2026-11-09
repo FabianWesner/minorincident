@@ -208,7 +208,10 @@ const http = createServer((req, res) => { void (async () => {
       if (!e.granted || leases.size) return json(409, { error: 'Exclusive reservation has not drained yet' });
       const externalAt = Date.now();
       e.external = true;
-      await closeBrowsers('external-exclusive', true);
+      // A shared launch can already be awaiting GPU admission when exclusivity
+      // is granted. Drain that launch before retiring the resident browsers.
+      launchChain = launchChain.then(() => closeBrowsers('external-exclusive', true));
+      await launchChain;
       if (!releaseSlots) releaseSlots = await reserveLegacySlots();
       if (!exclusives.includes(e)) { const release = releaseSlots; releaseSlots = undefined; await release(); return json(409, { error: 'Reservation expired' }); }
       recordWait(e.job, 'browser-external', Date.now() - externalAt);
