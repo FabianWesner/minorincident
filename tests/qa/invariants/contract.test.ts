@@ -11,6 +11,7 @@ import { l4PerimeterWalls } from '../../../src/data/l4Perimeter';
 import { oracle, obbHitsAabb } from './oracles';
 import { markerAnchor } from '../../../src/sim/missions/markerAnchor';
 import { loadLevel } from './world';
+import { morningSweep } from './morning';
 import type { DistrictLayout } from '../../../src/levels/districts/types';
 import { highwayPoint } from '../../../src/levels/L3/highway';
 import { inside } from '../../../src/levels/districts/validate';
@@ -24,6 +25,13 @@ const layouts = new Map(readdirSync('public/assets/layouts').filter(x => x.endsW
 
 describe('automatic regression invariants', () => {
   test('3 @nightly scripted actors: all initial cast, depot clerk and lab technician persist until their scripted exits', async () => {
+    // Keep the low-tier sweep in this existing actor fixture; the high tier runs in its own worker file.
+    for (const level of missionIds) {
+      const result = await morningSweep(level, 'low');
+      expect(result.seats, `${level}/low: every seated pose has authored support`).toEqual([]);
+      expect(result.actors, `${level}/low: scripted cast persists: ${JSON.stringify(result.cast)}`).toEqual([]);
+      console.log(`[qa:invariants] morning ${level}/low: 5400 frames, seats and actors PASS`);
+    }
     const world = await loadLevel('L1', 1), mission = world.missions!;
     // Run the same L1 story controller used by the depot trigger; it stays private in production.
     (mission as unknown as { l1: { story: { pickup(): void } } }).l1.story.pickup();
