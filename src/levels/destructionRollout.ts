@@ -13,7 +13,11 @@ export function destructionRollout(layouts: DistrictLayout[], level: string): Di
     const layout = structuredClone(source);
     for (const p of layout.placements) {
       if (level === 'L1' || level === 'L2' || level === 'L4' || level === 'L5') {
-        if (civilianCar(p.assetId) && p.assetId !== 'veh.courier-van') p.destruction = { class: 'vehicle' };
+        // Fairhaven's authored war/aftermath dressing includes combat cover,
+        // burning wrecks and deliberate route blockers. Keep those accepted
+        // encounters intact; the neighborhood's ordinary parked stock opts in.
+        const combatDressing = (level === 'L4' && p.id.startsWith('l4-')) || (level === 'L5' && p.id.startsWith('l5-'));
+        if (civilianCar(p.assetId) && !combatDressing) p.destruction = { class: 'vehicle' };
         if (p.assetId === 'bld.shed') p.destruction = { class: 'timber' };
       } else if (level === 'L9') {
         if (civilianCar(p.assetId)) p.destruction = { class: 'vehicle' };
