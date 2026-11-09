@@ -268,13 +268,6 @@ export class LevelThreeCollapse {
   }
   private emergeWaves(): void {
     const { world } = this.mission, s = this.s, tick = world.tick, ai = world.infected!;
-    if (ai.director.count >= ai.director.cap && s.waves.some(q => !q.id && tick >= q.at)) {
-      // Preserve the first recovery, then let repeated police downings finish
-      // a wave actor when its retained slot blocks an announced arrival.
-      // Its corpse remains in the world, as in L4's existing downed-slot rule.
-      const body = ai.active.find(e => e.health.current <= 0 && e.infected!.recoverAt >= 0 && e.infected!.downs > 1 && s.waveIds.includes(e.id));
-      if (body) body.infected!.recoverAt = -1;
-    }
     if (ai.director.count >= this.emergenceCap(true, false, true) || !ai.pool.length) return;
     for (const q of s.waves) if (!q.id && tick >= q.at) {
       const player = world.entities.get(1)!.transform;
@@ -714,8 +707,6 @@ export class LevelThreeCollapse {
       // No corridor steer (PO 10-31: "let the user find the way by themselves. You just show the final checkpoint"):
       // the marker and HUD arrow point at the army checkpoint itself.
     }
-    // L3 infected (turned adults in the open) hit as hard as L2's (section 5.1 tuning).
-    if (tick % 15 === 0) for (const e of world.infected!.active) if (e.combat && e.health.current > 0 && e.combat.damageMultiplier === 1) e.combat.damageMultiplier = l3.infectedDamage;
   }
   /**
    * PO 10-09: a checkpoint taken with a crowd on the courier's heels or at low health respawns the courier into the same fight

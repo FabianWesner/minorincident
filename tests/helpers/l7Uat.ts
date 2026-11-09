@@ -295,7 +295,7 @@ async function checkFollowerBites() {
     }
     const lost = roster.find(r => r.status !== 'following');
     expect(lost, 'one unopposed runner still kills an evacuee').toBeDefined();
-    expect(wounds.get(lost!.id), 'the twentieth ordinary bite is still fatal; every earlier bite visibly costs health').toEqual([95, 90, 85, 80, 75, 70, 65, 60, 55, 50, 45, 40, 35, 30, 25, 20, 15, 10, 5]);
+    expect(wounds.get(lost!.id), 'the third ordinary bite is fatal; earlier bites cost the PROD 34 HP').toEqual([66, 32]);
     expect(staggered, 'the biter reels after a survived bite').toBe(true);
     expect(alarms.filter(kind => kind !== 'wait'), 'a loss beside the courier is not "behind you"').toEqual([]);
   } finally { w.dispose(); }

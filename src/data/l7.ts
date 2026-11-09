@@ -11,10 +11,6 @@ export const l7DefaultArsenal = {
 
 /** Encounter anchors on the retained Northgate, Harbor and Lakeshore roads; E2 owns the bus. */
 export const l7Encounters = {
-  /** Courier protection ends on launcher pickup, or after the opening eight seconds. */
-  openingGraceSeconds: 8,
-  /** Batch 59 bite damage; the evacuee tears free while the biter reels. */
-  followerBite: { damage: 34, shoveTicks: 45 },
   finalGroup: 700, firstStreetGroup: 701,
   horde: { x: -64, z: 46 }, passage: { x: -76, z: 46 },
   // The party forms east of the courier, behind the westbound escape heading.

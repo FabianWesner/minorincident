@@ -7,7 +7,6 @@ import { seatAnchor } from '../npc/seats';
 import { leaveSeat } from '../npc/MorningRoutines';
 import { l6, l6Entries, l6BreachModels, l6Doors, l6InjuryLines } from '../../data/l6';
 import { l5Survivors } from '../../data/l5';
-import { INFECTED_TOUGHNESS, infectedDef } from '../../data/infected';
 import type { EntitySnapshot } from '../world/types';
 import type { Point } from '../npc/types';
 import type { Mission } from './Mission';
@@ -196,7 +195,7 @@ export class LevelSixSubway {
       }
       if(door===undefined||!at){if(snapped)this.s.spawnRefusals.offscreen++;else this.s.spawnRefusals.snap++;continue;}
       const model=balancedCrowdModel(l6BreachModels,ai.active.filter(e=>e.health.current>0&&!e.hidden&&!e.infected?.hidden).map(e=>({model:e.appearance?.asset??e.infected!.variant,x:e.transform.x,z:e.transform.z})),at,w.entities.size);
-      // Each shelter breach includes one shielded former responder. Without
+      // Each shelter breach includes an armored or shielded responder. Without
       // that front member, sustained fire erased the entire second cohort
       // before it could engage. Keep the same finite cohort and cap slots.
       // Temporarily release the active cohort's own reserved slots while its
@@ -204,24 +203,16 @@ export class LevelSixSubway {
       // cohort and for the remaining authored arrivals.
       const held = ai.director.reserved;
       if (currentEntry) ai.director.reserved = Math.max(0, held - currentEntry.remaining);
-      // One resilient front member keeps each hatch cohort relevant against
-      // the carried MG; the riot model must use the actual shield counter.
+      // A catalog armored front member covers each hatch cohort against
+      // the carried MG; its visible role and stats agree in every level.
       const hatchFront = wave === 4 && !this.s.spawnLog.some(entry=>entry.wave===4&&entry.door===requested);
       const armored = wave === 1 && i === 1 || wave === 2 && !this.s.spawnLog.some(entry=>entry.wave===2)
         || hatchFront;
-      // The first breach retains its armored football front. Later hatch
-      // fronts use the riot shield matching their visible model.
+      // Shelter breach two retains a riot; hatches use actual armored actors.
       let id:number;
       try {
-        id=armored?ai.spawn(wave===1?'infected.armored':'infected.riot',at):o.spawnPedestrian(at,{model});
+        id=armored?ai.spawn(wave===1||hatchFront?'infected.armored':'infected.riot',at):o.spawnPedestrian(at,{model});
         const e=w.entities.get(id)!;
-        // Keep the hatch front's existing HP, body and chase speed. Its shield
-        // can now strain and break instead of secretly applying football armor.
-        if(hatchFront){
-          const front=infectedDef('infected.armored');
-          e.health.current=e.health.max=front.hp*INFECTED_TOUGHNESS;
-          e.combat!.radius=front.radius; e.infected!.speed=front.speed;
-        }
         if(!armored)o.turnNow(e);
       }
       finally { ai.director.reserved = held; }
@@ -382,10 +373,6 @@ export class LevelSixSubway {
       if(sw?.interactable){sw.interactable.enabled=!entry.closedAt&&!entry.brokenAt;sw.interactable.label=entry.brokenAt?'Hatch broken':entry.closedAt?'Hatch closed':'Close the hatch';}
     }
     if(s.phase!=='retreat'&&s.phase!=='exit')return;
-    // Approved L6 recovery exception: finish old shelter members after a second real knockdown.
-    // The corpse stays; living/chasing actors and later hatch cohorts are unaffected.
-    const shelterCohort=new Set(s.spawnLog.filter(q=>q.wave<=2).map(q=>q.id));
-    for(const e of w.infected!.active) if(shelterCohort.has(e.id)&&e.health.current<=0&&e.infected!.recoverAt>=0&&(e.infected!.knockdowns??0)>1)e.infected!.recoverAt=-1;
     // QA 10-21 #83: the rear is the walking column's (healthy walkers within columnM of the leader). One healthy survivor
     // fighting far back made the whole group wait and sent the courier 70-80 m back through the horde, over and over.
     const live=this.living(),healthy=live.filter(r=>!r.injured).map(r=>w.entities.get(r.id)!),column=healthy.filter(e=>e.transform.x>=s.leaderX-l6.follow.columnM);

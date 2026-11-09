@@ -4,6 +4,7 @@ import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { Point } from '../npc/types';
 import { l7Encounters, l7Rocket } from '../../data/l7';
+import { infectedHumanBite } from '../../data/infected';
 import { corpseDetour, formationBack, formationSlot, leaderHeading, requireClearPoint, snapToClear } from './missionHelpers';
 import { NavGrid } from '../ai/NavGrid';
 import { actorRadius, solidLargeCorpse } from '../world/SolidRegistry';
@@ -250,11 +251,11 @@ export class LevelSevenEncounters {
       m.setState('corridor-group',arrived&&this.corridorGroup().missing.length===0);
     }
   }
-  /** A completed bite on a following evacuee costs `followerBite.damage` of its health and staggers the biter while
+  /** A completed bite on a following evacuee costs the shared bite damage of its health and staggers the biter while
    * the evacuee tears free. True when it survives; the bite that would empty its health kills/turns as usual. */
   woundFollower(target: EntitySnapshot, biter: EntitySnapshot): boolean {
     if (!this.state.roster.some(r => r.id === target.id && r.status === 'following')) return false;
-    const { damage, shoveTicks } = l7Encounters.followerBite, w = this.world;
+    const { damage, shoveTicks } = infectedHumanBite, w = this.world;
     if (target.health.current <= damage) return false;
     target.health.current -= damage;
     if (biter.combat) biter.combat.staggerUntil = Math.max(biter.combat.staggerUntil, w.tick + shoveTicks);

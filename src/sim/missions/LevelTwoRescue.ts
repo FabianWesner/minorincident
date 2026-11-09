@@ -60,7 +60,6 @@ export class LevelTwoRescue {
   private route: { pts: Point[]; cum: number[]; length: number } | null = null;
   private readonly alarmDelayTicks: number;
   constructor(private readonly mission: Mission) {
-    mission.world.infectedMeleeHits = l2.infectedMeleeHits;
     const [min, max] = l2.calm.alarmS;
     this.alarmDelayTicks = ticks(min + new Rng(mission.world.seed, 'l2-story').next() * (max - min));
   }
@@ -616,8 +615,6 @@ export class LevelTwoRescue {
       for (const id of s.clusterIds) world.infected!.rush(id, { x: l2.checkpoint.gateX - 8, z: 30 }, tick + ticks(l2.checkpoint.hordeRushS));
     }
     this.checkpointGate(tick, player);
-    // L2 infected (turned adults in the open) hit harder than L1's first, disoriented victims (section 5.1 tuning).
-    if (tick % 15 === 0) for (const e of world.infected!.active) if (e.combat && e.health.current > 0 && e.combat.damageMultiplier === 1) e.combat.damageMultiplier = l2.infectedDamage;
     // Officers cover the courier's approach (they hold fire otherwise) and wave them in while nothing threatens the line.
     const gate = this.anchor('l2-gate'), cover = s.gateClosedAt > 0 || Math.hypot(player.transform.x - gate.x, player.transform.z - gate.z) <= l2.checkpoint.coverM;
     // Always: anything at the line itself. Covering: the whole 15 m in front of the gate.

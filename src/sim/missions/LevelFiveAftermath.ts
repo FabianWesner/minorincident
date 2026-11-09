@@ -186,7 +186,6 @@ export class LevelFiveAftermath {
       // Admission may shift around a body; retain that clear street pose as
       // the wander home rather than the rejected raw point inside a shell.
       const brain = e.infected.l1; if (brain) { brain.homeX = e.transform.x; brain.homeZ = e.transform.z; brain.leashM = l5.infected.leashM; }
-      if (e.combat) e.combat.damageMultiplier = l5.infected.damage;
       s.infectedIds.push(id); occupied.push(at); left--;
     }
   }

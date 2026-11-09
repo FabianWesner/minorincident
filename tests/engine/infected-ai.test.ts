@@ -8,13 +8,11 @@ import type { CoverWall } from '../../src/sim/combat/HitQuery';
 import type { EntitySnapshot, GameEvent } from '../../src/sim/world/types';
 import { clickable } from '../../src/input/ClickPick';
 import { l1v2 } from '../../src/data/l1v2';
-import { l3 } from '../../src/data/l3';
 import { megaAlpha } from '../../src/data/megaAlpha';
 import { alphaTypeFor, alphaTypes } from '../../src/data/alphaTypes';
 import { PropSystem } from '../../src/sim/interact/PropSystem';
 import { damageAmount } from '../../src/sim/combat/Damage';
 import { SimWorld } from '../../src/sim/world/SimWorld';
-import { missionSandbox } from '../fixtures/scenarios/mission-sandbox';
 import { followFrustum, loadL3 } from '../../tools/sim-runner/l3Bots';
 
 const worlds: SimWorld[] = [];
@@ -213,34 +211,15 @@ async function alphaTypeContracts() {
 
 test('every human and animal role validates and spawns with its catalog health and speed; every attack is telegraphed', async () => {
   await alphaTypeContracts();
-  for (const tier of ['low', 'high'] as const) {
-    const w = await arena(); w.scenario = 'L3'; w.infected!.configureL1v2(); w.infected!.director.setTier(tier);
-    // Isolate the retreat AI from the level's population and objective graph.
-    const definition = missionSandbox(); definition.onStart = [];
-    const mission = w.loadMission(definition); mission.begin(); Object.assign(mission.state, { l3: { fallbackAt: 1, segment: 1 } });
+  // Mission-specific acquisition ranges must not change the ordinary runner.
+  for (const level of Array.from({ length: 10 }, (_, i) => `L${i + 1}`)) {
+    const w = await arena(); w.scenario = level; w.infected!.configureL1v2();
     const e = spawn(w, 'runner', 2), brain = e.infected!.l1!;
     brain.mode = 'chase'; brain.targetId = 1; brain.pauseUntil = 0;
-    const warnings: number[] = [];
-    w.events.on('telegraph', event => {
-      if (event.type === 'telegraph' && event.sourceId === e.id) warnings.push(Math.hypot(e.transform.x, e.transform.z));
-    });
     step(w, 1);
-    expect(warnings, `${tier}: pursuing at two metres must not repeatedly wind up out of contact`).toEqual([]);
-    // r6-l3 (PO 2026-11-07, "I can just walk through it"): the retreat commit range must lie outside the melee separation ring,
-    // or no runner can ever commit on a moving courier (0.9 m < 1.08 m did exactly that).
-    const lunge = l3.infected.retreatLungeM[tier];
-    expect(lunge).toBeGreaterThan(meleeRing);
-    e.transform.x = lunge + .0001; e.transform.z = 0;
-    step(w, 1);
-    expect(warnings, `${tier}: contact reached during steering must commit before separation`).toHaveLength(1);
-    expect(warnings[0]).toBeLessThanOrEqual(lunge);
-    if (tier === 'low') {
-      mission.state.l3!.segment = 0;
-      const early = spawn(w, 'runner', 2), approach = early.infected!.l1!;
-      approach.mode = 'chase'; approach.targetId = 1; approach.pauseUntil = 0;
-      step(w, 1);
-      expect(w.events.events().some(event => event.type === 'telegraph' && event.sourceId === early.id), 'the first squad segment retains its original lunge').toBe(true);
-    }
+    expect(w.events.events().some(event => event.type === 'telegraph' && event.sourceId === e.id), `${level}: shared lunge acquisition`).toBe(true);
+    expect(e.health.max, `${level}: shared runner toughness`).toBe(humanInfected[0].hp * INFECTED_TOUGHNESS);
+    expect(e.combat!.damageMultiplier, `${level}: no mission damage multiplier`).toBe(1);
   }
   {
     const w = await arena(); w.scenario = 'L3'; w.infected!.configureL1v2();
@@ -263,7 +242,7 @@ test('every human and animal role validates and spawns with its catalog health a
     brain.mode = 'chase'; brain.targetId = 1; brain.pauseUntil = 0;
     for (let i = 0; i < 180 && e.infected!.state !== 'attack'; i++) step(w, 1);
     const start = e.transform.x;
-    expect(start).toBeGreaterThan(4.4); expect(start).toBeLessThanOrEqual(6);
+    expect(start).toBeGreaterThan(2); expect(start).toBeLessThanOrEqual(l1v2.infected.lungeRangeM);
     const warning = w.events.events().find(event => event.type === 'telegraph' && event.sourceId === e.id);
     expect(warning).toMatchObject({ target: { id: 1 }, duration: .35 });
     step(w, 19);
@@ -289,8 +268,8 @@ test('every human and animal role validates and spawns with its catalog health a
       if (moving) w.setInput({ move: { x: -1, z: 0 } });
       step(w, 1);
       const cue = w.events.events().find(event => event.type === 'telegraph' && event.sourceId === e.id);
-      expect(cue).toMatchObject({ target: { id: 1 }, duration: .35 });
-      step(w, 59);
+      expect(cue, 'a distant ordinary runner must close before its shared warning').toBeUndefined();
+      step(w, 179);
       const damage = w.events.events().filter(event => event.type === 'combat.hit' && event.targetId === 1 && event.amount > 0);
       expect(damage.length > 0, 'an out-of-reach runner can still be outrun').toBe(!moving);
       if (!moving) expect(damage[0]).toMatchObject({ amount: 10 });
@@ -301,10 +280,11 @@ test('every human and animal role validates and spawns with its catalog health a
     expect(close.events.events().some(event => event.type === 'combat.hit' && event.sourceId === reaching.id), 'windup stays readable').toBe(false);
     step(close, 40);
     const graze = close.events.events().find(event => event.type === 'combat.hit' && event.sourceId === reaching.id && event.amount > 0);
-    expect(graze, 'movement connects with a full hit').toMatchObject({ amount: 10 });
     const planted = await arena(1, false); planted.scenario = 'L2';
     const fullContact = spawn(planted, 'runner', 1.3); step(planted, 60);
-    expect(planted.events.events().find(event => event.type === 'combat.hit' && event.sourceId === fullContact.id && event.amount > 0), 'a planted target still takes the authored wound').toMatchObject({ amount: 10 });
+    const plantedHit = planted.events.events().find(event => event.type === 'combat.hit' && event.sourceId === fullContact.id && event.amount > 0);
+    expect(plantedHit, 'a planted target still takes the authored wound').toMatchObject({ amount: 10 });
+    expect(graze?.type === 'combat.hit' && graze.amount, 'a moving lunge lands the same damage as a planted target').toBe(plantedHit?.type === 'combat.hit' && plantedHit.amount);
 
     const late = await arena(1, false); late.scenario = 'L6';
     const unchanged = spawn(late, 'runner', 1.3);
@@ -317,7 +297,7 @@ test('every human and animal role validates and spawns with its catalog health a
       if (moving) ruined.setInput({ move: { x: -1, z: 0 } });
       step(ruined, 60);
       expect(ruined.events.events().find(event => event.type === 'combat.hit' && event.sourceId === runner.id && event.amount > 0),
-        'L7 regular lunges chip courier health, including during Alpha stun').toMatchObject({ amount: 10 });
+        'L7 ordinary runner lunges retain their authored damage').toMatchObject({ amount: 10 });
     }
 
     const closing = await arena(1, false); closing.scenario = 'L2';
@@ -458,7 +438,7 @@ test('perception: sight cone, facing-independent gunshots, silent melee misses, 
   }
 });
 
-test('melee knocks down for a seeded 10-20 s, respects the L2 recovery pool, then up at full HP; explosives and burns kill for good', async () => {
+test('all levels recover nonlethal downs after seeded 10-20 s at full HP; explosives and burns kill for good', async () => {
   const downTicks: number[] = [];
   for (const seed of [1, 2, 3, 1]) {
     const w = await arena(seed); w.infected!.configureL1v2();
@@ -493,20 +473,48 @@ test('melee knocks down for a seeded 10-20 s, respects the L2 recovery pool, the
   w.combat!.status.apply(burned, { kind: 'burning', duration: 10, maxStacks: 1, dps: 15, slow: 0 }, 1, 'throw.molotov');
   step(w, 60 * highS + 300);
   for (const e of [blasted, downed, burned]) { expect(w.entities.get(e.id)!.health.current).toBe(0); expect(w.entities.get(e.id)!.corpse, `${e.id} is a corpse`).toBe(true); }
-  // L2 has a separate recovery pool: living caps exclude downed bodies and
-  // the oldest body above the tier limit settles into a persistent corpse.
+  // A nurse may accelerate a recoverable down, never undo an explosive kill.
   {
-  const w = await arena(1, false); w.scenario = 'L2';
-  w.infected!.director.strict = true; w.infected!.director.tier = 'low'; w.infected!.director.levelCap = 60;
-  const bodies = Array.from({ length: 13 }, (_, i) => spawn(w, 'runner', -12 + i * 2, 8));
-  for (const body of bodies) { hit(w, body); step(w, 1); }
-  expect(w.infected!.director.count).toBe(0);
-  expect(w.infected!.active.filter(e => e.infected!.recoverAt >= 0)).toHaveLength(12);
-  expect(bodies[0].infected!.recoverAt).toBe(-1);
-  step(w, 125);
-  expect(w.entities.get(bodies[0].id)).toMatchObject({ id: bodies[0].id, corpse: true });
-  expect(w.entities.get(bodies[0].id)).toBeDefined();
-  expect(w.infected!.active.filter(e => e.infected!.recoverAt >= 0)).toHaveLength(12);
+    const w = await arena();
+    const blasted = spawn(w, 'runner', 4, -1), recoverable = spawn(w, 'runner', 4, 1);
+    hit(w, blasted, 'explosive'); hit(w, recoverable);
+    const nurse = spawn(w, 'nurse', 6);
+    step(w, 120);
+    expect(recoverable.health.current).toBe(recoverable.health.max);
+    expect(nurse.infected!.reviveUsed).toBe(true);
+    expect(w.entities.get(blasted.id)!.health.current).toBe(0);
+  }
+  // Strict admission reserves downed actors' existing slots; no level may
+  // silently turn a recoverable body into a permanent corpse to free a slot.
+  for (const level of Array.from({ length: 10 }, (_, i) => `L${i + 1}`)) {
+    const w = await arena(1); w.scenario = level;
+    w.infected!.director.strict = true; w.infected!.director.levelCap = 60;
+    const bodies = Array.from({ length: 13 }, (_, i) => spawn(w, 'runner', -12 + i * 2, 8));
+    const rocketVictim = spawn(w, 'runner', 15, 8);
+    w.combat!.damage.apply({ attackId: 1000, actionId: 'weapon.rocket-launcher', sourceId: 1, targetId: rocketVictim.id,
+      origin: { x: 0, z: 0 }, direction: { x: 1, z: 0 }, base: 999, multiplier: 1,
+      type: 'explosive', knockback: 0, stagger: 0 });
+    expect(rocketVictim.infected!.recoverAt, `${level}: rocket kills remain permanent`).toBe(-1);
+    const risen = new Set<number>();
+    w.events.on('infected.recovered', event => { if (event.type === 'infected.recovered') risen.add(event.sourceId); });
+    for (const [i, body] of bodies.entries()) {
+      const actionId = ['weapon.fire-axe', 'weapon.handgun', 'weapon.shotgun'][i % 3];
+      w.combat!.damage.apply({ attackId: i + 1, actionId, sourceId: 1, targetId: body.id,
+        origin: { x: 0, z: 0 }, direction: { x: 1, z: 0 }, base: 999, multiplier: 1,
+        type: i % 3 ? 'bullet' : 'melee', knockback: 0, stagger: 0 });
+      expect(body.infected!.recoverAt - w.tick, `${level}/${actionId}`).toBeGreaterThanOrEqual(lowS * 60);
+      expect(body.infected!.recoverAt - w.tick, `${level}/${actionId}`).toBeLessThanOrEqual(highS * 60);
+    }
+    expect(w.infected!.director.count, level).toBe(13);
+    step(w, highS * 60 + 2);
+    for (const body of bodies) {
+      expect(body.health.current, `${level}/${body.id}`).toBe(body.health.max);
+      expect(body.corpse, `${level}/${body.id}`).toBeFalsy();
+      expect(risen.has(body.id), `${level}: actual recovery event`).toBe(true);
+    }
+    expect(w.entities.get(rocketVictim.id)?.health.current, `${level}: rocket victim stays down`).toBe(0);
+    expect(w.entities.get(rocketVictim.id)?.corpse, `${level}: rocket corpse persists`).toBe(true);
+    w.dispose(); worlds.splice(worlds.indexOf(w), 1);
   }
 });
 
