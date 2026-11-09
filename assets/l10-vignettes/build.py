@@ -44,7 +44,7 @@ def build_asset(asset, lod, root=None):
         if lod == 0:
             for x in [-.07, .07]: box(root, 'nail', (x, -.083, .48), (.015, .012, .015), 'asphalt')
     elif asset == 'decay.body-bag':
-        n, rings = [(10, 7), (8, 5), (4, 4)][lod]
+        n, rings = [(10, 7), (8, 5), (8, 4)][lod]
         verts, faces = [], []
         for j in range(rings):
             x = -1.05 + 2.1*j/(rings-1)
@@ -55,9 +55,9 @@ def build_asset(asset, lod, root=None):
         for j in range(rings-1):
             for i in range(n): faces.append((j*n+i, j*n+(i+1)%n, (j+1)*n+(i+1)%n, (j+1)*n+i))
         faces += [tuple(reversed(range(n))), tuple((rings-1)*n+i for i in range(n))]
-        mesh(root, 'canvas', verts, faces, ['olive'])
-        box(root, 'zipper', (0, 0, .343), (1.65, .015, .008), 'canvasTan')
-        if lod == 0:
+        mesh(root, 'canvas', verts, faces, ['olive','uiDark'] if lod==2 else ['olive'], [0]*(len(faces)-1)+[1] if lod==2 else None)
+        if lod<2:box(root, 'zipper', (0, 0, .343), (1.65, .015, .008), 'canvasTan')
+        if lod < 2:
             for x in [-.65, .65]:
                 for y in [-.33, .33]: box(root, 'handle', (x, y, .1), (.16, .1, .035), 'uiDark')
     elif asset == 'prop.l10-quarantine-tape':
@@ -154,7 +154,8 @@ def build(ctx):
 if __name__ == '__main__':
     args = sys.argv[sys.argv.index('--')+1:]
     report = []
-    for asset in IDS:
+    selected=IDS if '--only' not in args else args[args.index('--only')+1].split(',')
+    for asset in selected:
         for lod in range(3):
             bpy.ops.wm.read_factory_settings(use_empty=True)
             root = build_asset(asset,lod)

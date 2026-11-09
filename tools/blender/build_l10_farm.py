@@ -17,11 +17,18 @@ def parent(o, root, token):
 def box(root,name,at,size,token,turn=0):
  bpy.ops.mesh.primitive_cube_add(size=1,location=at);o=bpy.context.object;o.name=name;o.scale=size;o.rotation_euler.z=turn;bpy.ops.object.transform_apply(location=False,rotation=False,scale=True);return parent(o,root,token)
 
-def branch(root,name,a,b,r,token,sides=5):
- a,b=Vector(a),Vector(b);v=b-a;bpy.ops.mesh.primitive_cone_add(vertices=sides,radius1=r,radius2=r*.45,depth=v.length,location=(a+b)/2);o=bpy.context.object;o.name=name;o.rotation_euler=v.to_track_quat('Z','Y').to_euler();return parent(o,root,token)
+def branch(root,name,a,b,r,token,sides=5,caps=True):
+ a,b=Vector(a),Vector(b);v=b-a;bpy.ops.mesh.primitive_cone_add(vertices=sides,radius1=r,radius2=r*.45,depth=v.length,location=(a+b)/2,end_fill_type='NGON' if caps else 'NOTHING');o=bpy.context.object;o.name=name;o.rotation_euler=v.to_track_quat('Z','Y').to_euler();return parent(o,root,token)
 
 def mesh(root,name,verts,faces,token):
  d=bpy.data.meshes.new(name);d.from_pydata(verts,[],faces);d.materials.append(mat(token));o=bpy.data.objects.new(name,d);bpy.context.collection.objects.link(o);o.parent=root;return o
+
+def cross_branch(root,name,a,b,r,token):
+ a,b=Vector(a),Vector(b);axis=(b-a).normalized()
+ side=axis.cross(Vector((0,0,1))).normalized();other=axis.cross(side).normalized()
+ for direction in [side,other]:
+  points=[tuple(a-direction*r),tuple(a+direction*r),tuple(b+direction*r*.45),tuple(b-direction*r*.45)]
+  mesh(root,name,points,[(0,1,2,3)],token)
 
 def shape(root,name,at,scale,token,lod):
  bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=2 if lod==0 else 1,radius=1,location=at);o=bpy.context.object;o.name=name;o.scale=scale;return parent(o,root,token)
@@ -35,12 +42,14 @@ def build_geometry(id,lod,burned=False):
  elif id in ['prop.farm-tractor','prop.farm-combine']:
   farm_assets.vehicle(root,lod,id=='prop.farm-combine',burned)
  elif id=='prop.farm-irrigator':
-  branch(root,'body',(-6,0,2.1),(6,0,2.1),.09,'silver',6 if lod<2 else 3)
+  branch(root,'body',(-6,0,2.1),(6,0,2.1),.09,'silver',6 if lod<2 else 4)
   for x in [-5,0,5]:
-   branch(root,'rusted-leg',(x,0,2.1),(x,-.65,.08),.07,'leatherShadow',4 if lod<2 else 3)
-   branch(root,'rusted-leg',(x,0,2.1),(x,.65,.08),.07,'leatherShadow',4 if lod<2 else 3)
-  if lod<2:
-   for k in range(-5,6,2):branch(root,'dropped-nozzle',(k,0,2.1),(k,0,1.55),.025,'asphalt',3)
+   for sign in [-1,1]:
+    if lod<2:branch(root,'rusted-leg',(x,0,2.1),(x,sign*.65,.08),.07,'leatherShadow',4)
+    else:branch(root,'rusted-leg',(x,0,2.1),(x,sign*.65,.08),.08,'leatherShadow',3,False)
+  for k in range(-5,6,2):
+   if lod<2:branch(root,'dropped-nozzle',(k,0,2.1),(k,0,1.55),.025,'asphalt',3)
+   else:mesh(root,'dropped-nozzle',[(k-.025,-.025,2.1),(k+.025,.025,2.1),(k+.025,.025,1.55),(k-.025,-.025,1.55)],[(0,1,2,3)],'asphalt')
  elif id=='prop.farm-scarecrow':
   box(root,'body',(0,0,1.1),(.11,.12,2.2),char)
   box(root,'crossbar',(0,0,1.6),(1.65,.1,.11),char,.09)
@@ -48,6 +57,8 @@ def build_geometry(id,lod,burned=False):
   if lod==2:
    box(root,'sack-head',(0,0,1.99),(.36,.34,.44),'canvasTan')
    mesh(root,'hat-brim',[(-.3,-.235,2.14),(.3,-.235,2.14),(.3,.235,2.14),(-.3,.235,2.14)],[(0,1,2),(0,2,3)],'leatherShadow')
+   for sign in [-1,1]:
+    mesh(root,'torn-sleeve',[(sign*.24,-.14,1.57),(sign*.24,.14,1.57),(sign*.7,.063,1.45),(sign*.7,-.063,1.45)],[(0,1,2,3)],'leatherShadow')
   else:shape(root,'sack-head',(0,0,1.99),(.18,.17,.22),'canvasTan',1)
   if lod<2:
    box(root,'brim',(0,0,2.14),(.6,.47,.045),'leatherShadow');box(root,'hat',(0,0,2.22),(.31,.3,.15),'leatherShadow')
@@ -57,14 +68,16 @@ def build_geometry(id,lod,burned=False):
   shape(root,'body',(0,0,.39),(1.02,.47,.36),'khakiSeam',lod)
   shape(root,'head',(1.02,-.05,.25),(.35,.25,.21),'leatherShadow',1)
   for x in [-.65,.6]:
-   for y in ([-.28] if lod==2 else [-.28,.28]):branch(root,'leg',(x,y,.25),(x+.2,y*2.8,.12),.11,'leatherShadow',3 if lod==2 else 5)
+   for y in [-.28,.28]:
+    if lod<2:branch(root,'leg',(x,y,.25),(x+.2,y*2.8,.12),.11,'leatherShadow',5)
+    else:cross_branch(root,'leg',(x,y,.25),(x+.2,y*2.8,.12),.11,'leatherShadow')
   if lod==0:
    for x in [-.5,.15]:shape(root,'hide-patch',(x,-.28,.52),(.24,.22,.15),'leatherShadow',1)
  elif id=='prop.tree.dead':
-  branch(root,'body',(0,0,0),(.18,0,4.8),.29,char,5 if lod==0 else 4 if lod==1 else 3)
+  branch(root,'body',(0,0,0),(.18,0,4.8),.29,char,5 if lod<2 else 3,lod<2)
   for k,(x,y,z) in enumerate([(-1.65,.2,4.2),(1.6,-.35,4.6),(.3,1.45,4.8),(-.6,-1.3,3.7)]):
-   branch(root,'bare-branch',(.08,0,2.1+k*.32),(x,y,z),.13,char,5 if lod==0 else 3)
-   if lod==0:branch(root,'snapped-twig',(x*.55,y*.55,z-.8),(x*.9+.4,y*1.2,z+.15),.055,char,4)
+   branch(root,'bare-branch',(.08,0,2.1+k*.32),(x,y,z),.13,char,5 if lod<2 else 3,lod<2)
+   branch(root,'snapped-twig',(x*.55,y*.55,z-.8),(x*.9+.4,y*1.2,z+.15),.055,char,4 if lod<2 else 3,lod<2)
  else:
   farm_assets.building(root,lod,id=='bld.farm-house-ruin',burned)
  bpy.context.view_layer.update()
