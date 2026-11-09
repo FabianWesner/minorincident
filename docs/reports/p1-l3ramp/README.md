@@ -41,12 +41,14 @@ The existing movement case now drives the production `SimWorld`/Rapier controlle
 
 This is coverage of the known gameplay elevation routes, **not an exhaustive certification of every stair depicted by an asset in L1–L10**. For example, the L4/L5 cellar has an authored solid `dressing:cellar-stair` block rather than a traversable tread route; sealed station arrivals and building entrance dressing also need classification before asserting every authored staircase is climbable. The brief's blanket all-authored-stairs requirement therefore remains open. No accepted level geometry was changed speculatively to satisfy that broader assertion.
 
+[Candidate inventory](authored-slope-candidates.json) now enumerates all ten production layout transformations/world tiers. It includes 19 asset-note candidates, named layout stair/ramp colliders, and the two mission-built L9 vehicle jump ramps. A concrete additional probe found that L1 `bld.house-c:67` (scale 0.8) stops at the first porch tread: after 100 movement ticks it advances about 0.05 m and stands at y 0.92 rather than the y 1.408 landing. Its collision contains a single body-height box across the entire plot. That is distinct from the working L3 highway and needs a scope decision about decorative stair flights before changing accepted collision across levels. The cellar's deliberate solid stair block is explicitly authored in `layouts/D-FAIR/layout.py`; E22's art-direction addendum preserves that yard's navigation.
+
 ## Validation
 
 - Focused movement/wall/health file, including both gaits from the ramp entry lips: 3/3 passed locally through the shared CPU admission adapter.
-- Final `npm run typecheck` and `npm run lint`: passed on `c9994ba3`.
+- Final **`npm run verify -- E21`: passed on `8247260f`**, including typecheck, lint, and the complete default unit suite. It was admitted locally through the shared FIFO/CPU slot after browser/quiet work cleared. [Checks](epic-checks.json) · [Budget receipt](test-budget.json).
 - Remote full-suite attempts exposed the runner's commit-less checkout (`git rev-parse HEAD` in an existing tooling test) and a pre-existing navigation-test timeout under runner load. An additional fixture failure in the new Northgate test was corrected by isolating its mission controllers; the focused final file passes.
-- Final complete local default suite: **107/107 tests, 27/27 files passed**, 60.37 seconds, two workers, through the shared CPU admission adapter. Both previously failing infrastructure cases pass locally. [Raw suite result](unit.json) · [Validation/provenance](validation.json).
-- `npm run verify -- E21` was run on the remote runner and returned nonzero for the listed issues; it is not represented as a green remote gate. The final current-source typecheck, lint, and full default suite each pass locally.
+- Final complete local default suite, including walking/running entry-lip ascents: **107/107 tests, 27/27 files passed**, 37.56 seconds, at most four workers. The earlier two-worker full suite also passed in 60.37 seconds; [its raw result](unit.json) is retained separately from the [latest validation/provenance](validation.json).
+- Earlier remote `npm run verify -- E21` attempts returned nonzero for the listed issues; they are not represented as green remote gates. The final exact E21 command passes locally.
 
 No deploy or push. This lane is an investigation/regression handoff; the reported cause and exhaustive authored-stair requirement remain unproven.
