@@ -36,7 +36,7 @@ for (const id of [...ids].sort()) {
     const manifest = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8'));
     const def = manifest.find((entry: { id: string }) => entry.id === (productionIds[id] ?? id));
     if (!def || !atLeast(def.status, 'integrated')) continue;
-    for (const lod of ['lod1', 'lod2'] as const) {
+    for (const lod of ['lod0', 'lod1', 'lod2'] as const) {
       const canonical = def.lods?.[lod] ? lod : 'lod0';
       for (const decay of ['', ...def.decayVariants]) {
         const key = `${id}:${canonical}:${decay}`; if (!selected.size && files[key]) continue;
