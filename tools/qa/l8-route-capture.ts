@@ -36,21 +36,30 @@ try {
   for (let n = 0; n < 7200; n++) {
     const row = await session.page.evaluate(() => {
       const ss = window.__SS__!, state = ss.getState(), player = ss.getEntity(1)!, zoo = state.l8!;
-      const plan = ss.bot.plan(), p = player.transform;
-      const origin = ss.input.project(p, 'player'), direction = ss.input.project({ x: p.x + plan.frame.move.x * 8, z: p.z + plan.frame.move.z * 8 }, 'player');
+      const plan = ss.bot.plan(), p = player.transform, active = zoo.arenas.find(a => a.phase !== 3);
+      let move = { ...plan.frame.move };
+      const elephant = active?.id === 'elephant' && active.phase > 0 ? ss.getEntity(active.ids[0]) : undefined;
+      const tell = elephant?.infected?.specialAttack;
+      // Keyboard directions are coarser than native steering. Reposition into
+      // the open east yard between tells instead of fighting at the north gate.
+      if (elephant && elephant.health.current > 0 && tell?.stage !== 'telegraph' && tell?.stage !== 'active' && (p.x < 104 || p.z < 56 || p.z > 69)) {
+        const dx = 108 - p.x, dz = 62 - p.z, d = Math.hypot(dx, dz) || 1; move = { x: dx / d, z: dz / d };
+      }
+      const origin = ss.input.project(p, 'player'), direction = ss.input.project({ x: p.x + move.x * 8, z: p.z + move.z * 8 }, 'player');
       const target = plan.target && ss.input.project(plan.target, 'player');
       const entries = (window.__SCENE__ as unknown as { game: Game }).game.world.combat!.runner.loadout.activeEntries();
-      const active = zoo.arenas.find(a => a.phase !== 3);
       const audit = (window as unknown as { l8Audit: { attacks: { id: string; arena?: string }[]; hits: { id: string; arena?: string; amount: number }[] } }).l8Audit;
       const guns = ['weapon.handgun', 'weapon.shotgun', 'weapon.army-mg', 'weapon.rocket-launcher'];
       const needed = active?.phase ? guns.find(id => audit.attacks.filter(e => e.arena === active.id && e.id === id).length < 2 || !audit.hits.some(e => e.arena === active.id && e.id === id && e.amount > 0)) : undefined;
       const choice = entries[plan.slot];
-      const weapon = choice?.id === 'weapon.fire-axe' ? choice.id : needed ?? choice?.id;
+      const bossTarget = plan.target && active?.ids.some(id => { const e = ss.getEntity(id); return e && Math.hypot(e.transform.x - plan.target!.x, e.transform.z - plan.target!.z) < .1; });
+      const safeNeeded = needed === 'weapon.rocket-launcher' && plan.target && Math.hypot(plan.target.x - p.x, plan.target.z - p.z) < 8 ? undefined : needed;
+      const weapon = choice?.id === 'weapon.fire-axe' ? choice.id : bossTarget ? safeNeeded ?? choice?.id : choice?.id;
       return { tick: ss.tick(), phase: (state.mission as { phase: string })?.phase, player: p, hp: player.health.current,
-        move: plan.frame.move, dx: direction.x - origin.x, dy: direction.y - origin.y, target, fire: !!(plan.frame.left.held || plan.frame.right.held), interact: plan.frame.interact,
+        move, dx: direction.x - origin.x, dy: direction.y - origin.y, target, fire: !!(plan.frame.left.held || plan.frame.right.held), interact: plan.frame.interact,
         weapon, actualWeapon: entries.find(e => e.side === player.weapons!.selectedSide && e.index === player.weapons![e.side].index)?.id,
         damagedWeapons: [...new Set(audit.hits.filter(e => e.arena === active?.id && e.amount > 0).map(e => e.id))], marker: (state.mission as { marker?: string })?.marker,
-        wallBreached: !!zoo.arenas.find(a => a.id === 'elephant')?.breachAt, haleKeys: !!(state.mission as { states: Record<string, boolean> })?.states['hale-keys'], haleFallen: !!(state.mission as { states: Record<string, boolean> })?.states['hale-fallen'], hale: ss.getEntity(zoo.haleId)?.transform, carrier: active && ss.getEntity(active.carrier)?.transform, animal: active && ss.getEntity(active.ids[0])?.transform, arena: active?.id ?? 'boarding', arenaPhase: active?.phase ?? 3, arenaHP: active?.ids.map(id => ss.getEntity(id)?.health.current), arenas: zoo.arenas.map(a => ({ id: a.id, phase: a.phase })),
+        wallBreached: !!zoo.arenas.find(a => a.id === 'elephant')?.breachAt, haleKeys: !!(state.mission as { states: Record<string, boolean> })?.states['hale-keys'], haleFallen: !!(state.mission as { states: Record<string, boolean> })?.states['hale-fallen'], hale: ss.getEntity(zoo.haleId)?.transform, boarding: !active ? zoo.roster.map(id => ss.getEntity(id)).filter(e => e && e.health.current > 0 && !e.infected && e.passengerOf === undefined).map(e => ({ id: e!.id, at: e!.transform })) : undefined, carrier: active && ss.getEntity(active.carrier)?.transform, animal: active && ss.getEntity(active.ids[0])?.transform, arena: active?.id ?? 'boarding', arenaPhase: active?.phase ?? 3, arenaHP: active?.ids.map(id => ss.getEntity(id)?.health.current), arenas: zoo.arenas.map(a => ({ id: a.id, phase: a.phase })),
         objective: [...document.querySelectorAll('[data-testid=objective-text],[data-testid=mission-tracker]')].map(e => e.textContent).find(text => text?.trim()) ?? '', departed: (state.mission as { states: Record<string, boolean> })?.states.departed,
       };
     });
@@ -92,7 +101,7 @@ try {
   }
   const result = await session.page.evaluate(() => {
     const ss = window.__SS__!, state = ss.getState();
-    return { state: { tick: ss.tick(), quality: state.render.quality, backend: state.render.backend, mission: state.mission, zoo: state.l8, boarding: state.l8 && { passengers: ss.getEntity(state.l8.carId)?.vehicle?.passengers, actors: [1, ...state.l8.roster, ...state.l8.guards, ...[...(window.__SCENE__ as unknown as { game: Game }).game.world.entities.iterate()].filter(e => e.companion).map(e => e.id)].map(id => ss.getEntity(id)) } }, audit: (window as unknown as { l8Audit: unknown }).l8Audit };
+    return { state: { tick: ss.tick(), quality: state.render.quality, backend: state.render.backend, mission: state.mission, zoo: state.l8, boarding: state.l8 && { passengers: ss.getEntity(state.l8.carId)?.vehicle?.passengers, actors: [1, ...state.l8.roster, ...state.l8.guards, ...state.l8.arenas.flatMap(a => a.ids), ...[...(window.__SCENE__ as unknown as { game: Game }).game.world.entities.iterate()].filter(e => e.companion).map(e => e.id)].map(id => ss.getEntity(id)) } }, audit: (window as unknown as { l8Audit: unknown }).l8Audit };
   });
   writeFileSync(`${out}/receipt.json`, JSON.stringify({ ...build, captureToolSha256, tier, method: 'Physical WASD, Digit weapon shortcuts, LMB aiming/firing and E. Paused fixed-step presentation, mortal courier and NPCs. Shared policy is read only; no injected input, teleport, health edits or objective changes.', captures, frames, errors: session.errors, ...result }, null, 2));
   if (!(result.state.mission as { states?: Record<string, boolean> })?.states?.departed || session.errors.length) process.exitCode = 1;

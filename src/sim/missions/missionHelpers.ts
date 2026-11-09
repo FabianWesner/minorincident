@@ -19,24 +19,52 @@ export function corpseDetour(world: SimWorld, e: EntitySnapshot, goal: Point): P
     const along = length ? Math.max(0, Math.min(1, ((body.transform.x - from.x) * x + (body.transform.z - from.z) * z) / length)) : 0;
     return Math.hypot(from.x + along * x - body.transform.x, from.z + along * z - body.transform.z) >= actorRadius(e) + (e.companion ? .4 : 0) + actorRadius(body);
   });
+  if (world.scenario === 'L8') {
+    // A fallen elephant beside a displaced light prop can trap an otherwise
+    // valid nav route. Find a bounded local path with the actual solid sweep,
+    // including the full corgi footprint, before resuming the door approach.
+    const near = bodies.some(body => distance(e.transform, body.transform) < actorRadius(e) + (e.companion ? .4 : 0) + actorRadius(body) + 1);
+    if (!near || clearOfCorpses(e.transform, goal) && !bodies.some(body => world.solids.blockingBody(e.id)?.id === body.id)) return;
+    type Node = { x: number; z: number; cost: number; score: number; parent?: Node };
+    const queue: Node[] = [{ x: 0, z: 0, cost: 0, score: 0 }], visited = new Set<string>();
+    const point = (node: Node) => ({ x: e.transform.x + node.x * .75, z: e.transform.z + node.z * .75 });
+    for (let visits = 0; queue.length && visits < 512; visits++) {
+      queue.sort((a, b) => b.score - a.score); const node = queue.pop()!, key = `${node.x},${node.z}`;
+      if (visited.has(key)) continue; visited.add(key);
+      const from = point(node), probe = { ...e, transform: { ...e.transform, ...from }, contactExempt: e.id };
+      const gx = goal.x - from.x, gz = goal.z - from.z, length = Math.hypot(gx, gz);
+      if (node.parent && clearOfCorpses(from, goal) && world.solids.sweep(probe, { x: gx / length, z: gz / length }, length, actorRadius(e), false, false) >= length - .001) {
+        const path: Point[] = []; let step: Node | undefined = node;
+        while (step?.parent) { path.unshift(point(step)); step = step.parent; }
+        return path;
+      }
+      for (let x = -1; x <= 1; x++) for (let z = -1; z <= 1; z++) {
+        if (!x && !z) continue;
+        const next = { x: node.x + x, z: node.z + z, cost: node.cost + Math.hypot(x, z) * .75, score: 0, parent: node };
+        if (Math.abs(next.x) > 12 || Math.abs(next.z) > 12 || visited.has(`${next.x},${next.z}`)) continue;
+        const at = point(next), leg = Math.hypot(x, z) * .75;
+        if (!world.infected!.nav.contains(at.x, at.z, actorRadius(e)) || !world.solids.clear({ ...at, y: e.transform.y }, actorRadius(e), e.id) || world.solids.sweep(probe, { x: x * .75 / leg, z: z * .75 / leg }, leg) < leg - .001) continue;
+        next.score = next.cost + distance(at, goal); queue.push(next);
+      }
+    }
+    return;
+  }
   for (const body of bodies) {
-    const reach = actorRadius(e) + (e.companion ? .4 : 0) + actorRadius(body), along = ((body.transform.x - e.transform.x) * dx + (body.transform.z - e.transform.z) * dz) / length2;
+    const reach = actorRadius(e) + actorRadius(body), along = ((body.transform.x - e.transform.x) * dx + (body.transform.z - e.transform.z) * dz) / length2;
     if (distance(e.transform, body.transform) > reach + .75 || along <= 0 || along >= 1 || Math.hypot(e.transform.x + along * dx - body.transform.x, e.transform.z + along * dz - body.transform.z) > reach + .1) continue;
     const angle = Math.atan2(e.transform.z - body.transform.z, e.transform.x - body.transform.x);
     const candidates: { path: Point[]; length: number }[] = [];
-    for (const margin of [1, 3, 5, 9]) for (const sign of [-1, 1]) {
+    for (const sign of [-1, 1]) {
       const path: Point[] = []; let from: Point = e.transform, travelled = 0;
-      // A body can fall across a narrow lane beside a truck. Back away along
-      // the clear radius before turning, rather than requiring a sideways
-      // first step between the body and the static obstacle.
-      const radial = { x: body.transform.x + Math.cos(angle) * (reach + margin), z: body.transform.z + Math.sin(angle) * (reach + margin) };
-      const points = [...(margin > 1 ? [radial] : []), ...Array.from({ length: 4 }, (_, i) => ({ x: body.transform.x + Math.cos(angle + sign * (i + 1) * Math.PI / 4) * (reach + margin), z: body.transform.z + Math.sin(angle + sign * (i + 1) * Math.PI / 4) * (reach + margin) }))];
-      for (const at of points) {
+      for (let step = 1; step <= 4; step++) {
+        const at = { x: body.transform.x + Math.cos(angle + sign * step * Math.PI / 4) * (reach + 1), z: body.transform.z + Math.sin(angle + sign * step * Math.PI / 4) * (reach + 1) };
         const x = at.x - from.x, z = at.z - from.z, length = Math.hypot(x, z);
+        // Query a copied footprint at each proposed leg; skip its real body's
+        // current reservation, while retaining every other actor and solid.
         const probe = { ...e, transform: { ...e.transform, ...from }, contactExempt: e.id };
         if (!world.solids.clear({ ...at, y: e.transform.y }, actorRadius(e), e.id) || !world.infected!.nav.visible(from, at, actorRadius(e)) || world.solids.sweep(probe, { x: x / length, z: z / length }, length) < length - .01) break;
         path.push(at); travelled += length;
-        if (clearOfCorpses(at, goal) && (at.x - body.transform.x) * (goal.x - body.transform.x) + (at.z - body.transform.z) * (goal.z - body.transform.z) > 0) { candidates.push({ path, length: travelled + distance(at, goal) }); break; }
+        if (clearOfCorpses(at, goal)) { candidates.push({ path, length: travelled + distance(at, goal) }); break; }
         from = at;
       }
     }
