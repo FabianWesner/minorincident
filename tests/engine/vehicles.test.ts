@@ -1,5 +1,6 @@
 // Vehicle core: one Rapier vehicle body and one enter/drive/exit flow serve the bike, cars, bus, APC and tank in five levels.
 import { expect, test } from 'vitest';
+import { playHaleCharge } from '../helpers/l8Finale';
 import * as RAPIER from '@dimforge/rapier3d-compat';
 import { vehicleDef, vehicles } from '../../src/data/vehicles';
 import { emptyInput } from '../../src/input/InputFrame';
@@ -94,7 +95,7 @@ test('enter, drive and exit: door dwell, input ownership (no attacks while drivi
   await apcBoarders();
 });
 
-// L9 boarders create pressure in the cab, and the driver can clear the hull with a snap turn.
+// L9 boarders threaten an exposed hatch occupant; the closed cab protects the driver.
 async function apcBoarders(): Promise<void> {
   const world = await loadLevel('L9', 1, preset('L9-default'));
   try {
@@ -109,8 +110,11 @@ async function apcBoarders(): Promise<void> {
     const climbAt = car.entity.vehicle!.apcBoarders![dogId].startedAt;
     for (let i = 0; i < 90; i++) world.update();
     expect(car.entity.vehicle!.apcBoarders![dogId].startedAt, 'overlap does not restart the climb').toBe(climbAt);
-    for (let i = 0; i < 240 && world.entities.get(1)!.health.current === world.entities.get(1)!.health.max; i++) world.update();
-    expect(world.entities.get(1)!.health.current, 'a boarder bites after its climb').toBeLessThan(world.entities.get(1)!.health.max);
+    for (let i = 0; i < 240; i++) world.update();
+    expect(world.entities.get(1)!.health.current, 'the closed cab protects its driver').toBe(world.entities.get(1)!.health.max);
+    world.missions!.l9!.driving.state.stallAt = world.tick;
+    for (let i = 0; i < 120 && world.entities.get(1)!.health.current === world.entities.get(1)!.health.max; i++) world.update();
+    expect(world.entities.get(1)!.health.current, 'a climbed boarder bites an exposed hatch occupant').toBeLessThan(world.entities.get(1)!.health.max);
     const turn = emptyInput(); turn.drive = { throttle: 1, steer: 1 };
     car.physics.body.setLinvel({ x: 8, y: 0, z: 0 }, true); car.physics.body.setAngvel({ x: 0, y: 1, z: 0 }, true);
     world.applyInput(turn, 'keyboard'); world.update();
@@ -290,6 +294,8 @@ async function zooParkedBoarding(): Promise<void> {
     expect(objectiveText(mission, mission.def.steps[0].text)).toMatch(/Cover.*aboard/);
     world.applyInput(emptyInput(), 'keyboard'); advance(60);
     expect(vehicles.active, 'standing at the door does not remove cover fire either').toBeNull();
+    const charge = playHaleCharge(world);
+    expect(charge.distance).toBeLessThan(6); expect(charge.move).toBe('elephant.charge');
     missionControls(world).teleport(1, { x: zoo.door().x - 4, z: zoo.door().z + 2 });
     const entry = vehicles.passengerDoor(car.entity.id);
     for (const id of zoo.passengers()) {

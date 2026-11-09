@@ -1,4 +1,5 @@
 import { expect } from 'vitest';
+import { playHaleCharge } from './l8Finale';
 import { readFile } from 'node:fs/promises';
 import { Box3, BoxGeometry, Group, Mesh, MeshBasicNodeMaterial, Vector3 } from 'three/webgpu';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
@@ -124,8 +125,8 @@ export async function checkL8Story(): Promise<void> {
     expect(zoo.canBoardDriver()).toBe(false);
     expect([...world.entities.iterate()].some(e => e.archetype === 'infected.mega-alpha' || e.infected?.variant === 'inf.mega-alpha')).toBe(false);
     for (const arena of zoo.state.arenas) arena.phase = 3;
-    zoo.update();
-    world.tick = zoo.state.haleFallAt; zoo.update();
+    const charge = playHaleCharge(world);
+    expect(charge.distance).toBeLessThan(6); expect(charge.move).toBe('elephant.charge');
     expect(mission.state.states['hale-keys']).toBe(true);
     expect(mission.state.states['hale-fallen']).toBe(true);
     expect(world.entities.get(zoo.state.haleId)!.health.current).toBe(0);
