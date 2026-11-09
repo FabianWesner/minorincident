@@ -9,6 +9,7 @@ import math
 import random
 import sys
 from pathlib import Path
+import os
 import bpy
 import bmesh
 from mathutils import Matrix, Vector
@@ -107,7 +108,7 @@ def rod(name, a, b, radius, material, group=root):
     return o
 
 FACE = Matrix(((0, 0, 1), (1, 0, 0), (0, 1, 0))).to_quaternion()
-font_path = __import__('os').environ.get('MI_ASSET_BOLD_FONT','/System/Library/Fonts/Supplemental/Arial Bold.ttf')
+font_path = os.environ.get('MI_ASSET_BOLD_FONT','/System/Library/Fonts/Supplemental/Arial Bold.ttf')
 font = bpy.data.fonts.load(font_path) if Path(font_path).exists() else None
 
 def text(name, body, p, width, height, material, group=root):

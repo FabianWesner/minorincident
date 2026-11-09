@@ -4,6 +4,7 @@ Static meshes merge per material; roof and hinged doors retain their assemblies.
 """
 import argparse, json, math, random, sys
 from pathlib import Path
+import os
 import bpy
 from mathutils import Matrix, Vector
 
@@ -58,7 +59,7 @@ def rod(name,start,end,r,mat,parent=body,n=10):
     d=Vector(end)-Vector(start); mid=(Vector(start)+Vector(end))/2
     bpy.ops.mesh.primitive_cylinder_add(vertices=n,radius=r,depth=d.length,location=mid); o=bpy.context.object
     o.rotation_euler=d.to_track_quat('Z','Y').to_euler(); return finish(o,name,mat,parent)
-font_path=__import__('os').environ.get('MI_ASSET_BOLD_FONT','/System/Library/Fonts/Supplemental/Arial Bold.ttf')
+font_path=os.environ.get('MI_ASSET_BOLD_FONT','/System/Library/Fonts/Supplemental/Arial Bold.ttf')
 font=bpy.data.fonts.load(font_path)
 def text(word,loc,width,height,mat='backpackTeal',parent=body,flat=False):
     bpy.ops.object.text_add(location=loc,rotation=(math.pi/2,0,math.pi/2)); o=bpy.context.object
