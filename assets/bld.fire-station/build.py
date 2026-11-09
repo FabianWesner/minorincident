@@ -107,7 +107,7 @@ def rod(name, a, b, radius, material, group=root):
     return o
 
 FACE = Matrix(((0, 0, 1), (1, 0, 0), (0, 1, 0))).to_quaternion()
-font_path = '/System/Library/Fonts/Supplemental/Arial Bold.ttf'
+font_path = __import__('os').environ.get('MI_ASSET_BOLD_FONT','/System/Library/Fonts/Supplemental/Arial Bold.ttf')
 font = bpy.data.fonts.load(font_path) if Path(font_path).exists() else None
 
 def text(name, body, p, width, height, material, group=root):
@@ -181,7 +181,7 @@ for y in [4.78,.98,.60,-3.23]:
     box('Yellow bay guide', (3.53,y,.411), (4.05,.10,.018), 'schoolBusYellow', bevel=.006, segments=1)
 
 # Open building shell; garage apertures lead to a simple usable interior.
-box('Interior floor', (-1.65,.9,.45), (6.3,8.45,.16), 'asphalt', interior)
+box('Interior floor', (-1.65,.9,.45), (6.28,8.43,.16), 'asphalt', interior)
 box('Back wall', (-4.65,.9,2.95), (.3,8.45,5.0), 'brick')
 box('Left wall', (-1.65,5.02,2.95), (6.3,.3,5), 'brick')
 box('Right wall', (-1.65,-3.22,2.95), (6.3,.3,5), 'brick')
@@ -393,11 +393,11 @@ sphere('Flag finial',(1.14,5.70,5.47),(.09,.09,.10),'schoolBusYellow')
 for j in range(9):
     z=5.17-j*.17
     o=box('Civic flag stripe',(1.16+(.03*math.sin(j*.6)),5.14,z),(.05,1.08,.165),'survivorRed' if j%2==0 else 'picketWhite',bevel=.011,segments=1)
-box('Flag canton',(1.20,5.42,4.88),(.075,.48,.59),'backpackTeal',bevel=.015)
+box('Flag canton',(1.212,5.42,4.88),(.075,.48,.59),'backpackTeal',bevel=.015)
 # Small geometric stars on the visible side of the fictional flag.
 for j in range(3):
     for k in range(2):
-        sphere('Civic flag star',(1.247,5.29+k*.22,4.70+j*.17),(.012,.025,.025),'schoolBusYellow',segments=6,rings=3)
+        sphere('Civic flag star',(1.259,5.29+k*.22,4.70+j*.17),(.012,.025,.025),'schoolBusYellow',segments=6,rings=3)
 
 # Reference landscaping: chunky leaves, modest pink flowers and ground weeds.
 for x,y,scale in [(-3.8,5.63,1.2),(-1.65,5.65,.95),(-4.45,3.1,1.1),(-4.5,-2.0,1.0),(-1.2,-5.7,1.0),(.8,-5.66,.80),(1.32,5.64,.7)]:

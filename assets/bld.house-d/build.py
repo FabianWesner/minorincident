@@ -411,7 +411,7 @@ def railing(x0,x1,y0,y1,z,parent=body):
 # The little paved pad matches the sheet and makes ground contact unambiguous.
 PAD_X0, PAD_X1 = (-3.7,5.3) if KIND=='d' else (-3.9,4.6)
 PAD_HALF=4.0
-box('pad',( (PAD_X0+PAD_X1)/2,0,.095),(PAD_X1-PAD_X0,8,.19),'sidewalk',dressing,.025)
+box('pad',( (PAD_X0+PAD_X1)/2,0,.095),(PAD_X1-PAD_X0-.02,7.98,.19),'sidewalk',dressing,.025)
 for i in range(1 if DISTANCE == 2 else math.ceil((PAD_X1-PAD_X0)/.70)):
     x=PAD_X0+(i+.5)*(PAD_X1-PAD_X0)/(1 if DISTANCE == 2 else math.ceil((PAD_X1-PAD_X0)/.70))
     for y in [-3.83,3.83]:box('curb',(x,y,.20),((PAD_X1-PAD_X0)/(1 if DISTANCE == 2 else math.ceil((PAD_X1-PAD_X0)/.70))-.012,.32,.30),'sidewalk',dressing,.018)

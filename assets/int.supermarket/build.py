@@ -111,7 +111,7 @@ def shelf(name,x,y,length,height=2.05,depth=.65,rows=4):
     n=int((length-.2)/.3)
     for row in range(rows):
         z=.52+row*.43
-        box(name+'_shelf',(x,y,z),(depth,length-.12,.07),'sidewalk',.014)
+        box(name+'_shelf',(x,y,z),(depth-.02,length-.14,.07),'sidewalk',.014)
         box(name+'_price_rail',(x+depth/2+.008,y,z+.027),(.035,length-.14,.075),'picketWhite',.006)
         for k in range(n):
             py=y-(n-1)*.3/2+k*.3

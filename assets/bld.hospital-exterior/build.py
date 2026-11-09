@@ -58,7 +58,7 @@ def rod(name,start,end,r,mat,parent=body,n=10):
     d=Vector(end)-Vector(start); mid=(Vector(start)+Vector(end))/2
     bpy.ops.mesh.primitive_cylinder_add(vertices=n,radius=r,depth=d.length,location=mid); o=bpy.context.object
     o.rotation_euler=d.to_track_quat('Z','Y').to_euler(); return finish(o,name,mat,parent)
-font_path='/System/Library/Fonts/Supplemental/Arial Bold.ttf'
+font_path=__import__('os').environ.get('MI_ASSET_BOLD_FONT','/System/Library/Fonts/Supplemental/Arial Bold.ttf')
 font=bpy.data.fonts.load(font_path)
 def text(word,loc,width,height,mat='backpackTeal',parent=body,flat=False):
     bpy.ops.object.text_add(location=loc,rotation=(math.pi/2,0,math.pi/2)); o=bpy.context.object
@@ -126,7 +126,7 @@ def window_front(x,y,z,w=1.35,h=1.68,lit=True,parent=body):
     for yy in [-1,1]:box('window jamb',(x+.090,y+yy*(w+.10)/2,z),(.12,.11,h-.02),'backpackTeal',parent,.018)
     for zz in [-1,1]:box('window rail',(x+.090,y,z+zz*(h+.10)/2),(.12,w+.12,.11),'backpackTeal',parent,.018)
     box('window vertical mullion',(x+.118,y,z),(.11,.065,h),'backpackTeal',parent,.012)
-    box('window transom',(x+.118,y,z+.13),(.11,w,.065),'woodWarm',parent,.012)
+    box('window transom',(x+.128,y,z+.13),(.11,w,.065),'woodWarm',parent,.012)
     box('window sill',(x+.13,y,z-h/2-.14),(.29,w+.35,.13),'sidewalk',parent,.028)
 for y in [-7,-3.5,-1.75,0]:window_front(3.70,y,5.14,lit=y!=-1.75)
 for y in [6.2,7.65]:
@@ -198,7 +198,7 @@ for x,y,w,d,h in [(-1.9,-4.8,2.2,2.6,1.9),(-1.8,4,2.5,2.4,2.3),(.3,5.8,1.8,1.5,3
     bpy.ops.mesh.primitive_cylinder_add(vertices=24,radius=min(w,d)*.32,depth=.06,location=(x,y,10.41+h)); finish(bpy.context.object,'fan well','uiDark',roof)
     for j in range(6):
         o=box('fan blade',(x,y,10.45+h),(min(w,d)*.52,.12,.04),'sidewalk',roof,.015); o.rotation_euler.z=j*math.pi/3
-    for yy in [-d*.33,d*.33]:box('service latch',(x+w/2+.10,y+yy,10.28+h*.25),(.04,.08,.14),'woodWarm',roof,.01)
+    for yy in [-d*.33,d*.33]:box('service latch',(x+w/2+.11,y+yy,10.28+h*.25),(.04,.08,.14),'woodWarm',roof,.01)
 for y in [-6.5,-2.5,1.0,6.5]:
     rod('roof pipe',(-.3,y,10.05),(-.3,y,10.60),.10,'sidewalk',roof)
     rod('pipe bend',(-.3,y,10.60),(.2,y,10.60),.10,'sidewalk',roof)
@@ -313,7 +313,7 @@ def build_lod(level):
                 Q('window jamb',x+.15,y+sign*(w+.10)/2,z,.11,h-.02,'backpackTeal')
                 Q('window rail',x+.15,y,z+sign*(h+.10)/2,w+.12,.11,'backpackTeal')
         Q('window mullion',x+.18,y,z,.06,h,'backpackTeal')
-        Q('window transom',x+.18,y,z+.13,w,.06,'woodWarm')
+        Q('window transom',x+.19,y,z+.13,w,.06,'woodWarm')
         return parts[start:]
     for y in [-7,-3.5,-1.75,0]:W(3.70,y,5.14,lit=y!=-1.75)
     for y in [6.2,7.65]:
