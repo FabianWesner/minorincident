@@ -78,7 +78,7 @@ for (const tier of tiers) for (const seed of seeds) {
       observation = observer.finish(); nativeStateHash = stateHash(w.getState());
       boarded = w.l7Departure!.state.boarded.length;
       final = { departure: w.l7Departure!.state.phase, boarded: w.l7Departure!.state.boarded.length, arrivals: w.l7Encounters!.state.arrivals, collision: w.solids.snapshot(),
-        roster: w.l7Encounters!.state.roster.map(r => { const e = w.entities.get(r.id)!; return { ...r, hp: e.health.current, model: e.model, guard: e.civilian?.ally?.role, boarded: w.l7Departure!.state.boarded.includes(r.id) }; }),
+        roster: w.l7Encounters!.state.roster.map(r => { const e = w.entities.get(r.id)!; return { ...r, hp: e.health.current, model: e.appearance?.asset ?? e.archetype, guard: e.civilian?.ally?.role, boarded: w.l7Departure!.state.boarded.includes(r.id) }; }),
         escaped: w.missions?.state.result?.escapedSurvivors?.map(e => e.id) ?? [] };
     },
   });
