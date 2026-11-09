@@ -24,7 +24,7 @@ for (const seed of seeds) {
   const run = await runLevel('L7', 'complete', seed, undefined, 'auto', campaign, undefined, 0, {
     quality: tier,
     beforeBegin: w => {
-      observer = new ThreatObserver(w, 'L7', { paths: false, followersOnly: true });
+      observer = new ThreatObserver(w, 'L7', { paths: false });
       w.events.on('combat.hit', e => {
         if (e.type !== 'combat.hit' || e.targetId !== 1) return;
         const target = w.entities.get(1)!, source = w.entities.get(e.sourceId);
