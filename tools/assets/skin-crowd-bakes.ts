@@ -19,6 +19,7 @@ export async function skinCrowdBakes(def: AssetDef, lods: readonly ('lod0' | 'lo
   loader.register(() => ({ name: 'KHR_texture_basisu', loadTexture: async () => new DataTexture(new Uint8Array([255, 255, 255, 255]), 1, 1) }));
   const registry = new AssetRegistry(event => { throw Error(JSON.stringify(event)); }, { manifest: [def], load: async url => {
     const data = readFileSync(`public${url}`), parsed = await loader.parseAsync(data.buffer.slice(data.byteOffset, data.byteOffset + data.byteLength), '');
+    parsed.scene.animations = parsed.animations;
     parsed.scene.traverse(node => { const index = parsed.parser.associations.get(node)?.nodes; if (index !== undefined) node.name = parsed.parser.json.nodes[index].name ?? node.name; }); return parsed.scene;
   } });
   try {

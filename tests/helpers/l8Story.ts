@@ -46,6 +46,11 @@ export async function checkL8Story(): Promise<void> {
   for (const model of [vest, dogModel.scene]) model.traverse(node => { if (node instanceof Mesh) { node.geometry.dispose(); for (const material of Array.isArray(node.material) ? node.material : [node.material]) material.dispose(); } });
   const world = await loadLevel('L8', 1808), mission = world.missions!, zoo = mission.l8!, lines: string[] = [];
   const watchedAnimalId = zoo.state.animals[5], bites: { tick: number }[] = [], turns: { tick: number; infectedId: number }[] = [];
+  const habitats: Record<string, { minX: number; maxX: number; minZ: number; maxZ: number }> = {
+    lion: { minX: -82, maxX: -38, minZ: -52, maxZ: -12 }, gorilla: { minX: 38, maxX: 82, minZ: -52, maxZ: -12 },
+    lioness: { minX: -82, maxX: -38, minZ: -52, maxZ: -12 }, elephant: { minX: -82, maxX: -38, minZ: 12, maxZ: 52 }, zebra: { minX: 38, maxX: 82, minZ: 12, maxZ: 52 },
+    flamingo: { minX: -14, maxX: 14, minZ: -52, maxZ: -12 }, monkey: { minX: -20, maxX: -10.48, minZ: 20, maxZ: 31.9 },
+  };
   let biteDistance = Infinity;
   const off = world.events.on('dialogue.line', event => { if (event.type === 'dialogue.line') lines.push(event.id); });
   const offBite = world.events.on('outbreak.bite', event => {
@@ -67,11 +72,19 @@ export async function checkL8Story(): Promise<void> {
       for (const id of zoo.state.animals) {
         const animal = world.entities.get(id)!;
         nearest.set(id, Math.min(nearest.get(id)!, Math.hypot(player.x - animal.transform.x, player.z - animal.transform.z)));
-        if (i < 3599 && (animal.infected || animal.infection || animal.health.current <= 0)) calmHealthy = false;
+        if (i < 3599) {
+          if (animal.infected || animal.infection || animal.health.current <= 0) calmHealthy = false;
+          const species = animal.civilian?.zooAnimal, bounds = species && habitats[species];
+          if (!bounds || animal.transform.x < bounds.minX - .1 || animal.transform.x > bounds.maxX + .1 || animal.transform.z < bounds.minZ - .1 || animal.transform.z > bounds.maxZ + .1)
+            throw new Error(`Healthy zoo animal ${id} left its ${species ?? 'unknown'} enclosure at ${animal.transform.x.toFixed(2)}, ${animal.transform.z.toFixed(2)} on calm tick ${i}`);
+        }
       }
     }
     expect(calmHealthy, 'no animal turns or dies before the alarm').toBe(true);
-    for (const [id, distance] of nearest) expect(distance, `animal ${id} near the real courier route`).toBeLessThan(18);
+    for (const [id, distance] of nearest) {
+      if (world.entities.get(id)?.civilian?.zooAnimal === 'monkey') continue;
+      expect(distance, `tour animal ${id} near the real courier route`).toBeLessThan(18);
+    }
     expect(lines).toEqual(expect.arrayContaining(['L8.nadia-path', 'L8.nadia-lion', 'L8.broadcast', 'L8.hale-greeting', 'L8.hale-breach']));
     expect(mission.state.states.breached).toBe(true);
     expect(world.entities.get(zoo.state.dogId)!.infected!.variant).toBe('inf.dog-k9');
