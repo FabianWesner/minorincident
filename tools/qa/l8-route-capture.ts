@@ -13,6 +13,7 @@ const browser = await launchBrowser({ headless: true, args: ['--use-angle=metal'
 const session = new SceneSession({ tier, backend: 'webgl2', seed: 1, viewport: { width: 1280, height: 720 }, query: { ui: '1' } });
 const frames: unknown[] = [], captures: string[] = [], down = new Set<string>();
 const weaponPictures = new Set<string>();
+const storyPictures = new Set<string>();
 let firing = false, lastArena = '', lastPhase = -1, lastTick = -1;
 try {
   await session.open(browser);
@@ -45,10 +46,15 @@ try {
         move: plan.frame.move, dx: direction.x - origin.x, dy: direction.y - origin.y, target, fire: !!(plan.frame.left.held || plan.frame.right.held), interact: plan.frame.interact,
         weapon, actualWeapon: entries.find(e => e.side === player.weapons!.selectedSide && e.index === player.weapons![e.side].index)?.id,
         damagedWeapons: [...new Set(audit.hits.filter(e => e.arena === active?.id && e.amount > 0).map(e => e.id))], marker: (state.mission as { marker?: string })?.marker,
-        hale: ss.getEntity(zoo.haleId)?.transform, carrier: active && ss.getEntity(active.carrier)?.transform, animal: active && ss.getEntity(active.ids[0])?.transform, arena: active?.id ?? 'boarding', arenaPhase: active?.phase ?? 3, arenaHP: active?.ids.map(id => ss.getEntity(id)?.health.current), arenas: zoo.arenas.map(a => ({ id: a.id, phase: a.phase })),
+        wallBreached: !!zoo.arenas.find(a => a.id === 'elephant')?.breachAt, haleKeys: !!(state.mission as { states: Record<string, boolean> })?.states['hale-keys'], haleFallen: !!(state.mission as { states: Record<string, boolean> })?.states['hale-fallen'], hale: ss.getEntity(zoo.haleId)?.transform, carrier: active && ss.getEntity(active.carrier)?.transform, animal: active && ss.getEntity(active.ids[0])?.transform, arena: active?.id ?? 'boarding', arenaPhase: active?.phase ?? 3, arenaHP: active?.ids.map(id => ss.getEntity(id)?.health.current), arenas: zoo.arenas.map(a => ({ id: a.id, phase: a.phase })),
         objective: [...document.querySelectorAll('[data-testid=objective-text],[data-testid=mission-tracker]')].map(e => e.textContent).find(text => text?.trim()) ?? '', departed: (state.mission as { states: Record<string, boolean> })?.states.departed,
       };
     });
+    for (const [beat, occurred] of [['wall-breach', row.wallBreached], ['hale-keys', row.haleKeys], ['hale-fallen', row.haleFallen]] as const) {
+      if (occurred && !storyPictures.has(beat)) {
+        const file = `${beat}-tick-${row.tick}.jpg`; await session.page.screenshot({ path: `${out}/${file}`, type: 'jpeg', quality: 75 }); captures.push(file); storyPictures.add(beat);
+      }
+    }
     if (lastArena && row.arena !== lastArena) { const file = `${lastArena}-cleared-tick-${row.tick}.jpg`; await session.page.screenshot({ path: `${out}/${file}`, type: 'jpeg', quality: 75 }); captures.push(file); }
     if (row.arena !== lastArena || row.arenaPhase !== lastPhase) {
       const file = `${row.arena}-phase-${row.arenaPhase}-tick-${row.tick}.jpg`;
