@@ -1,0 +1,87 @@
+[
+  {
+    "lane": "eg-l8-story",
+    "source": "docs/reports/eg-l8-story/README.md",
+    "requested": "## Browser QA needed\n\nNo browsers are run by this lane. The QA lane should inspect low/high at the PO zooms:\n\n- Follow Nadia from the bus: all normal animal species are readable at their lit fences; the path/lion lines, broadcast and Hale greeting have enough reading time; zoo ambience is audible before the alarm and stops afterward.\n- Watch the flamingo pond during the opening breach: the K9 exits its tunnel, its police vest fits the moving body and remains with its corpse, and the keeper grab and same-ID flamingo transformation read from the game camera.\n- Cover APC boarding: the north-wall reveal clearly shows the Mega; Hale's keys gesture and death stay brief and avoid close gore; the courier can enter the real cab afterward.\n- During departure, both steel leaves open before the APC reaches them, the vehicle and complete group cross the east gate, the Mega remains visible behind it, and the exact departure caption can be read.\n- Check camera return/skip, checkpoint retry during the story, frame cost at the boarding hold and the unchanged L8\u2192L9 roster/arsenal handover.\n\nThe orchestrator ended the lane at the time box: all working changes and receipts are committed, the checks above have finished, and the listed failures remain follow-up work. No check is left running.\n\nNo specifications, reference assets or dependencies changed. No deploy or push."
+  },
+  {
+    "lane": "eg-l8-bosses",
+    "source": "docs/reports/eg-l8-bosses/README.md",
+    "requested": "## Browser QA needed\n\nReview all six arenas at gameplay zooms and both quality tiers/backends: healthy/infected continuity; monkey silhouette, roof movement and leader scale; marked lanes/landing circles; windup poses/audio and bars; prop/corpse/living throws and landing roll; pillars; elephant walls/truck and held evacuees; checkpoint return and full APC escape. Also review the combined Mega lope, Alpha bar eligibility/moves and flame VFX. Rendered quality/performance remain manual work because this lane forbids browser launches."
+  },
+  {
+    "lane": "eg-l9",
+    "source": "docs/reports/eg-l9/README.md",
+    "requested": "## Browser QA needed\n\nNo browser was opened in this lane, as instructed. QA should inspect both quality tiers:\n\n- Max zoom admission: mixed packs already moving, no first-frame idle formations.\n- Boarder climb and real turn/scrape/brake release; driver HP and hatch shooting.\n- Breakable versus solid obstacles; both ramp jumps and low-speed failures/detours; tanker fuse and countryside fire closure.\n- Bus pursuit, wheel motion, ram readability and passenger spill.\n- Gate deadline and late fence entry; truck transfer, Rosa/corgi goodbye, Sam remaining.\n- Mega landing, dropping spans, whole APC roll, readable burning rack/launcher loss, controlled crawl with the axe on her back, safe dog and final explosion.\n- L10 receives four evacuated named survivors when alive, the separate research companion, a safe corgi and exactly the axe.\n- Draws, triangles, frames and streaming budgets from E18/E31; only native CPU counters can be checked by this lane.\n"
+  },
+  {
+    "lane": "r15-l10pace",
+    "source": "docs/reports/r15-l10pace/README.md",
+    "requested": "## Browser QA needed\n\nNo browser was launched, as required by the brief. Full visual acceptance remains open:\n\n- Walk the dry farm approach, including the PO's exact location; inspect corn density, night readability and route framing.\n- Confirm all six finds and world markers are conspicuous while following story objectives; inspect their farmhouse/barn/shed/workshop/tower contexts.\n- Read the barn roof text and three graves; inspect restricted-zone warning/searchlight composition.\n- Inspect hangar cast, dialogue staging, arsenal/flamethrower handover, Mega ground slam, machinery weak-point glow, flame counter and platform combat.\n- Review cure-wave continuity, survivor identities, sunrise/phone/panorama framing and full-map rendering performance.\n- Review hymn, credits/licences, skip/menu behaviour and the conditional corgi-toy shot.\n"
+  },
+  {
+    "lane": "eg-l10-story",
+    "source": "docs/reports/eg-l10-story/README.md",
+    "requested": "## Browser QA needed\n\nThe brief reserves browser work for the QA lane. Check both quality tiers and zoom extremes:\n\n- Hangar enclosure, roof visibility/cutaway, entrance, indoor terminal/canister, cast spacing, exact subtitle timing and quiet music.\n- Place-specific appearance of all six discoveries with the farm/vignette dressing, optional discovery markers and hostile dog marker shape.\n- Mega's visible first encounter, repeated threatening gap escapes, real-position pulsing red dot, hidden walk HP bar, roar/footstep gain and no visible spawn pop.\n- Whole arsenal selection, flamethrower fuel/readability and final machinery/fuel/electric-gate counters inside the enlarged zone.\n- Green dust, kneeling/healthy recovery and dead-body preservation; staged journey shots; saved-survivor continuity; seated courier/corgi; Delivered \u2713 phone buzz; 15 s full-map pullback at both aspect ratios; panorama draw/triangle budgets; triumphant hymn and readable 90 s credit roll, skip/thanks/menu.\n"
+  },
+  {
+    "lane": "eg-l10-vignettes",
+    "source": "docs/reports/eg-l10-vignettes/README.md",
+    "requested": "## Browser QA needed\n\nNo browser was launched by this lane after the orchestrator's prohibition. These checks belong to the QA lane:\n\n1. Run `scene:gate` and capture each region, the jam and helicopter at zoom 1/1.5, low/high, with one headless browser. Open the captures to assess story readability, ground contact, overlap, repetition, the residential refuge and the combined corn/vignette clearings at the evacuation turnouts.\n2. Compile and inspect the atlas shader on WebGL2 and WebGPU: approved text, wall orientation, legibility, corpse colors, transparency, ground layering, occlusion and quality switches. Verify all new models load without placeholders.\n3. Record fresh real-input gameplay along every route choice and replay the empty-stretch meter. Confirm the geometric result in actual frames, including the R7 console approach.\n4. Measure E18 draw/triangle budgets at the evacuation jam, high/low, cold load \u22646 s and no new high-tier frame >66 ms. No GPU frame or cold-load result is claimed here.\n"
+  },
+  {
+    "lane": "r15-farmassets",
+    "source": "docs/reports/r15-farmassets/README.md",
+    "requested": ""
+  },
+  {
+    "lane": "r15-megarun",
+    "source": "docs/reports/r15-megarun/README.md",
+    "requested": ""
+  },
+  {
+    "lane": "r15-flamer",
+    "source": "docs/reports/r15-flamer/README.md",
+    "requested": ""
+  },
+  {
+    "lane": "r15-flamevfx",
+    "source": "docs/reports/r15-flamevfx/README.md",
+    "requested": "## Open / Browser QA needed\n\n- Browser QA needed: independent visual review and manual WebGPU look check before merge.\n\nNo deploy or push has been performed.\n"
+  },
+  {
+    "lane": "r16-destroll",
+    "source": "docs/reports/r16-destroll/README.md",
+    "requested": "**Browser QA needed:** new asset damage appearance, clipping and first-hit allocation remain visually unreviewed under this brief\u2019s no-browser instruction. No deployment or push was performed."
+  },
+  {
+    "lane": "r13-destruction",
+    "source": "docs/reports/r13-destruction/README.md",
+    "requested": "## Browser QA needed\n\nPer the post-crash instruction, no browsers were launched. These checks remain unverified:\n\n1. Run `npm run scene:gate` on the approved browser runner.\n2. Run `SCENE_PORT=4833 E2E_UNITS=1 sh tools/e2e-lock.sh node --import tsx tools/scenelab/destruction.ts`; inspect its single contact sheet and gameplay assertions.\n3. Inspect L3 glass/door holes, roof collapse, car burn/wreck, debris and impacts on low/high tiers; confirm neighbouring static instances remain intact.\n4. Check extracted geometry/materials, camera occlusion, moving wreck alignment, performance and checkpoint appearance in WebGL2; WebGPU remains manual QA.\n\nNo capture or visual pass is claimed. The model uses discrete parts; parked-car hull collision remains with its wreck. The carried flamethrower and L8/L10 boss move state machines are outside this lane; their destruction entry points are supported.\n"
+  },
+  {
+    "lane": "r14-alphas",
+    "source": "docs/reports/r14-alphas/README.md",
+    "requested": "## Browser QA needed\n\n- Read each type and its windup/landing marker at gameplay zoom, low/high quality and night lighting; verify pose, sound/caption, counters and exposed recovery.\n- Verify walk-up, overhead pickup, projectile collision/knockdown and persistent landing poses with a pushable, corpse and living infected; kill the missile in the air and during its landing roll.\n- Check Screamer's blocked/clear sight, bounded call group and hit interruption.\n- Check Leaper low fence traversal, sidestep/pin/escape and landing recovery.\n- Check L9 APC pounce/hull contact and thrown wrecks in the road; the existing APC system owns hull damage.\n- Run browser smoke/`verify -- E07` and review the affected Scene Lab captures; this lane launched no browsers.\n- Check Armoured front/flank bullet feedback and forward bash arc.\n- Review all five reused look variants; confirm that the helmeted firefighter is an acceptable temporary Armoured cue."
+  },
+  {
+    "lane": "r12-group",
+    "source": "docs/reports/r12-group/README.md",
+    "requested": "**Status: authorized L7 fallback completed and natively verified. Final runtime: `6fc09518`; no added follower failures versus merged main `eb835fc1`. Browser QA remains open.**\n- **Browser QA needed.** No browser was used."
+  },
+  {
+    "lane": "r14-height",
+    "source": "docs/reports/r14-height/README.md",
+    "requested": "## Browser QA needed\n\n- On L10, stand on the dispersal minigun platform and confirm infected below cannot bite, grab, or land Alpha/dog/animal attacks across the deck; observe that they climb the real stairs and do not appear on the deck without using them.\n- Repeat on L6 platforms, L4 walls, stairs/ramps, and vehicle roofs in campaign scenes.\n- Confirm same-floor melee and threat numbers on flat ground match the prior baseline.\n\nNo browser automation was run per the lane brief."
+  },
+  {
+    "lane": "r15-qafix",
+    "source": "docs/reports/r15-qafix/README.md",
+    "requested": "## Browser QA needed\n\n- Physically enter the APC and review `detail-apc-front.jpg` and `detail-vehicle.military-apc.jpg` from `docs/reports/qa-browser/vehicle-detail.ts`. Confirm seated-driver readability through glazing, closed roof, posts/sill and complete body panels at gameplay zoom and all LODs.\n- Repeat `isolated-headlights` from the shadow capture/audit at low/high on both native backends. Capture ticks 21, 51, 120 and a longer drive. Confirm sustained moving-APC selection, actual actor-shadow direction, one refreshed map, and stronger-lamp/power-off transitions.\n- Review the raised L10 gun's pitched firing/tracers, enemy stair approach, and physical charge/Mega progression. Death must still restore the pre-activation attempt.\n- Repeat the original five-state G-24 rendered bar matrix at both qualities. Include the healthy riot at 16 m control. Native eligibility alone is not pixel approval."
+  },
+  {
+    "lane": "r12-l4truck",
+    "source": "docs/reports/r12-l4truck/README.md",
+    "requested": "## Browser QA needed\n\nNo browser was started in this coding lane. The browser QA owner should check WebGL2 and manually check WebGPU:\n\n| Level / state | Quality / zoom | Check |\n| --- | --- | --- |\n| L4 arrival, tick 1949 (32.48 s); rear truck near `(-10.90, 8.20)`, front truck near `(-11, -11.54)` | Low/high; zoom 0.5, 1.0, 1.5 | Complete cab, six wheels, bed and smooth continuous canvas; truck clear of the east perimeter/sign and adjacent bus. Move courier past 8/24 m (high) and 30 m (low) LOD transitions and back; no lost panels or triangular flashes. Repeat wrecked variants in asset/scene review. |\n| L4 opening fight: MG pickup through first breach, line-1, nests and armor (+0\u2013182 s after alarm), then Fall back | Low/high; zoom 0.5, 1.0, 1.5 | Camera stays centered on the moving courier; no highlight pan, cinematic pause or input skip. Breach/line/armor radio messages and breach HUD marker still appear. |\n\nNo deploy or push."
+  }
+]
