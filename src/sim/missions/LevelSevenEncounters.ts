@@ -407,7 +407,10 @@ export class LevelSevenEncounters {
     const slot = e.civilian!.survivor!.slot, loose = looseSlotOffset(slot);
     const moving = Math.hypot(velocity.x, velocity.z) > .8;
     const last = this.trail.at(-1);
-    const departure = this.world.missions!.state.steps.departure?.status === 'active';
+    // Form the narrow column on the approach street, before the objective
+    // changes. Re-forming three abreast into pairs at the corridor threshold
+    // makes the rear ranks cross and brake just as the horde arrives.
+    const departure = this.world.missions!.state.steps.departure?.status === 'active' || player.z > l7Encounters.streets.at(-1)!.z - 10;
     if (last && distance(last, player) > 6) this.trail.length = 0;
     if (!last || distance(last, player) >= .4) {
       // Follow the street, not every small aim/dodge correction. A clear
