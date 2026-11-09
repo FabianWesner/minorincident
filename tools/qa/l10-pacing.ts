@@ -102,7 +102,7 @@ for (const quality of tiers) {
         const mega = world.megaPursuit?.entity();
         trace.push({ seconds: world.tick / 60, x: p.x, z: p.z, y: p.y, hp: world.entities.get(1)!.health.current, active: active.id, move: frame.move, waypoint: Reflect.get(bot, 'waypoint'), marker: markerAnchor(mission), checkpoint: mission.state.checkpoint, charge: mission.state.counters['charge-ticks'], rack: world.entities.get(1)!.weapons?.RIGHT.rack.map(s => s.id), mega: mega ? { id: mega.id, x: mega.transform.x, z: mega.transform.z, hp: mega.health.current, distance: distance(p, mega.transform), state: mega.infected?.state } : null });
       }
-      if (tick % 3600 === 0) console.log(`[l10-pacing] ${quality} ${Math.round(world.tick / 60)}s ${active.id} (${p.x.toFixed(1)},${p.z.toFixed(1)}) finds=${finds} deaths=${deaths}`);
+      if (tick % 3600 === 0) console.log(`[l10-pacing] ${quality} ${Math.round(world.tick / 60)}s ${active.id} (${p.x.toFixed(1)},${p.z.toFixed(1)}) finds=${finds} deaths=${deaths} y=${p.y.toFixed(2)} hp=${world.entities.get(1)!.health.current}`);
       if (tick % 30 === 0) for (const scene of vignettes) {
         const at = { x: scene.position[0], z: scene.position[2] };
         const sceneId = scene.id.replace(/-\d+$/, '');
@@ -144,6 +144,10 @@ for (const quality of tiers) {
   });
   const firstRouteCheckpoint = checkpoints.find(cp => (cp as { id: string }).id !== 'cure-crash') as { seconds: number } | undefined;
   results.push({ quality, seed, profile: process.env.L10_PACING_PROFILE ?? 'complete', outcome, completed: outcome === 'complete', seconds: elapsedSeconds, gameplaySeconds: gameplayEnd, deaths, fights, finds, scares, megaMoments, gapCrossings, megaActions, megaPhases, epiloguePhases, hangarVisits, observation, threat: threatObservation, opening: { peakRegulars: peakOpeningRegulars, peakDogs: peakOpeningDogs, peakAlphas: peakOpeningAlphas }, trace, routeMetresTravelled: routeMetres, arenaMetres, canonicalRouteMetres: routeDistances, checkpoints, checkpointGaps, maxCheckpointGapM: Math.max(0, ...checkpointGaps.map(g => g.metres)), timeToFirstCheckpoint: firstRouteCheckpoint?.seconds ?? null, beats, longestBeatGapSeconds: longestGap.seconds, longestGap, activeAtEnd, limits: { beatGapSeconds: 40, checkpointGapMetres: 250, firstCheckpointSeconds: 60 } });
+  // Preserve completed tiers if a later tier is interrupted. The final path
+  // still appears only after the complete requested tier set has terminated.
+  mkdirSync(dirname(output), { recursive: true });
+  writeFileSync(`${output}.partial`, JSON.stringify({ generatedAt: new Date().toISOString(), revision, sourceHash, seed, tiers, results }, null, 2));
 }
 
 mkdirSync(dirname(output), { recursive: true });
