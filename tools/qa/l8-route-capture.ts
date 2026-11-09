@@ -1,12 +1,16 @@
 /** Mortal L8 playthrough with physical WASD, weapon shortcuts and held mouse fire.
  * The shared policy only proposes directions; no frame injection or world edits. */
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { launchBrowser } from '../browser-pool/client';
 import { SceneSession, stopServer } from '../scenelab/session';
 import { dodgeWalkKeys } from '../playtest/input';
 import { weaponKey } from '../../src/data/weaponKeys';
 import type { Game } from '../../src/Game';
 import { provenance } from './accept/probe';
+const build = JSON.parse(readFileSync('docs/reports/p1-l8rework/browser-build.json', 'utf8')) as ReturnType<typeof provenance> & { artifactSha256: Record<string, string> };
+for (const [file, sha] of Object.entries(build.artifactSha256)) if (createHash('sha256').update(readFileSync(file)).digest('hex') !== sha) throw Error(`QA build changed: ${file}`);
+const captureToolSha256 = createHash('sha256').update(readFileSync(new URL(import.meta.url))).digest('hex');
 const tier = process.argv[2] === 'high' ? 'high' : 'low';
 const out = `docs/reports/p1-l8rework/browser-${tier}`; mkdirSync(out, { recursive: true });
 const browser = await launchBrowser({ headless: true, args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] });
@@ -88,9 +92,9 @@ try {
   }
   const result = await session.page.evaluate(() => {
     const ss = window.__SS__!, state = ss.getState();
-    return { state: { tick: ss.tick(), quality: state.render.quality, backend: state.render.backend, mission: state.mission, zoo: state.l8 }, audit: (window as unknown as { l8Audit: unknown }).l8Audit };
+    return { state: { tick: ss.tick(), quality: state.render.quality, backend: state.render.backend, mission: state.mission, zoo: state.l8, boarding: state.l8 && { passengers: ss.getEntity(state.l8.carId)?.vehicle?.passengers, actors: [1, ...state.l8.roster, ...state.l8.guards, ...[...(window.__SCENE__ as unknown as { game: Game }).game.world.entities.iterate()].filter(e => e.companion).map(e => e.id)].map(id => ss.getEntity(id)) } }, audit: (window as unknown as { l8Audit: unknown }).l8Audit };
   });
-  writeFileSync(`${out}/receipt.json`, JSON.stringify({ ...provenance(), tier, method: 'Physical WASD, Digit weapon shortcuts, LMB aiming/firing and E. Paused fixed-step presentation, mortal courier and NPCs. Shared policy is read only; no injected input, teleport, health edits or objective changes.', captures, frames, errors: session.errors, ...result }, null, 2));
+  writeFileSync(`${out}/receipt.json`, JSON.stringify({ ...build, captureToolSha256, tier, method: 'Physical WASD, Digit weapon shortcuts, LMB aiming/firing and E. Paused fixed-step presentation, mortal courier and NPCs. Shared policy is read only; no injected input, teleport, health edits or objective changes.', captures, frames, errors: session.errors, ...result }, null, 2));
   if (!(result.state.mission as { states?: Record<string, boolean> })?.states?.departed || session.errors.length) process.exitCode = 1;
   console.log(JSON.stringify({ tier, out, errors: session.errors, complete: (result.state.mission as { states?: Record<string, boolean> })?.states?.departed }));
 } finally { await session.close(); await browser.close(); stopServer(); }
