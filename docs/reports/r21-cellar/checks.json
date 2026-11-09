@@ -1,0 +1,86 @@
+{
+  "runtimeCommit": "722eb2091601ceeb83e4d4a458e6612ecc45c14c",
+  "branch": "lane/r21-cellar",
+  "epicGates": [
+    {
+      "target": "E22",
+      "epics": [
+        "E22"
+      ],
+      "checks": [
+        {
+          "command": "npm run typecheck",
+          "status": 0,
+          "seconds": 14.66
+        },
+        {
+          "command": "npm run lint",
+          "status": 0,
+          "seconds": 10.182
+        },
+        {
+          "command": "npm test",
+          "status": 0,
+          "seconds": 53.931
+        }
+      ]
+    },
+    {
+      "target": "E23",
+      "epics": [
+        "E23"
+      ],
+      "checks": [
+        {
+          "command": "npm run typecheck",
+          "status": 0,
+          "seconds": 20.912
+        },
+        {
+          "command": "npm run lint",
+          "status": 0,
+          "seconds": 13.582
+        },
+        {
+          "command": "npm test",
+          "status": 0,
+          "seconds": 44.137
+        }
+      ]
+    }
+  ],
+  "unitTests": {
+    "passed": 107,
+    "files": 27,
+    "perGate": true
+  },
+  "smoke": {
+    "command": "E2E_PORT=4987 BROWSER_POOL_JOB_ID=r21-cellar MI_SLUG=r21-cellar npm run test:smoke",
+    "qaPassed": 6,
+    "publicPassed": 1,
+    "receipt": {
+      "name": "smoke",
+      "cases": 150,
+      "counts": {
+        "vitest": 129,
+        "e2e": 9,
+        "invariantsBrowser": 12
+      },
+      "files": 44,
+      "limits": {
+        "cases": 150,
+        "files": 45,
+        "seconds": 240
+      },
+      "command": [
+        "sh",
+        "tools/qa/smoke.sh"
+      ],
+      "seconds": 132.930447833,
+      "exitCode": 0,
+      "signal": null,
+      "failures": [],
+      "at": "2026-11-09T21:00:16.787Z"
+    }
+  }
+}

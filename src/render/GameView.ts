@@ -54,7 +54,7 @@ import { Occlusion } from './Occlusion';
 import { projectHullReveal, projectReveal, seeThrough } from './SeeThrough';
 import { PostFx } from './PostFx';
 import type { TimeOfDay } from '../data/timeOfDay';
-import { Vector3 } from 'three';
+import { Vector3, Vector4 } from 'three';
 import { VehicleFeedback } from './vfx/VehicleFeedback';
 import { Vfx, type VfxSettings } from './vfx/Vfx';
 import { LabAccidentFx } from './vfx/labAccident';
@@ -203,6 +203,8 @@ export class GameView implements Lifecycle {
   private districts:DistrictView|null=null;
   private labView: Lookdev | null = null;
   private postFx: PostFx | null = null;
+  private readonly cellarBounds = new Vector4();
+  private cellarBlend = 0;
   private retiredPostFx: ReturnType<PostFx['diagnostics']> | null = null;
   private dofEnabled = false;
   private readonly occlusion = new Occlusion();
@@ -243,7 +245,7 @@ export class GameView implements Lifecycle {
   setQuality(tier: QualityTier): void {
     const changed = this.quality !== tier; this.quality = tier; this.resize();
     if (changed) this.epiloguePrepared = null;
-    if (changed && this.postFx) { const enabled = this.postFx.bloomEnabled.value; this.postFx.dispose(); this.retiredPostFx = this.postFx.diagnostics(); this.postFx = new PostFx(this.renderer, this.scene, this.camera, tier, this.look); this.postFx.bloomEnabled.value = enabled; this.postFx.setDof(this.dofEnabled); this.postFx.applyLook(); }
+    if (changed && this.postFx) { const enabled = this.postFx.bloomEnabled.value; this.postFx.dispose(); this.retiredPostFx = this.postFx.diagnostics(); this.postFx = new PostFx(this.renderer, this.scene, this.camera, tier, this.look, this.world.scenario === 'L4' || this.world.scenario === 'L5'); this.postFx.bloomEnabled.value = enabled; this.postFx.setDof(this.dofEnabled); this.postFx.applyLook(); }
     this.lighting?.setQuality(tier); this.districts?.setQuality(tier);
     this.vfx?.set({ quality: tier }); this.crowd?.setQuality(tier); this.npcs?.setQuality(tier);
   }
@@ -263,6 +265,12 @@ export class GameView implements Lifecycle {
     const districts = this.world.districts?.composition.districts.map(d => `${d.id}:${d.origin.join(',')}`).sort().join('|');
     const districtKey = districts ? `${districts}|departure:${this.world.scenario === 'L7'}` : undefined;
     this.reset(districtKey); this.resourceDistricts = districtKey ?? '';
+    this.cellarBounds.set(0, 0, 0, 0);
+    if (this.world.scenario === 'L4' || this.world.scenario === 'L5') for (const district of this.world.districts?.districts ?? []) {
+      const bounds = district.layout.placements.find(p => p.assetId === 'int.basement-cellar')?.visualAabb;
+      if (bounds) this.cellarBounds.set((bounds.min[0] + bounds.max[0]) / 2 + district.origin[0], (bounds.min[2] + bounds.max[2]) / 2 + district.origin[1], (bounds.max[0] - bounds.min[0]) / 2, (bounds.max[2] - bounds.min[2]) / 2);
+    }
+    this.cellarBlend = this.inCellar() ? 1 : 0;
     // A live L7 handover keeps its frame budget while assets and batches assemble.
     // A cold menu load has no live scene to update: use the foreground policy.
     const cooperative = this.world.scenario === 'L8' && this.frozenUpdates;
@@ -477,7 +485,7 @@ export class GameView implements Lifecycle {
         this.pendingPreparation = { shared, instanceCapacity };
       }
     }
-    this.scene.add(this.districts);this.lighting.field.setStatic(layoutLights(this.world.districts!));this.lighting.practicalEffects.install(this.world.districts!);this.postFx=new PostFx(this.renderer,this.scene,this.camera,this.quality,this.look);
+    this.scene.add(this.districts);this.lighting.field.setStatic(layoutLights(this.world.districts!));this.lighting.practicalEffects.install(this.world.districts!);this.postFx=new PostFx(this.renderer,this.scene,this.camera,this.quality,this.look,this.world.scenario === 'L4' || this.world.scenario === 'L5');
     this.dofEnabled = this.world.districts!.composition.id === 'L1'; this.postFx.setDof(this.dofEnabled);
     this.scene.add(this.character);
     return { actors };
@@ -732,7 +740,16 @@ export class GameView implements Lifecycle {
     }
   }
   /** Real render seconds, deliberately independent of sim ticks/time scale. */
-  frame(seconds: number): void { const dt = Math.min(1, seconds); this.playSeconds += dt; this.vfx?.advance(dt); this.labAccident?.advance(dt); }
+  frame(seconds: number): void {
+    const dt = Math.min(1, seconds); this.playSeconds += dt; this.vfx?.advance(dt); this.labAccident?.advance(dt);
+    const target = this.inCellar() ? 1 : 0;
+    this.cellarBlend += (target - this.cellarBlend) * (1 - Math.exp(-8 * dt));
+    if (Math.abs(target - this.cellarBlend) < .001) this.cellarBlend = target;
+  }
+  private inCellar(): boolean {
+    return this.world.scenario === 'L4' ? !!this.world.missions?.state.l4?.descendAt
+      : this.world.scenario === 'L5' && this.world.missions?.state.l5?.phase === 'cellar';
+  }
   /** Seconds of running play since the level loaded (menus/briefing/pause excluded). */
   private playSeconds = 0;
   /** Network-only extras wait until the first playable frames have been presented. */
@@ -1050,6 +1067,7 @@ export class GameView implements Lifecycle {
     if (this.view.inspectionPose) this.view.present(alpha);
     this.vfx?.blasts.refreshStreetCamera();
     const current = this.world.entities.get(1)?.transform, previous = this.world.previousPlayer;
+    this.postFx?.setCellarMask(this.cellarBlend, this.cellarBounds);
     const survivor = this.world.entities.get(1)?.survivor;
     const carPose = carTransitionPose(this.world, alpha);
     if (!this.bicycle && this.world.vehicles?.bicycle.entity && this.materials) { this.bicycle = new BicycleView(this.world, this.materials); this.bicycle.ground = this.drawnGround; this.scene.add(this.bicycle); }
@@ -1090,7 +1108,7 @@ export class GameView implements Lifecycle {
     this.syncMountedGun();
     this.interactions?.update(this.camera); this.npcs?.update(this.camera, alpha, this.view.lodCamera); this.accessories?.finish();
     this.vfx?.refreshFlameJet();
-    const flashOpacity = String(Math.max(this.weather?.flash ?? 0, this.vfx?.flash ?? 0, this.labAccident?.flash ?? 0));
+    const flashOpacity = String(Math.max(this.weather?.flash ?? 0, this.vfx?.flash ?? 0, this.labAccident?.flash ?? 0) * (1 - this.cellarBlend));
     if (this.flashOverlay.style.opacity !== flashOpacity) this.flashOverlay.style.opacity = flashOpacity;
     this.fixtureProps?.update();
     if (this.world.props) this.districts?.syncProps(this.world.props.items);
