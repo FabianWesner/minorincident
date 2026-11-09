@@ -1,0 +1,33 @@
+{
+  "identity": {
+    "sourceHash": "fb925a584e7a6df0c2a10c57505210985dc3771978bda3fcf5ffc090dcb73043",
+    "observerHash": "f6f19f3a30a061c07b0e90a71d614f36498a80c2bdf41074dd826884cc2d7165",
+    "revision": "dbc3e5444e7fd8da9d6548b149cbb3d3fe6e53b5"
+  },
+  "checks": {
+    "target": "E29",
+    "epics": [
+      "E29"
+    ],
+    "checks": [
+      {
+        "command": "npm run typecheck",
+        "status": 0,
+        "seconds": 60.016
+      },
+      {
+        "command": "npm run lint",
+        "status": 0,
+        "seconds": 36.656
+      },
+      {
+        "command": "npm test",
+        "status": 1,
+        "seconds": 109.092
+      }
+    ]
+  },
+  "failedTest": "tests/engine/navigation.test.ts:91",
+  "failure": "Existing 30000ms per-test budget; focused run passed; retry with two workers",
+  "maxWorkers": 4
+}

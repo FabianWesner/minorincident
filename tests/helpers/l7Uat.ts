@@ -269,7 +269,7 @@ async function checkPharmacyCourier() {
   } finally { w.dispose(); }
 }
 
-/** r5-l7 (vqa58 survivor losses): a completed bite costs an evacuee a third of its bar instead of killing it, the
+/** A completed bite costs an evacuee health instead of killing it outright, the
  * biter reels while it tears free, and a loss inside the column never raises "Survivor lost behind you!". */
 async function checkFollowerBites() {
   const w = await loadLevel('L7', 3, undefined, 0, { quality: 'low' });
@@ -277,6 +277,13 @@ async function checkFollowerBites() {
     checkFriendlyRocketReaction(w);
     for (const e of [...w.infected!.active]) { w.solids.forget(e); w.infected!.release(e); }
     const roster = w.l7Encounters!.state.roster, follower = w.entities.get(roster[0].id)!;
+    for (const row of roster.slice(1)) {
+      const e = w.entities.get(row.id)!;
+      e.hidden = true; e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; w.solids.forget(e);
+    }
+    // Keep this isolated mortality fixture on its only evacuee: the courier
+    // must not steal the runner's target between the longer sequence of bites.
+    w.inspectionGhost = true;
     const runner = w.entities.get(w.infected!.spawn('infected.runner', { x: follower.transform.x + 1.2, y: follower.transform.y, z: follower.transform.z }, { state: 'chase' }))!;
     const wounds = new Map<number, number[]>(), alarms: string[] = [];
     w.events.on('infected.attack', e => { if (e.type === 'infected.attack' && e.special === 'bite') wounds.set(e.targetId, [...wounds.get(e.targetId) ?? [], w.entities.get(e.targetId)!.health.current]); });
@@ -288,7 +295,7 @@ async function checkFollowerBites() {
     }
     const lost = roster.find(r => r.status !== 'following');
     expect(lost, 'one unopposed runner still kills an evacuee').toBeDefined();
-    expect(wounds.get(lost!.id), 'the fatal bite is the third: 100 → 66 → 32 → dead').toEqual([66, 32]);
+    expect(wounds.get(lost!.id), 'the twentieth ordinary bite is still fatal; every earlier bite visibly costs health').toEqual([95, 90, 85, 80, 75, 70, 65, 60, 55, 50, 45, 40, 35, 30, 25, 20, 15, 10, 5]);
     expect(staggered, 'the biter reels after a survived bite').toBe(true);
     expect(alarms.filter(kind => kind !== 'wait'), 'a loss beside the courier is not "behind you"').toEqual([]);
   } finally { w.dispose(); }
