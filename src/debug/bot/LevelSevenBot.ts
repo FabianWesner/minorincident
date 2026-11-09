@@ -50,7 +50,11 @@ export class LevelSevenBot {
     // Casualties leave holes, not renumbered slots. Counting only the living
     // shortened this wait band below a surviving tail's assigned row.
     const rows = followers.reduce((n, r) => Math.max(n, Math.floor(w.entities.get(r.id)!.civilian!.survivor!.slot / 3) + 1), 0);
-    const limit = Math.max(12, rows * 1.2 + 5);
+    const tail = followers.reduce((n, r) => Math.max(n, w.entities.get(r.id)!.civilian!.survivor!.slot), 0);
+    // The walking corridor is two abreast, longer than the street's three
+    // columns. Leave two metres for ordinary tracking lag behind its last row;
+    // otherwise stopping the leader can leave a settled tail outside the band.
+    const limit = Math.max(12, rows * 1.2 + 5, 2.3 + Math.floor(tail / 2) * 1.1 + 2);
     // Reach the bus door before waiting for the last stragglers; the shipped boarding queue owns their recovery there.
     if (!pickup && this.waypoint < this.route.length - 1 && distance(p.transform, goal) > 10 && followers.some(r => { const e = w.entities.get(r.id); return e && distance(e.transform, p.transform) > limit; })) f.move = { x: 0, z: 0 };
     // Clear a firing lane instead of running into a crowd or waiting inside
