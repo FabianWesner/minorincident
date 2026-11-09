@@ -3,15 +3,16 @@ import { afterEach, expect, test } from 'vitest';
 import * as RAPIER from '@dimforge/rapier3d-compat';
 import { survivor } from '../../src/data/survivor';
 import { SimWorld } from '../../src/sim/world/SimWorld';
-import { loadLevel } from '../../tools/sim-runner/levels';
 import { highwayPoint } from '../../src/levels/L3/highway';
+import { readFileSync } from 'node:fs';
+import { compositions } from '../../src/levels/compositions';
 
 const worlds: SimWorld[] = [];
 async function setup(scenario = 'survivor'): Promise<SimWorld> { const w = new SimWorld(); worlds.push(w); await w.init(); w.loadScenario(scenario, 1); return w; }
 const step = (w: SimWorld, ticks: number) => { for (let i = 0; i < ticks; i++) w.update(); };
 afterEach(() => { for (const w of worlds) w.dispose(); worlds.length = 0; });
 
-test('movement: fast acceleration and stop, capped diagonal speed, 720°/s turning, one-tick aim snap', async () => {
+test('movement: fast acceleration and stop, capped diagonal speed, 720°/s turning, one-tick aim snap, campaign ramps and stairs', async () => {
   const w = await setup(); w.setInput({ move: { x: 1, z: 0 } }); step(w, 9);
   expect(w.player!.locomotion.displacement.x * 60).toBeGreaterThanOrEqual(4.5 * 0.95);
   w.setInput({ move: { x: 0, z: 0 } }); step(w, 6);
@@ -48,11 +49,10 @@ test('movement: fast acceleration and stop, capped diagonal speed, 720°/s turni
   step(raised, 60); expect(courier.transform.y).toBeLessThan(1);
 });
 
-/** Production controller traversal for the L3 highway ramps and the L5/L6/L10 authored stair routes. */
+/** Production controller traversal for the campaign's authored gameplay elevation routes. */
 async function campaignRampTraversal(): Promise<void> {
   for (const quality of ['low', 'high'] as const) {
-    const l3 = await loadLevel('L3', 1, undefined, 0, { quality }); worlds.push(l3);
-    l3.player!.locomotion.crowd = []; l3.player!.locomotion.props = [];
+    const l3 = await slopeWorld('L3', quality);
     const ramps = l3.districts!.districts.flatMap(d => d.decay.placements.filter(p => p.assetId === 'kit.highway-onramp')).sort((a, b) => a.position[0] - b.position[0]);
     expect(ramps.map(r => r.id)).toEqual(['kit.highway-onramp:991', 'kit.highway-onramp:992']);
     for (const ramp of ramps) {
@@ -69,10 +69,23 @@ async function campaignRampTraversal(): Promise<void> {
       l3.clearInput();
       expect(waypoint, `${quality} ${ramp.id} reaches the far end of its authored centreline`).toBe(points.length);
       expect(Math.hypot(player.transform.x - points.at(-1)![0], player.transform.z - points.at(-1)![2])).toBeLessThan(.6);
+      expect(player.transform.y, `${quality} ${ramp.id} arrives on the elevated deck`).toBeGreaterThan(points.at(-1)![1] + .6);
     }
+    // Recover from the PO's actual edge-of-curve pose, rather than only testing an ideal start at the foot.
+    const reported = l3.entities.get(1)!, ramp = ramps[0]!, recovery = Array.from({ length: 21 }, (_, i) => highwayPoint(ramp, .4 * (1 - i / 20)));
+    Object.assign(reported.transform, { x: 159.34, y: 5.69, z: -1.32 });
+    l3.physics.playerBody!.setTranslation(reported.transform, true); l3.solids.remember(reported, 'ramp-traversal:po-pose'); l3.player!.locomotion.reset();
+    let recoveryPoint = 0;
+    for (let tick = 0; tick < 600 && recoveryPoint < recovery.length; tick++) {
+      const [x, , z] = recovery[recoveryPoint]!, dx = x - reported.transform.x, dz = z - reported.transform.z, distance = Math.hypot(dx, dz) || 1;
+      l3.setInput({ move: { x: dx / distance, z: dz / distance } }); l3.update();
+      if (Math.hypot(dx, dz) < .4) recoveryPoint++;
+    }
+    l3.clearInput();
+    expect(recoveryPoint, `${quality} reported L3 pose can rejoin the bend and reach the deck`).toBe(recovery.length);
+    expect(reported.transform.y).toBeGreaterThan(6.3);
 
-    const metro = await loadLevel('L5', 1, undefined, 0, { quality }); worlds.push(metro);
-    metro.player!.locomotion.crowd = []; metro.player!.locomotion.props = [];
+    const metro = await slopeWorld('L5', quality);
     const entrance = metro.districts!.districts.flatMap(d => d.decay.placements).find(p => p.id === 'bld.metro-entrance:225')!, player = metro.entities.get(1)!;
     Object.assign(player.transform, { x: entrance.position[0], y: .855, z: entrance.position[2] - 2.2 });
     metro.physics.playerBody!.setTranslation(player.transform, true); metro.solids.remember(player, `ramp-traversal:${entrance.id}`); metro.player!.locomotion.reset();
@@ -82,19 +95,29 @@ async function campaignRampTraversal(): Promise<void> {
     expect(player.transform.z, `${quality} metro stair reaches its upper landing`).toBeGreaterThan(entrance.position[2] + 1.8);
     expect(metroTop, `${quality} metro stair climbs above its lower street`).toBeGreaterThan(1.7);
 
-    const subway = await loadLevel('L6', 1, undefined, 0, { quality }); worlds.push(subway);
-    subway.player!.locomotion.crowd = []; subway.player!.locomotion.props = [];
+    const subway = await slopeWorld('L6', quality);
     const exit = subway.districts!.districts.flatMap(d => d.decay.placements).find(p => p.assetId === 'int.metro-exit')!, survivor = subway.entities.get(1)!;
-    Object.assign(survivor.transform, { x: exit.position[0] - 2.6, y: exit.position[1] + 1.0425, z: exit.position[2] - .9 });
-    subway.physics.playerBody!.setTranslation(survivor.transform, true); subway.solids.remember(survivor, `ramp-traversal:${exit.id}`); subway.player!.locomotion.reset();
-    let exitTop = survivor.transform.y;
-    for (let tick = 0; tick < 100; tick++) { subway.setInput({ move: { x: 1, z: 0 } }); subway.update(); exitTop = Math.max(exitTop, survivor.transform.y); }
-    subway.clearInput();
-    expect(survivor.transform.x, `${quality} subway exit stair reaches its upper landing`).toBeGreaterThan(exit.position[0] + 1.5);
-    expect(exitTop, `${quality} subway exit stair climbs to street height`).toBeGreaterThan(4.2);
+    for (const [route, offset] of [['stairs', 1.4], ['escalator', -.9]] as const) {
+      Object.assign(survivor.transform, { x: exit.position[0] - 3.2, y: exit.position[1] + .905, z: exit.position[2] + offset });
+      subway.physics.playerBody!.setTranslation(survivor.transform, true); subway.solids.remember(survivor, `ramp-traversal:${exit.id}:${route}`); subway.player!.locomotion.reset();
+      for (let tick = 0; tick < 110; tick++) { subway.setInput({ move: { x: 1, z: 0 } }); subway.update(); }
+      subway.clearInput();
+      expect(survivor.transform.x, `${quality} subway ${route} reaches its upper landing`).toBeGreaterThan(exit.position[0] + 3.2);
+      expect(survivor.transform.y, `${quality} subway ${route} arrives at street height`).toBeGreaterThan(exit.position[1] + 4.1);
+    }
 
-    const cure = await loadLevel('L10', 1, undefined, 0, { quality }); worlds.push(cure);
-    cure.player!.locomotion.crowd = []; cure.player!.locomotion.props = [];
+    // Northgate's terraced road is an authored slope too. Load the production
+    // composition without its opening cinematic, which otherwise owns the courier pose.
+    const northgate = await slopeWorld('L7', quality);
+    const climber = northgate.entities.get(1)!;
+    Object.assign(climber.transform, { x: 90, y: .705, z: 15 });
+    northgate.physics.playerBody!.setTranslation(climber.transform, true); northgate.solids.remember(climber, 'ramp-traversal:northgate'); northgate.player!.locomotion.reset();
+    for (let tick = 0; tick < 3000 && climber.transform.x < 250; tick++) { northgate.setInput({ move: { x: 1, z: 0 } }); northgate.update(); }
+    northgate.clearInput();
+    expect(climber.transform.x, `${quality} Northgate road reaches its raised end`).toBeGreaterThanOrEqual(250);
+    expect(climber.transform.y, `${quality} Northgate road arrives at street height`).toBeGreaterThan(4.5);
+
+    const cure = await slopeWorld('L10', quality);
     const platform = cure.districts!.districts.flatMap(d => d.decay.placements).find(p => p.assetId === 'kit.dispersal-platform')!, courier = cure.entities.get(1)!;
     Object.assign(courier.transform, { x: platform.position[0] + 8.2, y: .705, z: platform.position[2] });
     cure.physics.playerBody!.setTranslation(courier.transform, true); cure.solids.remember(courier, `ramp-traversal:${platform.id}`); cure.player!.locomotion.reset();
@@ -104,6 +127,17 @@ async function campaignRampTraversal(): Promise<void> {
     expect(courier.transform.x, `${quality} dispersal stair reaches its deck`).toBeLessThan(platform.position[0] + 4.6);
     expect(platformTop, `${quality} dispersal stair reaches the raised platform`).toBeGreaterThan(3.5);
   }
+}
+
+/** Keep production level transforms, static colliders, Rapier, and movement input;
+ * mission cinematics and actor crowds are covered by the native route/browser audit. */
+async function slopeWorld(level: 'L3' | 'L5' | 'L6' | 'L7' | 'L10', quality: 'low' | 'high'): Promise<SimWorld> {
+  const world = new SimWorld(); worlds.push(world); await world.init();
+  const composition = compositions[level];
+  world.loadComposition(composition, composition.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), 1);
+  world.infected!.director.setTier(quality); world.npcs!.setQuality(quality);
+  world.player!.locomotion.crowd = []; world.player!.locomotion.props = [];
+  return world;
 }
 
 test('walls: a 72-direction capsule sweep never penetrates the wall ring; sliding keeps 60 % tangential speed; head-on corners slip', async () => {
