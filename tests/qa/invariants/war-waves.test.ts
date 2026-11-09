@@ -163,6 +163,8 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly L4 ${tier}: every 
       // low-tier admission budget. Alarm identities have their own census;
       // the full-hold action census measures both populations together.
       s.perimeterAt = Infinity; s.perimeterPending = 0;
+      // The Alpha spawn quota is measured separately; release its slots so this finite-wave census can complete without combat deaths.
+      w.infected!.director.reserved = 0;
       const base = collapse ? l4.war.collapseWaveSize : l4.war.waveSize[wave];
       const n = Math.max(1, Math.ceil(base * (tier === 'low' ? .5 : 1) * (collapse ? 1 : l4.war.waveScale)));
       const ring = l4Edges.length - 1, expected = collapse ? n * l4.war.edgesPerWave : Math.ceil(n * l4.war.edgesPerWave / ring) * ring;
