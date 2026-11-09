@@ -12,7 +12,7 @@ const build = JSON.parse(readFileSync('docs/reports/p1-l8rework/browser-build.js
 for (const [file, sha] of Object.entries(build.artifactSha256)) if (createHash('sha256').update(readFileSync(file)).digest('hex') !== sha) throw Error(`QA build changed: ${file}`);
 const captureToolSha256 = createHash('sha256').update(readFileSync(new URL(import.meta.url))).digest('hex');
 const tier = process.argv[2] === 'high' ? 'high' : 'low';
-const out = `docs/reports/p1-l8rework/browser-${tier}`; mkdirSync(out, { recursive: true });
+const out = process.env.L8_CAPTURE_OUT ?? `docs/reports/p1-l8rework/browser-${tier}`; mkdirSync(out, { recursive: true });
 const browser = await launchBrowser({ headless: true, args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] });
 const session = new SceneSession({ tier, backend: 'webgl2', seed: 1, viewport: { width: 1280, height: 720 }, query: { ui: '1' } });
 const frames: unknown[] = [], captures: string[] = [], down = new Set<string>();
@@ -48,6 +48,7 @@ try {
       const origin = ss.input.project(p, 'player'), direction = ss.input.project({ x: p.x + move.x * 8, z: p.z + move.z * 8 }, 'player');
       const target = plan.target && ss.input.project(plan.target, 'player');
       const entries = (window.__SCENE__ as unknown as { game: Game }).game.world.combat!.runner.loadout.activeEntries();
+      const cinematic = (state.mission as { cinematic?: { id: string; elapsed: number } })?.cinematic;
       const audit = (window as unknown as { l8Audit: { attacks: { id: string; arena?: string }[]; hits: { id: string; arena?: string; amount: number }[] } }).l8Audit;
       const guns = ['weapon.handgun', 'weapon.shotgun', 'weapon.army-mg', 'weapon.rocket-launcher'];
       const needed = active?.phase ? guns.find(id => audit.attacks.filter(e => e.arena === active.id && e.id === id).length < 2 || !audit.hits.some(e => e.arena === active.id && e.id === id && e.amount > 0)) : undefined;
@@ -56,14 +57,14 @@ try {
       const safeNeeded = needed === 'weapon.rocket-launcher' && plan.target && Math.hypot(plan.target.x - p.x, plan.target.z - p.z) < 8 ? undefined : needed;
       const weapon = choice?.id === 'weapon.fire-axe' ? choice.id : bossTarget ? safeNeeded ?? choice?.id : choice?.id;
       return { tick: ss.tick(), phase: (state.mission as { phase: string })?.phase, player: p, hp: player.health.current,
-        move, dx: direction.x - origin.x, dy: direction.y - origin.y, target, fire: !!(plan.frame.left.held || plan.frame.right.held), interact: plan.frame.interact,
-        weapon, actualWeapon: entries.find(e => e.side === player.weapons!.selectedSide && e.index === player.weapons![e.side].index)?.id,
+        move: cinematic ? { x: 0, z: 0 } : move, dx: direction.x - origin.x, dy: direction.y - origin.y, target, fire: !cinematic && !!(plan.frame.left.held || plan.frame.right.held), interact: !cinematic && plan.frame.interact,
+        weapon: cinematic ? undefined : weapon, actualWeapon: entries.find(e => e.side === player.weapons!.selectedSide && e.index === player.weapons![e.side].index)?.id,
         damagedWeapons: [...new Set(audit.hits.filter(e => e.arena === active?.id && e.amount > 0).map(e => e.id))], marker: (state.mission as { marker?: string })?.marker,
-        wallBreached: !!zoo.arenas.find(a => a.id === 'elephant')?.breachAt, haleKeys: !!(state.mission as { states: Record<string, boolean> })?.states['hale-keys'], haleFallen: !!(state.mission as { states: Record<string, boolean> })?.states['hale-fallen'], hale: ss.getEntity(zoo.haleId)?.transform, boarding: !active ? zoo.roster.map(id => ss.getEntity(id)).filter(e => e && e.health.current > 0 && !e.infected && e.passengerOf === undefined).map(e => ({ id: e!.id, at: e!.transform })) : undefined, carrier: active && ss.getEntity(active.carrier)?.transform, animal: active && ss.getEntity(active.ids[0])?.transform, arena: active?.id ?? 'boarding', arenaPhase: active?.phase ?? 3, arenaHP: active?.ids.map(id => ss.getEntity(id)?.health.current), arenas: zoo.arenas.map(a => ({ id: a.id, phase: a.phase })),
+        cinematic, wallBreached: !!zoo.arenas.find(a => a.id === 'elephant')?.breachAt, haleKeys: !!(state.mission as { states: Record<string, boolean> })?.states['hale-keys'], haleFallen: !!(state.mission as { states: Record<string, boolean> })?.states['hale-fallen'], hale: ss.getEntity(zoo.haleId)?.transform, boarding: !active ? zoo.roster.map(id => ss.getEntity(id)).filter(e => e && e.health.current > 0 && !e.infected && e.passengerOf === undefined).map(e => ({ id: e!.id, at: e!.transform })) : undefined, carrier: active && ss.getEntity(active.carrier)?.transform, animal: active && ss.getEntity(active.ids[0])?.transform, arena: active?.id ?? 'boarding', arenaPhase: active?.phase ?? 3, arenaHP: active?.ids.map(id => ss.getEntity(id)?.health.current), arenas: zoo.arenas.map(a => ({ id: a.id, phase: a.phase })),
         objective: [...document.querySelectorAll('[data-testid=objective-text],[data-testid=mission-tracker]')].map(e => e.textContent).find(text => text?.trim()) ?? '', departed: (state.mission as { states: Record<string, boolean> })?.states.departed,
       };
     });
-    for (const [beat, occurred] of [['wall-breach', row.wallBreached], ['hale-keys', row.haleKeys], ['hale-fallen', row.haleFallen]] as const) {
+    for (const [beat, occurred] of [['wall-breach', row.wallBreached], ['hale-keys', row.haleKeys], ['hale-fallen', row.haleFallen], ['hale-mid', row.cinematic?.id === 'l8-hale' && row.cinematic.elapsed >= 48]] as const) {
       if (occurred && !storyPictures.has(beat)) {
         const file = `${beat}-tick-${row.tick}.jpg`; await session.page.screenshot({ path: `${out}/${file}`, type: 'jpeg', quality: 75 }); captures.push(file); storyPictures.add(beat);
       }
