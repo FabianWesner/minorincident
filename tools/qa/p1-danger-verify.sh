@@ -11,3 +11,18 @@ if ! git rev-parse --verify HEAD >/dev/null 2>&1; then
   git update-ref HEAD "$snapshot"
 fi
 npm run verify -- E07
+python3 - <<'PY'
+import hashlib, json, subprocess
+from pathlib import Path
+def digest(scopes):
+    files = subprocess.check_output(['git', 'ls-files', '-z', '--', *scopes]).decode().split('\0')
+    value = hashlib.sha256()
+    for name in sorted(set(filter(None, files))):
+        value.update(name.encode()); value.update(b'\0'); value.update(Path(name).read_bytes())
+    return value.hexdigest()
+path = Path('test-results/epics/E07/checks.json')
+receipt = json.loads(path.read_text())
+receipt['sourceHash'] = digest(['src', 'layouts', 'public/assets/layouts'])
+receipt['unitContractHash'] = digest(['tests/engine', 'tests/helpers', 'tests/shared', 'tests/tools'])
+path.write_text(json.dumps(receipt, indent=2) + '\n')
+PY

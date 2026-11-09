@@ -2,8 +2,10 @@
 import csv
 import hashlib
 import json
+import os
 import re
 import shutil
+import subprocess
 from pathlib import Path
 
 root = Path("docs/reports/p1-danger")
@@ -35,7 +37,7 @@ baseline, main = routes("batch59") | routes("batch59-matched"), routes("main") |
 current = routes("final") | routes("restored") | routes("stable")
 # Later, targeted measurements take precedence, with their original source
 # hashes and paths retained. Never relabel an intermediate receipt as final.
-for side in ["l2-approach", "l4-design", "l4-design-passive", "l5-l6-composition", "l5-butcher", "l6-stable", "l6-alphas", "l6-fan", "l6-breach", "l6-placement", "l10-shared-brain", "l10-shared-passive", "l10-density"]:
+for side in ["l4-design", "l4-design-passive", "l5-l6-composition", "l5-butcher", "l6-stable", "l6-alphas", "l6-fan", "l6-breach", "l6-placement", "l10-shared-brain", "l10-shared-passive", "l10-density"]:
     path = Path(f"test-results/p1-danger/{side}/routes.json")
     if path.exists():
         data = read(path)
@@ -52,6 +54,24 @@ for folder in ["recovery", "final-gate", "l7-before", "l7-batch59"]:
     for path in Path(f"test-results/p1-danger/{folder}").glob("*"):
         if "progress" not in path.name:
             copy(path)
+for side in ["l2-cluster", "l2-approach", "l4-cadence", "l6-density", "l6-butcher", "l6-breach", "l6-fan", "l6-alphas"]:
+    path = Path(f"test-results/p1-danger/{side}/routes.json")
+    if path.exists():
+        copy(path, Path("rejected-trials") / f"{side}.json")
+
+if os.environ.get("P1_FINAL_REPORT") == "1":
+    def digest(scopes):
+        paths = subprocess.check_output(["git", "ls-files", "-z", "--", *scopes]).decode().split("\0")
+        value = hashlib.sha256()
+        for name in sorted(set(filter(None, paths))):
+            value.update(name.encode()); value.update(b"\0"); value.update(Path(name).read_bytes())
+        return value.hexdigest()
+    checks = read("test-results/p1-danger/final-gate/checks.json")
+    actual = {"sourceHash": digest(["src", "layouts", "public/assets/layouts"]),
+              "unitContractHash": digest(["tests/engine", "tests/helpers", "tests/shared", "tests/tools"])}
+    assert all(check["status"] == 0 for check in checks["checks"])
+    assert all(checks.get(key) == value for key, value in actual.items()), "Gate source must match the final working tree"
+    (evidence / "gate-source-match.json").write_text(json.dumps(actual | {"matchesFinalWorkingTree": True}, indent=2) + "\n")
 
 matrix = []
 for tier in ["low", "high"]:
@@ -129,6 +149,16 @@ if restored_ttk.exists():
     report = "\n".join(lines).replace("## Causes and shared-rule corrections", "\n".join(tables) + "\n## Causes and shared-rule corrections")
 else:
     report = "\n".join(lines)
+remaining = """## Remaining acceptance work
+
+The goal is not met. The strict L1–L6 band still fails for L1 skilled/passive, L2 skilled/passive, L3 skilled, L4 passive and L6 passive. The low results are L2 passive (−19.5%) and L4 passive (−17.3%); the other failures are above the band. The requested PO clarification about the upper bound versus minimum-PROD pressure has not been answered. It would not by itself clear the two below-band cases.
+
+Rejected experiments are retained in [trial receipts](evidence/rejected-trials/): increasing L2's bridge cluster and advancing one ambush approach reduced passive pressure; faster L4 waves also reduced pressure. Those changes are absent from the final source. L6's added Alpha/butcher fronts were unnecessary once the matched-policy baseline was available; the final change retains the original two-member hatch quotas and spreads their positions.
+
+Further acceptance work needs encounter/route balancing with shared zombie stats, plus a decision on the strict upper band. Standing TTK here is a controlled shared-runner fixture, not a native encounter/phase TTK audit. The report does not claim browser appearance or GPU performance approval.
+
+"""
+report = report.replace("## Validation and reproduction", remaining + "## Validation and reproduction")
 (root / "README.md").write_text(report)
 files = {str(path.relative_to(evidence)): hashlib.sha256(path.read_bytes()).hexdigest() for path in sorted(evidence.rglob("*")) if path.is_file() and path.name != "sha256.json"}
 (evidence / "sha256.json").write_text(json.dumps(files, indent=2) + "\n")
