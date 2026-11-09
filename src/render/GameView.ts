@@ -679,7 +679,7 @@ export class GameView implements Lifecycle {
     cureDust.radius.value = front?.radius ?? -1;
     if (front) cureDust.origin.value.set(front.fronts[0].x, front.fronts[0].z);
     this.endingView?.update(this.view);
-    if (this.districts) this.districts.overview = !!front && epiloguePull(front.elapsed) > .2 && this.world.missions?.state.epilogue?.phase !== 'thanks';
+    if (this.districts) this.districts.overview = !!front && epiloguePull(front.elapsed) > 0 && this.camera.position.distanceTo(this.view.cameraTarget) > 250 && this.world.missions?.state.epilogue?.phase !== 'thanks';
     if (this.lighting) {
       this.lighting.panorama = !!front && epiloguePull(front.elapsed) > 0 && this.world.missions?.state.epilogue?.phase !== 'thanks';
       if (front) this.lighting.cureDawn(front.elapsed / (8 * 60));
@@ -1179,7 +1179,7 @@ export class GameView implements Lifecycle {
     const renderStart = profileStart ? performance.now() : 0;
     if (profileStart) this.updateCpuMs = renderStart - profileStart;
     this.probes?.applyVisibility();
-    if (this.districts?.overview) {
+    if (this.districts?.overview && this.camera.position.distanceTo(this.view.cameraTarget) > 400) {
       for (const group of [this.character, this.npcs, this.crowd, this.accessories, this.interactions, this.vehicles, this.bicycle, this.entityAssets, this.contactShadows]) if (group) {
         if (!this.panoramaHidden.has(group)) this.panoramaHidden.set(group, group.visible);
         group.visible = false;
