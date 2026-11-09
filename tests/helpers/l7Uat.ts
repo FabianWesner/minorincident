@@ -458,6 +458,13 @@ function checkLowBoardingCorner(w: SimWorld) {
     }
     expect(target.x).toBeGreaterThan(-30.55); expect(target.x).toBeLessThan(-30.05);
     expect(w.infected!.nav.clear(target.x, target.z, .35)).toBe(true);
+    Object.assign(player.transform, { x: -30, z: 49 });
+    Object.assign(player.survivor!.velocity, { x: 0, z: 4.5 });
+    w.l7Encounters!.follower(follower);
+    Object.assign(player.survivor!.velocity, { x: 0, z: 0 });
+    w.l7Encounters!.follower(follower);
+    expect(target.x, 'the group rejoins the stopped courier on the current walked leg').toBeGreaterThan(-31.55);
+    expect(target.x).toBeLessThan(-31.05);
   } finally { w.npcs!.move = move; }
 }
 
