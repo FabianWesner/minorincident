@@ -68,6 +68,10 @@ export class LevelSevenEncounters {
     if (this.prepared) return;
     this.prepared = true;
     const w = this.world, ai = w.infected!, director = ai.director;
+    // Keep the infected pressure on the courier while she leads the evacuation
+    // column. The shared perception query still permits a follower at contact
+    // range to interrupt; this bias only prevents nearby rows stealing focus.
+    ai.hearing.playerBiasM = -18;
     director.levelCap = 200; director.strict = true; director.ambientTarget = 0; director.reserved = 0; director.pendingTurns = 0;
     w.npcs!.setAmbient(0);
     const outbreak = w.npcs!.civilians.outbreak ?? new Outbreak(w, { refuges: [], tier: director.tier });

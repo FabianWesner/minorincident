@@ -130,6 +130,13 @@ export class Perception {
   playerBiasM = 0;
   private readonly cosHalf = Math.cos(l1v2.infected.visionConeDeg / 2 * Math.PI / 180);
   constructor(private readonly world: SimWorld) { this.humans = new WorldHumans(world); }
+  /** L7 infected stay on the courier's line; a person already at grab range still interrupts the focus. */
+  targetPriority(e: EntitySnapshot, id: number, position: Vec2): number {
+    const distance = Math.hypot(position.x - e.transform.x, position.z - e.transform.z);
+    if (this.world.scenario !== 'L7') return distance;
+    if (id !== 1 && distance <= 1.5) return distance - 30;
+    return distance + (id === 1 ? this.playerBiasM : 0);
+  }
   /** Real courier/ally gunshots expand Alpha hearing for one second; L5 still uses courier shots only. */
   shot(sourceId = 1): void {
     for (const [id, until] of this.shotUntil) if (until <= this.world.tick) this.shotUntil.delete(id);
@@ -207,7 +214,7 @@ export class Perception {
   closestHeard(e: EntitySnapshot): HumanTarget | undefined {
     let best: HumanTarget | undefined, distance = Infinity;
     for (const h of this.humans.within(e.transform, this.closeAwareness(e) ? 12 : this.hearingM)) {
-      const d = Math.hypot(h.position.x - e.transform.x, h.position.z - e.transform.z);
+      const d = this.targetPriority(e, h.id, h.position);
       if (d < distance && this.hears(e, h.position, h.id)) { best = h; distance = d; }
     }
     return best;
@@ -224,7 +231,7 @@ export class Perception {
       if (h.id === ignoreId) continue;
       const isCurrent = h.id === currentId;
       if (!(isCurrent ? this.tracks(e, h.position, h.id) : this.notices(e, h.position, h.id))) continue;
-      const distance = Math.hypot(h.position.x - e.transform.x, h.position.z - e.transform.z) + (h.id === 1 ? this.playerBiasM : 0) - (h.id === focus ? brain?.focusBiasM ?? focusBiasM : 0);
+      const distance = this.targetPriority(e, h.id, h.position) + (this.world.scenario !== 'L7' && h.id === 1 ? this.playerBiasM : 0) - (h.id === focus ? brain?.focusBiasM ?? focusBiasM : 0);
       if (isCurrent) { current = h; currentDistance = distance; }
       if (distance < bestDistance) { best = h; bestDistance = distance; }
     }
