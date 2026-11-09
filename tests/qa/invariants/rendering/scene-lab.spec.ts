@@ -12,7 +12,7 @@ import { PNG } from 'pngjs';
 const baseline = process.env.QA_INVARIANTS_BASELINE ?? 'https://qa.minor-incident.pages.dev';
 const levels = ['L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8', 'L9', 'L10'] as const;
 
-test('6 objectives: L5 pharmacy and bus arrows draw in the first frame, with occluded ground rings', async ({ browser }, info) => {
+test('6 objectives: L5 hiding places have no search ring, arrow or minimap marker', async ({ browser }, info) => {
   test.setTimeout(180_000);
   const session = new SceneSession({ backend: 'webgpu', tier: 'low' });
   try {
@@ -22,36 +22,13 @@ test('6 objectives: L5 pharmacy and bus arrows draw in the first frame, with occ
       spec.hud = true;
       spec.actors![0].at = [...at];
       await session.load(spec); await session.step(1); await session.ready();
+      // PO Q-302 changed hiding-place discovery to sign-of-life cues; these locations have no markers.
       const marker = await session.page.evaluate(key => {
         const game = (window.__SCENE__ as unknown as { game: Game }).game;
-        const spot = game.view.scene.getObjectByName(`survivor-spot-${key}`)!;
-        const arrow = spot.getObjectByName(`survivor-arrow-${key}`) as Mesh;
-        const ring = spot.getObjectByName(`survivor-ring-${key}`) as Mesh;
-        const at = arrow.getWorldPosition(arrow.position.clone()), p = game.view.project(at.x, at.y, at.z);
-        const hud = document.querySelector<HTMLElement>('[data-testid=objective-tracker]')!;
-        const text = document.querySelector<HTMLElement>('[data-testid=objective-text]')!;
-        const hudVisible = !hud.hidden && hud.offsetParent !== null && getComputedStyle(hud).visibility === 'visible'
-          && !text.hidden && text.offsetParent !== null && getComputedStyle(text).visibility === 'visible';
-        return { visible: spot.visible && arrow.visible, hudVisible, text: text.textContent ?? '', ringDepth: (ring.material as { depthTest: boolean }).depthTest, arrowDepth: (arrow.material as { depthTest: boolean }).depthTest, x: (p[0] + 1) * innerWidth / 2, y: (1 - p[1]) * innerHeight / 2 };
+        const spot = game.view.scene.getObjectByName(`survivor-spot-${key}`);
+        return !!spot;
       }, key);
-      expect(oracle.objective({ markerVisible: marker.visible, visibleAtMs: 1000 / 60, hudVisible: marker.hudVisible, text: marker.text }), `L5/look ${key}: actual search HUD and guidance must be visible`).toBe(false);
-      expect(marker.visible).toBe(true);
-      expect(marker.ringDepth).toBe(true); expect(marker.arrowDepth).toBe(false);
-      const drawn = PNG.sync.read(await session.page.screenshot());
-      await session.page.evaluate(async key => {
-        const game = (window.__SCENE__ as unknown as { game: Game }).game;
-        game.view.scene.getObjectByName(`survivor-arrow-${key}`)!.visible = false;
-        game.view.update(1);
-        for (let i = 0; i < 2; i++) await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
-      }, key);
-      const hidden = PNG.sync.read(await session.page.screenshot());
-      let pixels = 0;
-      for (let y = Math.max(0, Math.floor(marker.y - 20)); y < Math.min(drawn.height, marker.y + 20); y++) for (let x = Math.max(0, Math.floor(marker.x - 20)); x < Math.min(drawn.width, marker.x + 20); x++) {
-        const i = (y * drawn.width + x) * 4;
-        if (Math.abs(drawn.data[i] - hidden.data[i]) + Math.abs(drawn.data[i + 1] - hidden.data[i + 1]) + Math.abs(drawn.data[i + 2] - hidden.data[i + 2]) > 30) pixels++;
-      }
-      await info.attach(`L5-${key}-first-frame`, { body: PNG.sync.write(drawn), contentType: 'image/png' });
-      expect(pixels, `${key}: search arrow must contribute visible pixels within 2 s (sampled at frame 1)`).toBeGreaterThanOrEqual(8);
+      expect(marker, `Q-302: ${key} hiding spot has no ring or arrow`).toBe(false);
       expect(session.errors).toEqual([]);
     }
   } finally { await session.close(); stopServer(); }
