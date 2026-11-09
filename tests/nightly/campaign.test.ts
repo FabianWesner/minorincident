@@ -16,6 +16,7 @@ test('nightly campaign: one continuous seed-1 bot run L1 → credits with the re
       const abilities = save.ownedActions.filter(id => id.startsWith('ability.'));
       const racks = structuredClone(save.racks);
       const survivors = [...save.survivors ?? []];
+      let shelteredPassengers: number[] = [], researchCompanion: number | undefined;
       const report = await runLevel(level, 'complete', save.seed, n === 10 ? 3600 : 1200, 'auto', save, (world, result) => {
         // Match Game's completion callback, including the exact zoo APC payload.
         if (n === 6) {
@@ -34,6 +35,13 @@ test('nightly campaign: one continuous seed-1 bot run L1 → credits with the re
         if (n === 9) {
           expect(world.missions!.l9!.state.carId).toBe(transport!.vehicle.id);
           expect(world.missions!.l9!.state.preCrashDurability).toBeLessThanOrEqual(transport!.vehicle.health.current);
+          const driving = world.missions!.l9!.driving.state;
+          // PO's bridgehead evacuation permits visible casualties; Sam stays aboard for the crash and L10.
+          shelteredPassengers = transport!.occupants.map(e => world.getEntity(e.id)).filter(e => e && e.id !== 1 && e.id !== driving.samId && !e.companion && e.health.current > 0 && !e.infected && !e.infection).map(e => e!.id).sort((a, b) => a - b);
+          expect(driving.evacuationDone).toBe(true);
+          expect([...driving.evacuated].sort((a, b) => a - b)).toEqual(shelteredPassengers);
+          const sam = world.getEntity(driving.samId);
+          researchCompanion = sam && sam.health.current > 0 && !sam.infected ? sam.id : undefined;
         }
         expect(world.combat!.damage.god).toBe(false);
         if (n === 10) {
@@ -66,7 +74,8 @@ test('nightly campaign: one continuous seed-1 bot run L1 → credits with the re
         expect(save.ownedActions.filter(id => id.startsWith('weapon.'))).toEqual(['weapon.fire-axe']);
         expect(save.selectedAction).toBe('weapon.fire-axe');
         expect(save.ownedActions.filter(id => id.startsWith('ability.'))).toEqual(abilities);
-        expect(save.crossingHandover!.shelteredPassengers.map(e => e.id)).toEqual(transport!.occupants.filter(e => e.id !== 1 && !e.companion).map(e => e.id));
+        expect(save.crossingHandover!.shelteredPassengers.map(e => e.id).sort((a, b) => a - b)).toEqual(shelteredPassengers);
+        expect(save.crossingHandover!.researchCompanion?.id).toBe(researchCompanion);
       }
       if (n === 8) {
         expect(save.transport?.vehicle.archetype).toBe('vehicle.military-apc');
