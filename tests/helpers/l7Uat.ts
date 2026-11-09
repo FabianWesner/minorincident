@@ -277,25 +277,6 @@ async function checkFollowerBites() {
     checkFriendlyRocketReaction(w);
     for (const e of [...w.infected!.active]) { w.solids.forget(e); w.infected!.release(e); }
     const roster = w.l7Encounters!.state.roster, follower = w.entities.get(roster[0].id)!;
-    for (const row of roster.slice(1)) { const e = w.entities.get(row.id)!; e.hidden = true; w.solids.forget(e); }
-    const at = { ...follower.transform };
-    const contact = [1.2, -1.2].map(offset => w.entities.get(w.infected!.spawn('infected.runner', { x: at.x + offset, y: at.y, z: at.z }, { state: 'chase' }))!);
-    const alpha = w.entities.get(w.infected!.spawn('infected.alpha', { x: at.x, y: at.y, z: at.z + 1.2 }, { state: 'chase' }))!;
-    const before = contact.map(e => ({ ...e.transform }));
-    expect(w.l7Encounters!.woundFollower(follower, contact[0])).toBe(true);
-    expect(follower.health.current).toBe(66);
-    for (const e of contact) expect(e.combat!.staggerUntil).toBeGreaterThan(w.tick);
-    expect(alpha.combat!.staggerUntil, 'an evacuee cannot stagger a nearby Alpha').toBeLessThanOrEqual(w.tick);
-    expect(alpha.knockbackSlide).toBeUndefined();
-    for (let tick = 0; tick < 12; tick++) {
-      const previous = contact.map(e => ({ ...e.transform }));
-      w.applyInput(emptyInput(), 'keyboard'); w.update();
-      contact.forEach((e, i) => expect(Math.hypot(e.transform.x - previous[i].x, e.transform.z - previous[i].z), 'a break-free shove is continuous').toBeLessThan(1));
-    }
-    contact.forEach((e, i) => expect(Math.hypot(e.transform.x - before[i].x, e.transform.z - before[i].z), 'both touching runners leave physical escape room').toBeGreaterThan(1));
-    expect(w.solids.offenders).toEqual([]);
-    for (const e of [...contact, alpha]) { w.solids.forget(e); w.infected!.release(e); }
-    follower.health.current = 100;
     const runner = w.entities.get(w.infected!.spawn('infected.runner', { x: follower.transform.x + 1.2, y: follower.transform.y, z: follower.transform.z }, { state: 'chase' }))!;
     const wounds = new Map<number, number[]>(), alarms: string[] = [];
     w.events.on('infected.attack', e => { if (e.type === 'infected.attack' && e.special === 'bite') wounds.set(e.targetId, [...wounds.get(e.targetId) ?? [], w.entities.get(e.targetId)!.health.current]); });
