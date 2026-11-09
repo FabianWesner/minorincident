@@ -34,6 +34,7 @@ export async function checkL7Navigation() {
   await checkPharmacyCourier();
   const w = await loadLevel('L7', 29);
   try {
+    expect(w.player!.locomotion.supportWhenDisabled, 'Northgate keeps its logical floor during Alpha stun').toBe(true);
     const launcher = [...w.entities.iterate()].find(e => e.pickup && 'actionId' in e.pickup && e.pickup.actionId === 'weapon.rocket-launcher');
     expect(launcher, 'the authored launcher remains present for the approach').toBeDefined();
     for (const e of w.infected!.active) e.hidden = true;

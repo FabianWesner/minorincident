@@ -1,0 +1,41 @@
+{
+  "runtimeRevision": "dd370e962d094cbf64ca463b6e92c71110f0023a",
+  "sourceHash": "e71de80a6adca1ef8205fe67a9317b1a0f785de89047d029d41f439db07682e4",
+  "verify": {
+    "target": "E29",
+    "epics": [
+      "E29"
+    ],
+    "checks": [
+      {
+        "command": "npm run typecheck",
+        "status": 0,
+        "seconds": 50.344
+      },
+      {
+        "command": "npm run lint",
+        "status": 0,
+        "seconds": 27.626
+      },
+      {
+        "command": "npm test",
+        "status": 0,
+        "seconds": 88.821
+      }
+    ]
+  },
+  "passed": 106,
+  "skipped": 1,
+  "files": 27,
+  "vitestSeconds": 83.74,
+  "budgetWrapperSeconds": 88.7,
+  "budgetSeconds": 240,
+  "collection": {
+    "cases": 150,
+    "caseBudget": 150,
+    "files": 43,
+    "fileBudget": 45
+  },
+  "browserUsed": false,
+  "runnerSetup": "Hydrated manifest blobs with git add --renormalize . and created a disposable commit in the private snapshot before Git-dependent tool tests."
+}

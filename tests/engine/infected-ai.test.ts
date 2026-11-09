@@ -312,6 +312,15 @@ test('every human and animal role validates and spawns with its catalog health a
     late.setInput({ move: { x: -1, z: 0 } }); step(late, 60);
     expect(late.events.events().find(event => event.type === 'combat.hit' && event.sourceId === unchanged.id && event.amount > 0), 'later campaigns retain their authored moving damage').toMatchObject({ amount: 10 });
 
+    for (const moving of [false, true]) {
+      const ruined = await arena(1, false); ruined.scenario = 'L7';
+      const runner = spawn(ruined, 'runner', 1.3);
+      if (moving) ruined.setInput({ move: { x: -1, z: 0 } });
+      step(ruined, 60);
+      expect(ruined.events.events().find(event => event.type === 'combat.hit' && event.sourceId === runner.id && event.amount > 0),
+        'L7 regular lunges chip courier health, including during Alpha stun').toMatchObject({ amount: 2 });
+    }
+
     const closing = await arena(1, false); closing.scenario = 'L2';
     const pursuer = spawn(closing, 'runner', 8);
     let warningDistance = 0;
