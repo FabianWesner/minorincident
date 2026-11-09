@@ -14,7 +14,6 @@
 |---|---|---|
 | Companion graphs are created after prototype warm-up | A render-pipeline trace attributes late synchronous links to the corgi body, collar bell and backpack. | `8ae970c5`: instantiate resident NPC presentations before warming and use the companion's actual courier-depth materials for its loading representative. |
 | Vertex/index uploads interleave with queued WebGL links | L8's first-profile chunk phase stalls after shader compilation; the retained trace also identifies blocking buffer uploads. | `04ea9aff`: upload resident WebGL attributes through Three's version cache before starting program links. All ordinary/instanced/solo draws remain. |
-
 | Long passive follower jobs start last | The old L7 seed estimates are 20 seconds; measured complete windows take 149–161 seconds. The original gate leaves both running at timeout. | `10e47dbd`: price long passive jobs before short routes. All 31 stages complete in 598.97 seconds, still without useful margin. |
 
 The broad compilation experiments were discarded. Runtime content and public assets are retained. The frozen qualification bundle is built from both repairs; later changes to the threat tool do not change that bundle.
@@ -85,9 +84,43 @@ The [matched heap-size diagnostic](threat-heap-probe.json) preserves every recei
 
 ## Cold capture blockers
 
-Six complete/partial reservations were rejected as whole reservations: three at L4 WebGL2 and three at L10 WebGPU. The later WebGPU attempts abort during their PROD sides, so they provide no candidate comparison. The three L4 reservations are also rejected. The first two overlap foreign Vitest/typecheck/lint jobs; the third aborts when another worktree starts a typecheck. They are retained, including every slow sample. The rejected attempts do not count as failed candidate timings or qualified cells.
+The original six rejected reservations and every extension attempt remain in the raw archive. Extension collection attempted **18 reservations**; 12 reached sampling and retained 99 fresh-profile records. **0 extension configuration(s) qualified.** All partial records are excluded from the matrix.
 
-The monitor initially finished invalid reservations; after repeated interference it was changed to terminate the reservation at the first foreign CPU job. No sample-level exclusion is used. Each driver stops after three invalid reservations. Remaining collection needs an enforced local quiet window of roughly one hour. The brief's three-hour time box ends around 18:23 UTC; the quiet-window and extension requests received no answer before closeout. Further runtime repair also needs additional time. Both conditions require the owner to reschedule or extend this lane; the goal is not marked complete.
+Repeated local typechecks, builds, Vitest and QA simulation/capture scripts in `p1-l8rework` and `p1-l3ramp` overlapped sampling or prevented quiet admission. The [extension capture ledger](cold-extension.json) records each attempt, side counts, foreign commands and interrupted admissions. Some attempts reached the candidate side; none completed the required twenty profiles per side without an overlap. No sample-level exclusion or selective resampling is used.
+
+The monitor aborts an entire sampling reservation when foreign work begins. Later collection also tried shorter, single-configuration reservations, with the same profile count and limits. Admission expirations and aborted setup remain unmeasured. The original three-hour time box ended around 18:23 UTC; the orchestrator granted ninety more minutes, starting at 18:27 UTC. That extension did not provide a sustained quiet window. The goal is not complete.
+
+**Needed to finish:** pause competing local CPU/browser jobs for an enforced quiet window, then complete or repair the 14 unqualified configurations. Additional runtime repair time is also needed: the complete control still has only 1.03 seconds of headroom; every extension audit timed out. Queue and sync time are excluded from the reported audit budgets.
+
+## Extension work
+
+The orchestrator granted 90 more minutes at 18:27 UTC. The original evidence archive remains immutable; extension artifacts are retained separately.
+
+- `a3278435` / `edebeef6`: the shared host classifier also detects CPU-consuming QA/simulation probes, while permitting idle clients queued behind the owned browser reservation. The existing classifier fixture includes active foreign probes and owned/idle exclusions; no test case was added.
+- `4d43c7d5`: collect the three independent test inventories concurrently. Their shared wall-clock deadline, watchdogs, counts and cancellation status remain intact; cancellation now forwards to every active collector.
+- `09b133ac`: serialize external browser preparation behind pending launches. A late shared Chrome could otherwise appear after retirement and block GPU admission. The live shared daemon was not restarted because other requests were queued; existing reservation preparation was repeated to clear idle instances.
+
+[Extension validation](validation-extension.json) records typecheck, lint and the existing collection/timeout/cancellation/descendant-cleanup regression. [Extension threat trials](threat-extension.json) retain complete command-budget receipts and finished-stage records. The compiler inlining probe preserves every receipt value and hash `bfdfd24f`, but changes a complete 1,200-second route only from 126.24 to 125.89 seconds (−0.28%); it is discarded. Observer census and alternative dispatch-order probes are also reverted.
+
+A possible L3 prefix-sharing optimization was rejected: its survival and army bootstraps use different chunk-residency setup. Both original simulations and their original windows are preserved.
+
+<!-- extension-runtime-start -->
+### Extension runtime trials
+
+All rows retain the complete audit and the 600-second command limit. Incomplete trials do not qualify.
+
+| Configuration | Runner | Command seconds | Finished stages | Result |
+|---|---|---:|---:|---|
+| Completed cohort observer | .230 | 601.10 | 26/31 | TIMEOUT |
+| Three workers | .230 | 600.28 | 15/31 | TIMEOUT |
+| Balanced tail + parallel inventory | .230 | 601.01 | 28/31 | TIMEOUT |
+| Retained schedule + parallel inventory | .230 | 601.11 | 25/31 | TIMEOUT |
+| 256 MiB on slower pool runner | .173 | 600.51 | 12/31 | TIMEOUT |
+| 16 MiB reference run | .230 | 601.06 | 23/31 | TIMEOUT |
+| One V8 background thread | .230 | 600.21 | 27/31 | TIMEOUT |
+
+Exact receipts and raw artifact names: [extension results](threat-extension.json). All observer, dispatch-order, worker-count, compiler and heap probes are discarded. The retained runtime change is concurrent test inventory collection; a useful full-audit margin remains unproven.
+<!-- extension-runtime-end -->
 
 ## Method and provenance
 
@@ -95,7 +128,7 @@ The monitor initially finished invalid reservations; after repeated interference
 
 Captures use `tools/perf/quiet-run.sh`, exclusive browser admission, a post-queue cooldown, and continuous two-second host receipts. Chromium 153.0.8010.12 runs headlessly on native Apple M4 Metal at 1600×900, DPR 1. Browser processes and disk/HTTP profiles are fresh; OS/driver caches remain shared. Every sample retains its first post-card frames. Every configuration includes ten seconds of physical movement and at least 100 gameplay frames. Both sides use the same menu waits and requested quality. The original cold tool remains unchanged; its stricter no-increase assertion is disabled only by the harness, whose evaluator applies the brief's explicit +5% rule. A foreign-work overlap invalidates the entire reservation.
 
-If game source or the candidate bundle changes, the current six cells cannot qualify that new build. Tool-only threat changes leave the frozen game artifact unchanged.
+If game source or the candidate bundle changes, the current qualified cells cannot qualify that new build. Tool-only threat changes leave the frozen game artifact unchanged.
 
 ## Content and validation
 
@@ -103,11 +136,15 @@ The [content comparison](content-comparison.json) covers L1/L4/L7/L8/L10 in both
 
 Seven pairs have identical pixels. L7 low/high and L8 low differ in startup animation poses; the inspected image pairs preserve the scenery and actors. Selected L8 proof: [before](L8-low-before.png), [after](L8-low-after.png). This static comparison's host receipt caught a foreign Vitest job, so it is explicitly excluded from performance qualification. Its completed equality assertions remain content evidence. A later interrupted repeat is retained as rejected evidence.
 
-[Validation receipt](validation.json): `npm run verify -- E18` passes typecheck, lint, and 27 unit files / 107 cases. The unchanged test budget remains 150 cases across 44 files; no test framework cases were added. The final check on committed code after reverting the earlier experimental runtime flags passes; the final 256 MiB experiment is subsequently reverted to those same committed bytes. This records the E18 check commands, not completion of the full E18 acceptance matrix. New report files pass the scoped size/type/link check. The repository-wide evidence-retention checker still reports 8,487 pre-existing historical/sparse-checkout violations; its full log is archived, and those unrelated files are unchanged.
+The [earlier validation receipt](validation.json) covers the loading repairs. The [final extension gate](validation-extension.json) records `npm run verify -- E18` on retained code revision `09b133ac`: typecheck, lint, and **27 unit files / 107 cases all pass**. The full gate takes 68.67 seconds. Its inventory remains 150 cases across 44 files (limits 150/45); no test case was added. All observer, worker, heap, compiler and dispatch experiments have been reverted. This is the E18 per-change gate, not certification of the full E18 acceptance matrix.
+
+The selected report files pass the scoped size/type/JSON/link check. The earlier repository-wide retention check reported 8,487 pre-existing historical/sparse-checkout violations; its archived log is retained. Unrelated reports are unchanged.
 
 ## Evidence and reproduction
 
-Raw captures, all host receipts, failed attempts, profiles, logs, discarded patches, immutable public builds and the actual reproduction harness are preserved in the [local raw archive](/Users/wesner/Workspace/mi-evidence-archive/test-results/r20-loadtime/). The [artifact index](artifacts.json) identifies its verified file manifest. Discarded experiment sources are preserved in the [reproduction archive](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/r20-loadtime/repro/). This local archive is not part of a fresh checkout or CI. The retained report uses small selected JSON and images; raw artifacts are not added to Git.
+Original raw captures, host receipts, failed attempts, profiles, logs, discarded patches, immutable public builds and the original reproduction harness are preserved in the [local raw archive](/Users/wesner/Workspace/mi-evidence-archive/test-results/r20-loadtime/). The [artifact index](artifacts.json) identifies its verified file manifest. Discarded experiment sources are preserved in the [reproduction archive](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/r20-loadtime/repro/). This local archive is not part of a fresh checkout or CI. The retained report uses small selected JSON and images; raw artifacts are not added to Git.
+
+The original archive is preserved unchanged. The extension has a separate [verified archive](/Users/wesner/Workspace/mi-evidence-archive/test-results/r20-loadtime-b/) listed in [artifacts](artifacts.json). It includes the current harness, temporary diagnostic sources, all failed captures and every runtime trial. Restore its raw root to `test-results/r20-loadtime/` before using the commands below; restore `repro-r19-extension/` to `test-results/r19-perf/` and temporary helpers from `repro-extension-tools/` to their original `tools/qa/` paths when reproducing those diagnostics.
 
 The harness has an explicit remainder command, so qualified cells need not be collected again. Once other local CPU/browser jobs are paused and more time is authorized, restore the archived ignored directory to `test-results/r20-loadtime/` and copy its `repro-r19/` files into `test-results/r19-perf/`. The owned diagnostic servers have been stopped. Start the pinned snapshots in a separate terminal:
 

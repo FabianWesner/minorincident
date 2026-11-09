@@ -1,0 +1,968 @@
+{
+  "at": "2026-11-09T19:54:12.970676+00:00",
+  "rules": {
+    "commandSeconds": 600,
+    "sameLevelsPoliciesSeedsWindowsAndThresholds": true,
+    "all31StagesRequired": true,
+    "all10LevelsRequired": true
+  },
+  "attempts": [
+    {
+      "label": "Completed cohort observer",
+      "artifact": "threat-completed-cohorts",
+      "runner": "2.31.107.230",
+      "workers": 4,
+      "semiSpaceMiB": "64",
+      "note": "discarded observer census",
+      "finishedStages": 26,
+      "finishedStageRecords": [
+        {
+          "id": "L4/skilled/1",
+          "seconds": 163.044
+        },
+        {
+          "id": "L5/passive/2",
+          "seconds": 197.222
+        },
+        {
+          "id": "L5/passive/3",
+          "seconds": 208.246
+        },
+        {
+          "id": "L5/passive/1",
+          "seconds": 219.81
+        },
+        {
+          "id": "L4/passive/1",
+          "seconds": 111.203
+        },
+        {
+          "id": "L7/passive/2",
+          "seconds": 168.345
+        },
+        {
+          "id": "L7/passive/3",
+          "seconds": 147.643
+        },
+        {
+          "id": "L4/high-hold",
+          "seconds": 144.702
+        },
+        {
+          "id": "L3/skilled/1",
+          "seconds": 56.063
+        },
+        {
+          "id": "L8/skilled/1",
+          "seconds": 64.993
+        },
+        {
+          "id": "L10/skilled/1",
+          "seconds": 101.368
+        },
+        {
+          "id": "L3/skilled/3",
+          "seconds": 115.612
+        },
+        {
+          "id": "L2/skilled/1",
+          "seconds": 53.766
+        },
+        {
+          "id": "L10/passive/1",
+          "seconds": 64.838
+        },
+        {
+          "id": "L9/passive/1",
+          "seconds": 54.248
+        },
+        {
+          "id": "L9/skilled/1",
+          "seconds": 52.756
+        },
+        {
+          "id": "L2/passive/1",
+          "seconds": 42.742
+        },
+        {
+          "id": "L3/skilled/2",
+          "seconds": 43.864
+        },
+        {
+          "id": "L1/skilled/1",
+          "seconds": 40.787
+        },
+        {
+          "id": "L5/skilled/1",
+          "seconds": 39.518
+        },
+        {
+          "id": "L5/skilled/2",
+          "seconds": 44.655
+        },
+        {
+          "id": "L5/skilled/3",
+          "seconds": 33.932
+        },
+        {
+          "id": "L7/passive/1",
+          "seconds": 34.254
+        },
+        {
+          "id": "L7/skilled/1",
+          "seconds": 45.696
+        },
+        {
+          "id": "L7/skilled/2",
+          "seconds": 32.453
+        },
+        {
+          "id": "L8/passive/1",
+          "seconds": 36.183
+        }
+      ],
+      "complete": false,
+      "budget": {
+        "name": "qa-threat",
+        "cases": 150,
+        "counts": {
+          "vitest": 129,
+          "e2e": 9,
+          "invariantsBrowser": 12
+        },
+        "files": 44,
+        "limits": {
+          "cases": 150,
+          "files": 45,
+          "seconds": 600
+        },
+        "command": [
+          "node",
+          "--import",
+          "tsx/esm",
+          "tools/qa/threat-audit.ts",
+          "--out",
+          "test-results/r20-loadtime/threat-completed-cohorts"
+        ],
+        "seconds": 601.097987851,
+        "exitCode": 124,
+        "signal": null,
+        "failures": [
+          "qa-threat failed (exit 124)",
+          "qa-threat took 601.1 s, over the 600 s budget"
+        ],
+        "at": "2026-11-09T18:42:52.806Z"
+      },
+      "budgetSha256": "aaec93c9ca7d22dbbf4542d3a3a83dafe5b3ac20333d26f80f3b6d0f947a0790",
+      "rawLog": "logs-extension/r20-completed-cohorts.log",
+      "timingPass": false
+    },
+    {
+      "label": "Three workers",
+      "artifact": "threat-three-workers",
+      "runner": "2.31.107.230",
+      "workers": 3,
+      "semiSpaceMiB": "64",
+      "note": "discarded worker count",
+      "finishedStages": 15,
+      "finishedStageRecords": [
+        {
+          "id": "L5/passive/2",
+          "seconds": 179.33
+        },
+        {
+          "id": "L5/passive/3",
+          "seconds": 189.291
+        },
+        {
+          "id": "L5/passive/1",
+          "seconds": 201.411
+        },
+        {
+          "id": "L4/skilled/1",
+          "seconds": 135.714
+        },
+        {
+          "id": "L7/passive/2",
+          "seconds": 139.936
+        },
+        {
+          "id": "L7/passive/3",
+          "seconds": 139.884
+        },
+        {
+          "id": "L4/passive/1",
+          "seconds": 99.508
+        },
+        {
+          "id": "L3/skilled/3",
+          "seconds": 98.009
+        },
+        {
+          "id": "L4/high-hold",
+          "seconds": 134.548
+        },
+        {
+          "id": "L8/skilled/1",
+          "seconds": 61.0
+        },
+        {
+          "id": "L3/skilled/1",
+          "seconds": 53.446
+        },
+        {
+          "id": "L10/skilled/1",
+          "seconds": 89.93
+        },
+        {
+          "id": "L2/skilled/1",
+          "seconds": 48.335
+        },
+        {
+          "id": "L10/passive/1",
+          "seconds": 56.77
+        },
+        {
+          "id": "L9/passive/1",
+          "seconds": 46.219
+        }
+      ],
+      "complete": false,
+      "budget": {
+        "name": "qa-threat",
+        "cases": 150,
+        "counts": {
+          "vitest": 129,
+          "e2e": 9,
+          "invariantsBrowser": 12
+        },
+        "files": 44,
+        "limits": {
+          "cases": 150,
+          "files": 45,
+          "seconds": 600
+        },
+        "command": [
+          "node",
+          "--import",
+          "tsx/esm",
+          "tools/qa/threat-audit.ts",
+          "--maxWorkers=3",
+          "--out",
+          "test-results/r20-loadtime/threat-three-workers"
+        ],
+        "seconds": 600.283114758,
+        "exitCode": 124,
+        "signal": null,
+        "failures": [
+          "qa-threat failed (exit 124)",
+          "qa-threat took 600.3 s, over the 600 s budget"
+        ],
+        "at": "2026-11-09T18:53:07.295Z"
+      },
+      "budgetSha256": "37c091bdc1ebdf4aad90c894a70d101af5d87371d707e83e80a4341165b0db8d",
+      "rawLog": "logs-extension/r20-three-workers.log",
+      "timingPass": false
+    },
+    {
+      "label": "Balanced tail + parallel inventory",
+      "artifact": "threat-balanced-tail",
+      "runner": "2.31.107.230",
+      "workers": 4,
+      "semiSpaceMiB": "64",
+      "note": "discarded dispatch order; observer changes reverted",
+      "finishedStages": 28,
+      "finishedStageRecords": [
+        {
+          "id": "L4/skilled/1",
+          "seconds": 150.563
+        },
+        {
+          "id": "L5/passive/2",
+          "seconds": 191.008
+        },
+        {
+          "id": "L5/passive/3",
+          "seconds": 203.876
+        },
+        {
+          "id": "L5/passive/1",
+          "seconds": 211.994
+        },
+        {
+          "id": "L7/passive/2",
+          "seconds": 165.095
+        },
+        {
+          "id": "L4/passive/1",
+          "seconds": 108.758
+        },
+        {
+          "id": "L7/passive/3",
+          "seconds": 148.526
+        },
+        {
+          "id": "L4/high-hold",
+          "seconds": 149.598
+        },
+        {
+          "id": "L9/skilled/1",
+          "seconds": 51.976
+        },
+        {
+          "id": "L8/skilled/1",
+          "seconds": 67.765
+        },
+        {
+          "id": "L3/skilled/1",
+          "seconds": 58.768
+        },
+        {
+          "id": "L3/skilled/3",
+          "seconds": 119.589
+        },
+        {
+          "id": "L10/passive/1",
+          "seconds": 63.783
+        },
+        {
+          "id": "L2/skilled/1",
+          "seconds": 52.818
+        },
+        {
+          "id": "L9/passive/1",
+          "seconds": 53.076
+        },
+        {
+          "id": "L2/passive/1",
+          "seconds": 46.37
+        },
+        {
+          "id": "L1/skilled/1",
+          "seconds": 36.692
+        },
+        {
+          "id": "L3/skilled/2",
+          "seconds": 45.185
+        },
+        {
+          "id": "L5/skilled/1",
+          "seconds": 40.56
+        },
+        {
+          "id": "L5/skilled/3",
+          "seconds": 35.102
+        },
+        {
+          "id": "L10/skilled/1",
+          "seconds": 108.657
+        },
+        {
+          "id": "L5/skilled/2",
+          "seconds": 45.349
+        },
+        {
+          "id": "L7/skilled/1",
+          "seconds": 41.216
+        },
+        {
+          "id": "L7/passive/1",
+          "seconds": 34.065
+        },
+        {
+          "id": "L7/skilled/2",
+          "seconds": 31.308
+        },
+        {
+          "id": "L8/passive/1",
+          "seconds": 37.941
+        },
+        {
+          "id": "L7/skilled/3",
+          "seconds": 28.059
+        },
+        {
+          "id": "L3/passive/1",
+          "seconds": 12.444
+        }
+      ],
+      "complete": false,
+      "budget": {
+        "name": "qa-threat",
+        "cases": 150,
+        "counts": {
+          "vitest": 129,
+          "e2e": 9,
+          "invariantsBrowser": 12
+        },
+        "files": 44,
+        "limits": {
+          "cases": 150,
+          "files": 45,
+          "seconds": 600
+        },
+        "command": [
+          "node",
+          "--import",
+          "tsx/esm",
+          "tools/qa/threat-audit.ts",
+          "--out",
+          "test-results/r20-loadtime/threat-balanced-tail"
+        ],
+        "seconds": 601.0139096,
+        "exitCode": 124,
+        "signal": null,
+        "failures": [
+          "qa-threat failed (exit 124)",
+          "qa-threat took 601.0 s, over the 600 s budget"
+        ],
+        "at": "2026-11-09T19:03:21.228Z"
+      },
+      "budgetSha256": "1133c05452db5e6ed28d9c48daafb258121586c1e17f2ac041829f76a973a3c1",
+      "rawLog": "logs-extension/r20-balanced-tail.log",
+      "timingPass": false
+    },
+    {
+      "label": "Retained schedule + parallel inventory",
+      "artifact": "threat-final-inventories",
+      "runner": "2.31.107.230",
+      "workers": 4,
+      "semiSpaceMiB": "64",
+      "note": "retained schedule",
+      "finishedStages": 25,
+      "finishedStageRecords": [
+        {
+          "id": "L4/skilled/1",
+          "seconds": 156.677
+        },
+        {
+          "id": "L5/passive/2",
+          "seconds": 196.119
+        },
+        {
+          "id": "L5/passive/3",
+          "seconds": 211.6
+        },
+        {
+          "id": "L5/passive/1",
+          "seconds": 219.287
+        },
+        {
+          "id": "L7/passive/2",
+          "seconds": 157.459
+        },
+        {
+          "id": "L4/passive/1",
+          "seconds": 111.331
+        },
+        {
+          "id": "L7/passive/3",
+          "seconds": 156.197
+        },
+        {
+          "id": "L4/high-hold",
+          "seconds": 151.58
+        },
+        {
+          "id": "L8/skilled/1",
+          "seconds": 71.591
+        },
+        {
+          "id": "L3/skilled/1",
+          "seconds": 60.983
+        },
+        {
+          "id": "L3/skilled/3",
+          "seconds": 114.579
+        },
+        {
+          "id": "L10/skilled/1",
+          "seconds": 100.326
+        },
+        {
+          "id": "L2/skilled/1",
+          "seconds": 53.993
+        },
+        {
+          "id": "L9/passive/1",
+          "seconds": 53.738
+        },
+        {
+          "id": "L9/skilled/1",
+          "seconds": 51.746
+        },
+        {
+          "id": "L10/passive/1",
+          "seconds": 63.216
+        },
+        {
+          "id": "L1/skilled/1",
+          "seconds": 37.273
+        },
+        {
+          "id": "L2/passive/1",
+          "seconds": 47.85
+        },
+        {
+          "id": "L5/skilled/1",
+          "seconds": 41.391
+        },
+        {
+          "id": "L3/skilled/2",
+          "seconds": 50.459
+        },
+        {
+          "id": "L5/skilled/3",
+          "seconds": 36.303
+        },
+        {
+          "id": "L5/skilled/2",
+          "seconds": 46.269
+        },
+        {
+          "id": "L7/passive/1",
+          "seconds": 38.962
+        },
+        {
+          "id": "L7/skilled/1",
+          "seconds": 46.117
+        },
+        {
+          "id": "L1/passive/1",
+          "seconds": 20.729
+        }
+      ],
+      "complete": false,
+      "budget": {
+        "name": "qa-threat",
+        "cases": 150,
+        "counts": {
+          "vitest": 129,
+          "e2e": 9,
+          "invariantsBrowser": 12
+        },
+        "files": 44,
+        "limits": {
+          "cases": 150,
+          "files": 45,
+          "seconds": 600
+        },
+        "command": [
+          "node",
+          "--import",
+          "tsx/esm",
+          "tools/qa/threat-audit.ts",
+          "--out",
+          "test-results/r20-loadtime/threat-final-inventories"
+        ],
+        "seconds": 601.110919537,
+        "exitCode": 124,
+        "signal": null,
+        "failures": [
+          "qa-threat failed (exit 124)",
+          "qa-threat took 601.1 s, over the 600 s budget"
+        ],
+        "at": "2026-11-09T19:23:44.562Z"
+      },
+      "budgetSha256": "72079d222b97c0b5ffbead877fe0b47a08ed2dace81f308e075ead8780961fb5",
+      "rawLog": "logs-extension/r20-final-inventories.log",
+      "timingPass": false
+    },
+    {
+      "label": "256 MiB on slower pool runner",
+      "artifact": "threat-final-semi256",
+      "runner": "94.130.181.173",
+      "workers": 4,
+      "semiSpaceMiB": "256",
+      "note": "discarded alternate-host heap trial",
+      "finishedStages": 12,
+      "finishedStageRecords": [
+        {
+          "id": "L4/skilled/1",
+          "seconds": 191.255
+        },
+        {
+          "id": "L5/passive/2",
+          "seconds": 250.607
+        },
+        {
+          "id": "L5/passive/3",
+          "seconds": 265.603
+        },
+        {
+          "id": "L5/passive/1",
+          "seconds": 278.771
+        },
+        {
+          "id": "L7/passive/2",
+          "seconds": 201.832
+        },
+        {
+          "id": "L4/passive/1",
+          "seconds": 137.732
+        },
+        {
+          "id": "L7/passive/3",
+          "seconds": 195.643
+        },
+        {
+          "id": "L4/high-hold",
+          "seconds": 183.676
+        },
+        {
+          "id": "L3/skilled/1",
+          "seconds": 72.607
+        },
+        {
+          "id": "L8/skilled/1",
+          "seconds": 85.478
+        },
+        {
+          "id": "L10/skilled/1",
+          "seconds": 124.302
+        },
+        {
+          "id": "L3/skilled/3",
+          "seconds": 151.182
+        }
+      ],
+      "complete": false,
+      "budget": {
+        "name": "qa-threat",
+        "cases": 150,
+        "counts": {
+          "vitest": 129,
+          "e2e": 9,
+          "invariantsBrowser": 12
+        },
+        "files": 44,
+        "limits": {
+          "cases": 150,
+          "files": 45,
+          "seconds": 600
+        },
+        "command": [
+          "node",
+          "--import",
+          "tsx/esm",
+          "tools/qa/threat-audit.ts",
+          "--out",
+          "test-results/r20-loadtime/threat-final-semi256"
+        ],
+        "seconds": 600.5068926030001,
+        "exitCode": 124,
+        "signal": null,
+        "failures": [
+          "qa-threat failed (exit 124)",
+          "qa-threat took 600.5 s, over the 600 s budget"
+        ],
+        "at": "2026-11-09T19:23:29.018Z"
+      },
+      "budgetSha256": "8038d95c75c99a0dbc8548e3b9536c958764c18eb892caa355c822a88bae3bd4",
+      "rawLog": "logs-extension/r20-final-semi256.log",
+      "timingPass": false
+    },
+    {
+      "label": "16 MiB reference run",
+      "artifact": "threat-final-semi16",
+      "runner": "2.31.107.230",
+      "workers": 4,
+      "semiSpaceMiB": "16",
+      "note": "heap trial",
+      "finishedStages": 23,
+      "finishedStageRecords": [
+        {
+          "id": "L4/skilled/1",
+          "seconds": 164.417
+        },
+        {
+          "id": "L5/passive/2",
+          "seconds": 197.292
+        },
+        {
+          "id": "L5/passive/3",
+          "seconds": 206.633
+        },
+        {
+          "id": "L5/passive/1",
+          "seconds": 225.486
+        },
+        {
+          "id": "L7/passive/2",
+          "seconds": 168.06
+        },
+        {
+          "id": "L4/passive/1",
+          "seconds": 118.543
+        },
+        {
+          "id": "L7/passive/3",
+          "seconds": 164.108
+        },
+        {
+          "id": "L4/high-hold",
+          "seconds": 158.726
+        },
+        {
+          "id": "L3/skilled/1",
+          "seconds": 63.285
+        },
+        {
+          "id": "L8/skilled/1",
+          "seconds": 74.48
+        },
+        {
+          "id": "L10/skilled/1",
+          "seconds": 108.642
+        },
+        {
+          "id": "L3/skilled/3",
+          "seconds": 124.4
+        },
+        {
+          "id": "L2/skilled/1",
+          "seconds": 54.788
+        },
+        {
+          "id": "L10/passive/1",
+          "seconds": 65.897
+        },
+        {
+          "id": "L9/passive/1",
+          "seconds": 57.621
+        },
+        {
+          "id": "L9/skilled/1",
+          "seconds": 53.773
+        },
+        {
+          "id": "L2/passive/1",
+          "seconds": 44.924
+        },
+        {
+          "id": "L3/skilled/2",
+          "seconds": 47.612
+        },
+        {
+          "id": "L1/skilled/1",
+          "seconds": 39.614
+        },
+        {
+          "id": "L5/skilled/1",
+          "seconds": 47.712
+        },
+        {
+          "id": "L5/skilled/3",
+          "seconds": 38.603
+        },
+        {
+          "id": "L5/skilled/2",
+          "seconds": 47.32
+        },
+        {
+          "id": "L7/passive/1",
+          "seconds": 37.098
+        }
+      ],
+      "complete": false,
+      "budget": {
+        "name": "qa-threat",
+        "cases": 150,
+        "counts": {
+          "vitest": 129,
+          "e2e": 9,
+          "invariantsBrowser": 12
+        },
+        "files": 44,
+        "limits": {
+          "cases": 150,
+          "files": 45,
+          "seconds": 600
+        },
+        "command": [
+          "node",
+          "--import",
+          "tsx/esm",
+          "tools/qa/threat-audit.ts",
+          "--out",
+          "test-results/r20-loadtime/threat-final-semi16"
+        ],
+        "seconds": 601.0623081110001,
+        "exitCode": 124,
+        "signal": null,
+        "failures": [
+          "qa-threat failed (exit 124)",
+          "qa-threat took 601.1 s, over the 600 s budget"
+        ],
+        "at": "2026-11-09T19:36:38.437Z"
+      },
+      "budgetSha256": "8b014d3507d47c50941869773a9cbfd2a34fbaa2b1bd7699d28818bca001d173",
+      "rawLog": "logs-extension/r20-final-semi16.log",
+      "timingPass": false
+    },
+    {
+      "label": "One V8 background thread",
+      "artifact": "threat-final-v8pool1",
+      "runner": "2.31.107.230",
+      "workers": 4,
+      "semiSpaceMiB": "64",
+      "note": "background worker trial",
+      "finishedStages": 27,
+      "finishedStageRecords": [
+        {
+          "id": "L4/skilled/1",
+          "seconds": 161.546
+        },
+        {
+          "id": "L5/passive/2",
+          "seconds": 198.635
+        },
+        {
+          "id": "L5/passive/3",
+          "seconds": 203.28
+        },
+        {
+          "id": "L5/passive/1",
+          "seconds": 223.453
+        },
+        {
+          "id": "L7/passive/2",
+          "seconds": 164.681
+        },
+        {
+          "id": "L4/passive/1",
+          "seconds": 117.923
+        },
+        {
+          "id": "L7/passive/3",
+          "seconds": 153.316
+        },
+        {
+          "id": "L4/high-hold",
+          "seconds": 152.048
+        },
+        {
+          "id": "L3/skilled/1",
+          "seconds": 59.97
+        },
+        {
+          "id": "L8/skilled/1",
+          "seconds": 66.923
+        },
+        {
+          "id": "L3/skilled/3",
+          "seconds": 114.457
+        },
+        {
+          "id": "L10/skilled/1",
+          "seconds": 103.011
+        },
+        {
+          "id": "L2/skilled/1",
+          "seconds": 53.312
+        },
+        {
+          "id": "L10/passive/1",
+          "seconds": 64.327
+        },
+        {
+          "id": "L9/passive/1",
+          "seconds": 52.607
+        },
+        {
+          "id": "L9/skilled/1",
+          "seconds": 50.077
+        },
+        {
+          "id": "L2/passive/1",
+          "seconds": 48.304
+        },
+        {
+          "id": "L3/skilled/2",
+          "seconds": 42.505
+        },
+        {
+          "id": "L1/skilled/1",
+          "seconds": 37.818
+        },
+        {
+          "id": "L5/skilled/1",
+          "seconds": 41.55
+        },
+        {
+          "id": "L5/skilled/3",
+          "seconds": 34.19
+        },
+        {
+          "id": "L5/skilled/2",
+          "seconds": 42.59
+        },
+        {
+          "id": "L7/passive/1",
+          "seconds": 35.469
+        },
+        {
+          "id": "L7/skilled/1",
+          "seconds": 42.177
+        },
+        {
+          "id": "L1/passive/1",
+          "seconds": 19.389
+        },
+        {
+          "id": "L7/skilled/2",
+          "seconds": 31.397
+        },
+        {
+          "id": "L8/passive/1",
+          "seconds": 38.283
+        }
+      ],
+      "complete": false,
+      "budget": {
+        "name": "qa-threat",
+        "cases": 150,
+        "counts": {
+          "vitest": 129,
+          "e2e": 9,
+          "invariantsBrowser": 12
+        },
+        "files": 44,
+        "limits": {
+          "cases": 150,
+          "files": 45,
+          "seconds": 600
+        },
+        "command": [
+          "node",
+          "--import",
+          "tsx/esm",
+          "tools/qa/threat-audit.ts",
+          "--out",
+          "test-results/r20-loadtime/threat-final-v8pool1"
+        ],
+        "seconds": 600.2078950529999,
+        "exitCode": 124,
+        "signal": null,
+        "failures": [
+          "qa-threat failed (exit 124)",
+          "qa-threat took 600.2 s, over the 600 s budget"
+        ],
+        "at": "2026-11-09T19:46:52.424Z"
+      },
+      "budgetSha256": "2da7c1404e66b122cc18598f4300cd3f980de3b4fb118a7a686fa736b23fbd20",
+      "rawLog": "logs-extension/r20-final-v8pool1.log",
+      "timingPass": false
+    }
+  ],
+  "inlineProbe": {
+    "exact": true,
+    "before": 126.236767754,
+    "after": 125.887550939,
+    "deltaPercent": -0.2766363724398646,
+    "nativeStateHash": "bfdfd24f",
+    "time": 1200
+  },
+  "rawArchive": "/Users/wesner/Workspace/mi-evidence-archive/test-results/r20-loadtime-b",
+  "coldProtocol": "20 unique fresh browser profiles per side/configuration; foreign work invalidates its entire reservation; no partial samples counted"
+}
