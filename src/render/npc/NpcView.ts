@@ -62,7 +62,10 @@ export class NpcView extends Group {
   /** Hidden companions and replenished pets need their skin/shadow programs
    * before appearing. Clones borrow the actual rigs without adding sim actors. */
   prewarmCorgi(at: Vector3): () => void {
-    const models = this.world.scenario === 'L9' ? [this.dog, ...this.pets.values()] : [this.dog];
+    // The attached companion owns its courier-depth graphs; the raw asset
+    // prototype retains ordinary world depth for ambient pets.
+    const companion = [...this.heroes].find(([id]) => this.world.entities.get(id)?.companion)?.[1].root ?? this.dog;
+    const models = this.world.scenario === 'L9' ? [companion, ...this.pets.values()] : [companion];
     const copies = models.map((model, i) => {
       const root = model.getObjectByName('skin_body') ? cloneSkeleton(model) : model.clone(true);
       root.position.copy(at); root.position.x += i * .4; this.add(root); return root;

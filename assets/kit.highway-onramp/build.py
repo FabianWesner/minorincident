@@ -168,7 +168,8 @@ def lamp(t, side, index):
     center=tip+Vector((0,0,-.43))
     head=box('lampHead'+str(index),center,(.34,.34,.43),'glow',.04)
     head['preserve_node']=True
-    head['pivot']='lamp center' 
+    # `pivot` is a numeric transform field in Three's GLTFLoader.
+    head['pivot_note']='lamp center'
     box('Lantern foot',center+Vector((0,0,-.25)),(.38,.38,.06),'woodWarm',.018)
     bpy.ops.mesh.primitive_cone_add(vertices=4,radius1=.36,radius2=.10,depth=.18,location=center+Vector((0,0,.31)),rotation=(0,0,math.pi/4))
     obj=bpy.context.object

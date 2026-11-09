@@ -1,0 +1,100 @@
+{
+  "checks": [
+    {
+      "name": "typecheck",
+      "command": "npm",
+      "args": [
+        "run",
+        "typecheck"
+      ],
+      "at": "2026-11-09T18:59:09.210Z",
+      "seconds": 54.3984623,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "name": "lint",
+      "command": "npm",
+      "args": [
+        "run",
+        "lint"
+      ],
+      "at": "2026-11-09T19:00:03.610Z",
+      "seconds": 34.328259728000006,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "name": "budget-cleanup",
+      "command": "/usr/local/bin/node",
+      "args": [
+        "node_modules/vitest/vitest.mjs",
+        "run",
+        "--project",
+        "default",
+        "tests/tools/test-budget-tools.test.ts",
+        "--maxWorkers=4",
+        "--configLoader",
+        "runner",
+        "--reporter=json",
+        "--outputFile=test-results/r20-loadtime/extension-validation/budget-tests.json"
+      ],
+      "at": "2026-11-09T19:00:37.938Z",
+      "seconds": 25.06506465,
+      "code": 0,
+      "signal": null
+    }
+  ],
+  "focusedTests": {
+    "passed": 1,
+    "failed": 0,
+    "success": true,
+    "sha256": "46cc8d38a81402430d55f64ba49300732db2b1bcdb4436c6a44a7ef3d4575a07"
+  },
+  "scope": "Retained inventory/admission changes typecheck and lint; existing cancellation/timeout/descendant-cleanup regression passes. That snapshot also contained observer/schedule probes subsequently reverted to previously validated bytes.",
+  "testCasesAdded": 0,
+  "budget": {
+    "cases": 150,
+    "caseLimit": 150,
+    "files": 44,
+    "fileLimit": 45
+  },
+  "finalVerify": {
+    "command": [
+      "npm",
+      "run",
+      "verify",
+      "--",
+      "E18"
+    ],
+    "at": "2026-11-09T19:51:38.759885+00:00",
+    "seconds": 68.672247833,
+    "exitCode": 0,
+    "checks": {
+      "target": "E18",
+      "epics": [
+        "E18"
+      ],
+      "checks": [
+        {
+          "command": "npm run typecheck",
+          "status": 0,
+          "seconds": 19.838
+        },
+        {
+          "command": "npm run lint",
+          "status": 0,
+          "seconds": 11.43
+        },
+        {
+          "command": "npm test",
+          "status": 0,
+          "seconds": 37.027
+        }
+      ]
+    },
+    "revision": "09b133ac0c7260170237f2a6abd3dda09e019183",
+    "unitFilesPassed": 27,
+    "unitCasesPassed": 107
+  }
+}

@@ -342,11 +342,12 @@ export class GameView implements Lifecycle {
     // Resolve the authored interaction radius before warming its buffers.
     // The first gameplay sync must not replace the torus that was just warmed.
     this.marker?.update();
-    // Instantiate L9's resident pet/escort before warming, including its own
-    // skinned shadow bindings. Their first update can request an escort model.
-    if (this.world.scenario === 'L9') this.npcs?.update(this.camera);
+    // Instantiate resident companions/escorts before warming. The companion
+    // owns courier-depth materials that differ from its asset prototype, and
+    // the first update can also request an escort model.
+    this.npcs?.update(this.camera);
     await Promise.all([this.crowd?.ready(), this.npcs?.ready(), this.districts?.ready()]);
-    if (this.world.scenario === 'L9') this.npcs?.update(this.camera);
+    this.npcs?.update(this.camera);
     // The resident mounted gun used to load only in update()/screenshotReady(),
     // after the full warm-up. Its white vertex-colour mesh then linked on first
     // camera entry (especially low WebGL). Include it in the same loading pass.

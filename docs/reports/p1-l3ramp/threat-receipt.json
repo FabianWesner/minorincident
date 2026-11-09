@@ -1,0 +1,157 @@
+{
+  "sourceHash": "4f532423fbf0824a74b3e496e42e45c804303a99975f765c90a42cccf26d579f",
+  "observerHash": "f6f19f3a30a061c07b0e90a71d614f36498a80c2bdf41074dd826884cc2d7165",
+  "revision": "8f37b658f49677fcdc97c31f58a29c78dfb0be6d",
+  "mainRevision": "04742b26ef256c6c431321360c1f429dee9efe98",
+  "sourceMatchesMain": false,
+  "seconds": 124.452566344,
+  "flags": [
+    "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+  ],
+  "command": "npm run qa:threat:remote -- --levels L3",
+  "exitCode": 1,
+  "run": {
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 2544,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    },
+    "level": "L3",
+    "policy": "complete",
+    "seed": 1,
+    "completed": true,
+    "time": 193.4,
+    "deaths": 0,
+    "kills": 0,
+    "damageTaken": 36.300000000000004,
+    "failures": {},
+    "objectiveTimeline": [
+      {
+        "id": "armory",
+        "t": 4.45
+      },
+      {
+        "id": "defend",
+        "t": 35.65
+      },
+      {
+        "id": "checkpoint",
+        "t": 188.4
+      }
+    ],
+    "furthestObjective": "checkpoint",
+    "activeObjectives": [],
+    "outcome": "complete",
+    "blocker": null
+  },
+  "passiveFlags": [],
+  "levelFlags": [
+    "wave/station-0:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+    "wave/station-2:WAVE_NO_ATTACK_WITHIN_20_SECONDS"
+  ],
+  "army": {
+    "seeds": [
+      {
+        "seed": 1,
+        "valid": true,
+        "army": 2,
+        "attacksPerMinute": 9.034369885433716
+      },
+      {
+        "seed": 2,
+        "valid": true,
+        "army": 4,
+        "attacksPerMinute": 8.672798948751643
+      },
+      {
+        "seed": 3,
+        "valid": true,
+        "army": 0,
+        "attacksPerMinute": 231.1960926945859
+      }
+    ],
+    "measured": 3,
+    "within": 2,
+    "pass": true
+  },
+  "survivalSeeds": [
+    {
+      "seed": 1,
+      "valid": true,
+      "s1": {
+        "completed": true,
+        "officerHits": 118,
+        "officerKills": 23,
+        "playerKills": 25,
+        "damage": 11
+      },
+      "density": {
+        "prepopulated": [
+          125,
+          240,
+          710
+        ],
+        "near30": [
+          11,
+          21,
+          32
+        ],
+        "maxConcurrent": 100,
+        "cap": 100
+      }
+    },
+    {
+      "seed": 2,
+      "valid": true,
+      "s1": {
+        "completed": true,
+        "officerHits": 149,
+        "officerKills": 34,
+        "playerKills": 15,
+        "damage": 4.4
+      },
+      "density": {
+        "prepopulated": [
+          125,
+          240,
+          710
+        ],
+        "near30": [
+          11,
+          22,
+          21
+        ],
+        "maxConcurrent": 100,
+        "cap": 100
+      }
+    },
+    {
+      "seed": 3,
+      "valid": true,
+      "s1": {
+        "completed": true,
+        "officerHits": 40,
+        "officerKills": 9,
+        "playerKills": 24,
+        "damage": 55
+      },
+      "density": {
+        "prepopulated": [
+          125,
+          240,
+          710
+        ],
+        "near30": [
+          13,
+          29,
+          40
+        ],
+        "maxConcurrent": 100,
+        "cap": 100
+      }
+    }
+  ]
+}

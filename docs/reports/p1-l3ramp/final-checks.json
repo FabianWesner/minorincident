@@ -1,0 +1,69 @@
+{
+  "target": "E21",
+  "epics": [
+    "E21"
+  ],
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "status": 0,
+      "seconds": 55.02
+    },
+    {
+      "command": "npm run lint",
+      "status": 0,
+      "seconds": 33.608
+    },
+    {
+      "command": "npm test",
+      "status": 0,
+      "seconds": 167.027
+    }
+  ],
+  "sourceRevision": "3549e844af4132ba33f95c2b3fcd04ccc5cbecf6",
+  "fullGateSourceRevision": "df7448aa65bd10eb716ac274ba241aa83b0008cd",
+  "mergedMainRevision": "f691bf058fb8e444d401ddc443e41fef3484c35f",
+  "unitAndRuntimeMatchFullGate": true,
+  "checkedSourceDigest": "140cd0cb332cf530b509040ebfb84c52f4b8d793eee598a4cd3a7c4b2ae57a73",
+  "digestScopes": [
+    "src",
+    "public",
+    "layouts",
+    "assets/kit.highway-onramp",
+    "tests",
+    "tools/qa/l3-ramp-courier.ts",
+    "tools/qa/l3-ramp-restore.ts",
+    "tools/qa/l3-ramp-visual.ts"
+  ],
+  "sparseAuthoredAssetsReadFromCommit": [
+    "assets/kit.highway-onramp/model.glb",
+    "assets/kit.highway-onramp/model.lod1.glb",
+    "assets/kit.highway-onramp/model.lod2.glb"
+  ],
+  "workers": 2,
+  "runner": "2.31.170.171",
+  "unit": {
+    "filesPassed": 27,
+    "testsPassed": 106,
+    "testsSkipped": 1,
+    "seconds": 161.34,
+    "movementRegressionSeconds": 25.109,
+    "registeredCaseBudget": 150,
+    "registeredCases": 150
+  },
+  "subsequentQaHelperChecks": [
+    {
+      "command": "npm run typecheck",
+      "status": 0,
+      "revision": "3549e844af4132ba33f95c2b3fcd04ccc5cbecf6",
+      "runner": "94.130.181.173"
+    },
+    {
+      "command": "npm run lint",
+      "status": 0,
+      "revision": "3549e844af4132ba33f95c2b3fcd04ccc5cbecf6",
+      "runner": "2.31.107.230"
+    }
+  ],
+  "runnerSetup": "The private checkout normally contains only an index. Unpack authentic HEAD commit/tree objects and hash the matching runtime blobs into its object store, then update its private HEAD to the checked source revision. No synthetic source commit or test override."
+}

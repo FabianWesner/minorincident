@@ -1,0 +1,1313 @@
+{
+  "method": "Candidate inventory: production per-level layout transforms and resolved world tier; asset notes containing a whole stair/stairs/staircase/ramp word, plus named layout colliders and mission-built L9 course ramps. A candidate is not automatically an intended walking route.",
+  "candidates": [
+    "bld.apartment-block-a",
+    "bld.apartment-block-b",
+    "bld.church",
+    "bld.house-c",
+    "bld.metro-entrance",
+    "bld.safe-house",
+    "bld.town-hall",
+    "decay.burned-facade.brick",
+    "decay.burned-facade.diner",
+    "int.basement-cellar",
+    "int.metro-exit",
+    "int.metro-station",
+    "kit.dispersal-platform",
+    "kit.highway-onramp",
+    "kit.maintenance-corridor",
+    "kit.metro-tunnel",
+    "kit.porch-stairs",
+    "kit.shelter-camp",
+    "veh.evac-bus"
+  ],
+  "levels": [
+    {
+      "level": "L1",
+      "assets": [
+        {
+          "assetId": "bld.house-c",
+          "placements": [
+            "bld.house-c:67",
+            "bld.house-c:112",
+            "bld.house-c:154",
+            "bld.house-c:232",
+            "bld.house-c:356",
+            "bld.house-c:392",
+            "bld.house-c:481",
+            "bld.house-c:542",
+            "bld.house-c:695",
+            "bld.house-c:736"
+          ]
+        }
+      ],
+      "namedColliders": []
+    },
+    {
+      "level": "L2",
+      "assets": [
+        {
+          "assetId": "bld.house-c",
+          "placements": [
+            "bld.house-c:67",
+            "bld.house-c:112",
+            "bld.house-c:154",
+            "bld.house-c:232",
+            "bld.house-c:356",
+            "bld.house-c:392",
+            "bld.house-c:481",
+            "bld.house-c:542",
+            "bld.house-c:695",
+            "bld.house-c:736"
+          ]
+        }
+      ],
+      "namedColliders": []
+    },
+    {
+      "level": "L3",
+      "assets": [
+        {
+          "assetId": "bld.house-c",
+          "placements": [
+            "bld.house-c:375",
+            "bld.house-c:416",
+            "bld.house-c:467",
+            "bld.house-c:511",
+            "bld.house-c:554",
+            "bld.house-c:775",
+            "bld.house-c:793",
+            "bld.house-c:811",
+            "bld.house-c:829",
+            "bld.house-c:847",
+            "bld.house-c:865",
+            "bld.house-c:883"
+          ]
+        },
+        {
+          "assetId": "kit.highway-onramp",
+          "placements": [
+            "kit.highway-onramp:991",
+            "kit.highway-onramp:992"
+          ]
+        },
+        {
+          "assetId": "veh.evac-bus",
+          "placements": [
+            "l3-army-105",
+            "l3-army-106"
+          ]
+        }
+      ],
+      "namedColliders": [
+        {
+          "id": "kit.highway-onramp:991",
+          "walkable": false,
+          "min": [
+            141.32815,
+            0,
+            -8.390850000000002
+          ],
+          "max": [
+            169.67185,
+            9.477,
+            8.390850000000002
+          ]
+        },
+        {
+          "id": "kit.highway-onramp:992",
+          "walkable": false,
+          "min": [
+            177.32815,
+            0,
+            -8.39085
+          ],
+          "max": [
+            205.67185,
+            9.477,
+            8.39085
+          ]
+        },
+        {
+          "id": "l3-ramp-foot-seal-143.4",
+          "walkable": false,
+          "min": [
+            143.4,
+            0,
+            -1.05
+          ],
+          "max": [
+            144.3,
+            1.2,
+            -0.45
+          ]
+        },
+        {
+          "id": "l3-ramp-foot-seal-202.8",
+          "walkable": false,
+          "min": [
+            202.8,
+            0,
+            0.4
+          ],
+          "max": [
+            203.7,
+            1.2,
+            1.1
+          ]
+        }
+      ]
+    },
+    {
+      "level": "L4",
+      "assets": [
+        {
+          "assetId": "bld.apartment-block-a",
+          "placements": [
+            "bld.apartment-block-a:0",
+            "bld.apartment-block-a:4",
+            "bld.apartment-block-a:57",
+            "bld.apartment-block-a:59",
+            "bld.apartment-block-a:61",
+            "bld.apartment-block-a:141",
+            "bld.apartment-block-a:143",
+            "bld.apartment-block-a:220",
+            "bld.apartment-block-a:224",
+            "bld.apartment-block-a:306"
+          ]
+        },
+        {
+          "assetId": "bld.town-hall",
+          "placements": [
+            "bld.town-hall:1"
+          ]
+        },
+        {
+          "assetId": "bld.apartment-block-b",
+          "placements": [
+            "bld.apartment-block-b:3",
+            "bld.apartment-block-b:6",
+            "bld.apartment-block-b:58",
+            "bld.apartment-block-b:60",
+            "bld.apartment-block-b:142",
+            "bld.apartment-block-b:144",
+            "bld.apartment-block-b:217",
+            "bld.apartment-block-b:222",
+            "bld.apartment-block-b:226"
+          ]
+        },
+        {
+          "assetId": "bld.church",
+          "placements": [
+            "bld.church:5"
+          ]
+        },
+        {
+          "assetId": "int.basement-cellar",
+          "placements": [
+            "int.basement-cellar:216"
+          ]
+        },
+        {
+          "assetId": "bld.metro-entrance",
+          "placements": [
+            "bld.metro-entrance:225"
+          ]
+        },
+        {
+          "assetId": "bld.house-c",
+          "placements": [
+            "bld.house-c:451",
+            "bld.house-c:501",
+            "bld.house-c:691"
+          ]
+        }
+      ],
+      "namedColliders": [
+        {
+          "id": "dressing:cellar-stair:240",
+          "walkable": false,
+          "min": [
+            76.3,
+            0,
+            -5.7
+          ],
+          "max": [
+            77.3,
+            2.4,
+            -0.7000000000000002
+          ]
+        }
+      ]
+    },
+    {
+      "level": "L5",
+      "assets": [
+        {
+          "assetId": "bld.apartment-block-a",
+          "placements": [
+            "bld.apartment-block-a:0",
+            "bld.apartment-block-a:4",
+            "bld.apartment-block-a:57",
+            "bld.apartment-block-a:59",
+            "bld.apartment-block-a:61",
+            "bld.apartment-block-a:141",
+            "bld.apartment-block-a:143",
+            "bld.apartment-block-a:220",
+            "bld.apartment-block-a:224",
+            "bld.apartment-block-a:306"
+          ]
+        },
+        {
+          "assetId": "bld.town-hall",
+          "placements": [
+            "bld.town-hall:1"
+          ]
+        },
+        {
+          "assetId": "bld.apartment-block-b",
+          "placements": [
+            "bld.apartment-block-b:3",
+            "bld.apartment-block-b:6",
+            "bld.apartment-block-b:58",
+            "bld.apartment-block-b:60",
+            "bld.apartment-block-b:142",
+            "bld.apartment-block-b:144",
+            "bld.apartment-block-b:217",
+            "bld.apartment-block-b:222",
+            "bld.apartment-block-b:226"
+          ]
+        },
+        {
+          "assetId": "bld.church",
+          "placements": [
+            "bld.church:5"
+          ]
+        },
+        {
+          "assetId": "int.basement-cellar",
+          "placements": [
+            "int.basement-cellar:216"
+          ]
+        },
+        {
+          "assetId": "bld.metro-entrance",
+          "placements": [
+            "bld.metro-entrance:225"
+          ]
+        },
+        {
+          "assetId": "bld.house-c",
+          "placements": [
+            "bld.house-c:451",
+            "bld.house-c:501",
+            "bld.house-c:691"
+          ]
+        },
+        {
+          "assetId": "int.metro-station",
+          "placements": [
+            "l5-station"
+          ]
+        }
+      ],
+      "namedColliders": [
+        {
+          "id": "dressing:cellar-stair:240",
+          "walkable": false,
+          "min": [
+            76.3,
+            0,
+            -5.7
+          ],
+          "max": [
+            77.3,
+            2.4,
+            -0.7000000000000002
+          ]
+        }
+      ]
+    },
+    {
+      "level": "L6",
+      "assets": [
+        {
+          "assetId": "int.metro-station",
+          "placements": [
+            "l6-0"
+          ]
+        },
+        {
+          "assetId": "kit.metro-tunnel",
+          "placements": [
+            "l6-1",
+            "l6-2",
+            "l6-3",
+            "l6-4",
+            "l6-5",
+            "l6-6",
+            "l6-7",
+            "l6-8",
+            "l6-9",
+            "l6-10",
+            "l6-11",
+            "l6-12",
+            "l6-13",
+            "l6-14",
+            "l6-15",
+            "l6-16",
+            "l6-17",
+            "l6-18"
+          ]
+        },
+        {
+          "assetId": "kit.maintenance-corridor",
+          "placements": [
+            "l6-19",
+            "l6-20",
+            "l6-21",
+            "l6-22",
+            "l6-23"
+          ]
+        },
+        {
+          "assetId": "int.metro-exit",
+          "placements": [
+            "l6-24"
+          ]
+        },
+        {
+          "assetId": "kit.shelter-camp",
+          "placements": [
+            "l6-25",
+            "l6-26",
+            "l6-27",
+            "l6-28",
+            "l6-29",
+            "l6-30"
+          ]
+        }
+      ],
+      "namedColliders": [
+        {
+          "id": "northgate-tread-17.3-0",
+          "walkable": true,
+          "min": [
+            249.4,
+            0.4,
+            16.55
+          ],
+          "max": [
+            249.65,
+            0.7374999999999999,
+            18.05
+          ]
+        },
+        {
+          "id": "northgate-tread-17.3-1",
+          "walkable": true,
+          "min": [
+            249.65,
+            0.4,
+            16.55
+          ],
+          "max": [
+            249.9,
+            0.875,
+            18.05
+          ]
+        },
+        {
+          "id": "northgate-tread-17.3-2",
+          "walkable": true,
+          "min": [
+            249.9,
+            0.4,
+            16.55
+          ],
+          "max": [
+            250.15,
+            1.0125,
+            18.05
+          ]
+        },
+        {
+          "id": "northgate-tread-17.3-3",
+          "walkable": true,
+          "min": [
+            250.15,
+            0.4,
+            16.55
+          ],
+          "max": [
+            250.4,
+            1.15,
+            18.05
+          ]
+        },
+        {
+          "id": "northgate-tread-17.3-4",
+          "walkable": true,
+          "min": [
+            250.4,
+            0.4,
+            16.55
+          ],
+          "max": [
+            250.65,
+            1.2875,
+            18.05
+          ]
+        },
+        {
+          "id": "northgate-tread-17.3-5",
+          "walkable": true,
+          "min": [
+            250.65,
+            0.4,
+            16.55
+          ],
+          "max": [
+            250.9,
+            1.4249999999999998,
+            18.05
+          ]
+        },
+        {
+          "id": "northgate-tread-17.3-6",
+          "walkable": true,
+          "min": [
+            250.9,
+            0.4,
+            16.55
+          ],
+          "max": [
+            251.15,
+            1.5625,
+            18.05
+          ]
+        },
+        {
+          "id": "northgate-tread-17.3-7",
+          "walkable": true,
+          "min": [
+            251.15,
+            0.4,
+            16.55
+          ],
+          "max": [
+            251.4,
+            1.6999999999999997,
+            18.05
+          ]
+        },
+        {
+          "id": "northgate-tread-17.3-8",
+          "walkable": true,
+          "min": [
+            251.4,
+            0.4,
+            16.55
+          ],
+          "max": [
+            251.65,
+            1.8375,
+            18.05
+          ]
+        },
+        {
+          "id": "northgate-tread-17.3-9",
+          "walkable": true,
+          "min": [
+            251.65,
+            0.4,
+            16.55
+          ],
+          "max": [
+            251.9,
+            1.975,
+            18.05
+          ]
+        },
+        {
+          "id": "northgate-tread-17.3-10",
+          "walkable": true,
+          "min": [
+            251.9,
+            0.4,
+            16.55
+          ],
+          "max": [
+            252.15,
+            2.1125,
+            18.05
+          ]
+        },
+        {
+          "id": "northgate-tread-17.3-11",
+          "walkable": true,
+          "min": [
+            252.15,
+            0.4,
+            16.55
+          ],
+          "max": [
+            252.4,
+            2.2499999999999996,
+            18.05
+          ]
+        },
+        {
+          "id": "northgate-tread-17.3-12",
+          "walkable": true,
+          "min": [
+            252.4,
+            0.4,
+            16.55
+          ],
+          "max": [
+            252.65,
+            2.3874999999999997,
+            18.05
+          ]
+        },
+        {
+          "id": "northgate-tread-17.3-13",
+          "walkable": true,
+          "min": [
+            252.65,
+            0.4,
+            16.55
+          ],
+          "max": [
+            252.9,
+            2.525,
+            18.05
+          ]
+        },
+        {
+          "id": "northgate-tread-17.3-14",
+          "walkable": true,
+          "min": [
+            252.9,
+            0.4,
+            16.55
+          ],
+          "max": [
+            253.15,
+            2.6625,
+            18.05
+          ]
+        },
+        {
+          "id": "northgate-tread-17.3-15",
+          "walkable": true,
+          "min": [
+            253.15,
+            0.4,
+            16.55
+          ],
+          "max": [
+            253.4,
+            2.8,
+            18.05
+          ]
+        },
+        {
+          "id": "northgate-tread-17.3-16",
+          "walkable": true,
+          "min": [
+            253.4,
+            0.4,
+            16.55
+          ],
+          "max": [
+            253.65,
+            2.9375,
+            18.05
+          ]
+        },
+        {
+          "id": "northgate-tread-17.3-17",
+          "walkable": true,
+          "min": [
+            253.65,
+            0.4,
+            16.55
+          ],
+          "max": [
+            253.9,
+            3.075,
+            18.05
+          ]
+        },
+        {
+          "id": "northgate-tread-17.3-18",
+          "walkable": true,
+          "min": [
+            253.9,
+            0.4,
+            16.55
+          ],
+          "max": [
+            254.15,
+            3.2125,
+            18.05
+          ]
+        },
+        {
+          "id": "northgate-tread-17.3-19",
+          "walkable": true,
+          "min": [
+            254.15,
+            0.4,
+            16.55
+          ],
+          "max": [
+            254.4,
+            3.35,
+            18.05
+          ]
+        },
+        {
+          "id": "northgate-tread-17.3-20",
+          "walkable": true,
+          "min": [
+            254.4,
+            0.4,
+            16.55
+          ],
+          "max": [
+            254.65,
+            3.4875,
+            18.05
+          ]
+        },
+        {
+          "id": "northgate-tread-17.3-21",
+          "walkable": true,
+          "min": [
+            254.65,
+            0.4,
+            16.55
+          ],
+          "max": [
+            254.9,
+            3.625,
+            18.05
+          ]
+        },
+        {
+          "id": "northgate-tread-17.3-22",
+          "walkable": true,
+          "min": [
+            254.9,
+            0.4,
+            16.55
+          ],
+          "max": [
+            255.15,
+            3.7624999999999997,
+            18.05
+          ]
+        },
+        {
+          "id": "northgate-tread-17.3-23",
+          "walkable": true,
+          "min": [
+            255.15,
+            0.4,
+            16.55
+          ],
+          "max": [
+            255.4,
+            3.8999999999999995,
+            18.05
+          ]
+        },
+        {
+          "id": "northgate-tread-15-0",
+          "walkable": true,
+          "min": [
+            249.4,
+            0.4,
+            14.325
+          ],
+          "max": [
+            249.65,
+            0.7374999999999999,
+            15.675
+          ]
+        },
+        {
+          "id": "northgate-tread-15-1",
+          "walkable": true,
+          "min": [
+            249.65,
+            0.4,
+            14.325
+          ],
+          "max": [
+            249.9,
+            0.875,
+            15.675
+          ]
+        },
+        {
+          "id": "northgate-tread-15-2",
+          "walkable": true,
+          "min": [
+            249.9,
+            0.4,
+            14.325
+          ],
+          "max": [
+            250.15,
+            1.0125,
+            15.675
+          ]
+        },
+        {
+          "id": "northgate-tread-15-3",
+          "walkable": true,
+          "min": [
+            250.15,
+            0.4,
+            14.325
+          ],
+          "max": [
+            250.4,
+            1.15,
+            15.675
+          ]
+        },
+        {
+          "id": "northgate-tread-15-4",
+          "walkable": true,
+          "min": [
+            250.4,
+            0.4,
+            14.325
+          ],
+          "max": [
+            250.65,
+            1.2875,
+            15.675
+          ]
+        },
+        {
+          "id": "northgate-tread-15-5",
+          "walkable": true,
+          "min": [
+            250.65,
+            0.4,
+            14.325
+          ],
+          "max": [
+            250.9,
+            1.4249999999999998,
+            15.675
+          ]
+        },
+        {
+          "id": "northgate-tread-15-6",
+          "walkable": true,
+          "min": [
+            250.9,
+            0.4,
+            14.325
+          ],
+          "max": [
+            251.15,
+            1.5625,
+            15.675
+          ]
+        },
+        {
+          "id": "northgate-tread-15-7",
+          "walkable": true,
+          "min": [
+            251.15,
+            0.4,
+            14.325
+          ],
+          "max": [
+            251.4,
+            1.6999999999999997,
+            15.675
+          ]
+        },
+        {
+          "id": "northgate-tread-15-8",
+          "walkable": true,
+          "min": [
+            251.4,
+            0.4,
+            14.325
+          ],
+          "max": [
+            251.65,
+            1.8375,
+            15.675
+          ]
+        },
+        {
+          "id": "northgate-tread-15-9",
+          "walkable": true,
+          "min": [
+            251.65,
+            0.4,
+            14.325
+          ],
+          "max": [
+            251.9,
+            1.975,
+            15.675
+          ]
+        },
+        {
+          "id": "northgate-tread-15-10",
+          "walkable": true,
+          "min": [
+            251.9,
+            0.4,
+            14.325
+          ],
+          "max": [
+            252.15,
+            2.1125,
+            15.675
+          ]
+        },
+        {
+          "id": "northgate-tread-15-11",
+          "walkable": true,
+          "min": [
+            252.15,
+            0.4,
+            14.325
+          ],
+          "max": [
+            252.4,
+            2.2499999999999996,
+            15.675
+          ]
+        },
+        {
+          "id": "northgate-tread-15-12",
+          "walkable": true,
+          "min": [
+            252.4,
+            0.4,
+            14.325
+          ],
+          "max": [
+            252.65,
+            2.3874999999999997,
+            15.675
+          ]
+        },
+        {
+          "id": "northgate-tread-15-13",
+          "walkable": true,
+          "min": [
+            252.65,
+            0.4,
+            14.325
+          ],
+          "max": [
+            252.9,
+            2.525,
+            15.675
+          ]
+        },
+        {
+          "id": "northgate-tread-15-14",
+          "walkable": true,
+          "min": [
+            252.9,
+            0.4,
+            14.325
+          ],
+          "max": [
+            253.15,
+            2.6625,
+            15.675
+          ]
+        },
+        {
+          "id": "northgate-tread-15-15",
+          "walkable": true,
+          "min": [
+            253.15,
+            0.4,
+            14.325
+          ],
+          "max": [
+            253.4,
+            2.8,
+            15.675
+          ]
+        },
+        {
+          "id": "northgate-tread-15-16",
+          "walkable": true,
+          "min": [
+            253.4,
+            0.4,
+            14.325
+          ],
+          "max": [
+            253.65,
+            2.9375,
+            15.675
+          ]
+        },
+        {
+          "id": "northgate-tread-15-17",
+          "walkable": true,
+          "min": [
+            253.65,
+            0.4,
+            14.325
+          ],
+          "max": [
+            253.9,
+            3.075,
+            15.675
+          ]
+        },
+        {
+          "id": "northgate-tread-15-18",
+          "walkable": true,
+          "min": [
+            253.9,
+            0.4,
+            14.325
+          ],
+          "max": [
+            254.15,
+            3.2125,
+            15.675
+          ]
+        },
+        {
+          "id": "northgate-tread-15-19",
+          "walkable": true,
+          "min": [
+            254.15,
+            0.4,
+            14.325
+          ],
+          "max": [
+            254.4,
+            3.35,
+            15.675
+          ]
+        },
+        {
+          "id": "northgate-tread-15-20",
+          "walkable": true,
+          "min": [
+            254.4,
+            0.4,
+            14.325
+          ],
+          "max": [
+            254.65,
+            3.4875,
+            15.675
+          ]
+        },
+        {
+          "id": "northgate-tread-15-21",
+          "walkable": true,
+          "min": [
+            254.65,
+            0.4,
+            14.325
+          ],
+          "max": [
+            254.9,
+            3.625,
+            15.675
+          ]
+        },
+        {
+          "id": "northgate-tread-15-22",
+          "walkable": true,
+          "min": [
+            254.9,
+            0.4,
+            14.325
+          ],
+          "max": [
+            255.15,
+            3.7624999999999997,
+            15.675
+          ]
+        },
+        {
+          "id": "northgate-tread-15-23",
+          "walkable": true,
+          "min": [
+            255.15,
+            0.4,
+            14.325
+          ],
+          "max": [
+            255.4,
+            3.8999999999999995,
+            15.675
+          ]
+        }
+      ]
+    },
+    {
+      "level": "L7",
+      "assets": [
+        {
+          "assetId": "bld.apartment-block-a",
+          "placements": [
+            "bld.apartment-block-a:0",
+            "bld.apartment-block-a:4",
+            "bld.apartment-block-a:57",
+            "bld.apartment-block-a:59",
+            "bld.apartment-block-a:61",
+            "bld.apartment-block-a:141",
+            "bld.apartment-block-a:143",
+            "bld.apartment-block-a:220",
+            "bld.apartment-block-a:224",
+            "bld.apartment-block-a:306",
+            "l7-edge-shell-0",
+            "l7-edge-shell-2",
+            "l7-edge-shell-4"
+          ]
+        },
+        {
+          "assetId": "bld.town-hall",
+          "placements": [
+            "bld.town-hall:1"
+          ]
+        },
+        {
+          "assetId": "bld.apartment-block-b",
+          "placements": [
+            "bld.apartment-block-b:3",
+            "bld.apartment-block-b:6",
+            "bld.apartment-block-b:58",
+            "bld.apartment-block-b:60",
+            "bld.apartment-block-b:142",
+            "bld.apartment-block-b:144",
+            "bld.apartment-block-b:217",
+            "bld.apartment-block-b:222",
+            "bld.apartment-block-b:226"
+          ]
+        },
+        {
+          "assetId": "bld.church",
+          "placements": [
+            "bld.church:5"
+          ]
+        },
+        {
+          "assetId": "bld.metro-entrance",
+          "placements": [
+            "bld.metro-entrance:225"
+          ]
+        },
+        {
+          "assetId": "bld.house-c",
+          "placements": [
+            "bld.house-c:691"
+          ]
+        },
+        {
+          "assetId": "int.metro-exit",
+          "placements": [
+            "l7-northgate-mouth"
+          ]
+        }
+      ],
+      "namedColliders": []
+    },
+    {
+      "level": "L8",
+      "assets": [
+        {
+          "assetId": "kit.maintenance-corridor",
+          "placements": [
+            "kit.maintenance-corridor:412",
+            "kit.maintenance-corridor:413",
+            "kit.maintenance-corridor:414"
+          ]
+        },
+        {
+          "assetId": "bld.apartment-block-a",
+          "placements": [
+            "bld.apartment-block-a:441",
+            "bld.apartment-block-a:448",
+            "bld.apartment-block-a:449",
+            "bld.apartment-block-a:456",
+            "bld.apartment-block-a:457",
+            "bld.apartment-block-a:489",
+            "bld.apartment-block-a:492",
+            "bld.apartment-block-a:497",
+            "bld.apartment-block-a:500"
+          ]
+        },
+        {
+          "assetId": "bld.apartment-block-b",
+          "placements": [
+            "bld.apartment-block-b:443",
+            "bld.apartment-block-b:451",
+            "bld.apartment-block-b:459",
+            "bld.apartment-block-b:491",
+            "bld.apartment-block-b:499"
+          ]
+        },
+        {
+          "assetId": "bld.house-c",
+          "placements": [
+            "bld.house-c:467",
+            "bld.house-c:475",
+            "bld.house-c:483",
+            "bld.house-c:488",
+            "bld.house-c:496",
+            "bld.house-c:508"
+          ]
+        }
+      ],
+      "namedColliders": []
+    },
+    {
+      "level": "L9",
+      "assets": [
+        {
+          "assetId": "bld.apartment-block-a",
+          "placements": [
+            "bld.apartment-block-a:84",
+            "bld.apartment-block-a:85",
+            "bld.apartment-block-a:86",
+            "bld.apartment-block-a:87",
+            "bld.apartment-block-a:2627",
+            "bld.apartment-block-a:2631",
+            "bld.apartment-block-a:2641"
+          ]
+        },
+        {
+          "assetId": "bld.apartment-block-b",
+          "placements": [
+            "bld.apartment-block-b:2616",
+            "bld.apartment-block-b:2622",
+            "bld.apartment-block-b:2625",
+            "bld.apartment-block-b:2626",
+            "bld.apartment-block-b:2632",
+            "bld.apartment-block-b:2633",
+            "bld.apartment-block-b:2640"
+          ]
+        },
+        {
+          "assetId": "bld.town-hall",
+          "placements": [
+            "bld.town-hall:2617",
+            "bld.town-hall:2621"
+          ]
+        },
+        {
+          "assetId": "bld.church",
+          "placements": [
+            "bld.church:2623",
+            "bld.church:2636"
+          ]
+        }
+      ],
+      "namedColliders": [],
+      "missionBuiltRamps": [
+        {
+          "id": "overpass",
+          "x": -65,
+          "z": -330
+        },
+        {
+          "id": "ditch",
+          "x": 80,
+          "z": -30
+        }
+      ]
+    },
+    {
+      "level": "L10",
+      "assets": [
+        {
+          "assetId": "kit.dispersal-platform",
+          "placements": [
+            "kit.dispersal-platform:377"
+          ]
+        },
+        {
+          "assetId": "bld.house-c",
+          "placements": [
+            "bld.house-c:451",
+            "bld.house-c:463",
+            "bld.house-c:548",
+            "bld.house-c:549",
+            "bld.house-c:550",
+            "bld.house-c:551",
+            "bld.house-c:593",
+            "bld.house-c:2139",
+            "bld.house-c:2142",
+            "bld.house-c:2147",
+            "bld.house-c:2149",
+            "bld.house-c:2154",
+            "bld.house-c:2157",
+            "bld.house-c:2162",
+            "bld.house-c:2169",
+            "bld.house-c:2170",
+            "bld.house-c:2173",
+            "bld.house-c:2176",
+            "bld.house-c:2180",
+            "bld.house-c:2181",
+            "bld.house-c:2184",
+            "bld.house-c:2198",
+            "bld.house-c:2204",
+            "bld.house-c:2208",
+            "bld.house-c:2210",
+            "bld.house-c:2211",
+            "bld.house-c:2214",
+            "bld.house-c:2217",
+            "bld.house-c:2221",
+            "bld.house-c:2222",
+            "bld.house-c:2226",
+            "bld.house-c:2228"
+          ]
+        },
+        {
+          "assetId": "veh.evac-bus",
+          "placements": [
+            "veh.evac-bus:1567",
+            "veh.evac-bus:1568",
+            "veh.evac-bus:1571",
+            "veh.evac-bus:1608",
+            "veh.evac-bus:1629",
+            "veh.evac-bus:1640",
+            "veh.evac-bus:1685",
+            "veh.evac-bus:1689",
+            "veh.evac-bus:1703",
+            "veh.evac-bus:1731"
+          ]
+        },
+        {
+          "assetId": "kit.shelter-camp",
+          "placements": [
+            "kit.shelter-camp:3269",
+            "kit.shelter-camp:3287",
+            "kit.shelter-camp:3331",
+            "kit.shelter-camp:3364"
+          ]
+        }
+      ],
+      "namedColliders": []
+    }
+  ]
+}
