@@ -17,10 +17,11 @@ const option = (name, fallback) => { const i = options.indexOf(`--${name}`); ret
 const name = option('name', 'test'), maxSeconds = Number(option('max-seconds', '240'));
 if (!Number.isFinite(maxSeconds) || maxSeconds <= 0) throw new Error('--max-seconds must be finite and positive');
 const started = performance.now();
-let activeChild, cancelled;
+const activeChildren = new Set();
+let cancelled;
 for (const signal of ['SIGTERM', 'SIGINT', 'SIGHUP']) process.on(signal, () => {
   cancelled ??= signal;
-  activeChild?.kill(signal);
+  for (const child of activeChildren) child.kill(signal);
 });
 
 function testFiles(dir = 'tests') {
@@ -42,7 +43,7 @@ async function bounded(cmd, args, options) {
   const child = spawn('python3', ['tools/browser-job.py', '--seconds', String(Math.ceil(remaining)), '--', executable, ...args], {
     ...options, env,
   });
-  activeChild = child;
+  activeChildren.add(child);
   let stdout = '', stderr = '';
   child.stdout?.on('data', data => { stdout += data; });
   child.stderr?.on('data', data => { stderr += data; });
@@ -51,7 +52,7 @@ async function bounded(cmd, args, options) {
       child.once('error', error => resolve({ status: null, error, stdout, stderr }));
       child.once('close', (status, signal) => resolve({ status, signal, stdout, stderr }));
     });
-  } finally { activeChild = undefined; }
+  } finally { activeChildren.delete(child); }
 }
 async function run(cmd, args) {
   const result = await bounded(cmd, args, { env: { ...process.env, FORCE_COLOR: '0' } });
@@ -78,11 +79,15 @@ async function playwrightCases(args) {
 let files, counts, cases, failures = [];
 try {
   files = testFiles();
-  counts = {
-    vitest: await vitestCases(),
-    e2e: await playwrightCases(['--project=chromium', '--project=perf']),
-    invariantsBrowser: await playwrightCases(['--config=tests/qa/invariants/playwright.config.ts']),
-  };
+  // These inventories are independent and launch no browsers. Collect them
+  // together while retaining the shared wall-clock deadline and each watchdog.
+  const inventories = await Promise.allSettled([
+    vitestCases(),
+    playwrightCases(['--project=chromium', '--project=perf']),
+    playwrightCases(['--config=tests/qa/invariants/playwright.config.ts']),
+  ]);
+  for (const inventory of inventories) if (inventory.status === 'rejected') throw inventory.reason;
+  counts = Object.fromEntries(['vitest', 'e2e', 'invariantsBrowser'].map((key, i) => [key, inventories[i].value]));
   cases = counts.vitest + counts.e2e + counts.invariantsBrowser;
   if (cases > LIMITS.cases) failures.push(`${cases} test cases exceed the budget of ${LIMITS.cases}`);
   if (files.length > LIMITS.files) failures.push(`${files.length} test files exceed the budget of ${LIMITS.files}`);
