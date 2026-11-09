@@ -25,7 +25,7 @@ export class LevelSevenEncounters {
   state: L7EncounterState = { started: false, roster: [], arrivals: [], finalReady: false, passageReady: false, waitAt: 0 };
   private launcherId = 0;
   private prepared = false;
-  private readonly seen = new Set<number>();
+  private readonly seen = new Set<string>();
   private readonly waypoint = { x: 0, z: 0 };
   private readonly approaches = new Map<number, { x: number; z: number; at: number; around?: Point[] }>();
   private readonly pocketRoutes = new Map<number, { revision: number; points: Point[] }>();
@@ -215,8 +215,8 @@ export class LevelSevenEncounters {
     if (speaker && s.alarm && s.alarm.kind !== 'lost') { s.alarm.x = speaker.transform.x; s.alarm.z = speaker.transform.z; }
     this.reserveSlots();
     if (!s.started && w.combat!.runner.loadout.activeEntries().some(e => e.id === 'weapon.rocket-launcher')) this.start();
-    for (const e of ai.active) if (e.infected!.pack >= l7Encounters.finalGroup && e.infected!.pack <= l7Encounters.firstStreetGroup + 3 && !this.seen.has(e.id)) {
-      this.seen.add(e.id);
+    for (const e of ai.active) if (e.infected!.pack >= l7Encounters.finalGroup && e.infected!.pack <= l7Encounters.firstStreetGroup + 3 && !this.seen.has(`${e.infected!.pack}:${e.id}`)) {
+      this.seen.add(`${e.infected!.pack}:${e.id}`);
       // Idle residents stay on their authored block until a human or noise
       // starts a pursuit. The shared unrestricted wander can cross half the
       // district during the approach and leave the final corridor empty.
@@ -498,7 +498,7 @@ export class LevelSevenEncounters {
     this.trail.splice(0, this.trail.length, ...(record.trail ?? []));
     this.state.waitAt += this.world.tick - record.tick;
     if (this.state.alarm) this.state.alarm.until += this.world.tick - record.tick;
-    this.seen.clear(); for (const id of record.seen) this.seen.add(id);
+    this.seen.clear(); for (const arrival of this.state.arrivals) this.seen.add(`${arrival.group}:${arrival.id}`);
     const director = this.world.infected!.director;
     director.queue.splice(0, director.queue.length, ...structuredClone(record.queue));
     director.levelCap = 200; director.strict = true; director.ambientTarget = 0;
