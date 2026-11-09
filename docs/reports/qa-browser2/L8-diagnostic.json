@@ -1,0 +1,106 @@
+{
+  "revision": "1d6349ed4705b38fd1a786892a8d04f06da801a0",
+  "method": "Temporary in-page wrapper around CrowdView.loadBatch records the failing asset/LOD before rethrowing the unchanged exception. No source or asset edits; no successful L8 render claimed.",
+  "result": {
+    "error": "Error: Crowd semantic owner must be a weighted joint",
+    "failures": [
+      {
+        "def": {
+          "id": "healthy.monkey",
+          "hp": 45,
+          "speed": 6,
+          "radius": 0.3,
+          "special": "cling",
+          "windup": 0.6,
+          "damage": 10,
+          "range": 1.1,
+          "weight": 1,
+          "grabChance": 0.15,
+          "asset": "amb.monkey",
+          "bar": true
+        },
+        "lod": "lod2",
+        "error": "Error: Crowd semantic owner must be a weighted joint"
+      },
+      {
+        "def": {
+          "id": "healthy.monkey",
+          "hp": 45,
+          "speed": 6,
+          "radius": 0.3,
+          "special": "cling",
+          "windup": 0.6,
+          "damage": 10,
+          "range": 1.1,
+          "weight": 1,
+          "grabChance": 0.15,
+          "asset": "amb.monkey",
+          "bar": true
+        },
+        "lod": "lod2",
+        "error": "Error: Crowd semantic owner must be a weighted joint"
+      },
+      {
+        "def": {
+          "id": "healthy.monkey",
+          "hp": 45,
+          "speed": 6,
+          "radius": 0.3,
+          "special": "cling",
+          "windup": 0.6,
+          "damage": 10,
+          "range": 1.1,
+          "weight": 1,
+          "grabChance": 0.15,
+          "asset": "amb.monkey",
+          "bar": true
+        },
+        "lod": "lod2",
+        "error": "Error: Crowd semantic owner must be a weighted joint"
+      },
+      {
+        "def": {
+          "id": "healthy.monkey",
+          "hp": 45,
+          "speed": 6,
+          "radius": 0.3,
+          "special": "cling",
+          "windup": 0.6,
+          "damage": 10,
+          "range": 1.1,
+          "weight": 1,
+          "grabChance": 0.15,
+          "asset": "amb.monkey",
+          "bar": true
+        },
+        "lod": "lod2",
+        "error": "Error: Crowd semantic owner must be a weighted joint"
+      },
+      {
+        "def": {
+          "id": "healthy.monkey",
+          "hp": 45,
+          "speed": 6,
+          "radius": 0.3,
+          "special": "cling",
+          "windup": 0.6,
+          "damage": 10,
+          "range": 1.1,
+          "weight": 1,
+          "grabChance": 0.15,
+          "asset": "amb.monkey",
+          "bar": true
+        },
+        "lod": "lod2",
+        "error": "Error: Crowd semantic owner must be a weighted joint"
+      }
+    ]
+  },
+  "consoleErrors": [
+    "console.error: Level load failed Error: Crowd semantic owner must be a weighted joint\n    at packSkin (http://127.0.0.1:4351/src/render/characters/skinnedCrowd.ts:15:25)\n    at http://127.0.0.1:4351/src/render/characters/bakeInfected.ts:260:20\n    at SkinnedMesh.traverse (http://127.0.0.1:4351/@fs/Users/wesner/Workspace/minorincident/.mi-worktree-cache/vite/1555bdf993e225dfa2d5/deps/chunk-RZRUIVF5.js?v=d80a8418:7282:5)\n    at Group.traverse (http://127.0.0.1:4351/@fs/Users/wesner/Workspace/minorincident/.mi-worktree-cache/vite/1555bdf993e225dfa2d5/deps/chunk-RZRUIVF5.js?v=d80a8418:7285:19)\n    at bakeInfectedSteps (http://127.0.0.1:4351/src/render/characters/bakeInfected.ts:195:8)\n    at bakeInfectedSteps.next (<anonymous>)\n    at bakeInfectedAsync (http://127.0.0.1:4351/src/render/characters/bakeInfected.ts:29:18)\n    at async CrowdView.loadBatch (http://127.0.0.1:4351/src/render/CrowdView.ts:342:89)\n    at async proto.loadBatch (eval at evaluate (:311:30), <anonymous>:1:208)\n    at async Promise.all (index 0)",
+    "requestfailed: blob:http://127.0.0.1:4351/324f6ed0-3502-4af1-afc6-2a24ab558eb6 net::ERR_ABORTED",
+    "requestfailed: blob:http://127.0.0.1:4351/3e5e79b5-3e68-4029-a027-05f00dadde10 net::ERR_ABORTED",
+    "requestfailed: blob:http://127.0.0.1:4351/b3876a49-4670-4b0f-bfbf-b13d7d20be01 net::ERR_ABORTED",
+    "requestfailed: blob:http://127.0.0.1:4351/be98a0a6-7e82-4b5a-a021-f7b8312587fa net::ERR_ABORTED"
+  ]
+}
