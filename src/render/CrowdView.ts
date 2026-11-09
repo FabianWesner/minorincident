@@ -450,7 +450,10 @@ export class CrowdView extends Group {
       const ordinarySurface = regularInfectedModels.some(model => model === asset);
       const sharedAlpha = (this.world.scenario === 'L8' || this.world.scenario === 'L10') && alpha;
       const sharedSurface = (this.world.scenario === 'L4' || ordinarySurface) && infectedAtlas || zooSurface || sharedAlpha && (this.world.scenario === 'L10' || lod === 'lod1');
-      const materialKey = sharedSurface && baked.texture ? `${baked.clip.parts.join('|')}:${poses.bindRow}:${baked.doubleSided}:${inlineAccessories}:${asset.startsWith('npc.')}:${baked.geometry.hasAttribute('_skin')}:${human}:${healthy}:${infectedAtlas}:${dogPalette}:${regularAlpha}` : undefined;
+      // Zoo joint names and atlas widths are data addressed through integer
+      // texels. They do not change the skinning graph; each draw binds its rig.
+      const rigKey = zooSurface ? 'zoo' : baked.clip.parts.join('|');
+      const materialKey = sharedSurface && baked.texture ? `${rigKey}:${poses.bindRow}:${baked.doubleSided}:${inlineAccessories}:${asset.startsWith('npc.')}:${baked.geometry.hasAttribute('_skin')}:${human}:${healthy}:${infectedAtlas}:${dogPalette}:${regularAlpha}` : undefined;
       let sharedSkin = materialKey ? this.sharedSkinMaterials.get(materialKey) : undefined;
       let material = sharedSkin?.material, surfaceAtlas = sharedSkin?.atlas;
       if (!material) {
