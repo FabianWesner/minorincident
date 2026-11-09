@@ -25,6 +25,8 @@ export interface AssetDef {
   icon?: string;
   /** Transparent ground decal image; no GLB or LOD is needed for its two-triangle quad. */
   decalTexture?: string;
+  /** Packed decal atlas columns/rows; each tile retains the 256 px decal limit. */
+  decalGrid?: [number, number];
   actionCategory?: 'melee' | 'ranged' | 'throwable' | 'ability';
   id: string;
   /** Alternate inventory ID sharing a canonical model and its node/LOD contract. */

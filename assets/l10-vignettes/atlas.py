@@ -11,7 +11,7 @@ if not font.exists(): font=Path('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bol
 if not font.exists(): raise RuntimeError('Install DejaVu Sans Bold for CPU atlas generation')
 family='Arial' if font.name=='Arial Bold.ttf' else 'DejaVu Sans'
 WORDS=['HELP — 3 INSIDE','AUTHORIZED PERSONNEL ONLY|— BIOHAZARD LEVEL 4']
-svg=['<svg xmlns="http://www.w3.org/2000/svg" width="2048" height="512" viewBox="0 0 2048 512">']
+svg=['<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="256" viewBox="0 0 2048 512">']
 for i,word in enumerate(WORDS):
     x=(i%4)*512;y=(i//4)*128
     for line,text in enumerate(word.split('|')):

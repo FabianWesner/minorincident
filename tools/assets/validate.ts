@@ -278,7 +278,9 @@ export async function validateAssets(manifest: AssetDef[], production = true): P
       try {
         bytes = readFileSync(def.decalTexture);
         const png = PNG.sync.read(bytes);
-        if (png.width > 256 || png.height > 256) errors.push('decal: exceeds 256px');
+        const [columns, rows] = def.decalGrid ?? [1, 1];
+        if (![columns, rows].every(n => Number.isInteger(n) && n >= 1) || png.width % columns || png.height % rows) errors.push('decal: invalid atlas grid');
+        if (png.width / columns > 256 || png.height / rows > 256) errors.push('decal: exceeds 256px per tile');
         let transparent = false, painted = false;
         for (let i = 3; i < png.data.length; i += 4) { transparent ||= png.data[i] === 0; painted ||= png.data[i] > 0; }
         if (!transparent || !painted) errors.push('decal: expected painted and transparent pixels');
