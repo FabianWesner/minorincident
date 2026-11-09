@@ -312,6 +312,7 @@ export class SimWorld implements Lifecycle {
     this.lightPower?.install(districts);
     // Relative to the feet: a courier under a raised deck (L10 finale platform) must not be lifted through it.
     this.player!.locomotion.groundHeight = (x, z) => this.districts?.groundBelow(x, z, (this.entities.get(1)?.transform.y ?? .7) - .7) ?? 0;
+    this.player!.locomotion.supportWhenDisabled = composition.id === 'L7';
     this.interactables!.nav = districts.nav;
     const {min,max}=districts.nav;
     // Respect the authored floor at load; relative grounding can then keep bodies below overhead decks.

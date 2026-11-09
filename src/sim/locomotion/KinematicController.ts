@@ -26,6 +26,8 @@ export class KinematicController {
   /** Solid props without a static collider (the parked bicycle): always pushed out of, at up to 4 m/s. */
   props: readonly CrowdObstacle[] = [];
   groundHeight: ((x: number, z: number) => number) | null = null;
+  /** L7's raised Northgate road must continue supporting the courier during Alpha stun. */
+  supportWhenDisabled = false;
   /**
    * Keyboard/joystick corner slip (r2-bike): a head-on push into the edge of a static box or post that ends within
    * `cornerSlipReach` sidesteps along the face at walking pace until the way ahead is clear, so the courier rounds lot
@@ -65,7 +67,7 @@ export class KinematicController {
     this.fallSpeed -= this.physics.world!.gravity.y * FIXED_DT;
     this.displacement.y = -Math.max(.02, this.fallSpeed * FIXED_DT);
     let hover = -Infinity;
-    if (enabled) {
+    if (enabled || this.supportWhenDisabled) {
       // Thin paving edges can defeat Rapier autostep at low joystick speeds.
       // Start a bounded upward sweep at the capsule's leading foot, using the
       // same GLB support tops as NPC grounding. The sweep still tests all solids.
