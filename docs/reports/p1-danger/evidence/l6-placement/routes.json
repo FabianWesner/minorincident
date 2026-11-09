@@ -1,0 +1,41 @@
+{
+  "sourceHash": "a5a4b8b7da23b2ab877838e62625fe66592630f7ef7b31400a13d2454b265d7e",
+  "diagnosticHash": "7ba054210a86f32b1abf1bbdea16baaffd46e05eea8b3b3f506fd2d94ac20ee2",
+  "revision": "l6-placement",
+  "seed": 1,
+  "tier": "low",
+  "rows": [
+    {
+      "level": "L6",
+      "policy": "skilled",
+      "outcome": "complete",
+      "completed": true,
+      "seconds": 198.43333333333334,
+      "landedHits": 3,
+      "landedHitsPerMinute": 0.9071056610112548,
+      "damageHp": 30,
+      "damageHpPerMinute": 9.071056610112548,
+      "infectedDamageHp": 30,
+      "deaths": 0,
+      "startTick": 0,
+      "boarded": null,
+      "furthestObjective": "exit"
+    },
+    {
+      "level": "L6",
+      "policy": "passive",
+      "outcome": "tick-budget",
+      "completed": false,
+      "seconds": 1200,
+      "landedHits": 720,
+      "landedHitsPerMinute": 36,
+      "damageHp": 7200,
+      "damageHpPerMinute": 360,
+      "infectedDamageHp": 7200,
+      "deaths": 72,
+      "startTick": 0,
+      "boarded": null,
+      "furthestObjective": "retreat"
+    }
+  ]
+}
