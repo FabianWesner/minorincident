@@ -3,7 +3,7 @@ import { Outbreak } from '../outbreak/Outbreak';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { Point } from '../npc/types';
-import { l7Encounters, l7Rocket } from '../../data/l7';
+import { l7Encounters, l7FormationBack, l7Rocket } from '../../data/l7';
 import { corpseDetour, formationBack, formationSlot, leaderHeading, requireClearPoint, snapToClear } from './missionHelpers';
 import { NavGrid } from '../ai/NavGrid';
 import { actorRadius, solidLargeCorpse } from '../world/SolidRegistry';
@@ -418,12 +418,11 @@ export class LevelSevenEncounters {
     }
   }
   /** Follow the walked street line even while the courier aims or is stunned.
-   * Three close rows stay in her cover; the boarding corner remains two abreast. */
+   * Close rows stay in her cover; the boarding corner remains two abreast. */
   private formationGoal(player: EntitySnapshot['transform'], velocity: Point, slot: number): Point {
     const departure = this.world.missions!.state.steps.departure?.status === 'active';
     {
-      const columns = departure ? 2 : 3;
-      let remaining = 2.3 + Math.floor(slot / columns) * (departure ? 1 : .8), newer: Point = player;
+      let remaining = departure ? 2.3 + Math.floor(slot / 2) : l7FormationBack(slot), newer: Point = player;
       for (let i = this.trail.length - 1; i >= 0; i--) {
         const older = this.trail[i], length = distance(older, newer);
         if (length >= remaining && length > 0) {
