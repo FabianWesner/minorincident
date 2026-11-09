@@ -1,0 +1,24 @@
+{
+  "name": "nightly",
+  "cases": 150,
+  "counts": {
+    "vitest": 129,
+    "e2e": 9,
+    "invariantsBrowser": 12
+  },
+  "files": 44,
+  "limits": {
+    "cases": 150,
+    "files": 45,
+    "seconds": 1200
+  },
+  "command": [
+    "sh",
+    "tools/qa/nightly.sh"
+  ],
+  "seconds": 1118.7592185859999,
+  "exitCode": 0,
+  "signal": null,
+  "failures": [],
+  "at": "2026-11-09T14:29:28.936Z"
+}
