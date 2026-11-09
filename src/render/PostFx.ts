@@ -1,7 +1,7 @@
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from folio-2025 Rendering.js / Passes/cheapDOF.js by Bruno Simon (MIT), commit 41046b5.
 import { DepthTexture, DepthStencilFormat, UnsignedInt248Type, ColorManagement, NoToneMapping, RenderPipeline, Vector4, type Node, type Camera, type Scene, type WebGPURenderer, type RenderTarget, type Object3D } from 'three/webgpu';
-import { pass, uv, uniform, uniformArray, mix, vec2, vec3, vec4, rtt, float, sin, luminance, max, min } from 'three/tsl';
+import { pass, uv, uniform, uniformArray, mix, vec2, vec3, vec4, rtt, float, sin, luminance, max, min, getViewPosition } from 'three/tsl';
 import { bloom } from 'three/addons/tsl/display/BloomNode.js';
 import { hashBlur } from 'three/addons/tsl/display/hashBlur.js';
 import { LookUniforms } from './LookUniforms';
@@ -18,6 +18,10 @@ export class PostFx {
   private readonly targetDisposals = new Map<RenderTarget, number>();
   readonly pipeline: RenderPipeline;
   readonly bloomEnabled = uniform(1);
+  /** Eased world-space cellar mask; HUD overlays remain outside the scene composite. */
+  readonly cellarMask = uniform(0);
+  /** World X/Z centre and half extents from the cellar placement's authored bounds. */
+  readonly cellarBounds = uniform(new Vector4());
   private readonly sharpOutput;
   private readonly blurredOutput;
   private readonly scenePass;
@@ -29,7 +33,7 @@ export class PostFx {
   readonly heatTime = uniform(0);
   readonly heatAspect = uniform(16 / 9);
   readonly haze: boolean;
-  constructor(private readonly renderer: WebGPURenderer, scene: Scene, camera: Camera, tier: QualityTier = 'high', readonly look = new LookUniforms()) {
+  constructor(private readonly renderer: WebGPURenderer, scene: Scene, camera: Camera, tier: QualityTier = 'high', readonly look = new LookUniforms(), cellarScene = false) {
     const depthTexture = new DepthTexture(1, 1, UnsignedInt248Type); depthTexture.format = DepthStencilFormat;
     this.scenePass = pass(scene, camera, { stencilBuffer: true, depthTexture }); const scene0 = this.scenePass.getTextureNode('output');
     // Heat haze: one dependent fetch of the scene colour with a small rippling UV offset inside each source's disc.
@@ -52,8 +56,17 @@ export class PostFx {
     const blur = hashBlur(source, strength.mul(look.nodes.dofAmount), { repeats: tier === 'high' ? look.nodes.dofRepeats : look.nodes.dofRepeatsLow, premultipliedAlpha: true });
     this.lowBlur = tier === 'low' ? rtt(blur, null, null, { resolutionScale: .5 }) : null;
     const vignette = uv().sub(.5).length().smoothstep(.25, .7).mul(look.nodes.vignette).oneMinus();
-    this.sharpOutput = vec4(this.grade(source).add(this.bloomPass.mul(this.bloomEnabled)).mul(vignette).rgb, 1);
-    this.blurredOutput = vec4(this.grade(mix(source, this.lowBlur ?? blur, strength)).add(this.bloomPass.mul(this.bloomEnabled)).mul(vignette).rgb, 1);
+    // Reuse WetReflections' depth reconstruction: the mask follows the actual room footprint at any camera zoom.
+    // Applying it after bloom/blur also removes exterior light spill and weather without changing interior lighting.
+    let cellar: Node<'float'> = float(0);
+    if (cellarScene) {
+      const worldPosition = uniform(camera.matrixWorld).mul(vec4(getViewPosition(uv(), this.scenePass.getTextureNode('depth').r, uniform(camera.projectionMatrixInverse)), 1));
+      const edge = worldPosition.xz.sub(this.cellarBounds.xy).abs().sub(this.cellarBounds.zw);
+      cellar = max(edge.x, edge.y).smoothstep(0, .18).mul(this.cellarMask);
+    }
+    const present = (input: Node<'vec4'>) => cellarScene ? vec4(input.rgb.mul(cellar.oneMinus()), 1) : input;
+    this.sharpOutput = present(vec4(this.grade(source).add(this.bloomPass.mul(this.bloomEnabled)).mul(vignette).rgb, 1));
+    this.blurredOutput = present(vec4(this.grade(mix(source, this.lowBlur ?? blur, strength)).add(this.bloomPass.mul(this.bloomEnabled)).mul(vignette).rgb, 1));
     this.pipeline = new RenderPipeline(renderer, this.sharpOutput);
     for (const target of this.diagnosticTargets()) {
       this.targetDisposals.set(target, 0);
@@ -115,7 +128,8 @@ export class PostFx {
   }
   private tier: QualityTier = 'high';
   setDof(enabled: boolean): void { this.pipeline.outputNode = enabled ? this.blurredOutput : this.sharpOutput; this.pipeline.needsUpdate = true; }
-  snapshot() { return { bloomMips: qualityBudgets[this.tier].bloomMips, dof: this.pipeline.outputNode === this.blurredOutput, dofRepeats: this.tier === 'high' ? this.look.nodes.dofRepeats.value : this.look.nodes.dofRepeatsLow.value, dofResolution: this.tier === 'high' ? 1 : .5, bloomStrength: this.bloomPass.strength.value, haze: this.haze, heatSources: this.heat.filter(h => h.w > 0).length, ssr: this.wetReflections?.snapshot() ?? null }; }
+  setCellarMask(amount: number, bounds: Vector4): void { this.cellarMask.value = amount; this.cellarBounds.value.copy(bounds); }
+  snapshot() { return { bloomMips: qualityBudgets[this.tier].bloomMips, dof: this.pipeline.outputNode === this.blurredOutput, dofRepeats: this.tier === 'high' ? this.look.nodes.dofRepeats.value : this.look.nodes.dofRepeatsLow.value, dofResolution: this.tier === 'high' ? 1 : .5, bloomStrength: this.bloomPass.strength.value, haze: this.haze, heatSources: this.heat.filter(h => h.w > 0).length, cellar: { amount: this.cellarMask.value, bounds: this.cellarBounds.value.toArray() }, ssr: this.wetReflections?.snapshot() ?? null }; }
   /** Compile in the gameplay HDR/MSAA target. `root` warms a streamed subtree with the scene's lights. */
   async compile(partitions?: (() => void)[], root?: Object3D): Promise<void> {
     const renderer = this.renderer, target = renderer.getRenderTarget(), mrt = renderer.getMRT();
