@@ -427,7 +427,7 @@ export class LevelSevenEncounters {
         const older = this.trail[i], length = distance(older, newer);
         if (length >= remaining && length > 0) {
           const hx = (newer.x - older.x) / length, hz = (newer.z - older.z) / length;
-          const side = departure ? slot % 2 - .5 : (slot % 3 - 1) * 1.2;
+          const side = departure ? slot % 2 - .5 : (slot % 5 - 2) * .9;
           const centre = { x: newer.x - hx * remaining, z: newer.z - hz * remaining };
           const goal = { x: centre.x - hz * side, z: centre.z + hx * side };
           const nav = this.followerNavigation();

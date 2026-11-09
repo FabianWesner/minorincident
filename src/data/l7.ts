@@ -8,8 +8,8 @@ export const l7DefaultArsenal = {
   LEFT: ['weapon.bat', 'weapon.fire-axe'],
   RIGHT: ['weapon.handgun', 'weapon.army-mg', 'weapon.shotgun'],
 };
-/** Moving street column: three abreast, close enough for the courier to cover its rear. */
-export const l7FormationBack = (slot: number): number => 2.3 + Math.floor(slot / 3) * .8;
+/** Moving street column fits five abreast inside the six-metre road, keeping the tail in covering range. */
+export const l7FormationBack = (slot: number): number => 2.3 + Math.floor(slot / 5) * .9;
 
 /** Encounter anchors on the retained Northgate, Harbor and Lakeshore roads; E2 owns the bus. */
 export const l7Encounters = {

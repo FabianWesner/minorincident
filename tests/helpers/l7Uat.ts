@@ -62,7 +62,7 @@ export async function checkL7Navigation() {
       p.transform.yaw = Math.PI / 2; w.l7Encounters!.follower(tail);
       expect(goals).toHaveLength(2);
       expect(goals[0], 'aiming at another kerb does not rotate a stopped evacuation column').toEqual(goals[1]);
-      expect(goals[0].x - p.transform.x, 'the tail remains behind the westbound street route').toBeGreaterThan(6);
+      expect(goals[0].x - p.transform.x, 'the tail remains behind the westbound street route').toBeGreaterThan(5);
     } finally { movement.mockRestore(); p.transform.yaw = yaw; w.entities.replace(launcher!); }
     // The loading renderer must see the actual resident models at tick zero;
     // discovering their pedestrian looks on the first AI tick builds new
