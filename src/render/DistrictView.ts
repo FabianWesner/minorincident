@@ -33,6 +33,7 @@ import type { NightAccents } from './NightAccents';
 import { buildDistrict, DistrictParts, freezeBatch, type DressingEntry, type LodBatch } from './district/DistrictBuild';
 import { poseZooExitGate } from './district/zooExitGate';
 import { DistrictOcclusion } from './district/DistrictOcclusion';
+import { LevelTenOverview, overviewLandmarks } from './district/LevelTenOverview';
 
 // Repeated fence panels dominated V1 (109k faces in each view/shadow pass).
 // Preserve the adjacent panels; farther boards need their silhouette, not fine bevels.
@@ -77,6 +78,7 @@ export class DistrictView extends Group {
   private readonly destructionView = new DestructionView();
   private readonly destructionActive = new Map<string, boolean>();
   private barnRoofVisible = true;
+  private overviewView?: LevelTenOverview;
   private readonly destructionSources = new Map<string, Group>();
   private readonly pending = new Map<LodBatch, Promise<void>>();
   private disposed = false;
@@ -128,6 +130,7 @@ export class DistrictView extends Group {
   async load(seed: number, focus?: { x: number; z: number }, heroAtSpawn = false): Promise<void> {
     this.phase.value = 0;
     await buildDistrict(this.parts, { view: this, world: this.world, materials: this.materials, registry: this.registry, grassMaterial: this.grassMaterial, foliage: this.foliage, low: () => this.low, instanceCapacity: this.instanceCapacity }, seed, focus, heroAtSpawn);
+    if (this.world.composition.id === 'L10') { this.overviewView = new LevelTenOverview(this.world); this.add(this.overviewView); }
     this.occlusion.tagInteriors();
     await Promise.all(this.world.districts.flatMap(d => d.decay.placements.filter(p => p.destruction && !p.destruction.indestructible).map(async p => {
       const source = await this.registry.asset(p.assetId, false, 'lod1', p.decay);
@@ -278,6 +281,13 @@ export class DistrictView extends Group {
   overview = false;
   /** Static matrices are repartitioned only when the camera moves; far props use LOD2. */
   updateLods(view: View, velocity: { x: number; z: number } = { x: 0, z: 0 }): void {
+    if (this.overviewView) this.overviewView.visible = this.overview;
+    this.foliage.visible = this.destructionView.visible = !this.overview;
+    if (this.parts.accents) this.parts.accents.visible = !this.overview;
+    if (this.parts.ambient) this.parts.ambient.visible = !this.overview;
+    if (this.parts.stepEdges) this.parts.stepEdges.visible = !this.overview;
+    if (this.parts.cureDecals) this.parts.cureDecals.visible = !this.overview;
+    for (const grass of this.grass) grass.visible = !this.overview;
     this.parts.cureDecals?.update(view.cameraTarget,this.low, !this.barnRoofVisible);
     this.lodPrefetchMetres = Math.hypot(velocity.x, velocity.z) * terrainPrefetchSeconds;
     if (this.parts.terrain) {
@@ -327,8 +337,7 @@ export class DistrictView extends Group {
     let prefetchNear = false, prefetchHero = false;
     for (const [index, ref] of refs.entries()) {
       if (this.overview) {
-        const asset = worldAssets[entry.id], size = asset.dimensions;
-        if (asset.category === 'prop' && Math.max(size.x, size.y, size.z) < 6 || index % Math.max(1, Math.ceil(refs.length / (this.low ? 8 : 24))) !== 0) continue;
+        if (!overviewLandmarks.has(entry.id)) continue;
       }
       if (ref.userData.interiorHidden || ref.userData.destructed || this.low && ref.userData.highOnly) continue;
       if (this.low && ref.userData.farmScatter !== undefined && ref.userData.farmScatter % 2) continue;
@@ -659,6 +668,7 @@ export class DistrictView extends Group {
     };
   }
   dispose(): void {
+    this.overviewView?.dispose();
     this.disposed = true;
     for (const { material } of this.metroMaterials.values()) material.dispose(); this.metroMaterials.clear();
     this.foliage.dispose();
