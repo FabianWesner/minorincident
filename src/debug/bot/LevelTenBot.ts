@@ -88,8 +88,12 @@ export class LevelTenBot {
       const foot = { x: footX, z: footZ };
       const pivot = gun.placement;
       if (p.y < arena.gun.deckHeight + .2) {
-        f.move = distance(foot) > 1 && (p.x > foot.x - 1 || distance(foot) > 8)
-          ? this.walker.step(w, foot, .5, 'gun-stair') ?? f.move : { x: -1, z: 0 };
+        // Walk onto the ramp after reaching its foot. Stopping here leaves
+        // the courier below the gun; walking east while already raised sends
+        // it back down the ramp before it can reach the deck.
+        f.move = p.y > .9 || distance(foot) < .45
+          ? { x: -1, z: Math.max(-1, Math.min(1, (foot.z - p.z) * 2)) }
+          : this.walker.step(w, foot, .25, 'gun-stair') ?? f.move;
       } else {
         const dx = pivot.x - p.x, dz = pivot.z - p.z, d = Math.hypot(dx, dz) || 1;
         f.move = { x: dx / d, z: dz / d };
