@@ -1,0 +1,35 @@
+{
+  "sourceHash": "fb925a584e7a6df0c2a10c57505210985dc3771978bda3fcf5ffc090dcb73043",
+  "observerHash": "f6f19f3a30a061c07b0e90a71d614f36498a80c2bdf41074dd826884cc2d7165",
+  "revision": "9f4d7c16fb9fa983a13fa7768bee54c4ae5f49d2",
+  "maxWorkers": 2,
+  "runnerSnapshotRevision": "9f4d7c16fb9fa983a13fa7768bee54c4ae5f49d2",
+  "target": "E29",
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "status": 0,
+      "seconds": 54.493
+    },
+    {
+      "command": "npm run lint",
+      "status": 0,
+      "seconds": 32.799
+    },
+    {
+      "command": "npm test",
+      "status": 0,
+      "seconds": 139.227
+    }
+  ],
+  "passed": 106,
+  "skipped": 1,
+  "failed": 0,
+  "collectionCases": 150,
+  "collectionFiles": 43,
+  "testWallSeconds": 139.0,
+  "testBudgetSeconds": 240,
+  "testTimeoutMilliseconds": 30000,
+  "testUnitAlias": "npm test",
+  "browsersUsed": false
+}

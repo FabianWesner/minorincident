@@ -1,0 +1,70 @@
+{
+  "objective": "L7 escort boards \u226560% on both tiers",
+  "baselineRevision": "7c2583f10d35c1044b998533511bc06d4424b9d6",
+  "runtimeRevision": "1096efee474490c6ddab49084122bbc07d7c7db7",
+  "sourceHash": "fb925a584e7a6df0c2a10c57505210985dc3771978bda3fcf5ffc090dcb73043",
+  "requirements": [
+    {
+      "requirement": "The baseline loses 100 followers to fatal ordinary bites with no Alpha damage on living followers",
+      "status": "proven",
+      "evidence": "native-main-traces.json.gz; native-main.json.gz"
+    },
+    {
+      "requirement": "At least 15 of the original 24 board on low/high seeds 1\u20133; courier completes all six without death or collision failures",
+      "status": "proven",
+      "evidence": "native-final.json.gz; native-final-traces.json.gz"
+    },
+    {
+      "requirement": "Every boarded living original id reaches the L8 transfer payload",
+      "status": "proven",
+      "evidence": "Each final.roster/escaped/boarded comparison"
+    },
+    {
+      "requirement": "Alpha attack rate is at least pinned main in every case; five 450 HP Alphas and 200/400 regular arrivals remain",
+      "status": "proven",
+      "evidence": "Per-case summary.alphaAttacksPerMinute and final.arrivals"
+    },
+    {
+      "requirement": "Mortal no-fire controls still die without damage/health qualification overrides",
+      "status": "proven",
+      "evidence": "mortal-final.json.gz; observer mortal-passive input-only branch"
+    },
+    {
+      "requirement": "Every other level reproduces its entire native/passive threat receipt except elapsed wall time",
+      "status": "proven",
+      "evidence": "other-levels-main.json.gz; other-levels-final.json.gz; other-levels-parity.json"
+    },
+    {
+      "requirement": "E29 per-change gate passes typecheck, lint and the complete test:unit-equivalent npm test within existing budgets",
+      "status": "proven",
+      "evidence": "verification.json; verify-log.gz"
+    },
+    {
+      "requirement": "Current runtime matches the frozen receipts; shared Alpha/damage/encounter/boarding code and protected source/dependencies remain at main",
+      "status": "proven",
+      "evidence": "source-scope.json; current source hash; Git diff"
+    }
+  ],
+  "nativeBoarded": {
+    "low": [
+      24,
+      24,
+      24
+    ],
+    "high": [
+      23,
+      21,
+      24
+    ]
+  },
+  "courierCompletions": 6,
+  "courierDeaths": 0,
+  "minimumRescuePercent": 87.5,
+  "processConstraints": {
+    "browsersUsed": false,
+    "pushed": false,
+    "deployed": false,
+    "heavyRuns": "remote runners; one wrapper separator; at most four Vitest workers"
+  },
+  "complete": true
+}

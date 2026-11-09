@@ -1,0 +1,2883 @@
+{
+  "baselineSourceHash": "e71de80a6adca1ef8205fe67a9317b1a0f785de89047d029d41f439db07682e4",
+  "finalSourceHash": "fb925a584e7a6df0c2a10c57505210985dc3771978bda3fcf5ffc090dcb73043",
+  "observerHashes": [
+    "f6f19f3a30a061c07b0e90a71d614f36498a80c2bdf41074dd826884cc2d7165",
+    "f6f19f3a30a061c07b0e90a71d614f36498a80c2bdf41074dd826884cc2d7165"
+  ],
+  "levelCount": 9,
+  "stageCounts": [
+    25,
+    25
+  ],
+  "phaseCount": 168,
+  "flagsEqual": true,
+  "flags": [
+    "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+  ],
+  "comparisonExcludes": [
+    "level.wallSeconds"
+  ],
+  "levels": [
+    {
+      "level": "L1",
+      "entireReceiptEqualExceptWallSeconds": true,
+      "nativeStateHash": [
+        "fd9463a7",
+        "fd9463a7"
+      ],
+      "phaseRows": [
+        {
+          "policy": "skilled",
+          "phase": "step/pickup",
+          "seconds": [
+            15.466666666666667,
+            15.466666666666667
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/morning",
+          "seconds": [
+            44.666666666666664,
+            44.666666666666664
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/deliver",
+          "seconds": [
+            39.96666666666667,
+            39.96666666666667
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/handover",
+          "seconds": [
+            10.766666666666667,
+            10.766666666666667
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/calm",
+          "seconds": [
+            4.733333333333333,
+            4.733333333333333
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/accident",
+          "seconds": [
+            9.266666666666667,
+            9.266666666666667
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/escape",
+          "seconds": [
+            0.016666666666666666,
+            0.016666666666666666
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/spread",
+          "seconds": [
+            40.63333333333333,
+            40.63333333333333
+          ],
+          "courierAPM": [
+            32.4856439704676,
+            32.4856439704676
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/weapon",
+          "seconds": [
+            16.083333333333332,
+            16.083333333333332
+          ],
+          "courierAPM": [
+            11.191709844559586,
+            11.191709844559586
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/firestation",
+          "seconds": [
+            24.533333333333335,
+            24.533333333333335
+          ],
+          "courierAPM": [
+            46.46739130434783,
+            46.46739130434783
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/run-out",
+          "seconds": [
+            5,
+            5
+          ],
+          "courierAPM": [
+            192,
+            192
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/pickup",
+          "seconds": [
+            15.466666666666667,
+            15.466666666666667
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/morning",
+          "seconds": [
+            44.666666666666664,
+            44.666666666666664
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/deliver",
+          "seconds": [
+            39.96666666666667,
+            39.96666666666667
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/handover",
+          "seconds": [
+            10.766666666666667,
+            10.766666666666667
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/calm",
+          "seconds": [
+            4.733333333333333,
+            4.733333333333333
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/accident",
+          "seconds": [
+            9.266666666666667,
+            9.266666666666667
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/escape",
+          "seconds": [
+            0.016666666666666666,
+            0.016666666666666666
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/spread",
+          "seconds": [
+            40.63333333333333,
+            40.63333333333333
+          ],
+          "courierAPM": [
+            32.4856439704676,
+            32.4856439704676
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/weapon",
+          "seconds": [
+            16.083333333333332,
+            16.083333333333332
+          ],
+          "courierAPM": [
+            11.191709844559586,
+            11.191709844559586
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/firestation",
+          "seconds": [
+            24.533333333333335,
+            24.533333333333335
+          ],
+          "courierAPM": [
+            46.46739130434783,
+            46.46739130434783
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/run-out",
+          "seconds": [
+            5,
+            5
+          ],
+          "courierAPM": [
+            192,
+            192
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        }
+      ],
+      "flags": [
+        [],
+        []
+      ],
+      "passiveFlags": [
+        [],
+        []
+      ]
+    },
+    {
+      "level": "L2",
+      "entireReceiptEqualExceptWallSeconds": true,
+      "nativeStateHash": [
+        "d881c150",
+        "d881c150"
+      ],
+      "phaseRows": [
+        {
+          "policy": "skilled",
+          "phase": "step/calm",
+          "seconds": [
+            23.15,
+            23.15
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/axe",
+          "seconds": [
+            23.1,
+            23.1
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/calm",
+          "seconds": [
+            23.15,
+            23.15
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/board",
+          "seconds": [
+            1.5666666666666667,
+            1.5666666666666667
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/alarm",
+          "seconds": [
+            1.5833333333333333,
+            1.5833333333333333
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/ride",
+          "seconds": [
+            24.333333333333332,
+            24.333333333333332
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/ride",
+          "seconds": [
+            24.316666666666666,
+            24.316666666666666
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/doors",
+          "seconds": [
+            9.55,
+            9.55
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/arrived",
+          "seconds": [
+            5.55,
+            5.55
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/doors",
+          "seconds": [
+            4,
+            4
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/bridge",
+          "seconds": [
+            89.71666666666667,
+            89.71666666666667
+          ],
+          "courierAPM": [
+            23.407022106631988,
+            23.407022106631988
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/collapse",
+          "seconds": [
+            17.416666666666668,
+            17.416666666666668
+          ],
+          "courierAPM": [
+            48.229665071770334,
+            48.229665071770334
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/escape",
+          "seconds": [
+            69.7,
+            69.7
+          ],
+          "courierAPM": [
+            18.077474892395983,
+            18.077474892395983
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/checkpoint",
+          "seconds": [
+            2.6,
+            2.6
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/done",
+          "seconds": [
+            0,
+            0
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/calm",
+          "seconds": [
+            23.15,
+            23.15
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/axe",
+          "seconds": [
+            23.1,
+            23.1
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/calm",
+          "seconds": [
+            23.15,
+            23.15
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/board",
+          "seconds": [
+            1.5666666666666667,
+            1.5666666666666667
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/alarm",
+          "seconds": [
+            1.5833333333333333,
+            1.5833333333333333
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/ride",
+          "seconds": [
+            24.333333333333332,
+            24.333333333333332
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/ride",
+          "seconds": [
+            24.316666666666666,
+            24.316666666666666
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/doors",
+          "seconds": [
+            9.55,
+            9.55
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/arrived",
+          "seconds": [
+            5.55,
+            5.55
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/doors",
+          "seconds": [
+            4,
+            4
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/bridge",
+          "seconds": [
+            195.35,
+            195.35
+          ],
+          "courierAPM": [
+            161.8633222421295,
+            161.8633222421295
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/collapse",
+          "seconds": [
+            45,
+            45
+          ],
+          "courierAPM": [
+            141.33333333333334,
+            141.33333333333334
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/escape",
+          "seconds": [
+            147.75,
+            147.75
+          ],
+          "courierAPM": [
+            170.96446700507613,
+            170.96446700507613
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/checkpoint",
+          "seconds": [
+            2.6,
+            2.6
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/done",
+          "seconds": [
+            0,
+            0
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        }
+      ],
+      "flags": [
+        [],
+        []
+      ],
+      "passiveFlags": [
+        [],
+        []
+      ]
+    },
+    {
+      "level": "L3",
+      "entireReceiptEqualExceptWallSeconds": true,
+      "nativeStateHash": [
+        "532e8221",
+        "532e8221"
+      ],
+      "phaseRows": [
+        {
+          "policy": "skilled",
+          "phase": "step/armory",
+          "seconds": [
+            4.45,
+            4.45
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/yard",
+          "seconds": [
+            9.45,
+            9.45
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/defend",
+          "seconds": [
+            26.2,
+            26.2
+          ],
+          "courierAPM": [
+            16.03053435114504,
+            16.03053435114504
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/attack",
+          "seconds": [
+            26.2,
+            26.2
+          ],
+          "courierAPM": [
+            16.03053435114504,
+            16.03053435114504
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/checkpoint",
+          "seconds": [
+            152.75,
+            152.75
+          ],
+          "courierAPM": [
+            9.034369885433716,
+            9.034369885433716
+          ],
+          "groupAPM": [
+            4.713584288052373,
+            4.713584288052373
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/fallback",
+          "seconds": [
+            8.416666666666666,
+            8.416666666666666
+          ],
+          "courierAPM": [
+            21.386138613861387,
+            21.386138613861387
+          ],
+          "groupAPM": [
+            14.257425742574258,
+            14.257425742574258
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/corridor",
+          "seconds": [
+            144.33333333333334,
+            144.33333333333334
+          ],
+          "courierAPM": [
+            8.314087759815243,
+            8.314087759815243
+          ],
+          "groupAPM": [
+            4.157043879907621,
+            4.157043879907621
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/run-out",
+          "seconds": [
+            5,
+            5
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/armory",
+          "seconds": [
+            4.45,
+            4.45
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/yard",
+          "seconds": [
+            9.45,
+            9.45
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/defend",
+          "seconds": [
+            27.1,
+            27.1
+          ],
+          "courierAPM": [
+            79.70479704797047,
+            79.70479704797047
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/attack",
+          "seconds": [
+            27.1,
+            27.1
+          ],
+          "courierAPM": [
+            79.70479704797047,
+            79.70479704797047
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/checkpoint",
+          "seconds": [
+            33.45,
+            33.45
+          ],
+          "courierAPM": [
+            278.0269058295964,
+            278.0269058295964
+          ],
+          "groupAPM": [
+            46.63677130044843,
+            46.63677130044843
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/fallback",
+          "seconds": [
+            33.45,
+            33.45
+          ],
+          "courierAPM": [
+            278.0269058295964,
+            278.0269058295964
+          ],
+          "groupAPM": [
+            46.63677130044843,
+            46.63677130044843
+          ]
+        }
+      ],
+      "flags": [
+        [
+          "wave/station-0:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+          "wave/station-2:WAVE_NO_ATTACK_WITHIN_20_SECONDS"
+        ],
+        [
+          "wave/station-0:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+          "wave/station-2:WAVE_NO_ATTACK_WITHIN_20_SECONDS"
+        ]
+      ],
+      "passiveFlags": [
+        [],
+        []
+      ]
+    },
+    {
+      "level": "L4",
+      "entireReceiptEqualExceptWallSeconds": true,
+      "nativeStateHash": [
+        "5061c9fa",
+        "5061c9fa"
+      ],
+      "phaseRows": [
+        {
+          "policy": "skilled",
+          "phase": "step/ride",
+          "seconds": [
+            30.483333333333334,
+            30.483333333333334
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/convoy",
+          "seconds": [
+            30.483333333333334,
+            30.483333333333334
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/quartermaster",
+          "seconds": [
+            2.3333333333333335,
+            2.3333333333333335
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/plaza",
+          "seconds": [
+            2.3333333333333335,
+            2.3333333333333335
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/hold",
+          "seconds": [
+            178,
+            178
+          ],
+          "courierAPM": [
+            264.9438202247191,
+            264.9438202247191
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/war",
+          "seconds": [
+            178,
+            178
+          ],
+          "courierAPM": [
+            264.9438202247191,
+            264.9438202247191
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/hide",
+          "seconds": [
+            278.6,
+            278.6
+          ],
+          "courierAPM": [
+            79.68413496051687,
+            79.68413496051687
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/collapse",
+          "seconds": [
+            278.6,
+            278.6
+          ],
+          "courierAPM": [
+            79.68413496051687,
+            79.68413496051687
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/bar",
+          "seconds": [
+            1.1666666666666667,
+            1.1666666666666667
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/cellar",
+          "seconds": [
+            8.166666666666666,
+            8.166666666666666
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/wait",
+          "seconds": [
+            7,
+            7
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/done",
+          "seconds": [
+            0,
+            0
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/ride",
+          "seconds": [
+            30.483333333333334,
+            30.483333333333334
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/convoy",
+          "seconds": [
+            30.483333333333334,
+            30.483333333333334
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/quartermaster",
+          "seconds": [
+            2.3333333333333335,
+            2.3333333333333335
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/plaza",
+          "seconds": [
+            2.3333333333333335,
+            2.3333333333333335
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/hold",
+          "seconds": [
+            190,
+            190
+          ],
+          "courierAPM": [
+            1122.6315789473683,
+            1122.6315789473683
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/war",
+          "seconds": [
+            190,
+            190
+          ],
+          "courierAPM": [
+            1122.6315789473683,
+            1122.6315789473683
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/hide",
+          "seconds": [
+            27.183333333333334,
+            27.183333333333334
+          ],
+          "courierAPM": [
+            721.7657878602084,
+            721.7657878602084
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/collapse",
+          "seconds": [
+            27.183333333333334,
+            27.183333333333334
+          ],
+          "courierAPM": [
+            721.7657878602084,
+            721.7657878602084
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        }
+      ],
+      "flags": [
+        [
+          "wave/breach-north:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+        ],
+        [
+          "wave/breach-north:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+        ]
+      ],
+      "passiveFlags": [
+        [],
+        []
+      ]
+    },
+    {
+      "level": "L5",
+      "entireReceiptEqualExceptWallSeconds": true,
+      "nativeStateHash": [
+        "b19eda42",
+        "b19eda42"
+      ],
+      "phaseRows": [
+        {
+          "policy": "skilled",
+          "phase": "step/emerge",
+          "seconds": [
+            1,
+            1
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/cellar",
+          "seconds": [
+            1.65,
+            1.65
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/emerged",
+          "seconds": [
+            10,
+            10
+          ],
+          "courierAPM": [
+            60,
+            60
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/look",
+          "seconds": [
+            150.85,
+            150.85
+          ],
+          "courierAPM": [
+            10.739144845873383,
+            10.739144845873383
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/search",
+          "seconds": [
+            150.85,
+            150.85
+          ],
+          "courierAPM": [
+            10.739144845873383,
+            10.739144845873383
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/metro",
+          "seconds": [
+            65.81666666666666,
+            65.81666666666666
+          ],
+          "courierAPM": [
+            1.823246391491517,
+            1.823246391491517
+          ],
+          "groupAPM": [
+            0.9116231957457585,
+            0.9116231957457585
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/metro",
+          "seconds": [
+            62.81666666666667,
+            62.81666666666667
+          ],
+          "courierAPM": [
+            1.9103210400636774,
+            1.9103210400636774
+          ],
+          "groupAPM": [
+            0.9551605200318387,
+            0.9551605200318387
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/shelter",
+          "seconds": [
+            3,
+            3
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/done",
+          "seconds": [
+            0,
+            0
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/emerge",
+          "seconds": [
+            1,
+            1
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/cellar",
+          "seconds": [
+            1.65,
+            1.65
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/emerged",
+          "seconds": [
+            10,
+            10
+          ],
+          "courierAPM": [
+            60,
+            60
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/look",
+          "seconds": [
+            1188.35,
+            1188.35
+          ],
+          "courierAPM": [
+            372.819455547608,
+            372.819455547608
+          ],
+          "groupAPM": [
+            0.7068624563470358,
+            0.7068624563470358
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/search",
+          "seconds": [
+            1188.35,
+            1188.35
+          ],
+          "courierAPM": [
+            372.819455547608,
+            372.819455547608
+          ],
+          "groupAPM": [
+            0.7068624563470358,
+            0.7068624563470358
+          ]
+        }
+      ],
+      "flags": [
+        [],
+        []
+      ],
+      "passiveFlags": [
+        [],
+        []
+      ]
+    },
+    {
+      "level": "L6",
+      "entireReceiptEqualExceptWallSeconds": true,
+      "nativeStateHash": [
+        "225645f9",
+        "225645f9"
+      ],
+      "phaseRows": [
+        {
+          "policy": "skilled",
+          "phase": "step/shelter",
+          "seconds": [
+            33.2,
+            33.2
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/shelter",
+          "seconds": [
+            33.2,
+            33.2
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/stop",
+          "seconds": [
+            21.016666666666666,
+            21.016666666666666
+          ],
+          "courierAPM": [
+            2.8548770816812055,
+            2.8548770816812055
+          ],
+          "groupAPM": [
+            14.274385408406028,
+            14.274385408406028
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/first",
+          "seconds": [
+            21.016666666666666,
+            21.016666666666666
+          ],
+          "courierAPM": [
+            2.8548770816812055,
+            2.8548770816812055
+          ],
+          "groupAPM": [
+            14.274385408406028,
+            14.274385408406028
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/retreat",
+          "seconds": [
+            232.58333333333334,
+            232.58333333333334
+          ],
+          "courierAPM": [
+            17.80007165890362,
+            17.80007165890362
+          ],
+          "groupAPM": [
+            11.60874238624149,
+            11.60874238624149
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/retreat",
+          "seconds": [
+            232.58333333333334,
+            232.58333333333334
+          ],
+          "courierAPM": [
+            17.80007165890362,
+            17.80007165890362
+          ],
+          "groupAPM": [
+            11.60874238624149,
+            11.60874238624149
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/exit",
+          "seconds": [
+            9.933333333333334,
+            9.933333333333334
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/exit",
+          "seconds": [
+            9.933333333333334,
+            9.933333333333334
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/done",
+          "seconds": [
+            0,
+            0
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/shelter",
+          "seconds": [
+            33.2,
+            33.2
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/shelter",
+          "seconds": [
+            33.2,
+            33.2
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/stop",
+          "seconds": [
+            21.016666666666666,
+            21.016666666666666
+          ],
+          "courierAPM": [
+            165.58287073750992,
+            165.58287073750992
+          ],
+          "groupAPM": [
+            179.85725614591593,
+            179.85725614591593
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/first",
+          "seconds": [
+            21.016666666666666,
+            21.016666666666666
+          ],
+          "courierAPM": [
+            165.58287073750992,
+            165.58287073750992
+          ],
+          "groupAPM": [
+            179.85725614591593,
+            179.85725614591593
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/retreat",
+          "seconds": [
+            55.78333333333333,
+            55.78333333333333
+          ],
+          "courierAPM": [
+            685.1508813863161,
+            685.1508813863161
+          ],
+          "groupAPM": [
+            257.0660292799522,
+            257.0660292799522
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/retreat",
+          "seconds": [
+            55.78333333333333,
+            55.78333333333333
+          ],
+          "courierAPM": [
+            685.1508813863161,
+            685.1508813863161
+          ],
+          "groupAPM": [
+            257.0660292799522,
+            257.0660292799522
+          ]
+        }
+      ],
+      "flags": [
+        [],
+        []
+      ],
+      "passiveFlags": [
+        [],
+        []
+      ]
+    },
+    {
+      "level": "L8",
+      "entireReceiptEqualExceptWallSeconds": true,
+      "nativeStateHash": [
+        "a9c213b2",
+        "a9c213b2"
+      ],
+      "phaseRows": [
+        {
+          "policy": "skilled",
+          "phase": "step/sanctuary",
+          "seconds": [
+            60,
+            60
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/sanctuary",
+          "seconds": [
+            60,
+            60
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/escape",
+          "seconds": [
+            102.78333333333333,
+            102.78333333333333
+          ],
+          "courierAPM": [
+            26.852602562023673,
+            26.852602562023673
+          ],
+          "groupAPM": [
+            4.0862656072644725,
+            4.0862656072644725
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/breached",
+          "seconds": [
+            102.78333333333333,
+            102.78333333333333
+          ],
+          "courierAPM": [
+            26.852602562023673,
+            26.852602562023673
+          ],
+          "groupAPM": [
+            4.0862656072644725,
+            4.0862656072644725
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/depart",
+          "seconds": [
+            9,
+            9
+          ],
+          "courierAPM": [
+            20,
+            20
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/boarding",
+          "seconds": [
+            9,
+            9
+          ],
+          "courierAPM": [
+            20,
+            20
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/run-out",
+          "seconds": [
+            5,
+            5
+          ],
+          "courierAPM": [
+            36,
+            36
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/sanctuary",
+          "seconds": [
+            60,
+            60
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/sanctuary",
+          "seconds": [
+            60,
+            60
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/escape",
+          "seconds": [
+            90,
+            90
+          ],
+          "courierAPM": [
+            269.3333333333333,
+            269.3333333333333
+          ],
+          "groupAPM": [
+            52.666666666666664,
+            52.666666666666664
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/breached",
+          "seconds": [
+            90,
+            90
+          ],
+          "courierAPM": [
+            269.3333333333333,
+            269.3333333333333
+          ],
+          "groupAPM": [
+            52.666666666666664,
+            52.666666666666664
+          ]
+        }
+      ],
+      "flags": [
+        [],
+        []
+      ],
+      "passiveFlags": [
+        [],
+        []
+      ]
+    },
+    {
+      "level": "L9",
+      "entireReceiptEqualExceptWallSeconds": true,
+      "nativeStateHash": [
+        "0d7d6249",
+        "0d7d6249"
+      ],
+      "phaseRows": [
+        {
+          "policy": "skilled",
+          "phase": "step/approach",
+          "seconds": [
+            201.91666666666666,
+            201.91666666666666
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/driving",
+          "seconds": [
+            201.91666666666666,
+            201.91666666666666
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/approach",
+          "seconds": [
+            2.933333333333333,
+            2.933333333333333
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/fall",
+          "seconds": [
+            1.5,
+            1.5
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/reach-outskirts",
+          "seconds": [
+            11.016666666666667,
+            11.016666666666667
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/impact",
+          "seconds": [
+            2,
+            2
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/crawl",
+          "seconds": [
+            9.016666666666667,
+            9.016666666666667
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "phase/done",
+          "seconds": [
+            0,
+            0
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/approach",
+          "seconds": [
+            249.31666666666666,
+            249.31666666666666
+          ],
+          "courierAPM": [
+            0.7219733939434454,
+            0.7219733939434454
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/driving",
+          "seconds": [
+            249.31666666666666,
+            249.31666666666666
+          ],
+          "courierAPM": [
+            0.7219733939434454,
+            0.7219733939434454
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/approach",
+          "seconds": [
+            3.0833333333333335,
+            3.0833333333333335
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/fall",
+          "seconds": [
+            1.5,
+            1.5
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/reach-outskirts",
+          "seconds": [
+            11.016666666666667,
+            11.016666666666667
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/impact",
+          "seconds": [
+            2,
+            2
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/crawl",
+          "seconds": [
+            9.016666666666667,
+            9.016666666666667
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "phase/done",
+          "seconds": [
+            0,
+            0
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        }
+      ],
+      "flags": [
+        [],
+        []
+      ],
+      "passiveFlags": [
+        [],
+        []
+      ]
+    },
+    {
+      "level": "L10",
+      "entireReceiptEqualExceptWallSeconds": true,
+      "nativeStateHash": [
+        "fd223748",
+        "fd223748"
+      ],
+      "phaseRows": [
+        {
+          "policy": "skilled",
+          "phase": "step/crash",
+          "seconds": [
+            23.966666666666665,
+            23.966666666666665
+          ],
+          "courierAPM": [
+            30.041724617524338,
+            30.041724617524338
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/farmstead",
+          "seconds": [
+            286.65,
+            286.65
+          ],
+          "courierAPM": [
+            1.2558869701726845,
+            1.2558869701726845
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/restricted-zone",
+          "seconds": [
+            154.53333333333333,
+            154.53333333333333
+          ],
+          "courierAPM": [
+            0.3882657463330457,
+            0.3882657463330457
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/research-hangar",
+          "seconds": [
+            57.96666666666667,
+            57.96666666666667
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/research",
+          "seconds": [
+            56.016666666666666,
+            56.016666666666666
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/cure",
+          "seconds": [
+            0.9166666666666666,
+            0.9166666666666666
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/research-exit",
+          "seconds": [
+            25.266666666666666,
+            25.266666666666666
+          ],
+          "courierAPM": [
+            7.124010554089709,
+            7.124010554089709
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/delivery-corridor",
+          "seconds": [
+            31.416666666666668,
+            31.416666666666668
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/dispersal-complex",
+          "seconds": [
+            175.71666666666667,
+            175.71666666666667
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/install",
+          "seconds": [
+            68.81666666666666,
+            68.81666666666666
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/hold",
+          "seconds": [
+            64.4,
+            64.4
+          ],
+          "courierAPM": [
+            44.72049689440994,
+            44.72049689440994
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/mega",
+          "seconds": [
+            73.91666666666667,
+            73.91666666666667
+          ],
+          "courierAPM": [
+            78.73731679819616,
+            78.73731679819616
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/release",
+          "seconds": [
+            1.7833333333333334,
+            1.7833333333333334
+          ],
+          "courierAPM": [
+            100.93457943925233,
+            100.93457943925233
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/epilogue",
+          "seconds": [
+            65,
+            65
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "skilled",
+          "phase": "step/credits",
+          "seconds": [
+            101,
+            101
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/crash",
+          "seconds": [
+            23.966666666666665,
+            23.966666666666665
+          ],
+          "courierAPM": [
+            90.12517385257301,
+            90.12517385257301
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/farmstead",
+          "seconds": [
+            284.35,
+            284.35
+          ],
+          "courierAPM": [
+            259.3282925971514,
+            259.3282925971514
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/restricted-zone",
+          "seconds": [
+            154.46666666666667,
+            154.46666666666667
+          ],
+          "courierAPM": [
+            364.35045317220545,
+            364.35045317220545
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/research-hangar",
+          "seconds": [
+            57.96666666666667,
+            57.96666666666667
+          ],
+          "courierAPM": [
+            340.5405405405405,
+            340.5405405405405
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/research",
+          "seconds": [
+            56.016666666666666,
+            56.016666666666666
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/cure",
+          "seconds": [
+            0.9166666666666666,
+            0.9166666666666666
+          ],
+          "courierAPM": [
+            0,
+            0
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/research-exit",
+          "seconds": [
+            25.266666666666666,
+            25.266666666666666
+          ],
+          "courierAPM": [
+            170.97625329815304,
+            170.97625329815304
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/delivery-corridor",
+          "seconds": [
+            31.416666666666668,
+            31.416666666666668
+          ],
+          "courierAPM": [
+            309.38992042440316,
+            309.38992042440316
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/dispersal-complex",
+          "seconds": [
+            175.71666666666667,
+            175.71666666666667
+          ],
+          "courierAPM": [
+            370.482784786114,
+            370.482784786114
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/install",
+          "seconds": [
+            68.93333333333334,
+            68.93333333333334
+          ],
+          "courierAPM": [
+            376.88588007736945,
+            376.88588007736945
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        },
+        {
+          "policy": "passive",
+          "phase": "step/hold",
+          "seconds": [
+            62.43333333333333,
+            62.43333333333333
+          ],
+          "courierAPM": [
+            465.1361452215697,
+            465.1361452215697
+          ],
+          "groupAPM": [
+            0,
+            0
+          ]
+        }
+      ],
+      "flags": [
+        [],
+        []
+      ],
+      "passiveFlags": [
+        [],
+        []
+      ]
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+diff --git a/src/sim/ai/InfectedSystem.ts b/src/sim/ai/InfectedSystem.ts
+index 1add2ebd..affb5737 100644
+--- a/src/sim/ai/InfectedSystem.ts
++++ b/src/sim/ai/InfectedSystem.ts
+@@ -450,14 +450,15 @@ export class InfectedSystem {
+     let target: EntitySnapshot | undefined, nearest = Infinity;
+     for (const candidate of this.approachParty) {
+       const distance = Math.hypot(candidate.transform.x - e.transform.x, candidate.transform.z - e.transform.z);
++      const priority = this.hearing.targetPriority(e, candidate.id, candidate.transform);
+       // L8's gate-side sprinters retain their announced courier approach. A person at actual grab contact still interrupts it.
+       const gateFocus = b.pressureTarget && this.world.tick < b.pressureTarget.until ? b.pressureTarget.id : brain?.focusBiasM === 30 && this.world.tick < (brain.focusUntil ?? 0) ? brain.focusId : 0;
+       if (this.world.scenario === 'L8' && gateFocus && candidate.id !== gateFocus && distance > 1.5) continue;
+-      if (distance >= nearest || !this.hearing.notices(e, candidate.transform, candidate.id)) continue;
++      if (priority >= nearest || !this.hearing.notices(e, candidate.transform, candidate.id)) continue;
+       // The corgi can alert an approaching group, but remains outside every bite
+       // and damage target query. Its courier becomes the ordinary chase target.
+       target = isCorgi(candidate) ? (!courier.hidden && courier.health.current > 0 ? courier : undefined) : candidate;
+-      if (target) nearest = distance;
++      if (target) nearest = priority;
+     }
+     if (!target) return;
+     b.heardTargetId = target.id; b.state = 'chase'; e.combat!.attacking = false;
+diff --git a/src/sim/ai/Perception.ts b/src/sim/ai/Perception.ts
+index c3668cc9..f429aa09 100644
+--- a/src/sim/ai/Perception.ts
++++ b/src/sim/ai/Perception.ts
+@@ -130,6 +130,13 @@ export class Perception {
+   playerBiasM = 0;
+   private readonly cosHalf = Math.cos(l1v2.infected.visionConeDeg / 2 * Math.PI / 180);
+   constructor(private readonly world: SimWorld) { this.humans = new WorldHumans(world); }
++  /** L7 infected stay on the courier's line; a person already at grab range still interrupts the focus. */
++  targetPriority(e: EntitySnapshot, id: number, position: Vec2): number {
++    const distance = Math.hypot(position.x - e.transform.x, position.z - e.transform.z);
++    if (this.world.scenario !== 'L7') return distance;
++    if (id !== 1 && distance <= 1.5) return distance - 30;
++    return distance + (id === 1 ? this.playerBiasM : 0);
++  }
+   /** Real courier/ally gunshots expand Alpha hearing for one second; L5 still uses courier shots only. */
+   shot(sourceId = 1): void {
+     for (const [id, until] of this.shotUntil) if (until <= this.world.tick) this.shotUntil.delete(id);
+@@ -207,7 +214,7 @@ export class Perception {
+   closestHeard(e: EntitySnapshot): HumanTarget | undefined {
+     let best: HumanTarget | undefined, distance = Infinity;
+     for (const h of this.humans.within(e.transform, this.closeAwareness(e) ? 12 : this.hearingM)) {
+-      const d = Math.hypot(h.position.x - e.transform.x, h.position.z - e.transform.z);
++      const d = this.targetPriority(e, h.id, h.position);
+       if (d < distance && this.hears(e, h.position, h.id)) { best = h; distance = d; }
+     }
+     return best;
+@@ -224,7 +231,7 @@ export class Perception {
+       if (h.id === ignoreId) continue;
+       const isCurrent = h.id === currentId;
+       if (!(isCurrent ? this.tracks(e, h.position, h.id) : this.notices(e, h.position, h.id))) continue;
+-      const distance = Math.hypot(h.position.x - e.transform.x, h.position.z - e.transform.z) + (h.id === 1 ? this.playerBiasM : 0) - (h.id === focus ? brain?.focusBiasM ?? focusBiasM : 0);
++      const distance = this.targetPriority(e, h.id, h.position) + (this.world.scenario !== 'L7' && h.id === 1 ? this.playerBiasM : 0) - (h.id === focus ? brain?.focusBiasM ?? focusBiasM : 0);
+       if (isCurrent) { current = h; currentDistance = distance; }
+       if (distance < bestDistance) { best = h; bestDistance = distance; }
+     }
+diff --git a/src/sim/missions/LevelSevenEncounters.ts b/src/sim/missions/LevelSevenEncounters.ts
+index 4e0ca37b..b1760e29 100644
+--- a/src/sim/missions/LevelSevenEncounters.ts
++++ b/src/sim/missions/LevelSevenEncounters.ts
+@@ -68,6 +68,10 @@ export class LevelSevenEncounters {
+     if (this.prepared) return;
+     this.prepared = true;
+     const w = this.world, ai = w.infected!, director = ai.director;
++    // Keep the infected pressure on the courier while she leads the evacuation
++    // column. The shared perception query still permits a follower at contact
++    // range to interrupt; this bias only prevents nearby rows stealing focus.
++    ai.hearing.playerBiasM = -18;
+     director.levelCap = 200; director.strict = true; director.ambientTarget = 0; director.reserved = 0; director.pendingTurns = 0;
+     w.npcs!.setAmbient(0);
+     const outbreak = w.npcs!.civilians.outbreak ?? new Outbreak(w, { refuges: [], tier: director.tier });
