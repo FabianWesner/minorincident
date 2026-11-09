@@ -1,0 +1,264 @@
+{
+  "pass": true,
+  "run": {
+    "level": "L9",
+    "policy": "complete",
+    "seed": 1,
+    "completed": true,
+    "time": 213.8,
+    "deaths": 0,
+    "kills": 13,
+    "damageTaken": 0,
+    "failures": {},
+    "objectiveTimeline": [
+      {
+        "id": "approach",
+        "t": 193.56666666666666
+      },
+      {
+        "id": "reach-outskirts",
+        "t": 208.8
+      }
+    ],
+    "furthestObjective": "reach-outskirts",
+    "activeObjectives": [],
+    "outcome": "complete",
+    "blocker": null,
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 323,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    }
+  },
+  "final": {
+    "phase": "done",
+    "finished": true,
+    "sightings": [
+      0,
+      1,
+      2
+    ],
+    "evacuated": [
+      669,
+      672
+    ],
+    "playerWeapons": {
+      "selectedSide": "LEFT",
+      "LEFT": {
+        "rack": [
+          {
+            "id": "weapon.fire-axe",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 1,
+          "z": 0
+        },
+        "aimPoint": null,
+        "swapUntil": 0
+      },
+      "RIGHT": {
+        "rack": [
+          {
+            "id": "weapon.fire-axe",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 1,
+          "z": 0
+        },
+        "aimPoint": null,
+        "swapUntil": 0
+      }
+    }
+  },
+  "signals": [
+    {
+      "tick": 1887,
+      "name": "l9.route.road"
+    },
+    {
+      "tick": 2412,
+      "name": "l9.mega-sighting-1"
+    },
+    {
+      "tick": 3310,
+      "name": "l9.mega-sighting-2"
+    },
+    {
+      "tick": 4330,
+      "name": "l9.mega-sighting-3"
+    },
+    {
+      "tick": 4383,
+      "name": "l9.bus-chase"
+    },
+    {
+      "tick": 5094,
+      "name": "l9.gate-countdown"
+    },
+    {
+      "tick": 6185,
+      "name": "l9.rail-stall"
+    },
+    {
+      "tick": 6488,
+      "name": "l9.bus-ram"
+    },
+    {
+      "tick": 6570,
+      "name": "l9.bus-spill"
+    },
+    {
+      "tick": 6660,
+      "name": "l9.bus-spill"
+    },
+    {
+      "tick": 6750,
+      "name": "l9.bus-spill"
+    },
+    {
+      "tick": 6840,
+      "name": "l9.bus-spill"
+    },
+    {
+      "tick": 6930,
+      "name": "l9.bus-spill"
+    },
+    {
+      "tick": 7020,
+      "name": "l9.bus-spill"
+    },
+    {
+      "tick": 7985,
+      "name": "l9.engine-restarted"
+    },
+    {
+      "tick": 8000,
+      "name": "l9.bus-ram"
+    },
+    {
+      "tick": 8694,
+      "name": "l9.gate-closed"
+    },
+    {
+      "tick": 9135,
+      "name": "l9.evacuation-started"
+    },
+    {
+      "tick": 9160,
+      "name": "l9.bus-ram"
+    },
+    {
+      "tick": 9938,
+      "name": "l9.corgi-goodbye"
+    },
+    {
+      "tick": 10202,
+      "name": "l9.survivor-evacuated"
+    },
+    {
+      "tick": 10254,
+      "name": "l9.survivor-evacuated"
+    },
+    {
+      "tick": 11204,
+      "name": "l9.evacuation-complete"
+    },
+    {
+      "tick": 11225,
+      "name": "l9.bus-ram"
+    },
+    {
+      "tick": 11345,
+      "name": "l9.bus-ram"
+    },
+    {
+      "tick": 11551,
+      "name": "l9.bus-ram"
+    },
+    {
+      "tick": 11614,
+      "name": "l9.crash-approach"
+    },
+    {
+      "tick": 11674,
+      "name": "l9.mega-boarded"
+    },
+    {
+      "tick": 11777,
+      "name": "l9.bridge-collapse"
+    },
+    {
+      "tick": 11777,
+      "name": "l9.weapons-lost"
+    },
+    {
+      "tick": 11867,
+      "name": "l9.crash-impact"
+    },
+    {
+      "tick": 12528,
+      "name": "l9.crawl-finished"
+    }
+  ],
+  "lines": [
+    {
+      "tick": 0,
+      "id": "L9.briefing"
+    },
+    {
+      "tick": 2413,
+      "id": "L9.mega-what"
+    },
+    {
+      "tick": 2713,
+      "id": "L9.mega-drive"
+    },
+    {
+      "tick": 4384,
+      "id": "L9.bus.dale"
+    },
+    {
+      "tick": 4684,
+      "id": "L9.bus.dale-beat"
+    },
+    {
+      "tick": 5095,
+      "id": "L9.gate"
+    },
+    {
+      "tick": 6186,
+      "id": "L9.stall.sam"
+    },
+    {
+      "tick": 8243,
+      "id": "L9.clingers"
+    },
+    {
+      "tick": 11205,
+      "id": "L9.sam-stays"
+    },
+    {
+      "tick": 12348,
+      "id": "L9.end-caption"
+    }
+  ]
+}

@@ -1,0 +1,707 @@
+{
+  "sourceHash": "7b8f8e012c7260b6923e72c36b7e0df5cfa18940d6e3ee05114cfdb399a942ec",
+  "observerHash": "9c863d51c978878788816a777d0fae61932ac68c7a6de7ff16a9289fa1bc7831",
+  "revision": "working-tree",
+  "tier": "low",
+  "method": "Controlled native lifecycle, mortal checkpoint, input, damage, bar and dialogue checks; setup mutations are explicit and do not certify arena combat completion.",
+  "checks": [
+    {
+      "name": "flamingo loses health and reacts to repeated weapon.shotgun",
+      "pass": true,
+      "value": {
+        "boss": "flamingo",
+        "weapon": "weapon.shotgun",
+        "shots": 2,
+        "damage": 86.39999999999999,
+        "reactions": 9,
+        "hp": 693.5999999999999
+      }
+    },
+    {
+      "name": "flamingo loses health and reacts to repeated weapon.army-mg",
+      "pass": true,
+      "value": {
+        "boss": "flamingo",
+        "weapon": "weapon.army-mg",
+        "shots": 2,
+        "damage": 2.52,
+        "reactions": 4,
+        "hp": 691.0799999999999
+      }
+    },
+    {
+      "name": "flamingo loses health and reacts to repeated weapon.hunting-rifle",
+      "pass": true,
+      "value": {
+        "boss": "flamingo",
+        "weapon": "weapon.hunting-rifle",
+        "shots": 2,
+        "damage": 32.4,
+        "reactions": 9,
+        "hp": 656.1599999999999
+      }
+    },
+    {
+      "name": "flamingo loses health and reacts to repeated weapon.rocket-launcher",
+      "pass": true,
+      "value": {
+        "boss": "flamingo",
+        "weapon": "weapon.rocket-launcher",
+        "shots": 2,
+        "damage": 27.22594840782217,
+        "reactions": 8,
+        "hp": 628.9340515921776
+      }
+    },
+    {
+      "name": "zebra loses health and reacts to repeated weapon.shotgun",
+      "pass": true,
+      "value": {
+        "boss": "zebra",
+        "weapon": "weapon.shotgun",
+        "shots": 2,
+        "damage": 86.39999999999999,
+        "reactions": 9,
+        "hp": 1163.6
+      }
+    },
+    {
+      "name": "zebra loses health and reacts to repeated weapon.army-mg",
+      "pass": true,
+      "value": {
+        "boss": "zebra",
+        "weapon": "weapon.army-mg",
+        "shots": 2,
+        "damage": 2.52,
+        "reactions": 4,
+        "hp": 1161.08
+      }
+    },
+    {
+      "name": "zebra loses health and reacts to repeated weapon.hunting-rifle",
+      "pass": true,
+      "value": {
+        "boss": "zebra",
+        "weapon": "weapon.hunting-rifle",
+        "shots": 2,
+        "damage": 32.4,
+        "reactions": 9,
+        "hp": 1126.1599999999999
+      }
+    },
+    {
+      "name": "zebra loses health and reacts to repeated weapon.rocket-launcher",
+      "pass": true,
+      "value": {
+        "boss": "zebra",
+        "weapon": "weapon.rocket-launcher",
+        "shots": 2,
+        "damage": 30.941999999999993,
+        "reactions": 8,
+        "hp": 1095.2179999999998
+      }
+    },
+    {
+      "name": "monkey loses health and reacts to repeated weapon.shotgun",
+      "pass": true,
+      "value": {
+        "boss": "monkey",
+        "weapon": "weapon.shotgun",
+        "shots": 2,
+        "damage": 86.39999999999999,
+        "reactions": 9,
+        "hp": 753.5999999999999
+      }
+    },
+    {
+      "name": "monkey loses health and reacts to repeated weapon.army-mg",
+      "pass": true,
+      "value": {
+        "boss": "monkey",
+        "weapon": "weapon.army-mg",
+        "shots": 2,
+        "damage": 2.52,
+        "reactions": 3,
+        "hp": 751.0799999999999
+      }
+    },
+    {
+      "name": "monkey loses health and reacts to repeated weapon.hunting-rifle",
+      "pass": true,
+      "value": {
+        "boss": "monkey",
+        "weapon": "weapon.hunting-rifle",
+        "shots": 2,
+        "damage": 32.4,
+        "reactions": 9,
+        "hp": 716.1599999999999
+      }
+    },
+    {
+      "name": "monkey loses health and reacts to repeated weapon.rocket-launcher",
+      "pass": true,
+      "value": {
+        "boss": "monkey",
+        "weapon": "weapon.rocket-launcher",
+        "shots": 2,
+        "damage": 30.449869597627163,
+        "reactions": 8,
+        "hp": 683.5501304023726
+      }
+    },
+    {
+      "name": "lion loses health and reacts to repeated weapon.shotgun",
+      "pass": true,
+      "value": {
+        "boss": "lion",
+        "weapon": "weapon.shotgun",
+        "shots": 2,
+        "damage": 86.39999999999999,
+        "reactions": 9,
+        "hp": 3113.6000000000004
+      }
+    },
+    {
+      "name": "lion loses health and reacts to repeated weapon.army-mg",
+      "pass": true,
+      "value": {
+        "boss": "lion",
+        "weapon": "weapon.army-mg",
+        "shots": 2,
+        "damage": 2.52,
+        "reactions": 3,
+        "hp": 3111.0800000000004
+      }
+    },
+    {
+      "name": "lion loses health and reacts to repeated weapon.hunting-rifle",
+      "pass": true,
+      "value": {
+        "boss": "lion",
+        "weapon": "weapon.hunting-rifle",
+        "shots": 2,
+        "damage": 16.2,
+        "reactions": 8,
+        "hp": 3092.3600000000006
+      }
+    },
+    {
+      "name": "lion loses health and reacts to repeated weapon.rocket-launcher",
+      "pass": true,
+      "value": {
+        "boss": "lion",
+        "weapon": "weapon.rocket-launcher",
+        "shots": 2,
+        "damage": 25.31586754925934,
+        "reactions": 8,
+        "hp": 3067.044132450741
+      }
+    },
+    {
+      "name": "gorilla loses health and reacts to repeated weapon.shotgun",
+      "pass": true,
+      "value": {
+        "boss": "gorilla",
+        "weapon": "weapon.shotgun",
+        "shots": 2,
+        "damage": 86.39999999999999,
+        "reactions": 9,
+        "hp": 5913.6
+      }
+    },
+    {
+      "name": "gorilla loses health and reacts to repeated weapon.army-mg",
+      "pass": true,
+      "value": {
+        "boss": "gorilla",
+        "weapon": "weapon.army-mg",
+        "shots": 2,
+        "damage": 2.52,
+        "reactions": 3,
+        "hp": 5911.08
+      }
+    },
+    {
+      "name": "gorilla loses health and reacts to repeated weapon.hunting-rifle",
+      "pass": true,
+      "value": {
+        "boss": "gorilla",
+        "weapon": "weapon.hunting-rifle",
+        "shots": 2,
+        "damage": 32.4,
+        "reactions": 9,
+        "hp": 5876.16
+      }
+    },
+    {
+      "name": "gorilla loses health and reacts to repeated weapon.rocket-launcher",
+      "pass": true,
+      "value": {
+        "boss": "gorilla",
+        "weapon": "weapon.rocket-launcher",
+        "shots": 2,
+        "damage": 30.413584878547027,
+        "reactions": 8,
+        "hp": 5845.746415121453
+      }
+    },
+    {
+      "name": "elephant loses health and reacts to repeated weapon.shotgun",
+      "pass": true,
+      "value": {
+        "boss": "elephant",
+        "weapon": "weapon.shotgun",
+        "shots": 2,
+        "damage": 86.39999999999999,
+        "reactions": 9,
+        "hp": 4913.6
+      }
+    },
+    {
+      "name": "elephant loses health and reacts to repeated weapon.army-mg",
+      "pass": true,
+      "value": {
+        "boss": "elephant",
+        "weapon": "weapon.army-mg",
+        "shots": 2,
+        "damage": 25.2,
+        "reactions": 3,
+        "hp": 4888.400000000001
+      }
+    },
+    {
+      "name": "elephant loses health and reacts to repeated weapon.hunting-rifle",
+      "pass": true,
+      "value": {
+        "boss": "elephant",
+        "weapon": "weapon.hunting-rifle",
+        "shots": 2,
+        "damage": 178.2,
+        "reactions": 9,
+        "hp": 4685.000000000001
+      }
+    },
+    {
+      "name": "elephant loses health and reacts to repeated weapon.rocket-launcher",
+      "pass": true,
+      "value": {
+        "boss": "elephant",
+        "weapon": "weapon.rocket-launcher",
+        "shots": 2,
+        "damage": 30.667521750177574,
+        "reactions": 8,
+        "hp": 4654.332478249823
+      }
+    },
+    {
+      "name": "bounded path entry uses the actual body sweep and rejects a closed physical pocket",
+      "pass": true,
+      "value": {
+        "entry": {
+          "x": 2.75,
+          "z": -0.25
+        },
+        "radius": 0.35,
+        "unchangedStretch": 2.5,
+        "bounded": true,
+        "closedPocketRejected": true
+      }
+    },
+    {
+      "name": "north wall restores both intact protection and the breached checkpoint",
+      "pass": true,
+      "value": {
+        "intactAgain": true,
+        "brokenAgain": true
+      }
+    },
+    {
+      "name": "healthy animal has no enemy bar",
+      "pass": true,
+      "value": {
+        "id": 397,
+        "infected": false
+      }
+    },
+    {
+      "name": "engagement sets arena-entry checkpoint and health bar",
+      "pass": true,
+      "value": {
+        "checkpoint": "arena-gorilla",
+        "arenaPhase": 1,
+        "bar": true
+      }
+    },
+    {
+      "name": "arena uses the campaign launcher with no arena ammunition pickup",
+      "pass": true,
+      "value": {
+        "specialPickups": 0,
+        "rack": [
+          "weapon.fists",
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.handgun",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.rocket-launcher"
+        ]
+      }
+    },
+    {
+      "name": "pillar uses the real destruction owner",
+      "pass": true,
+      "value": {
+        "id": "D-ZOO/l8-gorilla-pillar-0",
+        "beforeHP": [
+          260
+        ],
+        "hp": [
+          0
+        ],
+        "collapsed": true
+      }
+    },
+    {
+      "name": "mortal retry restores entry, phase, boss HP and cover without an ammo gate",
+      "pass": true,
+      "value": {
+        "deaths": 1,
+        "at": {
+          "x": 60,
+          "y": 0.7170000076293945,
+          "z": -16,
+          "yaw": 0.19952152321515965
+        },
+        "phase": 1,
+        "hp": {
+          "current": 0,
+          "max": 6000
+        },
+        "pillarHP": [
+          260
+        ]
+      }
+    },
+    {
+      "name": "chest beat can be hit during its full one-second cue and countered into recovery",
+      "pass": true,
+      "value": {
+        "windup": true,
+        "body": 2.52,
+        "exposed": 25.2,
+        "move": {
+          "move": "gorilla.roar",
+          "attackId": 3,
+          "stage": "recovery",
+          "startTick": 318,
+          "activeTick": 378,
+          "cooldownExpiry": 738,
+          "recoveryUntil": 439,
+          "target": {
+            "id": 1,
+            "x": 60,
+            "z": -16
+          },
+          "area": {
+            "x": 60.00082413201894,
+            "z": -22.000593243446335,
+            "radius": 8,
+            "dx": -0.0001373417556786841,
+            "dz": 0.9999999905686211
+          },
+          "hitIds": [],
+          "destination": {
+            "x": 60.00082413201894,
+            "z": -22.000593243446335
+          }
+        },
+        "counters": 1
+      }
+    },
+    {
+      "name": "ordinary weapons finish an arena boss permanently",
+      "pass": true,
+      "value": {
+        "hp": 0,
+        "recoverAt": -1
+      }
+    },
+    {
+      "name": "roof monkey keeps height guards and physically descends when the courier leaves",
+      "pass": true,
+      "value": {
+        "perched": true,
+        "guarded": true,
+        "descent": {
+          "start": 456,
+          "from": {
+            "x": -11.6175,
+            "y": 4.8,
+            "z": 12.5
+          },
+          "to": {
+            "x": -6,
+            "y": 0.7,
+            "z": 14
+          },
+          "roof": false
+        },
+        "grounded": true,
+        "maxStep": 0.1322130478487248,
+        "at": {
+          "x": -6,
+          "z": 14,
+          "y": 0.7000000000000004,
+          "yaw": -1.937970160613014
+        }
+      }
+    },
+    {
+      "name": "a close monkey grab continues real contact damage until escaped",
+      "pass": true,
+      "value": {
+        "gripDamage": 20,
+        "hp": 80
+      }
+    },
+    {
+      "name": "grab blocks weapon selection for two seconds",
+      "pass": true,
+      "value": {
+        "selected": "RIGHT",
+        "gunSide": "RIGHT",
+        "blocked": true,
+        "remaining": 60
+      }
+    },
+    {
+      "name": "a real melee hit shakes off the monkey and opens recovery",
+      "pass": true,
+      "value": {
+        "grabUntil": 0,
+        "tick": 300,
+        "counters": 1,
+        "hp": 684.768
+      }
+    },
+    {
+      "name": "weapon selection returns at grab expiry",
+      "pass": true,
+      "value": {
+        "blocked": false,
+        "selected": "RIGHT",
+        "expected": "RIGHT"
+      }
+    },
+    {
+      "name": "three actual sidestepped wall collisions permanently finish the elephant (independent lure setup)",
+      "pass": true,
+      "value": {
+        "contacts": [
+          {
+            "tick": 338,
+            "hits": 1,
+            "barrier": "zoo-wall-east",
+            "boss": {
+              "x": 114.39999999999999,
+              "z": 80,
+              "y": 0.7,
+              "yaw": 0
+            },
+            "courier": {
+              "x": 110,
+              "y": 0.7099999785423279,
+              "z": 82.81990051269531,
+              "yaw": 1.1519173063162573
+            },
+            "hp": 5000
+          },
+          {
+            "tick": 481,
+            "hits": 2,
+            "barrier": "zoo-wall-east",
+            "hp": 5000
+          },
+          {
+            "tick": 624,
+            "hits": 3,
+            "barrier": "zoo-wall-east",
+            "hp": 0
+          }
+        ],
+        "wallHits": 3,
+        "hp": 0,
+        "courierHP": 100,
+        "charges": [
+          {
+            "tick": 338,
+            "a": {
+              "move": "elephant.charge",
+              "attackId": 1,
+              "stage": "recovery",
+              "startTick": 225,
+              "activeTick": 279,
+              "cooldownExpiry": 645,
+              "recoveryUntil": 458,
+              "target": {
+                "id": 1,
+                "x": 110,
+                "z": 80
+              },
+              "area": {
+                "x": 100.57722222222219,
+                "z": 80,
+                "radius": 1.75,
+                "dx": 1,
+                "dz": 0
+              },
+              "hitIds": [],
+              "bait": {
+                "x": 110,
+                "z": 80
+              },
+              "destination": {
+                "x": 144.5772222222222,
+                "z": 80
+              }
+            },
+            "boss": {
+              "x": 114.39999999999999,
+              "z": 80,
+              "y": 0.7,
+              "yaw": 0
+            },
+            "courier": {
+              "x": 110,
+              "y": 0.7099999785423279,
+              "z": 82.8749008178711,
+              "yaw": 1.1519173063162573
+            },
+            "neighbors": [
+              {
+                "id": 1,
+                "role": "player.survivor",
+                "at": {
+                  "x": 110,
+                  "y": 0.7099999785423279,
+                  "z": 82.8749008178711,
+                  "yaw": 1.1519173063162573
+                },
+                "radius": 0.3
+              }
+            ],
+            "staticAhead": 2.886579864025407e-15
+          },
+          {
+            "tick": 481,
+            "a": {
+              "move": "elephant.charge",
+              "attackId": 2,
+              "stage": "recovery",
+              "startTick": 368,
+              "activeTick": 422,
+              "cooldownExpiry": 788,
+              "recoveryUntil": 601,
+              "target": {
+                "id": 1,
+                "x": 110,
+                "z": 80
+              },
+              "area": {
+                "x": 100.57585463442966,
+                "z": 79.99111711037031,
+                "radius": 1.75,
+                "dx": 0.9999995557839007,
+                "dz": 0.0009425667091488774
+              },
+              "hitIds": [],
+              "bait": {
+                "x": 110,
+                "z": 80
+              },
+              "destination": {
+                "x": 144.57583508892128,
+                "z": 80.03259004557286
+              }
+            },
+            "boss": {
+              "x": 114.39999999999999,
+              "z": 80.00414729536296,
+              "y": 0.7,
+              "yaw": -0.0009425668487166712
+            },
+            "courier": {
+              "x": 109.99890899658203,
+              "y": 0.7100048661231995,
+              "z": 85.24958801269531,
+              "yaw": -1.5707963267948966
+            },
+            "neighbors": [],
+            "staticAhead": 2.8865811462912243e-15
+          }
+        ]
+      }
+    },
+    {
+      "name": "arena throw ground mark uses the actual short landing endpoint",
+      "pass": true,
+      "value": {
+        "marks": [
+          {
+            "x": 60,
+            "z": -12,
+            "aspect": 1,
+            "shape": 1
+          }
+        ],
+        "markedLanding": true
+      }
+    },
+    {
+      "name": "gorilla lifts a real living infected, lands it nearby and gives it a 0.6s roll",
+      "pass": true,
+      "value": {
+        "payloadId": 426,
+        "lifted": true,
+        "flight": true,
+        "landed": true,
+        "rolling": true,
+        "landingDistance": 2,
+        "hp": 60,
+        "at": {
+          "x": 60,
+          "y": 0.82,
+          "z": -12,
+          "yaw": 0
+        }
+      }
+    },
+    {
+      "name": "elephant dialogue continuity (Nadia alive)",
+      "pass": true,
+      "value": {
+        "lines": [
+          "L8.nadia-path",
+          "L8.nadia-elephant",
+          "L8.courier-elephant"
+        ],
+        "hp": 0,
+        "nadiaAlive": true
+      }
+    },
+    {
+      "name": "elephant dialogue continuity (Nadia dead)",
+      "pass": true,
+      "value": {
+        "lines": [
+          "L8.nadia-path",
+          "L8.courier-elephant"
+        ],
+        "hp": 0,
+        "nadiaAlive": false
+      }
+    }
+  ],
+  "errors": []
+}
