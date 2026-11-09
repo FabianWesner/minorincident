@@ -1,0 +1,57 @@
+{
+  "command": "npm run test:smoke",
+  "pass": true,
+  "count": 7,
+  "sourceLogSha256": "f812fcbdbe89948f0ef0d1269fb16c9a02653de859e60da43618d4db609e5039",
+  "results": [
+    {
+      "project": "chromium",
+      "name": "tests/e2e/crowd-gpu-limits.spec.ts:19:52 › every crowd, corpse and accessory program compiles within the portable GPU limits on webgpu @smoke",
+      "duration": "28.0s",
+      "stage": "qa",
+      "pass": true
+    },
+    {
+      "project": "chromium",
+      "name": "tests/e2e/crowd-gpu-limits.spec.ts:19:52 › every crowd, corpse and accessory program compiles within the portable GPU limits on webgl @smoke",
+      "duration": "32.8s",
+      "stage": "qa",
+      "pass": true
+    },
+    {
+      "project": "chromium",
+      "name": "tests/e2e/smoke.spec.ts:245:54 › L1 start: pedestrians are drawn on screen (webgl), not only their props @smoke",
+      "duration": "25.6s",
+      "stage": "qa",
+      "pass": true
+    },
+    {
+      "project": "chromium",
+      "name": "tests/e2e/smoke.spec.ts:245:54 › L1 start: pedestrians are drawn on screen (webgpu), not only their props @smoke",
+      "duration": "25.1s",
+      "stage": "qa",
+      "pass": true
+    },
+    {
+      "project": "chromium",
+      "name": "tests/e2e/smoke.spec.ts:59:1 › L1 handover + outbreak: no shader builds after warm-up and no frame over 200 ms @smoke",
+      "duration": "1.0m",
+      "stage": "qa",
+      "pass": true
+    },
+    {
+      "project": "chromium",
+      "name": "tests/e2e/webgpu-unflagged.spec.ts:12:1 › menu → L1 start on unflagged WebGPU compiles every render pipeline with suit zombies drawn (low tier) @smoke",
+      "duration": "12.7s",
+      "stage": "qa",
+      "pass": true
+    },
+    {
+      "project": "chromium",
+      "name": "tests/e2e/smoke.spec.ts:16:1 › public build: menu start draws L1, debug info is query-gated, and no QA globals escape @public-smoke",
+      "duration": "12.2s",
+      "stage": "public",
+      "pass": true
+    }
+  ]
+}
