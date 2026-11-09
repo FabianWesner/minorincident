@@ -84,6 +84,18 @@ function visibleBounds(scene: Scene): ReturnType<typeof getBounds> {
 export function validateDocument(document: Document, def: AssetDef, bytes: number, lod = 0, source?: Document, label = `${def.id}:lod${lod}`): Validation {
   const errors: string[] = [];
   const root = document.getRoot(), nodes = root.listNodes();
+  if (def.crowdSkin) for (const node of nodes) for (const primitive of node.getMesh()?.listPrimitives() ?? []) {
+    const owner = primitive.getAttribute('_CROWD_PART'), joints = primitive.getAttribute('JOINTS_0'), weights = primitive.getAttribute('WEIGHTS_0');
+    if (!owner) continue;
+    if (!joints || !weights) { errors.push(`${node.getName()}: semantic owner is missing skin attributes`); continue; }
+    const indices: number[] = [], influences: number[] = [];
+    for (let i = 0; i < owner.getCount(); i++) {
+      const semantic = owner.getScalar(i); let weighted = false;
+      joints.getElement(i, indices); weights.getElement(i, influences);
+      for (let c = 0; c < 4; c++) if (indices[c] === semantic && influences[c] > 0) weighted = true;
+      if (!weighted) { errors.push(`${node.getName()}: semantic owner is not weighted at vertex ${i}`); break; }
+    }
+  }
   const byName = new Map(nodes.map((n) => [n.getName(), n]));
   // The general asset gate must enforce the same light contract as assets:lights.
   // A shipped binding must resolve in the shipped graph. An authored source can
@@ -242,6 +254,12 @@ export function validateDocument(document: Document, def: AssetDef, bytes: numbe
 }
 export async function validateAssets(manifest: AssetDef[], production = true): Promise<Validation[]> {
   const io = await assetIO(), results: Validation[] = [];
+  // Registry applies the quality suffix before the decay suffix. Never fall
+  // back to an existing high GLB: a missing low sibling is a delivery failure.
+  const lowPaths = new Map(manifest.flatMap(def => [undefined, ...def.decayVariants].map(decay => [
+    decay ? `${def.id}.${decay}` : def.id,
+    [def.glb, def.lods?.lod1, def.lods?.lod2].map(path => path && variantPath(path.replace(/\.glb$/, '.low.glb'), decay)),
+  ] as const)));
   const variants = manifest.flatMap(def => def.decayVariants.map(decay => ({
     ...def, ...def.decayNodes?.[decay], id: `${def.id}.${decay}`, decayVariants: [],
     glb: variantPath(def.glb, decay),
@@ -369,6 +387,15 @@ export async function validateAssets(manifest: AssetDef[], production = true): P
           if (better && existsSync(better) && statSync(path).size > statSync(better).size) validation.errors.push('delivery: file exceeds next-better LOD');
         }
         results.push(validation);
+        if (def.crowdSkin && def.textureMode && !def.textureAtlasLow) {
+          const lowPath = lowPaths.get(def.id)![lod]!;
+          if (!existsSync(lowPath)) results.push({ id: `${def.id}:lod${lod}:low`, errors: [`missing low GLB ${lowPath}`], triangles: 0, materials: 0, drawCalls: 0, fileKB: 0, dimensions: [], hash: '' });
+          else {
+            const low = await io.read(lowPath);
+            const lowValidation = { ...validateDocument(low, def, statSync(lowPath).size, lod, source, `${def.id}:lod${lod}:low`), id: `${def.id}:lod${lod}:low` };
+            results.push(lowValidation);
+          }
+        }
       }
       catch (error) { results.push({ id: def.id, errors: [String(error)], triangles: 0, materials: 0, drawCalls: 0, fileKB: 0, dimensions: [], hash: '' }); }
     }
