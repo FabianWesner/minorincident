@@ -1,6 +1,6 @@
 import { strikeAt } from './helpers';
 import { emptyInput, type InputFrame } from '../../input/InputFrame';
-import { l7FormationBack, l7Rocket } from '../../data/l7';
+import { l7Rocket } from '../../data/l7';
 import { l7CorridorAnchors } from '../../levels/L7/corridor';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import { Walker } from './Walker';
@@ -53,7 +53,7 @@ export class LevelSevenBot {
     }
     // Deaths leave holes in the original slots; the surviving tail keeps its row.
     const lastSlot = followers.reduce((slot, r) => Math.max(slot, w.entities.get(r.id)!.civilian!.survivor!.slot), -1);
-    const limit = Math.max(10, l7FormationBack(lastSlot) + 3);
+    const limit = Math.max(12, (Math.floor(lastSlot / 3) + 1) * 1.2 + 5);
     // Reach the bus door before waiting for the last stragglers; the shipped boarding queue owns their recovery there.
     if (!pickup && this.waypoint < this.route.length - 1 && distance(p.transform, goal) > 10 && followers.some(r => { const e = w.entities.get(r.id); return e && distance(e.transform, p.transform) > limit; })) f.move = { x: 0, z: 0 };
     return f;

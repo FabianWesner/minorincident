@@ -1,4 +1,4 @@
-import { readyCarriedAlly } from '../outbreak/Allies';
+import { allyState, readyCarriedAlly } from '../outbreak/Allies';
 import { Outbreak } from '../outbreak/Outbreak';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
@@ -94,7 +94,7 @@ export class LevelSevenEncounters {
       if (source && (source.health.current <= 0 || source.infected || source.infection)) continue;
       // Preserve the authored entry clearance; loosen slots only after following starts.
       const at = this.clearPoint(formationSlot(formation, heading, slot, false), .4);
-      const e = source ? structuredClone(source) : w.entities.get(outbreak.spawnPedestrian(at, { model: slot % 2 ? 'npc.civilian-man-b.aftermath' : 'npc.civilian-woman-b.aftermath', role: 'cashier' }))!;
+      const e = source ? structuredClone(source) : w.entities.get(outbreak.spawnPedestrian(at, { model: slot === 0 ? 'npc.marcus.aftermath' : slot % 2 ? 'npc.civilian-man-b.aftermath' : 'npc.civilian-woman-b.aftermath', role: 'cashier' }))!;
       if (source) {
         if (w.entities.get(e.id)) throw new Error(`L7 incoming survivor id collision: ${e.id}`);
         w.entities.replace(e);
@@ -103,6 +103,12 @@ export class LevelSevenEncounters {
       e.hidden = false;
       e.health.current = e.health.max;
       const c = e.civilian!;
+      // Standalone L7 includes the same armed shelter guard as standalone L6.
+      // Campaign entries retain their own carried fighters and guns.
+      if (!source && slot === 0) {
+        c.ally = allyState('officer'); c.ally.weapon = 'pistol';
+        c.ally.gun = { damage: 20, shotS: .5, rangeM: 16, nearM: 16, hitNear: .5, hitFar: .5 };
+      }
       readyCarriedAlly(e, w.tick);
       delete c.floorY; c.story = null; c.path.length = 0; c.goal = -1; c.pauseUntil = 0; c.state = 'calm';
       c.entered = w.tick; c.until = 0; c.knockedUntil = 0;
@@ -261,15 +267,10 @@ export class LevelSevenEncounters {
     const { damage, shoveTicks, shoveM } = l7Encounters.followerBite, w = this.world;
     if (target.health.current <= damage) return false;
     target.health.current -= damage;
-    // Reeling in place leaves the attacker's full body sealing the column's
-    // escape lane. Break all ordinary holds on this person together, so a
-    // second completed grab cannot immediately consume another third of HP.
-    for (const attacker of w.infected!.active) {
-      if (attacker.id !== biter.id && attacker.infected!.l1?.biteTargetId !== target.id) continue;
-      if (attacker.combat) attacker.combat.staggerUntil = Math.max(attacker.combat.staggerUntil, w.tick + shoveTicks);
-      const dx = attacker.transform.x - target.transform.x, dz = attacker.transform.z - target.transform.z, length = Math.hypot(dx, dz);
-      if (length > 0 && attacker.archetype !== 'infected.alpha') w.knockback(attacker, { x: dx / length, z: dz / length }, shoveM, 12);
-    }
+    if (biter.combat) biter.combat.staggerUntil = Math.max(biter.combat.staggerUntil, w.tick + shoveTicks);
+    // Reeling in place leaves the attacker's full body sealing the escape lane.
+    const dx = biter.transform.x - target.transform.x, dz = biter.transform.z - target.transform.z, length = Math.hypot(dx, dz);
+    if (length > 0 && biter.archetype !== 'infected.alpha') w.knockback(biter, { x: dx / length, z: dz / length }, shoveM, 12);
     w.events.emit({ type: 'infected.attack', tick: w.tick, sourceId: biter.id, attackId: 0, targetId: target.id, special: 'bite', amount: damage });
     return true;
   }
