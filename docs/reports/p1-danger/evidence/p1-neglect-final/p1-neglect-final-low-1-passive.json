@@ -1,0 +1,1720 @@
+{
+  "sourceHash": "a5a5b24077dc4e1bf8bf92feeff118a06042e2550d0c69f19219defb1b0cbfbd",
+  "observerHash": "f6f19f3a30a061c07b0e90a71d614f36498a80c2bdf41074dd826884cc2d7165",
+  "revision": "manifest-only",
+  "diagnosticHash": "c1f7a9340ab11397cf5c403cc9bc7972bb943107cabd61bdca6397797d16fccc",
+  "generatedAt": "2026-11-09T18:27:20.999Z",
+  "summary": {
+    "tag": "p1-neglect-final",
+    "tier": "low",
+    "seed": 1,
+    "passive": true,
+    "mortalPassive": false,
+    "maxSeconds": 120,
+    "completed": false,
+    "outcome": "tick-budget",
+    "seconds": 120,
+    "deaths": 0,
+    "acceptedHits": 0,
+    "acceptedDamage": 0,
+    "damageBySource": {},
+    "alphaLandedHits": 6,
+    "alphaLandedDamage": 150,
+    "rockets": 0,
+    "rocketKills": 0,
+    "gunDowns": 0,
+    "recoveries": 184,
+    "grabs": 196,
+    "minFollowerHp": 0,
+    "longestQuietSeconds": 10.816666666666668,
+    "courierAttacks": 1172,
+    "groupAttacks": 196,
+    "alphaAttacks": 96,
+    "boarded": 0,
+    "alphaAttacksPerMinute": 48,
+    "courierAttacksPerMinute": 586,
+    "groupAttacksPerMinute": 98,
+    "attackDirections": {
+      "west": 577,
+      "south": 243,
+      "north": 248,
+      "east": 300
+    },
+    "simultaneousDirections": 4,
+    "alphas": [
+      {
+        "id": 75,
+        "hp": 450,
+        "alphaType": "brute",
+        "tick": 1
+      },
+      {
+        "id": 108,
+        "hp": 450,
+        "alphaType": "thrower",
+        "tick": 791
+      }
+    ],
+    "nativeStateHash": "0dcbb524"
+  },
+  "pacing": {
+    "beats": [
+      {
+        "seconds": 0,
+        "kind": "radio",
+        "detail": "L7.start"
+      },
+      {
+        "seconds": 0.03333333333333333,
+        "kind": "fight",
+        "detail": "npc.cashier/weapon.pistol -> infected.runner"
+      },
+      {
+        "seconds": 0.23333333333333334,
+        "kind": "pickup",
+        "detail": "weapon.rocket-launcher"
+      },
+      {
+        "seconds": 10.033333333333333,
+        "kind": "fight",
+        "detail": "infected.alpha/infected.alpha -> npc.cashier"
+      },
+      {
+        "seconds": 20.85,
+        "kind": "fight",
+        "detail": "npc.cashier/weapon.pistol -> infected.runner"
+      },
+      {
+        "seconds": 33.416666666666664,
+        "kind": "fight",
+        "detail": "npc.cashier/weapon.pistol -> infected.runner"
+      },
+      {
+        "seconds": 44.1,
+        "kind": "fight",
+        "detail": "npc.cashier/weapon.pistol -> infected.runner"
+      },
+      {
+        "seconds": 54.9,
+        "kind": "fight",
+        "detail": "npc.cashier/weapon.pistol -> infected.runner"
+      },
+      {
+        "seconds": 65.25,
+        "kind": "fight",
+        "detail": "npc.cashier/weapon.pistol -> infected.runner"
+      },
+      {
+        "seconds": 76.38333333333334,
+        "kind": "fight",
+        "detail": "npc.cashier/weapon.pistol -> infected.runner"
+      },
+      {
+        "seconds": 86.38333333333334,
+        "kind": "fight",
+        "detail": "npc.cashier/weapon.pistol -> infected.runner"
+      },
+      {
+        "seconds": 96.41666666666667,
+        "kind": "fight",
+        "detail": "npc.cashier/weapon.pistol -> infected.runner"
+      },
+      {
+        "seconds": 106.48333333333333,
+        "kind": "fight",
+        "detail": "npc.cashier/weapon.pistol -> infected.runner"
+      },
+      {
+        "seconds": 116.63333333333334,
+        "kind": "fight",
+        "detail": "npc.cashier/weapon.pistol -> infected.runner"
+      }
+    ],
+    "longestQuietSeconds": 10.816666666666668,
+    "quietFrom": 10.033333333333333,
+    "quietTo": 20.85,
+    "passes": false
+  },
+  "run": {
+    "level": "L7",
+    "policy": "complete",
+    "seed": 1,
+    "completed": false,
+    "time": 120,
+    "deaths": 0,
+    "kills": 0,
+    "damageTaken": 0,
+    "failures": {
+      "tick-budget": 1
+    },
+    "objectiveTimeline": [],
+    "furthestObjective": "bus-departure",
+    "activeObjectives": [],
+    "outcome": "tick-budget",
+    "blocker": {
+      "objective": "bus-departure",
+      "detail": "{\"phase\":\"waiting\",\"hp\":100,\"roster\":[{\"id\":51,\"key\":\"shelter-0\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":184.232173553849,\"z\":15.774091519610026,\"y\":3.55,\"yaw\":0.34366322606684063}},{\"id\":52,\"key\":\"shelter-1\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":184.311518468647,\"z\":15.199622878780067,\"y\":3.55,\"yaw\":0.7043976173971173}},{\"id\":53,\"key\":\"shelter-2\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":183.59904994480578,\"z\":15.482236832382828,\"y\":3.55,\"yaw\":-2.58840883797691}},{\"id\":54,\"key\":\"shelter-3\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":183.89414339879303,\"z\":13.71728511588033,\"y\":3.55,\"yaw\":0.23862599898658027}},{\"id\":55,\"key\":\"shelter-4\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":184.95623370445924,\"z\":15.514976567177678,\"y\":3.55,\"yaw\":2.6783259800698107}},{\"id\":56,\"key\":\"shelter-5\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":185.06919109257262,\"z\":14.555727010044215,\"y\":3.7,\"yaw\":-0.012659856206338804}},{\"id\":57,\"key\":\"shelter-6\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":185.87994211498892,\"z\":15.880137308175522,\"y\":3.7,\"yaw\":2.765126947603937}},{\"id\":58,\"key\":\"shelter-7\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":185.68848943579414,\"z\":13.296119178576195,\"y\":3.7,\"yaw\":-2.919305940916048}},{\"id\":59,\"key\":\"shelter-8\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":186.77180898209662,\"z\":17.213583775136144,\"y\":3.7,\"yaw\":3.059096032520403}},{\"id\":60,\"key\":\"shelter-9\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":185.95972800225744,\"z\":14.567001681611599,\"y\":3.7,\"yaw\":3.1289327973834546}},{\"id\":61,\"key\":\"shelter-10\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":186.52808416075544,\"z\":16.359151634782943,\"y\":3.7,\"yaw\":-2.446667069517228}},{\"id\":62,\"key\":\"shelter-11\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":185.7590323219572,\"z\":14.062941643052339,\"y\":3.7,\"yaw\":-2.5213032074540647}},{\"id\":63,\"key\":\"shelter-12\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":186.07640231457046,\"z\":17.793859698814085,\"y\":3.7,\"yaw\":2.7739464994181753}},{\"id\":64,\"key\":\"shelter-13\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":185.54087867001323,\"z\":14.064253907825618,\"y\":3.7,\"yaw\":2.488657920288714}},{\"id\":65,\"key\":\"shelter-14\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":185.12390987327427,\"z\":18.220694279757847,\"y\":3.7,\"yaw\":3.864223512689233}},{\"id\":66,\"key\":\"shelter-15\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":185.47987653065002,\"z\":13.665206412044077,\"y\":3.7,\"yaw\":-2.0029040575856536}},{\"id\":67,\"key\":\"shelter-16\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":186.6388780844413,\"z\":16.582022206776237,\"y\":3.7,\"yaw\":-2.538653553822107}},{\"id\":68,\"key\":\"shelter-17\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":185.93364221051277,\"z\":15.051709313325595,\"y\":3.7,\"yaw\":2.6206952656164835}},{\"id\":69,\"key\":\"shelter-18\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":185.21925252548635,\"z\":12.932530965642874,\"y\":3.7,\"yaw\":-2.2103182962139756}},{\"id\":70,\"key\":\"shelter-19\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":185.6474716119599,\"z\":17.807657169898285,\"y\":3.7,\"yaw\":2.4492725173910723}},{\"id\":71,\"key\":\"shelter-20\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":185.6515714210954,\"z\":16.286936573150257,\"y\":3.7,\"yaw\":-1.359011918466475}},{\"id\":72,\"key\":\"shelter-21\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":186.61542453795963,\"z\":17.32637330334471,\"y\":3.7,\"yaw\":3.087677388197927}},{\"id\":73,\"key\":\"shelter-22\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":185.4673846629136,\"z\":13.284695290820798,\"y\":3.7,\"yaw\":-2.833769843828142}},{\"id\":74,\"key\":\"shelter-23\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":185.64874416777766,\"z\":14.103094236560828,\"y\":3.7,\"yaw\":-2.4785429728707555}}]}",
+      "player": {
+        "x": 180.51341247558594,
+        "y": 3.569999933242798,
+        "z": 15.483144760131836,
+        "yaw": -3.1468150354572715
+      }
+    },
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 159,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    }
+  },
+  "observation": {
+    "ticks": 7200,
+    "followerWait": {
+      "windows": [
+        {
+          "key": "step/rocket|phase/pickup",
+          "escortTicks": 14,
+          "stationaryFarTicks": 0
+        },
+        {
+          "key": "step/corridor|phase/encounters",
+          "escortTicks": 7186,
+          "stationaryFarTicks": 1425,
+          "first": {
+            "tick": 166,
+            "playerX": 263.714599609375,
+            "playerZ": 15.100539207458496,
+            "followerId": 66,
+            "followerX": 274.1028951982017,
+            "followerZ": 15.924440850317675
+          }
+        }
+      ],
+      "escortTicks": 7200,
+      "stationaryFarTicks": 1425,
+      "upperBoundPercent": 19.791666666666668,
+      "followers": [
+        {
+          "id": 20,
+          "escortTicks": 4200,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 51,
+          "escortTicks": 3663,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 52,
+          "escortTicks": 3475,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 53,
+          "escortTicks": 3588,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 54,
+          "escortTicks": 3918,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 55,
+          "escortTicks": 6766,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 56,
+          "escortTicks": 6601,
+          "stationaryFarTicks": 2
+        },
+        {
+          "id": 57,
+          "escortTicks": 4634,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 58,
+          "escortTicks": 4513,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 59,
+          "escortTicks": 4295,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 60,
+          "escortTicks": 4082,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 61,
+          "escortTicks": 4072,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 62,
+          "escortTicks": 3920,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 63,
+          "escortTicks": 3545,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 64,
+          "escortTicks": 3400,
+          "stationaryFarTicks": 2
+        },
+        {
+          "id": 65,
+          "escortTicks": 3289,
+          "stationaryFarTicks": 10
+        },
+        {
+          "id": 66,
+          "escortTicks": 3175,
+          "stationaryFarTicks": 12
+        },
+        {
+          "id": 67,
+          "escortTicks": 2758,
+          "stationaryFarTicks": 1393
+        },
+        {
+          "id": 68,
+          "escortTicks": 2553,
+          "stationaryFarTicks": 1188
+        },
+        {
+          "id": 69,
+          "escortTicks": 2418,
+          "stationaryFarTicks": 1053
+        },
+        {
+          "id": 70,
+          "escortTicks": 2296,
+          "stationaryFarTicks": 931
+        },
+        {
+          "id": 71,
+          "escortTicks": 2081,
+          "stationaryFarTicks": 716
+        },
+        {
+          "id": 72,
+          "escortTicks": 2110,
+          "stationaryFarTicks": 745
+        },
+        {
+          "id": 73,
+          "escortTicks": 1612,
+          "stationaryFarTicks": 290
+        },
+        {
+          "id": 74,
+          "escortTicks": 1623,
+          "stationaryFarTicks": 265
+        },
+        {
+          "id": 96,
+          "escortTicks": 7093,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 97,
+          "escortTicks": 6922,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 98,
+          "escortTicks": 7053,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 99,
+          "escortTicks": 661,
+          "stationaryFarTicks": 2
+        }
+      ]
+    },
+    "phases": [
+      {
+        "key": "step/rocket",
+        "label": "rocket: Recover the rocket launcher beside the exit",
+        "threat": false,
+        "startSeconds": 0,
+        "seconds": 0.23333333333333334,
+        "spawned": 0,
+        "initial": 21,
+        "observed": 21,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": null,
+        "flags": []
+      },
+      {
+        "key": "phase/pickup",
+        "label": "controller: pickup",
+        "threat": false,
+        "startSeconds": 0,
+        "seconds": 0.23333333333333334,
+        "spawned": 0,
+        "initial": 21,
+        "observed": 21,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": null,
+        "flags": []
+      },
+      {
+        "key": "step/corridor",
+        "label": "corridor: Bring the group to the evacuation corridor",
+        "threat": true,
+        "startSeconds": 0.23333333333333334,
+        "seconds": 119.76666666666667,
+        "spawned": 73,
+        "initial": 20,
+        "observed": 94,
+        "reachableEver": 0,
+        "within2_5m": 32,
+        "attacks": 1172,
+        "attacksPerMinute": 587.141664347342,
+        "firstAttackSeconds": 1.3833333333333333,
+        "groupAttacks": 314,
+        "groupAttacksPerMinute": 157.3058725299193,
+        "firstGroupAttackSeconds": 3.566666666666667,
+        "followerSpeeds": [
+          {
+            "id": 20,
+            "samples": 39,
+            "median": 4.499817279660794
+          },
+          {
+            "id": 51,
+            "samples": 44,
+            "median": 4.4998251608593485
+          },
+          {
+            "id": 52,
+            "samples": 42,
+            "median": 4.599999999998444
+          },
+          {
+            "id": 53,
+            "samples": 44,
+            "median": 4.499817631715713
+          },
+          {
+            "id": 54,
+            "samples": 42,
+            "median": 4.499817631936355
+          },
+          {
+            "id": 55,
+            "samples": 42,
+            "median": 4.499817947558117
+          },
+          {
+            "id": 56,
+            "samples": 41,
+            "median": 4.499826187419752
+          },
+          {
+            "id": 57,
+            "samples": 45,
+            "median": 4.499817631367836
+          },
+          {
+            "id": 58,
+            "samples": 44,
+            "median": 4.499817631557152
+          },
+          {
+            "id": 59,
+            "samples": 47,
+            "median": 4.499817624654058
+          },
+          {
+            "id": 60,
+            "samples": 45,
+            "median": 4.499817631255286
+          },
+          {
+            "id": 61,
+            "samples": 46,
+            "median": 4.499817620444519
+          },
+          {
+            "id": 62,
+            "samples": 45,
+            "median": 4.4998176312501705
+          },
+          {
+            "id": 63,
+            "samples": 47,
+            "median": 4.49981763060727
+          },
+          {
+            "id": 64,
+            "samples": 46,
+            "median": 4.4998176312527285
+          },
+          {
+            "id": 65,
+            "samples": 45,
+            "median": 4.49981762465065
+          },
+          {
+            "id": 66,
+            "samples": 40,
+            "median": 4.499817631336323
+          },
+          {
+            "id": 67,
+            "samples": 45,
+            "median": 4.4998176312501705
+          },
+          {
+            "id": 68,
+            "samples": 38,
+            "median": 4.4998176312527285
+          },
+          {
+            "id": 69,
+            "samples": 46,
+            "median": 4.4998175928259725
+          },
+          {
+            "id": 70,
+            "samples": 43,
+            "median": 4.499817629623943
+          },
+          {
+            "id": 71,
+            "samples": 46,
+            "median": 4.4998175945032735
+          },
+          {
+            "id": 72,
+            "samples": 43,
+            "median": 4.4998208519891465
+          },
+          {
+            "id": 73,
+            "samples": 43,
+            "median": 4.499817630561275
+          },
+          {
+            "id": 74,
+            "samples": 45,
+            "median": 4.4998176280336
+          },
+          {
+            "id": 96,
+            "samples": 44,
+            "median": 4.497381354457206
+          },
+          {
+            "id": 97,
+            "samples": 45,
+            "median": 4.49981526283677
+          },
+          {
+            "id": 98,
+            "samples": 46,
+            "median": 4.499817626257423
+          },
+          {
+            "id": 99,
+            "samples": 9,
+            "median": 4.313567845040067
+          }
+        ],
+        "followerMin": 4.497381354457206,
+        "followerMedian": 4.4998176312501705,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": null,
+        "flags": []
+      },
+      {
+        "key": "phase/encounters",
+        "label": "controller: encounters",
+        "threat": false,
+        "startSeconds": 0.23333333333333334,
+        "seconds": 119.76666666666667,
+        "spawned": 73,
+        "initial": 20,
+        "observed": 94,
+        "reachableEver": 0,
+        "within2_5m": 32,
+        "attacks": 1172,
+        "attacksPerMinute": 587.141664347342,
+        "firstAttackSeconds": 1.3833333333333333,
+        "groupAttacks": 314,
+        "groupAttacksPerMinute": 157.3058725299193,
+        "firstGroupAttackSeconds": 3.566666666666667,
+        "followerSpeeds": [
+          {
+            "id": 20,
+            "samples": 39,
+            "median": 4.499817279660794
+          },
+          {
+            "id": 51,
+            "samples": 44,
+            "median": 4.4998251608593485
+          },
+          {
+            "id": 52,
+            "samples": 42,
+            "median": 4.599999999998444
+          },
+          {
+            "id": 53,
+            "samples": 44,
+            "median": 4.499817631715713
+          },
+          {
+            "id": 54,
+            "samples": 42,
+            "median": 4.499817631936355
+          },
+          {
+            "id": 55,
+            "samples": 42,
+            "median": 4.499817947558117
+          },
+          {
+            "id": 56,
+            "samples": 41,
+            "median": 4.499826187419752
+          },
+          {
+            "id": 57,
+            "samples": 45,
+            "median": 4.499817631367836
+          },
+          {
+            "id": 58,
+            "samples": 44,
+            "median": 4.499817631557152
+          },
+          {
+            "id": 59,
+            "samples": 47,
+            "median": 4.499817624654058
+          },
+          {
+            "id": 60,
+            "samples": 45,
+            "median": 4.499817631255286
+          },
+          {
+            "id": 61,
+            "samples": 46,
+            "median": 4.499817620444519
+          },
+          {
+            "id": 62,
+            "samples": 45,
+            "median": 4.4998176312501705
+          },
+          {
+            "id": 63,
+            "samples": 47,
+            "median": 4.49981763060727
+          },
+          {
+            "id": 64,
+            "samples": 46,
+            "median": 4.4998176312527285
+          },
+          {
+            "id": 65,
+            "samples": 45,
+            "median": 4.49981762465065
+          },
+          {
+            "id": 66,
+            "samples": 40,
+            "median": 4.499817631336323
+          },
+          {
+            "id": 67,
+            "samples": 45,
+            "median": 4.4998176312501705
+          },
+          {
+            "id": 68,
+            "samples": 38,
+            "median": 4.4998176312527285
+          },
+          {
+            "id": 69,
+            "samples": 46,
+            "median": 4.4998175928259725
+          },
+          {
+            "id": 70,
+            "samples": 43,
+            "median": 4.499817629623943
+          },
+          {
+            "id": 71,
+            "samples": 46,
+            "median": 4.4998175945032735
+          },
+          {
+            "id": 72,
+            "samples": 43,
+            "median": 4.4998208519891465
+          },
+          {
+            "id": 73,
+            "samples": 43,
+            "median": 4.499817630561275
+          },
+          {
+            "id": 74,
+            "samples": 45,
+            "median": 4.4998176280336
+          },
+          {
+            "id": 96,
+            "samples": 44,
+            "median": 4.497381354457206
+          },
+          {
+            "id": 97,
+            "samples": 45,
+            "median": 4.49981526283677
+          },
+          {
+            "id": 98,
+            "samples": 46,
+            "median": 4.499817626257423
+          },
+          {
+            "id": 99,
+            "samples": 9,
+            "median": 4.313567845040067
+          }
+        ],
+        "followerMin": 4.497381354457206,
+        "followerMedian": 4.4998176312501705,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": null,
+        "flags": []
+      }
+    ],
+    "waves": []
+  },
+  "final": {
+    "departure": "waiting",
+    "boarded": 0,
+    "arrivals": [
+      {
+        "id": 75,
+        "group": 701,
+        "alpha": true,
+        "tick": 1,
+        "x": 259,
+        "z": 12,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 76,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 273,
+        "z": 9.5,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 77,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 273,
+        "z": 20.5,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 78,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 271.6,
+        "z": 9.5,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 79,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 271.6,
+        "z": 20.5,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 80,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 259,
+        "z": 10,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 81,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 259,
+        "z": 20,
+        "offscreen": true,
+        "safe": false
+      },
+      {
+        "id": 82,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 259,
+        "z": 8.2,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 83,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 259,
+        "z": 21.8,
+        "offscreen": true,
+        "safe": false
+      },
+      {
+        "id": 84,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 259,
+        "z": 6.4,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 85,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 259,
+        "z": 23.6,
+        "offscreen": true,
+        "safe": false
+      },
+      {
+        "id": 86,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 250,
+        "z": 10,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 87,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 250,
+        "z": 20,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 88,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 250.35355339059328,
+        "z": 8.553553390593272,
+        "offscreen": false,
+        "safe": false
+      },
+      {
+        "id": 89,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 250,
+        "z": 21.8,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 90,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 248.5,
+        "z": 6.4,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 91,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 250,
+        "z": 23.6,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 92,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 241,
+        "z": 10,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 93,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 241,
+        "z": 20,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 94,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 241,
+        "z": 8.2,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 95,
+        "group": 701,
+        "alpha": false,
+        "tick": 1,
+        "x": 241,
+        "z": 21.8,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 108,
+        "group": 702,
+        "alpha": true,
+        "tick": 790,
+        "x": 173,
+        "z": 12,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 109,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 158.9,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 110,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 161.7,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 111,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 164.5,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 112,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 167.3,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 113,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 170.1,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 114,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 172.9,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 115,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 175.7,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 116,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 178.5,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 117,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 181.3,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 118,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 184.1,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 119,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 161.9,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 120,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 164.7,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 121,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 167.5,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 122,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 170.3,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 123,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 173.1,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 124,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 175.9,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 125,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 178.7,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 126,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 181.5,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 127,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 184.3,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 128,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 187.1,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 129,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 158.9,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 130,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 161.7,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 131,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 164.5,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 132,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 167.3,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 133,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 170.1,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 134,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 172.9,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 135,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 175.7,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 136,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 178.5,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 137,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 181.3,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 138,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 184.1,
+        "z": 21.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 139,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 162.65,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 140,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 165.45,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 141,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 168.25,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 142,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 171.05,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 143,
+        "group": 702,
+        "alpha": false,
+        "tick": 790,
+        "x": 173.85,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 144,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 210.9,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 145,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 213.7,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 146,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 216.5,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 147,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 219.3,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 148,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 222.1,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 149,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 224.9,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 150,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 227.7,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 151,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 230.5,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 152,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 233.3,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 153,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 236.1,
+        "z": 8.5,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 154,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 225.9,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 155,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 228.7,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 156,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 231.5,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 157,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 234.3,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      },
+      {
+        "id": 158,
+        "group": 705,
+        "alpha": false,
+        "tick": 1399,
+        "x": 237.1,
+        "z": 15,
+        "offscreen": true,
+        "safe": true
+      }
+    ],
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 159,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    },
+    "roster": [
+      {
+        "id": 51,
+        "key": "shelter-0",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 52,
+        "key": "shelter-1",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 53,
+        "key": "shelter-2",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 54,
+        "key": "shelter-3",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 55,
+        "key": "shelter-4",
+        "injured": false,
+        "status": "following",
+        "passed": false,
+        "hp": 100,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 56,
+        "key": "shelter-5",
+        "injured": false,
+        "status": "following",
+        "passed": false,
+        "hp": 66,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 57,
+        "key": "shelter-6",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 58,
+        "key": "shelter-7",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 59,
+        "key": "shelter-8",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 60,
+        "key": "shelter-9",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 61,
+        "key": "shelter-10",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 62,
+        "key": "shelter-11",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 63,
+        "key": "shelter-12",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 64,
+        "key": "shelter-13",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 65,
+        "key": "shelter-14",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 66,
+        "key": "shelter-15",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 67,
+        "key": "shelter-16",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 68,
+        "key": "shelter-17",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 69,
+        "key": "shelter-18",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 70,
+        "key": "shelter-19",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 71,
+        "key": "shelter-20",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 72,
+        "key": "shelter-21",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 73,
+        "key": "shelter-22",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-woman-b.aftermath",
+        "boarded": false
+      },
+      {
+        "id": 74,
+        "key": "shelter-23",
+        "injured": false,
+        "status": "turned",
+        "passed": false,
+        "hp": 0,
+        "model": "npc.civilian-man-b.aftermath",
+        "boarded": false
+      }
+    ],
+    "escaped": []
+  }
+}

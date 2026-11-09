@@ -105,7 +105,7 @@ export function installAgentMotion(world: SimWorld): void {
       // Follow speed includes crowd separation: a chain of people pushing one
       // another must not run faster than the courier-facing movement contract.
       const l5Follower = !!world.missions?.state.l5;
-      const l7Follower = world.scenario === 'L7' && world.missions?.state.steps.departure?.status === 'active';
+      const l7Follower = world.scenario === 'L7';
       const followMs = l5Follower ? l5.follow.runMs : l7Follower ? l7Departure.followMs : 0;
       if (followMs && p.following && e.civilian?.survivor?.mode === 'follow' && !forced(e, world.tick, world)) {
         const dx = e.transform.x - p.x, dz = e.transform.z - p.z, distance = Math.hypot(dx, dz);

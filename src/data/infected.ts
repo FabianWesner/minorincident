@@ -1,6 +1,8 @@
 import { l1v2 } from './l1v2';
 /** PO 10-10: every infected spawns with 50% more HP. */
 export const INFECTED_TOUGHNESS = 1.5;
+/** PROD completed escort bite: shown health loss, then the victim tears free. */
+export const infectedHumanBite = { damage: 34, shoveTicks: 45 } as const;
 /** L4 riot shield response: front shots chip, build strain, then expose the bearer briefly. */
 export const riotShieldResponse = { chipFraction: .18, faceHalfAngleDeg: 35, breakStress: 80, breakTicks: 90, recoilM: .08 } as const;
 /** Infected balance in metres/seconds/HP, from concept §7. Human roles and animals share one brain. */

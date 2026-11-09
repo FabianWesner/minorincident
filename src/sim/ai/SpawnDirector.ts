@@ -47,12 +47,10 @@ export class SpawnDirector {
     this.tier = tier;
   }
   get cap(): number { return this.tier === 'low' ? this.ai.world.scenario === 'L4' ? l4.war.caps.infected.low : this.ai.world.scenario === 'L3' ? l3.density.caps.low : Math.floor(this.levelCap / 2) : this.levelCap; }
-  /** Living infected only: a knocked-down infected (PO "Infected recover") frees its slot while down, so authored
-   * populations still emerge; the cap bounds new spawns, recoveries may briefly exceed it. */
+  /** Strict levels reserve a downed actor's slot until it rises; ordinary
+   * admission cannot crowd a recoverable body out of its scheduled get-up. */
   get count(): number {
-    // L4 low budgets living pressure; recoverable bodies keep their identity
-    // and wait for a free living slot before getting up.
-    const downed = this.strict && this.ai.world.scenario !== 'L2' && !(this.tier === 'low' && this.ai.world.scenario === 'L4');
+    const downed = this.strict;
     let count = 0; for (const e of this.ai.active) if (e.health.current > 0 || (downed && (e.infected?.recoverAt ?? -1) >= 0)) count += e.archetype === 'infected.crow' ? e.infected!.birds * 0.25 : 1; return count;
   }
   /** L1 streets / E21: a downed infected that will get up keeps its slot, so recoveries cannot push the level past its cap. */
