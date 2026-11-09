@@ -37,6 +37,8 @@ The [scope audit](scope-audit.json) also confirms that all 684 tracked files in 
 ## Repository checks
 
 - `npm run build:qa` and `git diff --check`: passed.
-- E22/E23 per-change gates and smoke: results recorded in `checks.json` after completion.
+- `npm run verify -- E22` and `npm run verify -- E23`: passed; each includes typecheck, lint, and all 107 unit/shared/tool tests in 27 files.
+- `E2E_PORT=4987 BROWSER_POOL_JOB_ID=r21-cellar MI_SLUG=r21-cellar npm run test:smoke`: passed, six QA cases plus the public-build case in 132.9 s.
+- [Check receipts](checks.json) identify the tested runtime commit, `722eb209`. Its renderer source hashes exactly match the visual capture receipts; the final report commit adds only evidence.
 
 The owned preview server has been stopped and all r21-cellar browser reservations released. No deploy or push.
