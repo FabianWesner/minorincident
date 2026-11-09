@@ -135,6 +135,7 @@ async function slopeWorld(level: 'L3' | 'L5' | 'L6' | 'L7' | 'L10', quality: 'lo
   const world = new SimWorld(); worlds.push(world); await world.init();
   const composition = compositions[level];
   world.loadComposition(composition, composition.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), 1);
+  world.l7Encounters = null; world.l7Departure = null; world.l10Encounters = null;
   world.infected!.director.setTier(quality); world.npcs!.setQuality(quality);
   world.player!.locomotion.crowd = []; world.player!.locomotion.props = [];
   return world;
