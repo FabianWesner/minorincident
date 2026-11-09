@@ -139,6 +139,10 @@ test('save decoding: presets round-trip, v0 migrates, corrupt/unknown data and s
   expect(store.load()).toEqual({ status: 'ok', save });
   expect(encodeSave(save)).toBe(JSON.stringify(save));
   const large = preset('L10-default');
+  large.usage['weapon.rotary-minigun'] = 204;
+  expect(validateSave(large), 'mounted gun usage is known without granting a carried weapon').toBe(true);
+  expect(large.ownedActions).not.toContain('weapon.rotary-minigun');
+  expect(validateSave({ ...large, usage: { 'weapon.unknown-mounted-gun': 1 } })).toBe(false);
   large.results = { L9: { ...result, optionalObjectives: Array.from({ length: 1024 }, (_, i) => `${i}:${'cure 雪 🧟\u0000'.repeat(32)}`) } };
   expect(validateSave(large)).toBe(true);
   const encoded = encodeSave(large);

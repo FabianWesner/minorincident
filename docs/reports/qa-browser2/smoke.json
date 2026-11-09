@@ -1,0 +1,402 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/qa-browser2/node_modules/.bin/playwright",
+      "test",
+      "--project=chromium",
+      "--grep",
+      "@smoke",
+      "--grep-invert",
+      "webgpu|WebGPU",
+      "--workers=1"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/qa-browser2/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/qa-browser2/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": {},
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/qa-browser2/test-results/playwright/run-4351",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/qa-browser2/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/e2e/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/qa-browser2/test-results/playwright/run-4351",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "perf",
+        "name": "perf",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/qa-browser2/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/nightly/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/qa-browser2/test-results/playwright/run-4351",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/qa-browser2/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/e2e/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/qa-browser2/test-results/playwright/run-4351",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/qa-browser2/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/e2e/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/qa-browser2/test-results/playwright/run-4351",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/qa-browser2/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/e2e/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/qa-browser2/test-results/playwright/run-4351",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/qa-browser2/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/e2e/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 4351 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:4351",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/crowd-gpu-limits.spec.ts",
+      "file": "e2e/crowd-gpu-limits.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "every crowd, corpse and accessory program compiles within the portable GPU limits on webgl @smoke",
+          "ok": false,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 9163,
+                  "error": {
+                    "message": "Error: page.evaluate: Error: Crowd semantic owner must be a weighted joint\n    at qi (http://127.0.0.1:4351/build/Physics-IWCzETgv.js:1:26267)\n    at http://127.0.0.1:4351/build/Physics-IWCzETgv.js:1:35209\n    at ed.traverse (http://127.0.0.1:4351/build/three-core-hrHf-oq7.js:5:62452)\n    at Pi.traverse (http://127.0.0.1:4351/build/three-core-hrHf-oq7.js:5:62518)\n    at qe (http://127.0.0.1:4351/build/Physics-IWCzETgv.js:1:32862)\n    at qe.next (<anonymous>)\n    at gs (http://127.0.0.1:4351/build/Physics-IWCzETgv.js:1:28329)\n    at L2.loadBatch (http://127.0.0.1:4351/build/index-KbWF4xOJ.js:8:254639)\n    at async Promise.all (index 34)\n    at async L2.init (http://127.0.0.1:4351/build/index-KbWF4xOJ.js:8:250539)",
+                    "stack": "Error: page.evaluate: Error: Crowd semantic owner must be a weighted joint\n    at qi (http://127.0.0.1:4351/build/Physics-IWCzETgv.js:1:26267)\n    at http://127.0.0.1:4351/build/Physics-IWCzETgv.js:1:35209\n    at ed.traverse (http://127.0.0.1:4351/build/three-core-hrHf-oq7.js:5:62452)\n    at Pi.traverse (http://127.0.0.1:4351/build/three-core-hrHf-oq7.js:5:62518)\n    at qe (http://127.0.0.1:4351/build/Physics-IWCzETgv.js:1:32862)\n    at qe.next (<anonymous>)\n    at gs (http://127.0.0.1:4351/build/Physics-IWCzETgv.js:1:28329)\n    at L2.loadBatch (http://127.0.0.1:4351/build/index-KbWF4xOJ.js:8:254639)\n    at async Promise.all (index 34)\n    at async L2.init (http://127.0.0.1:4351/build/index-KbWF4xOJ.js:8:250539)\n    at qi (http://127.0.0.1:4351/build/Physics-IWCzETgv.js:1:26267)\n    at http://127.0.0.1:4351/build/Physics-IWCzETgv.js:1:35209\n    at ed.traverse (http://127.0.0.1:4351/build/three-core-hrHf-oq7.js:5:62452)\n    at Pi.traverse (http://127.0.0.1:4351/build/three-core-hrHf-oq7.js:5:62518)\n    at qe (http://127.0.0.1:4351/build/Physics-IWCzETgv.js:1:32862)\n    at gs (http://127.0.0.1:4351/build/Physics-IWCzETgv.js:1:28329)\n    at L2.loadBatch (http://127.0.0.1:4351/build/index-KbWF4xOJ.js:8:254639)\n    at async L2.init (http://127.0.0.1:4351/build/index-KbWF4xOJ.js:8:250539)\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/qa-browser2/tests/e2e/crowd-gpu-limits.spec.ts:74:16",
+                    "location": {
+                      "file": "http://127.0.0.1:4351/build/Physics-IWCzETgv.js",
+                      "column": 26267,
+                      "line": 1
+                    }
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "http://127.0.0.1:4351/build/Physics-IWCzETgv.js",
+                        "column": 26267,
+                        "line": 1
+                      },
+                      "message": "Error: page.evaluate: Error: Crowd semantic owner must be a weighted joint\n    at qi (http://127.0.0.1:4351/build/Physics-IWCzETgv.js:1:26267)\n    at http://127.0.0.1:4351/build/Physics-IWCzETgv.js:1:35209\n    at ed.traverse (http://127.0.0.1:4351/build/three-core-hrHf-oq7.js:5:62452)\n    at Pi.traverse (http://127.0.0.1:4351/build/three-core-hrHf-oq7.js:5:62518)\n    at qe (http://127.0.0.1:4351/build/Physics-IWCzETgv.js:1:32862)\n    at qe.next (<anonymous>)\n    at gs (http://127.0.0.1:4351/build/Physics-IWCzETgv.js:1:28329)\n    at L2.loadBatch (http://127.0.0.1:4351/build/index-KbWF4xOJ.js:8:254639)\n    at async Promise.all (index 34)\n    at async L2.init (http://127.0.0.1:4351/build/index-KbWF4xOJ.js:8:250539)\n    at qi (http://127.0.0.1:4351/build/Physics-IWCzETgv.js:1:26267)\n    at http://127.0.0.1:4351/build/Physics-IWCzETgv.js:1:35209\n    at ed.traverse (http://127.0.0.1:4351/build/three-core-hrHf-oq7.js:5:62452)\n    at Pi.traverse (http://127.0.0.1:4351/build/three-core-hrHf-oq7.js:5:62518)\n    at qe (http://127.0.0.1:4351/build/Physics-IWCzETgv.js:1:32862)\n    at gs (http://127.0.0.1:4351/build/Physics-IWCzETgv.js:1:28329)\n    at L2.loadBatch (http://127.0.0.1:4351/build/index-KbWF4xOJ.js:8:254639)\n    at async L2.init (http://127.0.0.1:4351/build/index-KbWF4xOJ.js:8:250539)\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/qa-browser2/tests/e2e/crowd-gpu-limits.spec.ts:74:16"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/qa-browser2/tests/e2e/fixtures.ts",
+                        "column": 81,
+                        "line": 54
+                      },
+                      "message": "Error: Uncaught errors, console errors and failed requests\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 13\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"console.error: Level load failed Error: Crowd semantic owner must be a weighted joint\u001b[39m\n\u001b[31m+     at qi (http://127.0.0.1:4351/build/Physics-IWCzETgv.js:1:26267)\u001b[39m\n\u001b[31m+     at http://127.0.0.1:4351/build/Physics-IWCzETgv.js:1:35209\u001b[39m\n\u001b[31m+     at ed.traverse (http://127.0.0.1:4351/build/three-core-hrHf-oq7.js:5:62452)\u001b[39m\n\u001b[31m+     at Pi.traverse (http://127.0.0.1:4351/build/three-core-hrHf-oq7.js:5:62518)\u001b[39m\n\u001b[31m+     at qe (http://127.0.0.1:4351/build/Physics-IWCzETgv.js:1:32862)\u001b[39m\n\u001b[31m+     at qe.next (<anonymous>)\u001b[39m\n\u001b[31m+     at gs (http://127.0.0.1:4351/build/Physics-IWCzETgv.js:1:28329)\u001b[39m\n\u001b[31m+     at L2.loadBatch (http://127.0.0.1:4351/build/index-KbWF4xOJ.js:8:254639)\u001b[39m\n\u001b[31m+     at async Promise.all (index 34)\u001b[39m\n\u001b[31m+     at async L2.init (http://127.0.0.1:4351/build/index-KbWF4xOJ.js:8:250539)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   at e2e/fixtures.ts:54\n\n  52 |     const guard = attachErrorGuard(page);\n  53 |     await use(); guard.dispose();\n> 54 |     expect(guard.errors, 'Uncaught errors, console errors and failed requests').toEqual([]);\n     |                                                                                 ^\n  55 |   }, { auto: true }],\n  56 | });\n  57 | export { expect };\n    at Object.base.extend.errorGuard.auto (/Users/wesner/Workspace/minorincident/.claude/worktrees/qa-browser2/tests/e2e/fixtures.ts:54:81)"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T04:26:09.246Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/qa-browser2/test-results/playwright/run-4351/e2e-crowd-gpu-limits-every-97995-e-GPU-limits-on-webgl-smoke-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/qa-browser2/test-results/playwright/run-4351/e2e-crowd-gpu-limits-every-97995-e-GPU-limits-on-webgl-smoke-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "http://127.0.0.1:4351/build/Physics-IWCzETgv.js",
+                    "column": 26267,
+                    "line": 1
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ee0616d069dd89d0a627-02b725917596e5db8b47",
+          "file": "e2e/crowd-gpu-limits.spec.ts",
+          "line": 19,
+          "column": 52
+        }
+      ]
+    },
+    {
+      "title": "e2e/smoke.spec.ts",
+      "file": "e2e/smoke.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "L1 handover + outbreak: no shader builds after warm-up and no frame over 200 ms @smoke",
+          "ok": false,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 200000,
+              "annotations": [
+                {
+                  "type": "builds after warm-up",
+                  "description": "{\"pal_picketWhite:static:m2828:c12:o14461\":1,\"pal_picketWhite:static:m2841:c12:o14562\":1,\"pal_picketWhite:static:m2872:c12:o14817\":1,\"pal_picketWhite:static:m2873:c12:o14876\":1}"
+                },
+                {
+                  "type": "frames",
+                  "description": "max 33 ms in 170"
+                },
+                {
+                  "type": "L3 corpse shader builds",
+                  "description": "{\"corpses\":[{\"id\":45,\"model\":\"npc.civilian-man-a\"},{\"id\":24,\"model\":\"npc.police-officer\"},{\"id\":34,\"model\":\"npc.national-guard\"}],\"builds\":{}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 54429,
+                  "error": {
+                    "message": "Error: page.evaluate: Error: amb.monkey is required for the skinned crowd\n    at L2.loadBatch (http://127.0.0.1:4351/build/index-KbWF4xOJ.js:8:253489)\n    at async Promise.all (index 0)\n    at async Promise.all (index 1)\n    at async L2.init (http://127.0.0.1:4351/build/index-KbWF4xOJ.js:8:251441)\n    at async Promise.all (index 4)",
+                    "stack": "Error: page.evaluate: Error: amb.monkey is required for the skinned crowd\n    at L2.loadBatch (http://127.0.0.1:4351/build/index-KbWF4xOJ.js:8:253489)\n    at async Promise.all (index 0)\n    at async Promise.all (index 1)\n    at async L2.init (http://127.0.0.1:4351/build/index-KbWF4xOJ.js:8:251441)\n    at async Promise.all (index 4)\n    at L2.loadBatch (http://127.0.0.1:4351/build/index-KbWF4xOJ.js:8:253489)\n    at async L2.init (http://127.0.0.1:4351/build/index-KbWF4xOJ.js:8:251441)\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/qa-browser2/tests/e2e/smoke.spec.ts:193:25",
+                    "location": {
+                      "file": "http://127.0.0.1:4351/build/index-KbWF4xOJ.js",
+                      "column": 253489,
+                      "line": 8
+                    }
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "http://127.0.0.1:4351/build/index-KbWF4xOJ.js",
+                        "column": 253489,
+                        "line": 8
+                      },
+                      "message": "Error: page.evaluate: Error: amb.monkey is required for the skinned crowd\n    at L2.loadBatch (http://127.0.0.1:4351/build/index-KbWF4xOJ.js:8:253489)\n    at async Promise.all (index 0)\n    at async Promise.all (index 1)\n    at async L2.init (http://127.0.0.1:4351/build/index-KbWF4xOJ.js:8:251441)\n    at async Promise.all (index 4)\n    at L2.loadBatch (http://127.0.0.1:4351/build/index-KbWF4xOJ.js:8:253489)\n    at async L2.init (http://127.0.0.1:4351/build/index-KbWF4xOJ.js:8:251441)\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/qa-browser2/tests/e2e/smoke.spec.ts:193:25"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/qa-browser2/tests/e2e/fixtures.ts",
+                        "column": 81,
+                        "line": 54
+                      },
+                      "message": "Error: Uncaught errors, console errors and failed requests\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 8\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"console.error: Level load failed Error: amb.monkey is required for the skinned crowd\u001b[39m\n\u001b[31m+     at L2.loadBatch (http://127.0.0.1:4351/build/index-KbWF4xOJ.js:8:253489)\u001b[39m\n\u001b[31m+     at async Promise.all (index 0)\u001b[39m\n\u001b[31m+     at async Promise.all (index 1)\u001b[39m\n\u001b[31m+     at async L2.init (http://127.0.0.1:4351/build/index-KbWF4xOJ.js:8:251441)\u001b[39m\n\u001b[31m+     at async Promise.all (index 4)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   at e2e/fixtures.ts:54\n\n  52 |     const guard = attachErrorGuard(page);\n  53 |     await use(); guard.dispose();\n> 54 |     expect(guard.errors, 'Uncaught errors, console errors and failed requests').toEqual([]);\n     |                                                                                 ^\n  55 |   }, { auto: true }],\n  56 | });\n  57 | export { expect };\n    at Object.base.extend.errorGuard.auto (/Users/wesner/Workspace/minorincident/.claude/worktrees/qa-browser2/tests/e2e/fixtures.ts:54:81)"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T04:26:20.376Z",
+                  "annotations": [
+                    {
+                      "type": "builds after warm-up",
+                      "description": "{\"pal_picketWhite:static:m2828:c12:o14461\":1,\"pal_picketWhite:static:m2841:c12:o14562\":1,\"pal_picketWhite:static:m2872:c12:o14817\":1,\"pal_picketWhite:static:m2873:c12:o14876\":1}"
+                    },
+                    {
+                      "type": "frames",
+                      "description": "max 33 ms in 170"
+                    },
+                    {
+                      "type": "L3 corpse shader builds",
+                      "description": "{\"corpses\":[{\"id\":45,\"model\":\"npc.civilian-man-a\"},{\"id\":24,\"model\":\"npc.police-officer\"},{\"id\":34,\"model\":\"npc.national-guard\"}],\"builds\":{}}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/qa-browser2/test-results/playwright/run-4351/e2e-smoke-L1-handover-outb-c8fda--no-frame-over-200-ms-smoke-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/qa-browser2/test-results/playwright/run-4351/e2e-smoke-L1-handover-outb-c8fda--no-frame-over-200-ms-smoke-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "http://127.0.0.1:4351/build/index-KbWF4xOJ.js",
+                    "column": 253489,
+                    "line": 8
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-77f7b8cefa6484a6a802",
+          "file": "e2e/smoke.spec.ts",
+          "line": 59,
+          "column": 1
+        },
+        {
+          "title": "L1 start: pedestrians are drawn on screen (webgl), not only their props @smoke",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 36855,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T04:27:17.195Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-216fc21225993c9bd012",
+          "file": "e2e/smoke.spec.ts",
+          "line": 245,
+          "column": 54
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-09T04:26:08.634Z",
+    "duration": 105460.81,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

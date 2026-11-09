@@ -69,6 +69,11 @@ export class Pickups {
         }
         combat.runner.loadout.state.selectedSide = side;
         combat.runner.loadout.state[side].index = index;
+        const campaign = this.world.progression?.campaign;
+        if (campaign) {
+          if (!campaign.ownedActions.includes(pickup.actionId)) campaign.ownedActions.push(pickup.actionId);
+          campaign.racks = { LEFT: loadout.state.LEFT.rack.map(slot => slot.id), RIGHT: loadout.state.RIGHT.rack.map(slot => slot.id) };
+        }
       } else replaced = loadout.collect(side, pickup.actionId);
       delete combat.runner.running[side];
       this.world.entities.remove(entity.id); this.world.spatial.delete(entity.id);

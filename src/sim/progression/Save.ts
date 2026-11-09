@@ -1,7 +1,7 @@
 import { gzipSync, gunzipSync, strFromU8, strToU8 } from 'three/addons/libs/fflate.module.js';
 import { migrateCureResume, validCureCheckpoint } from './cureSave';
 import { rocketZoomLimit } from '../../data/cameraFraming';
-import { catalog } from '../../data/actions/catalog';
+import { catalog, mountedActions } from '../../data/actions/catalog';
 import { upgrades } from '../../data/upgrades';
 import { eligible, lastLevel, meetsPrerequisite, validRacks, type CampaignSave } from './Campaign';
 import { validAftermath } from './carryover';
@@ -125,7 +125,7 @@ export function validateSave(raw:unknown):raw is CampaignSave {
     const enums:Record<string,string[]>={gore:['Off','Reduced','Full'],quality:['high','low','auto'],aimAssist:['Off','Low','Default','High']};
     if(Object.hasOwn(enums,key)?!enums[key].includes(String(value)):!['cameraShake','flashReduction','muted','captions','noiseRings','mono','haptics','tinnitus','bloom','cheapDof','vfx','colorblind','slowMotion'].includes(key)||typeof value!=='boolean')return false;
   }
-  if(Object.entries(save.usage).some(([id,n])=>!Object.hasOwn(catalog,id)||!Number.isSafeInteger(n)||n<0))return false;
+  if(Object.entries(save.usage).some(([id,n])=>(!Object.hasOwn(catalog,id)&&!Object.hasOwn(mountedActions,id))||!Number.isSafeInteger(n)||n<0))return false;
   if (save.world?.infectionCleared !== undefined) {
     const cleared = save.world.infectionCleared;
     if (!record(cleared) || cleared.level !== 10 || !Number.isSafeInteger(cleared.releasedAt) || cleared.releasedAt < 0 || cleared.epilogueSeen !== undefined && typeof cleared.epilogueSeen !== 'boolean') return false;
