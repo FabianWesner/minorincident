@@ -3,6 +3,8 @@ import { afterEach, expect, test } from 'vitest';
 import * as RAPIER from '@dimforge/rapier3d-compat';
 import { survivor } from '../../src/data/survivor';
 import { SimWorld } from '../../src/sim/world/SimWorld';
+import { loadLevel } from '../../tools/sim-runner/levels';
+import { highwayPoint } from '../../src/levels/L3/highway';
 
 const worlds: SimWorld[] = [];
 async function setup(scenario = 'survivor'): Promise<SimWorld> { const w = new SimWorld(); worlds.push(w); await w.init(); w.loadScenario(scenario, 1); return w; }
@@ -23,6 +25,7 @@ test('movement: fast acceleration and stop, capped diagonal speed, 720°/s turni
   a.clearInput(); p.transform.yaw = 0; a.setInput({ move: { x: -1, z: 0 }, aim: { x: 1, z: 0 } }); step(a, 1);
   expect(Math.abs(p.transform.yaw)).toBeCloseTo(4 * Math.PI / 60);
   step(a, 14); expect(Math.abs(p.transform.yaw)).toBeCloseTo(Math.PI);
+  await campaignRampTraversal();
 
   // L7's logical road remains solid throughout Alpha stun, including when
   // the stun blocks held movement. Removing the support still permits a fall.
@@ -44,6 +47,64 @@ test('movement: fast acceleration and stop, capped diagonal speed, 720°/s turni
   courier.combat.staggerUntil = raised.tick + 90;
   step(raised, 60); expect(courier.transform.y).toBeLessThan(1);
 });
+
+/** Production controller traversal for the L3 highway ramps and the L5/L6/L10 authored stair routes. */
+async function campaignRampTraversal(): Promise<void> {
+  for (const quality of ['low', 'high'] as const) {
+    const l3 = await loadLevel('L3', 1, undefined, 0, { quality }); worlds.push(l3);
+    l3.player!.locomotion.crowd = []; l3.player!.locomotion.props = [];
+    const ramps = l3.districts!.districts.flatMap(d => d.decay.placements.filter(p => p.assetId === 'kit.highway-onramp')).sort((a, b) => a.position[0] - b.position[0]);
+    expect(ramps.map(r => r.id)).toEqual(['kit.highway-onramp:991', 'kit.highway-onramp:992']);
+    for (const ramp of ramps) {
+      const points = Array.from({ length: 51 }, (_, i) => highwayPoint(ramp, 1 - i / 50)), player = l3.entities.get(1)!;
+      const [x, surfaceY, z] = points[0]!;
+      Object.assign(player.transform, { x, y: surfaceY + .705, z });
+      l3.physics.playerBody!.setTranslation(player.transform, true); l3.solids.remember(player, `ramp-traversal:${ramp.id}`); l3.player!.locomotion.reset();
+      let waypoint = 1;
+      for (let tick = 0; tick < 1500 && waypoint < points.length; tick++) {
+        const [tx, , tz] = points[waypoint]!, dx = tx - player.transform.x, dz = tz - player.transform.z, distance = Math.hypot(dx, dz) || 1;
+        l3.setInput({ move: { x: dx / distance, z: dz / distance } }); l3.update();
+        if (Math.hypot(tx - player.transform.x, tz - player.transform.z) < .35) waypoint++;
+      }
+      l3.clearInput();
+      expect(waypoint, `${quality} ${ramp.id} reaches the far end of its authored centreline`).toBe(points.length);
+      expect(Math.hypot(player.transform.x - points.at(-1)![0], player.transform.z - points.at(-1)![2])).toBeLessThan(.6);
+    }
+
+    const metro = await loadLevel('L5', 1, undefined, 0, { quality }); worlds.push(metro);
+    metro.player!.locomotion.crowd = []; metro.player!.locomotion.props = [];
+    const entrance = metro.districts!.districts.flatMap(d => d.decay.placements).find(p => p.id === 'bld.metro-entrance:225')!, player = metro.entities.get(1)!;
+    Object.assign(player.transform, { x: entrance.position[0], y: .855, z: entrance.position[2] - 2.2 });
+    metro.physics.playerBody!.setTranslation(player.transform, true); metro.solids.remember(player, `ramp-traversal:${entrance.id}`); metro.player!.locomotion.reset();
+    let metroTop = player.transform.y;
+    for (let tick = 0; tick < 120; tick++) { metro.setInput({ move: { x: 0, z: 1 } }); metro.update(); metroTop = Math.max(metroTop, player.transform.y); }
+    metro.clearInput();
+    expect(player.transform.z, `${quality} metro stair reaches its upper landing`).toBeGreaterThan(entrance.position[2] + 1.8);
+    expect(metroTop, `${quality} metro stair climbs above its lower street`).toBeGreaterThan(1.7);
+
+    const subway = await loadLevel('L6', 1, undefined, 0, { quality }); worlds.push(subway);
+    subway.player!.locomotion.crowd = []; subway.player!.locomotion.props = [];
+    const exit = subway.districts!.districts.flatMap(d => d.decay.placements).find(p => p.assetId === 'int.metro-exit')!, survivor = subway.entities.get(1)!;
+    Object.assign(survivor.transform, { x: exit.position[0] - 2.6, y: exit.position[1] + 1.0425, z: exit.position[2] - .9 });
+    subway.physics.playerBody!.setTranslation(survivor.transform, true); subway.solids.remember(survivor, `ramp-traversal:${exit.id}`); subway.player!.locomotion.reset();
+    let exitTop = survivor.transform.y;
+    for (let tick = 0; tick < 100; tick++) { subway.setInput({ move: { x: 1, z: 0 } }); subway.update(); exitTop = Math.max(exitTop, survivor.transform.y); }
+    subway.clearInput();
+    expect(survivor.transform.x, `${quality} subway exit stair reaches its upper landing`).toBeGreaterThan(exit.position[0] + 1.5);
+    expect(exitTop, `${quality} subway exit stair climbs to street height`).toBeGreaterThan(4.2);
+
+    const cure = await loadLevel('L10', 1, undefined, 0, { quality }); worlds.push(cure);
+    cure.player!.locomotion.crowd = []; cure.player!.locomotion.props = [];
+    const platform = cure.districts!.districts.flatMap(d => d.decay.placements).find(p => p.assetId === 'kit.dispersal-platform')!, courier = cure.entities.get(1)!;
+    Object.assign(courier.transform, { x: platform.position[0] + 8.2, y: .705, z: platform.position[2] });
+    cure.physics.playerBody!.setTranslation(courier.transform, true); cure.solids.remember(courier, `ramp-traversal:${platform.id}`); cure.player!.locomotion.reset();
+    let platformTop = courier.transform.y;
+    for (let tick = 0; tick < 100; tick++) { cure.setInput({ move: { x: -1, z: 0 } }); cure.update(); platformTop = Math.max(platformTop, courier.transform.y); }
+    cure.clearInput();
+    expect(courier.transform.x, `${quality} dispersal stair reaches its deck`).toBeLessThan(platform.position[0] + 4.6);
+    expect(platformTop, `${quality} dispersal stair reaches the raised platform`).toBeGreaterThan(3.5);
+  }
+}
 
 test('walls: a 72-direction capsule sweep never penetrates the wall ring; sliding keeps 60 % tangential speed; head-on corners slip', async () => {
   const w = await setup('survivor-ring');
