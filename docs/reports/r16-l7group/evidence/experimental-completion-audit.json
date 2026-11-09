@@ -1,0 +1,25 @@
+{
+  "goalAchieved": false,
+  "selectedRuntimeRevision": "5e475879",
+  "restoredRuntimeRevision": "fd46bbed",
+  "sourceHash": "4f235f57b95586004b0251cd7abeea3db37258a6459ad811d968b9abe974e0c6",
+  "checks": {
+    "allSixMortalRoutesComplete": true,
+    "zeroCollisionInvariantFailures": true,
+    "zeroNativeBoardingAssistsOrRecoveries": true,
+    "standardL7FollowerAuditFlags": 0,
+    "additionalHighTierFlagIdentities": 4,
+    "repositoryGatePass": true,
+    "unitTestsPassed": 106,
+    "existingUnitTestsSkipped": 1,
+    "browserQa": "needed; forbidden by brief",
+    "pushOrDeployment": false
+  },
+  "remaining": [
+    "step/corridor:SLOW_FOLLOWER:74",
+    "phase/encounters:SLOW_FOLLOWER:74",
+    "step/departure:SLOW_FOLLOWER:63",
+    "step/departure:SLOW_FOLLOWER:70"
+  ],
+  "handoffReason": "Two-hour timebox; strict supplemental both-tier no-new-flags condition remains open."
+}

@@ -1,5 +1,7 @@
 # R16 L7 investigation
 
+**Historical experiments: every runtime and test change described below was reverted in `6c069d47`. The final branch retains pinned main’s L7 opt-out. See [current handoff](README.md).**
+
 Base: `8622b6d1`. The unchanged mortal completion route does **not** complete all six cases on this base. Fresh runner results reproduce R12's archived results exactly:
 
 | Tier | Seed | Outcome | Seconds | Native hash |
@@ -25,17 +27,17 @@ Once the courier stays on the road, enemies can reach her throughout the encount
 
 After casualties, living survivors retain their original slots. The bot previously computed its waiting distance from the number of living survivors. In high/3, eighteen survivors included original slot 23, whose assigned position remained 12.21 m away while the bot waited for everyone to come within 12.2 m. With no threats present, neither side could make progress. The original 1,200-second run and its last samples are retained in `evidence/casualty-wait-deadlock.json.gz`.
 
-The bot now derives the same row allowance from occupied slots. The mission's 18 m group requirement and boarding requirements are unchanged. The existing navigation test includes a surviving slot-23 case after the other slots are lost.
+The experimental bot derives the same row allowance from occupied slots. The mission's 18 m group requirement and boarding requirements are unchanged. The existing navigation test includes a surviving slot-23 case after the other slots are lost.
 
 ## Natural movement and turns
 
-Loose slots, start reactions and idle glances are enabled for L7. Wide encounter formation sway is applied before clearance checks. In the corridor, pairs follow a walked trail with small shared and personal sway; real corners and blocked legs remain in that trail. Gentle clear corrections can be shortened, so a small courier dodge does not require everyone to repeat the loop.
+In the experimental candidate, loose slots, start reactions and idle glances are enabled for L7. Wide encounter formation sway is applied before clearance checks. In the corridor, pairs follow a walked trail with small shared and personal sway; real corners and blocked legs remain in that trail. Gentle clear corrections can be shortened, so a small courier dodge does not require everyone to repeat the loop.
 
 Generic sway must not displace a controller's already solved detour or bus queue target. L7 applies its sway in the encounter controller instead. R13's distinct three-column boarding rows remain unchanged, and the dog's existing tracking response is retained.
 
 The first six-completion candidates still added pace flags at turns. Rejected moving-slot velocity trackers added more flags; these were discarded. Historical route receipts are retained in `evidence/rejected-route-trials.json.gz`. Completion alone is insufficient evidence for the requested follower regression constraint.
 
-A later high-tier opening trace narrows the frontage problem to normal following after the launcher is already collected: a courier sidestep rotates the far tail's target off the road. Preserving exact pickup positions alone did not fix this. Extending the walked street trail removed high-tier aggregate pace flags but introduced a high/3 courier death and low-tier departure flags. That experiment was discarded. The selected handoff keeps the reproducible six-route candidate; the strict supplemental high-tier constraint remains open, as detailed in `README.md`.
+A later high-tier opening trace narrows the frontage problem to normal following after the launcher is already collected: a courier sidestep rotates the far tail's target off the road. Preserving exact pickup positions alone did not fix this. Extending the walked street trail removed high-tier aggregate pace flags but introduced a high/3 courier death and low-tier departure flags. That experiment was discarded. The earlier selected candidate completed six routes, but the final handoff restores pinned main because the strict supplemental high-tier constraint remains open. See `experimental-six-route.md`.
 
 ## Verification limits
 

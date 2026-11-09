@@ -1,0 +1,100 @@
+{
+  "revision": "6c069d47054e0eb210cce1865f5d71969e6becbc",
+  "mainRevision": "8622b6d1",
+  "sourceHash": "c0e03f21fbe6a3669defc2ca955c943821ef88bf6e25594f477fb13c288867bd",
+  "observerHash": "f6f19f3a30a061c07b0e90a71d614f36498a80c2bdf41074dd826884cc2d7165",
+  "l7OptOut": true,
+  "runtimeTestsPublicDiffFromMain": false,
+  "native": [
+    {
+      "tier": "low",
+      "seed": 1,
+      "outcome": "complete",
+      "seconds": 116.36666666666666,
+      "nativeStateHash": "7531f27e",
+      "mainParity": true,
+      "entireObservationEqual": true,
+      "collisionFailures": 0
+    },
+    {
+      "tier": "low",
+      "seed": 2,
+      "outcome": "mission-failed",
+      "seconds": 74.78333333333333,
+      "nativeStateHash": "02602b10",
+      "mainParity": true,
+      "entireObservationEqual": true,
+      "collisionFailures": 0
+    },
+    {
+      "tier": "low",
+      "seed": 3,
+      "outcome": "complete",
+      "seconds": 120.11666666666666,
+      "nativeStateHash": "66622d3c",
+      "mainParity": true,
+      "entireObservationEqual": true,
+      "collisionFailures": 0
+    },
+    {
+      "tier": "high",
+      "seed": 1,
+      "outcome": "mission-failed",
+      "seconds": 105.31666666666666,
+      "nativeStateHash": "f303c8ff",
+      "mainParity": true,
+      "entireObservationEqual": true,
+      "collisionFailures": 0
+    },
+    {
+      "tier": "high",
+      "seed": 2,
+      "outcome": "mission-failed",
+      "seconds": 64.51666666666667,
+      "nativeStateHash": "470e45ff",
+      "mainParity": true,
+      "entireObservationEqual": true,
+      "collisionFailures": 0
+    },
+    {
+      "tier": "high",
+      "seed": 3,
+      "outcome": "mission-failed",
+      "seconds": 101.13333333333334,
+      "nativeStateHash": "e2128f94",
+      "mainParity": true,
+      "entireObservationEqual": true,
+      "collisionFailures": 0
+    }
+  ],
+  "pace": [
+    {
+      "tier": "low",
+      "allVotesAndRawPhasesEqual": true,
+      "flags": [
+        "step/corridor:SLOW_FOLLOWER:71",
+        "phase/encounters:FOLLOWER_PACE_UNOBSERVED:63",
+        "phase/encounters:SLOW_FOLLOWER:71",
+        "phase/encounters:FOLLOWER_PACE_UNOBSERVED:60"
+      ],
+      "addedIdentities": []
+    },
+    {
+      "tier": "high",
+      "allVotesAndRawPhasesEqual": true,
+      "flags": [
+        "phase/encounters:FOLLOWER_PACE_UNOBSERVED:60",
+        "phase/encounters:FOLLOWER_PACE_UNOBSERVED:63"
+      ],
+      "addedIdentities": []
+    }
+  ],
+  "focusedAudit": {
+    "matchesBaselineExceptWallClockTime": true,
+    "existingG13Identities": 5,
+    "addedIdentities": 0,
+    "exitCode": 1,
+    "partialLevelSelection": true
+  },
+  "naturalMovementGoalAchieved": false
+}
