@@ -14,6 +14,7 @@ import { followerPaceVerdict, type FollowerPaceSeed, type FollowerPaceVerdict } 
 import { runStages, stageId } from './threat/stageJobs';
 import type { L3SurvivalSeed } from './threat/l3SurvivalSeeds';
 import type { KitingReceipt } from './threat/kiting';
+import { provenance } from './accept/probe';
 
 export interface LevelReceipt {
   level: RunnerLevel; quality: string; definitions: ThreatObserver['definitions']; run: LevelReport | null;
@@ -31,6 +32,7 @@ export interface LevelReceipt {
 }
 export interface AuditReceipt {
   revision: string; mainRevision: string; sourceMatchesMain: boolean | null; seed: number; policy: string; tier: string;
+  sourceHash?: string; observerHash?: string;
   workers: number; seconds: number; flags: string[]; levels: LevelReceipt[];
   passivity?: { seconds: number; levels: number; matches: boolean };
 }
@@ -162,7 +164,7 @@ const seconds = (performance.now() - started) / 1000;
 const flags = levels.flatMap(level => level.passiveFlags.map(flag => `${level.level}/${flag}`));
 if (selected.length !== runnerLevels.length) flags.push('PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate');
 if (values.report && sourceMatchesMain !== true) flags.push('BASELINE_MAIN_SOURCE_NOT_VERIFIED');
-const receipt: AuditReceipt = { revision, mainRevision, sourceMatchesMain, seed: 1, policy: 'kiting + passive', tier: 'low', workers: maxWorkers, seconds, flags, levels };
+const receipt: AuditReceipt = { ...provenance(revision), mainRevision, sourceMatchesMain, seed: 1, policy: 'kiting + passive', tier: 'low', workers: maxWorkers, seconds, flags, levels };
 await writeFile(join(values.out!, 'audit.json'), JSON.stringify(receipt, null, 2) + '\n');
 const reportPath = values.report ?? join(values.out!, 'README.md');
 await mkdir(dirname(reportPath), { recursive: true }); await writeFile(reportPath, renderReport(receipt, !!values.report));

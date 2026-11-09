@@ -51,7 +51,11 @@ async function execute(job: StageJob): Promise<StageResult> {
         beforeDispose: world => { native.observation = observer?.finish() ?? null; if (!job.passive) native.nativeStateHash = stateHash(world.getState()); },
       });
       if (!job.passive) {
-        native.kiting = kiting;
+        native.kiting = finishKitingReceipt(kiting);
+      }
+      if (!job.passive && job.level !== 'L9') {
+        // L9 is a driving/crawl route, explicitly exempt from the on-foot
+        // kiting sample. Replaying its whole drive cannot collect that sample.
         let kitingComplete = () => false;
         try { await runLevel(job.level, 'complete', job.seed, undefined, 'auto', campaignFor(job.level, job.seed), undefined, 0, {
           quality: 'low', beforeBegin: world => { kitingComplete = installKitingPolicy(world, kiting, job.level, kitingStyle); },

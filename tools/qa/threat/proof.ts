@@ -23,12 +23,17 @@ import { focusedCriteria } from './criteria';
 import type { LevelReceipt } from '../threat-audit';
 import { l9Groups, l9Encounters } from '../../../src/data/l9';
 import { crossing } from '../../../src/levels/L9/district';
+import { provenance } from '../accept/probe';
 
 /** Replay the same policies without instrumentation and compare complete native state, not only completion. */
 export async function provePassiveFrom(path: string, out: string, reportPath?: string): Promise<void> {
   const audit = JSON.parse(await readFile(path, 'utf8')) as AuditReceipt;
   assert.equal(audit.seed, 1); assert.equal(audit.tier, 'low'); assert(['complete', 'complete + passive', 'kiting + passive'].includes(audit.policy));
-  if (process.env.QA_THREAT_MAIN_REVISION) {
+  if (audit.sourceHash && audit.observerHash) {
+    const current = provenance();
+    assert.equal(current.sourceHash, audit.sourceHash, 'replay must use the audited gameplay source');
+    assert.equal(current.observerHash, audit.observerHash, 'replay must use the audited policies and instrumentation');
+  } else if (process.env.QA_THREAT_MAIN_REVISION) {
     assert.equal(process.env.QA_THREAT_MAIN_REVISION, audit.mainRevision);
     assert.equal(process.env.QA_THREAT_SOURCE_MATCHES_MAIN, 'true');
   } else execFileSync('git', ['diff', '--quiet', audit.mainRevision, '--', 'src', 'public']);
@@ -38,7 +43,7 @@ export async function provePassiveFrom(path: string, out: string, reportPath?: s
     const level = receipt.level, campaign = level === 'L1' ? newCampaign('female', 1) : preset(`${level}-default` as ProgressionPreset);
     campaign.seed = 1; campaign.settings.quality = 'low';
     let control: string | null = null;
-    await runLevel(level, 'complete', 1, undefined, 'auto', campaign, undefined, 0, { quality: 'low', beforeBegin: world => { if (receipt.kiting) installKitingPolicy(world, { kitingSeconds: 0, attacks: 0, attacksPerMinute: 0, samples: 0 }, level); }, beforeDispose: world => { control = stateHash(world.getState()); } });
+    await runLevel(level, 'complete', 1, undefined, 'auto', campaign, undefined, 0, { quality: 'low', beforeDispose: world => { control = stateHash(world.getState()); } });
     const row = { level, observed: receipt.nativeStateHash, control, equal: !!control && control === receipt.nativeStateHash };
     rows.push(row); console.log(`[qa:threat:passive] ${level}: ${row.equal ? 'identical' : 'DIFFERS'} (${control})`);
   }
