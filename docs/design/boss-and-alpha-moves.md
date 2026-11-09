@@ -41,7 +41,9 @@ Level mix (keeps accepted levels recognisable; only the move sets grow):
 ## L8 animal boss fights (each a short arena)
 
 Each fight: one animal (or one pack), health bar shown when it engages, clear telegraphs, a tactic that wins, a fail state
-(the courier downed → checkpoint at the arena entry). Rockets are scarce in L8 (one pickup per arena at most).
+(the courier downed → checkpoint at the arena entry). PO 2026-11-09: every arena blocks the route until its boss falls; normal ammunition
+for every weapon (no L8 rocket scarcity); every boss reacts to hits (stagger/turn/attack) and never idles while engaged. The elephant is
+the final L8 boss at the APC; the Mega does not appear in L8.
 
 | # | Boss | Arena | Moves (telegraph) | Winning tactic | Phases |
 |---|---|---|---|---|---|
