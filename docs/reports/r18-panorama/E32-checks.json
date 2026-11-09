@@ -1,0 +1,23 @@
+{
+  "target": "E32",
+  "epics": [
+    "E32"
+  ],
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "status": 0,
+      "seconds": 12.407
+    },
+    {
+      "command": "npm run lint",
+      "status": 0,
+      "seconds": 8.573
+    },
+    {
+      "command": "npm test",
+      "status": 0,
+      "seconds": 31.506
+    }
+  ]
+}
