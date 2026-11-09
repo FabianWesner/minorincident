@@ -149,7 +149,7 @@ export class MountedGun {
     if (id % 2 === 0) combat.effects.noise({ x: muzzle.x, z: muzzle.z }, def.noiseRadius, 'weapon.machine-gun', 1, 'ranged');
     if (!target) return;
     const dx = target.transform.x - muzzle.x, dz = target.transform.z - muzzle.z, distance = Math.hypot(dx, dz) || 1;
-    combat.damage.apply({ attackId: id, actionId: def.id, sourceId: 1, targetId: target.id, origin: { x: muzzle.x, z: muzzle.z }, direction: { x: dx / distance, z: dz / distance }, base: def.damage, multiplier: p.combat?.damageMultiplier ?? 1, type: 'bullet', permanent: true, radius: def.range, spread: def.spread, knockback: def.knockback, stagger: def.stagger });
+    combat.damage.apply({ attackId: id, actionId: def.id, sourceId: 1, targetId: target.id, origin: { x: muzzle.x, z: muzzle.z }, direction: { x: dx / distance, z: dz / distance }, base: def.damage, multiplier: p.combat?.damageMultiplier ?? 1, type: 'bullet', radius: def.range, spread: def.spread, knockback: def.knockback, stagger: def.stagger });
   }
   snapshot(): MountedGunSnapshot { return { ...this.gun.snapshot(), mounted: this.mounted }; }
   /** Checkpoint reload: heat comes back, the player is not on the gun (the checkpoint position owns where she stands). */

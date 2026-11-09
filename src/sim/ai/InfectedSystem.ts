@@ -178,7 +178,7 @@ export class InfectedSystem {
     });
     world.events.on('noise', (event) => { if (event.type === 'noise') this.noise(event.position, event.radius, event.radius >= 25, event.sourceId); });
     world.events.on('outbreak.distraction', (event) => { if (event.type === 'outbreak.distraction') this.distraction(event); });
-    if (world.districts?.districts.some((d) => isOutbreakDistrict(d.id))) this.configureL1v2();
+    if (/^L(?:[1-9]|10)$/.test(world.scenario ?? '') || world.districts?.districts.some((d) => isOutbreakDistrict(d.id))) this.configureL1v2();
     world.events.on('combat.hit', (event) => {
       if (event.type !== 'combat.hit' || event.amount <= 0) return;
       const target = world.entities.get(event.targetId);
@@ -896,7 +896,7 @@ export class InfectedSystem {
     if (b.special === 'scream') { this.world.events.emit({ type: 'noise', tick: this.world.tick, sourceId: e.id, actionId: e.archetype, position: { ...e.transform }, ...noise.scream, kind: 'scream' }); return true; }
     if (b.special === 'revive' && !b.reviveUsed) {
       const downed = this.revivable(e);
-      if (downed && this.director.count <= this.director.cap) {
+      if (downed && this.director.count + (this.director.strict ? 0 : 1) <= this.director.cap) {
         downed.health.current = downed.health.max; downed.infected!.recoverAt = -1; downed.infected!.revived = true; downed.infected!.deadAt = -1; downed.infected!.state = 'chase'; b.reviveUsed = true; this.world.events.emit({ type: 'infected.revived', tick: this.world.tick, sourceId: e.id, targetId: downed.id }); return true;
       }
     }
@@ -1037,13 +1037,13 @@ export class InfectedSystem {
   }
   // ---- L1 v2 brain: vision and close hearing, closest human, chase/lunge/bite,
   // randomised search, wander, attracted by deliberate distractions, speed tiers. All randomness from `l1Rng`.
-  /** Vision, LOS blockers and the human query of L1; null outside L1. */
+  /** Shared campaign vision, LOS blockers and human query; optional in isolated arenas. */
   l1: Perception | null = null;
   private l1Rng: Rng | null = null;
   private readonly tierStart = { frail: 0, average: 0, athletic: 0 };
   private readonly tierCount = { frail: 0, average: 0, athletic: 0 };
   private readonly recentTurns: number[] = [];
-  /** Enables the L1 brain for every human infected spawned from now on (D-GROVE enables it automatically). */
+  /** Enables the shared human brain for future spawns; native campaign compositions enable it automatically. */
   configureL1v2(humans?: HumanTargetQuery): Perception {
     if (!this.l1) {
       this.l1 = this.hearing; this.l1Rng = new Rng(this.world.seed, 'infected-l1');
