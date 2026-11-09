@@ -2,7 +2,8 @@ import { expect, test } from 'vitest';
 import { loadLevel } from './world';
 import { oracle } from './oracles';
 
-for (const tier of ['low', 'high'] as const) test(`3 late scripted scenes ${tier}: firefighter invitation and metro lookout persist`, async () => {
+test('3 late scripted scenes: firefighter invitation and metro lookout persist on both tiers', async () => {
+ for (const tier of ['low', 'high'] as const) {
   const errors = new Set<string>();
   const fire = await loadLevel('L1', 1, tier);
   try {
@@ -38,4 +39,5 @@ for (const tier of ['low', 'high'] as const) test(`3 late scripted scenes ${tier
     expect(metro.entities.get(id)?.civilian?.story?.clip).toBe('npc-wave-in');
   } finally { metro.dispose(); }
   expect([...errors].slice(0, 20), 'actors invariant: late scene visibility').toEqual([]);
+ }
 }, 120_000);
