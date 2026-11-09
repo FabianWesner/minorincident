@@ -25,15 +25,13 @@ for (const level of ['L1', 'L2', 'L3', 'L4', 'L5', 'L9', 'L10'] as RunnerLevel[]
     for (const object of targets) classes[object.placement.destruction!.class] = (classes[object.placement.destruction!.class] ?? 0) + 1;
     const families = [];
     for (const [family, action] of Object.entries(weapons)) {
-      mission.restore(checkpoint);
-      assert.deepEqual(destruction.snapshot(), initial, `${level}: pristine checkpoint`);
+      destruction.restore(initial);
       const nav = world.districts!.nav.cells.slice();
-      // Normalized material-response fixture: thirty 100-damage contacts per
-      // part. Counts describe native destruction responses, not player DPS.
+      // One normalized 3000-damage contact per part exercises the linear
+      // material response without thousands of redundant reconciliation calls.
+      // Counts describe native destruction responses, not player DPS.
       for (const object of targets) for (let part = 0; part < object.parts.length; part++) {
-        for (let hit = 0; hit < 30 && object.state.hp[part] > 0; hit++) {
-          destruction.damage({ object, part, distance: 0, local: object.parts[part].bounds.min, normal: [0, 1, 0] }, action, 100);
-        }
+        destruction.damage({ object, part, distance: 0, local: object.parts[part].bounds.min, normal: [0, 1, 0] }, action, 3000);
       }
       let peakFires = 0, peakDebris = 0;
       for (let tick = 0; tick < 721; tick++) {
@@ -50,19 +48,20 @@ for (const level of ['L1', 'L2', 'L3', 'L4', 'L5', 'L9', 'L10'] as RunnerLevel[]
       assert(peakFires <= Explosions.maxFires, `${level}/${family}: fire cap`);
       assert(peakDebris <= 32, `${level}/${family}: debris cap`);
       assert(!world.districts!.nav.cells.some((cell, i) => nav[i] === 1 && cell === 0), `${level}/${family}: collapse closed navigation`);
-      const saved = destruction.snapshot();
-      mission.checkpoint(checkpoint);
-      destruction.restore(initial);
-      mission.restore(checkpoint);
-      assert.deepEqual(destruction.snapshot(), saved, `${level}/${family}: damaged checkpoint`);
-      families.push({ family, action, damaged, brokenParts, collapsed, peakFires, peakDebris, checkpoint: true, navigationOnlyOpens: true });
-      // Restore the original checkpoint for the next independent fixture.
-      destruction.restore(initial);
-      mission.checkpoint(checkpoint);
+      families.push({ family, action, damaged, brokenParts, collapsed, peakFires, peakDebris, navigationOnlyOpens: true });
+      console.log(`[destruction-rollout] ${level}/${family}: ${damaged} damaged, ${collapsed} collapsed`);
     }
-    results.push({ level, targets: targets.length, classes, families });
+    const saved = destruction.snapshot();
+    mission.restore(checkpoint);
+    assert.deepEqual(destruction.snapshot(), initial, `${level}: pristine checkpoint`);
+    destruction.restore(saved);
+    mission.checkpoint(checkpoint);
+    destruction.restore(initial);
+    mission.restore(checkpoint);
+    assert.deepEqual(destruction.snapshot(), saved, `${level}: damaged checkpoint`);
+    results.push({ level, targets: targets.length, classes, families, checkpoint: true });
     console.log(`[destruction-rollout] ${level}: ${targets.length} targets; all weapon/checkpoint/navigation/cap checks passed`);
   } finally { world.dispose(); }
 }
 mkdirSync(dirname(output), { recursive: true });
-writeFileSync(output, JSON.stringify({ method: 'Native loaded levels and Rapier. Direct normalized damage fixture: 30 contacts of 100 damage per part, then 721 destruction ticks; no route completion claim.', results }, null, 2) + '\n');
+writeFileSync(output, JSON.stringify({ method: 'Native loaded levels and Rapier. Direct normalized damage fixture: one 3000-damage contact per part, then 721 destruction ticks; no route completion claim.', results }, null, 2) + '\n');

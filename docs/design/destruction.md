@@ -4,6 +4,8 @@
 
 L3 opts in two Oak Street `bld.house-a` placements (`407`, `457`) and its two abandoned blue/green sedans. Other L3 buildings and vehicles explicitly carry `indestructible: true`. Mission actors, gates, road supports, and objective geometry retain their existing owners.
 
+`src/levels/destructionRollout.ts` extends the opt-ins before district collision is constructed. L1/L2 and L4/L5 use ordinary parked civilian cars and small sheds. Fairhaven's authored `l4-*`/`l5-*` combat dressing remains intact to preserve accepted threat numbers. L9 adds parked civilian cars, sheds/garages and roadside barricades. L10 adds abandoned cars, farm ruins/sheds, checkpoint huts, and the dispersal complex's machinery/fuel tanks (x ≥ 3750); the console and required supports retain their existing ownership. L3 retains its reviewed pilot set.
+
 A placement opts in with `destruction: { class: 'timber' }`. Classes are `timber`, `masonry`, `concrete`, `vehicle`, `wood-prop`, and `metal-prop`; material, part HP, burn duration, and collapse threshold live in `src/data/destructionModel.ts`. The system is not tied to L3 IDs. The district chooses its safe rollout set.
 
 The r12 `PropSystem` owns parked-car rigid bodies, movement, settling, and navigation. Destruction borrows those poses and never creates a second car body. The shared `pushableProps` catalog is the completed r12 catalog from main, including parked vehicles.
@@ -22,7 +24,7 @@ Breaking a structural part removes its Rapier collider and navigation/visibility
 
 Intact neighbours stay in their shared district batches. On first damage, only the hit instance is extracted. Its existing LOD1 prototype is clipped at the sim's part boundaries, preserving vertex attributes and materials. Subsequent part changes rewrite triangle indices without splitting geometry again. Up to eight local impact/scorch marks are retained per object. The car's existing burned variant replaces its broken shell after explosion and follows the same rigid body.
 
-The district preloads only its opted-in prototypes and burned-car variants. The pilot has four objects, so its split buffers and marks are bounded. Cosmetic debris reuses the existing 32-body pool on both tiers (below the low-tier cap), expires after eight seconds, and never blocks characters. The system owns and disposes extracted buffers; asset-cache materials and prototypes remain borrowed.
+The district preloads only its opted-in prototypes and burned-car variants. Split buffers and marks are bounded by the authored opt-in set; first damage allocates the split buffers. Cosmetic debris reuses the existing 32-body pool on both tiers (below the low-tier cap), expires after eight seconds, and never blocks characters. The system owns and disposes extracted buffers; asset-cache materials and prototypes remain borrowed.
 
 ## Persistence and extension
 
