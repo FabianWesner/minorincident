@@ -302,7 +302,11 @@ export class LevelSevenEncounters {
       this.state.waitAt = w.tick + 300;
       this.warn(e, 'wait');
     }
-    if (distance(e.transform, target) > .6) {
+    // A moving corridor slot needs continuous steering. The half-metre
+    // arrival deadband supplied no intent for whole walking samples, then
+    // made the follower accelerate again after its slot had already moved on.
+    const arrival = w.missions!.state.steps.departure?.status === 'active' ? .1 : .6;
+    if (distance(e.transform, target) > arrival) {
       // Reuse the crowd's connected route across the city. Until that field
       // reaches a follower, short searches fit the shared A* scratch budget.
       let destination = target;
