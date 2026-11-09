@@ -82,6 +82,10 @@ export class LevelSevenEncounters {
     // Form behind the escape direction, not the courier's briefing pose
     // facing the launcher. Otherwise the whole party crosses itself on departure.
     const road = l7Encounters.streets[0], heading = leaderHeading(-Math.atan2(road.z - leader.z, road.x - leader.x));
+    // The initial column already occupies the road behind the exit. Seed that
+    // line so an aiming turn during pickup cannot sweep its tail into a kerb.
+    for (let back = Math.max(20, formationBack(count - 1) + 3.5); back > 0; back -= .4) this.trail.push({ x: leader.x - heading.x * back, z: leader.z - heading.z * back });
+    this.trail.push({ x: leader.x, z: leader.z });
     // The launcher is three metres behind the courier along this heading.
     // Stage the column beyond its two-metre objective ring, with room for a body.
     const formation = { x: leader.x - heading.x * 3.5, z: leader.z - heading.z * 3.5 };
@@ -273,6 +277,7 @@ export class LevelSevenEncounters {
     if (this.world.l7Departure?.claims(e)) return true;
     if (e.passengerOf === undefined && this.yieldToCourier(e)) return true;
     const w = this.world, p = w.entities.get(1)!, c = e.civilian!, s = c.survivor!;
+    this.recordTrail(p.transform);
     s.briskAt = w.tick;
     c.state = 'calm'; c.story = null; s.cover = false;
     const launcher = this.launcher();
@@ -396,22 +401,26 @@ export class LevelSevenEncounters {
     }
     return false;
   }
-  /** At either quality, follow the courier's walked boarding corner two abreast
-   * instead of swinging the tail across the parked vehicles. */
-  private formationGoal(player: EntitySnapshot['transform'], velocity: Point, slot: number): Point {
+  private recordTrail(player: Point): void {
     const last = this.trail.at(-1);
     if (last && distance(last, player) > 6) this.trail.length = 0;
     if (!last || distance(last, player) >= .4) {
       this.trail.push({ x: player.x, z: player.z });
       if (this.trail.length > 128) this.trail.shift();
     }
-    if (this.world.missions!.state.steps.departure?.status === 'active') {
-      let remaining = 2.3 + Math.floor(slot / 2), newer: Point = player;
+  }
+  /** Follow the walked street line even while the courier aims or is stunned.
+   * Three close rows stay in her cover; the boarding corner remains two abreast. */
+  private formationGoal(player: EntitySnapshot['transform'], velocity: Point, slot: number): Point {
+    const departure = this.world.missions!.state.steps.departure?.status === 'active';
+    {
+      const columns = departure ? 2 : 3;
+      let remaining = 2.3 + Math.floor(slot / columns) * (departure ? 1 : .8), newer: Point = player;
       for (let i = this.trail.length - 1; i >= 0; i--) {
         const older = this.trail[i], length = distance(older, newer);
         if (length >= remaining && length > 0) {
           const hx = (newer.x - older.x) / length, hz = (newer.z - older.z) / length;
-          const side = slot % 2 - .5;
+          const side = departure ? slot % 2 - .5 : (slot % 3 - 1) * 1.2;
           const centre = { x: newer.x - hx * remaining, z: newer.z - hz * remaining };
           const goal = { x: centre.x - hz * side, z: centre.z + hx * side };
           const nav = this.followerNavigation();
