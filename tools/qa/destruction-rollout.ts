@@ -30,13 +30,12 @@ for (const level of ['L1', 'L2', 'L3', 'L4', 'L5', 'L9', 'L10'] as RunnerLevel[]
       mission.restore(checkpoint);
       assert.deepEqual(destruction.snapshot(), initial, `${level}/${family}: pristine checkpoint`);
       const nav = world.districts!.nav.cells.slice();
-      // One normalized 3000-damage structural contact per target exercises the
-      // material response without demolishing the whole district six times.
+      // Normalized material contacts cover every occupied part. The lazy
+      // district hash keeps bulk collider changes from rescanning the grid.
       // Counts describe native destruction responses, not player DPS.
       for (const object of targets) {
-        const part = object.parts.findIndex(p => p.role === 'structure');
-        assert(part >= 0, `${object.id}: no structural hit geometry`);
-        destruction.damage({ object, part, distance: 0, local: object.parts[part].bounds.min, normal: [0, 1, 0] }, action, 3000);
+        assert(object.parts.some(p => p.role === 'structure'), `${object.id}: no structural hit geometry`);
+        for (const [part, shape] of object.parts.entries()) destruction.damage({ object, part, distance: 0, local: shape.bounds.min, normal: [0, 1, 0] }, action, 3000);
       }
       let peakFires = 0, peakDebris = 0;
       for (let tick = 0; tick < 721; tick++) {
@@ -50,6 +49,7 @@ for (const level of ['L1', 'L2', 'L3', 'L4', 'L5', 'L9', 'L10'] as RunnerLevel[]
       const brokenParts = targets.reduce((n, o) => n + o.state.hp.filter(hp => hp === 0).length, 0);
       const collapsed = targets.filter(o => o.state.collapsed).length;
       assert(damaged > 0, `${level}/${family}: no response`);
+      if (family === 'explosive') assert.equal(collapsed, targets.length, `${level}: rockets demolish every opted-in target`);
       assert(peakFires <= Explosions.maxFires, `${level}/${family}: fire cap`);
       assert(peakDebris <= 32, `${level}/${family}: debris cap`);
       assert(!world.districts!.nav.cells.some((cell, i) => nav[i] === 1 && cell === 0), `${level}/${family}: collapse closed navigation`);
@@ -80,4 +80,4 @@ for (const level of ['L1', 'L2', 'L3', 'L4', 'L5', 'L9', 'L10'] as RunnerLevel[]
   } finally { world.dispose(); }
 }
 mkdirSync(dirname(output), { recursive: true });
-writeFileSync(output, JSON.stringify({ method: 'Native loaded levels and Rapier. Direct normalized damage fixture: one 3000-damage structural contact per target, then 721 destruction ticks. Separate full-collapse sample per policy; no route completion claim.', results }, null, 2) + '\n');
+writeFileSync(output, JSON.stringify({ method: 'Native loaded levels and Rapier. Direct normalized damage fixture: one 3000-damage contact per occupied part, then 721 destruction ticks. Separate full-collapse sample per policy; no route completion claim.', results }, null, 2) + '\n');
