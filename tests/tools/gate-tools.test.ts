@@ -56,8 +56,10 @@ test('browser pool admission backs off under WindowServer pressure, keeps a one-
     '10 0 00:20 0.0 npm exec vitest run',
     '11 0 1-05:00:00 0.0 node /tmp/fixture/npx vitest list',
     '12 0 10:00 0.0 node /tmp/fixture/npx vitest list',
+    '13 0 00:20 99.0 node --import tsx tools/sim-runner/l8-contact.ts',
+    '14 5 00:20 99.0 node --import tsx tools/qa/owned-probe.ts',
   ].join('\n'), new Set([5]), session, now);
-  expect(classified.busy.map(p => p.pid)).toEqual([2, 3, 4, 8, 10, 12]);
+  expect(classified.busy.map(p => p.pid)).toEqual([2, 3, 4, 8, 9, 10, 12, 13]);
   expect(classified.ignoredIdle.map(p => p.pid)).toEqual([1, 11]);
   const review = JSON.parse(readFileSync('docs/qa/reviews/L5-11.json', 'utf8')) as ReviewDecision;
   expect(validateReview(review, 'L5-11').status).toBe('PASS');

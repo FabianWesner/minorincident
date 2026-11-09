@@ -51,9 +51,11 @@ export function classifyQuietProcesses(snapshot: string, owned: Set<number>, ses
   const ours = new Set(owned);
   let count = -1;
   while (ours.size !== count) { count = ours.size; for (const p of processes) if (ours.has(p.parent)) ours.add(p.pid); }
+  // Native simulation probes consume a core too, even without Vitest/tsc in
+  // their command line. They must yield the same quiet window as test jobs.
   const candidates = processes.filter(p => !ours.has(p.pid) && (
     (/^\/.*(?:chrome-headless-shell|headless_shell|Google Chrome|Chromium)/.test(p.command) && !p.command.includes('--type=') && /headless/.test(p.command)) ||
-    /^(?:(?:\/[^ ]*\/)?(?:node|nodejs|Blender|blender)(?: |$)|npm exec )/.test(p.command) && /(?:vitest|vite(?:[.]js)? (?:build)|(?:[/ ])tsc(?: |$)|blender|Blender)/.test(p.command)
+    /^(?:(?:\/[^ ]*\/)?(?:node|nodejs|Blender|blender)(?: |$)|npm exec )/.test(p.command) && /(?:vitest|vite(?:[.]js)? (?:build)|(?:[/ ])tsc(?: |$)|blender|Blender|(?:[/ ])tools\/(?:qa|sim-runner)\/)/.test(p.command)
   ));
   const stale = (p: typeof candidates[number]) => p.ageSeconds > 600 && p.cpu === 0 && now - p.ageSeconds * 1000 < sessionStarted;
   const describe = (p: typeof candidates[number]) => ({ pid: p.pid, cpu: p.cpu, ageSeconds: p.ageSeconds, command: p.command.slice(0, 180) });
