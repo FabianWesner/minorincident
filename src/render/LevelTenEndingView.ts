@@ -91,7 +91,7 @@ export class LevelTenEndingView extends Group {
       }
       this.dust.position.x = -28 + age * 16; this.dust.scale.setScalar(30);
       const aspect = Math.max(1, 1 / view.camera.aspect);
-      view.cinematic({ position: [this.position.x + (27 - age * .7) * aspect, 2 + 19 * aspect, this.position.z - 2 + 32 * aspect], target: [this.position.x, 2, this.position.z - 2] });
+      view.cinematic({ position: [this.position.x + (32 - age * .7) * aspect, 2 + 26 * aspect, this.position.z + 3 + 36 * aspect], target: [this.position.x, 2, this.position.z + 3] });
       cureDust.origin.value.set(this.position.x, this.position.z); cureDust.radius.value = 100;
     } else {
       if (this.hidden.size) { for (const [child, visible] of this.hidden) child.visible = visible; this.hidden.clear(); view.follow(); }
