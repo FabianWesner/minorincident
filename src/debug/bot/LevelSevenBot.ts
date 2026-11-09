@@ -35,14 +35,23 @@ export class LevelSevenBot {
     if (pickup && distance(p.transform, goal) < 1.45) { f.move = { x: 0, z: 0 }; f.interact = true; }
     const rocket = p.weapons!.RIGHT.rack.findIndex(s => s.id === l7Rocket.action);
     if (rocket >= 0) f.selectedSlot = { side: 'RIGHT', index: rocket };
+    const followers = w.l7Encounters!.state.roster.filter(r => r.status === 'following' && !w.l7Departure!.state.boarded.includes(r.id));
     const enemies = w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && !e.emerging && !e.infectionRise && distance(e.transform, p.transform) < 24 && w.infected!.nav.visible(p.transform, e.transform, 0)).sort((a, b) => distance(a.transform, p.transform) - distance(b.transform, p.transform));
-    if (enemies[0] && this.profile !== 'evade-only') {
-      const close = distance(enemies[0].transform, p.transform) < 6;
+    const victim = (e: typeof enemies[number]) => e.infected!.l1?.biteTargetId || e.infected!.l1?.targetId || e.infected!.heardTargetId;
+    const rescue = rocket < 0 ? undefined : enemies.filter(e => followers.some(r => r.id === victim(e)))
+      .sort((a, b) => Number(b.infected!.l1?.mode === 'bite') - Number(a.infected!.l1?.mode === 'bite') || w.entities.get(victim(a)!)!.health.current - w.entities.get(victim(b)!)!.health.current)
+      .find(e => {
+        const dx = e.transform.x - p.transform.x, dz = e.transform.z - p.transform.z, length = Math.hypot(dx, dz);
+        if (length < 6) return false;
+        return !w.combat!.query.melee(1, p.transform, { x: dx / length, z: dz / length }, 5, 30, 1000).some(o => o.faction === 'infected' && !o.hidden && !o.infected?.hidden && distance(o.transform, p.transform) < 5);
+      });
+    const target = rescue ?? enemies[0];
+    if (target && this.profile !== 'evade-only') {
+      const close = distance(target.transform, p.transform) < 6;
       const backup = p.weapons!.RIGHT.rack.findIndex(s => s.id === 'weapon.shotgun');
       if (close && backup >= 0) f.selectedSlot = { side: 'RIGHT', index: backup };
-      strikeAt(f, enemies[0], 'RIGHT', p.transform, false);
+      strikeAt(f, target, 'RIGHT', p.transform, false);
     }
-    const followers = w.l7Encounters!.state.roster.filter(r => r.status === 'following' && !w.l7Departure!.state.boarded.includes(r.id));
     // Deaths leave holes in the original slots; the surviving tail keeps its row.
     const lastSlot = followers.reduce((slot, r) => Math.max(slot, w.entities.get(r.id)!.civilian!.survivor!.slot), -1);
     const limit = Math.max(12, (Math.floor(lastSlot / 3) + 1) * 1.2 + 5);
