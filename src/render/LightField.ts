@@ -64,6 +64,8 @@ export class LightField {
   readonly target: RenderTarget;
   readonly center = uniform(vec2(0, 0)).setGroup(renderGroup);
   readonly extent = uniform(80).setGroup(renderGroup);
+  /** Local road elevation for raised districts; attenuation is above ground. */
+  readonly groundHeight = uniform(0).setGroup(renderGroup);
   /** Time-of-day practical-light weight; fire/blast transients also work in daylight. */
   readonly strength = uniform(0).setGroup(renderGroup);
   /** Promoted night pools feather their coarse visibility rays inward, without light leaking past blockers. */
@@ -148,7 +150,7 @@ export class LightField {
     const local = positionWorld.xz.sub(this.center).div(this.extent);
     const fieldUv = local.add(.5);
     const edge = local.abs().max(local.yx.abs()).x.smoothstep(.5, .42);
-    const height = positionWorld.y.div(5).oneMinus().clamp(.15, 1);
+    const height = positionWorld.y.sub(this.groundHeight).div(5).oneMinus().clamp(.15, 1);
     return texture(this.target.texture, fieldUv).rgb.mul(edge).mul(height).mul(this.enabled);
   }
   setQuality(tier: 'high' | 'low'): void {

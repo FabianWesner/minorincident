@@ -1253,6 +1253,9 @@ export class GameView implements Lifecycle {
     const shadowFocus = hero ?? this.view.focus;
     lighting.setHeroLight(field.active ? field.heroAt(shadowFocus.x, shadowFocus.z) ?? flashlight : null, shadowFocus, this.world.tick / 60);
     this.districts?.accents?.update(this.world.tick / 60);
+    // Northgate begins on a raised road: sea-level attenuation left the truck
+    // body dark even beside its lantern. Other presets retain their baseline.
+    field.groundHeight.value = this.world.scenario === 'L7' ? this.world.districts?.groundHeight(this.view.focus.x, this.view.focus.z) ?? 0 : 0;
     field.update(this.view.focus.x, this.view.focus.z, this.world.tick / 60);
     field.render(this.renderer);
   }

@@ -52,9 +52,9 @@ export function nightAccents(world: DistrictWorld | null | undefined): AccentSet
     const truck = fair?.decay.placements.find(p => p.id === 'l7-rocket-wreck');
     if (truck && fair) {
       const [x, y, z] = truck.position;
-      const points: Accent[] = [{ kind: 'storm-lantern', x: x - 2.8 + fair.origin[0], y: y + .17, z: z + 1.95 + fair.origin[1],
+      const points: Accent[] = [{ kind: 'storm-lantern', x: x - .5 + fair.origin[0], y: y + .17, z: z + 1.95 + fair.origin[1],
         yaw: 0, seed: 142, color: '#ffdfac', glow: 5, flicker: 0, strobe: false,
-        pool: { color: '#ffdfac', intensity: 18, range: 7 } }];
+        pool: { color: '#ffdfac', intensity: 12, range: 7 } }];
       for (const p of fair.decay.placements) if (!fair.decay.removed.includes(p.id) && p.decor && p.roadLife) {
         const [px, , pz] = p.position;
         points.push({ kind: 'storm-lantern', x: px + fair.origin[0], y: p.visualAabb.max[1] + .235,
