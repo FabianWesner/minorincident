@@ -37,7 +37,13 @@ export class L8BossArenas {
         const waypoints = def.id === 'monkey'
           ? [0, 1, 2, 3].map(n => ({ x: -18 + ((offset * 3 + n * 5) % 8), z: 22 + ((offset * 5 + n * 3) % 9) }))
           : [at, to!];
+        if (def.id === 'monkey') waypoints[2] = { x: -15.35, z: 27 };
         const id = civilians.spawn('cashier', at, { zooAnimal: def.id === 'lion' ? 'lioness' : def.id, waypoints });
+        if (def.id === 'monkey') {
+          const c = w.entities.get(id)!.civilian!;
+          c.pauseUntil = w.tick + 30 + offset * 23; c.waypoint = offset % waypoints.length;
+          c.l1!.walkSpeed = .65 + offset * .055;
+        }
         ids.push(id); zoo.state.animals.push(id);
       }
       this.state.push({ id: def.id, ids, carrier: 0, phase: 0, startedAt: 0, endedAt: 0, nextAt: 0, cycle: 0, wallHits: 0, rocket: 0, grabs: 0, counters: 0 });
