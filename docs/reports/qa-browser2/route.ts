@@ -22,7 +22,7 @@ const snapshot=()=>session.page.evaluate(()=>{
  const a=window.__SS__!,g=window.__SCENE__.game,w=g.world,m=w.missions?.state,p=w.entities.get(1),mega=w.megaPursuit?.entity();
  const title=document.querySelector('[data-testid="epilogue-title"]'),credits=document.querySelector('.credits-roll');
  const zoo=w.missions?.l8,l9=w.missions?.l9;
- return {tick:w.tick,level:w.scenario,phase:m?.phase,active:m&&Object.entries(m.steps).filter(([,s])=>s.status==='active').map(([id])=>id),checkpoint:m?.checkpoint,position:p&&{...p.transform},hp:p?.health.current,stats:m?.stats,caption:m?.subtitle?.text,objective:document.querySelector('[data-testid=objective-text]')?.textContent,camera:a.getState().render.camera,backend:a.perf().backend,quality:a.getState().render.quality,charge:m?.counters['charge-ticks'],mounted:w.mountedGun?.mounted,mega:mega&&{id:mega.id,hp:mega.health.current,at:{...mega.transform},hidden:mega.hidden,state:mega.infected?.state},epilogue:m?.epilogue&&{phase:m.epilogue.phase,phaseTicks:m.epilogue.phaseTicks},cure:m?.cureFront&&{elapsed:m.cureFront.elapsed,radius:m.cureFront.radius,affected:m.cureFront.affectedIds.length},l4:m?.l4,followers:[...w.entities.iterate()].filter(e=>e.civilian?.survivor?.mode==='follow').map(e=>({id:e.id,at:{...e.transform},hp:e.health.current,handProp:e.appearance?.handProp,ally:e.civilian?.ally,passengerOf:e.passengerOf})),l8:zoo&&{...zoo.state,rosterActors:zoo.roster().map(id=>{const e=w.entities.get(id);return{id,hp:e?.health.current,at:e?.transform,aboard:e?.passengerOf};})},l9:l9&&{...l9.state,driving:l9.driving.state},title:title?.getClientRects().length?title.textContent:null,credits:credits?.getClientRects().length?credits.textContent?.slice(0,1000):null,events:(window as any).__qaEvents.splice(0),nearby:w.infected?.active.filter(e=>e.health.current>0&&!e.hidden&&p&&Math.hypot(e.transform.x-p.transform.x,e.transform.z-p.transform.z)<25).map(e=>({id:e.id,type:e.archetype,hp:e.health.current,at:{...e.transform},state:e.infected?.state})),perf:{draws:a.perf().drawCalls,triangles:a.perf().triangles,heap:a.perf().heapBytes},god:w.combat?.damage.god,driver:!!g.driver};
+ return {tick:w.tick,level:w.scenario,phase:m?.phase,active:m&&Object.entries(m.steps).filter(([,s])=>s.status==='active').map(([id])=>id),checkpoint:m?.checkpoint,position:p&&{...p.transform},hp:p?.health.current,stats:m?.stats,caption:m?.subtitle?.text,objective:document.querySelector('[data-testid=objective-text]')?.textContent,camera:a.getState().render.camera,backend:a.perf().backend,quality:a.getState().render.quality,charge:m?.counters['charge-ticks'],mounted:w.mountedGun?.mounted,mega:mega&&{id:mega.id,hp:mega.health.current,at:{...mega.transform},hidden:mega.hidden,state:mega.infected?.state},epilogue:m?.epilogue&&{phase:m.epilogue.phase,phaseTicks:m.epilogue.phaseTicks},cure:m?.cureFront&&{elapsed:m.cureFront.elapsed,radius:m.cureFront.radius,affected:m.cureFront.affectedIds.length},l4:m?.l4,l5:m?.l5,l6:m?.l6,l7:w.l7Departure?.state,followers:[...w.entities.iterate()].filter(e=>e.civilian?.survivor?.mode==='follow').map(e=>({id:e.id,at:{...e.transform},hp:e.health.current,handProp:e.appearance?.handProp,ally:e.civilian?.ally,passengerOf:e.passengerOf})),l8:zoo&&{...zoo.state,rosterActors:zoo.roster().map(id=>{const e=w.entities.get(id);return{id,hp:e?.health.current,at:e?.transform,aboard:e?.passengerOf};})},l9:l9&&{...l9.state,driving:l9.driving.state},title:title?.getClientRects().length?title.textContent:null,credits:credits?.getClientRects().length?credits.textContent?.slice(0,1000):null,events:(window as any).__qaEvents.splice(0),nearby:w.infected?.active.filter(e=>e.health.current>0&&!e.hidden&&p&&Math.hypot(e.transform.x-p.transform.x,e.transform.z-p.transform.z)<25).map(e=>({id:e.id,type:e.archetype,hp:e.health.current,at:{...e.transform},state:e.infected?.state})),perf:{draws:a.perf().drawCalls,triangles:a.perf().triangles,heap:a.perf().heapBytes},god:w.combat?.damage.god,driver:!!g.driver};
 });
 async function photo(label:string,state:any){
  label=label.replace(/[^a-zA-Z0-9_.-]/g,'-');if(seen.has(label))return;seen.add(label);
@@ -35,7 +35,8 @@ async function photo(label:string,state:any){
   await session.page.evaluate(async z=>{window.__SS__!.camera.zoom(z);await window.__SS__!.screenshotReady();},zoom);
   const file=`${raw}/${String(receipt.captures.length).padStart(3,'0')}-${label}-z${zoom}.jpg`;
   await session.page.screenshot({path:file,type:'jpeg',quality:80});
-  receipt.captures.push({file,label,requestedZoom:zoom,state:{...state,events:undefined},camera:await session.page.evaluate(()=>window.__SS__!.getState().render.camera),sha256:createHash('sha256').update(readFileSync(file)).digest('hex')});
+  const renderedWorld=await session.page.evaluate(()=>{const w=window.__SCENE__.game.world;return{level:w.scenario,tick:w.tick,phase:w.missions?.state.phase};});
+  receipt.captures.push({file,label,requestedZoom:zoom,renderedWorld,state:{...state,events:undefined},camera:await session.page.evaluate(()=>window.__SS__!.getState().render.camera),sha256:createHash('sha256').update(readFileSync(file)).digest('hex')});
   receipt.captures.at(-1).placeholders=await session.page.evaluate(()=>window.__SCENE__.game.view.labProbes().districts?.placeholderDraws()??[]);
  }
  await session.page.evaluate(()=>window.__SS__!.camera.zoom(1.5));
@@ -53,7 +54,7 @@ try{
  await session.page.evaluate(()=>{for(const style of document.querySelectorAll('style'))if(style.textContent?.includes('#hud:not([data-scene-hud])'))style.remove();});
  if(await session.page.evaluate(()=>window.__SS__!.missions.state()?.phase==='briefing'))await session.page.getByTestId('mission-button').click({force:true});
  await session.page.evaluate(()=>window.__SS__!.pause());
- let lastActive='',lastRegion=-1,lastLog=-1000,lastEpi='',lastX=-1000,deaths=0,wasDead=false;
+ let lastPhase='',lastActive='',lastRegion=-1,lastLog=-1000,lastEpi='',lastX=-1000,deaths=0,wasDead=false;
  const pendingSignals=new Set<string>();
  for(let i=0;i<14000&&Date.now()-start<Number(process.env.QA_BOUND_SECONDS??510)*1000;i++){
   const s=await snapshot();receipt.end=s;receipt.events.push(...s.events);
@@ -61,6 +62,9 @@ try{
   if(s.god)throw Error('Unexpected god mode');
   if(s.backend!==(backend==='webgl2'?'webgl':'webgpu'))throw Error(`Backend fallback ${s.backend}`);
   const key=s.active?.join('-')||s.phase;
+  if(s.phase!==lastPhase){await photo(`phase-${s.phase}`,s);lastPhase=s.phase;}
+  if(level==='L5'&&s.l5?.metroAt)await photo(`metro-sequence-${Math.floor((s.tick-s.l5.metroAt)/60)}`,s);
+  if(level==='L7'&&s.l7&&s.l7.phase!=='waiting')await photo(`boarding-${s.l7.phase}-${Math.floor((s.tick-s.l7.startedAt)/60)}`,s);
   if(s.tick-lastLog>=300||key!==lastActive){receipt.timeline.push({...s,events:undefined,l8:undefined,l9:undefined});lastLog=s.tick;console.log(tag,s.tick,key,s.position?.x.toFixed(1),s.position?.z.toFixed(1),s.hp);}
   if(key!==lastActive){await photo(`step-${key}`,s);lastActive=key;}
   if(s.level!==level||s.phase==='result'||s.phase==='progression'){await photo('route-end',s);receipt.finished=true;break;}
