@@ -1,0 +1,90 @@
+{
+  "revision": "c8d4a8024bd9660f25df29d49cc2ddafe0100575",
+  "command": "npm run test:nightly:remote",
+  "exitCode": 1,
+  "runner": "2.31.170.171",
+  "seconds": 1201.1,
+  "budgetSeconds": 1200,
+  "watchdogExit": 124,
+  "remoteSyncSeconds": 78,
+  "remoteTotalSeconds": 1204,
+  "campaignLevels": [
+    {
+      "level": "L1",
+      "completed": true,
+      "time": 115.06666666666666,
+      "deaths": 0,
+      "blocker": null
+    },
+    {
+      "level": "L2",
+      "completed": true,
+      "time": 144.11666666666667,
+      "deaths": 0,
+      "blocker": null
+    },
+    {
+      "level": "L3",
+      "completed": true,
+      "time": 195.08333333333334,
+      "deaths": 0,
+      "blocker": null
+    },
+    {
+      "level": "L4",
+      "completed": true,
+      "time": 327.78333333333336,
+      "deaths": 4,
+      "blocker": null
+    },
+    {
+      "level": "L5",
+      "completed": true,
+      "time": 258.01666666666665,
+      "deaths": 1,
+      "blocker": null
+    },
+    {
+      "level": "L6",
+      "completed": true,
+      "time": 794.4833333333333,
+      "deaths": 5,
+      "blocker": null
+    },
+    {
+      "level": "L7",
+      "completed": true,
+      "time": 146.01666666666668,
+      "deaths": 0,
+      "blocker": null
+    },
+    {
+      "level": "L8",
+      "completed": true,
+      "time": 182.88333333333333,
+      "deaths": 0,
+      "blocker": null
+    }
+  ],
+  "campaignReachedCredits": false,
+  "otherNightlyTests": {
+    "passed": 22,
+    "failed": 11,
+    "files": 9
+  },
+  "failures": [
+    "FAIL   nightly  tests/nightly/content-invariants.test.ts > LOD fidelity: every static asset LOD keeps LOD0 extent (12 %), visible materials and game-camera silhouettes (IoU 0.8)",
+    "FAIL   nightly  tests/nightly/content-invariants.test.ts > asset inventory: every production asset and LOD passes the validator",
+    "FAIL   nightly  tests/qa/invariants/contract.test.ts > automatic regression invariants > 2 @nightly seated actors: every active sit/bench pose across L1\u2013L10 and both quality tiers has seat support",
+    "FAIL   nightly  tests/qa/invariants/contract.test.ts > automatic regression invariants > 3 @nightly scripted actors: all initial cast, depot clerk and lab technician persist until their scripted exits",
+    "FAIL   nightly  tests/qa/invariants/escape-waves.test.ts > 5 L2 escape high: every street batch and bridge cluster admits its quota and reaches its authored home",
+    "FAIL   nightly  tests/qa/invariants/escape-waves.test.ts > 5 L2 escape low: every street batch and bridge cluster admits its quota and reaches its authored home",
+    "FAIL   nightly  tests/qa/invariants/vehicle-scenes.test.ts > 4 vehicles: all level start poses, L8 evacuation vehicles and L9 scripted crash clear structural solids",
+    "FAIL   nightly  tests/qa/invariants/war-waves.test.ts > 5 @nightly L4 high: every authored war wave and collapse batch spawns and reaches its goal area",
+    "FAIL   nightly  tests/qa/invariants/war-waves.test.ts > 5 @nightly L4 low: every authored war wave and collapse batch spawns and reaches its goal area",
+    "FAIL   nightly  tests/qa/invariants/waves.test.ts > 5 @nightly authored wave census high: L1, L2, L3, L6, L7, L8 and L10",
+    "FAIL   nightly  tests/qa/invariants/waves.test.ts > 5 @nightly authored wave census low: L1, L2, L3, L6, L7, L8 and L10"
+  ],
+  "campaignReceiptMissing": true,
+  "log": "nightly.log.gz"
+}

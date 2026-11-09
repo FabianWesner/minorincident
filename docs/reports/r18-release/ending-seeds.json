@@ -1,0 +1,50 @@
+[
+  {
+    "side": "prod",
+    "tier": "low",
+    "source": "2741447:docs/reports/final-c/L10-08/low-release-save.json.gz",
+    "path": "test-results/r18-release/ending-seeds/prod-low.json.gz",
+    "bytes": 862488,
+    "sha256": "eb4745b14bf1e90c1261712b0d9803db0c2b3c2b500b40f25192f2b53839d899",
+    "seed": 1,
+    "activeObjectives": [
+      "release"
+    ]
+  },
+  {
+    "side": "prod",
+    "tier": "high",
+    "source": "2741447:docs/reports/final-c/L10-08/high-release-save.json.gz",
+    "path": "test-results/r18-release/ending-seeds/prod-high.json.gz",
+    "bytes": 1450057,
+    "sha256": "76d229253e924f715f08baa426f28b79e29067486ec1311196ea57de1bad41e3",
+    "seed": 1,
+    "activeObjectives": [
+      "release"
+    ]
+  },
+  {
+    "side": "candidate",
+    "tier": "low",
+    "source": "HEAD:docs/reports/r18-panorama/seeds/L10-low-release.json.gz",
+    "path": "test-results/r18-release/ending-seeds/candidate-low.json.gz",
+    "bytes": 166626,
+    "sha256": "f16c0b257db9d843027825413ea77977f1d7e0378a6366c1fe90aa7000ff511e",
+    "seed": 1,
+    "activeObjectives": [
+      "release"
+    ]
+  },
+  {
+    "side": "candidate",
+    "tier": "high",
+    "source": "HEAD:docs/reports/r18-panorama/seeds/L10-high-release.json.gz",
+    "path": "test-results/r18-release/ending-seeds/candidate-high.json.gz",
+    "bytes": 160500,
+    "sha256": "62014cb38126ef1cf630809b219fc81cc704efeb93bcd10a5e715265b5997f37",
+    "seed": 1,
+    "activeObjectives": [
+      "release"
+    ]
+  }
+]

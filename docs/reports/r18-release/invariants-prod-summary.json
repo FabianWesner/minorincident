@@ -1,0 +1,101 @@
+{
+  "stats": {
+    "startTime": "2026-11-09T10:37:39.753Z",
+    "duration": 211356.023,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 8,
+    "flaky": 0
+  },
+  "timings": [
+    {
+      "level": "L1",
+      "candidateMs": 2611,
+      "prodMs": 2079.4000000059605,
+      "limitMs": 2287.3400000065567,
+      "verdict": "FAIL",
+      "baselineURL": "http://127.0.0.1:4912/?testApi=1"
+    },
+    {
+      "level": "L2",
+      "candidateMs": 3846.0999999940395,
+      "prodMs": 3005.5999999940395,
+      "limitMs": 3306.1599999934433,
+      "verdict": "FAIL",
+      "baselineURL": "http://127.0.0.1:4912/?testApi=1"
+    },
+    {
+      "level": "L3",
+      "candidateMs": 3609.2000000029802,
+      "prodMs": 3111,
+      "limitMs": 3422.1,
+      "verdict": "FAIL",
+      "baselineURL": "http://127.0.0.1:4912/?testApi=1"
+    },
+    {
+      "level": "L4",
+      "candidateMs": 34858.79999999702,
+      "prodMs": 3214,
+      "limitMs": 3535.4,
+      "verdict": "FAIL",
+      "baselineURL": "http://127.0.0.1:4912/?testApi=1"
+    },
+    {
+      "level": "L5",
+      "candidateMs": 3026.7999999970198,
+      "prodMs": 2712.9000000059605,
+      "limitMs": 2984.1900000065566,
+      "verdict": "FAIL",
+      "baselineURL": "http://127.0.0.1:4912/?testApi=1"
+    },
+    {
+      "level": "L6",
+      "candidateMs": 2359.6000000089407,
+      "prodMs": 4967,
+      "limitMs": 5463.7,
+      "verdict": "PASS",
+      "baselineURL": "http://127.0.0.1:4912/?testApi=1"
+    },
+    {
+      "level": "L7",
+      "candidateMs": 3313,
+      "prodMs": 2813.5,
+      "limitMs": 3094.85,
+      "verdict": "FAIL",
+      "baselineURL": "http://127.0.0.1:4912/?testApi=1"
+    },
+    {
+      "level": "L8",
+      "candidateMs": 4313.600000008941,
+      "prodMs": 5863.20000000298,
+      "limitMs": 6449.520000003278,
+      "verdict": "PASS",
+      "baselineURL": "http://127.0.0.1:4912/?testApi=1"
+    },
+    {
+      "level": "L9",
+      "candidateMs": 7011.0999999940395,
+      "prodMs": 4589.399999991059,
+      "limitMs": 5048.339999990165,
+      "verdict": "FAIL",
+      "baselineURL": "http://127.0.0.1:4912/?testApi=1"
+    },
+    {
+      "level": "L10",
+      "candidateMs": 6326.29999999702,
+      "prodMs": 3422.0999999940395,
+      "limitMs": 3764.3099999934434,
+      "verdict": "FAIL",
+      "baselineURL": "http://127.0.0.1:4912/?testApi=1"
+    }
+  ],
+  "sourceTest": "tests/qa/invariants/rendering/scene-lab.spec.ts",
+  "releaseCopy": "test-results/r18-release/invariants-render.spec.ts",
+  "adaptations": [
+    "await API ready before preparing campaign",
+    "match batch59 API for baseline",
+    "enable request interception on both sides"
+  ],
+  "candidateBundle": "index-B33LTwE-.js",
+  "baselineBundle": "index-Dk-iL-FG.js"
+}

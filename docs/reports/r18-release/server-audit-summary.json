@@ -1,0 +1,60 @@
+{
+  "requests": 247839,
+  "first": "2026-11-09T09:24:35.165Z",
+  "last": "2026-11-09T11:53:47.470Z",
+  "counts": [
+    {
+      "side": "candidate",
+      "status": 200,
+      "instrumented": false,
+      "n": 77481
+    },
+    {
+      "side": "prod",
+      "status": 200,
+      "instrumented": false,
+      "n": 84555
+    },
+    {
+      "side": "prod",
+      "status": 304,
+      "instrumented": false,
+      "n": 38241
+    },
+    {
+      "side": "candidate",
+      "status": 304,
+      "instrumented": false,
+      "n": 47515
+    },
+    {
+      "side": "prod",
+      "status": 200,
+      "instrumented": true,
+      "n": 29
+    },
+    {
+      "side": "candidate",
+      "status": 200,
+      "instrumented": true,
+      "n": 18
+    }
+  ],
+  "patchRows": [
+    {
+      "side": "candidate",
+      "main": "/build/index-Dvfi5s_W.js",
+      "originalSha256": "a950e19e4c71ab8088ec6d76275ddf6c14d83d2df59e3a1f511e1ec0bfcfc063",
+      "patchedSha256": "0c1b0ddced93f66225c4d9508ac3142298ec0fda35ea241f94245e0407a2a838",
+      "patch": "Expose the existing Game instance to the shared test adapter only for ?testApi=1; original public code otherwise intact."
+    },
+    {
+      "side": "prod",
+      "main": "/build/index-Dk-iL-FG.js",
+      "originalSha256": "61043483d030ec6be950a50c4de5d2d3d1301106df7a6ac18c2eaa0b1bbf29e0",
+      "patchedSha256": "1e611e98364fc87f75469e2f1e6c987a9826a19d0b3bcb39159a4e65489892bb",
+      "patch": "Expose the existing Game instance to the shared test adapter only for ?testApi=1; original public code otherwise intact."
+    }
+  ],
+  "rawLocal": "test-results/r18-release/server-audit.json.gz"
+}

@@ -1,0 +1,1390 @@
+{
+  "loads": [
+    {
+      "level": "L1",
+      "backend": "webgpu",
+      "tier": "low",
+      "sides": {
+        "prod": {
+          "origin": "http://127.0.0.1:4902",
+          "backend": "webgpu",
+          "quality": "low",
+          "level": "L1",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 1908.7000000029802,
+          "p90": 1942.5999999940395,
+          "max": 1959.5,
+          "maxFrameMs": 33.30000000000109,
+          "errors": []
+        },
+        "candidate": {
+          "origin": "http://127.0.0.1:4901",
+          "backend": "webgpu",
+          "quality": "low",
+          "level": "L1",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 1994.3499999977648,
+          "p90": 2011.8999999985099,
+          "max": 2059.7000000029802,
+          "maxFrameMs": 33.399999999999636,
+          "errors": []
+        }
+      },
+      "issues": [
+        "median >PROD"
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "level": "L1",
+      "backend": "webgpu",
+      "tier": "high",
+      "sides": {
+        "prod": {
+          "origin": "http://127.0.0.1:4902",
+          "backend": "webgpu",
+          "quality": "high",
+          "level": "L1",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 1867.7000000029802,
+          "p90": 1908.8000000044703,
+          "max": 1912.1000000014901,
+          "maxFrameMs": 50,
+          "errors": []
+        },
+        "candidate": {
+          "origin": "http://127.0.0.1:4901",
+          "backend": "webgpu",
+          "quality": "high",
+          "level": "L1",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 1935.6499999985099,
+          "p90": 1959.2000000029802,
+          "max": 1960.6000000014901,
+          "maxFrameMs": 66.69999999999982,
+          "errors": []
+        }
+      },
+      "issues": [
+        "median >PROD"
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "level": "L1",
+      "backend": "webgl2",
+      "tier": "low",
+      "sides": {
+        "prod": {
+          "origin": "http://127.0.0.1:4902",
+          "backend": "webgl2",
+          "quality": "low",
+          "level": "L1",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 2159.699999999255,
+          "p90": 2192.5999999940395,
+          "max": 2259,
+          "maxFrameMs": 33.30000000000109,
+          "errors": []
+        },
+        "candidate": {
+          "origin": "http://127.0.0.1:4901",
+          "backend": "webgl2",
+          "quality": "low",
+          "level": "L1",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 2268.35000000149,
+          "p90": 2324.39999999851,
+          "max": 8226.80000000447,
+          "maxFrameMs": 416.7000000000003,
+          "errors": []
+        }
+      },
+      "issues": [
+        "maximum >6000ms",
+        "median >PROD",
+        "post-card frame >200ms"
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "level": "L1",
+      "backend": "webgl2",
+      "tier": "high",
+      "sides": {
+        "prod": {
+          "origin": "http://127.0.0.1:4902",
+          "backend": "webgl2",
+          "quality": "high",
+          "level": "L1",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 2126.9500000029802,
+          "p90": 2143.39999999851,
+          "max": 2876.10000000149,
+          "maxFrameMs": 66.80000000000018,
+          "errors": []
+        },
+        "candidate": {
+          "origin": "http://127.0.0.1:4901",
+          "backend": "webgl2",
+          "quality": "high",
+          "level": "L1",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 2192.7500000037253,
+          "p90": 2342.2000000029802,
+          "max": 3127.39999999851,
+          "maxFrameMs": 400,
+          "errors": []
+        }
+      },
+      "issues": [
+        "median >PROD",
+        "post-card frame >200ms"
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "level": "L4",
+      "backend": "webgpu",
+      "tier": "low",
+      "sides": {
+        "prod": {
+          "origin": "http://127.0.0.1:4902",
+          "backend": "webgpu",
+          "quality": "low",
+          "level": "L4",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 3141.800000000745,
+          "p90": 3174,
+          "max": 3192.10000000149,
+          "maxFrameMs": 16.80000000000109,
+          "errors": []
+        },
+        "candidate": {
+          "origin": "http://127.0.0.1:4901",
+          "backend": "webgpu",
+          "quality": "low",
+          "level": "L4",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 3366.25,
+          "p90": 3391,
+          "max": 3956.10000000149,
+          "maxFrameMs": 66.59999999999854,
+          "errors": []
+        }
+      },
+      "issues": [
+        "median >PROD"
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "level": "L4",
+      "backend": "webgpu",
+      "tier": "high",
+      "sides": {
+        "prod": {
+          "origin": "http://127.0.0.1:4902",
+          "backend": "webgpu",
+          "quality": "high",
+          "level": "L4",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 3574.650000002235,
+          "p90": 3593.2999999970198,
+          "max": 3640.8000000044703,
+          "maxFrameMs": 16.80000000000109,
+          "errors": []
+        },
+        "candidate": {
+          "origin": "http://127.0.0.1:4901",
+          "backend": "webgpu",
+          "quality": "high",
+          "level": "L4",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 3858.10000000149,
+          "p90": 3906.5,
+          "max": 3958.89999999851,
+          "maxFrameMs": 83.30000000000291,
+          "errors": []
+        }
+      },
+      "issues": [
+        "median >PROD"
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "level": "L4",
+      "backend": "webgl2",
+      "tier": "low",
+      "sides": {
+        "prod": {
+          "origin": "http://127.0.0.1:4902",
+          "backend": "webgl2",
+          "quality": "low",
+          "level": "L4",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 3342.0499999970198,
+          "p90": 3424.5,
+          "max": 3641.3000000044703,
+          "maxFrameMs": 16.80000000000109,
+          "errors": []
+        },
+        "candidate": {
+          "origin": "http://127.0.0.1:4901",
+          "backend": "webgl2",
+          "quality": "low",
+          "level": "L4",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 3492.2999999970198,
+          "p90": 3525.8000000044703,
+          "max": 6607.39999999851,
+          "maxFrameMs": 683.2999999999956,
+          "errors": []
+        }
+      },
+      "issues": [
+        "maximum >6000ms",
+        "median >PROD",
+        "post-card frame >200ms"
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "level": "L4",
+      "backend": "webgl2",
+      "tier": "high",
+      "sides": {
+        "prod": {
+          "origin": "http://127.0.0.1:4912",
+          "backend": "webgl2",
+          "quality": "high",
+          "level": "L4",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 3784.400000002235,
+          "p90": 3808.7000000029802,
+          "max": 4141.30000000447,
+          "maxFrameMs": 16.80000000000109,
+          "errors": []
+        },
+        "candidate": {
+          "origin": "http://127.0.0.1:4911",
+          "backend": "webgl2",
+          "quality": "high",
+          "level": "L4",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 3984.650000002235,
+          "p90": 4292,
+          "max": 5940.10000000149,
+          "maxFrameMs": 450.09999999999854,
+          "errors": []
+        }
+      },
+      "issues": [
+        "median >PROD",
+        "post-card frame >200ms"
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "level": "L7",
+      "backend": "webgpu",
+      "tier": "low",
+      "sides": {
+        "prod": {
+          "origin": "http://127.0.0.1:4912",
+          "backend": "webgpu",
+          "quality": "low",
+          "level": "L7",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 2742.35000000149,
+          "p90": 2791.60000000149,
+          "max": 2808.8000000044703,
+          "maxFrameMs": 16.80000000000109,
+          "errors": []
+        },
+        "candidate": {
+          "origin": "http://127.0.0.1:4911",
+          "backend": "webgpu",
+          "quality": "low",
+          "level": "L7",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 2824.8000000044703,
+          "p90": 2841.89999999851,
+          "max": 2842.10000000149,
+          "maxFrameMs": 16.80000000000109,
+          "errors": []
+        }
+      },
+      "issues": [
+        "median >PROD"
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "level": "L7",
+      "backend": "webgpu",
+      "tier": "high",
+      "sides": {
+        "prod": {
+          "origin": "http://127.0.0.1:4912",
+          "backend": "webgpu",
+          "quality": "high",
+          "level": "L7",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 3315.0000000037253,
+          "p90": 3341.2999999970198,
+          "max": 3342.2000000029802,
+          "maxFrameMs": 16.80000000000109,
+          "errors": []
+        },
+        "candidate": {
+          "origin": "http://127.0.0.1:4911",
+          "backend": "webgpu",
+          "quality": "high",
+          "level": "L7",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 3275.4499999955297,
+          "p90": 3325.89999999851,
+          "max": 3358.7999999970198,
+          "maxFrameMs": 16.80000000000109,
+          "errors": [],
+          "gate": "PASS",
+          "baselineMedian": 3315.0000000037253
+        }
+      },
+      "issues": [],
+      "verdict": "PASS"
+    },
+    {
+      "level": "L7",
+      "backend": "webgl2",
+      "tier": "low",
+      "sides": {
+        "prod": {
+          "origin": "http://127.0.0.1:4912",
+          "backend": "webgl2",
+          "quality": "low",
+          "level": "L7",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 2991.400000002235,
+          "p90": 3041.4000000059605,
+          "max": 3107.1999999955297,
+          "maxFrameMs": 16.80000000000109,
+          "errors": []
+        },
+        "candidate": {
+          "origin": "http://127.0.0.1:4911",
+          "backend": "webgl2",
+          "quality": "low",
+          "level": "L7",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 3125.949999999255,
+          "p90": 3159.10000000149,
+          "max": 10274.89999999851,
+          "maxFrameMs": 99.89999999999964,
+          "errors": []
+        }
+      },
+      "issues": [
+        "maximum >6000ms",
+        "median >PROD"
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "level": "L7",
+      "backend": "webgl2",
+      "tier": "high",
+      "sides": {
+        "prod": {
+          "origin": "http://127.0.0.1:4912",
+          "backend": "webgl2",
+          "quality": "high",
+          "level": "L7",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 3542.3000000044703,
+          "p90": 3608.7000000029802,
+          "max": 10257,
+          "maxFrameMs": 66.69999999999982,
+          "errors": []
+        },
+        "candidate": {
+          "origin": "http://127.0.0.1:4911",
+          "backend": "webgl2",
+          "quality": "high",
+          "level": "L7",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 3558.25,
+          "p90": 3675.60000000149,
+          "max": 7508,
+          "maxFrameMs": 16.80000000000109,
+          "errors": []
+        }
+      },
+      "issues": [
+        "maximum >6000ms",
+        "median >PROD"
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "level": "L8",
+      "backend": "webgpu",
+      "tier": "low",
+      "sides": {
+        "prod": {
+          "origin": "http://127.0.0.1:4912",
+          "backend": "webgpu",
+          "quality": "low",
+          "level": "L8",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 3191.849999997765,
+          "p90": 3209,
+          "max": 6407.5,
+          "maxFrameMs": 33.400000000001455,
+          "errors": []
+        },
+        "candidate": {
+          "origin": "http://127.0.0.1:4911",
+          "backend": "webgpu",
+          "quality": "low",
+          "level": "L8",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 3741.35000000149,
+          "p90": 3774.7000000029802,
+          "max": 3776.3000000044703,
+          "maxFrameMs": 33.30000000000109,
+          "errors": []
+        }
+      },
+      "issues": [
+        "median >PROD"
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "level": "L8",
+      "backend": "webgpu",
+      "tier": "high",
+      "sides": {
+        "prod": {
+          "origin": "http://127.0.0.1:4912",
+          "backend": "webgpu",
+          "quality": "high",
+          "level": "L8",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 3341.39999999851,
+          "p90": 3376.2000000029802,
+          "max": 4374.79999999702,
+          "maxFrameMs": 50.100000000000364,
+          "errors": []
+        },
+        "candidate": {
+          "origin": "http://127.0.0.1:4911",
+          "backend": "webgpu",
+          "quality": "high",
+          "level": "L8",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 4007.85000000149,
+          "p90": 4041.7999999970198,
+          "max": 4058.4000000059605,
+          "maxFrameMs": 50,
+          "errors": []
+        }
+      },
+      "issues": [
+        "median >PROD"
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "level": "L8",
+      "backend": "webgl2",
+      "tier": "low",
+      "sides": {
+        "prod": {
+          "origin": "http://127.0.0.1:4912",
+          "backend": "webgl2",
+          "quality": "low",
+          "level": "L8",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 3091.8000000044703,
+          "p90": 3127.7000000029802,
+          "max": 10358.20000000298,
+          "maxFrameMs": 100,
+          "errors": []
+        },
+        "candidate": {
+          "origin": "http://127.0.0.1:4911",
+          "backend": "webgl2",
+          "quality": "low",
+          "level": "L8",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 3625.5499999970198,
+          "p90": 3659.199999988079,
+          "max": 11256.79999999702,
+          "maxFrameMs": 33.30000000000109,
+          "errors": []
+        }
+      },
+      "issues": [
+        "maximum >6000ms",
+        "median >PROD"
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "level": "L8",
+      "backend": "webgl2",
+      "tier": "high",
+      "sides": {
+        "prod": {
+          "origin": "http://127.0.0.1:4912",
+          "backend": "webgl2",
+          "quality": "high",
+          "level": "L8",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 3292.25,
+          "p90": 3358.800000011921,
+          "max": 6674.79999999702,
+          "maxFrameMs": 100,
+          "errors": []
+        },
+        "candidate": {
+          "origin": "http://127.0.0.1:4911",
+          "backend": "webgl2",
+          "quality": "high",
+          "level": "L8",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 3924.35000000149,
+          "p90": 4041.8999999910593,
+          "max": 7241,
+          "maxFrameMs": 33.400000000001455,
+          "errors": []
+        }
+      },
+      "issues": [
+        "maximum >6000ms",
+        "median >PROD"
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "level": "L10",
+      "backend": "webgpu",
+      "tier": "low",
+      "sides": {
+        "prod": {
+          "origin": "http://127.0.0.1:4912",
+          "backend": "webgpu",
+          "quality": "low",
+          "level": "L10",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 3267.0500000044703,
+          "p90": 3292.2999999970198,
+          "max": 3375.0999999940395,
+          "maxFrameMs": 33.30000000000109,
+          "errors": []
+        },
+        "candidate": {
+          "origin": "http://127.0.0.1:4911",
+          "backend": "webgpu",
+          "quality": "low",
+          "level": "L10",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 4060.5,
+          "p90": 4092.2999999970198,
+          "max": 4124.899999991059,
+          "maxFrameMs": 33.400000000001455,
+          "errors": []
+        }
+      },
+      "issues": [
+        "median >PROD"
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "level": "L10",
+      "backend": "webgpu",
+      "tier": "high",
+      "sides": {
+        "prod": {
+          "origin": "http://127.0.0.1:4912",
+          "backend": "webgpu",
+          "quality": "high",
+          "level": "L10",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 3008.75,
+          "p90": 3042.2999999970198,
+          "max": 3075.7999999970198,
+          "maxFrameMs": 33.399999999999636,
+          "errors": []
+        },
+        "candidate": {
+          "origin": "http://127.0.0.1:4911",
+          "backend": "webgpu",
+          "quality": "high",
+          "level": "L10",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 3857.1500000059605,
+          "p90": 3875,
+          "max": 3890.5999999940395,
+          "maxFrameMs": 33.5,
+          "errors": []
+        }
+      },
+      "issues": [
+        "median >PROD"
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "level": "L10",
+      "backend": "webgl2",
+      "tier": "low",
+      "sides": {
+        "prod": {
+          "origin": "http://127.0.0.1:4912",
+          "backend": "webgl2",
+          "quality": "low",
+          "level": "L10",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 3535.85000000149,
+          "p90": 3560.4000000059605,
+          "max": 8509.10000000894,
+          "maxFrameMs": 33.399999999999636,
+          "errors": []
+        },
+        "candidate": {
+          "origin": "http://127.0.0.1:4911",
+          "backend": "webgl2",
+          "quality": "low",
+          "level": "L10",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 4359.19999999553,
+          "p90": 4410,
+          "max": 9725.10000000894,
+          "maxFrameMs": 33.399999999999636,
+          "errors": []
+        }
+      },
+      "issues": [
+        "maximum >6000ms",
+        "median >PROD"
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "level": "L10",
+      "backend": "webgl2",
+      "tier": "high",
+      "sides": {
+        "prod": {
+          "origin": "http://127.0.0.1:4912",
+          "backend": "webgl2",
+          "quality": "high",
+          "level": "L10",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 3233.9499999955297,
+          "p90": 3326.5,
+          "max": 5425.29999999702,
+          "maxFrameMs": 33.399999999999636,
+          "errors": []
+        },
+        "candidate": {
+          "origin": "http://127.0.0.1:4911",
+          "backend": "webgl2",
+          "quality": "high",
+          "level": "L10",
+          "diagnostic": false,
+          "gameplaySamples": 1,
+          "menuWaits": [
+            0
+          ],
+          "n": 20,
+          "median": 4226.500000007451,
+          "p90": 4276.70000000298,
+          "max": 6607.600000008941,
+          "maxFrameMs": 33.400000000001455,
+          "errors": []
+        }
+      },
+      "issues": [
+        "maximum >6000ms",
+        "median >PROD"
+      ],
+      "verdict": "FAIL"
+    }
+  ],
+  "native": [
+    {
+      "level": "L3",
+      "tier": "low",
+      "sides": {
+        "prod": {
+          "stats": {
+            "n": 3610,
+            "p95": 16.700000000004366,
+            "max": 16.80000000000291,
+            "spikes66": 0
+          },
+          "receipt": "test-results/r18-release/native/L3-L5-L6-low/strips/webgpu/L3-L5-L6.json",
+          "failure": null,
+          "errors": []
+        },
+        "candidate": {
+          "stats": {
+            "n": 3607,
+            "p95": 16.70000000001164,
+            "max": 16.80000000000291,
+            "spikes66": 0
+          },
+          "receipt": "test-results/r18-release/native/L3-L5-L6-low/strips/webgpu/L3-L5-L6.json",
+          "failure": null,
+          "errors": []
+        }
+      },
+      "issues": [],
+      "verdict": "PASS"
+    },
+    {
+      "level": "L3",
+      "tier": "high",
+      "sides": {
+        "prod": {
+          "stats": {
+            "n": 3609,
+            "p95": 16.700000000004366,
+            "max": 16.80000000000291,
+            "spikes66": 0
+          },
+          "receipt": "test-results/r18-release/native/L3-L5-L6-high/strips/webgpu/L3-L5-L6.json",
+          "failure": null,
+          "errors": []
+        },
+        "candidate": {
+          "stats": {
+            "n": 3604,
+            "p95": 16.700000000004366,
+            "max": 33.399999999999636,
+            "spikes66": 0
+          },
+          "receipt": "test-results/r18-release/native/L3-L5-L6-high/strips/webgpu/L3-L5-L6.json",
+          "failure": null,
+          "errors": []
+        }
+      },
+      "issues": [],
+      "verdict": "PASS"
+    },
+    {
+      "level": "L4",
+      "tier": "low",
+      "sides": {
+        "prod": {
+          "stats": {
+            "n": 3606,
+            "p95": 16.799999999995634,
+            "max": 33.39999999999418,
+            "spikes66": 0
+          },
+          "receipt": "test-results/r18-release/native/L4-L7-L8-low/strips/webgpu/L4-L7-L8.json",
+          "failure": null,
+          "errors": []
+        },
+        "candidate": {
+          "stats": {
+            "n": 3257,
+            "p95": 33.30000000000291,
+            "max": 50,
+            "spikes66": 0
+          },
+          "receipt": "test-results/r18-release/native/L4-L7-L8-low/strips/webgpu/L4-L7-L8.json",
+          "failure": null,
+          "errors": []
+        }
+      },
+      "issues": [
+        "p95 >PROD+1ms"
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "level": "L4",
+      "tier": "high",
+      "sides": {
+        "prod": {
+          "stats": {
+            "n": 3599,
+            "p95": 16.799999999995634,
+            "max": 33.399999999999636,
+            "spikes66": 0
+          },
+          "receipt": "test-results/r18-release/native/L4-L7-L8-high/strips/webgpu/L4-L7-L8.json",
+          "failure": null,
+          "errors": []
+        },
+        "candidate": {
+          "stats": {
+            "n": 2542,
+            "p95": 33.400000000001455,
+            "max": 66.59999999999854,
+            "spikes66": 1
+          },
+          "receipt": "test-results/r18-release/native/L4-L7-L8-high/strips/webgpu/L4-L7-L8.json",
+          "failure": null,
+          "errors": []
+        }
+      },
+      "issues": [
+        "p95 >PROD+1ms",
+        "max >PROD+one frame",
+        "new >=66ms hitch"
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "level": "L5",
+      "tier": "low",
+      "sides": {
+        "prod": {
+          "stats": {
+            "n": 3601,
+            "p95": 16.700000000004366,
+            "max": 33.400000000001455,
+            "spikes66": 0
+          },
+          "receipt": "test-results/r18-release/native/L3-L5-L6-low/strips/webgpu/L3-L5-L6.json",
+          "failure": null,
+          "errors": []
+        },
+        "candidate": {
+          "stats": {
+            "n": 3603,
+            "p95": 16.70000000001164,
+            "max": 33.399999999999636,
+            "spikes66": 0
+          },
+          "receipt": "test-results/r18-release/native/L3-L5-L6-low/strips/webgpu/L3-L5-L6.json",
+          "failure": null,
+          "errors": []
+        }
+      },
+      "issues": [],
+      "verdict": "PASS"
+    },
+    {
+      "level": "L5",
+      "tier": "high",
+      "sides": {
+        "prod": {
+          "stats": {
+            "n": 3602,
+            "p95": 16.700000000004366,
+            "max": 33.399999999999636,
+            "spikes66": 0
+          },
+          "receipt": "test-results/r18-release/native/L3-L5-L6-high/strips/webgpu/L3-L5-L6.json",
+          "failure": null,
+          "errors": []
+        },
+        "candidate": {
+          "stats": {
+            "n": 3607,
+            "p95": 16.799999999995634,
+            "max": 33.30000000000109,
+            "spikes66": 0
+          },
+          "receipt": "test-results/r18-release/native/L3-L5-L6-high/strips/webgpu/L3-L5-L6.json",
+          "failure": null,
+          "errors": []
+        }
+      },
+      "issues": [],
+      "verdict": "PASS"
+    },
+    {
+      "level": "L6",
+      "tier": "low",
+      "sides": {
+        "prod": {
+          "stats": {
+            "n": 3607,
+            "p95": 16.700000000004366,
+            "max": 33.29999999999927,
+            "spikes66": 0
+          },
+          "receipt": "test-results/r18-release/native/L3-L5-L6-low/strips/webgpu/L3-L5-L6.json",
+          "failure": null,
+          "errors": []
+        },
+        "candidate": {
+          "stats": {
+            "n": 3607,
+            "p95": 16.70000000001164,
+            "max": 33.399999999999636,
+            "spikes66": 0
+          },
+          "receipt": "test-results/r18-release/native/L3-L5-L6-low/strips/webgpu/L3-L5-L6.json",
+          "failure": null,
+          "errors": []
+        }
+      },
+      "issues": [],
+      "verdict": "PASS"
+    },
+    {
+      "level": "L6",
+      "tier": "high",
+      "sides": {
+        "prod": {
+          "stats": {
+            "n": 3606,
+            "p95": 16.799999999995634,
+            "max": 49.899999999999636,
+            "spikes66": 0
+          },
+          "receipt": "test-results/r18-release/native/L3-L5-L6-high/strips/webgpu/L3-L5-L6.json",
+          "failure": null,
+          "errors": []
+        },
+        "candidate": {
+          "stats": {
+            "n": 3606,
+            "p95": 16.70000000001164,
+            "max": 33.399999999999636,
+            "spikes66": 0
+          },
+          "receipt": "test-results/r18-release/native/L3-L5-L6-high/strips/webgpu/L3-L5-L6.json",
+          "failure": null,
+          "errors": []
+        }
+      },
+      "issues": [],
+      "verdict": "PASS"
+    },
+    {
+      "level": "L7",
+      "tier": "low",
+      "sides": {
+        "prod": {
+          "stats": {
+            "n": 3608,
+            "p95": 16.700000000004366,
+            "max": 33.30000000000291,
+            "spikes66": 0
+          },
+          "receipt": "test-results/r18-release/native/L4-L7-L8-low/strips/webgpu/L4-L7-L8.json",
+          "failure": null,
+          "errors": []
+        },
+        "candidate": {
+          "stats": {
+            "n": 3599,
+            "p95": 16.70000000001164,
+            "max": 33.400000000001455,
+            "spikes66": 0
+          },
+          "receipt": "test-results/r18-release/native/L4-L7-L8-low/strips/webgpu/L4-L7-L8.json",
+          "failure": null,
+          "errors": []
+        }
+      },
+      "issues": [],
+      "verdict": "PASS"
+    },
+    {
+      "level": "L7",
+      "tier": "high",
+      "sides": {
+        "prod": {
+          "stats": {
+            "n": 3604,
+            "p95": 16.700000000004366,
+            "max": 50,
+            "spikes66": 0
+          },
+          "receipt": "test-results/r18-release/native/L4-L7-L8-high/strips/webgpu/L4-L7-L8.json",
+          "failure": null,
+          "errors": []
+        },
+        "candidate": {
+          "stats": {
+            "n": 3605,
+            "p95": 16.700000000004366,
+            "max": 33.29999999999927,
+            "spikes66": 0
+          },
+          "receipt": "test-results/r18-release/native/L4-L7-L8-high/strips/webgpu/L4-L7-L8.json",
+          "failure": null,
+          "errors": []
+        }
+      },
+      "issues": [],
+      "verdict": "PASS"
+    },
+    {
+      "level": "L8",
+      "tier": "low",
+      "sides": {
+        "prod": {
+          "stats": {
+            "n": 3594,
+            "p95": 16.70000000001164,
+            "max": 183.29999999999563,
+            "spikes66": 1
+          },
+          "receipt": "test-results/r18-release/native/L4-L7-L8-low/strips/webgpu/L4-L7-L8.json",
+          "failure": null,
+          "errors": []
+        },
+        "candidate": {
+          "stats": {
+            "n": 3599,
+            "p95": 16.70000000001164,
+            "max": 50,
+            "spikes66": 0
+          },
+          "receipt": "test-results/r18-release/native/L4-L7-L8-low/strips/webgpu/L4-L7-L8.json",
+          "failure": null,
+          "errors": []
+        }
+      },
+      "issues": [],
+      "verdict": "PASS"
+    },
+    {
+      "level": "L8",
+      "tier": "high",
+      "sides": {
+        "prod": {
+          "stats": {
+            "n": 3594,
+            "p95": 16.70000000001164,
+            "max": 133.40000000000146,
+            "spikes66": 1
+          },
+          "receipt": "test-results/r18-release/native/L4-L7-L8-high/strips/webgpu/L4-L7-L8.json",
+          "failure": null,
+          "errors": []
+        },
+        "candidate": {
+          "stats": {
+            "n": 3546,
+            "p95": 16.799999999999272,
+            "max": 50,
+            "spikes66": 0
+          },
+          "receipt": "test-results/r18-release/native/L4-L7-L8-high/strips/webgpu/L4-L7-L8.json",
+          "failure": null,
+          "errors": []
+        }
+      },
+      "issues": [],
+      "verdict": "PASS"
+    },
+    {
+      "level": "L9",
+      "tier": "low",
+      "sides": {
+        "prod": {
+          "stats": {
+            "n": 3599,
+            "p95": 16.70000000001164,
+            "max": 50,
+            "spikes66": 0
+          },
+          "receipt": "test-results/r18-release/native/L9-low/strips/webgpu/L9.json",
+          "failure": null,
+          "errors": []
+        },
+        "candidate": {
+          "stats": {
+            "n": 3596,
+            "p95": 16.79999999998836,
+            "max": 100,
+            "spikes66": 1
+          },
+          "receipt": "test-results/r18-release/native/L9-low/strips/webgpu/L9.json",
+          "failure": null,
+          "errors": []
+        }
+      },
+      "issues": [
+        "max >PROD+one frame",
+        "new >=66ms hitch"
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "level": "L9",
+      "tier": "high",
+      "sides": {
+        "prod": {
+          "stats": {
+            "n": 3595,
+            "p95": 16.799999999995634,
+            "max": 50.100000000000364,
+            "spikes66": 0
+          },
+          "receipt": "test-results/r18-release/native/L9-high/strips/webgpu/L9.json",
+          "failure": null,
+          "errors": []
+        },
+        "candidate": {
+          "stats": {
+            "n": 3586,
+            "p95": 16.70000000001164,
+            "max": 83.39999999999964,
+            "spikes66": 1
+          },
+          "receipt": "test-results/r18-release/native/L9-high/strips/webgpu/L9.json",
+          "failure": null,
+          "errors": []
+        }
+      },
+      "issues": [
+        "max >PROD+one frame",
+        "new >=66ms hitch"
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "level": "L10",
+      "tier": "low",
+      "sides": {
+        "prod": {
+          "stats": {
+            "n": 5406,
+            "p95": 16.70000000001164,
+            "max": 33.30000000000291,
+            "spikes66": 0
+          },
+          "receipt": "test-results/r18-release/native/L10-low/strips/webgpu/L10.json",
+          "failure": null,
+          "errors": []
+        },
+        "candidate": {
+          "stats": {
+            "n": 5392,
+            "p95": 16.70000000001164,
+            "max": 66.60000000000582,
+            "spikes66": 1
+          },
+          "receipt": "test-results/r18-release/native/L10-low/strips/webgpu/L10.json",
+          "failure": null,
+          "errors": []
+        }
+      },
+      "issues": [
+        "max >PROD+one frame",
+        "new >=66ms hitch"
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "level": "L10",
+      "tier": "high",
+      "sides": {},
+      "issues": [],
+      "verdict": "INCOMPLETE"
+    }
+  ]
+}

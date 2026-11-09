@@ -1,0 +1,32 @@
+{
+  "originalLowNativeFirstCharge": {
+    "prod": 122,
+    "candidate": 123
+  },
+  "correctedLow": [
+    {
+      "side": "prod",
+      "initialCharge": 0,
+      "firstRecordedCharge": 0,
+      "initialActive": false,
+      "sameTickAtRecorderStart": true,
+      "initialPartialMs": 9.599999988080526,
+      "firstCompleteAtMs": 60856.99999998808,
+      "durationMs": 90170.79999999702,
+      "maxMs": 50
+    },
+    {
+      "side": "candidate",
+      "initialCharge": 0,
+      "firstRecordedCharge": 2,
+      "initialActive": false,
+      "sameTickAtRecorderStart": true,
+      "initialPartialMs": 12.200000008946517,
+      "firstCompleteAtMs": 60026.500000008935,
+      "durationMs": 90167.70000000298,
+      "maxMs": 66.70000000001164
+    }
+  ],
+  "helper": "ab-tour-charge.ts",
+  "originalNativeRetained": true
+}
