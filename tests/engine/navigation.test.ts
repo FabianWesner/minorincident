@@ -20,6 +20,15 @@ function checkDirectedReach(): void {
   for (let pattern = 0; pattern < 24; pattern++) {
     const nav = new WorldNavGrid([0, 0], [12, 12]), heights = new Float32Array(nav.cells.length);
     for (let i = 0; i < nav.cells.length; i++) { nav.cells[i] = (i * 31 + pattern * 17) % 13 > 1 ? 1 : 0; heights[i] = pattern % 3 ? ((i * 17 + pattern * 3) % 7) * .4 : 0; }
+    const flood = new Uint8Array(nav.cells.length), pending = [nav.index(3.5, 4.5)];
+    if (nav.cells[pending[0]]) flood[pending[0]] = 1; else pending.length = 0;
+    for (let cursor = 0; cursor < pending.length; cursor++) {
+      const i = pending[cursor], x = i % nav.width;
+      for (const j of [x ? i - 1 : -1, x + 1 < nav.width ? i + 1 : -1, i - nav.width, i + nav.width]) {
+        if (j >= 0 && j < flood.length && nav.cells[j] && !flood[j]) { flood[j] = 1; pending.push(j); }
+      }
+    }
+    expect(nav.flood([3.5, 4.5]), `scanline flood pattern ${pattern}`).toEqual(flood);
     const goals = [{ x: 3.5, z: 4.5 }, { x: 10.5, z: 8.5 }], expected = new Uint8Array(nav.cells.length), queue: number[] = [];
     for (const goal of goals) { const i = nav.index(goal.x, goal.z); if (nav.cells[i]) { expected[i] = 1; queue.push(i); } }
     for (let cursor = 0; cursor < queue.length; cursor++) {
