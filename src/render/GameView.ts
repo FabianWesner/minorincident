@@ -1300,7 +1300,9 @@ export class GameView implements Lifecycle {
     // residency on every load. A briefing snapshot waits only for its visible assets.
     if (__QA_HOOKS__ && this.params.get('test') === '1' && this.world.missions?.state.phase !== 'briefing') await this.preparation;
     this.accessories?.begin(); this.districts?.updateLods(this.view); this.crowd?.update(this.view); this.npcs?.update(this.camera, 1, this.view.lodCamera); this.accessories?.finish();
+    if (this.world.destruction) this.districts?.syncDestruction(this.world.destruction);
     await Promise.all([this.districts?.ready(), this.crowd?.ready(), this.npcs?.ready(), this.vehicles?.ready(), this.entityAssets?.ready(), this.interactions?.synchronize(), this.syncMountedGun()]);
+    if (this.world.destruction) this.districts?.syncDestruction(this.world.destruction);
     corpseLayout(this.world).settleAll();
     // Tier loads chain (LOD1 stand-in, then LOD0) and each step is requested by the next partition: settle them, so a snapshot
     // never shows a building drawn from a stand-in mesh (lod-pop: the first Scene Lab frame showed crude LOD2 shapes).
