@@ -1,0 +1,55 @@
+{
+  "rules": {
+    "p95OverProdMs": 1,
+    "maxOverProdMs": 16.8,
+    "noNewHitchMs": 66
+  },
+  "rows": [
+    {
+      "name": "L8 high",
+      "prod": {
+        "n": 3606,
+        "p95": 16.799999999995634,
+        "max": 33.399999999999636
+      },
+      "candidate": {
+        "n": 3605,
+        "p95": 16.799999999995634,
+        "max": 33.30000000000291
+      },
+      "pass": true,
+      "file": "high-L8-fix1/strips/webgpu/L8.json"
+    },
+    {
+      "name": "L8 low",
+      "prod": {
+        "n": 3601,
+        "p95": 16.70000000001164,
+        "max": 116.69999999999709
+      },
+      "candidate": {
+        "n": 3606,
+        "p95": 16.799999999995634,
+        "max": 33.400000000001455
+      },
+      "pass": true,
+      "file": "low-L8-fix1/strips/webgpu/L8.json"
+    },
+    {
+      "name": "L8 low",
+      "prod": {
+        "n": 3607,
+        "p95": 16.70000000001164,
+        "max": 33.29999999999927
+      },
+      "candidate": {
+        "n": 3605,
+        "p95": 16.70000000001164,
+        "max": 33.399999999999636
+      },
+      "pass": true,
+      "file": "low-L8-fix2/strips/webgpu/L8.json"
+    }
+  ],
+  "pass": true
+}
