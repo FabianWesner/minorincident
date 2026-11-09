@@ -163,7 +163,7 @@ export class LevelSixSubway {
     this.s.spawnRefusals??={cap:0,offscreen:0,snap:0};
     for(let i=0;i<n;i++){
       let occupied=ai.director.count+ai.director.pendingTurns;
-      // Reserve the twelve authored side arrivals even while defending the shelter.
+      // Reserve the authored side arrivals even while defending the shelter.
       // Downed infected retain their pool slots while waiting to recover.
       // An announced maintenance cohort owns its own reserved slots. Count the
       // other announced cohorts here, but do not reserve this cohort against
@@ -183,7 +183,10 @@ export class LevelSixSubway {
       const candidates=(wave<=2?[requested,1-requested,...[2,3,4,5,6,7].map((_,j)=>2+(j+requested)%6)]:[requested]).filter(index=>!(this.s.entries??[]).some(e=>e.door===index&&e.closedAt&&!e.brokenAt));
       if(!candidates.length){this.s.spawnRefusals.hatch=(this.s.spawnRefusals.hatch??0)+1;continue;}
       // Both tunnel walls emit inward. The old fixed -Z offset put north-side arrivals in the unbuilt void.
-      const mouth=(index:number,breachOffset=20)=>{const base=l6Doors[index];return {x:base.x+(i%2)*.8,z:base.z+(wave===1?breachOffset:index>1&&base.z<l6.tunnel.z?1.4:-1.4)};};
+      const mouth=(index:number,breachOffset=20)=>{const base=l6Doors[index];
+        const rank=wave===4?this.s.spawnLog.filter(entry=>entry.wave===4&&entry.door===requested).length%2:0;
+        const inward=wave===4?1.4+rank*1.4:1.4;
+        return {x:base.x+(wave===4?[-3,3][rank]:(i%2)*.8),z:base.z+(wave===1?breachOffset:index>1&&base.z<l6.tunnel.z?inward:-inward)};};
       let door:number|undefined,at:Point|undefined,snapped=false;
       for(const index of candidates){
         for(const offset of wave===1?[20,14,9]:[20]){
@@ -195,7 +198,7 @@ export class LevelSixSubway {
       }
       if(door===undefined||!at){if(snapped)this.s.spawnRefusals.offscreen++;else this.s.spawnRefusals.snap++;continue;}
       const model=balancedCrowdModel(l6BreachModels,ai.active.filter(e=>e.health.current>0&&!e.hidden&&!e.infected?.hidden).map(e=>({model:e.appearance?.asset??e.infected!.variant,x:e.transform.x,z:e.transform.z})),at,w.entities.size);
-      // Each shelter breach includes an armored or shielded responder. Without
+      // Each shelter breach includes one catalog heavy. Without
       // that front member, sustained fire erased the entire second cohort
       // before it could engage. Keep the same finite cohort and cap slots.
       // Temporarily release the active cohort's own reserved slots while its
@@ -205,15 +208,16 @@ export class LevelSixSubway {
       if (currentEntry) ai.director.reserved = Math.max(0, held - currentEntry.remaining);
       // A catalog armored front member covers each hatch cohort against
       // the carried MG; its visible role and stats agree in every level.
-      const hatchFront = wave === 4 && !this.s.spawnLog.some(entry=>entry.wave===4&&entry.door===requested);
-      const armored = wave === 1 && i === 1 || wave === 2 && !this.s.spawnLog.some(entry=>entry.wave===2)
+      const hatchMembers = this.s.spawnLog.filter(entry=>entry.wave===4&&entry.door===requested).length;
+      const hatchFront = wave === 4 && hatchMembers === 0;
+      const front = wave === 1 && i === 1 || wave === 2 && !this.s.spawnLog.some(entry=>entry.wave===2)
         || hatchFront;
-      // Shelter breach two retains a riot; hatches use actual armored actors.
+      // Shelter breach two retains a riot; hatch fronts use actual armored actors.
       let id:number;
       try {
-        id=armored?ai.spawn(wave===1||hatchFront?'infected.armored':'infected.riot',at):o.spawnPedestrian(at,{model});
+        id=front?ai.spawn(wave===1||hatchFront?'infected.armored':'infected.riot',at):o.spawnPedestrian(at,{model});
         const e=w.entities.get(id)!;
-        if(!armored)o.turnNow(e);
+        if(!front)o.turnNow(e);
       }
       finally { ai.director.reserved = held; }
       const e=w.entities.get(id)!;

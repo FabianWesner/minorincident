@@ -171,7 +171,8 @@ export class CrowdView extends Group {
     // Their unused default batch need not delay the level's loading card.
     if (this.world.scenario === 'L4') for (const model of [...l4InfectedArchetypes.filter(id => id !== 'infected.sprinter'), ...l4InfectedLooks, ...l4FirefighterLooks]) l1Roles.add(model);
     // Register the later shielded subway responder in the streamed cast plan.
-    if (this.world.scenario === 'L6') l1Roles.add('infected.riot');
+    if (this.world.scenario === 'L5') l1Roles.add('infected.butcher');
+    if (this.world.scenario === 'L6') for (const role of ['infected.riot', 'infected.armored']) l1Roles.add(role);
     // Ordinary and turned pedestrians keep their CivilianCrowd batches (keepsLook
     // below). Only explicit infected model overrides need this view's NPC assets.
     for (const species of animals) { l1Roles.add(`healthy.${species}`); l1Roles.add(`infected.${species}`); }
