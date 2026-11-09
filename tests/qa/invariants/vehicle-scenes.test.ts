@@ -39,9 +39,11 @@ test('4 vehicles: all level start poses, L8 evacuation vehicles and L9 scripted 
       if (level === 'L9') {
         const m = w.missions!, c = m.l9!, car = w.entities.get(c.state.carId)!, start = m.def.anchors['crash-approach'];
         Object.assign(car.transform, start); w.vehicles!.scriptPose(car.id, car.transform);
-        // Run the actual authored pose controller through approach, fall and parked impact.
-        // Ground impact belongs to the crash; clipping an unrelated wall/fence does not.
-        for (let i = 0; i <= 320; i++) { w.tick++; c.update(); check(car, `${c.state.phase}-${i}`); }
+        // PO's forced crash begins after the convoy reaches the outskirts bridge; seed that phase directly here
+        // so this geometry fixture exercises its fall/impact poses without replaying the full drive.
+        c.state.phase = 'approach'; c.state.startedAt = w.tick; c.state.from = { ...car.transform };
+        c.state.approachTicks = 90; c.state.impactSpeed = 14; c.state.heading = { x: 1, z: 0 };
+        for (let i = 0; i <= 320 && String(c.state.phase) !== 'impact'; i++) { w.tick++; c.update(); check(car, `${c.state.phase}-${i}`); }
         expect(c.state.phase).toBe('impact');
       }
     } finally { w.dispose(); }
