@@ -43,7 +43,7 @@ export class LevelSevenBot {
     if (!pickup && this.waypoint < this.route.length - 1 && distance(p.transform, goal) > 10 && followers.some(r => { const e = w.entities.get(r.id); return e && distance(e.transform, p.transform) > limit; })) f.move = { x: 0, z: 0 };
     // Clear a firing lane instead of running into a crowd or waiting inside
     // its bites. Reuse the same connected six-metre dodge as the war bot.
-    if (!pickup && this.profile !== 'evade-only') {
+    if (!pickup && followers.length && this.profile !== 'evade-only') {
       if (this.detour && (w.tick >= this.detour.until || distance(p.transform, this.detour) < .8)) this.detour = null;
       const alpha = enemies.find(e => e.archetype === 'infected.alpha' && e.infected?.specialAttack?.stage === 'telegraph' && distance(e.transform, p.transform) < 14);
       if (!this.detour && (alpha || enemies[0] && distance(enemies[0].transform, p.transform) < 6)) {

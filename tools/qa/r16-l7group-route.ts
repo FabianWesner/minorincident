@@ -52,6 +52,7 @@ for (const seed of seeds) {
           followers: w.l7Encounters!.state.roster.map(r => { const e = w.entities.get(r.id)!; return { id: r.id, status: r.status, hp: e.health.current, at: { ...e.transform }, speed: e.motion?.speed, hidden: e.hidden, passengerOf: e.passengerOf, blockedBy: w.solids.blockingBody(e.id)?.id }; }),
           threats: w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 20).map(e => ({ id: e.id, type: e.archetype, hp: e.health.current, at: { ...e.transform }, state: e.infected?.state })),
         });
+        if (w.tick % 600 === 0) writeFileSync(`${out}/${tag}-${tier}-${seed}-progress.json`, JSON.stringify(samples.at(-1)) + '\n');
       };
     },
     beforeDispose: w => {
