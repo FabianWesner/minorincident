@@ -228,7 +228,7 @@ export class LevelEightZoo {
     }
     const elephantArena = s.arenas.find(a => a.id === 'elephant');
     const elephantDefeated = elephantArena?.phase === 3;
-    if (elephantArena && elephantArena.phase > 0 && (elephantDefeated || elephant && hale && distance(elephant.transform, hale.transform) < 6) && !this.mission.state.states['hale-keys'] && hale?.civilian && hale.health.current > 0) {
+    if (elephantArena && elephantArena.phase > 0 && (elephantDefeated || elephant && hale && distance(hale.transform, this.door()) < 2.5 && distance(elephant.transform, hale.transform) < 6) && !this.mission.state.states['hale-keys'] && hale?.civilian && hale.health.current > 0) {
       this.mission.setState('hale-keys', true); this.mission.radio('L8.hale-dying');
       hale.civilian.story = { clip: 'npc-give', start: t - 24 };
       hale.civilian.knockedUntil = t + 120;

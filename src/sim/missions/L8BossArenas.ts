@@ -117,10 +117,12 @@ export class L8BossArenas {
         if (elephant?.emerging && w.tick - arena.startedAt >= 60) elephant.emerging = false;
       }
       const provoked = live.some(e => e.infected!.provoked?.id === 1 && (e.infected!.provoked?.until ?? 0) > w.tick);
+      const hale = w.entities.get(this.mission.l8!.state.haleId);
+      const finaleReady = arena.id !== 'elephant' || !hale || hale.health.current <= 0 || distance(hale.transform, this.mission.l8!.door()) < 2.5;
       if (arena.phase === 0 && arena.ids.every(id => (w.entities.get(id)?.health.current ?? 0) <= 0)) {
         arena.phase = 3; arena.endedAt = w.tick; this.signal(arena, 'cleared'); continue;
       }
-      if (arena.phase === 0 && (routeOpen || provoked) && live.length && (distance(player.transform, def.entry) < 12 || provoked)) {
+      if (arena.phase === 0 && finaleReady && (routeOpen || provoked) && live.length && (distance(player.transform, def.entry) < 12 || provoked)) {
         arena.phase = 1; arena.startedAt = w.tick; arena.nextAt = w.tick + 90;
         if (arena.id === 'elephant') {
           // The old elephant breaks into the vehicle yard for the final stand;
