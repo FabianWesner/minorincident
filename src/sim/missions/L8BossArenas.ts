@@ -27,9 +27,17 @@ export class L8BossArenas {
       const first = w.entities.get(ids[0])?.transform ?? def.centre;
       const originalCount = ids.length;
       for (let i = ids.length; i < def.count; i++) {
-        const at = requireClearPoint(w, { x: first.x + (i - originalCount + 1) * 1.3, z: first.z }, .5, 10, `l8.${def.id}.healthy`);
-        const to = requireClearPoint(w, { x: at.x + 1.5, z: at.z }, .5, 4, `l8.${def.id}.routine`);
-        const id = civilians.spawn('cashier', at, { zooAnimal: def.id === 'lion' ? 'lioness' : def.id, waypoints: [at, to] });
+        const offset = i - originalCount + 1;
+        const at = def.id === 'monkey'
+          ? requireClearPoint(w, { x: -17 + (offset % 3) * 2.6, z: 23 + Math.floor(offset / 3) * 2.4 }, .5, 3, `l8.${def.id}.healthy`)
+          : requireClearPoint(w, { x: first.x + offset * 1.3, z: first.z }, .5, 10, `l8.${def.id}.healthy`);
+        const to = def.id === 'monkey' ? null : requireClearPoint(w, { x: at.x + 1.5, z: at.z }, .5, 4, `l8.${def.id}.routine`);
+        // Healthy monkeys use individual compact loops; the arena controller
+        // takes over as soon as they turn, preserving the monkey-pack fight.
+        const waypoints = def.id === 'monkey'
+          ? [0, 1, 2, 3].map(n => ({ x: -18 + ((offset * 3 + n * 5) % 8), z: 22 + ((offset * 5 + n * 3) % 9) }))
+          : [at, to!];
+        const id = civilians.spawn('cashier', at, { zooAnimal: def.id === 'lion' ? 'lioness' : def.id, waypoints });
         ids.push(id); zoo.state.animals.push(id);
       }
       this.state.push({ id: def.id, ids, carrier: 0, phase: 0, startedAt: 0, endedAt: 0, nextAt: 0, cycle: 0, wallHits: 0, rocket: 0, grabs: 0, counters: 0 });

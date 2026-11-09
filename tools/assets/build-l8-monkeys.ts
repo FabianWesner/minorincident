@@ -1,7 +1,6 @@
 /** Small tailed primates on the shipped primate skeleton. No new rig, animation atlas or third-party model. */
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync } from 'node:fs';
 import { assetIO } from './io';
-import type { AssetDef } from '../../src/assets/types';
 const io = await assetIO();
 for (const healthy of [true, false]) {
   const id = healthy ? 'amb.monkey' : 'inf.monkey', base = healthy ? 'amb.gorilla' : 'inf.gorilla';
@@ -10,10 +9,31 @@ for (const healthy of [true, false]) {
     const body = root.listNodes().find(n => n.getName() === 'skin_body')!, p = body.getMesh()!.listPrimitives()[0];
     const hip = body.getSkin()!.listJoints().findIndex(joint => joint.getName() === 'hip');
     if (hip < 0) throw new Error(`${base}: missing hip joint for the tail`);
+    // The gorilla's deep torso and heavy forelimbs survive an overall scale
+    // change and still read as a blue gorilla at the isometric camera. Keep the
+    // existing rig/owners, but narrow each weighted limb around its own centre
+    // and give the head's front (the +X muzzle) a little more definition.
+    const positions = p.getAttribute('POSITION')!.getArray()!, owners = p.getAttribute('_CROWD_PART')!.getArray()!;
+    const centres = new Map<number, [number, number, number, number]>();
+    for (let i = 0; i < owners.length; i++) {
+      const part = owners[i], c = centres.get(part) ?? [0, 0, 0, 0];
+      for (let axis = 0; axis < 3; axis++) c[axis] += positions[i * 3 + axis]; c[3]++;
+      centres.set(part, c);
+    }
+    for (let i = 0; i < owners.length; i++) {
+      const part = owners[i], c = centres.get(part)!; let x = positions[i * 3], z = positions[i * 3 + 2]; const y = positions[i * 3 + 1];
+      if (part >= 4 && part <= 15) { x = c[0] / c[3] + (x - c[0] / c[3]) * .84; z = c[2] / c[3] + (z - c[2] / c[3]) * .72; }
+      if (part === 3 && x > c[0] / c[3]) x = c[0] / c[3] + (x - c[0] / c[3]) * 1.12;
+      positions[i * 3] = x; positions[i * 3 + 1] = y; positions[i * 3 + 2] = z;
+    }
+    // The healthy fur gets a warm brown shift from the gorilla's cool blue
+    // base; infected monkeys retain the source atlas and its wound treatment.
+    if (healthy) for (const material of root.listMaterials()) if (material.getName() === 'tex_baseColor') material.setBaseColorFactor([1, .84, .68, 1]);
     const count = p.getAttribute('POSITION')!.getCount(), tail: number[][] = [], normals: number[][] = [], indices: number[] = [];
     const rings = lod === 0 ? 14 : lod === 1 ? 10 : 6, sides = 6;
     for (let j = 0; j <= rings; j++) {
-      const t = j / rings, x = -.72 - 1.7 * t, y = .86 + 1.18 * Math.sin(t * Math.PI * .68), radius = .09 * (1 - .86 * t);
+      const t = j / rings, curl = t > .72 ? (t - .72) / .28 * Math.PI : 0;
+      const x = -.72 - 1.55 * t + (curl ? .55 * Math.sin(curl) : 0), y = .86 + 1.18 * Math.sin(t * Math.PI * .68) + (curl ? .42 * Math.sin(curl) : 0), radius = .09 * (1 - .86 * t);
       for (let k = 0; k < sides; k++) {
         const a = k * Math.PI * 2 / sides;
         tail.push([x, y + Math.cos(a) * radius, Math.sin(a) * radius]); normals.push([0, Math.cos(a), Math.sin(a)]);
@@ -46,7 +66,7 @@ for (const healthy of [true, false]) {
     await io.write(`public/assets/models/skinned/${id}.lod${lod}${quality}.glb`, d);
   }
   mkdirSync(`assets/${id}`, { recursive: true });
-  writeFileSync(`assets/${id}/notes.md`, `# ${id}\n\nDerived from the shipped ${base} skin at 55% scale, with a long hip-skinned tail. Keeps the reviewed primate joints and motion clips; healthy/infected atlases preserve the existing eyes and wound distinction. Rebuild with \`node --import tsx tools/assets/build-l8-monkeys.ts\`. Arena leader is enlarged at runtime. Browser visual QA remains pending.\n`);
+  writeFileSync(`assets/${id}/notes.md`, `# ${id}\n\nDerived from the shipped ${base} skin at 55% scale, with slimmer weighted limbs, a more defined forward-facing head and a curled hip-skinned tail. Keeps the reviewed primate joints and motion clips; healthy/infected atlases preserve the existing eyes and wound distinction. Rebuild with \`node --import tsx tools/assets/build-l8-monkeys.ts\`. Arena leader is enlarged at runtime. Browser visual QA remains pending.\n`);
 }
 // Lioness: reduce the welded neck mane on the same feline skeleton; face, teeth and eye paint stay intact.
 for (const healthy of [true, false]) {
@@ -66,19 +86,3 @@ for (const healthy of [true, false]) {
   mkdirSync(`assets/${id}`, { recursive: true });
   writeFileSync(`assets/${id}/notes.md`, `# ${id}\n\nLioness derivative of ${base}, on the same rig and atlas. Reduces the broad neck mane to a close neck silhouette. Rebuild with node --import tsx tools/assets/build-l8-monkeys.ts. Browser visual QA remains pending.\n`);
 }
-const path = 'src/assets/manifest.json', manifest = JSON.parse(readFileSync(path, 'utf8')) as AssetDef[];
-for (const healthy of [true, false]) {
-  const id = healthy ? 'amb.monkey' : 'inf.monkey', base = structuredClone(manifest.find(a => a.id === (healthy ? 'amb.gorilla' : 'inf.gorilla'))!);
-  base.id = id; base.status = 'integrated'; delete base.script; delete base.sourceGlb;
-  base.glb = `public/assets/models/skinned/${id}.lod0.glb`; base.lods = { lod1: `public/assets/models/skinned/${id}.lod1.glb`, lod2: `public/assets/models/skinned/${id}.lod2.glb` };
-  base.dimensions = { x: 1.95, y: 1.2, z: 1.1, tolerance: .35 }; base.budget.triangles += 250;
-  if (base.authoredLodTriangles) { base.authoredLodTriangles.lod1 += 160; base.authoredLodTriangles.lod2 += 100; }
-  const i = manifest.findIndex(a => a.id === id); if (i >= 0) manifest[i] = base; else manifest.push(base);
-}
-for (const healthy of [true, false]) {
-  const id = healthy ? 'amb.lioness' : 'inf.lioness', base = structuredClone(manifest.find(a => a.id === (healthy ? 'amb.lion' : 'inf.lion'))!);
-  base.id = id; base.status = 'integrated'; delete base.script; delete base.sourceGlb;
-  base.glb = `public/assets/models/skinned/${id}.lod0.glb`; base.lods = { lod1: `public/assets/models/skinned/${id}.lod1.glb`, lod2: `public/assets/models/skinned/${id}.lod2.glb` };
-  const i = manifest.findIndex(a => a.id === id); if (i >= 0) manifest[i] = base; else manifest.push(base);
-}
-writeFileSync(path, JSON.stringify(manifest, null, 2) + '\n');

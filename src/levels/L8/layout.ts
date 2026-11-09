@@ -21,6 +21,15 @@ export function levelEightLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
       layout.placements.push({ id, assetId, position: [x, y, z], yaw, scale, minTier: 0, maxTier: 6, lightGroup: layout.lightGroups[0]?.id ?? 'zoo', allowRoad: true,
         visualAabb: { min: [x - hx, y, z - hz], max: [x + hx, y + dim.y * scale[1], z + hz] }, ...(destruction ? { destruction } : {}) });
     };
+    // A dedicated closed primate yard sits behind the house, away from the
+    // public tour path. Fixed fence panels preserve the healthy habitat.
+    const fencePanels: [number, number, number][] = [];
+    for (let x = -18.81; x <= -11.67; x += 2.38) { fencePanels.push([x, 20, 0], [x, 31.9, 0]); }
+    for (let z = 21.19; z <= 30.71; z += 2.38) { fencePanels.push([-20, z, Math.PI / 2], [-10.48, z, Math.PI / 2]); }
+    for (const [i, [x, z, yaw]] of fencePanels.entries()) {
+      add(`l8-primate-fence-${i}`, 'prop.crowd-fence', x, z, [1, 1, 1], yaw);
+      layout.placements.at(-1)!.fixed = true;
+    }
     for (const [i, [x, z]] of [[55, -28], [65, -28], [55, -38], [65, -38]].entries()) add(`l8-gorilla-pillar-${i}`, 'prop.cure-garden-wall', x, z, [.25, 1.55, 1.6], 0, { class: 'pillar' });
     for (const [i, [x, z]] of [[59, -29], [64, -35], [55, -34], [61, -40]].entries()) add(`l8-gorilla-throw-${i}`, 'prop.bench', x, z);
     for (let i = 0; i < 3; i++) add(`l8-gorilla-light-${i}`, 'prop.folding-chair', 58 + i * 2, -31);
