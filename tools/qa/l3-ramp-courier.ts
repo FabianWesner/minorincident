@@ -65,7 +65,7 @@ try {
         // Follow the complete authored S-curve rather than aiming at its upper bend.
         const points: [number, number, number][] = [...routeSetup.approach, [139, 0, 0], ...Array.from({ length: 61 }, (_, i) => highwayPoint(routeSetup.ramp, 1 - i / 60))];
         const trace: unknown[] = [];
-        let waypoint = 0, checkedEdge = false;
+        let waypoint = 0, checkedEdge = false, defences = 0;
         for (let tick = 0; tick < 1200 && waypoint < points.length; tick++) {
           const state = await session.page.evaluate(() => {
             const game = (window.__SCENE__ as unknown as { game: Game }).game;
@@ -76,6 +76,7 @@ try {
               azimuth: game.view.view.azimuth };
           });
           trace.push({ waypoint, target: points[waypoint], ...state });
+          if (state.diedAt != null) break;
           if (restore === 'death' && !checkedEdge && state.player.x >= 158.5) {
             checkedEdge = true;
             await session.page.keyboard.down('KeyA'); await session.page.keyboard.down('KeyS');
@@ -91,9 +92,18 @@ try {
             down = Math.sin(state.azimuth) * dx + Math.cos(state.azimuth) * dz, keys: string[] = [];
           if (Math.abs(right) / distance > .34) keys.push(right > 0 ? 'KeyD' : 'KeyA');
           if (Math.abs(down) / distance > .34) keys.push(down > 0 ? 'KeyS' : 'KeyW');
+          // Living infected retain ordinary contact. Fight an intercepting body
+          // with the carried axe through the real weapon key and mouse controls.
+          const defend = state.blocker && state.blocker.hp > 0 && state.blocker.archetype.startsWith('infected.');
+          if (defend) {
+            defences++;
+            const point = await session.page.evaluate(p => window.__SS__!.input.project(p, 'player'), state.blocker!.position);
+            await session.page.keyboard.press('Digit3');
+            await session.page.mouse.move(point.x, point.y); await session.page.mouse.down({ button: 'left' });
+          }
           for (const key of keys) await session.page.keyboard.down(key);
           try { await session.page.evaluate(async () => window.__SS__!.step(3)); }
-          finally { for (const key of keys) await session.page.keyboard.up(key); }
+          finally { for (const key of keys) await session.page.keyboard.up(key); if (defend) await session.page.mouse.up({ button: 'left' }); }
         }
         const final = await session.page.evaluate(() => {
           const game = (window.__SCENE__ as unknown as { game: Game }).game;
@@ -109,12 +119,12 @@ try {
         }
         const file = `${out}/l3-ramp-top-${tier}.png`;
         if (restore === 'restart-retry') await session.screenshot(file);
-        receipts.push({ tier, restore, checkpoint: 'segment-3b', setup: { ...setup, player: routeSetup.player }, reachedTop: waypoint === points.length, final, screenshot: restore === 'restart-retry' ? file : undefined, consoleErrors: session.errors });
+        receipts.push({ tier, restore, checkpoint: 'segment-3b', setup: { ...setup, player: routeSetup.player }, reachedTop: waypoint === points.length, defences, final, screenshot: restore === 'restart-retry' ? file : undefined, consoleErrors: session.errors });
       }
     } finally { await session.close(); }
   }
 } finally {
-  if (receipts.length) writeFileSync(`${out}/receipt.json`, JSON.stringify({ method: 'The native skilled input policy first reaches the real seed 1 segment-3b snapshot, then stops. Trigger production death/respawn, then the actual pause Restart level and mission Retry buttons; walk the full S-ramp with production keyboard WASD. No teleport, cheats, or movement override. One settled top-of-ramp capture per quality tier.', renderer: process.platform === 'darwin' ? 'pooled headless WebGL2/Metal' : 'remote headless WebGL2/SwiftShader', runs: receipts }, null, 2) + '\n');
+  if (receipts.length) writeFileSync(`${out}/receipt.json`, JSON.stringify({ method: 'The native skilled input policy first reaches the real seed 1 segment-3b snapshot, then stops. Trigger production death/respawn, then the actual pause Restart level and mission Retry buttons; walk the full S-ramp with production keyboard WASD. Use Digit3 and the left mouse button for the carried axe only when a living infected intercepts. No teleport, cheats, or movement override. One settled top-of-ramp capture per quality tier.', renderer: process.platform === 'darwin' ? 'pooled headless WebGL2/Metal' : 'remote headless WebGL2/SwiftShader', runs: receipts }, null, 2) + '\n');
   stopServer();
 }
 console.log(JSON.stringify(receipts, null, 2));
