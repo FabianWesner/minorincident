@@ -204,7 +204,8 @@ test('escort: shared combat pace, follows through a maze, a 2 s stand revives to
   const launcher = [...w.entities.iterate()].find(e => e.pickup && 'actionId' in e.pickup && e.pickup.actionId === 'weapon.rocket-launcher')!;
   w.entities.delete(launcher.id);
   const tail = w.entities.get(w.l7Encounters!.state.roster.at(-1)!.id)!, player = w.entities.get(1)!;
-  tail.transform.x += 1;
+  Object.assign(player.transform, { x: 259, z: 15 });
+  Object.assign(tail.transform, { x: 272, z: 15 });
   const origin = { ...player.transform };
   Object.assign(player.survivor!.velocity, { x: -4.5, z: 0 });
   let target = { x: 0, z: 0 };
@@ -213,9 +214,14 @@ test('escort: shared combat pace, follows through a maze, a 2 s stand revives to
   expect(move).toHaveBeenCalled();
   const safe = { ...target };
   expect(Math.hypot(safe.x - player.transform.x, safe.z - player.transform.z)).toBeGreaterThan(2);
-  expect(w.infected!.nav.clear(safe.x, safe.z, .35)).toBe(true);
-  Object.assign(player.transform, { x: 270.307, z: 14.881 });
-  Object.assign(player.survivor!.velocity, { x: -2.5, z: 3.75 });
+  expect(w.infected!.nav.visible(player.transform, safe, .35)).toBe(true);
+  const blocked = Array.from({ length: 16 }, (_, i) => ({ x: Math.cos(i * Math.PI / 8), z: Math.sin(i * Math.PI / 8) })).find(heading => {
+    const at = formationSlot(player.transform, heading, tail.civilian!.survivor!.slot);
+    return !w.infected!.nav.clear(at.x, at.z, .35) || !w.infected!.nav.visible(player.transform, at, .35);
+  });
+  expect(blocked).toBeDefined();
+  player.transform.x--;
+  Object.assign(player.survivor!.velocity, { x: blocked!.x * 4.5, z: blocked!.z * 4.5 });
   expect(Math.hypot(tail.transform.x - player.transform.x, tail.transform.z - player.transform.z)).toBeLessThan(18);
   w.l7Encounters!.follower(tail);
   const carried = { x: safe.x + player.transform.x - origin.x, z: safe.z + player.transform.z - origin.z };

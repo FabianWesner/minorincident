@@ -301,7 +301,7 @@ export class LevelSevenEncounters {
     const ahead = w.missions!.state.steps.departure?.status !== 'active' || Math.hypot(v.x, v.z) <= .8 || (goal.x - e.transform.x) * v.x + (goal.z - e.transform.z) * v.z >= 0;
     let target: Point;
     if (w.missions!.state.steps.departure?.status === 'active') target = nav.clear(goal.x, goal.z, .35) ? goal : snapToClear(w, goal, .35);
-    else if (Math.hypot(v.x, v.z) > .8 && ahead && nav.clear(goal.x, goal.z, .35) && nav.visible(e.transform, goal, .35) && nav.visible(goal, p.transform, .35)) {
+    else if (Math.hypot(v.x, v.z) > .8 && ahead && nav.clear(goal.x, goal.z, .35) && nav.visible(goal, p.transform, .35)) {
       target = goal; this.formationOffsets.set(e.id, { x: goal.x - p.transform.x, z: goal.z - p.transform.z });
     } else {
       // A short courier dodge can swing a distant slot through a frontage.
@@ -310,7 +310,7 @@ export class LevelSevenEncounters {
       // retains the walking formation instead of rotating it with her weapon.
       const offset = this.formationOffsets.get(e.id);
       const carried = offset && { x: p.transform.x + offset.x, z: p.transform.z + offset.z };
-      target = carried && Math.hypot(offset!.x, offset!.z) <= l7FollowerRangeM && nav.clear(carried.x, carried.z, .35) ? carried : p.transform;
+      target = carried && Math.hypot(offset!.x, offset!.z) <= l7FollowerRangeM && nav.clear(carried.x, carried.z, .35) && nav.visible(carried, p.transform, .35) ? carried : p.transform;
     }
     if (d > formationBack(slot) + 10 && w.tick >= this.state.waitAt) {
       this.state.waitAt = w.tick + 300;
