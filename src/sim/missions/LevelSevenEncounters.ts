@@ -29,6 +29,7 @@ export class LevelSevenEncounters {
   private readonly seen = new Set<number>();
   private readonly waypoint = { x: 0, z: 0 };
   private readonly approaches = new Map<number, { x: number; z: number; at: number; around?: Point[] }>();
+  private readonly formationTargets = new Map<number, Point>();
   private readonly pocketRoutes = new Map<number, { revision: number; points: Point[] }>();
   private corpseRoutes?: { source: NavGrid; revision: number; bodies: string; nav: NavGrid };
   private routeTick = -1;
@@ -117,6 +118,7 @@ export class LevelSevenEncounters {
         : source?.civilian?.l1?.walkSpeed === 1.4);
       c.survivor = { key, mode: 'follow', slot, leader: 1, cover: false, ...(source ? { injured } : {}), waitAt: 0, foundAt: w.tick };
       this.state.roster.push({ id: e.id, key, injured, status: 'following', passed: false });
+      this.formationTargets.set(e.id, { x: at.x, z: at.z });
       w.solids.admit(e, 'l7.roster.arrival');
     }
     // Residents are already standing in the city when the level becomes
@@ -295,9 +297,16 @@ export class LevelSevenEncounters {
     // Keep followers on their individual slots when the leader turns. Falling
     // back to the leader position sends the whole formation to one crowded point.
     const ahead = w.missions!.state.steps.departure?.status !== 'active' || Math.hypot(v.x, v.z) <= .8 || (goal.x - e.transform.x) * v.x + (goal.z - e.transform.z) * v.z >= 0;
-    const target = w.missions!.state.steps.departure?.status === 'active'
-      ? nav.clear(goal.x, goal.z, .35) ? goal : snapToClear(w, goal, .35)
-      : ahead && nav.clear(goal.x, goal.z, .35) && nav.visible(e.transform, goal, .35) && nav.visible(goal, p.transform, .35) ? goal : p.transform;
+    let target: Point;
+    if (w.missions!.state.steps.departure?.status === 'active') target = nav.clear(goal.x, goal.z, .35) ? goal : snapToClear(w, goal, .35);
+    else if (ahead && nav.clear(goal.x, goal.z, .35) && nav.visible(e.transform, goal, .35) && nav.visible(goal, p.transform, .35)) {
+      target = goal; this.formationTargets.set(e.id, { x: goal.x, z: goal.z });
+    } else {
+      // A short courier dodge can swing a distant slot through a frontage.
+      // Keep its last clear place instead of gathering everyone on the courier.
+      const previous = this.formationTargets.get(e.id);
+      target = previous && distance(previous, p.transform) <= l7FollowerRangeM && nav.clear(previous.x, previous.z, .35) ? previous : p.transform;
+    }
     if (d > formationBack(slot) + 10 && w.tick >= this.state.waitAt) {
       this.state.waitAt = w.tick + 300;
       this.warn(e, 'wait');

@@ -198,6 +198,25 @@ test('escort: shared combat pace, follows through a maze, a 2 s stand revives to
   expect(actual).toBeGreaterThan(4.5);
   expect(follower.locomotion!.vx, 'the next steering step starts from resolved, capped motion').toBeCloseTo(actual, 8);
   expect(follower.locomotion!.ax).toBe(0);
+  // A blocked encounter slot holds its separate road position through a dodge.
+  w.missions!.state.steps.departure.status = 'pending';
+  w.missions!.state.steps.corridor.status = 'active';
+  const launcher = [...w.entities.iterate()].find(e => e.pickup && 'actionId' in e.pickup && e.pickup.actionId === 'weapon.rocket-launcher')!;
+  w.entities.delete(launcher.id);
+  const tail = w.entities.get(w.l7Encounters!.state.roster.at(-1)!.id)!, player = w.entities.get(1)!;
+  Object.assign(player.transform, { x: 273.6755, z: 14.7906 });
+  Object.assign(player.survivor!.velocity, { x: -4.5, z: 0 });
+  let target = { x: 0, z: 0 };
+  const move = vi.spyOn(w.npcs!, 'move').mockImplementation((_e, at) => { target = { x: at.x, z: at.z }; return true; });
+  w.l7Encounters!.follower(tail);
+  const safe = { ...target };
+  expect(Math.hypot(safe.x - player.transform.x, safe.z - player.transform.z)).toBeGreaterThan(2);
+  expect(w.infected!.nav.visible(player.transform, safe, .35)).toBe(true);
+  Object.assign(player.transform, { x: 270.307, z: 14.881 });
+  Object.assign(player.survivor!.velocity, { x: -2.5, z: 3.75 });
+  w.l7Encounters!.follower(tail);
+  expect(target, 'a frontage cannot recall the tail onto the courier').toEqual(safe);
+  move.mockRestore();
   }
   {
   const w = await world(), p = w.entities.get(1)!;
