@@ -25,7 +25,10 @@ for (const level of ['L1', 'L2', 'L3', 'L4', 'L5', 'L9', 'L10'] as RunnerLevel[]
     for (const object of targets) classes[object.placement.destruction!.class] = (classes[object.placement.destruction!.class] ?? 0) + 1;
     const families = [];
     for (const [family, action] of Object.entries(weapons)) {
-      destruction.restore(initial);
+      // Restore entities too: an owned fire from the preceding fixture can
+      // outlive its object's burn clock and must not ignite the next fixture.
+      mission.restore(checkpoint);
+      assert.deepEqual(destruction.snapshot(), initial, `${level}/${family}: pristine checkpoint`);
       const nav = world.districts!.nav.cells.slice();
       // One normalized 3000-damage structural contact per target exercises the
       // material response without demolishing the whole district six times.
