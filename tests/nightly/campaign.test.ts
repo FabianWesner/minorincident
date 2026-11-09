@@ -89,7 +89,8 @@ test('nightly campaign: one continuous seed-1 bot run L1 → credits with the re
     expect(save.completedLevels).toBe(10); expect(nextLevelAfter(10)).toBeNull();
     expect(save.results!.L10.time).toBe(reports[9].time);
     expect(reports[9].regions).toHaveLength(7);
-    expect(reports[9].objectiveTimeline.map(e => e.id)).toEqual(['crash', 'residential-fringe', 'industrial-area', 'military-zone', 'research-campus', 'research', 'cure', 'research-exit', 'destroyed-corridor', 'dispersal-complex', 'install', 'hold', 'mega', 'release', 'epilogue', 'credits']);
+    // PO's story-goal graph replaces the former region-as-objective IDs; all seven regions remain required above.
+    expect(reports[9].objectiveTimeline.map(e => e.id)).toEqual(['crash', 'farmstead', 'restricted-zone', 'research-hangar', 'research', 'cure', 'research-exit', 'delivery-corridor', 'dispersal-complex', 'install', 'hold', 'mega', 'release', 'epilogue', 'credits']);
   } finally {
     mkdirSync('test-results/nightly', { recursive: true });
     writeFileSync(out, JSON.stringify({ seed: 1, reports, save }, null, 2) + '\n');
