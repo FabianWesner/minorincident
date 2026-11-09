@@ -17,24 +17,26 @@ export function corpseDetour(world: SimWorld, e: EntitySnapshot, goal: Point): P
   const clearOfCorpses = (from: Point, to: Point) => bodies.every(body => {
     const x = to.x - from.x, z = to.z - from.z, length = x * x + z * z;
     const along = length ? Math.max(0, Math.min(1, ((body.transform.x - from.x) * x + (body.transform.z - from.z) * z) / length)) : 0;
-    return Math.hypot(from.x + along * x - body.transform.x, from.z + along * z - body.transform.z) >= actorRadius(e) + actorRadius(body);
+    return Math.hypot(from.x + along * x - body.transform.x, from.z + along * z - body.transform.z) >= actorRadius(e) + (e.companion ? .4 : 0) + actorRadius(body);
   });
   for (const body of bodies) {
-    const reach = actorRadius(e) + actorRadius(body), along = ((body.transform.x - e.transform.x) * dx + (body.transform.z - e.transform.z) * dz) / length2;
+    const reach = actorRadius(e) + (e.companion ? .4 : 0) + actorRadius(body), along = ((body.transform.x - e.transform.x) * dx + (body.transform.z - e.transform.z) * dz) / length2;
     if (distance(e.transform, body.transform) > reach + .75 || along <= 0 || along >= 1 || Math.hypot(e.transform.x + along * dx - body.transform.x, e.transform.z + along * dz - body.transform.z) > reach + .1) continue;
     const angle = Math.atan2(e.transform.z - body.transform.z, e.transform.x - body.transform.x);
     const candidates: { path: Point[]; length: number }[] = [];
-    for (const sign of [-1, 1]) {
+    for (const margin of [1, 3, 5, 9]) for (const sign of [-1, 1]) {
       const path: Point[] = []; let from: Point = e.transform, travelled = 0;
-      for (let step = 1; step <= 4; step++) {
-        const at = { x: body.transform.x + Math.cos(angle + sign * step * Math.PI / 4) * (reach + 1), z: body.transform.z + Math.sin(angle + sign * step * Math.PI / 4) * (reach + 1) };
+      // A body can fall across a narrow lane beside a truck. Back away along
+      // the clear radius before turning, rather than requiring a sideways
+      // first step between the body and the static obstacle.
+      const radial = { x: body.transform.x + Math.cos(angle) * (reach + margin), z: body.transform.z + Math.sin(angle) * (reach + margin) };
+      const points = [...(margin > 1 ? [radial] : []), ...Array.from({ length: 4 }, (_, i) => ({ x: body.transform.x + Math.cos(angle + sign * (i + 1) * Math.PI / 4) * (reach + margin), z: body.transform.z + Math.sin(angle + sign * (i + 1) * Math.PI / 4) * (reach + margin) }))];
+      for (const at of points) {
         const x = at.x - from.x, z = at.z - from.z, length = Math.hypot(x, z);
-        // Query a copied footprint at each proposed leg; skip its real body's
-        // current reservation, while retaining every other actor and solid.
         const probe = { ...e, transform: { ...e.transform, ...from }, contactExempt: e.id };
         if (!world.solids.clear({ ...at, y: e.transform.y }, actorRadius(e), e.id) || !world.infected!.nav.visible(from, at, actorRadius(e)) || world.solids.sweep(probe, { x: x / length, z: z / length }, length) < length - .01) break;
         path.push(at); travelled += length;
-        if (clearOfCorpses(at, goal)) { candidates.push({ path, length: travelled + distance(at, goal) }); break; }
+        if (clearOfCorpses(at, goal) && (at.x - body.transform.x) * (goal.x - body.transform.x) + (at.z - body.transform.z) * (goal.z - body.transform.z) > 0) { candidates.push({ path, length: travelled + distance(at, goal) }); break; }
         from = at;
       }
     }

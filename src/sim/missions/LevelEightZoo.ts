@@ -14,7 +14,7 @@ import { Outbreak } from '../outbreak/Outbreak';
 import { zooStaffLook } from '../../data/zooStaff';
 import { readyCarriedAlly, allyState, updateAlly } from '../outbreak/Allies';
 import { layoutHouseDoors, doorExit, emergeResident, walkResidents, type HouseEmergence } from '../outbreak/HouseEmergence';
-import { formationSlot, leaderHeading, requireClearPoint } from './missionHelpers';
+import { corpseDetour, formationSlot, leaderHeading, requireClearPoint } from './missionHelpers';
 import { L8BossArenas, type L8ArenaState } from './L8BossArenas';
 
 export interface L8ZooState {
@@ -37,6 +37,7 @@ export class LevelEightZoo {
   private rosterCache: number[] = [];
   private passengersCache: number[] = [];
   private readonly seatedPassengers = new Set<number>();
+  private readonly boardingDetours = new Map<number, { goal: Point; path: Point[]; tick: number }>();
   private readonly cacheStops: (() => void)[] = [];
   constructor(private readonly mission: Mission) {
     this.bosses = new L8BossArenas(mission);
@@ -417,13 +418,28 @@ export class LevelEightZoo {
     if (!this.boarding()) return false;
     const w = this.w, door = w.vehicles!.passengerDoor(this.state.carId);
     if (distance(e.transform, door) < .7) w.vehicles!.boardPassenger(this.state.carId, e.id);
-    else if (!this.approachBoardingSpot(e, door, 8)) w.npcs!.move(e, door, 8, e.companion!, .2);
+    else { const target = this.boardingTarget(e, door); if (!this.approachBoardingSpot(e, target, 8)) w.npcs!.move(e, target, 8, e.companion!, .2, 2400); }
     return true;
   }
   /** Newly rescued zoo residents also belong to the complete living group. */
   roster(): number[] {
     this.refreshRoster();
     return [...this.rosterCache];
+  }
+  private boardingTarget(e: EntitySnapshot, goal: Point): Point {
+    const w = this.w;
+    // Large fallen animals stay solid but do not enter the static nav grid.
+    // Retain swept detour legs so a companion cannot hold the queue against
+    // the elephant's body after winning the fight.
+    let detour = this.boardingDetours.get(e.id);
+    if (detour && (w.tick < detour.tick || Math.hypot(detour.goal.x - goal.x, detour.goal.z - goal.z) > .5)) { this.boardingDetours.delete(e.id); detour = undefined; }
+    while (detour?.path.length && Math.hypot(e.transform.x - detour.path[0].x, e.transform.z - detour.path[0].z) < .3) detour.path.shift();
+    if (!detour?.path.length) {
+      const path = corpseDetour(w, e, goal);
+      if (path) { detour = { goal: { ...goal }, path, tick: w.tick }; this.boardingDetours.set(e.id, detour); }
+      else { this.boardingDetours.delete(e.id); detour = undefined; }
+    }
+    return detour?.path[0] ?? goal;
   }
   /** The parked nav AABB encloses free space beside a rotated hull. Use the
    * canonical physical sweep for the final clear approach, without changing
@@ -530,6 +546,7 @@ export class LevelEightZoo {
         target = w.infected!.nav.clear(queue.x, queue.z, actorRadius(e)) && w.solids.clear({ ...queue, y: e.transform.y }, actorRadius(e), e.id, false) ? queue : e.transform;
       }
     }
+    if (boarding) target = this.boardingTarget(e, target);
     if (boarding && queueIndex === 0 && distance(e.transform, door) < .7) w.vehicles!.boardPassenger(s.carId, e.id);
     else if (distance(e.transform, target) > .3) {
       // The roster is healed on arrival and must keep pace through the long
