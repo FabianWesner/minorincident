@@ -88,7 +88,7 @@ export class HealthBars extends Group {
     this.fillGain.value = cityNight ? nightHealthBarGains.fill : 1;
     if (__QA_HOOKS__) this.probes.length = 0;
     for (const layer of [...this.enemyMeshes, ...this.followerMeshes]) layer.count = 0;
-    if (this.world.l7Departure?.cinematic) return;
+    if (this.world.l7Departure?.cinematic || this.world.storyLock || this.world.missions?.state.cinematic || this.world.missions?.state.epilogue) return;
     const player = this.world.entities.get(1); if (!player) return;
     let followerCount = 0;
     for (const e of this.world.entities.iterate()) if (isFollower(e)) followerCount++;

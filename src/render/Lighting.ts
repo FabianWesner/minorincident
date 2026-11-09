@@ -266,6 +266,12 @@ export class Lighting {
     this.fogColorA.value.set(p.sky).lerp(this.dawnColor.set(dawn.sky), t);
     this.field.strength.value = (p.practical ?? 0) * (1 - t); this.nightThreat.value = 1 - t;
     this.rim.value = (p.rim ?? 0) * (1 - t); this.roadLift.value = (p.roadLift ?? 0) * (1 - t);
+    const grade = this.look.nodes, values = this.look.values;
+    grade.gradeShadow.value.set(values.gradeShadow).lerp(this.dawnColor.set('#927b69'), t);
+    grade.gradeHighlight.value.set(values.gradeHighlight).lerp(this.dawnColor.set('#ffe2ad'), t);
+    grade.gradeAmount.value = values.gradeAmount * (1 - t * .55);
+    grade.gradeContrast.value = values.gradeContrast + (1.05 - values.gradeContrast) * t;
+    grade.gradeSaturation.value = values.gradeSaturation + (.9 - values.gradeSaturation) * t;
   }
   /** Reapply authored presets plus explicit live overrides; gameplay never reads these values. */
   applyLook(): void {

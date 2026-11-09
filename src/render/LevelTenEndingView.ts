@@ -6,6 +6,7 @@ import type { SimWorld } from '../sim/world/SimWorld';
 import type { Materials } from './Materials';
 import type { View } from './View';
 import { cureDust } from './CureDust';
+import { cameraFraming } from '../data/cameraFraming';
 
 type Item = [string, number, number, number?];
 const tableaux: Item[][] = [
@@ -102,17 +103,25 @@ export class LevelTenEndingView extends Group {
         view.camera.near = .1; view.camera.far = 600; view.camera.updateProjectionMatrix();
         view.cinematic({ position: [console.x + 4 - 24 * aspect, 1 + 22 * aspect, console.z + 3 + 24 * aspect], target: [console.x + 4, 1, console.z + 3] });
       } else if (console && pull > 0) {
+        const fov = cameraFraming.fovDeg + (60 - cameraFraming.fovDeg) * pull;
         // Fit the complete long L10 rectangle at every aspect ratio, with a generous margin.
         const bounds = this.world.districts!.nav, centreX = (bounds.min[0] + bounds.max[0]) / 2, centreZ = (bounds.min[1] + bounds.max[1]) / 2;
         const halfX = (bounds.max[0] - bounds.min[0]) / 2, halfZ = (bounds.max[1] - bounds.min[1]) / 2;
-        const height = Math.max(halfX / Math.max(.35, view.camera.aspect), halfZ) / Math.tan(view.camera.fov * Math.PI / 360) * 1.2;
+        // Keep a shallow oblique view; portrait looks along the long route so it
+        // uses the tall frame instead of shrinking the level into a thin ribbon.
+        const ox = view.camera.aspect < 1 ? -2.15 : -.05, oz = view.camera.aspect < 1 ? .05 : 2.15;
+        const lateral = Math.hypot(ox, oz), length = Math.hypot(1, lateral);
+        const across = (halfX * Math.abs(oz) + halfZ * Math.abs(ox)) / lateral;
+        const up = (halfX * Math.abs(ox) + halfZ * Math.abs(oz)) / (lateral * length);
+        const depth = (halfX * Math.abs(ox) + halfZ * Math.abs(oz)) / length;
+        const height = (Math.max(across / view.camera.aspect, up) / Math.tan(fov * Math.PI / 360) + depth) / length * 1.12;
         const aspect = Math.max(1, (16 / 9) / view.camera.aspect), baseHeight = 1 + 22 * aspect;
         const x = console.x + 4 + (centreX - console.x - 4) * pull, z = console.z + 3 + (centreZ - console.z - 3) * pull;
         // At kilometre heights the gameplay near plane loses the millimetre
         // separation between terrain layers. Keep depth precision on the map.
         view.camera.near = Math.max(.1, (baseHeight + height * pull) * .05);
-        view.camera.far = Math.max(600, height * 3); view.camera.updateProjectionMatrix();
-        view.cinematic({ position: [x - 24 * aspect * (1 - pull), baseHeight + height * pull, z + 24 * aspect * (1 - pull)], target: [x, 1 - pull, z] });
+        view.camera.far = Math.max(600, height * length * 6); view.camera.updateProjectionMatrix();
+        view.cinematic({ position: [x - 24 * aspect * (1 - pull) + height * ox * pull, baseHeight + height * pull, z + 24 * aspect * (1 - pull) + height * oz * pull], target: [x, 1 - pull, z], fovDeg: fov });
       }
     }
   }
