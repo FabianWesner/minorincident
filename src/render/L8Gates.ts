@@ -23,7 +23,7 @@ export class L8Gates extends Group {
       for (const y of [.65, 1.55, 2.5]) add(0, y, length, .16);
       for (let along = -length / 2; along <= length / 2; along += 1) add(along, 1.4, .12, 2.8);
     };
-    l8YardWalls.forEach((box, i) => fence(box, false, i === 2));
+    l8YardWalls.forEach((box, i) => { if (i !== 2) fence(box, false); });
     l8YardGates.forEach(box => fence(box, true));
     for (const def of l8BossArenas) fence(l8EncounterGates[def.id], true, false, def.id);
     this.mesh = new InstancedMesh(this.geometry, materials.fromColor('l8-keeper-fence', new Color('#b7a269'), 0, true), this.rods.length);

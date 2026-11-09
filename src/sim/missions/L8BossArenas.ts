@@ -10,7 +10,7 @@ import { requireClearPoint } from './missionHelpers';
 
 export interface L8ArenaState {
   id: L8BossId; ids: number[]; carrier: number; phase: 0 | 1 | 2 | 3; startedAt: number; endedAt: number;
-  nextAt: number; cycle: number; wallHits: number; wallContacts?: string[]; carrierRetryAt?: number; grabs: number; counters: number;
+  nextAt: number; cycle: number; wallHits: number; wallContacts?: string[]; breachAt?: number; carrierRetryAt?: number; grabs: number; counters: number;
   lane?: { x: number; side: 1 | -1; staging: boolean; startedAt?: number };
   track?: { x: number; z: number; vx: number; vz: number; turn: number; at: number };
 }
@@ -52,7 +52,7 @@ export class L8BossArenas {
   }
   /** Closed keeper gates sit at the far end of each enclosure, leaving the authored entry open for its fight. */
   private updateGates(): void {
-    const breached = this.state.some(a => a.id === 'elephant' && a.phase > 0);
+    const breached = this.state.some(a => a.id === 'elephant' && !!a.breachAt);
     if (this.gateStates.get('breach') !== breached) {
       this.gateStates.set('breach', breached);
       this.barrier('l8.yard-wall.2', 900812, { ...l8YardWalls[2], y: 1.5, halfY: 1.5 }, !breached);
@@ -122,17 +122,16 @@ export class L8BossArenas {
       if (arena.phase === 0 && arena.ids.every(id => (w.entities.get(id)?.health.current ?? 0) <= 0)) {
         arena.phase = 3; arena.endedAt = w.tick; this.signal(arena, 'cleared'); continue;
       }
-      if (arena.phase === 0 && finaleReady && (routeOpen || provoked) && live.length && (distance(player.transform, def.entry) < 12 || provoked)) {
+      if (arena.phase === 0 && finaleReady && (routeOpen || provoked) && live.length && (distance(player.transform, def.entry) < 12 || arena.id === 'elephant' && distance(player.transform, def.centre) < def.radius || provoked)) {
         arena.phase = 1; arena.startedAt = w.tick; arena.nextAt = w.tick + 90;
         if (arena.id === 'elephant') {
           // The old elephant breaks into the vehicle yard for the final stand;
           // preserve the turned animal's entity and health for the whole fight.
           const elephant = live[0]!;
-          const breached = w.solids.relocate(elephant, { x: 89, z: 50, y: .7 }, 'l8.elephant-wall-breach', 2);
+          const breached = w.solids.relocate(elephant, { x: 89, z: 42, y: .7 }, 'l8.elephant-wall-breach', 2);
           if (breached) {
             elephant.emerging = true; elephant.infected!.path.length = 0; elephant.infected!.goal = -1;
             elephant.transform.yaw = -Math.atan2(player.transform.z - elephant.transform.z, player.transform.x - elephant.transform.x);
-            w.events.emit({ type: 'mission.signal', tick: w.tick, name: 'l8.elephant-wall-breach', actorId: elephant.id });
             const door = this.mission.l8!.door(), dx = door.x - elephant.transform.x, dz = door.z - elephant.transform.z, d = Math.hypot(dx, dz) || 1;
             this.start(elephant, 'elephant.charge', 60, d, 1.75, { x: dx / d, z: dz / d });
             arena.nextAt = w.tick + 360;
@@ -278,7 +277,7 @@ export class L8BossArenas {
       const ready = members.every(v => !v.infected!.specialAttack && w.tick >= v.infected!.arenaBoss!.readyAt);
       const aligned = members.every(v => distance(v.transform, { x: lane.x + (v.infected!.arenaBoss!.slot - 1.5) * .95, z: goal.z }) < 1.6);
       // A straggler at a fence must not leave the rest of the herd waiting.
-      if (ready && (aligned || w.tick - (lane.startedAt ?? w.tick) >= 90)) {
+      if (ready && aligned || w.tick - (lane.startedAt ?? w.tick) >= 90) {
         lane.staging = false; arena.nextAt = w.tick + (arena.phase === 2 ? 360 : 480);
         for (const member of members) this.start(member, 'zebra.stampede', 60, 36, .9, { x: 0, z: lane.side });
       }
@@ -416,6 +415,18 @@ export class L8BossArenas {
     const range = distance(a.area, a.destination!), travelled = distance(e.transform, a.area);
     const speed = arena.id === 'elephant' ? 14 : arena.id === 'zebra' ? 15 : arena.id === 'flamingo' ? arena.phase === 2 ? 21 : 17 : 12;
     const step = Math.min(speed / 60, Math.max(0, range - travelled));
+    if (arena.id === 'elephant' && !arena.breachAt && e.transform.x > 84 && e.transform.x < 92 && e.transform.z < 46 && e.transform.z + e.combat!.radius + step >= 45.75) {
+      const wall = w.destruction?.objects.find(o => o.id === 'D-ZOO/l8-yard-north-wall');
+      if (wall) {
+        // This military wall is protected from incidental player fire until the
+        // elephant's telegraphed contact resolves through the destruction owner.
+        wall.protected = false;
+        w.destruction!.impact(wall.id, 'boss.elephant.charge', 1000);
+        arena.breachAt = w.tick; this.updateGates();
+        w.events.emit({ type: 'mission.signal', tick: w.tick, name: 'l8.elephant-wall-breach', actorId: e.id });
+      }
+    }
+
     const staticClear = w.solids.sweep(e, { x: a.area.dx, z: a.area.dz }, step, e.combat!.radius, false, false);
     let clear = w.solids.sweep(e, { x: a.area.dx, z: a.area.dz }, step, e.combat!.radius, arena.id === 'zebra' || arena.id === 'elephant' ? 'side' : false, true);
     if (arena.id === 'flamingo' && !w.infected!.nav.clear(e.transform.x + a.area.dx * clear, e.transform.z + a.area.dz * clear, e.combat!.radius)) clear = 0;
@@ -484,5 +495,5 @@ export class L8BossArenas {
     return arena ? `${l8BossArenas.find(d => d.id === arena.id)!.name} · Phase ${arena.phase}` : null;
   }
   swapBlocked(): boolean { return this.w.infected!.active.some(e => e.health.current > 0 && e.infected!.arenaBoss?.arena === 'monkey' && e.infected!.grabUntil > this.w.tick); }
-  restore(delta: number): void { this.gateStates.clear(); this.updateGates(); for (const a of this.state) { if (a.startedAt) a.startedAt += delta; if (a.endedAt) a.endedAt += delta; if (a.nextAt) a.nextAt += delta; if (a.track) a.track.at += delta; if (a.carrierRetryAt) a.carrierRetryAt += delta; if (a.lane?.startedAt !== undefined) a.lane.startedAt += delta; } }
+  restore(delta: number): void { this.gateStates.clear(); this.updateGates(); for (const a of this.state) { if (a.startedAt) a.startedAt += delta; if (a.endedAt) a.endedAt += delta; if (a.nextAt) a.nextAt += delta; if (a.track) a.track.at += delta; if (a.carrierRetryAt) a.carrierRetryAt += delta; if (a.breachAt) a.breachAt += delta; if (a.lane?.startedAt !== undefined) a.lane.startedAt += delta; } }
 }

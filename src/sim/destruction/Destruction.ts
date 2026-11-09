@@ -164,7 +164,7 @@ export class Destruction {
     this.reconcile();
   }
   /** Boss lane calls after its telegraph/contact resolves; returns whether this contact broke cover. */
-  impact(id: string, actionId: 'boss.gorilla.smash' | 'boss.mega.charge', amount: number): boolean {
+  impact(id: string, actionId: 'boss.gorilla.smash' | 'boss.mega.charge' | 'boss.elephant.charge', amount: number): boolean {
     const object=this.objects.find(o=>o.id===id); if(!object||!object.present||object.protected) return false;
     let broke=false;
     for(const [part,p] of object.parts.entries()) {

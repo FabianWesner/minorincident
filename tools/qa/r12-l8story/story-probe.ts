@@ -15,12 +15,15 @@ const animals: { id: number; species: string; healthy: boolean; closest: number 
 const lines: { id: string; text: string; tick: number }[] = [], bites: { id: number; source: number; tick: number; distance: number }[] = [];
 const turns: { id: number; tick: number; archetype: string }[] = [], forbiddenMega: { tick: number; id: number }[] = [];
 const end = { breachedAt: 0, keeperGrabbed: false, haleFallenAt: -1, driverAt: -1, departed: false, carX: 0, carZ: 0, elephantPhase: 0, alphas: 0, peak: 0, keys: [] as string[] };
+const finale: { tick: number; kind: string; haleDoorDistance?: number; wallCollapsed?: boolean; elephant?: unknown }[] = [];
 let finalState: unknown;
 const activity = new Map<number, { arena: string; x: number; z: number; idle: number; maxIdle: number; at: number }>();
 const run = await runLevel('L8', 'complete', 1, 1200, 'auto', campaign, undefined, 0, {
   quality: tier,
   beforeBegin: world => {
     const mission = world.missions!; mission.prepare(); const zoo = mission.l8!;
+    world.events.on('mission.signal', e => { if (e.type === 'mission.signal' && e.name === 'l8.elephant-wall-breach') finale.push({ tick: world.tick, kind: 'wall-breach', wallCollapsed: world.destruction!.objects.find(o => o.id === 'D-ZOO/l8-yard-north-wall')?.state.collapsed }); });
+    world.events.on('dialogue.line', e => { if (e.type === 'dialogue.line' && e.id === 'L8.hale-dying') { const h = world.entities.get(zoo.state.haleId)!; const d = zoo.door(); finale.push({ tick: world.tick, kind: 'hale-keys', haleDoorDistance: Math.hypot(h.transform.x-d.x,h.transform.z-d.z), elephant: { ...world.entities.get(zoo.state.animals[2])!.transform } }); } });
     for (const id of zoo.state.animals) {
       const e = world.entities.get(id)!;
       animals.push({ id, species: e.civilian!.zooAnimal!, healthy: e.health.current > 0 && !e.infected && !e.infection, closest: Infinity });
@@ -66,6 +69,8 @@ const run = await runLevel('L8', 'complete', 1, 1200, 'auto', campaign, undefine
 });
 const flags: string[] = [];
 if ([...activity.values()].some(row => row.maxIdle > 120)) flags.push('ENGAGED_BOSS_IDLE_OVER_2S');
+if (!finale.some(e => e.kind === 'wall-breach' && e.wallCollapsed)) flags.push('MISSING_PHYSICAL_WALL_BREACH');
+if (!finale.some(e => e.kind === 'hale-keys' && e.haleDoorDistance! < 2.5)) flags.push('HALE_NOT_AT_APC_DOOR');
 if (!run.completed) flags.push(`INCOMPLETE:${run.outcome}`);
 if (animals.length < 8 || !['lion', 'gorilla', 'elephant', 'zebra', 'flamingo'].every(species => animals.some(row => row.species === species)) || animals.some(row => !row.healthy)) flags.push('CALM_ANIMAL_CENSUS');
 if (animals.some(row => row.species !== 'monkey' && row.closest > 18)) flags.push('ANIMALS_NOT_PASSED_ON_REAL_ROUTE');
@@ -81,6 +86,6 @@ if (end.haleFallenAt < 0 || end.driverAt <= end.haleFallenAt) flags.push('DRIVER
 if (!end.departed || end.elephantPhase !== 3 || end.carX <= 116 || end.carZ < 70 || end.carZ > 80) flags.push('MISSING_ELEPHANT_GATED_ESCAPE');
 if (end.peak > (tier === 'low' ? 100 : 200) || end.alphas < 3 || end.alphas > 5) flags.push('POPULATION_BUDGET');
 mkdirSync(dirname(out), { recursive: true });
-writeFileSync(out, JSON.stringify({ ...identity, probeSha256, tier, seed: 1, flags, activity: [...activity].map(([id, row]) => ({ id, ...row })), animals, lines, bites, turns, forbiddenMega, end, run, openingAlarmTick, finalState }, null, 2) + '\n');
+writeFileSync(out, JSON.stringify({ ...identity, probeSha256, tier, seed: 1, flags, finale, activity: [...activity].map(([id, row]) => ({ id, ...row })), animals, lines, bites, turns, forbiddenMega, end, run, openingAlarmTick, finalState }, null, 2) + '\n');
 console.log(JSON.stringify({ tier, outcome: run.outcome, seconds: run.time, flags, output: out }));
 process.exitCode = flags.length ? 1 : 0;

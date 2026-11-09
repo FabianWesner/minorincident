@@ -10,6 +10,7 @@ const defaultResponse: Readonly<Record<DestructionMaterial, number>> = {
  * inherit a conservative response appropriate to their damage type. */
 export const weaponDestructionResponse: Readonly<Record<string, Partial<Record<DestructionMaterial, number>>>> = {
   'boss.gorilla.smash': { glass: 4, wood: 3, metal: 2, brick: 2, concrete: 2 },
+  'boss.elephant.charge': { glass: 4, wood: 3, metal: 2, brick: 2, concrete: 2 },
   'boss.mega.charge': { glass: 4, wood: 3, metal: 2, brick: 2, concrete: 2 },
   'weapon.bat': { glass: .08, wood: .18, metal: .02, brick: .01, concrete: .005 },
   'weapon.fire-axe': { glass: .25, wood: .8, metal: .06, brick: .025, concrete: .01 },
