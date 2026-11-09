@@ -598,7 +598,8 @@ export class CrowdView extends Group {
       // A streamed actor's static corpse pages are siblings of its living batch.
       // Warm them after preparation; warming only `mesh` leaves the first settled
       // body to compile its corpse_* palette graph during gameplay.
-      if (this.world.scenario === 'L10' || this.world.scenario === 'L7') {
+      // r22-perfqual: L8's first dead animal/Alpha linked its corpse_* graph mid-fight (a 130-230 ms frame at the first kill).
+      if (this.world.scenario === 'L10' || this.world.scenario === 'L7' || this.world.scenario === 'L8') {
         for (const page of corpsePages) {
           if (this.disposed) return;
           await this.warmBatch?.(page);
