@@ -234,6 +234,18 @@ export class L8BossArenas {
     }
     if (b.specialAttack?.move === 'gorilla.roar' && b.specialAttack.stage === 'telegraph' && b.grabHits > 0) { arena.counters++; this.recover(e, 120); return true; }
     if (b.specialAttack) { this.advanceMove(e, arena); return true; }
+    if (arena.id === 'elephant' && !this.mission.state.states['hale-keys']) {
+      const hale = w.entities.get(this.mission.l8!.state.haleId);
+      if (hale && hale.health.current > 0) {
+        const d = distance(e.transform, hale.transform);
+        // A body or prop can interrupt the breach charge. Route around it,
+        // then commit the final charge at Hale instead of abandoning this beat
+        // to chase the courier on the other side of the yard.
+        if (d > 10) this.walk(e, hale.transform, 6);
+        else this.start(e, 'elephant.charge', 54, d + 1, 1.75, { x: (hale.transform.x - e.transform.x) / (d || 1), z: (hale.transform.z - e.transform.z) / (d || 1) });
+        return true;
+      }
+    }
     if (Status.stunned(e, w.tick)) return true;
     if (w.tick < boss.readyAt) { if (arena.id === 'elephant') this.walk(e, this.predict(e, .8, arena), 5); else this.orbit(e, arena, p.transform, 3); return true; }
     if (boss.followUpThrow) { delete boss.followUpThrow; this.scavenge(e); }

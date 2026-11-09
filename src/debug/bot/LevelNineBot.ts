@@ -2,6 +2,7 @@ import { emptyInput, type InputFrame } from '../../input/InputFrame';
 import { crossing, crossingRouteLength } from '../../levels/L9/district';
 import type { Point } from '../../levels/districts/types';
 import type { SimWorld } from '../../sim/world/SimWorld';
+import { downed } from '../../sim/combat/Damage';
 import { l9Course } from '../../data/l9';
 
 /** Ordinary keyboard policy: follow a route, avoid heavy bodies, shake boarders,
@@ -66,9 +67,9 @@ export class LevelNineBot {
       const risk = (p: { x: number; z: number }) => Math.min(...humans.map(h => Math.hypot(p.x - h.x, p.z - h.z)));
       // A climbing body will bite the courier even after the hatch closes.
       // Clear those visible hull attackers before covering the walking crew.
-      const target = w.infected!.active.filter(e => !e.hidden && !e.infected?.hidden && e.health.current > 0 && e.id !== driving.megaId && Math.hypot(e.transform.x - origin.x, e.transform.z - origin.z) < 30)
+      const target = w.infected!.active.filter(e => !e.hidden && !e.infected?.hidden && (e.health.current > 0 || downed(e) && risk(e.transform) >= 8) && e.id !== driving.megaId && Math.hypot(e.transform.x - origin.x, e.transform.z - origin.z) < 30)
         .sort((a, b) => Number(b.attachedTo === car.id) - Number(a.attachedTo === car.id) || risk(a.transform) - risk(b.transform))[0];
-      if (target) { const dx = target.transform.x - origin.x, dz = target.transform.z - origin.z, length = Math.hypot(dx, dz) || 1; f.selectedWeaponKey = length < 8 ? 6 : 5; f.aim = { x: dx / length, z: dz / length }; f.aimPoint = { x: target.transform.x, z: target.transform.z }; f.aimSource = 'keyboard'; f.activeAttack = true; f.left = { down: true, held: true, up: false }; }
+      if (target) { const dx = target.transform.x - origin.x, dz = target.transform.z - origin.z, length = Math.hypot(dx, dz) || 1; f.selectedWeaponKey = length >= 8 && risk(target.transform) >= 8 ? 7 : length < 8 ? 6 : 5; f.aim = { x: dx / length, z: dz / length }; f.aimPoint = { x: target.transform.x, z: target.transform.z }; f.aimSource = 'keyboard'; f.activeAttack = true; f.left = { down: true, held: true, up: false }; }
       return f;
     }
     if (!l9.driving.holding(car.id) && car.vehicle!.speed < 1) this.blockedAt ??= w.tick; else this.blockedAt = null;

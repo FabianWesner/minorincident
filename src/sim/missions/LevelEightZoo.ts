@@ -229,7 +229,7 @@ export class LevelEightZoo {
     }
     const elephantArena = s.arenas.find(a => a.id === 'elephant');
     const elephantDefeated = elephantArena?.phase === 3;
-    if (elephantArena && elephantArena.phase > 0 && (elephantDefeated || elephant && hale && distance(hale.transform, this.door()) < 2.5 && distance(elephant.transform, hale.transform) < 6) && !this.mission.state.states['hale-keys'] && hale?.civilian && hale.health.current > 0) {
+    if (elephantArena && elephantArena.phase > 0 && elephant && hale && elephant.infected?.specialAttack?.move === 'elephant.charge' && distance(hale.transform, this.door()) < 2.5 && distance(elephant.transform, hale.transform) < 6 && !this.mission.state.states['hale-keys'] && hale?.civilian && hale.health.current > 0) {
       this.mission.setState('hale-keys', true); this.mission.radio('L8.hale-dying');
       hale.civilian.story = { clip: 'npc-give', start: t - 24 };
       hale.civilian.knockedUntil = t + 120;
@@ -273,6 +273,12 @@ export class LevelEightZoo {
   update(): void {
     const w = this.w, s = this.state, ai = w.infected!, t = w.tick;
     this.bosses.update();
+    const hale = w.entities.get(s.haleId);
+    if (this.breached && !this.mission.state.states['hale-keys'] && hale?.civilian && hale.health.current > 0 && distance(hale.transform, this.door()) > 1.8) {
+      // Hale's retreat remains physical while he fires. Repeated rifle windups
+      // must not pin him hundreds of metres behind the final door staging.
+      if (!this.approachBoardingSpot(hale, this.door(), 6)) w.npcs!.move(hale, this.door(), 6, hale.civilian, .2, 48000);
+    }
     this.story();
     let pending = 0; for (const e of w.entities.iterate()) if (e.infection && !e.infected) pending++;
     ai.director.pendingTurns = pending;
@@ -349,17 +355,20 @@ export class LevelEightZoo {
   }
   /** The existing evacuation detail covers the living column, using its shared rifle rules. */
   private escortGuards(): void {
-    if (!this.breached || this.boarding() || this.state.arenas.every(a => a.phase === 3)) return;
-    const group = this.state.roster.map(id => this.w.entities.get(id)).filter((e): e is EntitySnapshot => !!e && e.health.current > 0 && !e.infected && !e.infection);
+    if (!this.breached || this.departing()) return;
+    const group = this.state.roster.map(id => this.w.entities.get(id)).filter((e): e is EntitySnapshot => !!e && e.health.current > 0 && !e.infected && !e.infection && e.passengerOf === undefined);
     if (!group.length) return;
     const x = group.reduce((n, e) => n + e.transform.x, 0) / group.length, z = group.reduce((n, e) => n + e.transform.z, 0) / group.length;
     for (const [i, id] of this.state.guards.entries()) {
       const guard = this.w.entities.get(id), ally = guard?.civilian?.ally;
       if (!guard || guard.health.current <= 0 || !ally) continue;
       const angle = i * Math.PI / 3;
-      const desired = { x: x + Math.cos(angle) * 4, z: z + Math.sin(angle) * 4 };
-      if (ally.post && distance(ally.post, desired) < 2) continue;
-      const at = this.point(desired); ally.post = at; ally.run = at; ally.runSpeed = 6; ally.hold = true;
+      const radius = this.boarding() ? 6 : 4;
+      const desired = { x: x + Math.cos(angle) * radius, z: z + Math.sin(angle) * radius };
+      if (!ally.post || distance(ally.post, desired) >= 2) {
+        const at = this.point(desired); ally.post = at; ally.run = at; ally.runSpeed = 6; ally.hold = true;
+      }
+      if (ally.run && distance(guard.transform, ally.run) > 2) this.w.npcs!.move(guard, ally.run, 6, guard.civilian!, .3, 48000);
     }
   }
   /** L8 no longer owns a Mega Alpha reveal; L9 is its first appearance. */
