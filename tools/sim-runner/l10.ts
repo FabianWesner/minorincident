@@ -24,8 +24,11 @@ export function runTen(world: SimWorld, policy: CompletionPolicy, maxSeconds: nu
   const timings: CureRegionTiming[] = cure.regions.map(r => ({ id: r.id, seconds: 0, travelSeconds: 0, combatSeconds: 0, interactionSeconds: 0, holdSeconds: 0, epilogueSeconds: 0, otherSeconds: 0, metres: 0 }));
   let peak = 0, holdTicks = 0;
   for (let tick = 0; tick < maxSeconds * 60 && mission.state.phase !== 'result' && mission.state.phase !== 'progression'; tick++) {
+    // Match the pacing route's ordinary Retry action; death itself remains
+    // mortal and checkpoint restoration owns inventory, pursuit and position.
+    if (mission.state.phase === 'retry') { mission.restore(); continue; }
     const active = mission.def.steps.find(s => mission.state.steps[s.id].status === 'active');
-    if (!active || mission.state.phase === 'retry') break;
+    if (!active) break;
     // Keep updating through the ordinary death delay. Checkpoint respawn can
     // replace entity 1, so reacquire it instead of retaining the dead body.
     const player = world.entities.get(1)!;

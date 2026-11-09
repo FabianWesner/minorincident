@@ -44,7 +44,10 @@ try {
     }
     if (i % 300 === 0) samples.push({ tick: world.tick, phase: l9.state.phase, position: { ...car.entity.transform }, speed: car.physics.speed, durability: car.entity.health.current, hp: p.health.current,
       restart: l9.driving.state.restarted, evacuation: l9.driving.state.evacuated.length, gate: l9.driving.state.gateClosed, boarders: car.entity.vehicle!.attached.length,
-      bus: world.entities.get(l9.driving.state.busId)?.transform, busStopped: l9.driving.state.busStoppedAt });
+      bus: world.entities.get(l9.driving.state.busId)?.transform, busStopped: l9.driving.state.busStoppedAt,
+      goodbye: { at: l9.driving.state.hugAt, done: l9.driving.state.hugDone, spot: l9.driving.state.hugSpot },
+      evacuees: l9.driving.state.roster.map(id => { const e = world.entities.get(id)!; return { id, key: e.civilian?.survivor?.key, position: { ...e.transform }, hp: e.health.current, passengerOf: e.passengerOf }; }),
+      corgi: (() => { const e = [...world.entities.iterate()].find(e => e.companion); return e ? { position: { ...e.transform }, passengerOf: e.passengerOf, transitionUntil: e.companion!.transitionUntil } : null; })() });
   }
   durations.sort((a, b) => a - b);
   const collision = world.solids.snapshot(), state = l9.state, final = world.getState();

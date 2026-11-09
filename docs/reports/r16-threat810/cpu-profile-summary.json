@@ -1,0 +1,132 @@
+{
+  "method": "Node CPU sampling on low L5 passive seed 2, ordinary input policy, first 300 sim seconds, follower-only observer; excludes rendering.",
+  "sampledSeconds": 64.753987,
+  "raw": "test-results/r16-threat-profile/l5.cpuprofile",
+  "self": [
+    {
+      "function": "emit",
+      "source": "src/core/EventBus.ts",
+      "seconds": 4.251712
+    },
+    {
+      "function": "query",
+      "source": "src/sim/spatial/SpatialHash.ts",
+      "seconds": 3.671046
+    },
+    {
+      "function": "",
+      "source": "src/sim/ai/CharacterSeparation.ts",
+      "seconds": 2.282086
+    },
+    {
+      "function": "commit",
+      "source": "src/sim/world/SolidRegistry.ts",
+      "seconds": 2.133699
+    },
+    {
+      "function": "query",
+      "source": "src/sim/spatial/SpatialHash.ts",
+      "seconds": 2.004407
+    },
+    {
+      "function": "update",
+      "source": "src/sim/ai/InfectedSystem.ts",
+      "seconds": 1.330437
+    },
+    {
+      "function": "update",
+      "source": "src/sim/weather/WeatherSystem.ts",
+      "seconds": 1.239942
+    },
+    {
+      "function": "query",
+      "source": "src/sim/spatial/SpatialHash.ts",
+      "seconds": 0.979726
+    },
+    {
+      "function": "solids",
+      "source": "src/sim/world/SolidRegistry.ts",
+      "seconds": 0.910208
+    },
+    {
+      "function": "visitSolids",
+      "source": "src/sim/ai/NavGrid.ts",
+      "seconds": 0.881925
+    },
+    {
+      "function": "",
+      "source": "src/sim/world/SimWorld.ts",
+      "seconds": 0.876527
+    },
+    {
+      "function": "spacingRadius",
+      "source": "src/sim/ai/CharacterSeparation.ts",
+      "seconds": 0.870373
+    },
+    {
+      "function": "",
+      "source": "src/sim/npc/install.ts",
+      "seconds": 0.751801
+    },
+    {
+      "function": "",
+      "source": "src/sim/world/SimWorld.ts",
+      "seconds": 0.71274
+    },
+    {
+      "function": "closest",
+      "source": "src/sim/ai/Perception.ts",
+      "seconds": 0.710246
+    },
+    {
+      "function": "reachPath",
+      "source": "src/sim/ai/NavGrid.ts",
+      "seconds": 0.683406
+    },
+    {
+      "function": "",
+      "source": "src/sim/locomotion/AgentMotion.ts",
+      "seconds": 0.672967
+    },
+    {
+      "function": "steerL1",
+      "source": "src/sim/ai/InfectedSystem.ts",
+      "seconds": 0.598983
+    },
+    {
+      "function": "__name",
+      "source": "src/sim/world/SolidRegistry.ts",
+      "seconds": 0.598547
+    },
+    {
+      "function": "combatLevel",
+      "source": "src/sim/combat/height.ts",
+      "seconds": 0.580396
+    },
+    {
+      "function": "update",
+      "source": "src/sim/npc/Companion.ts",
+      "seconds": 0.554118
+    },
+    {
+      "function": "(garbage collector)",
+      "source": "",
+      "seconds": 0.531766
+    },
+    {
+      "function": "set toTemporalInstant",
+      "source": "",
+      "seconds": 0.516629
+    },
+    {
+      "function": "update",
+      "source": "src/sim/npc/Npcs.ts",
+      "seconds": 0.50982
+    },
+    {
+      "function": "runCallSync",
+      "source": "node_modules/tsx/node_modules/esbuild/lib/main.js",
+      "seconds": 0.500315
+    }
+  ]
+}

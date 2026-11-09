@@ -30,6 +30,7 @@ const campaignFor = (level: RunnerLevel, seed: number) => {
 };
 async function execute(job: StageJob): Promise<StageResult> {
   const start = performance.now(), startedAt = Date.now();
+  console.log(`[qa:threat:stage] start ${job.id}`);
   const result: StageResult = { job, seconds: 0, startedAt, endedAt: startedAt };
   try {
     if (job.kind === 'follower') result.follower = await runSeed({ ...job, tier: 'low' });
@@ -51,7 +52,11 @@ async function execute(job: StageJob): Promise<StageResult> {
         beforeDispose: world => { native.observation = observer?.finish() ?? null; if (!job.passive) native.nativeStateHash = stateHash(world.getState()); },
       });
       if (!job.passive) {
-        native.kiting = kiting;
+        native.kiting = finishKitingReceipt(kiting);
+      }
+      if (!job.passive && job.level !== 'L9') {
+        // L9 is a driving/crawl route, explicitly exempt from the on-foot
+        // kiting sample. Replaying its whole drive cannot collect that sample.
         let kitingComplete = () => false;
         try { await runLevel(job.level, 'complete', job.seed, undefined, 'auto', campaignFor(job.level, job.seed), undefined, 0, {
           quality: 'low', beforeBegin: world => { kitingComplete = installKitingPolicy(world, kiting, job.level, kitingStyle); },
@@ -79,15 +84,16 @@ export async function runStages(levels: readonly RunnerLevel[], maxWorkers: numb
     if (level === 'L5' || level === 'L7') for (const passive of [false, true]) for (const seed of [2, 3])
       jobs.push({ id: stageId(level, passive, seed), level, kind: 'follower', seed, passive });
   }
-  // Runner stage profiles: start long routes first to avoid a late passive tail.
+  // Measured redesigned-route profiles: start long jobs first, including the
+  // slower L3 third seed, so it cannot become a late tail behind short routes.
   const nativeCosts: Record<RunnerLevel, readonly [number, number]> = {
-    L1: [55, 30], L2: [65, 45], L3: [80, 15], L4: [210, 150], L5: [55, 250],
-    L6: [40, 10], L7: [45, 35], L8: [50, 65], L9: [30, 20], L10: [150, 85],
+    L1: [35, 25], L2: [55, 45], L3: [65, 15], L4: [250, 115], L5: [50, 200],
+    L6: [30, 10], L7: [40, 30], L8: [65, 40], L9: [25, 35], L10: [75, 60],
   };
   const cost = (job: StageJob) => {
-    if (job.kind === 'high-hold') return 175;
-    if (job.kind === 'l3' && job.seed > 1) return 65;
-    if (job.kind === 'follower') return job.level === 'L5' ? job.passive ? 250 : 45 : job.passive ? 25 : 35;
+    if (job.kind === 'high-hold') return 145;
+    if (job.kind === 'l3' && job.seed > 1) return job.seed === 3 ? 140 : 55;
+    if (job.kind === 'follower') return job.level === 'L5' ? job.passive ? 190 : 40 : job.passive ? 20 : 25;
     return nativeCosts[job.level][job.passive ? 1 : 0];
   };
   jobs.sort((a, b) => cost(b) - cost(a));

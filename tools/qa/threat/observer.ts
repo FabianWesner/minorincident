@@ -64,6 +64,7 @@ export interface PhaseReceipt {
 export interface FollowerWaitReceipt {
   escortTicks: number; stationaryFarTicks: number; upperBoundPercent: number | null;
   followers: { id: number; escortTicks: number; stationaryFarTicks: number }[];
+  windows?: { key: string; escortTicks: number; stationaryFarTicks: number; first?: { tick: number; playerX: number; playerZ: number; followerId: number; followerX: number; followerZ: number } }[];
 }
 /** Standing during combat is included, so this bounds actual babysitting from
  * above. Passing the bound proves the <=10% waiting-share requirement. */
@@ -189,6 +190,7 @@ export function physicalPathEntry(world: SimWorld, entity: EntitySnapshot, grid:
 
 export class ThreatObserver {
   private readonly followerWait = { escortTicks: 0, stationaryFarTicks: 0, followers: new Map<number, { escortTicks: number; stationaryFarTicks: number }>() };
+  private readonly waitWindows = new Map<string, NonNullable<FollowerWaitReceipt['windows']>[number]>();
   private readonly rows = new Map<string, Row>();
   private active: Row[] = [];
   private readonly births = new SpawnIdentities(() => { for (const row of this.active) row.spawned++; });
@@ -379,6 +381,8 @@ export class ThreatObserver {
     // infected and waiting censuses are used by the main audit, not those votes.
     if (followersOnly && w.tick % 30) return;
     let escorting = false, stationaryFar = false;
+    const windowKey = this.level === 'L8' ? w.missions!.l8!.protecting() ? 'protect' : w.vehicles!.active !== null ? 'aboard' : w.missions!.l8!.boarding() ? 'boarding' : 'escort' : this.active.map(r => r.key).join('|');
+    const window: NonNullable<FollowerWaitReceipt['windows']>[number] = this.waitWindows.get(windowKey) ?? { key: windowKey, escortTicks: 0, stationaryFarTicks: 0 };
     // Use resolved displacement: requested velocity can remain nonzero while
     // the courier is blocked or a cinematic owns movement.
     for (const e of this.entities()) {
@@ -399,6 +403,7 @@ export class ThreatObserver {
         wait.escortTicks++;
         if (leaderSpeed <= .2 && Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) > 10) {
           wait.stationaryFarTicks++; stationaryFar = true;
+          window.first ??= { tick: w.tick, playerX: player.transform.x, playerZ: player.transform.z, followerId: e.id, followerX: e.transform.x, followerZ: e.transform.z };
         }
         this.followerWait.followers.set(e.id, wait);
       }
@@ -420,6 +425,9 @@ export class ThreatObserver {
     }
     if (escorting) this.followerWait.escortTicks++;
     if (stationaryFar) this.followerWait.stationaryFarTicks++;
+    if (escorting) window.escortTicks++;
+    if (stationaryFar) window.stationaryFarTicks++;
+    this.waitWindows.set(windowKey, window);
   }
   private observePaths(): void {
     const w = this.world, player = w.entities.get(1)!, alive = this.living(), positions: Position[] = [];
@@ -474,15 +482,21 @@ export class ThreatObserver {
       const disconnected = goal === at && Math.hypot(at.x - player.transform.x, at.z - player.transform.z) > 2.5;
       const legalBarrierPath = (stretch: number) => this.level === 'L4' && !e.pendingAdmission
         && Number.isFinite(this.barrierDistance(source, e, player.transform, stretch * Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z)));
+      let boundedPath = false;
       if (Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) <= 30) {
         nearby++;
-        if ((!e.pendingAdmission || entrance || authored.length) && !disconnected && this.paths.query(source, routed, player.transform, 2.5, authored) || legalBarrierPath(2.5)) boundedReachable++;
+        boundedPath = !!((!e.pendingAdmission || entrance || authored.length) && !disconnected && this.paths.query(source, routed, player.transform, 2.5, authored) || legalBarrierPath(2.5));
+        if (boundedPath) boundedReachable++;
         else { boundedBlockedIds.push(e.id); boundedBlockedPositions.push({ identity: token, id: e.id, x: e.transform.x, z: e.transform.z, playerX: player.transform.x, playerZ: player.transform.z }); }
       }
       // L4's every-infected clause needs a continuous path at the actual body
       // radius too, rather than only A* connectivity on the narrower AI bake.
       const legalStretch = this.level === 'L4' ? 1e9 : Infinity;
-      if ((!e.pendingAdmission || entrance || authored.length) && !disconnected && this.paths.query(source, routed, goal, legalStretch, authored) || legalBarrierPath(Infinity)) reachable.add(token);
+      // A body-clear route within 2.5× direct distance already proves the
+      // unbounded route to that same destination. Reuse the witness instead
+      // of doing a second independent A* / destructible-barrier search.
+      if (boundedPath && (this.level === 'L4' || (e.combat?.radius ?? .35) <= source.clearance) && goal.x === player.transform.x && goal.z === player.transform.z
+        || (!e.pendingAdmission || entrance || authored.length) && !disconnected && this.paths.query(source, routed, goal, legalStretch, authored) || legalBarrierPath(Infinity)) reachable.add(token);
       else positions.push({ identity: token, id: e.id, x: e.transform.x, z: e.transform.z, playerX: player.transform.x, playerZ: player.transform.z });
     }
     // Geometry is sampled after the sim tick. Charge it to the phases now
@@ -511,6 +525,7 @@ export class ThreatObserver {
       ticks: this.lastTick,
       ...(this.level === 'L3' ? { l3Squad: { initial: this.initialSquad, army: this.armySquad, losses: this.world.missions!.state.l3!.lost.map(q => ({ ...q })) } } : {}),
       followerWait: {
+        windows: [...this.waitWindows.values()],
         escortTicks: this.followerWait.escortTicks, stationaryFarTicks: this.followerWait.stationaryFarTicks,
         upperBoundPercent: this.followerWait.escortTicks ? 100 * this.followerWait.stationaryFarTicks / this.followerWait.escortTicks : null,
         followers: [...this.followerWait.followers].map(([id, value]) => ({ id, ...value })),

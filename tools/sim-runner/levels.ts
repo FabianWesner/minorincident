@@ -100,7 +100,7 @@ function findDrive(t: Trigger): Extract<Trigger, { kind: 'drive' }> | undefined 
   if (t.kind === 'all' || t.kind === 'any') return t.triggers.map(findDrive).find(Boolean);
 }
 /** Inputs and ordinary Begin/Retry/Skip menu actions only; no teleport, loadout injection or cheats. */
-export async function runLevel(level: RunnerLevel, policy: CompletionPolicy, seed: number, maxSeconds = level === 'L10' ? 3600 : 1200, street: L3StreetChoice = 'auto', campaign?: CampaignSave, onComplete?: (world: SimWorld, result: MissionResult) => void, props: -4 | 0 | 4 = 0, hooks?: LevelRunHooks): Promise<LevelReport> {
+export async function runLevel(level: RunnerLevel, policy: CompletionPolicy, seed: number, maxSeconds = level === 'L10' ? 1800 : level === 'L9' ? 600 : 1200, street: L3StreetChoice = 'auto', campaign?: CampaignSave, onComplete?: (world: SimWorld, result: MissionResult) => void, props: -4 | 0 | 4 = 0, hooks?: LevelRunHooks): Promise<LevelReport> {
   const report: LevelReport = { level, policy, seed, completed: false, time: 0, deaths: 0, kills: 0, damageTaken: 0, failures: {}, objectiveTimeline: [], furthestObjective: null, activeObjectives: [], outcome: 'tick-budget', blocker: null };
   let world: SimWorld;
   try { world = await loadLevel(level, seed, campaign, props, hooks); }

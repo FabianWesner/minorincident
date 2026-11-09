@@ -14,6 +14,7 @@ import { followerPaceVerdict, type FollowerPaceSeed, type FollowerPaceVerdict } 
 import { runStages, stageId } from './threat/stageJobs';
 import type { L3SurvivalSeed } from './threat/l3SurvivalSeeds';
 import type { KitingReceipt } from './threat/kiting';
+import { provenance } from './accept/probe';
 
 export interface LevelReceipt {
   level: RunnerLevel; quality: string; definitions: ThreatObserver['definitions']; run: LevelReport | null;
@@ -31,6 +32,7 @@ export interface LevelReceipt {
 }
 export interface AuditReceipt {
   revision: string; mainRevision: string; sourceMatchesMain: boolean | null; seed: number; policy: string; tier: string;
+  sourceHash?: string; observerHash?: string;
   workers: number; seconds: number; flags: string[]; levels: LevelReceipt[];
   passivity?: { seconds: number; levels: number; matches: boolean };
 }
@@ -84,6 +86,7 @@ for (const level of selected) {
   const passiveStage = stage(stageId(level, true));
   const passiveRun = passiveStage.native?.run ?? null, passiveObservation = passiveStage.native?.observation ?? null;
   const passiveFlags: string[] = passiveStage.error ? [`AUDIT_ERROR:${passiveStage.error}`] : [];
+  if (!run?.completed) passiveFlags.push(`INCOMPLETE_NATIVE_POLICY:${run?.outcome ?? 'error'}`);
   const kiting = skilled?.kiting ?? null;
   if (!kiting) passiveFlags.push('MISSING_KITING_POLICY_RECEIPT');
   else if (kiting.kitingSeconds === 0 && level !== 'L9') passiveFlags.push('MISSING_KITING_ON_FOOT_SAMPLE');
@@ -94,7 +97,9 @@ for (const level of selected) {
   // threat potential. Interrupted windups and group grabs are real attempts.
   for (const row of observation?.phases ?? []) if (row.threat && row.attacks + row.groupAttacks === 0)
     passiveFlags.push(`${row.key}:SKILLED_ZERO_ATTACK_WINDUPS`);
-  const skilledFloors = level === 'L2' ? { step: 'bridge', rate: 2 } : level === 'L5' ? { step: 'look', rate: 3 } : level === 'L10' ? { step: 'hold', rate: 8 } : null;
+  // L10-11 explicitly measures a stationary ground policy. The skilled route
+  // uses the protected minigun platform and must survive/complete instead.
+  const skilledFloors = level === 'L2' ? { step: 'bridge', rate: 2 } : level === 'L5' ? { step: 'look', rate: 3 } : null;
   if (skilledFloors) {
     const row = observation?.phases.find(p => p.key === `step/${skilledFloors.step}`);
     if (!row || row.attacksPerMinute + row.groupAttacksPerMinute < skilledFloors.rate)
@@ -159,7 +164,7 @@ const seconds = (performance.now() - started) / 1000;
 const flags = levels.flatMap(level => level.passiveFlags.map(flag => `${level.level}/${flag}`));
 if (selected.length !== runnerLevels.length) flags.push('PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate');
 if (values.report && sourceMatchesMain !== true) flags.push('BASELINE_MAIN_SOURCE_NOT_VERIFIED');
-const receipt: AuditReceipt = { revision, mainRevision, sourceMatchesMain, seed: 1, policy: 'kiting + passive', tier: 'low', workers: maxWorkers, seconds, flags, levels };
+const receipt: AuditReceipt = { ...provenance(revision), mainRevision, sourceMatchesMain, seed: 1, policy: 'kiting + passive', tier: 'low', workers: maxWorkers, seconds, flags, levels };
 await writeFile(join(values.out!, 'audit.json'), JSON.stringify(receipt, null, 2) + '\n');
 const reportPath = values.report ?? join(values.out!, 'README.md');
 await mkdir(dirname(reportPath), { recursive: true }); await writeFile(reportPath, renderReport(receipt, !!values.report));
