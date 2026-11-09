@@ -1,0 +1,63 @@
+{
+  "method": "Read-only events from the six final mortal native traces. Attack starts and active special events are separate; an active event does not imply a successful hit.",
+  "sourceHash": "e71de80a6adca1ef8205fe67a9317b1a0f785de89047d029d41f439db07682e4",
+  "cases": [
+    {
+      "case": "low-1",
+      "alphaAttackStarts": 5,
+      "activeSpecialEvents": {
+        "alpha.roar": 3
+      }
+    },
+    {
+      "case": "low-2",
+      "alphaAttackStarts": 15,
+      "activeSpecialEvents": {
+        "alpha.roar": 2,
+        "alpha.living-missile": 1,
+        "alpha.grab-throw": 2
+      }
+    },
+    {
+      "case": "low-3",
+      "alphaAttackStarts": 11,
+      "activeSpecialEvents": {
+        "alpha.roar": 2,
+        "alpha.grab-throw": 1,
+        "alpha.living-missile": 1,
+        "alpha.charge": 1
+      }
+    },
+    {
+      "case": "high-1",
+      "alphaAttackStarts": 22,
+      "activeSpecialEvents": {
+        "alpha.roar": 1,
+        "alpha.grab-throw": 2,
+        "alpha.living-missile": 1,
+        "alpha.charge": 1,
+        "alpha.ground-slam": 1
+      }
+    },
+    {
+      "case": "high-2",
+      "alphaAttackStarts": 20,
+      "activeSpecialEvents": {
+        "alpha.roar": 1,
+        "alpha.grab-throw": 2,
+        "alpha.charge": 4,
+        "alpha.ground-slam": 1
+      }
+    },
+    {
+      "case": "high-3",
+      "alphaAttackStarts": 16,
+      "activeSpecialEvents": {
+        "alpha.roar": 1,
+        "alpha.living-missile": 1,
+        "alpha.grab-throw": 2,
+        "alpha.charge": 1
+      }
+    }
+  ]
+}

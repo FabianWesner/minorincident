@@ -1,0 +1,154 @@
+{
+  "goal": "L7 skilled completes \u22655/6 with strong Alphas",
+  "goalAchieved": true,
+  "auditedAt": "2026-11-09T05:53:07.235564+00:00",
+  "runtimeRevision": "dd370e962d094cbf64ca463b6e92c71110f0023a",
+  "sourceHash": "e71de80a6adca1ef8205fe67a9317b1a0f785de89047d029d41f439db07682e4",
+  "requirements": [
+    {
+      "requirement": "native skilled completion",
+      "result": "pass",
+      "observed": {
+        "completed": 6,
+        "required": 5,
+        "cases": 6,
+        "deaths": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "evidence": [
+        "native-final.json.gz",
+        "native-final-traces.json.gz"
+      ]
+    },
+    {
+      "requirement": "strong Alphas",
+      "result": "pass",
+      "observed": {
+        "hp": 450,
+        "alphasPerRun": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "sharedAlphaAndEncounterFilesUnchanged": true
+      },
+      "evidence": [
+        "native-final.json.gz",
+        "alpha-activity.json",
+        "source-scope.json"
+      ]
+    },
+    {
+      "requirement": "multi-direction attacks",
+      "result": "pass",
+      "observed": {
+        "overlappingApproachSectors": {
+          "streets": 5,
+          "corridor": 3,
+          "bus": 3
+        }
+      },
+      "evidence": [
+        "crossfire-final.json"
+      ]
+    },
+    {
+      "requirement": "pressure floor and passive control",
+      "result": "pass",
+      "observed": {
+        "passiveCorridorCombinedAPM": 260.7590059718744,
+        "requiredAPM": 6,
+        "mortalNoFireDeaths": 6,
+        "movingHitsPerMinute": 2.9999999999999782
+      },
+      "evidence": [
+        "pressure-final.json.gz",
+        "mortal-final.json.gz"
+      ]
+    },
+    {
+      "requirement": "other levels unchanged",
+      "result": "pass",
+      "observed": {
+        "levels": 9,
+        "stages": 25,
+        "primaryPhaseRows": 168,
+        "entireLevelReceiptsEqualExceptWallSeconds": true,
+        "nativeHashesEqual": true
+      },
+      "evidence": [
+        "other-levels-parity.json",
+        "other-levels-before.json.gz",
+        "other-levels-after.json.gz"
+      ]
+    },
+    {
+      "requirement": "native R14 bisection",
+      "result": "pass",
+      "observed": {
+        "beforeAlphaComplete": 0,
+        "afterAlphaComplete": 0,
+        "afterMovingComplete": 2,
+        "mainComplete": 2,
+        "casesPerBoundary": 6
+      },
+      "evidence": [
+        "native-before-alphas.json.gz",
+        "native-after-alphas.json.gz",
+        "native-after-moving.json.gz",
+        "native-main.json.gz",
+        "spawn-layer-ablation.json.gz"
+      ]
+    },
+    {
+      "requirement": "repository validation",
+      "result": "pass",
+      "observed": {
+        "typecheck": 0,
+        "lint": 0,
+        "unitPassed": 106,
+        "unitSkipped": 1,
+        "verifyE29": 0,
+        "testUnitAlias": "npm test",
+        "budgetSeconds": 240,
+        "actualBudgetSeconds": 88.7
+      },
+      "evidence": [
+        "verification.json",
+        "verify-log.gz"
+      ]
+    },
+    {
+      "requirement": "scope and execution constraints",
+      "result": "pass",
+      "observed": {
+        "protectedFilesUnchanged": true,
+        "dependenciesUnchanged": true,
+        "browserUsed": false,
+        "pushed": false,
+        "deployed": false,
+        "heavyRuns": "remote runners",
+        "vitestMaxWorkers": 4,
+        "timeboxSeconds": 7200,
+        "auditElapsedSeconds": 3829
+      },
+      "evidence": [
+        "source-scope.json"
+      ]
+    }
+  ],
+  "knownLimitations": [
+    "High-tier survivors boarded: 0/2/0 of 24; the existing zero-survivor rule permits completion.",
+    "Known L7 follower wait-share and ID-63 coverage checks remain; the focused campaign gate exits 1.",
+    "No browser or visual verification was performed, as required by the brief."
+  ]
+}
