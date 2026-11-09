@@ -32,7 +32,6 @@ export async function checkL7Navigation() {
   await checkCorpseCatchup();
   await checkPharmacyCatchup();
   await checkL7CourierYield();
-  await checkGroupWaitAfterCasualties();
   await checkPharmacyCourier();
   const w = await loadLevel('L7', 29);
   try {
@@ -122,11 +121,11 @@ export async function checkL7Navigation() {
 }
 
 /** A carried tail keeps its original row after casualties leave empty slots. */
-async function checkGroupWaitAfterCasualties() {
-  const w = await loadLevel('L7', 1, undefined, 0, { quality: 'low' });
-  try {
+function checkGroupWaitAfterCasualties(w: SimWorld) {
     for (const e of w.infected!.active) e.hidden = true;
     const roster = w.l7Encounters!.state.roster, tail = w.entities.get(roster.at(-1)!.id)!, p = w.entities.get(1)!;
+    const [x, z] = w.districts!.playerStart;
+    expect(w.solids.relocate(p, { x, z, y: w.districts!.playerStartHeight + .7 }, 'test.l7-tail-leader', 1)).toBe(true);
     for (const r of roster.slice(0, -1)) { r.status = 'dead'; w.entities.get(r.id)!.hidden = true; }
     expect(tail.civilian!.survivor!.slot).toBe(23);
     const at = { x: p.transform.x + 12.05, z: p.transform.z - 1.95, y: p.transform.y };
@@ -136,7 +135,6 @@ async function checkGroupWaitAfterCasualties() {
     w.l7Encounters!.state.started = true;
     const frame = new LevelSevenBot(w).sample();
     expect(frame.move.x, 'lead the occupied last row instead of waiting forever for its slot to move closer').toBeLessThan(-.1);
-  } finally { w.dispose(); }
 }
 
 /** Opening a rocket gap must not fling the escorted humans into that gap. */
@@ -422,7 +420,7 @@ async function checkPharmacyCatchup() {
         expect(w.solids.offenders).toEqual([]);
       }
       if (quality === 'high') checkNearRangeCatchup(w);
-      else checkLowBoardingCorner(w);
+      else { checkLowBoardingCorner(w); checkGroupWaitAfterCasualties(w); }
     } finally { w.dispose(); }
   }
 }
