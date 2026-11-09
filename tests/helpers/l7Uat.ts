@@ -13,6 +13,7 @@ import { goalReach } from '../../src/sim/world/TrapRescue';
 import { emptyInput } from '../../src/input/InputFrame';
 import { actorRadius } from '../../src/sim/world/SolidRegistry';
 import pharmacyColumn from '../fixtures/l7-pharmacy-column.json';
+import { LevelSevenBot } from '../../src/debug/bot/LevelSevenBot';
 
 function checkWallGeometry() {
   const geometry = new BoxGeometry(170, .9, .5), wall = new Mesh(geometry), neighbour = new Mesh(geometry), root = new Group();
@@ -31,6 +32,7 @@ export async function checkL7Navigation() {
   await checkCorpseCatchup();
   await checkPharmacyCatchup();
   await checkL7CourierYield();
+  await checkGroupWaitAfterCasualties();
   await checkPharmacyCourier();
   const w = await loadLevel('L7', 29);
   try {
@@ -116,6 +118,24 @@ export async function checkL7Navigation() {
         previous = next;
       }
     }
+  } finally { w.dispose(); }
+}
+
+/** A carried tail keeps its original row after casualties leave empty slots. */
+async function checkGroupWaitAfterCasualties() {
+  const w = await loadLevel('L7', 1, undefined, 0, { quality: 'low' });
+  try {
+    for (const e of w.infected!.active) e.hidden = true;
+    const roster = w.l7Encounters!.state.roster, tail = w.entities.get(roster.at(-1)!.id)!, p = w.entities.get(1)!;
+    for (const r of roster.slice(0, -1)) { r.status = 'dead'; w.entities.get(r.id)!.hidden = true; }
+    expect(tail.civilian!.survivor!.slot).toBe(23);
+    const at = { x: p.transform.x + 12.05, z: p.transform.z - 1.95, y: p.transform.y };
+    expect(w.solids.relocate(tail, at, 'test.l7-tail-after-loss', 1)).toBe(true);
+    const gap = Math.hypot(tail.transform.x - p.transform.x, tail.transform.z - p.transform.z);
+    expect(gap).toBeGreaterThan(12); expect(gap).toBeLessThan(14.6);
+    w.l7Encounters!.state.started = true;
+    const frame = new LevelSevenBot(w).sample();
+    expect(frame.move.x, 'lead the occupied last row instead of waiting forever for its slot to move closer').toBeLessThan(-.1);
   } finally { w.dispose(); }
 }
 
