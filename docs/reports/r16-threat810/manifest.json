@@ -47,6 +47,27 @@
       "source": "test-results/r16-l7-diagnostic/L7.json",
       "sha256": "5098df3f05820d36c1f7cb166a20d191a1efc1265b658618d2ebef92fb148f16",
       "bytes": 13551
+    },
+    {
+      "path": "diagnostic-full.json.gz",
+      "source": "test-results/r16-threat-full-profile/audit.json",
+      "sha256": "dbaa0f8bf000af8fe62af69543bae47f2fb69acbee534ce69106ea924b9c1c7f",
+      "bytes": 102376,
+      "rawBytes": 1513508
+    },
+    {
+      "path": "replay.json.gz",
+      "source": "test-results/r16-threat-replay/audit.json",
+      "sha256": "cbe01a89b48a0f7466f3e4fc042597cc03a5dcea15a88f8d1f401c7187f8f168",
+      "bytes": 18624,
+      "rawBytes": 238169
+    },
+    {
+      "path": "final-audit.json.gz",
+      "source": "test-results/qa-threat/final-optimized/audit.json",
+      "sha256": "2636d22cf910e0a57974d98add907efe4f9e53dc731825e2434612acd162bb3c",
+      "bytes": 102405,
+      "rawBytes": 1513567
     }
   ]
 }

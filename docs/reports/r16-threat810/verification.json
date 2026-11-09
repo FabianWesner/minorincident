@@ -23,17 +23,29 @@
     {
       "command": "npm run typecheck",
       "status": 0,
-      "seconds": 49.976
+      "seconds": 60.673
     },
     {
       "command": "npm run lint",
       "status": 0,
-      "seconds": 25.841
+      "seconds": 34.628
     },
     {
       "command": "npm test",
       "status": 0,
-      "seconds": 87.353
+      "seconds": 106.596
     }
-  ]
+  ],
+  "sourceRevision": "721d2813043ec671eb77f5e66d1843e1a117c68d",
+  "runner": "94.130.181.173",
+  "unit": {
+    "passed": 106,
+    "skipped": 1,
+    "filesPassed": 27
+  },
+  "threatProof": {
+    "command": "node --import tsx/esm tools/qa/threat-audit.ts --proof",
+    "exitCode": 0
+  },
+  "remoteGit": "Disposable runner job received a source snapshot commit so Git-dependent gate-tools assertions could execute."
 }
