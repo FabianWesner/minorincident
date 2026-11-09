@@ -1,0 +1,163 @@
+{
+  "selectedGameRevision": "5e4758790fb859240764689ae69f7bffb517a06c",
+  "restoredAs": "fd46bbed",
+  "sourceHash": "4f235f57b95586004b0251cd7abeea3db37258a6459ad811d968b9abe974e0c6",
+  "observerHash": "f6f19f3a30a061c07b0e90a71d614f36498a80c2bdf41074dd826884cc2d7165",
+  "sourceTestsAndToolsDiffAgainst5e": "empty",
+  "cases": [
+    {
+      "tier": "low",
+      "seed": 1,
+      "outcome": "complete",
+      "seconds": 126.18333333333334,
+      "nativeStateHash": "23fdf66a",
+      "boarded": 21,
+      "roster": {
+        "following": 21,
+        "dead": 3
+      },
+      "waitPercent": 3.6984352773826457,
+      "collision": {
+        "failures": 0,
+        "pending": 0,
+        "admitted": 254,
+        "deferred": 0,
+        "requests": [],
+        "offenders": []
+      }
+    },
+    {
+      "tier": "low",
+      "seed": 2,
+      "outcome": "complete",
+      "seconds": 111.66666666666667,
+      "nativeStateHash": "c23178bd",
+      "boarded": 21,
+      "roster": {
+        "following": 21,
+        "dead": 3
+      },
+      "waitPercent": 1.4679201715322447,
+      "collision": {
+        "failures": 0,
+        "pending": 0,
+        "admitted": 254,
+        "deferred": 0,
+        "requests": [],
+        "offenders": []
+      }
+    },
+    {
+      "tier": "low",
+      "seed": 3,
+      "outcome": "complete",
+      "seconds": 119.46666666666667,
+      "nativeStateHash": "b27b0c52",
+      "boarded": 21,
+      "roster": {
+        "following": 21,
+        "dead": 3
+      },
+      "waitPercent": 1.9013128112267994,
+      "collision": {
+        "failures": 0,
+        "pending": 0,
+        "admitted": 254,
+        "deferred": 0,
+        "requests": [],
+        "offenders": []
+      }
+    },
+    {
+      "tier": "high",
+      "seed": 1,
+      "outcome": "complete",
+      "seconds": 135.63333333333333,
+      "nativeStateHash": "98c025ac",
+      "boarded": 17,
+      "roster": {
+        "dead": 6,
+        "turned": 1,
+        "following": 17
+      },
+      "waitPercent": 9.49705358366452,
+      "collision": {
+        "failures": 0,
+        "pending": 0,
+        "admitted": 455,
+        "deferred": 0,
+        "requests": [],
+        "offenders": []
+      }
+    },
+    {
+      "tier": "high",
+      "seed": 2,
+      "outcome": "complete",
+      "seconds": 127.48333333333333,
+      "nativeStateHash": "a18f362c",
+      "boarded": 16,
+      "roster": {
+        "dead": 8,
+        "following": 16
+      },
+      "waitPercent": 8.610016882386043,
+      "collision": {
+        "failures": 0,
+        "pending": 0,
+        "admitted": 454,
+        "deferred": 0,
+        "requests": [],
+        "offenders": []
+      }
+    },
+    {
+      "tier": "high",
+      "seed": 3,
+      "outcome": "complete",
+      "seconds": 123.58333333333333,
+      "nativeStateHash": "01a3affc",
+      "boarded": 16,
+      "roster": {
+        "turned": 2,
+        "following": 16,
+        "dead": 6
+      },
+      "waitPercent": 7.564736688972942,
+      "collision": {
+        "failures": 0,
+        "pending": 0,
+        "admitted": 456,
+        "deferred": 0,
+        "requests": [],
+        "offenders": []
+      }
+    }
+  ],
+  "lowNativeHashesMatchOfficialObserver": [
+    {
+      "seed": 1,
+      "matches": true
+    },
+    {
+      "seed": 2,
+      "matches": true
+    },
+    {
+      "seed": 3,
+      "matches": true
+    }
+  ],
+  "standardFocusedFlags": [
+    "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+  ],
+  "lowPaceFlags": [],
+  "highPaceFlags": [
+    "step/corridor:SLOW_FOLLOWER:71",
+    "step/corridor:SLOW_FOLLOWER:74",
+    "phase/encounters:SLOW_FOLLOWER:71",
+    "phase/encounters:SLOW_FOLLOWER:74",
+    "step/departure:SLOW_FOLLOWER:63",
+    "step/departure:SLOW_FOLLOWER:70"
+  ]
+}

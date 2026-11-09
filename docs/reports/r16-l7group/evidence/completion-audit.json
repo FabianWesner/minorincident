@@ -1,0 +1,39 @@
+{
+  "goalAchieved": false,
+  "naturalMovementGoalAchieved": false,
+  "orchestratorHandoffComplete": true,
+  "handoffReason": "Orchestrator requested the safe opt-out fallback, a committed README and an end within twenty minutes.",
+  "runtimeRevision": "6c069d47054e0eb210cce1865f5d71969e6becbc",
+  "mainRevision": "8622b6d1",
+  "sourceHash": "c0e03f21fbe6a3669defc2ca955c943821ef88bf6e25594f477fb13c288867bd",
+  "l7OptOut": true,
+  "checks": {
+    "nativeCasesMatchingMain": 6,
+    "nativeCompletions": 2,
+    "nativeExistingMissionFailures": 4,
+    "identicalRuntimeTestsAndPublicAssets": true,
+    "entireNativeObservationsAndPaceVotesMatchMain": true,
+    "standardExistingG13Identities": 5,
+    "addedFollowerIdentitiesAcrossBothTiers": 0,
+    "repositoryGatePass": true,
+    "browserQa": "needed; forbidden by brief",
+    "pushOrDeployment": false,
+    "unitTestsPassed": 106,
+    "existingUnitTestsSkipped": 1,
+    "testFilesPassed": 27,
+    "collectionCases": 150,
+    "collectionCaseLimit": 150,
+    "wallBudgetSeconds": 240
+  },
+  "revertedExperimentalCandidate": {
+    "revision": "5e475879",
+    "mortalCompletions": 6,
+    "addedHighTierIdentities": 4,
+    "retained": false
+  },
+  "open": [
+    "Connected road slots through courier dodges and corridor turns",
+    "High-tier corridor and departure follower pace",
+    "Six mortal completions with unchanged follower evaluation before enabling L7 natural movement"
+  ]
+}
