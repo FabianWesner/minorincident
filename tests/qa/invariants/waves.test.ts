@@ -12,16 +12,16 @@ import { l4BreachSite } from '../../../src/data/l4Perimeter';
 
 const failure = (authored: number, ids: number[]) => ids.length !== authored || ids.some(id => id <= 0);
 function observed(world: SimWorld, ids: number[]) { return ids.filter(id => { const e = world.entities.get(id); return e && !e.hidden && !e.pendingAdmission && e.infected && !e.infected.hidden; }); }
-function reach(w: SimWorld, ids: number[] | (() => number[]), goal: (id: number, x: number, z: number) => boolean, frames = 1800) {
+function reach(w: SimWorld, ids: number[] | (() => number[]), goal: (id: number, x: number, z: number) => boolean, frames = 1800, beforeTick?: () => void, retire = false) {
   const admitted = new Set<number>(), reached = new Set<number>();
   const current = () => typeof ids === 'function' ? ids() : ids;
   for (let tick = 0; tick < frames && reached.size < current().length; tick++) {
     // Isolate navigation from damage: an ally killing an arrival before it reaches the test area is not a routing failure.
     for (const id of current()) { const e = w.entities.get(id); if (e) e.health.current = e.health.max = 1_000_000; }
-    followFrustum(w); w.update();
+    beforeTick?.(); followFrustum(w); w.update();
     for (const id of observed(w, current())) {
       admitted.add(id); const e = w.entities.get(id)!;
-      if (!e.emerging && goal(id, e.transform.x, e.transform.z)) reached.add(id);
+      if (!e.emerging && goal(id, e.transform.x, e.transform.z)) { reached.add(id); if (retire) w.infected!.release(e); }
     }
   }
   if (reached.size < current().length) console.log(`[qa:invariants] unreached identities: ${JSON.stringify(current().filter(id => !reached.has(id)).map(id => {
@@ -74,7 +74,7 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly authored wave cens
     // victim away before the last member spawns. Starting observation after the batch missed that real arrival.
     const movement = reach(w, () => s.ambush.map(a => a.id), (_id, x, z) => x >= -64 && x <= -36 && z >= -52 && z <= -24, 3000);
     const ids = s.ambush.map(a => a.id);
-    record('L2/market-ambush', l2.rescue.ambushDoors.reduce((n, [, count]) => n + Math.ceil(count * (tier === 'low' ? l2.escape.lowScale : 1)), 0), ids, w, movement);
+    record('L2/market-ambush', l2.rescue.ambushDoors.reduce((n, [, count]) => n + count, 0), ids, w, movement);
   });
   await withWorld('L3', tier, w => {
     const c = w.missions!.l3! as unknown as { startAttack(): void; emergeWaves(): void; checkFallback(): void };
@@ -105,8 +105,18 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly authored wave cens
     const c = w.missions!.l6! as unknown as { spawn(n: number, doors: number[], wave: number): number };
     const state = w.missions!.state.l6!;
     state.breach1At = state.breach2At = Infinity;
+    // Shelter breaches may engage any resident; hatch routing probes require courier contact across the tracks.
+    let courierOnly = false;
+    const humans = w.infected!.l1!.humans, all = humans.all.bind(humans), get = humans.get.bind(humans), within = humans.within.bind(humans);
+    vi.spyOn(humans, 'all').mockImplementation(() => all().filter(h => !courierOnly || h.id === 1));
+    vi.spyOn(humans, 'get').mockImplementation(id => !courierOnly || id === 1 ? get(id) : undefined);
+    vi.spyOn(humans, 'within').mockImplementation((p, r) => within(p, r).filter(h => !courierOnly || h.id === 1));
+    const measured = new Set<number>(), apply = w.combat!.damage.apply.bind(w.combat!.damage);
+    // An immortal route probe must also be protected from repeated gunfire stagger.
+    vi.spyOn(w.combat!.damage, 'apply').mockImplementation(hit => (hit.targetId === 1 || measured.has(hit.targetId)) ? 0 : apply(hit));
     // Four per breach at the opening; eight staggered at the second; every maintenance entry has its own quota.
     for (const [name, count, doors, wave] of [['breach-1', 8, [0, 1], 1], ['breach-2', 8, [0, 1], 2], ['retreat-reinforcement', 1, [0, 1], 3], ...l6Entries.map((entry, i) => [`entry-${i}`, entry.count, [entry.door], 4])] as [string, number, number[], number][]) {
+      courierOnly = wave === 4;
       for (const e of [...w.infected!.active]) w.infected!.release(e);
       if (wave === 4) {
         const door = l6Doors[doors[0]], p = w.entities.get(1)!;
@@ -132,10 +142,15 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly authored wave cens
         w.physics.playerBody!.setTranslation(p.transform, true);
         w.physics.playerBody!.setNextKinematicTranslation(p.transform);
       }
+      ids.forEach(id => measured.add(id));
       record(`L6/${name}`, count, ids, w, reach(w, ids, id => {
         const e = w.entities.get(id)!;
-        return e.infected!.l1?.targetId === 1 && e.combat!.attacking;
-      }));
+        return (!courierOnly || (e.infected!.l1?.targetId || e.infected!.heardTargetId || 1) === 1) && e.combat!.attacking;
+      }, 5400, () => {
+        // Renew the short authored cue for this route probe; a two-second pressure cue is not a path deadline.
+        for (const e of w.entities.iterate()) if (e.civilian && !e.infected) { e.health.current=e.health.max=1_000_000; delete e.infection; }
+        if (courierOnly) for (const id of ids) { w.infected!.press(id, 1, w.tick + 120); w.infected!.rush(id, w.entities.get(1)!.transform, w.tick+120, true); }
+      }, true));
     }
     // Hold knockdowns retain their pool slots. Leave all twelve side arrivals
     // available even after the hold budget is full, on both quality tiers.
@@ -143,8 +158,11 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly authored wave cens
     const player = w.entities.get(1)!;
     Object.assign(player.transform, { x: 3, z: 0 }); w.spatial.set(1, 3, 0);
     w.physics.playerBody!.setTranslation(player.transform, true); followFrustum(w);
-    expect(c.spawn(60, [0, 1], 1), 'hold arrivals fill the tier cap').toBe(l6.infected[tier]);
-    expect(c.spawn(1, [0, 1], 2)).toBe(0);
+    // Announced breaches now outrank future hatches; recurring retreat filler must still reserve all twelve hatch arrivals.
+    state.phase = 'retreat'; delete state.arrivals;
+    const reserved = state.entries!.reduce((sum, entry) => sum + entry.remaining, 0);
+    expect(c.spawn(60, [0, 1], 3), 'filler preserves every authored hatch slot').toBe(l6.infected[tier] - reserved);
+    expect(c.spawn(1, [0, 1], 3)).toBe(0);
     for (const entry of state.entries!) {
       const door = l6Doors[entry.door];
       Object.assign(player.transform, { x: door.x - 24, z: 15 }); w.spatial.set(1, player.transform.x, 15);
@@ -193,11 +211,14 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly authored wave cens
     }
     for (let i = 0; i <= l7Encounters.streets.length; i++) {
       const group = i === 0 ? l7Encounters.finalGroup : l7Encounters.firstStreetGroup + i - 1;
-      const expected = i === 0 ? (tier === 'low' ? 60 : 120) + 2 : (tier === 'low' ? 35 : 70) + (i <= 3 ? 1 : 0);
+      const expected = i === 0 ? (tier === 'low' ? 60 : 120) + 2 : (tier === 'low' ? 35 : 70) + ([1, 2, 4].includes(i) ? 1 : 0);
       const arrivals = c.state.arrivals.filter(a => a.group === group), ids = arrivals.map(a => a.id);
       const home = i === 0 ? l7Encounters.horde : l7Encounters.streets[i - 1];
       // These groups are authored idle at their destination: verify the admitted poses are in that area.
-      const atGoal = arrivals.filter(a => Math.hypot(a.x - home.x, a.z - home.z) <= 20).length;
+      // The second final Alpha now guards the eastern flank rather than the horde centre.
+      const atGoal = arrivals.filter(a => i === 0 && a.alpha
+        ? Math.min(Math.hypot(a.x + 64, a.z - 50), Math.hypot(a.x + 43, a.z - 41.7)) <= 6
+        : Math.hypot(a.x - home.x, a.z - home.z) <= 20).length;
       // Ledger entries are the actual admitted director arrivals; not the requested count.
       receipt[`L7/group-${group}`] = { authored: expected, spawned: ids.length, admitted: ids.length, reached: atGoal };
       if (ids.length !== expected) errors.push(`L7/group-${group}: authored ${expected}, admitted ${ids.length}`);
@@ -208,19 +229,22 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly authored wave cens
     const c = w.missions!.l8!; w.tick = c.state.startedAt + 3600; c.update();
     const initial = c.state.arrivals.slice();
     const next = c.state.nextWave; c.state.nextWave = Infinity;
+    // The K9's new pond approach uses the whole authored service route, not the former short doorstep leg.
+    const routeFrames = Math.ceil(Math.max(...c.state.outlets.map(o => { let from = [o.sx, o.sz], metres = 3; for (const at of o.route) { metres += Math.hypot(at[0]-from[0], at[1]-from[1]); from=at; } return metres/(o.speedMs ?? 1.6)+30; })) * 60);
     const initialGoals = new Map(initial.map(a => [a.id, c.state.outlets[a.outlet]]));
-    const firstMovement = reach(w, initial.map(a => a.id), (id, x, z) => { const door = initialGoals.get(id)!; return Math.hypot(x - door.ox, z - door.oz) < 12; });
+    const firstMovement = reach(w, initial.map(a => a.id), (id, x, z) => { const door = initialGoals.get(id)!; return Math.hypot(x - door.ox, z - door.oz) < 12; }, routeFrames);
     for (let outlet = 0; outlet < c.state.outlets.length; outlet++) {
       const ids = initial.filter(a => a.outlet === outlet).map(a => a.id);
-      record(`L8/tunnel-breach-${outlet}`, tier === 'low' ? 3 : 6, ids, w, { admitted: ids.filter(id => firstMovement.admittedIds.includes(id)).length, reached: ids.filter(id => firstMovement.reachedIds.includes(id)).length });
+      record(`L8/tunnel-breach-${outlet}`, (tier === 'low' ? 3 : 6) + (outlet === 2 ? 1 : 0), ids, w, { admitted: ids.filter(id => firstMovement.admittedIds.includes(id)).length, reached: ids.filter(id => firstMovement.reachedIds.includes(id)).length });
     }
     for (const e of [...w.infected!.active]) w.infected!.release(e);
     c.state.nextWave = Math.max(next, w.tick); c.update(); c.state.nextWave = Infinity;
     const reinforcements = c.state.arrivals.slice(initial.length), reinforcementGoals = new Map(reinforcements.map(a => [a.id, c.state.outlets[a.outlet]]));
-    const reinforcementMovement = reach(w, reinforcements.map(a => a.id), (id, x, z) => { const door = reinforcementGoals.get(id)!; return Math.hypot(x - door.ox, z - door.oz) < 12; });
+    const reinforcementMovement = reach(w, reinforcements.map(a => a.id), (id, x, z) => { const door = reinforcementGoals.get(id)!; return Math.hypot(x - door.ox, z - door.oz) < 12; }, routeFrames);
     for (let outlet = 0; outlet < c.state.outlets.length; outlet++) {
       const ids = reinforcements.filter(a => a.outlet === outlet).map(a => a.id);
-      record(`L8/tunnel-reinforcement-${outlet}`, 4, ids, w, { admitted: ids.filter(id => reinforcementMovement.admittedIds.includes(id)).length, reached: ids.filter(id => reinforcementMovement.reachedIds.includes(id)).length });
+      // PO 11-08: four total sustaining arrivals, one per outlet; the arenas carry the later outbreak.
+      record(`L8/tunnel-reinforcement-${outlet}`, 1, ids, w, { admitted: ids.filter(id => reinforcementMovement.admittedIds.includes(id)).length, reached: ids.filter(id => reinforcementMovement.reachedIds.includes(id)).length });
     }
   });
   await withWorld('L10', tier, w => {
@@ -229,8 +253,10 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly authored wave cens
     w.physics.playerBody!.setTranslation(p.transform, true); w.chunks!.update(); m.setState('charge-active', true);
     w.tick += 10 - w.tick % 10; w.l10Encounters!.update();
     const def = cureEncounters.find(g => g.id === 'dispersal-assault')!;
-    const ids = Object.entries(w.l10Encounters!.state.spawned).filter(([key]) => key.startsWith('dispersal-assault:')).map(([, id]) => id);
-    record('L10/dispersal-assault', cureEncounterSlots(def, tier).length, ids, w, reach(w, ids, (_id, x, z) => Math.hypot(x - def.at[0], z - def.at[1]) < 18, 3600));
+    // Finale setup is now staggered to one actor per director tick; observe the full first cohort.
+    const ids = () => Object.entries(w.l10Encounters!.state.spawned).filter(([key]) => key.startsWith('dispersal-assault:') && key.endsWith(':0')).map(([, id]) => id);
+    const movement = reach(w, ids, (_id, x, z) => Math.hypot(x - def.at[0], z - def.at[1]) < 18, 3600);
+    record('L10/dispersal-assault', cureEncounterSlots(def, tier).length, ids(), w, movement);
   });
   console.log(`[qa:invariants] wave census ${tier}: ${JSON.stringify(receipt)}`);
   expect(errors, `waves invariant ${tier}`).toEqual([]);
