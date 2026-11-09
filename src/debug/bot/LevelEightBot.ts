@@ -29,10 +29,12 @@ export class LevelEightBot {
       if (arena && this.profile === 'arena-tour') return this.arenas.sample(arena.id);
     }
     const door = zoo.door(), car = w.vehicles!.cars.get(zoo.state.carId)!.entity.vehicle!;
+    const passengerDoor = w.vehicles!.passengerDoor(zoo.state.carId);
     const boarded = zoo.passengers().every(id => car.passengers?.some(p => p.id === id && p.phase === 'seated'));
-    // Cover the queue on foot; the APC has no gun. Stand clear of its door so
-    // the courier's body does not obstruct passengers, then board last.
-    let target = zoo.protecting() ? m.def.anchors['central-plaza'] : m.state.steps.sanctuary.status === 'active' ? calm ? w.entities.get(zoo.state.keeperId)!.transform : m.def.anchors['central-plaza'] : boarded ? door : { x: door.x - 4, z: door.z + 2 };
+    // Cover the rear passenger queue on foot; the APC has no gun. Using the
+    // driver's side door as this origin leaves the rear evacuees >10 m away
+    // on the redesigned north-facing APC. Board the driver last.
+    let target = zoo.protecting() ? m.def.anchors['central-plaza'] : m.state.steps.sanctuary.status === 'active' ? calm ? w.entities.get(zoo.state.keeperId)!.transform : m.def.anchors['central-plaza'] : boarded ? door : { x: passengerDoor.x - 4, z: passengerDoor.z + 2 };
     if (zoo.protecting()) this.escapeLeg = 0;
     if (!calm && !zoo.protecting() && !boarded) {
       // Stay on the public service boulevard; the shortest grid route cuts across the zebra paddock.
