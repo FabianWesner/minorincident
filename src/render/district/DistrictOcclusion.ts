@@ -78,20 +78,28 @@ export class DistrictOcclusion {
     // temporary frames in L10's scenery pass.
     const buildings = this.interiorBuildings.map(building => {
       const foot = DistrictOcclusion.enclosure(building.entry);
-      return { building, foot, frame: DistrictOcclusion.footFrame({ foot, origin: building.entry.origin }, building.ref, false) };
+      const frame = DistrictOcclusion.footFrame({ foot, origin: building.entry.origin }, building.ref, false);
+      const [c, s] = frame;
+      return { building, foot, frame,
+        halfX: Math.abs(c * foot.hx * building.ref.scale.x) + Math.abs(s * foot.hz * building.ref.scale.z),
+        halfZ: Math.abs(s * foot.hx * building.ref.scale.x) + Math.abs(c * foot.hz * building.ref.scale.z) };
     });
     for (const entry of props) for (const ref of entry.refs) {
       const [pc, ps, px, pz] = DistrictOcclusion.footFrame(entry, ref);
-      const owner = buildings.find(({ building: b, foot, frame: [c, s, x, z] }) => {
+      const corners = [-entry.foot.hx, entry.foot.hx].flatMap(dx => [-entry.foot.hz, entry.foot.hz].map(dz =>
+        [px + dx * ref.scale.x * pc + dz * ref.scale.z * ps, pz - dx * ref.scale.x * ps + dz * ref.scale.z * pc]));
+      const owner = buildings.find(({ building: b, foot, frame: [c, s, x, z], halfX, halfZ }) => {
+        // A fully contained rectangle also contains its centre. This broad
+        // rejection is padded so boundary rounding still reaches the exact test.
+        if (Math.abs(px - x) > halfX + .001 || Math.abs(pz - z) > halfZ + .001 || ref.position.y < b.ref.position.y || ref.position.y + entry.height * ref.scale.y >= b.ref.position.y + b.entry.height * b.ref.scale.y) return false;
         // PO #112 (L2 apron benches vanished under their sitters): the LOD0 bounds of a building include its open
         // apron/forecourt slabs. Only the walled enclosure is an interior; fall back to the bounds without wall boxes.
         // Require the complete prop footprint within the building, so doorstep/street furniture stays drawn.
-        for (const dx of [-entry.foot.hx, entry.foot.hx]) for (const dz of [-entry.foot.hz, entry.foot.hz]) {
-          const wx = px + dx * ref.scale.x * pc + dz * ref.scale.z * ps - x;
-          const wz = pz - dx * ref.scale.x * ps + dz * ref.scale.z * pc - z;
+        for (const [cx, cz] of corners) {
+          const wx = cx - x, wz = cz - z;
           if (Math.abs((wx * c - wz * s) / b.ref.scale.x) >= foot.hx - .2 || Math.abs((wx * s + wz * c) / b.ref.scale.z) >= foot.hz - .2) return false;
         }
-        return ref.position.y >= b.ref.position.y && ref.position.y + entry.height * ref.scale.y < b.ref.position.y + b.entry.height * b.ref.scale.y;
+        return true;
       });
       if (owner) { owner.building.props.push({ entry, ref }); ref.userData.interiorBuilding = owner.building.ref; }
     }
