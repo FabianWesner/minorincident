@@ -25,17 +25,15 @@ export class LevelSevenBot {
     // forward clear leg instead of walking back to the missed corner and
     // dragging the column through the same turn twice.
     if (!pickup && this.waypoint >= 3) for (let i = this.route.length - 1; i > this.waypoint; i--) {
-      const at = this.route[i], d = distance(p.transform, at);
-      if (at.x > p.transform.x || !d || !w.infected!.nav.visible(p.transform, at, .45)) continue;
-      if (w.solids.sweep(p, { x: (at.x - p.transform.x) / d, z: (at.z - p.transform.z) / d }, d) < d - .01) continue;
+      const at = this.route[i];
+      if (at.x > p.transform.x || !w.infected!.nav.visible(p.transform, at, .45)) continue;
       this.waypoint = i; break;
     }
     if (!pickup && this.waypoint < this.route.length - 1 && distance(p.transform, this.route[this.waypoint]) < (this.waypoint >= 3 ? .3 : 2)) this.waypoint++;
     const goal = pickup?.transform ?? this.route[this.waypoint];
-    if (!pickup && this.waypoint >= 3 && w.infected!.nav.visible(p.transform, goal, .35)) {
-      const dx = goal.x - p.transform.x, dz = goal.z - p.transform.z, d = Math.hypot(dx, dz);
-      if (d > .2) f.move = { x: dx / d, z: dz / d };
-    } else f.move = this.walker.step(w, goal, pickup ? .5 : this.waypoint >= 3 ? .2 : 1, `${pickup ? 'pickup' : 'bus'}-${this.waypoint}`) ?? f.move;
+    // Large dead Alphas are physical obstacles too. Use the existing private
+    // corpse route from the finale instead of repeatedly taking a blocked line.
+    f.move = this.walker.step(w, goal, pickup ? .5 : this.waypoint >= 3 ? .2 : 1, `${pickup ? 'pickup' : 'bus'}-${this.waypoint}`, !pickup && this.waypoint >= 3) ?? f.move;
     if (pickup && distance(p.transform, goal) < 1.45) { f.move = { x: 0, z: 0 }; f.interact = true; }
     const rocket = p.weapons!.RIGHT.rack.findIndex(s => s.id === l7Rocket.action);
     if (rocket >= 0) f.selectedSlot = { side: 'RIGHT', index: rocket };
