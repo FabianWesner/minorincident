@@ -1,0 +1,141 @@
+{
+  "complete": true,
+  "pass": true,
+  "purpose": "Static content comparison; excluded from timing qualification",
+  "source": "test-results/r20-loadtime/warmup-content-final/comparison.json",
+  "sourceSha256": "9621b239d4a727fa43d5e49f2042d22ccef33528f8dda29f5b797db8dd5233b9",
+  "quietHost": false,
+  "note": "Host monitor caught a foreign Vitest run. Every equality assertion completed without a browser error. Zero-count cache batches are excluded; all populated objects, including hidden variants, are compared. Pixel differences are startup poses.",
+  "rows": [
+    {
+      "level": "L1",
+      "tier": "low",
+      "actors": 701,
+      "renderObjects": 535,
+      "stateSha256": "55a98b703da527ebbe33f88d0dc00a76d14cc9f8ec6cd312e8cd6bd842b133b1",
+      "differentPixels": 0,
+      "pngSha256": {
+        "before": "94f3bd5fbfa72294efa051a6f5067f9aa323c88b2beeff4422da2bfe5d030250",
+        "after": "94f3bd5fbfa72294efa051a6f5067f9aa323c88b2beeff4422da2bfe5d030250"
+      },
+      "exactActorsAndRenderObjectMetadata": true
+    },
+    {
+      "level": "L1",
+      "tier": "high",
+      "actors": 708,
+      "renderObjects": 540,
+      "stateSha256": "92d6bcdfb6a5ab6b9493a0f933f1db4d183e57284f8e12df151b69008f6a1ab9",
+      "differentPixels": 0,
+      "pngSha256": {
+        "before": "baf1668a06dadf784c48def6302b9d221cce01d60c491efa8cfab5147086d0d0",
+        "after": "baf1668a06dadf784c48def6302b9d221cce01d60c491efa8cfab5147086d0d0"
+      },
+      "exactActorsAndRenderObjectMetadata": true
+    },
+    {
+      "level": "L4",
+      "tier": "low",
+      "actors": 304,
+      "renderObjects": 904,
+      "stateSha256": "8a7a61e116c6599b6619717b9a20b497741be4269587be6b4d3254dcb3f73d57",
+      "differentPixels": 0,
+      "pngSha256": {
+        "before": "bed78c3fa07a7dbc66f8d23eb4adf209f4e11f8a948d795079f7f9d5146a3744",
+        "after": "bed78c3fa07a7dbc66f8d23eb4adf209f4e11f8a948d795079f7f9d5146a3744"
+      },
+      "exactActorsAndRenderObjectMetadata": true
+    },
+    {
+      "level": "L4",
+      "tier": "high",
+      "actors": 347,
+      "renderObjects": 1289,
+      "stateSha256": "533e2d13759518a8e5f207a61f59dc4701f1097a0d166e409ea5e02bfb820724",
+      "differentPixels": 0,
+      "pngSha256": {
+        "before": "aabf90ed1c580a0e959874676269d7487f4ab9c4f3f51d3304b24ae67978febf",
+        "after": "aabf90ed1c580a0e959874676269d7487f4ab9c4f3f51d3304b24ae67978febf"
+      },
+      "exactActorsAndRenderObjectMetadata": true
+    },
+    {
+      "level": "L7",
+      "tier": "low",
+      "actors": 410,
+      "renderObjects": 233,
+      "stateSha256": "437f0063502e05f4a2bb890e7204ea716538f63cbc61756f85e4876bb6f9ebaf",
+      "differentPixels": 7742,
+      "pngSha256": {
+        "before": "070b6249885e53363c1e3d70c3671ff1c1810be68c71f7f1c2b375618c56aeb5",
+        "after": "4bd0127e4391ffd50bfcd505a2ffbe79089e2878a72c1908e48b27739cc86cf2"
+      },
+      "exactActorsAndRenderObjectMetadata": true
+    },
+    {
+      "level": "L7",
+      "tier": "high",
+      "actors": 505,
+      "renderObjects": 245,
+      "stateSha256": "17485e423e9693aec6f4b05803d82d11af166413dfb3249ec7748678d11b8da9",
+      "differentPixels": 1059,
+      "pngSha256": {
+        "before": "1128a4446a986dddc6b3d678b9fc797cb8e3c6927d7f2fed92056f4e009d8563",
+        "after": "50f4b8ce718db392b65860c9bc7234e0337c964cbaaa50602c9d1dc2e4b81b06"
+      },
+      "exactActorsAndRenderObjectMetadata": true
+    },
+    {
+      "level": "L8",
+      "tier": "low",
+      "actors": 1054,
+      "renderObjects": 477,
+      "stateSha256": "8a8e0bf30833b7d9921b781e1bda5d6d4b853ed7e1af8105e49df2dd7afacf11",
+      "differentPixels": 25481,
+      "pngSha256": {
+        "before": "e74f4320091f6e620ec7d21873917e1c76b9b19117c3a1e08a8831b887836ded",
+        "after": "3197b5efa89abb8e940d61ce73ea5dcd09da298e2333fc20a57f9493fc897d96"
+      },
+      "exactActorsAndRenderObjectMetadata": true
+    },
+    {
+      "level": "L8",
+      "tier": "high",
+      "actors": 1054,
+      "renderObjects": 511,
+      "stateSha256": "863dffd6765e4f763b36f0a2d6e805bc88de2817ae8b3ede3f9d10af27fe2d43",
+      "differentPixels": 0,
+      "pngSha256": {
+        "before": "872795c1ffa756ecbbbe324e96348605a403bd9e41d1b320766b6e07bef2f03e",
+        "after": "872795c1ffa756ecbbbe324e96348605a403bd9e41d1b320766b6e07bef2f03e"
+      },
+      "exactActorsAndRenderObjectMetadata": true
+    },
+    {
+      "level": "L10",
+      "tier": "low",
+      "actors": 38,
+      "renderObjects": 691,
+      "stateSha256": "f1276949a76dd0c8c4a5a3162f2e710d19dfc7b4854f2b3b7817a43a0679eafc",
+      "differentPixels": 0,
+      "pngSha256": {
+        "before": "e155174ad8de2b13e379b8b1c2fb1290de0dcd548ee26a8eb7a193fd11d92ea2",
+        "after": "e155174ad8de2b13e379b8b1c2fb1290de0dcd548ee26a8eb7a193fd11d92ea2"
+      },
+      "exactActorsAndRenderObjectMetadata": true
+    },
+    {
+      "level": "L10",
+      "tier": "high",
+      "actors": 46,
+      "renderObjects": 711,
+      "stateSha256": "cc8b6ecafd9e2c7fb10725cb17e333897d21504d21256d2eb056b4f5d3e75936",
+      "differentPixels": 0,
+      "pngSha256": {
+        "before": "70255273b242331959625cf22cc831690a547c6fb2edc47372c9fbc6630adae1",
+        "after": "70255273b242331959625cf22cc831690a547c6fb2edc47372c9fbc6630adae1"
+      },
+      "exactActorsAndRenderObjectMetadata": true
+    }
+  ]
+}

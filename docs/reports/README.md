@@ -19,6 +19,8 @@ snapshots remain byte-identical because the qualification manifest hashes them.
 
 Current E25 emitter contract repair: [E25-AC02 report](e25-emitters/README.md).
 
+Cold-load matrix and threat runtime: [r20-loadtime report](r20-loadtime/README.md).
+
 ## Retained report subtrees
 
 | Subtree | Required use |

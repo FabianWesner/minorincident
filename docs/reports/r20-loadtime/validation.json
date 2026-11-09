@@ -1,0 +1,27 @@
+{
+  "target": "E18",
+  "epics": [
+    "E18"
+  ],
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "status": 0,
+      "seconds": 14.83
+    },
+    {
+      "command": "npm run lint",
+      "status": 0,
+      "seconds": 9.919
+    },
+    {
+      "command": "npm test",
+      "status": 0,
+      "seconds": 32.395
+    }
+  ],
+  "validatedRevision": "10e47dbdbb0e6c76522ed2994305246046c61143",
+  "completedAt": "2026-11-09T17:40:41.473343+00:00",
+  "unitFiles": 27,
+  "unitCases": 107
+}

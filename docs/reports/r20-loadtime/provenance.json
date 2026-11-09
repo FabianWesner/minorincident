@@ -1,0 +1,54 @@
+{
+  "recordedAt": "2026-11-09T17:09:32.023094+00:00",
+  "startingRevision": "cab3405c20f3bf4214c99d764d61c526b3e0c525",
+  "gameRevision": "04ea9affd99000bbf34cdfb3273dbc707865a4c0",
+  "gameSourceSha256": {
+    "src/render/GameView.ts": "2892db17604be299ed274f88de2d20b7d2f5edd04003d988e85ffcb1447835fa",
+    "src/render/npc/NpcView.ts": "d8f5ff1b9c1e08851bf2912594e3bdd76813f004ff1fbb44dcd88b784607cc35",
+    "src/render/PreRenderer.ts": "0437478254a8c077a4d25d0643b07f51828ddf31883d0a3e6dababce6b44be05",
+    "package-lock.json": "fcc71eadb92a311d9d8d736c592e80fa473404c37a46f73f1b6edd8463305038"
+  },
+  "candidate": {
+    "entry": "build/index-BnxiBBWO.js",
+    "sha256": "518be35eed467aeeea9e8da94ad2346596d51ee349463b710d312d76ba88583a",
+    "buildLabel": "r20-webgl-buffers",
+    "environment": {
+      "NODE_ENV": "production",
+      "BRANCH": "release",
+      "VITE_QA_HOOKS": "0"
+    },
+    "qaHookExclusion": {
+      "htmlJsFiles": 21,
+      "pass": true
+    }
+  },
+  "prod": {
+    "release": "batch 59",
+    "entry": "build/index-Dk-iL-FG.js",
+    "sha256": "61043483d030ec6be950a50c4de5d2d3d1301106df7a6ac18c2eaa0b1bbf29e0",
+    "manifest": "docs/reports/perf12/mirror.json",
+    "manifestSha256": "140ed35f97cbe08c27ac960cbac3299b043b3fe2fc51d159f5272508d8931356",
+    "verifiedFiles": 2758
+  },
+  "coldHost": {
+    "platform": "macOS arm64",
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+    "chromium": "153.0.8010.12",
+    "playwright": "1.63.0",
+    "headless": true,
+    "viewport": [
+      1600,
+      900
+    ],
+    "dpr": 1,
+    "freshBrowserAndDiskProfile": true,
+    "sharedOsAndDriverCaches": true
+  },
+  "threatReferenceHost": {
+    "ip": "2.31.107.230",
+    "cpu": "AMD EPYC-Rome Processor",
+    "vcpus": 4,
+    "node": "v26.0.0",
+    "isolation": "Both runner slots held for the entire command"
+  }
+}
