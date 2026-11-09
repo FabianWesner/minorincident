@@ -1,0 +1,37 @@
+{
+  "candidate": "c8d4a8024bd9660f25df29d49cc2ddafe0100575",
+  "releaseVerdict": "NO-GO",
+  "timeboxVerdict": "FAIL",
+  "startedAt": "2026-11-09T08:31:35+00:00",
+  "reportClosedAt": "2026-11-09T11:59:12.993326+00:00",
+  "elapsedSeconds": 12457.993326,
+  "nativeCounts": {
+    "PASS": 10,
+    "FAIL": 5,
+    "INCOMPLETE": 1
+  },
+  "coldCounts": {
+    "PASS": 1,
+    "FAIL": 19,
+    "profiles": 800
+  },
+  "deferredCoverageItems": [
+    "native L10/high: incomplete",
+    "event L10/high/charge through completion +2s: incomplete []",
+    "ending low: absent",
+    "ending high: absent",
+    "lamp debug/webgpu: absent",
+    "lamp continue/webgpu: absent",
+    "lamp debug/webgl2: absent",
+    "lamp continue/webgl2: absent"
+  ],
+  "stoppedOwnedServers": [
+    4911,
+    4912
+  ],
+  "gameOrAcceptanceChanges": false,
+  "deployOrPush": false,
+  "closeoutInstructionReceivedApproxAt": "2026-11-09T11:52:00+00:00",
+  "closeoutWithin20Minutes": true,
+  "status": "closed_under_orchestrator_cutoff"
+}

@@ -1,0 +1,17 @@
+{
+  "command": "isolated remote npm run qa:threat -- --out test-results/r18-release/remote-threat",
+  "exitCode": 1,
+  "watchdogExit": 124,
+  "seconds": 601.1,
+  "budgetSeconds": 600,
+  "runner": "94.130.181.173",
+  "syncSeconds": 201,
+  "remoteTotalSeconds": 604,
+  "completedL5PassiveSeconds": [
+    329.167,
+    332.975,
+    347.587
+  ],
+  "L4SkilledSeconds": 557.724,
+  "completeAuditReceipt": false
+}

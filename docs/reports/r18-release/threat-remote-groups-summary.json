@@ -1,0 +1,114 @@
+{
+  "groups": {
+    "A": {
+      "seconds": 554.132368165,
+      "flags": [
+        "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+      ]
+    },
+    "B": {
+      "seconds": 535.98717653,
+      "flags": [
+        "L7/FOLLOWER_WAIT_UPPER_BOUND_OVER_10_PERCENT",
+        "L7/step/departure:SLOW_FOLLOWER:20",
+        "L7/step/departure:SLOW_FOLLOWER:74",
+        "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+      ]
+    },
+    "C": {
+      "seconds": 279.97768038799995,
+      "flags": [
+        "L10/KITING_LANDED_HITS_BELOW_2:0.00",
+        "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+      ]
+    }
+  },
+  "nativeStageEnvelopeSeconds": 565.758,
+  "levels": [
+    {
+      "level": "L1",
+      "wallSeconds": 46.553,
+      "flags": [],
+      "passiveFlags": []
+    },
+    {
+      "level": "L2",
+      "wallSeconds": 129.881,
+      "flags": [],
+      "passiveFlags": []
+    },
+    {
+      "level": "L3",
+      "wallSeconds": 424.867,
+      "flags": [
+        "wave/station-0:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+        "wave/station-2:WAVE_NO_ATTACK_WITHIN_20_SECONDS"
+      ],
+      "passiveFlags": []
+    },
+    {
+      "level": "L4",
+      "wallSeconds": 552.989,
+      "flags": [
+        "wave/breach-north:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+      ],
+      "passiveFlags": []
+    },
+    {
+      "level": "L5",
+      "wallSeconds": 362.719,
+      "flags": [],
+      "passiveFlags": []
+    },
+    {
+      "level": "L6",
+      "wallSeconds": 156.596,
+      "flags": [],
+      "passiveFlags": []
+    },
+    {
+      "level": "L7",
+      "wallSeconds": 372.384,
+      "flags": [
+        "step/departure:SLOW_FOLLOWER:20",
+        "step/departure:SLOW_FOLLOWER:74"
+      ],
+      "passiveFlags": [
+        "FOLLOWER_WAIT_UPPER_BOUND_OVER_10_PERCENT",
+        "step/departure:SLOW_FOLLOWER:20",
+        "step/departure:SLOW_FOLLOWER:74"
+      ]
+    },
+    {
+      "level": "L8",
+      "wallSeconds": 74.065,
+      "flags": [],
+      "passiveFlags": []
+    },
+    {
+      "level": "L9",
+      "wallSeconds": 151.771,
+      "flags": [],
+      "passiveFlags": []
+    },
+    {
+      "level": "L10",
+      "wallSeconds": 279.021,
+      "flags": [
+        "wave/dispersal-assault:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+      ],
+      "passiveFlags": [
+        "KITING_LANDED_HITS_BELOW_2:0.00"
+      ]
+    }
+  ],
+  "gatingFlags": [
+    "L7/FOLLOWER_WAIT_UPPER_BOUND_OVER_10_PERCENT",
+    "L7/step/departure:SLOW_FOLLOWER:20",
+    "L7/step/departure:SLOW_FOLLOWER:74",
+    "L10/KITING_LANDED_HITS_BELOW_2:0.00"
+  ],
+  "sourceHash": "6f6e4bb34df7ec575ad150516568cba094e41c83367f263996b3ac0f05fe4823",
+  "observerHash": "f6f19f3a30a061c07b0e90a71d614f36498a80c2bdf41074dd826884cc2d7165",
+  "profileSeedStateHashMatches": true
+}

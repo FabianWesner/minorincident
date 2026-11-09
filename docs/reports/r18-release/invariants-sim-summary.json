@@ -1,0 +1,58 @@
+{
+  "success": false,
+  "total": 28,
+  "passed": 20,
+  "failed": 8,
+  "pending": 0,
+  "stageSeconds": 517.436,
+  "failedAssertions": [
+    {
+      "name": "automatic regression invariants 3 @nightly scripted actors: all initial cast, depot clerk and lab technician persist until their scripted exits",
+      "messages": [
+        "AssertionError: actors invariant: 45796 missing frames; cast {\"L1/high\":1,\"L1/low\":1,\"L2/high\":40,\"L2/low\":30,\"L3/high\":19,\"L3/low\":19,\"L4/high\":20,\"L4/low\":10,\"L5/high\":29,\"L5/low\":29,\"L6/high\":29,\"L6/low\":29,\"L7/high\":24,\"L7/low\":24,\"L8/high\":20,\"L8/low\":20,\"L9/high\":9,\"L9/low\":9,\"L10/high\":0,\"L10/low\":0}: expected [ \u2026(20) ] to deeply equal []\n    at /srv/mi/jobs/r18-release-bf676a-20774-1794216291/tests/qa/invariants/contract.test.ts:131:174\n    at file:///srv/mi/jobs/r18-release-bf676a-20774-1794216291/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "name": "5 L2 escape high: every street batch and bridge cluster admits its quota and reaches its authored home",
+      "messages": [
+        "AssertionError: authoring must enumerate every escape batch: expected 41 to be 35 // Object.is equality\n    at /srv/mi/jobs/r18-release-bf676a-20774-1794216291/tests/qa/invariants/escape-waves.test.ts:22:75\n    at file:///srv/mi/jobs/r18-release-bf676a-20774-1794216291/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "name": "5 L2 escape low: every street batch and bridge cluster admits its quota and reaches its authored home",
+      "messages": [
+        "AssertionError: authoring must enumerate every escape batch: expected 45 to be 21 // Object.is equality\n    at /srv/mi/jobs/r18-release-bf676a-20774-1794216291/tests/qa/invariants/escape-waves.test.ts:22:75\n    at file:///srv/mi/jobs/r18-release-bf676a-20774-1794216291/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "name": "4 vehicles: all level start poses, L8 evacuation vehicles and L9 scripted crash clear structural solids",
+      "messages": [
+        "AssertionError: expected 'driving' to be 'impact' // Object.is equality\n    at /srv/mi/jobs/r18-release-bf676a-20774-1794216291/tests/qa/invariants/vehicle-scenes.test.ts:45:31\n    at file:///srv/mi/jobs/r18-release-bf676a-20774-1794216291/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "name": "5 @nightly L4 high: every authored war wave and collapse batch spawns and reaches its goal area",
+      "messages": [
+        "AssertionError: waves invariant: L4 authored count and goal arrival: expected [ \u2026(9) ] to deeply equal []\n    at /srv/mi/jobs/r18-release-bf676a-20774-1794216291/tests/qa/invariants/war-waves.test.ts:216:73\n    at file:///srv/mi/jobs/r18-release-bf676a-20774-1794216291/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "name": "5 @nightly L4 low: every authored war wave and collapse batch spawns and reaches its goal area",
+      "messages": [
+        "AssertionError: waves invariant: L4 authored count and goal arrival: expected [ \u2026(7) ] to deeply equal []\n    at /srv/mi/jobs/r18-release-bf676a-20774-1794216291/tests/qa/invariants/war-waves.test.ts:216:73\n    at file:///srv/mi/jobs/r18-release-bf676a-20774-1794216291/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "name": "5 @nightly authored wave census high: L1, L2, L3, L6, L7, L8 and L10",
+      "messages": [
+        "AssertionError: hold arrivals reserve every authored maintenance slot: expected 30 to be 48 // Object.is equality\n    at /srv/mi/jobs/r18-release-bf676a-20774-1794216291/tests/qa/invariants/waves.test.ts:146:93\n    at withWorld (/srv/mi/jobs/r18-release-bf676a-20774-1794216291/tests/qa/invariants/waves.test.ts:35:56)\n    at /srv/mi/jobs/r18-release-bf676a-20774-1794216291/tests/qa/invariants/waves.test.ts:104:3\n    at file:///srv/mi/jobs/r18-release-bf676a-20774-1794216291/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "name": "5 @nightly authored wave census low: L1, L2, L3, L6, L7, L8 and L10",
+      "messages": [
+        "AssertionError: hold arrivals reserve every authored maintenance slot: expected 30 to be 48 // Object.is equality\n    at /srv/mi/jobs/r18-release-bf676a-20774-1794216291/tests/qa/invariants/waves.test.ts:146:93\n    at withWorld (/srv/mi/jobs/r18-release-bf676a-20774-1794216291/tests/qa/invariants/waves.test.ts:35:56)\n    at /srv/mi/jobs/r18-release-bf676a-20774-1794216291/tests/qa/invariants/waves.test.ts:104:3\n    at file:///srv/mi/jobs/r18-release-bf676a-20774-1794216291/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    }
+  ]
+}

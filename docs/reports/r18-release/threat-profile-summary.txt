@@ -1,0 +1,40 @@
+total 335877 ms
+
+self time by file:
+   55679  HitQuery.ts
+   36689  SpatialHash.ts
+   32999  SolidRegistry.ts
+   26853  NavGrid.ts
+   24466  InfectedSystem.ts
+   18692  EventBus.ts
+   17521  AgentMotion.ts
+   16793  CharacterSeparation.ts
+   12581  SimWorld.ts
+    8163  DistrictWorld.ts
+    7931  00bc1dde
+    7738  Perception.ts
+    6169  WeatherSystem.ts
+    4711  set Storage
+    4256  install.ts
+
+self time by function:
+   47220  cover HitQuery.ts:0
+   34353  query SpatialHash.ts:0
+   18692  emit EventBus.ts:0
+   13263  (anonymous) CharacterSeparation.ts:0
+   12075  (anonymous) SimWorld.ts:0
+   10515  commit SolidRegistry.ts:0
+    8128  clearDistance HitQuery.ts:0
+    6701  (anonymous) AgentMotion.ts:0
+    5982  update InfectedSystem.ts:0
+    5885  (anonymous) SolidRegistry.ts:0
+    5503  update WeatherSystem.ts:0
+    4757  clear NavGrid.ts:0
+    4711  set Storage :-1
+    4314  visitSolids NavGrid.ts:0
+    4304  forced AgentMotion.ts:0
+    4251  (anonymous) install.ts:0
+    4216  reachPath NavGrid.ts:0
+    3900  solids SolidRegistry.ts:0
+    3788  steerL1 InfectedSystem.ts:0
+    3626  closest Perception.ts:0
