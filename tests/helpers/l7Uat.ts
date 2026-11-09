@@ -277,7 +277,10 @@ async function checkFollowerBites() {
     checkFriendlyRocketReaction(w);
     for (const e of [...w.infected!.active]) { w.solids.forget(e); w.infected!.release(e); }
     const roster = w.l7Encounters!.state.roster, follower = w.entities.get(roster[0].id)!;
-    for (const row of roster.slice(1)) { const e = w.entities.get(row.id)!; e.hidden = true; w.solids.forget(e); }
+    for (const row of roster.slice(1)) {
+      const e = w.entities.get(row.id)!;
+      e.hidden = true; e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; w.solids.forget(e);
+    }
     // Keep this isolated mortality fixture on its only evacuee: the courier
     // must not steal the runner's target between the longer sequence of bites.
     w.inspectionGhost = true;
