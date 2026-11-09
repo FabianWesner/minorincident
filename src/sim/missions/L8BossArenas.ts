@@ -11,7 +11,7 @@ import { requireClearPoint } from './missionHelpers';
 export interface L8ArenaState {
   id: L8BossId; ids: number[]; carrier: number; phase: 0 | 1 | 2 | 3; startedAt: number; endedAt: number;
   nextAt: number; cycle: number; wallHits: number; wallContacts?: string[]; carrierRetryAt?: number; grabs: number; counters: number;
-  lane?: { x: number; side: 1 | -1; staging: boolean };
+  lane?: { x: number; side: 1 | -1; staging: boolean; startedAt?: number };
   track?: { x: number; z: number; vx: number; vz: number; turn: number; at: number };
 }
 const distance = (a: { x: number; z: number }, b: { x: number; z: number }) => Math.hypot(a.x - b.x, a.z - b.z);
@@ -273,7 +273,10 @@ export class L8BossArenas {
       const goal = { x: lane.x + (boss.slot - 1.5) * .95, z: lane.side === 1 ? 16 : 48 };
       this.walk(e, goal, 7);
       const members = arena.ids.map(id => w.entities.get(id)).filter((v): v is EntitySnapshot => !!v?.infected && v.health.current > 0);
-      if (members.every(v => !v.infected!.specialAttack && w.tick >= v.infected!.arenaBoss!.readyAt && distance(v.transform, { x: lane.x + (v.infected!.arenaBoss!.slot - 1.5) * .95, z: goal.z }) < 1.6)) {
+      const ready = members.every(v => !v.infected!.specialAttack && w.tick >= v.infected!.arenaBoss!.readyAt);
+      const aligned = members.every(v => distance(v.transform, { x: lane.x + (v.infected!.arenaBoss!.slot - 1.5) * .95, z: goal.z }) < 1.6);
+      // A straggler at a fence must not leave the rest of the herd waiting.
+      if (ready && (aligned || w.tick - (lane.startedAt ?? w.tick) >= 90)) {
         lane.staging = false; arena.nextAt = w.tick + (arena.phase === 2 ? 360 : 480);
         for (const member of members) this.start(member, 'zebra.stampede', 60, 36, .9, { x: 0, z: lane.side });
       }
@@ -318,7 +321,7 @@ export class L8BossArenas {
     }
     else if (arena.id === 'zebra') {
       const side = arena.cycle % 2 ? 1 : -1, predicted = this.predict(e, 2.2, arena);
-      arena.lane = { x: Math.max(46, Math.min(74, predicted.x)), side, staging: true };
+      arena.lane = { x: Math.max(46, Math.min(74, predicted.x)), side, staging: true, startedAt: this.w.tick };
     }
     else if (arena.id === 'lion') {
       if (arena.phase === 2 && arena.cycle % 2 === 0) {
@@ -479,5 +482,5 @@ export class L8BossArenas {
     return arena ? `${l8BossArenas.find(d => d.id === arena.id)!.name} · Phase ${arena.phase}` : null;
   }
   swapBlocked(): boolean { return this.w.infected!.active.some(e => e.health.current > 0 && e.infected!.arenaBoss?.arena === 'monkey' && e.infected!.grabUntil > this.w.tick); }
-  restore(delta: number): void { this.gateStates.clear(); this.updateGates(); for (const a of this.state) { if (a.startedAt) a.startedAt += delta; if (a.endedAt) a.endedAt += delta; if (a.nextAt) a.nextAt += delta; if (a.track) a.track.at += delta; if (a.carrierRetryAt) a.carrierRetryAt += delta; } }
+  restore(delta: number): void { this.gateStates.clear(); this.updateGates(); for (const a of this.state) { if (a.startedAt) a.startedAt += delta; if (a.endedAt) a.endedAt += delta; if (a.nextAt) a.nextAt += delta; if (a.track) a.track.at += delta; if (a.carrierRetryAt) a.carrierRetryAt += delta; if (a.lane?.startedAt !== undefined) a.lane.startedAt += delta; } }
 }
