@@ -1,0 +1,76 @@
+{
+  "pass": true,
+  "auditedAt": "2026-11-09T05:07:15.159Z",
+  "implementationRevision": "53d5c6b80728c842e946a4328ecc364facadacef",
+  "assetRepairRevision": "0e676b1a",
+  "runtimeChangesSinceAssetRepair": [],
+  "fourCells": {
+    "pass": true,
+    "count": 4,
+    "producerHashMatchesCurrent": true,
+    "currentAssetHashesMatched": 24,
+    "nativeBegin": true,
+    "normalMortalTime": true,
+    "minimumSimulationTicks": 3601,
+    "minimumWallSeconds": 60.085,
+    "browserReservationSeconds": 600,
+    "screenshotHashes": {
+      "low-webgl2-loaded.jpg": "b57a655615de79a917dca876d5737ab269837833db15a42f76c7a8af94565523",
+      "low-webgl2-60s.jpg": "51b1332cc5ac46bb7078cdca6f3e0dbead3a9c860c1ba2b91a17c3cf00a30527",
+      "high-webgl2-loaded.jpg": "0575ddc62643290d11d00e0a0e2389c84a0ae4fdca8d8c4137d648c927b092b0",
+      "high-webgl2-60s.jpg": "0daba2e9cd0d4098fbac91d19422bdc5b50e45c439f450ed323fcd31e6c44a77",
+      "low-webgpu-loaded.jpg": "92a001f696239ce356dec616d82be22a63fc60288c710feb90f022f71d77581b",
+      "low-webgpu-60s.jpg": "d8d9d859e4bc6aa0b995d420560c119891cd6db319c66e189605ec99f7d13333",
+      "high-webgpu-loaded.jpg": "0462f015a2b1e056a304a5d5d27803a8e39ead3eecd2da35f82c203d21acb340",
+      "high-webgpu-60s.jpg": "71a8c9613e785503c4989e79d58a5e2350a748cc5b482724e02942554f3b8031"
+    }
+  },
+  "affectedAssetValidation": {
+    "pass": true,
+    "files": 24
+  },
+  "sceneGate": {
+    "pass": true,
+    "rows": 50,
+    "batches": 4,
+    "missing": 0,
+    "failed": 0
+  },
+  "smoke": {
+    "pass": true,
+    "qaChecks": 6,
+    "publicChecks": 1,
+    "seconds": 128.378758833,
+    "budgetSeconds": 240,
+    "results": "smoke-checks.json",
+    "sourceLogSha256": "f812fcbdbe89948f0ef0d1269fb16c9a02653de859e60da43618d4db609e5039"
+  },
+  "unit": {
+    "pass": true,
+    "casesInRepository": 150,
+    "limit": 150
+  },
+  "verifyE30": {
+    "pass": true,
+    "checks": [
+      {
+        "command": "npm run typecheck",
+        "status": 0,
+        "seconds": 17.444
+      },
+      {
+        "command": "npm run lint",
+        "status": 0,
+        "seconds": 11.113
+      },
+      {
+        "command": "npm test",
+        "status": 0,
+        "seconds": 40.443
+      }
+    ]
+  },
+  "visualReview": "All four final screenshots reviewed: nonblank zoo, courier/group, HUD, full health and the tunnel-alarm dialogue at Begin+60s.",
+  "deploy": false,
+  "push": false
+}

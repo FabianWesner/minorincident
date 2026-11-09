@@ -1,12 +1,16 @@
 // Asset contract: every shipped GLB (all levels, all LODs) passes the one validator in tools/assets/validate.ts.
 // Validator rejection cases and atlas identity details are shared across every figure build.
 import { Document } from '@gltf-transform/core';
+import { mkdtempSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { assetIO } from '../../tools/assets/io';
 import { crewRoofs } from '../../src/data/vehicles';
 import { cloneDocument } from '@gltf-transform/functions';
 import { expect, test } from 'vitest';
 import manifest from '../../src/assets/manifest.json';
 import type { AssetDef } from '../../src/assets/types';
+import { variantPath } from '../../src/assets/types';
 import { validateAssets, validateDocument } from '../../tools/assets/validate';
 import { extractLights } from '../../tools/assets/lights';
 import { optimizeDocument } from '../../tools/assets/optimize';
@@ -143,6 +147,35 @@ test('uniform and civilian faces and yellow bare arms share the per-person skin 
 });
 
 test('the asset validator rejects every contract violation, and every production asset passes it', async () => {
+  const crowdIO = await assetIO(), temporary = mkdtempSync(join(tmpdir(), 'crowd-delivery-'));
+  try {
+    const { doc, def } = fixture(), buffer = doc.getRoot().listBuffers()[0];
+    def.crowdSkin = true; def.textureMode = 'baseColor'; def.decayVariants = []; def.glb = join(temporary, 'body.glb');
+    const primitive = doc.getRoot().listMeshes()[0].listPrimitives()[0];
+    const owner = doc.createAccessor().setType('SCALAR').setArray(new Float32Array([0, 0, 0])).setBuffer(buffer);
+    primitive.setAttribute('_CROWD_PART', owner)
+      .setAttribute('JOINTS_0', doc.createAccessor().setType('VEC4').setArray(new Uint16Array(12)).setBuffer(buffer))
+      .setAttribute('WEIGHTS_0', doc.createAccessor().setType('VEC4').setArray(new Float32Array([1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0])).setBuffer(buffer));
+    await crowdIO.write(def.glb, doc);
+    const absentLow = await validateAssets([def]);
+    expect(absentLow.flatMap(row => row.errors)).toContain(`missing low GLB ${join(temporary, 'body.low.glb')}`);
+    owner.setScalar(2, 1);
+    await crowdIO.write(join(temporary, 'body.low.glb'), doc);
+    const badOwner = await validateAssets([def]);
+    expect(badOwner.find(row => row.id === `${def.id}:lod0:low`)?.errors).toContain('body: semantic owner is not weighted at vertex 2');
+  } finally { rmSync(temporary, { recursive: true, force: true }); }
+  // Read every runtime crowd LOD/tier/coat. Missing or corrupt files fail the
+  // read; semantic checks also cover the appended monkey tail at LOD2.
+  for (const def of (manifest as AssetDef[]).filter(asset => asset.crowdSkin)) {
+    for (const decay of [undefined, ...def.decayVariants]) for (const [lod, path] of [def.glb, def.lods?.lod1, def.lods?.lod2].entries()) {
+      expect(path, `${def.id}:lod${lod} must be declared`).toBeTruthy();
+      for (const low of [false, true]) {
+        const file = variantPath(path!.replace(/\.glb$/, low ? '.low.glb' : '.glb'), decay);
+        const report = validateDocument(await crowdIO.read(file), def, 0, lod);
+        expect(report.errors.filter(error => error.includes('semantic owner')), file).toEqual([]);
+      }
+    }
+  }
   // Disabled sockets must not masquerade as authored lights after wreck exports strip their metadata.
   const lightFixture = { nodes: [{ name: 'light:headlight' }], scenes: [{ nodes: [0] }] };
   expect(extractLights(lightFixture).errors).toEqual(['light:headlight: light anchor is missing ss_light']);

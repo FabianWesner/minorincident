@@ -5,9 +5,11 @@ import type { AssetDef } from '../../src/assets/types';
 const io = await assetIO();
 for (const healthy of [true, false]) {
   const id = healthy ? 'amb.monkey' : 'inf.monkey', base = healthy ? 'amb.gorilla' : 'inf.gorilla';
-  for (const lod of [0, 1, 2]) {
-    const d = await io.read(`public/assets/models/skinned/${base}.lod${lod}.glb`), root = d.getRoot(), buffer = root.listBuffers()[0];
+  for (const lod of [0, 1, 2]) for (const quality of ['', '.low']) {
+    const d = await io.read(`public/assets/models/skinned/${base}.lod${lod}${quality}.glb`), root = d.getRoot(), buffer = root.listBuffers()[0];
     const body = root.listNodes().find(n => n.getName() === 'skin_body')!, p = body.getMesh()!.listPrimitives()[0];
+    const hip = body.getSkin()!.listJoints().findIndex(joint => joint.getName() === 'hip');
+    if (hip < 0) throw new Error(`${base}: missing hip joint for the tail`);
     const count = p.getAttribute('POSITION')!.getCount(), tail: number[][] = [], normals: number[][] = [], indices: number[] = [];
     const rings = lod === 0 ? 14 : lod === 1 ? 10 : 6, sides = 6;
     for (let j = 0; j <= rings; j++) {
@@ -22,7 +24,8 @@ for (const healthy of [true, false]) {
       const a = p.getAttribute(semantic)!, old = a.getArray()!, size = a.getElementSize();
       const combined = new (old.constructor as { new(length: number): typeof old })(old.length + tail.length * size); combined.set(old);
       for (let i = 0; i < tail.length; i++) for (let c = 0; c < size; c++) {
-        const value = semantic === 'POSITION' ? tail[i][c] : semantic === 'NORMAL' ? normals[i][c] * 32767 : semantic === 'JOINTS_0' ? c === 0 ? 1 : 0 : semantic === 'WEIGHTS_0' ? c === 0 ? 65535 : 0 : old[c];
+        // The added tail belongs to the same hip joint that carries its weights.
+        const value = semantic === 'POSITION' ? tail[i][c] : semantic === 'NORMAL' ? normals[i][c] * 32767 : semantic === '_CROWD_PART' ? hip : semantic === 'JOINTS_0' ? c === 0 ? hip : 0 : semantic === 'WEIGHTS_0' ? c === 0 ? 65535 : 0 : old[c];
         combined[old.length + i * size + c] = value;
       }
       p.setAttribute(semantic, d.createAccessor().setType(a.getType()).setNormalized(a.getNormalized()).setArray(combined).setBuffer(buffer));
@@ -40,7 +43,7 @@ for (const healthy of [true, false]) {
     for (const animation of root.listAnimations()) for (const channel of animation.listChannels()) if (channel.getTargetPath() === 'translation') {
       const a = channel.getSampler()!.getOutput()!; if (scaled.has(a)) continue; scaled.add(a); const values = a.getArray()!; for (let i = 0; i < values.length; i++) values[i] *= .55;
     }
-    await io.write(`public/assets/models/skinned/${id}.lod${lod}.glb`, d);
+    await io.write(`public/assets/models/skinned/${id}.lod${lod}${quality}.glb`, d);
   }
   mkdirSync(`assets/${id}`, { recursive: true });
   writeFileSync(`assets/${id}/notes.md`, `# ${id}\n\nDerived from the shipped ${base} skin at 55% scale, with a long hip-skinned tail. Keeps the reviewed primate joints and motion clips; healthy/infected atlases preserve the existing eyes and wound distinction. Rebuild with \`node --import tsx tools/assets/build-l8-monkeys.ts\`. Arena leader is enlarged at runtime. Browser visual QA remains pending.\n`);
@@ -48,8 +51,8 @@ for (const healthy of [true, false]) {
 // Lioness: reduce the welded neck mane on the same feline skeleton; face, teeth and eye paint stay intact.
 for (const healthy of [true, false]) {
   const id = healthy ? 'amb.lioness' : 'inf.lioness', base = healthy ? 'amb.lion' : 'inf.lion';
-  for (const lod of [0, 1, 2]) {
-    const d = await io.read(`public/assets/models/skinned/${base}.lod${lod}.glb`);
+  for (const lod of [0, 1, 2]) for (const quality of ['', '.low']) {
+    const d = await io.read(`public/assets/models/skinned/${base}.lod${lod}${quality}.glb`);
     const seen = new Set<unknown>();
     for (const mesh of d.getRoot().listMeshes()) for (const primitive of mesh.listPrimitives()) {
       const a = primitive.getAttribute('POSITION')!; if (seen.has(a)) continue; seen.add(a);
@@ -58,7 +61,7 @@ for (const healthy of [true, false]) {
         v[i] = .75 + (v[i] - .75) * .4; v[i + 1] = .98 + (v[i + 1] - .98) * .6; v[i + 2] *= .6;
       }
     }
-    await io.write(`public/assets/models/skinned/${id}.lod${lod}.glb`, d);
+    await io.write(`public/assets/models/skinned/${id}.lod${lod}${quality}.glb`, d);
   }
   mkdirSync(`assets/${id}`, { recursive: true });
   writeFileSync(`assets/${id}/notes.md`, `# ${id}\n\nLioness derivative of ${base}, on the same rig and atlas. Reduces the broad neck mane to a close neck silhouette. Rebuild with node --import tsx tools/assets/build-l8-monkeys.ts. Browser visual QA remains pending.\n`);
