@@ -127,6 +127,14 @@ export function installAgentMotion(world: SimWorld): void {
           const at = { x: p.x, z: p.z };
           world.infected!.nav.move(at, dx / distance * limit, dz / distance * limit, e.combat?.radius ?? .35);
           Object.assign(e.transform, at); world.spatial.set(e.id, at.x, at.z);
+          if (l7Follower && e.locomotion) {
+            // Feed the resolved approach bound back into steering. Retaining
+            // the faster pre-clamp velocity makes a moving slot overshoot,
+            // brake and restart while its neighbours keep walking.
+            e.locomotion.vx = (at.x - p.x) / FIXED_DT;
+            e.locomotion.vz = (at.z - p.z) / FIXED_DT;
+            e.locomotion.ax = e.locomotion.az = 0;
+          }
         }
       }
       groundAgent(world, e);

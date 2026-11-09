@@ -9,6 +9,7 @@ import { preset } from '../../src/sim/progression/Campaign';
 import { missionControls } from '../../src/sim/missions/controls';
 import { adultMaleStandingHeight, civilianHeight, fitCivilianHeight, heroineStandingHeight } from '../../src/render/npc/figureHeight';
 import { SimWorld } from '../../src/sim/world/SimWorld';
+import { SimPhase } from '../../src/core/EventBus';
 import { actorRadius, solidLargeCorpse } from '../../src/sim/world/SolidRegistry';
 import { followerInCombat, updateSurvivor } from '../../src/sim/outbreak/Survivors';
 import { formationBack, formationSlot } from '../../src/sim/missions/missionHelpers';
@@ -178,6 +179,25 @@ test('escort: shared combat pace, follows through a maze, a 2 s stand revives to
     w.npcs!.move(group[0], { x: at.x + 2, z: at.z }, 3, group[0].civilian!, 0);
     expect(move).toHaveBeenCalled(); expect(move.mock.calls[0][2]).toBeCloseTo(0, 10);
     move.mockRestore();
+  }
+  {
+  const w = await loadRunnerLevel('L7', 1, undefined, 0, { quality: 'low' }); worlds.push(w);
+  for (const e of w.infected!.active) e.hidden = true;
+  const follower = w.entities.get(w.l7Encounters!.state.roster[0].id)!, start = { ...follower.transform };
+  for (const r of w.l7Encounters!.state.roster.slice(1)) w.entities.get(r.id)!.hidden = true;
+  w.missions!.state.steps.rocket.status = w.missions!.state.steps.corridor.status = 'completed';
+  w.missions!.state.steps.departure.status = 'active';
+  const remove = w.events.on('sim.tick', () => {
+    // Supply an over-cap step immediately before the authored pace clamp.
+    follower.transform.x = start.x + 8 / 60; follower.transform.z = start.z;
+    follower.locomotion = { vx: 8, vz: 0, ax: 10, az: 0, omega: 0, updatedAt: w.tick };
+  }, SimPhase.cleanup + .25);
+  step(w, 1); remove();
+  const actual = (follower.transform.x - start.x) * 60;
+  expect(actual).toBeLessThanOrEqual(4.6 + 1e-8);
+  expect(actual).toBeGreaterThan(4.5);
+  expect(follower.locomotion!.vx, 'the next steering step starts from resolved, capped motion').toBeCloseTo(actual, 8);
+  expect(follower.locomotion!.ax).toBe(0);
   }
   {
   const w = await world(), p = w.entities.get(1)!;
