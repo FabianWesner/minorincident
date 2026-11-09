@@ -482,15 +482,21 @@ export class ThreatObserver {
       const disconnected = goal === at && Math.hypot(at.x - player.transform.x, at.z - player.transform.z) > 2.5;
       const legalBarrierPath = (stretch: number) => this.level === 'L4' && !e.pendingAdmission
         && Number.isFinite(this.barrierDistance(source, e, player.transform, stretch * Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z)));
+      let boundedPath = false;
       if (Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) <= 30) {
         nearby++;
-        if ((!e.pendingAdmission || entrance || authored.length) && !disconnected && this.paths.query(source, routed, player.transform, 2.5, authored) || legalBarrierPath(2.5)) boundedReachable++;
+        boundedPath = !!((!e.pendingAdmission || entrance || authored.length) && !disconnected && this.paths.query(source, routed, player.transform, 2.5, authored) || legalBarrierPath(2.5));
+        if (boundedPath) boundedReachable++;
         else { boundedBlockedIds.push(e.id); boundedBlockedPositions.push({ identity: token, id: e.id, x: e.transform.x, z: e.transform.z, playerX: player.transform.x, playerZ: player.transform.z }); }
       }
       // L4's every-infected clause needs a continuous path at the actual body
       // radius too, rather than only A* connectivity on the narrower AI bake.
       const legalStretch = this.level === 'L4' ? 1e9 : Infinity;
-      if ((!e.pendingAdmission || entrance || authored.length) && !disconnected && this.paths.query(source, routed, goal, legalStretch, authored) || legalBarrierPath(Infinity)) reachable.add(token);
+      // A body-clear route within 2.5× direct distance already proves the
+      // unbounded route to that same destination. Reuse the witness instead
+      // of doing a second independent A* / destructible-barrier search.
+      if (boundedPath && (this.level === 'L4' || (e.combat?.radius ?? .35) <= source.clearance) && goal.x === player.transform.x && goal.z === player.transform.z
+        || (!e.pendingAdmission || entrance || authored.length) && !disconnected && this.paths.query(source, routed, goal, legalStretch, authored) || legalBarrierPath(Infinity)) reachable.add(token);
       else positions.push({ identity: token, id: e.id, x: e.transform.x, z: e.transform.z, playerX: player.transform.x, playerZ: player.transform.z });
     }
     // Geometry is sampled after the sim tick. Charge it to the phases now
