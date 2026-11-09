@@ -1,0 +1,19 @@
+{
+  "adapterSha256": "f3892662a55f32b417eb4d3769ced54984f7d14fff4cada06024d595304397cb",
+  "patchRows": [
+    {
+      "side": "candidate",
+      "main": "/build/index-CrPXP-rT.js",
+      "originalSha256": "ab39ed860a2debf9804836047e279b997873beeaa0cbbb2ab2795e09755c7922",
+      "patchedSha256": "58b176a38ab2df92cf6e11380e6ea9f74e3042204b640ac696a256516fe84c7d",
+      "patch": "Expose the existing Game instance to the shared test adapter only for ?testApi=1; original public code otherwise intact."
+    },
+    {
+      "side": "prod",
+      "main": "/build/index-Dk-iL-FG.js",
+      "originalSha256": "61043483d030ec6be950a50c4de5d2d3d1301106df7a6ac18c2eaa0b1bbf29e0",
+      "patchedSha256": "1e611e98364fc87f75469e2f1e6c987a9826a19d0b3bcb39159a4e65489892bb",
+      "patch": "Expose the existing Game instance to the shared test adapter only for ?testApi=1; original public code otherwise intact."
+    }
+  ]
+}

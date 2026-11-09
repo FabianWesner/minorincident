@@ -87,7 +87,7 @@ export class NavGrid {
     if (!nearest) throw new Error('No walkable destination');
     return nearest;
   }
-  /** Load/test-time flood fill. The typed queue bounds memory and does not use Array.shift(). */
+  /** Load/test-time scanline flood. Queue row spans instead of every open cell. */
   flood(start: Point): Uint8Array {
     const reached = new Uint8Array(this.cells.length),
       queue = new Int32Array(this.cells.length),
@@ -98,14 +98,16 @@ export class NavGrid {
     queue[0] = first;
     reached[first] = 1;
     while (read < write) {
-      const i = queue[read++],
-        x = i % this.width;
-      // L10 visits millions of cells at load: do not allocate a four-element array for each one.
-      for (let direction = 0; direction < 4; direction++) {
-        const n = direction === 0 ? x > 0 ? i - 1 : -1 : direction === 1 ? x < this.width - 1 ? i + 1 : -1 : direction === 2 ? i - this.width : i + this.width;
-        if (n >= 0 && n < this.cells.length && this.cells[n] && !reached[n]) {
-          reached[n] = 1;
-          queue[write++] = n;
+      const i = queue[read++], row = i - i % this.width, end = row + this.width;
+      let left = i, right = i;
+      while (left > row && this.cells[left - 1] && !reached[left - 1]) reached[--left] = 1;
+      while (right + 1 < end && this.cells[right + 1] && !reached[right + 1]) reached[++right] = 1;
+      for (const offset of [-this.width, this.width]) {
+        if (left + offset < 0 || right + offset >= this.cells.length) continue;
+        let span = false;
+        for (let j = left + offset; j <= right + offset; j++) {
+          if (!this.cells[j] || reached[j]) { span = false; continue; }
+          if (!span) { reached[j] = 1; queue[write++] = j; span = true; }
         }
       }
     }

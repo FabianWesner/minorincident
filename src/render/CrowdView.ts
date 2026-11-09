@@ -29,7 +29,7 @@ import { contactShadowMaterial } from './ContactShadows';
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from Bruno Simon InstancedGroup.js (MIT, 41046b5), using E17 GPU crowdMatrix/clipTexture.
 import { BoxGeometry, BufferGeometry, PlaneGeometry, Color, DoubleSide, FrontSide, Group, InstancedInterleavedBuffer, InterleavedBufferAttribute, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, Frustum, Sphere, Vector3, StreamDrawUsage } from 'three/webgpu';
-import { varying, mix, attribute, mat4, normalGeometry, vec3, positionGeometry, vec4, float, uint, cameraViewMatrix, luminance, screenCoordinate, frontFacing, texture as sampleTexture, uv } from 'three/tsl';
+import { varying, mix, attribute, mat4, normalGeometry, vec3, positionGeometry, vec4, float, uint, uniform, cameraViewMatrix, luminance, screenCoordinate, frontFacing, texture as sampleTexture, uv } from 'three/tsl';
 import { packCrowdParts, poseTexture } from '../assets/crowd';
 import type { Materials } from './Materials';
 import { PaletteMaterial } from './PaletteMaterial';
@@ -450,7 +450,10 @@ export class CrowdView extends Group {
       const ordinarySurface = regularInfectedModels.some(model => model === asset);
       const sharedAlpha = (this.world.scenario === 'L8' || this.world.scenario === 'L10') && alpha;
       const sharedSurface = (this.world.scenario === 'L4' || ordinarySurface) && infectedAtlas || zooSurface || sharedAlpha && (this.world.scenario === 'L10' || lod === 'lod1');
-      const materialKey = sharedSurface && baked.texture ? `${baked.clip.parts.join('|')}:${poses.bindRow}:${baked.doubleSided}:${inlineAccessories}:${asset.startsWith('npc.')}:${baked.geometry.hasAttribute('_skin')}:${human}:${healthy}:${infectedAtlas}:${dogPalette}:${regularAlpha}` : undefined;
+      // Zoo joint names and atlas widths are data addressed through integer
+      // texels. They do not change the skinning graph; each draw binds its rig.
+      const rigKey = zooSurface ? 'zoo' : baked.clip.parts.join('|');
+      const materialKey = sharedSurface && baked.texture ? `${rigKey}:${zooSurface ? 'per-draw' : poses.bindRow}:${baked.doubleSided}:${inlineAccessories}:${asset.startsWith('npc.')}:${baked.geometry.hasAttribute('_skin')}:${human}:${healthy}:${infectedAtlas}:${dogPalette}:${regularAlpha}` : undefined;
       let sharedSkin = materialKey ? this.sharedSkinMaterials.get(materialKey) : undefined;
       let material = sharedSkin?.material, surfaceAtlas = sharedSkin?.atlas;
       if (!material) {
@@ -510,7 +513,10 @@ export class CrowdView extends Group {
       material.depthTest = material.depthWrite = true;
       material.side = baked.doubleSided ? DoubleSide : FrontSide;
       const outgoing = variant.w.div(2).floor(), weight = variant.w.mod(2);
-      const matrix: TslNode<'mat4'> = skinnedCrowdMatrix(sharedPose ?? texture, parts.x, feedbackState.x, outgoing, weight, poses.bindRow);
+      // Bind rows depend on clip length/capacity, not shader structure. Zoo
+      // draws select their own row through the same object update as textures.
+      const bindRow = zooSurface ? uniform(poses.bindRow).onObjectUpdate(({ object }) => crowdSurfaceBindings.get((object as Mesh).geometry)?.bindRow ?? poses.bindRow) : poses.bindRow;
+      const matrix: TslNode<'mat4'> = skinnedCrowdMatrix(sharedPose ?? texture, parts.x, feedbackState.x, outgoing, weight, bindRow);
       const column = (offset: number) => attribute(`_crowd${offset / 4}`, 'vec4');
       const instance = mat4(column(0), column(4), column(8), column(12));
       material.positionNode = instance.mul(matrix.mul(vec4(positionGeometry, 1))).xyz;
@@ -554,7 +560,7 @@ export class CrowdView extends Group {
         // Each living or frozen draw binds its own pose and colour atlas.
         const binding = sharedSkin, atlas = baked.texture;
         bindSurface = () => { binding.pose.value = texture; binding.atlas.value = atlas; };
-        const surface = { bind: bindSurface, textures: [atlas] };
+        const surface = { bind: bindSurface, textures: [atlas], bindRow: poses.bindRow };
         crowdSurfaceBindings.set(mesh.geometry, surface);
         const body = this.corpseGeometry.get(key);
         if (body && (!sharedAlpha || this.world.scenario === 'L10' && lod === 'lod0')) crowdSurfaceBindings.set(body, surface);

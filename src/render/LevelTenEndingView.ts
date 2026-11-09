@@ -1,5 +1,8 @@
-import { AnimationMixer, BoxGeometry, CircleGeometry, Group, Mesh, MeshBasicNodeMaterial, type Object3D, type Scene } from 'three/webgpu';
+import { AnimationMixer, BoxGeometry, CircleGeometry, Group, Mesh, MeshBasicNodeMaterial, Object3D, type BufferGeometry, type Material, type Scene } from 'three/webgpu';
 import { AssetRegistry } from '../assets/registry';
+import { staticBatchAsync } from '../assets/staticBatch';
+import { InstancedGroup } from './InstancedGroup';
+import { loadGate } from '../assets/loadGate';
 import { retargetClip } from './characters/clips';
 import { epiloguePull } from '../sim/missions/LevelTenEpilogue';
 import type { SimWorld } from '../sim/world/SimWorld';
@@ -24,6 +27,9 @@ export class LevelTenEndingView extends Group {
   private readonly registry: AssetRegistry;
   private readonly shots: Group[] = [];
   private readonly roads: Mesh[] = [];
+  private readonly batches = new Set<InstancedGroup>();
+  private readonly batchGeometry = new Set<BufferGeometry>();
+  private readonly batchMaterials = new Map<string, Material>();
   private readonly actors: { root: Object3D; mixer: AnimationMixer; shot: number; cured: boolean; stood: boolean; x: number; z: number }[] = [];
   private hidden = new Map<Object3D, boolean>();
   private readonly dustMaterial = new MeshBasicNodeMaterial({ color: '#64ff32', transparent: true, opacity: .18, depthWrite: false });
@@ -32,16 +38,27 @@ export class LevelTenEndingView extends Group {
   private ready = false;
   private lastShot = -1;
   readonly errors: string[] = [];
-  constructor(private readonly world: SimWorld, private readonly scene: Scene, materials: Materials, private readonly warm: (model: Object3D) => Promise<void>) {
+  constructor(private readonly world: SimWorld, private readonly scene: Scene, private readonly materials: Materials, private readonly warm: (model: Object3D) => Promise<void>) {
     super(); this.registry = new AssetRegistry(() => {}, { materials }); this.visible = false;
     const console = world.missions!.def.anchors['cure-console']; this.position.set(console.x, 0, console.z);
     this.dust.rotation.x = -Math.PI / 2; this.dust.position.y = .12; this.add(this.dust);
     void this.prepare().catch(error => this.errors.push(String(error)));
   }
   private async item(group: Group, item: Item, shot: number, cured = false): Promise<void> {
-    const [id, x, z, yaw = 0] = item;
-    const root = await this.registry.loadAsset(id, 'low');
     if (this.disposed) return;
+    const [id, x, z, yaw = 0] = item;
+    const source = await this.registry.loadAsset(id, 'low');
+    if (this.disposed) return;
+    let root: Object3D = source;
+    if (!id.startsWith('npc.')) {
+      // Fixed scenery uses the same shared palette/instance layout as the
+      // district, rather than compiling a graph for every GLB material.
+      source.userData.paletteWorld = false;
+      const prototype = await staticBatchAsync(source, true, this.materials, () => loadGate.wait(), 4, this.batchMaterials);
+      prototype.traverse(node => { if (node instanceof Mesh) this.batchGeometry.add(node.geometry); });
+      if (this.disposed) { for (const geometry of this.batchGeometry) geometry.dispose(); for (const material of this.batchMaterials.values()) material.dispose(); return; }
+      root = new InstancedGroup(prototype, [new Object3D()], 1); this.batches.add(root as InstancedGroup);
+    }
     root.position.set(x, 0, z); root.rotation.y = yaw;
     if (id.startsWith('npc.')) {
       const mixer = new AnimationMixer(root); mixer.clipAction(retargetClip(root, cured ? 'npc-cower' : shot >= 5 ? 'npc-walk' : 'idle')).play();
@@ -53,6 +70,7 @@ export class LevelTenEndingView extends Group {
     const save = this.world.progression?.campaign;
     const roster = save?.crossingHandover?.shelteredPassengers ?? save?.results?.L8?.escapedSurvivors ?? [];
     for (let i = 0; i < tableaux.length; i++) {
+      if (this.disposed) return;
       const group = new Group(); group.visible = false; this.shots.push(group); this.add(group);
       const floor = new Mesh(new BoxGeometry(220, .15, 180), new MeshBasicNodeMaterial({ color: i === 1 ? '#405e68' : i === 6 ? '#777b79' : '#8d9167' }));
       floor.position.y = -.14; group.add(floor);
@@ -61,6 +79,7 @@ export class LevelTenEndingView extends Group {
         road.position.set(0, -.045, -2); group.add(road); this.roads.push(road);
       }
       for (const item of tableaux[i]) await this.item(group, item, i);
+      if (this.disposed) return;
       if (i < 5) for (let n = 0; n < 4; n++) await this.item(group, [n === 2 ? 'npc.national-guard' : n === 3 ? 'npc.paramedic' : 'npc.civilian-man-a', n * 4 - 6, 2 + n % 2 * 3], i, true);
       if (i === 2) {
         // Nadia's keeper cap left on the enclosure fence.
@@ -131,6 +150,9 @@ export class LevelTenEndingView extends Group {
     for (const actor of this.actors) { actor.mixer.stopAllAction(); actor.mixer.uncacheRoot(actor.root); }
     for (const shot of this.shots) { const floor = shot.children[0] as Mesh; floor?.geometry.dispose(); (floor?.material as MeshBasicNodeMaterial)?.dispose(); }
     for (const road of this.roads) { road.geometry.dispose(); (road.material as MeshBasicNodeMaterial).dispose(); }
+    for (const batch of this.batches) batch.dispose();
+    for (const geometry of this.batchGeometry) geometry.dispose();
+    for (const material of this.batchMaterials.values()) material.dispose();
     this.dust.geometry.dispose(); this.dustMaterial.dispose(); this.removeFromParent(); void this.registry.dispose(); cureDust.radius.value = -1;
   }
 }

@@ -217,6 +217,24 @@ export class DistrictWorld {
     }
     return height;
   }
+  /** Exact nav-cell ground samples without querying the empty countryside cell by cell. */
+  groundHeights(): Float32Array {
+    const nav = this.nav, heights = new Float32Array(nav.cells.length);
+    const raster = (min: Point, max: Point, height: number, polygon?: Point[]): void => {
+      if (height <= 0) return;
+      const x0 = Math.max(0, Math.ceil((min[0] - nav.min[0]) / nav.cellSize - .5)), x1 = Math.min(nav.width - 1, Math.floor((max[0] - nav.min[0]) / nav.cellSize - .5));
+      const z0 = Math.max(0, Math.ceil((min[1] - nav.min[1]) / nav.cellSize - .5)), z1 = Math.min(nav.height - 1, Math.floor((max[1] - nav.min[1]) / nav.cellSize - .5));
+      for (let z = z0; z <= z1; z++) for (let x = x0; x <= x1; x++) {
+        const i = z * nav.width + x;
+        if (nav.cells[i] && height > heights[i] && (!polygon || insideXZ(nav.min[0] + (x + .5) * nav.cellSize, nav.min[1] + (z + .5) * nav.cellSize, polygon))) heights[i] = height;
+      }
+    };
+    const supports = new Set<Aabb>();
+    for (const bucket of this.supports.values()) for (const a of bucket) if (!supports.has(a)) { supports.add(a); raster([a.min[0], a.min[2]], [a.max[0], a.max[2]], a.max[1]); }
+    const slabs = new Set<Point[]>();
+    for (const bucket of this.slabs.values()) for (const s of bucket) if (!slabs.has(s.polygon)) { slabs.add(s.polygon); raster(s.min, s.max, s.height, s.polygon); }
+    return heights;
+  }
   /**
    * The walkable support a body at (x, z) whose feet are at `feet` stands on: the highest support or paving top that is at most
    * `rise` (a step) above the feet. Unlike `pavingHeight` (the highest top anywhere in the column) a body on the street below the

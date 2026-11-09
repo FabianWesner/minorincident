@@ -102,6 +102,11 @@ export class DistrictView extends Group {
   terrainState() { return this.parts.terrain?.snapshot() ?? null; }
   /** Borrowed geometry/materials: the caller warms and detaches this copy. */
   horizonForWarmup(): Group | null { return this.parts.terrainHorizon?.clone(true) ?? null; }
+  /** The panorama enters only near the finale; its pipelines can prepare with that region. */
+  prepareOverview(): Group | undefined {
+    this.overviewView?.traverse(node => { delete node.userData.preventPreRender; });
+    return this.overviewView;
+  }
   private readonly mergedLayout = this.parts.mergedLayout;
   private readonly windowMask = new MeshBasicNodeMaterial({ color: "#ffffff" });
   private readonly black = new MeshBasicNodeMaterial({ color: "#000000" });
@@ -130,13 +135,14 @@ export class DistrictView extends Group {
   async load(seed: number, focus?: { x: number; z: number }, heroAtSpawn = false): Promise<void> {
     this.phase.value = 0;
     await buildDistrict(this.parts, { view: this, world: this.world, materials: this.materials, registry: this.registry, grassMaterial: this.grassMaterial, foliage: this.foliage, low: () => this.low, instanceCapacity: this.instanceCapacity }, seed, focus, heroAtSpawn);
-    if (this.world.composition.id === 'L10') { this.overviewView = new LevelTenOverview(this.world, this.materials); this.add(this.overviewView); }
+    if (this.world.composition.id === 'L10') {
+      this.overviewView = new LevelTenOverview(this.world, this.materials);
+      this.overviewView.traverse(node => { node.userData.preventPreRender = true; });
+      this.add(this.overviewView);
+    }
     this.occlusion.tagInteriors();
-    await Promise.all(this.world.districts.flatMap(d => d.decay.placements.filter(p => p.destruction && !p.destruction.indestructible).map(async p => {
-      const source = await this.registry.asset(p.assetId, false, 'lod1', p.decay);
-      this.destructionSources.set(`${d.id}/${p.id}`, source);
-      if (p.destruction?.class === 'vehicle') this.destructionSources.set(`${d.id}/${p.id}/wreck`, await this.registry.asset(p.assetId, false, 'lod1', 'burned'));
-    })));
+    // Destruction geometry is presentation-only until an object is first hit.
+    // Load it on demand so untouched placements do not delay the playable scene.
   }
 
   /** Drawn ground at a world point (null outside the baked district ground). */
@@ -448,7 +454,7 @@ export class DistrictView extends Group {
       if (!entry || !ref) continue;
       if (o.state.revision > 0 && !this.destructionView.has(o.id)) {
         const source = this.destructionSources.get(o.id);
-        if (!source) continue;
+        if (!source) { this.loadDestructionSource(o); continue; }
         this.destructionView.extract(o, source, this.destructionSources.get(`${o.id}/wreck`));
       }
       const destructed = o.state.revision > 0 && this.destructionView.has(o.id);
@@ -456,6 +462,20 @@ export class DistrictView extends Group {
       this.destructionActive.set(o.id, destructed);
     }
     this.destructionView.update(destruction);
+  }
+  private readonly destructionLoads = new Map<string, Promise<void>>();
+  private loadDestructionSource(o: Destruction['objects'][number]): void {
+    if (this.destructionLoads.has(o.id)) return;
+    const placement = o.placement;
+    const load = (async () => {
+      const source = await this.registry.asset(placement.assetId, false, 'lod1', placement.decay);
+      const wreck = placement.destruction?.class === 'vehicle'
+        ? await this.registry.asset(placement.assetId, false, 'lod1', 'burned') : undefined;
+      if (this.disposed) return;
+      this.destructionSources.set(o.id, source);
+      if (wreck) this.destructionSources.set(`${o.id}/wreck`, wreck);
+    })().catch(error => { this.destructionLoads.delete(o.id); console.error(`Failed to load destruction view for ${o.id}`, error); });
+    this.destructionLoads.set(o.id, load);
   }
   private readonly propPoint = new Vector3();
   private propGap(entry: LodBatch, ref: Object3D, batch: InstancedGroup): number {
@@ -613,7 +633,7 @@ export class DistrictView extends Group {
     };
     await Promise.all(Array.from({ length: 4 }, worker));
   }
-  async ready(): Promise<void> { await Promise.all([...this.pending.values(), this.parts.terrain?.ready()]); }
+  async ready(): Promise<void> { await Promise.all([...this.pending.values(), ...this.destructionLoads.values(), this.parts.terrain?.ready()]); }
   /** Probe-only mask; render normal view immediately afterwards so it cannot leak across frames. */
   mask(on: boolean): void {
     if (on) {

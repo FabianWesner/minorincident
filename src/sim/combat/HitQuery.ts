@@ -18,66 +18,69 @@ export class HitQuery {
     this.area.x = origin.x; this.area.z = origin.z; this.area.r = range;
     return this.spatial.query(this.area, this.neighbors);
   }
-  /** Static walls bucketed on an 4 m grid (rebuilt when the array changes; `invalidate` after in-place edits). */
-  private grid: { cells: Map<number, number[]>; length: number; first: CoverWall | undefined; last: CoverWall | undefined } | null = null;
+  /** Cover walls bucketed on an 8 m grid; blocker mutations invalidate the shared index. */
+  private grid: { cells: Map<number, number[]>; walls: readonly CoverWall[]; length: number; first: CoverWall | undefined; last: CoverWall | undefined; dynamicLength: number; dynamicFirst: CoverWall | undefined; dynamicLast: CoverWall | undefined } | null = null;
   private stamps = new Uint32Array(0);
   private stamp = 0;
   private readonly candidates: number[] = [];
   invalidate(): void { this.grid = null; }
   private static key(x: number, z: number): number { return (x + 4096) * 8192 + z + 4096; }
   private index() {
-    const w = this.walls;
-    if (this.grid && this.grid.length === w.length && this.grid.first === w[0] && this.grid.last === w[w.length - 1]) return this.grid;
+    const fixed = this.walls, dynamic = this.dynamicWalls;
+    if (this.grid && this.grid.length === fixed.length && this.grid.first === fixed[0] && this.grid.last === fixed[fixed.length - 1]
+      && this.grid.dynamicLength === dynamic.length && this.grid.dynamicFirst === dynamic[0] && this.grid.dynamicLast === dynamic[dynamic.length - 1]) return this.grid;
+    const w = [...fixed, ...dynamic];
     const cells = new Map<number, number[]>();
     w.forEach((wall, i) => {
-      for (let x = Math.floor((wall.x - wall.halfX) / 4); x <= Math.floor((wall.x + wall.halfX) / 4); x++) for (let z = Math.floor((wall.z - wall.halfZ) / 4); z <= Math.floor((wall.z + wall.halfZ) / 4); z++) {
+      for (let x = Math.floor((wall.x - wall.halfX) / 8); x <= Math.floor((wall.x + wall.halfX) / 8); x++) for (let z = Math.floor((wall.z - wall.halfZ) / 8); z <= Math.floor((wall.z + wall.halfZ) / 8); z++) {
         const key = HitQuery.key(x, z), list = cells.get(key); if (list) list.push(i); else cells.set(key, [i]);
       }
     });
     if (this.stamps.length < w.length) this.stamps = new Uint32Array(w.length);
-    return this.grid = { cells, length: w.length, first: w[0], last: w[w.length - 1] };
+    return this.grid = { cells, walls: w, length: fixed.length, first: fixed[0], last: fixed[fixed.length - 1], dynamicLength: dynamic.length, dynamicFirst: dynamic[0], dynamicLast: dynamic[dynamic.length - 1] };
   }
   /** Segment vs XYZ slabs (range measured along XZ); returns first solid cover distance, or the whole segment. */
   clearDistance(origin: RayPoint, direction: RayPoint, range: number, ignoreId?: number, padding = 0): number {
     let closest = range;
-    // Static walls: only those in the 4 m cells overlapping the segment's bounds (a wall crossing the segment shares a cell with it).
-    if (this.walls.length > 64) {
+    // Both authored cover and destruction/door blockers share the same exact tests.
+    if (this.walls.length + this.dynamicWalls.length > 64) {
       const grid = this.index(), ex = origin.x + direction.x * range, ez = origin.z + direction.z * range;
       if (++this.stamp === 0xffffffff) { this.stamps.fill(0); this.stamp = 1; }
       const list = this.candidates; list.length = 0;
       if (padding === 0 && Number.isFinite(origin.x) && Number.isFinite(origin.z) && Number.isFinite(ex) && Number.isFinite(ez)) {
         // An unpadded sight ray only crosses a thin chain of cells, not its
         // entire bounding rectangle. Inclusive wall buckets retain edge/corner hits.
-        let x = Math.floor(origin.x / 4), z = Math.floor(origin.z / 4);
-        const endX = Math.floor(ex / 4), endZ = Math.floor(ez / 4), dx = ex - origin.x, dz = ez - origin.z;
-        const stepX = Math.sign(dx), stepZ = Math.sign(dz), deltaX = dx ? 4 / Math.abs(dx) : Infinity, deltaZ = dz ? 4 / Math.abs(dz) : Infinity;
-        let nextX = dx ? ((x + (stepX > 0 ? 1 : 0)) * 4 - origin.x) / dx : Infinity;
-        let nextZ = dz ? ((z + (stepZ > 0 ? 1 : 0)) * 4 - origin.z) / dz : Infinity;
+        let x = Math.floor(origin.x / 8), z = Math.floor(origin.z / 8);
+        const endX = Math.floor(ex / 8), endZ = Math.floor(ez / 8), dx = ex - origin.x, dz = ez - origin.z;
+        const stepX = Math.sign(dx), stepZ = Math.sign(dz), deltaX = dx ? 8 / Math.abs(dx) : Infinity, deltaZ = dz ? 8 / Math.abs(dz) : Infinity;
+        let nextX = dx ? ((x + (stepX > 0 ? 1 : 0)) * 8 - origin.x) / dx : Infinity;
+        let nextZ = dz ? ((z + (stepZ > 0 ? 1 : 0)) * 8 - origin.z) / dz : Infinity;
         for (;;) {
           const cell = grid.cells.get(HitQuery.key(x, z));
-          if (cell) for (const i of cell) if (this.stamps[i] !== this.stamp) { this.stamps[i] = this.stamp; closest = this.cover(this.walls[i], origin, direction, range, closest, ignoreId, padding); }
+          if (cell) for (const i of cell) if (this.stamps[i] !== this.stamp) { this.stamps[i] = this.stamp; closest = this.cover(grid.walls[i], origin, direction, range, closest, ignoreId, padding); }
           if (x === endX && z === endZ) break;
           if (x === endX) nextX = Infinity;
           if (z === endZ) nextZ = Infinity;
           // A later cell cannot hide a nearer wall. Keep a conservative boundary
-          // margin; dynamic cover is still evaluated after the static traversal.
+          // margin; every indexed wall retains its exact rotated-footprint test.
           if (range > 0 && Math.min(nextX, nextZ) * range > closest + 1e-8) break;
           if (Math.abs(nextX - nextZ) <= 1e-12) {
             // A corner-touch can hit a wall in either side cell (including mixed-sign rays).
             for (const [cx, cz] of [[x + stepX, z], [x, z + stepZ]]) {
               const side = grid.cells.get(HitQuery.key(cx, cz));
-              if (side) for (const i of side) if (this.stamps[i] !== this.stamp) { this.stamps[i] = this.stamp; closest = this.cover(this.walls[i], origin, direction, range, closest, ignoreId, padding); }
+              if (side) for (const i of side) if (this.stamps[i] !== this.stamp) { this.stamps[i] = this.stamp; closest = this.cover(grid.walls[i], origin, direction, range, closest, ignoreId, padding); }
             }
             x += stepX; z += stepZ; nextX += deltaX; nextZ += deltaZ;
           } else if (nextX < nextZ) { x += stepX; nextX += deltaX; }
           else { z += stepZ; nextZ += deltaZ; }
         }
-      } else for (let x = Math.floor((Math.min(origin.x, ex) - padding) / 4); x <= Math.floor((Math.max(origin.x, ex) + padding) / 4); x++) for (let z = Math.floor((Math.min(origin.z, ez) - padding) / 4); z <= Math.floor((Math.max(origin.z, ez) + padding) / 4); z++) {
+      // Padding is applied in a rotated wall's local axes. Its world-space
+      // expansion can reach sqrt(2) times that value at a 45-degree corner.
+      } else for (let x = Math.floor((Math.min(origin.x, ex) - padding * Math.SQRT2) / 8); x <= Math.floor((Math.max(origin.x, ex) + padding * Math.SQRT2) / 8); x++) for (let z = Math.floor((Math.min(origin.z, ez) - padding * Math.SQRT2) / 8); z <= Math.floor((Math.max(origin.z, ez) + padding * Math.SQRT2) / 8); z++) {
         const cell = grid.cells.get(HitQuery.key(x, z));
         if (cell) for (const i of cell) if (this.stamps[i] !== this.stamp) { this.stamps[i] = this.stamp; list.push(i); }
       }
-      for (const i of list) closest = this.cover(this.walls[i], origin, direction, range, closest, ignoreId, padding);
-      for (const wall of this.dynamicWalls) closest = this.cover(wall, origin, direction, range, closest, ignoreId, padding);
+      for (const i of list) closest = this.cover(grid.walls[i], origin, direction, range, closest, ignoreId, padding);
       return closest;
     }
     for (const walls of this.wallGroups) for (const wall of walls) closest = this.cover(wall, origin, direction, range, closest, ignoreId, padding);
@@ -85,37 +88,37 @@ export class HitQuery {
   }
   wallDistance(wall: CoverWall, origin: RayPoint, direction: RayPoint, range: number, padding = 0): number { return this.cover(wall, origin, direction, range, range, undefined, padding); }
   private cover(wall: CoverWall, origin: RayPoint, direction: RayPoint, range: number, closest: number, ignoreId?: number, padding = 0): number {
-    if (wall.entityId !== undefined && wall.entityId === ignoreId) return closest;
-    // Rotate scalar ray coordinates once. Rebuilding a wall and two point objects
-    // for every rotated cover candidate dominated the campaign's combat queries.
-    let ox = origin.x, oz = origin.z, dx = direction.x, dz = direction.z;
-    let x = wall.x, z = wall.z, halfX = wall.halfX, halfZ = wall.halfZ;
+    // Navigation and contact expose the actual rotated box, so sight and shots
+    // must not retain invisible cover in its broad-phase AABB corners.
     const f = wall.navFootprint;
     if (f) {
-      const c = Math.cos(f.yaw), s = Math.sin(f.yaw), fromX = ox - f.x, fromZ = oz - f.z;
-      ox = fromX * c - fromZ * s; oz = fromX * s + fromZ * c;
-      const rayX = dx; dx = rayX * c - dz * s; dz = rayX * s + dz * c;
-      x = z = 0; halfX = f.halfX; halfZ = f.halfZ;
+      const c = Math.cos(f.yaw), s = Math.sin(f.yaw), x = origin.x - f.x, z = origin.z - f.z;
+      return this.cover({ ...wall, x: 0, z: 0, halfX: f.halfX, halfZ: f.halfZ, navFootprint: undefined },
+        { ...origin, x: x * c - z * s, z: x * s + z * c },
+        { ...direction, x: direction.x * c - direction.z * s, z: direction.x * s + direction.z * c }, range, closest, ignoreId, padding);
     }
-    let near = 0, far = range;
     {
-      const d = dx, extent = halfX + padding, start = ox;
-      if (Math.abs(d) < 1e-12) { if (start < x - extent || start > x + extent) return closest; }
-      else { const a = (x - extent - start) / d, b = (x + extent - start) / d; near = Math.max(near, Math.min(a, b)); far = Math.min(far, Math.max(a, b)); }
+      if (wall.entityId !== undefined && wall.entityId === ignoreId) return closest;
+      let near = 0, far = range;
+      {
+        const d = direction.x, extent = wall.halfX + padding, start = origin.x;
+        if (Math.abs(d) < 1e-12) { if (start < wall.x - extent || start > wall.x + extent) return closest; }
+        else { const a = (wall.x - extent - start) / d, b = (wall.x + extent - start) / d; near = Math.max(near, Math.min(a, b)); far = Math.min(far, Math.max(a, b)); }
+      }
+      if (near > far || near >= closest) return closest;
+      {
+        const d = direction.y ?? 0, extent = wall.halfY, start = origin.y ?? .7;
+        if (Math.abs(d) < 1e-12) { if (start < wall.y - extent || start > wall.y + extent) return closest; }
+        else { const a = (wall.y - extent - start) / d, b = (wall.y + extent - start) / d; near = Math.max(near, Math.min(a, b)); far = Math.min(far, Math.max(a, b)); }
+      }
+      if (near > far || near >= closest) return closest;
+      {
+        const d = direction.z, extent = wall.halfZ + padding, start = origin.z;
+        if (Math.abs(d) < 1e-12) { if (start < wall.z - extent || start > wall.z + extent) return closest; }
+        else { const a = (wall.z - extent - start) / d, b = (wall.z + extent - start) / d; near = Math.max(near, Math.min(a, b)); far = Math.min(far, Math.max(a, b)); }
+      }
+      return far >= near && near < closest ? near : closest;
     }
-    if (near > far || near >= closest) return closest;
-    {
-      const d = direction.y ?? 0, extent = wall.halfY, start = origin.y ?? .7;
-      if (Math.abs(d) < 1e-12) { if (start < wall.y - extent || start > wall.y + extent) return closest; }
-      else { const a = (wall.y - extent - start) / d, b = (wall.y + extent - start) / d; near = Math.max(near, Math.min(a, b)); far = Math.min(far, Math.max(a, b)); }
-    }
-    if (near > far || near >= closest) return closest;
-    {
-      const d = dz, extent = halfZ + padding, start = oz;
-      if (Math.abs(d) < 1e-12) { if (start < z - extent || start > z + extent) return closest; }
-      else { const a = (z - extent - start) / d, b = (z + extent - start) / d; near = Math.max(near, Math.min(a, b)); far = Math.min(far, Math.max(a, b)); }
-    }
-    return far >= near && near < closest ? near : closest;
   }
   visible(origin: RayPoint, target: RayPoint, ignoreId?: number): boolean {
     const dx = target.x - origin.x, dz = target.z - origin.z, distance = Math.hypot(dx, dz);

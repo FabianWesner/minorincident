@@ -3,7 +3,7 @@ import type { TextureNode } from 'three/webgpu';
 
 /** Shared shader graphs bind each living or frozen page's own atlas before drawing.
  * Keep live resources outside serializable geometry metadata. */
-export interface CrowdSurfaceBinding { bind(): void; textures: Texture[]; pose?: Texture }
+export interface CrowdSurfaceBinding { bind(): void; textures: Texture[]; pose?: Texture; bindRow?: number }
 export const crowdSurfaceBindings = new WeakMap<BufferGeometry, CrowdSurfaceBinding>();
 
 /** Shader graphs may be shared, while each render object owns its texture

@@ -1,0 +1,136 @@
+{
+  "rules": {
+    "p95OverProdMs": 1,
+    "maxOverProdMs": 16.8,
+    "noNewHitchMs": 66
+  },
+  "rows": [
+    {
+      "name": "L10 high",
+      "prod": {
+        "n": 5405,
+        "p95": 16.70000000001164,
+        "max": 50
+      },
+      "candidate": {
+        "n": 5406,
+        "p95": 16.70000000001164,
+        "max": 33.30000000000291
+      },
+      "pass": true,
+      "file": "native-high-L10-a0/strips/webgpu/L10.json"
+    },
+    {
+      "name": "L10 charge high",
+      "prod": {
+        "n": 3819,
+        "p95": 16.70000000001164,
+        "max": 50,
+        "startMs": 0,
+        "endMs": 63670.8
+      },
+      "candidate": {
+        "n": 3718,
+        "p95": 16.70000000001164,
+        "max": 33.30000000000291,
+        "startMs": 0,
+        "endMs": 62020.300000002986
+      },
+      "pass": true
+    },
+    {
+      "name": "L4 high",
+      "prod": {
+        "n": 3599,
+        "p95": 16.799999999995634,
+        "max": 50
+      },
+      "candidate": {
+        "n": 3596,
+        "p95": 16.70000000001164,
+        "max": 50.100000000000364
+      },
+      "pass": true,
+      "file": "native-high-L4-L9-a0/strips/webgpu/L4-L9.json"
+    },
+    {
+      "name": "L9 high",
+      "prod": {
+        "n": 3595,
+        "p95": 16.799999999995634,
+        "max": 50
+      },
+      "candidate": {
+        "n": 3588,
+        "p95": 16.70000000001164,
+        "max": 50
+      },
+      "pass": true,
+      "file": "native-high-L4-L9-a0/strips/webgpu/L4-L9.json"
+    },
+    {
+      "name": "L10 low",
+      "prod": {
+        "n": 5409,
+        "p95": 16.70000000001164,
+        "max": 33.400000000001455
+      },
+      "candidate": {
+        "n": 5404,
+        "p95": 16.70000000001164,
+        "max": 33.400000000001455
+      },
+      "pass": true,
+      "file": "native-low-L10-a0/strips/webgpu/L10.json"
+    },
+    {
+      "name": "L10 charge low",
+      "prod": {
+        "n": 3772,
+        "p95": 16.70000000001164,
+        "max": 33.400000000001455,
+        "startMs": 0,
+        "endMs": 62857.5
+      },
+      "candidate": {
+        "n": 3717,
+        "p95": 16.79999999998836,
+        "max": 33.400000000001455,
+        "startMs": 0,
+        "endMs": 62021.20000000596
+      },
+      "pass": true
+    },
+    {
+      "name": "L4 low",
+      "prod": {
+        "n": 3605,
+        "p95": 16.799999999995634,
+        "max": 33.20000000000073
+      },
+      "candidate": {
+        "n": 3605,
+        "p95": 16.70000000001164,
+        "max": 33.19999999999891
+      },
+      "pass": true,
+      "file": "native-low-L4-L9-a1/strips/webgpu/L4-L9.json"
+    },
+    {
+      "name": "L9 low",
+      "prod": {
+        "n": 3597,
+        "p95": 16.799999999995634,
+        "max": 33.399999999999636
+      },
+      "candidate": {
+        "n": 3600,
+        "p95": 16.70000000001164,
+        "max": 33.400000000000546
+      },
+      "pass": true,
+      "file": "native-low-L4-L9-a1/strips/webgpu/L4-L9.json"
+    }
+  ],
+  "pass": true
+}

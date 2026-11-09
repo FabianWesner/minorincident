@@ -1,7 +1,8 @@
 // Navigation core: one NavGrid (collider-baked, dynamic blockers, budgeted A*) moves every infected, ally and pet in all levels.
 import { afterEach, expect, test } from 'vitest';
 import { NavGrid } from '../../src/sim/ai/NavGrid';
-import { bakeNav } from '../../src/sim/world/NavGrid';
+import { bakeNav, NavGrid as WorldNavGrid } from '../../src/sim/world/NavGrid';
+import { goalReach, stepUpM } from '../../src/sim/world/TrapRescue';
 import type { DistrictLayout, Placement } from '../../src/levels/districts/types';
 import { placementColliders } from '../../src/levels/districts/staticCollision';
 import { SimWorld } from '../../src/sim/world/SimWorld';
@@ -15,7 +16,36 @@ const worlds: SimWorld[] = [];
 afterEach(() => { for (const w of worlds) w.dispose(); worlds.length = 0; });
 async function arena(name: string) { const w = new SimWorld(); worlds.push(w); await w.init(); w.loadScenario(name); w.combat!.damage.god = true; return w; }
 
+function checkDirectedReach(): void {
+  for (let pattern = 0; pattern < 24; pattern++) {
+    const nav = new WorldNavGrid([0, 0], [12, 12]), heights = new Float32Array(nav.cells.length);
+    for (let i = 0; i < nav.cells.length; i++) { nav.cells[i] = (i * 31 + pattern * 17) % 13 > 1 ? 1 : 0; heights[i] = pattern % 3 ? ((i * 17 + pattern * 3) % 7) * .4 : 0; }
+    const flood = new Uint8Array(nav.cells.length), pending = [nav.index(3.5, 4.5)];
+    if (nav.cells[pending[0]]) flood[pending[0]] = 1; else pending.length = 0;
+    for (let cursor = 0; cursor < pending.length; cursor++) {
+      const i = pending[cursor], x = i % nav.width;
+      for (const j of [x ? i - 1 : -1, x + 1 < nav.width ? i + 1 : -1, i - nav.width, i + nav.width]) {
+        if (j >= 0 && j < flood.length && nav.cells[j] && !flood[j]) { flood[j] = 1; pending.push(j); }
+      }
+    }
+    expect(nav.flood([3.5, 4.5]), `scanline flood pattern ${pattern}`).toEqual(flood);
+    const goals = [{ x: 3.5, z: 4.5 }, { x: 10.5, z: 8.5 }], expected = new Uint8Array(nav.cells.length), queue: number[] = [];
+    for (const goal of goals) { const i = nav.index(goal.x, goal.z); if (nav.cells[i]) { expected[i] = 1; queue.push(i); } }
+    for (let cursor = 0; cursor < queue.length; cursor++) {
+      const i = queue[cursor], x = i % nav.width, z = Math.floor(i / nav.width);
+      for (const [dx, dz] of [[-1, -1], [0, -1], [1, -1], [-1, 0], [1, 0], [-1, 1], [0, 1], [1, 1]]) {
+        const nx = x + dx, nz = z + dz, j = nz * nav.width + nx;
+        if (nx < 0 || nx >= nav.width || nz < 0 || nz >= nav.height || !nav.cells[j] || expected[j]) continue;
+        if (dx && dz && (!nav.cells[i + dx] || !nav.cells[i + dz * nav.width])) continue;
+        if (heights[i] - heights[j] <= stepUpM) { expected[j] = 1; queue.push(j); }
+      }
+    }
+    expect(goalReach(nav, () => { throw Error('Prepared heights must be used'); }, goals, heights), `directed ground pattern ${pattern}`).toEqual(expected);
+  }
+}
+
 test('capsule moves: a body inside the wall margin slides out and never moves deeper or crosses the solid', () => {
+  checkDirectedReach();
   const nav = new NavGrid({ width: 20, depth: 20 }, [{ x: 0, y: 1, z: 0, halfX: 1, halfY: 1, halfZ: 2 }]);
   for (const overlap of [.001, .015, .055, .095]) {
     const p = { x: 1.35 - overlap, z: 0 }, start = p.x;

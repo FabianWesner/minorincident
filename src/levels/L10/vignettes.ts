@@ -26,7 +26,13 @@ export const cureVignetteRoutes = () => [
   ...cureCrossingLines.map((r,i)=>({ id:`crossing-${i}`,region:i===0?1:i===1?2:i===2?3:i<5?4:i===5?5:6,line:r.line })),
 ];
 export function cureLineDistance(p:Point,line:readonly Point[]):number {
-  return Math.min(...line.slice(1).map((b,i)=>{const a=line[i],dx=b[0]-a[0],dz=b[1]-a[1],d=dx*dx+dz*dz,t=d?Math.max(0,Math.min(1,((p[0]-a[0])*dx+(p[1]-a[1])*dz)/d)):0;return Math.hypot(p[0]-a[0]-dx*t,p[1]-a[1]-dz*t);}));
+  let nearest = Infinity;
+  for (let i = 1; i < line.length; i++) {
+    const a = line[i - 1], b = line[i], dx = b[0] - a[0], dz = b[1] - a[1], d = dx * dx + dz * dz;
+    const t = d ? Math.max(0, Math.min(1, ((p[0] - a[0]) * dx + (p[1] - a[1]) * dz) / d)) : 0;
+    nearest = Math.min(nearest, Math.hypot(p[0] - a[0] - dx * t, p[1] - a[1] - dz * t));
+  }
+  return nearest;
 }
 export const cureLineLength=(line:readonly Point[])=>line.slice(1).reduce((n,b,i)=>n+Math.hypot(b[0]-line[i][0],b[1]-line[i][1]),0);
 function pose(line:readonly Point[],station:number) {

@@ -29,12 +29,24 @@ const overlaps = (a: Placement, b: Placement, pad: number) => a.visualAabb.min[0
 /** Deterministic crop blocks and varied farm remnants. Every story composition survives low quality. */
 export function cureFarmDecor(placements: readonly Placement[]): Placement[] {
   const out: Placement[] = [], rng = new Rng(1029, 'L10-dead-farm');
+  // The farm occupies a short section of the multi-kilometre district. Visit
+  // only occupied X buckets, retaining the original exact footprint test.
+  const occupied = new Map<number, Placement[]>(), cell = 16;
+  for (const p of placements) for (let x = Math.floor(p.visualAabb.min[0] / cell); x <= Math.floor(p.visualAabb.max[0] / cell); x++) {
+    const row = occupied.get(x) ?? []; row.push(p); occupied.set(x, row);
+  }
+  const blocked = (p: Placement, pad: number, tall = false): boolean => {
+    for (let x = Math.floor((p.visualAabb.min[0] - pad) / cell); x <= Math.floor((p.visualAabb.max[0] + pad) / cell); x++) {
+      if (occupied.get(x)?.some(q => (!tall || q.visualAabb.max[1] > .8) && overlaps(p, q, pad))) return true;
+    }
+    return false;
+  };
   // A ten metre tile has no collider. Whole tiles clear all mown lanes, story anchors, and existing building plots.
   for (let x = 555; x < 1230; x += 10) for (let z = -68; z < 125; z += 10) {
     const distance = farmLaneDistance(x, z);
     if (distance < 8 || distance > 42 || rng.next() < .08) continue;
     const p = piece(`decor-cure-corn-${x}-${z}`, 'veg.corn-block', x, z, rng.next() < .5 ? 0 : Math.PI);
-    if (placements.some(q => q.visualAabb.max[1] > .8 && overlaps(p, q, .5))) continue;
+    if (blocked(p, .5, true)) continue;
     if (Object.values(cure.anchors).some(a => Math.hypot(x - a[0], z - a[1]) < 12)) continue;
     out.push(p);
   }
@@ -49,7 +61,7 @@ export function cureFarmDecor(placements: readonly Placement[]): Placement[] {
   ];
   for (const [i, [x, z, assets]] of scenes.entries()) for (const [j, asset] of assets.entries()) {
     let p = piece(`decor-cure-farm-${i}-${j}`, asset, x + (j ? rng.next() * 6 + 6 : 0), z + (j ? rng.next() * 5 - 2 : 0), rng.next() * 2 - 1);
-    const fits = (candidate: Placement) => farmLaneDistance(candidate.position[0], candidate.position[2]) >= 12 && !placements.some(q => overlaps(candidate, q, .5)) && !out.some(q => q.assetId !== 'veg.corn-block' && overlaps(candidate, q, .3));
+    const fits = (candidate: Placement) => farmLaneDistance(candidate.position[0], candidate.position[2]) >= 12 && !blocked(candidate, .5) && !out.some(q => q.assetId !== 'veg.corn-block' && overlaps(candidate, q, .3));
     if (!fits(p) && asset.startsWith('bld.')) {
       for (const [dx, dz] of [[-12, 14], [10, -16], [-22, -14], [18, 12], [0, -30], [0, 30]]) {
         const candidate = piece(p.id, asset, x + dx, z + dz, p.yaw);
@@ -72,7 +84,7 @@ export function cureFarmDecor(placements: readonly Placement[]): Placement[] {
     for (const tile of tiles) {
       const p = piece(`decor-cure-farm-machine-${i}`, asset, tile.position[0], tile.position[2], rng.next() * .5 - .25);
       if (asset === 'prop.farm-combine') p.decay = 'burned';
-      if (farmLaneDistance(p.position[0], p.position[2]) < 17 || placements.some(q => overlaps(p, q, .5)) || out.some(q => q.assetId !== 'veg.corn-block' && overlaps(p, q, .5))) continue;
+      if (farmLaneDistance(p.position[0], p.position[2]) < 17 || blocked(p, .5) || out.some(q => q.assetId !== 'veg.corn-block' && overlaps(p, q, .5))) continue;
       for (let k = out.length - 1; k >= 0; k--) if (out[k].assetId === 'veg.corn-block' && overlaps(p, out[k], .3)) out.splice(k, 1);
       out.push(p); break;
     }

@@ -17,6 +17,7 @@ import { StaticCorpses } from '../../src/render/characters/StaticCorpses';
 import { CrowdPosePalette } from '../../src/render/characters/CrowdPosePalette';
 import { PickBodies } from '../../src/render/characters/PickBodies';
 import { CrowdView } from '../../src/render/CrowdView';
+import { VehicleView } from '../../src/render/VehicleView';
 import type { SimWorld } from '../../src/sim/world/SimWorld';
 import { Lighting } from '../../src/render/Lighting';
 import { LightField } from '../../src/render/LightField';
@@ -150,6 +151,21 @@ async function checkSeatedBodyFrame(): Promise<void> {
       expect(forward.x).toBeCloseTo(0, 6);
       expect(forward.z * seat.position.z).toBeLessThan(0);
     }
+    const cast = new Map([
+      [1, { id: 1, survivor: { variant: 'female' }, health: { current: 100 } }],
+      [2, { id: 2, civilian: { model: 'npc.civilian-man-a' }, health: { current: 100 } }],
+      [3, { id: 3, civilian: { model: 'amb.monkey', zooAnimal: 'monkey' }, health: { current: 100 } }],
+      [4, { id: 4, civilian: { model: 'amb.lioness', zooAnimal: 'lioness' }, health: { current: 100 } }],
+    ]);
+    const world = { entities: { get: (id: number) => cast.get(id), iterate: () => cast.values() }, vehicles: { cars: new Map([[7, { entity: { id: 7 } }]]) }, missions: { state: {}, l8: { state: { carId: 7 } } } } as unknown as SimWorld;
+    const view = new VehicleView(world, materials, {} as ConstructorParameters<typeof VehicleView>[2]);
+    (view as unknown as { records: Map<number, { model: Group }> }).records.set(7, { model: hull });
+    const load = vi.spyOn(VehicleOccupant, 'load').mockImplementation(async (_registry, actorId) => Object.assign(new Group(), { actorId, pose: () => {}, dispose: () => {} }) as unknown as VehicleOccupant);
+    try {
+      const restore = await view.prewarmOccupants();
+      expect(load.mock.calls.map(call => call[2]), 'transport warms the human escape cast, never seated zoo animals').toEqual(['char.courier-female', 'npc.civilian-man-a']);
+      restore?.();
+    } finally { load.mockRestore(); view.dispose(); }
   } finally { occupant.dispose(); materials.dispose(); lighting.dispose(); }
 }
 

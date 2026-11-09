@@ -15,7 +15,12 @@ export function cureRoadsideBelt(placements: readonly Placement[]): Placement[] 
     const t = d ? Math.max(0, Math.min(1, ((p[0] - a[0]) * dx + (p[1] - a[1]) * dz) / d)) : 0;
     return Math.hypot(p[0] - a[0] - t * dx, p[1] - a[1] - t * dz);
   };
-  const laneDistance = (x: number, z: number) => Math.min(...roads.flatMap(r => r.slice(1).map((b, i) => distance([x, z], r[i], b))));
+  const laneDistance = (x: number, z: number) => {
+    let nearest = Infinity;
+    const point: Point = [x, z];
+    for (const road of roads) for (let i = 1; i < road.length; i++) nearest = Math.min(nearest, distance(point, road[i - 1], road[i]));
+    return nearest;
+  };
   const make = (assetId: string, x: number, z: number, yaw: number, index: number): Placement => {
     const { dimensions: d } = worldAssets[assetId], c = Math.abs(Math.cos(yaw)), s = Math.abs(Math.sin(yaw));
     const hx = (d.x * c + d.z * s) / 2, hz = (d.x * s + d.z * c) / 2;
@@ -29,7 +34,10 @@ export function cureRoadsideBelt(placements: readonly Placement[]): Placement[] 
     // camera: their low supplies sit closer, with every corner > 1.2 m beyond
     // the six-metre road. The final 100 m into the arena stays clear.
     const corridor = p.position[0] >= 2910;
-    if ([[a[0], a[2]], [a[0], b[2]], [b[0], a[2]], [b[0], b[2]]].some(([x, z]) => laneDistance(x, z) < (corridor ? 4.2 : 6) || laneDistance(x, z) > (corridor ? 9 : 13))) return false;
+    if ([[a[0], a[2]], [a[0], b[2]], [b[0], a[2]], [b[0], b[2]]].some(([x, z]) => {
+      const nearest = laneDistance(x, z);
+      return nearest < (corridor ? 4.2 : 6) || nearest > (corridor ? 9 : 13);
+    })) return false;
     if (p.position[0] > 3900) return false;
     return [...placements, ...out].every(q => {
       let { min: c, max: d } = q.visualAabb;

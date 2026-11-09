@@ -22,7 +22,7 @@ const directory = 'public/assets/statics'; mkdirSync(directory, { recursive: tru
 const selected = new Set(process.argv.slice(2));
 const files: Record<string, string> = selected.size ? JSON.parse(readFileSync('src/assets/staticBakes.json', 'utf8')) : {}; let total = 0;
 if (selected.size) for (const key of Object.keys(files)) if (selected.has(key.split(':')[0])) delete files[key];
-const ids = new Set<string>();
+const ids = new Set<string>(selected);
 for (const district of ['D-GROVE', 'D-CORRIDOR']) {
   const layout = JSON.parse(readFileSync(`public/assets/layouts/${district}.layout.json`, 'utf8'));
   for (const placement of layout.placements) if (worldAssets[placement.assetId]) ids.add(placement.assetId);
@@ -36,7 +36,7 @@ for (const id of [...ids].sort()) {
     const manifest = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8'));
     const def = manifest.find((entry: { id: string }) => entry.id === (productionIds[id] ?? id));
     if (!def || !atLeast(def.status, 'integrated')) continue;
-    for (const lod of ['lod1', 'lod2'] as const) {
+    for (const lod of ['lod0', 'lod1', 'lod2'] as const) {
       const canonical = def.lods?.[lod] ? lod : 'lod0';
       for (const decay of ['', ...def.decayVariants]) {
         const key = `${id}:${canonical}:${decay}`; if (!selected.size && files[key]) continue;

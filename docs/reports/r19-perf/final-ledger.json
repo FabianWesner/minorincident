@@ -1,0 +1,79 @@
+[
+  {
+    "name": "cold-critical-low",
+    "kind": "cold",
+    "cells": [
+      "L8/webgpu/low",
+      "L10/webgpu/low"
+    ],
+    "attempt": 0,
+    "start": "2026-11-09T13:39:15.453Z",
+    "finished": "2026-11-09T13:47:01.874Z",
+    "dir": "test-results/r19-perf/final-v12/cold-critical-low-a0",
+    "code": 0,
+    "signal": null
+  },
+  {
+    "name": "native-low-L4-L9",
+    "kind": "native",
+    "tier": "low",
+    "levels": "L4,L9",
+    "attempt": 0,
+    "start": "2026-11-09T13:47:01.931Z",
+    "finished": "2026-11-09T13:52:43.678Z",
+    "dir": "test-results/r19-perf/final-v12/native-low-L4-L9-a0",
+    "code": 75,
+    "signal": null
+  },
+  {
+    "name": "native-low-L4-L9",
+    "kind": "native",
+    "tier": "low",
+    "levels": "L4,L9",
+    "attempt": 1,
+    "start": "2026-11-09T13:52:43.678Z",
+    "finished": "2026-11-09T14:40:16.745Z",
+    "dir": "test-results/r19-perf/final-v12/native-low-L4-L9-a1",
+    "code": 0,
+    "signal": null
+  },
+  {
+    "name": "native-high-L4-L9",
+    "kind": "native",
+    "tier": "high",
+    "levels": "L4,L9",
+    "attempt": 0,
+    "start": "2026-11-09T14:40:16.747Z",
+    "finished": "2026-11-09T14:45:00.415Z",
+    "dir": "test-results/r19-perf/final-v12/native-high-L4-L9-a0",
+    "code": 0,
+    "signal": null
+  },
+  {
+    "name": "native-low-L10",
+    "kind": "native",
+    "tier": "low",
+    "levels": "L10",
+    "seconds": 90,
+    "attempt": 0,
+    "start": "2026-11-09T14:45:00.416Z",
+    "finished": "2026-11-09T14:49:52.743Z",
+    "dir": "test-results/r19-perf/final-v12/native-low-L10-a0",
+    "code": 0,
+    "signal": null
+  },
+  {
+    "name": "native-high-L10",
+    "kind": "native",
+    "tier": "high",
+    "levels": "L10",
+    "seconds": 90,
+    "attempt": 0,
+    "start": "2026-11-09T14:51:02.515Z",
+    "finished": "2026-11-09T14:54:47.431Z",
+    "dir": "test-results/r19-perf/final-v12/native-high-L10-a0",
+    "code": 0,
+    "signal": null,
+    "ledgerNote": "Reconciled from completed child host receipt; parent stopped before next job at orchestrator closeout."
+  }
+]

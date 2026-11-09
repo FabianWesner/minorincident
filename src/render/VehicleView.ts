@@ -84,7 +84,7 @@ export class VehicleView extends Group {
     }
     const player = this.world.entities.get(1)!;
     const assets = new Set<string>();
-    for (const entity of this.world.entities.iterate()) if (entity.civilian && !entity.civilian.pet && entity.health.current > 0) assets.add(entity.appearance?.asset ?? entity.civilian.model ?? 'npc.firefighter-alive');
+    for (const entity of this.world.entities.iterate()) if (entity.civilian && !entity.civilian.pet && !entity.civilian.zooAnimal && entity.health.current > 0) assets.add(entity.appearance?.asset ?? entity.civilian.model ?? 'npc.firefighter-alive');
     const copies = await Promise.all([
       ...(!this.occupants.has(player.id) ? [VehicleOccupant.load(this.registry, player.id, `char.courier-${player.survivor!.variant}`, this.materials, this.low).then(copy => ({ copy, retain: true }))] : []),
       ...[...assets].map((asset, index) => VehicleOccupant.load(this.registry, -index - 1, asset, this.materials, this.low).then(copy => ({ copy, retain: false }))),
@@ -114,6 +114,12 @@ export class VehicleView extends Group {
       for (const lod of this.low ? ['lod1', 'lod2'] as const : ['lod0', 'lod1', 'lod2'] as const) await this.addCar(car.entity.id, lod, false);
     }));
     this.update(1); await this.ready();
+  }
+  /** Obstacle fragments must exercise their ordinary box pipeline before the first impact. */
+  prewarmDebris(at: Vector3): () => void {
+    const mesh = new Mesh(this.propGeometry, this.materials.get('woodWarm'));
+    mesh.name = 'vehicle-debris-warmup'; mesh.position.copy(this.worldToLocal(at.clone())); mesh.scale.setScalar(.5); this.add(mesh);
+    return () => mesh.removeFromParent();
   }
   /** Both occluding and ridden hull graphs belong to the level warm-up. */
   prewarmReveal(enabled: boolean): () => void {
