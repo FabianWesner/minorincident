@@ -99,6 +99,20 @@ test('an unsafe spawn keeps its identity and director slot, then admits once the
   for (const s of w.entities.iterate()) if (s.kind === 'setpiece') s.hidden = true;
   tank.hidden = true; tick(w, 30);
   expect(e.pendingAdmission).toBeUndefined(); expect(e.hidden).not.toBe(true); expect(w.infected!.director.count).toBe(1);
+  // Leaving the actor mask invalidates its old reservation. A body recovering
+  // inside congestion must queue locally, never return to its pre-down position.
+  const r = await arena(), recoveredId = r.infected!.spawn('infected.runner', { x: 10, z: 10 }, { state: 'idle' }), recovered = r.entities.get(recoveredId)!;
+  r.tick++; r.solids.commit(); recovered.health.current = 0;
+  r.tick++; r.solids.commit();
+  Object.assign(recovered.transform, { x: 20, z: 0 });
+  spawnSetPiece(r, 'veh.tank', { x: 20, z: 0 });
+  for (let i = 0; i < 12; i++) spawnSetPiece(r, 'veh.tank', { x: 20 + Math.cos(i * Math.PI / 6) * 4, z: Math.sin(i * Math.PI / 6) * 4 });
+  recovered.health.current = recovered.health.max;
+  r.tick++; r.solids.commit();
+  expect(recovered.pendingAdmission).toBeDefined();
+  expect(Math.hypot(recovered.transform.x - 20, recovered.transform.z)).toBeLessThanOrEqual(4.01);
+  expect(r.entities.get(recoveredId)).toBe(recovered);
+  expect(r.solids.snapshot().failures).toBe(0);
 });
 
 test('the courier: knockback and post-physics writes never cross a thin solid; she can push out of eight bodies', async () => {

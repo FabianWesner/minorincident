@@ -535,6 +535,9 @@ export class SolidRegistry {
       this.world.spatial.set(e.id, e.transform.x, e.transform.z);
     }
     for (const id of previous) if (!this.live[id]) {
+      // Downed/hidden actors have no reserved physical pose. Recovery must not
+      // roll back to a footprint from before other bodies crossed that space.
+      const inactive = this.world.entities.get(id); if (inactive) this.forget(inactive);
       this.bodyIndex.delete(id);
       this.committedPoses[id] = this.proposalPoints[id] = undefined; this.contactProofs[id] = undefined; this.bodyRadii[id] = 0; this.bodyPoints[id] = undefined;
     }
