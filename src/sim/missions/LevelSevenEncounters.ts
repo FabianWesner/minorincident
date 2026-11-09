@@ -261,11 +261,15 @@ export class LevelSevenEncounters {
     const { damage, shoveTicks, shoveM } = l7Encounters.followerBite, w = this.world;
     if (target.health.current <= damage) return false;
     target.health.current -= damage;
-    if (biter.combat) biter.combat.staggerUntil = Math.max(biter.combat.staggerUntil, w.tick + shoveTicks);
     // Reeling in place leaves the attacker's full body sealing the column's
-    // escape lane. A survived struggle must open physical room to regroup.
-    const dx = biter.transform.x - target.transform.x, dz = biter.transform.z - target.transform.z, length = Math.hypot(dx, dz);
-    if (length > 0 && biter.archetype !== 'infected.alpha') w.knockback(biter, { x: dx / length, z: dz / length }, shoveM, 12);
+    // escape lane. Break all ordinary holds on this person together, so a
+    // second completed grab cannot immediately consume another third of HP.
+    for (const attacker of w.infected!.active) {
+      if (attacker.id !== biter.id && attacker.infected!.l1?.biteTargetId !== target.id) continue;
+      if (attacker.combat) attacker.combat.staggerUntil = Math.max(attacker.combat.staggerUntil, w.tick + shoveTicks);
+      const dx = attacker.transform.x - target.transform.x, dz = attacker.transform.z - target.transform.z, length = Math.hypot(dx, dz);
+      if (length > 0 && attacker.archetype !== 'infected.alpha') w.knockback(attacker, { x: dx / length, z: dz / length }, shoveM, 12);
+    }
     w.events.emit({ type: 'infected.attack', tick: w.tick, sourceId: biter.id, attackId: 0, targetId: target.id, special: 'bite', amount: damage });
     return true;
   }
