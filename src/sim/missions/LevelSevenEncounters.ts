@@ -402,9 +402,16 @@ export class LevelSevenEncounters {
   private formationGoal(player: EntitySnapshot['transform'], velocity: Point, e: EntitySnapshot): Point {
     const slot = e.civilian!.survivor!.slot, loose = looseSlotOffset(slot);
     const moving = Math.hypot(velocity.x, velocity.z) > .8;
-    const last = this.trail.at(-1);
+    const last = this.trail.at(-1), previous = this.trail.at(-2);
+    const departure = this.world.missions!.state.steps.departure?.status === 'active';
+    // A short retreat along a clear leg need not turn the whole column
+    // around. Hold its lead point until the courier resumes or returns more
+    // than six metres, when the ordinary trail reset lets everyone follow back.
+    const retreat = departure && last && previous && distance(last, player) <= 6 &&
+      (player.x - last.x) * (last.x - previous.x) + (player.z - last.z) * (last.z - previous.z) < -.8 * distance(last, player) * distance(last, previous);
+    const leader = retreat ? { ...player, x: last.x, z: last.z } : player;
     if (last && distance(last, player) > 6) this.trail.length = 0;
-    if (!last || distance(last, player) >= .4) {
+    if (!retreat && (!last || distance(last, player) >= .4)) {
       // Follow the street, not every small aim/dodge correction. A clear
       // shortcut removes gentle wiggles and backtracking; real corners and
       // wrecks retain their walked legs for the whole body to pass around.
@@ -413,14 +420,14 @@ export class LevelSevenEncounters {
         const a = this.trail[this.trail.length - 2], b = this.trail[this.trail.length - 1];
         const ax = b.x - a.x, az = b.z - a.z, bx = player.x - b.x, bz = player.z - b.z;
         const gentle = ax * bx + az * bz >= .5 * Math.hypot(ax, az) * Math.hypot(bx, bz);
-        if ((!gentle && distance(a, player) >= distance(a, b)) || !nav.visible(a, player, .35)) break;
+        if ((!gentle && distance(a, player) > distance(a, b)) || !nav.visible(a, player, .35)) break;
         this.trail.pop();
       }
       this.trail.push({ x: player.x, z: player.z });
       if (this.trail.length > 128) this.trail.shift();
     }
-    if (this.world.missions!.state.steps.departure?.status === 'active') {
-      let remaining = 2.3 + Math.floor(slot / 2) + loose.back * .25, newer: Point = player;
+    if (departure) {
+      let remaining = 2.3 + Math.floor(slot / 2) + loose.back * .25, newer: Point = leader;
       for (let i = this.trail.length - 1; i >= 0; i--) {
         const older = this.trail[i], length = distance(older, newer);
         if (length >= remaining && length > 0) {
@@ -438,7 +445,7 @@ export class LevelSevenEncounters {
         remaining -= length; newer = older;
       }
     }
-    const heading = leaderHeading(player.yaw, velocity), goal = formationSlot(player, heading, slot);
+    const heading = leaderHeading(player.yaw, velocity), goal = formationSlot(leader, heading, slot);
     const offset = moving ? swayOffset(e.id, this.world.tick) : 0, nav = this.followerNavigation();
     const wandered = { x: goal.x - heading.z * offset, z: goal.z + heading.x * offset };
     return nav.clear(wandered.x, wandered.z, .4) && nav.visible(goal, wandered, .35) ? wandered : goal;
