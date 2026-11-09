@@ -2,6 +2,7 @@ import type { DistrictLayout, Placement, Point } from '../districts/types';
 import { worldAssets } from '../../assets/worldDefinitions';
 import { Rng } from '../../core/Rng';
 import { cure } from './district';
+import { cureCrossingLines } from './crossingStories';
 
 /** Farm chapter paths: road and direct objective bearing both retain full-speed mown lanes. */
 export const farmLanes: Point[][] = [
@@ -31,7 +32,7 @@ export function cureFarmDecor(placements: readonly Placement[]): Placement[] {
   // A ten metre tile has no collider. Whole tiles clear all mown lanes, story anchors, and existing building plots.
   for (let x = 555; x < 1230; x += 10) for (let z = -68; z < 125; z += 10) {
     const distance = farmLaneDistance(x, z);
-    if (distance < 11 || distance > 42 || rng.next() < .1) continue;
+    if (distance < 8 || distance > 42 || rng.next() < .08) continue;
     const p = piece(`decor-cure-corn-${x}-${z}`, 'veg.corn-block', x, z, rng.next() < .5 ? 0 : Math.PI);
     if (placements.some(q => q.visualAabb.max[1] > .8 && overlaps(p, q, .5))) continue;
     if (Object.values(cure.anchors).some(a => Math.hypot(x - a[0], z - a[1]) < 12)) continue;
@@ -82,6 +83,19 @@ export function cureFarmDecor(placements: readonly Placement[]): Placement[] {
 /** Render-only southern field detail for the off-road farm approach shown in the PO's QA capture. */
 export function cureSouthernFieldDecor(occupied: readonly Placement[]): Placement[] {
   const out: Placement[] = [];
+  for (const [i, [asset, x, z]] of ([
+    ['prop.farm-tractor', 870, -100], ['prop.farm-scarecrow', 849, -97], ['prop.picket-fence', 860, -107],
+  ] as const).entries()) {
+    const remnant = piece(`decor-cure-south-approach-${i}`, asset, x, z, i === 0 ? -.35 : 0);
+    if (!occupied.some(p => overlaps(remnant, p, .5))) out.push(remnant);
+  }
+  // The QA approach bends through the south field at (858,-94); the wider
+  // field rows leave a bare wedge there, so continue the crop edge behind it.
+  for (let x = 820; x <= 940; x += 14) for (const z of [-88, -112]) {
+    const crop = piece(`decor-cure-south-approach-corn-${x}-${z}`, 'veg.corn-block', x, z, x % 2 ? 0 : Math.PI);
+    if (occupied.some(p => overlaps(crop, p, .5)) || out.some(p => overlaps(crop, p, .5))) continue;
+    out.push(crop);
+  }
   for (let x = 820; x <= 1210; x += 30) for (const z of [-145, -125, -105]) {
     const crop = piece(`decor-cure-south-corn-${x}-${z}`, 'veg.corn-block', x, z, (x / 30) % 2 ? 0 : Math.PI);
     if (occupied.some(p => overlaps(crop, p, .5)) || out.some(p => overlaps(crop, p, .5))) continue;
@@ -92,6 +106,31 @@ export function cureSouthernFieldDecor(occupied: readonly Placement[]): Placemen
   ] as const).entries()) {
     const remnant = piece(`decor-cure-south-remnant-${i}`, asset, x, z);
     if (!occupied.some(p => overlaps(remnant, p, .5)) && !out.some(p => overlaps(remnant, p, .5))) out.push(remnant);
+  }
+  return out;
+}
+
+/** Thin, broken crop strips on the two later stretches called out by the route review. */
+export function cureRoadsideFarmDecor(occupied: readonly Placement[]): Placement[] {
+  const out: Placement[] = [];
+  let station = 0;
+  const lines = [...cure.regions.map(r => r.route), ...cureCrossingLines.map(r => r.line),
+    [cure.anchors['cure-corridor'], cure.anchors['corridor-breach'], cure.anchors['cure-complex']]];
+  for (const line of lines) for (let i = 1; i < line.length; i++) {
+    const a = line[i - 1], b = line[i], dx = b[0] - a[0], dz = b[1] - a[1], length = Math.hypot(dx, dz);
+    for (let along = 10; along < length; along += 14) {
+      const x = a[0] + dx * along / length, z = a[1] + dz * along / length;
+      if (!((x >= 1250 && x <= 1750) || (x >= 3050 && x <= 3650))) continue;
+      const side = Math.floor((station + along) / 56) % 2 ? -1 : 1;
+      for (const [lateral, direction] of [10, 14, 18, 22].flatMap(offset => [[offset, side], [offset, -side]])) {
+        const crop = piece(`decor-cure-route-corn-${Math.round(station + along)}`, 'veg.corn-block', x - dz / length * direction * lateral, z + dx / length * direction * lateral, dx > 0 ? 0 : Math.PI);
+        if (occupied.some(p => p.visualAabb.max[1] > .8 && overlaps(crop, p, .5)) || out.some(p => overlaps(crop, p, .5))) continue;
+        out.push(crop);
+        if (out.filter(p => p.assetId === 'veg.corn-block').length % 6 === 0) out.push(piece(`${crop.id}-scarecrow`, 'prop.farm-scarecrow', crop.position[0], crop.position[2]));
+        break;
+      }
+    }
+    station += length;
   }
   return out;
 }

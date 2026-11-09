@@ -3443,13 +3443,18 @@
   {
     "id": "haz.propane-tank",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/haz.propane-tank.glb",
+    "sourceGlb": "assets/haz.propane-tank/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/haz.propane-tank.lod1.glb",
+      "lod2": "public/assets/models/haz.propane-tank.lod2.glb"
+    },
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 0.72,
+      "y": 1.735,
+      "z": 0.72,
       "tolerance": 0.1
     },
     "forward": "+X",

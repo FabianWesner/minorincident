@@ -10,6 +10,7 @@ export class CureVignetteDecals extends Group {
   private readonly transform=new Object3D();
   private focus=[Infinity,Infinity];
   private low=false;
+  private barnDestroyed=false;
   private shown:string[]=[];
   private readonly roofs:Mesh[]=[];
   static async load(rows:readonly CureVignetteDecal[]):Promise<CureVignetteDecals>{
@@ -26,14 +27,16 @@ export class CureVignetteDecals extends Group {
     this.mesh=new InstancedMesh(geometry,material,rows.length);this.mesh.frustumCulled=false;this.mesh.count=0;this.add(this.mesh);
     for(const row of rows.filter(r=>r.roof)){
       const roof=new Mesh(new PlaneGeometry(row.size[0]+.4,row.size[1]+.4),new MeshBasicNodeMaterial({color:0x493c2d}));
-      roof.rotation.x=-Math.PI/2;roof.position.fromArray(row.position);roof.position.y-=.02;this.roofs.push(roof);this.add(roof);
+      roof.name=row.id;roof.rotation.x=-Math.PI/2;roof.position.fromArray(row.position);roof.position.y-=.02;this.roofs.push(roof);this.add(roof);
     }
   }
-  update(focus:{x:number;z:number},low:boolean):void{
-    if(low===this.low&&Math.hypot(focus.x-this.focus[0],focus.z-this.focus[1])<3)return;
-    this.focus=[focus.x,focus.z];this.low=low;this.shown=[];
+  update(focus:{x:number;z:number},low:boolean,barnDestroyed=false):void{
+    if(low===this.low&&barnDestroyed===this.barnDestroyed&&Math.hypot(focus.x-this.focus[0],focus.z-this.focus[1])<3)return;
+    this.focus=[focus.x,focus.z];this.low=low;this.barnDestroyed=barnDestroyed;this.shown=[];
+    for(const roof of this.roofs)roof.visible=!barnDestroyed&&Math.hypot(roof.position.x-focus.x,roof.position.z-focus.z)<(low?60:90);
     let index=0;
     for(const row of this.rows){
+      if(row.roof&&barnDestroyed)continue;
       if(low&&row.highOnly||Math.hypot(row.position[0]-focus.x,row.position[2]-focus.z)>(low?60:90))continue;
       this.transform.position.fromArray(row.position);this.transform.rotation.set(row.ground?-Math.PI/2:0,row.yaw,0,'YXZ');this.transform.scale.set(row.size[0],row.size[1],1);this.transform.updateMatrix();
       this.mesh.setMatrixAt(index,this.transform.matrix);this.cells.setXYZW(index,(row.cell%4)/4,(3-Math.floor(row.cell/4))/4,.25,.25);

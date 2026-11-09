@@ -332,6 +332,9 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   const assembled = new DistrictWorld(compositions.L10, levelTenLayouts([cureLayout]), 42);
   const actualFarm = assembled.districts[0].layout.placements;
   expect(actualFarm.filter(p => p.assetId === 'veg.corn-block').length).toBeGreaterThan(100);
+  for (const [x, z] of [[1350, 19], [1650, -38.45], [3150, 51.05], [3450, 53]]) {
+    expect(actualFarm.some(p => p.id.startsWith('decor-cure-route-corn-') && Math.hypot(p.position[0] - x, p.position[2] - z) < 25), `crop edge near QA route ${x}`).toBe(true);
+  }
   expect(actualFarm.some(p => p.id.startsWith('decor-cure-vignette-'))).toBe(true);
   expect(actualFarm.filter(p => p.id.startsWith('l10-barn-grave-'))).toHaveLength(3);
   expect(actualFarm.some(p => p.id === 'l10-find-farm-barn')).toBe(true);
@@ -340,7 +343,7 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   expect(cureCrossingStories([...cureLayout.placements, ...belt])).toEqual(stories);
   const { cureForecourtDecor } = await import('../../src/levels/L10/forecourts');
   const apron = cureForecourtDecor([...cureLayout.placements, ...belt, ...stories]);
-  const { clearFarmFromSurfaces, cureFarmDecor, cureSouthernFieldDecor } = await import('../../src/levels/L10/farmLayout');
+  const { clearFarmFromSurfaces, cureFarmDecor, cureRoadsideFarmDecor, cureSouthernFieldDecor } = await import('../../src/levels/L10/farmLayout');
   const farm = cureFarmDecor([...cureLayout.placements, ...belt, ...stories, ...apron]);
   expect(farm.filter(p => p.assetId === 'veg.corn-block').length).toBeGreaterThan(100);
   const { cureVignetteCatalogue, cureVignettes } = await import('../../src/levels/L10/vignettes');
@@ -351,8 +354,10 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   expect(clearedFarm.filter(p => p.assetId !== 'veg.corn-block').map(p => [p.id, p.assetId])).toEqual(farm.filter(p => p.assetId !== 'veg.corn-block').map(p => [p.id, p.assetId]));
   expect(clearedFarm.filter(p => p.assetId !== 'veg.corn-block' && !p.id.startsWith('decor-cure-farm-field-'))).toEqual(farm.filter(p => p.assetId !== 'veg.corn-block' && !p.id.startsWith('decor-cure-farm-field-')));
   const southernField = cureSouthernFieldDecor([...cureLayout.placements, ...belt, ...stories, ...apron, ...farm, ...vignettes]);
+  const roadsideFarm = cureRoadsideFarmDecor([...cureLayout.placements, ...belt, ...stories, ...apron, ...farm, ...vignettes]);
+  expect(roadsideFarm.filter(p => p.position[0] >= 1250 && p.position[0] <= 1750 || p.position[0] >= 3050 && p.position[0] <= 3650).length).toBeGreaterThan(0);
   expect(southernField.some(p => p.assetId === 'veg.corn-block' && p.position[2] < -100)).toBe(true);
-  expect(districtDecor('D-CURE', cureLayout.placements)).toEqual([...belt, ...stories, ...apron, ...clearedFarm, ...vignettes, ...southernField]);
+  expect(districtDecor('D-CURE', cureLayout.placements)).toEqual([...belt, ...stories, ...apron, ...clearedFarm, ...roadsideFarm, ...vignettes, ...southernField]);
   expect(cureVignettes([...cureLayout.placements, ...belt, ...stories, ...apron, ...farm])).toEqual(vignettes);
   expect(cureVignetteCatalogue.every(v => v.pieces.length >= 3 && v.pieces.length <= 8)).toBe(true);
   const vignetteGroups = new Set(vignettes.map(p => p.id.replace(/-\d+$/, '')));
@@ -379,6 +384,15 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   decals.update(focus,false);expect(decals.visibleIds()).toHaveLength(2);
   decals.update(focus,true);expect(decals.visibleIds()).toHaveLength(1);
   decals.update({x:0,z:0},true);expect(decals.visibleIds()).toHaveLength(0);decals.dispose();
+  const roofRows = cureVignetteDecals(actualFarm).filter(row => row.roof);
+  const roofDecal = new CureVignetteDecals(roofRows, new DataTexture(new Uint8Array([255,255,255,255]),1,1));
+  const roofFocus = { x: 944, z: -26 };
+  roofDecal.update(roofFocus, false); expect(roofDecal.visibleIds()).toContain('l10-barn-help-roof');
+  roofDecal.update(roofFocus, false, true);
+  expect(roofDecal.visibleIds()).not.toContain('l10-barn-help-roof');
+  expect(roofDecal.children.slice(1).every(child => !child.visible)).toBe(true);
+  roofDecal.update(roofFocus, false, false); expect(roofDecal.visibleIds()).toContain('l10-barn-help-roof');
+  roofDecal.dispose();
 
   expect(apron.some(p => p.position[0] > 3900 && p.roadLife)).toBe(true);
   expect(stories.filter(q => q.fieldLight).length).toBeGreaterThan(60);

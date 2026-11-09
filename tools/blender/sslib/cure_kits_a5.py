@@ -87,21 +87,22 @@ def guard_post(s):
 
 def motor_shelter(s):
     L = s.lod
+    roof = s.joint('roof')
     s.plain('pad', (0, 0, .08), (8.6, 11.6, .16), 'khaki')
-    s.plain('roof', (0, 0, 4.4), (8.6, 11.8, .2), 'olive')
-    s.plain('fascia', (4.36, 0, 4.3), (.16, 11.9, .5), 'schoolBusYellow')
+    s.plain('roofPanel', (0, 0, 4.4), (8.6, 11.8, .2), 'olive', parent=roof)
+    s.plain('fascia', (4.36, 0, 4.3), (.16, 11.9, .5), 'schoolBusYellow', parent=roof)
     for x in (-3.7, 3.7):
         for y in (-5.4, -1.8, 1.8, 5.4):
             s.plain('post', (x, y, 2.25), (.3, .3, 4.2), 'uiDark')
     s.plain('backWall', (-4.0, 0, 1.9), (.3, 11.0, 3.4), 'olive')
     for y in ((-5.4, -2.7, 0, 2.7, 5.4) if L < 2 else (-5.4, 0, 5.4)):  # beams keep the side silhouette at every tier
-        s.plain('beam', (0, y, 4.1), (8.0, .22, .3), 'uiDark')
+        s.plain('beam', (0, y, 4.1), (8.0, .22, .3), 'uiDark', parent=roof)
     if L < 2:
         for y in (-2.75, 2.75):
             s.plain('wheelStop', (-2.7, y, .3), (.3, 2.6, .28), 'schoolBusYellow')
     if L == 0:
         for y in (-1.2, 1.2):
-            s.plain('lamp', (0, y, 3.93), (2.2, .16, .08), 'khaki')
+            s.plain('lamp', (0, y, 3.93), (2.2, .16, .08), 'khaki', parent=roof)
         s.plain('locker', (-3.7, -4.6, 1.15), (.7, 1.4, 1.9), 'uiDark')
         for y in (3.6, 4.5):
             s.tube('drum', (-3.3, y, .55), .27, .78, 'schoolBusYellow')

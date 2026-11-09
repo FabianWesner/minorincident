@@ -1,0 +1,185 @@
+{
+  "pass": true,
+  "checks": [
+    {
+      "matrix": "low/webgl2",
+      "environment": "PASS",
+      "graves": "PASS"
+    },
+    {
+      "matrix": "low/webgpu",
+      "environment": "PASS",
+      "graves": "PASS"
+    },
+    {
+      "matrix": "high/webgl2",
+      "environment": "PASS",
+      "graves": "PASS"
+    },
+    {
+      "matrix": "high/webgpu",
+      "environment": "PASS",
+      "graves": "PASS"
+    },
+    {
+      "matrix": "ending-low-webgl2-landscape-carried",
+      "renderFrames": 4505,
+      "geometry": {
+        "maxDraws": 209,
+        "maxTriangles": 201998,
+        "drawLimit": 300,
+        "triangleLimit": 500000,
+        "pass": true
+      },
+      "ending": "PASS"
+    },
+    {
+      "matrix": "ending-low-webgl2-landscape",
+      "renderFrames": 4509,
+      "geometry": {
+        "maxDraws": 209,
+        "maxTriangles": 236652,
+        "drawLimit": 300,
+        "triangleLimit": 500000,
+        "pass": true
+      },
+      "ending": "PASS"
+    },
+    {
+      "matrix": "ending-low-webgpu-landscape-carried",
+      "renderFrames": 4506,
+      "geometry": {
+        "maxDraws": 209,
+        "maxTriangles": 201998,
+        "drawLimit": 300,
+        "triangleLimit": 500000,
+        "pass": true
+      },
+      "ending": "PASS"
+    },
+    {
+      "matrix": "ending-low-webgpu-landscape",
+      "renderFrames": 4505,
+      "geometry": {
+        "maxDraws": 209,
+        "maxTriangles": 236652,
+        "drawLimit": 300,
+        "triangleLimit": 500000,
+        "pass": true
+      },
+      "ending": "PASS"
+    },
+    {
+      "matrix": "ending-low-webgl2-portrait-carried",
+      "renderFrames": 4497,
+      "geometry": {
+        "maxDraws": 209,
+        "maxTriangles": 166989,
+        "drawLimit": 300,
+        "triangleLimit": 500000,
+        "pass": true
+      },
+      "ending": "PASS"
+    },
+    {
+      "matrix": "ending-low-webgl2-portrait",
+      "renderFrames": 4496,
+      "geometry": {
+        "maxDraws": 207,
+        "maxTriangles": 190783,
+        "drawLimit": 300,
+        "triangleLimit": 500000,
+        "pass": true
+      },
+      "ending": "PASS"
+    },
+    {
+      "matrix": "ending-high-webgl2-landscape-carried",
+      "renderFrames": 4454,
+      "geometry": {
+        "maxDraws": 215,
+        "maxTriangles": 273545,
+        "drawLimit": 600,
+        "triangleLimit": 1500000,
+        "pass": true
+      },
+      "ending": "PASS"
+    },
+    {
+      "matrix": "ending-high-webgl2-landscape",
+      "renderFrames": 4455,
+      "geometry": {
+        "maxDraws": 232,
+        "maxTriangles": 367155,
+        "drawLimit": 600,
+        "triangleLimit": 1500000,
+        "pass": true
+      },
+      "ending": "PASS"
+    },
+    {
+      "matrix": "ending-high-webgpu-landscape-carried",
+      "renderFrames": 4457,
+      "geometry": {
+        "maxDraws": 215,
+        "maxTriangles": 273545,
+        "drawLimit": 600,
+        "triangleLimit": 1500000,
+        "pass": true
+      },
+      "ending": "PASS"
+    },
+    {
+      "matrix": "ending-high-webgpu-landscape",
+      "renderFrames": 4453,
+      "geometry": {
+        "maxDraws": 232,
+        "maxTriangles": 367157,
+        "drawLimit": 600,
+        "triangleLimit": 1500000,
+        "pass": true
+      },
+      "ending": "PASS"
+    },
+    {
+      "matrix": "ending-high-webgl2-portrait-carried",
+      "renderFrames": 4432,
+      "geometry": {
+        "maxDraws": 215,
+        "maxTriangles": 241213,
+        "drawLimit": 600,
+        "triangleLimit": 1500000,
+        "pass": true
+      },
+      "ending": "PASS"
+    },
+    {
+      "matrix": "ending-high-webgl2-portrait",
+      "renderFrames": 4438,
+      "geometry": {
+        "maxDraws": 230,
+        "maxTriangles": 262637,
+        "drawLimit": 600,
+        "triangleLimit": 1500000,
+        "pass": true
+      },
+      "ending": "PASS"
+    },
+    {
+      "defaultCampaignClosingControl": "PASS",
+      "method": "accelerated appearance fixture"
+    },
+    {
+      "route": "PASS",
+      "sourceHash": "3289449abd9baa080a4a7edb7573c4c4d5878715266a95007e9ad8415e5a920a",
+      "sourceRevision": "08441757d453b7e9aba1ead19709d0aed88f029f",
+      "subsequentRenderOnlyChange": "src/render/LevelTenEndingView.ts tableau camera coordinates, closing portrait fit and continuous pullback pose",
+      "E32": "PASS",
+      "assets": "PASS"
+    },
+    {
+      "retainedSheets": 7,
+      "hashes": "PASS"
+    }
+  ]
+}

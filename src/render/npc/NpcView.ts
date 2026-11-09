@@ -18,6 +18,7 @@ import { QuadrupedAnimator } from '../characters/QuadrupedAnimator';
 import { CorgiTongue, markCorgiTongue } from '../characters/CorgiTongue';
 import { MotionPresentation } from '../characters/MotionPresentation';
 import { MotionPhase } from '../characters/MotionPhase';
+import { l10ClosingPose } from '../characters/l10Closing';
 import { NpcAnimator } from '../characters/NpcAnimator';
 import { civilianHeight, fitCivilianHeight } from './figureHeight';
 import { attribute, style, text } from '../../ui/dom';
@@ -176,6 +177,8 @@ export class NpcView extends Group {
       if (hero.tick !== this.world.tick) { hero.moving = e.motion?.moving ?? Math.hypot(hero.x - e.transform.x, hero.z - e.transform.z) > .001; hero.x = e.transform.x; hero.z = e.transform.z; hero.tick = this.world.tick; }
       const presented = this.presentation.sample(e.id, e.transform, this.world.tick, alpha);
       hero.root.visible = !e.hidden && e.companion?.state !== 'hide'; hero.root.position.set(presented.x, presented.y - (e.escort || e.civilian?.pet === 'dog' ? .7 : .3), presented.z); hero.root.rotation.set(0, presented.yaw, 0);
+      const closingCast = l10ClosingPose(this.world, e);
+      if (closingCast) { hero.root.position.set(closingCast.x, closingCast.y - .7, closingCast.z); hero.root.rotation.y = closingCast.yaw; }
       if (e.companion && hero.head && this.world.missions?.state.items.includes('corgi-toy')) {
         this.toyBall ??= new Mesh(this.toyGeometry, this.materials.get('backpackTeal'));
         if (this.toyBall.parent !== hero.head) { hero.head.add(this.toyBall); this.toyBall.position.set(.28, -.08, 0); }
@@ -184,7 +187,7 @@ export class NpcView extends Group {
       const closing = e.companion && this.world.missions?.state.epilogue && this.world.missions.state.counters['epilogue-ticks'] >= 45 * 60;
       if (closing) {
         const console = this.world.missions!.def.anchors['cure-console']; const returnTime = this.world.missions!.state.epilogue!.phase === 'thanks' ? this.world.missions!.state.epilogue!.phaseTicks / 60 : 6;
-        hero.root.position.set(console.x + .3 + Math.max(0, 4.5 - returnTime * 1.5), .08, console.z - 6); hero.root.rotation.y = Math.PI;
+        hero.root.position.set(console.x + 4.2 + Math.max(0, 4.5 - returnTime * 1.5), .08, console.z + 5); hero.root.rotation.y = Math.PI;
       }
       const down = e.escort?.state === 'downed' || e.escort?.state === 'dead' || this.world.tick < (e.escort?.knockedUntil ?? 0) || e.civilian?.state === 'down' || e.civilian?.state === 'rising';
       if (down && hero.animator) { hero.root.rotation.z = Math.PI / 2; hero.root.position.y = .25; }
@@ -192,7 +195,7 @@ export class NpcView extends Group {
       const time = Math.max(0, this.world.tick + alpha - 1) / 60, distance = Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60);
       const warn = e.companion?.warn;
       if (hero.animator) hero.animator.update(time, closing ? this.world.missions!.state.epilogue!.phase === 'thanks' && this.world.missions!.state.epilogue!.phaseTicks < 180 ? 1.5 : 0 : motion.speed, closing ? this.world.missions!.state.epilogue!.phaseTicks / 40 : distance, warn && { stage: warn.stage, toward: this.world.entities.get(warn.threat)?.transform ?? null });
-      else hero.humanAnimator!.update(time, motion.speed, distance, down);
+      else hero.humanAnimator!.update(time, closingCast ? 0 : motion.speed, distance, down);
       hero.tongue?.update(time, motion.speed);
       if (hero.badge && e.escort) {
         this.point.set(e.transform.x, hero.root.position.y + civilianHeight(hero.model) + .15, e.transform.z).project(camera);

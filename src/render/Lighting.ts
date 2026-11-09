@@ -75,6 +75,8 @@ export class Lighting {
   readonly hazeFar = uniform(60).setGroup(renderGroup);
   readonly fogNear = uniform(55);
   readonly fogFar = uniform(140);
+  /** L10's high camera needs clear air down to the whole-level ground plane. */
+  panorama = false;
   readonly bounce;
   readonly fogA = this.fogColorA;
   readonly fogB = this.fogColor;
@@ -297,6 +299,13 @@ export class Lighting {
     this.fogNear.value = p.fogNear + fogOffset; this.fogFar.value = p.fogFar + fogOffset;
     const lens = view.radius * view.driveScale, haze = this.look.values;
     this.hazeNear.value = lens * haze.hazeStart; this.hazeFar.value = lens * haze.hazeEnd;
+    if (this.panorama) {
+      const distance = view.camera.position.distanceTo(view.cameraTarget);
+      this.fogNear.value = Math.max(this.fogNear.value, distance * 1.6);
+      this.fogFar.value = Math.max(this.fogFar.value, distance * 3);
+      this.hazeNear.value = Math.max(this.hazeNear.value, distance * 1.6);
+      this.hazeFar.value = Math.max(this.hazeFar.value, distance * 3);
+    }
     if (this.scene.fog instanceof Fog) { this.scene.fog.near = this.fogNear.value; this.scene.fog.far = this.fogFar.value; }
     // Bound the view's ground-plane corners, then enclose that area in the light's orthographic frustum.
     let visibleRadius = 0;
