@@ -24,7 +24,9 @@ export class LevelSevenBot {
     const blocker = w.solids.blockingBody(1);
     if (blocker && solidLargeCorpse(blocker)) this.avoidCorpses = true;
     const pickup = w.l7Encounters!.state.started ? undefined : [...w.entities.iterate()].find(e => e.pickup && 'actionId' in e.pickup && e.pickup.actionId === l7Rocket.action);
-    if (!pickup && this.waypoint < this.route.length - 1 && distance(p.transform, this.route[this.waypoint]) < (this.waypoint >= 3 ? .3 : 2)) this.waypoint++;
+    // Tight corners resolve to half-metre nav cells; require the whole swept
+    // route, without waiting forever for an unreachable exact cell centre.
+    if (!pickup && this.waypoint < this.route.length - 1 && distance(p.transform, this.route[this.waypoint]) < (this.waypoint >= 3 ? .7 : 2)) this.waypoint++;
     const goal = pickup?.transform ?? this.route[this.waypoint];
     if (!this.avoidCorpses && !pickup && this.waypoint >= 3 && w.infected!.nav.visible(p.transform, goal, .35)) {
       const dx = goal.x - p.transform.x, dz = goal.z - p.transform.z, d = Math.hypot(dx, dz);

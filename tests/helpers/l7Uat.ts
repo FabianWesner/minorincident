@@ -269,7 +269,7 @@ async function checkPharmacyCourier() {
   } finally { w.dispose(); }
 }
 
-/** r5-l7 (vqa58 survivor losses): a completed bite costs an evacuee a third of its bar instead of killing it, the
+/** A completed bite costs an evacuee health instead of killing it outright, the
  * biter reels while it tears free, and a loss inside the column never raises "Survivor lost behind you!". */
 async function checkFollowerBites() {
   const w = await loadLevel('L7', 3, undefined, 0, { quality: 'low' });
@@ -288,7 +288,7 @@ async function checkFollowerBites() {
     }
     const lost = roster.find(r => r.status !== 'following');
     expect(lost, 'one unopposed runner still kills an evacuee').toBeDefined();
-    expect(wounds.get(lost!.id), 'the fatal bite is the third: 100 → 66 → 32 → dead').toEqual([66, 32]);
+    expect(wounds.get(lost!.id), 'the tenth ordinary bite is still fatal; every earlier bite visibly costs health').toEqual([90, 80, 70, 60, 50, 40, 30, 20, 10]);
     expect(staggered, 'the biter reels after a survived bite').toBe(true);
     expect(alarms.filter(kind => kind !== 'wait'), 'a loss beside the courier is not "behind you"').toEqual([]);
   } finally { w.dispose(); }
