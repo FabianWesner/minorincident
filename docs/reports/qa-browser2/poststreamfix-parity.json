@@ -1,0 +1,93 @@
+{
+  "method": "Same observed capture fields before/after destruction lifetime fix; not a whole-world hash or performance comparison.",
+  "cells": [
+    {
+      "tier": "low",
+      "backend": "webgl2",
+      "before": "L10-low-webgl2-complete.json",
+      "after": "L10-low-webgl2-complete-poststreamfix.json",
+      "comparedCaptures": 240,
+      "fields": [
+        "tick",
+        "phase",
+        "active",
+        "checkpoint",
+        "position",
+        "hp",
+        "stats",
+        "charge",
+        "mounted",
+        "mega",
+        "epilogue",
+        "cure"
+      ],
+      "mismatches": []
+    },
+    {
+      "tier": "low",
+      "backend": "webgpu",
+      "before": "L10-low-webgpu-complete-clean.json",
+      "after": "L10-low-webgpu-complete-poststreamfix.json",
+      "comparedCaptures": 240,
+      "fields": [
+        "tick",
+        "phase",
+        "active",
+        "checkpoint",
+        "position",
+        "hp",
+        "stats",
+        "charge",
+        "mounted",
+        "mega",
+        "epilogue",
+        "cure"
+      ],
+      "mismatches": []
+    },
+    {
+      "tier": "high",
+      "backend": "webgl2",
+      "before": "L10-high-webgl2-complete.json",
+      "after": "L10-high-webgl2-complete-poststreamfix.json",
+      "comparedCaptures": 228,
+      "fields": [
+        "tick",
+        "phase",
+        "active",
+        "checkpoint",
+        "position",
+        "hp",
+        "stats",
+        "charge",
+        "mounted",
+        "mega",
+        "epilogue",
+        "cure"
+      ],
+      "mismatches": []
+    },
+    {
+      "tier": "high",
+      "backend": "webgpu",
+      "before": "L10-high-webgpu-complete-clean.json",
+      "after": "L10-high-webgpu-complete-poststreamfix.json",
+      "comparedCaptures": 228,
+      "fields": [
+        "tick",
+        "phase",
+        "active",
+        "checkpoint",
+        "position",
+        "hp",
+        "stats",
+        "charge",
+        "mounted",
+        "mega",
+        "epilogue",
+        "cure"
+      ],
+      "mismatches": []
+    }
+  ]
+}
