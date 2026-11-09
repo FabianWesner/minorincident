@@ -14,6 +14,8 @@ The r12 `PropSystem` owns parked-car rigid bodies, movement, settling, and navig
 
 `tools/assets/bake-destruction-parts.ts` reads authored door, window and roof bounds from the existing GLBs into a small sim-only JSON file. Optimized sedan meshes retain empty door anchors, so shared cabin-glass and panel zones provide their parts. A fixed structural grid partitions the remaining occupied collision shell. Floors below 45 cm stay intact as walkable supports.
 
+The merged L10 farm meshes use wall, doorway-pier/header and roof zones from their authored Blender recipe. These ruins deliberately have no solid collision owner. Their semantic wall zones remain breakable and receive hit queries, while their existing open doorway routes gain no Rapier or navigation blockers.
+
 `src/data/destruction.ts` scales authored weapon damage by material: glass, wood, metal, brick, concrete. Handguns make bounded impact marks and break glass; shotgun pellets hit separate parts; axes cut timber doors; sustained machine-gun fire removes thin wood sections; grenades, pipe bombs and rockets damage parts with radial falloff. Incendiary zones ignite timber and cars. The `weapon.flamethrower` fire-response ID is supported for future callers; the game does not currently have a carried flamethrower action.
 
 Combat compares environmental hits with actor and cover distances. Projectiles, shotgun pellets, melee strikes, explosions, and the mounted gun share the same placement damage owner. Entity damage skips placement-owned cars to prevent double damage. Environmental chain blasts retain their existing authored damage curves.
