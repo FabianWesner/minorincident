@@ -1,0 +1,27 @@
+{
+  "name": "nightly",
+  "cases": 150,
+  "counts": {
+    "vitest": 129,
+    "e2e": 9,
+    "invariantsBrowser": 12
+  },
+  "files": 44,
+  "limits": {
+    "cases": 150,
+    "files": 45,
+    "seconds": 1200
+  },
+  "command": [
+    "sh",
+    "tools/qa/nightly.sh"
+  ],
+  "seconds": 1200.3364827710002,
+  "exitCode": 124,
+  "signal": null,
+  "failures": [
+    "nightly failed (exit 124)",
+    "nightly took 1200.3 s, over the 1200 s budget"
+  ],
+  "at": "2026-11-09T13:50:35.516Z"
+}

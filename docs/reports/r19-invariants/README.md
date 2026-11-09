@@ -2,6 +2,10 @@
 
 Base: `c8d4a802`; lane: `lane/r19-invariants`. No browser, deployment or push. Heavy runs use the runner pool with local fallback disabled.
 
+## Status
+
+**Goal not yet complete.** Repairs are on local main through `8266f0ea`. The full sim passed on `fdee95c6`; the final L9 change passed its focused vehicle/crawl regression, typecheck and lint. A fresh full nightly on `8266f0ea` is still required. The three-hour brief timebox is reached; an extension was requested for that final validation.
+
 ## Findings and changes
 
 | Item | Cause and correction |
@@ -19,6 +23,9 @@ Base: `c8d4a802`; lane: `lane/r19-invariants`. No browser, deployment or push. H
 | L7/L8/L10 expectations | Current street Alphas, the additional K9, one sustaining arrival per outlet and staggered L10 admission replace old fixture expectations. |
 | Vehicles | Decorative hull checks ignored authored scale. Use the installed scaled hull; move the L4 fuel truck clear of its storefront and the L7 parked APC 25 cm clear of its barrier. |
 | Recovery contact | An inactive infected retained a pre-knockdown rollback reservation. Discard contact history when an actor leaves the collision mask; recovery validates its current pose. Exact L4 tick 10970 replay is clean and the existing admission test now covers stale recovery history. |
+| L4 completion bot | Collapse combat stopped the completion profile for every pursuer. Keep movement while defending, including medkit and detour legs, as the novice profile already did. Ordinary player input and gameplay remain unchanged. |
+| L6 completion bot | Combat returned before retreat movement, pinning the courier at the night exit after the survivors were already out. Preserve ordinary retreat movement while defending; follower waiting and gameplay rules stay unchanged. |
+| L9 crawl death | Releasing the crash input lock also stopped renewing invulnerability. A one-HP courier died at 61% of the controlled crawl, and the crash update then returned forever. Renew protection through the input-controlled crawl; the existing vehicle fixture now attempts damage every crawl tick and requires the ending. |
 | Combat ray cost | A CPU profile attributed 42% of L4 runtime to cover queries. Remove rotated-ray allocations and use four-metre static buckets; 250,000 rays match the previous result exactly. |
 | Seated sweep | Split the same twenty worlds and ninety seconds of every-frame actor observation between the existing low-tier actor fixture and a high-tier worker file, with individual level receipts. Seat sampling remains once per second. |
 | Rig dimensions | Seven manifest entries retained dimensions from older rigs. Record the delivered LOD0 extents; retain the existing dimension tolerances. |
@@ -28,7 +35,11 @@ Base: `c8d4a802`; lane: `lane/r19-invariants`. No browser, deployment or push. H
 
 ## Evidence
 
-Asset validation: **1,533 entries, zero errors**. Typecheck and lint pass. Unit validation: **106 passed, one skipped**, **120.6 s / 240 s**. The runner input was given a private snapshot commit because the existing review-tool test requires `git rev-parse HEAD`; the runner cache otherwise has no HEAD. The complete sim passed **47/47** in **429.22 s** before case-budget consolidation; current-source nightly and final main receipts are pending.
+Asset validation: **1,533 entries, zero errors**. Typecheck and lint pass. Unit validation: **106 passed, one skipped**, **185.8 s / 240 s**, using two workers. The runner input was given a private snapshot commit because the existing review-tool test requires `git rev-parse HEAD`; the runner cache otherwise has no HEAD. On main `fdee95c6`, the complete sim passed **28/28** in **216.09 s**. Nightly on `fdee95c6` passed all 33 non-campaign checks and L1–L8, then exhausted 1,200.3 seconds at the fatal L9 crawl. Main `8266f0ea` fixes that failure and passes the focused regression; the complete campaign and nightly remain unverified on this final source. The recovery regression fails when the history reset is removed and passes with it restored.
+
+An additional four-worker unit run on runner 1 hit the existing 30-second limit in L4 contact, navigation and explosion cases (103 passed, three timed out). Repeating the unchanged 107 cases with two workers passed 106 with one skipped in 178.5 seconds, within the 240-second total budget. The failure log is retained as `unit-timeout.log.gz`; the final main two-worker rerun also passed in 185.8 seconds.
+
+The full L4 carryover replay now completes in 296.9 simulated seconds (zero contact failures). The L6 carryover replay completes in 199.42 seconds with zero deaths, damage or contact failures; the former bot exhausted 1,200 seconds at the night exit after every follower had already left. Both fixes change ordinary bot movement decisions.
 
 The suite remains within **150 collected cases / 45 files**. The final tier split uses 44 files and preserves all ninety-second observations.
 
