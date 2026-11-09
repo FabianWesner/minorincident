@@ -5,6 +5,9 @@ import { Box3, MeshLambertNodeMaterial, NodeFrame, PerspectiveCamera, Scene, Tex
 import { float, vec3 } from 'three/tsl';
 import { expect, test, vi } from 'vitest';
 import { readFileSync } from 'node:fs';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import { staticBatch } from '../../src/assets/staticBatch';
 import { gunzipSync } from 'node:zlib';
 import { decodeCivilianBake } from '../../src/assets/civilianBakeData';
 import { deathReach, registerDeathPoseRepair, repairDeathPoses } from '../../src/render/characters/deathPose';
@@ -200,6 +203,7 @@ function checkStaticArtworkBatches(): void {
 }
 
 test('static placement batches reuse their graph and narrow barriers keep the foreground cut', async () => {
+  await checkHighwayModels();
   checkVehicleForegroundVeto();
   await checkSeatedBodyFrame(); checkChangingSupport();
   checkStaticArtworkBatches();
@@ -269,6 +273,28 @@ test('static placement batches reuse their graph and narrow barriers keep the fo
     expect(posts[0].geometry.getAttribute('_placement0')).not.toBe(posts[1].geometry.getAttribute('_placement0'));
   } finally { a.dispose(); b.dispose(); for (const mesh of posts) { mesh.geometry.dispose(); mesh.dispose(); } postGeometry.dispose(); for (const geometry of geometries) geometry.dispose(); shading.dispose(); lighting.dispose(); }
 });
+
+/** Invalid lantern transforms poison the whole ramp's bounds, hiding its road and rails while collision remains. */
+async function checkHighwayModels(): Promise<void> {
+  const lighting = new Lighting(new Scene()), shading = new Materials(lighting);
+  try {
+    for (const lod of ['', '.lod1', '.lod2']) {
+      const file = `public/assets/models/kit.highway-onramp${lod}.glb`, bytes = readFileSync(file);
+      const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
+      scene.updateMatrixWorld(true);
+      scene.traverse(node => {
+        if (node instanceof Mesh) expect(node.matrixWorld.elements.every(Number.isFinite), `${file}: ${node.name} has a finite world transform`).toBe(true);
+      });
+      scene.userData.assetId = 'kit.highway-onramp';
+      const batch = staticBatch(scene, true, shading), box = new Box3().setFromObject(batch);
+      expect([...box.min.toArray(), ...box.max.toArray()].every(Number.isFinite), `${file}: production batching preserves finite culling bounds`).toBe(true);
+      expect(box.getSize(new Vector3()).x).toBeGreaterThan(28);
+      expect(box.getSize(new Vector3()).y).toBeGreaterThan(9);
+      batch.traverse(node => { if (node instanceof Mesh) { node.geometry.dispose(); for (const material of Array.isArray(node.material) ? node.material : [node.material]) material.dispose(); } });
+      scene.traverse(node => { if (node instanceof Mesh) { node.geometry.dispose(); for (const material of Array.isArray(node.material) ? node.material : [node.material]) material.dispose(); } });
+    }
+  } finally { shading.dispose(); lighting.dispose(); }
+}
 
 test('a held cane reaches the floor across rig scales without moving its fitted grip', () => {
   const props = new RoutineProps(), matrix = new Matrix4();

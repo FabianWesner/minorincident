@@ -1,0 +1,301 @@
+{
+  "method": "The native skilled input policy first reaches the real seed 1 segment-3b snapshot, then stops. Trigger production death/respawn, then the actual pause Restart level and mission Retry buttons; walk the full S-ramp with production keyboard WASD. Use Digit3 and the left mouse button for the carried axe only when a living infected intercepts. No teleport, cheats, or movement override. One settled top-of-ramp capture per quality tier.",
+  "renderer": "pooled headless WebGL2/Metal",
+  "runs": [
+    {
+      "tier": "low",
+      "restore": "death",
+      "observation": "outer-rail pose before recovering inward",
+      "state": {
+        "x": 158.9044952392578,
+        "y": 5.65362024307251,
+        "z": -1.309089183807373,
+        "yaw": -1.5707963267948968
+      }
+    },
+    {
+      "tier": "low",
+      "restore": "death",
+      "checkpoint": "segment-3b",
+      "setup": {
+        "tick": 10201,
+        "checkpoint": "segment-3b",
+        "phase": "playing",
+        "player": {
+          "x": 97.63643646240234,
+          "y": 0.8500000238418579,
+          "z": -22.901390075683594,
+          "yaw": -0.004437769715788149
+        }
+      },
+      "reachedTop": true,
+      "defences": 5,
+      "final": {
+        "tick": 11598,
+        "player": {
+          "x": 167.3083953857422,
+          "y": 6.420000076293945,
+          "z": -0.39100033044815063,
+          "yaw": -0.7853981633974484
+        },
+        "objective": "active",
+        "ramps": [
+          {
+            "assetId": "kit.highway-onramp",
+            "origin": [
+              0,
+              0
+            ],
+            "position": [
+              155.5,
+              0,
+              0
+            ],
+            "lod": "lod2"
+          },
+          {
+            "assetId": "kit.highway-onramp",
+            "origin": [
+              0,
+              0
+            ],
+            "position": [
+              191.5,
+              0,
+              0
+            ],
+            "lod": "lod2"
+          }
+        ]
+      },
+      "consoleErrors": []
+    },
+    {
+      "tier": "low",
+      "restore": "restart-retry",
+      "checkpoint": "segment-3b",
+      "setup": {
+        "tick": 10080,
+        "checkpoint": "segment-3b",
+        "phase": "retry",
+        "player": {
+          "x": 97.63643646240234,
+          "y": 0.8500000238418579,
+          "z": -22.901390075683594,
+          "yaw": -0.004437769715788149
+        }
+      },
+      "reachedTop": true,
+      "defences": 9,
+      "final": {
+        "tick": 11416,
+        "player": {
+          "x": 167.2785186767578,
+          "y": 6.420000076293945,
+          "z": -0.3112924098968506,
+          "yaw": -0.7853981633974484
+        },
+        "objective": "active",
+        "ramps": [
+          {
+            "assetId": "kit.highway-onramp",
+            "origin": [
+              0,
+              0
+            ],
+            "position": [
+              155.5,
+              0,
+              0
+            ],
+            "lod": "lod2"
+          },
+          {
+            "assetId": "kit.highway-onramp",
+            "origin": [
+              0,
+              0
+            ],
+            "position": [
+              191.5,
+              0,
+              0
+            ],
+            "lod": "lod2"
+          }
+        ]
+      },
+      "screenshot": "test-results/qa/l3-ramp-final/l3-ramp-top-low.png",
+      "consoleErrors": []
+    },
+    {
+      "tier": "high",
+      "restore": "death",
+      "observation": "outer-rail pose before recovering inward",
+      "state": {
+        "x": 159.19802856445312,
+        "y": 5.716875076293945,
+        "z": -1.7799451351165771,
+        "yaw": -1.5707963267948968
+      }
+    },
+    {
+      "tier": "high",
+      "restore": "death",
+      "checkpoint": "segment-3b",
+      "setup": {
+        "tick": 11641,
+        "checkpoint": "segment-3b",
+        "phase": "playing",
+        "player": {
+          "x": 94.0427474975586,
+          "y": 0.8500000238418579,
+          "z": -22.960575103759766,
+          "yaw": 0.046971768978127354
+        }
+      },
+      "reachedTop": true,
+      "defences": 10,
+      "final": {
+        "tick": 13086,
+        "player": {
+          "x": 167.24517822265625,
+          "y": 6.420000076293945,
+          "z": -0.057288944721221924,
+          "yaw": -0.7853981633974484
+        },
+        "objective": "active",
+        "ramps": [
+          {
+            "assetId": "kit.highway-onramp",
+            "origin": [
+              0,
+              0
+            ],
+            "position": [
+              155.5,
+              0,
+              0
+            ],
+            "lod": "lod1"
+          },
+          {
+            "assetId": "kit.highway-onramp",
+            "origin": [
+              0,
+              0
+            ],
+            "position": [
+              191.5,
+              0,
+              0
+            ],
+            "lod": "lod2"
+          }
+        ]
+      },
+      "consoleErrors": []
+    },
+    {
+      "tier": "high",
+      "restore": "restart-retry",
+      "checkpoint": "segment-3b",
+      "setup": {
+        "tick": 11520,
+        "checkpoint": "segment-3b",
+        "phase": "retry",
+        "player": {
+          "x": 94.0427474975586,
+          "y": 0.8500000238418579,
+          "z": -22.960575103759766,
+          "yaw": 0.046971768978127354
+        }
+      },
+      "reachedTop": true,
+      "defences": 20,
+      "final": {
+        "tick": 12930,
+        "player": {
+          "x": 167.33340454101562,
+          "y": 6.420000076293945,
+          "z": -0.17770108580589294,
+          "yaw": -0.7853981633974484
+        },
+        "objective": "active",
+        "ramps": [
+          {
+            "assetId": "kit.highway-onramp",
+            "origin": [
+              0,
+              0
+            ],
+            "position": [
+              155.5,
+              0,
+              0
+            ],
+            "lod": "lod1"
+          },
+          {
+            "assetId": "kit.highway-onramp",
+            "origin": [
+              0,
+              0
+            ],
+            "position": [
+              191.5,
+              0,
+              0
+            ],
+            "lod": "lod2"
+          }
+        ]
+      },
+      "screenshot": "test-results/qa/l3-ramp-final/l3-ramp-top-high.png",
+      "consoleErrors": []
+    }
+  ],
+  "sourceRevision": "3549e844",
+  "traceSummary": [
+    {
+      "tier": "low",
+      "restore": "death",
+      "samples": 645,
+      "minimumHp": 76.26666666666631,
+      "deaths": 0,
+      "defences": 5,
+      "trace": "test-results/qa/l3-ramp-final/trace-low-death.json",
+      "sha256": "7d280e81660bb53309e43a4ecde20bca6084d4d2bdcb23c3131be3ea169b176b"
+    },
+    {
+      "tier": "low",
+      "restore": "restart-retry",
+      "samples": 633,
+      "minimumHp": 60,
+      "deaths": 0,
+      "defences": 9,
+      "trace": "test-results/qa/l3-ramp-final/trace-low-restart-retry.json",
+      "sha256": "cc0a48a0bc341b63215510858130cbcedb8eb52b57813078c181e9cac4979edf"
+    },
+    {
+      "tier": "high",
+      "restore": "death",
+      "samples": 668,
+      "minimumHp": 20,
+      "deaths": 0,
+      "defences": 10,
+      "trace": "test-results/qa/l3-ramp-final/trace-high-death.json",
+      "sha256": "d1a579a416654414e31c9155720b12235551989b54f2f46f4bb36ab0c7e506d0"
+    },
+    {
+      "tier": "high",
+      "restore": "restart-retry",
+      "samples": 664,
+      "minimumHp": 50,
+      "deaths": 0,
+      "defences": 20,
+      "trace": "test-results/qa/l3-ramp-final/trace-high-restart-retry.json",
+      "sha256": "23402e9a3c394a915539c7f1ff556f0a7c1b82dec3aa8aaf2c15183f77d241aa"
+    }
+  ]
+}

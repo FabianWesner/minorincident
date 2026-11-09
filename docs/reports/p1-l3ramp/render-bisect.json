@@ -1,0 +1,38 @@
+{
+  "culprit": "fd0ad256",
+  "mechanism": "Preserved lantern child meshes make Three GLTFLoader interpret a descriptive extras.pivot string as a numeric pivot; NaN lantern transforms poison the complete ramp bounds and it is culled.",
+  "rows": [
+    {
+      "version": "before fd0ad256",
+      "file": "/tmp/p1-highway-before-lod1.glb",
+      "invalidMeshParents": [],
+      "finiteBounds": true
+    },
+    {
+      "version": "before fd0ad256",
+      "file": "/tmp/p1-highway-before.glb",
+      "invalidMeshParents": [],
+      "finiteBounds": true
+    },
+    {
+      "version": "fd0ad256 / cab3405c",
+      "file": "public/assets/models/kit.highway-onramp.lod1.glb",
+      "invalidMeshParents": [
+        "lampHead1",
+        "lampHead2",
+        "lampHead3"
+      ],
+      "finiteBounds": false
+    },
+    {
+      "version": "fd0ad256 / cab3405c",
+      "file": "public/assets/models/kit.highway-onramp.lod2.glb",
+      "invalidMeshParents": [
+        "lampHead1",
+        "lampHead2",
+        "lampHead3"
+      ],
+      "finiteBounds": false
+    }
+  ]
+}

@@ -253,11 +253,13 @@ export class PropSystem {
         if (!this.shoulderPush || !item.metadata.pushable) { item.body.setBodyType(RAPIER.RigidBodyType.Fixed, false); continue; }
         item.body.setBodyType(RAPIER.RigidBodyType.Dynamic, false); scale = Math.min(scale, .25);
       } else if (item.metadata.class === 'medium') scale = Math.min(scale, .55);
-      if (item.metadata.class !== 'light') {
-        const v = item.body.linvel(), speed = 4.5 * scale;
-        const impulse = item.mass * Math.max(0, speed - v.x * nx - v.z * nz);
-        item.body.applyImpulse({ x: nx * impulse, y: 0, z: nz * impulse }, true);
-      }
+      // A capsule's lower cap presses light props down into stair risers.
+      // Give touching props the same horizontal shove as larger movable props,
+      // without slowing the courier. The 3D contact also excludes props below a deck.
+      if (item.metadata.class === 'light' && !this.world.physics.playerCollider!.contactCollider(item.collider, .1)) continue;
+      const v = item.body.linvel(), speed = 4.5 * scale;
+      const impulse = item.mass * Math.max(0, speed - v.x * nx - v.z * nz);
+      item.body.applyImpulse({ x: nx * impulse, y: 0, z: nz * impulse }, true);
     }
     return scale;
   }

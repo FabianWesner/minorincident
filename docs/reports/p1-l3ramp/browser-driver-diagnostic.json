@@ -1,0 +1,284 @@
+{
+  "method": "Production WASD alone, high quality, death ascent then pause Restart and mission Retry. This traced run reproduces the initial merged browser failure at exactly the same final street pose.",
+  "conclusion": "An intercepting live runner held the unarmed driver in melee. It died on the supported ramp (tick 13112), respawned at its genuine checkpoint (tick 13232), and the test driver continued toward its old upper-ramp waypoint. This was not a fall through the ramp. The driver now detects death and fights intercepting live infected with the carried axe through Digit3 and left mouse; no simulation rule changes.",
+  "rawTrace": "test-results/qa/l3-ramp-high-sequence/trace-high-restart-retry.json",
+  "rawTraceSha256": "81323a5a36ceb55eca107326112ae143eb44f321e729bc0ee781a1e5421df951",
+  "minimumHp": 0,
+  "excerpt": [
+    {
+      "sample": 0,
+      "waypoint": 0,
+      "target": [
+        94.25,
+        0,
+        -22.75
+      ],
+      "tick": 11529,
+      "player": {
+        "x": 94.0427474975586,
+        "y": 0.8500000238418579,
+        "z": -22.960575103759766,
+        "yaw": 0.046971768978127354
+      },
+      "hp": 100,
+      "diedAt": null,
+      "staggerUntil": 11520,
+      "azimuth": 0.7853981633974483
+    },
+    {
+      "sample": 533,
+      "waypoint": 158,
+      "target": [
+        152.3,
+        3.6944444444444446,
+        3.1955227495527936
+      ],
+      "tick": 12654,
+      "player": {
+        "x": 151.79486663802527,
+        "y": 4.3973961770534515,
+        "z": 3.3043717227410525,
+        "yaw": -7.850462293418876e-17
+      },
+      "hp": 70,
+      "diedAt": null,
+      "staggerUntil": 11520,
+      "blocker": {
+        "id": 1444,
+        "archetype": "infected.runner",
+        "hp": 60,
+        "position": {
+          "x": 152.36010144396295,
+          "z": 2.889750674122217,
+          "y": 4.498611111111111,
+          "yaw": -0.3863175312464279
+        }
+      },
+      "azimuth": 0.7853981633974483
+    },
+    {
+      "sample": 534,
+      "waypoint": 158,
+      "target": [
+        152.3,
+        3.6944444444444446,
+        3.1955227495527936
+      ],
+      "tick": 12657,
+      "player": {
+        "x": 151.80241575161926,
+        "y": 4.414444446563721,
+        "z": 3.290962876752019,
+        "yaw": -7.850462293418876e-17
+      },
+      "hp": 60,
+      "diedAt": null,
+      "staggerUntil": 11520,
+      "blocker": {
+        "id": 1444,
+        "archetype": "infected.runner",
+        "hp": 60,
+        "position": {
+          "x": 152.36010144396295,
+          "z": 2.889750674122217,
+          "y": 4.498611111111111,
+          "yaw": -0.3863175312464279
+        }
+      },
+      "azimuth": 0.7853981633974483
+    },
+    {
+      "sample": 551,
+      "waypoint": 158,
+      "target": [
+        152.3,
+        3.6944444444444446,
+        3.1955227495527936
+      ],
+      "tick": 12708,
+      "player": {
+        "x": 151.81910760700703,
+        "y": 4.399174153804779,
+        "z": 3.3070073714479804,
+        "yaw": -7.850462293418876e-17
+      },
+      "hp": 60,
+      "diedAt": null,
+      "staggerUntil": 11520,
+      "blocker": {
+        "id": 1444,
+        "archetype": "infected.runner",
+        "hp": 60,
+        "position": {
+          "x": 152.36010144396295,
+          "z": 2.889750674122217,
+          "y": 4.498611111111111,
+          "yaw": -0.38287991615506706
+        }
+      },
+      "azimuth": 0.7853981633974483
+    },
+    {
+      "sample": 570,
+      "waypoint": 158,
+      "target": [
+        152.3,
+        3.6944444444444446,
+        3.1955227495527936
+      ],
+      "tick": 12765,
+      "player": {
+        "x": 151.8149805571884,
+        "y": 4.466875076293945,
+        "z": 3.3063777647912502,
+        "yaw": -7.850462293418876e-17
+      },
+      "hp": 40,
+      "diedAt": null,
+      "staggerUntil": 11520,
+      "blocker": {
+        "id": 1444,
+        "archetype": "infected.runner",
+        "hp": 60,
+        "position": {
+          "x": 152.36010144396295,
+          "z": 2.889750674122217,
+          "y": 4.498611111111111,
+          "yaw": -0.3844138610706602
+        }
+      },
+      "azimuth": 0.7853981633974483
+    },
+    {
+      "sample": 588,
+      "waypoint": 158,
+      "target": [
+        152.3,
+        3.6944444444444446,
+        3.1955227495527936
+      ],
+      "tick": 12819,
+      "player": {
+        "x": 151.8149805571884,
+        "y": 4.466875076293945,
+        "z": 3.3063777647912502,
+        "yaw": -7.850462293418876e-17
+      },
+      "hp": 30,
+      "diedAt": null,
+      "staggerUntil": 11520,
+      "blocker": {
+        "id": 1444,
+        "archetype": "infected.runner",
+        "hp": 60,
+        "position": {
+          "x": 152.36010144396295,
+          "z": 2.889750674122217,
+          "y": 4.498611111111111,
+          "yaw": -0.3844138610706602
+        }
+      },
+      "azimuth": 0.7853981633974483
+    },
+    {
+      "sample": 704,
+      "waypoint": 177,
+      "target": [
+        159.9,
+        5.198611111111111,
+        -3.9282454678631837
+      ],
+      "tick": 13110,
+      "player": {
+        "x": 159.4528045654297,
+        "y": 5.9186110496521,
+        "z": -3.647679090499878,
+        "yaw": -7.850462293418876e-17
+      },
+      "hp": 10,
+      "diedAt": null,
+      "staggerUntil": 11520,
+      "azimuth": 0.7853981633974483
+    },
+    {
+      "sample": 705,
+      "waypoint": 177,
+      "target": [
+        159.9,
+        5.198611111111111,
+        -3.9282454678631837
+      ],
+      "tick": 13113,
+      "player": {
+        "x": 159.59132385253906,
+        "y": 5.924652576446533,
+        "z": -3.6753954887390137,
+        "yaw": 0.418879020478639
+      },
+      "hp": 0,
+      "diedAt": 13112,
+      "staggerUntil": 11520,
+      "azimuth": 0.7853981633974483
+    },
+    {
+      "sample": 745,
+      "waypoint": 178,
+      "target": [
+        160.3,
+        5.25,
+        -4.089543020069159
+      ],
+      "tick": 13230,
+      "player": {
+        "x": 159.58778381347656,
+        "y": 5.8855109214782715,
+        "z": -3.6753954887390137,
+        "yaw": 0.418879020478639
+      },
+      "hp": 0,
+      "diedAt": 13112,
+      "staggerUntil": 11520,
+      "azimuth": 0.7853981633974483
+    },
+    {
+      "sample": 746,
+      "waypoint": 178,
+      "target": [
+        160.3,
+        5.25,
+        -4.089543020069159
+      ],
+      "tick": 13233,
+      "player": {
+        "x": 94.04981994628906,
+        "y": 0.8500000238418579,
+        "z": -22.9676456451416,
+        "yaw": 0.2564112792174469
+      },
+      "hp": 100,
+      "diedAt": null,
+      "staggerUntil": 13232,
+      "azimuth": 0.7853981633974483
+    },
+    {
+      "sample": 1199,
+      "waypoint": 178,
+      "target": [
+        160.3,
+        5.25,
+        -4.089543020069159
+      ],
+      "tick": 14592,
+      "player": {
+        "x": 157.2455291748047,
+        "y": 0.7099999785423279,
+        "z": -10.976099967956543,
+        "yaw": -1.5707963267948968
+      },
+      "hp": 100,
+      "diedAt": null,
+      "staggerUntil": 13232,
+      "azimuth": 0.7853981633974483
+    }
+  ]
+}
