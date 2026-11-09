@@ -141,10 +141,7 @@ export class Npcs {
     if (s.stirAt === undefined || tick - s.stirAt > delay + 30) s.stirAt = tick;
     if (tick - s.stirAt >= delay) return false;
     // Fear is immediate: nobody dawdles with an infected anywhere near.
-    const leader = this.world.scenario === 'L7' ? this.world.entities.get(1)?.transform : undefined;
-    return !this.world.infected!.active.some(o => o.health.current > 0 && !o.hidden &&
-      (Math.hypot(o.transform.x - e.transform.x, o.transform.z - e.transform.z) < 20 ||
-        leader && Math.hypot(o.transform.x - leader.x, o.transform.z - leader.z) < 20));
+    return !this.world.infected!.active.some(o => o.health.current > 0 && !o.hidden && Math.hypot(o.transform.x - e.transform.x, o.transform.z - e.transform.z) < 20);
   }
   /** Walking followers wander slowly to either side of their slot instead of moving on parallel rails. */
   private sway(e: EntitySnapshot, target: Point, nav: NavGrid): Point {

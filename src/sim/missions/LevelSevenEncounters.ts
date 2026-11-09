@@ -283,7 +283,7 @@ export class LevelSevenEncounters {
       const exit = { x: launcher.transform.x - l7Rocket.exitOffset[0], z: launcher.transform.z - l7Rocket.exitOffset[1] };
       const road = l7Encounters.streets[0], heading = leaderHeading(-Math.atan2(road.z - exit.z, road.x - exit.x));
       const origin = { x: exit.x - heading.x * 3.5, z: exit.z - heading.z * 3.5 };
-      w.npcs!.move(e, formationSlot(origin, heading, s.slot, false), 5.2, c, .3);
+      w.npcs!.move(e, formationSlot(origin, heading, s.slot), 5.2, c, .3);
       w.spatial.set(e.id, e.transform.x, e.transform.z);
       return true;
     }
@@ -294,14 +294,14 @@ export class LevelSevenEncounters {
     const nav = this.followerNavigation();
     // Keep followers on their individual slots when the leader turns. Falling
     // back to the leader position sends the whole formation to one crowded point.
-    const target = nav.clear(goal.x, goal.z, .35) ? goal : snapToClear(w, goal, .35);
+    const ahead = w.missions!.state.steps.departure?.status !== 'active' || Math.hypot(v.x, v.z) <= .8 || (goal.x - e.transform.x) * v.x + (goal.z - e.transform.z) * v.z >= 0;
+    const target = w.infected!.director.tier === 'high' || w.missions!.state.steps.departure?.status === 'active'
+      ? nav.clear(goal.x, goal.z, .35) ? goal : snapToClear(w, goal, .35)
+      : ahead && nav.clear(goal.x, goal.z, .35) && nav.visible(e.transform, goal, .35) && nav.visible(goal, p.transform, .35) ? goal : p.transform;
     if (d > formationBack(slot) + 10 && w.tick >= this.state.waitAt) {
       this.state.waitAt = w.tick + 300;
       this.warn(e, 'wait');
     }
-    // A moving corridor slot needs continuous steering. The half-metre
-    // arrival deadband supplied no intent for whole walking samples, then
-    // made the follower accelerate again after its slot had already moved on.
     const arrival = w.missions!.state.steps.departure?.status === 'active' ? .1 : .6;
     if (distance(e.transform, target) > arrival) {
       // Reuse the crowd's connected route across the city. Until that field
@@ -403,18 +403,8 @@ export class LevelSevenEncounters {
   private formationGoal(player: EntitySnapshot['transform'], velocity: Point, e: EntitySnapshot): Point {
     const slot = e.civilian!.survivor!.slot, loose = looseSlotOffset(slot);
     const moving = Math.hypot(velocity.x, velocity.z) > .8;
-    let last = this.trail.at(-1);
-    const departure = this.world.missions!.state.steps.departure?.status === 'active';
-    if (last && distance(last, player) > 6) { this.trail.length = 0; last = undefined; }
-    if (!last && !departure) {
-      // The road already holds the arriving column. Seed its history behind
-      // the courier so her first combat sidestep cannot swing the tail through
-      // a frontage before she has walked a whole formation-length trail.
-      const road = l7Encounters.streets[0];
-      const heading = player.x > 200 ? leaderHeading(-Math.atan2(road.z - player.z, road.x - player.x)) : leaderHeading(player.yaw, velocity);
-      const back = Math.ceil(this.state.roster.length / 3) * 1.2 + 6;
-      this.trail.push({ x: player.x - heading.x * back, z: player.z - heading.z * back });
-    }
+    const last = this.trail.at(-1);
+    if (last && distance(last, player) > 6) this.trail.length = 0;
     if (!last || distance(last, player) >= .4) {
       // Follow the street, not every small aim/dodge correction. A clear
       // shortcut removes gentle wiggles and backtracking; real corners and
@@ -430,18 +420,15 @@ export class LevelSevenEncounters {
       this.trail.push({ x: player.x, z: player.z });
       if (this.trail.length > 128) this.trail.shift();
     }
-    {
-      const columns = departure ? 2 : 3, row = Math.floor(slot / columns);
-      let remaining = 2.3 + row * (departure ? 1 : 1.2) + loose.back * .25, newer: Point = player;
+    if (this.world.missions!.state.steps.departure?.status === 'active') {
+      let remaining = 2.3 + Math.floor(slot / 2) + loose.back * .25, newer: Point = player;
       for (let i = this.trail.length - 1; i >= 0; i--) {
         const older = this.trail[i], length = distance(older, newer);
         if (length >= remaining && length > 0) {
           const hx = (newer.x - older.x) / length, hz = (newer.z - older.z) / length;
-          // A pair drifts together through narrow turns, with a small personal
-          // sway. Independent wide offsets squeeze partners into each other
-          // or the wreck edges; keep their body room and the original lane width.
-          const side = (slot % columns - (columns - 1) / 2) * (departure ? 1 : 1.2) + loose.side * (departure ? .05 : .35) +
-            (moving ? swayOffset(row, this.world.tick, .12) + swayOffset(e.id, this.world.tick, .03) : 0);
+          // Keep paired body room while varying each follower along the
+          // local trail tangent, including when the courier rounds the bus.
+          const side = (slot % 2 - .5) * 1.2 + loose.side * .2 + (moving ? swayOffset(e.id, this.world.tick, .12) : 0);
           const centre = { x: newer.x - hx * remaining, z: newer.z - hz * remaining };
           const goal = { x: centre.x - hz * side, z: centre.z + hx * side };
           const nav = this.followerNavigation();

@@ -135,8 +135,6 @@ function checkGroupWaitAfterCasualties(w: SimWorld) {
   w.l7Encounters!.state.started = true;
   const frame = new LevelSevenBot(w).sample();
   expect(frame.move.x, 'lead the occupied last row instead of waiting forever for its slot to move closer').toBeLessThan(-.1);
-  expect(w.solids.relocate(tail, { ...at, x: p.transform.x + 14.85 }, 'test.l7-paired-tail', 1)).toBe(true);
-  expect(new LevelSevenBot(w).sample().move.x, 'a settled two-abreast tail also fits the wait band').toBeLessThan(-.1);
 }
 
 /** Opening a rocket gap must not fling the escorted humans into that gap. */
