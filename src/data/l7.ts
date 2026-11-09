@@ -18,7 +18,7 @@ export const l7Encounters = {
   /** r5-l7: health one completed bite takes from an evacuee (100 HP → the third bite kills), and how long the
    * biter reels after the evacuee tears free. The shared 1 s pedestrian bite killed outright, so the shown bars never
    * mattered and only frame-perfect range fire could keep a 24-person column alive inside the opening mob. */
-  followerBite: { damage: 34, shoveTicks: 45 },
+  followerBite: { damage: 34, shoveTicks: 90, shoveM: 2, contactM: 1.5 },
   finalGroup: 700, firstStreetGroup: 701,
   horde: { x: -64, z: 46 }, passage: { x: -76, z: 46 },
   // The party forms east of the courier, behind the westbound escape heading.

@@ -254,10 +254,19 @@ export class LevelSevenEncounters {
    * the evacuee tears free. True when it survives; the bite that would empty its health kills/turns as usual. */
   woundFollower(target: EntitySnapshot, biter: EntitySnapshot): boolean {
     if (!this.state.roster.some(r => r.id === target.id && r.status === 'following')) return false;
-    const { damage, shoveTicks } = l7Encounters.followerBite, w = this.world;
+    const { damage, shoveTicks, shoveM, contactM } = l7Encounters.followerBite, w = this.world;
     if (target.health.current <= damage) return false;
     target.health.current -= damage;
-    if (biter.combat) biter.combat.staggerUntil = Math.max(biter.combat.staggerUntil, w.tick + shoveTicks);
+    // A stagger in place leaves the body sealing the escape lane, and another
+    // touching runner can grab as soon as the first hold releases. Push the
+    // contact cluster off together; Alphas and their thrown actors keep control.
+    for (const attacker of w.infected!.active) {
+      if (attacker.archetype !== 'infected.runner' || attacker.health.current <= 0 || attacker.hidden || attacker.attachedTo !== undefined || attacker.infected!.thrownBy !== undefined) continue;
+      const dx = attacker.transform.x - target.transform.x, dz = attacker.transform.z - target.transform.z, length = Math.hypot(dx, dz);
+      if (attacker.id !== biter.id && (length > contactM || Math.abs(attacker.transform.y - target.transform.y) > 1.2)) continue;
+      if (attacker.combat) attacker.combat.staggerUntil = Math.max(attacker.combat.staggerUntil, w.tick + shoveTicks);
+      if (length > 0) w.knockback(attacker, { x: dx / length, z: dz / length }, shoveM, 12);
+    }
     w.events.emit({ type: 'infected.attack', tick: w.tick, sourceId: biter.id, attackId: 0, targetId: target.id, special: 'bite', amount: damage });
     return true;
   }
