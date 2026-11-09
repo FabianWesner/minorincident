@@ -1,5 +1,5 @@
 /** Read-only L7 native combat diagnosis, portable to the R14 commit boundaries.
- * Usage: node --import tsx/esm tools/qa/r17-l7diff.ts <tag> [low|high|both] [1,2,3] [passive]
+ * Usage: node --import tsx/esm tools/qa/r17-l7diff.ts <tag> [low|high|both] [1,2,3] [passive|mortal-passive]
  * Uses the default mortal route window; passive is the existing threat-observer policy. */
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
@@ -13,6 +13,7 @@ import { provenance } from './accept/probe';
 const tag = process.argv[2] ?? 'candidate', selected = process.argv[3] ?? 'both';
 const tiers: ('low' | 'high')[] = selected === 'low' || selected === 'high' ? [selected] : ['low', 'high'];
 const seeds = (process.argv[4] ?? '1,2,3').split(',').map(Number), passive = process.argv[5] === 'passive';
+const mortalPassive = process.argv[5] === 'mortal-passive';
 const out = 'test-results/r17-l7diff'; mkdirSync(out, { recursive: true });
 const identity = { ...provenance(), diagnosticHash: createHash('sha256').update(readFileSync(new URL(import.meta.url))).digest('hex') };
 const sector = (x: number, z: number) => Math.abs(x) >= Math.abs(z) ? x < 0 ? 'west' : 'east' : z < 0 ? 'north' : 'south';
@@ -25,6 +26,11 @@ for (const tier of tiers) for (const seed of seeds) {
   const run = await runLevel('L7', 'complete', seed, undefined, 'auto', undefined, undefined, 0, {
     quality: tier, passive,
     beforeBegin: w => {
+      if (mortalPassive) {
+        const applyInput = w.applyInput.bind(w);
+        w.applyInput = (frame, scheme) => applyInput({ ...frame, mouseAttack: false, activeAttack: false, attackInPlace: false, attackTarget: undefined,
+          left: { down: false, held: false, up: false }, right: { down: false, held: false, up: false } }, scheme);
+      }
       observer = new ThreatObserver(w, 'L7', { paths: false });
       observeAttackStarts(w, (sourceId, targetId, tick) => {
         const source = w.entities.get(sourceId), target = w.entities.get(targetId);
@@ -52,6 +58,7 @@ for (const tier of tiers) for (const seed of seeds) {
         simultaneousDirections = Math.max(simultaneousDirections, sectors.size);
         samples.push({ tick: w.tick, player: { ...p.transform }, hp: p.health.current, support: w.districts!.groundHeight(p.transform.x, p.transform.z),
           statuses: p.combat?.statuses.map(s => ({ kind: s.kind, expires: s.expires })), sectors: [...sectors], boarded: w.l7Departure!.state.boarded.length });
+        if (w.tick % 600 === 0) writeFileSync(`${out}/${tag}-${tier}-${seed}${passive ? '-passive' : ''}-progress.json`, JSON.stringify(samples.at(-1)) + '\n');
       });
     },
     beforeDispose: w => {
@@ -59,7 +66,7 @@ for (const tier of tiers) for (const seed of seeds) {
       final = { departure: w.l7Departure!.state.phase, boarded: w.l7Departure!.state.boarded.length, arrivals: w.l7Encounters!.state.arrivals, collision: w.solids.snapshot() };
     },
   });
-  const summary = { tag, tier, seed, passive, completed: run.completed, outcome: run.outcome, seconds: run.time, deaths: run.deaths,
+  const summary = { tag, tier, seed, passive, mortalPassive, completed: run.completed, outcome: run.outcome, seconds: run.time, deaths: run.deaths,
     acceptedHits, acceptedDamage, damageBySource, courierAttacks, groupAttacks,
     courierAttacksPerMinute: courierAttacks * 60 / run.time, groupAttacksPerMinute: groupAttacks * 60 / run.time,
     attackDirections, simultaneousDirections, alphas: [...alphas.values()], nativeStateHash };
