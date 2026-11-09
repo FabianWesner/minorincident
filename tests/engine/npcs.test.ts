@@ -211,7 +211,7 @@ test('escort: shared combat pace, follows through a maze, a 2 s stand revives to
   w.l7Encounters!.follower(tail);
   const safe = { ...target };
   expect(Math.hypot(safe.x - player.transform.x, safe.z - player.transform.z)).toBeGreaterThan(2);
-  expect(w.infected!.nav.visible(player.transform, safe, .35)).toBe(true);
+  expect(w.infected!.nav.clear(safe.x, safe.z, .35)).toBe(true);
   Object.assign(player.transform, { x: 270.307, z: 14.881 });
   Object.assign(player.survivor!.velocity, { x: -2.5, z: 3.75 });
   w.l7Encounters!.follower(tail);
