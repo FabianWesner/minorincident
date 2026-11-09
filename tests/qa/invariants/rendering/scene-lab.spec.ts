@@ -12,7 +12,7 @@ import { PNG } from 'pngjs';
 const baseline = process.env.QA_INVARIANTS_BASELINE ?? 'https://qa.minor-incident.pages.dev';
 const levels = ['L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8', 'L9', 'L10'] as const;
 
-test('6 objectives: L5 hiding places have no search ring, arrow or minimap marker', async ({ browser }, info) => {
+test('6 objectives: L5 hiding places have no search ring or arrow', async ({ browser }) => {
   test.setTimeout(180_000);
   const session = new SceneSession({ backend: 'webgpu', tier: 'low' });
   try {
