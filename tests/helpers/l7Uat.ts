@@ -292,7 +292,8 @@ async function checkFollowerBites() {
   try {
     checkFriendlyRocketReaction(w);
     for (const e of [...w.infected!.active]) { w.solids.forget(e); w.infected!.release(e); }
-    const roster = w.l7Encounters!.state.roster, follower = w.entities.get(roster[0].id)!;
+    const roster = w.l7Encounters!.state.roster, follower = w.entities.get(roster.find(r => !w.entities.get(r.id)!.civilian?.ally)!.id)!;
+    for (const row of roster) if (row.id !== follower.id) w.entities.get(row.id)!.hidden = true;
     const runner = w.entities.get(w.infected!.spawn('infected.runner', { x: follower.transform.x + 1.2, y: follower.transform.y, z: follower.transform.z }, { state: 'chase' }))!;
     const wounds = new Map<number, number[]>(), alarms: string[] = [];
     w.events.on('infected.attack', e => { if (e.type === 'infected.attack' && e.special === 'bite') wounds.set(e.targetId, [...wounds.get(e.targetId) ?? [], w.entities.get(e.targetId)!.health.current]); });

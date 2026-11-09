@@ -45,6 +45,8 @@ for (const tier of tiers) for (const seed of seeds) {
       w.events.on('infected.special', e => { if (e.type === 'infected.special') specials.push({ ...e }); });
       w.events.on('combat.hit', e => {
         if (e.type !== 'combat.hit' || e.amount <= 0) return;
+        const shooter = w.entities.get(e.sourceId), struck = w.entities.get(e.targetId);
+        if (shooter?.civilian?.survivor && struck?.infected) followerEvents.push({ ...e, guardHit: true, heldId: struck.infected.l1?.biteTargetId ?? 0 });
         if (w.l7Encounters!.state.roster.some(r => r.id === e.targetId)) {
           const target = w.entities.get(e.targetId)!, source = w.entities.get(e.sourceId);
           followerEvents.push({ ...e, hp: target.health.current, target: { ...target.transform }, source: source && { type: source.archetype, at: { ...source.transform } } });
@@ -58,6 +60,8 @@ for (const tier of tiers) for (const seed of seeds) {
       w.events.on('infected.attack', e => { if (e.type === 'infected.attack' && e.special === 'bite' && w.l7Encounters!.state.roster.some(r => r.id === e.targetId)) followerEvents.push({ ...e }); });
       w.events.on('outbreak.bite', e => { if (e.type === 'outbreak.bite' && w.l7Encounters!.state.roster.some(r => r.id === e.targetId)) followerEvents.push({ ...e }); });
       w.events.on('mission.signal', e => { if (e.type === 'mission.signal' && /^l7.survivor-/.test(e.name)) followerEvents.push({ ...e }); });
+      w.events.on('ally.attack', e => { if (e.type === 'ally.attack' && w.l7Encounters!.state.roster.some(r => r.id === e.sourceId)) followerEvents.push({ ...e }); });
+      w.events.on('civilian.saved', e => { if (e.type === 'civilian.saved' && w.l7Encounters!.state.roster.some(r => r.id === e.id)) followerEvents.push({ ...e }); });
       w.events.on('sim.tick', () => {
         for (const e of w.infected!.active) if (e.archetype === 'infected.alpha' && !alphas.has(e.id)) alphas.set(e.id, { id: e.id, hp: e.health.max, alphaType: e.infected?.alphaType, tick: w.tick });
         if (w.tick % 60) return;
@@ -73,7 +77,9 @@ for (const tier of tiers) for (const seed of seeds) {
     beforeDispose: w => {
       observation = observer.finish(); nativeStateHash = stateHash(w.getState());
       boarded = w.l7Departure!.state.boarded.length;
-      final = { departure: w.l7Departure!.state.phase, boarded: w.l7Departure!.state.boarded.length, arrivals: w.l7Encounters!.state.arrivals, collision: w.solids.snapshot() };
+      final = { departure: w.l7Departure!.state.phase, boarded: w.l7Departure!.state.boarded.length, arrivals: w.l7Encounters!.state.arrivals, collision: w.solids.snapshot(),
+        roster: w.l7Encounters!.state.roster.map(r => { const e = w.entities.get(r.id)!; return { ...r, hp: e.health.current, model: e.model, guard: e.civilian?.ally?.role, boarded: w.l7Departure!.state.boarded.includes(r.id) }; }),
+        escaped: w.missions?.state.result?.escapedSurvivors?.map(e => e.id) ?? [] };
     },
   });
   const summary = { tag, tier, seed, passive, mortalPassive, completed: run.completed, outcome: run.outcome, seconds: run.time, deaths: run.deaths,
