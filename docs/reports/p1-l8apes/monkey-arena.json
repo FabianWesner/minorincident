@@ -1,0 +1,1011 @@
+{
+  "revision": "e2d48e4d",
+  "sourceHash": "bd25fc2fe0f1965193236657d73b863b629f418447db71545f043bdc0bec2af4",
+  "observerHash": "7d56698184639dfbf5c990fbd11373924e17575469d4164e37775e5e16499e53",
+  "policy": "skilled",
+  "rows": [
+    {
+      "id": "monkey",
+      "tier": "low",
+      "policy": "skilled",
+      "measurementEntry": {
+        "x": -5,
+        "z": 15,
+        "y": 0.7
+      },
+      "complete": true,
+      "seconds": 55.56666666666667,
+      "totalSeconds": 55.56666666666667,
+      "hp": 76.1333333333327,
+      "deaths": 0,
+      "damage": 35,
+      "attacks": 1,
+      "phases": 3,
+      "counters": 1,
+      "wallHits": 0,
+      "rocket": 1,
+      "rocketPickups": 0,
+      "bites": [
+        411,
+        413,
+        414,
+        415,
+        416,
+        417,
+        412
+      ],
+      "turns": [
+        411,
+        415,
+        416,
+        413,
+        417,
+        414,
+        412
+      ],
+      "tells": [
+        {
+          "tick": 304,
+          "source": 411,
+          "attack": 1,
+          "move": "monkey.grab",
+          "duration": 0.8,
+          "area": {
+            "x": -10.831638072755624,
+            "z": 25.218148045546005,
+            "radius": 0.8,
+            "dx": 0.7256700523814171,
+            "dz": -0.6880428584592323
+          }
+        },
+        {
+          "tick": 304,
+          "source": 414,
+          "attack": 2,
+          "move": "monkey.grab",
+          "duration": 0.9,
+          "area": {
+            "x": -11.54407691057195,
+            "z": 25.41168191920403,
+            "radius": 0.8,
+            "dx": 0.7397059368019041,
+            "dz": -0.6729302542314599
+          }
+        },
+        {
+          "tick": 304,
+          "source": 415,
+          "attack": 3,
+          "move": "monkey.grab",
+          "duration": 0.9333333333333333,
+          "area": {
+            "x": -8.223797743178844,
+            "z": 25.715809551653507,
+            "radius": 0.8,
+            "dx": 0.618589153331186,
+            "dz": -0.7857146170086228
+          }
+        },
+        {
+          "tick": 318,
+          "source": 416,
+          "attack": 4,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -11.6175,
+            "z": 15.5,
+            "radius": 1.2,
+            "dx": 0.9930075073202689,
+            "dz": -0.11805121941592259
+          }
+        },
+        {
+          "tick": 319,
+          "source": 413,
+          "attack": 5,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -11.6175,
+            "z": 12.5,
+            "radius": 1.2,
+            "dx": 0.9930075073202689,
+            "dz": 0.11805121941592259
+          }
+        },
+        {
+          "tick": 384,
+          "source": 413,
+          "attack": 7,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -11.235000305175781,
+            "z": 12.5,
+            "radius": 1.2,
+            "dx": 0.9281683829751687,
+            "dz": 0.3721605202668074
+          }
+        },
+        {
+          "tick": 473,
+          "source": 411,
+          "attack": 8,
+          "move": "monkey.grab",
+          "duration": 0.8,
+          "area": {
+            "x": -8.830426789918166,
+            "z": 22.620239033141253,
+            "radius": 0.8,
+            "dx": 0.4639530297219899,
+            "dz": -0.8858598005394457
+          }
+        },
+        {
+          "tick": 473,
+          "source": 412,
+          "attack": 9,
+          "move": "monkey.grab",
+          "duration": 0.8333333333333334,
+          "area": {
+            "x": -10.115569192993972,
+            "z": 25.894168614419176,
+            "radius": 0.8,
+            "dx": 0.4403484933122862,
+            "dz": -0.897826934569018
+          }
+        },
+        {
+          "tick": 473,
+          "source": 414,
+          "attack": 10,
+          "move": "monkey.grab",
+          "duration": 0.9,
+          "area": {
+            "x": -8.094620535356228,
+            "z": 24.016435688487775,
+            "radius": 0.8,
+            "dx": 0.36395044057049014,
+            "dz": -0.9314183146194551
+          }
+        },
+        {
+          "tick": 473,
+          "source": 415,
+          "attack": 11,
+          "move": "monkey.grab",
+          "duration": 0.9333333333333333,
+          "area": {
+            "x": -4.205993322851262,
+            "z": 24.557369472815807,
+            "radius": 0.8,
+            "dx": 0.036442403608990856,
+            "dz": -0.9993357549988889
+          }
+        },
+        {
+          "tick": 893,
+          "source": 411,
+          "attack": 12,
+          "move": "monkey.grab",
+          "duration": 0.8,
+          "area": {
+            "x": 4.775357224891728,
+            "z": 13.223413881926602,
+            "radius": 0.8,
+            "dx": -0.7375143942395671,
+            "dz": -0.6753314136699435
+          }
+        },
+        {
+          "tick": 893,
+          "source": 414,
+          "attack": 13,
+          "move": "monkey.grab",
+          "duration": 0.9,
+          "area": {
+            "x": -4.712855693252153,
+            "z": 13.232935381309364,
+            "radius": 0.8,
+            "dx": 0.8192444131195294,
+            "dz": -0.5734444973774164
+          }
+        },
+        {
+          "tick": 893,
+          "source": 415,
+          "attack": 14,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -5.806157887664157,
+            "z": 13.403971348711082,
+            "radius": 1,
+            "dx": 0.8543799683112919,
+            "dz": -0.5196487946184383
+          }
+        },
+        {
+          "tick": 916,
+          "source": 412,
+          "attack": 15,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": 4.500251840309377,
+            "z": 18.146507399797326,
+            "radius": 1,
+            "dx": -0.9671030182295046,
+            "dz": -0.25438504698858067
+          }
+        },
+        {
+          "tick": 1313,
+          "source": 412,
+          "attack": 16,
+          "move": "monkey.grab",
+          "duration": 0.8333333333333334,
+          "area": {
+            "x": -3.5361261241530024,
+            "z": 18.119459438393008,
+            "radius": 0.8,
+            "dx": 0.42698438282069395,
+            "dz": 0.9042589987538033
+          }
+        },
+        {
+          "tick": 1313,
+          "source": 415,
+          "attack": 17,
+          "move": "monkey.grab",
+          "duration": 0.9333333333333333,
+          "area": {
+            "x": 2.23601558983532,
+            "z": 19.901254195002792,
+            "radius": 0.8,
+            "dx": -0.8381576937822175,
+            "dz": 0.5454279790711827
+          }
+        },
+        {
+          "tick": 1389,
+          "source": 411,
+          "attack": 18,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -6.845580324900911,
+            "z": 21.485028615952636,
+            "radius": 1,
+            "dx": 0.4186654763314013,
+            "dz": 0.9081405281828363
+          }
+        },
+        {
+          "tick": 1733,
+          "source": 411,
+          "attack": 19,
+          "move": "monkey.grab",
+          "duration": 0.8,
+          "area": {
+            "x": -1.686820819936664,
+            "z": 20.812115316569628,
+            "radius": 0.8,
+            "dx": -0.4507981202422961,
+            "dz": 0.8926259321720451
+          }
+        },
+        {
+          "tick": 1733,
+          "source": 415,
+          "attack": 20,
+          "move": "monkey.grab",
+          "duration": 0.9333333333333333,
+          "area": {
+            "x": 0.8979073338117027,
+            "z": 25.22610275986701,
+            "radius": 0.8,
+            "dx": -0.9319995328585894,
+            "dz": 0.36245947463319406
+          }
+        },
+        {
+          "tick": 2153,
+          "source": 411,
+          "attack": 21,
+          "move": "monkey.grab",
+          "duration": 0.8,
+          "area": {
+            "x": -9.537924999117585,
+            "z": 22.716769464536338,
+            "radius": 0.8,
+            "dx": 0.965209513178469,
+            "dz": -0.2614777154362922
+          }
+        },
+        {
+          "tick": 2753,
+          "source": 417,
+          "attack": 22,
+          "move": "monkey.debris",
+          "duration": 0.6,
+          "area": {
+            "x": -5.258324248431792,
+            "z": 13.360413289439439,
+            "radius": 1,
+            "dx": 0.3034978699086282,
+            "dz": 0.9528321168815236
+          }
+        },
+        {
+          "tick": 3052,
+          "source": 417,
+          "attack": 23,
+          "move": "monkey.grab",
+          "duration": 1,
+          "area": {
+            "x": -7.863357610664565,
+            "z": 17.33868339875417,
+            "radius": 0.8,
+            "dx": 0.6695457939685642,
+            "dz": 0.7427707787595075
+          }
+        },
+        {
+          "tick": 3352,
+          "source": 417,
+          "attack": 24,
+          "move": "monkey.grab",
+          "duration": 1,
+          "area": {
+            "x": -4.654641443686199,
+            "z": 18.887172225763603,
+            "radius": 0.8,
+            "dx": 0.7307674319504793,
+            "dz": 0.6826265160397019
+          }
+        },
+        {
+          "tick": 3653,
+          "source": 417,
+          "attack": 25,
+          "move": "monkey.debris",
+          "duration": 0.6,
+          "area": {
+            "x": -1.4226487118176636,
+            "z": 20.739414691742766,
+            "radius": 1,
+            "dx": -0.5097622020740982,
+            "dz": 0.8603153476118895
+          }
+        }
+      ],
+      "throws": [
+        {
+          "tick": 366,
+          "source": 416,
+          "prop": 1417832575
+        },
+        {
+          "tick": 367,
+          "source": 413,
+          "prop": 1401054956
+        },
+        {
+          "tick": 432,
+          "source": 413,
+          "prop": 1401054956
+        },
+        {
+          "tick": 941,
+          "source": 415,
+          "prop": 1401054956
+        },
+        {
+          "tick": 964,
+          "source": 412,
+          "prop": 1382670987
+        },
+        {
+          "tick": 1437,
+          "source": 411,
+          "prop": 1449781463
+        },
+        {
+          "tick": 2789,
+          "source": 417,
+          "prop": 1382670987
+        },
+        {
+          "tick": 3689,
+          "source": 417,
+          "prop": 1433003844
+        }
+      ],
+      "signals": [
+        {
+          "tick": 214,
+          "name": "l8.arena.monkey.engaged"
+        },
+        {
+          "tick": 2261,
+          "name": "l8.arena.monkey.phase-2"
+        },
+        {
+          "tick": 3717,
+          "name": "l8.arena.monkey.cleared"
+        }
+      ],
+      "stages": [
+        {
+          "tick": 352,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 353,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 358,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 360,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 360,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 361,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 366,
+          "source": 416,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 367,
+          "source": 413,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 432,
+          "source": 413,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 466,
+          "source": 413,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 521,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 523,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 527,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 529,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 530,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 550,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 562,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 567,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 586,
+          "source": 413,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 650,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 670,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 682,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 687,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 941,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 941,
+          "source": 415,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 947,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 951,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 964,
+          "source": 412,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 968,
+          "source": 415,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 974,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1014,
+          "source": 412,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1071,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1080,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "cancelled"
+        },
+        {
+          "tick": 1088,
+          "source": 415,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1134,
+          "source": 412,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1363,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 1369,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 1373,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1376,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1403,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "cancelled"
+        },
+        {
+          "tick": 1437,
+          "source": 411,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 1469,
+          "source": 411,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1496,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1589,
+          "source": 411,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1781,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 1789,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 1789,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1830,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1886,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "cancelled"
+        },
+        {
+          "tick": 1950,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2201,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 2241,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2261,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "cancelled"
+        },
+        {
+          "tick": 2789,
+          "source": 417,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 2815,
+          "source": 417,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2935,
+          "source": 417,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3112,
+          "source": 417,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 3151,
+          "source": 417,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3271,
+          "source": 417,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3412,
+          "source": 417,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 3417,
+          "source": 417,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3537,
+          "source": 417,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3689,
+          "source": 417,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 3697,
+          "source": 417,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3717,
+          "source": 417,
+          "move": "monkey.debris",
+          "stage": "cancelled"
+        }
+      ],
+      "destruction": [
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-0",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-1",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-2",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-3",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        }
+      ],
+      "bosses": [
+        {
+          "id": 411,
+          "hp": 0,
+          "at": {
+            "x": -4.290352390116165,
+            "z": 20.515150000000002,
+            "y": 0.7,
+            "yaw": 0.26455286509271725
+          },
+          "state": "dead",
+          "boss": {
+            "arena": "monkey",
+            "slot": 0,
+            "engaged": true,
+            "exposedUntil": 2361,
+            "readyAt": 2361,
+            "shakeHits": 0
+          },
+          "held": false
+        },
+        {
+          "id": 412,
+          "hp": 0,
+          "at": {
+            "x": -2.530444796213199,
+            "z": 20.10950768000872,
+            "y": 0.7,
+            "yaw": -1.129641090222278
+          },
+          "state": "dead",
+          "boss": {
+            "arena": "monkey",
+            "slot": 1,
+            "engaged": true,
+            "exposedUntil": 1493,
+            "readyAt": 1493,
+            "shakeHits": 0
+          },
+          "held": false
+        },
+        {
+          "id": 413,
+          "hp": 840,
+          "at": {
+            "x": -10.852500610351562,
+            "z": 12.5,
+            "y": 4.8,
+            "yaw": -0.38133566201923574
+          },
+          "state": "scatter",
+          "boss": {
+            "arena": "monkey",
+            "slot": 2,
+            "engaged": false,
+            "exposedUntil": 586,
+            "readyAt": 3744,
+            "roof": true,
+            "shakeHits": 0,
+            "scattered": true
+          },
+          "held": false
+        },
+        {
+          "id": 414,
+          "hp": 0,
+          "at": {
+            "x": -0.971112009428777,
+            "z": 11.672959588070269,
+            "y": 0.7,
+            "yaw": 0.6107041795326992
+          },
+          "state": "dead",
+          "boss": {
+            "arena": "monkey",
+            "slot": 3,
+            "engaged": true,
+            "exposedUntil": 1094,
+            "readyAt": 1094,
+            "shakeHits": 0
+          },
+          "held": false
+        },
+        {
+          "id": 415,
+          "hp": 0,
+          "at": {
+            "x": 1.2191502581013636,
+            "z": 25.88718131683831,
+            "y": 0.7,
+            "yaw": -2.770687187257344
+          },
+          "state": "dead",
+          "boss": {
+            "arena": "monkey",
+            "slot": 4,
+            "engaged": true,
+            "exposedUntil": 1909,
+            "readyAt": 1909,
+            "shakeHits": 2
+          },
+          "held": false
+        },
+        {
+          "id": 416,
+          "hp": 840,
+          "at": {
+            "x": -11.235000305175781,
+            "z": 15.5,
+            "y": 4.8,
+            "yaw": 0.11832714877320401
+          },
+          "state": "scatter",
+          "boss": {
+            "arena": "monkey",
+            "slot": 5,
+            "engaged": false,
+            "exposedUntil": 0,
+            "readyAt": 3744,
+            "roof": true,
+            "shakeHits": 0,
+            "scattered": true
+          },
+          "held": false
+        },
+        {
+          "id": 417,
+          "hp": 0,
+          "at": {
+            "x": -0.8840988472414019,
+            "z": 20.738970061176172,
+            "y": 0.7,
+            "yaw": -2.105704686566228
+          },
+          "state": "chase",
+          "boss": {
+            "arena": "monkey",
+            "slot": 6,
+            "engaged": true,
+            "exposedUntil": 3817,
+            "readyAt": 3817,
+            "leaderEntered": true,
+            "shakeHits": 0
+          },
+          "held": false
+        }
+      ]
+    }
+  ]
+}
