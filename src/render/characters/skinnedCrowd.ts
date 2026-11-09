@@ -36,7 +36,7 @@ export function packSkin(indices: ArrayLike<number>, weights: ArrayLike<number>,
 
 /** One part's inverse bind from the atlas bind row (4 texels). */
 export function crowdBind(texture: DataTexture | TextureNode, part: Node<'float'>, bindRow: number | Node<'float'>) {
-  const atlas = texture instanceof DataTexture ? poseTexture(texture) : texture, start = int(part).mul(4), row = int(bindRow);
+  const atlas = texture instanceof DataTexture ? poseTexture(texture) : texture, start = int(part).mul(4), row = typeof bindRow === 'number' ? int(bindRow) : int(bindRow);
   return mat4(textureLoad(atlas, ivec2(start, row)), textureLoad(atlas, ivec2(start.add(1), row)), textureLoad(atlas, ivec2(start.add(2), row)), textureLoad(atlas, ivec2(start.add(3), row)));
 }
 /** One influence: joint(frame) · bind⁻¹. */
