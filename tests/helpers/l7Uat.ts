@@ -431,6 +431,13 @@ function checkLowBoardingCorner(w: SimWorld) {
       sides.push(target.z);
     }
     expect(Math.max(...sides) - Math.min(...sides), 'the corridor slot wanders instead of remaining on a rail').toBeGreaterThan(.1);
+    // A clear one-metre out-and-back dodge must not send the column back
+    // through the same loop before it continues around the actual corner.
+    for (const [x, z] of [[-31, 49], [-30, 49], [-30, 48]]) {
+      Object.assign(player.transform, { x, z }); w.l7Encounters!.follower(follower);
+    }
+    expect(target.x).toBeGreaterThan(-30.55); expect(target.x).toBeLessThan(-30.05);
+    expect(w.infected!.nav.clear(target.x, target.z, .35)).toBe(true);
   } finally { w.npcs!.move = move; }
 }
 
