@@ -119,7 +119,7 @@ export class LevelFourBot {
     if (this.medkit) {
       const kit = heldKit(w, this.medkit, hp, newbie);
       if (!kit) this.medkit = 0;
-      else { if (fight(8)) return frame; go(kit.transform, .2, `kit-${this.medkit}`); return frame; }
+      else { fight(8); go(kit.transform, .2, `kit-${this.medkit}`); return frame; }
     }
     // At the break (and after a respawn): the escape street with the gap (forced runs keep theirs), joined at the nearest leg.
     if (!this.picked && this.leg === 0 && !this.detour) {
@@ -138,12 +138,10 @@ export class LevelFourBot {
     const door = a['l4-cellar-door'], next = ROUTES[this.route][this.leg] ?? door;
     if (!this.detour && (crowd.length >= (fights ? 4 : 2) || many >= 6) && (hp < .5 || !fights || many >= 6)) { const at = this.walker.detour(w, next, crowd[0]?.transform ?? this.threats(p, 9)[0]?.transform); if (at) this.detour = { ...at, until: w.tick + 90 }; }
     if (newbie && !this.detour && this.rng.next() < .0015) this.detour = { x: p.x - 4 + this.rng.next() * 8, z: p.z + (this.rng.next() - .5) * 10, until: w.tick + 180 };
-    if (this.detour) { if (crowd.length < 2 && fight(5)) return frame; go(this.detour, .8, `detour-${this.detour.until}`); return frame; }
+    if (this.detour) { if (crowd.length < 2) fight(5); go(this.detour, .8, `detour-${this.detour.until}`); return frame; }
     if (fight(5)) {
-      // A slower courier keeps escaping while defending; stopping for each pursuer traps the novice in the replenishing crowd.
-      if (newbie) {
-        go(next, .45, 'escape-under-fire');
-      }
+      // Both profiles keep escaping while defending: the replenishing crowd makes stopping for each pursuer a dead end.
+      go(next, .45, 'escape-under-fire');
       return frame;
     }
     // Waypoints of the route (the grid path takes the cross streets by itself), then the cellar door: stand in its ring to descend.
