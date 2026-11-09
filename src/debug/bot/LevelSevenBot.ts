@@ -21,6 +21,15 @@ export class LevelSevenBot {
     this.finished = w.l7Departure?.state.phase === 'done' || w.missions?.state.phase === 'result' || w.missions?.state.phase === 'progression';
     if (this.finished || w.storyLock || this.profile === 'idle' || p.health.current <= 0) return f;
     const pickup = w.l7Encounters!.state.started ? undefined : [...w.entities.iterate()].find(e => e.pickup && 'actionId' in e.pickup && e.pickup.actionId === l7Rocket.action);
+    // A dodge can already take the courier past a corridor corner. Rejoin a
+    // forward clear leg instead of walking back to the missed corner and
+    // dragging the column through the same turn twice.
+    if (!pickup && this.waypoint >= 3) for (let i = this.route.length - 1; i > this.waypoint; i--) {
+      const at = this.route[i], d = distance(p.transform, at);
+      if (at.x > p.transform.x || !d || !w.infected!.nav.visible(p.transform, at, .45)) continue;
+      if (w.solids.sweep(p, { x: (at.x - p.transform.x) / d, z: (at.z - p.transform.z) / d }, d) < d - .01) continue;
+      this.waypoint = i; break;
+    }
     if (!pickup && this.waypoint < this.route.length - 1 && distance(p.transform, this.route[this.waypoint]) < (this.waypoint >= 3 ? .3 : 2)) this.waypoint++;
     const goal = pickup?.transform ?? this.route[this.waypoint];
     if (!pickup && this.waypoint >= 3 && w.infected!.nav.visible(p.transform, goal, .35)) {

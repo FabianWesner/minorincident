@@ -27,6 +27,14 @@ for (const seed of seeds) {
     quality: tier,
     beforeBegin: w => {
       observer = new ThreatObserver(w, 'L7', { paths: false });
+      const orders = new Map<number, unknown>(), move = w.npcs!.move.bind(w.npcs!);
+      w.npcs!.move = (...args) => {
+        const [e, target, speed, , stop] = args, at = { ...e.transform };
+        const result = move(...args);
+        if (w.tick % 30 === 0 && e.civilian?.survivor) orders.set(e.id, { tick: w.tick, target: { ...target }, from: at, speed, stop,
+          waypoint: { ...(w.npcs as unknown as { waypoint: { x: number; z: number } }).waypoint } });
+        return result;
+      };
       w.events.on('combat.hit', e => {
         if (e.type !== 'combat.hit') return;
         if (e.sourceId === 1) { const target = w.entities.get(e.targetId); hits.push({ ...e, target: target?.archetype, faction: target?.faction }); }
@@ -49,7 +57,7 @@ for (const seed of seeds) {
           move: { ...w.inputFrame.move }, blocker: blocker && { id: blocker.id, type: blocker.archetype },
           steps: Object.entries(w.missions!.state.steps).filter(([, s]) => s.status === 'active').map(([id]) => id),
           bus: w.l7Departure!.state.phase, boarded: w.l7Departure!.state.boarded.length,
-          followers: w.l7Encounters!.state.roster.map(r => { const e = w.entities.get(r.id)!; return { id: r.id, status: r.status, hp: e.health.current, at: { ...e.transform }, speed: e.motion?.speed, hidden: e.hidden, passengerOf: e.passengerOf, blockedBy: w.solids.blockingBody(e.id)?.id }; }),
+          followers: w.l7Encounters!.state.roster.map(r => { const e = w.entities.get(r.id)!; return { id: r.id, status: r.status, hp: e.health.current, at: { ...e.transform }, speed: e.motion?.speed, hidden: e.hidden, passengerOf: e.passengerOf, blockedBy: w.solids.blockingBody(e.id)?.id, order: orders.get(e.id) }; }),
           threats: w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 20).map(e => ({ id: e.id, type: e.archetype, hp: e.health.current, at: { ...e.transform }, state: e.infected?.state })),
         });
         if (w.tick % 600 === 0) writeFileSync(`${out}/${tag}-${tier}-${seed}-progress.json`, JSON.stringify(samples.at(-1)) + '\n');
