@@ -405,6 +405,17 @@ export class LevelSevenEncounters {
     const last = this.trail.at(-1);
     if (last && distance(last, player) > 6) this.trail.length = 0;
     if (!last || distance(last, player) >= .4) {
+      // Follow the street, not every small aim/dodge correction. A clear
+      // shortcut removes gentle wiggles and backtracking; real corners and
+      // wrecks retain their walked legs for the whole body to pass around.
+      const nav = this.followerNavigation();
+      while (this.trail.length >= 2) {
+        const a = this.trail[this.trail.length - 2], b = this.trail[this.trail.length - 1];
+        const ax = b.x - a.x, az = b.z - a.z, bx = player.x - b.x, bz = player.z - b.z;
+        const gentle = ax * bx + az * bz >= .5 * Math.hypot(ax, az) * Math.hypot(bx, bz);
+        if ((!gentle && distance(a, player) >= distance(a, b)) || !nav.visible(a, player, .35)) break;
+        this.trail.pop();
+      }
       this.trail.push({ x: player.x, z: player.z });
       if (this.trail.length > 128) this.trail.shift();
     }
