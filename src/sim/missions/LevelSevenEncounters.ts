@@ -3,7 +3,7 @@ import { Outbreak } from '../outbreak/Outbreak';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { Point } from '../npc/types';
-import { l7Departure, l7Encounters, l7Rocket } from '../../data/l7';
+import { l7Encounters, l7Rocket } from '../../data/l7';
 import { corpseDetour, formationBack, formationSlot, leaderHeading, requireClearPoint, snapToClear } from './missionHelpers';
 import { NavGrid } from '../ai/NavGrid';
 import { actorRadius, solidLargeCorpse } from '../world/SolidRegistry';
@@ -29,7 +29,6 @@ export class LevelSevenEncounters {
   private readonly seen = new Set<number>();
   private readonly waypoint = { x: 0, z: 0 };
   private readonly approaches = new Map<number, { x: number; z: number; at: number; around?: Point[] }>();
-  private readonly slotHeading = { x: 1, z: 0 };
   private readonly pocketRoutes = new Map<number, { revision: number; points: Point[] }>();
   private corpseRoutes?: { source: NavGrid; revision: number; bodies: string; nav: NavGrid };
   private routeTick = -1;
@@ -303,25 +302,6 @@ export class LevelSevenEncounters {
       this.state.waitAt = w.tick + 300;
       this.warn(e, 'wait');
     }
-    // Like L5's bounded slot tracker, follow a moving target's velocity plus
-    // its position error. Treating it as a fixed destination repeatedly brakes
-    // people just before their slot, then makes them set off again behind it.
-    const pace = Math.hypot(v.x, v.z), heading = this.slotHeading;
-    if (w.missions!.state.steps.departure?.status === 'active' && target === goal && d <= l7FollowerRangeM && pace > .8 && p.locomotion?.updatedAt === w.tick &&
-        v.x * heading.x + v.z * heading.z > -.5 * pace &&
-        !this.approaches.get(e.id)?.around && !w.solids.blockingBody(e.id) && nav.visible(e.transform, target, .35)) {
-      const ex = target.x - e.transform.x, ez = target.z - e.transform.z, cap = Math.min(5.2, Math.max(l7Departure.followMs, pace * 1.05));
-      const ahead = ex * heading.x + ez * heading.z;
-      const along = Math.max(0, Math.min(cap, pace + ahead * (ahead < 0 ? 3 : 1.5)));
-      const sideRoom = Math.sqrt(Math.max(0, cap * cap - along * along));
-      const across = Math.max(-sideRoom, Math.min(sideRoom, (ez * heading.x - ex * heading.z) * 1.5));
-      const vx = heading.x * along - heading.z * across, vz = heading.z * along + heading.x * across;
-      const speed = Math.hypot(vx, vz), aim = { x: e.transform.x + vx * .5, z: e.transform.z + vz * .5 };
-      if (speed > .3 && nav.clear(aim.x, aim.z, .35) && nav.visible(e.transform, aim, .35)) {
-        w.npcs!.move(e, aim, speed, c, 0, 1600, nav);
-        w.spatial.set(e.id, e.transform.x, e.transform.z); return true;
-      }
-    }
     // A moving corridor slot needs continuous steering. The half-metre
     // arrival deadband supplied no intent for whole walking samples, then
     // made the follower accelerate again after its slot had already moved on.
@@ -445,16 +425,15 @@ export class LevelSevenEncounters {
       if (this.trail.length > 128) this.trail.shift();
     }
     if (departure) {
-      let remaining = 2.3 + Math.floor(slot / 2) + loose.back * .25, newer: Point = player;
+      let remaining = 2.3 + Math.floor(slot / 2) * 1.1 + loose.back * .25, newer: Point = player;
       for (let i = this.trail.length - 1; i >= 0; i--) {
         const older = this.trail[i], length = distance(older, newer);
         if (length >= remaining && length > 0) {
           const hx = (newer.x - older.x) / length, hz = (newer.z - older.z) / length;
-          this.slotHeading.x = hx; this.slotHeading.z = hz;
           // A pair drifts together through narrow turns, with a small personal
           // sway. Independent wide offsets squeeze partners into each other
           // or the wreck edges; keep their body room and the original lane width.
-          const side = slot % 2 - .5 + loose.side * .05 + (moving ? swayOffset(Math.floor(slot / 2), this.world.tick, .12) + swayOffset(e.id, this.world.tick, .03) : 0);
+          const side = (slot % 2 - .5) * 1.2 + loose.side * .05 + (moving ? swayOffset(Math.floor(slot / 2), this.world.tick, .12) + swayOffset(e.id, this.world.tick, .03) : 0);
           const centre = { x: newer.x - hx * remaining, z: newer.z - hz * remaining };
           const goal = { x: centre.x - hz * side, z: centre.z + hx * side };
           const nav = this.followerNavigation();
@@ -466,7 +445,6 @@ export class LevelSevenEncounters {
       }
     }
     const heading = leaderHeading(player.yaw, velocity), goal = formationSlot(player, heading, slot);
-    Object.assign(this.slotHeading, heading);
     const offset = moving ? swayOffset(e.id, this.world.tick) : 0, nav = this.followerNavigation();
     const wandered = { x: goal.x - heading.z * offset, z: goal.z + heading.x * offset };
     return nav.clear(wandered.x, wandered.z, .4) && nav.visible(goal, wandered, .35) ? wandered : goal;
