@@ -84,7 +84,7 @@ export class VehicleView extends Group {
     }
     const player = this.world.entities.get(1)!;
     const assets = new Set<string>();
-    for (const entity of this.world.entities.iterate()) if (entity.civilian && !entity.civilian.pet && entity.health.current > 0) assets.add(entity.appearance?.asset ?? entity.civilian.model ?? 'npc.firefighter-alive');
+    for (const entity of this.world.entities.iterate()) if (entity.civilian && !entity.civilian.pet && !entity.civilian.zooAnimal && entity.health.current > 0) assets.add(entity.appearance?.asset ?? entity.civilian.model ?? 'npc.firefighter-alive');
     const copies = await Promise.all([
       ...(!this.occupants.has(player.id) ? [VehicleOccupant.load(this.registry, player.id, `char.courier-${player.survivor!.variant}`, this.materials, this.low).then(copy => ({ copy, retain: true }))] : []),
       ...[...assets].map((asset, index) => VehicleOccupant.load(this.registry, -index - 1, asset, this.materials, this.low).then(copy => ({ copy, retain: false }))),
