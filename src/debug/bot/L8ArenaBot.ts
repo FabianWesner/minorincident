@@ -15,7 +15,7 @@ export class L8ArenaBot {
     // The real tour keeps the tunnel cohort; clear a close intruder with the campaign shotgun before resuming the animal.
     const group = zoo.roster().map(id => w.entities.get(id)).filter(e => e && !e.infected && !e.infection && e.health.current > 0);
     const intruder = policy === 'skilled' ? w.infected!.active.filter(e => e.health.current > 0 && !e.infected!.arenaBoss && !e.infected!.arenaCarrier && !e.hidden && !e.emerging && !e.infectionRise &&
-      (Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 6 || Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 22 && group.some(member => Math.hypot(e.transform.x - member!.transform.x, e.transform.z - member!.transform.z) < 5)) && w.combat!.query.visible(p.transform, e.transform)).sort((a,b) => Math.hypot(a.transform.x-p.transform.x,a.transform.z-p.transform.z)-Math.hypot(b.transform.x-p.transform.x,b.transform.z-p.transform.z))[0] : undefined;
+      (Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 6 || Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 22 && group.some(member => member!.civilian?.state === 'grabbed' && member!.civilian.attacker === e.id || e.infected!.l1?.biteTargetId === member!.id)) && w.combat!.query.visible(p.transform, e.transform)).sort((a,b) => Math.hypot(a.transform.x-p.transform.x,a.transform.z-p.transform.z)-Math.hypot(b.transform.x-p.transform.x,b.transform.z-p.transform.z))[0] : undefined;
 
     if (!arena.phase) {
       if (Math.hypot(p.transform.x - def.entry.x, p.transform.z - def.entry.z) < 2) this.entered.add(id);

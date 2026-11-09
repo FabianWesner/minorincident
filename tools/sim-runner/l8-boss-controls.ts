@@ -34,6 +34,7 @@ const hit = (w: SimWorld, e: EntitySnapshot, base: number, type: 'bullet' | 'mel
 for (const def of l8BossArenas) {
   const { w, zoo, m, p, arena, e } = await fixture(def.id);
   try {
+    for (const actor of w.entities.iterate()) if (actor.civilian?.ally) delete actor.civilian.ally; // Isolate this weapon's damage from rifle support.
     w.combat!.damage.god = true; m.state.states.breached = true; m.state.states['hale-keys'] = true; m.state.states['hale-fallen'] = true;
     zoo.state.breachedAt = w.tick || 1; zoo.state.nextWave = Number.MAX_SAFE_INTEGER;
     arena.phase = 1; arena.nextAt = Number.MAX_SAFE_INTEGER;
