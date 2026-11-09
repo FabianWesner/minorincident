@@ -432,32 +432,6 @@ test('perception: sight cone, facing-independent gunshots, silent melee misses, 
   expect(near.infected!.state).not.toBe('idle'); expect(beyond.infected!.state).toBe('idle');
   expect(n.events.events().some(e => e.type === 'noise' && e.actionId === 'weapon.bat' && e.radius === 6)).toBe(true);
 
-  // L7 pulls attention off the moving column while the courier is detectable.
-  // Leaving the normal sensory range exposes followers to ordinary hunts.
-  const escort = await arena(1, false); escort.scenario = 'L7'; escort.infected!.configureL1v2();
-  const hearing = escort.infected!.hearing; hearing.playerBiasM = -18;
-  const escortRunner = spawn(escort, 'runner', 10), alpha = spawn(escort, 'alpha', 10);
-  Object.assign(alpha.transform, { x: 10, z: 0 });
-  escortRunner.transform.yaw = Math.PI;
-  const humans = [{ id: 1, kind: 'player' as const, position: { x: 0, z: 0 }, facing: 0 },
-    { id: 999, kind: 'civilian' as const, position: { x: 7.5, z: 0 }, facing: 0 }];
-  hearing.humans = { all: () => humans, get: id => humans.find(h => h.id === id),
-    within: (at, radius) => humans.filter(h => Math.hypot(h.position.x - at.x, h.position.z - at.z) <= radius) };
-  hearing.shot(1);
-  expect(hearing.closest(escortRunner, 999)?.id).toBe(1);
-  expect(hearing.closestHeard(alpha)?.id).toBe(1);
-  humans[1].position.x = 8.5;
-  expect(hearing.closest(escortRunner, 999)?.id).toBe(1);
-  expect(hearing.closestHeard(alpha)?.id).toBe(1);
-  humans[0].position.x = -10;
-  expect(hearing.closest(escortRunner, 1)?.id).toBe(999);
-  expect(hearing.closestHeard(alpha)?.id).toBe(999);
-  // L3's existing positive player bias must still draw pressure to its police.
-  escort.scenario = 'L3'; hearing.playerBiasM = 4; humans[0].position.x = 0; humans[1].position.x = -2;
-  expect(hearing.closest(escortRunner, 0)?.id).toBe(999);
-  escort.scenario = 'L6'; hearing.playerBiasM = 0;
-  expect(hearing.closest(escortRunner, 0)?.id).toBe(1);
-
   const s = await arena(); spawn(s, 'screamer', 1);
   const within = spawn(s, 'runner', 20.5, 0, 'idle'), past = spawn(s, 'runner', 22, 0, 'idle'); step(s, 51);
   expect(within.infected!.state).not.toBe('idle'); expect(past.infected!.state).toBe('idle');

@@ -450,15 +450,14 @@ export class InfectedSystem {
     let target: EntitySnapshot | undefined, nearest = Infinity;
     for (const candidate of this.approachParty) {
       const distance = Math.hypot(candidate.transform.x - e.transform.x, candidate.transform.z - e.transform.z);
-      const priority = this.hearing.targetPriority(e, candidate.id, candidate.transform);
       // L8's gate-side sprinters retain their announced courier approach. A person at actual grab contact still interrupts it.
       const gateFocus = b.pressureTarget && this.world.tick < b.pressureTarget.until ? b.pressureTarget.id : brain?.focusBiasM === 30 && this.world.tick < (brain.focusUntil ?? 0) ? brain.focusId : 0;
       if (this.world.scenario === 'L8' && gateFocus && candidate.id !== gateFocus && distance > 1.5) continue;
-      if (priority >= nearest || !this.hearing.notices(e, candidate.transform, candidate.id)) continue;
+      if (distance >= nearest || !this.hearing.notices(e, candidate.transform, candidate.id)) continue;
       // The corgi can alert an approaching group, but remains outside every bite
       // and damage target query. Its courier becomes the ordinary chase target.
       target = isCorgi(candidate) ? (!courier.hidden && courier.health.current > 0 ? courier : undefined) : candidate;
-      if (target) nearest = priority;
+      if (target) nearest = distance;
     }
     if (!target) return;
     b.heardTargetId = target.id; b.state = 'chase'; e.combat!.attacking = false;
