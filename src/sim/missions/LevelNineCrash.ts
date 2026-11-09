@@ -120,6 +120,9 @@ export class LevelNineCrash {
       w.events.emit({ type: 'mission.signal', tick: w.tick, name: 'l9.crash-approach', actorId: s.carId });
     }
     if (s.phase !== 'crawl') this.lock();
+    // The wounded crawl still belongs to the crash sequence. Keep its protection
+    // after releasing the input lock, or a lingering fire can kill its one-HP courier.
+    else w.entities.get(1)!.survivor!.invulnerableUntil = w.tick + 120;
     const def = w.vehicles!.cars.get(s.carId)!.physics.def, height = def.suspension + def.wheelRadius + .15;
     const approachTicks = s.approachTicks ?? 180, t = w.tick - s.startedAt, lip = this.anchor('crash-impact'), wreck = this.anchor('crash-wreck');
     const heading = s.heading ?? { x: Math.cos(s.from.yaw), z: -Math.sin(s.from.yaw) };

@@ -48,6 +48,14 @@ test('4 vehicles: all level start poses, L8 evacuation vehicles and L9 scripted 
         c.state.approachTicks = 90; c.state.impactSpeed = 14; c.state.heading = { x: 1, z: 0 };
         for (let i = 0; i <= 320 && String(c.state.phase) !== 'impact'; i++) { w.tick++; c.update(); check(car, `${c.state.phase}-${i}`); }
         expect(c.state.phase).toBe('impact');
+        const player = w.entities.get(1)!; player.health.current = 1;
+        const end = m.def.anchors['crawl-end'], origin = m.def.anchors[c.state.crawlAnchor];
+        const dx = end.x - origin.x, dz = end.z - origin.z, length = Math.hypot(dx, dz);
+        for (let i = 0; i < 800 && !c.state.finished; i++) {
+          w.inputFrame.move = { x: dx / length, z: dz / length }; w.tick++; c.update();
+          if (String(c.state.phase) === 'crawl') expect(w.player!.damage(2, w.tick), 'crash protection lasts through the controlled crawl').toBe(0);
+        }
+        expect(c.state.finished).toBe(true); expect(player.health.current).toBe(1);
       }
     } finally { w.dispose(); }
   }
