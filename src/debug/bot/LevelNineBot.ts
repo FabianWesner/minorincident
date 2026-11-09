@@ -69,7 +69,9 @@ export class LevelNineBot {
     if (!l9.driving.holding(car.id) && car.vehicle!.speed < 1) this.blockedAt ??= w.tick; else this.blockedAt = null;
     if (this.blockedAt !== null && w.tick - this.blockedAt >= 90) { this.reverseUntil = w.tick + 90; this.blockedAt = null; this.avoid = null; }
     if (w.tick < this.reverseUntil) { f.drive = { throttle: -.8, steer: .6 }; return f; }
-    if (car.vehicle!.attached.length && car.vehicle!.speed > 2.25) {
+    // Keep the short bridge departure aligned. Repeated handbrake shakes here
+    // turn the APC off the bridge lane while the pursuing bus keeps ramming it.
+    if (!driving.evacuationDone && car.vehicle!.attached.length && car.vehicle!.speed > 2.25) {
       f.drive = { throttle: .4, steer: w.tick % 120 < 60 ? 1 : -1 }; f.handbrake = true; return f;
     }
     const p = car.transform;
@@ -115,7 +117,7 @@ export class LevelNineBot {
     if (this.avoid) target = [this.avoid.x, this.avoid.z];
     const dx = target[0] - p.x, dz = target[1] - p.z, want = -Math.atan2(dz, dx);
     const delta = Math.atan2(Math.sin(want - p.yaw), Math.cos(want - p.yaw));
-    f.drive = { throttle: this.throttle, steer: Math.max(-1, Math.min(1, delta * 2)) };
+    f.drive = { throttle: driving.evacuationDone ? 1 : this.throttle, steer: Math.max(-1, Math.min(1, delta * 2)) };
     return f;
   }
 }
