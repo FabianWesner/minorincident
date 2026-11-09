@@ -52,12 +52,13 @@ test('browser pool admission backs off under WindowServer pressure, keeps a one-
     '6 5 05:00 2.0 node node_modules/.bin/vitest run',
     '7 0 05:00 0.0 /bin/sh -c "node node_modules/.bin/vitest run"',
     '8 0 00:20 1.0 /usr/bin/node node_modules/typescript/bin/tsc --noEmit',
-    '9 0 00:20 1.0 node tools/qa/census.ts',
+    '9 0 00:20 99.0 node tools/qa/census.ts',
     '10 0 00:20 0.0 npm exec vitest run',
     '11 0 1-05:00:00 0.0 node /tmp/fixture/npx vitest list',
     '12 0 10:00 0.0 node /tmp/fixture/npx vitest list',
     '13 0 00:20 99.0 node --import tsx tools/sim-runner/l8-contact.ts',
     '14 5 00:20 99.0 node --import tsx tools/qa/owned-probe.ts',
+    '15 0 00:20 0.0 node --import tsx tools/qa/queued-browser.ts',
   ].join('\n'), new Set([5]), session, now);
   expect(classified.busy.map(p => p.pid)).toEqual([2, 3, 4, 8, 9, 10, 12, 13]);
   expect(classified.ignoredIdle.map(p => p.pid)).toEqual([1, 11]);
