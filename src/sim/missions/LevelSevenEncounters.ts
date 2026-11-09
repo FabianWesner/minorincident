@@ -405,9 +405,9 @@ export class LevelSevenEncounters {
     const last = this.trail.at(-1), previous = this.trail.at(-2);
     const departure = this.world.missions!.state.steps.departure?.status === 'active';
     // A short retreat along a clear leg need not turn the whole column
-    // around. Hold its lead point until the courier resumes or returns more
-    // than six metres, when the ordinary trail reset lets everyone follow back.
-    const retreat = departure && last && previous && distance(last, player) <= 6 &&
+    // around. Hold its lead point while the courier backs up; stopping or a
+    // return beyond six metres lets everyone follow her actual position again.
+    const retreat = departure && moving && last && previous && distance(last, player) <= 6 &&
       (player.x - last.x) * (last.x - previous.x) + (player.z - last.z) * (last.z - previous.z) < -.8 * distance(last, player) * distance(last, previous);
     const leader = retreat ? { ...player, x: last.x, z: last.z } : player;
     if (last && distance(last, player) > 6) this.trail.length = 0;
