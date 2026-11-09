@@ -27,10 +27,12 @@ for (const level of ['L1', 'L2', 'L3', 'L4', 'L5', 'L9', 'L10'] as RunnerLevel[]
     for (const [family, action] of Object.entries(weapons)) {
       destruction.restore(initial);
       const nav = world.districts!.nav.cells.slice();
-      // One normalized 3000-damage contact per part exercises the linear
-      // material response without thousands of redundant reconciliation calls.
+      // One normalized 3000-damage structural contact per target exercises the
+      // material response without demolishing the whole district six times.
       // Counts describe native destruction responses, not player DPS.
-      for (const object of targets) for (let part = 0; part < object.parts.length; part++) {
+      for (const object of targets) {
+        const part = object.parts.findIndex(p => p.role === 'structure');
+        assert(part >= 0, `${object.id}: no structural hit geometry`);
         destruction.damage({ object, part, distance: 0, local: object.parts[part].bounds.min, normal: [0, 1, 0] }, action, 3000);
       }
       let peakFires = 0, peakDebris = 0;
@@ -51,6 +53,17 @@ for (const level of ['L1', 'L2', 'L3', 'L4', 'L5', 'L9', 'L10'] as RunnerLevel[]
       families.push({ family, action, damaged, brokenParts, collapsed, peakFires, peakDebris, navigationOnlyOpens: true });
       console.log(`[destruction-rollout] ${level}/${family}: ${damaged} damaged, ${collapsed} collapsed`);
     }
+    // Exercise complete collider removal for each authored policy separately
+    // from the comparable weapon counts. Vehicles retain their original hull.
+    const nav = world.districts!.nav.cells.slice();
+    const collapseClasses = [];
+    for (const kind of Object.keys(classes)) {
+      const object = targets.find(o => o.placement.destruction!.class === kind)!;
+      for (let part = 0; part < object.parts.length; part++) destruction.damage({ object, part, distance: 0, local: object.parts[part].bounds.min, normal: [0, 1, 0] }, 'weapon.rocket-launcher', 1e6);
+      assert(object.state.collapsed, `${level}/${kind}: collapse`);
+      collapseClasses.push(kind);
+    }
+    assert(!world.districts!.nav.cells.some((cell, i) => nav[i] === 1 && cell === 0), `${level}: complete collapse closed navigation`);
     const saved = destruction.snapshot();
     mission.restore(checkpoint);
     assert.deepEqual(destruction.snapshot(), initial, `${level}: pristine checkpoint`);
@@ -59,9 +72,9 @@ for (const level of ['L1', 'L2', 'L3', 'L4', 'L5', 'L9', 'L10'] as RunnerLevel[]
     destruction.restore(initial);
     mission.restore(checkpoint);
     assert.deepEqual(destruction.snapshot(), saved, `${level}: damaged checkpoint`);
-    results.push({ level, targets: targets.length, classes, families, checkpoint: true });
+    results.push({ level, targets: targets.length, classes, families, collapseClasses, checkpoint: true });
     console.log(`[destruction-rollout] ${level}: ${targets.length} targets; all weapon/checkpoint/navigation/cap checks passed`);
   } finally { world.dispose(); }
 }
 mkdirSync(dirname(output), { recursive: true });
-writeFileSync(output, JSON.stringify({ method: 'Native loaded levels and Rapier. Direct normalized damage fixture: one 3000-damage contact per part, then 721 destruction ticks; no route completion claim.', results }, null, 2) + '\n');
+writeFileSync(output, JSON.stringify({ method: 'Native loaded levels and Rapier. Direct normalized damage fixture: one 3000-damage structural contact per target, then 721 destruction ticks. Separate full-collapse sample per policy; no route completion claim.', results }, null, 2) + '\n');
