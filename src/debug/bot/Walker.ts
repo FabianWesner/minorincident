@@ -37,7 +37,7 @@ export class Walker {
     let nav = world.infected!.nav;
     if (avoidCorpses) {
       const source = nav, bodies = [...world.entities.iterate()].filter(e => solidLargeCorpse(e) && !e.hidden && Math.abs(e.transform.y - p.y) < 1.2 && dist(p, e.transform) < 35);
-      const elevated = world.scenario === 'L10' && p.y > 2;
+      const elevated = p.y > 2;
       const signature = `${elevated}:` + bodies.map(e => `${e.id}:${e.transform.x.toFixed(2)}:${e.transform.z.toFixed(2)}`).join('|');
       if (!this.bodyGrid || this.bodyGrid.source !== source || this.bodyGrid.revision !== source.revision || this.bodyGrid.signature !== signature) {
         // Private planning data only. Production nav, bodies and collision are untouched.

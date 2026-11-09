@@ -29,6 +29,7 @@ export class LevelSevenEncounters {
   private readonly seen = new Set<number>();
   private readonly waypoint = { x: 0, z: 0 };
   private readonly approaches = new Map<number, { x: number; z: number; at: number; around?: Point[] }>();
+  private readonly slotMotion = new Map<number, Point & { tick: number }>();
   private readonly pocketRoutes = new Map<number, { revision: number; points: Point[] }>();
   private corpseRoutes?: { source: NavGrid; revision: number; bodies: string; nav: NavGrid };
   private routeTick = -1;
@@ -298,6 +299,23 @@ export class LevelSevenEncounters {
     const target = w.infected!.director.tier === 'high' || w.missions!.state.steps.departure?.status === 'active'
       ? nav.clear(goal.x, goal.z, .35) ? goal : snapToClear(w, goal, .35)
       : ahead && nav.clear(goal.x, goal.z, .35) && nav.visible(e.transform, goal, .35) && nav.visible(goal, p.transform, .35) ? goal : p.transform;
+    const previousSlot = this.slotMotion.get(e.id);
+    this.slotMotion.set(e.id, { x: target.x, z: target.z, tick: w.tick });
+    // Like L5's bounded slot tracker, follow a moving target's velocity plus
+    // its position error. Treating it as a fixed destination repeatedly brakes
+    // people just before their slot, then makes them set off again behind it.
+    if (w.missions!.state.steps.departure?.status === 'active' && Math.hypot(v.x, v.z) > .8 && previousSlot?.tick === w.tick - 1 &&
+        !this.approaches.get(e.id)?.around && !w.solids.blockingBody(e.id) && nav.visible(e.transform, target, .35)) {
+      const dx = (target.x - previousSlot.x) * 60, dz = (target.z - previousSlot.z) * 60;
+      const reference = Math.min(1, 5.2 / (Math.hypot(dx, dz) || 1));
+      const vx = dx * reference + (target.x - e.transform.x) * 1.5, vz = dz * reference + (target.z - e.transform.z) * 1.5;
+      const speed = Math.min(5.2, Math.hypot(vx, vz)), scale = .5 * speed / (Math.hypot(vx, vz) || 1);
+      const aim = { x: e.transform.x + vx * scale, z: e.transform.z + vz * scale };
+      if (speed > .3 && nav.clear(aim.x, aim.z, .35) && nav.visible(e.transform, aim, .35)) {
+        w.npcs!.move(e, aim, speed, c, 0, 1600, nav);
+        w.spatial.set(e.id, e.transform.x, e.transform.z); return true;
+      }
+    }
     if (d > formationBack(slot) + 10 && w.tick >= this.state.waitAt) {
       this.state.waitAt = w.tick + 300;
       this.warn(e, 'wait');
