@@ -13,6 +13,7 @@ export class LevelSevenBot {
   // Walk around the inherited parked school bus south of the crater, with room for the full party.
   private readonly route = [{ x: 88, z: 15 }, { x: 88, z: 46 }, { x: -30, z: 47 }, { x: -36, z: 47 }, { x: -36, z: 41.7 }, { x: -50, z: 41.7 }, { x: -50, z: 47 }, { x: l7CorridorAnchors['l7-bus-boarding'].position[0], z: l7CorridorAnchors['l7-bus-boarding'].position[2] }];
   private waypoint = 0;
+  private detour: { x: number; z: number; until: number } | null = null;
   finished = false;
   constructor(private readonly w: SimWorld, readonly profile = 'complete') {}
   sample(): InputFrame {
@@ -40,6 +41,17 @@ export class LevelSevenBot {
     const limit = Math.max(12, Math.ceil(followers.length / 3) * 1.2 + 5);
     // Reach the bus door before waiting for the last stragglers; the shipped boarding queue owns their recovery there.
     if (!pickup && this.waypoint < this.route.length - 1 && distance(p.transform, goal) > 10 && followers.some(r => { const e = w.entities.get(r.id); return e && distance(e.transform, p.transform) > limit; })) f.move = { x: 0, z: 0 };
+    // Clear a firing lane instead of running into a crowd or waiting inside
+    // its bites. Reuse the same connected six-metre dodge as the war bot.
+    if (!pickup && this.profile !== 'evade-only') {
+      if (this.detour && (w.tick >= this.detour.until || distance(p.transform, this.detour) < .8)) this.detour = null;
+      const alpha = enemies.find(e => e.archetype === 'infected.alpha' && e.infected?.specialAttack?.stage === 'telegraph' && distance(e.transform, p.transform) < 14);
+      if (!this.detour && (alpha || enemies[0] && distance(enemies[0].transform, p.transform) < 6)) {
+        const at = this.walker.detour(w, goal, (alpha ?? enemies[0]).transform);
+        if (at) this.detour = { ...at, until: w.tick + 90 };
+      }
+      if (this.detour) f.move = this.walker.step(w, this.detour, .8, `dodge-${this.detour.until}`) ?? f.move;
+    }
     return f;
   }
 }

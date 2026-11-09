@@ -1,5 +1,5 @@
 /** L7 diagnosis using the ordinary mortal completion route and read-only observations.
- * Usage: node --import tsx/esm tools/qa/r16-l7group-route.ts <low|high> <tag> [1,2,3]
+ * Usage: node --import tsx/esm tools/qa/r16-l7group-route.ts <low|high> <tag> [1,2,3] [maxSeconds]
  * No setup edits, cheats, policy overrides or changed qualification thresholds. */
 import { createHash } from 'node:crypto';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -13,6 +13,8 @@ import { provenance } from './accept/probe';
 
 const tier = process.argv[2] === 'high' ? 'high' : 'low', tag = process.argv[3] ?? 'lane';
 const seeds = (process.argv[4] ?? '1,2,3').split(',').map(Number);
+const maxSeconds = process.argv[5] === undefined ? undefined : Number(process.argv[5]);
+if (maxSeconds !== undefined && (!Number.isFinite(maxSeconds) || maxSeconds <= 0)) throw new Error('maxSeconds must be positive');
 const out = 'test-results/r16-l7group'; mkdirSync(out, { recursive: true });
 const identity = { ...provenance(), toolHash: createHash('sha256').update(readFileSync(new URL(import.meta.url))).digest('hex') };
 const votes: FollowerPaceSeed[] = [];
@@ -21,7 +23,7 @@ for (const seed of seeds) {
   let observer: ThreatObserver | undefined, observation: ReturnType<ThreatObserver['finish']> | undefined;
   let nativeStateHash = '', collision: unknown, final: unknown;
   const samples: unknown[] = [], damage: unknown[] = [], signals: unknown[] = [], shots: unknown[] = [], hits: unknown[] = [];
-  const run = await runLevel('L7', 'complete', seed, undefined, 'auto', campaign, undefined, 0, {
+  const run = await runLevel('L7', 'complete', seed, maxSeconds, 'auto', campaign, undefined, 0, {
     quality: tier,
     beforeBegin: w => {
       observer = new ThreatObserver(w, 'L7', { paths: false });
@@ -41,6 +43,8 @@ for (const seed of seeds) {
         if (w.tick % 30) return;
         const p = w.entities.get(1)!, blocker = w.solids.blockingBody(1);
         samples.push({ tick: w.tick, player: { ...p.transform }, hp: p.health.current, speed: p.motion?.speed,
+          support: w.districts!.groundHeight(p.transform.x, p.transform.z),
+          staggerUntil: p.combat?.staggerUntil, statuses: p.combat?.statuses.map(s => ({ kind: s.kind, actionId: s.actionId, expires: s.expires })),
           weapon: w.combat!.runner.loadout.current('RIGHT').id, ready: { ...w.combat!.runner.gunReady },
           move: { ...w.inputFrame.move }, blocker: blocker && { id: blocker.id, type: blocker.archetype },
           steps: Object.entries(w.missions!.state.steps).filter(([, s]) => s.status === 'active').map(([id]) => id),
@@ -57,7 +61,7 @@ for (const seed of seeds) {
     },
   });
   const vote = votes.at(-1)!; vote.valid = run.completed; vote.outcome = run.outcome; vote.time = run.time;
-  const receipt = { ...identity, tag, tier, seed, generatedAt: new Date().toISOString(), run, nativeStateHash, collision, final, observation, signals, damage, shots, hits };
+  const receipt = { ...identity, tag, tier, seed, maxSeconds, generatedAt: new Date().toISOString(), run, nativeStateHash, collision, final, observation, signals, damage, shots, hits };
   writeFileSync(`${out}/${tag}-${tier}-${seed}.json`, JSON.stringify(receipt, null, 2) + '\n');
   writeFileSync(`${out}/${tag}-${tier}-${seed}-trace.json.gz`, gzipSync(JSON.stringify(samples)));
   console.log(JSON.stringify({ tag, tier, seed, outcome: run.outcome, time: run.time, damage: damage.length, waitPercent: observation?.followerWait?.upperBoundPercent, nativeStateHash }));
