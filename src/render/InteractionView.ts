@@ -110,7 +110,9 @@ export class InteractionView extends Group {
   }
   /** Destruction fragments use plain boxes rather than the world's instanced surface layout. */
   prewarmDebris(at: Vector3): () => void {
-    const meshes = (['woodWarm', 'windowGlow', 'sidewalk', 'brick'] as const).map((token, i) => {
+    const tokens = new Set((this.world.destruction?.objects ?? []).filter(object => !object.protected)
+      .flatMap(object => object.parts.map(part => part.material === 'glass' ? 'windowGlow' : part.material === 'metal' || part.material === 'concrete' ? 'sidewalk' : part.material === 'brick' ? 'brick' : 'woodWarm')));
+    const meshes = [...tokens].map((token, i) => {
       const mesh = new Mesh(this.box, this.materials.get(token)); mesh.name = `destruction-debris-warmup:${token}`;
       mesh.position.copy(this.worldToLocal(at.clone())); mesh.position.x += i * .5; mesh.scale.setScalar(.4); this.add(mesh); return mesh;
     });
