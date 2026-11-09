@@ -365,6 +365,7 @@ export class GameUI {
       this.missionPhase = mission?.state.phase ?? '';
       if (mission?.state.phase === 'progression' && !this.game.campaign) { this.nextLevel = `L${Math.min(6, Number(mission.def.id.slice(1)) + 1)}`; this.show('upgrades'); }
     }
+    document.body.classList.toggle('cinematic-ui', !!mission?.state.cinematic || !!mission?.state.epilogue || !!this.game.world.storyLock || !!this.game.world.l7Departure?.cinematic);
     this.hud.update();
     setHidden(this.pauseButton, !this.game.campaignUI.root.hidden || this.screen !== null || (!!mission && !['playing', 'cinematic'].includes(mission.state.phase)));
     // Home is hidden during cutscenes, briefings, results and loading (only live play), and via CSS while the UI is hidden (H).
