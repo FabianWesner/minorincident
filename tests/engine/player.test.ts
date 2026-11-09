@@ -174,6 +174,9 @@ async function slopeWorld(level: 'L3' | 'L5' | 'L6' | 'L7' | 'L10', quality: 'lo
   world.loadComposition(composition, composition.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), 1);
   world.l7Encounters = null; world.l7Departure = null; world.l10Encounters = null;
   world.infected!.director.setTier(quality); world.npcs!.setQuality(quality);
+  // setQuality also enables ambient spawning. Keep this collider fixture empty;
+  // restored crowds and followers are exercised by the native/browser audit.
+  world.npcs!.setAmbient(0);
   world.player!.locomotion.crowd = []; world.player!.locomotion.props = [];
   return world;
 }
