@@ -30,6 +30,7 @@ export class LevelSevenEncounters {
   private readonly waypoint = { x: 0, z: 0 };
   private readonly approaches = new Map<number, { x: number; z: number; at: number; around?: Point[] }>();
   private readonly formationOffsets = new Map<number, Point>();
+  private readonly formationLeader = { x: 0, z: 0 };
   private readonly pocketRoutes = new Map<number, { revision: number; points: Point[] }>();
   private corpseRoutes?: { source: NavGrid; revision: number; bodies: string; nav: NavGrid };
   private routeTick = -1;
@@ -81,6 +82,7 @@ export class LevelSevenEncounters {
     // entries have the same 24-person shelter group on every quality/path.
     const count = roster?.length ?? 24;
     const leader = w.entities.get(1)!.transform;
+    Object.assign(this.formationLeader, { x: leader.x, z: leader.z });
     // Form behind the escape direction, not the courier's briefing pose
     // facing the launcher. Otherwise the whole party crosses itself on departure.
     const road = l7Encounters.streets[0], heading = leaderHeading(-Math.atan2(road.z - leader.z, road.x - leader.x));
@@ -416,6 +418,8 @@ export class LevelSevenEncounters {
   /** At either quality, follow the courier's walked boarding corner two abreast
    * instead of swinging the tail across the parked vehicles. */
   private formationGoal(player: EntitySnapshot['transform'], velocity: Point, e: EntitySnapshot): Point {
+    if (distance(this.formationLeader, player) > 6) this.formationOffsets.clear();
+    Object.assign(this.formationLeader, { x: player.x, z: player.z });
     const slot = e.civilian!.survivor!.slot, loose = looseSlotOffset(slot);
     const moving = Math.hypot(velocity.x, velocity.z) > .8;
     const last = this.trail.at(-1);

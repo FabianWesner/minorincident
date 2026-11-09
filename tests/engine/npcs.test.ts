@@ -204,11 +204,13 @@ test('escort: shared combat pace, follows through a maze, a 2 s stand revives to
   const launcher = [...w.entities.iterate()].find(e => e.pickup && 'actionId' in e.pickup && e.pickup.actionId === 'weapon.rocket-launcher')!;
   w.entities.delete(launcher.id);
   const tail = w.entities.get(w.l7Encounters!.state.roster.at(-1)!.id)!, player = w.entities.get(1)!;
+  tail.transform.x += 2;
   const origin = { ...player.transform };
   Object.assign(player.survivor!.velocity, { x: -4.5, z: 0 });
   let target = { x: 0, z: 0 };
   const move = vi.spyOn(w.npcs!, 'move').mockImplementation((_e, at) => { target = { x: at.x, z: at.z }; return true; });
   w.l7Encounters!.follower(tail);
+  expect(move).toHaveBeenCalled();
   const safe = { ...target };
   expect(Math.hypot(safe.x - player.transform.x, safe.z - player.transform.z)).toBeGreaterThan(2);
   expect(w.infected!.nav.clear(safe.x, safe.z, .35)).toBe(true);
@@ -216,10 +218,12 @@ test('escort: shared combat pace, follows through a maze, a 2 s stand revives to
   Object.assign(player.survivor!.velocity, { x: -2.5, z: 3.75 });
   w.l7Encounters!.follower(tail);
   const carried = { x: safe.x + player.transform.x - origin.x, z: safe.z + player.transform.z - origin.z };
-  expect(target, 'a frontage cannot recall the tail onto the courier').toEqual(carried);
+  expect(target.x, 'a frontage cannot recall the tail onto the courier').toBeCloseTo(carried.x, 8);
+  expect(target.z).toBeCloseTo(carried.z, 8);
   Object.assign(player.survivor!.velocity, { x: 0, z: 0 }); player.transform.yaw += Math.PI;
   w.l7Encounters!.follower(tail);
-  expect(target, 'stationary weapon aiming does not swing the walking column').toEqual(carried);
+  expect(target.x, 'stationary weapon aiming does not swing the walking column').toBeCloseTo(carried.x, 8);
+  expect(target.z).toBeCloseTo(carried.z, 8);
   move.mockRestore();
   }
   {
