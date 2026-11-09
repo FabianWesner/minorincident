@@ -62,7 +62,10 @@ export class LevelNineBot {
       const origin = w.entities.get(1)!.transform;
       const humans = [origin, ...driving.roster.map(id => w.entities.get(id)).filter(e => e?.civilian && !e.hidden && !e.passengerOf && e.health.current > 0 && !e.infected).map(e => e!.transform)];
       const risk = (p: { x: number; z: number }) => Math.min(...humans.map(h => Math.hypot(p.x - h.x, p.z - h.z)));
-      const target = w.infected!.active.filter(e => !e.hidden && !e.infected?.hidden && e.health.current > 0 && e.id !== driving.megaId && Math.hypot(e.transform.x - origin.x, e.transform.z - origin.z) < 30).sort((a, b) => risk(a.transform) - risk(b.transform))[0];
+      // A climbing body will bite the courier even after the hatch closes.
+      // Clear those visible hull attackers before covering the walking crew.
+      const target = w.infected!.active.filter(e => !e.hidden && !e.infected?.hidden && e.health.current > 0 && e.id !== driving.megaId && Math.hypot(e.transform.x - origin.x, e.transform.z - origin.z) < 30)
+        .sort((a, b) => Number(b.attachedTo === car.id) - Number(a.attachedTo === car.id) || risk(a.transform) - risk(b.transform))[0];
       if (target) { const dx = target.transform.x - origin.x, dz = target.transform.z - origin.z, length = Math.hypot(dx, dz) || 1; f.aim = { x: dx / length, z: dz / length }; f.aimSource = 'keyboard'; f.activeAttack = true; f.left = { down: true, held: true, up: false }; }
       return f;
     }
