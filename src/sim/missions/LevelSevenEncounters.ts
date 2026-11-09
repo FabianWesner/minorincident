@@ -258,10 +258,14 @@ export class LevelSevenEncounters {
    * the evacuee tears free. True when it survives; the bite that would empty its health kills/turns as usual. */
   woundFollower(target: EntitySnapshot, biter: EntitySnapshot): boolean {
     if (!this.state.roster.some(r => r.id === target.id && r.status === 'following')) return false;
-    const { damage, shoveTicks } = l7Encounters.followerBite, w = this.world;
+    const { damage, shoveTicks, shoveM } = l7Encounters.followerBite, w = this.world;
     if (target.health.current <= damage) return false;
     target.health.current -= damage;
     if (biter.combat) biter.combat.staggerUntil = Math.max(biter.combat.staggerUntil, w.tick + shoveTicks);
+    // Reeling in place leaves the attacker's full body sealing the column's
+    // escape lane. A survived struggle must open physical room to regroup.
+    const dx = biter.transform.x - target.transform.x, dz = biter.transform.z - target.transform.z, length = Math.hypot(dx, dz);
+    if (length > 0 && biter.archetype !== 'infected.alpha') w.knockback(biter, { x: dx / length, z: dz / length }, shoveM, 12);
     w.events.emit({ type: 'infected.attack', tick: w.tick, sourceId: biter.id, attackId: 0, targetId: target.id, special: 'bite', amount: damage });
     return true;
   }
