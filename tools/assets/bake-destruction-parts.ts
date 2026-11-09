@@ -27,4 +27,22 @@ for (const id of ['bld.house-a', 'veh.sedan-blue', 'veh.sedan-green']) {
     output[id].push({ name, min: box.min.toArray().map(v => +v.toFixed(4)), max: box.max.toArray().map(v => +v.toFixed(4)), role: name.startsWith('window') ? 'glass' : name === 'roof' ? 'roof' : 'door' });
   }
 }
+// The rebuilt farm GLBs fold their original nodes into one mesh. These bounds
+// follow building() in tools/blender/sslib/farm_assets.py: solid side walls,
+// split gable piers, an open central doorway and a pitched roof. They are hit
+// zones only; the authored walk-through ruins have no solid collision owner.
+for (const [id, house] of [['bld.farm-house-ruin', true], ['bld.farm-barn-ruin', false]] as const) {
+  const w = house ? 8 : 7, d = house ? 7 : 8, eave = house ? 2.55 : 3.35, opening = house ? 1.8 : 2.8;
+  const parts: (typeof output)[string] = [];
+  for (const side of [-1, 1]) {
+    parts.push({ name: `farm-side-${side}`, role: 'structure', min: [side*w/2-.27, .45, -d/2-.25], max: [side*w/2+.27, eave, d/2+.25] });
+    for (const end of [-1, 1]) {
+      const minX = side < 0 ? -w/2-.15 : opening/2-.12, maxX = side < 0 ? -opening/2+.12 : w/2+.15;
+      parts.push({ name: `farm-pier-${side}-${end}`, role: 'structure', min: [minX, .45, end*d/2-.3], max: [maxX, eave, end*d/2+.3] });
+    }
+    parts.push({ name: `farm-header-${side}`, role: 'structure', min: [-opening/2, 2.16, side*d/2-.3], max: [opening/2, eave, side*d/2+.3] });
+  }
+  parts.push({ name: 'farm-roof', role: 'roof', min: [-w/2-.25, eave-.12, -d/2-.3], max: [w/2+.25, house ? 4.12 : 5.3, d/2+.3] });
+  output[id] = parts;
+}
 writeFileSync('src/data/destructionParts.json', JSON.stringify(output));

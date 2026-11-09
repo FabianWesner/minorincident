@@ -91,6 +91,6 @@ export function verifyDestructionRollout(): void {
       expect(byClass.machinery).toBeGreaterThan(0);
       expect(byClass['fuel-tank']).toBeGreaterThan(0);
     }
-    expect(live.objects.filter(o => !o.protected && o.placement.destruction!.class !== 'vehicle' && !o.query.length).map(o => o.id), `${level} targets need live hit geometry`).toEqual([]);
+    expect(live.objects.filter(o => !o.protected && !o.query.some(q => o.parts[q.part].role === 'structure')).map(o => o.id), `${level} targets need live structural hit geometry`).toEqual([]);
   }
 }

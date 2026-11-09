@@ -41,7 +41,7 @@ export class Destruction {
       const parts: DestructionPart[] = p.destruction.indestructible ? [{ id: 'protected', role: 'structure', material: 'concrete', hp: 1,
         bounds: { min: [-dims.x/2,0,-dims.z/2], max: [dims.x/2,dims.y,dims.z/2] } }] : destructionParts(p);
       const id = `${d.id}/${p.id}`, query = p.destruction.indestructible ? [{part:0,box:parts[0].bounds}] : partColliders(p.assetId, parts);
-      const object: DestructionObject = { id, placement: p, parts, query: [...query, ...parts.flatMap((part,i)=>part.role === 'structure' ? [] : [{part:i,box:part.bounds}])], protected: !!p.destruction.indestructible, present: true,
+      const object: DestructionObject = { id, placement: p, parts, query: [...query, ...parts.flatMap((part,i)=>part.role === 'structure' && query.some(c=>c.part===i) ? [] : [{part:i,box:part.bounds}])], protected: !!p.destruction.indestructible, present: true,
         home: { p: [p.position[0] + d.origin[0], p.position[1], p.position[2] + d.origin[1]], q: [0, Math.sin(p.yaw / 2), 0, Math.cos(p.yaw / 2)] }, state: { hp: parts.map(p => p.hp), burning: 0, fireClock: 0, exploded: false, collapsed: false, revision: 0, marks: [] } };
       this.objects.push(object);
       const prop = world.props?.items.find(item => item.id === id);
