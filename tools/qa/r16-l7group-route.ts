@@ -29,9 +29,10 @@ for (const seed of seeds) {
       observer = new ThreatObserver(w, 'L7', { paths: false });
       const orders = new Map<number, unknown>(), move = w.npcs!.move.bind(w.npcs!);
       w.npcs!.move = (...args) => {
-        const [e, target, speed, , stop] = args, at = { ...e.transform };
+        const [e, target, speed, , stop] = args;
+        const sampling = w.tick % 30 === 0 && (e.civilian?.survivor || e.companion), at = sampling ? { ...e.transform } : undefined;
         const result = move(...args);
-        if (w.tick % 30 === 0 && e.civilian?.survivor) orders.set(e.id, { tick: w.tick, target: { ...target }, from: at, speed, stop,
+        if (sampling) orders.set(e.id, { tick: w.tick, target: { ...target }, from: at, speed, stop,
           waypoint: { ...(w.npcs as unknown as { waypoint: { x: number; z: number } }).waypoint } });
         return result;
       };
