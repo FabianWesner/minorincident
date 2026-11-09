@@ -108,7 +108,10 @@ export class LevelTenBot {
       // shipped stair anchors, rather than translating them from that marker.
       const [topX, topZ] = cure.anchors['dispersal-stair-top'], [footX, footZ] = cure.anchors['dispersal-stair-foot'];
       const top = { x: topX, z: topZ }, foot = { x: footX, z: footZ };
-      if (p.x < top.x - .25 || Math.abs(p.z - top.z) > .25) f.move = this.walker.step(w, top, .2, 'descend-landing', true) ?? { x: 0, z: 0 };
+      // Once on the ramp, continue to its foot even after a lateral shove.
+      // Asking the ground/deck grid for the top from mid-ramp can return a
+      // zero move forever because neither grid owns that sloped support.
+      if (p.x < top.x - .25 || p.y >= arena.gun.deckHeight + .2 && Math.abs(p.z - top.z) > .25) f.move = this.walker.step(w, top, .2, 'descend-landing', true) ?? { x: 0, z: 0 };
       else {
         const dx = foot.x - p.x, dz = foot.z - p.z, d = Math.hypot(dx, dz) || 1;
         f.move = { x: dx / d, z: dz / d };
