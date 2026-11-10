@@ -1,7 +1,7 @@
 # r31-epilogue: the L10 ending as a payoff (main a0957730)
 
 Fixes the r30-finale-qa epilogue findings (release beat, wave shots, "back to her", pull-out, P3s) against
-`docs/design/story-script.md` (Epilogue). Contact sheet (16 frames, story order): [contact-sheet.jpg](contact-sheet.jpg).
+`docs/design/story-script.md` (Epilogue). Contact sheet (16 frames, story order; images are git-ignored by the archive rule): `contact-sheet.jpg` next to this file locally and the full-size copy below.
 Raw captures, logs and the full-size sheet: `/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/r31-epilogue/`
 (`run2-high-z1-gl`, `run3-low-z15-gpu`, `contact-sheet-po.jpg`). Old sheet: `.../scratchpad/r30-finale/contact-sheet-po.jpg`.
 
