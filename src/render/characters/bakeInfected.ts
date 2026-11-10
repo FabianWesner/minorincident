@@ -138,7 +138,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
       const embedded = root.animations.find(animation => animation.name === clip);
       const action = embedded ? mixer.clipAction(embedded).setLoop(LoopOnce, 1) : undefined;
       if (action) { action.clampWhenFinished = true; action.reset().play(); }
-      const name = animalRig ? /^(die|death-|flung|knockdown)/.test(clip) ? 'animal-death' : /^(idle|infected-idle|infected-search|civ-startle|civ-grabbed)$/.test(clip) ? 'corgi-idle' : /^(windup|swing|zebra-rear-kick|zebra-stampede)$/.test(clip) ? 'corgi-idle' : flying ? 'infected-flight' : clip === 'dog-gallop' ? 'corgi-gallop' : 'corgi-trot' : clip.startsWith('zebra-') || clip.startsWith('dog-') ? 'idle' : crawlingRestPose && clip === 'crawl' ? 'infected-run' : clip;
+      const name = animalRig ? /^(die|death-|flung|knockdown)/.test(clip) ? 'animal-death' : /^(idle|infected-idle|infected-search|civ-startle|civ-grabbed)$/.test(clip) ? 'corgi-idle' : /^(windup|swing|zebra-rear-kick|zebra-stampede)$/.test(clip) ? 'corgi-idle' : flying ? 'infected-flight' : 'corgi-trot' : clip.startsWith('zebra-') || clip.startsWith('dog-') ? 'idle' : crawlingRestPose && clip === 'crawl' ? 'infected-run' : clip;
       const duration = embedded?.duration ?? authoredClips.get(name)!.duration, planted = !hoofPoints.length && (!animalRig || root.getObjectByName('root')?.userData.groundedAnimal === true) && soleHeight > 0 && !unplantedClips.test(clip);
       for (let frame = 0; frame < framesPerClip; frame++) {
         for (let i = 0; i < parts.length; i++) { parts[i].position.copy(rest[i].position); parts[i].rotation.copy(rest[i].rotation); }

@@ -32,7 +32,7 @@ for name, (arch, count, dist, moves, fire, frames) in ANIMALS.items():
     for frame, move in moves:
         script.append({"frame": frame, "actor": "z", "do": {"special": move, "target": "courier"}})
     script.append({"frame": fire, "actor": "courier", "do": {"attack": "z", "seconds": 0.6, "side": "RIGHT"}})
-    for cam, camera in (('close', {"mode": "pose", "position": [dist / 2, 3.2, 10], "target": [dist / 2, .7, 0]}), ('game', {"mode": "game", "target": "courier", "zoom": 1.5})):
+    for cam, camera in (('close', {"mode": "game", "target": "z", "zoom": 0.45}), ('game', {"mode": "game", "target": "courier", "zoom": 1.5})):
         spec = {"name": f"r32-{name}" + ("-game" if cam == 'game' else ''),
                 "note": f"r32-animalmoves {name}: walk-in 40, specials {', '.join(f'{m}@{f}' for f, m in moves)}, MG burst {fire}. Night L8-zoo light.",
                 "seed": 3, "ground": "grass", "size": 50, "time": "L8-zoo", "dof": False,

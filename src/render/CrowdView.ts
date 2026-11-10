@@ -783,10 +783,9 @@ export class CrowdView extends Group {
       if (specialAttack?.move === 'flamingo.dive' && specialAttack.stage === 'active') clip = 'run';
       // r32-animalmoves: species poses (lift/flight phase) are sampled once per figure and drive a few clip choices.
       const species = e.infected && !e.corpse ? animalSpecies(e) : undefined;
-      const animalPose = species ? this.animalMoves.sample(e, renderTick, motion.speed, this.gait.sample(e.id, gaitDistance, motion.speed > 5 ? 'corgi-gallop' : 'corgi-trot', batch.strideScale, motion.speed)) : undefined;
+      const animalPose = species ? this.animalMoves.sample(e, renderTick, motion.speed, this.gait.sample(e.id, gaitDistance, 'corgi-trot', batch.strideScale, motion.speed)) : undefined;
       const animalLift = species ? Math.max(0, this.animalMoves.lift - Math.max(0, e.transform.y - .7 - (this.world.districts?.pavingHeight(e.transform.x, e.transform.z) ?? 0))) : 0, flightPhase = species ? this.animalMoves.flightPhase : -1;
       if (species === 'flamingo' && animalPose?.airborne && b.state !== 'dead') clip = 'run';
-      if (species === 'lion' && !specialAttack && !heavy && b.state !== 'dead' && !(e.infected!.grabUntil > renderTick) && motion.speed > 5) clip = 'dog-gallop';
       if (species === 'zebra' && !heavy && b.state !== 'dead') {
         // Herd gallop (authored stampede loop) at speed and for the stampede's 1 s dust telegraph (pawing, weight back).
         if (specialAttack?.move === 'zebra.stampede' && specialAttack.stage === 'telegraph' || !specialAttack && motion.speed > 4.5) clip = 'zebra-stampede';
