@@ -3,8 +3,8 @@ import type { MusicState } from './MusicDirector';
 
 const PEAK_GAIN = 0.78;
 interface Deck { media: HTMLAudioElement; source: MediaElementAudioSourceNode; gain: GainNode; retire: number; file: string; }
-/** Level-specific recordings replace a state's shared score (`score-<file>`). PO 10-12: combat (zombies close) keeps the shared rock `score-combat`
- * in every level, as do aftermath; each level L1-L9 has its own calm and tension recording. L1 calm is the coffee-shop jazz. */
+/** Level-specific recordings replace a state's shared score (`score-<file>`). PO 11-10: the shared rock `score-combat` plays only in L1
+ * (L2-L9 keep their tension recording through combat, see playedState); aftermath stays shared; each level L1-L9 has its own calm and tension recording. L1 calm is the coffee-shop jazz. */
 export const levelStreams: Record<string, Partial<Record<MusicState, string>>> = Object.fromEntries(
     Array.from({ length: 9 }, (_, i) => `L${i + 1}`).map(level => [level, { calm: `calm-${level}`, tension: `tension-${level}` }]));
 /** L10 uses the licensed Zombie Hoodoo recording (already imported for L5 tension) as its sparse ambient bed. */
@@ -58,8 +58,12 @@ export class StreamedMusic {
         this.decks.set(state, deck);
         return deck;
     }
-    prepareDanger(): void { this.deck('combat'); }
-    async transition(state: MusicState, requested: number, epoch: number, bar: number, immediate = false): Promise<void> {
+    /** PO 2026-11-10: "rock music when Zombies are fighting … only in L1; on all other levels we just keep the regular music playing."
+     * L2-L9 stay on their tension recording through combat (no switch); L10 keeps its own combat recording. */
+    private playedState(state: MusicState): MusicState { return state === 'combat' && this.level !== 'L1' && !levelStreams[this.level]?.combat ? 'tension' : state; }
+    prepareDanger(): void { this.deck(this.playedState('combat')); }
+    async transition(stateIn: MusicState, requested: number, epoch: number, bar: number, immediate = false): Promise<void> {
+        const state = this.playedState(stateIn);
         this.target = { state, requested, epoch, bar, immediate };
         if (state === this.requested || this.suspended) return;
         this.requested = state;
