@@ -1,0 +1,455 @@
+{
+ "name": "r31-alpha-brute",
+ "note": "r31-zombie-audit motion fixture: idle 0-120, chase+attack 120-420, MG burst 420, bat 510, heavy kick 600, long MG 780-960.",
+ "seed": 3,
+ "ground": "asphalt",
+ "size": 40,
+ "time": "L4",
+ "dof": false,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "loadout": [
+    "weapon.bat",
+    "weapon.army-mg"
+   ]
+  },
+  {
+   "id": "z",
+   "kind": "infected",
+   "archetype": "infected.alpha",
+   "at": [
+    10,
+    0
+   ],
+   "yaw": 180,
+   "state": "idle",
+   "alphaType": "brute"
+  }
+ ],
+ "script": [
+  {
+   "frame": 120,
+   "actor": "z",
+   "do": "chase"
+  },
+  {
+   "frame": 420,
+   "actor": "courier",
+   "do": {
+    "attack": "z",
+    "seconds": 0.15,
+    "side": "RIGHT"
+   }
+  },
+  {
+   "frame": 510,
+   "actor": "courier",
+   "do": {
+    "attack": "z",
+    "seconds": 0.5,
+    "side": "LEFT"
+   }
+  },
+  {
+   "frame": 600,
+   "actor": "z",
+   "do": {
+    "hit": {
+     "from": "courier",
+     "heavy": true
+    }
+   }
+  },
+  {
+   "frame": 780,
+   "actor": "courier",
+   "do": {
+    "attack": "z",
+    "seconds": 3,
+    "side": "RIGHT"
+   }
+  },
+  {
+   "frame": 606,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 618,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 630,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 642,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 654,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 666,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 678,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 690,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 702,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 714,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 726,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 738,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 750,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 762,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 774,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 786,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 798,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 810,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 822,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 834,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 846,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 858,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 870,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 882,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 894,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 906,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 918,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 930,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 942,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 954,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 966,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 978,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 990,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 1002,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 1014,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 1026,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 1038,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 1050,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 1062,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  },
+  {
+   "frame": 1074,
+   "camera": {
+    "mode": "close",
+    "target": "z",
+    "radius": 7,
+    "azimuth": 0
+   }
+  }
+ ],
+ "camera": {
+  "mode": "close",
+  "target": [
+   1.2,
+   0.9,
+   0
+  ],
+  "radius": 7,
+  "azimuth": 0
+ },
+ "frames": 1080,
+ "trace": true,
+ "expect": {
+  "consoleErrors": 0
+ }
+}

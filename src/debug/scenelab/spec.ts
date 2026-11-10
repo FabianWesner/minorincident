@@ -133,6 +133,8 @@ export interface ActorSpec {
   look?: Look;
   /** Infected archetype (src/data/infected.ts), default infected.runner. */
   archetype?: string;
+  /** QA audit only (r31-zombie-audit): allow an archetype whose role asset is a retired rigid figure, because L4-L6 still spawn them. */
+  allowRigid?: boolean;
   /** Explicit Alpha identity for move/counter QA; omitted legacy scenes retain the shared move fixture. */
   alphaType?: import('../../data/alphaTypes').AlphaType;
   /** Spawn N copies on a ring of `spread` metres around `at` (ids get -1, -2 ...). */
@@ -417,7 +419,7 @@ export function validateSpec(spec: SceneSpec, assets: Map<string, AssetDef>): st
     if (a.at) point(a.at, `actors[${i}].at`);
     if (a.id) { if (ids.has(a.id)) errors.push(`duplicate id ${a.id}`); ids.add(a.id); }
     if (a.look?.model && a.kind === 'pedestrian' && !assets.has(a.look.model)) errors.push(`actors[${i}].look.model: unknown ${a.look.model}`);
-    if (a.kind === 'pedestrian' && a.look?.model || a.kind === 'infected') {
+    if ((a.kind === 'pedestrian' && a.look?.model || a.kind === 'infected') && !a.allowRigid) {
       const requested = a.look?.model ?? a.archetype ?? 'infected.runner';
       const source = requested.startsWith('infected.') ? infectedDefinitions.find(def => def.id === requested)?.asset : requested;
       if (!source || !assets.get(source)?.crowdSkin) errors.push(`actors[${i}]: retired rigid figure ${requested}; choose an accepted v2 crowd asset`);
