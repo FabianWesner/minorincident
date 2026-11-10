@@ -2,7 +2,8 @@
  * node --import tsx/esm tools/qa/r32/alpha-move-census.ts [out.json] [seconds] [levels,comma] [policy] [seed]
  * Counts every new specialAttack (by attackId) per `alphaType|move`, every ordinary Alpha strike per type and the Alpha
  * population per type. A move that belongs to another type is reported under `foreign` (must stay 0). */
-import { writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { dirname } from 'node:path';
 import { SimWorld } from '../../../src/sim/world/SimWorld';
 import { runLevel } from '../../sim-runner/levels';
 import { alphaTypes, type AlphaType } from '../../../src/data/alphaTypes';
@@ -12,6 +13,7 @@ const levels = (process.argv[4] ?? 'L3,L4,L5,L6,L7,L9,L10').split(',');
 const policy = (process.argv[5] ?? 'complete') as Parameters<typeof runLevel>[1], seed = Number(process.argv[6] ?? 1);
 type Row = { alphas: Record<string, number>; moves: Record<string, number>; strikes: Record<string, number>; foreign: number; looks: Record<string, number> };
 const rows: Record<string, Row> = {};
+mkdirSync(dirname(out), { recursive: true });
 let current = '';
 const seenAlpha = new Set<number>(), seenAttack = new Set<number>(), lastAttack = new Map<number, number>();
 const update = SimWorld.prototype.update;
