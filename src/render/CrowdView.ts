@@ -336,7 +336,7 @@ export class CrowdView extends Group {
       const model = loaded;
       const atlas = model.userData.assetTextureMode === 'baseColor' ? crowdTexture(model) : undefined;
       const healthy = def.id.startsWith('healthy.'), human = !dogCoat(def.id) && !/^(infected|healthy)\.(dog|cat|crow|lion|gorilla|elephant|zebra|flamingo|monkey|lioness)$/.test(def.id);
-      const alpha = alphaLookAssets.includes(asset), regularAlpha = alphaLooks['inf.alpha'].includes(asset), capacity = role === 'crow' ? 800 : 350;
+      const alpha = alphaLookAssets.includes(asset), regularAlpha = alphaLooks['inf.alpha'].includes(asset) || alphaLooks['inf.mega-alpha'].includes(asset), capacity = role === 'crow' ? 800 : 350;
       // The retained Alpha corpse is LOD0. Establish its own atlas binding before
       // a far batch prepares pages from that source, regardless of arrival order.
       if (this.world.scenario === 'L10' && alpha && lod === 'lod2') { await this.requestBatch(def, 'lod0'); if (this.disposed) return; }

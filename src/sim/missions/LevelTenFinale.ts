@@ -104,7 +104,8 @@ export function cureFinaleText(mission: Mission | null): string | null {
   if (state.steps.epilogue?.status === 'active' && state.cureFront) return state.cureFront.elapsed < 8 * 60 ? 'Release the cure' : 'Minor Incident';
   if (state.steps.mega.status === 'active' && !state.states['mega-dead']) {
     const at = def.anchors['cure-console'], p = world.entities.get(1)!.transform;
-    return at && Math.hypot(p.x - at.x, p.z - at.z) > finale.fightRadius ? 'Back to the dispersal arena · Kill the Mega Alpha' : 'Kill the Mega Alpha';
+    // The Mega is held at the leash edge: tell her to come back only while she is out of the yard and the Mega is not in melee with her.
+    return at && Math.hypot(p.x - at.x, p.z - at.z) > finale.fightRadius && (world.megaPursuit?.distance() ?? Infinity) > 10 ? 'Back to the dispersal arena · Kill the Mega Alpha' : 'Kill the Mega Alpha';
   }
   if (state.steps.hold.status !== 'active') return null;
   if (!state.states['charge-active']) return 'Activate the dispersal console';

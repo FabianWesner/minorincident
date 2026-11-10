@@ -207,20 +207,25 @@ export class MegaPursuit {
       this.world.infected!.seek(e, { ...arena, y: .7 + (this.world.districts?.groundHeight(arena.x, arena.z) ?? 0) });
       this.world.spatial.set(e.id, e.transform.x, e.transform.z); return true;
     }
-    if (mission?.state.states['charge-ready'] && arena && dist(player.transform, arena) > finale.fightRadius && dist(e.transform, arena) > finale.fightRadius - 5 && dist(e.transform, arena) < 100 && this.resident(e.transform.x, e.transform.z) && !Status.stunned(e, tick) && b.grabUntil <= tick && (b.specialRecoveryUntil ?? 0) <= tick && b.state !== 'attack' && !e.combat!.attacking) {
-      // Once the dispersal device is ready, the final fight belongs to its
-      // apron. A courier retreat used to pull the pursuing boss down hundreds
-      // of metres of cleared road. Walk back into the arena continuously;
-      // ongoing specials finish normally and HP/cooldowns remain untouched.
-      b.hidden = false; s.mode = 'detailed';
-      b.state = 'chase';
-      const distance = dist(e.transform, arena), scale = (finale.fightRadius - 10) / distance;
-      // Return to the nearest apron edge, rather than routing to the console's
-      // blocked centre through the whole plant (which can detour far outside it).
-      const edge = { x: arena.x + (e.transform.x - arena.x) * scale, z: arena.z + (e.transform.z - arena.z) * scale };
-      if (this.grid.steer(e.transform, this.grid.clear(edge.x, edge.z, this.radius) ? edge : arena, this.path, this.radius, this.waypoint, 20000)) this.walkTo(e, this.waypoint, false);
-      this.world.spatial.set(e.id, e.transform.x, e.transform.z);
-      return true;
+    if (arena && mission?.state.states['charge-active'] && !mission.state.states['cure-released'] && this.resident(e.transform.x, e.transform.z)
+      && !Status.stunned(e, tick) && b.grabUntil <= tick && (b.specialRecoveryUntil ?? 0) <= tick && b.state !== 'attack' && !e.combat!.attacking) {
+      // r31-megafight (r30 finale QA: the fight drifted 55-80 m from the console): once the charge runs and the Mega has entered the yard
+      // it belongs to the arena. A courier who leaves the leash disc does not drag it down the cleared road: it waits at the edge on the
+      // line to her (and fights her there if she is within reach), and returns with her. Ongoing specials finish; HP and cooldowns are untouched.
+      const states = mission.state.states, dm = dist(e.transform, arena), leash = finale.leashRadius;
+      if (dm <= leash + 4) states['mega-in-arena'] = true;
+      if (states['mega-in-arena'] && dist(player.transform, arena) > leash) {
+        const gap = dist(e.transform, player.transform);
+        if (dm > leash + 4 || gap > 8) {
+          b.hidden = false; s.mode = 'detailed'; b.state = 'chase'; e.combat!.attacking = false;
+          const pd = dist(player.transform, arena), scale = (leash - 3) / pd;
+          const edge = { x: arena.x + (player.transform.x - arena.x) * scale, z: arena.z + (player.transform.z - arena.z) * scale };
+          if (dist(e.transform, edge) > 1.5 && this.grid.steer(e.transform, this.grid.clear(edge.x, edge.z, this.radius) ? edge : arena, this.path, this.radius, this.waypoint, 20000)) this.walkTo(e, this.waypoint, false);
+          this.world.spatial.set(e.id, e.transform.x, e.transform.z);
+          return true;
+        }
+        // Within 8 m of the courier at the edge: the shared Alpha brain fights her (below).
+      }
     }
     const pressure = this.options.route?.pressure;
     // D-CURE progresses east along its authored R6/R7 delivery approach.
