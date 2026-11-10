@@ -25,7 +25,7 @@ git bisect bad
 # first bad commit: e19047c854f4cb17c0bd525a69a2f76b10bfa880
 ```
 
-[bisect.txt](bisect.txt) preserves Git's result. This path-limited result identifies the layout trigger, not a claim that every intermediate vehicle/bot combination has the same five failures. The r29 vehicle/bot merge reduces the direct e190 run's failure signature to the five reported on main. The original main snapshot for this lane is a0957730; the working branch adds only daa155b1's QA wrapper change. Main was never checked out or modified.
+[bisect.md](bisect.md) preserves Git's result. This path-limited result identifies the layout trigger, not a claim that every intermediate vehicle/bot combination has the same five failures. The r29 vehicle/bot merge reduces the direct e190 run's failure signature to the five reported on main. The original main snapshot for this lane is a0957730; the working branch adds only daa155b1's QA wrapper change. Main was never checked out or modified.
 
 ## Exact runtime cause and proposed fix
 
