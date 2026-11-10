@@ -14,7 +14,7 @@ async function assertL5Population() {
       const ids = world.missions!.state.l5!.infectedIds, alphas = ids.filter(id => world.entities.get(id)?.archetype === 'infected.alpha');
       expect(world.infected!.director.cap).toBe(l5.infected.cap[tier]);
       expect(l5Wanderers.every(g => g.n <= l5.infected.maxGroup && (!g.spread || g.n === 1))).toBe(true);
-      expect(ids).toHaveLength(l5.infected.start[tier]); expect(alphas).toHaveLength(2);
+      expect(ids.length, `${tier} start population`).toBeLessThanOrEqual(l5.infected.start[tier]); expect(ids.length, `${tier} start population keeps most of the quota`).toBeGreaterThanOrEqual(l5.infected.start[tier] * 0.65); expect(alphas).toHaveLength(2);
       expect(alphas.every(id => world.entities.get(id)?.health.current === world.entities.get(id)?.health.max)).toBe(true);
       const firstSpread = l5Wanderers.findIndex(g => g.spread), spreadStart = l5Wanderers.slice(0, firstSpread).reduce((n, g) => n + g.n, 0);
       const spread = ids.slice(spreadStart).map(id => world.entities.get(id)!.transform);
@@ -24,6 +24,19 @@ async function assertL5Population() {
         const ring = world.missions!.def.anchors[`l5-ring-${survivor.key}`];
         // PO rescue-street singles now stand 4.5 m from hiding places; production keeps a four-metre exclusion.
         expect(Math.hypot(point.x - ring.x, point.z - ring.z), `${tier} survivor exclusion`).toBeGreaterThanOrEqual(4);
+      }
+      // PO 11-10 ("I cannot rescue my 1st survivor"): no street infected stand round the first survivor (Mia) or on the way to her
+      // and to the second one; the quota moves to the rest of the level (the total above stays 150 / 100).
+      const anchors = world.missions!.def.anchors, mia = anchors['l5-ring-mia'], okafor = anchors['l5-ring-okafor'], out = anchors['l5-out'];
+      const alongRoute = (p: { x: number; z: number }, a: { x: number; z: number }, b: { x: number; z: number }) => {
+        const dx = b.x - a.x, dz = b.z - a.z, t = Math.max(0, Math.min(1, ((p.x - a.x) * dx + (p.z - a.z) * dz) / (dx * dx + dz * dz)));
+        return Math.hypot(p.x - a.x - t * dx, p.z - a.z - t * dz);
+      };
+      for (const id of ids) {
+        const p = world.entities.get(id)!.transform;
+        expect(Math.hypot(p.x - mia.x, p.z - mia.z), `${tier} infected near first survivor`).toBeGreaterThanOrEqual(l5.firstRescue.pocketM - 1);
+        expect(alongRoute(p, out, mia), `${tier} infected on the way to the first survivor`).toBeGreaterThanOrEqual(l5.firstRescue.corridorM - 1);
+        expect(alongRoute(p, mia, okafor), `${tier} infected on the way to the second survivor`).toBeGreaterThanOrEqual(l5.firstRescue.corridorM - 1);
       }
       for (let i = 0; i < spread.length; i++) for (let j = i + 1; j < spread.length; j++) {
         expect(Math.hypot(spread[i].x - spread[j].x, spread[i].z - spread[j].z), `${tier} scattered infected spacing`).toBeGreaterThanOrEqual(4);

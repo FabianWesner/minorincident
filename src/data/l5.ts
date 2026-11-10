@@ -21,6 +21,8 @@ export const l5 = {
   follow: { minM: 2, maxM: 5, runMs: 3.8, walkMs: 2.6, waitCallM: 10, waitEveryS: 12, coverM: 8, reactS: 1.2, hp: 60, rescueGraceS: 10 },
   /** Scattered street infected (singles, occasional pairs), and the cap. */
   infected: { start: { high: 150, low: 100 }, maxGroup: 2, cap: { high: 150, low: 100 }, leashM: 14 },
+  /** First rescue (PO 11-10): no street infected start in a pocket round the first survivor (Mia) and the second (Okafor), nor in a corridor cellar -> Mia -> Okafor. The rest of the level is unchanged; the free slots are not re-spent (road space at 4 m spacing is used up), so the start population is `start` minus the pocket's share. */
+  firstRescue: { route: ['mia', 'okafor'] as readonly string[], pocketM: 28, secondPocketM: 22, corridorM: 9 },
   /** Metro: the trigger at the foot of the entrance, every living follower crosses, the residents are shown briefly, then the shutter rolls shut. */
   metro: { triggerM: 1.2, gatherM: 15, waitS: 10, occupantViewS: 3, lookoutAfterS: 0, occupants: 24, stationX: 37.7854, stationZ: -78 },
   /** Sunset gloom ramp: sun intensity factor from 1 to `endFactor` over the story (time share and the share of survivors accounted for). */
@@ -91,13 +93,13 @@ export const l5PhotoSpots: readonly (readonly [string, readonly [number, number,
 /** The runner formerly near the new cellar exit patrols Lakeshore instead, keeping the relocated opening quiet.
  * Fixed infected starts are scattered in singles with a few authored pairs; low tier takes the first 100. */
 const l5AuthoredWanderers: readonly { at: P; lowAt?: P; n: number; alpha?: boolean; archetype?: string }[] = [
-  { at: [-20, -37.6], n: 2 }, { at: [-56, 22], n: 1 }, { at: [14, 28], n: 2, archetype: 'infected.butcher' }, { at: [-22, 10], n: 1 }, { at: [44, 36], n: 1, alpha: true }, { at: [22, -37.4], n: 1 },
+  { at: [18, -50], n: 2 }, { at: [-56, 22], n: 1 }, { at: [14, 28], n: 2, archetype: 'infected.butcher' }, { at: [-22, 10], n: 1 }, { at: [44, 36], n: 1, alpha: true }, { at: [22, -37.4], n: 1 },
   { at: [-26, 40], n: 2 },
-  // Low population uses the open northern street approach; high keeps its frontage.
-  { at: [-40, -37.4], lowAt: [-42, -41.5], n: 1, alpha: true }, { at: [2, 43.6], n: 1 }, { at: [14, -2], n: 1 }, { at: [-12, 18], n: 1 }, { at: [44, -36.4], n: 2 },
+  // PO 11-10 ("I cannot rescue my 1st survivor"): the stretch from the cellar to Mia (first survivor) holds no authored group; the Alpha and the pair that stood there moved east to the middle of the level.
+  { at: [4, -50], n: 1, alpha: true }, { at: [2, 43.6], n: 1 }, { at: [14, -2], n: 1 }, { at: [-12, 18], n: 1 }, { at: [44, -36.4], n: 2 },
   { at: [-6, -37.4], n: 1 }, { at: [10, 13], n: 1 },
   // PO 10-20 ("L5 feels quite empty"): retain these nine original lone shamblers.
-  { at: [-46, -37.5], n: 1 }, { at: [36, -37.4], n: 1 }, { at: [-12, 43.6], n: 1 }, { at: [40, 28.5], n: 1 }, { at: [14, -24], n: 1 },
+  { at: [52, -37.4], n: 1 }, { at: [36, -37.4], n: 1 }, { at: [-12, 43.6], n: 1 }, { at: [40, 28.5], n: 1 }, { at: [14, -24], n: 1 },
   { at: [-60, 43], n: 1 }, { at: [-4, 28], n: 1 }, { at: [24, 43.6], n: 1 }, { at: [-40, -20], n: 1 },
 ];
 // Interleave singles along the street bands so the population is spread across the reachable city. Skip the
