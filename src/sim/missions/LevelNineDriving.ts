@@ -274,6 +274,18 @@ export class LevelNineDriving {
     const car = this.car.entity.transform, dx = car.x - bus.transform.x, dz = car.z - bus.transform.z;
     const delta = Math.atan2(Math.sin(-Math.atan2(dz, dx) - bus.transform.yaw), Math.cos(-Math.atan2(dz, dx) - bus.transform.yaw));
     intent.throttle = 1; intent.brake = false; intent.steer = Math.max(-1, Math.min(1, delta * 2));
+    // Evacuation hold: the APC is parked with the brake on. A full-throttle bus
+    // pressed against it shoved it ~2.4 m at once and then crept it ~10 m over
+    // the hold. The bus now slows on approach and halts a few metres short, so
+    // it never pushes the parked APC and never blocks the passenger door
+    // (its passengers still spill and attack, see bus()).
+    if (this.state.evacuationAt !== null && !this.state.evacuationDone) {
+      const gap = this.car.physics.hullDistance(bus.transform.x, bus.transform.z) - this.w.vehicles!.cars.get(this.state.busId)!.physics.def.length / 2;
+      const speed = bus.vehicle?.speed ?? 0, allowed = 2.5 + Math.max(0, gap - 4.5) * .6;
+      // A bus already alongside when the hold starts (countryside route) backs off the door instead of walling it in.
+      if (gap < 3.5) { intent.throttle = -.6; intent.brake = false; intent.steer = 0; }
+      else if (gap <= 4.5 || speed > allowed) { intent.throttle = 0; intent.brake = true; }
+    }
   };
   private bus(): void {
     const s = this.state, w = this.w, car = this.car, p = car.entity.transform;
