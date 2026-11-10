@@ -64,9 +64,9 @@ test('doors: locked hint, key requirement, open/close updates navigation and col
 test('pickups: exact one-time effects with caps, rack join/replacement, dead players wait, inventory survives respawn', async () => {
   const w = await world(), p = w.entities.get(1)!, pickups = w.pickups!;
   w.player!.damage(80, w.tick);
-  const med = pickups.spawn('medkit', { x: 0, z: 0 }); step(w, 1); expect(p.health.current).toBe(70);
-  pickups.spawn('soda', { x: 0, z: 0 }); step(w, 1); expect(p.health.current).toBe(85);
-  pickups.spawn('medkit', { x: 0, z: 0 }); step(w, 1); expect(p.health.current).toBe(100);
+  pickups.spawn('soda', { x: 0, z: 0 }); step(w, 1); expect(p.health.current).toBe(35);
+  const med = pickups.spawn('medkit', { x: 0, z: 0 }); step(w, 1); expect(p.health.current).toBe(100); // PO 11-10: medkit heals to full
+  w.player!.damage(60, w.tick); pickups.spawn('medkit', { x: 0, z: 0 }); step(w, 1); expect(p.health.current).toBe(100);
   const full = pickups.spawn('medkit', { x: 0, z: 0 }); step(w, 1); expect((w.entities.get(full)!.pickup as Pickup).collected).toBe(false);
   w.combat!.setLoadout(['weapon.bat'], ['weapon.grenade']);
   const grenade = w.combat!.runner.loadout.current('RIGHT'); grenade.charges = 0; grenade.nextCharge = w.tick + 600;

@@ -5,7 +5,7 @@ import type { EntitySnapshot } from '../world/types';
 import type { SimWorld } from '../world/SimWorld';
 export const pickupKinds = ['medkit', 'soda', 'energy-drink', 'throwable', 'weapon', 'item'] as const;
 export type PickupKind = typeof pickupKinds[number];
-/** `amount`: fixed heal in HP (E21 medkits: +40); without it a medkit heals 50 % and a soda 15 % of max. */
+/** `amount`: fixed heal in HP for survivors' medkits (E21: +40). The courier's medkit always heals to full (PO 2026-11-10); a soda heals 15 % of max. */
 export interface Pickup { kind: Exclude<PickupKind, 'weapon'>; item: string | null; radius: number; collected: boolean; amount?: number; reservedFor?: number }
 /** Collection is a one-shot sim transaction, with health/charge caps and respawn-safe inventory. */
 export class Pickups {
@@ -63,7 +63,8 @@ export class Pickups {
       if (!p || !('kind' in p) || p.collected || (player.transform.x - e.transform.x) ** 2 + (player.transform.z - e.transform.z) ** 2 > p.radius ** 2) continue;
       if (p.kind === 'medkit' || p.kind === 'soda') {
         if (player.health.current >= player.health.max) continue;
-        player.health.current = Math.min(player.health.max, player.health.current + (p.amount ?? player.health.max * (p.kind === 'medkit' ? .5 : .15)));
+        // PO 2026-11-10 UAT: "I took a health kit ... and got only 50% health instead of full" — a medkit restores the courier to full.
+        player.health.current = p.kind === 'medkit' ? player.health.max : Math.min(player.health.max, player.health.current + (p.amount ?? player.health.max * .15));
       } else if (p.kind === 'energy-drink') player.speedBuff = { multiplier: 1.25, until: this.world.tick + 480 };
       else if (p.kind === 'item') this.world.interactables!.giveItem(p.item!);
       else {
