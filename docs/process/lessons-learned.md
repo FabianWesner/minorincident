@@ -352,3 +352,4 @@ A living record, updated after every lane or experiment. Short entries with evid
 - **Watch:** a boss damage probe that can kill the boss changes arena gates/phases for the next probe (gorilla hits vanished). Probe with a huge HP pool and assert on per-hit damage.
 - **Watch:** a wave spawned on the same tick the arena clear check runs must skip that check (stale `live`/`pendingTurns`).
 - **Night blobs:** the figure fill value (CrowdView `figureFill`) must be 0.25 for any dark-coated boss, not only Alphas; the Mega and the L8 animals shared this cause.
+- **Didn't work (orchestrator, 11-11 00:05):** `pkill -f threat-audit.ts` / `pkill -f scenelab/gate-run` to stop my own gate also hit lanes' runs (same command line). Stop only my own task (TaskStop / the PID I started), never pattern-kill shared tools.
