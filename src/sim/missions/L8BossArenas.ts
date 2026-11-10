@@ -122,7 +122,9 @@ export class L8BossArenas {
       if (arena.phase === 0 && arena.ids.every(id => (w.entities.get(id)?.health.current ?? 0) <= 0)) {
         arena.phase = 3; arena.endedAt = w.tick; this.signal(arena, 'cleared'); continue;
       }
-      if (arena.phase === 0 && finaleReady && (routeOpen || provoked) && live.length && (distance(player.transform, def.entry) < 12 || arena.id === 'elephant' && distance(player.transform, def.centre) < def.radius || provoked)) {
+      if (arena.phase === 0 && finaleReady && (routeOpen || provoked) && live.length && (distance(player.transform, def.entry) < 12 || arena.id === 'elephant' && distance(player.transform, def.centre) < def.radius
+        // A courier already inside the paddock (turned pack, no longer near the entry) used to wait ~340 s for a provocation.
+        || distance(player.transform, def.centre) < def.radius * .75 || provoked)) {
         arena.phase = 1; arena.startedAt = w.tick; arena.nextAt = w.tick + 90;
         if (arena.id === 'elephant') {
           // The old elephant breaks into the vehicle yard for the final stand;
