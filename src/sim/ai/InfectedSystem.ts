@@ -944,6 +944,7 @@ export class InfectedSystem {
       this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, targetId, special: b.special, amount: 0 });
       return;
     }
+    if (this.isL3Officer(targetId)) { this.hitL3Officer(e, target, damage * e.combat!.damageMultiplier); return; }
     const amount = this.world.combat!.damage.apply({ attackId: b.attackId, actionId: e.archetype, sourceId: e.id, targetId, origin: e.transform, direction: { x: b.dx, z: b.dz }, base: damage, multiplier: e.combat!.damageMultiplier, type: 'melee', knockback: b.special === 'charge' ? 3.2 : 0, stagger: 0 });
     this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, targetId, special: b.special, amount });
   }
@@ -1369,7 +1370,15 @@ export class InfectedSystem {
     // Civilians: runner lunge burst inside 2.5 m, then grab on contact.
     const contact = e.combat!.radius + (this.world.entities.get(target.id)?.combat?.radius ?? .35) + .3;
     const victimEntity = this.world.entities.get(target.id);
-    if (distance <= contact && victimEntity && combatHeightReachable(e, victimEntity) && this.l1!.lineOfSight(e.transform, target.position)) { this.startBite(e, b, brain, target); return; }
+    if (distance <= contact && victimEntity && combatHeightReachable(e, victimEntity) && this.l1!.lineOfSight(e.transform, target.position)) {
+      // PO 2026-11-10 (option B): on a following L3 squad officer the infected also land their normal melee hit, not only bites.
+      if (this.isL3Officer(target.id) && ((e.id + (this.world.tick / 120 | 0)) & 1) === 0) {
+        e.transform.yaw = -Math.atan2(target.position.z - e.transform.z, target.position.x - e.transform.x);
+        if (this.world.tick >= b.cooldown) { b.combo = 0; this.windup(e, victimEntity); }
+        return;
+      }
+      this.startBite(e, b, brain, target); return;
+    }
     this.steerL1(e, brain, target.position, distance <= lunge ? Math.min(7, brain.runSpeed * 1.25) : brain.runSpeed, false, true);
     // L4 high resolves contact reached during this move. Separation runs afterward;
     // checking only before steering can leave a moving human just outside the
@@ -1378,6 +1387,13 @@ export class InfectedSystem {
   }
   /** PO 2026-11-07 ("The police crew that should follow me has zero chance to survive"): like the L7 evacuees (r5-l7), a bite on
    * a following L3 squad officer costs his shown health first and shoves the biter off; only the bite that empties it turns him. */
+  private isL3Officer(id: number): boolean { return this.world.scenario === 'L3' && !!this.world.missions?.state.l3?.squad.some(m => m.id === id); }
+  /** A normal melee hit on a following L3 squad officer (Damage ignores civilians): same damage as on the courier; the last hit kills. */
+  private hitL3Officer(e: EntitySnapshot, target: EntitySnapshot, amount: number): void {
+    const prev = target.health.current; target.health.current = Math.max(0, prev - amount);
+    if (target.health.current <= 0 && target.civilian) { target.civilian.state = 'finished'; target.civilian.entered = this.world.tick; target.civilian.story = null; }
+    this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: e.id, attackId: e.infected!.attackId, targetId: target.id, special: e.infected!.special, amount: prev - target.health.current });
+  }
   private woundL3Officer(target: EntitySnapshot, biter: EntitySnapshot): boolean {
     const squad = this.world.scenario === 'L3' ? this.world.missions?.state.l3?.squad : undefined;
     if (!squad?.some(m => m.id === target.id)) return false;
