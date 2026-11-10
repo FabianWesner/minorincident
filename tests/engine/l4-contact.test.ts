@@ -6,7 +6,9 @@ import { l4, l4InfectedArchetypes, l4Route, l4RoutePose, l4ConvoyStations, l4Rea
 import physicsAssets from '../../src/data/physicsAssets';
 import { l4BreachSite, l4PerimeterWalls } from '../../src/data/l4Perimeter';
 import { infectedDef } from '../../src/data/infected';
-import { barEligible, followerBarsAlwaysMax, followerPipSize, HealthBars } from '../../src/render/HealthBars';
+import { barEligible, bossChip, bossChipFadeTicks, bossChipHoldTicks, bossChipMinPx, followerBarsAlwaysMax, followerPipSize, HealthBars } from '../../src/render/HealthBars';
+import { bossHitFlashChip, bossHitFlashExposed } from '../../src/render/vfx/Vfx';
+import { bossHitFlashTicks, hitFlashTicks } from '../../src/render/CrowdView';
 import { pickBodies } from '../../src/render/characters/PickBodies';
 import { updateAlly } from '../../src/sim/outbreak/Allies';
 import { respawnAtCheckpoint } from '../../src/sim/missions/Respawn';
@@ -319,6 +321,14 @@ test('L4: every contact archetype interrupts approach/lure and attacks within 3 
     expect(barEligible(distantAlpha, courier.transform, infectedDef(distantAlpha.archetype).bar === true), 'damaged Alpha keeps its bar beyond 15 m').toBe(true);
     expect(barEligible(distantRunner, courier.transform, infectedDef(distantRunner.archetype).bar === true), 'healthy ordinary infected follows the 15 m cutoff').toBe(false);
     ai.release(distantAlpha); ai.release(distantRunner);
+    // r26-l8hitreact: L8 boss hit reaction is render-only; chip stays visible for tiny hits, fades out, never passes the bar end.
+    expect(bossChip(1, 0.95, 0, 64)).toBeGreaterThanOrEqual(bossChipMinPx);
+    expect(bossChip(1, 0.9, bossChipHoldTicks + bossChipFadeTicks - 1, 64)).toBeLessThan(bossChip(1, 0.9, bossChipHoldTicks, 64));
+    expect(bossChip(1, 0.9, bossChipHoldTicks + bossChipFadeTicks, 64)).toBe(0);
+    expect(bossChip(1, 0.02, 0, 64)).toBeLessThanOrEqual(0.98 * 64);
+    expect(bossHitFlashExposed).toBeGreaterThan(bossHitFlashChip);
+    expect(1 + bossHitFlashExposed).toBeLessThan(2);
+    expect(bossHitFlashTicks).toBeGreaterThan(hitFlashTicks);
     for (const archetype of [...l4InfectedArchetypes, 'infected.alpha']) for (const state of ['attracted', 'attack', 'stagger'] as const) {
       // New Alpha grabs throw the courier. Each independent contact probe starts at the same position.
       world.solids.relocate(courier, contactOrigin, 'scripted.teleport');

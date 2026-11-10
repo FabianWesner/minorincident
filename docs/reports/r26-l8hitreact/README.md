@@ -7,7 +7,7 @@ Render-only change; no sim, damage, exposed-window, stagger or AI change.
 - `src/render/vfx/Vfx.ts`: a damaging hit on an `infected.arenaBoss` target starts a boss flash (0.18 s, rest 0.12 s between pulses) instead of the 0.1 s Alpha pulse. Amplitude 0.55 non-exposed, 0.9 exposed (0.3 with flash reduction). Strength is sent to the crowd as `1 + amplitude` (values above 1 mark a boss flash).
 - `src/render/CrowdView.ts`: shader adds a warm-white additive lift for the boss marker (same `_state.w` slot, no new attribute, no new draw call, no per-hit allocation); the ordinary 0..1 pulse is unchanged. Cosmetic squash (<= 9 ticks, +5% xz / -6% y) on the instance matrix only; poses, attacks and sim untouched.
 - `src/render/HealthBars.ts`: white "chip" segment beside the fill for 0.3 s (12 ticks hold, 6 fade, min 3 px) on every health drop of an arena boss; one extra instanced mesh, hidden (not drawn) when no chip is live.
-- Test: `tests/engine/boss-hit-reaction.test.ts`.
+- Test: `tests/engine/l4-contact.test.ts (asserts folded in; test budget)`.
 
 ## Browser QA needed
 Coding lane, no browser was started. The QA lane checks (entry `--entry debug`, each of the six L8 arenas: flamingo flock members, zebras, monkeys incl. the 1.4x leader, lion/lioness, gorilla, elephant), quality low AND high, zoom 1.5 AND 1, WebGL2 AND WebGPU:
