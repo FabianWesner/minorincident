@@ -1,0 +1,130 @@
+{
+  "runs": [
+    {
+      "case": "lane",
+      "revision": "36db80344706e9115cdbe4e46d7ec6e5a6093d15",
+      "completed": true,
+      "seconds": 325.81666666666666,
+      "finalStateHash": "2bbcf5c8",
+      "collisionFailures": 0,
+      "pendingAdmissions": 0
+    },
+    {
+      "case": "base",
+      "revision": "fb3dd88c7a09e0b638ba3fa0d5163eea55c8f516",
+      "completed": true,
+      "seconds": 412.18333333333334,
+      "finalStateHash": "56a9fa8e",
+      "collisionFailures": 5,
+      "pendingAdmissions": 0,
+      "offenders": [
+        {
+          "tick": 17055,
+          "actor": 938,
+          "other": 936,
+          "depth": 0.1622579530254067,
+          "inside": false,
+          "writer": "cleanup.separation"
+        },
+        {
+          "tick": 17072,
+          "actor": 927,
+          "other": 889,
+          "depth": 0.045633846677708645,
+          "inside": false,
+          "writer": "cleanup.separation"
+        },
+        {
+          "tick": 17193,
+          "actor": 878,
+          "other": 940,
+          "depth": 0.020105002620013024,
+          "inside": false,
+          "writer": "infected.update"
+        },
+        {
+          "tick": 17194,
+          "actor": 878,
+          "other": 940,
+          "depth": 0.020657497766717325,
+          "inside": false,
+          "writer": "infected.update"
+        },
+        {
+          "tick": 17195,
+          "actor": 878,
+          "other": 940,
+          "depth": 0.02086297615914745,
+          "inside": false,
+          "writer": "infected.update"
+        }
+      ]
+    },
+    {
+      "case": "mid",
+      "revision": "8d729271b2f6518bc911d34d110d79acac0587a6",
+      "completed": true,
+      "seconds": 412.18333333333334,
+      "finalStateHash": "56a9fa8e",
+      "collisionFailures": 5,
+      "pendingAdmissions": 0
+    },
+    {
+      "case": "old-layout",
+      "revision": "fb3dd88c7a09e0b638ba3fa0d5163eea55c8f516",
+      "completed": true,
+      "seconds": 325.81666666666666,
+      "finalStateHash": "2bbcf5c8",
+      "collisionFailures": 0,
+      "pendingAdmissions": 0
+    },
+    {
+      "case": "bisect",
+      "revision": "e19047c854f4cb17c0bd525a69a2f76b10bfa880",
+      "completed": false,
+      "seconds": 600,
+      "finalStateHash": "31b10407",
+      "collisionFailures": 182,
+      "pendingAdmissions": 0
+    },
+    {
+      "case": "road",
+      "revision": "daa155b14d1f461af81d1f4061dc2c91c2919b7d",
+      "completed": true,
+      "seconds": 200.05,
+      "finalStateHash": "ccd957c1",
+      "collisionFailures": 0,
+      "pendingAdmissions": 0
+    },
+    {
+      "case": "risky",
+      "revision": "daa155b14d1f461af81d1f4061dc2c91c2919b7d",
+      "completed": true,
+      "seconds": 191.75,
+      "finalStateHash": "a1b83e39",
+      "collisionFailures": 0,
+      "pendingAdmissions": 0
+    },
+    {
+      "case": "country",
+      "revision": "daa155b14d1f461af81d1f4061dc2c91c2919b7d",
+      "completed": true,
+      "seconds": 209.28333333333333,
+      "finalStateHash": "7047fa00",
+      "collisionFailures": 0,
+      "pendingAdmissions": 0
+    }
+  ],
+  "threat": {
+    "revision": "daa155b14d1f461af81d1f4061dc2c91c2919b7d",
+    "flags": [
+      "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+    ],
+    "levels": [
+      {
+        "level": "L9",
+        "flags": []
+      }
+    ]
+  }
+}

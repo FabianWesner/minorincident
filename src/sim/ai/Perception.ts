@@ -223,7 +223,9 @@ export class Perception {
     for (const h of this.humans.within(e.transform, this.rangeM)) {
       if (h.id === ignoreId) continue;
       const isCurrent = h.id === currentId;
-      if (!(isCurrent ? this.tracks(e, h.position, h.id) : this.notices(e, h.position, h.id))) continue;
+      // r31-aggro: whoever just shot this infected is known to it for the provocation window, whatever its facing (it turns toward her).
+      const shooter = h.id === focus && e.infected?.provoked?.id === h.id;
+      if (!shooter && !(isCurrent ? this.tracks(e, h.position, h.id) : this.notices(e, h.position, h.id))) continue;
       const distance = Math.hypot(h.position.x - e.transform.x, h.position.z - e.transform.z) + (h.id === 1 ? this.playerBiasM : 0) - (h.id === focus ? brain?.focusBiasM ?? focusBiasM : 0);
       if (isCurrent) { current = h; currentDistance = distance; }
       if (distance < bestDistance) { best = h; bestDistance = distance; }

@@ -18,7 +18,7 @@ import { QuadrupedAnimator } from '../characters/QuadrupedAnimator';
 import { CorgiTongue, markCorgiTongue } from '../characters/CorgiTongue';
 import { MotionPresentation } from '../characters/MotionPresentation';
 import { MotionPhase } from '../characters/MotionPhase';
-import { l10ClosingPose } from '../characters/l10Closing';
+import { l10Closing, l10ClosingPose } from '../characters/l10Closing';
 import { NpcAnimator } from '../characters/NpcAnimator';
 import { civilianHeight, fitCivilianHeight } from './figureHeight';
 import { attribute, style, text } from '../../ui/dom';
@@ -189,14 +189,16 @@ export class NpcView extends Group {
       }
       const closing = e.companion && this.world.missions?.state.epilogue && this.world.missions.state.counters['epilogue-ticks'] >= 45 * 60;
       if (closing) {
-        const console = this.world.missions!.def.anchors['cure-console']; const returnTime = this.world.missions!.state.epilogue!.phase === 'thanks' ? this.world.missions!.state.epilogue!.phaseTicks / 60 : 6;
-        hero.root.position.set(console.x + 4.2 + Math.max(0, 4.5 - returnTime * 1.5), .08, console.z + 5); hero.root.rotation.y = Math.PI;
+        const seat = l10Closing.seat(this.world)!, spot = l10Closing.corgi(seat); const returnTime = this.world.missions!.state.epilogue!.phase === 'thanks' ? this.world.missions!.state.epilogue!.phaseTicks / 60 : 6;
+        hero.root.position.set(spot.x + Math.max(0, 4.5 - returnTime * 1.5), .08, spot.z); hero.root.rotation.y = spot.yaw;
       }
       const down = e.escort?.state === 'downed' || e.escort?.state === 'dead' || this.world.tick < (e.escort?.knockedUntil ?? 0) || e.civilian?.state === 'down' || e.civilian?.state === 'rising';
       if (down && hero.animator) { hero.root.rotation.z = Math.PI / 2; hero.root.position.y = .25; }
       const motion = e.motion ?? this.motion.sample(e.id, this.world.tick, e.transform.x, e.transform.z);
       const time = Math.max(0, this.world.tick + alpha - 1) / 60, distance = Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60);
       const warn = e.companion?.warn;
+      // The corgi sits down next to her as the cure is released (story-script epilogue beat 1).
+      if (hero.animator && e.companion) hero.animator.sitAfter = this.world.missions?.state.cureFront ? .8 : 4;
       if (hero.animator) hero.animator.update(time, closing ? this.world.missions!.state.epilogue!.phase === 'thanks' && this.world.missions!.state.epilogue!.phaseTicks < 180 ? 1.5 : 0 : motion.speed, closing ? this.world.missions!.state.epilogue!.phaseTicks / 40 : distance, warn && { stage: warn.stage, toward: this.world.entities.get(warn.threat)?.transform ?? null });
       else hero.humanAnimator!.update(time, closingCast ? 0 : motion.speed, distance, down);
       hero.tongue?.update(time, motion.speed);

@@ -189,7 +189,7 @@ export class GameUI {
       input.addEventListener('change', () => this.game.audio.set({ [key]: input.checked })); row.append(input); form.append(row);
     }
     const controls = node('div', 'settings-controls'); controls.className = 'settings-controls';
-    controls.append(node('p', 'controls-guide', 'WASD / arrows move; mouse aims; LMB shoots; Space shoots with aim assist. Q / RMB switches weapons; E / F interacts.'));
+    controls.append(node('p', 'controls-guide', 'WASD / arrows move; mouse aims; LMB shoots; Space shoots with aim assist. Q / RMB switches weapons; E / F interacts. In a vehicle: W gas, S brake then reverse, A / D steer the front wheels left / right.'));
     const action = node('select', 'binding-action'); action.setAttribute('aria-label', 'Action to rebind');
     for (const name of Object.keys(defaultBindings) as Action[]) { const option = node('option', `binding-${name}`, name); option.value = name; action.append(option); }
     const code = node('input', 'binding-code'); code.setAttribute('aria-label', 'Keyboard code'); code.placeholder = 'KeyZ';

@@ -204,7 +204,13 @@ export class Damage {
     if (target.id === 1 && this.world.combat?.effects.shielded(target.transform)) amount = 0;
     if (target.id === 1 && (this.god || this.world.inspectionGhost)) amount = 0;
     if (target.id === 1 && this.world.player) amount = this.world.player.damage(amount, this.world.tick, hit.actionId === 'infected.zebra.stampede');
-    else { amount = Math.min(amount, target.health.current); target.health.current -= amount; }
+    else {
+      amount = Math.min(amount, target.health.current); target.health.current -= amount;
+      if (amount > 0 && (source.id === 1 || source.playerDamageSource)) {
+        if (target.infected) target.infected.hitByPlayer = true;
+        else if (target.faction === 'environment') target.playerDamageSource = true;
+      }
+    }
     // Keep ordinary player melee in reach even after knockback upgrades. Special
     // kicks/ground slam retain their authored shove; raw damage is never a finisher.
     const special = hit.knockdown || hit.actionId === 'weapon.kick' || hit.actionId === 'ability.ground-slam';

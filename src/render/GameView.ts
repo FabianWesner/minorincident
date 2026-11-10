@@ -830,6 +830,9 @@ export class GameView implements Lifecycle {
       const ending = this.world.missions?.state.epilogue;
       const pull = ending ? epiloguePull(this.world.missions!.state.counters['epilogue-ticks']) : 0;
       this.view.epilogueScale = 1;
+      // r31-epilogue: during the playable release beat the camera eases back so the dust column and the tide are in frame.
+      const released = this.world.missions?.state.cureFront?.elapsed;
+      if (released !== undefined && released < 8 * 60) { const k = Math.min(1, released / 120); this.view.epilogueScale = 1 + 1.3 * k * k * (3 - 2 * k); }
       if (this.world.missions?.l10) {
         const target = this.world.missions.def.anchors['epilogue-camera-target'] ?? player.transform;
         this.view.pull(target.x, target.z, .4 * pull);

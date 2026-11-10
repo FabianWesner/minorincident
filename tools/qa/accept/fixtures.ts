@@ -201,7 +201,7 @@ export async function runFixtures(level: RunnerLevel, tier: Tier, sourceHash: st
       // A real civilian component supplies all fields expected by the production eligibility function.
       const followers: EntitySnapshot[] = Array.from({ length: 35 }, (_, i) => ({ ...structuredClone(specimen), id: 1000 + i, faction: 'civilian', infected: undefined, hidden: false,
         civilian: { state: 'calm', ambient: false, adult: true, pet: null, owner: null, variant: '', routine: '', waypoints: [], waypoint: 0, pauseUntil: 0, entered: 0, until: 0, downTicks: 0, eyesGlow: false, veins: 0, attacker: 0, threat: { x: 0, z: 0 }, path: [], goal: -1, pathIndex: 0, gore: false, knockedUntil: 0, survivor: { key: `fixture-${i}`, mode: 'follow', leader: 1, slot: i, cover: false, waitAt: 0, foundAt: 0 } } }));
-      const visible = followers.filter(e => barEligible(e, { x: 0, z: 0 }, false, true)).length;
+      const visible = followers.filter(e => barEligible(e, { x: 0, z: 0 }, false)).length;
       add('G-12', '35-follower production eligibility and cap', { eligible: visible, cap: String(followerBarCap) }, '35/35 eligible; no finite follower cap (pixels still unreviewed)', visible === 35 && followerBarCap >= 35);
     } finally { world.dispose(); }
   });

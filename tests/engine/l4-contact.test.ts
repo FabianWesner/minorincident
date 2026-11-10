@@ -298,7 +298,7 @@ test('L4: every contact archetype interrupts approach/lure and attacks within 3 
     const outbreak = world.npcs!.civilians.outbreak!;
     for (const model of ['npc.national-guard', 'npc.firefighter-alive', 'npc.civilian-man-a']) {
       const e = world.entities.get(outbreak.spawnPedestrian({ x: -16, z: 3 }, { model }))!;
-      outbreak.turnNow(e); e.transform.yaw = Math.PI;
+      outbreak.turnNow(e); e.transform.yaw = Math.PI; e.infected!.heardTargetId = 1;
       expect(barEligible(e, courier.transform, infectedDef(e.archetype).bar === true), `converted ${model} has a bar`).toBe(true);
       expect(world.combat!.damage.apply({ attackId: e.id, actionId: 'weapon.army-mg', sourceId: 1, targetId: e.id,
         origin: { x: e.transform.x + 3, z: e.transform.z }, direction: { x: -1, z: 0 }, base: 1, multiplier: 1, type: 'bullet', knockback: 0, stagger: 0 }), `converted ${model} takes flank damage`).toBeGreaterThan(0);
@@ -316,11 +316,39 @@ test('L4: every contact archetype interrupts approach/lure and attacks within 3 
     const contactOrigin = { ...courier.transform };
     const distantAlpha = world.entities.get(ai.spawn('infected.alpha', { x: courier.transform.x + 16, z: courier.transform.z }))!;
     const distantRunner = world.entities.get(ai.spawn('infected.runner', { x: courier.transform.x + 16, z: courier.transform.z }))!;
-    expect(barEligible(distantAlpha, courier.transform, infectedDef(distantAlpha.archetype).bar === true), 'healthy Alpha follows the shared 15 m cutoff').toBe(false);
+    expect(barEligible(distantAlpha, courier.transform, infectedDef(distantAlpha.archetype).bar === true), 'Alpha always keeps its mandatory bar').toBe(true);
     distantAlpha.health.current--;
     expect(barEligible(distantAlpha, courier.transform, infectedDef(distantAlpha.archetype).bar === true), 'damaged Alpha keeps its bar beyond 15 m').toBe(true);
-    expect(barEligible(distantRunner, courier.transform, infectedDef(distantRunner.archetype).bar === true), 'healthy ordinary infected follows the 15 m cutoff').toBe(false);
+    expect(barEligible(distantRunner, courier.transform, infectedDef(distantRunner.archetype).bar === true), 'unengaged ordinary infected has no bar').toBe(false);
+    distantRunner.health.current--;
+    expect(barEligible(distantRunner, courier.transform, true), 'ally-only damage does not reveal a bar').toBe(false);
+    for (const type of ['bullet', 'melee', 'explosive', 'status'] as const) {
+      delete distantRunner.infected!.hitByPlayer;
+      world.combat!.damage.apply({ attackId: 7, actionId: 'weapon.test', sourceId: 1, targetId: distantRunner.id,
+        origin: distantRunner.transform, direction: { x: 0, z: 0 }, base: .1, multiplier: 1, type, knockback: 0, stagger: 0 });
+      expect(distantRunner.infected!.hitByPlayer, type).toBe(true);
+      expect(barEligible(distantRunner, courier.transform, true), 'player hit survives distance').toBe(true);
+    }
+    const fire = world.entities.get(world.hazards!.ignitePatch(distantRunner.transform, 1, 2)!)!;
+    delete distantRunner.infected!.hitByPlayer;
+    world.combat!.damage.apply({ attackId: 8, actionId: 'hazard.fire', sourceId: fire.id, targetId: distantRunner.id,
+      origin: fire.transform, direction: { x: 0, z: 0 }, base: .1, multiplier: 1, type: 'status', knockback: 0, stagger: 0 });
+    expect(distantRunner.infected!.hitByPlayer, 'weapon ground fire retains player attribution').toBe(true);
+    expect(barEligible(soldier, courier.transform, false), 'following soldier always keeps a bar').toBe(!!soldier.civilian?.ally?.follow);
+    delete distantRunner.infected!.hitByPlayer;
+    distantRunner.transform.x = courier.transform.x + 3;
+    expect(barEligible(distantRunner, courier.transform, true), 'near idle zombie stays hidden').toBe(false);
+    distantRunner.infected!.heardTargetId = 1;
+    expect(barEligible(distantRunner, courier.transform, true), 'near courier target shows bar').toBe(true);
+    distantRunner.infected!.heardTargetId = soldier.id;
+    expect(barEligible(distantRunner, courier.transform, true), 'targeting an ally does not reveal a bar').toBe(false);
+    distantRunner.infected!.hitByPlayer = true;
+    distantRunner.health.current = 0;
+    expect(barEligible(distantRunner, courier.transform, true), 'dead player-hit zombie has no bar').toBe(false);
     ai.release(distantAlpha); ai.release(distantRunner);
+    const reused = world.entities.get(ai.spawn('infected.runner', { x: courier.transform.x + 20, z: courier.transform.z }))!;
+    expect(reused.infected!.hitByPlayer, 'pool reuse clears player-hit history').toBe(false);
+    ai.release(reused);
     // r26-l8hitreact: L8 boss hit reaction is render-only; chip stays visible for tiny hits, fades out, never passes the bar end.
     expect(bossChip(1, 0.95, 0, 64)).toBeGreaterThanOrEqual(bossChipMinPx);
     expect(bossChip(1, 0.9, bossChipHoldTicks + bossChipFadeTicks - 1, 64)).toBeLessThan(bossChip(1, 0.9, bossChipHoldTicks, 64));
@@ -334,6 +362,7 @@ test('L4: every contact archetype interrupts approach/lure and attacks within 3 
       world.solids.relocate(courier, contactOrigin, 'scripted.teleport');
       courier.health.current = courier.health.max;
       const e = world.entities.get(ai.spawn(archetype, { x: -17, z: 3.8 }, { yaw: Math.PI, ...(archetype === 'infected.alpha' ? { alphaType: 'brute' as const } : {}) }))!;
+      e.infected!.heardTargetId = 1;
       expect(barEligible(e, courier.transform, infectedDef(archetype).bar === true), `${archetype}: hostile live L4 spawn has a bar`).toBe(true);
       expect(e.health.max, `${archetype}: positive health`).toBeGreaterThan(0);
       const flankDamage = world.combat!.damage.apply({ attackId: world.tick + e.id, actionId: 'weapon.army-mg', sourceId: 1, targetId: e.id,
@@ -558,6 +587,7 @@ test('L4: every contact archetype interrupts approach/lure and attacks within 3 
         const e = w.entities.get(w.infected!.spawn(archetype, { x: -61.5, z: 51.5 }, { yaw: 0 }))!;
         if (scripted) e.infected!.scripted = { x: -62, z: 52 };
         expect(e.health.current, `${archetype} street arrival: positive HP`).toBeGreaterThan(0);
+        e.infected!.heardTargetId = 1;
         expect(barEligible(e, player.transform, infectedDef(archetype).bar === true), `${archetype} street arrival: bar eligible`).toBe(true);
         expect(w.combat!.damage.apply({ attackId: e.id + w.tick, actionId: 'weapon.army-mg', sourceId: 1, targetId: e.id,
           origin: { x: -64.5, z: 51.5 }, shotOrigin: { x: -64.5, z: 51.5 }, direction: { x: 1, z: 0 },

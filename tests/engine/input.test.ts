@@ -104,6 +104,14 @@ test('keyboard aim (Q-196): WASD/arrows follow the screen at every camera yaw; k
   const driving = c.sample();
   expect(c.input.scheme).toBe('mouse-only'); expect(driving.drive).toBeUndefined(); expect(driving.strafe).toBeUndefined(); expect(driving.left.held).toBe(true);
   c.pointerUp(); c.input.setDriving(false);
+  // Vehicle-relative car keys (PO 2026-11-10), independent of the camera azimuth: W gas, S brake/reverse, A = vehicle left (+steer), D = right.
+  c.input.release(); c.input.setDriving(true);
+  for (const [code, throttle, steer] of [['KeyW', 1, 0], ['KeyS', -1, 0], ['KeyA', 0, 1], ['KeyD', 0, -1], ['ArrowUp', 1, 0], ['ArrowDown', -1, 0], ['ArrowLeft', 0, 1], ['ArrowRight', 0, -1]] as const) {
+    c.key(code, true); const f = c.sample();
+    expect([f.drive?.throttle, f.drive?.steer], code).toEqual([throttle || 0, steer || 0]);
+    c.key(code, false); c.sample();
+  }
+  c.input.setDriving(false);
   let saved = JSON.stringify({ controlMode: 'classic' });
   const storage = { getItem: () => saved, setItem: (_: string, value: string) => { saved = value; } };
   const settings = new Settings(storage); expect('controlMode' in settings.value).toBe(false);

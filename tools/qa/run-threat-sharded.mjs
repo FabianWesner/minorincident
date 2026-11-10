@@ -2,12 +2,12 @@
 // workers, tools/qa/threat/stageJobs.ts), runs on its own runner under the unchanged 600 s test-budget, and the merge
 // below rebuilds the normal audit.json / LevelN.json / README.md from both stage sets, so the gate result is the same.
 //   node tools/qa/run-threat-sharded.mjs [--single] [extra threat-audit args]
-// --single: fall back to the one-runner path (tools/qa/run-threat-remote.mjs).
+// --single: run the audit locally without requiring remote runners.
 import { execFileSync, spawn, spawnSync } from 'node:child_process';
 
 const args = process.argv.slice(2);
 if (args.includes('--single')) {
-  const r = spawnSync('node', ['tools/qa/run-threat-remote.mjs', ...args.filter(a => a !== '--single')], { stdio: 'inherit' });
+  const r = spawnSync('node', ['--import', 'tsx/esm', 'tools/qa/threat-audit.ts', ...args.filter(a => a !== '--single')], { stdio: 'inherit' });
   process.exit(r.status ?? 1);
 }
 const git = (...a) => execFileSync('git', a, { encoding: 'utf8' }).trim();

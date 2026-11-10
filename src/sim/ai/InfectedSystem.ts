@@ -39,6 +39,8 @@ import type { InfectedState } from './types';
 export interface InfectedSpawn { cureRegion?: CureRegion; state?: InfectedState['state']; yaw?: number; variant?: string; alphaType?: AlphaType; pack?: number; packIndex?: number; perched?: boolean; birds?: number; /** L1 v2 speed tier; derived from the variant when omitted. */ tier?: InfectedSpeedTier; /** E32 Mega Alpha introduced in a non-resident region (no loaded nav to validate against). */ offNav?: boolean }
 const l1Ticks = (seconds: number) => Math.round(seconds * 60);
 const provokeTicks = 12 * 60;
+/** Focus bias (metres) a courier hit gives her over survivors for the provocation window. */
+const provokeFocusBiasM = 12, provokeEngageM = 8, provokeFocusTicks = 4 * 60;
 const hearingReactionTicks = 15, hearingTurnRadS = 14;
 const lungeActiveTicks = 30;
 /** Bound prediction so moving couriers cannot make an unbounded lunge. */
@@ -209,14 +211,33 @@ export class InfectedSystem {
   private provoke(target: EntitySnapshot, sourceId: number): void {
     const b = target.infected!, source = this.world.entities.get(sourceId);
     if (!source || target.health.current <= 0 || b.pursuit || source.infected || !this.partyMember(source)) return;
+    // r31-aggro (PO 11-10 L4: "I shot at this Zombie, but it's not attack me, actually turning away from me"): a hit from the courier
+    // outranks a director assignment and whoever the infected was chasing. Bites already break off through grabHits.
+    if (sourceId === 1) delete b.pressureTarget;
     if (b.pressureTarget && this.world.tick < b.pressureTarget.until && sourceId !== b.pressureTarget.id) return;
     // A marching breach cohort keeps its courier assignment when a defender
     // shoots it. Damage and stagger still apply; the shot cannot cancel entry.
     if (sourceId !== 1 && this.world.scenario === 'L4' && b.breachApproach && !b.l4FlankTarget) return;
     delete b.scripted; delete b.breachApproach;
     b.provoked = { id: source.id, until: this.world.tick + provokeTicks };
+    if (sourceId === 1 && b.l1 && this.engageCourier(target, b.l1, source)) return;
     // Active director pressure already owns this actor's attack move and target.
     if (b.l1 && !(b.l1.focusId && this.world.tick < (b.l1.focusUntil ?? 0))) this.rush(target.id, source.transform, b.provoked.until);
+  }
+  /** The shot human brain drops its survivor (or director focus), snaps toward the courier and chases her; a grab in contact is left to
+   * finish/break off through the rescue rule (grabHits), after which `closest` prefers her through the focus bias. */
+  private engageCourier(target: EntitySnapshot, brain: L1Brain, courier: EntitySnapshot): boolean {
+    const b = target.infected!, tick = this.world.tick;
+    // Only a close shot redirects (the PO case: 3 m); a far one keeps the level's authored flow (L3-11 attack rate) and the 12 s provocation.
+    if (Math.hypot(courier.transform.x - target.transform.x, courier.transform.z - target.transform.z) > provokeEngageM) return false;
+    const until = Math.min(b.provoked!.until, tick + provokeFocusTicks);
+    brain.focusId = 1; brain.focusUntil = until; brain.focusBiasM = provokeFocusBiasM;
+    if (brain.mode === 'bite' || b.state === 'attack' || b.specialAttack || brain.mode === 'chase' && brain.targetId === 1) return true;
+    brain.mode = 'chase'; b.state = 'chase'; brain.targetId = 1; brain.hasGoal = false; brain.distractionId = 0; brain.cueUntil = 0; brain.search.completeApproach = false;
+    brain.seenX = courier.transform.x; brain.seenZ = courier.transform.z; brain.seenTick = tick;
+    brain.looking = true; brain.lookYaw = -Math.atan2(courier.transform.z - target.transform.z, courier.transform.x - target.transform.x);
+    brain.pauseUntil = tick + 9; brain.hearingUntil = tick + 9; brain.ignoreId = 0; brain.ignoreUntil = 0;
+    return true;
   }
   private provoker(b: InfectedState): EntitySnapshot | undefined {
     const p = b.provoked; if (!p) return undefined;
@@ -271,7 +292,7 @@ export class InfectedSystem {
     Object.assign(entity.transform, position); entity.transform.y = perch?.y ?? .7 + (this.world.districts?.supportBelow(position.x, position.z, (position.y ?? .7) - .7) ?? 0); entity.transform.yaw = opts.yaw ?? 0;
     Object.assign(entity.combat!, { radius: def.radius, armor: 0, shield: def.special === 'shield', staggerUntil: 0, attacking: false, damageMultiplier: 1 }); entity.combat!.statuses.length = 0; delete entity.combat!.reaction;
     delete entity.combat!.shieldStress; delete entity.combat!.shieldBrokenAt; delete entity.combat!.shieldBrokenUntil;
-    Object.assign(entity.infected!, { state: opts.state ?? 'idle', heardTargetId: 0, pathGrid: -1, grabNextTick: 0, combo: 0, targetId: 0, activeUntil: 0, speed: def.speed, until: 0, cooldown: 0, attackId: 0, special: def.special, hidden: id === 'infected.cat', deadAt: -1, recoverAt: -1, downedAt: undefined, downs: 0, revived: false, reviveUsed: false, legLost: false, detached: false, pack: opts.pack ?? 0, packIndex: opts.packIndex ?? 0, birds: id === 'infected.crow' ? opts.birds ?? 20 : 0, scatterUntil: 0, variant: opts.variant ?? id, pathIndex: 0, pathRetryAt: 0, l4ArmyApproach: false, goal: -1, dx: 0, dz: 0, grabHits: 0, grabUntil: 0, grabX: 0, grabZ: 0, perched: opts.perched ?? id === 'infected.cat' }); entity.infected!.path.length = 0; if (entity.infected!.l1) entity.infected!.l1.directTick = -1; delete entity.infected!.birdMotion; delete entity.infected!.birdVertical;
+    Object.assign(entity.infected!, { hitByPlayer: false, state: opts.state ?? 'idle', heardTargetId: 0, pathGrid: -1, grabNextTick: 0, combo: 0, targetId: 0, activeUntil: 0, speed: def.speed, until: 0, cooldown: 0, attackId: 0, special: def.special, hidden: id === 'infected.cat', deadAt: -1, recoverAt: -1, downedAt: undefined, downs: 0, revived: false, reviveUsed: false, legLost: false, detached: false, pack: opts.pack ?? 0, packIndex: opts.packIndex ?? 0, birds: id === 'infected.crow' ? opts.birds ?? 20 : 0, scatterUntil: 0, variant: opts.variant ?? id, pathIndex: 0, pathRetryAt: 0, l4ArmyApproach: false, goal: -1, dx: 0, dz: 0, grabHits: 0, grabUntil: 0, grabX: 0, grabZ: 0, perched: opts.perched ?? id === 'infected.cat' }); entity.infected!.path.length = 0; if (entity.infected!.l1) entity.infected!.l1.directTick = -1; delete entity.infected!.birdMotion; delete entity.infected!.birdVertical;
     for (let bird = 0; bird < 20; bird++) { entity.infected!.birdAlive[bird] = Number(bird < entity.infected!.birds); entity.infected!.birdPositions[bird * 3] = position.x + Math.cos(bird * 2.399963) * 2; entity.infected!.birdPositions[bird * 3 + 1] = 3; entity.infected!.birdPositions[bird * 3 + 2] = position.z + Math.sin(bird * 2.399963) * 2; }
     if (id === 'infected.crow') entity.health.current = entity.health.max = entity.infected!.birds * INFECTED_TOUGHNESS;
     if (this.l1 && def.special === 'lunge') this.initL1(entity, opts.tier ?? l1SpeedTier(entity.infected!.variant)); else delete entity.infected!.l1;

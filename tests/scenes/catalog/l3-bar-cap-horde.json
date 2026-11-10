@@ -1,6 +1,6 @@
 {
  "name": "l3-bar-cap-horde",
- "note": "vqa-3 #4: 24 healthy infected inside 15 m of the courier on L3 (Maple Hardware, -112, 2) carry at most six bars, the L4 cap now applied on every level except L10. Before the fix all of them drew a bar slab over her.",
+ "note": "PO 2026-11-10 bar rule (shot or engaging the courier → bar; others none) supersedes the nearest-6 cap: 24 healthy infected, only those targeting/attacking her (≤ 14) carry a bar. Orig vqa-3 #4: 24 healthy infected inside 15 m of the courier on L3 (Maple Hardware, -112, 2) carry at most six bars, the L4 cap now applied on every level except L10. Before the fix all of them drew a bar slab over her.",
  "ground": "district",
  "time": "L3",
  "tier": 2,
@@ -230,7 +230,7 @@
  "sheet": 30,
  "expect": {
   "consoleErrors": 0,
-  "healthBarsMax": 6,
+  "healthBarsMax": 14,
   "healthBarsMin": 1
  }
 }

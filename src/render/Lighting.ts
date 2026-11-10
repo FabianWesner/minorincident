@@ -287,6 +287,8 @@ export class Lighting {
     this.fogColor.value.set(p.fog).lerp(this.dawnColor.set(dawn.fog), t);
     this.fogColorA.value.set(p.sky).lerp(this.dawnColor.set(dawn.sky), t);
     this.field.strength.value = (p.practical ?? 0) * (1 - t); this.nightThreat.value = 1 - t;
+    // r31-epilogue: the sunrise fills the shadows too (the closing shot read as night).
+    this.hemisphere.intensity = this.look.values.hemisphereIntensity * (1 + .7 * t);
     this.rim.value = (p.rim ?? 0) * (1 - t); this.roadLift.value = (p.roadLift ?? 0) * (1 - t);
     const grade = this.look.nodes, values = this.look.values;
     grade.gradeShadow.value.set(values.gradeShadow).lerp(this.dawnColor.set('#927b69'), t);

@@ -19,7 +19,8 @@ import { completeCampaignLevel, recordL8Transport } from '../../src/sim/progress
 import { commitCrossingHandover } from '../../src/sim/progression/crossingHandover';
 import { decodeSave, encodeSave, SaveStore, validateSave } from '../../src/sim/progression/Save';
 import { debugFlagEnabled } from '../../src/ui/debugFlag';
-import { levelTenMission } from '../../src/levels/L10/mission';
+import { loadLevel } from '../../tools/sim-runner/levels';
+import { cureHangarWeapons, levelTenMission } from '../../src/levels/L10/mission';
 
 const result = { time: 1, kills: 0, knockdowns: 0, damage: 0, deaths: 0, rescued: 0, optionalObjectives: [] };
 /** The slice of a world that completeCampaignLevel reads: the player's two racks and the selected action. */
@@ -35,7 +36,7 @@ test('L1–L10 starts clamp progressed saves and fresh handovers to story weapon
   expect(debugFlagEnabled(new URLSearchParams())).toBe(false);
   const bat = 'weapon.bat', axe = 'weapon.fire-axe', handgun = 'weapon.handgun', mg = 'weapon.army-mg', shotgun = 'weapon.shotgun', rifle = 'weapon.assault-rifle', rocket = 'weapon.rocket-launcher';
   // Expected story boundaries are independent of the production pickup declarations below.
-  const expected = [[], [bat], [bat,axe], [bat,axe,handgun], [bat,axe,handgun,mg], [bat,axe,handgun,mg,shotgun,rifle], [bat,axe,handgun,mg,shotgun,rifle], [bat,axe,handgun,mg,shotgun,rifle,rocket], [bat,axe,handgun,mg,shotgun,rifle,rocket], [axe]];
+  const expected = [[], [bat], [bat,axe], [bat,axe,handgun], [bat,axe,handgun,mg], [bat,axe,handgun,mg,shotgun,rifle], [bat,axe,handgun,mg,shotgun,rifle], [bat,axe,handgun,mg,shotgun,rifle,rocket], [bat,axe,handgun,mg,shotgun,rifle], [axe]];
   const pickups: Record<number, string[]> = { 1:[bat], 2:[l2WeaponPickup], 3:[l3WeaponPickup], 4:[l4.machineGun.id], 5:[...new Set([l5WeaponPickup, ...l5DroppedWeapons.map(p => p.actionId)])], 7:[l7Rocket.action] };
   const weapons = (racks: CampaignSave['racks']) => [...new Set([...racks.LEFT,...racks.RIGHT].filter(id => !['weapon.fists','weapon.kick'].includes(id) && catalog[id].category !== 'ability'))].sort();
   const fresh = newCampaign();
@@ -82,7 +83,7 @@ test('selection fallback: lost or empty weapons fall back to the best usable own
   const lost = preset('L8-default'); lost.selectedAction = 'weapon.shotgun';
   lost.ownedActions = lost.ownedActions.filter(id => id !== 'weapon.shotgun'); lost.racks.RIGHT = lost.racks.RIGHT.filter(id => id !== 'weapon.shotgun');
   const r = resume(lost, 9); restoreSelectedAction(r, lost);
-  expect(r.current(r.state.selectedSide).id).toBe('weapon.rocket-launcher');
+  expect(r.current(r.state.selectedSide).id).toBe('weapon.army-mg'); // the launcher is gone after the L8 gate
 
   const save = newCampaign(); save.ownedActions.push('weapon.bat', 'weapon.fire-axe', 'weapon.pistol', 'weapon.smg');
   const loadout = new Loadout(['weapon.bat', 'weapon.fire-axe'], ['weapon.pistol', 'weapon.smg']);
@@ -102,7 +103,7 @@ test('selection fallback: lost or empty weapons fall back to the best usable own
   expect(restoreSelectedAction(bottomless, mg)).toBe('weapon.army-mg');
 });
 
-test('bare hands are innate: key 1 selects fists without them entering the carried racks', () => {
+test('bare hands are innate: key 1 selects fists without them entering the carried racks; the L8 sanctuary gate takes the launcher', async () => {
   const save = preset('L8-default');
   expect([...save.racks.LEFT, ...save.racks.RIGHT]).not.toContain('weapon.fists');
   const live = campaignLoadout(save, 8), input = new Loadout(live.LEFT, live.RIGHT, undefined, live.size);
@@ -111,6 +112,26 @@ test('bare hands are innate: key 1 selects fists without them entering the carri
   expect(input.current(input.state.selectedSide).id).toBe('weapon.fists');
   save.selectedAction = 'weapon.fists';
   expect(restoreSelectedAction(resume(save, 8), save)).toBe('weapon.rocket-launcher');
+  // PO 2026-11-10: the launcher arrives at L8 but the gate soldier collects it; L9 never offers it, even to an older save still carrying it.
+  const rocket = 'weapon.rocket-launcher', stale = preset('L8-default');
+  expect(campaignLoadout(stale, 8).RIGHT).toContain(rocket);
+  expect(campaignLoadout(stale, 9).RIGHT).not.toContain(rocket);
+  stale.selectedAction = rocket; stale.completedLevels = 7;
+  completeCampaignLevel(stale, 8, result, fakeWorld(stale.racks, rocket));
+  expect([...stale.racks.LEFT, ...stale.racks.RIGHT, ...stale.ownedActions, stale.selectedAction]).not.toContain(rocket);
+  expect(validateSave(stale)).toBe(true); expect(decodeSave(JSON.stringify(stale)).status).toBe('ok');
+  expect([...preset('L9-default').racks.RIGHT, ...preset('L9-default').ownedActions]).not.toContain(rocket);
+  expect(cureHangarWeapons).toContain(rocket);
+  const world = await loadLevel('L8', 1, preset('L8-default'), 0, { quality: 'low' }), lines: string[] = [];
+  try {
+    // The level start runs the gate beat: the soldier's line first, the HUD line naming the weapon four seconds later.
+    expect(world.missions!.state.subtitle?.id).toBe('L8.gate-soldier');
+    world.events.on('dialogue.line', event => { if (event.type === 'dialogue.line') lines.push(event.id); });
+    for (let i = 0; i < 5 * 60; i++) world.update();
+    expect(world.entities.get(1)!.weapons!.RIGHT.rack.map(s => s.id)).not.toContain(rocket);
+    expect(world.progression!.campaign!.ownedActions).not.toContain(rocket);
+    expect(lines).toContain('L8.gate-toast');
+  } finally { world.dispose?.(); }
 });
 
 test('save decoding: presets round-trip, v0 migrates, corrupt/unknown data and storage errors fail safely', () => {
