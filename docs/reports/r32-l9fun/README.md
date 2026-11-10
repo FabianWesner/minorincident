@@ -156,4 +156,4 @@ What I saw in the opened frames:
 - Check that nothing pops in. Set pieces are admitted ≥ 105 m away; the proof's admission violations were 0.
 
 ## Commits
-be46100e, 918e6e81, ebec1b56, (r28 tool) …, 0d7d37c1 (stall timing), e7f0d2f0, f5b07f70 (boost/smash/wrecks), 844c52bf (stall ambush), bay-approach bot, merges of main. See `git log main..HEAD`.
+be46100e set pieces, ramps, risky bot, timeline probe · 918e6e81 leaper cling/tuning, tanker near miss, jump camera · ebec1b56 test + bot (tanker, MG/shotgun) · 88c6b368 fixture-play car keys + event shots · 1552ebf9 stall timing · e7f0d2f0 test fix · f5b07f70 boost strips, smash clusters, wreck pile · 844c52bf rail-stall ambush · 32a8b54f bot bay approach · d549b9ca report; plus merges of main.
