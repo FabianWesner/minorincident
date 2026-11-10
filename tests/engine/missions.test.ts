@@ -177,6 +177,17 @@ test('interactions: ring, input and view predicates agree for every interact ste
         expect(house.ids).toHaveLength(6);
         expect(first.size).toBe(6);
         for (const [id, out] of first) expect(out, `resident ${id} first admitted behind door`).toBeLessThanOrEqual(.05);
+        // r26-l8follow: a body pinned on its authored service route (a fallen pen panel at the pond) used to keep `emerging`
+        // for the whole fight (the zebra carrier sat at (-11, -27) for 74 s). It now hands over to the AI after ~1.5 s.
+        levelWorld.solids.setBarrier('test.fallen-panel', { x: -11.4, y: .3, z: -25.4, halfX: 1.4, halfY: .35, halfZ: 1.2 });
+        const pinned = { ...source, ids: [] as number[], walking: [] };
+        const stuck = emergeResident(levelWorld, pinned, levelWorld.tick);
+        const released: number[] = [];
+        for (let frame = 0; frame < 60 * 40 && !released.includes(stuck); frame++) { released.push(...walkResidents(levelWorld, pinned, levelWorld.tick)); levelWorld.update(); }
+        levelWorld.solids.setBarrier('test.fallen-panel', null);
+        expect(released, 'a resident pinned on the service route is handed to the AI').toContain(stuck);
+        expect(levelWorld.entities.get(stuck)!.emerging).toBeUndefined();
+        expect(levelWorld.entities.get(stuck)!.transform.z, 'it stopped at the panel, not past it').toBeLessThan(-26);
         // Settling before the alarm chooses the real boarding destination;
         // later hull nudges must not drag a fixed objective around the map.
         const zoo = mission.l8!, car = levelWorld.entities.get(zoo.state.carId)!;
