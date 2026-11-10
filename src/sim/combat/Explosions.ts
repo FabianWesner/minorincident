@@ -64,7 +64,7 @@ export class Explosions {
     if (opts.damage !== false || opts.actionId) this.world.destruction?.blast(opts.actionId ?? id, at, r, d.damage * (opts.multiplier ?? 1), d.impulse);
     this.queueImpulses(d, at, r);
     if (d.class === 'large' && this.world.vehicles?.cars.has(sourceId)) this.detachParts(sourceId);
-    if (opts.fires !== false) this.ignite(d, at, r);
+    if (opts.fires !== false) this.ignite(d, at, r, sourceId);
     if (d.gas) this.world.hazards?.spawn(d.gas.kind, at, { radius: r, duration: d.gas.seconds });
     const player = this.world.entities.get(1);
     if (d.slowMo && player && player.health.current > 0 && Math.hypot(player.transform.x - at.x, player.transform.z - at.z) <= d.slowMo.within)
@@ -227,14 +227,14 @@ export class Explosions {
     }
   }
   /** Aftermath fires: E11 fire hazards that damage, ignite flammables, spread once and burn out. */
-  private ignite(d: ExplosionDef, at: { x: number; z: number }, r: number): void {
+  private ignite(d: ExplosionDef, at: { x: number; z: number }, r: number, sourceId: number): void {
     const hazards = this.world.hazards; if (!hazards || !d.fires.count) return;
     let active = 0;
     for (const e of this.world.entities.iterate()) if (e.hazard?.kind === 'fire' && this.world.tick < e.hazard.activeUntil) active++;
     const phase = (this.world.tick % 17) * .37;
     for (let i = 0; i < d.fires.count && active < MAX_FIRES; i++, active++) {
       const angle = phase + i * Math.PI * 2 / d.fires.count, distance = r * (.18 + .12 * (i % 2));
-      hazards.spawn('fire', { x: at.x + Math.cos(angle) * distance, z: at.z + Math.sin(angle) * distance }, { radius: d.fires.radius, duration: d.fires.seconds, spread: d.fires.spread });
+      hazards.spawn('fire', { x: at.x + Math.cos(angle) * distance, z: at.z + Math.sin(angle) * distance }, { radius: d.fires.radius, duration: d.fires.seconds, spread: d.fires.spread, playerDamageSource: sourceId === 1 || !!this.world.entities.get(sourceId)?.playerDamageSource });
     }
   }
   /** Fire count for the spread cap (shared with Hazards). */

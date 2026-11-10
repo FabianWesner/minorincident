@@ -19,7 +19,7 @@ export interface Hazard { kind: HazardKind; radius: number; fuseAt: number; expl
   /** E27 fires: remaining spread generations and the tick the fire spreads once (half its life). */
   spread?: number; spreadAt?: number }
 export interface Destructible { kind: DestructibleKind | 'fuel-trail'; flammable: boolean; exposure: number; burnTime: number; burningUntil: number; broken: boolean }
-export interface HazardOptions { hp?: number; radius?: number; burnTime?: number; halfX?: number; halfZ?: number; duration?: number; spread?: number }
+export interface HazardOptions { hp?: number; radius?: number; burnTime?: number; halfX?: number; halfZ?: number; duration?: number; spread?: number; playerDamageSource?: boolean }
 /** E11 hazard triggers/damage; E27 consumes arming/blast events for richer effects. */
 export class Hazards {
   readonly debris: DebrisPool;
@@ -51,6 +51,7 @@ export class Hazards {
       || [opts.hp ?? 1, opts.radius ?? 1, opts.burnTime ?? 1, opts.halfX ?? .5, opts.halfZ ?? .15, opts.duration ?? 1].some(n => n <= 0)) throw new RangeError('Invalid hazard');
     const isProp = (destructibleKinds as readonly string[]).includes(kind), hp = opts.hp ?? (kind === 'propane' || kind === 'barrel' ? 20 : kind === 'car-alarm' ? 1000 : 60);
     const e = this.world.entities.create({ kind: isProp ? 'prop' : 'hazard', archetype: `${isProp ? 'prop' : 'hazard'}.${kind}`, faction: 'environment', health: { current: hp, max: hp }, transform: { ...pos, y: .7, yaw: 0 } });
+    e.playerDamageSource = opts.playerDamageSource;
     if (kind === 'fire') opts = { ...opts, duration: (opts.duration ?? 30) * (this.world.weather?.modifiers.fireDuration ?? 1) };
     if (!isProp) e.hazard = { kind: kind as HazardKind, radius: opts.radius ?? (kind === 'propane' || kind === 'barrel' ? 5 : kind === 'car-alarm' ? 20 : 2), fuseAt: 0, exploded: false, activeUntil: kind === 'fire' || kind === 'toxic' || kind === 'tear-gas' || kind === 'live-wire' ? this.world.tick + Math.ceil((opts.duration ?? 30) * 60) : 0, leaked: false };
     if (kind === 'fire' && opts.spread) { e.hazard!.spread = opts.spread; e.hazard!.spreadAt = this.world.tick + Math.ceil((opts.duration ?? 30) * 30); }
@@ -72,11 +73,12 @@ export class Hazards {
       if (h.activeUntil <= this.world.tick) { if (h.fuelPatch) reusable ??= e; continue; }
       fires++;
       if (Math.hypot(e.transform.x - position.x, e.transform.z - position.z) <= Math.max(radius, h.radius) * .7) {
-        h.activeUntil = Math.max(h.activeUntil, until); return e.id;
+        h.activeUntil = Math.max(h.activeUntil, until); e.playerDamageSource = true; return e.id;
       }
     }
     if (fires >= Explosions.maxFires) return null;
     const e = reusable ?? this.world.entities.get(this.spawn('fire', position, { radius, duration }))!;
+    e.playerDamageSource = true;
     e.hazard!.fuelPatch = true; e.hazard!.radius = radius; e.hazard!.activeUntil = until;
     e.transform.x = position.x; e.transform.z = position.z; this.world.spatial.set(e.id, position.x, position.z);
     return e.id;
@@ -152,14 +154,14 @@ export class Hazards {
     this.world.explosions!.blast(hazardExplosions[h.kind], e.transform, { sourceId: e.id, radius: h.radius });
   }
   /** Shared spread path for persistent weapon zones and aftermath fires. */
-  spreadFire(position: Vec2, radius: number, duration: number, generations: number, sourceId: number): number | null {
+  spreadFire(position: Vec2, radius: number, duration: number, generations: number, sourceId: number, playerDamageSource = false): number | null {
     let count = 0;
     for (const e of this.world.entities.iterate()) if (e.hazard?.kind === 'fire' && this.world.tick < e.hazard.activeUntil) count++;
     if (count >= Explosions.maxFires) return null;
     const weather = this.world.weather, windy = (weather?.modifiers.fireSpread ?? 1) > 1;
     const angle = windy ? Math.atan2(weather!.wind.z, weather!.wind.x) + Math.sin(sourceId * 2.399963) * .8 : sourceId * 2.399963;
     const step = radius * 1.4 * (weather?.modifiers.fireSpread ?? 1);
-    return this.spawn('fire', { x: position.x + Math.cos(angle) * step, z: position.z + Math.sin(angle) * step }, { radius: radius * .85, duration, spread: generations });
+    return this.spawn('fire', { x: position.x + Math.cos(angle) * step, z: position.z + Math.sin(angle) * step }, { radius: radius * .85, duration, spread: generations, playerDamageSource });
   }
   snapshot() { return { blastTicks: [...this.blastTicks], blastCursor: this.blastCursor }; }
   update(): void {
@@ -172,7 +174,7 @@ export class Hazards {
     for (const e of this.spreading) {
       if (fires++ >= Explosions.maxFires) break;
       const h = e.hazard!;
-      this.spreadFire(e.transform, h.radius, (h.activeUntil - tick) / 60 + 4, h.spread! - 1, e.id);
+      this.spreadFire(e.transform, h.radius, (h.activeUntil - tick) / 60 + 4, h.spread! - 1, e.id, !!e.playerDamageSource);
     }
     for (const e of this.world.entities.iterate()) {
       if (e.noiseTarget && tick >= e.noiseTarget.until) delete e.noiseTarget;

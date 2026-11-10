@@ -6,6 +6,8 @@ export interface Transform { x: number; y: number; z: number; yaw: number }
 export interface EntitySnapshot {
   /** A placement-owned destruction model owns HP/parts; the existing prop body still owns motion. */
   environmentObject?: string;
+  /** Player attribution retained by secondary hazards and chain explosions. */
+  playerDamageSource?: boolean;
   id: number;
   /** Unsafe admission retains its identity and slot until a radius-aware placement succeeds. */
   pendingAdmission?: Transform & { writer: string; hidden?: boolean; range?: number; navigation?: boolean; colliderEnabled?: boolean; graceTicks?: number };

@@ -56,7 +56,7 @@ export class ActionEffects {
         }
       } else if (zone.kind === 'fire') {
         if (!zone.spreadDone && this.world.tick >= zone.created + (zone.expires - zone.created) / 2) {
-          zone.spreadDone = true; this.world.hazards?.spreadFire(zone, zone.radius, (zone.expires - this.world.tick) / 60, 0, zone.attack.id);
+          zone.spreadDone = true; this.world.hazards?.spreadFire(zone, zone.radius, (zone.expires - this.world.tick) / 60, 0, zone.attack.id, zone.attack.sourceId === 1);
         }
         const pulse = this.world.tick >= zone.nextPulse;
         for (const entity of this.world.entities.iterate()) if (entity.faction === 'infected' && entity.health.current > 0 && this.contains(zone, entity.transform) && zone.attack.def.status && (pulse || !entity.combat?.statuses.some((s) => s.kind === 'burning'))) this.world.combat!.status.apply(entity, zone.attack.def.status, zone.attack.sourceId, zone.attack.def.id);
