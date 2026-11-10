@@ -353,3 +353,7 @@ A living record, updated after every lane or experiment. Short entries with evid
 - **Watch:** a wave spawned on the same tick the arena clear check runs must skip that check (stale `live`/`pendingTurns`).
 - **Night blobs:** the figure fill value (CrowdView `figureFill`) must be 0.25 for any dark-coated boss, not only Alphas; the Mega and the L8 animals shared this cause.
 - **Didn't work (orchestrator, 11-11 00:05):** `pkill -f threat-audit.ts` / `pkill -f scenelab/gate-run` to stop my own gate also hit lanes' runs (same command line). Stop only my own task (TaskStop / the PID I started), never pattern-kill shared tools.
+
+### 2026-11-10 — r32-alphas (per-type Alpha moves, Opus)
+- **Found:** library clips are rotations in each bone's rest frame, authored for the arms-down library rest. The Alpha rig's rest is a hunched stance with arms bent out (identity joint rotations, the shape lives in the joint offsets), so library deltas swung its arms backwards: the shared `windup` straightened Alphas up instead of coiling them. The first hand-authored Euler keys did the same (baked hand moved 0.37 m backwards on the "rake").
+- **Apply:** author non-library rigs on the rig itself (directions + leg IK from its rest offsets, `alphaMoveClips.ts`) and assert baked joint positions (hand forward, fists overhead, hip drop) in a unit test before opening Scene Lab. A clip that only changes timing or a lean layer does not read at game zoom 1.5; whole-body poses do.

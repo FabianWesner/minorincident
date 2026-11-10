@@ -1,6 +1,6 @@
 import { Euler, Matrix4, Quaternion, Vector3, type BufferGeometry } from 'three';
 import type { CrowdClip } from '../../assets/crowd';
-import { civilianClips, framesPerClip, infectedClips } from './crowdClipNames';
+import { alphaCrowdClips, civilianClips, framesPerClip, infectedClips } from './crowdClipNames';
 import { premultiplyRow, skinnedVertexMatrix } from './skinnedCrowd';
 
 /**
@@ -54,7 +54,7 @@ const limbs = [['armL', 'foreArmL', 'handL', 'arm', 1], ['armR', 'foreArmR', 'ha
 export function repairDeathPoses(clip: CrowdClip, geometry?: BufferGeometry, options: { prone?: boolean } = {}): boolean {
   const prone = !!options.prone, done = repaired.get(clip);
   if (done) return done.prone === prone;
-  const names: readonly string[] | undefined = [infectedClips, civilianClips].find(list => list.length * framesPerClip === clip.frames);
+  const names: readonly string[] | undefined = [infectedClips, alphaCrowdClips, civilianClips].find(list => list.length * framesPerClip === clip.frames);
   if (!names || !clip.binds) return false;
   const P = clip.parts.length, index = Object.fromEntries(clip.parts.map((name, i) => [name, i])) as Record<string, number>;
   if (humanoid.some(name => index[name] === undefined)) return false;

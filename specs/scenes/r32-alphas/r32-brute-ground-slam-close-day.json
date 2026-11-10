@@ -1,0 +1,61 @@
+{
+ "name": "r32-brute-ground-slam-close-day",
+ "note": "r32-alphas: brute Alpha, alpha.ground-slam; courier god mode at the origin; close-day.",
+ "seed": 3,
+ "ground": "asphalt",
+ "size": 40,
+ "time": "L4",
+ "dof": false,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "loadout": [
+    "weapon.bat",
+    "weapon.army-mg"
+   ]
+  },
+  {
+   "id": "z",
+   "kind": "infected",
+   "archetype": "infected.alpha",
+   "at": [
+    3,
+    0
+   ],
+   "yaw": 180,
+   "state": "idle",
+   "alphaType": "brute"
+  }
+ ],
+ "script": [
+  {
+   "frame": 0,
+   "actor": "z",
+   "do": {
+    "special": "alpha.ground-slam",
+    "target": "courier"
+   }
+  }
+ ],
+ "camera": {
+  "mode": "close",
+  "target": [
+   1.7999999999999998,
+   1.1,
+   0
+  ],
+  "radius": 9,
+  "azimuth": 0
+ },
+ "frames": 200,
+ "trace": true,
+ "expect": {
+  "consoleErrors": 0
+ }
+}

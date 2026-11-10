@@ -57,7 +57,11 @@ for (const [move, caption, duration] of [['monkey.grab', 'Monkey reaching: melee
   cue(`telegraph.${move}`, 'telegraph', move === 'gorilla.roar' || move === 'zebra.stampede' ? 'step' : 'vocal', duration, 140, { gain: .6, caption, rateSpread: 0, antiSpam: 0 });
 }
 // Reuse shipped telegraph recordings for the new humanoid Alpha moves.
-for (const move of ['alpha.grab-human', 'alpha.living-missile', 'alpha.barrage']) telegraphCues[move] = telegraphCues['alpha.grab-throw'];
+// r32-alphas: one sound family per Alpha type. Brute: its bellow (charge, grab) and a ground thud for the slam; Thrower: the
+// heave grunt for every throw; Screamer: the inhale; Leaper: the pounce growl; Armoured: the shield step.
+for (const move of ['alpha.living-missile', 'alpha.barrage']) telegraphCues[move] = telegraphCues['alpha.grab-throw'];
+telegraphCues['alpha.charge'] = telegraphCues['alpha.grab-human'] = 'telegraph.brute';
+telegraphCues['alpha.ground-slam'] = telegraphCues['gorilla.pound'];
 telegraphCues['alpha.pounce'] = telegraphCues['lion.pounce'];
 telegraphCues['alpha.shield-bash'] = telegraphCues['infected.riot'];
 cue('screamer.scream', 'telegraph', 'vocal', 1.2, 700, { gain: 0.65, caption: 'Screamer shrieking', antiSpam: 0.3, rateSpread: 0 });

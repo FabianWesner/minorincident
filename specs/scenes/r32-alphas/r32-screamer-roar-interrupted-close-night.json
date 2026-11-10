@@ -1,0 +1,70 @@
+{
+ "name": "r32-screamer-roar-interrupted-close-night",
+ "note": "r32-alphas: screamer Alpha, roar-interrupted; courier god mode at the origin; close-night.",
+ "seed": 3,
+ "ground": "asphalt",
+ "size": 40,
+ "time": "night",
+ "dof": false,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "loadout": [
+    "weapon.bat",
+    "weapon.army-mg"
+   ]
+  },
+  {
+   "id": "z",
+   "kind": "infected",
+   "archetype": "infected.alpha",
+   "at": [
+    4,
+    0
+   ],
+   "yaw": 180,
+   "state": "idle",
+   "alphaType": "screamer"
+  }
+ ],
+ "script": [
+  {
+   "frame": 0,
+   "actor": "z",
+   "do": {
+    "special": "alpha.roar",
+    "target": "courier"
+   }
+  },
+  {
+   "frame": 22,
+   "actor": "courier",
+   "do": {
+    "attack": "z",
+    "seconds": 0.4,
+    "side": "RIGHT"
+   }
+  }
+ ],
+ "camera": {
+  "mode": "close",
+  "target": [
+   2.4,
+   1.1,
+   0
+  ],
+  "radius": 9,
+  "azimuth": 0
+ },
+ "frames": 160,
+ "trace": true,
+ "expect": {
+  "consoleErrors": 0
+ }
+}

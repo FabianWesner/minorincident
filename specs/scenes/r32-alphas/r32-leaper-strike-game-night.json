@@ -1,0 +1,56 @@
+{
+ "name": "r32-leaper-strike-game-night",
+ "note": "r32-alphas: leaper Alpha, strike; courier god mode at the origin; game-night.",
+ "seed": 3,
+ "ground": "asphalt",
+ "size": 40,
+ "time": "night",
+ "dof": false,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "loadout": [
+    "weapon.bat",
+    "weapon.army-mg"
+   ]
+  },
+  {
+   "id": "z",
+   "kind": "infected",
+   "archetype": "infected.alpha",
+   "at": [
+    3.2,
+    0
+   ],
+   "yaw": 180,
+   "state": "idle",
+   "alphaType": "leaper"
+  }
+ ],
+ "script": [
+  {
+   "frame": 10,
+   "actor": "z",
+   "do": "chase"
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   1.92,
+   0
+  ],
+  "zoom": 1.5
+ },
+ "frames": 200,
+ "trace": true,
+ "expect": {
+  "consoleErrors": 0
+ }
+}
