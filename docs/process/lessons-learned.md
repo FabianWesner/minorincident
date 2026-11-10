@@ -339,6 +339,19 @@ A living record, updated after every lane or experiment. Short entries with evid
 - **Found:** the restart was the player's parking spot with the chasing bus alongside, and Continue froze the APC for 2.5 min: the L9 resume path (`LevelNineCrash.prepare`) restored absolute ticks into a tick-0 world (`impactStallUntil` 8890). Probe the resumed vehicle with real throttle (speed stayed 0.00) before judging "bot cannot steer around the bus".
 - **Apply:** any resume/restore path rebases every absolute tick it loads (vehicles, infected, lights); put "can it move / act within 5 s of restore" in the restore test. A checkpoint that snapshots where the player happened to stop needs an authored safe pose, not just a clear-threat pass.
 
+### 2026-11-10 — Sol at --effort low (orchestrator)
+- **Didn't work:** Sol 6.1 at `--effort low` (PO setting) ended its turn after investigating (s31-healthbars: 0 code changes; s31-zerodrift: half the brief). **Apply:** submit low-effort Sol lanes in goal mode (`--goal "<done criteria>"`, max-turns 12) so the job keeps working until the criteria hold.
+
+### 2026-11-10 — L8 bosses flat at night shipped (PO: "How could this pass QA?")
+- **Didn't work:** every L8 boss Scene Lab spec uses `"time": "L1"`/`"L4"` (daylight); the CrowdView night-figure fill that flattens big bodies only applies under the L8 zoo night preset, so the gate always saw them lit. r26-vqa reported "gorilla and elephant show as a flat pale-grey cut-out"; the orchestrator attributed it to the hit flash, fixed the flash and verified only the elephant under a lamp — never the lion/gorilla at night without fire. Real-play QA never reached the lion/gorilla arenas (10-min cap, no fixtures until 11-10).
+- **Apply:** boss/creature visual checks run in the level's real lighting preset (L8-zoo night), not a neutral preset; when a QA report names several bodies, verify every named body before closing it; gate rows for every L8 animal at night with an automatic flat-silhouette metric (luminance variance inside the figure mask).
+
+## 2026-11-10: r31-flamingo (L8 animal bosses)
+- **Worked:** size boss HP from measured per-hit damage (one probe shot per weapon through the real pipeline), not from the boss's old HP. Bullet-sponge HP (780 per bird, 6000 gorilla) was the PO's complaint; the flock's threat is its numbers, so extra flights (not HP) lengthen the fight.
+- **Didn't work:** lengthening the fight with more flamingos alone: 26 solid bird corpses walled the courier in (bot idle 1000 s on seeds 4/5). Dead bodies persist, so any "more enemies" change needs a corpse-solidity check, not only a kill-time check.
+- **Watch:** a boss damage probe that can kill the boss changes arena gates/phases for the next probe (gorilla hits vanished). Probe with a huge HP pool and assert on per-hit damage.
+- **Watch:** a wave spawned on the same tick the arena clear check runs must skip that check (stale `live`/`pendingTurns`).
+- **Night blobs:** the figure fill value (CrowdView `figureFill`) must be 0.25 for any dark-coated boss, not only Alphas; the Mega and the L8 animals shared this cause.
 ### 2026-11-10 — r32-alphas (per-type Alpha moves, Opus)
 - **Found:** library clips are rotations in each bone's rest frame, authored for the arms-down library rest. The Alpha rig's rest is a hunched stance with arms bent out (identity joint rotations, the shape lives in the joint offsets), so library deltas swung its arms backwards: the shared `windup` straightened Alphas up instead of coiling them. The first hand-authored Euler keys did the same (baked hand moved 0.37 m backwards on the "rake").
 - **Apply:** author non-library rigs on the rig itself (directions + leg IK from its rest offsets, `alphaMoveClips.ts`) and assert baked joint positions (hand forward, fists overhead, hip drop) in a unit test before opening Scene Lab. A clip that only changes timing or a lean layer does not read at game zoom 1.5; whole-body poses do.

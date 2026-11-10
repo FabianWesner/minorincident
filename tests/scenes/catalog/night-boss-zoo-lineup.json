@@ -1,0 +1,344 @@
+{
+  "name": "night-boss-zoo-lineup",
+  "note": "All seven L8 bosses and night controls; separate projected crops and checks for every actor. Idle f0, walking f30, hit f60.",
+  "seed": 30,
+  "ground": "sidewalk",
+  "time": "L8-zoo",
+  "size": 80,
+  "dof": false,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        20,
+        20
+      ],
+      "god": true
+    },
+    {
+      "id": "flamingo",
+      "kind": "infected",
+      "archetype": "infected.flamingo",
+      "at": [
+        -1.414213562373095,
+        7.071067811865475
+      ],
+      "yaw": 0,
+      "state": "idle"
+    },
+    {
+      "id": "zebra",
+      "kind": "infected",
+      "archetype": "infected.zebra",
+      "at": [
+        2.82842712474619,
+        2.82842712474619
+      ],
+      "yaw": 0,
+      "state": "idle"
+    },
+    {
+      "id": "monkey",
+      "kind": "infected",
+      "archetype": "infected.monkey",
+      "at": [
+        7.071067811865475,
+        -1.414213562373095
+      ],
+      "yaw": 0,
+      "state": "idle"
+    },
+    {
+      "id": "lion",
+      "kind": "infected",
+      "archetype": "infected.lion",
+      "at": [
+        -4.242640687119285,
+        4.242640687119285
+      ],
+      "yaw": 0,
+      "state": "idle"
+    },
+    {
+      "id": "lioness",
+      "kind": "infected",
+      "archetype": "infected.lioness",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 0,
+      "state": "idle"
+    },
+    {
+      "id": "gorilla",
+      "kind": "infected",
+      "archetype": "infected.gorilla",
+      "at": [
+        4.242640687119285,
+        -4.242640687119285
+      ],
+      "yaw": 0,
+      "state": "idle"
+    },
+    {
+      "id": "elephant",
+      "kind": "infected",
+      "archetype": "infected.elephant",
+      "at": [
+        -7.071067811865475,
+        1.414213562373095
+      ],
+      "yaw": 0,
+      "state": "idle"
+    },
+    {
+      "id": "dog",
+      "kind": "infected",
+      "archetype": "infected.dog",
+      "at": [
+        -2.82842712474619,
+        -2.82842712474619
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "regular",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        1.414213562373095,
+        -7.071067811865475
+      ],
+      "state": "idle"
+    }
+  ],
+  "script": [
+    {
+      "frame": 20,
+      "actor": "flamingo",
+      "do": {
+        "chase": "courier"
+      }
+    },
+    {
+      "frame": 20,
+      "actor": "zebra",
+      "do": {
+        "chase": "courier"
+      }
+    },
+    {
+      "frame": 20,
+      "actor": "monkey",
+      "do": {
+        "chase": "courier"
+      }
+    },
+    {
+      "frame": 20,
+      "actor": "lion",
+      "do": {
+        "chase": "courier"
+      }
+    },
+    {
+      "frame": 20,
+      "actor": "lioness",
+      "do": {
+        "chase": "courier"
+      }
+    },
+    {
+      "frame": 20,
+      "actor": "gorilla",
+      "do": {
+        "chase": "courier"
+      }
+    },
+    {
+      "frame": 20,
+      "actor": "elephant",
+      "do": {
+        "chase": "courier"
+      }
+    },
+    {
+      "frame": 31,
+      "actor": "flamingo",
+      "do": {
+        "idle": true
+      }
+    },
+    {
+      "frame": 31,
+      "actor": "zebra",
+      "do": {
+        "idle": true
+      }
+    },
+    {
+      "frame": 31,
+      "actor": "monkey",
+      "do": {
+        "idle": true
+      }
+    },
+    {
+      "frame": 31,
+      "actor": "lion",
+      "do": {
+        "idle": true
+      }
+    },
+    {
+      "frame": 31,
+      "actor": "lioness",
+      "do": {
+        "idle": true
+      }
+    },
+    {
+      "frame": 31,
+      "actor": "gorilla",
+      "do": {
+        "idle": true
+      }
+    },
+    {
+      "frame": 31,
+      "actor": "elephant",
+      "do": {
+        "idle": true
+      }
+    },
+    {
+      "frame": 55,
+      "actor": "flamingo",
+      "do": {
+        "hit": {
+          "from": [
+            -2.1213203435596424,
+            7.7781745930520225
+          ],
+          "heavy": true,
+          "amount": 1
+        }
+      }
+    },
+    {
+      "frame": 55,
+      "actor": "zebra",
+      "do": {
+        "hit": {
+          "from": [
+            2.1213203435596424,
+            3.5355339059327373
+          ],
+          "heavy": true,
+          "amount": 1
+        }
+      }
+    },
+    {
+      "frame": 55,
+      "actor": "monkey",
+      "do": {
+        "hit": {
+          "from": [
+            6.363961030678928,
+            -0.7071067811865475
+          ],
+          "heavy": true,
+          "amount": 1
+        }
+      }
+    },
+    {
+      "frame": 55,
+      "actor": "lion",
+      "do": {
+        "hit": {
+          "from": [
+            -4.949747468305833,
+            4.949747468305833
+          ],
+          "heavy": true,
+          "amount": 1
+        }
+      }
+    },
+    {
+      "frame": 55,
+      "actor": "lioness",
+      "do": {
+        "hit": {
+          "from": [
+            -0.7071067811865475,
+            0.7071067811865475
+          ],
+          "heavy": true,
+          "amount": 1
+        }
+      }
+    },
+    {
+      "frame": 55,
+      "actor": "gorilla",
+      "do": {
+        "hit": {
+          "from": [
+            3.5355339059327373,
+            -3.5355339059327373
+          ],
+          "heavy": true,
+          "amount": 1
+        }
+      }
+    },
+    {
+      "frame": 55,
+      "actor": "elephant",
+      "do": {
+        "hit": {
+          "from": [
+            -7.7781745930520225,
+            2.1213203435596424
+          ],
+          "heavy": true,
+          "amount": 1
+        }
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1.5
+  },
+  "frames": 60,
+  "sheet": 30,
+  "flatSilhouette": {
+    "actors": [
+      "flamingo",
+      "zebra",
+      "monkey",
+      "lion",
+      "lioness",
+      "gorilla",
+      "elephant",
+      "dog",
+      "regular"
+    ],
+    "lumaStdMin": 14,
+    "colourBucketShareMin": 0.005
+  },
+  "expect": {
+    "consoleErrors": 0
+  },
+  "trace": true
+}

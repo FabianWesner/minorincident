@@ -92,6 +92,8 @@ export interface SceneSpec {
   look?: { whiteShareMax: number; hueDriftMaxDeg?: number; /** Max mean body luma / frame-0 (live) luma. */ lumaRiseMax?: number; minPixels?: number };
   /** Canvas edge check for an isolated actor; normalized crop excludes HUD and other figures. */
   edgeNoise?: { rect: [number, number, number, number]; extremeEdgeShareMax: number; /** Outline pixels per sqrt(area) of the drawn geometry ID mask; every sampled frame must stay under it. */ silhouetteRoughnessMax?: number };
+  /** Luminance spread and distinct 5-bit RGB buckets per crop pixel in each named actor's projected body bounds. Used to detect flat-lit large animals. */
+  flatSilhouette?: { actors: string[]; lumaStdMin: number; colourBucketShareMin: number };
   /** L1 beat 9 house emergence (HouseEmergence, the game's own code): from `frame` (default 30) `count` (default 3)
    * residents come out of `house`'s front door (a placement id in the scene), `staggerS` apart (default [1.5, 4]), and
    * chase the courier. Residents are actors `<id>-0` .. (default id `resident`). */
@@ -219,6 +221,9 @@ export type CameraSpec =
   | { mode: 'follow'; actor: string; zoom?: number };
 /** Optional pass/fail gates; the runner exits non-zero when one fails. */
 export interface Expectations {
+  /** Minimum luminance standard deviation and distinct colour buckets per crop pixel; gated for body bounds diagonals >= 2 m. */
+  flatSilhouetteLumaStdMin?: number;
+  flatSilhouetteColourBucketShareMin?: number;
   /** Numerical committed-body invariant, independent of camera/mesh clipping. */
   collisionFailuresMax?: number;
   collisionPendingMax?: number;

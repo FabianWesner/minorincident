@@ -10,7 +10,7 @@ import { leastCrowdedModel, regularInfectedModels } from '../../data/crowdAppear
 import { isCorgi, isCorgiModel, storyProtected } from '../npc/storyProtection';
 import { installAgentMotion, moveAgent } from '../locomotion/AgentMotion';
 import { motionResponse, resetResponse } from '../locomotion/MotionResponse';
-import { infectedContactDistance, installCharacterSeparation } from './CharacterSeparation';
+import { animalSpine, infectedContactDistance, installCharacterSeparation } from './CharacterSeparation';
 import { noise } from '../../data/noise';
 // Zone enter/alert pattern adapted from Bruno Simon folio-2025 Zones.js (MIT, 41046b5).
 import { INFECTED_TOUGHNESS, infectedHumanBite, infectedSpecialMoves, infectedSpecialRecoveryTicks, type InfectedSpecialMove, infectedDef, infectedRecovery, l1ReactionS, l1SpeedTier, l1TierSpeed, validateInfected, type InfectedSpeedTier } from '../../data/infected';
@@ -888,7 +888,7 @@ export class InfectedSystem {
     // Slow grabs/animal attacks retain their windup travel envelope. Ordinary
     // lunges already approach during the warning and active burst.
     const margin = e.infected?.special === 'lunge' ? 0 : speed * def.windup;
-    return def.range + (this.capsMovingLunge(e) ? Math.min(movingReachBudget, margin) : margin) + (target.survivor ? Math.max(0, e.combat!.radius - .35) : 0);
+    return def.range + (this.capsMovingLunge(e) ? Math.min(movingReachBudget, margin) : margin) + (target.survivor ? Math.max(0, e.combat!.radius - .35) + (animalSpine[e.archetype ?? ''] ?? 0) : 0);
   }
   /** Start a reachable warning before the pursuer enters a moving courier's weapon ring. */
   private lungeStartRange(e: EntitySnapshot, target: EntitySnapshot, base: number): number {

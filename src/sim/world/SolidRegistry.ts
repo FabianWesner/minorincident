@@ -20,10 +20,12 @@ export function actorRadius(e: EntitySnapshot): number {
   return e.companion ? .44 : e.survivor ? survivor.radius : e.combat?.radius ?? .35;
 }
 export function solidLargeCorpse(e: EntitySnapshot): boolean {
+  // r31-flamingo: the flock's dead birds are small; a pile of them must never wall the courier in (the flights leave 20+ corpses). The zoo flamingo (civilian) stays solid like before.
+  if (e.archetype === 'infected.flamingo') return false;
   // Rage can die across the platform's sole 1.3 m stair. Keep its rendered
   // body, but let the courier step over it like other fallen infected there.
   if (e.infected?.megaPhase && e.transform.y > 2) return false;
-  return e.health.current <= 0 && (!!e.civilian?.zooAnimal || /^infected\.(alpha|lion|gorilla|elephant|zebra|flamingo)$/.test(e.archetype ?? '') || !!e.infected?.variant?.includes('mega-alpha'));
+  return e.health.current <= 0 && (!!e.civilian?.zooAnimal || /^infected\.(alpha|lion|gorilla|elephant|zebra)$/.test(e.archetype ?? '') || !!e.infected?.variant?.includes('mega-alpha'));
 }
 // A courage-hiding pet is invisible and follows without crowd contact; navigation still keeps it outside static walls.
 function actor(e: EntitySnapshot): boolean {

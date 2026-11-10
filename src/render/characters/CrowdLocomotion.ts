@@ -9,6 +9,7 @@ import { CourierGroundContacts, type GaitStyle } from './CourierGroundContacts';
 import { authoredSoles } from './footSoles';
 import { LimbIK } from './LimbIK';
 import type { CrowdPosePalette } from './CrowdPosePalette';
+import type { AnimalPose } from './AnimalMoves';
 
 /** Presentation-only pose layers on top of the baked clip (zombie move set, hunch). Body space: +x forward, +z lateral. */
 export interface CrowdLayers {
@@ -32,6 +33,8 @@ export interface CrowdLayers {
   throwPose?: number;
   /** Riot shield arm pulled aside during its short break window. */
   shieldBreak?: number;
+  /** r32: L8 animal signature-move pose (AnimalMoves). */
+  animal?: AnimalPose;
 }
 /** Clips that stand on their feet: footwork locks the feet and turns become steps. */
 const standingClips = new Set(['idle', 'infected-idle', 'infected-search', 'npc-look-around', 'npc-gesture', 'npc-water', 'npc-wave', 'npc-glance', 'npc-give', 'npc-sign', 'npc-wave-in', 'npc-bang', 'npc-plead', 'npc-press', 'npc-hug', 'ff-pry', 'npc-stand-back', 'shoot', 'civ-startle', 'windup', 'swing', 'hurt']);
@@ -42,7 +45,7 @@ const gaitStyles: Record<string, { stance: number; run: number; knee?: number }>
   run: { stance: .3, run: 1 }, 'infected-run': { stance: .3, run: 1 }, 'civ-flee': { stance: .3, run: 1 },
 };
 const correctedJoints = new Set(['hip', 'torso', 'head', 'legL', 'legR', 'shinL', 'shinR', 'footL', 'footR']);
-const Z = new Vector3(0, 0, 1), X = new Vector3(1, 0, 0);
+const Z = new Vector3(0, 0, 1), X = new Vector3(1, 0, 0), Y = new Vector3(0, 1, 0);
 interface Footwork { contacts: CourierGroundContacts; owner: CrowdLocomotion; time: number; weight: number; active: number; run: number; stance: number }
 /** Per-figure footwork shared by every LOD batch of one crowd, with a per-frame budget of fully solved figures. */
 export class CrowdFootwork {
@@ -286,12 +289,37 @@ export class CrowdLocomotion {
       this.rig.armL?.quaternion.premultiply(this.rotation.setFromAxisAngle(Z, -.95 * weight)).premultiply(this.rotation.setFromAxisAngle(X, .55 * weight));
       this.rig.foreArmL?.quaternion.premultiply(this.rotation.setFromAxisAngle(Z, -.8 * weight));
     }
+    if (layers.animal) this.animalLayer(layers.animal, parentScale);
     if (flinch) {
       // Recoil away from the hit: chest and head snap back along the hit, hips give a little.
       const x = layers.hitX ?? -1, z = layers.hitZ ?? 0;
       torso.quaternion.premultiply(this.rotation.setFromAxisAngle(Z, -x * .42 * flinch)).premultiply(this.rotation.setFromAxisAngle(X, z * .32 * flinch));
       head?.quaternion.premultiply(this.rotation.setFromAxisAngle(Z, -x * .3 * flinch)).premultiply(this.rotation.setFromAxisAngle(X, z * .25 * flinch));
       hip.position.x += x * .04 * flinch / parentScale; hip.position.z += z * .04 * flinch / parentScale;
+    }
+  }
+  /** r32: species pose for the L8 animal moves. Joints are rotated in their parent's space; planted paws re-solve the legs. */
+  private animalLayer(a: AnimalPose, parentScale: number): void {
+    const rig = this.rig as unknown as Record<string, Object3D | undefined>, { hip, torso } = this.rig;
+    if (!hip || !torso) return;
+    const turn = (node: Object3D | undefined, axis: Vector3, angle: number) => { if (node && angle) node.quaternion.premultiply(this.rotation.setFromAxisAngle(axis, angle)); };
+    if (a.crouch) hip.position.y -= a.crouch / parentScale;
+    turn(hip, Z, a.pitch); turn(torso, X, a.roll);
+    turn(rig.neck ?? rig.head, Z, a.head);
+    turn(rig.jaw, Z, -a.jaw * .55);
+    turn(rig.trunk, Z, a.trunk);
+    for (const side of ['L', 'R'] as const) {
+      const arm = rig[`arm${side}`], fore = rig[`foreArm${side}`], leg = rig[`leg${side}`], shin = rig[`shin${side}`];
+      if (a.wing) {
+        // Flamingo wings: swing out from the folded rest, then beat about the body's long axis.
+        const out = side === 'L' ? -1 : 1;
+        turn(arm, Y, -out * 1.25 * a.wing); turn(arm, X, out * (a.flap - .15 * a.wing) * -1);
+        turn(fore, Y, -out * .35 * a.wing);
+      } else {
+        turn(arm, Z, a.front + (side === 'L' ? a.stamp * .75 : 0) + a.armsUp * 2.5);
+        turn(fore, Z, -a.front * .45 - (side === 'L' ? a.stamp * 1.1 : 0) - a.armsUp * .6);
+      }
+      turn(leg, Z, a.hind); turn(shin, Z, -Math.max(0, a.hind) * .6);
     }
   }
   /** Legacy stance plants (mid band): world-space stance heels, no yaw lock or turn steps. */
@@ -309,7 +337,11 @@ export class CrowdLocomotion {
     }
     this.load(pose, instance, layers, phase, style);
     const stride = cadenceStride(this.fourLegs ? 'corgi-trot' : name, scale, speed, style?.stepRate), run = /run|sprint|flee/.test(name) ? 1 : 0;
-    if (this.animal) {
+    if (this.animal && layers?.animal?.airborne) {
+      // Leap, flight or cling: the paws follow the pose instead of staying planted on the floor below.
+      this.paws.get(id)?.reset(); this.footwork.animalContacts.delete(id);
+      this.store(pose, instance); return;
+    } else if (this.animal) {
       let paws = this.paws.get(id);
       if (!paws) { paws = new PawContacts(this.frame, this.model); this.paws.set(id, paws); }
       const previous = this.animalSkin ? this.footwork.animalContacts.get(id) : undefined;

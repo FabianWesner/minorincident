@@ -22,6 +22,7 @@ import { crowdLod, canHoldCrowdPose, crowdStandingLodHeight } from './lodPolicy'
 import { StaticCorpses } from './characters/StaticCorpses';
 import { repairDeathPoses, deathReach } from './characters/deathPose';
 import { CrowdFootwork, CrowdLocomotion } from './characters/CrowdLocomotion';
+import { AnimalMoves, animalSpecies } from './characters/AnimalMoves';
 import { InfectedMoves, getUpSpan } from './characters/InfectedMoves';
 import { GaitPhase } from './characters/GaitPhase';
 import { CrowdFigureProbe } from './characters/CrowdFigureProbe';
@@ -116,6 +117,7 @@ export class CrowdView extends Group {
   private readonly projection = new Matrix4();
   private readonly arenaScale = new Vector3(1.4, 1.4, 1.4);
   private readonly flinchScale = new Vector3();
+  private readonly shadowMatrix = new Matrix4();
   private readonly bounds = new Sphere(new Vector3(), 1);
   private disposed = false;
   private readonly batches = new Map<string, Batch>();
@@ -131,6 +133,7 @@ export class CrowdView extends Group {
   private readonly moves = new InfectedMoves();
   private readonly alphaMoves = new AlphaMoves();
   private readonly silhouette = new Vector3();
+  private readonly animalMoves = new AnimalMoves();
   /** Corpses persist until a level/checkpoint resets their sim IDs. */
   private get corpseTicks(): number { return Infinity; }
   private readonly staticCorpses = new StaticCorpses();
@@ -342,6 +345,8 @@ export class CrowdView extends Group {
       const atlas = model.userData.assetTextureMode === 'baseColor' ? crowdTexture(model) : undefined;
       const healthy = def.id.startsWith('healthy.'), human = !dogCoat(def.id) && !/^(infected|healthy)\.(dog|cat|crow|lion|gorilla|elephant|zebra|flamingo|monkey|lioness)$/.test(def.id);
       const alpha = alphaLookAssets.includes(asset), regularAlpha = alphaLooks['inf.alpha'].includes(asset) || alphaLooks['inf.mega-alpha'].includes(asset), capacity = role === 'crow' ? 800 : 350;
+      // L8 animal bosses are dark coats too: the full night figure fill turned the gorilla into a flat pale-blue blob (PO 11-10); same Alpha value as the Mega.
+      const zooBoss = /^infected\.(lion|lioness|gorilla|elephant|zebra|flamingo|monkey)$/.test(def.id);
       // The retained Alpha corpse is LOD0. Establish its own atlas binding before
       // a far batch prepares pages from that source, regardless of arrival order.
       if (this.world.scenario === 'L10' && alpha && lod === 'lod2') { await this.requestBatch(def, 'lod0'); if (this.disposed) return; }
@@ -517,7 +522,7 @@ export class CrowdView extends Group {
       // E25 night readability: crowd silhouettes take the preset's moonlit rim.
       livingStencil(material);
       // r32-alphas: Alphas carry a stronger moonlit outline than the crowd, so the bigger silhouette reads at night.
-      if (material instanceof PaletteMaterial) { material.figureRim.value = regularAlpha ? .7 : .25; material.figureFill.value = regularAlpha ? .25 : 1; }
+      if (material instanceof PaletteMaterial) { material.figureRim.value = regularAlpha ? .7 : .25; material.figureFill.value = regularAlpha || zooBoss ? .25 : 1; }
       // The Alpha-sized Mega retains its silhouette at contact, like a regular Alpha.
       // Instances cannot be sorted independently in the transparent render list.
       // A shared 4x4 screen-door threshold keeps every surface of a corpse at
@@ -792,6 +797,15 @@ export class CrowdView extends Group {
       if (specialAttack?.move === 'zebra.kick') clip = 'zebra-rear-kick';
       if (specialAttack?.move === 'zebra.stampede' && specialAttack.stage === 'active') clip = 'zebra-stampede';
       if (specialAttack?.move === 'flamingo.dive' && specialAttack.stage === 'active') clip = 'run';
+      // r32-animalmoves: species poses (lift/flight phase) are sampled once per figure and drive a few clip choices.
+      const species = e.infected && !e.corpse ? animalSpecies(e) : undefined;
+      const animalPose = species ? this.animalMoves.sample(e, renderTick, motion.speed, this.gait.sample(e.id, gaitDistance, 'corgi-trot', batch.strideScale, motion.speed)) : undefined;
+      const animalLift = species ? Math.max(0, this.animalMoves.lift - Math.max(0, e.transform.y - .7 - (this.world.districts?.pavingHeight(e.transform.x, e.transform.z) ?? 0))) : 0, flightPhase = species ? this.animalMoves.flightPhase : -1;
+      if (species === 'flamingo' && animalPose?.airborne && b.state !== 'dead') clip = 'run';
+      if (species === 'zebra' && !heavy && b.state !== 'dead') {
+        // Herd gallop (authored stampede loop) at speed and for the stampede's 1 s dust telegraph (pawing, weight back).
+        if (specialAttack?.move === 'zebra.stampede' && specialAttack.stage === 'telegraph' || !specialAttack && motion.speed > 4.5) clip = 'zebra-stampede';
+      }
       // r32-alphas: each humanoid Alpha type plays its own authored telegraph/strike/recovery, and the ordinary strike stays
       // visible after the sim's strike tick (shipped atlases older than the move set keep the shared clips).
       const alphaMove = !heavy && !e.infectionRise && batch.poses.clip.frames >= alphaCrowdClips.length * framesPerClip ? this.alphaMoves.sample(e, renderTick, batch.windup, motion.speed) : undefined;
@@ -802,12 +816,19 @@ export class CrowdView extends Group {
       const duration = authoredClips.get(clip)?.duration ?? 1;
       const dogWindupTicks = Math.ceil(batch.windup * 60), dogBiteT = renderTick - (b.until - dogWindupTicks);
       const phase = alphaMove ? alphaMove.phase : primateStory ? Math.max(0, (renderTick - primateStory.start) / 96) % 1 : clip === 'dog-lunge-bite' ? Math.max(0, Math.min(1, dogBiteT < dogWindupTicks ? .4 * dogBiteT / dogWindupTicks : .4 + .6 * (dogBiteT - dogWindupTicks) / 24)) : clip === 'zebra-rear-kick' && specialAttack ? Math.min(1, (renderTick - specialAttack.startTick) / (specialAttack.activeTick - specialAttack.startTick + 36)) : clip === 'zebra-stampede' && specialAttack ? .5 + ((renderTick - specialAttack.activeTick) / 32 % 1) / 3 : e.infectionRise ? Math.min(1, (this.world.tick - e.infectionRise.started) / (e.infectionRise.until - e.infectionRise.started)) : b.state === 'dead' ? (reaction?.groundDeath ? 1 : Math.min(1, (this.world.tick - b.deadAt) / 60 / duration)) - InfectedMoves.stir(e, renderTick, duration) : clip === 'windup' ? e.infected?.specialAttack ? Math.min(1, (renderTick - e.infected.specialAttack.startTick) / (e.infected.specialAttack.activeTick - e.infected.specialAttack.startTick)) : Math.max(0, Math.min(1, 1 - (b.until - this.world.tick) / (batch.windup * 60))) : reaction && clip === 'get-up' ? Math.min(1, (age - .7) / getUpSpan(reaction)) : reaction && ['flung', 'knockdown', 'stagger-left', 'stagger-right'].includes(clip) ? Math.min(1, age / (reaction.heavy ? .48 : (reaction.until - reaction.started) / 60)) : strides[clip] ? this.gait.sample(e.id, gaitDistance, batch.animal ? clip === 'dog-gallop' ? 'corgi-gallop' : 'corgi-trot' : clip, batch.strideScale, motion.speed, heavyGait ? megaRate : undefined) : (renderTick / 60 + e.id * .137) / duration % 1;
-      let frame = alphaCrowdClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
+      const zebraTell = species === 'zebra' && clip === 'zebra-stampede' && specialAttack?.move === 'zebra.stampede' && specialAttack.stage === 'telegraph';
+      const animalPhase = flightPhase >= 0 && clip === 'run' ? flightPhase
+        : zebraTell ? .5 * Math.min(1, (renderTick - specialAttack!.startTick) / Math.max(1, specialAttack!.activeTick - specialAttack!.startTick)) * ((renderTick / 9 | 0) % 2 ? 1 : .6)
+        : species === 'zebra' && clip === 'zebra-stampede' && !specialAttack ? .5 + (this.gait.sample(e.id, gaitDistance, 'corgi-gallop', batch.strideScale, motion.speed) % 1) / 3 : -1;
+      let frame = alphaCrowdClips.indexOf(clip) * framesPerClip + (animalPhase >= 0 ? animalPhase : phase) * (framesPerClip - 1);
       const tint = batch.animal ? batch.role === 'inf.dog' && batch.lod === 'lod1' ? this.dogCoatTints[Number(key === 'inf.dog.cream')] : batch.shirt : crowdShirt(e.id);
       const presented = this.presentation.sample(e.id, e.transform, this.world.tick, alpha);
       const resting = b.state === 'dead' && !e.knockbackSlide ? this.corpsePosition(e, b.deadAt, alphaLookAssets.includes(def.asset) ? deathReach.get(batch.poses.clip) : undefined) : { ...e.transform, y: e.transform.y - .7 };
       const settle = b.state === 'dead' && !e.knockbackSlide ? reaction?.groundDeath ? 1 : Math.max(0, Math.min(1, (this.world.tick - b.deadAt - 8) / 52)) : 0;
-      const x = presented.x + (resting.x - e.transform.x) * settle, z = presented.z + (resting.z - e.transform.z) * settle;
+      let x = presented.x + (resting.x - e.transform.x) * settle, z = presented.z + (resting.z - e.transform.z) * settle;
+      // r32: a clinging monkey hangs on the courier's flank (render-only pull from its contact spot onto her body).
+      const clingTo = species === 'monkey' && animalPose?.airborne && !specialAttack ? this.world.entities.get(e.infected?.heardTargetId || 1) : undefined;
+      if (clingTo) { const dx = clingTo.transform.x - x, dz = clingTo.transform.z - z, d = Math.hypot(dx, dz); if (d > .45) { x += dx / d * (d - .42); z += dz / d * (d - .42); } }
       const blend = batch.poses.sample(e.id, clip, frame, renderTick / 60);
       const fade = 0;
       if (e.archetype === 'infected.crow') {
@@ -817,7 +838,7 @@ export class CrowdView extends Group {
         }
         for (let bird = 0; bird < 20; bird++) if (b.birdAlive[bird]) { this.transform.makeTranslation(b.birdPositions[bird * 3], b.birdPositions[bird * 3 + 1], b.birdPositions[bird * 3 + 2]); batch.mesh.setMatrixAt(batch.count, this.transform); writeCrowdAppearance(batch.tint, batch.count, e.id, tint, blend[0] * 2 + blend[1], this.accessories?.slot(e), this.accessories?.hidesHair(e, batch.lod)); batch.state.setXYZW(batch.count++, frame, 0, 0, this.flashStrength(e, feedback)); }
       } else {
-        this.transform.makeRotationY((b.state === 'dead' ? resting.yaw : presented.yaw) + (e.civilian?.zooAnimal && e.infection ? Math.sin(renderTick * .5 + e.id) * .018 * e.infection.progress : 0)); this.transform.setPosition(x, (b.state === 'dead' ? (presented.y - .7) * (1 - settle) + resting.y * settle : Math.max(presented.y - 0.7, this.world.districts?.pavingHeight(x, z) ?? 0)) + (reaction?.heavy && age < .48 ? Math.max(0, .16 * (1 - Math.abs(age / .24 - 1))) : 0), z);
+        this.transform.makeRotationY((b.state === 'dead' ? resting.yaw : presented.yaw) + (e.civilian?.zooAnimal && e.infection ? Math.sin(renderTick * .5 + e.id) * .018 * e.infection.progress : 0)); this.transform.setPosition(x, (b.state === 'dead' ? (presented.y - .7) * (1 - settle) + resting.y * settle : Math.max(presented.y - 0.7, this.world.districts?.pavingHeight(x, z) ?? 0)) + (reaction?.heavy && age < .48 ? Math.max(0, .16 * (1 - Math.abs(age / .24 - 1))) : 0) + animalLift, z);
         if (e.infected?.arenaBoss?.arena === 'monkey' && e.infected.arenaBoss.slot === 6) this.transform.scale(this.arenaScale);
         // r32-alphas: type silhouette (Brute biggest, Thrower lanky, Screamer thin, Armoured bulky); presentation only.
         const alphaShape = e.infected?.alphaType && !e.infected.pursuit && b.state !== 'dead' ? alphaSilhouette[e.infected.alphaType] : undefined;
@@ -828,6 +849,8 @@ export class CrowdView extends Group {
           if (k > 0) this.transform.scale(this.flinchScale.set(1 + .05 * k, 1 - .06 * k, 1 + .05 * k));
         }
         if (b.state === 'dead') this.deadFeet.set(e.id, { id: e.id, x, y: this.transform.elements[13], z });
+        // r32: flying flamingos and leaping animals cast a contact shadow on the ground under them (reads height top-down).
+        if (animalLift > .3 && this.shadows.count < 350) { const g = this.world.districts?.groundHeight(x, z) ?? 0; this.shadowMatrix.makeTranslation(x, g + .02, z); this.shadows.setMatrixAt(this.shadows.count++, this.shadowMatrix); this.shadows.instanceMatrix.needsUpdate = true; }
         if (e.corpse) {
           // Start with the intact corpse source; ordinary limb severance is
           // applied below, while the Mega keeps its complete creature outline.
@@ -880,7 +903,13 @@ export class CrowdView extends Group {
           // Combat reach is unchanged; only the added forward body throw yields.
           layers.lunge = Math.min(layers.lunge ?? 0, 0); layers.lean = -.25; layers.lurch = 0;
         }
-        const layered = !crawling && (layers.maxBodyLean || layers.lean || layers.lunge || layers.flinch || layers.lurch || layers.chestBeat || layers.trunkSwipe || layers.throwPose || layers.shieldBreak || layers.heavyGait) ? layers : undefined;
+        layers.animal = animalPose;
+        if (species && e.infected?.arenaBoss && feedback && feedback.strength > 1) {
+          // Boss hit: a short recoil away from the courier on every hit (the matrix squash above stays).
+          const k = Math.max(0, 1 - (this.world.tick - feedback.at) / 12);
+          if (k > 0 && !layers.flinch) { layers.flinch = k; layers.hitX = -1; layers.hitZ = 0; }
+        }
+        const layered = !crawling && (layers.animal || layers.maxBodyLean || layers.lean || layers.lunge || layers.flinch || layers.lurch || layers.chestBeat || layers.trunkSwipe || layers.throwPose || layers.shieldBreak || layers.heavyGait) ? layers : undefined;
         // Match the low L4 gait budget to its sixteen closest detailed bodies.
         // Contact-range actors and action poses keep the full leg solve; other
         // moving runners retain the existing procedural ground-contact solver.

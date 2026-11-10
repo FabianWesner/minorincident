@@ -17,10 +17,10 @@ export function turnArena(w: SimWorld, id: string): EntitySnapshot[] {
   return arena.ids.map(a => w.entities.get(a)!);
 }
 /** Shoot `target` from `range` along the first clear bearing; returns damage dealt by the real weapon pipeline. */
-export function shoot(w: SimWorld, target: EntitySnapshot, weapon: string, range: number, pin: () => void): { damage: number; fired: boolean; noLine?: boolean } {
+export function shoot(w: SimWorld, target: EntitySnapshot, weapon: string, range: number, pin: () => void): { damage: number; fired: boolean; shots: number; noLine?: boolean } {
   const player = w.entities.get(1)!, q = w.combat!.query;
     const goal = { x: target.transform.x, z: target.transform.z }, hp = target.health.current;
-  let last: { damage: number; fired: boolean } | undefined;
+  let last: { damage: number; fired: boolean; shots: number } | undefined;
   for (let k = 0; k < 16; k++) {
     const a = k * Math.PI / 8, at = { x: goal.x + Math.cos(a) * range, z: goal.z + Math.sin(a) * range };
     if (q.clearDistance({ x: at.x, y: 1, z: at.z }, { x: -Math.cos(a), z: -Math.sin(a), y: 0 }, range, target.id, .6) < range - .3) continue;
@@ -31,15 +31,15 @@ export function shoot(w: SimWorld, target: EntitySnapshot, weapon: string, range
     const start = w.tick;
     for (let t = 0; t < 70; t++) { pin(); w.update(); if (t === 0) w.clearInput(); }
     const events = w.events.events().filter(e => e.tick >= start);
-    const fired = events.some(e => e.type === 'combat.attack' && e.sourceId === 1);
+    const shots = events.filter(e => e.type === 'combat.attack' && e.sourceId === 1).length, fired = shots > 0;
     if (process.env.L8_DEBUG) console.log(weapon, range, 'dist', Math.hypot(player.transform.x - goal.x, player.transform.z - goal.z).toFixed(2), events.filter(e => e.type.startsWith('combat.')).map(e => e.type + ('targetId' in e ? ':' + e.targetId : '')).join(','));
     if (process.env.L8_DEBUG && weapon.includes('rocket') && hp - target.health.current <= 0) console.log('ROCKET', JSON.stringify({ target: target.id, at: goal, player: player.transform, y: target.transform.y, radius: target.combat?.radius, arch: target.archetype, types: events.filter(e => e.type.startsWith('combat.') || e.type.startsWith('projectile')).map(e => e.type), proj: w.combat!.projectiles.map(p => JSON.stringify(p).slice(0, 300)) }).slice(0, 1500));
     const damage = hp - target.health.current;
     // A shot into scenery the line test cannot see (rocket duds, props) is retried from the next bearing; immunity must fail on all 16.
-    if (damage <= 0 && !(weapon.includes('rocket') && range < 5)) { last = { damage, fired }; continue; }
-    return { damage, fired };
+    if (damage <= 0 && !(weapon.includes('rocket') && range < 5)) { last = { damage, fired, shots }; continue; }
+    return { damage, fired, shots };
   }
-  return last ?? { damage: 0, fired: false, noLine: true };
+  return last ?? { damage: 0, fired: false, shots: 0, noLine: true };
 }
 
 
@@ -62,15 +62,29 @@ export async function checkBossDamage(): Promise<void> {
       // Seven flamingos / zebras / monkeys share one body model per type: the first, the monkey leader and the lioness are the distinct cases.
       const slots = def.id === 'monkey' ? [0, def.count - 1] : def.id === 'lion' ? [0, 1] : [0];
       if (!slots.includes(boss.infected!.arenaBoss!.slot)) continue;
+      const per: Record<string, number> = {};
       for (const weapon of WEAPONS) for (const range of [2, 8]) {
-        boss.health.current = boss.health.max; boss.corpse = false;
+        // r31-flamingo: the bosses now have small HP; a big pool keeps every probe shot from killing the boss (a death opens gates/phases and changes the next probes).
+        boss.health.max = boss.health.current = 1e6; boss.corpse = false;
         const pin = () => { for (const other of w.entities.iterate()) if (other !== boss && other.infected && other.id !== 1) { other.transform.x = home.x + 400; other.transform.z = home.z + 400; } boss.transform.x = home.x; boss.transform.z = home.z; boss.health.current = Math.max(1, boss.health.current); };
         const { damage, fired, noLine } = shoot(w, boss, weapon, range, pin);
         if (noLine) { failures.push(`${def.id}#${boss.infected!.arenaBoss!.slot} ${weapon} @${range} m: no clear firing line`); continue; }
+        boss.health.max = def.id === 'monkey' && boss.infected!.arenaBoss!.slot === def.count - 1 ? def.hp * 2 : def.hp; boss.health.current = boss.health.max;
+        if (range === 8) per[weapon] = damage;
         const rocketTooClose = weapon === 'weapon.rocket-launcher' && range < 5;
         const label = `${def.id}#${boss.infected!.arenaBoss!.slot} ${weapon} @${range} m`;
         if (rocketTooClose) { if (fired || damage > 0) failures.push(`${label}: rocket fired inside the minimum range`); }
-        else if (damage <= 0) failures.push(`${label}: no damage (fired=${fired})`);
+        else if (damage <= 0) { failures.push(`${label}: no damage (fired=${fired})`); }
+      }
+      // r31-flamingo (PO 11-10): bosses scale to the L8 weapons (no rocket). Pistol column = weapon.pistol damage as the handgun stand-in.
+      if (boss.infected!.arenaBoss!.slot === 0) {
+        const hp = def.hp, hand = per['weapon.pistol'] ?? 0, shot = per['weapon.shotgun'] ?? 0, mg = per['weapon.army-mg'] ?? 0;
+        const need = (cond: boolean, text: string) => { if (!cond) failures.push(`${def.id} hp ${hp}: ${text} (pistol ${hand}, shotgun ${shot}, mg ${mg})`); };
+        if (def.id === 'flamingo' || def.id === 'monkey') { need(shot >= hp - 1, 'one shotgun blast must kill'); need(mg * 6 >= hp, 'a 6-bullet MG burst must kill'); need(hand * 4 >= hp, 'four handgun hits must kill'); }
+        if (def.id === 'zebra') need(shot * 2 >= hp, 'two shotgun blasts must kill a zebra');
+        if (def.id === 'lion') need(mg * 30 >= hp, 'a 30-round MG magazine must kill a lion');
+        if (def.id === 'gorilla') need(mg * 60 >= hp, 'two 30-round MG magazines must kill the gorilla');
+        if (def.id === 'elephant') need(mg * 30 < hp / 2, 'gunfire only chips the elephant (a magazine stays below half)');
       }
     }
   }
