@@ -1,0 +1,64 @@
+{
+  "lane": "r28-vqa",
+  "main": "029e709c",
+  "date": "2026-11-10",
+  "capturesRoot": "/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/r28-vqa",
+  "runs": [
+    { "run": "l8-lion-low-z15-gpu", "fixture": "l8-before-lion", "quality": "low", "zoom": 1.5, "backend": "webgpu", "god": true, "maxFrameMs": 217, "result": "arena not engaged (fixture is pre-breach); lion hit 3199->3118 HP, stayed alerted" },
+    { "run": "l8-gorilla-high-z1-gl", "fixture": "l8-before-gorilla", "quality": "high", "zoom": 1, "backend": "webgl2", "god": true, "maxFrameMs": 133, "result": "gorilla arena engaged t5190 (provoked); zebra arena engaged on top t8342" },
+    { "run": "l8-yard-low-z15-gpu", "fixture": "l8-elephant-apc-yard-engaged", "quality": "low", "zoom": 1.5, "backend": "webgpu", "god": true, "maxFrameMs": null, "result": "APC armour bar visible 970->950; elephant phase 1, no impacts by the script" },
+    { "run": "l8-elephant-high-z15-gl", "fixture": "l8-before-elephant", "quality": "high", "zoom": 1.5, "backend": "webgl2", "god": true, "maxFrameMs": null, "result": "script wedged at a house (82,28); armour bar visible (yard open)" },
+    { "run": "l8-board-high-z1-gl", "fixture": "l8-elephant-apc-yard-engaged", "setup": "elephant HP set to 40", "quality": "high", "zoom": 1, "backend": "webgl2", "god": true, "maxFrameMs": 1000, "note": "1000/183/117 ms frames only at the L9 level load (tick 0, loading card)", "result": "elephant fell, boarding 0/13 -> 13/13 in 46 s, L9 handover; APC drove 1020 -> 736 m, then pinned 56 s at (-265.7,-15.4)" },
+    { "run": "l9-rail-low-z1-gpu", "fixture": "l9-before-rail-stall", "quality": "low", "zoom": 1, "backend": "webgpu", "god": true, "maxFrameMs": null, "result": "rail stall, hatch defence 30 s, boarders, gate shut; afterwards APC held by the script's Space = handbrake (tool bug, fixed)" },
+    { "run": "l9-bridge-high-z15-gl", "fixture": "l9-at-bridge", "quality": "high", "zoom": 1.5, "backend": "webgl2", "god": true, "maxFrameMs": 233, "result": "APC wedged behind the school bus in a horde at start; script drove away; collapse not reached" },
+    { "run": "l10-console-low-z15-gpu", "fixture": "l10-dispersal-console", "quality": "low", "zoom": 1.5, "backend": "webgpu", "god": true, "maxFrameMs": null, "result": "console activated, charge 14/60 s, then paused (script kited 380 m away)" },
+    { "run": "l10-console2-high-z1-gl", "fixture": "l10-dispersal-console", "quality": "high", "zoom": 1, "backend": "webgl2", "god": true, "maxFrameMs": null, "result": "charge 60/60 at t3815 -> Kill the Mega Alpha; no Mega on screen for 7 min; courier pinned at the console" },
+    { "run": "l7-board-high-z1-gl", "fixture": "level:L7:corridor", "quality": "high", "zoom": 1, "backend": "webgl2", "god": true, "maxFrameMs": null, "result": "tracker: Get everyone aboard the bus · Aboard 0/24 · Go to the bus to start boarding · N m; script blocked at (66.5,8.6)" }
+  ],
+  "specs": {
+    "qa-l10-epilogue": {
+      "epilogueElapsed": 1740,
+      "measured": {
+        "low": { "playableTravel": 0, "survivors": 3, "radius": 7576.7, "titleFrames": 41, "pullScale": 1, "fanFrames": 2199, "mistPuffs": 12, "drawCallsMax": 45, "trianglesMax": 51841 },
+        "high": { "playableTravel": 0, "survivors": 6, "radius": 7576.7, "titleFrames": 41, "pullScale": 1, "fanFrames": 2199, "mistPuffs": 28, "drawCallsMax": 50, "trianglesMax": 124936 }
+      },
+      "backends": ["webgpu", "webgl2"],
+      "pass": "4/4 with committed bounds"
+    },
+    "qa-l10-title-credits": {
+      "epilogueElapsed": 3840,
+      "shots": [0, 60, 360, 479],
+      "measured": {
+        "low": { "titleFrames": 300, "creditsFrames": 121, "pullScale": 1, "fanFrames": 479, "mistPuffs": 2, "drawCallsMax": 40, "trianglesMax": 45496 },
+        "high": { "titleFrames": 300, "creditsFrames": 121, "pullScale": 1, "fanFrames": 479, "mistPuffs": 2, "drawCallsMax": 44, "trianglesMax": 101109 }
+      },
+      "backends": ["webgpu", "webgl2"],
+      "pass": "webgpu-low and webgl2-high pass with committed bounds; all four combinations measured identical values"
+    }
+  },
+  "findings": [
+    { "sev": "P2", "level": "L8", "where": "gorilla t5192/t5436 high z1 webgl2; elephant t525 high z1 webgl2; elephant t646 low z1.5 webgpu", "text": "sustained MG fire keeps the boss hit flash on: animal reads as a flat pale untextured silhouette" },
+    { "sev": "P1-candidate", "level": "L9", "where": "(-265.7,-15.4), L9 ticks 6617-9956, high z1 webgl2", "text": "APC at the floor pinned 56 s in a crowd of ~50 with held keys (0.3 m); needs a human drive" },
+    { "sev": "P2", "level": "L9", "where": "l9-at-bridge start t67, high z1.5 webgl2", "text": "APC nose-to-tail behind the school bus inside a horde at the bridge checkpoint; objective points through the bus" },
+    { "sev": "P2-candidate", "level": "L10", "where": "t3815-t30147 high z1 webgl2", "text": "Kill the Mega Alpha: no Mega on screen for 7 min, no distance or edge arrow" },
+    { "sev": "P2-candidate", "level": "L8/L10", "where": "L10 console; L8 yard (110,42.8)", "text": "MG at 1.1-1.3 m barely damages infected in contact; needs a sim test" },
+    { "sev": "P2-candidate", "level": "L10", "where": "Scene Lab qa-l10-epilogue", "text": "no pull-out, full HUD on, flat olive ground, courier leaves frame; unverified in real play" },
+    { "sev": "P3", "level": "L8", "where": "elephant fight", "text": "4-line objective box repeats boss name/phase" },
+    { "sev": "P3", "level": "L8", "where": "pre-breach lion paddock", "text": "shot lion stays alerted and never engages" },
+    { "sev": "P3", "level": "L9", "where": "bridge approach t67", "text": "large flat route arrows on the road" },
+    { "sev": "P3", "level": "L9", "where": "rail crossing, low webgpu", "text": "grass reads day-lit; APC shadow smear to the lower left" },
+    { "sev": "P3", "level": "L10", "where": "console, high z1 webgl2, t7670", "text": "enemies around the courier drawn as translucent dithered ghosts" },
+    { "sev": "P3", "level": "L10", "where": "console area, low", "text": "flat dark plane with a few blocks" },
+    { "sev": "P3", "level": "L7", "where": "corridor start", "text": "tracker shows two distances" }
+  ],
+  "checkedOk": [
+    "L8 APC armour bar shows once the yard is open (980/970 -> 950)",
+    "L8 boarding 13/13 in 46 s, no corgi stall seen in 4 s stills",
+    "L8 elephant corpse reads as a body; 'I'm sorry.' line",
+    "L9 rail stall, hatch defence, boarders, gate shut flow",
+    "L9 no freeze when APC lights die (low webgpu 0 frames > 100 ms; high webgl2 max 233 ms)",
+    "L10 console activate, charge and pause",
+    "L10 Delivered ✓, 5 s title, readable credits with Pause/Skip (fixture)",
+    "L7 'Go to the bus to start boarding' HUD"
+  ]
+}

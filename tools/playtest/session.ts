@@ -571,7 +571,16 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   const first = o.levels[0];
   if (await page.getByTestId(`character-${o.heroine}`).isVisible().catch(() => false)) await page.getByTestId(`character-${o.heroine}`).click();
   // ?debug=1 lets locked levels start; they stay aria-disabled, so the click is forced.
-  await page.getByTestId(`level-${first}`).click({ timeout: 60_000, force: o.entry === 'debug' });
+  // QA checkpoint fixture (tests/fixtures/saves/qa): start mid-level instead of the menu click (fixture setup, real input after).
+  const fixturePath = process.env.PLAYTEST_FIXTURE;
+  if (fixturePath) {
+    const { readFixture } = await import('../qa/fixture-io');
+    const { loadFixtureInPage } = await import('../qa/load-fixture');
+    const fixture = readFixture(fixturePath);
+    if (fixture.level !== first) throw new Error(`PLAYTEST_FIXTURE is ${fixture.level}, session starts ${first}`);
+    log({ fixture: fixture.label, state: await loadFixtureInPage(page, fixture) });
+    await page.evaluate(z => { window.__SS__!.camera.zoom(z); window.__SS__!.resume(); }, o.zoom);
+  } else await page.getByTestId(`level-${first}`).click({ timeout: 60_000, force: o.entry === 'debug' });
   log({ session: o.tag, entry: o.entry, levels: o.levels, quality: o.quality, heroine: o.heroine });
 
   // --- per-level state ---
