@@ -505,7 +505,7 @@ export class CrowdView extends Group {
       // The baked colours retain their blue-grey/white identity under the game's
       // cool key: trade some directional light for a small neutral cloth bounce.
       const base = healthy ? mix(albedo, vec3(.26, .3, .22), feedbackState.z.mul(.4)) : mix(infectedAtlas ? albedo.mul(.65) : albedo, vec3(0), eye);
-      const emission = healthy ? attribute('color', 'vec3').div(luminance(attribute('color', 'vec3')).max(.25)).mul(1.2) : infectedAtlas ? vec3(1, .04373, .02843).mul(eyeDisc.select(eyeRadius.smoothstep(1, .15).mul(3).add(3), 3)).mul(regularAlpha ? 2 : 1) : vec3(3, .25, .22);
+      const emission = healthy ? attribute('color', 'vec3').div(luminance(attribute('color', 'vec3')).max(.25)).mul(1.2) : infectedAtlas ? vec3(1, .04373, .02843).mul(eyeDisc.select(eyeRadius.smoothstep(1, .15).mul(3).add(3), 3)).mul(regularAlpha ? 2 : 1) : vec3(3, .25, .22).mul(zooBoss ? 2 : 1);
       // r32-alphas: Alpha eyes burn twice as bright as an ordinary infected's (night-readable 'this one is tough' cue).
       // alpha-white: the hit flash brightens the figure's own colours (glow ~ albedo x strength, about x2 on a
       // night-lit body at the 0.45 peak), easing off on pale swatches (bone, teeth) so they do not clip to white.
@@ -522,7 +522,7 @@ export class CrowdView extends Group {
       // E25 night readability: crowd silhouettes take the preset's moonlit rim.
       livingStencil(material);
       // r32-alphas: Alphas carry a stronger moonlit outline than the crowd, so the bigger silhouette reads at night.
-      if (material instanceof PaletteMaterial) { material.figureRim.value = regularAlpha ? .7 : .25; material.figureFill.value = regularAlpha || zooBoss ? .25 : 1; }
+      if (material instanceof PaletteMaterial) { material.animalNightRead.value = zooBoss ? 1 : 0; material.figureRim.value = zooBoss ? 2 : regularAlpha ? .7 : .25; material.figureFill.value = regularAlpha || zooBoss ? .25 : 1; }
       // The Alpha-sized Mega retains its silhouette at contact, like a regular Alpha.
       // Instances cannot be sorted independently in the transparent render list.
       // A shared 4x4 screen-door threshold keeps every surface of a corpse at
