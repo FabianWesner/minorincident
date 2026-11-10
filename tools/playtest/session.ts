@@ -1651,7 +1651,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     const closeRocketBackup = process.env.PLAYTEST_CLOSE_ROCKET_BACKUP === '1' && ['L7', 'L10'].includes(e.level ?? '') && e.player?.weapons.includes('weapon.shotgun') && e.enemies.some(b => b.drawn && b.hp > 0 && b.d < 6);
     const weapon = e.player && (closeRocketBackup ? 'weapon.shotgun' : e.level === 'L6' && Date.now() < l6CrowdUntil && e.player.weapons.includes('weapon.fire-axe') ? 'weapon.fire-axe' : o.weapon && e.player.weapons.includes(o.weapon)
       ? o.weapon
-      : campaignCombatWeapon(e.level, e.player.weapons, e.player.emptyWeapons));
+      : campaignCombatWeapon(e.level, e.player.weapons, e.player.emptyWeapons, Math.min(Infinity, ...e.enemies.filter(b => b.drawn && b.hp > 0 && !b.corpse).map(b => b.d))));
     const shortcut = weapon && weaponKey(weapon);
     if (weapon && shortcut && e.player?.current !== weapon) {
       await press([]); await releaseAim();

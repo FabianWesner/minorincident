@@ -22,11 +22,13 @@ export function prioritizeAllyThreat<T>(unarmed: boolean, nearby: T | undefined,
   return unarmed ? allyThreat ?? nearby : nearby ?? allyThreat;
 }
 
+export const rocketMinRange = 5;
 /** Choose from the carried HUD arsenal, including L10's recovered checkpoint weapons. */
-export function campaignCombatWeapon(level: string | null, weapons: readonly string[], emptyWeapons: readonly string[] = []): string | null {
+export function campaignCombatWeapon(level: string | null, weapons: readonly string[], emptyWeapons: readonly string[] = [], nearestEnemy = Infinity): string | null {
   if (level !== 'L7' && level !== 'L8' && level !== 'L10') return null;
   const order = ['weapon.rocket-launcher', 'weapon.army-mg', 'weapon.shotgun', 'weapon.handgun', 'weapon.pistol', 'weapon.fire-axe'];
-  return order.find(id => weapons.includes(id) && !emptyWeapons.includes(id)) ?? null;
+  // The launcher refuses to fire with an infected inside 5 m ("Too close!"); a bot holding it there never shoots (r24 playtest: 6+ min).
+  return order.find(id => weapons.includes(id) && !emptyWeapons.includes(id) && !(id === 'weapon.rocket-launcher' && nearestEnemy < rocketMinRange + 1)) ?? null;
 }
 
 /** The visible boss bar takes priority over a nearer ordinary walker during its kill objective. */

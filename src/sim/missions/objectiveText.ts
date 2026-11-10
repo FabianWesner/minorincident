@@ -9,6 +9,12 @@ const clock = (ticks: number) => {
   const seconds = Math.max(0, Math.ceil(ticks / 60));
   return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
 };
+/** L8 Beat 1: the courier has arrived at the plaza and the calm runs until the (hidden) tunnel breach; "0 m" told the player nothing. */
+export function l8SanctuaryResting(mission: Mission): boolean {
+  if (!mission.def.l8 || mission.state.steps.sanctuary?.status !== 'active' || mission.state.states.breached) return false;
+  const plaza = mission.def.anchors['central-plaza'], p = mission.world.entities.get(1)?.transform;
+  return !!plaza && !!p && Math.hypot(p.x - plaza.x, p.z - plaza.z) <= (plaza.radius ?? 6);
+}
 /** Both objective HUDs describe the same simulation conditions and deadlines. */
 export function objectiveText(mission: Mission, fallback: string): string {
   const s = mission.state, w = mission.world;
@@ -53,6 +59,7 @@ export function objectiveText(mission: Mission, fallback: string): string {
   if (mission.def.l8) {
     const zoo=mission.l8!, seated=w.vehicles!.active===zoo.state.carId;
     if (zoo.protecting()) return 'Protect the group!';
+    if (l8SanctuaryResting(mission)) return 'Rest at the plaza with the group';
     if (zoo.state.departureFrom) return 'Something is following you.';
     const arena = zoo.bosses.statusText(); if (arena) return `${fallback} · ${arena}`;
     if (!seated && zoo.boarding() && !zoo.canBoardDriver()) {
