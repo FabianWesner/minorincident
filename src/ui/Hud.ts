@@ -271,7 +271,9 @@ export class Hud {
     // ring. Keep its durability visible throughout the escape, not only after
     // entering the driver's seat.
     // Only once the escape to the APC has begun (PO 2026-11-09: the bar showed during the calm tour).
-    const l8Escape = !!mission?.def.l8 && (mission.state.steps.escape?.status === 'active' || mission.state.steps.depart?.status === 'active');
+    // PO queue 11-09: not during the animal arenas either — only once every arena before the elephant is cleared (vehicle yard open).
+    const l8YardOpen = (mission?.l8?.state.arenas ?? []).every(a => a.id === 'elephant' || a.phase === 3);
+    const l8Escape = !!mission?.def.l8 && (mission.state.steps.escape?.status === 'active' && l8YardOpen || mission.state.steps.depart?.status === 'active');
     const l8CarId = l8Escape ? mission!.l8?.state.carId : undefined;
     const escapeApc = l8CarId ? world.entities.get(l8CarId) : undefined;
     const apc = driven?.archetype === 'vehicle.military-apc' ? driven
