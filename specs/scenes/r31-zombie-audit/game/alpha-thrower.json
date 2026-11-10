@@ -1,0 +1,93 @@
+{
+ "name": "r31-alpha-thrower-game",
+ "note": "r31-zombie-audit motion fixture: idle 0-120, chase+attack 120-420, MG burst 420, bat 510, heavy kick 600, long MG 780-960.",
+ "seed": 3,
+ "ground": "asphalt",
+ "size": 40,
+ "time": "L4",
+ "dof": false,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "loadout": [
+    "weapon.bat",
+    "weapon.army-mg"
+   ]
+  },
+  {
+   "id": "z",
+   "kind": "infected",
+   "archetype": "infected.alpha",
+   "at": [
+    10,
+    0
+   ],
+   "yaw": 180,
+   "state": "idle",
+   "alphaType": "thrower"
+  }
+ ],
+ "script": [
+  {
+   "frame": 120,
+   "actor": "z",
+   "do": "chase"
+  },
+  {
+   "frame": 420,
+   "actor": "courier",
+   "do": {
+    "attack": "z",
+    "seconds": 0.15,
+    "side": "RIGHT"
+   }
+  },
+  {
+   "frame": 510,
+   "actor": "courier",
+   "do": {
+    "attack": "z",
+    "seconds": 0.5,
+    "side": "LEFT"
+   }
+  },
+  {
+   "frame": 600,
+   "actor": "z",
+   "do": {
+    "hit": {
+     "from": "courier",
+     "heavy": true
+    }
+   }
+  },
+  {
+   "frame": 780,
+   "actor": "courier",
+   "do": {
+    "attack": "z",
+    "seconds": 3,
+    "side": "RIGHT"
+   }
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   1.2,
+   0
+  ],
+  "zoom": 1.5
+ },
+ "frames": 1080,
+ "trace": true,
+ "expect": {
+  "consoleErrors": 0
+ }
+}
