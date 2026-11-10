@@ -14,7 +14,7 @@ export function playHaleCharge(world: SimWorld): { distance: number; move: strin
   });
   try {
     arena.phase = 0; zoo.state.nextWave = Number.MAX_SAFE_INTEGER;
-    world.solids.relocate(player, { x: 96, z: 46, y: .7 }, 'fixture.hale-charge-entry', 2);
+    world.solids.relocate(player, { x: 96, z: 58, y: .7 }, 'fixture.hale-charge-entry', 2);
     world.npcs!.civilians.outbreak!.infect(elephant, 1);
     for (let tick = 0; tick < 1800 && !world.missions!.state.states['hale-fallen']; tick++) { world.applyInput(emptyInput(), 'keyboard'); world.update(); }
     world.combat!.damage.apply({ sourceId: 1, targetId: elephant.id, attackId: 1, actionId: 'weapon.army-mg', origin: player.transform, direction: { x: 1, z: 0 }, base: 1e9, multiplier: 1, type: 'bullet', permanent: true, knockback: 0, stagger: 0 });

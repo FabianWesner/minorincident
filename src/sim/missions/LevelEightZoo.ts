@@ -632,6 +632,9 @@ export class LevelEightZoo {
       const other = { x: p.transform.x + heading.z * 6, z: p.transform.z - heading.x * 6 };
       const hold = arena.id === 'elephant' ? arena.entry : w.infected!.nav.clear(flank.x, flank.z, .4) ? flank : other;
       Object.assign(goal, formationSlot(hold, heading, slot));
+      // r33-l8route: the group holds INSIDE the enclosure with the courier (a hold point behind a fence would leave it outside the closing gate).
+      const zone = l8Route.find(r => r.id === arena.id)!.zone;
+      if (!boarding && arena.id !== 'elephant') { goal.x = Math.min(zone.x1 - 1.5, Math.max(zone.x0 + 1.5, goal.x)); goal.z = Math.min(zone.z1 - 1.5, Math.max(zone.z0 + 1.5, goal.z)); }
     }
     let target = boarding ? door : w.infected!.nav.clear(goal.x, goal.z, .35) ? goal : p.transform;
     let queueIndex = 0;
