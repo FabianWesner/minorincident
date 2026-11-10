@@ -172,7 +172,7 @@ export class Vehicles {
           drive.throttle = scheme === 'mouse-only' ? (frame.left.held ? Math.min(1, Math.max(0, (distance - 1.2) / 2.8)) : 0) : Math.min(1, distance);
           drive.brake = (scheme === 'mouse-only' && !frame.left.held) || distance < (scheme === 'mouse-only' ? 1.2 : .05) || !!frame.brake;
         }
-        drive.boost = car.physics.def.id !== 'vehicle.military-apc' && scheme !== 'mouse-only' && frame.left.held;
+        drive.boost = car.physics.def.id !== 'vehicle.military-apc' && scheme !== 'mouse-only' && frame.left.held || !!this.world.missions?.l9?.driving.boosting(car.entity.id);
         drive.handbrake = frame.handbrake ?? frame.right.held;
         if ((scheme !== 'mouse-only' && frame.left.down) || (car.physics.def.emergency && this.world.tick % 60 === 0)) this.noise(car);
         // Recovery reverses on the opposite lock to the held steer (a three-point turn), so it adds to the turn the driver asks for

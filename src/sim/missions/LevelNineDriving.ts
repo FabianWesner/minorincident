@@ -26,7 +26,7 @@ export interface L9DrivingState {
   fireAt: number | null; fireIds: number[]; jumped: string[]; jump: { id: string; airborne: boolean } | null;
   obstacleIds: number[]; waves: number[]; nextWave: number; lines: { id: string; at: number }[];
   /** r32-l9fun: authored set pieces (leapers, throwers, roadblock, packs) and measured jump airtime per ramp. */
-  setPieces?: L9SetPieceState; airtime?: { id: string; ticks: number; speed: number; hard: boolean }[]; takeoffAt?: number | null;
+  setPieces?: L9SetPieceState; boostUntil?: number; airtime?: { id: string; ticks: number; speed: number; hard: boolean }[]; takeoffAt?: number | null;
 }
 export const emptyDriving = (): L9DrivingState => ({
   prepared: false, roster: [], samId: 0, megaId: 0, soldiers: [], trucks: [], boardersCalled: false, route: null, checkpoints: [],
@@ -201,6 +201,8 @@ export class LevelNineDriving {
     for (const id of car.entity.vehicle!.attached) { const e = w.entities.get(id); if (e) { e.transform.x = a.x; e.transform.z = a.z; w.spatial.set(id, a.x, a.z); } }
     clearThreat(w, a);
   }
+  /** r32-l9fun: the APC is on a boost strip's 4 s engine boost. */
+  boosting(id: number): boolean { return id === this.mission.l9?.state.carId && this.w.tick < (this.state.boostUntil ?? -1) && !this.holding(id); }
   holding(id: number): boolean {
     if (id !== this.mission.l9?.state.carId) return false;
     const s = this.state;
@@ -321,6 +323,10 @@ export class LevelNineDriving {
       this.signal('fire-closed');
     }
     if (s.fireIds.length && Math.abs(p.x - cfg.fire.x) < 5 && Math.abs(p.z - cfg.fire.z) < 12 && w.tick % 30 === 0) w.vehicles!.damage(car.entity.id, 20);
+    // r32-l9fun boost strips: crossing one at speed gives a 4 s engine boost (Vehicles reads boosting()).
+    for (const b of cfg.boosts) if (Math.abs(p.x - b.x) < cfg.boost.halfX && Math.abs(p.z - b.z) < cfg.boost.halfZ && car.physics.speed > cfg.boost.minSpeed && !(w.tick < (s.boostUntil ?? -1))) {
+      s.boostUntil = w.tick + cfg.boost.ticks; this.signal('boost');
+    }
     const flying = car.physics.wheels.every(wheel => !wheel.contact);
     for (const ramp of cfg.ramps) {
       if (s.jumped.includes(ramp.id) || Math.abs(p.z - ramp.z) > 5) continue;
@@ -548,6 +554,7 @@ export class LevelNineDriving {
     if (s.fireAt !== null && !s.fireIds.length && distance(p, cfg.fire) < 70) return `Cross the fire line · ${Math.max(0, Math.ceil((cfg.fire.closeTicks - tick + s.fireAt) / 60))} s`;
     if (distance(p, cfg.repair) < 15) return `Hold E to repair from the hatch · ${Math.round(s.repairTicks / cfg.repair.ticks * 100)}%`;
     if (p.x > cfg.gate.x - 12) return 'Stop in the evacuation bay';
+    if (this.boosting(this.car.entity.id)) return 'Boost · open road, floor it';
     if (s.gateAt !== null) return `Reach the evacuation gate · ${s.gateClosed ? 'Gate shut · ram the side fence' : `${Math.max(0, Math.ceil(cfg.gate.seconds - (tick - s.gateAt) / 60))} s`}`;
     return 'Drive to the evacuation point';
   }
@@ -557,6 +564,7 @@ export class LevelNineDriving {
     if (s.megaSighting) s.megaSighting.startedAt += delta;
     if (s.setPieces) this.setPieces.restore(s.setPieces, delta);
     if (s.takeoffAt != null) s.takeoffAt += delta;
+    if (s.boostUntil !== undefined) s.boostUntil += delta;
     s.busHitAt += delta; s.nextWave += delta; for (const l of s.lines) l.at += delta;
     for (const id of Object.keys(s.truckEntering)) s.truckEntering[Number(id)] += delta;
   }

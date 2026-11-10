@@ -65,6 +65,9 @@ export const l9Course = {
   bridgeStart: { x: 452, z: 0, yaw: 0, busBehindM: [60, 50, 42], busZ: [12, 0, -12] },
   /** Jumps on the route lines (r32-l9fun, PO 11-10 "driving fun, incl jumps"): road 2, countryside 2, shortcut 1. The detours skip them. */
   ramps: [{ id: 'overpass', x: -65, z: -330 }, { id: 'ditch', x: 80, z: -30 }, { id: 'wreck-pile', x: 135, z: -330 }, { id: 'embankment', x: -105, z: 240 }, { id: 'creek-bank', x: 115, z: 240 }],
+  /** r32-l9fun: painted boost strips on the long straights (route lines); crossing one at speed gives the APC a 4 s engine boost. */
+  boosts: [{ x: -280, z: -330 }, { x: 230, z: -330 }, { x: -230, z: 240 }, { x: 225, z: 240 }, { x: -160, z: -30 }],
+  boost: { ticks: 240, halfX: 4, halfZ: 6, minSpeed: 4 },
   tanker: { x: -25, z: -330 },
   fire: { x: -20, z: 240, closeTicks: 900 },
 } as const;
@@ -76,12 +79,14 @@ export const l9Course = {
  * point is roughly `atX + 100`; the Mega sightings (-260, -90, 100) stay quiet beats between them.
  * Kinds use the L9 Alpha types (leaper, thrower) and existing archetypes only; no infected stat changes.
  */
-export type L9SetPieceKind = 'chase-pack' | 'leapers' | 'thrower' | 'roadblock';
+export type L9SetPieceKind = 'chase-pack' | 'leapers' | 'thrower' | 'roadblock' | 'smash';
 export interface L9SetPiece { id: string; kind: L9SetPieceKind; atX: number }
 export const l9SetPieces: readonly L9SetPiece[] = [
   { id: 'pack-1', kind: 'chase-pack', atX: -500 },
+  { id: 'smash-1', kind: 'smash', atX: -450 },
   { id: 'leapers-1', kind: 'leapers', atX: -300 },
   { id: 'thrower-1', kind: 'thrower', atX: -150 },
+  { id: 'smash-2', kind: 'smash', atX: -60 },
   { id: 'roadblock-1', kind: 'roadblock', atX: 40 },
   { id: 'pack-2', kind: 'chase-pack', atX: 120 },
   { id: 'leapers-2', kind: 'leapers', atX: 160 },
@@ -100,6 +105,8 @@ export const l9SetPieceTuning = {
     items: ['barricade', 'trash-can', 'jersey-barrier', 'barricade'] as const, heavyMinSpeed: 7, hullDamage: 30,
     /** A stopped hull is bracketed: throws alternate short/long by this much, so about half of them hit. */
     stoppedSpreadM: 3.5 },
+  /** Junk across the lane to plough through (light obstacles: 10 durability each, debris). */
+  smash: { items: ['trash-can', 'cone', 'mailbox', 'barricade', 'cone', 'trash-can', 'cone'] as const, slots: [-4.5, -3, -1.5, 0, 1.5, 3, 4.5] },
   roadblock: { slots: [-6, -3.6, -1.2, 1.2, 3.6, 6], /** Light bodies only: ploughing through is the payoff, heavy stalls belong to the ambient groups. */
     horde: ['infected.runner', 'infected.sprinter', 'infected.runner', 'infected.screamer', 'infected.runner', 'infected.crawler', 'infected.sprinter', 'infected.dog', 'infected.runner', 'infected.runner'] },
   /** Rail stall: the hatch defence gets a leaper on the hull, a thrower and a mixed rush on top of the reinforcement waves. */

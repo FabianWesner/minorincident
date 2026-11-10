@@ -96,6 +96,14 @@ export class LevelNineSetPieces {
       if (id) { this.hold(id, post); s.alphas.push({ id, role: 'thrower', piece, phase: 'wait', at: this.w.tick, post: this.at(id), uses: 0 }); }
       return !!id;
     }
+    if (kind === 'smash') {
+      let n = 0;
+      for (const [i, off] of tune.smash.slots.entries()) {
+        const at = side(this.lane(tune.aheadM + (i % 3) * 1.6) ?? ahead, off);
+        if (this.w.infected!.nav.clear(at.x, at.z, .6) && this.w.solids.clear({ x: at.x, y: .7, z: at.z }, .6)) { this.w.vehicles!.obstacles.spawn(tune.smash.items[i % tune.smash.items.length], at); n++; }
+      }
+      return n > 0;
+    }
     if (kind === 'roadblock') {
       let n = 0;
       for (const off of tune.roadblock.slots) {

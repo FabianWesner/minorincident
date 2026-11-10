@@ -48,6 +48,11 @@ export class L9Props extends Group {
       for (const side of [-1, 1]) for (let i = 0; i < 6; i++) fixed(paint, [ramp.x - 10 + i * 1.5, .08, ramp.z + side * 3.6], [.7, .04, .2]);
       this.sign('RAMP  /  DETOUR', ramp.x - 13, ramp.z + 7, paint);
     }
+    // r32-l9fun boost strips: orange bars across the lane and a roadside board.
+    for (const b of cfg.boosts) {
+      for (let i = 0; i < 4; i++) fixed(red, [b.x - 3 + i * 2, .07, b.z], [.7, .04, 9]);
+      this.sign('OPEN ROAD  ·  FLOOR IT', b.x - 6, b.z + 8, paint);
+    }
     // A single railway crosses all three returns. Sleepers are instanced,
     // keeping this long sightline to three draws rather than hundreds.
     for (let z = -350; z <= 300; z += 2) fixed(wood, [cfg.railX, .045, z], [5, .09, .22]);
@@ -103,6 +108,14 @@ export class L9Props extends Group {
     const post = new Mesh(this.geometry, postMaterial); post.position.set(x, 1.5, z); post.scale.set(.12, 3, .12); this.add(post);
   }
   async load(): Promise<void> {
+    // r32-l9fun: the wreck-pile jump reads as one: crushed cars flank its landing block (render only, outside the flight path).
+    const pile = cfg.ramps.find(r => r.id === 'wreck-pile');
+    if (pile) for (const [dx, dz, yaw, roll] of [[11, 5.6, .4, 0], [14, -5.4, 2.6, .35], [7, -5.8, -1.2, 0]] as const) {
+      const wreck = await this.registry.loadAsset('veh.wreck', 'lod1');
+      wreck.position.set(pile.x + dx, roll ? .5 : 0, pile.z + dz); wreck.rotation.set(roll, yaw, 0);
+      wreck.traverse(node => { if (node instanceof Mesh) node.castShadow = node.receiveShadow = true; });
+      this.add(wreck);
+    }
     for (const [i, id] of ['weapon.shotgun', 'weapon.army-mg', 'weapon.handgun'].entries()) {
       const model = await this.registry.loadAsset(catalog[id].viewAssetId, 'lod1');
       model.position.set(.15, i * .3, 0); model.scale.setScalar(.8); model.rotation.z = Math.PI / 2; this.rack.add(model);
