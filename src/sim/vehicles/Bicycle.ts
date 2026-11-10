@@ -167,7 +167,7 @@ export class Bicycle {
     const want = frame.drive ? Math.abs(frame.drive.throttle) : Math.min(1, Math.hypot(frame.move.x, frame.move.z)), r = Math.abs(b.speed) / speedMs;
     let target = 0, steerTarget = 0;
     if (frame.drive) {
-      steerTarget = Math.max(-1, Math.min(1, frame.drive.steer));
+      steerTarget = Math.max(-1, Math.min(1, -frame.drive.steer)); // drive.steer > 0 is the vehicle's left; the bicycle heading grows clockwise (right)
       // S brakes forward motion before reversing; A/D steer relative to the bicycle.
       const throttle = Math.max(-1, Math.min(1, frame.drive.throttle));
       target = throttle < 0 ? bicycleHandling.reverseMs * throttle : speedMs * throttle;

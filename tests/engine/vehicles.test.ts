@@ -310,31 +310,38 @@ async function apcBoarders(): Promise<void> {
   } finally { world.dispose(); }
 }
 
+/** Vehicle-relative car controls (PO 2026-11-10): throttle > 0 = W, < 0 = S (brake, then reverse), steer > 0 = A = the vehicle's own left. */
 async function screenRelativeSteering(): Promise<void> {
   const world = new SimWorld(); await world.init(); world.loadScenario('drive-course');
   try {
     for (let i = 0; i < 36; i++) world.update();
     const car = world.vehicles!.cars.get(2)!;
-    const start = { ...car.entity.transform };
-    // Screen-up is world -Z in the drive-course camera. A local drive intent
-    // pointing right/back must not override the requested screen direction.
-    const frame = emptyInput(); frame.move.z = -1; frame.drive = { throttle: -1, steer: -1 };
-    world.applyInput(frame, 'keyboard');
-    for (let i = 0; i < 120; i++) world.update();
-    expect(car.entity.transform.z).toBeLessThan(start.z - 1);
-    expect(car.entity.transform.yaw).toBeGreaterThan(.1);
-    const yaw = 2;
-    car.physics.body.setRotation({ x: 0, y: Math.sin(yaw / 2), z: 0, w: Math.cos(yaw / 2) }, true);
-    car.physics.body.setLinvel({ x: Math.cos(yaw) * 5, y: 0, z: -Math.sin(yaw) * 5 }, true); car.physics.postPhysics();
-    const left = emptyInput(); left.move = { x: -Math.SQRT1_2, z: Math.SQRT1_2 };
-    world.applyInput(left, 'keyboard'); world.update();
-    expect(car.physics.intent.throttle, 'lateral request before full screen-up alignment stays a forward turn').toBeGreaterThan(0);
-    expect(car.physics.intent.steer).toBeGreaterThan(0);
-    const behind = emptyInput(), heading = car.entity.transform.yaw;
-    behind.move = { x: -Math.cos(heading), z: Math.sin(heading) };
-    world.applyInput(behind, 'keyboard'); world.update();
-    expect(car.physics.intent.throttle, 'a request behind selects reverse').toBeLessThan(0);
+    // A turns the vehicle to its own left at speed in every heading; D to its right. The screen/camera has no say.
+    for (const yaw of [0, Math.PI / 2, Math.PI, -Math.PI / 2]) {
+      for (const side of [1, -1]) {
+        car.physics.body.setRotation({ x: 0, y: Math.sin(yaw / 2), z: 0, w: Math.cos(yaw / 2) }, true);
+        car.physics.body.setLinvel({ x: Math.cos(yaw) * 6, y: 0, z: -Math.sin(yaw) * 6 }, true); car.physics.body.setAngvel({ x: 0, y: 0, z: 0 }, true); car.physics.postPhysics();
+        const turn = emptyInput(); turn.drive = { throttle: 1, steer: side };
+        const before = car.entity.transform.yaw;
+        for (let i = 0; i < 30; i++) { world.applyInput(turn, 'keyboard'); world.update(); }
+        const change = Math.atan2(Math.sin(car.entity.transform.yaw - before), Math.cos(car.entity.transform.yaw - before));
+        expect(Math.sign(change), `${side > 0 ? 'A' : 'D'} turns the vehicle ${side > 0 ? 'left' : 'right'} heading ${yaw.toFixed(2)}`).toBe(side);
+        expect(Math.abs(change)).toBeGreaterThan(.1);
+      }
+    }
+    // S at speed brakes first, then reverses.
+    car.physics.body.setRotation({ x: 0, y: 0, z: 0, w: 1 }, true); car.physics.body.setLinvel({ x: 6, y: 0, z: 0 }, true); car.physics.body.setAngvel({ x: 0, y: 0, z: 0 }, true); car.physics.postPhysics();
+    const back = emptyInput(); back.drive = { throttle: -1, steer: 0 };
+    world.applyInput(back, 'keyboard'); world.update();
+    expect(car.physics.intent.throttle).toBeLessThan(0);
     expect(car.physics.braking, 'forward momentum brakes before reversing').toBe(true);
+    for (let i = 0; i < 360 && car.physics.forwardSpeed > -.5; i++) { world.applyInput(back, 'keyboard'); world.update(); }
+    expect(car.physics.forwardSpeed, 'holding S past standstill reverses').toBeLessThan(-.5);
+    // A while reversing: the front wheels point left, so the car backs up to the right (nose swings clockwise), like a real car.
+    const rev = emptyInput(); rev.drive = { throttle: -1, steer: 1 }; const before = car.entity.transform.yaw;
+    for (let i = 0; i < 60; i++) { world.applyInput(rev, 'keyboard'); world.update(); }
+    const swing = Math.atan2(Math.sin(car.entity.transform.yaw - before), Math.cos(car.entity.transform.yaw - before));
+    expect(swing, 'reversing with the wheels left rotates the vehicle clockwise (right)').toBeLessThan(0);
   } finally { world.dispose(); }
 }
 
