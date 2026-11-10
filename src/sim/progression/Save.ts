@@ -8,7 +8,7 @@ import { validAftermath } from './carryover';
 import type { EntitySnapshot } from '../world/types';
 export const SAVE_KEY='minor-incident.campaign';
 export const SAVE_ERROR='Save could not be loaded';
-export type SaveResult={status:'empty'}|{status:'ok';save:CampaignSave}|{status:'error';message:string};
+export type SaveResult={status:'empty'}|{status:'ok';save:CampaignSave;dropped?:string[]}|{status:'error';message:string};
 const record=(v:unknown):v is Record<string,unknown>=>!!v&&typeof v==='object'&&!Array.isArray(v);
 const strings=(v:unknown):v is string[]=>Array.isArray(v)&&v.every(s=>typeof s==='string')&&new Set(v).size===v.length;
 /** Bounded L5 carryover records preserve the people, rather than respawning replacements. */
@@ -187,8 +187,25 @@ export function decodeSave(text:string|null):SaveResult {
       const [campaign, view, current] = parts;
       raw = { ...campaign, cureResume: { ...view, current, checkpoint: structuredClone(current) } };
     } else raw = JSON.parse(text);
-    const save=migrate(raw);return validateSave(save)?{status:'ok',save:structuredClone(save)}:{status:'error',message:SAVE_ERROR};
+    const save=migrate(raw);
+    if(validateSave(save))return {status:'ok',save:structuredClone(save)};
+    // r28: a mid-level resume record written by an older build (e.g. L10 steps renamed in batch 60) must never cost the
+    // whole campaign. Drop only the mid-level record; the player keeps gear, upgrades and progress and restarts that level.
+    const salvaged=salvage(save);
+    return salvaged?{status:'ok',save:structuredClone(salvaged.save),dropped:salvaged.dropped}:{status:'error',message:SAVE_ERROR};
   }catch{return {status:'error',message:SAVE_ERROR};}
+}
+/** Mid-level records that can be discarded without touching campaign progress (the level restarts from its start). */
+const resumeRecords=['cureResume','l9Crash','transport'] as const;
+function salvage(raw:unknown):{save:CampaignSave;dropped:string[]}|null {
+  if(!record(raw)||!resumeRecords.some(k=>raw[k]!==undefined))return null;
+  const copy:Record<string,unknown>={...raw},dropped:string[]=[];
+  for(const key of resumeRecords){
+    if(copy[key]===undefined)continue;
+    delete copy[key];dropped.push(key);
+    if(validateSave(copy))return {save:copy as unknown as CampaignSave,dropped};
+  }
+  return null;
 }
 /** Options.js delegates persistence to Audio.js (Bruno Simon, MIT): restore/store at the browser boundary.
  * Injected storage keeps migration/validation testable without DOM or a singleton. */

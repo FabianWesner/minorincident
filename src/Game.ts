@@ -23,6 +23,7 @@ import { applyCampaign, campaignLoadout } from './sim/progression/apply';
 import { SaveStore } from './sim/progression/Save';
 import { completeCampaignLevel, recordL8Transport } from './sim/progression/carryover';
 import type { SurvivorVariant } from './data/survivor';
+import type { MissionCheckpoint } from './sim/missions/types';
 import { performanceLevels, installPerformanceLevel } from '../tests/fixtures/scenarios/performance';
 import { Quality, type QualitySetting } from './core/Quality';
 import { PerfOverlay } from './debug/performance/PerfOverlay';
@@ -231,7 +232,7 @@ export class Game {
     } catch { /* Best effort: a later handover can use the normal loading path. */ }
     loadMeasure('level:l8-prefetch', start);
   }
-  loadLevel(id:string,opts?:{seed?:number;tier?:Tier;checkpoint?:string;progression?:ProgressionPreset;source?:{composition:LevelComposition;layouts:DistrictLayout[]};setup?:(world:SimWorld)=>void;record?:boolean}, performanceScenario?: string, speculative = false):Promise<void>{
+  loadLevel(id:string,opts?:{seed?:number;tier?:Tier;checkpoint?:string;progression?:ProgressionPreset;source?:{composition:LevelComposition;layouts:DistrictLayout[]};setup?:(world:SimWorld)=>void;record?:boolean;resume?:{current:MissionCheckpoint;checkpoint:MissionCheckpoint}}, performanceScenario?: string, speculative = false):Promise<void>{
     // The player picked a level while one loads behind the menus: finish it at full speed.
     if (!speculative) {
       this.transition.begin(id);
@@ -335,6 +336,8 @@ export class Game {
         if (l8) await l8;
         if (performanceScenario && performanceLevels[performanceScenario].spot) this.view.preset(performanceLevels[performanceScenario].spot);
         if (id === 'L9') this.world.missions?.begin();
+        // QA fixtures (tests/fixtures/saves/qa): resume a captured mission snapshot at an arbitrary point (L8 arenas). L10 uses cureResume.
+        if (opts?.resume && id !== 'L10' && this.world.missions) { this.world.missions.begin(); this.world.missions.loadResume(opts.resume); }
         if (id === 'L10' && this.campaign?.cureResume?.cameraZoom !== undefined && !opts?.checkpoint) {
           this.view.advance(0); // Apply the restored held weapon's cap before restoring its zoom.
           this.view.view.zoom(Math.log(this.campaign.cureResume.cameraZoom / this.view.view.getState().targetZoom), true);

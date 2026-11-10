@@ -1,5 +1,7 @@
 // Save, load, Continue and the level handovers: one code path carries the courier's arsenal, upgrades and
 // world state through all ten levels. A regression here costs players their weapons (P1 10-20: "I lost the shotgun").
+import { readFileSync } from 'node:fs';
+import { gunzipSync } from 'node:zlib';
 import { expect, test, vi } from 'vitest';
 import { epilogueSurvivorLines } from '../../src/data/epilogueSurvivors';
 import { action, catalog } from '../../src/data/actions/catalog';
@@ -192,6 +194,38 @@ test('save decoding: presets round-trip, v0 migrates, corrupt/unknown data and s
   expect(store.write(cure)).toBe(true);
   expect(entries.get('minor-incident.campaign')!.startsWith('minor-incident.gzip1:')).toBe(true);
   expect(store.load()).toEqual({ status: 'ok', save: cure });
+
+  // r28: saves written by the PROD builds (b59 = 2741447, b60 = 1938e59a) at every level. Players must never lose a campaign
+  // because a mission was reworked: level-select saves and L9 crash records decode as written; an L10 resume record that
+  // no longer matches the mission definition (b59 steps) is dropped, keeping gear and progress, never the whole save.
+  const dir = new URL('../fixtures/saves/compat/', import.meta.url);
+  const read = (name: string) => gunzipSync(readFileSync(new URL(name, dir))).toString();
+  const expand = (text: string) => { const s = JSON.parse(text); if (s.cureResume?.checkpoint === '$same') s.cureResume.checkpoint = structuredClone(s.cureResume.current); return JSON.stringify(s); };
+  for (const tag of ['b59', 'b60']) {
+    const campaign = JSON.parse(readFileSync(new URL(`${tag}-campaign.json`, dir), 'utf8')) as Record<string, string>;
+    for (let level = 2; level <= 10; level++) {
+      const r = decodeSave(campaign[`L${level}`]);
+      expect(r.status, `${tag} L${level}`).toBe('ok');
+      expect(r.status === 'ok' && r.save.unlockedLevel).toBe(level);
+    }
+    const crash = decodeSave(read(`${tag}-l9-crash-driving.json.gz`));
+    expect(crash.status, `${tag} l9 crash`).toBe('ok');
+    expect(crash.status === 'ok' && !!crash.save.l9Crash && !crash.dropped).toBe(true);
+  }
+  const l10 = (name: string) => decodeSave(expand(read(name)));
+  for (const name of ['b59-l10-01-cure-crash', 'b59-l10-06-cure-research']) {
+    const r = l10(`${name}.json.gz`);
+    expect(r.status, name).toBe('ok');
+    expect(r.status === 'ok' && r.dropped, name).toEqual(['cureResume']);
+    expect(r.status === 'ok' && r.save.crossingHandover && r.save.unlockedLevel === 10 && r.save.ownedActions.includes('weapon.fire-axe') && r.save.cureResume === undefined, name).toBeTruthy();
+  }
+  for (const name of ['b60-l10-01-cure-crash', 'b60-l10-27-cure-disperse-ready']) {
+    const r = l10(`${name}.json.gz`);
+    expect(r.status, name).toBe('ok');
+    expect(r.status === 'ok' && !r.dropped && !!r.save.cureResume, name).toBe(true);
+  }
+  // A damaged campaign (not just a stale resume record) still fails safely.
+  expect(decodeSave(JSON.stringify({ ...JSON.parse(expand(read('b60-l10-01-cure-crash.json.gz'))), seed: 'x' })).status).toBe('error');
 });
 
 // N10: the destructive L9 -> L10 crossing commits once, after the crawl, and Continue resumes the committed save.
