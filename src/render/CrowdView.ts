@@ -310,6 +310,9 @@ export class CrowdView extends Group {
       const key = crowdModelKey(def);
       const role = dogCoat(def.id) ? 'dog' : def.id.startsWith('infected.') ? def.id.slice(9) : 'runner', asset = def.asset;
       const cpuKey = `${def.id}|${asset}|${def.decay ?? ''}|${lod}|${this.low ? 'low' : 'high'}`;
+      // The retained far surface of an ordinary body is LOD2. The zebra's LOD2 (647 triangles of thin leg and flank strips, hooves
+      // cut loose) read as a pile of striped shards once frozen; its permanent corpse is the 1.7k-triangle LOD1 (r27-visp2).
+      const corpseLod: CrowdLod = role === 'zebra' ? 'lod1' : 'lod2';
       // Keep the selected CPU data across the async model load. The zoo can
       // evict it from the bounded cache meanwhile; a second lookup then used
       // neither the cached body nor a delivery and rebaked every Alpha.
@@ -332,6 +335,7 @@ export class CrowdView extends Group {
       // The retained Alpha corpse is LOD0. Establish its own atlas binding before
       // a far batch prepares pages from that source, regardless of arrival order.
       if (this.world.scenario === 'L10' && alpha && lod === 'lod2') { await this.requestBatch(def, 'lod0'); if (this.disposed) return; }
+      if (corpseLod === 'lod1' && lod === 'lod2') { await this.requestBatch(def, 'lod1'); if (this.disposed) return; }
       // Level handover (10-20): the finished batch geometry (baked, merged, simplified, packed, appearance-marked) is
       // immutable CPU data that depends only on the model, LOD and tier. Reusing it across levels skips ~1 s of main-thread
       // work per level at 1x (bake + mergeVertices + marking), four times that on a throttled CPU; the scene gets clones.
@@ -365,7 +369,7 @@ export class CrowdView extends Group {
       if (!shipped) { deinterleaveGeometry(baked.geometry);
       const indexed = mergeCrowdVertices(baked.geometry); baked.geometry.dispose(); baked.geometry = indexed; }
       if (this.world.scenario === 'L8') { await loadGate.wait(); if (this.disposed) { baked.geometry.dispose(); return; } }
-      if (lod === 'lod2') {
+      if (lod === corpseLod) {
         if (atlas && human) {
           // The authored textured tier already meets its budget. Keep its UV
           // surface for both live actors and frozen permanent bodies.
@@ -570,7 +574,10 @@ export class CrowdView extends Group {
         const surface = { bind: bindSurface, textures: [atlas], pose: texture, bindRow: poses.bindRow };
         crowdSurfaceBindings.set(mesh.geometry, surface);
         const body = this.corpseGeometry.get(key);
-        if (body && (!sharedAlpha || this.world.scenario === 'L10' && lod === 'lod0')) crowdSurfaceBindings.set(body, surface);
+        if (body && (!sharedAlpha || this.world.scenario === 'L10' && lod === 'lod0') && (lod === corpseLod || human || alpha || role === 'dog' || role === 'firefighter')) crowdSurfaceBindings.set(body, surface);
+        // r27-visp2: a frozen zoo-animal corpse keeps the surface of its source LOD (own UV layout and atlas). Every other LOD's
+        // batch used to rebind the corpse to its own atlas as it loaded (L8: the first zebra seen up close), so settled zebras sampled
+        // stripes from the wrong atlas and read as a pile of scrambled triangles. Only the source LOD's batch binds it.
       }
       Object.defineProperty(mesh, 'isInstancedMesh', { value: false, writable: true });
       mesh.userData.staticInstanceAttributes = true;

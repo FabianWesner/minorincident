@@ -27,6 +27,7 @@ import { HeightStepEdges } from '../HeightStepEdges';
 import { batchPerimeterPosts, type PerimeterBox } from '../PerimeterPosts';
 import { NightAccents, nightAccents } from '../NightAccents';
 import { fairhavenDressing } from './FairhavenDressing';
+import { interiorLiner, linedBuildings } from './InteriorLiner';
 import { zooExitGate } from './zooExitGate';
 import { removeL7LakeWall } from './l7LakeWall';
 import { cureAprons } from '../../levels/L10/forecourts';
@@ -390,6 +391,7 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
           }
           const footBox = new Box3().setFromObject(prototypes[0]), dimensions = footBox.getSize(new Vector3()), footCenter = footBox.getCenter(new Vector3());
           parts.lodBatches.push({ foot: { cx: footCenter.x, cz: footCenter.z, hx: dimensions.x / 2, hz: dimensions.z / 2 }, hero, near, far, refs, id, decay, lit: power === 'true', loaded: false, nearLoaded, farLoaded, heroShown: nearLoaded ? 'lod1' : 'lod2', bands: [], origin: d.origin, height: dimensions.y, radius: Math.hypot(dimensions.x, dimensions.y, dimensions.z) * .55, half: Math.max(dimensions.x, dimensions.z) / 2 });
+          if (linedBuildings(id)) { const liner = interiorLiner(id, refs, deps.materials); root.add(liner.mesh); parts.ownedGeometry.push(liner.geometry); }
         }),
       );
       // Dynamic nav-blockers use the same positions/extents as their Rapier colliders.

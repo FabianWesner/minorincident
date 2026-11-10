@@ -1,0 +1,32 @@
+{
+ "name": "r27-animal-corpses",
+ "note": "r27-visp2: settled corpses of every zoo animal, game camera.",
+ "seed": 22,
+ "ground": "asphalt",
+ "time": "L4",
+ "size": 60,
+ "dof": false,
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [-9, 12], "state": "idle" },
+  { "id": "zebra", "kind": "infected", "archetype": "infected.lion", "look": { "model": "infected.zebra" }, "at": [-9, 0], "state": "idle" },
+  { "id": "flamingo", "kind": "infected", "archetype": "infected.lion", "look": { "model": "infected.flamingo" }, "at": [-6, 0], "state": "idle" },
+  { "id": "monkey", "kind": "infected", "archetype": "infected.lion", "look": { "model": "infected.monkey" }, "at": [-3, 0], "state": "idle" },
+  { "id": "lion", "kind": "infected", "archetype": "infected.lion", "look": { "model": "infected.lion" }, "at": [0, 0], "state": "idle" },
+  { "id": "lioness", "kind": "infected", "archetype": "infected.lion", "look": { "model": "infected.lioness" }, "at": [3, 0], "state": "idle" },
+  { "id": "gorilla", "kind": "infected", "archetype": "infected.lion", "look": { "model": "infected.gorilla" }, "at": [6, 0], "state": "idle" },
+  { "id": "elephant", "kind": "infected", "archetype": "infected.lion", "look": { "model": "infected.elephant" }, "at": [10, 0], "state": "idle" }
+ ],
+ "camera": { "mode": "game", "target": [0, 0.2, 0], "zoom": 1.0 },
+ "frames": 82,
+ "shots": [80],
+ "script": [
+  { "frame": 5, "actor": "zebra", "do": { "corpse": true } },
+  { "frame": 5, "actor": "flamingo", "do": { "corpse": true } },
+  { "frame": 5, "actor": "monkey", "do": { "corpse": true } },
+  { "frame": 5, "actor": "lion", "do": { "corpse": true } },
+  { "frame": 5, "actor": "lioness", "do": { "corpse": true } },
+  { "frame": 5, "actor": "gorilla", "do": { "corpse": true } },
+  { "frame": 5, "actor": "elephant", "do": { "corpse": true } }
+ ],
+ "expect": { "consoleErrors": 0 }
+}

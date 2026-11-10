@@ -3,7 +3,7 @@ import { weatherSurface } from './WeatherView';
 // Adapted from Bruno Simon folio-2025 World/Bushes.js (MIT).
 // Adapted from Bruno Simon folio-2025 World/Trees.js (MIT).
 import { BufferGeometry, DataTexture, DoubleSide, Float32BufferAttribute, Frustum, Group, InstancedMesh, LinearFilter, Matrix4, Object3D, RGBAFormat, Sphere, Vector2, Vector3 } from 'three/webgpu';
-import { attribute, min, mix, mx_noise_float, normalWorld, positionLocal, positionView, positionWorld, rotateUV, screenSize, screenUV, smoothstep, texture, uniform, uv, varying, vec2, vec3 } from 'three/tsl';
+import { attribute, dot, float, fract, min, mix, mx_noise_float, normalWorld, positionLocal, positionView, positionWorld, rotateUV, screenCoordinate, screenSize, screenUV, smoothstep, texture, uniform, uv, varying, vec2, vec3 } from 'three/tsl';
 import { Rng } from '../core/Rng';
 import { paletteTokens, type PaletteToken } from '../data/palette';
 import type { Materials } from './Materials';
@@ -65,6 +65,9 @@ export class Foliage extends Group {
   private readonly batches: Batch[] = [];
   private readonly player = seeThrough.center;
   private readonly target = uniform(new Vector2(-10, -10));
+  /** Arena canopy thinning (r27-visp2): world x, z and radius of a disc whose crowns keep only a sparse share of their leaf cards, so the
+   * fight below stays readable (monkey arena: opaque crowns hid the pack and the survivor group). Radius 0 = off. */
+  private readonly thin = uniform(new Vector3(0, 0, 0));
   private readonly playerDepth = seeThrough.depth;
   private readonly targetDepth = uniform(0);
   private readonly holeRadius = seeThrough.radius;
@@ -87,7 +90,11 @@ export class Foliage extends Group {
     const aspect = vec2(screenSize.x.div(screenSize.y), 1);
     const hole = (center: typeof this.player, depth: typeof this.playerDepth, radius = this.holeRadius, inner = .55) => positionView.z.greaterThan(depth).select(smoothstep(radius.mul(inner), radius, screenUV.sub(center).mul(aspect).length()), 1);
     // Clear combat space through foreground crowns; solid walls keep their tighter body-sized cut.
-    material.opacityNode = leaf.mul(min(hole(this.player, this.playerDepth, this.holeRadius, .85), hole(this.target, this.targetDepth)));
+    // Inside the thinning disc, crown cards above head height survive only as a sparse dither (full thinning in the inner part, a 5 m ramp at the rim).
+    const rim = this.thin.z.sub(positionWorld.xz.sub(this.thin.xy).length()).div(5).clamp(0, 1);
+    const noise = fract(fract(dot(screenCoordinate.xy.floor(), vec2(.06711056, .00583715))).mul(52.9829189));
+    const sparse = positionWorld.y.greaterThan(1.7).and(this.thin.z.greaterThan(0)).select(noise.greaterThanEqual(rim.mul(.58)).select(float(1), float(0)), float(1));
+    material.opacityNode = leaf.mul(sparse).mul(min(hole(this.player, this.playerDepth, this.holeRadius, .85), hole(this.target, this.targetDepth)));
     material.maskShadowNode = leaf.greaterThan(.5);
     material.alphaTest = .5; material.alphaToCoverage = !this.low; material.side = DoubleSide; material.transparent = false;
     material.positionNode = positionLocal.add(vec3(wind.mul(.035), 0, wind.mul(.02)).mul(attribute('leafWeight', 'float')));
@@ -111,6 +118,8 @@ export class Foliage extends Group {
       reference.position.y = reference.matrix.elements[13]; reference.scale.y = reference.userData.foliageScaleY * height;
     }
   }
+  /** Thin the crowns over a world disc (see `thin`); radius 0 restores them. */
+  setThinZone(x: number, z: number, radius: number): void { this.thin.value.set(x, z, radius); }
   setQuality(low: boolean): void {
     this.low = low; this.geometry.setDrawRange(0, (low ? 40 : 80) * 6);
     for (const { mesh, material } of this.batches) {
