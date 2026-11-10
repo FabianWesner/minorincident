@@ -1,0 +1,105 @@
+{
+ "name": "r32-screamer-roar-close-day",
+ "note": "r32-alphas: screamer Alpha, alpha.roar; courier god mode at the origin; close-day.",
+ "seed": 3,
+ "ground": "asphalt",
+ "size": 40,
+ "time": "L4",
+ "dof": false,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "loadout": [
+    "weapon.bat",
+    "weapon.army-mg"
+   ]
+  },
+  {
+   "id": "z",
+   "kind": "infected",
+   "archetype": "infected.alpha",
+   "at": [
+    4,
+    0
+   ],
+   "yaw": 180,
+   "state": "idle",
+   "alphaType": "screamer"
+  },
+  {
+   "id": "r0",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    12,
+    -4
+   ],
+   "yaw": 180,
+   "state": "idle"
+  },
+  {
+   "id": "r1",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    13,
+    -2
+   ],
+   "yaw": 180,
+   "state": "idle"
+  },
+  {
+   "id": "r2",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    12,
+    0
+   ],
+   "yaw": 180,
+   "state": "idle"
+  },
+  {
+   "id": "r3",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    13,
+    2
+   ],
+   "yaw": 180,
+   "state": "idle"
+  }
+ ],
+ "script": [
+  {
+   "frame": 0,
+   "actor": "z",
+   "do": {
+    "special": "alpha.roar",
+    "target": "courier"
+   }
+  }
+ ],
+ "camera": {
+  "mode": "close",
+  "target": [
+   2.4,
+   1.1,
+   0
+  ],
+  "radius": 9,
+  "azimuth": 0
+ },
+ "frames": 200,
+ "trace": true,
+ "expect": {
+  "consoleErrors": 0
+ }
+}

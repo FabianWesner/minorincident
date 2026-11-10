@@ -1,0 +1,61 @@
+{
+ "name": "r32-brute-grab-human-close-night",
+ "note": "r32-alphas: brute Alpha, alpha.grab-human; courier god mode at the origin; close-night.",
+ "seed": 3,
+ "ground": "asphalt",
+ "size": 40,
+ "time": "night",
+ "dof": false,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "loadout": [
+    "weapon.bat",
+    "weapon.army-mg"
+   ]
+  },
+  {
+   "id": "z",
+   "kind": "infected",
+   "archetype": "infected.alpha",
+   "at": [
+    2,
+    0
+   ],
+   "yaw": 180,
+   "state": "idle",
+   "alphaType": "brute"
+  }
+ ],
+ "script": [
+  {
+   "frame": 0,
+   "actor": "z",
+   "do": {
+    "special": "alpha.grab-human",
+    "target": "courier"
+   }
+  }
+ ],
+ "camera": {
+  "mode": "close",
+  "target": [
+   1.2,
+   1.1,
+   0
+  ],
+  "radius": 9,
+  "azimuth": 0
+ },
+ "frames": 220,
+ "trace": true,
+ "expect": {
+  "consoleErrors": 0
+ }
+}

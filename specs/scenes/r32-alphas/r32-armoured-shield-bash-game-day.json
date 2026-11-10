@@ -1,0 +1,59 @@
+{
+ "name": "r32-armoured-shield-bash-game-day",
+ "note": "r32-alphas: armoured Alpha, alpha.shield-bash; courier god mode at the origin; game-day.",
+ "seed": 3,
+ "ground": "asphalt",
+ "size": 40,
+ "time": "L4",
+ "dof": false,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "loadout": [
+    "weapon.bat",
+    "weapon.army-mg"
+   ]
+  },
+  {
+   "id": "z",
+   "kind": "infected",
+   "archetype": "infected.alpha",
+   "at": [
+    2,
+    0
+   ],
+   "yaw": 180,
+   "state": "idle",
+   "alphaType": "armoured"
+  }
+ ],
+ "script": [
+  {
+   "frame": 0,
+   "actor": "z",
+   "do": {
+    "special": "alpha.shield-bash",
+    "target": "courier"
+   }
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   1.2,
+   0
+  ],
+  "zoom": 1.5
+ },
+ "frames": 180,
+ "trace": true,
+ "expect": {
+  "consoleErrors": 0
+ }
+}

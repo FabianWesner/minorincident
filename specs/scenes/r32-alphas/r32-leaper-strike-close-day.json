@@ -1,0 +1,58 @@
+{
+ "name": "r32-leaper-strike-close-day",
+ "note": "r32-alphas: leaper Alpha, strike; courier god mode at the origin; close-day.",
+ "seed": 3,
+ "ground": "asphalt",
+ "size": 40,
+ "time": "L4",
+ "dof": false,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "loadout": [
+    "weapon.bat",
+    "weapon.army-mg"
+   ]
+  },
+  {
+   "id": "z",
+   "kind": "infected",
+   "archetype": "infected.alpha",
+   "at": [
+    3.2,
+    0
+   ],
+   "yaw": 180,
+   "state": "idle",
+   "alphaType": "leaper"
+  }
+ ],
+ "script": [
+  {
+   "frame": 10,
+   "actor": "z",
+   "do": "chase"
+  }
+ ],
+ "camera": {
+  "mode": "close",
+  "target": [
+   1.92,
+   1.1,
+   0
+  ],
+  "radius": 9,
+  "azimuth": 0
+ },
+ "frames": 200,
+ "trace": true,
+ "expect": {
+  "consoleErrors": 0
+ }
+}

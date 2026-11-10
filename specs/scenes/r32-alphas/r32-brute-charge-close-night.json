@@ -1,0 +1,61 @@
+{
+ "name": "r32-brute-charge-close-night",
+ "note": "r32-alphas: brute Alpha, alpha.charge; courier god mode at the origin; close-night.",
+ "seed": 3,
+ "ground": "asphalt",
+ "size": 40,
+ "time": "night",
+ "dof": false,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "loadout": [
+    "weapon.bat",
+    "weapon.army-mg"
+   ]
+  },
+  {
+   "id": "z",
+   "kind": "infected",
+   "archetype": "infected.alpha",
+   "at": [
+    8,
+    0
+   ],
+   "yaw": 180,
+   "state": "idle",
+   "alphaType": "brute"
+  }
+ ],
+ "script": [
+  {
+   "frame": 0,
+   "actor": "z",
+   "do": {
+    "special": "alpha.charge",
+    "target": "courier"
+   }
+  }
+ ],
+ "camera": {
+  "mode": "close",
+  "target": [
+   4.0,
+   1.1,
+   0
+  ],
+  "radius": 15,
+  "azimuth": 0
+ },
+ "frames": 200,
+ "trace": true,
+ "expect": {
+  "consoleErrors": 0
+ }
+}

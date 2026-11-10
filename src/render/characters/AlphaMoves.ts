@@ -9,7 +9,7 @@ interface MoveShape { clip: AlphaMoveClip; split: number; end: number; activeTic
 const shapes: Partial<Record<InfectedSpecialMove, MoveShape>> = {
   'alpha.charge': { clip: 'alpha-charge', split: .5, end: 1, activeTicks: 24, loopTicks: 24, recovery: .14 },
   'alpha.ground-slam': { clip: 'alpha-slam', split: .55, end: .64, activeTicks: 6 },
-  'alpha.grab-human': { clip: 'alpha-grab', split: .5, end: .8, activeTicks: 24 },
+  'alpha.grab-human': { clip: 'alpha-grab', split: .5, end: .8, activeTicks: 10 },
   'alpha.grab-throw': { clip: 'alpha-heave', split: .6, end: .72, activeTicks: 8 },
   'alpha.living-missile': { clip: 'alpha-heave', split: .6, end: .72, activeTicks: 8 },
   'alpha.barrage': { clip: 'alpha-heave', split: .55, end: .8, activeTicks: 20, loopTicks: 20 },
@@ -44,7 +44,8 @@ export class AlphaMoves {
       const started = a.recoveryUntil - recoveryTicks, r = clamp((renderTick - started) / recoveryTicks);
       // Cancelled before the strike: the telegraph broke (hit during the inhale/reach) and the body reels instead.
       if (started < a.activeTick) return { clip: 'stagger-left', phase: r };
-      const from = shape.recovery ?? shape.end;
+      // Slam, roar, bash and single throws resolve on one tick: their strike section plays at the start of the recovery.
+      const from = shape.recovery ?? (started - a.activeTick < 4 ? shape.split : shape.end);
       return { clip: shape.clip, phase: shape.recovery !== undefined && shape.clip === 'alpha-charge' ? from : from + (1 - from) * r };
     }
     if (b.state === 'attack') {
