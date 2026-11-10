@@ -433,6 +433,17 @@ function checkLowBoardingCorner(w: SimWorld) {
   Object.assign(follower.transform, { x: -35, z: 50, y: .7 });
   Object.assign(player.survivor!.velocity, { x: 0, z: -4.5 });
   w.missions!.state.steps.departure.status = 'active';
+  // r26-vqa: before the courier reaches the bus ring nobody boards, so the HUD must say that and point at the bus,
+  // not read "Waiting for <survivor> · 3 m" while the queue stands beside the courier.
+  const departure = w.l7Departure!;
+  if (departure.state.phase === 'waiting') {
+    const status = departure.boardingStatus();
+    expect(status.waiting).toMatch(/^Go to the bus to start boarding · \d+ m$/);
+    expect(status.target).toMatchObject({ id: departure.state.busId, name: 'the bus' });
+    departure.state.phase = 'boarding';
+    expect(departure.boardingStatus().waiting).toMatch(/^Waiting for /);
+    departure.state.phase = 'waiting';
+  }
   const move = w.npcs!.move; let target = { x: 0, z: 0 };
   w.npcs!.move = (_entity, at) => { target = { x: at.x, z: at.z }; return true; };
   try {

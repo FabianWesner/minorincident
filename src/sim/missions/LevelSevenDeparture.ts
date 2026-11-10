@@ -221,6 +221,12 @@ export class LevelSevenDeparture {
     const waiting = living.filter(r => !s.boarded.includes(r.id));
     const missing = waiting.map(r => ({ r, distance: distance(w.entities.get(r.id)!.transform, this.door) })).sort((a, b) => a.distance - b.distance)[0];
     const count = `Aboard ${living.length - waiting.length}/${living.length}`;
+    // Boarding only starts when the courier reaches the bus ring (r26-vqa: the HUD read "Waiting for Marcus · 3 m"
+    // while the queue stood beside the courier). Say what to do and point at the bus, not at a survivor.
+    if (s.phase === 'waiting' && living.length) {
+      const player = w.entities.get(1)!.transform, ring = Math.max(0, Math.ceil(Math.hypot(player.x - this.boarding[0], player.z - this.boarding[2]) - cfg.boardRadius));
+      return { count, waiting: `Go to the bus to start boarding · ${ring} m`, target: { x: this.boarding[0], z: this.boarding[2], id: s.busId, name: 'the bus' } };
+    }
     const name = missing && survivorName(w.entities.get(missing.r.id)!);
     const entity = missing && w.entities.get(missing.r.id)!;
     return {
