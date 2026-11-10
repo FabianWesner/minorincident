@@ -122,7 +122,7 @@ No flips and no hard landings occurred. The shortcut ditch was not jumped in the
     - a handbrake at speed throws it off, and it survives;
     - thrown debris becomes a road obstacle on the APC lane (z within 8 m) with a live collider, and only debris still in its flight is airborne.
   - A first remote run of the same files failed only in `zooParkedBoarding` / `checkL8Cues` (`breached` false). That also failed on main 6f3a9604 and was fixed on main by 56e762fb / 280156ee.
-- `npm run typecheck`: clean. `npm run lint`: clean. `npm run test:gate` (remote): see the final report.
+- `npm run typecheck`: clean. `npm run lint`: clean. `npm run test:gate` (remote): 27 files, 106 passed, 1 skipped.
 
 ## Real play by keys (headless, one browser via `tools/e2e-lock.sh`, port 4915, `build:qa` + `vite preview`; preview stopped)
 
