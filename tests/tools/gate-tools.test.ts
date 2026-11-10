@@ -64,13 +64,17 @@ test('browser pool admission backs off under WindowServer pressure, keeps a one-
   expect(classified.ignoredIdle.map(p => p.pid)).toEqual([1, 11]);
   const review = JSON.parse(readFileSync('docs/qa/reviews/L5-11.json', 'utf8')) as ReviewDecision;
   expect(validateReview(review, 'L5-11').status).toBe('PASS');
-  const currentCommit = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
-  const sourceDigest = reviewSourceDigest('L1');
-  const reviewed: ReviewDecision = { ...review, row: 'L1-01', commit: currentCommit, sourceDigest };
-  expect(reviewFreshness(reviewed, 'L1')).toBe('FRESH');
-  expect(reviewFreshness({ ...reviewed, sourceDigest: undefined }, 'L1')).toBe('FRESH');
-  expect(reviewFreshness({ ...reviewed, sourceDigest: '1'.repeat(64) }, 'L1')).toBe('STALE');
-  expect(reviewFreshness({ ...reviewed, sourceDigest: undefined, commit: 'f'.repeat(40) }, 'L1')).toBe('STALE');
+  // Remote runners get a synced copy without .git: the freshness checks need a real HEAD, so they run only where git works.
+  let currentCommit = '';
+  try { currentCommit = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); } catch { /* no git repo on the runner */ }
+  if (currentCommit) {
+    const sourceDigest = reviewSourceDigest('L1');
+    const reviewed: ReviewDecision = { ...review, row: 'L1-01', commit: currentCommit, sourceDigest };
+    expect(reviewFreshness(reviewed, 'L1')).toBe('FRESH');
+    expect(reviewFreshness({ ...reviewed, sourceDigest: undefined }, 'L1')).toBe('FRESH');
+    expect(reviewFreshness({ ...reviewed, sourceDigest: '1'.repeat(64) }, 'L1')).toBe('STALE');
+    expect(reviewFreshness({ ...reviewed, sourceDigest: undefined, commit: 'f'.repeat(40) }, 'L1')).toBe('STALE');
+  }
   const missingHash = structuredClone(review); missingHash.evidence[0].sha256 = '';
   expect(() => validateReview(missingHash)).toThrow(/evidence/);
   const unknownRow = structuredClone(review); unknownRow.row = 'L99-99';
