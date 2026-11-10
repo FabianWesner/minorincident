@@ -39,7 +39,7 @@ the old position); run3 has the final code for every beat.
 - `npx tsc --noEmit`, `npx eslint` on all touched files: clean.
 - Focused: `npx vitest run tests/engine/l10-camera-framing.test.ts` 3/3 (the release/closing staging assertions are folded
   into the existing L10 case because of the 150-case test budget).
-- `npm run test:gate`: see the lane report (first run hit the 240 s budget while the threat audit and a browser ran in parallel; navigation A* passes alone).
+- `npm run test:gate`: 27 files / 107 tests pass, 150/150 cases, 189 s (an earlier run under parallel threat-audit + browser load hit the 240 s budget).
 - `node --import tsx/esm tools/qa/threat-audit.ts --levels L10`: skilled complete, 0 L10 flags (only `PARTIAL_LEVEL_SELECTION`).
 - Scene Lab `qa-l10-epilogue`, `qa-l10-title-credits`: pass, bounds unchanged (Scene Lab scenarios do not create the
   ending view, so these do not show the cinematic; real play above does).
