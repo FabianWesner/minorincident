@@ -463,6 +463,24 @@ export class DistrictView extends Group {
     }
     this.destructionView.update(destruction);
   }
+  /** r23-l7l10perf: the first damaged prop used to build its sliced InstancedGroup (a fresh interleaved static-colors
+   * layout, 83-100 ms frame at L10's first hit). Extract one resident, unprotected object per asset behind the loading
+   * card; the batches stay hidden until damage (revision 0) and later hits reuse the entry. */
+  async prewarmDestruction(destruction: Destruction, limit = 1): Promise<void> {
+    const chosen: Destruction['objects'][number][] = [], assets = new Set<string>();
+    for (const o of destruction.objects) {
+      if (chosen.length >= limit || o.protected || assets.has(o.placement.assetId) || this.destructionView.has(o.id)) continue;
+      if (!this.lodBatches.some(e => e.refs.some(r => r.userData.placementId === o.id))) continue;
+      assets.add(o.placement.assetId); chosen.push(o);
+    }
+    for (const o of chosen) this.loadDestructionSource(o);
+    await Promise.all(chosen.map(o => this.destructionLoads.get(o.id)));
+    if (this.disposed) return;
+    for (const o of chosen) {
+      const source = this.destructionSources.get(o.id);
+      if (source) this.destructionView.extract(o, source, this.destructionSources.get(`${o.id}/wreck`));
+    }
+  }
   private readonly destructionLoads = new Map<string, Promise<void>>();
   private loadDestructionSource(o: Destruction['objects'][number]): void {
     if (this.destructionLoads.has(o.id)) return;

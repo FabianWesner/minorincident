@@ -168,6 +168,13 @@ export class AudioService implements Lifecycle {
         if (document.hidden || !document.hasFocus())
             await this.away();
     }
+    /** Start decoding the banks load() will await (r23-l7l10perf: L7 spent ~55 ms on them after the warm-up). Touches
+     * only the registry's cached bank loads, no world or graph state, so load() later finds them ready. */
+    prefetchL7(): void {
+        if (this.world.scenario !== 'L7')
+            return;
+        void Promise.all([this.registry.prepare('L7', false), ...['pickups', 'weapons'].map(bank => this.registry.load(bank))]).catch(() => { });
+    }
     /** Called after each sim load because EventBus.reset removes listeners. No retained old-world references. */
     async load(): Promise<void> {
         this.reset();
