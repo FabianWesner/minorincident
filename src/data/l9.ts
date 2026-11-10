@@ -103,5 +103,5 @@ export const l9SetPieceTuning = {
   roadblock: { slots: [-6, -3.6, -1.2, 1.2, 3.6, 6], /** Light bodies only: ploughing through is the payoff, heavy stalls belong to the ambient groups. */
     horde: ['infected.runner', 'infected.sprinter', 'infected.runner', 'infected.screamer', 'infected.runner', 'infected.crawler', 'infected.sprinter', 'infected.dog', 'infected.runner', 'infected.runner'] },
   /** Rail stall: the hatch defence gets a leaper on the hull, a thrower and a mixed rush on top of the reinforcement waves. */
-  stall: { leaperAtTicks: 240, throwerAtTicks: 420, rushAtTicks: 900, rush: ['infected.brute', 'infected.screamer', 'infected.runner', 'infected.sprinter', 'infected.armored', 'infected.runner'] },
+  stall: { leaperAtTicks: 0, throwerAtTicks: 120, rushAtTicks: 840, rush: ['infected.brute', 'infected.screamer', 'infected.runner', 'infected.sprinter', 'infected.armored', 'infected.runner'] },
 } as const;
