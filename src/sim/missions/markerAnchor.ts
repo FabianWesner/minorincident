@@ -10,12 +10,17 @@ export const objectiveRingRadius = .65;
  * L3 uses its next open route waypoint so navigation markers guide the player
  * around street closures instead of bearing straight through them.
  */
-export function markerAnchor(mission: (Pick<Mission, 'state' | 'def'> & { world?: Mission['world'] }) | null | undefined): Anchored | null {
+export function markerAnchor(mission: (Pick<Mission, 'state' | 'def'> & { world?: Mission['world']; l8?: Mission['l8'] }) | null | undefined): Anchored | null {
   // L10 final fight (r29-l10mega, PO finding: 'Kill the Mega Alpha' ran for minutes with no direction): the 'mega' step
   // has no authored waypoint, so while it is active the guidance follows the live Mega (HUD distance, edge arrow, minimap pin).
   if (mission?.def.id === 'L10' && mission.state.steps.mega?.status === 'active' && mission.world?.megaPursuit?.alive()) {
     const mega = mission.world.megaPursuit.entity();
     if (mega) return { x: mega.transform.x, z: mega.transform.z, y: mega.transform.y, radius: 2 };
+  }
+  // r31-nadia (PO: 'she is just running away ... I don't know which way to go'): while Nadia leads, guidance follows Nadia herself; at the plaza it is the ring.
+  if (mission?.def.id === 'L8' && mission.l8 && mission.world && mission.state.steps.sanctuary?.status === 'active' && mission.l8.state.guideDone === 0) {
+    const nadia = mission.world.entities.get(mission.l8.state.keeperId);
+    if (nadia) return { x: nadia.transform.x, z: nadia.transform.z, y: nadia.transform.y, radius: 2 };
   }
   const marker = mission?.state.marker;
   if (!mission || !marker) return null;

@@ -66,14 +66,25 @@ export async function checkL8Story(): Promise<void> {
   try {
     const bot = new LevelEightBot(world), nearest = new Map(zoo.state.animals.map(id => [id, Infinity]));
     const cast = [zoo.state.keeperId, zoo.state.haleId, zoo.state.reyesId];
-    let calmHealthy = true;
-    for (let i = 0; i < 3600; i++) {
+    let calmHealthy = true, leadGap = 0;
+    const plaza = mission.def.anchors['central-plaza'];
+    let plazaGroup = '';
+    // r31-nadia: the calm now lasts until Nadia has led the group into the plaza (about 77 s), not a fixed 60 s.
+    for (let i = 0; i < 7200 && !mission.state.states.breached; i++) {
       world.applyInput(bot.sample(), 'keyboard'); world.update();
+      const nadia = world.entities.get(zoo.state.keeperId)!;
+      if (!zoo.state.guideDone && !zoo.state.guideWaiting) leadGap = Math.max(leadGap, Math.hypot(nadia.transform.x - world.entities.get(1)!.transform.x, nadia.transform.z - world.entities.get(1)!.transform.z));
+      if (zoo.state.guideDone === 2 && !plazaGroup && world.tick - zoo.state.guideArrivedAt > 600) {
+        const group = zoo.roster().map(id => world.entities.get(id)!).filter(e => e.health.current > 0);
+        const inside = group.filter(e => Math.hypot(e.transform.x - plaza.x, e.transform.z - plaza.z) <= (plaza.radius ?? 6)).length;
+        plazaGroup = `${inside}/${group.length}`; expect(inside / group.length, 'the group settles inside the plaza ring').toBeGreaterThanOrEqual(.9);
+        expect(Math.hypot(nadia.transform.x - plaza.x, nadia.transform.z - plaza.z), 'Nadia stands inside the ring').toBeLessThanOrEqual(plaza.radius ?? 6);
+      }
       const player = world.entities.get(1)!.transform;
       for (const id of zoo.state.animals) {
         const animal = world.entities.get(id)!;
         nearest.set(id, Math.min(nearest.get(id)!, Math.hypot(player.x - animal.transform.x, player.z - animal.transform.z)));
-        if (i < 3599) {
+        if (!mission.state.states.breached) {
           if (animal.infected || animal.infection || animal.health.current <= 0) calmHealthy = false;
           const species = animal.civilian?.zooAnimal, bounds = species && habitats[species];
           if (!bounds || animal.transform.x < bounds.minX - .1 || animal.transform.x > bounds.maxX + .1 || animal.transform.z < bounds.minZ - .1 || animal.transform.z > bounds.maxZ + .1)
@@ -86,6 +97,9 @@ export async function checkL8Story(): Promise<void> {
       if (world.entities.get(id)?.civilian?.zooAnimal === 'monkey') continue;
       expect(distance, `tour animal ${id} near the real courier route`).toBeLessThan(18);
     }
+    expect(leadGap, 'Nadia never gets more than 12 m ahead of the courier while leading').toBeLessThan(12);
+    expect(zoo.state.guideDone, 'Nadia reached the plaza').toBe(2);
+    expect(lines.indexOf('L8.nadia-lion'), 'the lion line plays at the enclosure, before the plaza greeting').toBeLessThan(lines.indexOf('L8.hale-greeting'));
     expect(lines).toEqual(expect.arrayContaining(['L8.nadia-path', 'L8.nadia-lion', 'L8.broadcast', 'L8.hale-greeting', 'L8.hale-breach']));
     expect(mission.state.states.breached).toBe(true);
     expect(world.entities.get(zoo.state.dogId)!.infected!.variant).toBe('inf.dog-k9');
@@ -142,6 +156,6 @@ export async function checkL8Story(): Promise<void> {
     expect(world.storyLock).toBeNull();
     expect([zoo.state.keeperId, zoo.state.haleId, zoo.state.reyesId]).toEqual(cast);
     for (const id of cast) expect(world.entities.get(id)!.health.current).toBeGreaterThan(0);
-    expect(zoo.state.greetingAt - world.tick).toBe(180);
+    expect(zoo.state.greetingAt - world.tick).toBe(540); // after the gate beat (soldier line, then the HUD line)
   } finally { off(); offBite(); offTurn(); world.dispose(); }
 }

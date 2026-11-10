@@ -157,7 +157,7 @@ export class LevelNineCrash {
       if (s.phase === 'approach') {
         s.phase = 'fall'; s.fallFrom = approachPose();
         // Equipment ownership changes at its visible loss, before any crawl
-        // frame can draw the launcher across the courier's body.
+        // frame can draw the guns across the courier's body.
         w.combat!.setLoadout(['weapon.fire-axe'], ['weapon.fire-axe']);
         s.weaponFireIds = [0, 2].map(offset => {
           const id = w.hazards!.spawn('fire', { x: 516 + offset, z: 4 }, { radius: 2, duration: 60 });

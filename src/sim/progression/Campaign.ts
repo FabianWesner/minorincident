@@ -5,6 +5,7 @@ import type { GearTier, SurvivorVariant } from '../../data/survivor';
 import type { L1Aftermath } from '../../levels/continuity';
 import { l7DefaultArsenal } from '../../data/l7';
 import { cureRackCapacity } from '../../data/l10Story';
+import { isSanctuaryHeavy } from '../../data/l8Gate';
 /** Campaign through L10 The Cure (specs/po-levels-9-10-2026-10-13.md). */
 export type Level = 1|2|3|4|5|6|7|8|9|10;
 export type ProgressionPreset = `L${2|3|4|5|6|7|8|9|10}-default`;
@@ -126,11 +127,18 @@ export function completePending(save:CampaignSave):void {
     finishRewards(save,{LEFT:melee.slice(0,size),RIGHT:(ranged.length?ranged:['weapon.kick']).slice(0,size)});
   }
 }
+/** The L8 sanctuary gate takes heavy weapons for good (the L10 hangar issues them again): out of the racks, ownership and selection. */
+export function dropSanctuaryHeavy(save:CampaignSave):void {
+  const keep=(ids:string[],fallback:string)=>{const kept=ids.filter(id=>!isSanctuaryHeavy(id));return kept.length?kept:[fallback];};
+  save.ownedActions=save.ownedActions.filter(id=>!isSanctuaryHeavy(id));
+  save.racks={LEFT:keep(save.racks.LEFT,'weapon.fists'),RIGHT:keep(save.racks.RIGHT,'weapon.kick')};
+  if(save.selectedAction&&isSanctuaryHeavy(save.selectedAction))save.selectedAction=save.racks.RIGHT.find(id=>id!=='weapon.kick')??save.racks.LEFT[0];
+}
 export function autoRewards(save:CampaignSave,level:Level):void {beginRewards(save,level);completePending(save);}
 /** Optional prior history keeps the actual arriving group when replaying L7/L8 from a menu or QA preset. */
 export function preset(name:ProgressionPreset, previous?:CampaignSave|null):CampaignSave {
   if (name === 'L9-default') {
-    const save = preset('L8-default'); save.completedLevels = 8; save.unlockedLevel = 9; return save;
+    const save = preset('L8-default'); save.completedLevels = 8; save.unlockedLevel = 9; dropSanctuaryHeavy(save); return save;
   }
   if (name === 'L10-default') {
     const save = preset('L8-default');

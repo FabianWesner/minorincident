@@ -73,7 +73,7 @@ def rsh(addr, cmd, timeout=20):
 STATE_CMD = ("now=$(date +%s); run=0; wait=0; for f in /srv/mi/queue/*.job; do [ -f \"$f\" ] || continue; "
              "n=$(awk -F'\\t' 'NR==1{print NF}' $f); if [ \"$n\" -ge 4 ]; then run=$((run+1)); else wait=$((wait+1)); fi; done; "
              "occupied=0; for i in " + ' '.join(map(str, range(SLOTS))) + "; do "
-             "flock -n /srv/mi/locks/slot.$i true 2>/dev/null || occupied=$((occupied+1)); done; "
+             "[ -e /srv/mi/locks/slot.$i ] || continue; flock -n /srv/mi/locks/slot.$i true 2>/dev/null || occupied=$((occupied+1)); done; "
              "prov=1; [ -d /srv/mi ] && [ -w /srv/mi ] || prov=0; for t in node git rsync flock bash; do command -v $t >/dev/null 2>&1 || prov=0; done; "
              "echo \"$run $wait $(cat /srv/mi/last-activity 2>/dev/null || echo 0) $(cut -d' ' -f1 /proc/loadavg) $occupied $prov $(ls /srv/mi/ws 2>/dev/null | tr '\\n' ',')\"")
 
