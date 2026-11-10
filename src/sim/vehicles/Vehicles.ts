@@ -189,7 +189,9 @@ export class Vehicles {
         drive.boost = car.physics.def.id !== 'vehicle.military-apc' && scheme !== 'mouse-only' && frame.left.held;
         drive.handbrake = frame.handbrake ?? frame.right.held;
         if ((scheme !== 'mouse-only' && frame.left.down) || (car.physics.def.emergency && this.world.tick % 60 === 0)) this.noise(car);
-        if (state.recoveringUntil > this.world.tick && !drive.brake) { drive.throttle = -.8; drive.steer = .6; drive.brake = false; }
+        // Recovery reverses on the opposite lock to the held steer (a three-point turn), so it adds to the turn the driver asks for
+        // instead of undoing it; with right held the old fixed lock swung the nose straight back into the wall (r29-l9pin).
+        if (state.recoveringUntil > this.world.tick && !drive.brake) { drive.throttle = -.8; drive.steer = drive.steer > .1 ? -.6 : .6; drive.brake = false; }
       } else if (this.active === null && player.health.current > 0 && this.operable(car) && this.world.tick >= car.noEnterUntil && car.physics.speed < 1 && (zoo?.state.carId !== car.entity.id || zoo.canBoardDriver())) {
         this.localPoint(car, car.physics.def.doorX, car.physics.def.width / 2 + (zoo?.state.carId === car.entity.id ? 1 : .55));
         const near = Math.hypot(player.transform.x - this.position.x, player.transform.z - this.position.z) <= (zoo?.state.carId === car.entity.id ? 2 : .7);
@@ -198,7 +200,8 @@ export class Vehicles {
         if (near && (car.doorTicks >= 36 || frame.interact)) this.enter(car);
       } else car.doorTicks = 0;
       state.boosting = drive.boost;
-      if (state.impactStallUntil && this.world.tick < state.impactStallUntil || this.world.missions?.l9?.driving.holding(car.entity.id)) {
+      // The stuck-recovery reverse outranks a heavy stall: a pack hitting the reversing hull cancelled every recovery (r29-l9pin).
+      if (state.impactStallUntil && this.world.tick < state.impactStallUntil && !(state.recoveringUntil > this.world.tick) ||this.world.missions?.l9?.driving.holding(car.entity.id)) {
         drive.throttle = drive.steer = 0; drive.brake = true;
       }
       car.physics.speedCap = this.speedShare(car);
@@ -595,7 +598,7 @@ export class Vehicles {
     const amount = source === 'attack' ? apcDurability.attackDamage : heavy ? actor?.archetype === 'infected.elephant' ? 80 : 40 : bloated ? 60 : apcDurability.contactDamage;
     this.damage(car.entity.id, amount);
     const state = car.entity.vehicle!;
-    if (heavy && actor!.health.current > 0 && this.world.tick >= (state.impactStallUntil ?? -Infinity) + apcDurability.heavyStallGraceTicks) {
+    if (heavy && actor!.health.current > 0 && car.physics.speed >= apcDurability.heavyStallMinSpeed && this.world.tick >= (state.impactStallUntil ?? -Infinity) + apcDurability.heavyStallGraceTicks) {
       const velocity = car.physics.body.linvel(); car.physics.body.setLinvel({ x: 0, y: velocity.y, z: 0 }, true);
       state.impactStallUntil = this.world.tick + apcDurability.heavyStallTicks;
     }

@@ -158,6 +158,52 @@ async function l9FloorApcThroughPile(): Promise<void> {
     expect(Math.hypot(car.entity.transform.x - x0, car.entity.transform.z - z0), 'progress through 16 infected (8 heavy) in 10 s').toBeGreaterThanOrEqual(15);
     expect(top, 'keeps its floor speed share once clear').toBeGreaterThanOrEqual(car.physics.def.topSpeed * .6 * .9);
   } finally { world.dispose(); }
+  await l9FloorApcPackAtFence();
+}
+
+// r29-l9pin (r28-vqa: 0.3 m in 56 s at (-265.7, -15.4), ~50 infected, boarders on the hull): nose against a yard fence inside a dense
+// mixed pack. The stuck recovery reverse was cancelled by heavy stalls (heavy onsets during the reverse forced throttle 0 + brake),
+// and with right lock held it swung the nose back into the fence. Holding forward (straight or right) must break out within 6 s.
+async function l9FloorApcPackAtFence(): Promise<void> {
+  for (const steer of [0, 1]) {
+    const world = await loadLevel('L9', 1, preset('L9-default'), 0, { quality: 'low' });
+    try {
+      const l9 = world.missions!.l9!, vehicles = world.vehicles!, car = vehicles.cars.get(l9.state.carId)!;
+      world.missions!.begin();
+      for (let i = 0; i < 5; i++) world.update();
+      vehicles.damage(car.entity.id, car.entity.health.max);
+      const x0 = -265.7, z0 = -15.4, yaw = 1.45, pose = { x: x0, z: z0, y: car.physics.def.suspension + car.physics.def.wheelRadius + .15, yaw };
+      Object.assign(car.entity.transform, pose); Object.assign(car.physics.previous, pose); car.physics.body.setTranslation(pose, true);
+      car.physics.body.setRotation({ x: 0, y: Math.sin(yaw / 2), z: 0, w: Math.cos(yaw / 2) }, true); car.physics.body.setLinvel({ x: 0, y: 0, z: 0 }, true); car.physics.body.setAngvel({ x: 0, y: 0, z: 0 }, true);
+      for (let i = 0; i < 30; i++) world.update();
+      const c = Math.cos(yaw), s = Math.sin(yaw), L = car.physics.def.length / 2, W = car.physics.def.width / 2;
+      const at = (along: number, side: number) => ({ x: x0 + c * along + s * side, z: z0 - s * along + c * side });
+      const mix = ['infected.runner', 'infected.dog', 'infected.sprinter', 'infected.runner', 'infected.screamer', 'infected.zebra', 'infected.runner', 'infected.brute', 'infected.dog', 'infected.armored'];
+      for (let n = 0, ring = 0; n < 50; ring++) {
+        const hx = L + .9 + ring * .9, hz = W + .9 + ring * .9, perimeter = 4 * (hx + hz), count = Math.floor(perimeter);
+        for (let k = 0; k < count && n < 50; k++, n++) {
+          const t = k / count * perimeter;
+          const p = t < 2 * hx ? at(-hx + t, hz) : t < 2 * hx + 2 * hz ? at(hx, hz - (t - 2 * hx)) : t < 4 * hx + 2 * hz ? at(hx - (t - 2 * hx - 2 * hz), -hz) : at(-hx, -hz + (t - 4 * hx - 2 * hz));
+          world.infected!.spawn(mix[n % mix.length], p, { state: 'chase' });
+        }
+      }
+      for (let i = 0; i < 4; i++) world.infected!.spawn('infected.runner', at(-L * .5 + (i >> 1) * .8, (i % 2 ? 1 : -1) * (W + .35)), { state: 'chase' });
+      const drive = emptyInput(); drive.drive = { throttle: 1, steer }; drive.brake = false;
+      let away = 0, top = 0, boarded = 0;
+      const hp = car.entity.health.current;
+      let billed = 0; world.events.on('vehicle.durability-hit', () => { billed++; });
+      for (let i = 0; i < 360; i++) {
+        world.applyInput(drive, 'keyboard'); world.update();
+        away = Math.max(away, Math.hypot(car.entity.transform.x - x0, car.entity.transform.z - z0)); top = Math.max(top, car.physics.speed);
+        boarded = Math.max(boarded, car.entity.vehicle!.attached.length);
+      }
+      expect(hp, 'fixture is the lowest damage state').toBe(0);
+      expect(boarded, `boarders still climb on (steer ${steer})`).toBeGreaterThanOrEqual(4);
+      expect(billed, `the pack still bills durability (steer ${steer})`).toBeGreaterThan(10);
+      expect(away, `breaks off the fence inside the pack within 6 s (steer ${steer}; was 0.5 m)`).toBeGreaterThanOrEqual(3);
+      expect(top, `moves at >= 2 m/s while breaking out (steer ${steer})`).toBeGreaterThanOrEqual(2);
+    } finally { world.dispose(); }
+  }
 }
 
 // r27-l9board: a diagonally parked APC puts the passenger door inside the hull's nav margin; the corgi halted 1.3 m short of it
