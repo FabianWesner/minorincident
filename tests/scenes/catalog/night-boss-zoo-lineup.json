@@ -119,84 +119,49 @@
       "frame": 20,
       "actor": "flamingo",
       "do": {
-        "walk": [
-          [
-            -0.7071067811865475,
-            6.363961030678928
-          ]
-        ]
+        "chase": "courier"
       }
     },
     {
       "frame": 20,
       "actor": "zebra",
       "do": {
-        "walk": [
-          [
-            3.5355339059327373,
-            2.1213203435596424
-          ]
-        ]
+        "chase": "courier"
       }
     },
     {
       "frame": 20,
       "actor": "monkey",
       "do": {
-        "walk": [
-          [
-            7.7781745930520225,
-            -2.1213203435596424
-          ]
-        ]
+        "chase": "courier"
       }
     },
     {
       "frame": 20,
       "actor": "lion",
       "do": {
-        "walk": [
-          [
-            -3.5355339059327373,
-            3.5355339059327373
-          ]
-        ]
+        "chase": "courier"
       }
     },
     {
       "frame": 20,
       "actor": "lioness",
       "do": {
-        "walk": [
-          [
-            0.7071067811865475,
-            -0.7071067811865475
-          ]
-        ]
+        "chase": "courier"
       }
     },
     {
       "frame": 20,
       "actor": "gorilla",
       "do": {
-        "walk": [
-          [
-            4.949747468305833,
-            -4.949747468305833
-          ]
-        ]
+        "chase": "courier"
       }
     },
     {
       "frame": 20,
       "actor": "elephant",
       "do": {
-        "walk": [
-          [
-            -6.363961030678928,
-            0.7071067811865475
-          ]
-        ]
+        "chase": "courier"
       }
     },
     {
@@ -374,5 +339,6 @@
   },
   "expect": {
     "consoleErrors": 0
-  }
+  },
+  "trace": true
 }

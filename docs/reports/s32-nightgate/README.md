@@ -91,3 +91,13 @@ Added a nine-subject L8-zoo lineup with separate per-actor crops/checks, plus th
 ## Separated lineup
 
 Moved the courier away from measured crops, enlarged the synthetic slab to contain its position, and returned zoo actors to idle at frame 31 after the walking sample. The eight shared-fixture rows completed in 0.9 minutes across both backends/tiers, with gorilla failing and both controls passing. The grouped lion remains sensitive to the changed composition; retained its proven isolated regression row on all four combinations instead of changing thresholds. The resulting 12-row list still needs its final measured run, documentation counts, validation and commit.
+
+## Acceptance audit correction
+
+The final aggregate travel audit showed exactly 1.5 m per boss, equal to hit knockback. It does not prove walking before the hit. Therefore final acceptance above is conditional until pose traces verify walking. Changed the shared fixture's frame-20 movement to an explicit chase command and enabled trace output. That latest fixture change still requires a capture run and commit; the goal remains active.
+
+## Pose trace acceptance — final
+
+The chase correction resolves the pose-audit condition. All 12 rows completed in **1.8 minutes**, no missing rows, with unchanged isolated lion failures and lineup gorilla failures on every tier/backend combination; dog/regular controls and Mega pass. Final evidence: test-results/s32-nightgate-motion. Opened the final WebGPU high zoo sheet.
+
+Each of the seven zoo bosses has infected-idle at frame 20, moving shamble at frame 30 (speed 0.673 m/s), and knockdown/flung at frame 60. This proves movement independently of hit knockback. Mega trace (WebGPU high) records infected-sprint at frame 54 (7.2 m/s), hit at frame 55, infected-idle at 56–75, infected-lurch at frame 90, and final HP 2999 from 3000. Its sampled post-hit, idle and walking states therefore exist on the production model. Trace flags only retain existing diagnostic samples; no rendering or simulation implementation changed. The fixture/report-only corrections supersede the earlier conditional acceptance notes. The existing passing tsc/lint/test:gate evidence remains applicable to unchanged TypeScript, and all final JSON fixtures executed in the matrix.
