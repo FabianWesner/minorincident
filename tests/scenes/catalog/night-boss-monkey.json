@@ -1,0 +1,75 @@
+{
+  "name": "night-boss-monkey",
+  "note": "L8 monkey animal boss under the production zoo night lighting; sampled idle, walking and hit poses.",
+  "seed": 30,
+  "ground": "sidewalk",
+  "time": "L8-zoo",
+  "size": 40,
+  "dof": false,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        3,
+        0
+      ],
+      "yaw": 180
+    },
+    {
+      "id": "subject",
+      "kind": "infected",
+      "archetype": "infected.monkey",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 0
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "subject",
+    "zoom": 1.5
+  },
+  "frames": 90,
+  "sheet": 15,
+  "script": [
+    {
+      "frame": 20,
+      "actor": "subject",
+      "do": {
+        "walk": [
+          [
+            2,
+            0
+          ]
+        ],
+        "loop": true
+      }
+    },
+    {
+      "frame": 55,
+      "actor": "subject",
+      "do": {
+        "hit": {
+          "from": "courier",
+          "heavy": true,
+          "amount": 1
+        }
+      }
+    }
+  ],
+  "flatSilhouette": {
+    "actors": [
+      "subject"
+    ],
+    "lumaStdMin": 14,
+    "colourBucketShareMin": 0.005
+  },
+  "expect": {
+    "consoleErrors": 0,
+    "flatSilhouetteLumaStdMin": 14,
+    "flatSilhouetteColourBucketShareMin": 0.005
+  }
+}

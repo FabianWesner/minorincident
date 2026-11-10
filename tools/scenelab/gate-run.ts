@@ -36,7 +36,7 @@ function runBatch(b: Batch): { code: number | null; seconds: number; rows: Catal
   const dir = `${out}/${b.id}`, t0 = Date.now();
   // A previous index must never be mistaken for output from this child.
   rmSync(dir, { recursive: true, force: true });
-  const res = spawnSync('sh', ['tools/e2e-lock.sh', 'tsx', 'tools/scenelab/catalog.ts', '--matrix', '--jobs', flag('jobs') ?? '1', '--backend', b.backend, '--tier', b.tier, '--out', dir, '--only', b.rows.map(r => r.name).join(',')],
+  const res = spawnSync('sh', ['tools/e2e-lock.sh', process.execPath, '--import', 'tsx', 'tools/scenelab/catalog.ts', '--reuse-session', '--matrix', '--jobs', flag('jobs') ?? '1', '--backend', b.backend, '--tier', b.tier, '--out', dir, '--only', b.rows.map(r => r.name).join(',')],
     { stdio: ['ignore', 'inherit', 'inherit'], env: { ...process.env, E2E_UNITS: process.env.E2E_UNITS ?? '1' } });
   const index = `${dir}/index.json`;
   let rows: CatalogRow[] = [];
@@ -52,12 +52,14 @@ function selectRows(): { rows: Row[]; known: Map<string, string> } {
   if (mode === 'gate') {
     const list = JSON.parse(readFileSync('specs/scenes/gate-list.json', 'utf8')) as { rows: { scene: string; tier: 'high' | 'low'; zoom: number | null; backend: string }[]; known?: Record<string, string> };
     const backend = flag('backend');
+    const filter = flag('filter');
+    const selected = (scene: string) => !filter || filter.split(',').some(pattern => new RegExp('^' + pattern.replace(/[.+^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*') + '$').test(scene));
     if (backend !== undefined && backend !== 'webgl2' && backend !== 'webgpu') throw new Error('Unknown gate backend');
-    return { rows: list.rows.filter(r => backend === undefined || r.backend === backend).map(r => ({ name: rowName(r.scene, r.tier, r.zoom), scene: r.scene, tier: r.tier, backend: r.backend })), known: new Map(Object.entries(list.known ?? {})) };
+    return { rows: list.rows.filter(r => (backend === undefined || r.backend === backend) && selected(r.scene)).map(r => ({ name: rowName(r.scene, r.tier, r.zoom), scene: r.scene, tier: r.tier, backend: r.backend })), known: new Map(Object.entries(list.known ?? {})) };
   }
   const backend = flag('backend') ?? 'webgpu';
   const filter = flag('filter') ?? /--filter '([^']+)'/.exec(JSON.parse(readFileSync('package.json', 'utf8')).scripts['scene:matrix'] as string)![1];
-  const res = spawnSync('npx', ['tsx', 'tools/scenelab/catalog.ts', '--matrix', '--list', '--filter', filter], { encoding: 'utf8', maxBuffer: 1 << 26 });
+  const res = spawnSync('npx', ['tsx', 'tools/scenelab/catalog.ts', '--reuse-session', '--matrix', '--list', '--filter', filter], { encoding: 'utf8', maxBuffer: 1 << 26 });
   if (res.status !== 0) { console.error(res.stderr); process.exit(2); }
   return { rows: res.stdout.split('\n').filter(Boolean).map(name => ({ name, scene: name.split('@')[0], tier: name.includes('@low') ? 'low' as const : 'high' as const, backend })), known: new Map() };
 }

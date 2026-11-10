@@ -1,0 +1,80 @@
+{
+  "name": "night-boss-mega",
+  "note": "L10 Mega in the production L10 night lighting; real MegaPursuit approaches the courier and attacks.",
+  "seed": 30,
+  "ground": "asphalt",
+  "time": "L10-night",
+  "size": 50,
+  "dof": false,
+  "megaAlpha": {
+    "id": "mega",
+    "at": [
+      -9,
+      0
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 210,
+      "god": true,
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1.5
+  },
+  "frames": 90,
+  "sheet": 15,
+  "flatSilhouette": {
+    "actors": [
+      "mega"
+    ],
+    "lumaStdMin": 14,
+    "colourBucketShareMin": 0.005
+  },
+  "expect": {
+    "consoleErrors": 0,
+    "flatSilhouetteLumaStdMin": 14,
+    "flatSilhouetteColourBucketShareMin": 0.005
+  },
+  "script": [
+    {
+      "frame": 0,
+      "actor": "mega",
+      "do": {
+        "idle": true
+      }
+    },
+    {
+      "frame": 20,
+      "actor": "mega",
+      "do": {
+        "walk": [
+          [
+            -3,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "frame": 55,
+      "actor": "mega",
+      "do": {
+        "hit": {
+          "from": "courier",
+          "heavy": true,
+          "amount": 1
+        }
+      }
+    }
+  ]
+}
