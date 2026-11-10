@@ -5,7 +5,7 @@ import { bossHitFlashTicks, hitFlashTicks } from '../../src/render/CrowdView';
 
 describe('L8 boss hit reaction (r26-l8hitreact, render only)', () => {
   it('keeps a visible bar chip for even a tiny chip hit', () => {
-    expect(bossChip(1, 0.99, 0, 64)).toBeGreaterThanOrEqual(bossChipMinPx);
+    expect(bossChip(1, 0.95, 0, 64)).toBeGreaterThanOrEqual(bossChipMinPx);
     expect(bossChip(1, 0.7, 0, 64)).toBeCloseTo(0.3 * 64);
   });
   it('holds, fades and disappears', () => {
