@@ -15,8 +15,12 @@ export interface Box { min: [number, number]; max: [number, number] }
 export const finale = {
   /** E32 §5.7: charge only advances while the player is within this planar distance of the console. */
   holdRadius: 40,
-  /** The completed-charge fight stays on the plant apron, with room beyond the charge disc to dodge. */
-  fightRadius: 55,
+  /** r31-megafight: once the charge has started and the Mega has entered the yard, it stays within this distance of the console
+   * (the arena disc with the machinery, tanks and gate). A courier who runs further out does not drag it away: it waits at the edge
+   * and goes back in with her. Spec: "leash/return when it drifts beyond ~25 m from the console". */
+  leashRadius: 25,
+  /** The HUD says "Back to the dispersal arena" only for a courier this far from the console (the Mega is then at the leash edge). */
+  fightRadius: 33,
   /** E32 §5.7: the mounted gun stands at most this far from the console. */
   gunMaxDistance: 20,
   console: { id: 'console', asset: 'kit.dispersal-console', at: [0, 0] as [number, number], yaw: 0 as const, operator: [1, 0] as [number, number] },

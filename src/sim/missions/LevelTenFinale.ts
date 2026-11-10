@@ -98,13 +98,31 @@ export class LevelTenFinale {
 
 /** Shared by both objective HUDs; presentation never controls the charge clock. */
 export function cureFinaleText(mission: Mission | null): string | null {
+  const base = cureFinaleBase(mission), hint = base ? arenaHint(mission) : null;
+  return hint ? `${base} · ${hint}` : base;
+}
+/** r31-megafight: short tool hints while the Mega fights: a fuel tank next to it, an armed gate. */
+function arenaHint(mission: Mission | null): string | null {
+  if (!mission || mission.def.id !== 'L10') return null;
+  const { state, world } = mission, mega = world.megaPursuit?.entity();
+  if (!state.states['arena-equipped'] || !state.states['cure-installed'] || state.states['cure-released'] || !mega || mega.health.current <= 0) return null;
+  for (const key of ['arena-fuel-0', 'arena-fuel-1']) {
+    const tank = world.entities.get(state.actors[key]);
+    if (tank?.hazard && !tank.hazard.exploded && Math.hypot(tank.transform.x - mega.transform.x, tank.transform.z - mega.transform.z) <= tank.hazard.radius + 2) return 'Shoot the fuel tank!';
+  }
+  const sw = world.entities.get(state.actors['arena-gate-switch'])?.interactable;
+  if (sw?.completed && !state.states['gate-spent']) return 'Lure the Mega through the electric gate';
+  return null;
+}
+function cureFinaleBase(mission: Mission | null): string | null {
   if (!mission) return null;
   const { state, world, def } = mission;
   if (def.id !== 'L10') return null;
   if (state.steps.epilogue?.status === 'active' && state.cureFront) return state.cureFront.elapsed < 8 * 60 ? 'Release the cure' : 'Minor Incident';
   if (state.steps.mega.status === 'active' && !state.states['mega-dead']) {
     const at = def.anchors['cure-console'], p = world.entities.get(1)!.transform;
-    return at && Math.hypot(p.x - at.x, p.z - at.z) > finale.fightRadius ? 'Back to the dispersal arena · Kill the Mega Alpha' : 'Kill the Mega Alpha';
+    // The Mega is held at the leash edge: tell her to come back only while she is out of the yard and the Mega is not in melee with her.
+    return at && Math.hypot(p.x - at.x, p.z - at.z) > finale.fightRadius && (world.megaPursuit?.distance() ?? Infinity) > 10 ? 'Back to the dispersal arena · Kill the Mega Alpha' : 'Kill the Mega Alpha';
   }
   if (state.steps.hold.status !== 'active') return null;
   if (!state.states['charge-active']) return 'Activate the dispersal console';
