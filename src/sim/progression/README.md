@@ -23,6 +23,8 @@ unknown-version, and inaccessible saves return an error result; CampaignUI displ
 Start new. Version 0 compatibility renames `level` to `unlockedLevel`; version 1 migrates
 to version 2 while retaining any existing world aftermath, survivor list and results.
 
+Stale mid-level records never cost the campaign (r28): when a save fails validation only because of its `cureResume`, `l9Crash` or `transport` record (a mission was reworked since it was written, e.g. L10 steps in batch 60), `decodeSave` drops just that record (reported in `dropped`) and returns the campaign; the player keeps gear, upgrades and progress and restarts that level. Compatibility fixtures per PROD batch live in `tests/fixtures/saves/compat`.
+
 Saves of at least 64 KiB use lossless gzip through Three.js's MIT fflate module,
 with a `minor-incident.gzip1:` prefix and a binary string payload. Small saves and
 all legacy JSON saves remain supported. The campaign schema and both L10 snapshots
