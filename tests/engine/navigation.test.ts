@@ -213,7 +213,7 @@ test('A*: budgeted search resumes across ticks within its expansion budget; conn
   expect(Math.hypot(playerNav.x(end) - destination.x, playerNav.z(end) - destination.z)).toBeLessThan(1);
 });
 
-test('dynamic blockers: a prepared rebake equals a full rebake after doors and carts open and close', () => {
+test('dynamic blockers: a prepared rebake equals a full rebake after doors and carts open and close; a checkpoint restore re-announcing unchanged blockers leaves every AI grid identical (L10, L8)', async () => {
   const walls = [{ x: 2, z: 0, y: 1, halfX: .6, halfZ: 2, halfY: 1 }];
   const grid = new NavGrid({ width: 20, depth: 20 }, walls), full = new NavGrid({ width: 20, depth: 20 }, walls);
   const door = { x: -2, z: 0, y: 1, halfX: .5, halfZ: 1, halfY: 1 }, cart = { ...door, x: -4, z: -3 };
@@ -223,7 +223,42 @@ test('dynamic blockers: a prepared rebake equals a full rebake after doors and c
   grid.rebake(baked); full.rebake(); expect(grid.blocked).toEqual(full.blocked);
   grid.setBlocker(2, door, true); full.setBlocker(2, door, true); full.rebake(); expect(grid.blocked).toEqual(full.blocked);
   grid.setBlocker(2, door, false); full.setBlocker(2, door, false); full.rebake(); expect(grid.blocked).toEqual(full.blocked);
-});
+  // r29-respawn: identical re-announcements skip the cell re-bake but moved/removed blockers still re-bake.
+  const gridOf = (fast: boolean) => {
+    NavGrid.fastReannounce = fast;
+    const g = new NavGrid({ width: 40, depth: 40 }, []), a = { x: 5, z: 5, y: 1, halfX: 2, halfY: 1, halfZ: 1 }, b = { x: -6, z: 3, y: 1, halfX: 1, halfY: 1, halfZ: 3, navFootprint: { x: -6, z: 3, halfX: 1, halfZ: 3, yaw: .4 } };
+    g.setBlocker(-1, a, true); g.setBlocker(-2, b, true);
+    for (let pass = 0; pass < 2; pass++) { g.setBlocker(-1, { ...a }, true); g.setBlocker(-2, { ...b }, true); }
+    g.setBlocker(-1, a, false); g.setBlocker(-2, { ...b, x: -4, navFootprint: { ...b.navFootprint, x: -4 } }, true);
+    return g.blocked;
+  };
+  try { expect(gridOf(true)).toEqual(gridOf(false)); } finally { NavGrid.fastReannounce = true; }
+  // Checkpoint restores on the real levels: every AI grid ends identical to the full re-announce (cells and blocker ids).
+  for (const level of ['L10', 'L8'] as const) {
+    const states: Record<string, { cells: number[]; ids: number[] }>[] = [];
+    for (const fast of [false, true]) {
+      NavGrid.fastReannounce = fast;
+      const world = await loadLevel(level, 1); worlds.push(world);
+      const mission = world.missions!, destruction = world.destruction!, checkpoint = mission.def.checkpoints[0];
+      mission.checkpoint(checkpoint);
+      for (let round = 0; round < 2; round++) {
+        for (const o of destruction.objects.filter(o => o.present && !o.protected).slice(round * 40, round * 40 + 40)) for (const [part, shape] of o.parts.entries()) destruction.damage({ object: o, part, distance: 0, local: shape.bounds.min, normal: [0, 1, 0] }, 'weapon.rocket-launcher', 5000);
+        for (let i = 0; i < 200; i++) { world.tick++; destruction.update(); }
+        mission.restore(checkpoint);
+      }
+      const ai = world.infected!, grids: Record<string, NavGrid> = { nav: ai.nav, admission: ai.infectedNav };
+      ai.navigation.districts.forEach((d, i) => { grids[`district${i}`] = d.grid; });
+      if (world.megaPursuit) grids.mega = world.megaPursuit.grid;
+      states.push(Object.fromEntries(Object.entries(grids).map(([k, g]) => [k, { cells: [...g.blocked], ids: [...(g as unknown as { blockers: Map<number, unknown> }).blockers.keys()].sort((x, y) => x - y) }])));
+    }
+    NavGrid.fastReannounce = true;
+    expect(Object.keys(states[1]), level).toEqual(Object.keys(states[0]));
+    for (const k of Object.keys(states[0])) {
+      expect(states[1][k].ids, `${level}/${k}: blocker ids`).toEqual(states[0][k].ids);
+      expect(states[1][k].cells.filter((v, i) => v !== states[0][k].cells[i]).length, `${level}/${k}: differing cells`).toBe(0);
+    }
+  }
+}, 240_000);
 
 test('chasers path through a maze and an offset district without ever overlapping a static collider', async () => {
   const w = await arena('maze'); expect(w.infected!.navigation.districts).toHaveLength(3);
