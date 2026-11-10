@@ -97,6 +97,7 @@ test('enter, drive and exit: door dwell, input ownership (no attacks while drivi
   await checkBossDamage(); await checkOrdinaryDamage(); await checkBossStates();
   await apcBoarders();
   await l9BusVsParkedApc();
+  await l9FloorApcThroughPile();
 }, 400_000);
 
 // L9 evacuation hold: before the fix the pursuing bus kept full throttle against the braked APC
@@ -127,6 +128,34 @@ async function l9BusVsParkedApc(): Promise<void> {
     }
     expect(closest, 'the bus really closed in on the APC').toBeLessThan(apc.physics.def.length / 2 + bus.physics.def.length / 2 + 7);
     expect(moved, 'APC displacement over a 30 s hold with the bus pursuing').toBeLessThanOrEqual(1.5);
+  } finally { world.dispose(); }
+}
+
+// r27-l9apc: a pile of brutes/armored at the bumper chained one 60-tick heavy stop after another and pinned the
+// floor-state APC (QA: 863 -> 819 m in 7 min; this fixture: 2.3 m in 10 s). One heavy onset still stops momentum,
+// later heavy onsets inside the grace window only bill durability, so the APC drives on at its floor speed.
+async function l9FloorApcThroughPile(): Promise<void> {
+  const world = await loadLevel('L9', 1, preset('L9-default'), 0, { quality: 'low' });
+  try {
+    const l9 = world.missions!.l9!, vehicles = world.vehicles!, car = vehicles.cars.get(l9.state.carId)!;
+    world.missions!.begin();
+    for (let i = 0; i < 5; i++) world.update();
+    vehicles.damage(car.entity.id, car.entity.health.max);
+    const x0 = -300, z0 = -330, pose = { x: x0, z: z0, y: car.physics.def.suspension + car.physics.def.wheelRadius + .15, yaw: 0 };
+    Object.assign(car.entity.transform, pose); Object.assign(car.physics.previous, pose); car.physics.body.setTranslation(pose, true);
+    car.physics.body.setRotation({ x: 0, y: 0, z: 0, w: 1 }, true); car.physics.body.setLinvel({ x: 0, y: 0, z: 0 }, true); car.physics.body.setAngvel({ x: 0, y: 0, z: 0 }, true);
+    for (let i = 0; i < 30; i++) world.update();
+    const types = ['infected.runner', 'infected.sprinter', 'infected.brute', 'infected.armored'];
+    for (let i = 0; i < 16; i++) world.infected!.spawn(types[i % 4], { x: x0 + car.physics.def.length / 2 + 1 + Math.floor(i / 4) * .8, z: z0 + (i % 4 - 1.5) * .8 }, { state: 'chase' });
+    const stops: number[] = [];
+    world.events.on('vehicle.durability-hit', e => { if (e.type === 'vehicle.durability-hit' && car.entity.vehicle!.impactStallUntil === world.tick + 60 && !stops.includes(world.tick)) stops.push(world.tick); });
+    const drive = emptyInput(); drive.drive = { throttle: 1, steer: 0 }; drive.brake = false;
+    let top = 0;
+    for (let i = 0; i < 600; i++) { world.applyInput(drive, 'keyboard'); world.update(); if (i >= 360) top = Math.max(top, car.physics.speed); }
+    expect(car.entity.health.current, 'fixture is the lowest damage state').toBe(0);
+    expect(stops.length, 'a heavy contact still stops momentum (E31-AC06)').toBeGreaterThanOrEqual(1);
+    expect(Math.hypot(car.entity.transform.x - x0, car.entity.transform.z - z0), 'progress through 16 infected (8 heavy) in 10 s').toBeGreaterThanOrEqual(15);
+    expect(top, 'keeps its floor speed share once clear').toBeGreaterThanOrEqual(car.physics.def.topSpeed * .6 * .9);
   } finally { world.dispose(); }
 }
 
