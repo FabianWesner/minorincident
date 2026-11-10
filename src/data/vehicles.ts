@@ -6,8 +6,9 @@ export const apcDurability = {
   stoppedSpeed: .5, surroundReach: 3, surroundCount: 4, surroundQuadrants: 3,
   /** A heavy contact (E31-AC06) stops momentum and holds the throttle for `heavyStallTicks`. Further heavy onsets
    * within `heavyStallGraceTicks` after that hold still bill durability but do not stop the hull again, so a pile
-   * of brutes/armored at the bumper cannot chain stops into a permanent pin (r27-l9apc). */
-  heavyStallTicks: 60, heavyStallGraceTicks: 240,
+   * of brutes/armored at the bumper cannot chain stops into a permanent pin (r27-l9apc). Below `heavyStallMinSpeed` there is no
+   * momentum to stop, so no throttle lock either (r29-l9pin: at a fence the locks kept resetting the stuck recovery).  */
+  heavyStallTicks: 60, heavyStallGraceTicks: 240, heavyStallMinSpeed: 1.5,
 } as const;
 /** L9 mission floor (PO 10-13): at 0 the APC keeps driving at this share of the healthy top speed until the scripted crash. */
 export const apcFloor = { speedShare: .6, overspeedDamp: .015, obstacleContactGap: .1, stages: [.75, .5, .25, 0] as const } as const;
