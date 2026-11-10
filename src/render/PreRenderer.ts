@@ -1,5 +1,5 @@
 // Adapted from folio-2025 PreRenderer.js by Bruno Simon (MIT), commit 41046b5.
-import { InstancedMesh, Light, LineSegments, Matrix4, Mesh, Sprite, Vector2, Vector3, type Camera, type Object3D, type Scene, type Texture } from 'three/webgpu';
+import { InstancedMesh, Light, LineSegments, type Material, Matrix4, Mesh, Sprite, Vector2, Vector3, type Camera, type Object3D, type Scene, type Texture } from 'three/webgpu';
 import type { Renderer } from './Renderer';
 import { AttributeType } from 'three/src/renderers/common/Constants.js';
 
@@ -12,19 +12,23 @@ export const compileLanes = 6;
 export const warmUpSize = 128;
 export const textureUploadBudget = 4 * 1024 * 1024;
 export type CompilePartitions = (() => void)[];
+/** Material, program variant, instancing and exact attribute layout: leaves with one key share a program and vertex-state shape. */
+function layoutKey(leaf: Mesh): string {
+  const attributes = Object.keys(leaf.geometry.attributes).map(name => {
+    const a = leaf.geometry.getAttribute(name) as import('three').BufferAttribute | import('three').InterleavedBufferAttribute;
+    const layout = 'isInterleavedBufferAttribute' in a ? `${a.data.stride}:${a.offset}` : 'packed';
+    return `${name}:${a.itemSize}:${a.normalized}:${a.array.constructor.name}:${layout}:${'isInstancedBufferAttribute' in a ? a.count : ''}`;
+  }).sort().join('|');
+  const instances = leaf instanceof InstancedMesh ? `${leaf.instanceMatrix.count}:${!!leaf.instanceColor}` : 'rigid';
+  return `${(leaf.material as Material).uuid}:${(leaf.material as Material).customProgramCacheKey()}:${instances}:${+leaf.castShadow}:${+leaf.receiveShadow}:${attributes}`;
+}
 /** Same exact static layout needs one program/driver representative. */
 function warmCandidates<T extends Object3D>(leaves: T[]): T[] {
   const seen = new Set<string>();
   return leaves.filter(leaf => {
     if (!(leaf instanceof Mesh) || leaf.userData.preRenderSolo || Array.isArray(leaf.material) ||
       !(leaf.userData.preRenderShared || leaf instanceof InstancedMesh && leaf.material.userData.batchFeatures !== undefined) || Object.keys(leaf.geometry.morphAttributes).length) return true;
-    const attributes = Object.keys(leaf.geometry.attributes).map(name => {
-      const a = leaf.geometry.getAttribute(name) as import('three').BufferAttribute | import('three').InterleavedBufferAttribute;
-      const layout = 'isInterleavedBufferAttribute' in a ? `${a.data.stride}:${a.offset}` : 'packed';
-      return `${name}:${a.itemSize}:${a.normalized}:${a.array.constructor.name}:${layout}:${'isInstancedBufferAttribute' in a ? a.count : ''}`;
-    }).sort().join('|');
-    const instances = leaf instanceof InstancedMesh ? `${leaf.instanceMatrix.count}:${!!leaf.instanceColor}` : 'rigid';
-    const key = `${leaf.material.uuid}:${leaf.material.customProgramCacheKey()}:${instances}:${+leaf.castShadow}:${+leaf.receiveShadow}:${attributes}`;
+    const key = layoutKey(leaf);
     if (seen.has(key)) return false; seen.add(key); return true;
   });
 }
@@ -119,7 +123,7 @@ export function incrementalPreRender(renderer: Renderer, scene: Scene, camera: C
     },
   };
 }
-export async function preRender(renderer: Renderer, scene: Scene, camera: Camera, render: () => void, compile: (partitions: CompilePartitions) => Promise<unknown> = partitions => Promise.all(partitions.map(apply => { apply(); return renderer.compileAsync(scene, camera); })), pause?: () => Promise<void>, progress?: (completed: number, total: number) => void, background = false, budgetedWarmUp = false, cooperative = false, foregroundLanes = compileLanes): Promise<void> {
+export async function preRender(renderer: Renderer, scene: Scene, camera: Camera, render: () => void, compile: (partitions: CompilePartitions) => Promise<unknown> = partitions => Promise.all(partitions.map(apply => { apply(); return renderer.compileAsync(scene, camera); })), pause?: () => Promise<void>, progress?: (completed: number, total: number) => void, background = false, budgetedWarmUp = false, cooperative = false, foregroundLanes = compileLanes, sharedCorpseSolo = false): Promise<void> {
   const prepareDraw = async (): Promise<void> => { if (!background && !cooperative) await renderer.prepareWarmRender(render); else render(); };
   const saved: { object: Object3D; visible: boolean; culled: boolean; castShadow: boolean; count?: number; matrices?: Matrix4[]; position?: Vector3 }[] = [];
   scene.updateMatrixWorld(true);
@@ -211,7 +215,10 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
     performance.measure('L1 shader compilation', { start: compilationStart, end: performance.now() });
     // Background (menu-time) warm-up: draw the leaves in small groups, one group per gate slot, so
     // node builds and pipeline creation never form one long task; the full draw below is then cheap.
-    const solo = renderer.selectedBackend === 'webgl' ? saved.filter(({ object }) => object instanceof InstancedMesh && object.userData.preRenderSolo) : [];
+    // Corpse pages of one palette share their frozen material and exact vertex layout, so the first solo page already
+    // specialised the driver program for the rest (sharedCorpseSolo). Their normal draw still covers every page.
+    const soloLayouts = new Set<string>();
+    const solo = renderer.selectedBackend === 'webgl' ? saved.filter(({ object }) => object instanceof InstancedMesh && object.userData.preRenderSolo && (!sharedCorpseSolo || !object.name.startsWith('corpses:') || !soloLayouts.has(layoutKey(object)) && !!soloLayouts.add(layoutKey(object)))) : [];
     // L3 WebGPU draws at most 64 leaves per frame behind the card, so cold atlases
     // do not accumulate in a single draw. WebGL retains its measured batching.
     const chunk = cooperative ? 16 : background ? renderer.selectedBackend === 'webgl' ? 64 : 16 : renderer.selectedBackend === 'webgpu' && budgetedWarmUp ? 64 : 1024, soloChunk = cooperative ? 8 : 64, chunks = pause ? Math.ceil(leaves.length / chunk) : 0, total = chunks + Math.ceil(solo.length / soloChunk) * 2 + 3;

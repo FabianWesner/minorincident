@@ -378,6 +378,7 @@ export class GameView implements Lifecycle {
       const corgiFocus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(12).add(this.camera.position);
       prewarmed.vehicleDebris = this.vehicles?.prewarmDebris(corgiFocus);
       if (this.world.destruction) prewarmed.debris = this.interactions?.prewarmDebris(corgiFocus);
+      if (this.world.destruction && this.world.scenario === 'L10') await this.districts?.prewarmDestruction(this.world.destruction);
       prewarmed.corgi = this.npcs?.prewarmCorgi(corgiFocus); corgiPrewarmed = !!prewarmed.corgi;
       // Issued and racked weapons the courier is not holding yet: their held (courier-fill) materials.
       prewarmed.held = this.actions?.prewarmHeld(this.camera.getWorldDirection(new Vector3()).multiplyScalar(10).add(this.camera.position));
@@ -561,7 +562,7 @@ export class GameView implements Lifecycle {
       if (this.postFx) await this.postFx.compile(partitions);
       else await Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); }));
       if (!this.background && !cooperative) await compileShadowMaps(this.renderer, this.scene, this.postFx ? 2 : 1);
-    }, this.background ? () => loadGate.wait() : () => new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0))), this.loadProgress, this.background, this.world.scenario === 'L3' || this.world.scenario === 'L6' || this.world.scenario === 'L8', cooperative, foregroundLanes);
+    }, this.background ? () => loadGate.wait() : () => new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0))), this.loadProgress, this.background, this.world.scenario === 'L3' || this.world.scenario === 'L6' || this.world.scenario === 'L8', cooperative, foregroundLanes, this.world.scenario === 'L7');
     const prepare = async (): Promise<void> => {
       // L4's moving set pieces reveal the courier during combat. Warm both
       // graphs against every loading light/weather variant, before LOD swaps.

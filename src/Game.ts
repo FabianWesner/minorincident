@@ -220,6 +220,17 @@ export class Game {
   }
   /** E10 composition plus E12 mission briefing; checkpoints restore reached state or reconstruct an authored graph prefix. */
   /** `source`/`setup` (Scene Lab): a prebuilt composition instead of the layout files, and a sim hook after assembly, before the view loads. */
+  /** L7 -> L8 handover data (best effort). The layouts download and the synchronous DistrictWorld build run in idle
+   * time while L7 compiles its shaders (the main thread waits on native links), rather than after the warm-up. */
+  private async prefetchL8(): Promise<void> {
+    const start = performance.now();
+    try {
+      const source = await loadLayouts('L8', undefined, async url => { const response = await fetch(assetUrl(url)); if (!response.ok) throw new Error(`Layout request failed: ${url}`); return response.json(); });
+      await new Promise<void>(resolve => typeof requestIdleCallback === 'function' ? requestIdleCallback(() => resolve(), { timeout: 1000 }) : setTimeout(resolve, 0));
+      this.preparedL8 = { source, district: new DistrictWorld(source.composition, levelEightLayouts(source.layouts), 1) };
+    } catch { /* Best effort: a later handover can use the normal loading path. */ }
+    loadMeasure('level:l8-prefetch', start);
+  }
   loadLevel(id:string,opts?:{seed?:number;tier?:Tier;checkpoint?:string;progression?:ProgressionPreset;source?:{composition:LevelComposition;layouts:DistrictLayout[]};setup?:(world:SimWorld)=>void;record?:boolean}, performanceScenario?: string, speculative = false):Promise<void>{
     // The player picked a level while one loads behind the menus: finish it at full speed.
     if (!speculative) {
@@ -320,13 +331,8 @@ export class Game {
         const physicsStart = loadMeasure('level:mission+cast', missionStart);
         this.world.physics.prepare(); loadMeasure('level:physics-prepare', physicsStart);
         if (!speculative) { this.transition.update(.2, 'Loading assets…'); this.transition.watchAssets(); }
-        const sim=loadMeasure('level:sim',data);this.alarmWarmup = id === 'L4' && !this.alarmWarmed ? { composition, layouts, seed: opts?.seed ?? 1 } : null;const alarm = speculative ? undefined : this.warmAlarm();if (id === 'L8') await transitionPaint();await this.view.load();await alarm;this.renderedDistricts=this.world.districts;this.lastLoad={dataMs:data-start,simMs:sim-data,viewMs:loadMeasure('level:view',sim)-sim};if (speculative) { this.speculative = { id, seed: opts?.seed ?? 1 }; this.clock.pause(); } else { this.transition.update(.95, 'Preparing sound…'); const audio=performance.now();await this.audio.load();loadMeasure('level:audio',audio); this.ui.loaded(); const hud=performance.now(); await this.ui.prepareHud(); loadMeasure('level:hud',hud); }
-        if (id === 'L7' && !opts?.source) {
-          try {
-            const source = await loadLayouts('L8', undefined, async url => { const response = await fetch(assetUrl(url)); if (!response.ok) throw new Error(`Layout request failed: ${url}`); return response.json(); });
-            this.preparedL8 = { source, district: new DistrictWorld(source.composition, levelEightLayouts(source.layouts), 1) };
-          } catch { /* Best effort: a later handover can use the normal loading path. */ }
-        }
+        const sim=loadMeasure('level:sim',data);this.alarmWarmup = id === 'L4' && !this.alarmWarmed ? { composition, layouts, seed: opts?.seed ?? 1 } : null;const alarm = speculative ? undefined : this.warmAlarm();const l8 = id === 'L7' && !opts?.source ? this.prefetchL8() : undefined;if (id === 'L7' && !speculative) this.audio.prefetchL7();if (id === 'L8') await transitionPaint();await this.view.load();await alarm;this.renderedDistricts=this.world.districts;this.lastLoad={dataMs:data-start,simMs:sim-data,viewMs:loadMeasure('level:view',sim)-sim};if (speculative) { this.speculative = { id, seed: opts?.seed ?? 1 }; this.clock.pause(); } else { this.transition.update(.95, 'Preparing sound…'); const audio=performance.now();await this.audio.load();loadMeasure('level:audio',audio); this.ui.loaded(); const hud=performance.now(); await this.ui.prepareHud(); loadMeasure('level:hud',hud); }
+        if (l8) await l8;
         if (performanceScenario && performanceLevels[performanceScenario].spot) this.view.preset(performanceLevels[performanceScenario].spot);
         if (id === 'L9') this.world.missions?.begin();
         if (id === 'L10' && this.campaign?.cureResume?.cameraZoom !== undefined && !opts?.checkpoint) {
