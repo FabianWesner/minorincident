@@ -110,10 +110,12 @@ export class LevelNineBot {
       if (driving.gateClosed && p.x < l9Course.gate.x + 4) target = [l9Course.gate.x + 6, l9Course.gate.sideZ];
       else target = [l9Course.evacuation.x, l9Course.evacuation.z];
       const distance = Math.hypot(target[0] - p.x, target[1] - p.z);
-      if (target[0] === l9Course.evacuation.x && (distance < l9Course.evacuation.radius - 1 || car.vehicle!.speed > Math.max(1, distance * .6))) { f.brake = true; return f; }
+      // Ease in: at the old .6 x distance the floor-speed APC (11 m/s, bus ramming behind) orbited the bay at full lock and
+      // slipped round the end of the bridge-gate wall (r32-l9fun seed 1). Arrive at <= 0.35 x distance m/s.
+      if (target[0] === l9Course.evacuation.x && (distance < l9Course.evacuation.radius - 1 || car.vehicle!.speed > Math.max(2, distance * .35))) { f.brake = true; return f; }
       // Overshot the bay (a fast floor-speed arrival, r32-l9fun --zero): back straight into it instead of a turn-in-place
       // between the bridge gate and the trucks, where the horde boarded the circling hull for minutes.
-      if (target[0] === l9Course.evacuation.x && p.x > l9Course.evacuation.x + 3 && Math.cos(p.yaw) > .3 && car.vehicle!.speed < 4) {
+      if (target[0] === l9Course.evacuation.x && p.x > l9Course.evacuation.x + 3 && p.x < 471 && Math.cos(p.yaw) > .3 && car.vehicle!.speed < 4) {
         const back = Math.atan2(Math.sin(-Math.atan2(p.z - target[1], p.x - target[0]) - p.yaw), Math.cos(-Math.atan2(p.z - target[1], p.x - target[0]) - p.yaw));
         f.drive = { throttle: -.7, steer: Math.max(-1, Math.min(1, -back * 2)) }; return f;
       }
