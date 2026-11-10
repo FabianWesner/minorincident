@@ -201,7 +201,7 @@ export class Vehicles {
       } else car.doorTicks = 0;
       state.boosting = drive.boost;
       // The stuck-recovery reverse outranks a heavy stall: a pack hitting the reversing hull cancelled every recovery (r29-l9pin).
-      if (state.impactStallUntil && this.world.tick < state.impactStallUntil && !(state.recoveringUntil > this.world.tick) ||this.world.missions?.l9?.driving.holding(car.entity.id)) {
+      if (state.impactStallUntil && this.world.tick < state.impactStallUntil && !(state.recoveringUntil > this.world.tick) || this.world.missions?.l9?.driving.holding(car.entity.id)) {
         drive.throttle = drive.steer = 0; drive.brake = true;
       }
       car.physics.speedCap = this.speedShare(car);
