@@ -54,7 +54,7 @@ export class LevelTenOverview extends Group {
     const farm = mix(mix(vec3(.80, .66, .30), vec3(.46, .34, .22), step(.45, crop)), materials.look.nodes.grass.mul(1.25), step(.78, crop)).mul(float(1).sub(cropVerge.mul(.25)));
     const fence = near(p.x.sub(zoneA[0]).abs(), 2, 6).max(near(p.x.sub(zoneB[0]).abs(), 2, 6)).max(near(p.y.sub(cz).abs().sub(220).abs(), 2, 6));
     const restricted = mix(vec3(.55, .54, .45), vec3(.2, .21, .2), fence.mul(within(zoneA[0], zoneB[0])));
-    const apron = near(p.sub(vec2(cureHangar.centre.x, cureHangar.centre.z)).length(), 95, 130);
+    const fromHangar = p.sub(vec2(cureHangar.centre.x, cureHangar.centre.z)).abs(), apron = near(fromHangar.x.sub(70).max(fromHangar.y.sub(45)), 0, 8);
     const corridor = vec3(.36, .33, .28).mul(noise(p.mul(.05)).mul(.3).add(.8));
     const console = cure.anchors['cure-console'], pad = near(p.sub(vec2(console[0], console[1])).length(), 150, 190);
     let level: Node<'vec3'> = countryside;

@@ -14,6 +14,9 @@ import { GlowPuffs } from './CureGlow';
 import { l10Closing } from './characters/l10Closing';
 
 /** [asset, x, z, yaw?, scale?]. Shot space: the camera looks from +x/+z towards the origin. */
+/** The montage sets stand this far south of the console, beyond the level and its lights, so showing them never
+ * hides the level (r30 run hitches: hiding scene children changed the light set and recompiled every program). */
+const away = 2600;
 type Item = [string, number, number, number?, number?];
 /** [infected look, cured person, x, z, yaw]. The dust wall turns the first into the second. */
 type Figure = [string, string, number, number, number?];
@@ -80,9 +83,9 @@ const shots: ShotDef[] = [
   },
   { // The hangar doors open: Voss and Ruiz help Sam (or Reyes) outside.
     ground: 'sidewalk', patches: [{ token: 'grass', x: 0, z: 30, w: 200, d: 30 }],
-    items: [['bld.cure-motor-shelter', 0, -18, Math.PI / 2, 2.4], ['prop.cure-generator', 16, -4], ['prop.emergency-light', -10, -3], ['prop.cure-iso-tent', -18, -8, .3], ['veh.military-truck', 20, 6, -.6]],
+    items: [['bld.cure-motor-shelter', 0, -26, Math.PI / 2, 1.6], ['prop.cure-generator', 16, -4], ['prop.emergency-light', -10, -3], ['prop.cure-iso-tent', -18, -8, .3], ['veh.military-truck', 20, 6, -.6]],
     figures: [],
-    from: [11, 4.5, 17], to: [8, 4, 14], look: [0, 1.6, 0],
+    from: [15, 6, 20], to: [11, 5, 17], look: [0, 2, -6],
   },
   { // Town: people come out of houses and basements, blinking at the sun.
     ground: 'grass', patches: [{ token: 'asphalt', x: 0, z: 1, w: 200, d: 7 }, { token: 'sidewalk', x: 0, z: -4.5, w: 200, d: 3 }],
@@ -106,25 +109,28 @@ export class LevelTenEndingView extends Group {
   private readonly batchGeometry = new Set<BufferGeometry>();
   private readonly batchMaterials = new Map<string, Material>();
   private readonly actors: Actor[] = [];
-  private hidden = new Map<Object3D, boolean>();
+  private montage = false;
   private readonly glow: GlowPuffs;
   private readonly low: boolean;
   private survivors = false;
   private disposed = false;
-  private ready = false;
+  private readonly shotReady: boolean[] = [];
+  /** QA probe: leading shots that are loaded and warmed. */
+  get readyShots(): number { const i = this.shotReady.findIndex(r => !r); return i < 0 ? this.shotReady.length : i; }
   private lastShot = -1;
   readonly errors: string[] = [];
   constructor(private readonly world: SimWorld, private readonly scene: Scene, private readonly materials: Materials, private readonly warm: (model: Object3D) => Promise<void>) {
     super(); this.registry = new AssetRegistry(() => {}, { materials });
     this.low = world.infected?.director.tier === 'low';
     const console = world.missions!.def.anchors['cure-console']; this.position.set(console.x, 0, console.z);
-    this.stage.visible = false; this.add(this.stage);
+    this.stage.visible = false; this.stage.position.z = away; this.add(this.stage);
     this.glow = new GlowPuffs(this.low ? 220 : 420, '#7dff4a'); this.glow.name = 'cure-glow'; this.add(this.glow);
     void this.prepare().catch(error => this.errors.push(String(error)));
   }
   private async batch(group: Group, id: string, items: Item[]): Promise<void> {
     if (this.disposed) return;
-    const source = await this.registry.loadAsset(id, 'low');
+    const decay = /\.(wrecked|burned)$/.exec(id)?.[1];
+    const source = await this.registry.loadAsset(decay ? id.slice(0, -decay.length - 1) : id, 'low', decay);
     if (this.disposed) return;
     // Fixed scenery uses the same shared palette/instance layout as the district.
     source.userData.paletteWorld = false;
@@ -175,16 +181,17 @@ export class LevelTenEndingView extends Group {
     for (const [i, def] of shots.entries()) {
       if (this.disposed) return;
       const group = new Group(); group.visible = false; this.shotGroups.push(group); this.stage.add(group);
-      if (i === 5 && !this.survivors) continue;
+      if (i === 5 && !this.survivors) { this.shotReady[i] = true; continue; }
       this.ground(group, def);
       const byAsset = new Map<string, Item[]>();
       for (const item of def.items) { const list = byAsset.get(item[0]) ?? []; list.push(item); byAsset.set(item[0], list); }
-      for (const [id, items] of byAsset) await this.batch(group, id, items);
-      for (const [n, [infected, person, x, z, yaw = .55]] of def.figures.slice(0, perShot).entries()) {
-        const cured = await this.figure(group, person, x, z, yaw + (n % 3 - 1) * .3, i, !infected);
-        const before = infected ? await this.figure(group, infected, x, z, yaw + (n % 3 - 1) * .3, i, false) : undefined;
+      // One shot's assets load together; a failed asset leaves a gap, never the whole montage.
+      const guard = <T>(work: Promise<T>) => work.catch(error => { this.errors.push(String(error)); return undefined; });
+      await Promise.all([...byAsset].map(([id, items]) => guard(this.batch(group, id, items))));
+      await Promise.all(def.figures.slice(0, perShot).map(async ([infected, person, x, z, yaw = .55], n) => {
+        const [cured, before] = await Promise.all([guard(this.figure(group, person, x, z, yaw + (n % 3 - 1) * .3, i, !infected)), infected ? guard(this.figure(group, infected, x, z, yaw + (n % 3 - 1) * .3, i, false)) : undefined]);
         if (cured && before) { cured.partner = before; cured.root.visible = false; }
-      }
+      }));
       if (i === 5) for (const [n, person] of named.entries()) {
         const actor = await this.figure(group, person!.civilian!.model ?? 'npc.civilian-man-a', -6 + n * 4, -.5, .6, i, true);
         if (actor) actor.walk = .5;
@@ -197,10 +204,10 @@ export class LevelTenEndingView extends Group {
         const actor = await this.figure(group, townCast[n], -16 + n * 5.2, -9 - (n % 2) * 1.5, 0, i, true);
         if (actor) actor.walk = .45 + (n % 3) * .08;
       }
+      if (this.disposed) return;
+      await this.warm(group);
+      this.shotReady[i] = true;
     }
-    if (this.disposed) return;
-    await this.warm(this.stage);
-    this.ready = true;
   }
   /** Shot for a release-relative second; -1 outside the wave/survivor montage. */
   private shotAt(seconds: number): { shot: number; start: number; end: number } | null {
@@ -213,11 +220,11 @@ export class LevelTenEndingView extends Group {
   update(view: View): void {
     const state = this.world.missions?.state, ticks = state?.counters['epilogue-ticks'] ?? 0, seconds = ticks / 60;
     const front = state?.cureFront, phase = state?.epilogue?.phase;
-    const montage = state?.epilogue && this.ready ? this.shotAt(seconds) : null;
+    const slot = state?.epilogue ? this.shotAt(seconds) : null, montage = slot && this.shotReady[slot.shot] ? slot : null;
     this.glow.begin(view.camera);
     if (montage) {
       const { shot, start, end } = montage;
-      if (!this.hidden.size) for (const child of this.scene.children) if (child !== this && !(child as { isLight?: boolean }).isLight && child.type !== 'PerspectiveCamera') { this.hidden.set(child, child.visible); child.visible = false; }
+      this.montage = true; this.glow.offset.z = away;
       this.stage.visible = true; for (const [i, group] of this.shotGroups.entries()) group.visible = i === shot;
       const age = seconds - start, span = end - start, def = shots[shot], k = Math.min(1, age / span);
       if (shot !== this.lastShot) { for (const a of this.actors.filter(a => a.shot === shot)) this.resetActor(a); this.lastShot = shot; }
@@ -228,10 +235,10 @@ export class LevelTenEndingView extends Group {
       else this.dustHaze(age, 0, 26, .1, 7);
       const ease = k * k * (3 - 2 * k), aspect = Math.max(1, 1 / view.camera.aspect);
       const p = def.from.map((v, i) => v + (def.to[i] - v) * ease);
-      view.cinematic({ position: [this.position.x + p[0] * aspect, p[1] * aspect, this.position.z + p[2] * aspect], target: [this.position.x + def.look[0], def.look[1], this.position.z + def.look[2]] });
-      cureDust.origin.value.set(this.position.x + wall - 2000, this.position.z); cureDust.radius.value = shot < 5 ? 2000 : 2400;
+      view.cinematic({ position: [this.position.x + p[0] * aspect, p[1] * aspect, this.position.z + away + p[2] * aspect], target: [this.position.x + def.look[0], def.look[1], this.position.z + away + def.look[2]] });
+      cureDust.origin.value.set(this.position.x + wall - 2000, this.position.z + away); cureDust.radius.value = shot < 5 ? 2000 : 2400;
     } else {
-      if (this.hidden.size) { for (const [child, visible] of this.hidden) child.visible = visible; this.hidden.clear(); view.follow(); }
+      if (this.montage) { this.montage = false; this.glow.offset.z = 0; view.follow(); }
       this.stage.visible = false; this.lastShot = -1;
       if (front && phase !== 'done') this.release(seconds, front.radius, epiloguePull(ticks), phase === 'thanks');
       this.closingCamera(view, ticks, phase);
@@ -271,9 +278,9 @@ export class LevelTenEndingView extends Group {
     for (let i = 0; i < n; i++) {
       const u = i / n, z = -60 + u * 100, roll = Math.sin(age * 2.2 + i * 1.7);
       const lead = wall + Math.sin(i * 3.1) * 2.5 + roll * .8, height = (i % 4) * 1.6 + .8 + roll * .3;
-      this.glow.puff(lead, height, z, 4.5 + (i % 5) * 1.3, .32);
+      this.glow.puff(lead, height, z, 3.5 + (i % 5) * 1, .13);
     }
-    this.dustHaze(age, wall, 0, .12, 0);
+    this.dustHaze(age, wall, 0, .045, 0);
   }
   /** Settled dust behind the front, plus falling motes. */
   private dustHaze(age: number, wall: number, spread: number, brightness: number, base: number): void {
@@ -281,7 +288,7 @@ export class LevelTenEndingView extends Group {
     for (let i = 0; i < n; i++) {
       const a = Math.sin(i * 12.9898) * 43758.5453, u = a - Math.floor(a), b = Math.sin(i * 78.233) * 12345.678, v = b - Math.floor(b);
       const x = spread ? (u - .5) * spread * 2 : wall - u * 70, z = -40 + v * 70;
-      if (i % 3) this.glow.puff(x, .5 + (i % 2) * .6, z, 5 + (i % 4) * 2, brightness);
+      if (i % 3) this.glow.puff(x, .4 + (i % 2) * .5, z, 4 + (i % 4) * 1.5, brightness);
       else { const fall = (age * .5 + u * 6) % 6; this.glow.puff(x * .4, base + 6 - fall, z * .4 + 8, .25, .9); }
     }
   }
@@ -291,18 +298,18 @@ export class LevelTenEndingView extends Group {
     const grow = 1 + pull * 16, columnN = this.low ? 26 : 48, life = 5;
     if (!thanks) for (let i = 0; i < columnN; i++) {
       const h = ((seconds + i / columnN * life) % life) / life, angle = i * 2.4 + seconds * .3, r = (.5 + h * 3.2) * grow;
-      this.glow.puff(Math.cos(angle) * r, (1 + h * 34) * grow, Math.sin(angle) * r, (2.2 + h * 9) * grow, ramp * linger * .5 * Math.sin(Math.PI * h) ** .6);
+      this.glow.puff(Math.cos(angle) * r, (1 + h * 34) * grow, Math.sin(angle) * r, (2.2 + h * 9) * grow, ramp * linger * .8 * Math.sin(Math.PI * h) ** .6);
     }
     if (seconds < 1.4) for (let i = 0; i < 8; i++) {
       const t = seconds / 1.4, angle = i * .785;
-      this.glow.puff(Math.cos(angle) * t * 4, 1 + (i % 3), Math.sin(angle) * t * 4, 3 + t * 9, (1 - t) * .9);
+      this.glow.puff(Math.cos(angle) * t * 4, 1 + (i % 3), Math.sin(angle) * t * 4, 2.5 + t * 7, (1 - t) * .35);
     }
     if (seconds < 10.5) {
       const ring = Math.min(radius, 85), fade = seconds < 8 ? 1 : Math.max(0, 1 - (seconds - 8) / 2.5), n = this.low ? 60 : 120;
       for (let i = 0; i < n; i++) {
         const angle = i / n * Math.PI * 2 + Math.sin(i * 7.3) * .03, roll = Math.sin(seconds * 3 + i * 1.3), r = ring * (i % 2 ? .97 : 1) + roll * .4;
         const size = (2.4 + (i % 4) * .9) * (.7 + ring / 85 * .7);
-        this.glow.puff(Math.cos(angle) * r, .6 + (i % 3) * .7 + roll * .25, Math.sin(angle) * r, size, .38 * fade * ramp);
+        this.glow.puff(Math.cos(angle) * r, .6 + (i % 3) * .7 + roll * .25, Math.sin(angle) * r, size, .55 * fade * ramp);
       }
     }
     const motes = this.low ? 40 : 90, spread = Math.min(Math.max(radius, 6), 26);
@@ -341,9 +348,9 @@ export class LevelTenEndingView extends Group {
       view.cinematic({ position: [x + (sx - tx) * (1 - pull) + height * ox * pull, sy + height * pull, z + (sz - tz) * (1 - pull) + height * oz * pull], target: [x, shot.target[1] * (1 - pull), z], fovDeg: fov });
     }
   }
-  mask(): void { if (this.stage.visible) for (const child of this.hidden.keys()) child.visible = false; }
+  mask(): void { /* The montage stage stands far from the level; nothing is hidden (keeps every light set and pipeline). */ }
   dispose(): void {
-    this.disposed = true; for (const [child, visible] of this.hidden) child.visible = visible;
+    this.disposed = true;
     for (const actor of this.actors) { actor.mixer.stopAllAction(); actor.mixer.uncacheRoot(actor.root); }
     for (const { geometry } of this.owned) geometry.dispose();
     for (const batch of this.batches) batch.dispose();

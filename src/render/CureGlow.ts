@@ -1,4 +1,4 @@
-import { AdditiveBlending, Color, DataTexture, InstancedMesh, MeshBasicNodeMaterial, Object3D, PlaneGeometry, Quaternion, RGBAFormat, type Camera } from 'three/webgpu';
+import { AdditiveBlending, Color, DataTexture, InstancedMesh, MeshBasicNodeMaterial, Object3D, PlaneGeometry, Quaternion, RGBAFormat, Vector3, type Camera } from 'three/webgpu';
 
 let glowMap: DataTexture | null = null;
 /** Soft round puff: a smooth core with a slightly lumpy rim, generated once (no DOM needed). */
@@ -22,6 +22,8 @@ export class GlowPuffs extends InstancedMesh {
   private readonly slot = new Object3D();
   private readonly tint = new Color();
   private readonly facing = new Quaternion();
+  /** Added to every puff (the montage draws its dust wall at the far stage). */
+  readonly offset = new Vector3();
   constructor(capacity: number, color: string, opacity = 1) {
     super(new PlaneGeometry(1, 1), new MeshBasicNodeMaterial({ map: glowTexture(), color, transparent: true, depthWrite: false, blending: AdditiveBlending, opacity, fog: false }), capacity);
     this.frustumCulled = false; this.renderOrder = 5;
@@ -38,7 +40,7 @@ export class GlowPuffs extends InstancedMesh {
   /** Local position, world size in metres, brightness 0..1+. */
   puff(x: number, y: number, z: number, size: number, brightness: number): void {
     if (this.n >= this.instanceMatrix.count || brightness <= .002 || size <= 0) return;
-    this.slot.position.set(x, y, z); this.slot.quaternion.copy(this.facing); this.slot.scale.setScalar(size); this.slot.updateMatrix();
+    this.slot.position.set(x + this.offset.x, y + this.offset.y, z + this.offset.z); this.slot.quaternion.copy(this.facing); this.slot.scale.setScalar(size); this.slot.updateMatrix();
     this.setMatrixAt(this.n, this.slot.matrix); this.setColorAt(this.n, this.tint.setScalar(brightness)); this.n++;
   }
   end(): void {

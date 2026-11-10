@@ -8,13 +8,15 @@ const slots = { mia: [4.2, 2.2], rosa: [5.4, -.6], dale: [6.2, 2.8], okafor: [3.
  * Everything is relative to her seat at the stair foot, which faces east (+x, the sunrise and the open apron). */
 export const l10Closing = {
   /** Root lift for the sit clip, so the pelvis rests on the lowest tread. */
-  seatY: 0,
+  seatY: .22,
+  /** Sim heading of the seated courier: down the stair, east towards the apron and the sunrise. */
+  seatYaw: 0,
   seat(world: SimWorld): Point | undefined {
     const anchors = world.missions?.def.anchors, foot = anchors?.['dispersal-stair-foot'] ?? anchors?.['cure-console'];
-    return foot ? { x: foot.x + .3, z: foot.z } : undefined;
+    return foot ? { x: foot.x - .45, z: foot.z } : undefined;
   },
   /** The corgi sits against her right shin, turned to her, chin at knee height. */
-  corgi(seat: Point): { x: number; z: number; yaw: number } { return { x: seat.x + .62, z: seat.z + .5, yaw: Math.PI * .5 }; },
+  corgi(seat: Point): { x: number; z: number; yaw: number } { return { x: seat.x + .75, z: seat.z + .85, yaw: Math.PI * .8 }; },
   /** A low three-quarter view from the apron, sun behind the camera's left shoulder. */
   camera(console: Point, aspect: number, seat: Point = { x: console.x - 1.7, z: console.z - 6 }): { position: [number, number, number]; target: [number, number, number] } {
     const fit = Math.max(1, (16 / 9) / aspect), target: [number, number, number] = [seat.x + 1.6, .9, seat.z + 1.2];
@@ -38,7 +40,7 @@ export function l10ClosingPose(world: SimWorld, e: EntitySnapshot): EntitySnapsh
     const index = nearby.indexOf(e.id);
     if (index < 0 || index >= 12) return;
     // A loose arc on the apron, facing her; no grid.
-    const angle = -1.05 + (index % 6) * .42 + (index >= 6 ? .21 : 0), radius = 6.5 + (index >= 6 ? 3 : 0) + (index % 2) * .8;
+    const angle = -1.75 + (index % 6) * .3 + (index >= 6 ? .15 : 0), radius = 6.5 + (index >= 6 ? 3 : 0) + (index % 2) * .8;
     slot = [Math.cos(angle) * radius, Math.sin(angle) * radius];
   }
   if (!slot || !seat) return;

@@ -65,9 +65,12 @@ export class CourierPresenter {
     const closingPose = closing ? { ...survivor, scriptedClip: 'npc-sit' as const, animation: 'idle' as const, velocity: { x: 0, z: 0 } } : undefined;
     const seat = closing ? l10Closing.seat(this.world) : undefined;
     // r31-epilogue: she sits on the platform steps facing the sunrise (east), see l10Closing.
-    if (seat) { character.position.set(seat.x, l10Closing.seatY, seat.z); character.rotation.y = Math.PI / 2; }
+    // Snap the heading (sim convention, yaw 0 = +x) before the pose update, then pin the seat after it: the update's
+    // contact/transition blending would otherwise keep her at her last walked position (r30: "she stands ... no steps").
+    if (seat) character.face(l10Closing.seatYaw, (this.world.tick + alpha) / 60, false, undefined, 0, true);
     character.update(closingPose ?? carPose?.pose ?? (stopped && this.frozenPose ? this.frozenPose : survivor), stopped ? this.hitStopTick : this.world.tick, stopped ? 1 : alpha,
       riding === undefined ? undefined : { pedal: bicycle?.presentedRide?.pedal ?? bike?.pedal ?? this.world.tick * .12, steer: bicycle?.presentedRide?.steer ?? bike?.steer ?? 0 }, !!input.strafe && !carPose && riding === undefined);
+    if (seat) character.position.set(seat.x, l10Closing.seatY, seat.z);
     const cureCollected = this.world.missions?.state?.id === 'L10' && this.world.missions.state.items.includes('cure-canister');
     character.showCure(!!cureCollected && !!this.world.missions?.state?.states['cure-carried'] && !this.world.missions?.state?.states['cure-installed']);
     if (character.skinActive) character.glanceAt(this.threat(current));
