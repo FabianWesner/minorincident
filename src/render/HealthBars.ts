@@ -32,6 +32,14 @@ export function barSize(width: number, height: number, mega = false): { width: n
   const phone = Math.min(width, height) <= 480;
   return mega ? { width: phone ? 72 : 96, height: phone ? 8 : 10 } : { width: phone ? 48 : 64, height: phone ? 6 : 8 };
 }
+/** r26-l8hitreact: an L8 arena boss takes 0.6x outside its exposed windows, so a chip hit barely moves its bar. The lost slice stays
+ * as a white "chip" for 0.3 s (at least 3 px wide) beside the fill; render-only, one extra mesh that is hidden when no chip is live. */
+export const bossChipHoldTicks = 12, bossChipFadeTicks = 6, bossChipMinPx = 3;
+export function bossChip(from: number, current: number, age: number, widthPx: number): number {
+  if (age >= bossChipHoldTicks + bossChipFadeTicks || from <= current) return 0;
+  const fade = age <= bossChipHoldTicks ? 1 : 1 - (age - bossChipHoldTicks) / bossChipFadeTicks;
+  return Math.min(Math.max((from - current) * widthPx * fade, bossChipMinPx * fade), (1 - current) * widthPx);
+}
 export const followerPipSize = { width: 18, height: 3 } as const;
 
 /** Six pooled billboard meshes, independent of population and quality tier.
@@ -60,6 +68,7 @@ export class HealthBars extends Group {
   private readonly probes: { id: number; fraction: number; x: number; y: number; width: number; height: number; gap: number; anchor: number[] }[] = [];
   private readonly l10Bars: { id: number; distance: number }[] = [];
   private readonly l10BarIds = new Set<number>();
+  private readonly chips = new Map<number, { last: number; from: number; at: number }>();
   private readonly l4BarIds = new Set<number>();
   private readonly megaWeakSpot = new Mesh(new SphereGeometry(.26, 8, 6), new MeshBasicNodeMaterial({ color: 0xff3322, toneMapped: false, fog: false }));
   private readonly probing = __QA_HOOKS__ && typeof location !== 'undefined' && new URLSearchParams(location.search).has('test');
@@ -77,7 +86,7 @@ export class HealthBars extends Group {
       const mesh = new InstancedMesh(new PlaneGeometry(1, 1), material, 400);
       mesh.frustumCulled = false; mesh.count = 0; mesh.renderOrder = 100 + i; this.add(mesh); return mesh;
     });
-    this.enemyMeshes = makeMeshes([healthBarColors.outline, healthBarColors.background, healthBarColors.fill]);
+    this.enemyMeshes = makeMeshes([healthBarColors.outline, healthBarColors.background, healthBarColors.fill, '#ffffff']);
     this.followerMeshes = makeMeshes([healthBarColors.survivorOutline, healthBarColors.survivorBackground, healthBarColors.survivorFill]);
   }
   update(camera: PerspectiveCamera, width: number, height: number, occluded?: (target: Vector3) => boolean, cityNight = false): void {
@@ -192,6 +201,13 @@ export class HealthBars extends Group {
       const unit = 2 * depth / camera.projectionMatrix.elements[5] / height;
       const fraction = healthFraction(e.health.current, e.health.max), layers = follower ? this.followerMeshes : this.enemyMeshes;
       const indices = pip ? [1, 2] : [0, 1, 2];
+      let chipPx = 0;
+      if (e.infected?.arenaBoss && !follower) {
+        const chip = this.chips.get(e.id) ?? { last: fraction, from: fraction, at: -Infinity };
+        if (fraction < chip.last - 1e-6) { chip.from = this.world.tick - chip.at < bossChipHoldTicks + bossChipFadeTicks ? Math.max(chip.from, chip.last) : chip.last; chip.at = this.world.tick; }
+        chip.last = fraction; this.chips.set(e.id, chip);
+        chipPx = bossChip(chip.from, fraction, this.world.tick - chip.at, displaySize.width);
+      }
       for (const i of indices) {
         const index = layers[i].count;
         const w = i === 0 ? displaySize.width + 2 : i === 1 ? displaySize.width : displaySize.width * fraction;
@@ -200,6 +216,12 @@ export class HealthBars extends Group {
         if (i === 2) this.point.addScaledVector(this.direction.setFromMatrixColumn(camera.matrixWorld, 0), (fraction - 1) * displaySize.width / 2 * unit);
         this.barMatrix.compose(this.point, camera.quaternion, this.barScale.set(w * unit, h * unit, 1));
         layers[i].setMatrixAt(index, this.barMatrix); layers[i].count++;
+      }
+      if (chipPx > 0) {
+        const index = this.enemyMeshes[3].count;
+        this.point.copy(this.center).addScaledVector(this.direction.setFromMatrixColumn(camera.matrixWorld, 0), (displaySize.width * fraction - displaySize.width / 2 + chipPx / 2) * unit);
+        this.barMatrix.compose(this.point, camera.quaternion, this.barScale.set(chipPx * unit, displaySize.height * unit, 1));
+        this.enemyMeshes[3].setMatrixAt(index, this.barMatrix); this.enemyMeshes[3].count++;
       }
       if (__QA_HOOKS__ && this.probing) this.probes.push({ id: e.id, fraction, x, y, width: displaySize.width, height: displaySize.height, gap: pip ? 0 : 2, anchor: this.center.toArray() });
     }
