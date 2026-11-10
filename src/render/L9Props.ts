@@ -1,4 +1,4 @@
-import { BoxGeometry, CapsuleGeometry, CanvasTexture, Color, Group, InstancedMesh, Matrix4, Mesh, MeshBasicNodeMaterial, PlaneGeometry, Quaternion, TorusGeometry, Vector3, type Material, type Object3D } from 'three/webgpu';
+import { BoxGeometry, CapsuleGeometry, CanvasTexture, Color, Group, InstancedMesh, Matrix4, Mesh, MeshBasicNodeMaterial, PlaneGeometry, Quaternion, TorusGeometry, Vector3, type Material } from 'three/webgpu';
 import { AssetRegistry } from '../assets/registry';
 import { catalog } from '../data/actions/catalog';
 import { l9Course as cfg } from '../data/l9';
@@ -18,7 +18,6 @@ export class L9Props extends Group {
   private readonly signGeometry = new PlaneGeometry(1, 1);
   private readonly bagGeometry = new CapsuleGeometry(.22, .7, 3, 8);
   private readonly handleGeometry = new TorusGeometry(.14, .025, 4, 8, Math.PI);
-  private rocket?: Object3D;
   private readonly poseMatrix = new Matrix4();
   private readonly positionV = new Vector3();
   private readonly rotationQ = new Quaternion();
@@ -104,10 +103,9 @@ export class L9Props extends Group {
     const post = new Mesh(this.geometry, postMaterial); post.position.set(x, 1.5, z); post.scale.set(.12, 3, .12); this.add(post);
   }
   async load(): Promise<void> {
-    for (const [i, id] of ['weapon.rocket-launcher', 'weapon.army-mg', 'weapon.handgun'].entries()) {
+    for (const [i, id] of ['weapon.shotgun', 'weapon.army-mg', 'weapon.handgun'].entries()) {
       const model = await this.registry.loadAsset(catalog[id].viewAssetId, 'lod1');
       model.position.set(.15, i * .3, 0); model.scale.setScalar(.8); model.rotation.z = Math.PI / 2; this.rack.add(model);
-      if (i === 0) this.rocket = model;
     }
   }
   update(alpha = 1): void {
@@ -127,7 +125,6 @@ export class L9Props extends Group {
       this.rack.position.set(from.x + Math.cos(from.yaw) * Math.min(10, fall * 5) - 2, Math.max(-4.4, from.y + .5 - fall * fall * 3), from.z + Math.min(5, fall * 2));
       const tumble = Math.min(2.5, fall);
       this.rack.rotation.set(tumble * 2.5, from.yaw, tumble * 1.7);
-      if (this.rocket) { const slide = Math.max(0, fall - 1.8); this.rocket.position.y = Math.max(-4, -slide * 2.5); this.rocket.position.x = .15 + Math.min(3, slide * 1.5); }
     }
   }
   dispose(): void { this.registry.dispose(); this.geometry.dispose(); this.signGeometry.dispose(); this.bagGeometry.dispose(); this.handleGeometry.dispose(); for (const m of this.ownedMaterials) m.dispose(); for (const t of this.textures) t.dispose(); }

@@ -16,6 +16,7 @@ import { readyCarriedAlly, allyState, updateAlly } from '../outbreak/Allies';
 import { layoutHouseDoors, doorExit, emergeResident, walkResidents, type HouseEmergence } from '../outbreak/HouseEmergence';
 import { corpseDetour, formationSlot, leaderHeading, requireClearPoint } from './missionHelpers';
 import { L8BossArenas, type L8ArenaState } from './L8BossArenas';
+import { surrenderHeavyWeapons, gateToastDelay } from './L8Gate';
 
 export interface L8ZooState {
   arenas: L8ArenaState[];
@@ -23,7 +24,7 @@ export interface L8ZooState {
   roster: number[]; guards: number[]; animals: number[]; outlets: HouseEmergence[];
   arrivals: { id: number; outlet: number; tick: number; alpha: boolean }[];
   escapeCheckpoint: boolean;
-  keeperId: number; pondKeeperId: number; haleId: number; reyesId: number; dogId: number; broadcastAt: number; greetingAt: number; lionSpoken: boolean; haleGreetingAt: number;
+  keeperId: number; pondKeeperId: number; haleId: number; reyesId: number; dogId: number; broadcastAt: number; greetingAt: number; lionSpoken: boolean; haleGreetingAt: number; gateToastAt?: number;
   departureAt: number; chaseAt: number; departureFrom: Transform | null; haleFallAt: number; turnedAnimalId: number; animalInterceptionId: number; animalBiteStarted: boolean; keeperAttacked: boolean;
   /** Nadia's guided walk: 0 leading, 1 aborted (she is gone/turned), 2 arrived at the plaza. */
   guideDone: number; guideLeg: number; guideArrivedAt: number; guideWaiting: boolean; lionUntil: number;
@@ -167,7 +168,8 @@ export class LevelEightZoo {
   }
   begin(): void {
     const s = this.state, t = this.w.tick;
-    s.startedAt = t; s.greetingAt = t + 3 * 60; s.lionSpoken = false;
+    s.startedAt = t; s.greetingAt = t + 9 * 60; s.lionSpoken = false;
+    if (surrenderHeavyWeapons(this.w, this.mission).length) s.gateToastAt = t + gateToastDelay;
     s.broadcastAt = t + 20 * 60; s.haleGreetingAt = t + 38 * 60;
     this.mission.checkpoint('sanctuary');
   }
@@ -250,6 +252,7 @@ export class LevelEightZoo {
   private story(): void {
     const s = this.state, w = this.w, t = w.tick, player = w.entities.get(1)!;
     const keeper = w.entities.get(s.keeperId), hale = w.entities.get(s.haleId);
+    if (s.gateToastAt && t >= s.gateToastAt) { s.gateToastAt = 0; this.mission.radio('L8.gate-toast'); }
     if (s.greetingAt && t >= s.greetingAt) { s.greetingAt = 0; this.mission.radio('L8.nadia-path'); }
     if (s.broadcastAt && t >= s.broadcastAt && distance(player.transform, this.mission.def.anchors['central-plaza']) < 25) { s.broadcastAt = 0; this.mission.radio('L8.broadcast'); }
     if (s.haleGreetingAt && t >= s.haleGreetingAt && !s.broadcastAt && s.guideDone !== 0 && distance(player.transform, this.mission.def.anchors['central-plaza']) < 18) { s.haleGreetingAt = 0; this.mission.radio('L8.hale-greeting'); }
@@ -649,7 +652,7 @@ export class LevelEightZoo {
     // A checkpoint restored on tick zero can have a legitimate breach time of zero.
     this.state.startedAt += delta; if (this.breached) this.state.breachedAt += delta; if (this.state.nextWave) this.state.nextWave += delta;
     this.state.guideDone ??= 0; this.state.guideLeg ??= 0; this.state.guideArrivedAt ??= 0; this.state.lionUntil ??= 0;
-    for (const key of ['broadcastAt', 'greetingAt', 'haleGreetingAt', 'departureAt', 'haleFallAt', 'guideArrivedAt', 'lionUntil'] as const) if (this.state[key]) this.state[key] += delta;
+    for (const key of ['broadcastAt', 'greetingAt', 'haleGreetingAt', 'gateToastAt', 'departureAt', 'haleFallAt', 'guideArrivedAt', 'lionUntil'] as const) if (this.state[key]) this.state[key] += delta;
     if (this.state.departureFrom) this.state.chaseAt += delta;
     this.w.storyLock = this.state.departureFrom && !this.mission.state.states.departed ? { scripted: null, skip: false } : null;
     for (const arrival of this.state.arrivals) arrival.tick += delta;

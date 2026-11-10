@@ -6,6 +6,7 @@ import { l3WeaponPickup } from '../../data/l3';
 import { l4 } from '../../data/l4';
 import { l5DroppedWeapons, l5WeaponPickup } from '../../data/l5';
 import { l7Rocket } from '../../data/l7';
+import { isSanctuaryHeavy } from '../../data/l8Gate';
 import type { SimWorld } from '../world/SimWorld';
 import { fixedUnlocks, gearTier,modifiers,powerScore,rackSize,type CampaignSave } from './Campaign';
 import { restoreSelectedAction } from './selection';
@@ -60,7 +61,9 @@ export function applyCampaign(world:SimWorld,save:CampaignSave):void {
 export function campaignLoadout(save:CampaignSave,level:number):{size:number;LEFT:string[];RIGHT:string[]} {
   const allowed = storyWeaponsBefore(level);
   const permitted = (id:string) => allowed.has(id) || catalog[id]?.category === 'ability';
-  const LEFT = save.racks.LEFT.filter(permitted), RIGHT = save.racks.RIGHT.filter(permitted);
+  // PO 2026-11-10: the L8 sanctuary gate takes the heavy weapons; an older save still carrying one loses it here, not in a decode error.
+  const gated = (id:string) => !(level === 9 && isSanctuaryHeavy(id));
+  const LEFT = save.racks.LEFT.filter(permitted).filter(gated), RIGHT = save.racks.RIGHT.filter(permitted).filter(gated);
   // A filtered rack may be empty if an older save only contains weapons from future chapters.
   // The unarmed actions are always available and do not count as story weapons.
   if (!LEFT.length) LEFT.push('weapon.fists');
