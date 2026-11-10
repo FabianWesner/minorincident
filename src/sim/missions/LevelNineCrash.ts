@@ -71,7 +71,15 @@ export class LevelNineCrash {
       for (const actor of saved.actors ?? []) w.entities.replace(structuredClone(actor));
       this.restore(saved);
       if (saved.chunks) w.chunks?.load(saved.chunks);
-      w.vehicles!.rebuild(); this.rebuild();
+      // r30-l9bridge: a resumed world starts at tick 0 but the saved entities carry absolute ticks (the APC's impact stall alone
+      // froze it for 2.5 min after Continue). Rebase them as Mission.restore does for a retry.
+      const delta = w.tick - saved.tick;
+      for (const e of w.entities.iterate()) {
+        if (e.vehicle) { if (e.vehicle.explodeAt !== null) e.vehicle.explodeAt += delta; if (e.vehicle.recoveringUntil) e.vehicle.recoveringUntil += delta; }
+        if (e.light && e.light.startedAt >= 0) e.light.startedAt += delta;
+        if (e.infected) { w.infected?.restoreSpecialTimers(e.infected, delta); if (e.infected.until) e.infected.until += delta; if (e.infected.cooldown) e.infected.cooldown += delta; if (e.infected.recoverAt >= 0) { e.infected.recoverAt += delta; e.infected.deadAt += delta; } }
+      }
+      w.vehicles!.rebuild(false, delta); this.rebuild(); this.driving.safeBridgeStart(false);
       w.npcs!.restore(w.tick - saved.tick);
       const p = w.entities.get(1)!;
       w.physics.playerBody!.setTranslation(p.transform, true); w.physics.playerBody!.setNextKinematicTranslation(p.transform);

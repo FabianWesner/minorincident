@@ -9,6 +9,7 @@ import type { EntitySnapshot } from '../world/types';
 import type { DriveIntent } from '../vehicles/VehicleBody';
 import { pursueCrossingVehicle } from './LevelNineEncounters';
 import { Outbreak } from '../outbreak/Outbreak';
+import { clearThreat } from './Respawn';
 
 export interface L9DrivingState {
   prepared: boolean; roster: number[]; samId: number; megaId: number; soldiers: number[]; trucks: number[]; megaSightings?: number[]; megaSighting?: { index: number; startedAt: number; roadZ: number };
@@ -147,6 +148,52 @@ export class LevelNineDriving {
     if (!s.tankerExploded) w.interactables!.block(s.tankerId, { ...cfg.tanker, y: 1, halfX: 1.4, halfY: 1, halfZ: 4, entityId: s.tankerId });
     if (s.busId && s.busLineAt === null) { const bus = w.vehicles!.cars.get(s.busId); if (bus) { bus.physics.body.setEnabled(false); bus.entity.hidden = true; } }
     else if (s.busId && s.busStoppedAt === null) w.vehicles!.autopilot.set(s.busId, this.busIntent);
+  }
+  /** r30-l9bridge: true when nothing solid lies on the APC's heading (or `yaw`) for `metres`; `bodies` false ignores moving bodies (infected, vehicles). */
+  laneClear(metres = 8, yaw = this.car.entity.transform.yaw, bodies = true): boolean {
+    const w = this.w, car = this.car, p = car.entity.transform, r = car.physics.def.width / 2 + .2;
+    // Probe discs start just past the nose (the hull and its nav margin are not an obstacle) and reach `metres` beyond it.
+    for (let d = car.physics.def.length / 2 + r + .5; d <= car.physics.def.length / 2 + r + metres; d += 1) {
+      const x = p.x + Math.cos(yaw) * d, z = p.z - Math.sin(yaw) * d;
+      if (!w.infected!.nav.clear(x, z, r) || !w.solids.clear({ x, y: p.y, z }, r, car.entity.id, bodies)) return false;
+    }
+    return true;
+  }
+  /**
+   * r30-l9bridge (P2 "the APC starts nose-to-tail behind the school bus inside a horde"): the `bridge` snapshot is taken where the
+   * player happened to park in the bay, with the chasing bus alongside. A retry (`always`) or a resume whose lane is blocked puts the
+   * APC on the authored bridge-start pose (clear lane east to the deck), sets the bus back 40-60 m on the approach road and lets
+   * nearby infected lose the courier for the usual respawn delay. No infected stat or count changes.
+   */
+  safeBridgeStart(always: boolean): void {
+    const s = this.state, w = this.w;
+    if (!s.evacuationDone || this.mission.l9!.state.phase !== 'driving') return;
+    const car = this.car, p = car.entity.transform, a = cfg.bridgeStart;
+    if (p.x >= cfg.bridge.x) return;
+    const bus = s.busId ? w.vehicles!.cars.get(s.busId) : undefined;
+    const busNear = !!bus && !bus.entity.hidden && Math.hypot(bus.entity.transform.x - p.x, bus.entity.transform.z - p.z) < 18;
+    if (!always && !busNear && this.laneClear()) return;
+    const place = (c: { entity: EntitySnapshot; physics: typeof car.physics }, x: number, z: number, yaw: number) => {
+      const y = c.physics.def.suspension + c.physics.def.wheelRadius + .15, pose = { x, y, z, yaw };
+      Object.assign(c.entity.transform, pose); Object.assign(c.physics.previous, pose); c.physics.body.setTranslation(pose, true);
+      c.physics.body.setRotation({ x: 0, y: Math.sin(yaw / 2), z: 0, w: Math.cos(yaw / 2) }, true);
+      c.physics.body.setLinvel({ x: 0, y: 0, z: 0 }, true); c.physics.body.setAngvel({ x: 0, y: 0, z: 0 }, true);
+      c.physics.speed = c.physics.forwardSpeed = 0; if (c.entity.vehicle) c.entity.vehicle.speed = c.entity.vehicle.forwardSpeed = 0;
+      w.spatial.set(c.entity.id, x, z);
+    };
+    if (bus) {
+      let spot: { x: number; z: number } | null = null;
+      for (const behind of a.busBehindM) for (const z of a.busZ) {
+        const x = a.x - behind;
+        if (!spot && w.chunks?.resident(x, z) && w.infected!.nav.clear(x, z, 3) && w.solids.clear({ x, y: .7, z }, 3, bus.entity.id)) spot = { x, z };
+      }
+      if (spot) place(bus, spot.x, spot.z, 0);
+    }
+    place(car, a.x, a.z, a.yaw);
+    const player = w.entities.get(1)!; Object.assign(player.transform, { x: a.x, z: a.z, yaw: a.yaw });
+    w.physics.playerBody!.setTranslation(player.transform, true); w.previousPlayer = { ...player.transform }; w.spatial.set(1, a.x, a.z);
+    for (const id of car.entity.vehicle!.attached) { const e = w.entities.get(id); if (e) { e.transform.x = a.x; e.transform.z = a.z; w.spatial.set(id, a.x, a.z); } }
+    clearThreat(w, a);
   }
   holding(id: number): boolean {
     if (id !== this.mission.l9?.state.carId) return false;

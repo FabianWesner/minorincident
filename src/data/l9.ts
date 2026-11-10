@@ -61,6 +61,8 @@ export const l9Course = {
   gate: { x: 440, z: 0, halfZ: 7, seconds: 60, announceX: 240, sideZ: 11 },
   evacuation: { x: 457, z: 0, radius: 11, defendTicks: 1800, truckX: 459, truckZ: -16 },
   bridge: { x: 482, z: 0, halfZ: 6, endX: 508 },
+  /** r30-l9bridge: authored restart pose of the `bridge` checkpoint (clear lane east to the deck) and where the chasing bus is set back to. */
+  bridgeStart: { x: 452, z: 0, yaw: 0, busBehindM: [60, 50, 42], busZ: [12, 0, -12] },
   ramps: [{ id: 'overpass', x: -65, z: -330 }, { id: 'ditch', x: 80, z: -30 }],
   tanker: { x: -25, z: -330 },
   fire: { x: -20, z: 240, closeTicks: 900 },
