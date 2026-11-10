@@ -23,10 +23,10 @@ try {
     world.infected!.spawn(process.argv.includes('--mixed') ? types[i % types.length] : 'infected.runner', { x: ix, z: iz }, { state: 'chase' });
   }
   const start = { ...car.entity.transform };
-  let maxSpeed = 0;
+  let maxSpeed = 0; const worst = { ms: 0, tick: -1, attached: 0 };
   for (let i = 0; i < ticks; i++) {
     const frame = emptyInput(); frame.drive = { throttle: 1, steer: 0 }; frame.brake = false;
-    world.applyInput(frame, 'keyboard'); world.update();
+    world.applyInput(frame, 'keyboard'); const t0 = performance.now(); world.update(); const dt = performance.now() - t0; if (dt > worst.ms) Object.assign(worst, { ms: dt, tick: i, attached: car.entity.vehicle!.attached.length });
     maxSpeed = Math.max(maxSpeed, car.physics.speed);
     if (i % 30 === 0) {
       const p = car.entity.transform, st = car.entity.vehicle!;
@@ -46,5 +46,5 @@ try {
     for (const o of vehicles.obstacles.items) if (Math.hypot(o.entity.transform.x - x0, o.entity.transform.z - z0) < 15) console.log('obstacle', o.entity.id, o.entity.archetype, JSON.stringify(o.entity.transform), o.halfX, o.halfZ, o.light);
     for (const other of vehicles.cars.values()) if (other !== car && Math.hypot(other.entity.transform.x - x0, other.entity.transform.z - z0) < 20) console.log('car', other.entity.id, other.entity.archetype, JSON.stringify(other.entity.transform), other.entity.hidden);
   }
-  console.log(JSON.stringify({ progress: Math.hypot(car.entity.transform.x - start.x, car.entity.transform.z - start.z), maxSpeed }));
+  console.log(JSON.stringify({ worst, progress: Math.hypot(car.entity.transform.x - start.x, car.entity.transform.z - start.z), maxSpeed }));
 } finally { world.dispose(); }
