@@ -207,7 +207,7 @@ test('interactions: ring, input and view predicates agree for every interact ste
         const zoo = mission.l8!, car = levelWorld.entities.get(zoo.state.carId)!;
         const parked = { ...car.transform };
         car.transform.x += 2;
-        zoo.state.startedAt = levelWorld.tick - 3600;
+        zoo.state.startedAt = levelWorld.tick - 3600; zoo.state.guideDone = 1;
         zoo.update();
         const boarding = { ...mission.def.anchors.exit }, door = zoo.door();
         expect(Math.hypot(boarding.x - door.x, boarding.z - door.z)).toBeCloseTo(.25, 6);

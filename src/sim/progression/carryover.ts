@@ -2,7 +2,7 @@ import { clearOfL2Script, MAX_BODIES, type L1Aftermath } from '../../levels/cont
 import type { SimWorld } from '../world/SimWorld';
 import type { MissionResult } from '../missions/types';
 import { commitCrossingHandover } from './crossingHandover';
-import { autoRewards, carriedRackMax, lastLevel, type CampaignSave, type Level } from './Campaign';
+import { autoRewards, carriedRackMax, dropSanctuaryHeavy, lastLevel, type CampaignSave, type Level } from './Campaign';
 import { heldAction } from './selection';
 import type { VehicleTransfer } from '../vehicles/Vehicles';
 
@@ -25,13 +25,14 @@ export function completeCampaignLevel(save: CampaignSave, level: Level, result: 
   if (held) save.selectedAction = heldAction(held);
   if (level === 9) { commitCrossingHandover(save, world); return; }
   const holding = held ? { LEFT: held.LEFT.rack.map(s => s.id), RIGHT: held.RIGHT.rack.map(s => s.id) } : null;
-  if (level !== save.completedLevels + 1) { if (holding) carry(save, holding, false); return; }
+  if (level !== save.completedLevels + 1) { if (holding) carry(save, holding, false); if (level === 8) dropSanctuaryHeavy(save); return; }
   // L6 onwards has no reward screen: finishing a level unlocks and hands over to the next one directly.
   if (level >= 6) {
     save.completedLevels = level; save.unlockedLevel = Math.max(save.unlockedLevel, Math.min(lastLevel, level + 1)) as Level;
     // L7 -> L8 receives the exact acquired arsenal (E29-AC13 / E30-AC03); the rocket launcher stays in the racks.
     // Every other late handover keeps what the courier carries too (E24: the player keeps the existing arsenal).
     if (holding) carry(save, holding, level === 7);
+    if (level === 8) dropSanctuaryHeavy(save);
     return;
   }
   autoRewards(save, level);

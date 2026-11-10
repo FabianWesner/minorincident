@@ -24,6 +24,9 @@ L8 is the last safe place. L9 is the last time she has everything. L10 is alone,
 **Beat 1 · Sanctuary (calm, ~1 min).** The bus rolls into the zoo, now an army sanctuary. A keeper, **Nadia**, leads
 the group along lit enclosures: flamingos, zebras, the lion, the gorilla, the old elephant. Soldiers, staff, children
 pointing at animals. It is the first time all day nobody is running.
+- At the gate (PO 2026-11-10: "L8 would be more fun without the rocket launcher"): Hale's soldiers collect heavy weapons.
+  Soldier: "Heavy weapons stay at the armory. Rules of the sanctuary." A HUD line names the weapon handed over (the rocket
+  launcher). The courier keeps small arms, axe, shotgun and MG. There are no launcher pickups or racks in L8 or L9; the L10 hangar armory hands it back.
 - Objective: *Follow Nadia to the central plaza.*
 - Nadia: "Stay on the path. They're nervous tonight — so are we."
 - Nadia (at the lion): "Sixteen years old. Grumpiest cat in the state."
@@ -68,8 +71,8 @@ This is the level where she has every weapon and every friend — and the level 
 - Bridgehead: the army trucks take Mia, Rosa, Dale and Mr. Okafor north. Rosa hugs the corgi.
   - Mr. Okafor: "You came back for us. Every time."
   - Sam stays: "Someone has to watch your back. And somebody has to see what's on that campus."
-- On the bridge the thing drops onto the hull. The span gives way. Slow motion: the APC tips, the weapons rack burns,
-  the rocket launcher slides into the river.
+- On the bridge the thing drops onto the hull. The span gives way. Slow motion: the APC tips, the weapons rack burns and
+  the guns go into the river (no launcher: the sanctuary gate took it in L8).
 - Crawl out of the wreck. Axe on her back. The corgi pulls at her sleeve.
 - Caption (end of L9): *Everything went into the river. Almost everything.*
 
@@ -103,7 +106,7 @@ The music drops to a quiet theme. This is the breath before the end.
 - Voss: "The sample you carried that morning came from here. We sent it to the Annex for testing. The container failed. That's on us. Not on you."
 - Courier (her second line in the whole game): "I carried it."
 - Voss: "Then carry this one." (She hands over the cure canister.) "It's airborne. It doesn't kill them — it brings them back. Whoever is still in there. The dispersal complex is two kilometres east. Plug it into the main console, hold it while it charges, and release it."
-- Sergeant **Ruiz** (armory): "Your weapons came off the bridge wreck this morning. Cleaned them. Took the liberty." — she gets every weapon back.
+- Sergeant **Ruiz** (armory): "Your weapons came off the bridge wreck this morning. Cleaned them. Took the liberty — and one of ours." — she gets every weapon back, the rocket launcher included.
 - Voss (giving the flamethrower): "Prototype. Burns hot. Don't use it in the corn."
 - Sam: "I'm coming." — Voss: "You're bleeding into my floor. You're staying." — Sam (to the courier): "Go finish your delivery."
 

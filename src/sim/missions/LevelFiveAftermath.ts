@@ -173,6 +173,8 @@ export class LevelFiveAftermath {
       // Keep its slot for another authored street point instead.
       if (!alpha && !ai.nav.clear(source.x, source.z, .45)) continue;
       const at = this.snap(source, alpha ? .8 : .45);
+      // First rescue (PO 11-10): a quiet pocket round the first survivor and the way to it. The quota fills further out.
+      if (this.inFirstRescueQuiet(at)) continue;
       // Public roads on either side remain populated; the back-of-block strip
       // between them requires a long detour around the intact frontage.
       if (!alpha && at.x > -66 && at.x < -40 && at.z > -34 && at.z < 40) continue;
@@ -189,6 +191,17 @@ export class LevelFiveAftermath {
       const brain = e.infected.l1; if (brain) { brain.homeX = e.transform.x; brain.homeZ = e.transform.z; brain.leashM = l5.infected.leashM; }
       s.infectedIds.push(id); occupied.push(at); left--;
     }
+  }
+  /** True inside the first survivor's pocket or the corridor from the cellar to its ring (street infected start elsewhere). */
+  private inFirstRescueQuiet(at: Point): boolean {
+    const { route, pocketM, secondPocketM, corridorM } = l5.firstRescue;
+    const stops: Point[] = [this.anchor('l5-out'), ...route.map(key => this.anchor(`l5-ring-${key}`))];
+    if (dist(stops[1], at) < pocketM || stops[2] && dist(stops[2], at) < secondPocketM) return true;
+    for (let i = 0; i + 1 < stops.length; i++) {
+      const a = stops[i], b = stops[i + 1], dx = b.x - a.x, dz = b.z - a.z, t = Math.max(0, Math.min(1, ((at.x - a.x) * dx + (at.z - a.z) * dz) / (dx * dx + dz * dz)));
+      if (Math.hypot(at.x - (a.x + t * dx), at.z - (a.z + t * dz)) < corridorM) return true;
+    }
+    return false;
   }
   private spawnMedkits(): void {
     for (const [x, z] of l5.medkits.positions) {
