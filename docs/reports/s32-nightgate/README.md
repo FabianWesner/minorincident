@@ -69,3 +69,7 @@ Added opt-in catalog --reuse-session and enabled it for bounded gate batches. Al
 ## Tool validation
 
 Typecheck and lint passed. Focused gate-tools validation passed all eight cases with Vitest capped at two workers. Renamed the threshold field to colourBucketShareMin to state its unit correctly; the numerical threshold and observed results are unchanged. This commit remains a work-in-progress candidate: runtime target and a passing test:gate result are still outstanding.
+
+## Passing full test gate
+
+Re-ran npm run test:gate after the environment recovered from the earlier timeout. It passed: 27 files, 107 default-project tests, 87.7 seconds against the 240-second budget. Collection remains at 150/150 cases across projects. Typecheck, lint, focused gate-tools tests, full night matrix execution and capture review now have passing execution evidence; the deliberate night visual failures remain visible. The only unresolved acceptance constraint is reducing added scene-gate runtime from 4.6 minutes to approximately two minutes without reducing animal/pose/tier/backend coverage.
