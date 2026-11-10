@@ -337,6 +337,8 @@ export class CrowdView extends Group {
       const atlas = model.userData.assetTextureMode === 'baseColor' ? crowdTexture(model) : undefined;
       const healthy = def.id.startsWith('healthy.'), human = !dogCoat(def.id) && !/^(infected|healthy)\.(dog|cat|crow|lion|gorilla|elephant|zebra|flamingo|monkey|lioness)$/.test(def.id);
       const alpha = alphaLookAssets.includes(asset), regularAlpha = alphaLooks['inf.alpha'].includes(asset) || alphaLooks['inf.mega-alpha'].includes(asset), capacity = role === 'crow' ? 800 : 350;
+      // L8 animal bosses are dark coats too: the full night figure fill turned the gorilla into a flat pale-blue blob (PO 11-10); same Alpha value as the Mega.
+      const zooBoss = /^infected\.(lion|lioness|gorilla|elephant|zebra|flamingo|monkey)$/.test(def.id);
       // The retained Alpha corpse is LOD0. Establish its own atlas binding before
       // a far batch prepares pages from that source, regardless of arrival order.
       if (this.world.scenario === 'L10' && alpha && lod === 'lod2') { await this.requestBatch(def, 'lod0'); if (this.disposed) return; }
@@ -510,7 +512,7 @@ export class CrowdView extends Group {
       material = this.shading?.shaded(base, glow, undefined, undefined, undefined, healthy ? undefined : eye, figureMask, shadowReceiver, healthy ? undefined : float(1)) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: base, emissiveNode: glow });
       // E25 night readability: crowd silhouettes take the preset's moonlit rim.
       livingStencil(material);
-      if (material instanceof PaletteMaterial) { material.figureRim.value = .25; material.figureFill.value = regularAlpha ? .25 : 1; }
+      if (material instanceof PaletteMaterial) { material.figureRim.value = .25; material.figureFill.value = regularAlpha || zooBoss ? .25 : 1; }
       // The Alpha-sized Mega retains its silhouette at contact, like a regular Alpha.
       // Instances cannot be sorted independently in the transparent render list.
       // A shared 4x4 screen-door threshold keeps every surface of a corpse at

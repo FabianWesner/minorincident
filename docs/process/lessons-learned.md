@@ -338,3 +338,10 @@ A living record, updated after every lane or experiment. Short entries with evid
 ### 2026-11-10 — r30-l9bridge (L9 bridge checkpoint restart, Sonnet)
 - **Found:** the restart was the player's parking spot with the chasing bus alongside, and Continue froze the APC for 2.5 min: the L9 resume path (`LevelNineCrash.prepare`) restored absolute ticks into a tick-0 world (`impactStallUntil` 8890). Probe the resumed vehicle with real throttle (speed stayed 0.00) before judging "bot cannot steer around the bus".
 - **Apply:** any resume/restore path rebases every absolute tick it loads (vehicles, infected, lights); put "can it move / act within 5 s of restore" in the restore test. A checkpoint that snapshots where the player happened to stop needs an authored safe pose, not just a clear-threat pass.
+
+## 2026-11-10: r31-flamingo (L8 animal bosses)
+- **Worked:** size boss HP from measured per-hit damage (one probe shot per weapon through the real pipeline), not from the boss's old HP. Bullet-sponge HP (780 per bird, 6000 gorilla) was the PO's complaint; the flock's threat is its numbers, so extra flights (not HP) lengthen the fight.
+- **Didn't work:** lengthening the fight with more flamingos alone: 26 solid bird corpses walled the courier in (bot idle 1000 s on seeds 4/5). Dead bodies persist, so any "more enemies" change needs a corpse-solidity check, not only a kill-time check.
+- **Watch:** a boss damage probe that can kill the boss changes arena gates/phases for the next probe (gorilla hits vanished). Probe with a huge HP pool and assert on per-hit damage.
+- **Watch:** a wave spawned on the same tick the arena clear check runs must skip that check (stale `live`/`pendingTurns`).
+- **Night blobs:** the figure fill value (CrowdView `figureFill`) must be 0.25 for any dark-coated boss, not only Alphas; the Mega and the L8 animals shared this cause.

@@ -80,7 +80,8 @@ export class Damage {
       if (!(back && (target.infected.megaWeakTicks ?? 0) > 0)) amount *= .35;
     }
     const arena = target.infected?.arenaBoss;
-    if (arena && hit.actionId !== 'arena.elephant.wall') amount *= this.world.tick < arena.exposedUntil ? 1.8 : .6;
+    // r31-flamingo: allies (soldiers, group) only scratch the animals, so the courier owns the boss fight and the flock is not gone before its title shows.
+    if (arena && hit.actionId !== 'arena.elephant.wall') amount *= (this.world.tick < arena.exposedUntil ? 1.8 : .6) * (hit.sourceId === 1 ? 1 : .2);
     return glance ? amount * riotShieldResponse.chipFraction : amount;
   }
   /** True only for an actual frontal riot shield firearm hit outside contact and break windows. */
