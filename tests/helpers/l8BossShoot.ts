@@ -11,6 +11,8 @@ import type { SimWorld } from '../../src/sim/world/SimWorld';
 /** Convert every animal of the arena to a boss through the production turn path. */
 export function turnArena(w: SimWorld, id: string): EntitySnapshot[] {
   const zoo = w.missions!.l8!, arena = zoo.state.arenas.find(a => a.id === id)!;
+  // r32-animalmoves: the old elephant stays a living animal until the gorilla arena is cleared; clear it first so he can turn.
+  if (id === 'elephant') for (const a of zoo.state.arenas) if (a.id === 'gorilla') a.phase = 3;
   for (const animalId of arena.ids) w.npcs!.civilians.outbreak!.infect(w.entities.get(animalId)!, 1);
   w.combat!.damage.god = true;
   for (let i = 0; i < 1500 && !arena.ids.every(a => w.entities.get(a)?.infected?.arenaBoss); i++) w.update();
@@ -160,7 +162,8 @@ export async function checkL8Cues(): Promise<void> {
   expect(mission.state.states.breached).toBeFalsy();
   expect(l8SanctuaryResting(mission)).toBe(true);
   expect(objectiveText(mission, step().text)).toBe('Rest at the plaza with the group');
-  w.tick = zoo.state.startedAt + 3599; advance(2);
+  // r31-nadia: Nadia is still leading in this probe (the courier was teleported), so the calm runs to its 120 s cap.
+  w.tick = zoo.state.startedAt + 120 * 60 - 1; advance(2);
   expect(mission.state.states.breached).toBe(true);
   expect(mission.state.steps.escape.status).toBe('active');
   expect(zoo.protecting()).toBe(true);
