@@ -58,7 +58,7 @@ const sourceMatchesMain = process.env.QA_THREAT_SOURCE_MATCHES_MAIN !== undefine
 const started = performance.now(), levels: LevelReceipt[] = [];
 await mkdir(values.out!, { recursive: true });
 const stages = await runStages(selected, maxWorkers);
-await writeFile(join(values.out!, 'stages.json'), JSON.stringify([...stages.values()].map(({ job, seconds, startedAt, endedAt, error }) => ({ ...job, seconds, startedAt, endedAt, ...(error ? { error } : {}) })), null, 2) + '\n');
+await writeFile(join(values.out!, 'stages.json'), JSON.stringify([...stages.values()].map(({ job, seconds, startedAt, endedAt, error, split }) => ({ ...job, seconds, startedAt, endedAt, ...(split ? { split } : {}), ...(error ? { error } : {}) })), null, 2) + '\n');
 const stage = (id: string) => {
   const result = stages.get(id);
   if (!result) throw new Error(`Missing threat stage ${id}`);

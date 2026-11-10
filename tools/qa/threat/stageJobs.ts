@@ -20,6 +20,8 @@ export interface NativeStage {
 }
 export interface StageResult {
   job: StageJob; seconds: number; startedAt: number; endedAt: number; error?: string;
+  /** Diagnostic split of `seconds`, kept out of the receipts. */
+  split?: { skilledSeconds?: number; kitingSeconds?: number; observerSeconds?: number; simSeconds?: number };
   native?: NativeStage; l3?: L3SharedSeed; follower?: FollowerPaceSeed; highHold?: ReturnType<L4HoldCensus['finish']>;
 }
 export const stageId = (level: RunnerLevel, passive: boolean, seed = 1): string => `${level}/${passive ? 'passive' : 'skilled'}/${seed}`;
@@ -46,11 +48,13 @@ async function execute(job: StageJob): Promise<StageResult> {
       result.native = native;
       // Preserve every existing passive observation window, including L5's full 1,200 seconds.
       const windows: Partial<Record<RunnerLevel, number>> = { L3: 70, L4: 250, L6: 110, L8: 150 };
+      const runStarted = performance.now();
       native.run = await runLevel(job.level, 'complete', job.seed, job.passive ? windows[job.level] : undefined, 'auto', campaignFor(job.level, job.seed), undefined, 0, {
         quality: 'low', passive: job.passive,
         beforeBegin: world => { observer = new ThreatObserver(world, job.level); native.definitions = observer.definitions; native.quality = observer.quality; },
         beforeDispose: world => { native.observation = observer?.finish() ?? null; if (!job.passive) native.nativeStateHash = stateHash(world.getState()); },
       });
+      result.split = { skilledSeconds: (performance.now() - runStarted) / 1000, observerSeconds: (observer?.overheadMilliseconds ?? 0) / 1000, simSeconds: (observer?.simMilliseconds ?? 0) / 1000 };
       if (!job.passive) {
         native.kiting = finishKitingReceipt(kiting);
       }
@@ -58,6 +62,7 @@ async function execute(job: StageJob): Promise<StageResult> {
         // L9 is a driving/crawl route, explicitly exempt from the on-foot
         // kiting sample. Replaying its whole drive cannot collect that sample.
         let kitingComplete = () => false;
+        const kitingStarted = performance.now();
         try { await runLevel(job.level, 'complete', job.seed, undefined, 'auto', campaignFor(job.level, job.seed), undefined, 0, {
           quality: 'low', beforeBegin: world => { kitingComplete = installKitingPolicy(world, kiting, job.level, kitingStyle); },
           // Cinematic inputs can repeat at one sim tick (L4 has 1,227 inputs
@@ -65,6 +70,7 @@ async function execute(job: StageJob): Promise<StageResult> {
           stopWhen: () => kitingComplete(),
           beforeDispose: () => { native.kiting = finishKitingReceipt(kiting); },
         }); } catch (error) { if (!(error instanceof LevelRunStopped)) throw error; }
+        result.split!.kitingSeconds = (performance.now() - kitingStarted) / 1000;
       }
     }
   } catch (error) { result.error = String(error); }
@@ -84,19 +90,17 @@ export async function runStages(levels: readonly RunnerLevel[], maxWorkers: numb
     if (level === 'L5' || level === 'L7') for (const passive of [false, true]) for (const seed of [2, 3])
       jobs.push({ id: stageId(level, passive, seed), level, kind: 'follower', seed, passive });
   }
-  // Current runner profiles: L7's extra passive seeds can consume the full
-  // native window, like L5. Schedule them before the shorter routes; the old
-  // 20-second estimates left both seeds running after all other work finished.
-  const nativeCosts: Record<RunnerLevel, readonly [number, number]> = {
-    L1: [40, 25], L2: [55, 45], L3: [60, 15], L4: [160, 115], L5: [40, 220],
-    L6: [25, 10], L7: [40, 40], L8: [70, 40], L9: [50, 55], L10: [95, 60],
+  // Measured stage durations in seconds on a 4-vCPU runner running the pool of four workers (docs/reports/r23-threattime,
+  // stages.json of the unbounded diagnostic run). Longest-first on these numbers is the classic LPT packing; the
+  // old guesses put L7 passive seed 1 (240 s) and L8 skilled (454 s) last or in the middle and left two workers idle.
+  const measured: Record<string, number> = {
+    'L8/skilled/1': 454, 'L5/passive/1': 297, 'L5/passive/2': 277, 'L7/passive/1': 240, 'L9/skilled/1': 238, 'L5/passive/3': 232,
+    'L7/passive/2': 227, 'L7/passive/3': 224, 'L4/skilled/1': 154, 'L10/skilled/1': 137, 'L4/high-hold': 130, 'L3/skilled/2': 108,
+    'L4/passive/1': 107, 'L9/passive/1': 94, 'L2/passive/1': 92, 'L10/passive/1': 77, 'L5/skilled/1': 77, 'L3/skilled/1': 75,
+    'L2/skilled/1': 72, 'L8/passive/1': 66, 'L5/skilled/2': 64, 'L3/skilled/3': 64, 'L5/skilled/3': 59, 'L1/skilled/1': 49,
+    'L7/skilled/1': 49, 'L7/skilled/3': 48, 'L7/skilled/2': 40, 'L6/skilled/1': 32, 'L1/passive/1': 29, 'L3/passive/1': 19, 'L6/passive/1': 13,
   };
-  const cost = (job: StageJob) => {
-    if (job.kind === 'high-hold') return 145;
-    if (job.kind === 'l3' && job.seed > 1) return job.seed === 3 ? 110 : 45;
-    if (job.kind === 'follower') return job.passive ? job.level === 'L5' ? 200 : 160 : job.level === 'L5' ? 40 : 30;
-    return nativeCosts[job.level][job.passive ? 1 : 0];
-  };
+  const cost = (job: StageJob) => measured[job.id] ?? (job.kind === 'follower' ? job.passive ? 230 : 55 : job.passive ? 80 : 90);
   jobs.sort((a, b) => cost(b) - cost(a));
   const results = new Map<string, StageResult>();
   if (maxWorkers === 1) {
