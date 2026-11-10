@@ -20,7 +20,8 @@ per type (close camera, video), a game-camera pass at zoom 1.5 on low and high, 
 - **Reading:** `python3 tools/qa/r31/timeline.py <scene dir> name:f0:f1[:full]` prints the clip runs and tiles every video
   frame of a window (one cell = 3 ticks); `python3 tools/qa/r31/summarize.py test-results/scenes` gives clip counts per phase,
   foot slide and outcome. I looked at the attack, hit, kick and death strips for every group named below.
-- Committed sheets (one per group, every cell = 3 ticks): `sheet-humans-suit-attack.jpg` (suit worker, frames 155-275: two
+- Sheets (one per group, every cell = 3 ticks; `*.jpg` under docs/reports is git-ignored by the 11-05 archive rule, so they
+  sit next to this README in the worktree and in the scratchpad folder below): `sheet-humans-suit-attack.jpg` (suit worker, frames 155-275: two
   attack cycles), `sheet-alpha-brute-slam.jpg` (frames 128-300: slam ring, slam, charge lane), `sheet-animals-lion-pounce.jpg`
   (frames 150-300: pounce lane, arrival inside the courier).
 - Captures (not in git): `/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/r31-zombies/scenes/r31-<type>/`
