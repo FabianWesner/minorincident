@@ -12,7 +12,6 @@ export class LevelNineBot {
   private avoid: { x: number; z: number; until: number } | null = null;
   private blockedAt: number | null = null;
   private reverseUntil = 0;
-  private bridgeApproach = 0;
   private previousPosition: { x: number; z: number } | null = null;
   readonly path: readonly Point[];
   readonly length: number;
@@ -58,13 +57,12 @@ export class LevelNineBot {
     const car = l9 && w.entities.get(l9.state.carId);
     if (!car || this.profile === 'idle' || this.finished) return f;
     if (this.previousPosition && Math.hypot(car.transform.x - this.previousPosition.x, car.transform.z - this.previousPosition.z) > 25) {
-      this.bridgeApproach = 0; this.avoid = null; this.reverseUntil = 0; this.blockedAt = null;
+      this.avoid = null; this.reverseUntil = 0; this.blockedAt = null;
     }
     this.previousPosition = { x: car.transform.x, z: car.transform.z };
     if (l9.state.phase === 'crawl') { const end = w.missions!.def.anchors['crawl-end'], dx = end.x - w.entities.get(1)!.transform.x, dz = end.z - w.entities.get(1)!.transform.z, length = Math.hypot(dx, dz) || 1; f.move = { x: dx / length, z: dz / length }; return f; }
     if (l9.state.phase !== 'driving') return f;
     const driving = l9.driving.state;
-    if (!driving.evacuationDone) this.bridgeApproach = 0;
     if (l9.driving.hatch) {
       f.brake = true; f.selectedWeaponKey = 5;
       const origin = w.entities.get(1)!.transform;
@@ -94,14 +92,11 @@ export class LevelNineBot {
     if (driving.evacuationDone) this.index = this.path.length - 1;
     let target: Point = this.path[this.index];
     if (driving.evacuationDone) {
-      // Leave along the open gate side before turning toward the bridge.
-      // Cutting diagonally to its centreline drives into the evacuation
-      // barricades/trucks, where the pursuing bus pins the APC broadside.
-      const approach: Point[] = [[l9Course.bridge.x - 12, l9Course.gate.sideZ],
-        [l9Course.bridge.x - 8, 0], [l9Course.bridge.endX + 4, 0]];
-      if (Math.abs(p.z) < 4.5 && Math.cos(p.yaw) > .85) this.bridgeApproach = 2;
-      while (this.bridgeApproach < 2 && Math.hypot(approach[this.bridgeApproach][0] - p.x, approach[this.bridgeApproach][1] - p.z) < (this.bridgeApproach === 0 ? 14 : 12)) this.bridgeApproach++;
-      target = approach[this.bridgeApproach];
+      // Leave straight for the bridge at full power. Waypoint dances and a
+      // part-throttle turn-in-place leave the APC crawling next to the gate
+      // while the pursuing bus and the horde close in (r23-skilledreg: low
+      // tier L9 stalled at 0.3 m/s for 600 s and was mobbed).
+      target = [l9Course.bridge.x + 4, 0];
     }
     // The APC cannot turn sharply enough from the old x=405 trigger when the
     // evacuation gate is closed at x=440; it stalls against the barrier first.
@@ -136,8 +131,7 @@ export class LevelNineBot {
     if (this.avoid) target = [this.avoid.x, this.avoid.z];
     const dx = target[0] - p.x, dz = target[1] - p.z, want = -Math.atan2(dz, dx);
     const delta = Math.atan2(Math.sin(want - p.yaw), Math.cos(want - p.yaw));
-    f.drive = { throttle: driving.evacuationDone ? Math.abs(delta) > .8 ? .45 : 1 : this.throttle, steer: Math.max(-1, Math.min(1, delta * 2)) };
-    if (driving.evacuationDone && car.vehicle!.attached.length && car.vehicle!.speed > 2) f.handbrake = true;
+    f.drive = { throttle: driving.evacuationDone ? 1 : this.throttle, steer: Math.max(-1, Math.min(1, delta * 2)) };
     return f;
   }
 }
