@@ -469,7 +469,7 @@ _route_boxes = []                               # (x0, z0, x1, z1) footprints of
 def _route_piece(asset, x, z, yaw, span, fence_piece=False):
     dim = l.manifest[asset]['dimensions']['x']
     sc = (span / dim, 2.4 if fence_piece else 1, 1)
-    pid = l.place(asset, [x, 0, z], yaw=yaw, scale=sc)
+    pid = l.place(asset, [x, 0, z], yaw=yaw, scale=sc, allowed=(asset == 'prop.jersey-barrier'))
     if fence_piece: l.data['placements'][-1]['fixed'] = True
     a = l.data['placements'][-1]['visualAabb']
     _route_boxes.append((a['min'][0], a['min'][2], a['max'][0], a['max'][2]))
@@ -478,10 +478,13 @@ def _route_piece(asset, x, z, yaw, span, fence_piece=False):
 def _route_line(asset, x0, z0, x1, z1, fence_piece=False):
     """Pieces along an axis-aligned segment, each scaled so the line ends exactly at (x1, z1)."""
     along_x = abs(x1 - x0) >= abs(z1 - z0)
-    length = abs(x1 - x0) if along_x else abs(z1 - z0)
+    # The layout validator expands every footprint by the lane half width, so a line that ends exactly on a lane edge counts as on the road: stop 3 cm short
+    # (hedges and fences only; the jersey barriers that close the lane itself are the allowed road exception).
+    trim = 0 if asset == 'prop.jersey-barrier' else .03
+    length = abs(x1 - x0) - 2 * trim if along_x else abs(z1 - z0) - 2 * trim
     dim = l.manifest[asset]['dimensions']['x']
     n = max(1, math.ceil(length / dim - 1e-6)); span = length / n
-    lo = min(x0, x1) if along_x else min(z0, z1)
+    lo = (min(x0, x1) if along_x else min(z0, z1)) + trim
     for i in range(n):
         c = lo + span * (i + .5)
         if along_x: _route_piece(asset, c, z0, 0.0, span, fence_piece)
@@ -514,9 +517,16 @@ _fence(-63, 12, -57, 12); _fence(-63, 52, -57, 52); _fence(57, -52, 63, -52)
 # The gorilla's new east exit: a 7 m opening in the east fence (x=82) and a paved stub out to the x=96 service lane.
 _gorilla_exit_ids = [p['id'] for p in l.data['placements'][:_route_start]
                      if p['assetId'] == 'prop.crowd-fence' and abs(p['position'][0] - 82) < .01 and -35.5 < p['position'][2] < -28]
-point('gorilla-exit', 82, -31.77); point('p96:-32', 96, -32)
-path('gorilla-exit', 'p96:-32', 5)
+# Paving only (no road-graph edge: the x=96 lane already owns that graph node pair).
+l.box('clean-path', 'asphalt', [14, .12, 5], [89, .06, -32])
+for _side in (-1, 1): l.box('path-edging', 'sidewalk', [14, .12, .18], [89, .06, -32 + _side * 2.59])
+l.data['surfaces'].append(dict(surface='tile', height=.12, polygon=[[82, -34.5], [96, -34.5], [96, -29.5], [82, -29.5], [82, -34.5]]))
 _route_boxes.append((82, -34.5, 96, -29.5))
+
+# The three locked gates no longer lead anywhere: drop their dead-end road edges/nodes (the paving stays as the path up to the gate).
+_dead = {'elephant-gate--1', 'elephant-gate-1', 'gorilla-gate--1'}
+l.data['roads']['edges'] = [e for e in l.data['roads']['edges'] if e['start'] not in _dead and e['end'] not in _dead]
+l.data['roads']['nodes'] = [n for n in l.data['roads']['nodes'] if n['id'] not in _dead]
 
 # Nothing may stand on a new line: drop only the dressing underneath (and the gorilla exit fence panels).
 _DRESS = {'prop.tree', 'prop.street-tree', 'prop.garden-bush', 'prop.garden-bush-small', 'prop.flower', 'prop.flower-bed.large', 'prop.street-lamp', 'prop.trash-bin', 'prop.bench', 'prop.sprinkler', 'prop.hose-reel', 'prop.street-sign'}

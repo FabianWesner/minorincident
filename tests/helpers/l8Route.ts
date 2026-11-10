@@ -38,7 +38,7 @@ export async function checkL8Route(): Promise<void> {
       expect(inRect(player.transform, stage.zone), `${stage.id}: courier inside the enclosure`).toBe(true);
       let armedWith = -1;
       let stragglers = '';
-      for (let i = 0; i < 2400 && !arena.armed; i++) {
+      for (let i = 0; i < 3600 && !arena.armed; i++) {
         w.update();
         if (arena.armed) {
           const out = zoo.followers().filter(e => !inRect(e.transform, stage.zone)); armedWith = out.length;

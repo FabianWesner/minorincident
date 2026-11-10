@@ -171,8 +171,10 @@ export class L8BossArenas {
       // The entry gate closes behind the group: once every living follower is inside, or after 20 s when none is still at the gate (never on a follower).
       if (arena.phase > 0 && arena.phase < 3 && !arena.armed && stage.entry) {
         const gate = stage.entry, pending = this.mission.l8!.followers().filter(e => !inRect(e.transform, stage.zone));
-        const atGate = pending.some(e => Math.abs(e.transform.x - gate.x) < gate.halfX + 4.5 && Math.abs(e.transform.z - gate.z) < gate.halfZ + 4.5);
-        if (inZone && Math.hypot(player.transform.x - gate.x, player.transform.z - gate.z) >= 5 && (!pending.length || w.tick - arena.startedAt >= 1200 && !atGate)) arena.armed = true;
+        const near = (e: EntitySnapshot, pad: number) => Math.abs(e.transform.x - gate.x) < gate.halfX + pad && Math.abs(e.transform.z - gate.z) < gate.halfZ + pad;
+        // A follower still near the gate (a civilian recovering from a flee) holds the gate open for up to 45 s; only one standing in the doorway holds it longer.
+        const since = w.tick - arena.startedAt;
+        if (inZone && Math.hypot(player.transform.x - gate.x, player.transform.z - gate.z) >= 5 && (!pending.length || since >= 1200 && !pending.some(e => near(e, 9)) || since >= 2700 && !pending.some(e => near(e, 1.5)))) arena.armed = true;
       }
       if (!arena.phase) continue;
       const pendingTurns = arena.ids.some(id => { const e = w.entities.get(id); return !!e?.infection || e?.civilian?.state === 'grabbed'; });
