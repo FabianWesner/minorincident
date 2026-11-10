@@ -105,7 +105,7 @@ try {
     const foes = e.enemies.filter(b => b.drawn && !b.corpse && b.hp > 0).sort((a, b) => a.d - b.d);
     const target = foes.find(b => b.d < range);
     let keys: string[] = [];
-    while (ri < route.length && Math.hypot(route[ri].x - e.player.x, route[ri].z - e.player.z) < 2.5) { log({ reached: route[ri], tick: e.tick }); ri++; dwellUntil = Date.now() + Number(values.dwell) * 1000; }
+    while (ri < route.length && Math.hypot(route[ri].x - e.player.x, route[ri].z - e.player.z) < (e.driving ? 8 : 2.5)) { log({ reached: route[ri], tick: e.tick }); ri++; best = Infinity; bestAt = Date.now(); dwellUntil = Date.now() + Number(values.dwell) * 1000; }
     if (ri < route.length) {
       const d = Math.hypot(route[ri].x - e.player.x, route[ri].z - e.player.z);
       if (d < best - .5) { best = d; bestAt = Date.now(); }

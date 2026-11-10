@@ -276,12 +276,13 @@ async function l9SetPiecesFight(): Promise<void> {
     expect(leaper.health.current, 'thrown off, not run over').toBeGreaterThan(0);
     for (let i = 0; i < 1800 && !signals.includes('l9.thrower-landed') && !signals.includes('l9.thrower-hull-hit'); i++) drive(false);
     for (let i = 0; i < 120; i++) drive(false);
-    const thrown = vehicles.obstacles.items.filter(o => o.entity.transform.x > -200);
+    const thrown = vehicles.obstacles.items.filter(o => !l9.driving.state.obstacleIds.includes(o.entity.id));
     expect(signals.filter(n => n === 'l9.thrower-throw').length, 'the thrower lobs debris into the road').toBeGreaterThanOrEqual(1);
     expect(thrown.length, 'thrown debris becomes road obstacles').toBeGreaterThanOrEqual(1);
     for (const o of thrown) {
-      expect(o.airborne, 'nothing is left in the air').toBeFalsy();
-      if (!o.broken) { expect(o.entity.transform.y).toBe(.5); expect(o.collider.isEnabled(), 'landed debris has a live collider').toBe(true); expect(Math.abs(o.entity.transform.z - z0), 'lands on the APC lane').toBeLessThan(8); }
+      const flying = !!l9.driving.state.setPieces!.flights.some(f => f.obstacleId === o.entity.id);
+      expect(!!o.airborne, 'only debris still in flight is airborne').toBe(flying);
+      if (!o.broken && !flying) { expect(o.entity.transform.y).toBe(.5); expect(o.collider.isEnabled(), 'landed debris has a live collider').toBe(true); expect(Math.abs(o.entity.transform.z - z0), 'lands on the APC lane').toBeLessThan(8); }
     }
   } finally { world.dispose(); }
 }
