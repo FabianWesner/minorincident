@@ -43,7 +43,7 @@ export interface HouseEmergence extends HouseDoor {
   /** Walk-out pace (m/s), default `emergeSpeedMs` (a stumble); the lab staff burst out running. */
   speedMs?: number;
   /** Residents still on their scripted walk out of the door: release timeout tick, and the route leg (-1 = porch). */
-  walking?: { id: number; until: number; leg: number; lane?: number; startAt?: number; branchAt?: number; route?: [number, number][] }[];
+  walking?: { id: number; until: number; leg: number; lane?: number; startAt?: number; branchAt?: number; route?: [number, number][]; lastX?: number; lastZ?: number; stall?: number }[];
 }
 export type LayoutDoor = Omit<HouseDoor, 'sx' | 'sz' | 'route' | 'ox' | 'oz'> & { depth: number; width: number; gate: { x: number; z: number } };
 /** Scripted pace out of the door (a stumble, slower than the AI run), metres per second. */
@@ -193,6 +193,14 @@ export function walkResidents(world: SimWorld, house: HouseEmergence, tick: numb
       if (w.branchAt !== undefined && s >= w.branchAt) w.leg = 0;
       else if (s >= end - 1e-6) w.leg = 0;
     } else if (w.leg < route.length) {
+      // A scripted service route is baked on the bare layout. A body that props, fallen fence panels or another walker pin
+      // for 1.5 s hands over to the AI, whose nav routes around the obstacle (L8: a flamingo-pen panel knocked onto the north
+      // service route held the zebra carrier at (-11, -27) for the whole fight).
+      if (house.finishRoute) {
+        if (w.lastX !== undefined && Math.hypot(p.x - w.lastX, p.z - w.lastZ!) < step * .25) w.stall = (w.stall ?? 0) + 1; else w.stall = 0;
+        w.lastX = p.x; w.lastZ = p.z;
+        if (w.stall >= 90) { w.leg = route.length; w.until++; continue; }
+      }
       const [tx, tz] = route[w.leg], dx = tx - p.x, dz = tz - p.z, d = Math.hypot(dx, dz), m = Math.min(step, d);
       if (d > 1e-6) { p.x += dx / d * m; p.z += dz / d * m; p.yaw = -Math.atan2(dz, dx); }
       p.y = .7 + (world.districts?.groundHeight(p.x, p.z) ?? 0); world.spatial.set(e.id, p.x, p.z);
