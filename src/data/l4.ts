@@ -3,6 +3,10 @@ import { l1Pedestrians } from './npcs';
 /** Exterior horde roster, shared with render preloading so every combat archetype keeps its silhouette. */
 export const l4InfectedArchetypes = ['infected.runner', 'infected.crawler', 'infected.sprinter', 'infected.riot', 'infected.firefighter', 'infected.hazmat', 'infected.brute', 'infected.armored', 'infected.butcher'] as const;
 /** Already-infected arrivals: suit, fatigues and the five skinned civilian bodies with the infected material. */
+/** PO 11-10 ("in the army level there are tons of them"): brute, armored and butcher were a third of every arrival draw. This share of
+ * heavy draws is replaced by an ordinary type (runner, sprinter, crawler, firefighter, ...), leaving each heavy a readable set piece. */
+export const l4HeavyArchetypes = ['infected.brute', 'infected.armored', 'infected.butcher'] as const;
+export const l4HeavyReplaceShare = .75;
 export const l4InfectedLooks = ['inf.common-worker', 'npc.national-guard', ...l1Pedestrians.models] as const;
 /** Two registered responder bodies share the same firefighter combat role. */
 export const l4FirefighterLooks = ['infected.firefighter', 'npc.firefighter-alive'] as const;

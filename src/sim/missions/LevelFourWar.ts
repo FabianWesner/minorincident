@@ -3,8 +3,8 @@ import type { Combat } from '../combat/Combat';
 import { survivor } from '../../data/survivor';
 import { l4PerimeterSegments, l4WallSlots, l4BreachOf, l4Breaches, l4BreachSite, type L4BreachSide } from '../../data/l4Perimeter';
 import { Rng } from '../../core/Rng';
-import { l4, l4InfectedArchetypes, l4InfectedLooks, l4FirefighterLooks, l4Anchors, l4Cars, l4CellarDistance, l4CollapseGroups, l4Crowd, l4Edges, l4Emergence, l4OffscreenMouths, l4BreachApproaches, l4Pockets, l4Posts, l4Route, l4RoutePose, l4ConvoyStations, l4ConvoyGate, l4ConvoyPose, type L4Weapon } from '../../data/l4';
-import { balancedCrowdModel } from '../../data/crowdAppearance';
+import { l4, l4HeavyArchetypes, l4HeavyReplaceShare, l4InfectedArchetypes, l4InfectedLooks, l4FirefighterLooks, l4Anchors, l4Cars, l4CellarDistance, l4CollapseGroups, l4Crowd, l4Edges, l4Emergence, l4OffscreenMouths, l4BreachApproaches, l4Pockets, l4Posts, l4Route, l4RoutePose, l4ConvoyStations, l4ConvoyGate, l4ConvoyPose, type L4Weapon } from '../../data/l4';
+import { appearanceSample, balancedCrowdModel } from '../../data/crowdAppearance';
 import { l4AlphaEmergence } from '../../levels/L4/layout';
 import { infectedDef } from '../../data/infected';
 import { Outbreak } from '../outbreak/Outbreak';
@@ -926,7 +926,12 @@ export class LevelFourWar {
     // The arrival roster mixes silhouette and combat archetypes at the source.
     // Refill the least represented living archetype so slower survivors cannot dominate later waves.
     const neighbours = ai.active.filter(e => e.health.current > 0 && !e.hidden);
-    const archetype = balancedCrowdModel(roster, neighbours.map(e => ({ model: e.archetype!, x: e.transform.x, z: e.transform.z })), at, this.s.emergedIds.length + this.s.collapseIds.length);
+    // Heavy roles stay on the street as set pieces but are not a wall (PO 11-10): a heavy pick is replaced by the least represented
+    // ordinary type for l4HeavyReplaceShare of the draws (deterministic appearance sample, no gameplay RNG).
+    const heavy = l4HeavyArchetypes as readonly string[], seed = this.s.emergedIds.length + this.s.collapseIds.length;
+    const near = neighbours.map(e => ({ model: e.archetype!, x: e.transform.x, z: e.transform.z }));
+    let archetype = balancedCrowdModel(roster, near, at, seed);
+    if (heavy.includes(archetype) && appearanceSample(seed, 33) % 100 < l4HeavyReplaceShare * 100) archetype = balancedCrowdModel(roster.filter(a => !heavy.includes(a)), near, at, seed);
     const id = ai.spawn(archetype, at), e = world.entities.get(id)!;
     // Admission can shift around another body. Validate the admitted pose too,
     // before it is drawn, and retain the caller's quota if that shift exposed it.
