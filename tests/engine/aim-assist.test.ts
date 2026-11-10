@@ -50,6 +50,19 @@ test('keyboard fire at all eight facings: Off shoots along the facing, Default l
     const assisted = burst(on, 60);
     expect(assisted.hits.filter(id => id === front).length / assisted.shots.length, label).toBeGreaterThanOrEqual(.9);
   }
+  // r30-ghosts (r28-vqa: "machine-gun fire at 1.1–1.3 m barely hurt infected in contact"): the army MG hits and damages a contact target as it does at 4 m
+  // (same dummy, same burst, with assist on straight ahead and 20° off, and with assist off).
+  const damage = async (distance: number, setting: AimAssistSetting, offsetDegrees: number) => {
+    const w = await setup(setting), id = place(w, 0, offsetDegrees, distance), start = w.entities.get(id)!.health.current, result = burst(w, 60);
+    return { hits: result.hits.filter(h => h === id).length, lost: start - w.entities.get(id)!.health.current };
+  };
+  const far = await damage(4, 'Default', 0);
+  expect(far.hits).toBeGreaterThan(8);
+  for (const [distance, setting, offset] of [[1.1, 'Default', 0], [1.2, 'Default', 0], [1.3, 'Default', 0], [1.2, 'Default', 20], [1.2, 'Off', 0]] as const) {
+    const near = await damage(distance, setting, offset);
+    expect(near.hits, `${distance} m ${setting} ${offset}°`).toBeGreaterThanOrEqual(far.hits * .9);
+    expect(near.lost, `${distance} m ${setting} ${offset}°`).toBeGreaterThanOrEqual(far.lost * .9);
+  }
 });
 
 test('target choice: closest to the aim ray within 25° and 18 m, nearer when aligned; never corpses, civilians or escorts; pointer snap 8° not 15°', async () => {

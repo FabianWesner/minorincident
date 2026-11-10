@@ -1,0 +1,436 @@
+{
+ "name": "r30-ghost-crowd-apc",
+ "note": "r30-ghosts: 42 infected ring the driven APC at night; they must draw opaque.",
+ "seed": 33,
+ "ground": "district",
+ "time": "L9-crossing",
+ "dof": false,
+ "layout": {
+  "district": "D-CROSSING",
+  "bbox": [
+   [
+    -160,
+    -370
+   ],
+   [
+    -80,
+    -290
+   ]
+  ]
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -120,
+    -330
+   ]
+  },
+  {
+   "id": "infected-0",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -120.98,
+    -325.81
+   ]
+  },
+  {
+   "id": "infected-1",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -123.65,
+    -327.73
+   ]
+  },
+  {
+   "id": "infected-2",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -124.19,
+    -330.98
+   ]
+  },
+  {
+   "id": "infected-3",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -122.27,
+    -333.65
+   ]
+  },
+  {
+   "id": "infected-4",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -119.02,
+    -334.19
+   ]
+  },
+  {
+   "id": "infected-5",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -116.35,
+    -332.27
+   ]
+  },
+  {
+   "id": "infected-6",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -115.81,
+    -329.02
+   ]
+  },
+  {
+   "id": "infected-7",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -117.73,
+    -326.35
+   ]
+  },
+  {
+   "id": "infected-8",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -125.69,
+    -330.33
+   ]
+  },
+  {
+   "id": "infected-9",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -124.98,
+    -332.77
+   ]
+  },
+  {
+   "id": "infected-10",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -123.29,
+    -334.66
+   ]
+  },
+  {
+   "id": "infected-11",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -120.94,
+    -335.62
+   ]
+  },
+  {
+   "id": "infected-12",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -118.41,
+    -335.47
+   ]
+  },
+  {
+   "id": "infected-13",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -116.19,
+    -334.24
+   ]
+  },
+  {
+   "id": "infected-14",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -114.73,
+    -332.17
+   ]
+  },
+  {
+   "id": "infected-15",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -114.31,
+    -329.67
+   ]
+  },
+  {
+   "id": "infected-16",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -115.02,
+    -327.23
+   ]
+  },
+  {
+   "id": "infected-17",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -116.71,
+    -325.34
+   ]
+  },
+  {
+   "id": "infected-18",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -119.06,
+    -324.38
+   ]
+  },
+  {
+   "id": "infected-19",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -121.59,
+    -324.53
+   ]
+  },
+  {
+   "id": "infected-20",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -123.81,
+    -325.76
+   ]
+  },
+  {
+   "id": "infected-21",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -125.27,
+    -327.83
+   ]
+  },
+  {
+   "id": "infected-22",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -117.87,
+    -337.19
+   ]
+  },
+  {
+   "id": "infected-23",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -115.75,
+    -336.18
+   ]
+  },
+  {
+   "id": "infected-24",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -114.05,
+    -334.57
+   ]
+  },
+  {
+   "id": "infected-25",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -112.93,
+    -332.51
+   ]
+  },
+  {
+   "id": "infected-26",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -112.5,
+    -330.2
+   ]
+  },
+  {
+   "id": "infected-27",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -112.81,
+    -327.87
+   ]
+  },
+  {
+   "id": "infected-28",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -113.82,
+    -325.75
+   ]
+  },
+  {
+   "id": "infected-29",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -115.43,
+    -324.05
+   ]
+  },
+  {
+   "id": "infected-30",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -117.49,
+    -322.93
+   ]
+  },
+  {
+   "id": "infected-31",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -119.8,
+    -322.5
+   ]
+  },
+  {
+   "id": "infected-32",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -122.13,
+    -322.81
+   ]
+  },
+  {
+   "id": "infected-33",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -124.25,
+    -323.82
+   ]
+  },
+  {
+   "id": "infected-34",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -125.95,
+    -325.43
+   ]
+  },
+  {
+   "id": "infected-35",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -127.07,
+    -327.49
+   ]
+  },
+  {
+   "id": "infected-36",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -127.5,
+    -329.8
+   ]
+  },
+  {
+   "id": "infected-37",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -127.19,
+    -332.13
+   ]
+  },
+  {
+   "id": "infected-38",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -126.18,
+    -334.25
+   ]
+  },
+  {
+   "id": "infected-39",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -124.57,
+    -335.95
+   ]
+  },
+  {
+   "id": "infected-40",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -122.51,
+    -337.07
+   ]
+  },
+  {
+   "id": "infected-41",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -120.2,
+    -337.5
+   ]
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": "apc",
+  "zoom": 1
+ },
+ "frames": 120,
+ "shots": [
+  30,
+  119
+ ],
+ "expect": {
+  "consoleErrors": 0
+ },
+ "vehicles": [
+  {
+   "id": "apc",
+   "asset": "vehicle.military-apc",
+   "at": [
+    -120,
+    -330
+   ],
+   "yaw": 0,
+   "health": 700,
+   "floor": true,
+   "driven": true
+  }
+ ]
+}

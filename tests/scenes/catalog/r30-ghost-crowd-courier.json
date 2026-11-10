@@ -1,0 +1,422 @@
+{
+ "name": "r30-ghost-crowd-courier",
+ "note": "r30-ghosts: 42 infected ring the courier on foot at night; they must draw opaque.",
+ "seed": 33,
+ "ground": "district",
+ "time": "L9-crossing",
+ "dof": false,
+ "layout": {
+  "district": "D-CROSSING",
+  "bbox": [
+   [
+    -40,
+    -40
+   ],
+   [
+    40,
+    40
+   ]
+  ]
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    0,
+    0
+   ]
+  },
+  {
+   "id": "infected-0",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -0.41,
+    1.75
+   ]
+  },
+  {
+   "id": "infected-1",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -1.53,
+    0.95
+   ]
+  },
+  {
+   "id": "infected-2",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -1.75,
+    -0.41
+   ]
+  },
+  {
+   "id": "infected-3",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -0.95,
+    -1.53
+   ]
+  },
+  {
+   "id": "infected-4",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    0.41,
+    -1.75
+   ]
+  },
+  {
+   "id": "infected-5",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    1.53,
+    -0.95
+   ]
+  },
+  {
+   "id": "infected-6",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    1.75,
+    0.41
+   ]
+  },
+  {
+   "id": "infected-7",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    0.95,
+    1.53
+   ]
+  },
+  {
+   "id": "infected-8",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -3.19,
+    -0.19
+   ]
+  },
+  {
+   "id": "infected-9",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -2.8,
+    -1.55
+   ]
+  },
+  {
+   "id": "infected-10",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -1.85,
+    -2.61
+   ]
+  },
+  {
+   "id": "infected-11",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -0.53,
+    -3.16
+   ]
+  },
+  {
+   "id": "infected-12",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    0.89,
+    -3.07
+   ]
+  },
+  {
+   "id": "infected-13",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    2.14,
+    -2.38
+   ]
+  },
+  {
+   "id": "infected-14",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    2.96,
+    -1.22
+   ]
+  },
+  {
+   "id": "infected-15",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    3.19,
+    0.19
+   ]
+  },
+  {
+   "id": "infected-16",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    2.8,
+    1.55
+   ]
+  },
+  {
+   "id": "infected-17",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    1.85,
+    2.61
+   ]
+  },
+  {
+   "id": "infected-18",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    0.53,
+    3.16
+   ]
+  },
+  {
+   "id": "infected-19",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -0.89,
+    3.07
+   ]
+  },
+  {
+   "id": "infected-20",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -2.14,
+    2.38
+   ]
+  },
+  {
+   "id": "infected-21",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -2.96,
+    1.22
+   ]
+  },
+  {
+   "id": "infected-22",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    1.42,
+    -4.79
+   ]
+  },
+  {
+   "id": "infected-23",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    2.83,
+    -4.12
+   ]
+  },
+  {
+   "id": "infected-24",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    3.97,
+    -3.05
+   ]
+  },
+  {
+   "id": "infected-25",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    4.71,
+    -1.67
+   ]
+  },
+  {
+   "id": "infected-26",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    5,
+    -0.13
+   ]
+  },
+  {
+   "id": "infected-27",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    4.79,
+    1.42
+   ]
+  },
+  {
+   "id": "infected-28",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    4.12,
+    2.83
+   ]
+  },
+  {
+   "id": "infected-29",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    3.05,
+    3.97
+   ]
+  },
+  {
+   "id": "infected-30",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    1.67,
+    4.71
+   ]
+  },
+  {
+   "id": "infected-31",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    0.13,
+    5
+   ]
+  },
+  {
+   "id": "infected-32",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -1.42,
+    4.79
+   ]
+  },
+  {
+   "id": "infected-33",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -2.83,
+    4.12
+   ]
+  },
+  {
+   "id": "infected-34",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -3.97,
+    3.05
+   ]
+  },
+  {
+   "id": "infected-35",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -4.71,
+    1.67
+   ]
+  },
+  {
+   "id": "infected-36",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -5,
+    0.13
+   ]
+  },
+  {
+   "id": "infected-37",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -4.79,
+    -1.42
+   ]
+  },
+  {
+   "id": "infected-38",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -4.12,
+    -2.83
+   ]
+  },
+  {
+   "id": "infected-39",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -3.05,
+    -3.97
+   ]
+  },
+  {
+   "id": "infected-40",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -1.67,
+    -4.71
+   ]
+  },
+  {
+   "id": "infected-41",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -0.13,
+    -5
+   ]
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": "courier",
+  "zoom": 1
+ },
+ "frames": 120,
+ "shots": [
+  30,
+  119
+ ],
+ "expect": {
+  "consoleErrors": 0
+ }
+}
