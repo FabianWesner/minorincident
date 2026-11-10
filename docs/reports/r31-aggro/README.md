@@ -39,6 +39,23 @@ Runner = 40 hp x INFECTED_TOUGHNESS 1.5 = 60 hp, capsule radius 0.35 m, ray test
 Aimed-shot hit rate on the runner at 3, 5, 8 m: assist Default 100 %; assist Off (straight along the facing, targets 0.4 m off line) 71-79 %, which is the 0.35 m capsule vs the lateral offset, i.e. correct geometry. Moving runner/sprinter from 8 and 12 m: Default 100 % at 8 m, 80-83 % at 12 m, killed before contact in all trials.
 Conclusion: no hit-detection bug found for the runner. "Hard to kill" is toughness (60 hp = 5 MG hits, 3 handgun hits) plus, before this fix, the infected running past the courier to a survivor. If the PO saw an armoured/firefighter-class body in a suit look, the numbers above are the by-design armour (not changed). Nothing changed in HitQuery.
 
+
+## Finding 2b: "ultra hard to kill" suited zombie in L8 (PO 11-10, night, red eyes) = an Alpha in the suit skin
+Cause found: `src/data/alphaLooks.ts` draws every `infected.alpha` with one of five skins chosen by a hash of the entity id (`alphaLook(asset, id)`, CrowdView lines 310/635), independent of its Alpha type. `inf.alpha-suit` is a slim jacketed body that reads like a regular infected; it is the Leaper's own look in `alphaTypes`, but the id hash can put it on a Brute, Thrower or Armoured too (L8 has no authored Alpha mix, so Brutes there get any skin). The PO cannot tell it is an Alpha.
+
+Multipliers vs a runner (60 hp, no resist): Alpha base 200 hp x INFECTED_TOUGHNESS 1.5 = 300 hp (L7 x1.5 more = 450); bullets x0.5, shotgun x0.8 (`alphaDamageMultiplier`); Armoured type takes x0.25 from bullets hitting its front half (dot >= 0.5); x1.5 during a special's recovery. Capsule radius 0.55 (runner 0.35), so hit detection is not the issue.
+
+Measured standing targets (5 lateral offsets, 3-8 m), hits needed:
+| Weapon | Runner | Alpha brute | Alpha leaper (suit look) | Alpha armoured (facing the shooter) |
+|---|---|---|---|---|
+| handgun | 3 | 25 | 30 | 56 |
+| army MG | 5 | 37 | 43 | 76 |
+| shotgun (3 m / 8 m) | 1 | 2 / 6 | 2 / 6 | 2 / 6 |
+
+Hit rate 100 % for every Alpha trial (assist Off and Default). So: no hit-detection bug, it is a 7-15x tougher enemy that looks like a regular zombie. Stats unchanged.
+
+Proposal (not implemented here: render change, needs browser QA): make the skin a function of the Alpha type, as docs/design/boss-and-alpha-moves.md 'Look cue' says (Brute biggest, Thrower lankier with long arms, Screamer thin jaw open, Leaper crouched, Armoured helmet/vest), i.e. use `alphaTypes[type].look` in CrowdView instead of the id hash, and keep the hash only for variation inside a type. Add an Alpha-only cue visible at distance and at night: a larger world-space health bar / red-orange rim or eye glint that regular infected lack, and a one-time "ALPHA" ping when one first sees the courier. Also the night figure fill (pale blue) hides skin differences, so the shape cue matters most.
+
 ## Threat audit
 See the section appended below (L3,L4,L5,L7 skilled).
 

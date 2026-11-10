@@ -6,16 +6,16 @@ import { SimWorld } from '../../src/sim/world/SimWorld';
 
 const rows: string[] = [];
 const MOVING = process.env.MOVING === '1';
-for (const archetype of MOVING ? ['runner', 'sprinter'] : ['runner', 'firefighter', 'armored']) for (const weapon of MOVING ? ['weapon.handgun', 'weapon.army-mg'] : ['weapon.handgun', 'weapon.army-mg', 'weapon.shotgun']) for (const setting of ['Off', 'Default'] as const) for (const distance of MOVING ? [8, 12] : [3, 5, 8]) {
+for (const archetype of process.env.ARCH ? process.env.ARCH.split(',') : MOVING ? ['runner', 'sprinter'] : ['runner', 'firefighter', 'armored']) for (const weapon of MOVING ? ['weapon.handgun', 'weapon.army-mg'] : ['weapon.handgun', 'weapon.army-mg', 'weapon.shotgun']) for (const setting of ['Off', 'Default'] as const) for (const distance of MOVING ? [8, 12] : [3, 5, 8]) {
   let totalShots = 0, totalHits = 0, kills = 0, hitsToKill = 0, trials = 0;
   for (let offset = -0.4; offset <= 0.41; offset += 0.2) { // lateral aim error in metres (stands off the aim line)
     const w = new SimWorld(); await w.init(); w.loadScenario('horde-arena', 1); w.combat!.damage.god = true;
     w.combat!.setLoadout(['weapon.bat'], [weapon]); w.combat!.assist.setting = setting;
     const p = w.entities.get(1)!; p.transform.yaw = 0;
-    const id = w.infected!.spawn(`infected.${archetype}`, { x: p.transform.x + distance, z: p.transform.z + offset }, { state: MOVING ? 'chase' : 'idle' });
+    const id = w.infected!.spawn(`infected.${archetype}`, { x: p.transform.x + distance, z: p.transform.z + offset }, { state: MOVING ? 'chase' : 'idle', ...(archetype === 'alpha' ? { alphaType: (process.env.ALPHA ?? 'brute') as 'brute' } : {}) });
     const e = w.entities.get(id)!; const maxHp = e.health.current;
     const start = w.events.events().length;
-    for (let t = 0; t < 360 && e.health.current > 0 && !(MOVING && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 1.2); t++) {
+    for (let t = 0; t < (archetype === 'alpha' ? 1800 : 360) && e.health.current > 0 && !(MOVING && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 1.2); t++) {
       const f: InputFrame = emptyInput(); f.aimSource = 'assist'; f.right = { down: t === 0, held: true, up: false };
       w.applyInput(f, 'keyboard'); w.update();
     }
