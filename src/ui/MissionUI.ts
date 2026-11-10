@@ -1,4 +1,4 @@
-import { objectiveText } from '../sim/missions/objectiveText';
+import { objectiveText, l8SanctuaryResting } from '../sim/missions/objectiveText';
 import { devicePrompt } from './devicePrompt';
 import { markerAnchor } from '../sim/missions/markerAnchor';
 // Notification identity/text presentation adapted from Bruno Simon folio-2025
@@ -114,7 +114,7 @@ export class MissionUI {
       // L3's route marker follows the next walkable waypoint, while the HUD
       // distance remains measured to the active mission objective.
       const distanceAnchor = mission.def.l3 ? mission.def.anchors[objective.anchor] : anchor;
-      const distance=cellarDistance ?? (distanceAnchor?Math.hypot(distanceAnchor.x-player.transform.x,distanceAnchor.z-player.transform.z):null);
+      const distance=cellarDistance ?? (distanceAnchor&&!l8SanctuaryResting(mission)?Math.hypot(distanceAnchor.x-player.transform.x,distanceAnchor.z-player.transform.z):null);
       const seconds = state.deadlineTicks === null ? null : Math.ceil(state.deadlineTicks / 60);
       const timer = seconds === null ? '' : ` · ${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
       this.text(this.tracker,`${objectiveText(mission, objective.text)}${distance===null?'':` · ${Math.round(distance)}\u00a0m`}${timer}`);attribute(this.tracker,'data-objective',objective.id);attribute(this.tracker,'data-distance',distance===null?'':String(distance));

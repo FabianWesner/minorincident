@@ -1,6 +1,6 @@
 import { interactionPromptPosition, type PromptRect } from './promptPosition';
 import { survivorName } from '../sim/missions/survivorName';
-import { objectiveText } from '../sim/missions/objectiveText';
+import { objectiveText, l8SanctuaryResting } from '../sim/missions/objectiveText';
 import { LevelSixSubway } from '../sim/missions/LevelSixSubway';
 import { devicePrompt } from './devicePrompt';
 import { l5, l5Survivors } from '../data/l5';
@@ -341,7 +341,7 @@ export class Hud {
     const deadline = remaining === null ? '' : `Gates close in ${Math.floor(remaining / 60)}:${String(remaining % 60).padStart(2, '0')} · `;
     if (!objective && !done) text(this.trackerText, '');
     const distanceAnchor = LevelSixSubway.regroupTarget(mission) ? null : mission?.def.l3 && objective ? mission.def.anchors[objective.anchor] : anchor;
-    if (objective) text(this.trackerText, `${deadline}${objectiveText(mission!, objective.text)}${distanceAnchor ? ` · ${Math.round(cellarDistance ?? Math.hypot(distanceAnchor.x - px, distanceAnchor.z - pz))}\u00a0m` : ''}`);
+    if (objective) text(this.trackerText, `${deadline}${objectiveText(mission!, objective.text)}${distanceAnchor && !l8SanctuaryResting(mission!) ? ` · ${Math.round(cellarDistance ?? Math.hypot(distanceAnchor.x - px, distanceAnchor.z - pz))}\u00a0m` : ''}`);
     const finaleStep = mission?.def.id === 'L10' ? mission.interactStepInRange() : null;
     const finaleAction = !!finaleStep && ['install', 'hold', 'release'].includes(finaleStep.id);
     setHidden(this.finaleAction, !finaleAction);

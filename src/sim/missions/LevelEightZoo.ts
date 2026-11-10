@@ -306,7 +306,9 @@ export class LevelEightZoo {
     this.mission.setState('apc-destroyed', w.entities.get(s.carId)!.health.current <= 0);
     const seated=this.w.vehicles!.active===s.carId;
     this.mission.setState('player-boarded',seated);
-    if(seated || this.protecting())this.mission.state.marker=null;
+    // r25-l8cues: while the group is under the opening shock the marker rings the plaza where they stand (it was blank for the first 30 s).
+    if(seated)this.mission.state.marker=null;
+    else if(this.protecting())this.mission.state.marker=this.mission.state.steps.escape.status==='active'?'central-plaza':null;
     else if(this.mission.state.steps.escape.status==='active'||this.mission.state.steps.depart.status==='active') {
       const next = s.arenas.find(a => a.phase !== 3);
       const step = this.mission.def.steps.find(value => value.id === 'escape');
