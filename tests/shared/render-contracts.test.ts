@@ -722,7 +722,9 @@ test('materials: palette program keys match Three through weather and node chang
     expect(second.fade.groupNode).not.toBe(group);
     first.fade.value = .2; expect(second.fade.value).toBe(1);
     // Q-227/Q-228: L10 lamps keep the same light list and shadow filters through promotion.
-    lighting.set('L10-night');
+    // r27-l9apc: so does L9, where the APC headlight dying at the durability floor rebuilt ~110 programs (5.4 s frame).
+    for (const preset of ['L9-crossing', 'L10-night'] as const) {
+    lighting.set(preset);
     const filters = [lighting.sun.shadow, lighting.spot.shadow].map(shadow => (shadow as typeof shadow & { filterNode: unknown }).filterNode);
     expect(filters.every(Boolean)).toBe(true);
     for (const spot of [false, true, false]) lighting.withShadowSource(spot, () => {
@@ -731,6 +733,7 @@ test('materials: palette program keys match Three through weather and node chang
       expect(lighting.sun.shadow.intensity).toBe(Number(!spot)); expect(lighting.spot.shadow.intensity).toBe(Number(spot));
       expect([lighting.sun.shadow, lighting.spot.shadow].map(shadow => (shadow as typeof shadow & { filterNode: unknown }).filterNode)).toEqual(filters);
     });
+    }
     lighting.set('night'); lighting.field.strength.value = 1;
     const focus = { x: 4, y: 0, z: -2 };
     lighting.setHeroLight({ x: 0, z: 0, id: 'moving-headlight', y: 5, radius: 6, aimX: 0, aimZ: 0, stretch: 1, r: 1, g: 1, b: 1, flicker: 0, strobe: false, seed: 0, on: true, hero: true }, focus, 3);

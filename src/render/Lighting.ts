@@ -190,8 +190,8 @@ export class Lighting {
     this.worldPaletteEnabled.value = Number(name === 'L1');
     this.preset = name; const p = timeOfDay[name];
     this.corpseRim.value = p.corpseRim ?? 0;
-    (this.sun.shadow as typeof this.sun.shadow & { filterNode: typeof stableSunShadow }).filterNode = name === 'L10-night' ? activeSunShadow : stableSunShadow;
-    (this.spot.shadow as typeof this.spot.shadow & { filterNode: typeof stableSunShadow }).filterNode = name === 'L10-night' ? activeSpotShadow : stableSunShadow;
+    (this.sun.shadow as typeof this.sun.shadow & { filterNode: typeof stableSunShadow }).filterNode = name === 'L10-night' || name === 'L9-crossing' ? activeSunShadow : stableSunShadow;
+    (this.spot.shadow as typeof this.spot.shadow & { filterNode: typeof stableSunShadow }).filterNode = name === 'L10-night' || name === 'L9-crossing' ? activeSpotShadow : stableSunShadow;
     this.look.setPreset(p.look ?? {});
     this.roadLiftColor.value.set(p.roadColor ?? '#86a8c0');
     if (this.environment) {
@@ -227,7 +227,9 @@ export class Lighting {
   private spotSource = false;
   private setShadowSource(spot: boolean): void {
     this.spotSource = spot;
-    const stable = this.preset === 'L5' || this.preset === 'L6-subway' || this.preset === 'L6' || this.preset === 'L8-zoo' || this.preset === 'L10-night';
+    // L9-crossing (r27-l9apc): the driven APC's headlight is the promoted shadow spot; when its lights die at the
+    // durability floor the list flipped back to the moon and rebuilt ~110 programs (5.4 s frame at the first boarder wave).
+    const stable = this.preset === 'L5' || this.preset === 'L6-subway' || this.preset === 'L6' || this.preset === 'L8-zoo' || this.preset === 'L9-crossing' || this.preset === 'L10-night';
     delete this.scene.userData.shadowVariant;
     const spotOff = this.spotShadowOff();
     this.spot.visible = stable || spot; this.sun.visible = stable || !spot;
