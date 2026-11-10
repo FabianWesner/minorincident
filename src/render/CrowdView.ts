@@ -501,7 +501,7 @@ export class CrowdView extends Group {
       // Flash 0..1 is the ordinary hit pulse; 1..2 marks an L8 arena boss hit (r26-l8hitreact): a plain additive warm-white lift, since the
       // base*(1-base) pulse above is nearly invisible on dark animal coats.
       const flashValue = feedbackState.w.mod(2), bossFlash = flashValue.sub(1).max(0);
-      const glow = emission.mul(eye).add(atlasFill).add(flashValue.lessThan(1).select(flashValue, 0).mul(base.mul(base.oneMinus().mul(1.1))).add(vec3(.75, .68, .6).mul(bossFlash)).mul(figureMask ?? 1));
+      const glow = emission.mul(eye).add(atlasFill).add(flashValue.lessThan(1).select(flashValue, 0).mul(base.mul(base.oneMinus().mul(1.1))).add(vec3(.6, .54, .48).mul(bossFlash)).mul(figureMask ?? 1));
       material = this.shading?.shaded(base, glow, undefined, undefined, undefined, healthy ? undefined : eye, figureMask, shadowReceiver, healthy ? undefined : float(1)) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: base, emissiveNode: glow });
       // E25 night readability: crowd silhouettes take the preset's moonlit rim.
       livingStencil(material);

@@ -55,7 +55,9 @@ export const hitFlashRest = 0.35;
  * allies keeps its own look instead of strobing slate-grey three times a second. */
 /** r26-l8hitreact: an arena boss takes 0.6x outside its exposed windows and has no stagger, so every damaging hit gets a
  * stronger, longer flash (render-only). Strengths above 1 mark a boss flash for the crowd shader; this is the amplitude on top. */
-export const bossHitFlashSeconds = 0.18, bossHitFlashRest = 0.12, bossHitFlashChip = 0.55, bossHitFlashExposed = 0.9, bossHitFlashReduced = 0.3;
+// r28-vqa P2: rest 0.12 s < flash 0.18 s kept a boss under machine-gun fire permanently lit (flat pale cut-out). The rest now
+// leaves a visible dark gap between pulses, peaks are lower, and a sustained streak pulses at half strength.
+export const bossHitFlashSeconds = 0.18, bossHitFlashRest = 0.32, bossHitFlashChip = 0.35, bossHitFlashExposed = 0.6, bossHitFlashReduced = 0.2, bossHitFlashStreak = 0.5;
 export const hitFlashPeak = 0.45, hitFlashRepeat = 0.25, hitFlashStreak = hitFlashRest * 3;
 /** Event-driven view. All randomness, time, masks and bodies belong here, outside simulation.
  * Infrastructure presets deliberately leave E27's seven-beat choreography to E27. */
@@ -234,8 +236,9 @@ export class Vfx extends Group {
     const started = this.hitStarted.get(id);
     const arena = this.world.entities.get(id)?.infected?.arenaBoss;
     if (started !== undefined && this.time - started < (arena ? bossHitFlashRest : hitFlashRest)) return;
-    const boss = arena ? this.flashReduction ? bossHitFlashReduced : this.world.tick < arena.exposedUntil ? bossHitFlashExposed : bossHitFlashChip : 0;
-    const peak = started !== undefined && this.time - started < hitFlashStreak ? hitFlashRepeat : hitFlashPeak;
+    const streak = started !== undefined && this.time - started < (arena ? 1 : hitFlashStreak);
+    const boss = (arena ? this.flashReduction ? bossHitFlashReduced : this.world.tick < arena.exposedUntil ? bossHitFlashExposed : bossHitFlashChip : 0) * (arena && streak ? bossHitFlashStreak : 1);
+    const peak = streak ? hitFlashRepeat : hitFlashPeak;
     this.hitStarted.set(id, this.time);
     if (this.hitStarted.size > 2048) for (const [key, at] of this.hitStarted) if (this.time - at >= hitFlashRest) this.hitStarted.delete(key);
     let slot = 0;
