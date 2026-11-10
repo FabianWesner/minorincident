@@ -21,6 +21,7 @@ import { markerAnchor } from '../../src/sim/missions/markerAnchor';
 import { checkL8Story } from '../helpers/l8Story';
 import { emergeResident, emergeSpeedMs, walkResidents } from '../../src/sim/outbreak/HouseEmergence';
 import { validateSave } from '../../src/sim/progression/Save';
+import { corpseDetour } from '../../src/sim/missions/missionHelpers';
 
 let world: SimWorld | undefined;
 afterEach(() => { world?.dispose(); world = undefined; });
@@ -188,6 +189,17 @@ test('interactions: ring, input and view predicates agree for every interact ste
         expect(released, 'a resident pinned on the service route is handed to the AI').toContain(stuck);
         expect(levelWorld.entities.get(stuck)!.emerging).toBeUndefined();
         expect(levelWorld.entities.get(stuck)!.transform.z, 'it stopped at the panel, not past it').toBeLessThan(-26);
+        // r27-l8board: the corgi pressed into a fallen elephant's footprint (queue head, seed 1) got no corpse detour,
+        // and a boarding member that cannot move for 1.5 s is moved along its route instead of idling for 30 s.
+        const elephant = levelWorld.infected!.spawn('infected.elephant', { x: 103.6, z: 57.7 }, { state: 'idle' }), body = levelWorld.entities.get(elephant)!;
+        body.health.current = 0; Object.assign(body.infected!, { state: 'dead', deadAt: levelWorld.tick - 120, recoverAt: -1 }); levelWorld.infected!.settle(body);
+        const dog = levelWorld.entities.get(levelWorld.npcs!.companion.spawn())!;
+        Object.assign(dog.transform, { x: 102.7, y: .3, z: 56.2 }); levelWorld.spatial.set(dog.id, 102.7, 56.2);
+        expect(corpseDetour(levelWorld, dog, { x: 96, y: 0, z: 70.65 } as never), 'queue head beside the elephant finds a way out').toBeDefined();
+        const jam = mission.l8! as unknown as { unjamBoarding(e: EntitySnapshot, target: { x: number; z: number }): void }, before = { ...dog.transform }, away = { x: before.x - 6, z: before.z + 6 };
+        for (let frame = 0; frame < 100; frame++) { jam.unjamBoarding(dog, away); levelWorld.tick++; }
+        expect(Math.hypot(dog.transform.x - before.x, dog.transform.z - before.z), 'a stalled boarding member is moved along its route after 1.5 s').toBeGreaterThan(.5);
+        levelWorld.entities.delete(elephant); levelWorld.entities.delete(dog.id);
         // Settling before the alarm chooses the real boarding destination;
         // later hull nudges must not drag a fixed objective around the map.
         const zoo = mission.l8!, car = levelWorld.entities.get(zoo.state.carId)!;

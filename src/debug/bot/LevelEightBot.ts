@@ -4,6 +4,7 @@ import { strikeAt } from './helpers';
 import { emptyInput, type InputFrame } from '../../input/InputFrame';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import { Walker } from './Walker';
+import { corpseDetour } from '../../sim/missions/missionHelpers';
 /** Shared seeded policy: explore, hold the group together, fight only threats on the route, board the APC. */
 export class LevelEightBot {
   finished = false;
@@ -64,6 +65,8 @@ export class LevelEightBot {
       const live = zoo.roster().map(id => w.entities.get(id)).filter(e => e && e.health.current > 0 && !e.infected && e.passengerOf === undefined);
       if (this.profile !== 'runner' && !returning && Math.hypot(p.x - target.x, p.z - target.z) > 10 && live.some(e => Math.hypot(e!.transform.x - p.x, e!.transform.z - p.z) > Math.max(12, Math.ceil(live.length / 3) * 1.2 + 5))) return f;
     }
+    // A boss corpse beside the APC (seed 3: elephant at 88,70) blocks the straight walk to the door; step around it like the group does.
+    if (!calm && boarded) target = corpseDetour(w, player, target)?.[0] ?? target;
     f.move = this.walker.step(w, target, calm ? 1 : .35, calm ? 'explore' : `apc-${this.escapeLeg}`) ?? f.move;
     if (!calm) {
       const cue = w.infected!.active.find(e => e.health.current > 0 && e.infected!.state === 'attack' && (e.infected!.heardTargetId ?? e.infected!.l1?.targetId ?? 1) === 1 && Math.hypot(e.transform.x-p.x,e.transform.z-p.z) < 4);

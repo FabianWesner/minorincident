@@ -38,6 +38,7 @@ export class LevelEightZoo {
   private passengersCache: number[] = [];
   private readonly seatedPassengers = new Set<number>();
   private readonly boardingDetours = new Map<number, { goal: Point; path: Point[]; tick: number }>();
+  private readonly boardingProgress = new Map<number, { x: number; z: number; tick: number }>();
   private readonly cacheStops: (() => void)[] = [];
   constructor(private readonly mission: Mission) {
     this.bosses = new L8BossArenas(mission);
@@ -420,13 +421,27 @@ export class LevelEightZoo {
     if (!this.boarding()) return false;
     const w = this.w, door = w.vehicles!.passengerDoor(this.state.carId);
     if (distance(e.transform, door) < .7) w.vehicles!.boardPassenger(this.state.carId, e.id);
-    else { const target = this.boardingTarget(e, door); if (!this.approachBoardingSpot(e, target, 8)) w.npcs!.move(e, target, 8, e.companion!, .2, 2400); }
+    else { const target = this.boardingTarget(e, door); this.unjamBoarding(e, target); if (!this.approachBoardingSpot(e, target, 8)) w.npcs!.move(e, target, 8, e.companion!, .2, 2400); }
     return true;
   }
   /** Newly rescued zoo residents also belong to the complete living group. */
   roster(): number[] {
     this.refreshRoster();
     return [...this.rosterCache];
+  }
+  /** A boarding member jammed between the fallen elephant and the packed group
+   * (r27-l8board: queue head stuck 30+ s) has no legal step: every proposal is
+   * rejected by the atomic contact commit. After 1.5 s without progress it is
+   * moved at most 1.5 m along its route to the nearest physically clear spot
+   * (the same relocation the door approach already uses), then walks on. */
+  private unjamBoarding(e: EntitySnapshot, target: Point): void {
+    const w = this.w, p = e.transform, seen = this.boardingProgress.get(e.id);
+    if (!seen || Math.hypot(p.x - seen.x, p.z - seen.z) > .25) { this.boardingProgress.set(e.id, { x: p.x, z: p.z, tick: w.tick }); return; }
+    const toTarget = distance(p, target);
+    if (w.tick - seen.tick < 90 || toTarget < 1) return;
+    const step = Math.min(1.5, toTarget);
+    w.solids.relocate(e, { x: p.x + (target.x - p.x) / toTarget * step, y: p.y, z: p.z + (target.z - p.z) / toTarget * step }, 'l8.board-unjam', 1.5, false);
+    this.boardingProgress.set(e.id, { x: e.transform.x, z: e.transform.z, tick: w.tick });
   }
   private boardingTarget(e: EntitySnapshot, goal: Point): Point {
     const w = this.w;
@@ -548,7 +563,7 @@ export class LevelEightZoo {
         target = w.infected!.nav.clear(queue.x, queue.z, actorRadius(e)) && w.solids.clear({ ...queue, y: e.transform.y }, actorRadius(e), e.id, false) ? queue : e.transform;
       }
     }
-    if (boarding) target = this.boardingTarget(e, target);
+    if (boarding) { target = this.boardingTarget(e, target); this.unjamBoarding(e, target); }
     if (boarding && queueIndex === 0 && distance(e.transform, door) < .7) w.vehicles!.boardPassenger(s.carId, e.id);
     else if (distance(e.transform, target) > .3) {
       // The roster is healed on arrival and must keep pace through the long

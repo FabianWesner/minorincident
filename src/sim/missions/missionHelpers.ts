@@ -19,6 +19,12 @@ export function corpseDetour(world: SimWorld, e: EntitySnapshot, goal: Point): P
     const along = length ? Math.max(0, Math.min(1, ((body.transform.x - from.x) * x + (body.transform.z - from.z) * z) / length)) : 0;
     return Math.hypot(from.x + along * x - body.transform.x, from.z + along * z - body.transform.z) >= actorRadius(e) + (e.companion ? .4 : 0) + actorRadius(body);
   });
+  // A queue head already pressed into a corpse's footprint (the wide corgi beside the elephant)
+  // fails every swept leg at its start; accept a leg that only moves away from each body it overlaps.
+  const leavesCorpses = (from: Point, to: Point) => bodies.every(body => {
+    const need = actorRadius(e) + (e.companion ? .4 : 0) + actorRadius(body), now = distance(from, body.transform), next = distance(to, body.transform);
+    return next >= need || next > now + .05;
+  });
   if (world.scenario === 'L8') {
     // A fallen elephant beside a displaced light prop can trap an otherwise
     // valid nav route. Find a bounded local path with the actual solid sweep,
@@ -43,7 +49,10 @@ export function corpseDetour(world: SimWorld, e: EntitySnapshot, goal: Point): P
         const next = { x: node.x + x, z: node.z + z, cost: node.cost + Math.hypot(x, z) * .75, score: 0, parent: node };
         if (Math.abs(next.x) > 12 || Math.abs(next.z) > 12 || visited.has(`${next.x},${next.z}`)) continue;
         const at = point(next), leg = Math.hypot(x, z) * .75;
-        if (!world.infected!.nav.contains(at.x, at.z, actorRadius(e)) || !world.solids.clear({ ...at, y: e.transform.y }, actorRadius(e), e.id) || world.solids.sweep(probe, { x: x * .75 / leg, z: z * .75 / leg }, leg) < leg - .001) continue;
+        // Living actors are soft here (the evacuation crowd packs the head of
+        // the queue and ordinary separation sorts it out); only statics and the
+        // large corpses (checked explicitly) can veto a detour cell.
+        if (!world.infected!.nav.contains(at.x, at.z, actorRadius(e)) || !(clearOfCorpses(from, at) || leavesCorpses(from, at)) || !world.solids.clear({ ...at, y: e.transform.y }, actorRadius(e), e.id, false) || world.solids.sweep(probe, { x: x * .75 / leg, z: z * .75 / leg }, leg, actorRadius(e), false, false) < leg - .001) continue;
         next.score = next.cost + distance(at, goal); queue.push(next);
       }
     }
