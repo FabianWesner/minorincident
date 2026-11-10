@@ -14,6 +14,8 @@ export interface L8ArenaState {
   nextAt: number; cycle: number; wallHits: number; wallContacts?: string[]; breachAt?: number; carrierRetryAt?: number; grabs: number; counters: number;
   lane?: { x: number; side: 1 | -1; staging: boolean; startedAt?: number };
   track?: { x: number; z: number; vx: number; vz: number; turn: number; at: number };
+  /** r31-flamingo: flights called in so far (1 = the original flock). */
+  flights?: number;
 }
 const distance = (a: { x: number; z: number }, b: { x: number; z: number }) => Math.hypot(a.x - b.x, a.z - b.z);
 /** Arena state belongs to the L8 checkpoint seam. Turns retain the original healthy animal's entity ID. */
@@ -153,8 +155,11 @@ export class L8BossArenas {
       if (arena.phase === 1 && secondPhase) {
         arena.phase = 2; if (arena.id === 'monkey') this.announce('The leader is coming out — stop him to scatter the pack!'); if (arena.id !== 'elephant') arena.nextAt = Math.min(arena.nextAt, w.tick + 60); this.signal(arena, 'phase-2');
       }
+      // r31-flamingo: when the flock is nearly down, a new flight lands from the reeds (three extra flights): the fight lasts through numbers and dives, not bullet-sponge HP.
+      let flightCalled = false;
+      if (arena.id === 'flamingo' && arena.phase === 2 && (arena.flights ?? 1) < 4 && arena.ids.filter(id => (w.entities.get(id)?.health.current ?? 0) > 0).length <= 2) { this.callFlight(arena, def); flightCalled = true; }
       const leader = w.entities.get(arena.ids.at(-1)!);
-      if (!pendingTurns && !live.length || arena.id === 'monkey' && arena.phase === 2 && leader?.infected && leader.health.current <= 0) {
+      if (!flightCalled && (!pendingTurns && !live.length) || arena.id === 'monkey' && arena.phase === 2 && leader?.infected && leader.health.current <= 0) {
         arena.phase = 3; arena.endedAt = w.tick;
         const carrier = w.entities.get(arena.carrier);
         if (carrier?.infected) delete carrier.infected.arenaCarrier;
@@ -163,6 +168,18 @@ export class L8BossArenas {
         this.signal(arena, 'cleared');
       }
     }
+  }
+  private callFlight(arena: L8ArenaState, def: typeof l8BossArenas[number]): void {
+    arena.flights = (arena.flights ?? 1) + 1;
+    const w = this.w, zoo = this.mission.l8!, civilians = w.npcs!.civilians;
+    for (let i = 0; i < 6; i++) {
+      const angle = i * Math.PI / 3 + .4, at = requireClearPoint(w, { x: def.centre.x + Math.cos(angle) * 10, z: def.centre.z + Math.sin(angle) * 10 }, .5, 6, `l8.${def.id}.flight`);
+      const id = civilians.spawn('cashier', at, { zooAnimal: 'flamingo', waypoints: [at, at] });
+      arena.ids.push(id); zoo.state.animals.push(id);
+      const animal = w.entities.get(id)!;
+      civilians.outbreak!.infect(animal, 1);
+    }
+    this.announce('Another flight comes down from the reeds!');
   }
   /** Finite, physical animal-contact leg. Ordinary damage/grab interruption still owns its failure. */
   controlCarrier(e: EntitySnapshot): boolean {
@@ -320,6 +337,8 @@ export class L8BossArenas {
       return true;
     }
     const lead = arena.ids.find(id => { const member = w.entities.get(id); return member && member.health.current > 0 && !member.infected?.arenaBoss?.roof && !member.infected?.arenaBoss?.traversal; }) === e.id;
+    // r31-flamingo: the flock stays home until the courier comes (it used to chase her to the plaza, where the soldiers shot it before its title showed).
+    if (arena.id === 'flamingo' && distance(p.transform, def.centre) > def.radius + 12) { this.orbit(e, arena, def.centre, 5); return true; }
     if (lead && w.tick >= arena.nextAt) {
       arena.cycle++; arena.nextAt = w.tick + (arena.id === 'elephant' ? arena.phase === 2 && arena.wallHits === 0 ? 1080 : 1320 : arena.phase === 2 ? 300 : 420); this.beginCycle(e, arena);
     } else if (arena.id === 'lion' && arena.phase === 2 && boss.slot === 1 && w.tick >= boss.readyAt) {

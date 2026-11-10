@@ -345,3 +345,10 @@ A living record, updated after every lane or experiment. Short entries with evid
 ### 2026-11-10 — L8 bosses flat at night shipped (PO: "How could this pass QA?")
 - **Didn't work:** every L8 boss Scene Lab spec uses `"time": "L1"`/`"L4"` (daylight); the CrowdView night-figure fill that flattens big bodies only applies under the L8 zoo night preset, so the gate always saw them lit. r26-vqa reported "gorilla and elephant show as a flat pale-grey cut-out"; the orchestrator attributed it to the hit flash, fixed the flash and verified only the elephant under a lamp — never the lion/gorilla at night without fire. Real-play QA never reached the lion/gorilla arenas (10-min cap, no fixtures until 11-10).
 - **Apply:** boss/creature visual checks run in the level's real lighting preset (L8-zoo night), not a neutral preset; when a QA report names several bodies, verify every named body before closing it; gate rows for every L8 animal at night with an automatic flat-silhouette metric (luminance variance inside the figure mask).
+
+## 2026-11-10: r31-flamingo (L8 animal bosses)
+- **Worked:** size boss HP from measured per-hit damage (one probe shot per weapon through the real pipeline), not from the boss's old HP. Bullet-sponge HP (780 per bird, 6000 gorilla) was the PO's complaint; the flock's threat is its numbers, so extra flights (not HP) lengthen the fight.
+- **Didn't work:** lengthening the fight with more flamingos alone: 26 solid bird corpses walled the courier in (bot idle 1000 s on seeds 4/5). Dead bodies persist, so any "more enemies" change needs a corpse-solidity check, not only a kill-time check.
+- **Watch:** a boss damage probe that can kill the boss changes arena gates/phases for the next probe (gorilla hits vanished). Probe with a huge HP pool and assert on per-hit damage.
+- **Watch:** a wave spawned on the same tick the arena clear check runs must skip that check (stale `live`/`pendingTurns`).
+- **Night blobs:** the figure fill value (CrowdView `figureFill`) must be 0.25 for any dark-coated boss, not only Alphas; the Mega and the L8 animals shared this cause.

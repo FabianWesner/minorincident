@@ -13,13 +13,14 @@ campaign.seed = seed; campaign.settings.quality = 'low';
 const w: any = await loadLevel('L8', seed, campaign, 0, { quality: 'low' } as any);
 const bot: any = new LevelEightBot(w, 'complete');
 const zoo = w.missions.l8, player = w.entities.get(1);
+const aliveAtStart: Record<string, number> = {};
 const near: Record<string, number> = {}, start: Record<string, number> = {};
 for (let i = 0; i < 1300 * 60 && !bot.finished; i++) {
   followFrustum(w); w.applyInput(bot.sample(), 'keyboard'); w.update();
   for (const a of zoo.state.arenas) {
     const def = l8BossArenas.find((d: any) => d.id === a.id)!;
     if (a.phase === 0 && near[a.id] === undefined && (Math.hypot(player.transform.x - def.entry.x, player.transform.z - def.entry.z) < 12 || Math.hypot(player.transform.x - def.centre.x, player.transform.z - def.centre.z) < def.radius * .75)) near[a.id] = w.tick;
-    if (a.phase >= 1 && start[a.id] === undefined) start[a.id] = w.tick;
+    if (a.phase >= 1 && start[a.id] === undefined) { start[a.id] = w.tick; aliveAtStart[a.id] = a.ids.filter((id: number) => (w.entities.get(id)?.health.current ?? 0) > 0).length; }
   }
   if (!quiet && i % (10 * 60) === 0) {
     const za = zoo.state.arenas[1], c = w.entities.get(za.carrier);
@@ -27,5 +28,6 @@ for (let i = 0; i < 1300 * 60 && !bot.finished; i++) {
   }
 }
 const wait = Object.keys(start).map(id => `${id}:${near[id] !== undefined ? Math.max(0, Math.round((start[id] - near[id]) / 60)) : '?'}s`).join(' ');
+console.log('FLOCK', seed, 'aliveAtStart', aliveAtStart.flamingo, 'phase3At', zoo.state.arenas[0].endedAt && (zoo.state.arenas[0].endedAt - start.flamingo) / 60);
 console.log('RESULT seed', seed, 'wait', wait, 'end', bot.finished, (w.tick / 60) | 0);
 process.exit(0);
