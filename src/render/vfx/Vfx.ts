@@ -53,6 +53,9 @@ export const hitFlashRest = 0.35;
 /** PO #29 (Alphas "flashing pale under fire"): the first hit of a burst flashes at full strength, every further pulse of the
  * same sustained fire (another pulse due within hitFlashStreak) at about half, so a near-black Alpha shot by the MG and several
  * allies keeps its own look instead of strobing slate-grey three times a second. */
+/** r26-l8hitreact: an arena boss takes 0.6x outside its exposed windows and has no stagger, so every damaging hit gets a
+ * stronger, longer flash (render-only). Strengths above 1 mark a boss flash for the crowd shader; this is the amplitude on top. */
+export const bossHitFlashSeconds = 0.18, bossHitFlashRest = 0.12, bossHitFlashChip = 0.55, bossHitFlashExposed = 0.9, bossHitFlashReduced = 0.3;
 export const hitFlashPeak = 0.45, hitFlashRepeat = 0.25, hitFlashStreak = hitFlashRest * 3;
 /** Event-driven view. All randomness, time, masks and bodies belong here, outside simulation.
  * Infrastructure presets deliberately leave E27's seven-beat choreography to E27. */
@@ -84,6 +87,8 @@ export class Vfx extends Group {
   private readonly hitIds = new Uint32Array(512);
   private readonly hitUntil = new Float64Array(512);
   private readonly hitPeak = new Float32Array(512);
+  /** L8 arena bosses: 0 for everyone else, else the extra flash amplitude (0..0.9) added on top of 1 for the boss marker. */
+  private readonly hitBoss = new Float32Array(512);
   private hitCount = 0;
   private hitCursor = 0;
   /** alpha-white: start time of each target's last hit flash. Sustained fire (a soldier line, pellets) re-flashed
@@ -227,7 +232,9 @@ export class Vfx extends Group {
   private resetPools(preserveTelegraphs = false): void { this.flameSource = null; this.blasts.reset(); for (const pool of this.pools) if (!preserveTelegraphs || pool !== this.telegraphs) pool.reset(this.time); this.gibs.reset(); if (!preserveTelegraphs) this.tells.clear(); this.hitCount = this.hitCursor = 0; this.hitStarted.clear(); }
   private pulse(id: number): void {
     const started = this.hitStarted.get(id);
-    if (started !== undefined && this.time - started < hitFlashRest) return;
+    const arena = this.world.entities.get(id)?.infected?.arenaBoss;
+    if (started !== undefined && this.time - started < (arena ? bossHitFlashRest : hitFlashRest)) return;
+    const boss = arena ? this.flashReduction ? bossHitFlashReduced : this.world.tick < arena.exposedUntil ? bossHitFlashExposed : bossHitFlashChip : 0;
     const peak = started !== undefined && this.time - started < hitFlashStreak ? hitFlashRepeat : hitFlashPeak;
     this.hitStarted.set(id, this.time);
     if (this.hitStarted.size > 2048) for (const [key, at] of this.hitStarted) if (this.time - at >= hitFlashRest) this.hitStarted.delete(key);
@@ -237,7 +244,8 @@ export class Vfx extends Group {
       if (this.hitCount < this.hitIds.length) this.hitCount++;
       else { slot = this.hitCursor++ % this.hitIds.length; this.targets.flash(this.hitIds[slot], 0); }
     }
-    this.hitIds[slot] = id; this.hitUntil[slot] = this.time + 0.1; this.hitPeak[slot] = peak; this.targets.flash(id, peak);
+    this.hitIds[slot] = id; this.hitUntil[slot] = this.time + (boss ? bossHitFlashSeconds : 0.1); this.hitPeak[slot] = peak; this.hitBoss[slot] = boss;
+    this.targets.flash(id, boss ? 1 + boss : peak);
   }
   private burst(x: number, y: number, z: number, color: number, count: number, size = 0.18, life = 0.7, gravity = 9.81, shape: number = 0, speed = 1, lift = 0): void {
     const n = this.quality === 'low' ? Math.ceil(count / 4) : count;
@@ -658,9 +666,10 @@ export class Vfx extends Group {
     if (this.enabled) this.blasts.advance(this.time, seconds);
     this.gibs.advance(this.time, seconds);
     for (let i = 0; i < this.hitCount;) {
-      this.targets.flash(this.hitIds[i], Math.max(0, (this.hitUntil[i] - this.time) * 10 * this.hitPeak[i]));
+      const left = this.hitUntil[i] - this.time;
+      this.targets.flash(this.hitIds[i], this.hitBoss[i] > 0 ? left > 0 ? 1 + this.hitBoss[i] * Math.min(1, left / bossHitFlashSeconds) : 0 : Math.max(0, left * 10 * this.hitPeak[i]));
       if (this.hitUntil[i] <= this.time) {
-        this.hitCount--; this.hitIds[i] = this.hitIds[this.hitCount]; this.hitUntil[i] = this.hitUntil[this.hitCount]; this.hitPeak[i] = this.hitPeak[this.hitCount];
+        this.hitCount--; this.hitIds[i] = this.hitIds[this.hitCount]; this.hitUntil[i] = this.hitUntil[this.hitCount]; this.hitPeak[i] = this.hitPeak[this.hitCount]; this.hitBoss[i] = this.hitBoss[this.hitCount];
       } else i++;
     }
     if (Math.floor(this.time * 4) !== Math.floor((this.time - seconds) * 4) && this.enabled) {

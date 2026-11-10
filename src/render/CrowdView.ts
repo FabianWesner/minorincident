@@ -60,6 +60,8 @@ type CrowdDef = { id: string; asset: string; windup: number; decay?: string };
 type CrowdLod = 'lod0' | 'lod1' | 'lod2';
 /** Simulation ticks a hit flash may last at most (Vfx pulses for 0.1 s = 6 ticks at 60 Hz). */
 export const hitFlashTicks = 8;
+/** L8 arena boss flash/flinch: 0.18 s of render time (Vfx), capped in sim ticks for the same paused-stepping reason. */
+export const bossHitFlashTicks = 12;
 /** One instanced, skinned GPU batch per archetype. Scene graph size never grows with infected population. */
 /** E19 §5.4: the speed tier must read from the silhouette. Prefer the sim's tier,
  * else the brain's jittered run speed (frail 4.7, average 5.1, athletic 5.6 m/s). */
@@ -105,6 +107,7 @@ export class CrowdView extends Group {
   private readonly frustum = new Frustum();
   private readonly projection = new Matrix4();
   private readonly arenaScale = new Vector3(1.4, 1.4, 1.4);
+  private readonly flinchScale = new Vector3();
   private readonly bounds = new Sphere(new Vector3(), 1);
   private disposed = false;
   private readonly batches = new Map<string, Batch>();
@@ -491,7 +494,10 @@ export class CrowdView extends Group {
       // Alphas have authored bruised skin and dark outfits. The ordinary crowd's
       // additive atlas/figure fills washed those swatches pale lavender at night.
       const atlasFill = infectedAtlas ? albedo.mul(regularAlpha ? .04 : .18).mul(eye.oneMinus()) : vec3(0);
-      const glow = emission.mul(eye).add(atlasFill).add(feedbackState.w.mod(2).mul(base.mul(base.oneMinus().mul(1.1))).mul(figureMask ?? 1));
+      // Flash 0..1 is the ordinary hit pulse; 1..2 marks an L8 arena boss hit (r26-l8hitreact): a plain additive warm-white lift, since the
+      // base*(1-base) pulse above is nearly invisible on dark animal coats.
+      const flashValue = feedbackState.w.mod(2), bossFlash = flashValue.sub(1).max(0);
+      const glow = emission.mul(eye).add(atlasFill).add(flashValue.lessThan(1).select(flashValue, 0).mul(base.mul(base.oneMinus().mul(1.1))).add(vec3(.75, .68, .6).mul(bossFlash)).mul(figureMask ?? 1));
       material = this.shading?.shaded(base, glow, undefined, undefined, undefined, healthy ? undefined : eye, figureMask, shadowReceiver, healthy ? undefined : float(1)) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: base, emissiveNode: glow });
       // E25 night readability: crowd silhouettes take the preset's moonlit rim.
       livingStencil(material);
@@ -782,6 +788,11 @@ export class CrowdView extends Group {
       } else {
         this.transform.makeRotationY((b.state === 'dead' ? resting.yaw : presented.yaw) + (e.civilian?.zooAnimal && e.infection ? Math.sin(renderTick * .5 + e.id) * .018 * e.infection.progress : 0)); this.transform.setPosition(x, (b.state === 'dead' ? (presented.y - .7) * (1 - settle) + resting.y * settle : Math.max(presented.y - 0.7, this.world.districts?.pavingHeight(x, z) ?? 0)) + (reaction?.heavy && age < .48 ? Math.max(0, .16 * (1 - Math.abs(age / .24 - 1))) : 0), z);
         if (e.infected?.arenaBoss?.arena === 'monkey' && e.infected.arenaBoss.slot === 6) this.transform.scale(this.arenaScale);
+        // r26-l8hitreact: cosmetic squash on every boss hit (<= 0.15 s), matrix only; sim pose, attacks and stagger are untouched.
+        if (e.infected?.arenaBoss && feedback && feedback.strength > 1) {
+          const k = Math.max(0, 1 - (this.world.tick - feedback.at) / 9);
+          if (k > 0) this.transform.scale(this.flinchScale.set(1 + .05 * k, 1 - .06 * k, 1 + .05 * k));
+        }
         if (b.state === 'dead') this.deadFeet.set(e.id, { id: e.id, x, y: this.transform.elements[13], z });
         if (e.corpse) {
           // Start with the intact corpse source; ordinary limb severance is
@@ -891,7 +902,7 @@ export class CrowdView extends Group {
    * hitFlashTicks of simulation: paused stepping (QA drivers, e2e) froze the render clock, so every Alpha hit
    * under fire stayed at peak white. Downed and dead bodies never flash: a corpse keeps its own look. */
   private flashStrength(e: { health: { current: number } }, feedback: { strength: number; at: number } | undefined): number {
-    return feedback && e.health.current > 0 && this.world.tick - feedback.at <= hitFlashTicks ? feedback.strength : 0;
+    return feedback && e.health.current > 0 && this.world.tick - feedback.at <= (feedback.strength > 1 ? bossHitFlashTicks : hitFlashTicks) ? feedback.strength : 0;
   }
   flash(id: number, strength: number): void {
     const e = this.world.entities.get(id); if (!e?.combat || e.faction !== 'infected') return;
