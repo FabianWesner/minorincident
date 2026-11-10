@@ -610,9 +610,9 @@ export class Vfx extends Group {
           startTick: a.startTick, activeTick: a.activeTick, cooldownExpiry: a.cooldownExpiry, target: a.target, area: a.area });
       }
       if (a?.move === 'flamingo.dive' && a.hitIds.includes(1)) remaining = Math.max(remaining, (a.obstructionUntil ?? 0) - this.world.tick);
-      if (a && this.enabled) this.animalCue(e, a);
+      if (a && this.enabled && this.animalCues) this.animalCue(e, a);
     }
-    if (this.animalCues.size > 64) for (const id of this.animalCues.keys()) if (!this.world.infected?.active.some(e => e.infected?.specialAttack?.attackId === id)) this.animalCues.delete(id);
+    if (this.animalCues?.size > 64) for (const id of this.animalCues.keys()) if (!this.world.infected?.active.some(e => e.infected?.specialAttack?.attackId === id)) this.animalCues.delete(id);
     // Warning lifetime follows the sim snapshot, including paused step()/redraws.
     // Waiting for advance() left staged deaths ringed until real time resumed.
     for (const [attackId, tell] of this.tells) if (tell.sourceId !== undefined) {
