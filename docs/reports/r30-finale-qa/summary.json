@@ -1,0 +1,34 @@
+{
+  "lane": "r30-finale-qa",
+  "base": "acdd976c",
+  "fixture": "l10-dispersal-console",
+  "god": true,
+  "megaHpShortcut": false,
+  "contactSheet": "/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/r30-finale/contact-sheet-po.jpg",
+  "runs": [
+    { "id": "run1-low-z15-gpu", "quality": "low", "zoom": 1.5, "backend": "webgpu", "reached": "mega-dead; release not pressed (no prompt)", "pageErrors": 0 },
+    { "id": "run2-high-z1-gl", "quality": "high", "zoom": 1, "backend": "webgl", "reached": "menu (full credits 90 s)", "pageErrors": 0, "framesOver100ms": 0, "megaFightSeconds": 35.6 },
+    { "id": "run3-low-z15-gpu", "quality": "low", "zoom": 1.5, "backend": "webgpu", "reached": "menu (Skip credits at 22 s)", "pageErrors": 0, "framesOver100ms": 1, "worstFrameMs": 267, "megaFightSeconds": 36.9 },
+    { "id": "run4-high-z15-gpu-gate", "quality": "high", "zoom": 1.5, "backend": "webgpu", "reached": "menu (Skip credits at 7 s)", "pageErrors": 0, "framesOver100ms": 0, "megaFightSeconds": 35.6 }
+  ],
+  "timeline": { "epilogueS": 65, "pulloutS": 15, "titleS": 5, "creditsS": 90, "thanksS": 6, "cameraHeightM": { "wave": 28, "backToHer": 23, "pulloutEnd": 1024 } },
+  "r28SceneLabClaims": { "cameraNeverPullsOut": "not reproduced", "fullHudStaysOn": "not reproduced", "groundFlatOlive": "confirmed at pull-out", "courierWalksOutOfFrame": "not reproduced" },
+  "stunning": false,
+  "findings": [
+    { "sev": "P2", "p1CandidateTouch": true, "beat": "release", "text": "no prompt/ring/touch button for Release the cure; release step has no interact trigger" },
+    { "sev": "P2", "beat": "fight", "text": "Mega drawn see-through when the courier is behind it" },
+    { "sev": "P2", "beat": "fight", "text": "fight drifts 55-80 m out of the arena; 'Back to the dispersal arena' shown in melee" },
+    { "sev": "P2", "beat": "fight", "text": "gate switch unlabelled box, no gate visible; gate/tanks never used" },
+    { "sev": "P2", "beat": "release", "text": "no dust column/tide; empty beat when fight ended away from console" },
+    { "sev": "P2", "beat": "wave", "text": "placeholder dioramas on flat void slabs; flat disc as dust" },
+    { "sev": "P2", "beat": "back-to-her", "text": "stands in the dark; no steps, sunrise or corgi head on knee" },
+    { "sev": "P2", "beat": "pullout", "text": "vista is flat olive plain with conifer clumps; level does not read" },
+    { "sev": "P3", "beat": "survivors", "text": "empty-trucks shot when no survivors" },
+    { "sev": "P3", "beat": "fight", "text": "no boss bar; escort bar crosses the Mega" },
+    { "sev": "P3", "beat": "release", "text": "'Release it. Now.' subtitle lingers ~5 s after release" },
+    { "sev": "P3", "beat": "back-to-her", "text": "courier see-through under shadow; cured civilian inside Mega corpse" },
+    { "sev": "P3", "beat": "credits", "text": "3 s empty panel; ~60 s of package licences" },
+    { "sev": "P3", "beat": "pullout", "text": "267 ms hitch at pull-out start (low, WebGPU)" }
+  ],
+  "notCovered": ["low+WebGL2", "non-god fight", "touch input", "audio (muted)", "Rosa/Sam/survivor credits/corgi toy (fixture has no survivors, sam-alive=false)"]
+}
