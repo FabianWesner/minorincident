@@ -26,4 +26,10 @@ Evidence (ignored raw captures, not committed): `test-results/s31-{low,high}-z{1
 
 ## Final validation
 
-Pending clean-commit gate run.
+- `npm run typecheck`: PASS on final code.
+- `npm run lint`: PASS on final committed code.
+- `npx vitest run tests/engine/l4-contact.test.ts --maxWorkers=2`: PASS (1 existing case, 20.05 s).
+- Scene Lab: PASS 16/16; captures opened as described above. Also opened the existing occlusion/shared/zoo final frames: no bar through the house, nearby interacting runner bar, idle zoo actors without bars.
+- Clean-commit `npm run test:gate`: FAIL. First attempt reported a navigation long-route timeout (~30 s) and was terminated at 241.0 s. Retry with `npm run test:gate -- -- --maxWorkers=2` reported no assertion failure but exceeded 240 s (241.1 s); its wrapper also raised a cleanup PermissionError, and the child was subsequently confirmed absent. A final default-four-worker attempt, started when no other Vitest process was present, reported no assertion failure but was terminated at its 237 s browser reservation limit, total 240.7 s, exit 124. Logs: `/tmp/s31-gate-final.log`, `/tmp/s31-gate-two.log`, `/tmp/s31-gate-quiet.log`.
+
+No limits or tolerances were changed. No checks remain running. The implementation and visual verification are complete, but the requested green full gate is **not achieved**; this lane must not be represented as fully verified or ready to merge. The remaining action is to obtain a successful full gate within its existing budget.
