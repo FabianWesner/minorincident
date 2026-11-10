@@ -4,7 +4,7 @@ import type { InfectedSpecialMove } from '../../data/infected';
 export interface InfectedState {
   /** L8 arena ownership and punish window; copied with the actor on retries. */
   thrownBy?: number;
-  arenaBoss?: { arena: import('../../data/l8Bosses').L8BossId; slot: number; engaged: boolean; exposedUntil: number; readyAt: number; scattered?: boolean; shakeHits?: number; scavengeId?: number; scavengeProgress?: { x: number; z: number; at: number }; motionProgress?: { x: number; z: number; at: number }; smashId?: string; roof?: boolean; leaderEntered?: boolean; followUpThrow?: boolean; approach?: 'gorilla.roar' | 'gorilla.pound'; barrage?: number; hunt?: { x: number; z: number; until: number; flank: boolean }; traversal?: { start: number; from: { x: number; y: number; z: number }; to: { x: number; y: number; z: number }; roof: boolean } };
+  arenaBoss?: { arena: import('../../data/l8Bosses').L8BossId; slot: number; engaged: boolean; exposedUntil: number; readyAt: number; scattered?: boolean; shakeHits?: number; scavengeId?: number; scavengeProgress?: { x: number; z: number; at: number }; motionProgress?: { x: number; z: number; at: number }; smashId?: string; roof?: boolean; leaderEntered?: boolean; followUpThrow?: boolean; approach?: 'gorilla.roar' | 'gorilla.pound'; barrage?: number; hunt?: { x: number; z: number; until: number; flank: boolean }; traversal?: { start: number; from: { x: number; y: number; z: number }; to: { x: number; y: number; z: number }; roof: boolean }; pace?: { x: number; z: number } };
   arenaCarrier?: number;
   /** Data-driven E07 Alpha identity; absent on legacy saves, where Brute is the default. */
   alphaType?: import('../../data/alphaTypes').AlphaType;

@@ -1,0 +1,77 @@
+{
+ "name": "r32-elephant-game",
+ "note": "r32-animalmoves elephant: walk-in 40, specials elephant.charge@150, elephant.swipe@400, MG burst 560. Night L8-zoo light.",
+ "seed": 3,
+ "ground": "grass",
+ "size": 50,
+ "time": "L8-zoo",
+ "dof": false,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "loadout": [
+    "weapon.bat",
+    "weapon.army-mg"
+   ]
+  },
+  {
+   "id": "z",
+   "kind": "infected",
+   "archetype": "infected.elephant",
+   "at": [
+    16.0,
+    0.0
+   ],
+   "yaw": 180,
+   "state": "idle"
+  }
+ ],
+ "script": [
+  {
+   "frame": 40,
+   "actor": "z",
+   "do": "chase"
+  },
+  {
+   "frame": 150,
+   "actor": "z",
+   "do": {
+    "special": "elephant.charge",
+    "target": "courier"
+   }
+  },
+  {
+   "frame": 400,
+   "actor": "z",
+   "do": {
+    "special": "elephant.swipe",
+    "target": "courier"
+   }
+  },
+  {
+   "frame": 560,
+   "actor": "courier",
+   "do": {
+    "attack": "z",
+    "seconds": 0.6,
+    "side": "RIGHT"
+   }
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": "courier",
+  "zoom": 1.5
+ },
+ "frames": 680,
+ "trace": true,
+ "expect": {
+  "consoleErrors": 0
+ }
+}

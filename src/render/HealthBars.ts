@@ -25,6 +25,8 @@ export function barEligible(e: EntitySnapshot, player: { x: number; z: number },
   if (e.civilian?.survivor?.mode === 'follow') return isFollower(e) && (fullFollowers || e.health.current < e.health.max);
   // Alpha's crowd-cap exemption does not bypass its shared 15 m/damaged
   // eligibility rule. Healthy riots and the pursuing boss retain range exceptions.
+  // r32: the old elephant's boss bar appears when his finale fight engages, never while he waits in his enclosure.
+  if (e.infected?.arenaBoss?.arena === 'elephant' && !e.infected.arenaBoss.engaged) return false;
   return bar && e.faction === 'infected' && !!e.infected && e.health.current > 0 && !e.hidden && !e.infected.hidden && !e.corpse &&
     (e.health.current < e.health.max || !!e.combat?.shield || !!e.infected?.pursuit || !!e.infected?.arenaBoss?.engaged || Math.hypot(e.transform.x - player.x, e.transform.z - player.z) <= 15);
 }

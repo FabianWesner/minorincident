@@ -1,0 +1,158 @@
+{
+ "name": "r32-flamingo",
+ "note": "r32-animalmoves flamingo: walk-in 40, specials flamingo.dive@150, flamingo.dive@360, MG burst 560. Night L8-zoo light.",
+ "seed": 3,
+ "ground": "grass",
+ "size": 50,
+ "time": "L8-zoo",
+ "dof": false,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "loadout": [
+    "weapon.bat",
+    "weapon.army-mg"
+   ]
+  },
+  {
+   "id": "z",
+   "kind": "infected",
+   "archetype": "infected.flamingo",
+   "at": [
+    9.0,
+    -4.0
+   ],
+   "yaw": 180,
+   "state": "idle"
+  },
+  {
+   "id": "z1",
+   "kind": "infected",
+   "archetype": "infected.flamingo",
+   "at": [
+    10.2,
+    -2.4000000000000004
+   ],
+   "yaw": 180,
+   "state": "idle"
+  },
+  {
+   "id": "z2",
+   "kind": "infected",
+   "archetype": "infected.flamingo",
+   "at": [
+    9.0,
+    -0.8
+   ],
+   "yaw": 180,
+   "state": "idle"
+  },
+  {
+   "id": "z3",
+   "kind": "infected",
+   "archetype": "infected.flamingo",
+   "at": [
+    10.2,
+    0.8
+   ],
+   "yaw": 180,
+   "state": "idle"
+  },
+  {
+   "id": "z4",
+   "kind": "infected",
+   "archetype": "infected.flamingo",
+   "at": [
+    9.0,
+    2.4000000000000004
+   ],
+   "yaw": 180,
+   "state": "idle"
+  },
+  {
+   "id": "z5",
+   "kind": "infected",
+   "archetype": "infected.flamingo",
+   "at": [
+    10.2,
+    4.0
+   ],
+   "yaw": 180,
+   "state": "idle"
+  }
+ ],
+ "script": [
+  {
+   "frame": 40,
+   "actor": "z",
+   "do": "chase"
+  },
+  {
+   "frame": 40,
+   "actor": "z1",
+   "do": "chase"
+  },
+  {
+   "frame": 40,
+   "actor": "z2",
+   "do": "chase"
+  },
+  {
+   "frame": 40,
+   "actor": "z3",
+   "do": "chase"
+  },
+  {
+   "frame": 40,
+   "actor": "z4",
+   "do": "chase"
+  },
+  {
+   "frame": 40,
+   "actor": "z5",
+   "do": "chase"
+  },
+  {
+   "frame": 150,
+   "actor": "z",
+   "do": {
+    "special": "flamingo.dive",
+    "target": "courier"
+   }
+  },
+  {
+   "frame": 360,
+   "actor": "z",
+   "do": {
+    "special": "flamingo.dive",
+    "target": "courier"
+   }
+  },
+  {
+   "frame": 560,
+   "actor": "courier",
+   "do": {
+    "attack": "z",
+    "seconds": 0.6,
+    "side": "RIGHT"
+   }
+  }
+ ],
+ "camera": {
+  "mode": "close",
+  "target": "courier",
+  "radius": 11,
+  "azimuth": 70
+ },
+ "frames": 680,
+ "trace": true,
+ "expect": {
+  "consoleErrors": 0
+ }
+}

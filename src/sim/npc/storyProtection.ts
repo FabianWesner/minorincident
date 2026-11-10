@@ -7,8 +7,23 @@ import type { EntitySnapshot } from '../world/types';
  * checkpointed mission state so retries restore protection without a separate timer.
  * Regular allies and rescued followers retain their ordinary combat/infection rules.
  */
+/**
+ * r32 (PO 11-10 "This guy is not doing anything"): the old elephant stays a living zoo animal behind its fence
+ * until his own finale is reachable (the gorilla fight is cleared); stray infected neither hunt nor bite him first,
+ * so he never stands turned, idle and with a boss health bar during the earlier arenas. His finale turn is the
+ * arena carrier's scripted bite (L8BossArenas), which starts once this returns false.
+ */
+export function l8AnimalDormant(world: SimWorld, entity: EntitySnapshot): boolean {
+  if (entity.civilian?.zooAnimal !== 'elephant' || entity.infection) return false;
+  const s = world.missions?.state;
+  if (s?.id !== 'L8') return false;
+  const arenas = world.missions?.l8?.state.arenas;
+  const gorilla = arenas?.find(a => a.id === 'gorilla');
+  return !!arenas?.length && gorilla?.phase !== 3;
+}
 export function storyProtected(world: SimWorld, entity: EntitySnapshot): boolean {
   if (!entity.civilian && !entity.escort) return false;
+  if (l8AnimalDormant(world, entity)) return true;
   const s = world.missions?.state;
   if (!s || s.phase === 'result' || s.phase === 'progression') return false;
   const id = entity.id;

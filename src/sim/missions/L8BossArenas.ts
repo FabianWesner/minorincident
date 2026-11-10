@@ -202,6 +202,13 @@ export class L8BossArenas {
       if (victim) {
         this.walk(e, victim.transform, 3);
         if (distance(e.transform, victim.transform) < 1.8 && victim.civilian!.state !== 'grabbed') w.npcs!.civilians.outbreak!.grab(victim, e);
+      } else if (arena.id === 'elephant') {
+        // r32 (PO "This guy is not doing anything"): a bull that turned before his finale paces his fence line
+        // and rams it every few seconds instead of standing idle; his bar stays hidden until the fight engages.
+        const home = boss.pace ??= { x: e.transform.x, z: e.transform.z }, leg = Math.floor(w.tick / 210) % 3;
+        if (leg === 2 && !b.specialAttack) { if (w.tick % 210 === 0) this.start(e, 'elephant.swipe', 42, 0, 0); else this.walk(e, home, 2); }
+        else if (b.specialAttack) this.advanceMove(e, arena);
+        else this.walk(e, { x: home.x + (leg ? 3.5 : -3.5), z: home.z }, 2.6);
       } else this.orbit(e, arena, def.centre, 2);
       return true;
     }

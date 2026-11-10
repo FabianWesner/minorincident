@@ -10,6 +10,8 @@ import { combatHeightReachable } from '../combat/height';
 /** Human-sized infected contact spacing; larger bodies reserve their extra radius as well. */
 export const meleeRing = 1.08;
 export const infectedContactDistance = (radius: number): number => meleeRing + Math.max(0, radius - .35);
+/** Half the spine length (m) beyond the round contact body of the long zoo animals, from their drawn models. */
+export const animalSpine: Record<string, number> = { 'infected.lion': .55, 'infected.lioness': .5, 'infected.zebra': .75, 'infected.elephant': .95, 'infected.gorilla': .25 };
 function spacingRadius(e: EntitySnapshot, world: SimWorld): number {
   if (!e.survivor && !e.companion && !e.escort && !e.civilian && !e.infected) return 0;
   if (e.infected?.thrownBy !== undefined || e.infectionRise || e.hidden || e.emerging && world.scenario !== 'L4' || e.health.current <= 0 || e.attachedTo !== undefined || e.contactExempt !== undefined || e.passengerOf !== undefined || (e.infected && (e.infected.hidden || e.transform.y > 2)) || e.companion?.state === 'hide' || e.civilian?.state === 'down' || e.civilian?.state === 'rising') return 0;
@@ -111,7 +113,15 @@ export function installCharacterSeparation(world: SimWorld): void {
       if (body.courier && courierFollower(other)) return;
       if (body.courier && !other.civilian?.survivor && !(narrowQueue && other.companion)) return;
       let dx = body.x - neighbor.x, dz = body.z - neighbor.z;
-      if (narrowQueue && !body.infected && !neighbor.infected && (e.companion || other.companion)) {
+      // r32 (P1-D): a big animal is a long body, not a circle round its belly. Measure from the closest point
+      // of its spine to the person, so a lion/zebra/elephant stops with its muzzle at contact, not with the
+      // courier inside its head or flank.
+      const spine = body.infected !== neighbor.infected ? animalSpine[(body.infected ? e : other).archetype ?? ''] : undefined;
+      if (spine) {
+        const animal = body.infected ? e : other, nx = Math.cos(animal.transform.yaw), nz = -Math.sin(animal.transform.yaw);
+        const sign = body.infected ? 1 : -1, along = Math.max(-spine, Math.min(spine, -(dx * nx + dz * nz) * sign));
+        dx += sign * nx * along; dz += sign * nz * along;
+      } else if (narrowQueue && !body.infected && !neighbor.infected && (e.companion || other.companion)) {
         // Use the closest point on the long body: a circle cannot both push its head clear
         // and let a person pass beside it in the two-lane Metro opening.
         const dog = e.companion ? e : other, nx = Math.cos(dog.transform.yaw), nz = -Math.sin(dog.transform.yaw);
