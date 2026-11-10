@@ -1,0 +1,1920 @@
+{
+ "lane": "r31-zombie-audit",
+ "date": "2026-11-10",
+ "scale": "1 broken/absent .. 5 shippable; death null = not reached in the fixture",
+ "fixture": "specs/scenes/r31-zombie-audit/*.json (close, high, WebGL2, 1024x576, video) and game/*.json (zoom 1.5, low+high)",
+ "types": [
+  {
+   "type": "suit-l4",
+   "model": "inf.common-worker",
+   "archetype": "infected.runner/sprinter",
+   "levels": "L4 L8 L9 L10",
+   "ratings": {
+    "walkRun": 3,
+    "attack": 1,
+    "hitReaction": 1,
+    "death": 3,
+    "look": 4
+   },
+   "defects": [
+    "windup = stands upright, arms drop (reads as relaxing); no strike/bite ever drawn",
+    "MG burst: blood puff only, pose unchanged",
+    "stands idle ~3 s after get-up while being shot"
+   ]
+  },
+  {
+   "type": "native-runner (bbq-dad, jogger, cashier, mom, delivery, bathrobe)",
+   "model": "inf.*",
+   "archetype": "infected.runner/sprinter",
+   "levels": "L8 L9 L10",
+   "ratings": {
+    "walkRun": 3,
+    "attack": 1,
+    "hitReaction": 1,
+    "death": 3,
+    "look": 4
+   },
+   "defects": [
+    "same clip path as suit",
+    "arrival brake slide p95 3-4 cm (bbq-dad 3.9, jogger 4.4)"
+   ]
+  },
+  {
+   "type": "turned pedestrian (civ path)",
+   "model": "npc.civilian-* / police / lab / aftermath",
+   "archetype": "infected.runner/sprinter",
+   "levels": "L1 L2 L3 L5 L6 L7 L8 L9 (+L4 crowd path)",
+   "ratings": {
+    "walkRun": 3,
+    "attack": 1,
+    "hitReaction": 1,
+    "death": 3,
+    "look": 4
+   },
+   "defects": [
+    "windup clip frozen at phase 0.5 (CivilianCrowd), lunge layer capped to 4 cm at contact",
+    "no swing ever shown"
+   ]
+  },
+  {
+   "type": "riot",
+   "model": "inf.riot-cop",
+   "archetype": "infected.riot",
+   "levels": "L4 L6 L10",
+   "ratings": {
+    "walkRun": 3,
+    "attack": 2,
+    "hitReaction": 2,
+    "death": 3,
+    "look": 4
+   },
+   "defects": [
+    "shield raise during windup reads; shield-break recoil reads on bullets",
+    "body itself never flinches"
+   ]
+  },
+  {
+   "type": "firefighter",
+   "model": "inf.firefighter / npc.firefighter-alive",
+   "archetype": "infected.firefighter",
+   "levels": "L4 L9 L10",
+   "ratings": {
+    "walkRun": 3,
+    "attack": 1,
+    "hitReaction": 1,
+    "death": 3,
+    "look": 4
+   },
+   "defects": [
+    "same as suit"
+   ]
+  },
+  {
+   "type": "hazmat",
+   "model": "inf.hazmat",
+   "archetype": "infected.hazmat",
+   "levels": "L4",
+   "ratings": {
+    "walkRun": 3,
+    "attack": 1,
+    "hitReaction": 1,
+    "death": 3,
+    "look": 4
+   },
+   "defects": [
+    "same as suit"
+   ]
+  },
+  {
+   "type": "nurse",
+   "model": "inf.nurse",
+   "archetype": "infected.nurse",
+   "levels": "(none in census)",
+   "ratings": {
+    "walkRun": 2,
+    "attack": 1,
+    "hitReaction": 1,
+    "death": 3,
+    "look": 4
+   },
+   "defects": [
+    "arrival skate: slide p95 12.8 cm"
+   ]
+  },
+  {
+   "type": "crawler",
+   "model": "inf.crawler",
+   "archetype": "infected.crawler",
+   "levels": "L4 L10",
+   "ratings": {
+    "walkRun": 3,
+    "attack": 1,
+    "hitReaction": 1,
+    "death": 3,
+    "look": 3
+   },
+   "defects": [
+    "clip forced to crawl in every state: attacks and hits show the crawl loop only"
+   ]
+  },
+  {
+   "type": "brute / armored / butcher / screamer / bloated roles",
+   "model": "drawn as inf.common-worker (no skinned asset)",
+   "archetype": "infected.brute|armored|butcher|screamer|bloated",
+   "levels": "L4 L5 L6 L8 L9 L10",
+   "ratings": {
+    "walkRun": 3,
+    "attack": 1,
+    "hitReaction": 1,
+    "death": 2,
+    "look": 1
+   },
+   "defects": [
+    "300-1350 HP tanks look exactly like the 60 HP suit worker",
+    "butcher/armored absorb 3 s of MG fire standing in infected-idle",
+    "scream/explode specials have no body read"
+   ]
+  },
+  {
+   "type": "alpha brute",
+   "model": "inf.alpha",
+   "archetype": "infected.alpha (brute)",
+   "levels": "L4 L7",
+   "ratings": {
+    "walkRun": 4,
+    "attack": 3,
+    "hitReaction": 1,
+    "death": 2,
+    "look": 4
+   },
+   "defects": [
+    "slam: 4 m ring + arm raise, swing on recovery - readable",
+    "charge: chevron lane telegraph good, body only leans",
+    "bullets/kick: no reaction at all (idle 470 frames under fire)"
+   ]
+  },
+  {
+   "type": "alpha thrower",
+   "model": "inf.alpha-worker",
+   "archetype": "infected.alpha (thrower)",
+   "levels": "L4 L5 L7 L9",
+   "ratings": {
+    "walkRun": 4,
+    "attack": 1,
+    "hitReaction": 1,
+    "death": 2,
+    "look": 4
+   },
+   "defects": [
+    "solo fixture never triggered a throw (needs props/infected); ordinary attack = windup -> idle"
+   ]
+  },
+  {
+   "type": "alpha screamer",
+   "model": "inf.alpha-hoodie",
+   "archetype": "infected.alpha (screamer)",
+   "levels": "L6 L7 L10 (mix)",
+   "ratings": {
+    "walkRun": 4,
+    "attack": 2,
+    "hitReaction": 1,
+    "death": 2,
+    "look": 4
+   },
+   "defects": [
+    "roar = generic windup + lean"
+   ]
+  },
+  {
+   "type": "alpha leaper",
+   "model": "inf.alpha-suit",
+   "archetype": "infected.alpha (leaper)",
+   "levels": "L5 L9 L10",
+   "ratings": {
+    "walkRun": 4,
+    "attack": 1,
+    "hitReaction": 1,
+    "death": 2,
+    "look": 4
+   },
+   "defects": [
+    "pounce not triggered in fixture; ordinary attack = windup -> idle"
+   ]
+  },
+  {
+   "type": "alpha armoured",
+   "model": "inf.alpha-fire",
+   "archetype": "infected.alpha (armoured)",
+   "levels": "L4",
+   "ratings": {
+    "walkRun": 4,
+    "attack": 2,
+    "hitReaction": 1,
+    "death": 2,
+    "look": 4
+   },
+   "defects": [
+    "shield bash = generic windup + throwPose"
+   ]
+  },
+  {
+   "type": "mega alpha",
+   "model": "inf.mega-alpha",
+   "archetype": "infected.alpha / mega",
+   "levels": "L9 L10",
+   "ratings": {
+    "walkRun": 2,
+    "attack": 3,
+    "hitReaction": 1,
+    "death": null,
+    "look": 4
+   },
+   "defects": [
+    "sprint gait skates: slide p95 18.4 cm",
+    "roar + charge telegraphs readable"
+   ]
+  },
+  {
+   "type": "dog",
+   "model": "inf.dog (+k9, cream, black)",
+   "archetype": "infected.dog",
+   "levels": "L8 L9 L10",
+   "ratings": {
+    "walkRun": 3,
+    "attack": 3,
+    "hitReaction": 1,
+    "death": 3,
+    "look": 3
+   },
+   "defects": [
+    "authored dog-lunge-bite: best attack read in the game",
+    "pounce glides ~2 m with the lunge pose held (slide p95 93 cm)"
+   ]
+  },
+  {
+   "type": "lion / lioness",
+   "model": "inf.lion / inf.lioness",
+   "archetype": "infected.lion|lioness",
+   "levels": "L8",
+   "ratings": {
+    "walkRun": 3,
+    "attack": 2,
+    "hitReaction": 1,
+    "death": null,
+    "look": 3
+   },
+   "defects": [
+    "pounce lane marker good; at contact the lion stands in corgi-idle inside the courier, no pin/bite",
+    "windup/swing/hurt/stagger map to corgi-idle/trot in bake"
+   ]
+  },
+  {
+   "type": "gorilla",
+   "model": "inf.gorilla",
+   "archetype": "infected.gorilla",
+   "levels": "L8",
+   "ratings": {
+    "walkRun": 3,
+    "attack": 2,
+    "hitReaction": 1,
+    "death": null,
+    "look": 3
+   },
+   "defects": [
+    "humanoid clips on an ape rig; roar/pound read only via chestBeat/throwPose layers",
+    "fixture framing poor - see game-camera shots"
+   ]
+  },
+  {
+   "type": "elephant",
+   "model": "inf.elephant",
+   "archetype": "infected.elephant",
+   "levels": "L8 L9",
+   "ratings": {
+    "walkRun": 3,
+    "attack": 2,
+    "hitReaction": 1,
+    "death": null,
+    "look": 2
+   },
+   "defects": [
+    "swipe = trunk layer only, body frozen",
+    "wounds read as flat red stickers"
+   ]
+  },
+  {
+   "type": "zebra",
+   "model": "inf.zebra",
+   "archetype": "infected.zebra",
+   "levels": "L8 L9",
+   "ratings": {
+    "walkRun": 2,
+    "attack": 1,
+    "hitReaction": 1,
+    "death": 3,
+    "look": 3
+   },
+   "defects": [
+    "ordinary attack = corgi-idle; authored rear-kick only from the special",
+    "stops inside the courier (body overlap), slide p95 163 cm"
+   ]
+  },
+  {
+   "type": "flamingo",
+   "model": "inf.flamingo",
+   "archetype": "infected.flamingo",
+   "levels": "L8",
+   "ratings": {
+    "walkRun": 2,
+    "attack": 1,
+    "hitReaction": 1,
+    "death": 3,
+    "look": 3
+   },
+   "defects": [
+    "walks in place with the trot loop; no peck/dive body motion outside the special"
+   ]
+  },
+  {
+   "type": "monkey",
+   "model": "inf.monkey",
+   "archetype": "infected.monkey",
+   "levels": "L8",
+   "ratings": {
+    "walkRun": 2,
+    "attack": 1,
+    "hitReaction": 1,
+    "death": 3,
+    "look": 3
+   },
+   "defects": [
+    "cling = frozen idle pose glued on the courier for 10 s; never reacts to MG"
+   ]
+  }
+ ],
+ "sceneMetrics": {
+  "r31-alpha-armoured": {
+   "tier": "high",
+   "backend": "webgl",
+   "model": "inf.alpha-fire",
+   "health": 150,
+   "state": "stagger",
+   "firstDrawn": 85,
+   "slideMaxCm": 0.9,
+   "slideP95Cm": 0.6,
+   "torsoPitch": [
+    -11.6,
+    29.3
+   ],
+   "clips": {
+    "idle": {
+     "-": 84,
+     "infected-lurch": 35
+    },
+    "chase": {
+     "windup": 110,
+     "infected-idle": 110,
+     "infected-lurch": 41,
+     "shamble": 39
+    },
+    "hits": {
+     "infected-idle": 263,
+     "shamble": 52,
+     "windup": 43,
+     "infected-lurch": 2
+    },
+    "death": {
+     "infected-idle": 301
+    }
+   },
+   "specials": [
+    {
+     "frame": 186,
+     "sourceId": 3,
+     "move": "alpha.shield-bash",
+     "stage": "active"
+    },
+    {
+     "frame": 186,
+     "sourceId": 3,
+     "move": "alpha.shield-bash",
+     "stage": "recovery"
+    },
+    {
+     "frame": 234,
+     "sourceId": 3,
+     "move": "alpha.shield-bash",
+     "stage": "expiry"
+    }
+   ],
+   "bodies": [],
+   "attackOverlap": {
+    "depthCm": 0,
+    "frame": 0,
+    "actor": ""
+   }
+  },
+  "r31-alpha-brute": {
+   "tier": "high",
+   "backend": "webgl",
+   "model": "inf.alpha",
+   "health": 45,
+   "state": "stagger",
+   "firstDrawn": 85,
+   "slideMaxCm": 0.7,
+   "slideP95Cm": 0.4,
+   "torsoPitch": [
+    6.4,
+    33.8
+   ],
+   "clips": {
+    "idle": {
+     "-": 84,
+     "infected-lurch": 35
+    },
+    "chase": {
+     "windup": 108,
+     "-": 81,
+     "infected-lurch": 63,
+     "swing": 48
+    },
+    "hits": {
+     "-": 187,
+     "infected-idle": 173
+    },
+    "death": {
+     "infected-idle": 301
+    }
+   },
+   "specials": [
+    {
+     "frame": 190,
+     "sourceId": 3,
+     "move": "alpha.ground-slam",
+     "stage": "active"
+    },
+    {
+     "frame": 190,
+     "sourceId": 3,
+     "move": "alpha.ground-slam",
+     "stage": "recovery"
+    },
+    {
+     "frame": 238,
+     "sourceId": 3,
+     "move": "alpha.ground-slam",
+     "stage": "expiry"
+    },
+    {
+     "frame": 286,
+     "sourceId": 3,
+     "move": "alpha.charge",
+     "stage": "active"
+    },
+    {
+     "frame": 365,
+     "sourceId": 3,
+     "move": "alpha.charge",
+     "stage": "recovery"
+    },
+    {
+     "frame": 413,
+     "sourceId": 3,
+     "move": "alpha.charge",
+     "stage": "expiry"
+    }
+   ],
+   "bodies": [],
+   "attackOverlap": {
+    "depthCm": 0,
+    "frame": 0,
+    "actor": ""
+   }
+  },
+  "r31-alpha-leaper": {
+   "tier": "high",
+   "backend": "webgl",
+   "model": "inf.alpha-suit",
+   "health": 45,
+   "state": "stagger",
+   "firstDrawn": 117,
+   "slideMaxCm": 1,
+   "slideP95Cm": 0.9,
+   "torsoPitch": [
+    -16.1,
+    33.1
+   ],
+   "clips": {
+    "idle": {
+     "-": 116,
+     "infected-lurch": 3
+    },
+    "chase": {
+     "windup": 111,
+     "infected-idle": 104,
+     "infected-lurch": 84,
+     "shamble": 1
+    },
+    "hits": {
+     "infected-idle": 249,
+     "windup": 57,
+     "shamble": 52,
+     "infected-lurch": 2
+    },
+    "death": {
+     "infected-idle": 301
+    }
+   },
+   "specials": [],
+   "bodies": [],
+   "attackOverlap": {
+    "depthCm": 0,
+    "frame": 0,
+    "actor": ""
+   }
+  },
+  "r31-alpha-screamer": {
+   "tier": "high",
+   "backend": "webgl",
+   "model": "inf.alpha-hoodie",
+   "health": 45,
+   "state": "stagger",
+   "firstDrawn": 85,
+   "slideMaxCm": 1,
+   "slideP95Cm": 0.9,
+   "torsoPitch": [
+    -16.1,
+    33.7
+   ],
+   "clips": {
+    "idle": {
+     "-": 84,
+     "infected-lurch": 35
+    },
+    "chase": {
+     "windup": 113,
+     "infected-idle": 110,
+     "infected-lurch": 55,
+     "shamble": 22
+    },
+    "hits": {
+     "infected-idle": 245,
+     "shamble": 57,
+     "windup": 56,
+     "infected-lurch": 2
+    },
+    "death": {
+     "infected-idle": 301
+    }
+   },
+   "specials": [
+    {
+     "frame": 190,
+     "sourceId": 3,
+     "move": "alpha.roar",
+     "stage": "active"
+    },
+    {
+     "frame": 190,
+     "sourceId": 3,
+     "move": "alpha.roar",
+     "stage": "recovery"
+    },
+    {
+     "frame": 238,
+     "sourceId": 3,
+     "move": "alpha.roar",
+     "stage": "expiry"
+    }
+   ],
+   "bodies": [],
+   "attackOverlap": {
+    "depthCm": 0,
+    "frame": 0,
+    "actor": ""
+   }
+  },
+  "r31-alpha-thrower": {
+   "tier": "high",
+   "backend": "webgl",
+   "model": "inf.alpha-worker",
+   "health": 45,
+   "state": "stagger",
+   "firstDrawn": 88,
+   "slideMaxCm": 1,
+   "slideP95Cm": 1,
+   "torsoPitch": [
+    -16.6,
+    32.4
+   ],
+   "clips": {
+    "idle": {
+     "-": 87,
+     "infected-lurch": 32
+    },
+    "chase": {
+     "windup": 127,
+     "infected-idle": 120,
+     "infected-lurch": 52,
+     "shamble": 1
+    },
+    "hits": {
+     "infected-idle": 255,
+     "shamble": 52,
+     "windup": 51,
+     "infected-lurch": 2
+    },
+    "death": {
+     "infected-idle": 301
+    }
+   },
+   "specials": [],
+   "bodies": [],
+   "attackOverlap": {
+    "depthCm": 0,
+    "frame": 0,
+    "actor": ""
+   }
+  },
+  "r31-civ-elderly": {
+   "tier": "high",
+   "backend": "webgl",
+   "model": "npc.civilian-woman-a",
+   "health": 0,
+   "state": "dead",
+   "firstDrawn": 83,
+   "slideMaxCm": 2,
+   "slideP95Cm": 1.1,
+   "torsoPitch": [
+    -93.6,
+    39
+   ],
+   "clips": {
+    "idle": {
+     "-": 82,
+     "infected-frail": 37
+    },
+    "chase": {
+     "infected-idle": 165,
+     "windup": 108,
+     "infected-frail": 27
+    },
+    "hits": {
+     "infected-idle": 213,
+     "knockdown": 41,
+     "get-up": 38,
+     "windup": 37,
+     "infected-frail": 31
+    },
+    "death": {
+     "death-back": 291,
+     "infected-idle": 9,
+     "knockdown": 1
+    }
+   },
+   "specials": [],
+   "bodies": [],
+   "attackOverlap": {
+    "depthCm": 0,
+    "frame": 0,
+    "actor": ""
+   }
+  },
+  "r31-civ-man": {
+   "tier": "high",
+   "backend": "webgl",
+   "model": "npc.civilian-woman-a",
+   "health": 0,
+   "state": "dead",
+   "firstDrawn": 107,
+   "slideMaxCm": 184.8,
+   "slideP95Cm": 2.3,
+   "torsoPitch": [
+    -93.6,
+    67.4
+   ],
+   "clips": {
+    "idle": {
+     "-": 106,
+     "infected-lurch": 13
+    },
+    "chase": {
+     "infected-idle": 165,
+     "windup": 87,
+     "infected-lurch": 48
+    },
+    "hits": {
+     "infected-idle": 185,
+     "windup": 65,
+     "knockdown": 41,
+     "get-up": 38,
+     "infected-lurch": 31
+    },
+    "death": {
+     "death-back": 291,
+     "infected-idle": 9,
+     "knockdown": 1
+    }
+   },
+   "specials": [],
+   "bodies": [],
+   "attackOverlap": {
+    "depthCm": 0,
+    "frame": 0,
+    "actor": ""
+   }
+  },
+  "r31-crawler": {
+   "tier": "high",
+   "backend": "webgl",
+   "model": "inf.crawler",
+   "health": 0,
+   "state": "dead",
+   "firstDrawn": 18,
+   "slideMaxCm": 0,
+   "slideP95Cm": null,
+   "torsoPitch": [
+    53.6,
+    82.7
+   ],
+   "clips": {
+    "idle": {
+     "crawl": 102,
+     "-": 17
+    },
+    "chase": {
+     "crawl": 300
+    },
+    "hits": {
+     "death-side": 244,
+     "crawl": 115,
+     "knockdown": 1
+    },
+    "death": {
+     "death-side": 301
+    }
+   },
+   "specials": [],
+   "bodies": [],
+   "attackOverlap": {
+    "depthCm": 0,
+    "frame": 0,
+    "actor": ""
+   }
+  },
+  "r31-dog": {
+   "tier": "high",
+   "backend": "webgl",
+   "model": null,
+   "health": 0,
+   "state": "dead",
+   "firstDrawn": 75,
+   "slideMaxCm": 201.2,
+   "slideP95Cm": 92.7,
+   "torsoPitch": [
+    90,
+    91.9
+   ],
+   "clips": {
+    "idle": {
+     "-": 74,
+     "dog-gallop": 23,
+     "dog-lunge-bite": 22
+    },
+    "chase": {
+     "infected-idle": 211,
+     "dog-lunge-bite": 82,
+     "shamble": 6,
+     "dog-gallop": 1
+    },
+    "hits": {
+     "death-back": 244,
+     "infected-idle": 70,
+     "dog-lunge-bite": 39,
+     "shamble": 5,
+     "dog-gallop": 1,
+     "knockdown": 1
+    },
+    "death": {
+     "death-back": 301
+    }
+   },
+   "specials": [],
+   "bodies": [],
+   "attackOverlap": {
+    "depthCm": 0,
+    "frame": 0,
+    "actor": ""
+   }
+  },
+  "r31-elephant": {
+   "tier": "high",
+   "backend": "webgl",
+   "model": null,
+   "health": 779,
+   "state": "stagger",
+   "firstDrawn": 94,
+   "slideMaxCm": 0.2,
+   "slideP95Cm": 0,
+   "torsoPitch": [
+    35.1,
+    90
+   ],
+   "clips": {
+    "idle": {
+     "-": 93,
+     "infected-lurch": 26
+    },
+    "chase": {
+     "windup": 108,
+     "infected-idle": 95,
+     "infected-lurch": 61,
+     "swing": 36
+    },
+    "hits": {
+     "infected-idle": 220,
+     "windup": 61,
+     "get-up": 38,
+     "flung": 28,
+     "knockdown": 13
+    },
+    "death": {
+     "infected-idle": 301
+    }
+   },
+   "specials": [
+    {
+     "frame": 60,
+     "sourceId": 3,
+     "move": "elephant.charge",
+     "stage": "active"
+    },
+    {
+     "frame": 179,
+     "sourceId": 3,
+     "move": "elephant.charge",
+     "stage": "recovery"
+    },
+    {
+     "frame": 215,
+     "sourceId": 3,
+     "move": "elephant.charge",
+     "stage": "expiry"
+    },
+    {
+     "frame": 257,
+     "sourceId": 3,
+     "move": "elephant.swipe",
+     "stage": "active"
+    },
+    {
+     "frame": 257,
+     "sourceId": 3,
+     "move": "elephant.swipe",
+     "stage": "recovery"
+    },
+    {
+     "frame": 293,
+     "sourceId": 3,
+     "move": "elephant.swipe",
+     "stage": "expiry"
+    }
+   ],
+   "bodies": [],
+   "attackOverlap": {
+    "depthCm": 0,
+    "frame": 0,
+    "actor": ""
+   }
+  },
+  "r31-firefighter": {
+   "tier": "high",
+   "backend": "webgl",
+   "model": "inf.firefighter",
+   "health": 0,
+   "state": "dead",
+   "firstDrawn": 79,
+   "slideMaxCm": 154,
+   "slideP95Cm": 1,
+   "torsoPitch": [
+    -87.2,
+    25.2
+   ],
+   "clips": {
+    "idle": {
+     "-": 78,
+     "infected-lurch": 41
+    },
+    "chase": {
+     "infected-idle": 180,
+     "windup": 80,
+     "infected-lurch": 40
+    },
+    "hits": {
+     "infected-idle": 197,
+     "windup": 41,
+     "shamble": 41,
+     "get-up": 38,
+     "flung": 28,
+     "knockdown": 13,
+     "infected-lurch": 2
+    },
+    "death": {
+     "death-back": 231,
+     "infected-idle": 69,
+     "knockdown": 1
+    }
+   },
+   "specials": [],
+   "bodies": [],
+   "attackOverlap": {
+    "depthCm": 0,
+    "frame": 0,
+    "actor": ""
+   }
+  },
+  "r31-flamingo": {
+   "tier": "high",
+   "backend": "webgl",
+   "model": "inf.flamingo",
+   "health": 0,
+   "state": "dead",
+   "firstDrawn": 70,
+   "slideMaxCm": 0,
+   "slideP95Cm": 0,
+   "torsoPitch": [
+    -19.3,
+    90
+   ],
+   "clips": {
+    "idle": {
+     "-": 69,
+     "infected-lurch": 50
+    },
+    "chase": {
+     "shamble": 271,
+     "infected-lurch": 15,
+     "windup": 14
+    },
+    "hits": {
+     "death-back": 263,
+     "shamble": 96,
+     "flung": 1
+    },
+    "death": {
+     "death-back": 301
+    }
+   },
+   "specials": [],
+   "bodies": [],
+   "attackOverlap": {
+    "depthCm": 0,
+    "frame": 0,
+    "actor": ""
+   }
+  },
+  "r31-gorilla": {
+   "tier": "high",
+   "backend": "webgl",
+   "model": "inf.gorilla",
+   "health": 1335,
+   "state": "stagger",
+   "firstDrawn": 152,
+   "slideMaxCm": 0.7,
+   "slideP95Cm": 0,
+   "torsoPitch": [
+    -52.5,
+    57.8
+   ],
+   "clips": {
+    "idle": {
+     "-": 119
+    },
+    "chase": {
+     "windup": 107,
+     "infected-frail": 101,
+     "swing": 36,
+     "-": 32,
+     "shamble": 22,
+     "infected-idle": 2
+    },
+    "hits": {
+     "infected-idle": 186,
+     "windup": 52,
+     "shamble": 41,
+     "get-up": 38,
+     "flung": 28,
+     "knockdown": 13,
+     "infected-frail": 2
+    },
+    "death": {
+     "infected-idle": 301
+    }
+   },
+   "specials": [
+    {
+     "frame": 66,
+     "sourceId": 3,
+     "move": "gorilla.roar",
+     "stage": "active"
+    },
+    {
+     "frame": 66,
+     "sourceId": 3,
+     "move": "gorilla.roar",
+     "stage": "recovery"
+    },
+    {
+     "frame": 102,
+     "sourceId": 3,
+     "move": "gorilla.roar",
+     "stage": "expiry"
+    },
+    {
+     "frame": 257,
+     "sourceId": 3,
+     "move": "gorilla.pound",
+     "stage": "active"
+    },
+    {
+     "frame": 257,
+     "sourceId": 3,
+     "move": "gorilla.pound",
+     "stage": "recovery"
+    },
+    {
+     "frame": 293,
+     "sourceId": 3,
+     "move": "gorilla.pound",
+     "stage": "expiry"
+    }
+   ],
+   "bodies": [],
+   "attackOverlap": {
+    "depthCm": 0,
+    "frame": 0,
+    "actor": ""
+   }
+  },
+  "r31-guard": {
+   "tier": "high",
+   "backend": "webgl",
+   "model": "npc.civilian-woman-a",
+   "health": 0,
+   "state": "dead",
+   "firstDrawn": 94,
+   "slideMaxCm": 2.6,
+   "slideP95Cm": 1.6,
+   "torsoPitch": [
+    -93.6,
+    38.9
+   ],
+   "clips": {
+    "idle": {
+     "-": 93,
+     "infected-sprint": 26
+    },
+    "chase": {
+     "infected-idle": 165,
+     "windup": 101,
+     "infected-sprint": 34
+    },
+    "hits": {
+     "infected-idle": 205,
+     "windup": 45,
+     "knockdown": 41,
+     "get-up": 38,
+     "infected-lurch": 29,
+     "infected-sprint": 2
+    },
+    "death": {
+     "death-back": 291,
+     "infected-idle": 9,
+     "knockdown": 1
+    }
+   },
+   "specials": [],
+   "bodies": [],
+   "attackOverlap": {
+    "depthCm": 0,
+    "frame": 0,
+    "actor": ""
+   }
+  },
+  "r31-hazmat": {
+   "tier": "high",
+   "backend": "webgl",
+   "model": "inf.hazmat",
+   "health": 0,
+   "state": "dead",
+   "firstDrawn": 87,
+   "slideMaxCm": 2.6,
+   "slideP95Cm": 0.9,
+   "torsoPitch": [
+    -81.2,
+    47.4
+   ],
+   "clips": {
+    "idle": {
+     "-": 86,
+     "infected-lurch": 33
+    },
+    "chase": {
+     "infected-idle": 151,
+     "windup": 63,
+     "shamble": 49,
+     "infected-lurch": 37
+    },
+    "hits": {
+     "infected-idle": 202,
+     "windup": 42,
+     "get-up": 38,
+     "shamble": 35,
+     "flung": 28,
+     "knockdown": 13,
+     "infected-lurch": 2
+    },
+    "death": {
+     "death-back": 243,
+     "infected-idle": 57,
+     "knockdown": 1
+    }
+   },
+   "specials": [],
+   "bodies": [],
+   "attackOverlap": {
+    "depthCm": 0,
+    "frame": 0,
+    "actor": ""
+   }
+  },
+  "r31-lion": {
+   "tier": "high",
+   "backend": "webgl",
+   "model": null,
+   "health": 149,
+   "state": "stagger",
+   "firstDrawn": 76,
+   "slideMaxCm": 138.8,
+   "slideP95Cm": 14.8,
+   "torsoPitch": [
+    35.2,
+    90
+   ],
+   "clips": {
+    "idle": {
+     "-": 75,
+     "infected-sprint": 33,
+     "infected-idle": 11
+    },
+    "chase": {
+     "infected-idle": 174,
+     "windup": 98,
+     "infected-sprint": 27,
+     "shamble": 1
+    },
+    "hits": {
+     "infected-idle": 186,
+     "windup": 52,
+     "shamble": 41,
+     "knockdown": 41,
+     "get-up": 38,
+     "infected-sprint": 2
+    },
+    "death": {
+     "infected-idle": 301
+    }
+   },
+   "specials": [
+    {
+     "frame": 42,
+     "sourceId": 3,
+     "move": "lion.flank",
+     "stage": "active"
+    },
+    {
+     "frame": 108,
+     "sourceId": 3,
+     "move": "lion.flank",
+     "stage": "recovery"
+    },
+    {
+     "frame": 144,
+     "sourceId": 3,
+     "move": "lion.flank",
+     "stage": "expiry"
+    },
+    {
+     "frame": 180,
+     "sourceId": 3,
+     "move": "lion.pounce",
+     "stage": "active"
+    },
+    {
+     "frame": 207,
+     "sourceId": 3,
+     "move": "lion.pounce",
+     "stage": "recovery"
+    },
+    {
+     "frame": 243,
+     "sourceId": 3,
+     "move": "lion.pounce",
+     "stage": "expiry"
+    }
+   ],
+   "bodies": [],
+   "attackOverlap": {
+    "depthCm": 0,
+    "frame": 0,
+    "actor": ""
+   }
+  },
+  "r31-lioness": {
+   "tier": "high",
+   "backend": "webgl",
+   "model": null,
+   "health": 135,
+   "state": "stagger",
+   "firstDrawn": 104,
+   "slideMaxCm": 1,
+   "slideP95Cm": 0.8,
+   "torsoPitch": [
+    35.2,
+    93.8
+   ],
+   "clips": {
+    "idle": {
+     "-": 103,
+     "infected-sprint": 16
+    },
+    "chase": {
+     "infected-idle": 191,
+     "windup": 80,
+     "infected-sprint": 28,
+     "shamble": 1
+    },
+    "hits": {
+     "infected-idle": 186,
+     "shamble": 57,
+     "get-up": 38,
+     "windup": 36,
+     "flung": 28,
+     "knockdown": 13,
+     "infected-sprint": 2
+    },
+    "death": {
+     "infected-idle": 301
+    }
+   },
+   "specials": [],
+   "bodies": [],
+   "attackOverlap": {
+    "depthCm": 0,
+    "frame": 0,
+    "actor": ""
+   }
+  },
+  "r31-mega": {
+   "tier": "high",
+   "backend": "webgl",
+   "model": "inf.mega-alpha",
+   "health": 45,
+   "state": "stagger",
+   "firstDrawn": 83,
+   "slideMaxCm": 18.4,
+   "slideP95Cm": 18.4,
+   "torsoPitch": [
+    18.4,
+    47.9
+   ],
+   "clips": {
+    "idle": {
+     "-": 82,
+     "infected-sprint": 37
+    },
+    "chase": {
+     "windup": 108,
+     "infected-sprint": 95,
+     "-": 61,
+     "infected-idle": 36
+    },
+    "hits": {
+     "infected-idle": 203,
+     "-": 96,
+     "infected-lurch": 52,
+     "windup": 7,
+     "infected-sprint": 2
+    },
+    "death": {
+     "infected-idle": 301
+    }
+   },
+   "specials": [
+    {
+     "frame": 197,
+     "sourceId": 3,
+     "move": "alpha.roar",
+     "stage": "active"
+    },
+    {
+     "frame": 197,
+     "sourceId": 3,
+     "move": "alpha.roar",
+     "stage": "recovery"
+    },
+    {
+     "frame": 233,
+     "sourceId": 3,
+     "move": "alpha.roar",
+     "stage": "expiry"
+    },
+    {
+     "frame": 281,
+     "sourceId": 3,
+     "move": "alpha.charge",
+     "stage": "active"
+    },
+    {
+     "frame": 360,
+     "sourceId": 3,
+     "move": "alpha.charge",
+     "stage": "recovery"
+    },
+    {
+     "frame": 396,
+     "sourceId": 3,
+     "move": "alpha.charge",
+     "stage": "expiry"
+    }
+   ],
+   "bodies": [],
+   "attackOverlap": {
+    "depthCm": 0,
+    "frame": 0,
+    "actor": ""
+   }
+  },
+  "r31-monkey": {
+   "tier": "high",
+   "backend": "webgl",
+   "model": "inf.monkey",
+   "health": 0,
+   "state": "dead",
+   "firstDrawn": 68,
+   "slideMaxCm": 65.2,
+   "slideP95Cm": 58,
+   "torsoPitch": [
+    -52.5,
+    79.7
+   ],
+   "clips": {
+    "idle": {
+     "-": 67,
+     "infected-sprint": 52
+    },
+    "chase": {
+     "infected-idle": 242,
+     "shamble": 42,
+     "infected-sprint": 16
+    },
+    "hits": {
+     "infected-idle": 360
+    },
+    "death": {
+     "death-back": 274,
+     "infected-idle": 26,
+     "knockdown": 1
+    }
+   },
+   "specials": [],
+   "bodies": [],
+   "attackOverlap": {
+    "depthCm": 0,
+    "frame": 0,
+    "actor": ""
+   }
+  },
+  "r31-native-bbqdad": {
+   "tier": "high",
+   "backend": "webgl",
+   "model": "inf.bbq-dad",
+   "health": 0,
+   "state": "dead",
+   "firstDrawn": 79,
+   "slideMaxCm": 3.4,
+   "slideP95Cm": 3.2,
+   "torsoPitch": [
+    -88.5,
+    26.9
+   ],
+   "clips": {
+    "idle": {
+     "-": 78,
+     "infected-lurch": 41
+    },
+    "chase": {
+     "infected-idle": 180,
+     "windup": 80,
+     "infected-lurch": 40
+    },
+    "hits": {
+     "infected-idle": 197,
+     "windup": 41,
+     "shamble": 41,
+     "get-up": 38,
+     "flung": 28,
+     "knockdown": 13,
+     "infected-lurch": 2
+    },
+    "death": {
+     "death-back": 231,
+     "infected-idle": 69,
+     "knockdown": 1
+    }
+   },
+   "specials": [],
+   "bodies": [],
+   "attackOverlap": {
+    "depthCm": 0,
+    "frame": 0,
+    "actor": ""
+   }
+  },
+  "r31-nurse": {
+   "tier": "high",
+   "backend": "webgl",
+   "model": "inf.nurse",
+   "health": 0,
+   "state": "dead",
+   "firstDrawn": 73,
+   "slideMaxCm": 166.3,
+   "slideP95Cm": 12.8,
+   "torsoPitch": [
+    -101.7,
+    11.7
+   ],
+   "clips": {
+    "idle": {
+     "-": 72,
+     "infected-lurch": 47
+    },
+    "chase": {
+     "infected-idle": 200,
+     "windup": 84,
+     "infected-lurch": 16
+    },
+    "hits": {
+     "infected-idle": 201,
+     "shamble": 41,
+     "get-up": 38,
+     "windup": 37,
+     "flung": 28,
+     "knockdown": 13,
+     "infected-lurch": 2
+    },
+    "death": {
+     "death-back": 273,
+     "infected-idle": 27,
+     "flung": 1
+    }
+   },
+   "specials": [],
+   "bodies": [],
+   "attackOverlap": {
+    "depthCm": 0,
+    "frame": 0,
+    "actor": ""
+   }
+  },
+  "r31-riot": {
+   "tier": "high",
+   "backend": "webgl",
+   "model": "inf.riot-cop",
+   "health": 0,
+   "state": "dead",
+   "firstDrawn": 84,
+   "slideMaxCm": 169.9,
+   "slideP95Cm": 1.6,
+   "torsoPitch": [
+    -80.6,
+    33.1
+   ],
+   "clips": {
+    "idle": {
+     "-": 83,
+     "infected-lurch": 36
+    },
+    "chase": {
+     "infected-idle": 177,
+     "windup": 62,
+     "infected-lurch": 60,
+     "shamble": 1
+    },
+    "hits": {
+     "infected-idle": 189,
+     "windup": 49,
+     "shamble": 41,
+     "get-up": 38,
+     "flung": 28,
+     "knockdown": 13,
+     "infected-lurch": 2
+    },
+    "death": {
+     "death-back": 225,
+     "infected-idle": 75,
+     "flung": 1
+    }
+   },
+   "specials": [],
+   "bodies": [],
+   "attackOverlap": {
+    "depthCm": 0,
+    "frame": 0,
+    "actor": ""
+   }
+  },
+  "r31-role-armored": {
+   "tier": "high",
+   "backend": "webgl",
+   "model": "inf.common-worker",
+   "health": 483.75,
+   "state": "stagger",
+   "firstDrawn": 74,
+   "slideMaxCm": 178.5,
+   "slideP95Cm": 1.4,
+   "torsoPitch": [
+    -96.8,
+    20
+   ],
+   "clips": {
+    "idle": {
+     "-": 73,
+     "infected-frail": 46
+    },
+    "chase": {
+     "infected-idle": 194,
+     "windup": 84,
+     "infected-frail": 22
+    },
+    "hits": {
+     "infected-idle": 201,
+     "shamble": 41,
+     "get-up": 38,
+     "windup": 37,
+     "flung": 28,
+     "knockdown": 13,
+     "infected-frail": 2
+    },
+    "death": {
+     "infected-idle": 301
+    }
+   },
+   "specials": [],
+   "bodies": [],
+   "attackOverlap": {
+    "depthCm": 0,
+    "frame": 0,
+    "actor": ""
+   }
+  },
+  "r31-role-bloated": {
+   "tier": "high",
+   "backend": "webgl",
+   "model": "inf.common-worker",
+   "health": 0,
+   "state": "dead",
+   "firstDrawn": 99,
+   "slideMaxCm": 142.1,
+   "slideP95Cm": 0.7,
+   "torsoPitch": [
+    -96.8,
+    19.4
+   ],
+   "clips": {
+    "idle": {
+     "-": 98,
+     "infected-lurch": 21
+    },
+    "chase": {
+     "windup": 119,
+     "infected-lurch": 93,
+     "infected-idle": 85,
+     "shamble": 3
+    },
+    "hits": {
+     "infected-idle": 162,
+     "windup": 76,
+     "shamble": 41,
+     "get-up": 38,
+     "flung": 28,
+     "knockdown": 13,
+     "infected-lurch": 2
+    },
+    "death": {
+     "death-back": 243,
+     "infected-idle": 57,
+     "knockdown": 1
+    }
+   },
+   "specials": [],
+   "bodies": [],
+   "attackOverlap": {
+    "depthCm": 0,
+    "frame": 0,
+    "actor": ""
+   }
+  },
+  "r31-role-brute": {
+   "tier": "high",
+   "backend": "webgl",
+   "model": "inf.common-worker",
+   "health": 0,
+   "state": "dead",
+   "firstDrawn": 102,
+   "slideMaxCm": 0.8,
+   "slideP95Cm": 0.6,
+   "torsoPitch": [
+    -96.8,
+    37.1
+   ],
+   "clips": {
+    "idle": {
+     "-": 101,
+     "infected-lurch": 18
+    },
+    "chase": {
+     "infected-idle": 155,
+     "windup": 125,
+     "infected-lurch": 20
+    },
+    "hits": {
+     "infected-idle": 174,
+     "windup": 57,
+     "shamble": 48,
+     "get-up": 38,
+     "flung": 28,
+     "knockdown": 13,
+     "infected-lurch": 2
+    },
+    "death": {
+     "infected-idle": 171,
+     "death-back": 129,
+     "flung": 1
+    }
+   },
+   "specials": [],
+   "bodies": [],
+   "attackOverlap": {
+    "depthCm": 0,
+    "frame": 0,
+    "actor": ""
+   }
+  },
+  "r31-role-butcher": {
+   "tier": "high",
+   "backend": "webgl",
+   "model": "inf.common-worker",
+   "health": 885,
+   "state": "stagger",
+   "firstDrawn": 77,
+   "slideMaxCm": 155.4,
+   "slideP95Cm": 0.8,
+   "torsoPitch": [
+    -96.8,
+    20.3
+   ],
+   "clips": {
+    "idle": {
+     "-": 76,
+     "infected-lurch": 43
+    },
+    "chase": {
+     "windup": 149,
+     "infected-idle": 120,
+     "infected-lurch": 31
+    },
+    "hits": {
+     "infected-idle": 189,
+     "windup": 53,
+     "get-up": 38,
+     "shamble": 37,
+     "flung": 28,
+     "knockdown": 13,
+     "infected-lurch": 2
+    },
+    "death": {
+     "infected-idle": 301
+    }
+   },
+   "specials": [],
+   "bodies": [],
+   "attackOverlap": {
+    "depthCm": 0,
+    "frame": 0,
+    "actor": ""
+   }
+  },
+  "r31-role-screamer": {
+   "tier": "high",
+   "backend": "webgl",
+   "model": "inf.common-worker",
+   "health": 0,
+   "state": "dead",
+   "firstDrawn": 130,
+   "slideMaxCm": 151,
+   "slideP95Cm": 0.6,
+   "torsoPitch": [
+    -96.8,
+    20.3
+   ],
+   "clips": {
+    "idle": {
+     "-": 119
+    },
+    "chase": {
+     "infected-idle": 153,
+     "infected-lurch": 88,
+     "windup": 48,
+     "-": 10,
+     "shamble": 1
+    },
+    "hits": {
+     "infected-idle": 238,
+     "shamble": 41,
+     "get-up": 38,
+     "flung": 28,
+     "knockdown": 13,
+     "infected-lurch": 2
+    },
+    "death": {
+     "death-back": 279,
+     "infected-idle": 21,
+     "knockdown": 1
+    }
+   },
+   "specials": [],
+   "bodies": [],
+   "attackOverlap": {
+    "depthCm": 0,
+    "frame": 0,
+    "actor": ""
+   }
+  },
+  "r31-role-sprinter": {
+   "tier": "high",
+   "backend": "webgl",
+   "model": "inf.jogger",
+   "health": 0,
+   "state": "dead",
+   "firstDrawn": 96,
+   "slideMaxCm": 5.1,
+   "slideP95Cm": 4.4,
+   "torsoPitch": [
+    -98.9,
+    20
+   ],
+   "clips": {
+    "idle": {
+     "-": 95,
+     "infected-sprint": 24
+    },
+    "chase": {
+     "infected-idle": 165,
+     "windup": 101,
+     "infected-sprint": 34
+    },
+    "hits": {
+     "death-back": 244,
+     "infected-idle": 79,
+     "windup": 30,
+     "shamble": 5,
+     "infected-sprint": 1,
+     "knockdown": 1
+    },
+    "death": {
+     "death-back": 301
+    }
+   },
+   "specials": [],
+   "bodies": [],
+   "attackOverlap": {
+    "depthCm": 0,
+    "frame": 0,
+    "actor": ""
+   }
+  },
+  "r31-suit-l4": {
+   "tier": "high",
+   "backend": "webgl",
+   "model": "inf.common-worker",
+   "health": 0,
+   "state": "dead",
+   "firstDrawn": 78,
+   "slideMaxCm": 154.9,
+   "slideP95Cm": 0.8,
+   "torsoPitch": [
+    -96.8,
+    20.3
+   ],
+   "clips": {
+    "idle": {
+     "-": 77,
+     "infected-lurch": 42
+    },
+    "chase": {
+     "infected-idle": 180,
+     "windup": 80,
+     "infected-lurch": 40
+    },
+    "hits": {
+     "infected-idle": 197,
+     "windup": 41,
+     "shamble": 41,
+     "get-up": 38,
+     "flung": 28,
+     "knockdown": 13,
+     "infected-lurch": 2
+    },
+    "death": {
+     "death-back": 231,
+     "infected-idle": 69,
+     "knockdown": 1
+    }
+   },
+   "specials": [],
+   "bodies": [],
+   "attackOverlap": {
+    "depthCm": 0,
+    "frame": 0,
+    "actor": ""
+   }
+  },
+  "r31-zebra": {
+   "tier": "high",
+   "backend": "webgl",
+   "model": null,
+   "health": 0,
+   "state": "dead",
+   "firstDrawn": 93,
+   "slideMaxCm": 209.6,
+   "slideP95Cm": 162.7,
+   "torsoPitch": [
+    80.3,
+    90
+   ],
+   "clips": {
+    "idle": {
+     "-": 92,
+     "infected-sprint": 27
+    },
+    "chase": {
+     "infected-idle": 158,
+     "windup": 108,
+     "infected-sprint": 34
+    },
+    "hits": {
+     "infected-idle": 186,
+     "windup": 52,
+     "shamble": 41,
+     "get-up": 38,
+     "flung": 28,
+     "knockdown": 13,
+     "infected-sprint": 2
+    },
+    "death": {
+     "death-back": 243,
+     "infected-idle": 57,
+     "knockdown": 1
+    }
+   },
+   "specials": [],
+   "bodies": [],
+   "attackOverlap": {
+    "depthCm": 0,
+    "frame": 0,
+    "actor": ""
+   }
+  }
+ }
+}

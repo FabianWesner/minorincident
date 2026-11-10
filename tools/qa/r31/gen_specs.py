@@ -24,6 +24,8 @@ TYPES = [
     ('role-armored', 'infected.armored', {'allowRigid': True}, 9),
     ('role-butcher', 'infected.butcher', {'allowRigid': True}, 9),
     ('role-sprinter', 'infected.sprinter', {'allowRigid': True}, 9),
+    ('role-screamer', 'infected.screamer', {'allowRigid': True}, 9),
+    ('role-bloated', 'infected.bloated', {'allowRigid': True}, 9),
     ('alpha-brute', 'infected.alpha', {'alphaType': 'brute'}, 10),
     ('alpha-thrower', 'infected.alpha', {'alphaType': 'thrower'}, 10),
     ('alpha-screamer', 'infected.alpha', {'alphaType': 'screamer'}, 10),
@@ -58,9 +60,9 @@ def spec(name, archetype, extra, dist, camera):
             {'frame': 510, 'actor': 'courier', 'do': {'attack': 'z', 'seconds': 0.5, 'side': 'LEFT'}},
             {'frame': 600, 'actor': 'z', 'do': {'hit': {'from': 'courier', 'heavy': True}}},
             {'frame': 780, 'actor': 'courier', 'do': {'attack': 'z', 'seconds': 3, 'side': 'RIGHT'}},
-        ],
+        ] + ([{'frame': f, 'camera': {'mode': 'close', 'target': 'z', 'radius': 7 if not big else 11, 'azimuth': 0}} for f in range(606, 1080, 12)] if camera == 'close' else []),
         'camera': ({'mode': 'close', 'target': [1.2, 0.9 if not big else 1.6, 0], 'radius': 7 if not big else 11, 'azimuth': 0}
-                   if camera == 'close' else {'mode': 'game', 'target': [1.2, 0], 'zoom': 1.5}),
+                   if camera == 'close' else {'mode': 'game', 'target': 'z', 'zoom': 1.5}),
         'frames': 1080, 'trace': True,
         'expect': {'consoleErrors': 0},
     }
