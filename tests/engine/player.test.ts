@@ -47,7 +47,7 @@ test('movement: fast acceleration and stop, capped diagonal speed, 720°/s turni
   raised.player!.locomotion.groundHeight = () => 0;
   courier.combat.staggerUntil = raised.tick + 90;
   step(raised, 60); expect(courier.transform.y).toBeLessThan(1);
-});
+}, 60_000); // ~7 s locally, ~24 s on a contended cx33 runner (r24)
 
 /** Production controller traversal for the campaign's authored gameplay elevation routes. */
 async function campaignRampTraversal(): Promise<void> {
