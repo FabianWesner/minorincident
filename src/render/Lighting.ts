@@ -37,8 +37,28 @@ const activeShadowFilter = (filter: (inputs: ShadowFilterInputs) => Node<'float'
   If(weight.greaterThan(0), () => { visibility.assign(filter({ depthTexture, shadowCoord, shadow, depthLayer })); });
   return visibility;
 });
+// r28-l9load: L9 keeps the moon and the APC headlight in every material graph (r27-l9apc), so each graph carries both
+// filters. Cheaper kernels for L9 only: the moon uses 4 hardware-compared taps at +-1 texel (bilinear compare, so the
+// same +-2 texel penumbra as the 3x3 grid), the 512 px headlight map one tap. Saves ~0.3 s of load-time shader compile.
+const quadSunShadow = Fn(({ depthTexture, shadowCoord, shadow, depthLayer }: ShadowFilterInputs) => {
+  const step = reference('radius', 'float', shadow).div(reference('mapSize', 'vec2', shadow)).mul(.5);
+  let filtered: Node<'float'> = float(0);
+  for (const x of [-1, 1]) for (const y of [-1, 1]) {
+    let sample = texture(depthTexture, shadowCoord.xy.add(vec2(x, y).mul(step)));
+    if (depthTexture.isArrayTexture) sample = sample.depth(depthLayer);
+    filtered = filtered.add((sample.compare(shadowCoord.z) as unknown as Node<'float'>).mul(.25));
+  }
+  return filtered;
+});
+const liteSpotShadow = Fn(({ depthTexture, shadowCoord, depthLayer }: ShadowFilterInputs) => {
+  let sample = texture(depthTexture, shadowCoord.xy);
+  if (depthTexture.isArrayTexture) sample = sample.depth(depthLayer);
+  return sample.compare(shadowCoord.z) as unknown as Node<'float'>;
+});
 const activeSunShadow = activeShadowFilter(stableSunShadow);
 const activeSpotShadow = activeShadowFilter(stableSunShadow);
+const l9SunShadow = activeShadowFilter(quadSunShadow);
+const l9SpotShadow = activeShadowFilter(liteSpotShadow);
 
 /** One sun, a hemisphere and shared stylized lighting uniforms. Shadows follow the visible ground region. */
 export class Lighting {
@@ -190,8 +210,8 @@ export class Lighting {
     this.worldPaletteEnabled.value = Number(name === 'L1');
     this.preset = name; const p = timeOfDay[name];
     this.corpseRim.value = p.corpseRim ?? 0;
-    (this.sun.shadow as typeof this.sun.shadow & { filterNode: typeof stableSunShadow }).filterNode = name === 'L10-night' || name === 'L9-crossing' ? activeSunShadow : stableSunShadow;
-    (this.spot.shadow as typeof this.spot.shadow & { filterNode: typeof stableSunShadow }).filterNode = name === 'L10-night' || name === 'L9-crossing' ? activeSpotShadow : stableSunShadow;
+    (this.sun.shadow as typeof this.sun.shadow & { filterNode: typeof stableSunShadow }).filterNode = name === 'L9-crossing' ? l9SunShadow : name === 'L10-night' ? activeSunShadow : stableSunShadow;
+    (this.spot.shadow as typeof this.spot.shadow & { filterNode: typeof stableSunShadow }).filterNode = name === 'L9-crossing' ? l9SpotShadow : name === 'L10-night' ? activeSpotShadow : stableSunShadow;
     this.look.setPreset(p.look ?? {});
     this.roadLiftColor.value.set(p.roadColor ?? '#86a8c0');
     if (this.environment) {
