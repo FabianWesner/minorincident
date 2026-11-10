@@ -69,7 +69,7 @@ export const dialogue: Record<string, string> = {
   'L8.nadia-lion': 'Nadia: Sixteen years old. Grumpiest cat in the state.',
   'L8.broadcast': '…research campus past Hollow Creek reports a counter-agent… evacuation from the Hollow Creek bridge at dawn… all units…',
   'L8.hale-greeting': 'Major Hale: You\'re the courier. Heard about you. Get some rest — you\'ve earned one night.',
-  'L8.hale-breach': 'Hale: Tunnels! Get the civilians to the plaza!',
+  'L8.hale-breach': 'Hale: Tunnels! Keep the civilians in the plaza — form a ring!',
   'L8.hale-dying': 'Hale: Hollow Creek. Get them out.',
   'L8.nadia-elephant': 'Nadia: Not him. Not the old one…',
   'L8.courier-elephant': 'I\'m sorry.',

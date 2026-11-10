@@ -226,6 +226,7 @@ export class Hud {
       const p = this.game.view.project(event.position.x, 1.8, event.position.z);
       this.civilianBark.style.left = `${(p[0] + 1) * 50}%`; this.civilianBark.style.top = `${(1 - p[1]) * 50}%`;
       this.civilianBarkUntil = this.game.world.tick + 72;
+      this.keepBarkOffPanels();
     } else if (event.type === 'combat.hit' && event.targetId === 1) {
       this.damagedUntil = isMega(this.game.world.entities.get(event.sourceId)) ? -1 : this.game.world.tick + 60;
       const source = this.game.world.entities.get(event.sourceId), player = this.game.world.entities.get(1);
@@ -241,6 +242,19 @@ export class Hud {
       this.bark.style.top = `${Math.max(10, Math.min(80, (1 - p[1]) * 50))}%`;
     }
   };
+  /** r26-vqa P3: a callout projected onto the objective tracker/toast read as struck through; lift it above the panel.
+   * Runs only when a bark/callout starts (rare), so the layout read is cheap. */
+  private keepBarkOffPanels(): void {
+    const bark = this.civilianBark, wasHidden = bark.hidden; bark.hidden = false;
+    const b = bark.getBoundingClientRect();
+    for (const panel of document.querySelectorAll<HTMLElement>('.mission-tracker, .mission-toast')) {
+      if (panel.hidden || !panel.offsetParent) continue;
+      const r = panel.getBoundingClientRect();
+      if (b.right < r.left || b.left > r.right || b.bottom < r.top || b.top > r.bottom) continue;
+      bark.style.top = `${bark.offsetTop - (b.bottom - r.top) - 6}px`; break;
+    }
+    bark.hidden = wasHidden;
+  }
   private place(pin: HTMLElement, x: number, z: number, px: number, pz: number, clampEdge = false): void {
     let dx = (x - px) / 30 * 44, dz = (z - pz) / 30 * 44;
     const scale = clampEdge ? Math.min(1, 44 / (Math.hypot(dx, dz) || 1)) : 1;

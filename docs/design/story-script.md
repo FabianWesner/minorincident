@@ -33,7 +33,7 @@ pointing at animals. It is the first time all day nobody is running.
 **Beat 2 · From below.** The service tunnels under the zoo were never sealed. Infected pour out of three maintenance
 hatches, army dogs among them — turned K9s that still wear their vests.
 - Objective: *Protect the group!*
-- Hale: "Tunnels! Get the civilians to the plaza!"
+- Hale: "Tunnels! Keep the civilians in the plaza — form a ring!" (2026-11-10: the group is already resting in the plaza when the breach hits)
 - The player watches a keeper get pulled down at the flamingo pond, and a flamingo turn.
 
 **Beat 3 · Zoo outbreak (the animal fights).** The animals she just admired turn, one enclosure after another.
