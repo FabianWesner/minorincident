@@ -1,5 +1,5 @@
 import * as RAPIER from '@dimforge/rapier3d-compat';
-import { l9Course as cfg } from '../../data/l9';
+import { l9Course as cfg, l9SetPieceTuning } from '../../data/l9';
 import { l5Survivors } from '../../data/l5';
 import { spawnSetPiece } from './L4Spectacle';
 import { allyState, updateAlly } from '../outbreak/Allies';
@@ -39,7 +39,8 @@ export const emptyDriving = (): L9DrivingState => ({
   obstacleIds: [], waves: [], nextWave: 0, lines: [],
 });
 /** r27-l9board: total number of damaging bus rams per level (40 durability each). */
-const busRamCap = 12;
+const tuneStall = l9SetPieceTuning.stall;
+const busRamCap = 5;
 const distance = (a: { x: number; z: number }, b: { x: number; z: number }) => Math.hypot(a.x - b.x, a.z - b.z);
 const alive = (e: EntitySnapshot | undefined): e is EntitySnapshot => !!e && e.health.current > 0 && !e.infected && !e.infection;
 
@@ -113,7 +114,7 @@ export class LevelNineDriving {
     s.tankerId = spawnSetPiece(w, 'veh.fuel-truck', { ...cfg.tanker, yaw: Math.PI / 2 }).id;
     const crater = spawnSetPiece(w, 'decay.fuel-truck-crater', cfg.tanker); crater.hidden = true; s.tankerWreckId = crater.id;
     s.gateId = spawnSetPiece(w, 'l9.evac-gate', cfg.gate).id;
-    s.bridgeGateId = spawnSetPiece(w, 'l9.bridge-gate', { x: 472, z: 0 }).id;
+    s.bridgeGateId = spawnSetPiece(w, 'l9.bridge-gate', { x: cfg.bridgeGate.x, z: 0 }).id;
     // The reusable obstacle owner handles native collision, fracture and debris.
     for (const [x, z, kind] of [
       [-468, -4, 'barricade'], [-468, -1.5, 'barricade'], [-468, 1, 'barricade'], [-468, 3.5, 'barricade'],
@@ -144,7 +145,7 @@ export class LevelNineDriving {
     if (gate) gate.health.current = s.gateClosed ? 1 : 0;
     if (bridgeGate) bridgeGate.health.current = s.evacuationDone ? 0 : 1;
     if (s.gateClosed) w.interactables!.block(s.gateId, { x: cfg.gate.x, y: .8, z: 0, halfX: .25, halfY: .8, halfZ: cfg.gate.halfZ });
-    if (!s.evacuationDone) w.interactables!.block(s.bridgeGateId, { x: 472, y: 1, z: 0, halfX: .35, halfY: 1, halfZ: 13 });
+    if (!s.evacuationDone) w.interactables!.block(s.bridgeGateId, { x: cfg.bridgeGate.x, y: 1, z: 0, halfX: .35, halfY: 1, halfZ: cfg.bridgeGate.halfZ });
     for (const id of s.trucks) {
       w.interactables!.unblock(id);
       const truck = w.entities.get(id);
@@ -252,6 +253,7 @@ export class LevelNineDriving {
       s.stallAt = tick; this.line('L9.stall.sam'); this.signal('rail-stall'); this.checkpoint('mid-crossing');
     }
     if (s.stallAt !== null && !s.restarted && tick - s.stallAt >= 1800) { s.restarted = true; this.signal('engine-restarted'); }
+    car.entity.vehicle!.boardSpacing = s.stallAt !== null && !s.restarted ? tuneStall.boardSpacingTicks : 0;
     s.repairActive = this.canRepair() && (w.inputFrame.interactHeld ?? w.inputFrame.interact);
     if (s.repairActive) {
       s.repairTicks++; car.entity.health.current = Math.min(car.entity.health.max, car.entity.health.current + cfg.repair.durability / cfg.repair.ticks);
@@ -346,7 +348,7 @@ export class LevelNineDriving {
     const delta = Math.atan2(Math.sin(-Math.atan2(dz, dx) - bus.transform.yaw), Math.cos(-Math.atan2(dz, dx) - bus.transform.yaw));
     intent.throttle = 1; intent.brake = false; intent.steer = Math.max(-1, Math.min(1, delta * 2));
     // r27-l9board: a bus glued to a crawling or stalled APC rammed it every 2 s (30 rams, durability 0 by the rail on the
-    // countryside route). It now damages the APC at most busRamCap times (12 x 40 = 480 of 1000); it still drives and pushes.
+    // countryside route). It now damages the APC at most busRamCap times (r33-l9polish: 5 x 40 = 200 of 1000, was 12 x 40); it still drives and pushes.
     // Evacuation hold: the APC is parked with the brake on. A full-throttle bus
     // pressed against it shoved it ~2.4 m at once and then crept it ~10 m over
     // the hold. The bus now slows on approach and halts a few metres short, so
@@ -431,7 +433,8 @@ export class LevelNineDriving {
   }
   private evacuate(): void {
     const w = this.w, s = this.state, p = this.car.entity.transform;
-    if (s.evacuationAt === null && distance(p, cfg.evacuation) < cfg.evacuation.radius && this.car.physics.speed < 1) {
+    const inBay = p.x >= cfg.bay.x0 && p.x <= cfg.bay.x1 && Math.abs(p.z) <= cfg.bay.halfZ;
+    if (s.evacuationAt === null && (distance(p, cfg.evacuation) < cfg.evacuation.radius || inBay) && this.car.physics.speed < 1) {
       s.evacuationAt = w.tick; this.checkpoint('evac-point'); this.signal('evacuation-started');
     }
     if (s.evacuationAt === null || s.evacuationDone) return;

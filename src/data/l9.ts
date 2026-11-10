@@ -61,6 +61,9 @@ export const l9Course = {
   gate: { x: 440, z: 0, halfZ: 7, seconds: 60, announceX: 240, sideZ: 11 },
   evacuation: { x: 457, z: 0, radius: 11, defendTicks: 1800, truckX: 459, truckZ: -16 },
   bridge: { x: 482, z: 0, halfZ: 6, endX: 508 },
+  /** r33-l9polish: the bridge-gate wall (was halfZ 13: an APC circling the bay drove round its open end). It now runs to +-34 m, and the evacuation also starts from anywhere in the bay box. */
+  bridgeGate: { x: 472, halfZ: 34 },
+  bay: { x0: 443, x1: 484, halfZ: 40 },
   /** r30-l9bridge: authored restart pose of the `bridge` checkpoint (clear lane east to the deck) and where the chasing bus is set back to. */
   bridgeStart: { x: 452, z: 0, yaw: 0, busBehindM: [60, 50, 42], busZ: [12, 0, -12] },
   /** Jumps on the route lines (r32-l9fun, PO 11-10 "driving fun, incl jumps"): road 2, countryside 2, shortcut 1. The detours skip them. */
@@ -105,12 +108,12 @@ export const l9SetPieceTuning = {
   thrower: { sideM: 13, windupTicks: 48, flightTicks: 54, throws: 4, intervalTicks: 80, startM: 60, stopM: 12, /** objects land this far ahead of the predicted hull */ leadM: 9,
     /** Light debris is smashed (10 durability); the concrete block (3rd throw) must be dodged and is only thrown at a fast APC (>= heavyMinSpeed). */
     items: ['barricade', 'trash-can', 'jersey-barrier', 'barricade'] as const, heavyMinSpeed: 7, hullDamage: 30,
-    /** A stopped hull is bracketed: throws alternate short/long by this much, so about half of them hit. */
-    stoppedSpreadM: 3.5 },
+    /** A stopped hull is bracketed: the throws land at these distances (m) along the hull axis; the near ones (|d| < 3) hit, the far ones miss. r33-l9polish: was +-3.5/1.05 (all four hit, 120 of 1000). */
+    stoppedOffsetsM: [7, -1.2, -7, 1.2] },
   /** Junk across the lane to plough through (light obstacles: 10 durability each, debris). */
   smash: { items: ['trash-can', 'cone', 'mailbox', 'barricade', 'cone', 'trash-can', 'cone'] as const, slots: [-4.5, -3, -1.5, 0, 1.5, 3, 4.5] },
   roadblock: { slots: [-6, -3.6, -1.2, 1.2, 3.6, 6], /** Light bodies only: ploughing through is the payoff, heavy stalls belong to the ambient groups. */
     horde: ['infected.runner', 'infected.sprinter', 'infected.runner', 'infected.screamer', 'infected.runner', 'infected.crawler', 'infected.sprinter', 'infected.dog', 'infected.runner', 'infected.runner'] },
   /** Rail stall: the hatch defence gets the waiting ambush (leaper + thrower, see stall-ambush) and a mixed rush on top of the reinforcement waves. */
-  stall: { ambushLeaperSideM: 9, ambushThrowerSideM: 26, rushAtTicks: 840, rush: ['infected.brute', 'infected.screamer', 'infected.runner', 'infected.sprinter', 'infected.armored', 'infected.runner'] },
+  stall: { /** r33-l9polish: a hatch fight must be winnable: the next infected may only climb aboard this many ticks after the previous boarder (passive courier: >= 8 s from first bite to death). */ boardSpacingTicks: 210, ambushLeaperSideM: 9, ambushThrowerSideM: 26, rushAtTicks: 840, rush: ['infected.brute', 'infected.screamer', 'infected.runner', 'infected.sprinter', 'infected.armored', 'infected.runner'] },
 } as const;
