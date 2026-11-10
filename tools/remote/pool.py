@@ -74,13 +74,23 @@ STATE_CMD = ("now=$(date +%s); run=0; wait=0; for f in /srv/mi/queue/*.job; do [
              "n=$(awk -F'\\t' 'NR==1{print NF}' $f); if [ \"$n\" -ge 4 ]; then run=$((run+1)); else wait=$((wait+1)); fi; done; "
              "occupied=0; for i in " + ' '.join(map(str, range(SLOTS))) + "; do "
              "flock -n /srv/mi/locks/slot.$i true 2>/dev/null || occupied=$((occupied+1)); done; "
-             "echo \"$run $wait $(cat /srv/mi/last-activity 2>/dev/null || echo 0) $(cut -d' ' -f1 /proc/loadavg) $occupied $(ls /srv/mi/ws 2>/dev/null | tr '\\n' ',')\"")
+             "prov=1; [ -d /srv/mi ] && [ -w /srv/mi ] || prov=0; for t in node git rsync flock bash; do command -v $t >/dev/null 2>&1 || prov=0; done; "
+             "echo \"$run $wait $(cat /srv/mi/last-activity 2>/dev/null || echo 0) $(cut -d' ' -f1 /proc/loadavg) $occupied $prov $(ls /srv/mi/ws 2>/dev/null | tr '\\n' ',')\"")
 
 def state(s):
     rc, out = rsh(ip(s), STATE_CMD)
     if rc != 0 or not out.strip(): return None
     p = out.split()
-    return {"name": s["name"], "ip": ip(s), "running": int(p[0]), "waiting": int(p[1]), "last": int(p[2]), "load": float(p[3]), "occupied": int(p[4]), "ws": p[5] if len(p) > 5 else ""}
+    return {"name": s["name"], "ip": ip(s), "running": int(p[0]), "waiting": int(p[1]), "last": int(p[2]), "load": float(p[3]), "occupied": int(p[4]), "provisioned": p[5] == "1", "ws": p[6] if len(p) > 6 else ""}
+
+def usable(x):
+    """A runner may take jobs only when ssh works AND it is provisioned (/srv/mi writable, node/git/rsync/flock present)."""
+    return bool(x) and x.get("provisioned", True)
+
+def forget_host(addr):
+    """Drop a stale host key (recycled IP) from the runner known_hosts file."""
+    if not os.path.exists(HOSTS): return
+    subprocess.run(["ssh-keygen", "-R", addr, "-f", HOSTS], capture_output=True, text=True)
 
 def states(ss):
     with cf.ThreadPoolExecutor(8) as ex:
@@ -106,6 +116,12 @@ def wait_ssh(s, timeout=300):
         time.sleep(4)
     return False
 
+def verify_provisioned(s, tries=3):
+    for _ in range(tries):
+        if usable(state(s)): return True
+        time.sleep(2)
+    return False
+
 def create(name=None):
     d = lock()
     try:
@@ -128,13 +144,16 @@ def create(name=None):
         else:
             sys.exit(f"pool.py: create failed: {last}")
         log(f"created {name} ({ip(s)}) in {loc} from {'snapshot ' + str(img['id']) if img else 'ubuntu-24.04 + cloud-init'}")
+        forget_host(ip(s))  # Hetzner recycles IPs: a stale key from an earlier runner must not linger
         if not wait_ssh(s, 600): sys.exit(f"pool.py: {name} did not come up")
         if not img:
             for _ in range(90):  # cloud-init (node, swap) still running on a fresh image
                 if rsh(ip(s), "test -f /var/lib/cloud/instance/boot-finished && command -v node")[0] == 0: break
                 time.sleep(5)
-        rsh(ip(s), "mkdir -p /srv/mi && date +%s > /srv/mi/last-activity")
-        log(f"{name} ready")
+        rsh(ip(s), "sudo mkdir -p /srv/mi && sudo chown runner:runner /srv/mi && date +%s > /srv/mi/last-activity")
+        if not verify_provisioned(s):
+            sys.exit(f"pool.py: {name} ({ip(s)}) is up but NOT provisioned (needs writable /srv/mi plus node, git, rsync, flock); it will not take jobs. Fix it or `pool.py delete {name}`.")
+        log(f"{name} ready and provisioned")
         return s
     finally:
         os.rmdir(d)
@@ -143,7 +162,7 @@ def pick():
     t0 = time.time(); announced = False
     while True:
         ss = [s for s in servers() if s["status"] in ("running", "initializing", "starting")]
-        sts = [x for x in states([s for s in ss if s["status"] == "running"]) if x]
+        sts = [x for x in states([s for s in ss if s["status"] == "running"]) if usable(x)]
         booting = len(ss) - len(sts)
         free = [x for x in sts if x["running"] < SLOTS and x["last"]]  # only runners whose provisioning finished (/srv/mi/last-activity)
         if free:
@@ -167,10 +186,12 @@ def pick_now():
         fixed = os.environ.get("MI_RUNNER_IP")
         ss = ([{"name": "explicit", "public_net": {"ipv4": {"ip": fixed}}}] if fixed
               else [s for s in servers() if s["status"] == "running"])
-        sts = [x for x in states(ss) if x]
+        sts = [x for x in states(ss) if usable(x)]
     except Exception as e:
         log(f"runner pool unavailable: {e}")
         return 4
+    if not sts:
+        return 5  # no running, reachable, provisioned runner: callers must not wait for one
     free = [x for x in sts if max(x["running"], x.get("occupied", x["running"])) + x["waiting"] < SLOTS and x["last"]]
     if not free:
         return 3
@@ -205,7 +226,8 @@ def status():
     ss = servers()
     for s, st in zip(ss, states(ss)):
         print(f"{s['name']}  id={s['id']} {s['server_type']['name']} {s['datacenter']['location']['name'] if 'datacenter' in s else s['location']['name']} {ip(s)} {s['status']}"
-              + (f"  jobs {st['running']} slots {st['occupied']}/{SLOTS} +{st['waiting']} queued  load {st['load']}  idle {int(time.time()) - st['last'] if st['last'] else '?'}s" if st else "  (ssh not ready)"))
+              + ("  NOT PROVISIONED (no writable /srv/mi, or node/git/rsync/flock missing): takes no jobs" if st and not st.get("provisioned", True) else "")
+              + (f"  jobs {st['running']} slots {st['occupied']}/{SLOTS} +{st['waiting']} queued  load {st['load']}  idle {int(time.time()) - st['last'] if st['last'] else '?'}s" if usable(st) else "" if st else "  (ssh not ready)"))
     if not ss: print("no runners (they are created on demand)")
 
 def snapshot(name):

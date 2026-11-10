@@ -88,6 +88,10 @@ echo "[runner] queued FIFO $(basename "$TICKET"); remote preferred, eligible Mac
 while :; do
   SELECTED=$(python3 -I "$D/local-slot.py" choose "$TICKET" "$WT" -- "$@")
   if [ -n "$SELECTED" ]; then
+    if [ "$SELECTED" = unavailable ]; then
+      echo "run.sh: no healthy Hetzner runner (none running/provisioned; 'sh tools/remote/scale.sh add' creates one) and this command cannot run in the local Mac slot (only plain vitest/test:* commands can, on macOS with MI_LOCAL_FALLBACK != 0)" >&2
+      exit 69
+    fi
     if [ "$SELECTED" = local ]; then
       echo "[remote] runners full or unreachable; trying FIFO local Mac slot"
       MI_LOCAL_ENVS="$ENVS" python3 -I "$D/local-slot.py" run "$TICKET" "$WT" -- "$@" &

@@ -9,6 +9,7 @@ import json
 import io
 import os
 from pathlib import Path
+import shutil
 import signal
 import subprocess
 import sys
@@ -164,7 +165,7 @@ export async function createVitest(options) {
     def test_pool_probe_counts_reserved_queue_capacity(self):
         module = importlib.util.spec_from_file_location('pool_check', HERE / 'pool.py')
         pool = importlib.util.module_from_spec(module); module.loader.exec_module(pool)
-        with patch.object(pool, 'rsh', return_value=(0, '1 0 123 1.5 2 cache,')):
+        with patch.object(pool, 'rsh', return_value=(0, '1 0 123 1.5 2 1 cache,')):
             self.assertEqual(pool.state({'name': 'fixture', 'public_net': {'ipv4': {'ip': '192.0.2.1'}}})['occupied'], 2)
         with patch.object(pool, 'servers', return_value=[{'status': 'running'}]), patch.object(pool, 'SLOTS', 2), patch.object(pool, 'states', return_value=[{'running': 1, 'waiting': 1, 'last': 1, 'load': 0, 'ip': '192.0.2.1'}]):
             self.assertEqual(pool.pick_now(), 3)
@@ -174,6 +175,89 @@ export async function createVitest(options) {
                 self.assertEqual(pool.pick_now(), 0); self.assertEqual(output.getvalue().strip(), '192.0.2.1')
             with patch.object(pool, 'states', side_effect=OSError('unreachable')), patch('sys.stderr', new_callable=io.StringIO):
                 self.assertEqual(pool.pick_now(), 4)
+
+    def load_pool(self):
+        module = importlib.util.spec_from_file_location('pool_check2', HERE / 'pool.py')
+        pool = importlib.util.module_from_spec(module); module.loader.exec_module(pool)
+        return pool
+
+    def test_unprovisioned_runner_takes_no_jobs_and_is_not_reported_with_slots(self):
+        pool = self.load_pool()
+        server = {'name': 'mi-runner-1', 'id': 1, 'server_type': {'name': 'cx33'}, 'location': {'name': 'nbg1'}, 'status': 'running',
+                  'public_net': {'ipv4': {'ip': '192.0.2.9'}}}
+        fresh = '0 0 0 0.1 0 0 '  # recycled IP, ssh works, but /srv/mi or node/rsync/flock missing
+        with patch.object(pool, 'rsh', return_value=(0, fresh)):
+            st = pool.state(server)
+            self.assertFalse(st['provisioned']); self.assertFalse(pool.usable(st))
+        with patch.object(pool, 'servers', return_value=[server]), patch.object(pool, 'rsh', return_value=(0, fresh)):
+            self.assertEqual(pool.pick_now(), 5)  # no healthy runner, not "full"
+            with patch('sys.stdout', new_callable=io.StringIO) as output:
+                pool.status()
+            self.assertIn('NOT PROVISIONED', output.getvalue()); self.assertNotIn('slots', output.getvalue())
+        with patch.object(pool, 'servers', return_value=[server]), patch.object(pool, 'rsh', return_value=(0, '0 0 5 0.1 0 1 ')):
+            self.assertEqual(pool.pick_now(), 0)
+        with patch.object(pool, 'servers', return_value=[]):
+            self.assertEqual(pool.pick_now(), 5)  # zero runners
+
+    def test_state_command_probes_provisioning(self):
+        pool = self.load_pool()
+        for needle in ('/srv/mi', 'node', 'rsync', 'flock'): self.assertIn(needle, pool.STATE_CMD)
+        probe = pool.STATE_CMD[pool.STATE_CMD.index('prov=1;'):pool.STATE_CMD.index('echo "$run')]
+        fake = self.root / 'srv-mi'; fake.mkdir()
+        run = lambda d: subprocess.run(['sh', '-c', probe.replace('/srv/mi', str(d)) + ' echo $prov'], capture_output=True, text=True).stdout.strip()
+        self.assertEqual(run(self.root / 'nowhere'), '0')  # no /srv/mi at all -> unprovisioned
+        if all(shutil.which(t) for t in ('node', 'git', 'rsync', 'flock', 'bash')): self.assertEqual(run(fake), '1')
+
+    def test_new_runner_must_be_provisioned_and_stale_host_key_removed(self):
+        pool = self.load_pool()
+        server = {'name': 'mi-runner-1', 'public_net': {'ipv4': {'ip': '192.0.2.9'}}}
+        bad = {'provisioned': False, 'running': 0, 'waiting': 0, 'last': 1, 'load': 0, 'occupied': 0}
+        with patch.object(pool, 'state', return_value=bad), patch.object(pool.time, 'sleep'):
+            self.assertFalse(pool.verify_provisioned(server))
+        with patch.object(pool, 'state', return_value=dict(bad, provisioned=True)):
+            self.assertTrue(pool.verify_provisioned(server))
+        hosts = self.root / 'known_hosts'; hosts.write_text('192.0.2.9 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOldKeyOldKeyOldKeyOldKeyOldKeyOldKeyOldKeyOldK\n192.0.2.10 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOtherKeyOtherKeyOtherKeyOtherKeyOtherKeyOtherK\n')
+        with patch.object(pool, 'HOSTS', str(hosts)):
+            pool.forget_host('192.0.2.9')
+        left = hosts.read_text(); self.assertNotIn('192.0.2.9 ', left); self.assertIn('192.0.2.10', left)
+
+    def test_no_runner_uses_local_slot_or_fails_fast_never_hangs(self):
+        ticket = self.ticket()
+        env = patch.object(slot.sys, 'platform', 'darwin'), patch.object(slot, 'processes', return_value=[]), patch.object(slot.os, 'getloadavg', return_value=(1, 1, 1)), patch.object(slot, 'free_gb', return_value=8)
+        for p in env: p.start()
+        try:
+            def pick(rc):
+                def fake():
+                    slot.last_pick_rc = rc; return ''
+                return patch.object(slot, 'remote_pick', side_effect=fake)
+            with pick(5):  # zero healthy runners: eligible suite goes to the Mac slot at once
+                self.assertEqual(slot.choose(ticket, self.wt, ['npm', 'run', 'test:gate']), 'local')
+                # a command the Mac slot cannot run must fail fast instead of holding the FIFO head
+                self.assertEqual(slot.choose(ticket, self.wt, ['npx', 'playwright', 'test']), slot.UNAVAILABLE)
+                with patch.dict(os.environ, {'MI_LOCAL_FALLBACK': '0'}):
+                    self.assertEqual(slot.choose(ticket, self.wt, ['npm', 'run', 'test:gate']), slot.UNAVAILABLE)
+                # busy Mac: keep waiting, with the reason announced once
+                with patch.object(slot.os, 'getloadavg', return_value=(9, 9, 9)), patch('sys.stderr', new_callable=io.StringIO) as err:
+                    self.assertIsNone(slot.choose(ticket, self.wt, ['npm', 'run', 'test:gate']))
+                    self.assertIsNone(slot.choose(ticket, self.wt, ['npm', 'run', 'test:gate']))
+                    self.assertEqual(err.getvalue().count('no healthy runner'), 1)
+            with pick(3):  # runners exist but are full: unchanged behaviour, a non-eligible command waits
+                self.assertIsNone(slot.choose(ticket, self.wt, ['npx', 'playwright', 'test']))
+        finally:
+            for p in reversed(env): p.stop()
+
+    def test_run_sh_exits_instead_of_hanging_without_runners(self):
+        pool_dir = self.root / 'bin'; (pool_dir).mkdir()
+        # Real run.sh against a fake worktree repo; pool.py try reports "no runner" (exit 5) via MI_RUNNER_IP-free empty server list.
+        repo = self.root / 'repo'; repo.mkdir()
+        subprocess.run(['git', 'init', '-q', str(repo)], check=True)
+        (repo / 'a.txt').write_text('x')
+        env = dict(os.environ, MI_LOCAL_QUEUE=str(self.root / 'q2'), MI_LOCAL_FALLBACK='0', HETZNER_API_KEY='x')
+        # Point pool.py at an empty server list through a sitecustomize-free shim: PYTHONPATH is ignored by -I, so patch the API URL.
+        env['MI_RUNNER_IP'] = '127.0.0.1'  # unreachable ssh -> state None -> no healthy runner
+        result = subprocess.run(['sh', str(HERE / 'run.sh'), str(repo), '--', 'npx', 'playwright', 'test'], capture_output=True, text=True, env=env, timeout=120)
+        self.assertEqual(result.returncode, 69, result.stderr)
+        self.assertIn('no healthy Hetzner runner', result.stderr)
 
     def test_allowlist_and_gate_definitions(self):
         self.assertIsNotNone(slot.cpu_command(self.wt, ['npm', 'run', 'test:gate']))

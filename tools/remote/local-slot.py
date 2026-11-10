@@ -225,19 +225,52 @@ def record_wait(ticket, kind):
         f.write(json.dumps(receipt) + '\n')
 
 
+# pool.py try exit codes: 0 = free slot (ip printed), 3 = healthy runners exist but all full,
+# 4 = pool unreachable, 5 = no healthy (running, reachable, provisioned) runner at all.
+NO_RUNNER_CODES = (4, 5)
+last_pick_rc = None
+
+
 def remote_pick():
+    global last_pick_rc
     try:
         result = subprocess.run([sys.executable, '-I', str(HERE / 'pool.py'), 'try'], capture_output=True, text=True, timeout=45)
-    except (OSError, subprocess.TimeoutExpired): return ''
+    except (OSError, subprocess.TimeoutExpired):
+        last_pick_rc = 4
+        return ''
+    last_pick_rc = result.returncode
     return result.stdout.strip() if result.returncode == 0 else ''
 
 
+def announce(ticket, note):
+    """Print a waiting reason once per change (the ticket remembers the last one)."""
+    try:
+        data = json.loads(ticket.read_text())
+        if data.get('note') == note: return
+        data['note'] = note
+        ticket.write_text(json.dumps(data))
+    except (OSError, ValueError): pass
+    print(f'[runner] {note}', file=sys.stderr, flush=True)
+
+
+UNAVAILABLE = 'unavailable'
+
+
 def choose(ticket, wt, command):
+    """Return a runner IP, 'local', None (keep waiting) or UNAVAILABLE (nothing can ever run it: fail fast)."""
     if not first(ticket): return None
     remote = remote_pick()
     if remote: return remote if first(ticket) else None
-    if os.environ.get('MI_LOCAL_FALLBACK', '1') == '0' or sys.platform != 'darwin': return None
-    if cpu_command(wt, command) is None or not admitted()[0]: return None
+    no_runner = last_pick_rc in NO_RUNNER_CODES
+    if os.environ.get('MI_LOCAL_FALLBACK', '1') == '0' or sys.platform != 'darwin':
+        return UNAVAILABLE if no_runner else None
+    if cpu_command(wt, command) is None:
+        # With no healthy runner this command can never be admitted: do not hold the FIFO head forever.
+        return UNAVAILABLE if no_runner else None
+    ok, why = admitted()
+    if not ok:
+        announce(ticket, ('no healthy runner; waiting for the local Mac slot: ' if no_runner else 'runners full; local Mac slot not admitted: ') + why)
+        return None
     f = slot_lock()
     if f is None: return None
     f.close()
