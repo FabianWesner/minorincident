@@ -1067,11 +1067,19 @@ for route in source['routes']:
         mid_b = ((b[0] + db[0]) / 2, (b[1] + db[1]) / 2)
         bypass_corridors.append((mid_a, mid_b, max(math.dist(a, da), math.dist(b, db)) / 2 + 2.5))
 drop = []
+CORNER = (-350, -330)
+CORNER_LOW = ('prop.hedge', 'prop.garden-bush', 'prop.garden-bush-small', 'prop.picket-fence', 'prop.privacy-fence')
 for i, p in enumerate(l.data['placements']):
     x, z = p['position'][0], p['position'][2]
     # The departure lane plus a 2.5 m shoulder stays clear of whole prop footprints. Removing only
     # the tree and pole at (-473.5, 6) left the APC caught on the neighbouring hedge.
     b = p['visualAabb']
+    # r28-tools (P3): the road turns at (-350, -330) and an APC cuts or overshoots that corner. The low verge walls there
+    # (hedge row prop.hedge:134-138 at z -337.9, then bushes/fences) held its nose. Removed AFTER generation, so every other
+    # placement keeps its id and position (filtering inside put() changed the occupancy and thus the whole dressing).
+    if p['assetId'] in CORNER_LOW and math.hypot(x - CORNER[0], z - CORNER[1]) < 44 and route_d((x, z)) < 5:
+        drop.append(i)
+        continue
     if p['assetId'].startswith(('prop.', 'veh.')) and lane_hit(
         (b['min'][0], b['min'][2], b['max'][0], b['max'][2]),
         source['start'], source['routes'][0]['points'][1], source['routes'][0]['width'] / 2 + 2.5):
