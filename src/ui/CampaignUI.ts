@@ -87,8 +87,10 @@ export class CampaignUI {
       }
       for (const [source, titles] of groups) { const p = document.createElement('p'); p.textContent = `${source} — ${titles.join(', ')}`; credits.append(p); }
       const viewport = document.createElement('div'); viewport.className = 'credits-viewport'; credits.replaceWith(viewport); viewport.append(credits);
-      credits.style.setProperty('--credits-start', `${viewport.clientHeight}px`);
-      credits.style.setProperty('--credits-travel', `${credits.scrollHeight + viewport.clientHeight}px`);
+      // r31-epilogue P3: the first lines are on screen from the first frame (no empty panel), the roll still clears the top.
+      const start = Math.round(viewport.clientHeight * .2);
+      credits.style.setProperty('--credits-start', `${start}px`);
+      credits.style.setProperty('--credits-travel', `${credits.scrollHeight + start}px`);
       credits.style.animationDuration = `${creditsTicks / 60}s`;
       credits.style.animationPlayState = 'paused'; credits.style.animationDelay = `-${(this.game.world.missions?.state.epilogue?.phaseTicks ?? 0) / 60}s`; }
     else this.creditsTimer=setTimeout(()=>{if(!this.root.hidden)this.showMenu({status:'ok',save});},12000);

@@ -2,6 +2,7 @@ import { cureRadius } from '../../data/cureDust';
 import { cureReached } from './CureFront';
 import { cureAlphaCap, cureAlphaPopulation, cureRegularAlphaCount } from '../../levels/L10/alphaContracts';
 import type { Mission } from './Mission';
+import type { EntitySnapshot } from '../world/types';
 
 export const epilogueTicks = 65 * 60;
 export const pulloutTicks = 15 * 60;
@@ -57,6 +58,36 @@ export class LevelTenEpilogue {
     } else if (ending.phase === 'title' && ++ending.phaseTicks >= titleTicks) this.phase('credits');
     else if (ending.phase === 'credits' && ++ending.phaseTicks >= creditsTicks) this.phase('thanks');
     else if (ending.phase === 'thanks' && ++ending.phaseTicks >= 6 * 60) this.finish();
+  }
+  /** r31-epilogue: the release beat always has people to see. When the fight ended away from the
+   * infected, a small authored cured crowd kneels around her (cower) and then follows the normal
+   * cured routine (sit, look around, walk to her). Bodies are never moved; spawns keep clear of them. */
+  gatherCured(): void {
+    const { world: w, state } = this.mission, front = state.cureFront, npcs = w.npcs, nav = w.infected?.nav;
+    if (!front || !npcs || !nav) return;
+    const p = w.entities.get(1)!.transform, low = w.infected!.director.tier === 'low', desired = low ? 4 : 7;
+    const near = (e: EntitySnapshot | undefined, r: number) => !!e && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < r;
+    let present = front.affectedIds.filter(id => { const e = w.entities.get(id); return !!e?.civilian && e.health.current > 0 && near(e, 14); }).length;
+    if (present >= desired) return;
+    const megaId = w.megaPursuit?.state.id ?? 0;
+    const bodies = [...w.entities.iterate()].filter(e => e.corpse || (e.health.current <= 0 && e.id !== 1)).filter(e => near(e, 20));
+    const placed: { x: number; z: number }[] = [];
+    const models = ['npc.civilian-man-a', 'npc.national-guard', 'npc.civilian-woman-a', 'npc.paramedic', 'npc.civilian-man-b', 'npc.civilian-woman-b', 'npc.national-guard'];
+    for (let i = 0; i < 24 && present < desired; i++) {
+      const angle = 2.2 + i * 2.39996, radius = 4.5 + (i % 4) * 1.4;
+      const cell = nav.nearestCell(p.x + Math.cos(angle) * radius, p.z + Math.sin(angle) * radius, .35);
+      if (cell < 0) continue;
+      const at = { x: nav.x(cell), z: nav.z(cell) };
+      if (!nav.clear(at.x, at.z, .4) || Math.hypot(at.x - p.x, at.z - p.z) < 2.5) continue;
+      if (bodies.some(b => Math.hypot(b.transform.x - at.x, b.transform.z - at.z) < (b.id === megaId ? 5 : 1.8))) continue;
+      if (placed.some(q => Math.hypot(q.x - at.x, q.z - at.z) < 1.6)) continue;
+      const id = npcs.civilians.spawn('resident', at, { waypoints: [at], model: models[placed.length % models.length] });
+      const c = w.entities.get(id)!.civilian!;
+      // Same presentation as a cured infected: kneel, then stand into the cured routine.
+      c.story = { clip: 'npc-cower', start: w.tick }; c.pauseUntil = w.tick + 90 + placed.length * 25;
+      w.entities.get(id)!.transform.yaw = -Math.atan2(p.z - at.z, p.x - at.x);
+      front.affectedIds.push(id); placed.push(at); present++;
+    }
   }
   get canSkip(): boolean { return !!this.mission.world.progression?.campaign?.world?.infectionCleared?.epilogueSeen; }
   private phase(phase: 'title' | 'credits' | 'thanks' | 'done'): void {

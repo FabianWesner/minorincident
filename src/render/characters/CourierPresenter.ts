@@ -5,6 +5,7 @@ import type { SimWorld } from '../../sim/world/SimWorld';
 import type { EntitySnapshot } from '../../sim/world/types';
 import type { BicycleView } from '../BicycleView';
 import type { Vfx } from '../vfx/Vfx';
+import { l10Closing } from './l10Closing';
 import type { CharacterView } from './CharacterView';
 import type { carTransitionPose } from './carTransition';
 
@@ -62,10 +63,9 @@ export class CourierPresenter {
     const ending = this.world.missions?.state;
     const closing = ending?.epilogue && ending.counters['epilogue-ticks'] >= 45 * 60;
     const closingPose = closing ? { ...survivor, scriptedClip: 'npc-sit' as const, animation: 'idle' as const, velocity: { x: 0, z: 0 } } : undefined;
-    if (closing) {
-      const console = this.world.missions!.def.anchors['cure-console'];
-      character.position.set(console.x + 3, 0, console.z + 5); character.rotation.y = 0;
-    }
+    const seat = closing ? l10Closing.seat(this.world) : undefined;
+    // r31-epilogue: she sits on the platform steps facing the sunrise (east), see l10Closing.
+    if (seat) { character.position.set(seat.x, l10Closing.seatY, seat.z); character.rotation.y = Math.PI / 2; }
     character.update(closingPose ?? carPose?.pose ?? (stopped && this.frozenPose ? this.frozenPose : survivor), stopped ? this.hitStopTick : this.world.tick, stopped ? 1 : alpha,
       riding === undefined ? undefined : { pedal: bicycle?.presentedRide?.pedal ?? bike?.pedal ?? this.world.tick * .12, steer: bicycle?.presentedRide?.steer ?? bike?.steer ?? 0 }, !!input.strafe && !carPose && riding === undefined);
     const cureCollected = this.world.missions?.state?.id === 'L10' && this.world.missions.state.items.includes('cure-canister');
