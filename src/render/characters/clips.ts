@@ -3,9 +3,12 @@ import library from './library.json';
 import skinLibrary from './library.skin.json';
 import type { CharacterRig } from './rig';
 import { chainNodes, courierBones, shoulderOffset } from './CourierRig';
+import { alphaMoveClipData } from './alphaMoveClips';
 
 /** Blender GLB samplers compiled by tools/assets/animation-library.ts. */
 export const authoredClips = new Map(library.map(clip => [clip.name, clip]));
+// r32-alphas: the humanoid Alpha move set, authored as key poses in code (same schema).
+for (const clip of alphaMoveClipData) authoredClips.set(clip.name, clip);
 /** Skin pilot: Mesh2Motion CC0 clips retargeted offline (tools/skinpilot/retarget.ts); same schema, overrides by name. */
 export const skinClips: typeof authoredClips = new Map(skinLibrary.map(clip => [clip.name, clip as unknown as (typeof library)[number]]));
 export const strides: Record<string, number> = { walk: .9, run: 1.17, shamble: .9, 'infected-run': 1.17, 'npc-walk': .9, 'npc-walk-relaxed': .9, 'npc-carry': .9, 'npc-cane': .9, 'corgi-walk': .55, 'corgi-trot': .8,

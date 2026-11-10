@@ -1,6 +1,9 @@
 import { Matrix4, Quaternion, Vector3 } from 'three';
 import type { CrowdClip } from '../../assets/crowd';
 import { framesPerClip, infectedClips } from './bakeInfected';
+import { alphaCrowdClips } from './crowdClipNames';
+/** Infected atlases share the leading clip order; humanoid Alphas append their move set (r32-alphas). */
+const infectedAtlas = (frames: number) => frames === infectedClips.length * framesPerClip || frames === alphaCrowdClips.length * framesPerClip;
 
 /**
  * P1-117 (PO 10-22 "Alpha looks terrible"): an Alpha that died on its back showed its open maw, glowing eye
@@ -19,7 +22,7 @@ export function proneDeath(clip: CrowdClip, name: typeof infectedClips[number] =
   const P = clip.parts.length, first = infectedClips.indexOf(name) * framesPerClip;
   const hip = clip.parts.indexOf('hip'), torso = clip.parts.indexOf('torso'), head = clip.parts.indexOf('head');
   const footL = clip.parts.indexOf('footL'), footR = clip.parts.indexOf('footR');
-  if (clip.frames !== infectedClips.length * framesPerClip || [hip, torso, head, footL, footR].some(i => i < 0)) return;
+  if (!infectedAtlas(clip.frames) || [hip, torso, head, footL, footR].some(i => i < 0)) return;
   done.add(clip);
   const m = clip.matrices;
   const at = (frame: number, part: number, out: Vector3) => { const o = (frame * P + part) * 16; return out.set(m[o + 12], m[o + 13], m[o + 14]); };
@@ -73,7 +76,7 @@ export function groundDeathFeet(clip: CrowdClip, name: typeof infectedClips[numb
   if (grounded.get(clip)?.has(name)) return;
   const P = clip.parts.length, first = infectedClips.indexOf(name) * framesPerClip, last = first + framesPerClip - 1;
   const footL = clip.parts.indexOf('footL'), footR = clip.parts.indexOf('footR'), hip = clip.parts.indexOf('hip'), head = clip.parts.indexOf('head');
-  if (clip.frames !== infectedClips.length * framesPerClip || [footL, footR, hip, head].some(i => i < 0)) return;
+  if (!infectedAtlas(clip.frames) || [footL, footR, hip, head].some(i => i < 0)) return;
   const names = grounded.get(clip) ?? new Set<string>(); names.add(name); grounded.set(clip, names);
   const m = clip.matrices, a = new Vector3(), b = new Vector3(), up = new Vector3(0, 1, 0);
   const at = (frame: number, part: number, out: Vector3) => out.fromArray(m, (frame * P + part) * 16 + 12);

@@ -7,6 +7,8 @@ import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import type { AssetDef } from '../../src/assets/types';
 import { encodeCivilianBake } from '../../src/assets/civilianBakeData';
 import { bakeInfected } from '../../src/render/characters/bakeInfected';
+import { alphaCrowdClips } from '../../src/render/characters/crowdClipNames';
+import { alphaLooks } from '../../src/data/alphaLooks';
 import { prepareCivilianGeometry, prepareCivilianRig, restoreStanding } from '../../src/render/npc/prepareCivilianGeometry';
 import { AssetRegistry } from '../../src/assets/registry';
 import { deinterleaveGeometry } from 'three/addons/utils/BufferGeometryUtils.js';
@@ -27,7 +29,7 @@ export async function skinCrowdBakes(def: AssetDef, lods: readonly ('lod0' | 'lo
     const root = await registry.loadAsset(def.id, lod) as Group;
     if (civilian) prepareCivilianRig(root, def.id);
     else if (def.id.startsWith('npc.')) restoreStanding(root);
-    const baked = civilian ? await prepareCivilianGeometry(root, def.id) : bakeInfected(root, def.animatedNodes, def.id === 'inf.crawler', undefined, undefined, true, true);
+    const baked = civilian ? await prepareCivilianGeometry(root, def.id) : bakeInfected(root, def.animatedNodes, def.id === 'inf.crawler', alphaLooks['inf.alpha'].includes(def.id) ? alphaCrowdClips : undefined, undefined, true, true);
     if (!civilian) { deinterleaveGeometry(baked.geometry); const merged = mergeCrowdVertices(baked.geometry); baked.geometry.dispose(); baked.geometry = merged; }
     const bytes = gzipSync(encodeCivilianBake({ ...baked, rig: root }), { level: 9 });
     const name = `${def.id}.${lod}${civilian ? '' : '.infected'}.${createHash('sha256').update(bytes).digest('hex').slice(0, 16)}.bin.gz`;

@@ -42,6 +42,9 @@ import { isOutbreakDistrict } from '../levels/districts/types';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { View } from './View';
 import { bakeInfected, bakeInfectedAsync, framesPerClip, infectedClips } from './characters/bakeInfected';
+import { alphaCrowdClips } from './characters/crowdClipNames';
+import { AlphaMoves, alphaSilhouette } from './characters/AlphaMoves';
+import { alphaTypes } from '../data/alphaTypes';
 import { loadGate } from '../assets/loadGate';
 import { authoredClips, strides } from './characters/clips';
 import { CrowdPosePalette } from './characters/CrowdPosePalette';
@@ -126,6 +129,8 @@ export class CrowdView extends Group {
   private readonly footwork = new CrowdFootwork(40);
   private readonly footBands = new Map<number, 'lod1' | 'lod2'>();
   private readonly moves = new InfectedMoves();
+  private readonly alphaMoves = new AlphaMoves();
+  private readonly silhouette = new Vector3();
   /** Corpses persist until a level/checkpoint resets their sim IDs. */
   private get corpseTicks(): number { return Infinity; }
   private readonly staticCorpses = new StaticCorpses();
@@ -306,8 +311,8 @@ export class CrowdView extends Group {
       const key = variant && this.modelAliases.get(variant) || this.modelAliases.get(role);
       if (!key) continue;
       needed.add(key);
-      // alphaKey chooses the authored sibling by entity ID unless overridden.
-      const look = alphaLook(key, e.id); if (this.definitions.has(look)) needed.add(look);
+      // alphaKey draws a typed Alpha with its own type look (r32-alphas); the Mega keeps its id-chosen sibling.
+      const look = this.alphaKey(key, e); if (this.definitions.has(look)) needed.add(look);
     }
     return needed;
   }
@@ -359,7 +364,7 @@ export class CrowdView extends Group {
         if (prepared.corpseClip && !this.corpseClips.has(key)) this.corpseClips.set(key, prepared.corpseClip);
       } else {
         // The finished geometry is cached below (preparedBatches), so the raw bake is not kept a second time.
-        const args = [model, this.registry.definition(asset).animatedNodes, role === 'crawler', undefined, undefined, true, textured] as const;
+        const args = [model, this.registry.definition(asset).animatedNodes, role === 'crawler', alphaLooks['inf.alpha'].includes(asset) ? alphaCrowdClips : undefined, undefined, true, textured] as const;
         const bakeStarted = performance.now();
         const shipped = delivered ?? await prebuilt;
         baked = shipped ? { ...shipped, texture: atlas } : this.world.scenario === 'L8' ? await bakeInfectedAsync(() => loadGate.wait(), ...args) : bakeInfected(...args);
@@ -495,7 +500,8 @@ export class CrowdView extends Group {
       // The baked colours retain their blue-grey/white identity under the game's
       // cool key: trade some directional light for a small neutral cloth bounce.
       const base = healthy ? mix(albedo, vec3(.26, .3, .22), feedbackState.z.mul(.4)) : mix(infectedAtlas ? albedo.mul(.65) : albedo, vec3(0), eye);
-      const emission = healthy ? attribute('color', 'vec3').div(luminance(attribute('color', 'vec3')).max(.25)).mul(1.2) : infectedAtlas ? vec3(1, .04373, .02843).mul(eyeDisc.select(eyeRadius.smoothstep(1, .15).mul(3).add(3), 3)) : vec3(3, .25, .22);
+      const emission = healthy ? attribute('color', 'vec3').div(luminance(attribute('color', 'vec3')).max(.25)).mul(1.2) : infectedAtlas ? vec3(1, .04373, .02843).mul(eyeDisc.select(eyeRadius.smoothstep(1, .15).mul(3).add(3), 3)).mul(regularAlpha ? 2 : 1) : vec3(3, .25, .22);
+      // r32-alphas: Alpha eyes burn twice as bright as an ordinary infected's (night-readable 'this one is tough' cue).
       // alpha-white: the hit flash brightens the figure's own colours (glow ~ albedo x strength, about x2 on a
       // night-lit body at the 0.45 peak), easing off on pale swatches (bone, teeth) so they do not clip to white.
       // A flat white add (0.45 on every channel, then bloom) turned the dark Alpha into a grey-white mass; any
@@ -510,7 +516,8 @@ export class CrowdView extends Group {
       material = this.shading?.shaded(base, glow, undefined, undefined, undefined, healthy ? undefined : eye, figureMask, shadowReceiver, healthy ? undefined : float(1)) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: base, emissiveNode: glow });
       // E25 night readability: crowd silhouettes take the preset's moonlit rim.
       livingStencil(material);
-      if (material instanceof PaletteMaterial) { material.figureRim.value = .25; material.figureFill.value = regularAlpha ? .25 : 1; }
+      // r32-alphas: Alphas carry a stronger moonlit outline than the crowd, so the bigger silhouette reads at night.
+      if (material instanceof PaletteMaterial) { material.figureRim.value = regularAlpha ? .7 : .25; material.figureFill.value = regularAlpha ? .25 : 1; }
       // The Alpha-sized Mega retains its silhouette at contact, like a regular Alpha.
       // Instances cannot be sorted independently in the transparent render list.
       // A shared 4x4 screen-door threshold keeps every surface of a corpse at
@@ -628,10 +635,17 @@ export class CrowdView extends Group {
     const key = this.modelAliases.get(id);
     return key && this.definitions.has(key) ? key : undefined;
   }
-  /** PO #23: an Alpha drawn with its default model takes one of the sibling looks, chosen by entity id (same rig and size). An explicit model override keeps its asset. */
-  private alphaKey(key: string, e: { id: number; infected?: { model?: string; variant?: string } }): string {
+  /** PO #23: an Alpha drawn with its default model takes one of the sibling looks (same rig and size). An explicit model override keeps its asset.
+   * r32-alphas (PO 2026-11-10 "This type of Zombie again, which is ultra hard to kill"): a humanoid Alpha always wears its type's look
+   * (alphaTypes[type].look; untyped Alphas are Brutes), never an id-chosen sibling, so the slim suit (the Leaper) cannot land on a Brute. */
+  private alphaKey(key: string, e: { id: number; infected?: { model?: string; variant?: string; alphaType?: keyof typeof alphaTypes } }): string {
     // Naming the shipped asset on purpose (Scene Lab `look.model`, probes) keeps that exact look; the role default and the sim's Mega vary.
-    if (e.infected?.model || e.infected?.variant === 'inf.alpha') return key;
+    if (e.infected?.model) return key;
+    if (alphaLooks['inf.alpha'].includes(this.definitions.get(key)?.asset ?? key)) {
+      const typed = alphaTypes[e.infected?.alphaType ?? 'brute'].look;
+      return this.modelKey(typed) === typed ? typed : key;
+    }
+    if (e.infected?.variant === 'inf.alpha') return key;
     const look = alphaLook(key, e.id);
     return look !== key && this.modelKey(look) === look ? look : key;
   }
@@ -756,7 +770,7 @@ export class CrowdView extends Group {
       const movingClip = motion.speed > 2
         ? mega ? 'infected-sprint' : tierGait(b as { speed?: number; tier?: string; l1?: { tier: string } })
         : motion.speed > .06 ? mega ? 'infected-lurch' : 'shamble' : null;
-      let clip: typeof infectedClips[number] = b.state === 'dead' ? death
+      let clip: typeof alphaCrowdClips[number] = b.state === 'dead' ? death
         : b.legLost || e.archetype === 'infected.crawler' ? 'crawl'
           : b.state === 'attack' && motion.speed <= .06 ? this.world.tick < b.until ? 'windup' : 'swing'
             : movingClip ?? ((b.state as string) === 'search' || (b.state as string) === 'attracted' ? 'infected-search' : 'infected-idle');
@@ -778,13 +792,17 @@ export class CrowdView extends Group {
       if (specialAttack?.move === 'zebra.kick') clip = 'zebra-rear-kick';
       if (specialAttack?.move === 'zebra.stampede' && specialAttack.stage === 'active') clip = 'zebra-stampede';
       if (specialAttack?.move === 'flamingo.dive' && specialAttack.stage === 'active') clip = 'run';
+      // r32-alphas: each humanoid Alpha type plays its own authored telegraph/strike/recovery, and the ordinary strike stays
+      // visible after the sim's strike tick (shipped atlases older than the move set keep the shared clips).
+      const alphaMove = !heavy && !e.infectionRise && batch.poses.clip.frames >= alphaCrowdClips.length * framesPerClip ? this.alphaMoves.sample(e, renderTick, batch.windup, motion.speed) : undefined;
+      if (alphaMove) clip = alphaMove.clip;
       const heavyGait = mega && !heavy && !specialAttack && b.state !== 'attack' && b.state !== 'dead';
       const megaRun = Math.max(0, Math.min(1, (motion.speed - 1.5) / 1.5));
       const megaRate = 1.05 + (megaCycleRate - 1.05) * megaRun;
       const duration = authoredClips.get(clip)?.duration ?? 1;
       const dogWindupTicks = Math.ceil(batch.windup * 60), dogBiteT = renderTick - (b.until - dogWindupTicks);
-      const phase = primateStory ? Math.max(0, (renderTick - primateStory.start) / 96) % 1 : clip === 'dog-lunge-bite' ? Math.max(0, Math.min(1, dogBiteT < dogWindupTicks ? .4 * dogBiteT / dogWindupTicks : .4 + .6 * (dogBiteT - dogWindupTicks) / 24)) : clip === 'zebra-rear-kick' && specialAttack ? Math.min(1, (renderTick - specialAttack.startTick) / (specialAttack.activeTick - specialAttack.startTick + 36)) : clip === 'zebra-stampede' && specialAttack ? .5 + ((renderTick - specialAttack.activeTick) / 32 % 1) / 3 : e.infectionRise ? Math.min(1, (this.world.tick - e.infectionRise.started) / (e.infectionRise.until - e.infectionRise.started)) : b.state === 'dead' ? (reaction?.groundDeath ? 1 : Math.min(1, (this.world.tick - b.deadAt) / 60 / duration)) - InfectedMoves.stir(e, renderTick, duration) : clip === 'windup' ? e.infected?.specialAttack ? Math.min(1, (renderTick - e.infected.specialAttack.startTick) / (e.infected.specialAttack.activeTick - e.infected.specialAttack.startTick)) : Math.max(0, Math.min(1, 1 - (b.until - this.world.tick) / (batch.windup * 60))) : reaction && clip === 'get-up' ? Math.min(1, (age - .7) / getUpSpan(reaction)) : reaction && ['flung', 'knockdown', 'stagger-left', 'stagger-right'].includes(clip) ? Math.min(1, age / (reaction.heavy ? .48 : (reaction.until - reaction.started) / 60)) : strides[clip] ? this.gait.sample(e.id, gaitDistance, batch.animal ? clip === 'dog-gallop' ? 'corgi-gallop' : 'corgi-trot' : clip, batch.strideScale, motion.speed, heavyGait ? megaRate : undefined) : (renderTick / 60 + e.id * .137) / duration % 1;
-      let frame = infectedClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
+      const phase = alphaMove ? alphaMove.phase : primateStory ? Math.max(0, (renderTick - primateStory.start) / 96) % 1 : clip === 'dog-lunge-bite' ? Math.max(0, Math.min(1, dogBiteT < dogWindupTicks ? .4 * dogBiteT / dogWindupTicks : .4 + .6 * (dogBiteT - dogWindupTicks) / 24)) : clip === 'zebra-rear-kick' && specialAttack ? Math.min(1, (renderTick - specialAttack.startTick) / (specialAttack.activeTick - specialAttack.startTick + 36)) : clip === 'zebra-stampede' && specialAttack ? .5 + ((renderTick - specialAttack.activeTick) / 32 % 1) / 3 : e.infectionRise ? Math.min(1, (this.world.tick - e.infectionRise.started) / (e.infectionRise.until - e.infectionRise.started)) : b.state === 'dead' ? (reaction?.groundDeath ? 1 : Math.min(1, (this.world.tick - b.deadAt) / 60 / duration)) - InfectedMoves.stir(e, renderTick, duration) : clip === 'windup' ? e.infected?.specialAttack ? Math.min(1, (renderTick - e.infected.specialAttack.startTick) / (e.infected.specialAttack.activeTick - e.infected.specialAttack.startTick)) : Math.max(0, Math.min(1, 1 - (b.until - this.world.tick) / (batch.windup * 60))) : reaction && clip === 'get-up' ? Math.min(1, (age - .7) / getUpSpan(reaction)) : reaction && ['flung', 'knockdown', 'stagger-left', 'stagger-right'].includes(clip) ? Math.min(1, age / (reaction.heavy ? .48 : (reaction.until - reaction.started) / 60)) : strides[clip] ? this.gait.sample(e.id, gaitDistance, batch.animal ? clip === 'dog-gallop' ? 'corgi-gallop' : 'corgi-trot' : clip, batch.strideScale, motion.speed, heavyGait ? megaRate : undefined) : (renderTick / 60 + e.id * .137) / duration % 1;
+      let frame = alphaCrowdClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
       const tint = batch.animal ? batch.role === 'inf.dog' && batch.lod === 'lod1' ? this.dogCoatTints[Number(key === 'inf.dog.cream')] : batch.shirt : crowdShirt(e.id);
       const presented = this.presentation.sample(e.id, e.transform, this.world.tick, alpha);
       const resting = b.state === 'dead' && !e.knockbackSlide ? this.corpsePosition(e, b.deadAt, alphaLookAssets.includes(def.asset) ? deathReach.get(batch.poses.clip) : undefined) : { ...e.transform, y: e.transform.y - .7 };
@@ -801,6 +819,9 @@ export class CrowdView extends Group {
       } else {
         this.transform.makeRotationY((b.state === 'dead' ? resting.yaw : presented.yaw) + (e.civilian?.zooAnimal && e.infection ? Math.sin(renderTick * .5 + e.id) * .018 * e.infection.progress : 0)); this.transform.setPosition(x, (b.state === 'dead' ? (presented.y - .7) * (1 - settle) + resting.y * settle : Math.max(presented.y - 0.7, this.world.districts?.pavingHeight(x, z) ?? 0)) + (reaction?.heavy && age < .48 ? Math.max(0, .16 * (1 - Math.abs(age / .24 - 1))) : 0), z);
         if (e.infected?.arenaBoss?.arena === 'monkey' && e.infected.arenaBoss.slot === 6) this.transform.scale(this.arenaScale);
+        // r32-alphas: type silhouette (Brute biggest, Thrower lanky, Screamer thin, Armoured bulky); presentation only.
+        const alphaShape = e.infected?.alphaType && !e.infected.pursuit && b.state !== 'dead' ? alphaSilhouette[e.infected.alphaType] : undefined;
+        if (alphaShape) this.transform.scale(this.silhouette.set(alphaShape[0], alphaShape[1], alphaShape[0]));
         // r26-l8hitreact: cosmetic squash on every boss hit (<= 0.15 s), matrix only; sim pose, attacks and stagger are untouched.
         if (e.infected?.arenaBoss && feedback && feedback.strength > 1) {
           const k = Math.max(0, 1 - (this.world.tick - feedback.at) / 9);
@@ -828,6 +849,10 @@ export class CrowdView extends Group {
         const crawling = b.legLost || e.archetype === 'infected.crawler' || clip === 'crawl', moving = !!strides[clip] && motion.speed > .06;
         const lurchScale = this.world.scenario === 'L10' && e.archetype === 'infected.runner' ? .35 : 1;
         const { layers, style } = this.moves.sample(e, b.state, b.until, batch.windup, renderTick, presented.yaw, motion.speed, moving ? clip : undefined, lurchScale);
+        // The authored Alpha clip owns the whole body; the generic coil/lunge/arm-raise layers would fight it.
+        if (alphaMove) { layers.lean = layers.lunge = layers.throwPose = 0; }
+        // The Leaper runs low (its look cue: crouched); the clip owns it when it stands or pounces.
+        else if (moving && e.infected?.alphaType === 'leaper' && !heavy) layers.lean = -.24;
         if (heavyGait) {
           // Refit the existing zombie clips to the broad Mega: long low steps,
           // calm shoulders, and flat shoe plants about a steady crouched hip.
@@ -845,12 +870,12 @@ export class CrowdView extends Group {
         }
         if (this.world.scenario === 'L10' && e.archetype === 'infected.runner' && moving && !heavy) layers.maxBodyLean = 38 * Math.PI / 180;
         // G-17: standing and walking infected never lean past the 42 degree acceptance limit (idle hunch read 45-52 degrees on the womanB/manB rigs); attacks and crawlers keep their authored reach.
-        if (!heavy && !specialAttack && !crawling && b.state !== 'dead' && b.state !== 'attack') layers.maxBodyLean = Math.min(layers.maxBodyLean ?? Infinity, 40 * Math.PI / 180);
+        if (!heavy && !specialAttack && !alphaMove && !crawling && b.state !== 'dead' && b.state !== 'attack') layers.maxBodyLean = Math.min(layers.maxBodyLean ?? Infinity, 40 * Math.PI / 180);
         // The baked hunch already reaches toward the victim. Keep the added pelvis/torso lunge
         // inside the reserved contact space; distant windups retain their full coil and extension.
         const target = this.world.entities.get(e.infected?.heardTargetId || e.infected?.l1?.targetId || 1);
         if (target?.survivor && Math.hypot(x - target.transform.x, z - target.transform.z) < infectedContactDistance(e.combat!.radius) + .15) layers.lunge = Math.min(layers.lunge ?? 0, .04);
-        if (!heavy && !specialAttack && b.state !== 'dead' && this.world.solids?.clear(e.transform, e.combat!.radius + .6, e.id) === false) {
+        if (!heavy && !specialAttack && !alphaMove && b.state !== 'dead' && this.world.solids?.clear(e.transform, e.combat!.radius + .6, e.id) === false) {
           // Keep the baked attack hunch over its planted feet at a hull, wall or body.
           // Combat reach is unchanged; only the added forward body throw yields.
           layers.lunge = Math.min(layers.lunge ?? 0, 0); layers.lean = -.25; layers.lurch = 0;
