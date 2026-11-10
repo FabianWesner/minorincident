@@ -655,12 +655,13 @@ export class Vehicles {
     this.localPoint(car, entry?.x ?? car.physics.def.doorX, entry?.z ?? car.physics.def.width / 2 + .55);
     return { x: this.position.x, z: this.position.z };
   }
-  /** Boarding retains the complete logical roster, independent of visual seat count. */
-  boardPassenger(carId: number, actorId: number): boolean {
+  /** Boarding retains the complete logical roster, independent of visual seat count. `reach` widens the door radius for callers
+   * whose approach target sits inside the hull's nav margin (diagonally parked APC); the caller guarantees the actor is on the outer side of the door. */
+  boardPassenger(carId: number, actorId: number, reach?: number): boolean {
     const car = this.cars.get(carId), actor = this.world.entities.get(actorId);
     if (!car?.physics.def.transport || (!actor?.civilian && !actor?.companion && !actor?.escort) || actor.health.current <= 0 || actor.civilian?.pet || actor.infected || actorId === 1 || !this.operable(car) || car.physics.speed >= 1 || actor.passengerOf !== undefined) return false;
     const entry = this.passengerDoor(carId);
-    if (Math.hypot(actor.transform.x - entry.x, actor.transform.z - entry.z) > (actor.companion ? 1.2 : .7)) return false;
+    if (Math.hypot(actor.transform.x - entry.x, actor.transform.z - entry.z) > (reach ?? (actor.companion ? 1.2 : .7))) return false;
     const c = actor.civilian;
     const passenger: VehiclePassenger = { id: actorId, seat: (car.entity.vehicle!.passengers?.length ?? 0) % car.physics.def.transport.seats.length, phase: 'enter', started: this.world.tick, from: { ...actor.transform }, pauseUntil: c?.pauseUntil ?? 0, floorY: c?.floorY, story: c?.story ? { ...c.story } : c?.story };
     (car.entity.vehicle!.passengers ??= []).push(passenger);
