@@ -459,6 +459,85 @@ for asset, x, z, sc in [('prop.tree', 47, -22, .9), ('prop.tree', 76, -46, .85),
     if zoo_put(asset, x, z, _zr.uniform(0, math.tau), sc, path=1.5): _placed += 1
 print('look-l10-l8-2 zoo dressing placements', _placed, 'lawns', len(l.data['lawns']))
 
+# ------------------------------------------------------------------------------------------------ r33-l8route: a linear route through the zoo
+# Added AFTER all procedural dressing so every earlier placement id and position stays identical (lessons 11-10). Hedge lines on lawn and fixed
+# army checkpoints where a line crosses a paved path split the zoo into six cells; each enclosure is the only door between two cells.
+# Dressing that a new line would sit on is removed by id (other ids unchanged); everything is removed LAST because ids are placement indices.
+_route_start = len(l.data['placements'])
+_route_boxes = []                               # (x0, z0, x1, z1) footprints of the new pieces, used to clear dressing under them
+
+def _route_piece(asset, x, z, yaw, span, fence_piece=False):
+    dim = l.manifest[asset]['dimensions']['x']
+    sc = (span / dim, 2.4 if fence_piece else 1, 1)
+    pid = l.place(asset, [x, 0, z], yaw=yaw, scale=sc)
+    if fence_piece: l.data['placements'][-1]['fixed'] = True
+    a = l.data['placements'][-1]['visualAabb']
+    _route_boxes.append((a['min'][0], a['min'][2], a['max'][0], a['max'][2]))
+    return pid
+
+def _route_line(asset, x0, z0, x1, z1, fence_piece=False):
+    """Pieces along an axis-aligned segment, each scaled so the line ends exactly at (x1, z1)."""
+    along_x = abs(x1 - x0) >= abs(z1 - z0)
+    length = abs(x1 - x0) if along_x else abs(z1 - z0)
+    dim = l.manifest[asset]['dimensions']['x']
+    n = max(1, math.ceil(length / dim - 1e-6)); span = length / n
+    lo = min(x0, x1) if along_x else min(z0, z1)
+    for i in range(n):
+        c = lo + span * (i + .5)
+        if along_x: _route_piece(asset, c, z0, 0.0, span, fence_piece)
+        else: _route_piece(asset, x0, c, math.pi / 2, span, fence_piece)
+
+def _hedge(x0, z0, x1, z1): _route_line('prop.hedge', x0, z0, x1, z1)
+def _fence(x0, z0, x1, z1): _route_line('prop.crowd-fence', x0, z0, x1, z1, True)
+def _barricade(x0, z0, x1, z1):
+    """Army checkpoint across a 5 m path: concrete barriers, solid, never pushable."""
+    _route_line('prop.jersey-barrier', x0, z0, x1, z1)
+
+# H1 north loop split, H2/H3/H4 north gaps, H5 west-outer, H6/H7 south gaps, H8/H9 plaza flanks, H10 east split, H11 yard slot
+_hedge(14, -85.6, 14, -66.5); _barricade(14, -66.5, 14, -61.5); _hedge(14, -61.5, 14, -52)
+_hedge(-38, -52, -26.5, -52); _barricade(-26.5, -52, -21.5, -52); _hedge(-21.5, -52, -14, -52)
+_hedge(14, -52, 21.5, -52); _barricade(21.5, -52, 26.5, -52); _hedge(26.5, -52, 38, -52)
+_hedge(-115.6, -52, -98.5, -52); _barricade(-98.5, -52, -93.5, -52); _hedge(-93.5, -52, -82, -52)
+_hedge(-115.6, 12, -98.5, 12); _barricade(-98.5, 12, -93.5, 12); _hedge(-93.5, 12, -82, 12)
+_hedge(-38, 12, -28, 12)
+_hedge(14, 12, 21.5, 12); _hedge(26.5, 12, 38, 12)
+_hedge(-14, -12, -14, -3); _hedge(-14, 3, -14, 8)
+_hedge(14, -12, 14, -3); _hedge(14, 3, 14, 12)
+_hedge(82, -12, 82, -2.5); _barricade(82, -2.5, 82, 2.5); _hedge(82, 2.5, 82, 12)
+_hedge(82.4, 46, 83.7, 46)
+# Primate yard: a fixed crowd-fence compound round the reptile house, 5 m gates on the x=-24 path (north and south).
+_fence(-28, 8, -26.5, 8); _fence(-21.5, 8, 14, 8)
+_fence(-28, 32, -26.5, 32); _fence(-21.5, 32, 14, 32)
+_fence(-28, 8, -28, 32); _fence(14, 8, 14, 32)
+# Locked keeper gates, built as fixed fence: the empty elephant paddock (north and south) and the gorilla north gate.
+_fence(-63, 12, -57, 12); _fence(-63, 52, -57, 52); _fence(57, -52, 63, -52)
+# The gorilla's new east exit: a 7 m opening in the east fence (x=82) and a paved stub out to the x=96 service lane.
+_gorilla_exit_ids = [p['id'] for p in l.data['placements'][:_route_start]
+                     if p['assetId'] == 'prop.crowd-fence' and abs(p['position'][0] - 82) < .01 and -35.5 < p['position'][2] < -28]
+point('gorilla-exit', 82, -31.77); point('p96:-32', 96, -32)
+path('gorilla-exit', 'p96:-32', 5)
+_route_boxes.append((82, -34.5, 96, -29.5))
+
+# Nothing may stand on a new line: drop only the dressing underneath (and the gorilla exit fence panels).
+_DRESS = {'prop.tree', 'prop.street-tree', 'prop.garden-bush', 'prop.garden-bush-small', 'prop.flower', 'prop.flower-bed.large', 'prop.street-lamp', 'prop.trash-bin', 'prop.bench', 'prop.sprinkler', 'prop.hose-reel', 'prop.street-sign'}
+_drop = set(_gorilla_exit_ids)
+for p in l.data['placements'][:_route_start]:
+    if p['assetId'] not in _DRESS: continue
+    a = p['visualAabb']
+    for (x0, z0, x1, z1) in _route_boxes:
+        if a['max'][0] > x0 - .35 and a['min'][0] < x1 + .35 and a['max'][2] > z0 - .35 and a['min'][2] < z1 + .35: _drop.add(p['id']); break
+for pid in sorted(_drop):
+    p = next(q for q in l.data['placements'] if q['id'] == pid); idx = int(pid.rsplit(':', 1)[1])
+    l.data['placements'].remove(p)
+    l.data['colliders'] = [c for c in l.data['colliders'] if c['id'] != pid]
+    _nm = f"inst:{p['assetId']}:{idx + 1}"
+    for o in [o for o in l.empties if o.name == _nm or o.name.startswith(_nm + '.') or o.name.startswith(f'crown:{pid}:')]:
+        l.empties.remove(o); bpy.data.objects.remove(o, do_unlink=True)
+print('r33-l8route added', len(l.data['placements']) - _route_start, 'pieces, dropped', len(_drop))
+# Every enclosure panel is a cell wall: bolt them all (a pushable 22 kg panel is a door the herd or the player can open).
+for p in l.data['placements']:
+    if p['assetId'] == 'prop.crowd-fence': p['fixed'] = True
+
 # Static layout pieces with identical material/attribute layouts share a program.
 # PreRenderer still draws every piece, including its shadows, during warm-up.
 for _piece in l.layers[0]: _piece['preRenderShared'] = True
