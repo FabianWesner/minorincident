@@ -167,6 +167,9 @@ export class MegaPursuit {
       return;
     }
     if (e.health.current <= 0 && (e.infected!.recoverAt ?? -1) < 0) { s.mode = 'dead'; s.hp = 0; s.route.length = 0; return; }
+    // No authored stagger/stun outlasts 10 s (the electric gate is 3 s). A larger remainder is a stale absolute tick from another clock
+    // (r29-l10mega: a resumed save kept the Mega stunned for minutes); keep a short stagger instead of a frozen boss.
+    if (e.combat && e.combat.staggerUntil - tick > 600) e.combat.staggerUntil = tick + 60;
     s.x = e.transform.x; s.z = e.transform.z; s.hp = e.health.current; s.maxHp = e.health.max;
     this.sound();
     if (tick - s.routeAt >= megaAlpha.routeTicks) this.refresh();

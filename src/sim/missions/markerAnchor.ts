@@ -10,7 +10,13 @@ export const objectiveRingRadius = .65;
  * L3 uses its next open route waypoint so navigation markers guide the player
  * around street closures instead of bearing straight through them.
  */
-export function markerAnchor(mission: Pick<Mission, 'state' | 'def'> | null | undefined): Anchored | null {
+export function markerAnchor(mission: (Pick<Mission, 'state' | 'def'> & { world?: Mission['world'] }) | null | undefined): Anchored | null {
+  // L10 final fight (r29-l10mega, PO finding: 'Kill the Mega Alpha' ran for minutes with no direction): the 'mega' step
+  // has no authored waypoint, so while it is active the guidance follows the live Mega (HUD distance, edge arrow, minimap pin).
+  if (mission?.def.id === 'L10' && mission.state.steps.mega?.status === 'active' && mission.world?.megaPursuit?.alive()) {
+    const mega = mission.world.megaPursuit.entity();
+    if (mega) return { x: mega.transform.x, z: mega.transform.z, y: mega.transform.y, radius: 2 };
+  }
   const marker = mission?.state.marker;
   if (!mission || !marker) return null;
   if (mission.def.id === 'L10') {
