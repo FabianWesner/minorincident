@@ -381,7 +381,9 @@ export class LevelNineDriving {
       const target = { x: cfg.evacuation.truckX + slot % 3 * 9 + 2.5, z: cfg.evacuation.truckZ + 1 + Math.floor(slot / 3) * 1.1 };
       if (!w.infected!.nav.clear(target.x, target.z, .5) || !w.solids.clear({ ...target, y: e.transform.y }, .35, e.id, false)) target.x -= 5;
       e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; if (e.civilian!.survivor) e.civilian!.survivor!.mode = 'hidden';
-      if (s.truckEntering[id] === undefined) w.npcs!.move(e, target, 3, e.civilian!, .6, 1600);
+      // The far truck sits beyond the bridge-gate wall end: from an APC parked north of the bay the walk
+      // around it exceeds the default 1600-node search (r27-l9apc, --zero run: Okafor stood forever).
+      if (s.truckEntering[id] === undefined) w.npcs!.move(e, target, 3, e.civilian!, .6, 8000);
       w.spatial.set(id, e.transform.x, e.transform.z);
       if (distance(e.transform, target) < 1.2) {
         s.truckEntering[id] ??= w.tick; e.civilian!.story = { clip: 'npc-sit-down', start: s.truckEntering[id] };
