@@ -62,6 +62,11 @@ type CrowdLod = 'lod0' | 'lod1' | 'lod2';
 export const hitFlashTicks = 8;
 /** L8 arena boss flash/flinch: 0.18 s of render time (Vfx), capped in sim ticks for the same paused-stepping reason. */
 export const bossHitFlashTicks = 12;
+/** Active infected at which far bodies drop to the flat LOD2 (draw budget). */
+export const denseCrowdLod2 = 100;
+/** r30-ghosts: in such a dense crowd (high tier) the nearest bodies big enough for LOD1 keep it. At 100+ active every body, also the ring
+ * around the courier or the APC, used to fall to LOD2: flat, rim-lit, blue "ghosts" (r28-vqa L9/L10). 40 x ~1.7k triangles is within the budget. */
+export const denseNearLod1 = 40;
 /** One instanced, skinned GPU batch per archetype. Scene graph size never grows with infected population. */
 /** E19 §5.4: the speed tier must read from the silhouette. Prefer the sim's tier,
  * else the brain's jittered run speed (frail 4.7, average 5.1, athletic 5.6 m/s). */
@@ -666,6 +671,7 @@ export class CrowdView extends Group {
     const heroes = this.heroIds; this.previousHeroes.clear();
     for (const id of heroes) this.previousHeroes.add(id);
     heroes.clear(); this.nearest.length = 0; this.rolePixels.clear(); this.nearBodies.length = 0; this.nearIds.clear();
+    const dense = !this.low && (this.world.infected?.active.length ?? 0) >= denseCrowdLod2;
     for (const e of this.figures) {
       if (e.faction !== 'infected' && !e.civilian?.zooAnimal || !e.combat || e.hidden || e.infected?.hidden || e.archetype === 'infected.crow' || e.corpse || keepsLook(e) && e.appearance?.asset !== 'inf.common-worker') continue;
       if (e.health.current <= 0 && this.world.tick - (e.infected?.deadAt ?? 0) >= this.corpseTicks) continue;
@@ -679,7 +685,7 @@ export class CrowdView extends Group {
       const standing = standingHumans.has(e.archetype) && !e.infected?.legLost;
       const pixels = this.visibility.pixels(e.transform.x, e.transform.y, e.transform.z, standing ? Math.max(d.y, crowdStandingLodHeight) : d.y);
       this.rolePixels.set(key, Math.max(this.rolePixels.get(key) ?? 0, pixels));
-      if (this.low && crowdLod(pixels, this.footBands.get(e.id)) === 'lod1') this.nearBodies.push({ id: e.id, distance });
+      if ((this.low || dense) && crowdLod(pixels, this.footBands.get(e.id)) === 'lod1') this.nearBodies.push({ id: e.id, distance });
       if (this.low && !/infected\.(alpha|mega-alpha)/.test(e.archetype)) continue;
       if (distance > (this.previousHeroes.has(e.id) ? 13 : 12)) continue;
       const hero = !view || pixels > (this.heroBands.get(e.id) ? 164 : 196);
@@ -691,7 +697,7 @@ export class CrowdView extends Group {
     }
     // Bound phone geometry while retaining near detail for the closest sixteen bodies.
     this.nearBodies.sort((a, b) => a.distance - b.distance || a.id - b.id);
-    for (const body of this.nearBodies.slice(0, 16)) this.nearIds.add(body.id);
+    for (const body of this.nearBodies.slice(0, this.low ? 16 : denseNearLod1)) this.nearIds.add(body.id);
     // One background tier per role protects the largest visible silhouette and
     // avoids a third active draw for every archetype in a mixed horde.
     for (const [role, pixels] of this.rolePixels) this.roleLods.set(role, crowdLod(pixels, this.roleLods.get(role)));
@@ -723,7 +729,7 @@ export class CrowdView extends Group {
         this.bounds.radius = Math.max(this.bounds.radius, Math.hypot(p[bird * 3] - this.bounds.center.x, p[bird * 3 + 1] - this.bounds.center.y, p[bird * 3 + 2] - this.bounds.center.z) + .5);
       }
       if (view && !e.corpse && !this.frustum.intersectsSphere(this.bounds)) continue;
-      let lod: 'lod0' | 'lod1' | 'lod2' = this.low ? this.nearIds.has(e.id) ? 'lod1' : 'lod2' : e.health.current <= 0 || (this.world.infected?.active.length ?? 0) >= 100 ? 'lod2' : this.roleLods.get(key) ?? 'lod2';
+      let lod: 'lod0' | 'lod1' | 'lod2' = this.low ? this.nearIds.has(e.id) ? 'lod1' : 'lod2' : e.health.current <= 0 ? 'lod2' : (this.world.infected?.active.length ?? 0) >= denseCrowdLod2 ? this.nearIds.has(e.id) ? 'lod1' : 'lod2' : this.roleLods.get(key) ?? 'lod2';
       // Recoverable downed bodies are still animated, rather than frozen pages.
       // Keep their close surface as detailed as the living figure beside them.
       if (this.world.scenario === 'L4' && e.health.current <= 0 && !e.corpse
