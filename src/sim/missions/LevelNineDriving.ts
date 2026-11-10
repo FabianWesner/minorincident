@@ -40,7 +40,7 @@ export const emptyDriving = (): L9DrivingState => ({
 });
 /** r27-l9board: total number of damaging bus rams per level (40 durability each). */
 const tuneStall = l9SetPieceTuning.stall;
-const busRamCap = 5;
+const busRamCap = 3;
 const distance = (a: { x: number; z: number }, b: { x: number; z: number }) => Math.hypot(a.x - b.x, a.z - b.z);
 const alive = (e: EntitySnapshot | undefined): e is EntitySnapshot => !!e && e.health.current > 0 && !e.infected && !e.infection;
 
@@ -348,7 +348,7 @@ export class LevelNineDriving {
     const delta = Math.atan2(Math.sin(-Math.atan2(dz, dx) - bus.transform.yaw), Math.cos(-Math.atan2(dz, dx) - bus.transform.yaw));
     intent.throttle = 1; intent.brake = false; intent.steer = Math.max(-1, Math.min(1, delta * 2));
     // r27-l9board: a bus glued to a crawling or stalled APC rammed it every 2 s (30 rams, durability 0 by the rail on the
-    // countryside route). It now damages the APC at most busRamCap times (r33-l9polish: 5 x 40 = 200 of 1000, was 12 x 40); it still drives and pushes.
+    // countryside route). It now damages the APC at most busRamCap times (r33-l9polish: 3 x 40 = 120 of 1000, was 12 x 40); it still drives and pushes.
     // Evacuation hold: the APC is parked with the brake on. A full-throttle bus
     // pressed against it shoved it ~2.4 m at once and then crept it ~10 m over
     // the hold. The bus now slows on approach and halts a few metres short, so

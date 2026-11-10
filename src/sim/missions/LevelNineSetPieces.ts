@@ -250,7 +250,7 @@ export class LevelNineSetPieces {
   /** A point on the APC's lane, a little ahead of where the hull will be: the driver dodges or smashes it. Stopped hull: aim at the hull. */
   private throwTarget(ticks: number, uses = 0): { x: number; z: number } {
     const car = this.car, p = car.entity.transform, at = this.predict(ticks);
-    if (car.physics.speed < 2) { const d = tune.thrower.stoppedOffsetsM[uses % tune.thrower.stoppedOffsetsM.length]; return { x: p.x + Math.cos(p.yaw) * d, z: p.z - Math.sin(p.yaw) * d }; }
+    if (car.physics.speed < 2) { const [a, l] = tune.thrower.stoppedOffsetsM[uses % tune.thrower.stoppedOffsetsM.length]; return { x: p.x + Math.cos(p.yaw) * a + Math.sin(p.yaw) * l, z: p.z - Math.sin(p.yaw) * a + Math.cos(p.yaw) * l }; }
     return { x: at.x + Math.cos(p.yaw) * tune.thrower.leadM, z: at.z - Math.sin(p.yaw) * tune.thrower.leadM };
   }
   private flights(s: L9SetPieceState): void {

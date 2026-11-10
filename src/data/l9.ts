@@ -108,8 +108,8 @@ export const l9SetPieceTuning = {
   thrower: { sideM: 13, windupTicks: 48, flightTicks: 54, throws: 4, intervalTicks: 80, startM: 60, stopM: 12, /** objects land this far ahead of the predicted hull */ leadM: 9,
     /** Light debris is smashed (10 durability); the concrete block (3rd throw) must be dodged and is only thrown at a fast APC (>= heavyMinSpeed). */
     items: ['barricade', 'trash-can', 'jersey-barrier', 'barricade'] as const, heavyMinSpeed: 7, hullDamage: 30,
-    /** A stopped hull is bracketed: the throws land at these distances (m) along the hull axis; the near ones (|d| < 3) hit, the far ones miss. r33-l9polish: was +-3.5/1.05 (all four hit, 120 of 1000). */
-    stoppedOffsetsM: [7, -1.2, -7, 1.2] },
+    /** A stopped hull is bracketed: [along, lateral] metres from the hull centre. The near ones (along +-1.2) hit and are smashed; the far ones land 6 m to the side of the road axis, where an unsmashed barricade cannot wedge the APC when it restarts. r33-l9polish: was +-3.5/1.05 along the axis (all four hit, 120 of 1000). */
+    stoppedOffsetsM: [[0, 6], [-1.2, 0], [0, -6], [1.2, 0]] },
   /** Junk across the lane to plough through (light obstacles: 10 durability each, debris). */
   smash: { items: ['trash-can', 'cone', 'mailbox', 'barricade', 'cone', 'trash-can', 'cone'] as const, slots: [-4.5, -3, -1.5, 0, 1.5, 3, 4.5] },
   roadblock: { slots: [-6, -3.6, -1.2, 1.2, 3.6, 6], /** Light bodies only: ploughing through is the payoff, heavy stalls belong to the ambient groups. */
