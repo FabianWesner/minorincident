@@ -278,6 +278,9 @@ export class ThreatObserver {
   private lastTick = 0;
   private nextPathAt = 0;
   readonly waves: WaveObserver;
+  /** Wall time spent in observation (excluded from receipts): everything in the wrapped update except the simulation tick itself. */
+  overheadMilliseconds = 0;
+  simMilliseconds = 0;
   readonly definitions: { id: string; text: string; type: string }[];
   readonly quality: string;
   constructor(readonly world: SimWorld, readonly level: RunnerLevel, options: { paths?: boolean; followersOnly?: boolean } = {}) {
@@ -316,6 +319,7 @@ export class ThreatObserver {
       if (def) this.row({ key: `step/${def.id}`, label: `${def.id}: ${def.text}`, threat: !!threatSteps[level][def.id] });
     });
     world.update = () => {
+      const entered = performance.now();
       const before = world.tick;
       const playing = world.missions!.state.phase === 'playing';
       const descriptors = playing ? phases(world, level) : [];
@@ -326,8 +330,11 @@ export class ThreatObserver {
       }
       this.waves.beforeTick();
       const leaderBefore = world.entities.get(1)!.transform, leaderX = leaderBefore.x, leaderZ = leaderBefore.z;
+      const innerStart = performance.now();
       update();
-      if (world.tick === before) return;
+      const innerEnd = performance.now();
+      this.simMilliseconds += innerEnd - innerStart;
+      if (world.tick === before) { this.overheadMilliseconds += innerStart - entered; return; }
       for (const row of this.active) row.ticks += world.tick - before;
       const leaderAfter = world.entities.get(1)!.transform;
       this.observe(Math.hypot(leaderAfter.x - leaderX, leaderAfter.z - leaderZ) * 60 / (world.tick - before), options.followersOnly);
@@ -341,6 +348,7 @@ export class ThreatObserver {
         this.nextPathAt = world.tick + 120;
       }
       this.lastTick = world.tick;
+      this.overheadMilliseconds += innerStart - entered + performance.now() - innerEnd;
     };
   }
   private row(phase: Phase): Row {
