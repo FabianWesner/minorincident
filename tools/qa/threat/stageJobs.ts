@@ -24,6 +24,7 @@ export interface StageResult {
   split?: { skilledSeconds?: number; kitingSeconds?: number; observerSeconds?: number; simSeconds?: number };
   native?: NativeStage; l3?: L3SharedSeed; follower?: FollowerPaceSeed; highHold?: ReturnType<L4HoldCensus['finish']>;
 }
+export interface ShardSpec { index: number; count: number }
 export const stageId = (level: RunnerLevel, passive: boolean, seed = 1): string => `${level}/${passive ? 'passive' : 'skilled'}/${seed}`;
 const kitingStyle: KitingStyle = process.env.MI_THREAT_KITING_STYLE === 'circles' ? 'circles' : 'retreat';
 const campaignFor = (level: RunnerLevel, seed: number) => {
@@ -80,7 +81,7 @@ async function execute(job: StageJob): Promise<StageResult> {
 }
 
 /** Independent routes share a fixed pool: no level worker can hold a core idle while its seed jobs run. */
-export async function runStages(levels: readonly RunnerLevel[], maxWorkers: number): Promise<Map<string, StageResult>> {
+export async function runStages(levels: readonly RunnerLevel[], maxWorkers: number, shard?: ShardSpec): Promise<Map<string, StageResult>> {
   const jobs: StageJob[] = [];
   for (const level of levels) {
     jobs.push({ id: stageId(level, false), level, kind: level === 'L3' ? 'l3' : 'native', seed: 1, passive: false });
@@ -101,7 +102,19 @@ export async function runStages(levels: readonly RunnerLevel[], maxWorkers: numb
     'L7/skilled/1': 49, 'L7/skilled/3': 48, 'L7/skilled/2': 40, 'L6/skilled/1': 32, 'L1/passive/1': 29, 'L3/passive/1': 19, 'L6/passive/1': 13,
   };
   const cost = (job: StageJob) => measured[job.id] ?? (job.kind === 'follower' ? job.passive ? 230 : 55 : job.passive ? 80 : 90);
-  jobs.sort((a, b) => cost(b) - cost(a));
+  jobs.sort((a, b) => cost(b) - cost(a) || a.id.localeCompare(b.id));
+  if (shard) {
+    // Deterministic static split: longest-first onto count x 4 virtual workers, shard = virtual worker / 4. Every shard
+    // then runs its own jobs through the same 4-worker pool, so the packing the split assumed is the packing it gets.
+    const loads = new Array<number>(shard.count * maxWorkers).fill(0), owner = new Map<string, number>();
+    for (const job of jobs) {
+      const w = loads.indexOf(Math.min(...loads));
+      loads[w] += cost(job); owner.set(job.id, Math.floor(w / maxWorkers));
+    }
+    const mine = jobs.filter(job => owner.get(job.id) === shard.index);
+    jobs.length = 0; jobs.push(...mine);
+    console.log(`[qa:threat] shard ${shard.index + 1}/${shard.count}: ${jobs.length} stages, planned ${loads.slice(shard.index * maxWorkers, (shard.index + 1) * maxWorkers).map(Math.round).join('/')} s per worker`);
+  }
   const results = new Map<string, StageResult>();
   if (maxWorkers === 1) {
     for (const job of jobs) results.set(job.id, await execute(job));

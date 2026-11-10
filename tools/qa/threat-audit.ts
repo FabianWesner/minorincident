@@ -11,7 +11,8 @@ import { L4HoldCensus } from './threat/l4-hold';
 import { focusedCriteria } from './threat/criteria';
 import { armyLineVerdict, type ArmyLineVerdict } from './threat/l3ArmyLine';
 import { followerPaceVerdict, type FollowerPaceSeed, type FollowerPaceVerdict } from './threat/followerPace';
-import { runStages, stageId } from './threat/stageJobs';
+import { runStages, stageId, type StageResult } from './threat/stageJobs';
+import { readFile } from 'node:fs/promises';
 import type { L3SurvivalSeed } from './threat/l3SurvivalSeeds';
 import type { KitingReceipt } from './threat/kiting';
 import { provenance } from './accept/probe';
@@ -40,6 +41,10 @@ const { values } = parseArgs({ options: {
   maxWorkers: { type: 'string', default: '4' }, levels: { type: 'string' },
   out: { type: 'string', default: 'test-results/qa-threat' }, report: { type: 'string' }, proof: { type: 'boolean' },
   'passive-from': { type: 'string' },
+  /** `i/n`: run only shard i (1-based) of n; writes shard-i.json instead of receipts. */
+  shard: { type: 'string' },
+  /** Comma-separated shard output directories whose stage results replace running the simulation. */
+  merge: { type: 'string' },
 } });
 const maxWorkers = Number(values.maxWorkers);
 if (!Number.isInteger(maxWorkers) || maxWorkers < 1 || maxWorkers > 4) throw new Error('--maxWorkers must be 1–4');
@@ -57,7 +62,24 @@ const sourceMatchesMain = process.env.QA_THREAT_SOURCE_MATCHES_MAIN !== undefine
   : mainRevision === 'not-supplied' ? null : git('diff', mainRevision, '--', 'src', 'public') === '' && git('ls-files', '--others', '--exclude-standard', '--', 'src', 'public') === '';
 const started = performance.now(), levels: LevelReceipt[] = [];
 await mkdir(values.out!, { recursive: true });
-const stages = await runStages(selected, maxWorkers);
+const shardMatch = values.shard?.match(/^([1-9]\d*)\/([1-9]\d*)$/);
+if (values.shard && (!shardMatch || Number(shardMatch[1]) > Number(shardMatch[2]))) throw new Error('--shard must be i/n with 1 <= i <= n');
+if (shardMatch && values.merge) throw new Error('--shard and --merge are exclusive');
+let stages: Map<string, StageResult>, shardWall = 0;
+if (values.merge) {
+  stages = new Map();
+  for (const dir of values.merge.split(',')) {
+    const part = JSON.parse(await readFile(join(dir, 'shard.json'), 'utf8')) as { seconds: number; results: StageResult[] };
+    shardWall = Math.max(shardWall, part.seconds);
+    for (const row of part.results) { if (stages.has(row.job.id)) throw new Error(`Stage ${row.job.id} appears in two shards`); stages.set(row.job.id, row); }
+  }
+} else stages = await runStages(selected, maxWorkers, shardMatch ? { index: Number(shardMatch[1]) - 1, count: Number(shardMatch[2]) } : undefined);
+if (shardMatch) {
+  const seconds = (performance.now() - started) / 1000;
+  await writeFile(join(values.out!, 'shard.json'), JSON.stringify({ seconds, results: [...stages.values()] }) + '\n');
+  console.log(`[qa:threat] shard ${values.shard}: ${stages.size} stages in ${seconds.toFixed(1)}s`);
+  process.exit([...stages.values()].some(row => row.error) ? 1 : 0);
+}
 await writeFile(join(values.out!, 'stages.json'), JSON.stringify([...stages.values()].map(({ job, seconds, startedAt, endedAt, error, split }) => ({ ...job, seconds, startedAt, endedAt, ...(split ? { split } : {}), ...(error ? { error } : {}) })), null, 2) + '\n');
 const stage = (id: string) => {
   const result = stages.get(id);
@@ -160,7 +182,7 @@ for (const level of selected) {
   console.log(`[qa:threat] ${level}: skilled ${run?.outcome ?? 'error'}, passive ${passiveRun?.outcome ?? 'error'}, ${passiveFlags.length} passive flags (${receipt.wallSeconds.toFixed(1)}s)`);
   await writeFile(join(values.out!, `${level}.json`), JSON.stringify(receipt, null, 2) + '\n');
 }
-const seconds = (performance.now() - started) / 1000;
+const seconds = values.merge ? shardWall : (performance.now() - started) / 1000;
 const flags = levels.flatMap(level => level.passiveFlags.map(flag => `${level.level}/${flag}`));
 if (selected.length !== runnerLevels.length) flags.push('PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate');
 if (values.report && sourceMatchesMain !== true) flags.push('BASELINE_MAIN_SOURCE_NOT_VERIFIED');

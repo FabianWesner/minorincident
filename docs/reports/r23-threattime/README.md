@@ -40,3 +40,21 @@ Where the ~3,800 core-s go: L5 passive x3 806 (1,200 sim-s each), L7 passive x3 
 ## Verification
 
 `npm run typecheck` and `npm run lint` pass on a runner. `tests/tools/gate-tools.test.ts` has one failure (`reviewSourceDigest` needs Git history; the runner's manifest repo has no commits, as noted in r16); `tests/engine/navigation.test.ts` passes. Full `npm test` not run (lane rule: the orchestrator runs it).
+
+## Part 2: two-runner sharding (orchestrator decision)
+
+`npm run qa:threat:sharded` (`tools/qa/run-threat-sharded.mjs`) runs `threat-audit.ts --shard i/2` on two runners in parallel (`RUNNER_SLOTS=1` so a runner holding a shard counts as full and the second shard lands elsewhere), each under the unchanged `test-budget.mjs --max-seconds 600`. The split is deterministic: stages sorted by measured cost (ties by id), longest-first onto 2 x 4 virtual workers, shard = worker / 4, so each shard's own 4-worker pool follows the packing the split assumed. Each shard writes `shard.json`; `threat-audit.ts --merge dir1,dir2` rebuilds the normal `audit.json`, `LN.json` and `README.md` locally (no simulation). `npm run qa:threat:remote` / `node tools/qa/run-threat-sharded.mjs --single` keep the one-runner path.
+
+Measured run (runners 94.130.181.173 and 2.31.170.171, 15 + 16 stages):
+
+| | Shard 1 | Shard 2 |
+|---|---:|---:|
+| Audit clock | 540.5 s | 542.4 s |
+| With test-budget wrapper | 546.0 s | 547.6 s |
+| Headroom under 600 s | 54 s | 52 s |
+
+Planned 482-486 s per worker; actual stages ran ~11 % slower than the single-runner numbers they were costed from. Total command wall including runner sync (one shard waited 124 s for sync/npm ci) was 680 s, but the budget clock per shard is what the gate enforces.
+
+**Not fully met:** headroom is 52-54 s, 6-8 s short of the requested 60 s (540 s). Both shards finish evenly (1.9 s apart), so more balance will not help; a 3-way split or ~5 % less work (L8/L9 skilled, handled by another lane) would.
+
+**Hashes:** merged receipts vs the single-runner baseline: all ten `compare-receipts.mjs` lines IDENTICAL, native state hashes unchanged (same values as above). Gate result is the same 20 known fail flags as the baseline run (L9 skilled etc.), exit 1 exactly as before.
