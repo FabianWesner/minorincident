@@ -97,6 +97,7 @@ test('enter, drive and exit: door dwell, input ownership (no attacks while drivi
   await checkBossDamage(); await checkOrdinaryDamage(); await checkBossStates();
   await apcBoarders();
   await l9BusVsParkedApc();
+  await l9CompanionsBoardDiagonalApc();
 }, 400_000);
 
 // L9 evacuation hold: before the fix the pursuing bus kept full throttle against the braked APC
@@ -128,6 +129,32 @@ async function l9BusVsParkedApc(): Promise<void> {
     expect(closest, 'the bus really closed in on the APC').toBeLessThan(apc.physics.def.length / 2 + bus.physics.def.length / 2 + 7);
     expect(moved, 'APC displacement over a 30 s hold with the bus pursuing').toBeLessThanOrEqual(1.5);
   } finally { world.dispose(); }
+}
+
+// r27-l9board: a diagonally parked APC puts the passenger door inside the hull's nav margin; the corgi halted 1.3 m short of it
+// (boarding radius 1.2 m) and the evacuation never completed. Corgi and Sam must now seat from several approach sides.
+async function l9CompanionsBoardDiagonalApc(): Promise<void> {
+  for (const yaw of [-.85, .85]) {
+    const world = await loadLevel('L9', 1, preset('L9-default'), 0, { quality: 'low' });
+    try {
+      const l9 = world.missions!.l9!, s = l9.driving.state, apc = world.vehicles!.cars.get(l9.state.carId)!;
+      world.missions!.begin();
+      const pose = { x: 451, z: 1, y: apc.physics.def.suspension + apc.physics.def.wheelRadius + .15, yaw };
+      Object.assign(apc.entity.transform, pose); Object.assign(apc.physics.previous, pose); apc.physics.body.setTranslation(pose, true);
+      apc.physics.body.setRotation({ x: 0, y: Math.sin(yaw / 2), z: 0, w: Math.cos(yaw / 2) }, true);
+      apc.physics.body.setLinvel({ x: 0, y: 0, z: 0 }, true); apc.physics.body.setAngvel({ x: 0, y: 0, z: 0 }, true);
+      const corgi = [...world.entities.iterate()].find(e => e.companion)!, sam = world.entities.get(s.samId)!;
+      Object.assign(corgi.transform, { x: 444, z: -1 }); Object.assign(sam.transform, { x: 445, z: 6 });
+      // Both start outside the vehicle, as when the courier arrives at the evacuation point.
+      apc.entity.vehicle!.passengers = (apc.entity.vehicle!.passengers ?? []).filter(p => p.id !== corgi.id && p.id !== sam.id);
+      for (const e of [corgi, sam]) { delete e.passengerOf; e.hidden = false; }
+      world.spatial.set(corgi.id, 444, -1); world.spatial.set(sam.id, 445, 6);
+      for (let i = 0; i < 1200 && !(s.evacuationAt !== null && corgi.passengerOf !== undefined && sam.passengerOf !== undefined); i++) world.update();
+      expect(s.evacuationAt, `evacuation hold started (yaw ${yaw}, apc ${JSON.stringify(apc.entity.transform)} speed ${apc.physics.speed})`).not.toBeNull();
+      expect(corgi.passengerOf, `corgi boards the APC parked at yaw ${yaw}`).toBe(apc.entity.id);
+      expect(sam.passengerOf, `Sam boards the APC parked at yaw ${yaw}`).toBe(apc.entity.id);
+    } finally { world.dispose(); }
+  }
 }
 
 // L9 boarders threaten an exposed hatch occupant; the closed cab protects the driver.
