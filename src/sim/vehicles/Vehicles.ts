@@ -191,7 +191,7 @@ export class Vehicles {
         if ((scheme !== 'mouse-only' && frame.left.down) || (car.physics.def.emergency && this.world.tick % 60 === 0)) this.noise(car);
         // Recovery reverses on the opposite lock to the held steer (a three-point turn), so it adds to the turn the driver asks for
         // instead of undoing it; with right held the old fixed lock swung the nose straight back into the wall (r29-l9pin).
-        if (state.recoveringUntil > this.world.tick && !drive.brake) { drive.throttle = -.8; drive.steer = drive.steer > .1 ? -.6 : .6; drive.brake = false; }
+        if (state.recoveringUntil > this.world.tick && !drive.brake) { drive.throttle = -.8; drive.steer = drive.throttle > 0 && drive.steer > .1 ? -.6 : .6; drive.brake = false; }
       } else if (this.active === null && player.health.current > 0 && this.operable(car) && this.world.tick >= car.noEnterUntil && car.physics.speed < 1 && (zoo?.state.carId !== car.entity.id || zoo.canBoardDriver())) {
         this.localPoint(car, car.physics.def.doorX, car.physics.def.width / 2 + (zoo?.state.carId === car.entity.id ? 1 : .55));
         const near = Math.hypot(player.transform.x - this.position.x, player.transform.z - this.position.z) <= (zoo?.state.carId === car.entity.id ? 2 : .7);

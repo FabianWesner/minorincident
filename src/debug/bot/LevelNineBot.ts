@@ -12,6 +12,9 @@ export class LevelNineBot {
   private avoid: { x: number; z: number; until: number } | null = null;
   private blockedAt: number | null = null;
   private reverseUntil = 0;
+  /** Reverse on the lock opposite to the last forward steer (three-point turn); a fixed +0.6 undid right turns (r29-l9pin). */
+  private reverseSteer = .6;
+  private lastSteer = 0;
   private previousPosition: { x: number; z: number } | null = null;
   readonly path: readonly Point[];
   readonly length: number;
@@ -75,9 +78,10 @@ export class LevelNineBot {
       if (target) { const dx = target.transform.x - origin.x, dz = target.transform.z - origin.z, length = Math.hypot(dx, dz) || 1; f.selectedWeaponKey = length >= 8 && risk(target.transform) >= 8 ? 7 : length < 8 ? 6 : 5; f.aim = { x: dx / length, z: dz / length }; f.aimPoint = { x: target.transform.x, z: target.transform.z }; f.aimSource = 'keyboard'; f.activeAttack = true; f.left = { down: true, held: true, up: false }; }
       return f;
     }
-    if (!l9.driving.holding(car.id) && car.vehicle!.speed < 1) this.blockedAt ??= w.tick; else this.blockedAt = null;
-    if (this.blockedAt !== null && w.tick - this.blockedAt >= 90) { this.reverseUntil = w.tick + 90; this.blockedAt = null; this.avoid = null; }
-    if (w.tick < this.reverseUntil) { f.drive = { throttle: -.8, steer: .6 }; return f; }
+    // A slow reverse is not a new block: counting it chained 90-tick reverses forever (r29-l9pin, --zero crept backwards 200 m).
+    if (!l9.driving.holding(car.id) && car.vehicle!.speed < 1 && w.tick >= this.reverseUntil) this.blockedAt ??= w.tick; else this.blockedAt = null;
+    if (this.blockedAt !== null && w.tick - this.blockedAt >= 90) { this.reverseUntil = w.tick + 90; this.blockedAt = null; this.avoid = null; this.reverseSteer = this.lastSteer > .1 ? -.6 : .6; }
+    if (w.tick < this.reverseUntil) { f.drive = { throttle: -.8, steer: this.reverseSteer }; return f; }
     // Keep the short bridge departure aligned. Repeated handbrake shakes here
     // turn the APC off the bridge lane while the pursuing bus keeps ramming it.
     if (!driving.evacuationDone && car.vehicle!.attached.length && car.vehicle!.speed > 2.25) {
@@ -131,7 +135,7 @@ export class LevelNineBot {
     if (this.avoid) target = [this.avoid.x, this.avoid.z];
     const dx = target[0] - p.x, dz = target[1] - p.z, want = -Math.atan2(dz, dx);
     const delta = Math.atan2(Math.sin(want - p.yaw), Math.cos(want - p.yaw));
-    f.drive = { throttle: driving.evacuationDone ? 1 : this.throttle, steer: Math.max(-1, Math.min(1, delta * 2)) };
+    f.drive = { throttle: driving.evacuationDone ? 1 : this.throttle, steer: Math.max(-1, Math.min(1, delta * 2)) }; this.lastSteer = f.drive.steer;
     return f;
   }
 }
