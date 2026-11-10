@@ -60,7 +60,7 @@ The r22 L10 webgl2 high figure (+6.4 %) and r20 (+4.9 %) put the cell around +4-
 
 ## Validation
 
-`npm run typecheck`, `npm run lint`: clean. `npm test`: see the final message of the lane (one tools test, `tests/tools/gate-tools.test.ts`, depends on review freshness of the working tree, see below).
+`npm run typecheck`, `npm run lint`: clean. `npm test` on the committed tree: 27 files / 107 tests pass (31 s). (A first run on the dirty tree failed `tests/tools/gate-tools.test.ts` because its review-freshness check reads the working tree; it passed once the work was committed.)
 
 ## Open
 
