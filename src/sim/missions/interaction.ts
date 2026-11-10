@@ -27,6 +27,13 @@ export function activeInteractions(mission: { def: MissionDef; state: MissionSta
     const trigger = { kind: 'interact', anchor: 'cure-console', seconds: .6 } as const;
     out.push({ step: { ...hold, text: 'Activate the dispersal console', type: 'interact', complete: trigger }, trigger, ring: true });
   }
+  // r30-finale-qa: the release step completes on a flag set by an E press at the console, so it had no ring, prompt or
+  // touch button ("Release the cure · 1 m" only). Present it like the console activation above.
+  if (mission.l10 && state.steps.release?.status === 'active' && !state.states['cure-released'] && def.anchors['cure-console']) {
+    const release = def.steps.find(s => s.id === 'release')!;
+    const trigger = { kind: 'interact', anchor: 'cure-console', seconds: .6 } as const;
+    out.push({ step: { ...release, type: 'interact', complete: trigger }, trigger, ring: true });
+  }
   for (const step of def.steps) {
     const trigger = state.steps[step.id]?.status === 'active' ? interactTrigger(step.complete) : undefined;
     if (trigger) out.push({ step: { ...step, complete: trigger }, trigger, ring: !step.optional || (step.id === 'axe' && step.complete.kind === 'interact' && step.complete.anchor === 'l2-axe-rack') });
