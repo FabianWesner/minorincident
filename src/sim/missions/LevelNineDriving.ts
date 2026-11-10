@@ -19,7 +19,7 @@ export interface L9DrivingState {
   hugAt: number | null; hugDone: boolean;
   hugSpot?: { x: number; z: number; dogX: number; dogZ: number };
   truckEntering: Record<number, number>;
-  busId: number; busPassengers: number[]; busReleased: number; busHitAt: number; busStoppedAt: number | null; busLineAt: number | null;
+  busId: number; busPassengers: number[]; busReleased: number; busHitAt: number; busRams: number; busStoppedAt: number | null; busLineAt: number | null;
   tankerId: number; tankerWreckId: number; tankerFuseAt: number | null; tankerExploded: boolean; stampede: number[];
   fireAt: number | null; fireIds: number[]; jumped: string[]; jump: { id: string; airborne: boolean } | null;
   obstacleIds: number[]; waves: number[]; nextWave: number; lines: { id: string; at: number }[];
@@ -30,10 +30,12 @@ export const emptyDriving = (): L9DrivingState => ({
   evacuationAt: null, evacuated: [], evacuating: [], evacuationDone: false,
   hugAt: null, hugDone: false,
   truckEntering: {},
-  busId: 0, busPassengers: [], busReleased: 0, busHitAt: -1000, busStoppedAt: null, busLineAt: null,
+  busId: 0, busPassengers: [], busReleased: 0, busHitAt: -1000, busRams: 0, busStoppedAt: null, busLineAt: null,
   tankerId: 0, tankerWreckId: 0, tankerFuseAt: null, tankerExploded: false, stampede: [], fireAt: null, fireIds: [], jumped: [], jump: null,
   obstacleIds: [], waves: [], nextWave: 0, lines: [],
 });
+/** r27-l9board: total number of damaging bus rams per level (40 durability each). */
+const busRamCap = 12;
 const distance = (a: { x: number; z: number }, b: { x: number; z: number }) => Math.hypot(a.x - b.x, a.z - b.z);
 const alive = (e: EntitySnapshot | undefined): e is EntitySnapshot => !!e && e.health.current > 0 && !e.infected && !e.infection;
 
@@ -274,6 +276,8 @@ export class LevelNineDriving {
     const car = this.car.entity.transform, dx = car.x - bus.transform.x, dz = car.z - bus.transform.z;
     const delta = Math.atan2(Math.sin(-Math.atan2(dz, dx) - bus.transform.yaw), Math.cos(-Math.atan2(dz, dx) - bus.transform.yaw));
     intent.throttle = 1; intent.brake = false; intent.steer = Math.max(-1, Math.min(1, delta * 2));
+    // r27-l9board: a bus glued to a crawling or stalled APC rammed it every 2 s (30 rams, durability 0 by the rail on the
+    // countryside route). It now damages the APC at most busRamCap times (12 x 40 = 480 of 1000); it still drives and pushes.
     // Evacuation hold: the APC is parked with the brake on. A full-throttle bus
     // pressed against it shoved it ~2.4 m at once and then crept it ~10 m over
     // the hold. The bus now slows on approach and halts a few metres short, so
@@ -327,8 +331,8 @@ export class LevelNineDriving {
     const bus = w.vehicles!.cars.get(s.busId); if (!bus) return;
     if (s.busStoppedAt === null && w.tick % 6 === 0) emitEngine(w, s.busId, bus.physics.speed);
     const near = car.physics.hullDistance(bus.entity.transform.x, bus.entity.transform.z) < bus.physics.def.length / 2 + 1;
-    if (s.busStoppedAt === null && near && w.tick - s.busHitAt >= 120 && Math.max(bus.physics.speed, car.physics.speed) > 2) {
-      s.busHitAt = w.tick; w.vehicles!.damage(car.entity.id, 40); this.signal('bus-ram', bus.entity.id);
+    if (s.busStoppedAt === null && near && s.busRams < busRamCap && w.tick - s.busHitAt >= 120 && Math.max(bus.physics.speed, car.physics.speed) > 2) {
+      s.busHitAt = w.tick; s.busRams++; w.vehicles!.damage(car.entity.id, 40); this.signal('bus-ram', bus.entity.id);
     }
     let blocked = false;
     if (bus.physics.stuck) w.physics.world!.contactPairsWith(bus.physics.collider, collider => {
@@ -395,18 +399,29 @@ export class LevelNineDriving {
       corgi.companion!.transitionUntil = w.tick + 2;
       const door = w.vehicles!.passengerDoor(this.car.entity.id);
       w.npcs!.move(corgi, door, 2.5, corgi.companion!, .15);
-      w.vehicles!.boardPassenger(this.car.entity.id, corgi.id);
+      w.vehicles!.boardPassenger(this.car.entity.id, corgi.id, this.doorReach(corgi, door));
     }
     const dogAboard = !corgi || this.car.entity.vehicle!.passengers?.some(p => p.id === corgi.id && p.phase === 'seated');
     const research = w.entities.get(s.samId);
     if (alive(research) && research.passengerOf !== this.car.entity.id) {
       w.npcs!.move(research, w.vehicles!.passengerDoor(this.car.entity.id), 3, research.civilian!, .2);
-      w.vehicles!.boardPassenger(this.car.entity.id, research.id);
+      w.vehicles!.boardPassenger(this.car.entity.id, research.id, this.doorReach(research, w.vehicles!.passengerDoor(this.car.entity.id)));
     }
     const researchAboard = !alive(research) || this.car.entity.vehicle!.passengers?.some(p => p.id === research.id && p.phase === 'seated');
     if (w.tick - s.evacuationAt >= cfg.evacuation.defendTicks && living.every(id => s.evacuated.includes(id)) && dogAboard && researchAboard) {
       s.evacuationDone = true; this.line('L9.sam-stays'); this.rebuild(); this.signal('evacuation-complete'); this.checkpoint('bridge');
     }
+  }
+  /**
+   * r27-l9board: a diagonally parked APC puts the passenger door inside the hull's nav margin, so a companion routed to it
+   * halts on the nearest clear cell, 1.3 to 3 m out, just beyond the default 1.2 m / 0.7 m boarding radius, and the evacuation
+   * never completes. A companion standing on the outer side of the door (farther from the hull centre than the door) within
+   * 2 m may board; one beyond or across the hull may not.
+   */
+  private doorReach(e: EntitySnapshot, door: { x: number; z: number }): number | undefined {
+    const c = this.car.entity.transform;
+    const outside = Math.hypot(e.transform.x - c.x, e.transform.z - c.z) >= Math.hypot(door.x - c.x, door.z - c.z);
+    return outside ? 2 : undefined;
   }
   private hugCorgi(rosa: EntitySnapshot): boolean {
     const w = this.w, s = this.state, corgi = [...w.entities.iterate()].find(e => e.companion);

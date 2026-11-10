@@ -958,9 +958,14 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     if (e.level === 'L9' && e.driving) {
       // The APC exposes its heading directly. Inferring steering from recent
       // velocity flips the sign after a ram/reverse and can circle forever.
-      const car = e.driving, want = -Math.atan2(goal.z - car.z, goal.x - car.x);
-      const delta = Math.atan2(Math.sin(want - car.yaw), Math.cos(want - car.yaw));
-      await press(vehicleRecovery.keys(car, Date.now()) ?? ['KeyW', ...(Math.abs(delta) > .08 ? [delta > 0 ? 'KeyD' : 'KeyA'] : [])]);
+      // Keyboard driving is screen-relative (src/sim/vehicles/Vehicles.ts: the keys point where the vehicle
+      // should travel on screen, like walking), so steer by projecting a lookahead point, not with W+A/D.
+      const car = e.driving, recovery = vehicleRecovery.keys(car, Date.now());
+      if (recovery) { await press(recovery); return; }
+      const d = Math.hypot(goal.x - car.x, goal.z - car.z) || 1, ahead = Math.min(d, 25);
+      const to = { x: car.x + (goal.x - car.x) / d * ahead, z: car.z + (goal.z - car.z) / d * ahead };
+      const pts = await page.evaluate(({ a, b }) => [window.__SS__!.input.project(a, 'player'), window.__SS__!.input.project(b, 'player')], { a: { x: car.x, z: car.z }, b: to });
+      await press(wasdToward(e, e.view.w / 2 + pts[1].x - pts[0].x, e.view.h / 2 + pts[1].y - pts[0].y));
       return;
     }
     const recovery = vehicleRecovery.keys(e.driving!, Date.now());
@@ -1688,10 +1693,9 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
           if (!passed && Math.hypot(b[0] - car.x, b[1] - car.z) >= 6 + 10 * Math.min(1, turn / (Math.PI / 2))) break;
           l9Waypoint++;
         }
-        const goal = l9Path[l9Waypoint], want = -Math.atan2(goal[1] - car.z, goal[0] - car.x);
-        const delta = Math.atan2(Math.sin(want - car.yaw), Math.cos(want - car.yaw));
-        const recovery = vehicleRecovery.keys(car, Date.now());
-        await press(recovery ?? ['KeyW', ...(Math.abs(delta) > .08 ? [delta > 0 ? 'KeyD' : 'KeyA'] : [])]);
+        // Screen-relative keyboard driving (see drive()).
+        const goal = l9Path[l9Waypoint];
+        await drive(e, { x: goal[0], z: goal[1] });
       } else if (ring) await drive(e, ring); else await press([]);
       await hold(120); continue;
     }
