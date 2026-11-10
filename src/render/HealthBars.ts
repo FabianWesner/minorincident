@@ -16,6 +16,8 @@ export const isFollower = (e: EntitySnapshot) => (e.civilian?.survivor?.mode ===
 /** Player interactions persist; proximity or damage from another actor alone reveals nothing. */
 export function barEligible(e: EntitySnapshot, player: { x: number; z: number }, bar: boolean): boolean {
   if (e.civilian?.survivor?.mode === 'follow' || e.civilian?.ally?.follow?.targetId === 1 || e.escort?.order === 'follow') return isFollower(e);
+  // r32 (PO "This guy is not doing anything"): the old elephant's bar appears when his finale fight engages, never while he waits in his enclosure.
+  if (e.infected?.arenaBoss?.arena === 'elephant' && !e.infected.arenaBoss.engaged) return false;
   return bar && e.faction === 'infected' && !!e.infected && e.health.current > 0 && !e.hidden && !e.infected.hidden && !e.corpse &&
     (mandatoryBar(e) || !!e.infected.hitByPlayer || ((e.infected.targetId === 1 || e.infected.heardTargetId === 1 || e.infected.l1?.targetId === 1 || e.infected.specialAttack?.grabbedId === 1) && Math.hypot(e.transform.x - player.x, e.transform.z - player.z) <= 6));
 }
