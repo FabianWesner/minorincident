@@ -4,6 +4,7 @@ import { propFootprint } from '../interact/PropSystem';
 import { boxContact, type SolidBox } from '../world/SolidGeometry';
 import { Status } from '../combat/Status';
 import { resetResponse } from '../locomotion/MotionResponse';
+import { animalSpine, infectedContactDistance } from '../ai/CharacterSeparation';
 import type { EntitySnapshot } from '../world/types';
 import type { Mission } from './Mission';
 import { requireClearPoint } from './missionHelpers';
@@ -268,7 +269,7 @@ export class L8BossArenas {
     }
     if (boss.hunt) {
       const hunt = boss.hunt;
-      if (distance(e.transform, hunt) > 1.2 && w.tick < hunt.until) { this.walk(e, hunt, hunt.flank ? 7 : 4); return true; }
+      if (distance(e.transform, hunt) > 1.2 && w.tick < hunt.until) { this.walk(e, hunt, hunt.flank ? 7 : 3.2); return true; }
       if (distance(e.transform, p.transform) > 9) { hunt.until = w.tick; this.walk(e, p.transform, 6.5); return true; }
       delete boss.hunt; this.start(e, hunt.flank ? 'lion.flank' : 'lion.pounce', 36, 10, 1); return true;
     }
@@ -465,14 +466,25 @@ export class L8BossArenas {
     const staticClear = w.solids.sweep(e, { x: a.area.dx, z: a.area.dz }, step, e.combat!.radius, false, false);
     let clear = w.solids.sweep(e, { x: a.area.dx, z: a.area.dz }, step, e.combat!.radius, arena.id === 'zebra' || arena.id === 'elephant' ? 'side' : false, true);
     if (arena.id === 'flamingo' && !w.infected!.nav.clear(e.transform.x + a.area.dx * clear, e.transform.z + a.area.dz * clear, e.combat!.radius)) clear = 0;
+    const leap = arena.id === 'lion' && (a.move === 'lion.pounce' || a.move === 'lion.flank');
+    if (leap) {
+      // r32: the pounce lands with the muzzle at the courier (same contact rule as the shared pounce), not through her.
+      const px = p.transform.x - e.transform.x, pz = p.transform.z - e.transform.z, along = px * a.area.dx + pz * a.area.dz, lateral = Math.abs(px * a.area.dz - pz * a.area.dx);
+      const contact = infectedContactDistance(e.combat!.radius) + (animalSpine[e.archetype ?? ''] ?? 0);
+      if (along >= 0 && lateral <= contact) clear = Math.min(clear, Math.max(0, along - Math.sqrt(contact ** 2 - lateral ** 2)));
+    }
     w.solids.wrote(e, 'l8.arena-special'); e.transform.x += a.area.dx * clear; e.transform.z += a.area.dz * clear;
+    // r32: a real leap arc (0.8 m at mid-flight) for the lion's pounce; the renderer poses the body over it.
+    if (leap) e.transform.y = (w.districts?.supportBelow(e.transform.x, e.transform.z, e.transform.y - .7) ?? 0) + .7 + Math.sin(Math.PI * Math.min(1, (travelled + clear) / Math.max(.5, range))) * .8;
     w.spatial.set(e.id, e.transform.x, e.transform.z);
-    if (distance(e.transform, p.transform) <= a.area.radius + .35) {
+    if (distance(e.transform, p.transform) <= (leap ? Math.max(a.area.radius + .35, infectedContactDistance(e.combat!.radius) + (animalSpine[e.archetype ?? ''] ?? 0) + .1) : a.area.radius + .35)) {
       const firstContact = !a.hitIds.includes(1);
       this.hit(e, arena.id === 'elephant' ? 70 : arena.id === 'monkey' ? 35 : arena.id === 'flamingo' ? 30 : arena.id === 'lion' ? 70 : 35, arena.id === 'elephant' ? 70 : 0);
       if (firstContact && (arena.id === 'lion' || arena.id === 'monkey')) { b.grabUntil = w.tick + 120; b.grabNextTick = w.tick + 30; b.grabHits = 0; b.heardTargetId = 1; arena.grabs++; }
     }
-    if (clear + .001 < step || travelled + step >= range || w.tick - a.activeTick > (range / speed + 1) * 60) {
+    const landed = leap && distance(e.transform, p.transform) <= infectedContactDistance(e.combat!.radius) + (animalSpine[e.archetype ?? ''] ?? 0) + .05;
+    if (landed || clear + .001 < step || travelled + step >= range || w.tick - a.activeTick > (range / speed + 1) * 60) {
+      if (leap) e.transform.y = (w.districts?.supportBelow(e.transform.x, e.transform.z, e.transform.y - .7) ?? 0) + .7;
       const side = Math.abs((p.transform.x - a.area.x) * a.area.dz - (p.transform.z - a.area.z) * a.area.dx);
       const barrier = arena.id === 'elephant' && staticClear + .001 < step ? this.elephantBarrier(e) : undefined;
       // A near wall/truck still counts after a real lured run and sidestep; the elephant need not pass the old bait pose.

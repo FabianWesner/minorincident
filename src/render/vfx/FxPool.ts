@@ -170,6 +170,17 @@ export class FxPool {
           const animated = shape.equal(2).or(shape.equal(3)).select(laneWarning, ringWarning)
             .mul(windup.mul(.25).add(.65)).mul(beat).min(.68);
           mask = shape.equal(1).or(shape.equal(2)).or(shape.equal(3)).or(shape.equal(8)).select(animated, mask.mul(.65));
+          // r32 animal tells. 11: the diving flock's shadow line, a soft dark band that darkens from the birds'
+          // end of the lane as the dive nears. 12: a churned dust lane (zebra stampede, elephant charge) with
+          // drifting clods along it and ragged edges.
+          const soft = float(1).sub(p.x.abs().smoothstep(.8, 1));
+          const shadowBand = float(1).sub(across.smoothstep(.25, .95)).mul(soft);
+          const shadowSweep = p.x.lessThan(windup.mul(2.2).sub(1)).select(1, .45);
+          const shadow = shadowBand.mul(shadowSweep).mul(windup.mul(.35).add(.45));
+          const ragged = across.add(sin(p.x.mul(23).add(age.mul(3))).mul(.07)).add(noise.mul(.08));
+          const clods = sin(p.x.mul(style.x.mul(.9)).sub(age.mul(9))).mul(.5).add(.5).pow(3).mul(.35);
+          const dust = float(1).sub(ragged.smoothstep(.6, 1)).mul(soft).mul(clods.add(.22).add(p.x.lessThan(windup.mul(2).sub(1)).select(.14, 0))).mul(beat);
+          mask = shape.equal(11).select(shadow, shape.equal(12).select(dust.min(.62), mask));
         }
         if (this.bloodTextures.length) {
           const [splats, pool, trail] = this.bloodTextures.map(map => texture(map));

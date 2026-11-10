@@ -113,10 +113,17 @@
   }
  ],
  "camera": {
-  "mode": "close",
-  "target": "courier",
-  "radius": 11,
-  "azimuth": 70
+  "mode": "pose",
+  "position": [
+   8.0,
+   3.2,
+   10
+  ],
+  "target": [
+   8.0,
+   0.7,
+   0
+  ]
  },
  "frames": 640,
  "trace": true,
