@@ -96,7 +96,39 @@ test('enter, drive and exit: door dwell, input ownership (no attacks while drivi
   await checkL8Cues();
   await checkBossDamage(); await checkOrdinaryDamage(); await checkBossStates();
   await apcBoarders();
+  await l9BusVsParkedApc();
 }, 400_000);
+
+// L9 evacuation hold: before the fix the pursuing bus kept full throttle against the braked APC
+// (2.4 m first shove, then a 0.2 m/s creep, about 10 m over the hold). It must now stop short.
+async function l9BusVsParkedApc(): Promise<void> {
+  const world = await loadLevel('L9', 1, preset('L9-default'), 0, { quality: 'low' });
+  try {
+    const l9 = world.missions!.l9!, s = l9.driving.state, apc = world.vehicles!.cars.get(l9.state.carId)!;
+    world.missions!.begin();
+    const put = (v: typeof apc, x: number, z: number) => {
+      const pose = { x, z, y: v.physics.def.suspension + v.physics.def.wheelRadius + .15, yaw: 0 };
+      Object.assign(v.entity.transform, pose); Object.assign(v.physics.previous, pose); v.physics.body.setTranslation(pose, true);
+      v.physics.body.setRotation({ x: 0, y: 0, z: 0, w: 1 }, true); v.physics.body.setLinvel({ x: 0, y: 0, z: 0 }, true); v.physics.body.setAngvel({ x: 0, y: 0, z: 0 }, true);
+    };
+    const bus = world.vehicles!.cars.get(s.busId)!;
+    put(apc, 450, 0); put(bus, 390, 0);
+    // Same activation the mission performs once the bus reaches the road behind the APC.
+    bus.physics.body.setEnabled(true); bus.entity.hidden = false; bus.entity.vehicle!.braced = false;
+    world.vehicles!.autopilot.set(s.busId, (l9.driving as unknown as { busIntent: never }).busIntent); s.busLineAt = world.tick;
+    for (let i = 0; i < 90; i++) world.update();
+    expect(s.evacuationAt, 'evacuation hold started').not.toBeNull();
+    const x0 = apc.entity.transform.x, z0 = apc.entity.transform.z;
+    let moved = 0, closest = Infinity;
+    for (let i = 0; i < 1800; i++) {
+      world.update();
+      moved = Math.max(moved, Math.hypot(apc.entity.transform.x - x0, apc.entity.transform.z - z0));
+      closest = Math.min(closest, apc.entity.transform.x - bus.entity.transform.x);
+    }
+    expect(closest, 'the bus really closed in on the APC').toBeLessThan(apc.physics.def.length / 2 + bus.physics.def.length / 2 + 7);
+    expect(moved, 'APC displacement over a 30 s hold with the bus pursuing').toBeLessThanOrEqual(1.5);
+  } finally { world.dispose(); }
+}
 
 // L9 boarders threaten an exposed hatch occupant; the closed cab protects the driver.
 async function apcBoarders(): Promise<void> {
