@@ -1,6 +1,6 @@
 {
  "name": "r33-lineup-close",
- "note": "r33-heavies: runner plus the five heavy roles side by side, idle, same camera.",
+ "note": "r33-heavies: runner plus heavy roles, idle, fixed camera.",
  "seed": 10,
  "ground": "asphalt",
  "time": "L4",
@@ -11,8 +11,8 @@
    "id": "courier",
    "kind": "courier",
    "at": [
-    -5.6,
-    5.6
+    -9,
+    9
    ],
    "yaw": 0,
    "state": "idle"
@@ -91,14 +91,15 @@
   }
  ],
  "camera": {
-  "mode": "close",
+  "mode": "orbit",
   "target": [
    0,
    0,
    1.0
   ],
-  "radius": 8,
-  "azimuth": 30
+  "radius": 11,
+  "polar": 65,
+  "azimuth": 45
  },
  "frames": 60,
  "shots": [
