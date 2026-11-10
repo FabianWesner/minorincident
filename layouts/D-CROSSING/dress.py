@@ -152,17 +152,8 @@ def ok(asset, x, z, yaw=0.0, scale=(1, 1, 1), zone=False, pack=.62):
     return True
 
 
-CORNER = (-350, -330)
-CORNER_LOW = ('prop.hedge', 'prop.garden-bush', 'prop.garden-bush-small', 'prop.picket-fence', 'prop.privacy-fence')
-
-
 def put(asset, x, z, yaw=None, scale=(1, 1, 1), label=None, zone=False, pack=.62, decay=None):
     yaw = R.uniform(0, 2 * math.pi) if yaw is None else yaw
-    # r28-l7l10: the road turns at (-350, -330) and an APC cuts or overshoots that corner. The low verge walls there (hedge row
-    # prop.hedge:134-138 at z -337.9, then bushes) held its nose even with no infected near. Nothing a hull stops against stands
-    # within 5 m of the lane edge inside 44 m of the corner; trees and the farther fill still dress it.
-    if asset in CORNER_LOW and math.hypot(x - CORNER[0], z - CORNER[1]) < 44 and route_d((x, z)) < 5:
-        return False
     if not ok(asset, x, z, yaw, scale, zone, pack):
         stats['rejected'] = stats.get('rejected', 0) + 1
         return False
