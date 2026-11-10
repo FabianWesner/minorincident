@@ -317,3 +317,7 @@ A living record, updated after every lane or experiment. Short entries with evid
 - **Fix:** detour search treats living actors as soft and accepts a leg that only moves away from a corpse it already overlaps; a boarding member with no progress for 1.5 s is relocated up to 1.5 m along its route (`unjamBoarding`).
 - **Didn't work:** `contactExempt` with the blocking group member (corgi then wandered against the elephant and the queue got slower).
 - **Apply:** `zoo.passengers()` calls `refreshRoster()`; calling it from a per-tick diagnostic changes the run (seed 3 stopped finishing). Read `passengersCache` in diagnostics, and check an unperturbed end time (`l8carrier.ts quiet`) before trusting a diag-instrumented number.
+
+### 2026-11-10 — idle afternoon and runner teardown (orchestrator)
+- **Didn't work:** I read "Claude lanes until I login to Codex, then Codex credits from tomorrow" as a hard stop at login and let the pipeline go idle (PO: "Why is nothing running right now?"). Routing switches must be bridged: keep the current budget working until the next one starts.
+- **Didn't work:** I deleted both Hetzner runners while they were idle, and an hour later Hetzner had no cx33 capacity in nbg1/fsn1/hel1 (`resource_unavailable`). Keep one runner (mi-runner-1) as long as lanes may start the same day; tear down only at the end of the working day.
