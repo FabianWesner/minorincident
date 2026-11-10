@@ -31,12 +31,12 @@ export class LevelNineBot {
       return [a, ...route.risks.filter(p => along(p) > 0 && along(p) < length
         && Math.abs((p[0] - a[0]) * dz - (p[1] - a[1]) * dx) / length < 1).sort((p, q) => along(p) - along(q))];
     });
-    // A completion driver reads the road: it takes the open side of the solid
-    // collapsed sections, reserving jump attempts for the dedicated fixture.
-    this.path = base.flatMap((a, i, points) => {
+    // The safe completion driver keeps to its detour; the risky driver takes the jumps head on (r32-l9fun):
+    // a straight run-up on the ramp axis and full throttle from 45 m before the lip to the landing.
+    this.path = detour ? base : base.flatMap((a, i, points) => {
       const b = points[i + 1]; if (!b) return [a];
-      const ramps = l9Course.ramps.filter(r => r.x - 18 > a[0] && r.x + 22 < b[0] && Math.abs(r.z - a[1]) < 6);
-      return [a, ...ramps.flatMap(r => [[r.x - 18, r.z + 12], [r.x + 22, r.z + 12]] as Point[])];
+      const ramps = l9Course.ramps.filter(r => r.x - 30 > a[0] && r.x + 22 < b[0] && Math.abs(r.z - a[1]) < 6).sort((p, q) => p.x - q.x);
+      return [a, ...ramps.flatMap(r => [[r.x - 30, r.z], [r.x + 24, r.z]] as Point[])];
     });
     this.length = crossingRouteLength(this.path);
   }
@@ -73,7 +73,7 @@ export class LevelNineBot {
       const risk = (p: { x: number; z: number }) => Math.min(...humans.map(h => Math.hypot(p.x - h.x, p.z - h.z)));
       // A climbing body will bite the courier even after the hatch closes.
       // Clear those visible hull attackers before covering the walking crew.
-      const target = w.infected!.active.filter(e => !e.hidden && !e.infected?.hidden && (e.health.current > 0 || downed(e) && risk(e.transform) >= 8) && e.id !== driving.megaId && Math.hypot(e.transform.x - origin.x, e.transform.z - origin.z) < 30)
+      const target = w.infected!.active.filter(e => !e.hidden && !e.infected?.hidden && (e.health.current > 0 || downed(e) && risk(e.transform) >= 8) && e.id !== driving.megaId && Math.hypot(e.transform.x - origin.x, e.transform.z - origin.z) < 40)
         .sort((a, b) => Number(b.attachedTo === car.id) - Number(a.attachedTo === car.id) || risk(a.transform) - risk(b.transform))[0];
       if (target) { const dx = target.transform.x - origin.x, dz = target.transform.z - origin.z, length = Math.hypot(dx, dz) || 1; f.selectedWeaponKey = length >= 8 && risk(target.transform) >= 8 ? 7 : length < 8 ? 6 : 5; f.aim = { x: dx / length, z: dz / length }; f.aimPoint = { x: target.transform.x, z: target.transform.z }; f.aimSource = 'keyboard'; f.activeAttack = true; f.left = { down: true, held: true, up: false }; }
       return f;
@@ -126,7 +126,12 @@ export class LevelNineBot {
       const bus = driving.busStoppedAt !== null ? w.entities.get(driving.busId) : undefined;
       const dx = (bus?.transform.x ?? p.x) - p.x, dz = (bus?.transform.z ?? p.z) - p.z;
       const ahead = dx * c - dz * s;
-      const blocker = heavy ?? (bus && ahead > 3 && ahead < 24 && Math.abs(dx * s + dz * c) < 6 ? bus : undefined);
+      // A thrown concrete block is a wall: read it like a brute (r32-l9fun). Light debris is ploughed through.
+      const block = p.x < 405 ? w.vehicles!.obstacles.items.find(o => {
+        const ox = o.entity.transform.x - p.x, oz = o.entity.transform.z - p.z, oa = ox * c - oz * s;
+        return !o.light && !o.broken && !o.airborne && oa > 4 && oa < 22 && Math.abs(ox * s + oz * c) < 4.5;
+      })?.entity : undefined;
+      const blocker = heavy ?? block ?? (bus && ahead > 3 && ahead < 24 && Math.abs(dx * s + dz * c) < 6 ? bus : undefined);
       if (blocker) {
         const side = (blocker.transform.x - p.x) * s + (blocker.transform.z - p.z) * c >= 0 ? -1 : 1, clearance = blocker === bus ? 6 : 4.5;
         this.avoid = { x: blocker.transform.x + s * side * clearance, z: blocker.transform.z + c * side * clearance, until: w.tick + 240 };
@@ -135,7 +140,8 @@ export class LevelNineBot {
     if (this.avoid) target = [this.avoid.x, this.avoid.z];
     const dx = target[0] - p.x, dz = target[1] - p.z, want = -Math.atan2(dz, dx);
     const delta = Math.atan2(Math.sin(want - p.yaw), Math.cos(want - p.yaw));
-    f.drive = { throttle: driving.evacuationDone ? 1 : this.throttle, steer: Math.max(-1, Math.min(1, delta * 2)) }; this.lastSteer = f.drive.steer;
+    const ramp = l9Course.ramps.some(r => Math.abs(p.z - r.z) < 4 && p.x > r.x - 45 && p.x < r.x + 20);
+    f.drive = { throttle: driving.evacuationDone || ramp ? 1 : this.throttle, steer: Math.max(-1, Math.min(1, delta * 2)) }; this.lastSteer = f.drive.steer;
     return f;
   }
 }

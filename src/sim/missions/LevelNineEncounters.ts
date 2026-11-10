@@ -1,4 +1,4 @@
-import { l9Groups, l9Encounters } from '../../data/l9';
+import { l9Groups, l9Encounters, l9SetPieceTuning } from '../../data/l9';
 import type { SimWorld } from '../world/SimWorld';
 
 export interface L9EncounterState { spawned: string[]; ids: Record<string, number[]>; patrol?: { nextAt: number; serial: number } }
@@ -97,7 +97,7 @@ export function updateEncounters(w: SimWorld, state: L9EncounterState): void {
     const ids = group.map((at, index) => ai.spawn(patrolTypes[index], at, { state: 'chase' }));
     for (const id of ids) { ai.pursueTarget(id, 1); pursueCrossingVehicle(w, id); }
     state.ids[`crossing-patrol-${patrol.serial++}`] = ids;
-    patrol.nextAt = w.tick + 480;
+    patrol.nextAt = w.tick + l9SetPieceTuning.patrolTicks;
     return;
   }
 }

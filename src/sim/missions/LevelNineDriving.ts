@@ -10,6 +10,7 @@ import type { DriveIntent } from '../vehicles/VehicleBody';
 import { pursueCrossingVehicle } from './LevelNineEncounters';
 import { Outbreak } from '../outbreak/Outbreak';
 import { clearThreat } from './Respawn';
+import { LevelNineSetPieces, emptySetPieces, type L9SetPieceState } from './LevelNineSetPieces';
 
 export interface L9DrivingState {
   prepared: boolean; roster: number[]; samId: number; megaId: number; soldiers: number[]; trucks: number[]; megaSightings?: number[]; megaSighting?: { index: number; startedAt: number; roadZ: number };
@@ -24,6 +25,8 @@ export interface L9DrivingState {
   tankerId: number; tankerWreckId: number; tankerFuseAt: number | null; tankerExploded: boolean; stampede: number[];
   fireAt: number | null; fireIds: number[]; jumped: string[]; jump: { id: string; airborne: boolean } | null;
   obstacleIds: number[]; waves: number[]; nextWave: number; lines: { id: string; at: number }[];
+  /** r32-l9fun: authored set pieces (leapers, throwers, roadblock, packs) and measured jump airtime per ramp. */
+  setPieces?: L9SetPieceState; airtime?: { id: string; ticks: number; speed: number; hard: boolean }[]; takeoffAt?: number | null;
 }
 export const emptyDriving = (): L9DrivingState => ({
   prepared: false, roster: [], samId: 0, megaId: 0, soldiers: [], trucks: [], boardersCalled: false, route: null, checkpoints: [],
@@ -43,7 +46,10 @@ const alive = (e: EntitySnapshot | undefined): e is EntitySnapshot => !!e && e.h
 /** L9's physical road challenges, exposed hatch defense and visible bridgehead handoff. */
 export class LevelNineDriving {
   private readonly rampHandles: number[] = [];
-  constructor(private readonly mission: Mission) {}
+  readonly setPieces: LevelNineSetPieces;
+  constructor(private readonly mission: Mission) {
+    this.setPieces = new LevelNineSetPieces(mission.world, () => this.mission.l9!.state.carId, () => this.state.route, (name, actorId) => this.signal(name, actorId));
+  }
   private get w() { return this.mission.world; }
   get state(): L9DrivingState { return this.mission.l9!.state.driving ??= emptyDriving(); }
   private get car() { return this.w.vehicles!.cars.get(this.mission.l9!.state.carId)!; }
@@ -231,6 +237,7 @@ export class LevelNineDriving {
     }
     if (!s.route && p.x > -340) { s.route = p.z < -150 ? 'road' : p.z > 120 ? 'countryside' : 'dry-shortcut'; this.signal(`route.${s.route}`); }
     this.course(); this.bus();
+    this.setPieces.update(s.setPieces ??= emptySetPieces(), s.restarted ? null : s.stallAt, this.holding(car.entity.id) && s.stallAt === null);
     if (tick % 10 === 0) for (const id of [...s.waves, ...s.busPassengers.slice(0, s.busReleased)]) pursueCrossingVehicle(w, id);
     if (p.x >= cfg.gate.announceX && s.gateAt === null) { s.gateAt = tick; this.line('L9.gate'); this.signal('gate-countdown'); }
     if (s.gateAt !== null && !s.gateClosed && tick - s.gateAt >= cfg.gate.seconds * 60) {
@@ -310,12 +317,17 @@ export class LevelNineDriving {
       this.signal('fire-closed');
     }
     if (s.fireIds.length && Math.abs(p.x - cfg.fire.x) < 5 && Math.abs(p.z - cfg.fire.z) < 12 && w.tick % 30 === 0) w.vehicles!.damage(car.entity.id, 20);
+    const flying = car.physics.wheels.every(wheel => !wheel.contact);
     for (const ramp of cfg.ramps) {
       if (s.jumped.includes(ramp.id) || Math.abs(p.z - ramp.z) > 5) continue;
       if (p.x > ramp.x - 3 && p.x < ramp.x + 8 && p.y > 2) s.jump ??= { id: ramp.id, airborne: true };
-      if (s.jump?.id === ramp.id && p.x > ramp.x + 16 && p.y < 1.8) {
-        s.jumped.push(ramp.id); s.jump = null; this.signal(`jump.${ramp.id}`);
-        if (car.physics.speed < 7) w.vehicles!.damage(car.entity.id, 40);
+      // Airtime: all four wheels off the ground after the ramp lip (r32-l9fun jump proof).
+      if (s.jump?.id === ramp.id && flying) s.takeoffAt ??= w.tick;
+      if (s.jump?.id === ramp.id && p.x > ramp.x + 16 && p.y < 1.8 && !flying) {
+        const hard = car.physics.speed < 7;
+        (s.airtime ??= []).push({ id: ramp.id, ticks: s.takeoffAt == null ? 0 : w.tick - s.takeoffAt, speed: Math.round(car.physics.speed * 10) / 10, hard });
+        s.jumped.push(ramp.id); s.jump = null; s.takeoffAt = null; this.signal(`jump.${ramp.id}`);
+        if (hard) w.vehicles!.damage(car.entity.id, 40);
       }
     }
   }
@@ -523,7 +535,10 @@ export class LevelNineDriving {
     const s = this.state, p = this.car.entity.transform, tick = this.w.tick;
     if (s.stallAt !== null && !s.restarted) return `Defend the hatch · Restart ${Math.max(0, Math.ceil((1800 - tick + s.stallAt) / 60))} s`;
     if (s.evacuationAt !== null && !s.evacuationDone) return `Cover the survivors · ${s.evacuated.length}/${s.roster.filter(id => id !== s.samId && alive(this.w.entities.get(id))).length} at the trucks`;
+    const alphas = s.setPieces?.alphas ?? [];
+    if (alphas.some(a => a.phase === 'hull') && !this.holding(this.car.entity.id)) return 'Leaper on the hull · swerve hard or handbrake to throw it off';
     if (this.car.entity.vehicle!.attached.length && !this.holding(this.car.entity.id)) return 'Shake off boarders · swerve or handbrake while moving';
+    if (alphas.some(a => a.role === 'thrower' && (a.phase === 'throw' || a.phase === 'cool' && a.uses < 4)) && !this.holding(this.car.entity.id)) return 'Thrower ahead · dodge the debris or smash through';
     if (s.evacuationDone) return 'Drive onto the bridge';
     if (s.tankerFuseAt !== null && !s.tankerExploded && distance(p, cfg.tanker) < 30) return `Get clear of the tanker · ${Math.max(0, Math.ceil((s.tankerFuseAt - tick) / 60))} s`;
     if (s.fireAt !== null && !s.fireIds.length && distance(p, cfg.fire) < 70) return `Cross the fire line · ${Math.max(0, Math.ceil((cfg.fire.closeTicks - tick + s.fireAt) / 60))} s`;
@@ -536,6 +551,8 @@ export class LevelNineDriving {
     const s = this.state;
     for (const key of ['stallAt', 'gateAt', 'evacuationAt', 'busStoppedAt', 'busLineAt', 'tankerFuseAt', 'fireAt', 'hugAt'] as const) if (s[key] !== null) s[key]! += delta;
     if (s.megaSighting) s.megaSighting.startedAt += delta;
+    if (s.setPieces) this.setPieces.restore(s.setPieces, delta);
+    if (s.takeoffAt != null) s.takeoffAt += delta;
     s.busHitAt += delta; s.nextWave += delta; for (const l of s.lines) l.at += delta;
     for (const id of Object.keys(s.truckEntering)) s.truckEntering[Number(id)] += delta;
   }
