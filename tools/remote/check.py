@@ -29,6 +29,24 @@ UNIT_ONLY = '--unit' in sys.argv
 
 
 class SchedulerChecks(unittest.TestCase):
+    def test_threat_single_runs_local_audit(self):
+        script = HERE.parent / 'qa/run-threat-sharded.mjs'
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'tools/qa').mkdir(parents=True)
+            shutil.copy(script, root / 'tools/qa/run-threat-sharded.mjs')
+            (root / 'package.json').write_text('{"type":"module"}')
+            (root / 'loader.mjs').write_text('')
+            # A fake node records the exact child command and propagates its exit.
+            fake = root / 'node'
+            fake.write_text('#!/bin/sh\nprintf "%s\n" "$@" > "$CAPTURE"\nexit 7\n')
+            fake.chmod(0o755)
+            capture = root / 'args'
+            env = {**os.environ, 'PATH': str(root) + os.pathsep + os.environ['PATH'], 'CAPTURE': str(capture)}
+            result = subprocess.run([shutil.which('node'), str(root / 'tools/qa/run-threat-sharded.mjs'), '--single', '--levels', 'L9'], cwd=root, env=env)
+            self.assertEqual(result.returncode, 7)
+            self.assertEqual(capture.read_text().splitlines(), ['--import', 'tsx/esm', 'tools/qa/threat-audit.ts', '--levels', 'L9'])
+
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory(prefix='mi-slot-check-')
         self.root = Path(self.tmp.name)
