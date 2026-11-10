@@ -75,7 +75,7 @@ export class LevelNineBot {
       // Clear those visible hull attackers before covering the walking crew.
       const target = w.infected!.active.filter(e => !e.hidden && !e.infected?.hidden && (e.health.current > 0 || downed(e) && risk(e.transform) >= 8) && e.id !== driving.megaId && Math.hypot(e.transform.x - origin.x, e.transform.z - origin.z) < 40)
         .sort((a, b) => Number(b.attachedTo === car.id) - Number(a.attachedTo === car.id) || risk(a.transform) - risk(b.transform))[0];
-      if (target) { const dx = target.transform.x - origin.x, dz = target.transform.z - origin.z, length = Math.hypot(dx, dz) || 1; f.selectedWeaponKey = length >= 8 && risk(target.transform) >= 8 ? 7 : length < 8 ? 6 : 5; f.aim = { x: dx / length, z: dz / length }; f.aimPoint = { x: target.transform.x, z: target.transform.z }; f.aimSource = 'keyboard'; f.activeAttack = true; f.left = { down: true, held: true, up: false }; }
+      if (target) { const dx = target.transform.x - origin.x, dz = target.transform.z - origin.z, length = Math.hypot(dx, dz) || 1; f.selectedWeaponKey = length < 8 ? 6 : 5; /* no launcher in L9 (PO 2026-11-10): MG at range, shotgun close */ f.aim = { x: dx / length, z: dz / length }; f.aimPoint = { x: target.transform.x, z: target.transform.z }; f.aimSource = 'keyboard'; f.activeAttack = true; f.left = { down: true, held: true, up: false }; }
       return f;
     }
     // A slow reverse is not a new block: counting it chained 90-tick reverses forever (r29-l9pin, --zero crept backwards 200 m).
@@ -131,9 +131,13 @@ export class LevelNineBot {
         const ox = o.entity.transform.x - p.x, oz = o.entity.transform.z - p.z, oa = ox * c - oz * s;
         return !o.light && !o.broken && !o.airborne && oa > 4 && oa < 22 && Math.abs(ox * s + oz * c) < 4.5;
       })?.entity : undefined;
-      const blocker = heavy ?? block ?? (bus && ahead > 3 && ahead < 24 && Math.abs(dx * s + dz * c) < 6 ? bus : undefined);
+      // The leaking tanker sits in the overpass landing lane: pass it (near miss) instead of parking on it.
+      const tanker = driving.tankerExploded ? undefined : w.entities.get(driving.tankerId);
+      const tx = (tanker?.transform.x ?? p.x) - p.x, tz = (tanker?.transform.z ?? p.z) - p.z, tAhead = tx * c - tz * s;
+      const fuel = tanker && tAhead > 2 && tAhead < 26 && Math.abs(tx * s + tz * c) < 6 ? tanker : undefined;
+      const blocker = heavy ?? block ?? fuel ?? (bus && ahead > 3 && ahead < 24 && Math.abs(dx * s + dz * c) < 6 ? bus : undefined);
       if (blocker) {
-        const side = (blocker.transform.x - p.x) * s + (blocker.transform.z - p.z) * c >= 0 ? -1 : 1, clearance = blocker === bus ? 6 : 4.5;
+        const side = (blocker.transform.x - p.x) * s + (blocker.transform.z - p.z) * c >= 0 ? -1 : 1, clearance = blocker === bus || blocker === fuel ? 6 : 4.5;
         this.avoid = { x: blocker.transform.x + s * side * clearance, z: blocker.transform.z + c * side * clearance, until: w.tick + 240 };
       }
     }
