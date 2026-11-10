@@ -16,4 +16,8 @@ for (let i = 0; i < to * 60 && !bot.finished; i++) {
     console.log(`t=${(i / 60) | 0} player=${p.transform.x.toFixed(0)},${p.transform.z.toFixed(0)} hidden=${!!p.hidden} car=${car.transform.x.toFixed(0)},${car.transform.z.toFixed(0)} driver=${car.vehicle.driver} pass=${car.vehicle.passengers?.length} active=${w.vehicles.active} steps=${Object.entries(st).filter(([, v]: any) => v.status === 'active').map(([k]) => k)} canDrive=${zoo.canDrive()}`);
   }
 }
+const car = w.entities.get(zoo.state.carId);
+console.log('DUMP canBoardDriver', zoo.canBoardDriver(), 'breached', zoo.breached, 'arenas', JSON.stringify(zoo.state.arenas.map((a: any) => a.phase)), 'hale', !!w.missions.state.states['hale-fallen'], 'roster', JSON.stringify(zoo.passengers()), 'seated', JSON.stringify((car.vehicle.passengers ?? []).map((q: any) => q.id + ':' + q.phase)));
+console.log('DUMP bot', JSON.stringify({ phase: bot.phase, state: bot.state, stuck: bot.stuck, goal: bot.goal }), 'door', JSON.stringify(w.vehicles.passengerDoor(zoo.state.carId)));
+console.log('DUMP near', [...w.entities.iterate()].filter((e: any) => Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 3).map((e: any) => e.id + ':' + e.archetype + '@' + e.transform.x.toFixed(1) + ',' + e.transform.z.toFixed(1)).join(' '));
 process.exit(0);
