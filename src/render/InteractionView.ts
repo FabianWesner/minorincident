@@ -33,6 +33,12 @@ export function isMissionInteraction(world: SimWorld, entity: EntitySnapshot): b
   const mission = world.missions;
   if (!mission || mission.state.phase !== 'playing') return false;
   if (entity.archetype === 'pickup.headlamp') return !!entity.pickup && 'collected' in entity.pickup && !entity.pickup.collected;
+  // r31-megafight: the L10 arena gate switch wears the same ground ring as the console while the fight is on and she is within 16 m.
+  if (mission.def.id === 'L10' && entity.id !== undefined && mission.state.actors['arena-gate-switch'] === entity.id) {
+    const p = world.entities.get(1)?.transform;
+    return !!p && !entity.interactable?.completed && !!mission.state.states['cure-installed'] && !mission.state.states['cure-released']
+      && Math.hypot(p.x - entity.transform.x, p.z - entity.transform.z) <= 16;
+  }
   return isRingedInteraction(mission, entity.transform);
 }
 /** Registry objects and a constant-contrast ring/DOM prompt. The sim never reads this view. */
@@ -75,6 +81,16 @@ export class InteractionView extends Group {
   private readonly crateGuides: { id: string; ring: Mesh }[] = [];
   private readonly gateGuides: { x: number; line: Mesh }[] = [];
   private disposed = false;
+  /** r31-megafight: L10 arena set pieces (electric gate posts and wire, fuel-tank hazard rings, switch beacon). */
+  private arena: { root: Group; wires: Mesh[]; sparks: Mesh[]; lamps: Mesh[]; rings: { id: number; mesh: Mesh }[]; beacon: Mesh } | null = null;
+  private readonly stripeMaterial = new MeshBasicNodeMaterial({ color: '#ffc533', toneMapped: false });
+  private readonly wireOff = new MeshBasicNodeMaterial({ color: '#39414f' });
+  private readonly wireOn = new MeshBasicNodeMaterial({ color: '#a6fbff', toneMapped: false });
+  private readonly lampRed = new MeshBasicNodeMaterial({ color: '#ff3322', toneMapped: false });
+  private readonly lampArmed = new MeshBasicNodeMaterial({ color: '#7dfff0', toneMapped: false });
+  private readonly lampDark = new MeshBasicNodeMaterial({ color: '#2a2f3a' });
+  private readonly hazardRing = new MeshBasicNodeMaterial({ color: '#ff3a2a', transparent: true, opacity: .55, depthWrite: false, toneMapped: false });
+  private readonly beaconMaterial = new MeshBasicNodeMaterial({ color: '#58ffe0', transparent: true, opacity: .32, depthWrite: false, toneMapped: false });
   constructor(private readonly world: SimWorld, private readonly materials: Materials, private readonly view: View, private readonly low = false) {
     super(); this.registry = new AssetRegistry(() => {}, { materials: materials }); this.name = 'interactions';
     groundDepth(this.gasMaterial, groundLayers.footprint);
@@ -254,6 +270,7 @@ export class InteractionView extends Group {
   }
   private async create(e: EntitySnapshot, lod: AssetQuality): Promise<Object3D> {
     if (e.archetype === 'l6.service-gate') { const model = await this.registry.loadAsset('prop.service-gate', lod); this.prepareGate(model); return model; }
+    if (e.interactable?.kind === 'switch' && this.world.missions?.state.actors['arena-gate-switch'] === e.id) return this.arenaSwitchObject();
     // PO 10-20 #64: the entry hatch itself is drawn by entryHatches; its close prompt has no body of its own.
     if (e.archetype === 'l6.entry-switch') return new Group();
     if (e.barricade) {
@@ -334,6 +351,50 @@ export class InteractionView extends Group {
     }
     return copy;
   }
+  /** A control pedestal: dark housing, yellow hazard cap, a big status lamp (red = off, cyan = armed) and a yellow warning plate. */
+  private arenaSwitchObject(): Group {
+    const g = new Group(), body = new Mesh(this.box, this.materials.get('uiDark')); body.scale.set(.7, 1.15, .6); body.position.y = .575; body.castShadow = true; g.add(body);
+    const cap = new Mesh(this.box, this.materials.get('schoolBusYellow')); cap.scale.set(.8, .16, .7); cap.position.y = 1.23; g.add(cap);
+    const plate = new Mesh(this.box, this.materials.get('schoolBusYellow')); plate.scale.set(.5, .32, .04); plate.position.set(0, .7, -.32); g.add(plate);
+    const lamp = new Mesh(this.led, this.lampRed); lamp.name = 'switch-lamp'; lamp.scale.setScalar(2.6); lamp.position.y = 1.5; g.add(lamp);
+    return g;
+  }
+  private buildArena(console: { x: number; z: number }): void {
+    const root = new Group(); root.name = 'l10-arena'; this.add(root);
+    const gate = { x: console.x, z: console.z + 28 }, wires: Mesh[] = [], sparks: Mesh[] = [], lamps: Mesh[] = [];
+    for (const side of [-1, 1]) {
+      const post = new Mesh(this.box, this.materials.get('uiDark')); post.scale.set(.7, 3.6, .7); post.position.set(gate.x + side * 4, 1.8, gate.z); post.castShadow = true; root.add(post);
+      for (const y of [.5, 1.0]) { const stripe = new Mesh(this.box, this.stripeMaterial); stripe.scale.set(.74, .22, .74); stripe.position.set(gate.x + side * 4, y + .35, gate.z); root.add(stripe); }
+      const lamp = new Mesh(this.led, this.lampRed); lamp.scale.setScalar(3); lamp.position.set(gate.x + side * 4, 3.85, gate.z); root.add(lamp); lamps.push(lamp);
+    }
+    for (const y of [.9, 1.8, 2.7]) { const wire = new Mesh(this.box, this.wireOff); wire.scale.set(8, .06, .06); wire.position.set(gate.x, y, gate.z); root.add(wire); wires.push(wire); }
+    for (let i = 0; i < 8; i++) { const spark = new Mesh(this.box, this.wireOn); spark.scale.set(.18, .18, .18); spark.visible = false; root.add(spark); sparks.push(spark); }
+    const beacon = new Mesh(this.brush, this.beaconMaterial); beacon.scale.set(.5, 3, .5); beacon.renderOrder = 80; root.add(beacon);
+    const rings: { id: number; mesh: Mesh }[] = [];
+    for (const key of ['arena-fuel-0', 'arena-fuel-1']) {
+      const id = this.world.missions!.state.actors[key]; if (id == null) continue;
+      const mesh = new Mesh(new RingGeometry(4.7, 5, 48), this.hazardRing); mesh.rotation.x = -Math.PI / 2; mesh.renderOrder = 70; this.geometries.add(mesh.geometry); root.add(mesh); rings.push({ id, mesh });
+    }
+    this.arena = { root, wires, sparks, lamps, rings, beacon };
+  }
+  /** Gate wire, lamps, switch lamp/beacon and the fuel-tank blast rings follow the sim state (render only). */
+  private updateArena(): void {
+    const mission = this.world.missions, c = mission?.def.anchors['cure-console'];
+    if (this.world.scenario !== 'L10' || !mission || !c || !mission.state.states['arena-equipped']) { if (this.arena) this.arena.root.visible = false; return; }
+    if (!this.arena) this.buildArena(c);
+    const a = this.arena!, st = mission.state, tick = this.world.tick, switchId = st.actors['arena-gate-switch'];
+    a.root.visible = true;
+    const on = !!this.world.entities.get(switchId)?.interactable?.completed, spent = !!st.states['gate-spent'], live = on && !spent, gate = { x: c.x, z: c.z + 28 };
+    const flick = live && tick % 5 < 3;
+    for (const wire of a.wires) wire.material = flick ? this.wireOn : this.wireOff;
+    for (const lamp of a.lamps) lamp.material = live ? (tick % 30 < 18 ? this.lampArmed : this.lampDark) : spent ? this.lampDark : this.lampRed;
+    a.sparks.forEach((spark, i) => { spark.visible = live && (tick + i * 3) % 7 < 3; if (spark.visible) spark.position.set(gate.x + Math.sin(tick * .9 + i * 2.1) * 4, .5 + ((tick * 7 + i * 13) % 27) / 10, gate.z + Math.cos(tick * .7 + i) * .3); });
+    const sw = this.objects.get(switchId)?.getObjectByName('switch-lamp') as Mesh | undefined; if (sw) sw.material = spent ? this.lampDark : on ? this.lampArmed : this.lampRed;
+    const swEntity = this.world.entities.get(switchId);
+    a.beacon.visible = !on && !!swEntity; if (swEntity) a.beacon.position.set(swEntity.transform.x, 3, swEntity.transform.z);
+    for (const ring of a.rings) { const t = this.world.entities.get(ring.id); ring.mesh.visible = !!t?.hazard && !t.hazard.exploded; if (t) ring.mesh.position.set(t.transform.x, (this.world.districts?.pavingHeight(t.transform.x, t.transform.z) ?? 0) + .07, t.transform.z); }
+    this.hazardRing.opacity = .35 + .25 * Math.sin(tick / 12);
+  }
   private updateGateGuides(): void {
     const player = this.world.entities.get(1), state = this.world.missions?.state.l6;
     for (const guide of this.crateGuides) {
@@ -346,7 +407,7 @@ export class InteractionView extends Group {
     for (const guide of this.gateGuides) guide.line.visible = !!player && Math.abs(player.transform.x - guide.x) < 9 && !!state?.gates.find(g => g.x === guide.x);
   }
   update(camera: Camera): void {
-    this.updateGateGuides();
+    this.updateGateGuides(); this.updateArena();
     // Warned hatches rattle, then swing open. PO 10-20 #64: a closed hatch stays shut and jolts on every bash; a broken one hangs open.
     for(const hatch of this.entryHatches){const state=this.world.missions?.state.l6?.entries?.find(e=>e.door===hatch.door),tick=this.world.tick;const age=state?.warnedAt?tick-state.warnedAt:-1,hit=state?.hitAt?tick-state.hitAt:99;hatch.bar.visible=!!state?.closedAt&&!state.brokenAt;hatch.leaf.rotation.x=state?.brokenAt?-1.35:state?.closedAt?(hit<14?Math.sin(hit*1.3)*.09*(1-hit/14):0):age<0?0:age<120?Math.sin(age*.65)*.045:-1.2;}
     let selected: EntitySnapshot | null = null, nearest = 64, ringTarget: EntitySnapshot | null = null, ringDistance = 64;
@@ -402,7 +463,8 @@ export class InteractionView extends Group {
       const currentGate = !!gate && l6GateIsCurrent(this.world.missions, gate.id);
       const purpose = service ? gate?.closedAt ? (b?.props.length ?? 0) >= 2 ? 'Tunnel blocked · keep moving' : 'Push glowing crates onto the line · E to brace' : currentGate ? this.world.missions?.l6?.gateStatus(selected.id) : null : !b ? null : b.intact ? 'Repair the barricade: stand here to reinforce it' : b.slot.boardUp ? 'Seal this opening: stand here to board it up' : c.enabled ? 'Barricade the gap: press E / middle-click to brace the crates' : 'Barricade the gap: push crates onto the yellow line · 80% needed';
 
-      const caption = devicePrompt((service ? purpose : c.hint) || purpose || (c.completed && isDoor(c.kind) ? `E / middle-click to ${c.open ? 'close' : 'open'}` : nearest <= c.radius ** 2 ? c.instant ? 'Stand here · E / middle-click' : 'Stand here to interact' : 'Move into the ring'), document.body.classList.contains('touch-ui'));
+      const arenaSwitch = this.world.missions?.state.actors['arena-gate-switch'] === selected.id ? 'Press E: electrify the gate, then lure the Mega through it (one use)' : null;
+      const caption = devicePrompt((service ? purpose : c.hint) || arenaSwitch || purpose || (c.completed && isDoor(c.kind) ? `E / middle-click to ${c.open ? 'close' : 'open'}` : nearest <= c.radius ** 2 ? c.instant ? 'Stand here · E / middle-click' : 'Stand here to interact' : 'Move into the ring'), document.body.classList.contains('touch-ui'));
       if (this.label.textContent !== label) this.label.textContent = label;
       if (this.caption.textContent !== caption) this.caption.textContent = caption;
       this.panel.dataset.entityId = String(selected.id); this.panel.dataset.hint = c.hint;
@@ -458,6 +520,7 @@ export class InteractionView extends Group {
     this.geometries.clear(); this.batchMaterials.clear(); this.materialGraphs.clear(); this.prototypes.clear();
     this.corgiToy.dispose(); this.box.dispose(); this.led.dispose(); this.brush.dispose(); this.foam.dispose(); this.fillGeometry.dispose(); this.outlineGeometry.dispose(); this.strokeGeometry.dispose(); this.black.dispose(); this.white.dispose(); this.teal.dispose();
     this.gasGeometry.dispose(); this.gasMaterial.dispose();
+    for (const m of [this.stripeMaterial, this.wireOff, this.wireOn, this.lampRed, this.lampArmed, this.lampDark, this.hazardRing, this.beaconMaterial]) m.dispose();
     void this.registry.dispose();
   }
 }

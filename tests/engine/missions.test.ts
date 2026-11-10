@@ -19,6 +19,7 @@ import { missionSandbox } from '../fixtures/scenarios/mission-sandbox';
 import { objectiveText } from '../../src/sim/missions/objectiveText';
 import { markerAnchor } from '../../src/sim/missions/markerAnchor';
 import { l10MegaResumeCheck } from '../helpers/l10MegaResume';
+import { l10MegaFightCheck } from '../helpers/l10MegaFight';
 import { checkL8Story } from '../helpers/l8Story';
 import { emergeResident, emergeSpeedMs, walkResidents } from '../../src/sim/outbreak/HouseEmergence';
 import { validateSave } from '../../src/sim/progression/Save';
@@ -281,7 +282,15 @@ test('interactions: ring, input and view predicates agree for every interact ste
     } finally { levelWorld.dispose(); }
   }
   await l10MegaResumeCheck();
-}, 240_000);
+  // r31-megafight: the Mega stays in the arena for a 110 s fight, the HUD never says "back to the arena" in melee, the arena tools work.
+  const fight = await l10MegaFightCheck();
+  expect(fight.maxCourierM).toBeGreaterThan(50);
+  expect(fight.maxMegaM, 'Mega stays within the leash').toBeLessThan(34);
+  expect(fight.backInMelee).toBe(0);
+  expect(fight.switchDone).toBe(true);
+  expect(fight.tankDamage, 'a fuel tank hurts the Mega').toBeGreaterThan(50);
+  expect(fight.gateSpent && fight.gateDamage >= 900).toBe(true);
+}, 360_000);
 
 // N11: the L6 service gates have their own predicate (the group's waypoint, else the next open gate ahead of the leader).
 test('interactions: only the open L6 gate the group is heading for offers its prompt', async () => {

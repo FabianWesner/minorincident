@@ -280,6 +280,11 @@ body.ui-hidden [data-testid=home-button]{display:none!important}
 .touch-ui .hud-mega-label{bottom:2px}
 .touch-ui .hud-map.is-collapsed .hud-mega-label{clip-path:inset(50%);width:1px;height:1px;padding:0;overflow:hidden;white-space:nowrap}
 
+.hud-boss-bar{position:absolute;left:50%;top:14px;transform:translateX(-50%);width:min(46vw,420px);pointer-events:none;text-align:center;font:700 12px/1.3 system-ui,sans-serif;color:#fff;text-shadow:0 1px 2px #000}
+.hud-boss-track{height:12px;margin-top:3px;border:2px solid #151e30;border-radius:6px;background:#2b1418;overflow:hidden;box-shadow:0 0 0 1px #ffffff55}
+.hud-boss-track i{display:block;height:100%;background:linear-gradient(#ff6a5a,#c6281f)}
+.hud-boss-bar[data-phase="3"] .hud-boss-track i{background:linear-gradient(#ffb25a,#e0541a)}
+.touch-ui .hud-boss-bar{top:6px;width:min(52vw,300px);font-size:10px}
 .hud-dispersal-action{position:absolute;left:50%;bottom:18%;transform:translateX(-50%);pointer-events:auto;background:#182333ed;color:#ffd083;border:2px solid #78e6d7;border-radius:8px;padding:10px 16px;font:inherit;cursor:pointer}
 
 /* Ten campaign rows: keep navigation outside the scrolling list. */

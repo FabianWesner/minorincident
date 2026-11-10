@@ -7,6 +7,7 @@ import { l5, l5Survivors } from '../data/l5';
 import { isMega } from '../data/megaPresentation';
 import { SurvivorRadar } from './SurvivorRadar';
 import { healthFraction } from './health';
+import type { SimWorld } from '../sim/world/SimWorld';
 import { weatherLabels } from '../data/weather';
 // Adapted from folio-2025 Map.js / Notifications.js by Bruno Simon (MIT, 41046b5):
 // world-to-map projection, persistent DOM pins, and identity-preserving text updates.
@@ -66,6 +67,10 @@ export class Hud {
   private readonly shieldBlock = node('div', 'shield-block', 'SHIELD STRAIN · CHIP');
   private shieldBlockUntil = -1;
   private readonly bark = node('div', 'corgi-bark', 'Woof!');
+  /** r31-megafight: screen-wide boss bar for the L10 Mega fight (name, health, phase). */
+  private readonly bossBar = node('div', 'mega-boss-bar');
+  private readonly bossName = document.createElement('span');
+  private readonly bossFill = document.createElement('i');
   private readonly civilianBark = node('div', 'civilian-bark', 'Hey!');
   private civilianBarkUntil = -1;
   /** E19 story beat line above the speaker (one at a time, follows the speaker). */
@@ -151,6 +156,8 @@ export class Hud {
     if (this.map.getAttribute('role') === 'button') this.map.setAttribute('aria-expanded', 'true');
     activate(this.tracker, () => { text(this.fullText, this.trackerText.textContent ?? ''); this.detail.showModal(); });
     this.vignette.className = 'hud-vignette'; this.damage.className = 'hud-damage'; this.bark.className = 'hud-bark'; this.interaction.className = 'hud-interaction';
+    this.bossBar.className = 'hud-boss-bar'; this.bossBar.hidden = true; this.bossBar.setAttribute('role', 'progressbar'); this.bossBar.setAttribute('aria-label', 'Mega Alpha health');
+    const bossTrack = document.createElement('div'); bossTrack.className = 'hud-boss-track'; bossTrack.append(this.bossFill); this.bossBar.append(this.bossName, bossTrack);
     this.shieldBlock.className = 'hud-shield-block';
     this.damage.hidden = this.shieldBlock.hidden = this.bark.hidden = this.interaction.hidden = true;
     const stick = node('div', 'stick-zone'); stick.className = 'hud-stick-zone';
@@ -158,7 +165,7 @@ export class Hud {
     const navigation = node('div', 'radar-navigation'); navigation.className = 'hud-navigation';
     this.weatherIcon.className = 'hud-weather';
     navigation.append(this.map, this.weatherIcon, this.tracker);
-    this.root.append(this.weaponRack, this.finaleAction, stick, this.vignette, vitals, companion, navigation, this.damage, this.shieldBlock, this.bark, this.interaction, this.onboarding.element, this.detail);
+    this.root.append(this.weaponRack, this.finaleAction, stick, this.vignette, vitals, companion, navigation, this.damage, this.shieldBlock, this.bark, this.bossBar, this.interaction, this.onboarding.element, this.detail);
     this.cuePanels = [vitals, companion, this.survivorVitals, this.map, this.weatherIcon, this.tracker, this.weaponRack, this.onboarding.element];
   }
   private bar(name: string) {
@@ -442,6 +449,7 @@ export class Hud {
       attribute(w, 'data-weapon', shown.id); attribute(w, 'data-state', shown.state); attribute(w, 'data-ammo', String(shown.ammo)); attribute(w, 'data-charges', String(shown.charges));
       style(w, '--progress', String(shown.progress));
     }
+    this.updateBossBar(world);
     const id = world.interactables?.activeId, device = id != null ? world.entities.get(id)?.interactable : null;
     setHidden(this.interaction, !device);
     if (device) { this.interaction.style.background = `conic-gradient(#64dccc ${device.progress * 360}deg,#182333 0)`; text(this.interaction, device.hint || `${device.label} · ${Math.round(device.progress * 100)}%`); attribute(this.interaction, 'data-progress', String(device.progress)); }
@@ -449,6 +457,17 @@ export class Hud {
     setHidden(this.shieldBlock, world.tick > this.shieldBlockUntil);
     setHidden(this.civilianBark, world.tick > this.civilianBarkUntil);
     if (!preparing) { this.updateStory(); this.onboarding.update(this.game.input.scheme, visible); }
+  }
+  /** r31-megafight: the Mega's own bar once it can be hurt (cure installed) and while it lives. */
+  private updateBossBar(world: SimWorld): void {
+    const mega = world.scenario === 'L10' && world.missions?.state.states['cure-installed'] && !world.missions.state.states['cure-released'] ? world.megaPursuit?.entity() : null;
+    const show = !!mega && mega.health.current > 0 && !mega.hidden && !mega.infected?.hidden && Math.hypot(mega.transform.x - world.entities.get(1)!.transform.x, mega.transform.z - world.entities.get(1)!.transform.z) < 60;
+    setHidden(this.bossBar, !show);
+    if (!show || !mega) return;
+    const fraction = healthFraction(mega.health.current, mega.health.max), phase = mega.infected?.megaPhase ?? 1;
+    style(this.bossFill, 'width', `${fraction * 100}%`);
+    text(this.bossName, `Mega Alpha · phase ${phase}/3${(mega.infected?.megaWeakTicks ?? 0) > 0 || mega.infected?.megaArmourBroken ? ' · WEAK SPOT' : ''}`);
+    attribute(this.bossBar, 'aria-valuenow', String(Math.round(fraction * 100))); attribute(this.bossBar, 'data-phase', String(phase));
   }
   /** E23: survivor counter, the transient world caption, and the nearby interaction prompt. */
   private updateSurvivors(mission: Mission | null | undefined, px: number, pz: number): void {

@@ -98,6 +98,23 @@ export class LevelTenFinale {
 
 /** Shared by both objective HUDs; presentation never controls the charge clock. */
 export function cureFinaleText(mission: Mission | null): string | null {
+  const base = cureFinaleBase(mission), hint = base ? arenaHint(mission) : null;
+  return hint ? `${base} · ${hint}` : base;
+}
+/** r31-megafight: short tool hints while the Mega fights: a fuel tank next to it, an armed gate. */
+function arenaHint(mission: Mission | null): string | null {
+  if (!mission || mission.def.id !== 'L10') return null;
+  const { state, world } = mission, mega = world.megaPursuit?.entity();
+  if (!state.states['arena-equipped'] || !state.states['cure-installed'] || state.states['cure-released'] || !mega || mega.health.current <= 0) return null;
+  for (const key of ['arena-fuel-0', 'arena-fuel-1']) {
+    const tank = world.entities.get(state.actors[key]);
+    if (tank?.hazard && !tank.hazard.exploded && Math.hypot(tank.transform.x - mega.transform.x, tank.transform.z - mega.transform.z) <= tank.hazard.radius + 2) return 'Shoot the fuel tank!';
+  }
+  const sw = world.entities.get(state.actors['arena-gate-switch'])?.interactable;
+  if (sw?.completed && !state.states['gate-spent']) return 'Lure the Mega through the electric gate';
+  return null;
+}
+function cureFinaleBase(mission: Mission | null): string | null {
   if (!mission) return null;
   const { state, world, def } = mission;
   if (def.id !== 'L10') return null;

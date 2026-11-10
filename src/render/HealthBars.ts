@@ -70,11 +70,11 @@ export class HealthBars extends Group {
   private readonly l10BarIds = new Set<number>();
   private readonly chips = new Map<number, { last: number; from: number; at: number }>();
   private readonly l4BarIds = new Set<number>();
-  private readonly megaWeakSpot = new Mesh(new SphereGeometry(.26, 8, 6), new MeshBasicNodeMaterial({ color: 0xff3322, toneMapped: false, fog: false }));
+  private readonly megaWeakSpot = new Mesh(new SphereGeometry(.42, 12, 8), new MeshBasicNodeMaterial({ color: 0xff5a2a, toneMapped: false, fog: false, depthTest: false, transparent: true, opacity: .9 }));
   private readonly probing = __QA_HOOKS__ && typeof location !== 'undefined' && new URLSearchParams(location.search).has('test');
   constructor(private readonly world: SimWorld, private readonly courierBounds?: (out: Box3) => boolean) {
     super(); this.name = 'infected-health-bars'; this.unoccluded.needsUpdate = true;
-    this.megaWeakSpot.visible = false; this.add(this.megaWeakSpot);
+    this.megaWeakSpot.visible = false; this.megaWeakSpot.renderOrder = 95; this.add(this.megaWeakSpot);
     const makeMeshes = (colors: readonly string[]) => colors.map((color, i) => {
       const material = new MeshBasicNodeMaterial({ depthTest: false, depthWrite: false, toneMapped: false, fog: false });
       // Convert each bar fragment directly; a full-screen output transform would overwrite the game image.
