@@ -3,7 +3,7 @@ import type { Combat } from '../combat/Combat';
 import { survivor } from '../../data/survivor';
 import { l4PerimeterSegments, l4WallSlots, l4BreachOf, l4Breaches, l4BreachSite, type L4BreachSide } from '../../data/l4Perimeter';
 import { Rng } from '../../core/Rng';
-import { l4, l4HeavyArchetypes, l4HeavyReplaceShare, l4InfectedArchetypes, l4InfectedLooks, l4FirefighterLooks, l4Anchors, l4Cars, l4CellarDistance, l4CollapseGroups, l4Crowd, l4Edges, l4Emergence, l4OffscreenMouths, l4BreachApproaches, l4Pockets, l4Posts, l4Route, l4RoutePose, l4ConvoyStations, l4ConvoyGate, l4ConvoyPose, type L4Weapon } from '../../data/l4';
+import { l4, l4HeavyArchetypes, l4HeavyReplaceShare, l4HeavyStandIns, l4HeavyThinFrom, l4InfectedArchetypes, l4InfectedLooks, l4FirefighterLooks, l4Anchors, l4Cars, l4CellarDistance, l4CollapseGroups, l4Crowd, l4Edges, l4Emergence, l4OffscreenMouths, l4BreachApproaches, l4Pockets, l4Posts, l4Route, l4RoutePose, l4ConvoyStations, l4ConvoyGate, l4ConvoyPose, type L4Weapon } from '../../data/l4';
 import { appearanceSample, balancedCrowdModel } from '../../data/crowdAppearance';
 import { l4AlphaEmergence } from '../../levels/L4/layout';
 import { infectedDef } from '../../data/infected';
@@ -931,7 +931,7 @@ export class LevelFourWar {
     const heavy = l4HeavyArchetypes as readonly string[], seed = this.s.emergedIds.length + this.s.collapseIds.length;
     const near = neighbours.map(e => ({ model: e.archetype!, x: e.transform.x, z: e.transform.z }));
     let archetype = balancedCrowdModel(roster, near, at, seed);
-    if (heavy.includes(archetype) && appearanceSample(seed, 33) % 100 < l4HeavyReplaceShare * 100) archetype = balancedCrowdModel(roster.filter(a => !heavy.includes(a)), near, at, seed);
+    if (seed >= l4HeavyThinFrom && heavy.includes(archetype) && appearanceSample(seed, 33) % 100 < l4HeavyReplaceShare * 100) archetype = balancedCrowdModel(roster.filter(a => (l4HeavyStandIns as readonly string[]).includes(a)), near, at, seed);
     const id = ai.spawn(archetype, at), e = world.entities.get(id)!;
     // Admission can shift around another body. Validate the admitted pose too,
     // before it is drawn, and retain the caller's quota if that shift exposed it.

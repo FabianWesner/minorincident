@@ -38,7 +38,7 @@ interface Deform { perp?: number; axial?: number; sx?: number; sy?: number; sz?:
 interface Recolour { cls?: 'hair' | 'skin' | 'shirt' | 'trousers'; parts?: string[]; colour: string }
 export interface Role {
   id: string; base: string; scale: number; deform: Record<string, Deform>;
-  bulge?: { centre: V3; radius: number; amount: number; joints: string[] };
+  bulge?: { relativeToHip?: boolean; centre: V3; radius: number; amount: number; joints: string[] };
   jaw?: { drop: number; forward?: number; mouthDy: number; widthDz: number };
   tolerance?: number; drop?: string[]; recolour: Recolour[]; pieces: Piece[]; budget: { triangles: number; lod1: number; lod2: number };
 }
@@ -108,6 +108,7 @@ export async function buildRole(role: Role, lod: number, io: Awaited<ReturnType<
 
   // 1. bind-pose proportion edits on every skinned primitive (body, eyes, stump caps)
   const pt = new Vector3();
+  const origPos = readAttr(bodyNode.getMesh()!.listPrimitives()[0], 'POSITION')!.arr.slice();
   const boxes: Record<string, { min: V3; max: V3 }> = {};
   for (const node of skinned) for (const prim of node.getMesh()!.listPrimitives()) {
     const P = prim.getAttribute('POSITION')!, J = prim.getAttribute('JOINTS_0')!, W = prim.getAttribute('WEIGHTS_0')!;
@@ -123,7 +124,7 @@ export async function buildRole(role: Role, lod: number, io: Awaited<ReturnType<
       if (role.bulge) {
         const b = role.bulge, dom = names[j[w.indexOf(Math.max(...w))]];
         if (b.joints.includes(dom)) {
-          const c = new Vector3(...b.centre), dv = pt.clone().sub(c), r = dv.length() / b.radius;
+          const c = b.relativeToHip ? pos.get('hip')!.clone().add(new Vector3(...b.centre)) : new Vector3(...b.centre), dv = pt.clone().sub(c), r = dv.length() / b.radius;
           if (r < 1 && dv.x > -.02) pt.add(dv.normalize().multiplyScalar(b.amount * (1 - r * r) ** 1.5));
         }
       }
@@ -153,6 +154,23 @@ export async function buildRole(role: Role, lod: number, io: Awaited<ReturnType<
   for (const sem of body.listSemantics()) if (!known.has(sem)) extra[sem] = readAttr(body, sem)!;
   const indexAcc = body.getIndices();
   const indices: number[] = indexAcc ? Array.from(indexAcc.getArray()!) : Array.from({ length: attrs.P.arr.length / 3 }, (_, i) => i);
+  // Moved vertices keep stale normals (glassy shards on the bloated belly): rebuild them from the deformed surface, welded by position.
+  {
+    const acc = new Map<string, number[]>(), key = (i: number) => [0, 1, 2].map(a => Math.round(attrs.P.arr[i * 3 + a] * 2000)).join(',');
+    const v = (i: number) => new Vector3(attrs.P.arr[i * 3], attrs.P.arr[i * 3 + 1], attrs.P.arr[i * 3 + 2]);
+    for (let t = 0; t + 2 < indices.length; t += 3) {
+      const [a, b, c] = [v(indices[t]), v(indices[t + 1]), v(indices[t + 2])], n = b.clone().sub(a).cross(c.clone().sub(a));
+      for (const i of [indices[t], indices[t + 1], indices[t + 2]]) { const k = key(i), cur = acc.get(k) ?? [0, 0, 0]; cur[0] += n.x; cur[1] += n.y; cur[2] += n.z; acc.set(k, cur); }
+    }
+    let fixed = 0;
+    for (let i = 0; i < attrs.P.arr.length / 3; i++) {
+      const moved = Math.hypot(attrs.P.arr[i * 3] - origPos[i * 3], attrs.P.arr[i * 3 + 1] - origPos[i * 3 + 1], attrs.P.arr[i * 3 + 2] - origPos[i * 3 + 2]);
+      const sum = acc.get(key(i)); if (moved < .012 || !sum) continue;
+      const len = Math.hypot(sum[0], sum[1], sum[2]); if (len < 1e-12) continue;
+      attrs.N.arr[i * 3] = sum[0] / len; attrs.N.arr[i * 3 + 1] = sum[1] / len; attrs.N.arr[i * 3 + 2] = sum[2] / len; fixed++;
+    }
+    void fixed;
+  }
   const texture = body.getMaterial()!.getBaseColorTexture()!;
   const png = PNG.sync.read(Buffer.from(texture.getImage()!));
   const H = png.height, H2 = H + STRIP;

@@ -76,10 +76,10 @@ export const roles: Record<string, Role> = {
   },
   // Bloated: the bathrobe neighbour with a hugely swollen belly, boils and pustules in sick yellow-green.
   'inf.bloated': {
-    id: 'inf.bloated', base: 'inf.bathrobe-neighbor', scale: 1.12, tolerance: .35,
+    id: 'inf.bloated', base: 'inf.cashier', scale: 1.18, tolerance: .35,
     deform: { armL: { perp: 1.25 }, armR: { perp: 1.25 }, legL: { perp: 1.2 }, legR: { perp: 1.2 } },
-    bulge: { centre: [-.12, .64, 0], radius: .72, amount: .34, joints: ['torso', 'hip'] },
-    recolour: [{ parts: ['torso', 'armL', 'armR', 'foreArmL', 'foreArmR'], colour: '#8d8a63' }, { parts: ['hip', 'legL', 'legR', 'shinL', 'shinR'], colour: '#7c7a58' }],
+    bulge: { relativeToHip: true, centre: [-.06, .12, 0], radius: .62, amount: .27, joints: ['torso', 'hip'] },
+    recolour: [{ parts: ['torso', 'armL', 'armR', 'foreArmL', 'foreArmR'], colour: '#a8a36a' }, { parts: ['hip', 'legL', 'legR', 'shinL', 'shinR'], colour: '#6b6a55' }],
     pieces: [
       { joint: 'torso', rel: true, shape: 'sphere', centre: [1.0,.5,.35], size: [.24,.2,.24], colour: '#b9c35a', seg: 6 },
       { joint: 'torso', rel: true, shape: 'sphere', centre: [1.0,.3,.7], size: [.2,.17,.2], colour: '#8c5a78', seg: 6 },
