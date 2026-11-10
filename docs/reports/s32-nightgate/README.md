@@ -1,5 +1,15 @@
 # s32-nightgate
 
+## Final acceptance
+
+The final curated night gate contains 12 rows: the seven-animal L8-zoo lineup with separate actor crops/checks and two controls, the isolated L8-zoo lion regression proof, and the production L10-night Mega, each on low/high and WebGL2/WebGPU at game zoom 1.5. All 12 rows ran under one-browser reservations in **1.4 minutes** (20/20/23/19 seconds per batch), with no missing work. Idle, walking and hit samples are retained. Individual animal scenes remain available for diagnosis.
+
+The gate deliberately exits 1 on the current broken renders: isolated lion standard deviation 10.3–10.4 < 14; lineup gorilla 11.4 < 14 on every combination. Daylight reference minima were lion 38.78 and gorilla 51.87. Isolated infected dog/regular controls passed at 15.38/23.02; grouped controls also pass the size-qualified gate (body diagonals 1.66/1.71 m). The metric records every actor regardless of eligibility, and gates body diagonals >= 2 m on luma spread and distinct 5-bit RGB buckets per crop pixel (floor 0.005). Crop backgrounds can influence this diagnostic; the isolated lion row preserves the calibrated proof.
+
+Evidence: `test-results/s32-nightgate-acceptance/summary.md` and per-row `metrics.json` / `sheet.jpg` (untracked). Opened lion, gorilla, dog, Mega and final lineup sheets; all final lineup subjects are visible. No raw captures are committed. The zoo night failures remain untriaged, so a render fix must genuinely clear the gate.
+
+Typecheck and lint passed; focused gate-tools tests passed 8/8; `npm run test:gate` passed 107 tests across 27 files in 87.7 seconds, with the total collection at 150/150 cases. Final fixture changes affect JSON and documentation only; no renderer or sim/stat code changed. Setup, JSON execution and diff checks passed. This final acceptance supersedes the chronological progress notes below.
+
 ## Cause
 
 The curated Scene Lab deploy gate did not include L8 animal bosses under the `L8-zoo` preset or the L10 Mega under `L10-night`. The existing zoo boss specifications used daylight presets, so the flat, pale night renders were not measured by the gate.
@@ -73,3 +83,11 @@ Typecheck and lint passed. Focused gate-tools validation passed all eight cases 
 ## Passing full test gate
 
 Re-ran npm run test:gate after the environment recovered from the earlier timeout. It passed: 27 files, 107 default-project tests, 87.7 seconds against the 240-second budget. Collection remains at 150/150 cases across projects. Typecheck, lint, focused gate-tools tests, full night matrix execution and capture review now have passing execution evidence; the deliberate night visual failures remain visible. The only unresolved acceptance constraint is reducing added scene-gate runtime from 4.6 minutes to approximately two minutes without reducing animal/pose/tier/backend coverage.
+
+## Shared fixture candidate
+
+Added a nine-subject L8-zoo lineup with separate per-actor crops/checks, plus the existing L10 Mega row. All eight tier/backend rows completed in 1.1 minutes, meeting the runtime target. Opened the WebGPU high lineup; adjusted positions to screen axes after the first version clipped the regular control. The reframed candidate ran all eight rows again in 1.1 minutes. It still needs final review: lion's grouped crop passes on some combinations despite the established isolated lion failure, so grouped crop contamination/lighting must be resolved before acceptance. Individual per-species scenes remain available, and the earlier 40-row isolated proof remains valid. Grouped fixture/list changes are not yet committed.
+
+## Separated lineup
+
+Moved the courier away from measured crops, enlarged the synthetic slab to contain its position, and returned zoo actors to idle at frame 31 after the walking sample. The eight shared-fixture rows completed in 0.9 minutes across both backends/tiers, with gorilla failing and both controls passing. The grouped lion remains sensitive to the changed composition; retained its proven isolated regression row on all four combinations instead of changing thresholds. The resulting 12-row list still needs its final measured run, documentation counts, validation and commit.
