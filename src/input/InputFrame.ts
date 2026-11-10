@@ -4,7 +4,7 @@ export interface Button { down: boolean; held: boolean; up: boolean }
 export type Scheme = 'mouse-only' | 'mouse-keyboard' | 'keyboard' | 'touch';
 /** One logical frame per fixed tick. Pulses may have both down and up in the same tick. */
 export interface InputFrame {
-  /** Local vehicle axes from WASD; walking continues to use screen-relative move. */
+  /** Vehicle-relative axes: throttle > 0 = gas, < 0 = brake then reverse; steer > 0 = the vehicle's own left (A), < 0 = right (D). Walking uses screen-relative move. */
   drive?: { throttle: number; steer: number };
   /** Touch/keyboard vehicle brake. */
   brake?: boolean;

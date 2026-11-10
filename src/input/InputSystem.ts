@@ -130,11 +130,11 @@ export class InputSystem implements Lifecycle {
     this.scheme = scheme; this.hint.dataset.scheme = scheme;
     this.hint.textContent = this.drivingContext && scheme !== 'touch' ? scheme === 'mouse-only'
       ? 'Hold LMB and steer toward the cursor · release to brake · E / F exit'
-      : 'WASD / arrows choose screen direction · LEFT to horn / boost · E / F exit' : {
+      : 'W gas · S brake / reverse · A / D steer left / right · LEFT to horn / boost · E / F exit' : {
       'mouse-only': 'WASD / arrows move · mouse aims · LMB shoots · Space aim assist · Q / RMB switch · E / F interact · 1–9 slots',
       'mouse-keyboard': 'WASD / arrows move · mouse aims · LMB shoots · Space aim assist · Q / RMB switch · E / F interact · 1–9 slots',
       keyboard: 'WASD / arrows move · J / K / Space aim assist · 1–9 slots · Q · E / F interact',
-      touch: 'Stick to move · LEFT / RIGHT · swipe up to switch · pinch zoom · ACTION',
+      touch: 'Stick to move (driving: up gas, down brake / reverse, left / right steer) · LEFT / RIGHT · swipe up to switch · pinch zoom · ACTION',
     }[scheme];
   }
   private readonly mouseActivity = (): void => {
@@ -221,7 +221,13 @@ export class InputSystem implements Lifecycle {
     const x = this.axis('moveRight', 'moveLeft'), y = this.axis('moveDown', 'moveUp');
     const driveX = this.drivingContext && this.aiming() ? this.axis('aimRight', 'aimLeft') : x;
     const driveY = this.drivingContext && this.aiming() ? this.axis('aimDown', 'aimUp') : y;
-    this.driving.throttle = driveY ? -driveY : 0; this.driving.steer = driveX; if (this.scheme === 'keyboard' || this.scheme === 'mouse-keyboard') frame.drive = this.driving; else delete frame.drive; frame.brake = false;
+    // Vehicle-relative: W = +throttle, S = -throttle (brake, then reverse); A = +steer (the vehicle's own left), D = -steer.
+    this.driving.throttle = driveY ? -driveY : 0; this.driving.steer = driveX ? -driveX : 0;
+    if (this.scheme === 'touch' && this.drivingContext) {
+      const sx = this.touch.stick.move.x, sz = this.touch.stick.move.z;
+      this.driving.throttle = Math.abs(sz) > .12 ? -sz : 0; this.driving.steer = Math.abs(sx) > .12 ? -sx : 0;
+    }
+    if (this.scheme === 'keyboard' || this.scheme === 'mouse-keyboard' || (this.scheme === 'touch' && this.drivingContext)) frame.drive = this.driving; else delete frame.drive; frame.brake = false;
     if (this.scheme === 'keyboard' || this.scheme === 'mouse-keyboard') {
       this.screenVector(this.drivingContext ? driveX : x, this.drivingContext ? driveY : y, frame.move); const length = Math.hypot(frame.move.x, frame.move.z);
       if (length > 1) { frame.move.x /= length; frame.move.z /= length; }

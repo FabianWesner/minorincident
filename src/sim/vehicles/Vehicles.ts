@@ -157,23 +157,9 @@ export class Vehicles {
         car.physics.body.setAngvel({ x: 0, y: 0, z: 0 }, true);
       }
       if (this.operable(car) && this.active === car.entity.id && !waitingForBoarding) {
-        if ((scheme === 'keyboard' || scheme === 'mouse-keyboard') && Math.hypot(frame.move.x, frame.move.z) > .05) {
-          // Keyboard vehicle directions match walking: they point where the player
-          // wants to travel on screen. Turn toward that world heading, naturally
-          // steering while moving forward and reversing when the target is behind.
-          const wanted = Math.atan2(-frame.move.z, frame.move.x);
-          const delta = Math.atan2(Math.sin(wanted - car.entity.transform.yaw), Math.cos(wanted - car.entity.transform.yaw));
-          // Keep lateral requests as forward turns even before the chassis has
-          // fully aligned with screen-up. Reverse only in the rear 90° cone;
-          // switching gear at 90° made a left request back up to screen-right.
-          const reverse = Math.abs(delta) > Math.PI * .75;
-          const error = reverse ? delta - Math.sign(delta) * Math.PI : delta;
-          drive.throttle = reverse ? -.75 : Math.max(.35, Math.cos(delta));
-          drive.steer = Math.max(-1, Math.min(1, error / (Math.PI / 2))) * (reverse ? -1 : 1);
-          drive.brake = !!frame.brake;
-        } else if (scheme === 'keyboard' || scheme === 'mouse-keyboard') {
-          // Logical drive frames (bots/recordings) may carry local axes without
-          // a device-space movement vector; keep that explicit contract intact.
+        if (scheme === 'keyboard' || scheme === 'mouse-keyboard' || scheme === 'touch') {
+          // Vehicle-relative car controls (PO 2026-11-10): W/stick up = throttle, S/stick down = brake and then reverse,
+          // A/stick left = front wheels to the driver's left, D/right = right. drive.steer > 0 is the vehicle's own left.
           drive.throttle = frame.drive?.throttle ?? 0;
           drive.steer = frame.drive?.steer ?? 0;
           drive.brake = frame.brake ?? drive.throttle === 0;
