@@ -1,4 +1,5 @@
 import type { SimWorld } from '../../sim/world/SimWorld';
+import { finale } from '../../data/l10Finale';
 import type { EntitySnapshot } from '../../sim/world/types';
 
 type Point = { x: number; z: number };
@@ -12,8 +13,12 @@ export const l10Closing = {
   /** Sim heading of the seated courier: down the stair, east towards the apron and the sunrise. */
   seatYaw: 0,
   seat(world: SimWorld): Point | undefined {
-    const anchors = world.missions?.def.anchors, foot = anchors?.['dispersal-stair-foot'] ?? anchors?.['cure-console'];
-    return foot ? { x: foot.x - .45, z: foot.z } : undefined;
+    // The platform stair comes from the finale prop layout (its anchors are not mission anchors): origin = console prop,
+    // two metres west of the console's operator anchor.
+    const anchors = world.missions?.def.anchors, console = anchors?.['cure-console'];
+    if (!console) return undefined;
+    const origin = anchors['dispersal-origin'] ?? { x: console.x - finale.console.operator[0] * 2, z: console.z }, [fx, fz] = finale.platformStair.at;
+    return { x: origin.x + fx - .45, z: origin.z + fz };
   },
   /** The corgi sits against her right shin, turned to her, chin at knee height. */
   corgi(seat: Point): { x: number; z: number; yaw: number } { return { x: seat.x + .75, z: seat.z + .85, yaw: Math.PI * .8 }; },

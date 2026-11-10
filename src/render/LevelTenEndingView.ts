@@ -83,7 +83,7 @@ const shots: ShotDef[] = [
   },
   { // The hangar doors open: Voss and Ruiz help Sam (or Reyes) outside.
     ground: 'sidewalk', patches: [{ token: 'grass', x: 0, z: 30, w: 200, d: 30 }],
-    items: [['bld.cure-motor-shelter', 0, -26, Math.PI / 2, 1.6], ['prop.cure-generator', 16, -4], ['prop.emergency-light', -10, -3], ['prop.cure-iso-tent', -18, -8, .3], ['veh.military-truck', 20, 6, -.6]],
+    items: [['bld.cure-lab-main', -2, -22], ['bld.cure-motor-shelter', 22, -20, -Math.PI / 2], ['prop.cure-generator', 16, -4], ['prop.emergency-light', -10, -3], ['prop.cure-iso-tent', -18, -8, .3], ['veh.military-truck', 20, 6, -.6]],
     figures: [],
     from: [15, 6, 20], to: [11, 5, 17], look: [0, 2, -6],
   },
@@ -227,7 +227,8 @@ export class LevelTenEndingView extends Group {
       this.montage = true; this.glow.offset.z = away;
       this.stage.visible = true; for (const [i, group] of this.shotGroups.entries()) group.visible = i === shot;
       const age = seconds - start, span = end - start, def = shots[shot], k = Math.min(1, age / span);
-      if (shot !== this.lastShot) { for (const a of this.actors.filter(a => a.shot === shot)) this.resetActor(a); this.lastShot = shot; }
+      const cut = shot !== this.lastShot;
+      if (cut) { for (const a of this.actors.filter(a => a.shot === shot)) this.resetActor(a); this.lastShot = shot; }
       // The dust wall rolls in from the left of frame and crosses the whole set.
       const wall = shot < 5 ? -34 + age * 15 : 40;
       for (const a of this.actors) if (a.shot === shot) this.animateActor(a, age, wall);
@@ -235,13 +236,14 @@ export class LevelTenEndingView extends Group {
       else this.dustHaze(age, 0, 26, .1, 7);
       const ease = k * k * (3 - 2 * k), aspect = Math.max(1, 1 / view.camera.aspect);
       const p = def.from.map((v, i) => v + (def.to[i] - v) * ease);
-      view.cinematic({ position: [this.position.x + p[0] * aspect, p[1] * aspect, this.position.z + away + p[2] * aspect], target: [this.position.x + def.look[0], def.look[1], this.position.z + away + def.look[2]] });
+      view.cinematic({ position: [this.position.x + p[0] * aspect, p[1] * aspect, this.position.z + away + p[2] * aspect], target: [this.position.x + def.look[0], def.look[1], this.position.z + away + def.look[2]] }, cut);
       cureDust.origin.value.set(this.position.x + wall - 2000, this.position.z + away); cureDust.radius.value = shot < 5 ? 2000 : 2400;
     } else {
-      if (this.montage) { this.montage = false; this.glow.offset.z = 0; view.follow(); }
+      const back = this.montage;
+      if (back) { this.montage = false; this.glow.offset.z = 0; view.follow(); }
       this.stage.visible = false; this.lastShot = -1;
       if (front && phase !== 'done') this.release(seconds, front.radius, epiloguePull(ticks), phase === 'thanks');
-      this.closingCamera(view, ticks, phase);
+      this.closingCamera(view, ticks, phase, back);
     }
     this.glow.end();
   }
@@ -320,13 +322,13 @@ export class LevelTenEndingView extends Group {
       if (i % 3 === 0) this.glow.puff(Math.cos(angle + 1) * r, .35, Math.sin(angle + 1) * r, 4 + u * 3, .07 * ramp);
     }
   }
-  private closingCamera(view: View, ticks: number, phase: string | undefined): void {
+  private closingCamera(view: View, ticks: number, phase: string | undefined, cut = false): void {
     const pull = epiloguePull(ticks), console = this.world.missions?.def.anchors['cure-console'];
     if (!console) return;
     const shot = l10Closing.camera(console, view.camera.aspect, l10Closing.seat(this.world));
     if (phase === 'thanks' || ticks >= 45 * 60 && pull === 0) {
       view.camera.near = .1; view.camera.far = 600; view.camera.updateProjectionMatrix();
-      view.cinematic({ position: shot.position, target: shot.target });
+      view.cinematic({ position: shot.position, target: shot.target }, cut);
     } else if (pull > 0) {
       const fov = cameraFraming.fovDeg + (55 - cameraFraming.fovDeg) * pull;
       // Fit the complete long L10 rectangle at every aspect ratio, with a margin, at a steep enough
