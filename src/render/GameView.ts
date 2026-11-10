@@ -32,6 +32,7 @@ import { L3Props } from './L3Props';
 import { L9Props } from './L9Props';
 import { L8Gates } from './L8Gates';
 import { BicycleView } from './BicycleView';
+import { l8BossArenas } from '../data/l8Bosses';
 import { combatPhotoSpots } from '../../tests/fixtures/scenarios/combat-arena';
 import { ActionView } from './ActionView';
 import { CharacterView } from './characters/CharacterView';
@@ -1184,6 +1185,9 @@ export class GameView implements Lifecycle {
     this.vehicles?.updateReveal(subject, subject && this.revealCourier);
     this.entityAssets?.updateReveal(subject, subject && this.revealCourier);
     updateCorn(this.world);
+    // L8 enclosures (r27-visp2): while the courier stands inside one, the crowns above it thin out so the pack and her group stay visible.
+    const arena = this.world.scenario === 'L8' && current ? l8BossArenas.find(a => Math.hypot(current.x - a.centre.x, current.z - a.centre.z) < a.radius + 2) : undefined;
+    this.districts?.setCanopyThinning(arena?.centre.x ?? 0, arena?.centre.z ?? 0, arena?.radius ?? 0);
     this.districts?.updateFoliage(this.view, current, undefined, subject, !this.world.entities.get(1)?.hidden);
     // Scenes without a DistrictView (Scene Lab asphalt scenes with asset occluders) open the same bounded, immediate reveal.
     if (!this.districts) {

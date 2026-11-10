@@ -170,6 +170,8 @@ export class DistrictView extends Group {
     });
   }
   setFoliageReveal(enabled: boolean): void { this.foliage.reveal = enabled; }
+  /** Thin the leaf crowns over a world disc (radius 0 = off); GameView drives it for the L8 enclosures. */
+  setCanopyThinning(x: number, z: number, radius: number): void { this.foliage.setThinZone(x, z, radius); }
   updateFoliage(view: View, player?: { x: number; y: number; z: number }, target?: { x: number; y: number; z: number }, subject?: Box3, vehicleSilhouette = false): void {
     this.foliage.update(view, player, target); this.occlusion.update(view, this.foliage.reveal, player, subject, vehicleSilhouette);
   }

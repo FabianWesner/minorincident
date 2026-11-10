@@ -1,0 +1,20 @@
+{
+ "name": "r27-zebra-death",
+ "note": "r27-visp2: one zebra, live death clip then settled corpse, game camera zoom 1.5.",
+ "seed": 22,
+ "ground": "asphalt",
+ "time": "L4",
+ "size": 60,
+ "dof": false,
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [-9, 12], "state": "idle" },
+  { "id": "z", "kind": "infected", "archetype": "infected.lion", "look": { "model": "infected.zebra" }, "at": [0, 0], "state": "idle" }
+ ],
+ "camera": { "mode": "game", "target": [0, 0.2, 0], "zoom": 1.5 },
+ "frames": 140,
+ "shots": [8, 20, 32, 45, 70, 130],
+ "script": [
+  { "frame": 10, "actor": "z", "do": { "corpse": true, "ageTicks": 0 } }
+ ],
+ "expect": { "consoleErrors": 0 }
+}
