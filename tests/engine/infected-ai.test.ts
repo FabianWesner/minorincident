@@ -436,6 +436,24 @@ test('perception: sight cone, facing-independent gunshots, silent melee misses, 
     expect([brain.search.originX, brain.search.originZ]).toEqual([home.x, home.z]);
     retreat.infected!.release(e);
   }
+
+  // PO 2026-11-10 ("L3 police team doesn't loose any health"): infected that reach a following squad officer land their normal
+  // melee hit (runner damage, no bite), wear his shown health down and kill him with the last hit.
+  const { world: duel } = await loadL3(1, 'low'); worlds.push(duel);
+  for (const e of [...duel.infected!.active]) duel.infected!.release(e);
+  const ds = duel.missions!.state.l3!, cop = duel.entities.get(ds.squadIds[0])!;
+  ds.squad = [{ id: cop.id, farSince: 0 }];
+  let dmg = 0;
+  for (let k = 0; k < 6; k++) {
+    const a = k * Math.PI / 3, r = duel.entities.get(duel.infected!.spawn('infected.runner', { x: cop.transform.x + Math.cos(a) * 1.4, z: cop.transform.z + Math.sin(a) * 1.4 }, { state: 'chase' }))!;
+    r.health.current = r.health.max = 1e6; r.infected!.l1!.targetId = cop.id; r.infected!.l1!.mode = 'chase'; dmg = 10 * r.combat!.damageMultiplier;
+  }
+  cop.health.current = 200;
+  const hits: number[] = []; duel.events.on('infected.attack', ev => { if (ev.type === 'infected.attack' && ev.targetId === cop.id && ev.special !== 'bite') hits.push(ev.amount); });
+  step(duel, 600);
+  expect(hits.length, 'a plain melee hit lands on the officer').toBeGreaterThan(0);
+  expect(hits.some(a => a === dmg), 'the hit is the runner melee damage').toBe(true);
+  expect(cop.health.current, 'a pack of six wears the officer down to death').toBeLessThan(200);
 });
 
 test('all levels recover nonlethal downs after seeded 10-20 s at full HP; explosives and burns kill for good', async () => {
