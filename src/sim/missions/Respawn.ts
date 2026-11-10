@@ -34,7 +34,7 @@ function gatherAllies(world: SimWorld, at: Spot, escorts: boolean): void {
 }
 
 /** Clear the area around the anchor of infected and make pursuers lose the courier for a few seconds. */
-function clearThreat(world: SimWorld, at: Spot): void {
+export function clearThreat(world: SimWorld, at: Spot): void {
   const ai = world.infected, r = respawnRule, tick = world.tick;
   if (!ai) return;
   // Returning L3 crowds need time to stand without immediately reacquiring the just-respawned courier.
@@ -108,6 +108,7 @@ export function respawnAtCheckpoint(world: SimWorld, anchor: Spot, worldKept = t
   if (world.missions?.l9?.state.phase === 'driving' && world.vehicles?.active != null) {
     // The checkpoint restored the occupied APC. An on-foot admission at the
     // same anchor is inside its hull and would suppress all driving input.
+    world.missions.l9.driving.safeBridgeStart(true);
     world.missions.l9.driving.poseHatch();
     world.physics.playerCollider!.setEnabled(false);
     return;

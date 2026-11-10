@@ -334,3 +334,7 @@ A living record, updated after every lane or experiment. Short entries with evid
 - **Apply:** `l9-driving-proof --zero` is chaotic: any drive change moves where it gets stuck (original engine + bot fix failed too). When it breaks after a vehicle change, trace with tools/qa/diag/l9zerotrace.ts and l9zerocontacts.ts, and fix the general behaviour. Do not tune for the one spot.
 
 - r29-l10mega: absolute-tick timers (`combat.staggerUntil`, status expiry) must be rebased on every restore/resume; a fixture saved at tick ~52880 froze the Mega for 14 game minutes after load. Check all absolute-tick fields when a save loads at tick 0, and prefer a real-input play of the loaded fixture over guessing nav causes.
+
+### 2026-11-10 — r30-l9bridge (L9 bridge checkpoint restart, Sonnet)
+- **Found:** the restart was the player's parking spot with the chasing bus alongside, and Continue froze the APC for 2.5 min: the L9 resume path (`LevelNineCrash.prepare`) restored absolute ticks into a tick-0 world (`impactStallUntil` 8890). Probe the resumed vehicle with real throttle (speed stayed 0.00) before judging "bot cannot steer around the bus".
+- **Apply:** any resume/restore path rebases every absolute tick it loads (vehicles, infected, lights); put "can it move / act within 5 s of restore" in the restore test. A checkpoint that snapshots where the player happened to stop needs an authored safe pose, not just a clear-threat pass.
