@@ -19,7 +19,7 @@ try {
     world.applyInput(bot.sample(), 'keyboard'); world.update();
     const sp = l9.driving.state.setPieces; if (!sp) continue;
     const car = world.entities.get(l9.state.carId)!;
-    const line = sp.alphas.map(a => { const e = world.entities.get(a.id)!; return `${a.role[0]}${a.id}:${a.phase}:${a.uses} hp${Math.round(e.health.current)} att${e.attachedTo ?? '-'}`; }).join(' | ');
+    const line = sp.alphas.map(a => { const e = world.entities.get(a.id); return `${a.role[0]}${a.id}:${a.phase}:${a.uses} hp${Math.round(e?.health.current ?? -1)} att${e?.attachedTo ?? "-"}`; }).join(' | ');
     if (line !== last) { console.log((world.tick / 60).toFixed(2), `apc(${car.transform.x.toFixed(0)},${car.transform.z.toFixed(0)}) v${world.vehicles!.cars.get(car.id)!.physics.speed.toFixed(1)}`, line); last = line; }
   }
 } finally { world.dispose(); }

@@ -79,7 +79,7 @@ export const l9Course = {
  * point is roughly `atX + 100`; the Mega sightings (-260, -90, 100) stay quiet beats between them.
  * Kinds use the L9 Alpha types (leaper, thrower) and existing archetypes only; no infected stat changes.
  */
-export type L9SetPieceKind = 'chase-pack' | 'leapers' | 'thrower' | 'roadblock' | 'smash';
+export type L9SetPieceKind = 'chase-pack' | 'leapers' | 'thrower' | 'roadblock' | 'smash' | 'stall-ambush';
 export interface L9SetPiece { id: string; kind: L9SetPieceKind; atX: number }
 export const l9SetPieces: readonly L9SetPiece[] = [
   { id: 'pack-1', kind: 'chase-pack', atX: -500 },
@@ -91,6 +91,8 @@ export const l9SetPieces: readonly L9SetPiece[] = [
   { id: 'pack-2', kind: 'chase-pack', atX: 120 },
   { id: 'leapers-2', kind: 'leapers', atX: 160 },
   { id: 'thrower-2', kind: 'thrower', atX: 200 },
+  /** Waits at the rail crossing for the stall: a leaper beside the track and a thrower further out (they also hit an APC that drives on). */
+  { id: 'stall-ambush', kind: 'stall-ambush', atX: 265 },
 ];
 export const l9SetPieceTuning = {
   /** Staging distance ahead of the APC along its lane (spawn admission keeps >= 105 m, outside the zoomed-out frame). */
@@ -109,6 +111,6 @@ export const l9SetPieceTuning = {
   smash: { items: ['trash-can', 'cone', 'mailbox', 'barricade', 'cone', 'trash-can', 'cone'] as const, slots: [-4.5, -3, -1.5, 0, 1.5, 3, 4.5] },
   roadblock: { slots: [-6, -3.6, -1.2, 1.2, 3.6, 6], /** Light bodies only: ploughing through is the payoff, heavy stalls belong to the ambient groups. */
     horde: ['infected.runner', 'infected.sprinter', 'infected.runner', 'infected.screamer', 'infected.runner', 'infected.crawler', 'infected.sprinter', 'infected.dog', 'infected.runner', 'infected.runner'] },
-  /** Rail stall: the hatch defence gets a leaper on the hull, a thrower and a mixed rush on top of the reinforcement waves. */
-  stall: { leaperAtTicks: 0, throwerAtTicks: 120, rushAtTicks: 840, rush: ['infected.brute', 'infected.screamer', 'infected.runner', 'infected.sprinter', 'infected.armored', 'infected.runner'] },
+  /** Rail stall: the hatch defence gets the waiting ambush (leaper + thrower, see stall-ambush) and a mixed rush on top of the reinforcement waves. */
+  stall: { ambushLeaperSideM: 9, ambushThrowerSideM: 26, rushAtTicks: 840, rush: ['infected.brute', 'infected.screamer', 'infected.runner', 'infected.sprinter', 'infected.armored', 'infected.runner'] },
 } as const;

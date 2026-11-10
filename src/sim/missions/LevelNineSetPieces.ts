@@ -1,5 +1,5 @@
 import { crossing } from '../../levels/L9/district';
-import { l9SetPieces, l9SetPieceTuning as tune } from '../../data/l9';
+import { l9Course, l9SetPieces, l9SetPieceTuning as tune } from '../../data/l9';
 import type { Point } from '../../levels/districts/types';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
@@ -96,6 +96,18 @@ export class LevelNineSetPieces {
       if (id) { this.hold(id, post); s.alphas.push({ id, role: 'thrower', piece, phase: 'wait', at: this.w.tick, post: this.at(id), uses: 0 }); }
       return !!id;
     }
+    if (kind === 'stall-ambush') {
+      // Staged where this lane crosses the railway, i.e. where the engine stalls; both wait at their posts.
+      let rail: Lane | null = null;
+      for (let m = 60; m <= 260 && !rail; m += 4) { const at = this.lane(m); if (at && at.x >= l9Course.railX - 3) rail = at; }
+      if (!rail) return false;
+      let n = 0;
+      for (const [role, off] of [['leaper', tune.stall.ambushLeaperSideM], ['thrower', -tune.stall.ambushThrowerSideM]] as const) {
+        const post = side(rail, off), id = this.spawn('infected.alpha', post, { alphaType: role });
+        if (id) { n++; this.hold(id, post); s.alphas.push({ id, role, piece, phase: 'wait', at: this.w.tick, post: this.at(id), uses: 0 }); }
+      }
+      return n > 0;
+    }
     if (kind === 'smash') {
       let n = 0;
       for (const [i, off] of tune.smash.slots.entries()) {
@@ -123,17 +135,6 @@ export class LevelNineSetPieces {
   private stall(s: L9SetPieceState, stallAt: number): void {
     const w = this.w, p = this.car.entity.transform, st = s.stall ??= { leaper: false, thrower: false, rush: false };
     const ring = (angle: number, m: number) => ({ x: p.x + Math.cos(angle) * m, z: p.z + Math.sin(angle) * m });
-    const tryRing = (fn: (at: { x: number; z: number }) => boolean) => { for (const a of [Math.PI, Math.PI * .8, Math.PI * 1.2, Math.PI * .6, Math.PI * 1.4, Math.PI / 2, -Math.PI / 2]) if (fn(ring(a, 106))) return true; return false; };
-    if (!st.leaper && w.tick - stallAt >= tune.stall.leaperAtTicks) st.leaper = tryRing(at => {
-      const id = this.spawn('infected.alpha', at, { alphaType: 'leaper' }); if (!id) return false;
-      s.alphas.push({ id, role: 'leaper', piece: 'stall', phase: 'cool', at: w.tick, post: at, uses: 0 }); this.w.infected!.pursueTarget(id, 1); pursueCrossingVehicle(w, id); this.signal('setpiece.stall-leaper', id); return true;
-    });
-    if (!st.thrower && w.tick - stallAt >= tune.stall.throwerAtTicks) st.thrower = tryRing(at => {
-      const id = this.spawn('infected.alpha', at, { alphaType: 'thrower' }); if (!id) return false;
-      // It walks in to a throwing post 30 m out on its side of the APC, then lobs at the stopped hull.
-      const d = Math.hypot(at.x - p.x, at.z - p.z), post = { x: p.x + (at.x - p.x) / d * 30, z: p.z + (at.z - p.z) / d * 30 };
-      this.hold(id, post); s.alphas.push({ id, role: 'thrower', piece: 'stall', phase: 'wait', at: w.tick, post, uses: 0 }); this.signal('setpiece.stall-thrower', id); return true;
-    });
     if (!st.rush && w.tick - stallAt >= tune.stall.rushAtTicks) {
       let n = 0;
       for (const [i, type] of tune.stall.rush.entries()) {
@@ -176,7 +177,7 @@ export class LevelNineSetPieces {
       const L = tune.leaper;
       if (a.phase === 'wait' && tick % 10 === 0) this.hold(a.id, a.post);
       if ((a.phase === 'wait' || a.phase === 'cool' && tick >= a.at) && a.uses < L.uses && e.attachedTo === undefined && !e.infected.specialAttack
-        && hull < L.rangeM && hull > 2 && along > -4 && w.combat!.query.visible(e.transform, p)) {
+        && hull < L.rangeM && hull > 2 && (along > -4 || car.physics.speed < 2) && w.combat!.query.visible(e.transform, p)) {
         const target = this.predict(L.windupTicks + L.flightTicks);
         this.freeze(e, true); this.pose(e, 'alpha.pounce', 'telegraph', tick, tick + L.windupTicks, target);
         a.phase = 'windup'; a.at = tick + L.windupTicks; a.to = target; a.uses++;
@@ -223,9 +224,10 @@ export class LevelNineSetPieces {
     // Thrower.
     const T = tune.thrower;
     if (a.phase === 'wait' && tick % 10 === 0) this.hold(a.id, a.post);
-    const passed = along < -10 && a.piece !== 'stall';
+    const passed = along < -10 && !a.piece.startsWith('stall');
     if ((a.phase === 'wait' || a.phase === 'cool') && (a.uses >= T.throws || passed)) { a.phase = 'free'; a.at = tick; this.freeze(e, false); delete e.infected.scripted; w.infected!.pursueTarget(e.id, 1); pursueCrossingVehicle(w, e.id); return; }
-    const ready = a.phase === 'wait' && hull < T.startM || a.phase === 'cool' && tick >= a.at;
+    // The rail ambush thrower saves its load for the stalled hull (the hatch fight), not the approach.
+    const ready = (a.phase === 'wait' && hull < T.startM || a.phase === 'cool' && tick >= a.at) && (!a.piece.startsWith('stall') || car.physics.speed < 1.5);
     if (ready && hull > T.stopM && e.attachedTo === undefined && !e.infected.specialAttack && w.combat!.query.visible(e.transform, p)) {
       const target = this.throwTarget(T.windupTicks + T.flightTicks, a.uses);
       this.freeze(e, true); this.pose(e, 'alpha.grab-throw', 'telegraph', tick, tick + T.windupTicks, target);
