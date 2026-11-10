@@ -4,6 +4,7 @@ import { propFootprint } from '../interact/PropSystem';
 import { boxContact, type SolidBox } from '../world/SolidGeometry';
 import { Status } from '../combat/Status';
 import { resetResponse } from '../locomotion/MotionResponse';
+import { animalSpine, infectedContactDistance } from '../ai/CharacterSeparation';
 import type { EntitySnapshot } from '../world/types';
 import type { Mission } from './Mission';
 import { requireClearPoint } from './missionHelpers';
@@ -13,6 +14,8 @@ export interface L8ArenaState {
   nextAt: number; cycle: number; wallHits: number; wallContacts?: string[]; breachAt?: number; carrierRetryAt?: number; grabs: number; counters: number;
   lane?: { x: number; side: 1 | -1; staging: boolean; startedAt?: number };
   track?: { x: number; z: number; vx: number; vz: number; turn: number; at: number };
+  /** r31-flamingo: flights called in so far (1 = the original flock). */
+  flights?: number;
 }
 const distance = (a: { x: number; z: number }, b: { x: number; z: number }) => Math.hypot(a.x - b.x, a.z - b.z);
 /** Arena state belongs to the L8 checkpoint seam. Turns retain the original healthy animal's entity ID. */
@@ -152,8 +155,11 @@ export class L8BossArenas {
       if (arena.phase === 1 && secondPhase) {
         arena.phase = 2; if (arena.id === 'monkey') this.announce('The leader is coming out — stop him to scatter the pack!'); if (arena.id !== 'elephant') arena.nextAt = Math.min(arena.nextAt, w.tick + 60); this.signal(arena, 'phase-2');
       }
+      // r31-flamingo: when the flock is nearly down, a new flight lands from the reeds (three extra flights): the fight lasts through numbers and dives, not bullet-sponge HP.
+      let flightCalled = false;
+      if (arena.id === 'flamingo' && arena.phase === 2 && (arena.flights ?? 1) < 4 && arena.ids.filter(id => (w.entities.get(id)?.health.current ?? 0) > 0).length <= 2) { this.callFlight(arena, def); flightCalled = true; }
       const leader = w.entities.get(arena.ids.at(-1)!);
-      if (!pendingTurns && !live.length || arena.id === 'monkey' && arena.phase === 2 && leader?.infected && leader.health.current <= 0) {
+      if (!flightCalled && (!pendingTurns && !live.length) || arena.id === 'monkey' && arena.phase === 2 && leader?.infected && leader.health.current <= 0) {
         arena.phase = 3; arena.endedAt = w.tick;
         const carrier = w.entities.get(arena.carrier);
         if (carrier?.infected) delete carrier.infected.arenaCarrier;
@@ -162,6 +168,18 @@ export class L8BossArenas {
         this.signal(arena, 'cleared');
       }
     }
+  }
+  private callFlight(arena: L8ArenaState, def: typeof l8BossArenas[number]): void {
+    arena.flights = (arena.flights ?? 1) + 1;
+    const w = this.w, zoo = this.mission.l8!, civilians = w.npcs!.civilians;
+    for (let i = 0; i < 6; i++) {
+      const angle = i * Math.PI / 3 + .4, at = requireClearPoint(w, { x: def.centre.x + Math.cos(angle) * 10, z: def.centre.z + Math.sin(angle) * 10 }, .5, 6, `l8.${def.id}.flight`);
+      const id = civilians.spawn('cashier', at, { zooAnimal: 'flamingo', waypoints: [at, at] });
+      arena.ids.push(id); zoo.state.animals.push(id);
+      const animal = w.entities.get(id)!;
+      civilians.outbreak!.infect(animal, 1);
+    }
+    this.announce('Another flight comes down from the reeds!');
   }
   /** Finite, physical animal-contact leg. Ordinary damage/grab interruption still owns its failure. */
   controlCarrier(e: EntitySnapshot): boolean {
@@ -202,6 +220,13 @@ export class L8BossArenas {
       if (victim) {
         this.walk(e, victim.transform, 3);
         if (distance(e.transform, victim.transform) < 1.8 && victim.civilian!.state !== 'grabbed') w.npcs!.civilians.outbreak!.grab(victim, e);
+      } else if (arena.id === 'elephant') {
+        // r32 (PO "This guy is not doing anything"): a bull that turned before his finale paces his fence line
+        // and rams it every few seconds instead of standing idle; his bar stays hidden until the fight engages.
+        const home = boss.pace ??= { x: e.transform.x, z: e.transform.z }, leg = Math.floor(w.tick / 210) % 3;
+        if (leg === 2 && !b.specialAttack) { if (w.tick % 210 === 0) this.start(e, 'elephant.swipe', 42, 0, 0); else this.walk(e, home, 2); }
+        else if (b.specialAttack) this.advanceMove(e, arena);
+        else this.walk(e, { x: home.x + (leg ? 3.5 : -3.5), z: home.z }, 2.6);
       } else this.orbit(e, arena, def.centre, 2);
       return true;
     }
@@ -261,7 +286,7 @@ export class L8BossArenas {
     }
     if (boss.hunt) {
       const hunt = boss.hunt;
-      if (distance(e.transform, hunt) > 1.2 && w.tick < hunt.until) { this.walk(e, hunt, hunt.flank ? 7 : 4); return true; }
+      if (distance(e.transform, hunt) > 1.2 && w.tick < hunt.until) { this.walk(e, hunt, hunt.flank ? 7 : 3.2); return true; }
       if (distance(e.transform, p.transform) > 9) { hunt.until = w.tick; this.walk(e, p.transform, 6.5); return true; }
       delete boss.hunt; this.start(e, hunt.flank ? 'lion.flank' : 'lion.pounce', 36, 10, 1); return true;
     }
@@ -312,6 +337,8 @@ export class L8BossArenas {
       return true;
     }
     const lead = arena.ids.find(id => { const member = w.entities.get(id); return member && member.health.current > 0 && !member.infected?.arenaBoss?.roof && !member.infected?.arenaBoss?.traversal; }) === e.id;
+    // r31-flamingo: the flock stays home until the courier comes (it used to chase her to the plaza, where the soldiers shot it before its title showed).
+    if (arena.id === 'flamingo' && distance(p.transform, def.centre) > def.radius + 12) { this.orbit(e, arena, def.centre, 5); return true; }
     if (lead && w.tick >= arena.nextAt) {
       arena.cycle++; arena.nextAt = w.tick + (arena.id === 'elephant' ? arena.phase === 2 && arena.wallHits === 0 ? 1080 : 1320 : arena.phase === 2 ? 300 : 420); this.beginCycle(e, arena);
     } else if (arena.id === 'lion' && arena.phase === 2 && boss.slot === 1 && w.tick >= boss.readyAt) {
@@ -458,14 +485,25 @@ export class L8BossArenas {
     const staticClear = w.solids.sweep(e, { x: a.area.dx, z: a.area.dz }, step, e.combat!.radius, false, false);
     let clear = w.solids.sweep(e, { x: a.area.dx, z: a.area.dz }, step, e.combat!.radius, arena.id === 'zebra' || arena.id === 'elephant' ? 'side' : false, true);
     if (arena.id === 'flamingo' && !w.infected!.nav.clear(e.transform.x + a.area.dx * clear, e.transform.z + a.area.dz * clear, e.combat!.radius)) clear = 0;
+    const leap = arena.id === 'lion' && (a.move === 'lion.pounce' || a.move === 'lion.flank');
+    if (leap) {
+      // r32: the pounce lands with the muzzle at the courier (same contact rule as the shared pounce), not through her.
+      const px = p.transform.x - e.transform.x, pz = p.transform.z - e.transform.z, along = px * a.area.dx + pz * a.area.dz, lateral = Math.abs(px * a.area.dz - pz * a.area.dx);
+      const contact = infectedContactDistance(e.combat!.radius) + (animalSpine[e.archetype ?? ''] ?? 0);
+      if (along >= 0 && lateral <= contact) clear = Math.min(clear, Math.max(0, along - Math.sqrt(contact ** 2 - lateral ** 2)));
+    }
     w.solids.wrote(e, 'l8.arena-special'); e.transform.x += a.area.dx * clear; e.transform.z += a.area.dz * clear;
+    // r32: a real leap arc (0.8 m at mid-flight) for the lion's pounce; the renderer poses the body over it.
+    if (leap) e.transform.y = (w.districts?.supportBelow(e.transform.x, e.transform.z, e.transform.y - .7) ?? 0) + .7 + Math.sin(Math.PI * Math.min(1, (travelled + clear) / Math.max(.5, range))) * .8;
     w.spatial.set(e.id, e.transform.x, e.transform.z);
-    if (distance(e.transform, p.transform) <= a.area.radius + .35) {
+    if (distance(e.transform, p.transform) <= (leap ? Math.max(a.area.radius + .35, infectedContactDistance(e.combat!.radius) + (animalSpine[e.archetype ?? ''] ?? 0) + .1) : a.area.radius + .35)) {
       const firstContact = !a.hitIds.includes(1);
       this.hit(e, arena.id === 'elephant' ? 70 : arena.id === 'monkey' ? 35 : arena.id === 'flamingo' ? 30 : arena.id === 'lion' ? 70 : 35, arena.id === 'elephant' ? 70 : 0);
       if (firstContact && (arena.id === 'lion' || arena.id === 'monkey')) { b.grabUntil = w.tick + 120; b.grabNextTick = w.tick + 30; b.grabHits = 0; b.heardTargetId = 1; arena.grabs++; }
     }
-    if (clear + .001 < step || travelled + step >= range || w.tick - a.activeTick > (range / speed + 1) * 60) {
+    const landed = leap && distance(e.transform, p.transform) <= infectedContactDistance(e.combat!.radius) + (animalSpine[e.archetype ?? ''] ?? 0) + .05;
+    if (landed || clear + .001 < step || travelled + step >= range || w.tick - a.activeTick > (range / speed + 1) * 60) {
+      if (leap) e.transform.y = (w.districts?.supportBelow(e.transform.x, e.transform.z, e.transform.y - .7) ?? 0) + .7;
       const side = Math.abs((p.transform.x - a.area.x) * a.area.dz - (p.transform.z - a.area.z) * a.area.dx);
       const barrier = arena.id === 'elephant' && staticClear + .001 < step ? this.elephantBarrier(e) : undefined;
       // A near wall/truck still counts after a real lured run and sidestep; the elephant need not pass the old bait pose.

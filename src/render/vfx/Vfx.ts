@@ -1,3 +1,4 @@
+import type { EntitySnapshot } from '../../sim/world/types';
 import { readableTelegraphs, type TelegraphThreat } from './telegraphPriority';
 import { megaAlpha } from '../../data/megaAlpha';
 import { Group, type BufferGeometry, type Node } from 'three/webgpu';
@@ -47,6 +48,8 @@ const eventTypes = ['ally.attack', 'combat.hit', 'combat.kill', 'combat.attack',
 const limbs = 5;
 const heavyBlade = /machete|axe|katana|shovel/;
 const telegraphShapes = { lunge: 1, charge: 2, splash: 1, bloated: 4 } as const;
+const angle0 = (area: { dx: number; dz: number }) => Math.atan2(area.dz, area.dx);
+type SpecialAttack = NonNullable<NonNullable<EntitySnapshot['infected']>['specialAttack']>;
 const effectColors = { fire: 0xff923a, smoke: 0x665f73, toxic: 0x96d354, objective: 0xffe18e, pickup: 0x84e7ff, ash: 0xbcb0c8, 'vehicle-smoke': 0x535360, 'vehicle-fire': 0xff8c32 } as const;
 /** Seconds between two hit flashes on one target: a 0.1 s pulse, then at least 0.25 s in its own colours. */
 export const hitFlashRest = 0.35;
@@ -85,7 +88,9 @@ export class Vfx extends Group {
   private flameSource: { id: number; until: number; direction: { x: number; z: number } } | null = null;
   private lastSpray = { actionId: '', direction: { x: 1, z: 0 }, droplets: 0, chunks: 0, gravity: 9.81 };
   private readonly stops: (() => void)[] = [];
-  private readonly tells = new Map<number, TelegraphThreat & { kind: TelegraphKind; spawned: number; sourceId?: number }>();
+  private readonly tells = new Map<number, TelegraphThreat & { kind: TelegraphKind; spawned: number; sourceId?: number; color?: number }>();
+  /** r32: per-attack cue counter for the animal telegraph effects (dust, stamps, eye glint), keyed by attack id. */
+  private readonly animalCues = new Map<number, number>();
   private readonly hitIds = new Uint32Array(512);
   private readonly hitUntil = new Float64Array(512);
   private readonly hitPeak = new Float32Array(512);
@@ -210,7 +215,7 @@ export class Vfx extends Group {
     if (patch.quality !== undefined && !['high', 'low'].includes(patch.quality)) throw new RangeError('Invalid VFX quality');
     if (patch.colorblind !== undefined) {
       this.colorblind = patch.colorblind;
-      for (const tell of this.tells.values()) this.telegraphs.recolor(tell.slot, this.telegraphColor(tell.kind));
+      for (const tell of this.tells.values()) this.telegraphs.recolor(tell.slot, this.colorblind || tell.color === undefined ? this.telegraphColor(tell.kind) : tell.color);
     }
     if (patch.vfx !== undefined) this.enabled = patch.vfx;
     if (patch.flashReduction !== undefined) { this.flashReduction = patch.flashReduction; this.particles.emission.value = patch.flashReduction ? .35 : 1; }
@@ -440,14 +445,31 @@ export class Vfx extends Group {
     if (!position) return;
     const radius = throwing ? 1.5 : directional ? Math.max(.1, length / 2) : 'radius' in event ? event.radius : area?.radius ?? (kind === 'bloated' || kind === 'splash' ? 3 : source ? Math.max(this.world.missions?.def.l1 ? 1 : 2, infectedDef(source.archetype).range) : 2);
     const angle = area ? Math.atan2(area.dz, area.dx) : 'angle' in event ? event.angle : Math.atan2(source?.infected?.dz ?? 0, source?.infected?.dx ?? 1);
-    const shape = arenaThrow || throwing ? 1 : move === 'alpha.shield-bash' ? 9 : move === 'zebra.kick' ? 10 : move === 'elephant.swipe' ? 9 : move === 'alpha.ground-slam' || move === 'gorilla.pound' || source?.infected?.pursuit && move === 'alpha.grab-throw' ? 1 : move === 'alpha.roar' || move === 'gorilla.roar' || move === 'lion.roar' ? 8 : directional ? 2 : telegraphShapes[kind];
+    // r32-animalmoves: every animal has its own warning instead of the shared red lane: a dark shadow line under the
+    // diving flock, a dust lane for the zebra stampede and the elephant charge, an amber landing ring for the lion's
+    // pounce and the monkeys' leap (their bodies, eye glint and stamps carry the rest of the tell).
+    const animalShape = move === 'flamingo.dive' ? 11 : move === 'zebra.stampede' || move === 'elephant.charge' ? 12 : undefined;
+    const animalRing = move === 'lion.pounce' || move === 'lion.flank' || move === 'monkey.grab';
+    const animalColor = this.colorblind ? undefined : move === 'flamingo.dive' ? 0x12080c : move === 'zebra.stampede' ? 0xc9b07c : move === 'elephant.charge' ? 0x9c8463 : animalRing ? 0xffa53a : undefined;
+    if (animalRing && target && area) {
+      const ring = move === 'monkey.grab' ? .9 : 1.3, at = destination && move !== 'lion.pounce' ? destination : target;
+      const ringGround = this.world.districts?.groundHeight(at.x, at.z) ?? 0, duration = 'duration' in event ? event.duration : .6;
+      const ringSlot = this.telegraphs.spawn(this.time, 1e9, at.x, ringGround + .065, at.z, angle0(area), duration, 0, ring * 2, 8, animalColor ?? this.telegraphColor(kind), 0, 1, true);
+      if (ringSlot >= 0) {
+        this.visible = true;
+        this.tells.set(event.attackId, { slot: ringSlot, kind, spawned: this.time, x: at.x, z: at.z, angle: angle0(area), shape: 8, radius: ring, resolves: this.time + duration, ...(animalColor !== undefined ? { color: animalColor } : {}), ...(event.sourceId !== undefined ? { sourceId: event.sourceId } : {}) });
+        this.telegraphs.opacity(ringSlot, 0);
+      }
+      return;
+    }
+    const shape = animalShape ?? (arenaThrow || throwing ? 1 : move === 'alpha.shield-bash' ? 9 : move === 'zebra.kick' ? 10 : move === 'elephant.swipe' ? 9 : move === 'alpha.ground-slam' || move === 'gorilla.pound' || source?.infected?.pursuit && move === 'alpha.grab-throw' ? 1 : move === 'alpha.roar' || move === 'gorilla.roar' || move === 'lion.roar' ? 8 : directional ? 2 : telegraphShapes[kind]);
     const width = throwing ? 2 : move === 'elephant.charge' ? 3.5 : move === 'zebra.stampede' ? source?.infected?.arenaBoss ? (area?.radius ?? .75) * 2 : 1.5 : (area?.radius ?? 1) * 2;
     const ground = this.world.districts?.groundHeight(position.x, position.z) ?? 0;
     if (move === 'zebra.stampede' && source) this.burst(source.transform.x, source.transform.y - .5, source.transform.z, 0xb9ab8e, this.quality === 'low' ? 3 : 6, .5, 1, 0, particleShape.smoke, .6, .2);
-    const slot = this.telegraphs.spawn(this.time, 1e9, position.x, ground + .065, position.z, angle, 'duration' in event ? event.duration : .6, 0, radius * 2, shape, this.telegraphColor(kind), 0, arenaThrow || throwing ? 1 : directional ? width / (radius * 2) : kind === 'charge' ? .3 : 1, true);
+    const slot = this.telegraphs.spawn(this.time, 1e9, position.x, ground + .065, position.z, angle, 'duration' in event ? event.duration : .6, 0, radius * 2, shape, animalColor ?? this.telegraphColor(kind), 0, arenaThrow || throwing ? 1 : directional ? width / (radius * 2) : kind === 'charge' ? .3 : 1, true);
     if (slot < 0) return;
     this.visible = true;
-    this.tells.set(event.attackId, { slot, kind, spawned: this.time, x: position.x, z: position.z, angle, shape, radius, resolves: this.time + ('duration' in event ? event.duration : .6), ...(event.sourceId !== undefined ? { sourceId: event.sourceId } : {}) });
+    this.tells.set(event.attackId, { slot, kind, spawned: this.time, x: position.x, z: position.z, angle, shape, radius, resolves: this.time + ('duration' in event ? event.duration : .6), ...(animalColor !== undefined ? { color: animalColor } : {}), ...(event.sourceId !== undefined ? { sourceId: event.sourceId } : {}) });
     // Select once per presented update, even when many attacks arrive in one sim tick.
     this.telegraphs.opacity(slot, 0);
   };
@@ -588,7 +610,9 @@ export class Vfx extends Group {
           startTick: a.startTick, activeTick: a.activeTick, cooldownExpiry: a.cooldownExpiry, target: a.target, area: a.area });
       }
       if (a?.move === 'flamingo.dive' && a.hitIds.includes(1)) remaining = Math.max(remaining, (a.obstructionUntil ?? 0) - this.world.tick);
+      if (a && this.enabled && this.animalCues) this.animalCue(e, a);
     }
+    if (this.animalCues?.size > 64) for (const id of this.animalCues.keys()) if (!this.world.infected?.active.some(e => e.infected?.specialAttack?.attackId === id)) this.animalCues.delete(id);
     // Warning lifetime follows the sim snapshot, including paused step()/redraws.
     // Waiting for advance() left staged deaths ringed until real time resumed.
     for (const [attackId, tell] of this.tells) if (tell.sourceId !== undefined) {
@@ -623,6 +647,54 @@ export class Vfx extends Group {
       for (let i = 0; i < (this.quality === 'low' ? 2 : 4); i++) this.particles.spawn(this.time, t + .05, e.transform.x + ox, base + .6, e.transform.z + oz,
         (dx - ox) / t + (this.rng.next() - .5) * .3, .6 + this.rng.next() * .3, (dz - oz) / t + (this.rng.next() - .5) * .3, .16, 0, 0xe6f6ff, 9.81);
     }
+  }
+  /** r32: time-based animal telegraph/strike effects, read from the fixed-tick special (dust, stamps, glint, pound). */
+  private animalCue(e: EntitySnapshot, a: SpecialAttack): void {
+    const tick = this.world.tick, span = Math.max(1, a.activeTick - a.startTick), u = (tick - a.startTick) / span;
+    const last = this.animalCues.get(a.attackId) ?? -1, low = this.quality === 'low';
+    const ground = (x: number, z: number) => this.world.districts?.groundHeight(x, z) ?? 0;
+    const p = e.transform, fx = Math.cos(p.yaw), fz = -Math.sin(p.yaw);
+    const near = (r: number) => { const f = this.world.entities.get(1)?.transform; return !!f && Math.hypot(f.x - p.x, f.z - p.z) < r; };
+    let cue = last;
+    if (a.stage === 'telegraph') {
+      if (a.move === 'zebra.stampede') {
+        // 1 s of dust kicked up by pawing hooves and a low rumble before the herd breaks.
+        cue = Math.floor(u * 8);
+        if (cue > last) { this.burst(p.x - fx * .6, ground(p.x, p.z) + .25, p.z - fz * .6, 0xb9a47e, low ? 3 : 6, .45, 1.1, -.2, particleShape.smoke, .9, .35); if (near(22)) this.targets.shake(this.flashReduction ? .015 : .05); }
+      } else if (a.move === 'elephant.charge') {
+        // Two stamps of the raised foreleg (AnimalMoves stamp peaks), each a ground thump with dust; then the trumpet.
+        cue = u >= .75 ? 2 : u >= .25 ? 1 : 0;
+        if (cue > last && cue > 0) {
+          const x = p.x + fx * 1.6, z = p.z + fz * 1.6, g = ground(x, z);
+          this.waves.spawn(this.time, .5, x, g + .04, z, 0, 0, 0, 5, groundShape.pressure, 0xd8c7a6, 1);
+          this.burst(x, g + .2, z, 0xa89a82, low ? 4 : 9, .5, 1.4, -.3, particleShape.smoke, 1, .3);
+          if (near(26)) this.targets.shake(this.flashReduction ? .03 : .12);
+        }
+      } else if (a.move === 'lion.pounce' || a.move === 'lion.flank') {
+        // Eye glint: two hard gold sparks at the eyes, at the start of the crouch and just before the leap.
+        cue = u >= .55 ? 2 : u >= .05 ? 1 : 0;
+        if (cue > last && cue > 0) for (const side of [-1, 1]) {
+          const x = p.x + fx * .85 - fz * side * .09, z = p.z + fz * .85 + fx * side * .09;
+          this.particles.spawn(this.time, .35, x, ground(p.x, p.z) + .72, z, 0, 0, 0, .34, particleShape.flash, 0xffd25a);
+        }
+      }
+    } else {
+      const t = tick - a.activeTick;
+      if (a.move === 'zebra.stampede' || a.move === 'elephant.charge') {
+        const back = a.move === 'elephant.charge' ? 1.8 : 1;
+        cue = 100 + Math.floor(t / 5);
+        if (cue > last && a.stage === 'active') this.burst(p.x - fx * back, ground(p.x, p.z) + .2, p.z - fz * back, 0xb3a27f, low ? 2 : 4, .35, 1, -.2, particleShape.smoke, .8, .3);
+      } else if (a.move === 'gorilla.pound' || a.move === 'lion.pounce' && a.hitIds.includes(1)) {
+        cue = 200;
+        if (cue > last) {
+          const reach = a.move === 'gorilla.pound' ? 1 : .6, x = p.x + fx * reach, z = p.z + fz * reach, g = ground(x, z);
+          this.waves.spawn(this.time, .55, x, g + .04, z, 0, 0, 0, a.move === 'gorilla.pound' ? 10 : 3, groundShape.pressure, 0xe3d3b5, 1);
+          this.burst(x, g + .2, z, 0x9d8f7a, low ? 5 : 12, .5, 1.6, -.3, particleShape.smoke, 1, .3);
+          if (near(20)) this.targets.shake(this.flashReduction ? .03 : a.move === 'gorilla.pound' ? .16 : .06);
+        }
+      }
+    }
+    if (cue !== last) this.animalCues.set(a.attackId, cue);
   }
   private prioritizeTelegraphs(): void {
     if (!this.tells.size) return;

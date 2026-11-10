@@ -44,6 +44,10 @@ import { batchPerimeterPosts } from '../../src/render/PerimeterPosts';
 import { CrowdAccessories } from '../../src/render/characters/CrowdAccessories';
 import { skinnedBrow } from '../../src/render/characters/headMeasurements';
 import { characterNodes } from '../../src/data/survivor';
+import { alphaCrowdClips } from '../../src/render/characters/crowdClipNames';
+import { AlphaMoves } from '../../src/render/characters/AlphaMoves';
+import { alphaTypes } from '../../src/data/alphaTypes';
+import { alphaLooks } from '../../src/data/alphaLooks';
 import { courierForegroundWanted, crowdSurroundsCourier } from '../../src/render/courierForeground';
 import { DistrictOcclusion } from '../../src/render/district/DistrictOcclusion';
 import { isStructuralOccluder } from '../../src/assets/worldDefinitions';
@@ -93,6 +97,39 @@ async function checkWarmPipelineDraws(): Promise<void> {
   }
 }
 
+/** r32-alphas: every humanoid Alpha look ships the authored move set, each move visibly moves the body, and each type maps to its own clip. */
+function checkAlphaMoveSet(): void {
+  const deliveries = JSON.parse(readFileSync('src/assets/civilianBakes.json', 'utf8')) as Record<string, string>;
+  for (const look of alphaLooks['inf.alpha']) for (const lod of ['lod0', 'lod2']) {
+    const bytes = gunzipSync(readFileSync(`public${deliveries[`${look}:${lod}:infected`]}`));
+    const clip = decodeCivilianBake(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength)).clip;
+    expect(clip.frames).toBe(alphaCrowdClips.length * framesPerClip);
+    const P = clip.parts.length, at = (name: string, phase: number, part: string) => {
+      const row = (alphaCrowdClips.indexOf(name as typeof alphaCrowdClips[number]) * framesPerClip + Math.round(phase * (framesPerClip - 1))) * P + clip.parts.indexOf(part);
+      return new Vector3().setFromMatrixPosition(new Matrix4().fromArray(clip.matrices, row * 16));
+    };
+    // Rake: the right hand travels forward from the coil to the strike; slam: fists overhead, then at the ground.
+    expect(at('alpha-strike', .62, 'handR').x - at('alpha-strike', .5, 'handR').x).toBeGreaterThan(.25);
+    expect(at('alpha-slam', .5, 'handL').y).toBeGreaterThan(at('alpha-slam', .5, 'head').y);
+    expect(at('alpha-slam', .7, 'handL').y).toBeLessThan(at('alpha-slam', .7, 'hip').y);
+    // Pounce coil sits low; the heave lifts the load overhead; the bash drives the hip forward.
+    expect(at('alpha-pounce', .45, 'hip').y).toBeLessThan(at('alpha-pounce', 0, 'hip').y - .12);
+    expect(at('alpha-heave', .55, 'handR').y).toBeGreaterThan(at('alpha-heave', .55, 'head').y);
+    expect(at('alpha-bash', .7, 'hip').x).toBeGreaterThan(at('alpha-bash', .5, 'hip').x + .1);
+  }
+  const moves = new AlphaMoves(), entity = (type: keyof typeof alphaTypes, extra: object) => ({ id: 9, archetype: 'infected.alpha', health: { current: 300 }, infected: { alphaType: type, state: 'chase', until: 0, ...extra } }) as unknown as EntitySnapshot;
+  const clips = new Set<string>();
+  for (const [type, definition] of Object.entries(alphaTypes) as [keyof typeof alphaTypes, typeof alphaTypes.brute][]) {
+    const own = new Set(definition.moves.map(move => moves.sample(entity(type, { specialAttack: { move, stage: 'telegraph', startTick: 100, activeTick: 160, recoveryUntil: 0 } }), 130, .5, 0)!.clip));
+    for (const clip of own) { expect(clips.has(clip)).toBe(false); clips.add(clip); }
+  }
+  expect(clips.size).toBe(7); // brute: charge, slam, grab; thrower: heave; screamer: roar; leaper: pounce; armoured: bash
+  // The ordinary strike keeps playing after the sim's strike tick, and an interrupted inhale reels instead of roaring.
+  expect(moves.sample(entity('brute', { state: 'attack', until: 200 }), 190, .5, 0)).toEqual({ clip: 'alpha-strike', phase: expect.closeTo(1 / 3, 3) });
+  expect(moves.sample(entity('brute', { state: 'chase', until: 200 }), 210, .5, 2)?.clip).toBe('alpha-strike');
+  expect(moves.sample(entity('brute', { state: 'chase', until: 200 }), 240, .5, 2)).toBeUndefined();
+  expect(moves.sample(entity('screamer', { specialAttack: { move: 'alpha.roar', stage: 'recovery', startTick: 100, activeTick: 160, recoveryUntil: 178 } }), 140, .5, 0)?.clip).toBe('stagger-left');
+}
 function checkFractionalCrowdPicking(): void {
   const matrices = new Float32Array(32);
   new Matrix4().toArray(matrices, 0);
@@ -455,7 +492,7 @@ test('textured corpse draws bind their surface and upload placements added after
 });
 
 test('skinned crowd: four-influence packing, joint·bind⁻¹ atlas rows, and corpse freezing with the shader blend', () => {
-  checkFractionalCrowdPicking();
+  checkFractionalCrowdPicking(); checkAlphaMoveSet();
   const pose = (x: number, angle: number) => new Matrix4().compose(new Vector3(x, 1, 0), new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), angle), new Vector3(1, 1, 1));
   const { dominant, skin } = packSkin([3, 7, 12, 0], [.2, .5, .3, 0], 1);
   expect(dominant[0]).toBe(7);

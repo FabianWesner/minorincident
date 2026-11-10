@@ -1,0 +1,85 @@
+{
+ "name": "r32-lion-game",
+ "note": "r32-animalmoves lion: walk-in 40, specials lion.pounce@150, lion.pounce@330, lion.roar@520, MG burst 640. Night L8-zoo light.",
+ "seed": 3,
+ "ground": "grass",
+ "size": 50,
+ "time": "L8-zoo",
+ "dof": false,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "loadout": [
+    "weapon.bat",
+    "weapon.army-mg"
+   ]
+  },
+  {
+   "id": "z",
+   "kind": "infected",
+   "archetype": "infected.lion",
+   "at": [
+    14.0,
+    0.0
+   ],
+   "yaw": 180,
+   "state": "idle"
+  }
+ ],
+ "script": [
+  {
+   "frame": 40,
+   "actor": "z",
+   "do": "chase"
+  },
+  {
+   "frame": 150,
+   "actor": "z",
+   "do": {
+    "special": "lion.pounce",
+    "target": "courier"
+   }
+  },
+  {
+   "frame": 330,
+   "actor": "z",
+   "do": {
+    "special": "lion.pounce",
+    "target": "courier"
+   }
+  },
+  {
+   "frame": 520,
+   "actor": "z",
+   "do": {
+    "special": "lion.roar",
+    "target": "courier"
+   }
+  },
+  {
+   "frame": 640,
+   "actor": "courier",
+   "do": {
+    "attack": "z",
+    "seconds": 0.6,
+    "side": "RIGHT"
+   }
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": "courier",
+  "zoom": 1.5
+ },
+ "frames": 760,
+ "trace": true,
+ "expect": {
+  "consoleErrors": 0
+ }
+}

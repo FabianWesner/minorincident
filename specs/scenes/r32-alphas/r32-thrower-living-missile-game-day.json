@@ -1,0 +1,70 @@
+{
+ "name": "r32-thrower-living-missile-game-day",
+ "note": "r32-alphas: thrower Alpha, alpha.living-missile; courier god mode at the origin; game-day.",
+ "seed": 3,
+ "ground": "asphalt",
+ "size": 40,
+ "time": "L4",
+ "dof": false,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "loadout": [
+    "weapon.bat",
+    "weapon.army-mg"
+   ]
+  },
+  {
+   "id": "z",
+   "kind": "infected",
+   "archetype": "infected.alpha",
+   "at": [
+    8,
+    0
+   ],
+   "yaw": 180,
+   "state": "idle",
+   "alphaType": "thrower"
+  },
+  {
+   "id": "m",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    8.6,
+    0.8
+   ],
+   "yaw": 180,
+   "state": "idle"
+  }
+ ],
+ "script": [
+  {
+   "frame": 0,
+   "actor": "z",
+   "do": {
+    "special": "alpha.living-missile",
+    "target": "courier"
+   }
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   4.0,
+   0
+  ],
+  "zoom": 1.5
+ },
+ "frames": 240,
+ "trace": true,
+ "expect": {
+  "consoleErrors": 0
+ }
+}

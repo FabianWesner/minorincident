@@ -474,7 +474,8 @@ async function zooParkedBoarding(): Promise<void> {
     expect(mission.state.marker).toBe('central-plaza');
     expect(mission.state.steps.escape.status).toBe('pending');
     missionControls(world).teleport(1, zoo.door());
-    world.tick = zoo.state.startedAt + 3599; advance(1);
+    // r31-nadia: while Nadia still leads (a courier camping the APC never follows her), the calm lasts its 120 s cap before the breach.
+    world.tick = zoo.state.startedAt + 120 * 60 - 1; advance(1);
     expect(mission.state.states.breached).toBe(true);
     expect(mission.state.steps.sanctuary.status, 'camping the APC does not skip the plaza after the breach').toBe('active');
     expect(mission.state.checkpoint, 'APC camping must not award the escape-route checkpoint').toBe('breach');

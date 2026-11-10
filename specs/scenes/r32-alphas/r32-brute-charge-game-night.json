@@ -1,0 +1,59 @@
+{
+ "name": "r32-brute-charge-game-night",
+ "note": "r32-alphas: brute Alpha, alpha.charge; courier god mode at the origin; game-night.",
+ "seed": 3,
+ "ground": "asphalt",
+ "size": 40,
+ "time": "night",
+ "dof": false,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "loadout": [
+    "weapon.bat",
+    "weapon.army-mg"
+   ]
+  },
+  {
+   "id": "z",
+   "kind": "infected",
+   "archetype": "infected.alpha",
+   "at": [
+    8,
+    0
+   ],
+   "yaw": 180,
+   "state": "idle",
+   "alphaType": "brute"
+  }
+ ],
+ "script": [
+  {
+   "frame": 0,
+   "actor": "z",
+   "do": {
+    "special": "alpha.charge",
+    "target": "courier"
+   }
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   4.0,
+   0
+  ],
+  "zoom": 1.5
+ },
+ "frames": 200,
+ "trace": true,
+ "expect": {
+  "consoleErrors": 0
+ }
+}

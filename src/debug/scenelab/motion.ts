@@ -12,7 +12,8 @@ export interface MotionSummary {
 }
 const percentile = (a: number[], p: number) => a.slice().sort((x, y) => x - y)[Math.floor((a.length - 1) * p)];
 /** Clips whose feet legitimately leave the floor plane or are not standing (seated, knocked down, rising). */
-export const unplantedClips = /death|knockdown|flung|get-up|crawl|collapse|rise|sit|stand-up|grabbed|bitten|down/;
+// r32-alphas: the Alpha pounce leaves the floor and the charge rush outruns its in-place cycle (9 m/s).
+export const unplantedClips = /death|knockdown|flung|get-up|crawl|collapse|rise|sit|stand-up|grabbed|bitten|down|alpha-pounce|alpha-charge/;
 
 export function summarizeMotion(frames: MotionFrame[], grounded = .012): MotionSummary {
   const used = frames.filter(f => f.feet.length && !(f.clip && unplantedClips.test(f.clip)));

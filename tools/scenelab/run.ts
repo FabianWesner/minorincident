@@ -156,6 +156,42 @@ export async function measureVehicleSilhouette(session: SceneSession, id: string
   }
 }
 
+/** Flat-light diagnostic within each actor's projected posed-body bounds. */
+export async function measureFlatSilhouette(session: SceneSession, ids: string[]) {
+  const projected = await session.page.evaluate(async (ids) => {
+    const threePath = '/node_modules/three/build/three.webgpu.js', pickPath = '/src/render/characters/PickBodies.ts';
+    const { Box3, Matrix4, Vector3 } = await import(/* @vite-ignore */ threePath);
+    const { pickBodies } = await import(/* @vite-ignore */ pickPath);
+    const game = (window.__SCENE__ as unknown as { game: import('../../src/Game').Game }).game;
+    const api = window.__SCENE__!; const actors = await api.metrics();
+    const camera = game.view.camera, projection = new Matrix4().multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
+    return ids.map(id => {
+      const actor = (actors as { actors: Record<string, { entity: number }> }).actors[id];
+      const entityId = actor?.entity ?? (id === 'mega' ? [...game.world.entities.iterate()].find(e => e.infected?.pursuit)?.id : undefined);
+      if (entityId === undefined) throw new Error(`Flat silhouette: unknown actor ${id}`);
+      const entity = game.world.entities.get(entityId); if (!entity) throw new Error(`Flat silhouette: missing entity ${id}`);
+      const worldBox = pickBodies.bounds(entityId, new Box3());
+      const size = worldBox?.getSize(new Vector3());
+      const bodySizeM = size ? size.length() : 0;
+      const box = pickBodies.bounds(entityId, new Box3(), projection);
+      if (!box) throw new Error(`Flat silhouette: no projected body for ${id}`);
+      const width = document.querySelector('canvas')!.width, height = document.querySelector('canvas')!.height;
+      return { id, bodySizeM, rect: [Math.max(0, Math.floor((box.min.x + 1) * width / 2)), Math.max(0, Math.floor((1 - box.max.y) * height / 2)), Math.min(width, Math.ceil((box.max.x + 1) * width / 2)), Math.min(height, Math.ceil((1 - box.min.y) * height / 2))] };
+    });
+  }, ids);
+  const shot = PNG.sync.read(await session.page.screenshot({ type: 'png' }));
+  return projected.map(({ id, bodySizeM, rect: [x0, y0, x1, y1] }) => {
+    let n = 0, sum = 0, sumSq = 0; const buckets = new Set<number>();
+    for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) {
+      const i = (y * shot.width + x) * 4; if (shot.data[i + 3] < 200) continue;
+      const r = shot.data[i], g = shot.data[i + 1], b = shot.data[i + 2], l = .2126 * r + .7152 * g + .0722 * b;
+      n++; sum += l; sumSq += l * l; buckets.add((r >> 3) << 10 | (g >> 3) << 5 | (b >> 3));
+    }
+    const mean = n ? sum / n : 0;
+    return { id, bodySizeM, pixels: n, colourBucketShare: n ? buckets.size / n : 0, lumaStd: n ? Math.sqrt(Math.max(0, sumSq / n - mean * mean)) : 0, colourBuckets: buckets.size, rect: [x0, y0, x1, y1] };
+  });
+}
+
 export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOptions) {
   const name = spec.name ?? (o.file ? basename(o.file, '.json') : 'scene'), out = o.out;
   const video = o.video ?? spec.video ?? 0, sheet = o.sheet ?? spec.sheet ?? 0;
@@ -181,9 +217,11 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
   const cutExpected = spec.expect?.seeThroughLensPlacements !== undefined || spec.expect?.seeThroughCutPixelsMax !== undefined || spec.expect?.seeThroughCutInsideMin !== undefined || spec.expect?.seeThroughCutInsideMax !== undefined;
   const cuts: ({ frame: number } & Awaited<ReturnType<typeof measureCut>>)[] = [];
   const silhouettes: ({ frame: number } & Awaited<ReturnType<typeof measureVehicleSilhouette>>)[] = [];
+  const flatSilhouettes: { frame: number; actors: Awaited<ReturnType<typeof measureFlatSilhouette>> }[] = [];
   const lookSamples: ({ frame: number } & Awaited<ReturnType<typeof measureLook>>)[] = [];
   const contrast: { frame: number; result: ContrastResult }[] = [], measure = async (f: number) => {
     if (spec.look) lookSamples.push({ frame: f, ...await measureLook(session) });
+    if (spec.flatSilhouette) flatSilhouettes.push({ frame: f, actors: await measureFlatSilhouette(session, spec.flatSilhouette.actors) });
     if (spec.expect?.courierVisibleShareMin !== undefined || spec.expect?.megaAlphaVisibleRatioMin !== undefined) shares.push({ frame: f, ...await measureCourierShare(session, spec.expect?.megaAlphaVisibleRatioMin !== undefined) });
     if (cutExpected) cuts.push({ frame: f, ...await measureCut(session, spec.expect?.seeThroughLensPlacements) });
     if (spec.expect?.healthBarsMax !== undefined || spec.expect?.healthBarsMin !== undefined) barCounts.push({ frame: f, count: await session.page.evaluate(() => window.__SS__!.getState().render.healthBars?.count ?? 0) });
@@ -259,6 +297,19 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
     result.checks.push({ name: 'alphaSilhouetteBlackWhiteEdgeNoise', pass: value <= spec.edgeNoise.extremeEdgeShareMax, value, limit: spec.edgeNoise.extremeEdgeShareMax });
     if (spec.edgeNoise.silhouetteRoughnessMax !== undefined) { const rough = Math.max(...edgeSamples.map(s => s.edges >= 20 ? s.silhouetteRoughness : Infinity)); result.checks.push({ name: "alphaSilhouetteRoughness", pass: rough <= spec.edgeNoise.silhouetteRoughnessMax, value: rough, limit: spec.edgeNoise.silhouetteRoughnessMax }); }
   }
+  if (spec.flatSilhouette) {
+    const samples = flatSilhouettes.flatMap(s => s.actors);
+    for (const id of spec.flatSilhouette.actors) {
+      const actor = samples.filter(s => s.id === id);
+      const lumaStd = actor.length ? Math.min(...actor.map(s => s.lumaStd)) : 0;
+      const colourBuckets = actor.length ? Math.min(...actor.map(s => s.colourBucketShare)) : 0;
+      const eligible = actor.some(s => s.bodySizeM >= 2);
+      result.checks.push(
+        { name: `flatSilhouetteLumaStd:${id}`, pass: actor.length > 0 && (!eligible || lumaStd >= (spec.expect?.flatSilhouetteLumaStdMin ?? spec.flatSilhouette.lumaStdMin)), value: +lumaStd.toFixed(2), limit: spec.expect?.flatSilhouetteLumaStdMin ?? spec.flatSilhouette.lumaStdMin },
+        { name: `flatSilhouetteColourBucketShare:${id}`, pass: actor.length > 0 && (!eligible || colourBuckets >= (spec.expect?.flatSilhouetteColourBucketShareMin ?? spec.flatSilhouette.colourBucketShareMin)), value: colourBuckets, limit: spec.expect?.flatSilhouetteColourBucketShareMin ?? spec.flatSilhouette.colourBucketShareMin },
+      );
+    }
+  }
   if (spec.contrast) {
     const worst = (pick: (r: ContrastResult) => number | undefined) => { const v = contrast.map(c => pick(c.result)).filter((x): x is number => x !== undefined && Number.isFinite(x)); return v.length ? Math.min(...v) : 0; };
     const e = spec.expect ?? {}, gate = (name: string, value: number, min: number | undefined) => { if (min !== undefined) result.checks.push({ name, pass: value >= min, value, limit: min }); };
@@ -309,7 +360,7 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
   result.checks.push({ name: 'requestedQuality', pass: actualTier === session.options.tier && metrics.quality === actualTier, value: Number(actualTier === session.options.tier && metrics.quality === actualTier), limit: 1 });
   result.pass = result.checks.every(c => c.pass);
   const timing = { openMs: o.openMs ?? 0, loadMs, runMs: Date.now() - t0 - loadMs, sceneMs: Date.now() - t0 };
-  writeJson(`${out}/metrics.json`, { spec: o.file, backend: metrics.backend, requestedBackend: session.options.backend, tier: session.options.tier, actualTier, frames: metrics.frame, timing, checks: result, seeThroughCut: cutPixels, seeThroughCutSamples: cuts, courierShares: shares, courierForeground: foreground, vehicleSilhouettes: silhouettes, pixels, edgeSamples, lookSamples, ring, contrast: contrast.map(c => ({ frame: c.frame, candidates: c.result.candidates, pairs: c.result.pairs, median: +c.result.median.toFixed(2), wcag05: +c.result.wcag.toFixed(2), min: +c.result.min.toFixed(2), routeL: +c.result.routeL.toFixed(4), vergeL: +c.result.vergeL.toFixed(4), player: c.result.player && +c.result.player.toFixed(2), landmarks: c.result.landmarks && +c.result.landmarks.toFixed(2) })), consoleErrors: errors, scene, metrics, clipping });
+  writeJson(`${out}/metrics.json`, { spec: o.file, backend: metrics.backend, requestedBackend: session.options.backend, tier: session.options.tier, actualTier, frames: metrics.frame, timing, checks: result, seeThroughCut: cutPixels, seeThroughCutSamples: cuts, courierShares: shares, courierForeground: foreground, vehicleSilhouettes: silhouettes, flatSilhouettes, pixels, edgeSamples, lookSamples, ring, contrast: contrast.map(c => ({ frame: c.frame, candidates: c.result.candidates, pairs: c.result.pairs, median: +c.result.median.toFixed(2), wcag05: +c.result.wcag.toFixed(2), min: +c.result.min.toFixed(2), routeL: +c.result.routeL.toFixed(4), vergeL: +c.result.vergeL.toFixed(4), player: c.result.player && +c.result.player.toFixed(2), landmarks: c.result.landmarks && +c.result.landmarks.toFixed(2) })), consoleErrors: errors, scene, metrics, clipping });
   written.push(`${out}/metrics.json`);
   return { name, pass: result.pass, checks: result.checks, backend: metrics.backend, actualTier, frames: metrics.frame, seconds: timing.sceneMs / 1000, failed: result.checks.filter(c => !c.pass), clipping: clipping.summary, sheet: sheetInfo?.path, sheetKb: sheetInfo?.kb, files: written, consoleErrors: errors };
 }

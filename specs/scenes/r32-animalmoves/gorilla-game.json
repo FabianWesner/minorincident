@@ -1,0 +1,85 @@
+{
+ "name": "r32-gorilla-game",
+ "note": "r32-animalmoves gorilla: walk-in 40, specials gorilla.roar@150, gorilla.pound@300, gorilla.pound@450, MG burst 600. Night L8-zoo light.",
+ "seed": 3,
+ "ground": "grass",
+ "size": 50,
+ "time": "L8-zoo",
+ "dof": false,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "loadout": [
+    "weapon.bat",
+    "weapon.army-mg"
+   ]
+  },
+  {
+   "id": "z",
+   "kind": "infected",
+   "archetype": "infected.gorilla",
+   "at": [
+    9.0,
+    0.0
+   ],
+   "yaw": 180,
+   "state": "idle"
+  }
+ ],
+ "script": [
+  {
+   "frame": 40,
+   "actor": "z",
+   "do": "chase"
+  },
+  {
+   "frame": 150,
+   "actor": "z",
+   "do": {
+    "special": "gorilla.roar",
+    "target": "courier"
+   }
+  },
+  {
+   "frame": 300,
+   "actor": "z",
+   "do": {
+    "special": "gorilla.pound",
+    "target": "courier"
+   }
+  },
+  {
+   "frame": 450,
+   "actor": "z",
+   "do": {
+    "special": "gorilla.pound",
+    "target": "courier"
+   }
+  },
+  {
+   "frame": 600,
+   "actor": "courier",
+   "do": {
+    "attack": "z",
+    "seconds": 0.6,
+    "side": "RIGHT"
+   }
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": "courier",
+  "zoom": 1.5
+ },
+ "frames": 720,
+ "trace": true,
+ "expect": {
+  "consoleErrors": 0
+ }
+}

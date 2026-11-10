@@ -1,6 +1,6 @@
 {
   "name": "alpha-variants-live",
-  "note": "PO #23 (10-19): live Fairhaven (L4) Alphas through the real crowd path, production archetype and no model override, so each one takes its look from its entity id (src/data/alphaLooks.ts). Eight idle Alphas in a row beside the courier: expect at least four different looks, every one drawn, eyes visible, trim attached. Natural LOD at the matrix zooms/tiers.",
+  "note": "PO #23 (10-19): live Fairhaven (L4) Alphas through the real crowd path, production archetype and no model override. r32-alphas (11-10): each one wears its Alpha type's look (alphaTypes[type].look; the L4 mix brute/thrower/armoured gives three looks and silhouettes), never an id-chosen sibling. Eight idle Alphas in a row beside the courier: every one drawn, eyes visible, trim attached. Natural LOD at the matrix zooms/tiers.",
   "seed": 4,
   "ground": "district",
   "time": "L4",

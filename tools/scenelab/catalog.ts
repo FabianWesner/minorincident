@@ -78,7 +78,7 @@ try {
         rows.push({ name: e.name, file: relative(process.cwd(), e.file), pass: r.pass, seconds: r.seconds, frames: r.frames, errors: r.consoleErrors.length, requestedTier: e.tier, actualTier: r.actualTier, gates: r.checks.map(c => `${c.pass ? 'ok' : 'FAIL'} ${c.name} ${fmt(c.value)}/${c.limit}`).join('; '), failed: r.failed.map(c => `${c.name} ${fmt(c.value)} > ${c.limit}`), sheet: r.sheet && relative(out, r.sheet), sheetKb: r.sheetKb, note: (spec as { note?: string }).note });
       } catch (error) {
         rows.push({ name: e.name, file: relative(process.cwd(), e.file), pass: false, seconds: (Date.now() - t0) / 1000, frames: 0, errors: session.errors.length, gates: '', failed: [], error: String(error).split('\n').slice(0, 3).join(' '), });
-      } finally { if (process.env.MI_BROWSER_POOL === '1') await session.close(); }
+      } finally { if (process.env.MI_BROWSER_POOL === '1' && !args.includes('--reuse-session')) await session.close(); }
       const last = rows[rows.length - 1];
       console.error(`[catalog] ${rows.length}/${entries.length} ${last.pass ? 'pass' : 'FAIL'} ${e.name} (${last.seconds.toFixed(1)} s)${last.failed.length ? ' ' + last.failed.join(', ') : ''}${last.error ? ' ' + last.error : ''}`);
     }
