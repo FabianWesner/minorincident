@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any -- one-off diagnostic script (r23-skilledreg), not shipped */
 import { loadLevel } from '../../sim-runner/levels';
 import { followFrustum } from '../../sim-runner/l3Bots';
 import { LevelEightBot } from '../../../src/debug/bot/LevelEightBot';

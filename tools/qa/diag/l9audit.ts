@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any -- one-off diagnostic script (r23-skilledreg), not shipped */
 import { runLevel } from '../../sim-runner/levels';
 import { ThreatObserver } from '../threat/observer';
 import { preset } from '../../../src/sim/progression/Campaign';
