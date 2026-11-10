@@ -1,0 +1,1021 @@
+{
+ "l8-low-z15-gpu": {
+  "runs": [],
+  "issues": [
+   {
+    "severity": "P2",
+    "tick": 2175,
+    "x": -0.3,
+    "z": 0.1,
+    "kind": "stuck-at-ring",
+    "text": "20 s without objective progress standing at the ring (undefined m); HUD: \"Rest at the plaza with the group\""
+   },
+   {
+    "severity": "P2",
+    "tick": 4840,
+    "x": 0,
+    "z": -0.2,
+    "kind": "stuck-at-ring",
+    "text": "20 s without objective progress standing at the ring (0.0 m); HUD: \"Protect the group! \u00b7 0\u00a0m\""
+   },
+   {
+    "severity": "P2",
+    "tick": 24620,
+    "x": 59.9,
+    "z": 8.1,
+    "kind": "stuck-at-ring",
+    "text": "20 s without objective progress standing at the ring (0.0 m); HUD: \"Defeat Zebra herd \u2014 Leave the dust lane. The fence turns the herd; shoot the stragglers. \u00b7 Zebra herd \u00b7 Phase 2 \u00b7 0\u00a0m\""
+   }
+  ],
+  "framesOver150ms": []
+ },
+ "l8-high-z1-gl-god": {
+  "runs": [
+   {
+    "level": "L8",
+    "finished": false,
+    "deaths": 0,
+    "wallSeconds": 480,
+    "simSeconds": 477,
+    "skipped": []
+   }
+  ],
+  "issues": [
+   {
+    "severity": "P2",
+    "tick": 2168,
+    "x": -0.1,
+    "z": -0.2,
+    "kind": "stuck-at-ring",
+    "text": "20 s without objective progress standing at the ring (undefined m); HUD: \"Rest at the plaza with the group\""
+   },
+   {
+    "severity": "P2",
+    "tick": 2180,
+    "x": -0.1,
+    "z": -0.1,
+    "kind": "stuck-at-ring",
+    "text": "20 s without objective progress standing at the ring (undefined m); HUD: \"Rest at the plaza with the group\""
+   }
+  ],
+  "framesOver150ms": []
+ },
+ "l10-low-z15-gpu": {
+  "runs": [],
+  "issues": [
+   {
+    "severity": "P0",
+    "tick": 30324,
+    "x": 762.4,
+    "z": -10.8,
+    "kind": "cannot-finish",
+    "text": "Driver could not finish step farmstead (\"Find a way through the farms \u00b7 74\u00a0m\") after 5 s on it (8.5 min level cap: true); skipping it with the debug objective cheat"
+   }
+  ],
+  "framesOver150ms": [
+   {
+    "tick": 7616,
+    "ms": 267,
+    "x": 740.0,
+    "z": -10.7
+   },
+   {
+    "tick": 9949,
+    "ms": 283,
+    "x": 740.0,
+    "z": -10.7
+   },
+   {
+    "tick": 11996,
+    "ms": 283,
+    "x": 740.0,
+    "z": -10.7
+   },
+   {
+    "tick": 14346,
+    "ms": 283,
+    "x": 740.0,
+    "z": -10.7
+   },
+   {
+    "tick": 16645,
+    "ms": 283,
+    "x": 740.0,
+    "z": -10.7
+   },
+   {
+    "tick": 18928,
+    "ms": 267,
+    "x": 740.0,
+    "z": -10.7
+   },
+   {
+    "tick": 21043,
+    "ms": 267,
+    "x": 740.0,
+    "z": -10.7
+   },
+   {
+    "tick": 23146,
+    "ms": 267,
+    "x": 740.0,
+    "z": -10.7
+   },
+   {
+    "tick": 25415,
+    "ms": 283,
+    "x": 740.0,
+    "z": -10.7
+   },
+   {
+    "tick": 27796,
+    "ms": 283,
+    "x": 740.0,
+    "z": -10.7
+   },
+   {
+    "tick": 30009,
+    "ms": 283,
+    "x": 740.0,
+    "z": -10.7
+   },
+   {
+    "tick": 32267,
+    "ms": 283,
+    "x": 740.0,
+    "z": -10.7
+   },
+   {
+    "tick": 34329,
+    "ms": 283,
+    "x": 740.0,
+    "z": -10.7
+   }
+  ]
+ },
+ "l9-high-z15-gpu": {
+  "runs": [
+   {
+    "level": "L9",
+    "finished": false,
+    "deaths": 0,
+    "wallSeconds": 510,
+    "simSeconds": 478,
+    "skipped": []
+   }
+  ],
+  "issues": [
+   {
+    "severity": "P2",
+    "tick": 1237,
+    "x": -571,
+    "z": 1.8,
+    "kind": "stuck-navigating",
+    "text": "20 s without objective progress (distance 1041.0 m, no marker: false); HUD: \"Drive to the evacuation point \u00b7 1041\u00a0m\""
+   },
+   {
+    "severity": "P2",
+    "tick": 3927,
+    "x": -591.7,
+    "z": 3.5,
+    "kind": "hitch",
+    "text": "Frame of 517 ms at tick 3927"
+   },
+   {
+    "severity": "P1",
+    "tick": 3934,
+    "x": -591.7,
+    "z": 3.5,
+    "kind": "hitch",
+    "text": "Frame of 5250 ms at tick 3934"
+   },
+   {
+    "severity": "P1",
+    "tick": 4156,
+    "x": -595.1,
+    "z": -1.7,
+    "kind": "ally-passive",
+    "text": "Ally vehicle#667 (undefined) stands still with an infected attacking it for ~4 s (hp 90/1000)"
+   },
+   {
+    "severity": "P2",
+    "tick": 7872,
+    "x": -598.4,
+    "z": -362,
+    "kind": "stuck-navigating",
+    "text": "20 s without objective progress (distance 1128.0 m, no marker: false); HUD: \"Shake off boarders \u00b7 swerve or handbrake while moving \u00b7 1128\u00a0m\""
+   },
+   {
+    "severity": "P0",
+    "tick": 28670,
+    "x": -598.4,
+    "z": -397.1,
+    "kind": "cannot-finish",
+    "text": "Driver could not finish step approach (\"Shake off boarders \u00b7 swerve or handbrake while moving \u00b7 1140\u00a0m\") after 4 s on it (8.5 min level cap: true); stopping without advancing the objective"
+   },
+   {
+    "severity": "P0",
+    "tick": 28670,
+    "x": -598.4,
+    "z": -397.1,
+    "kind": "mandatory-crossing-stalled",
+    "text": "The crossing must finish its real crash and crawl before handover; stopping instead of skipping the sequence"
+   }
+  ],
+  "framesOver150ms": [
+   {
+    "tick": 3927,
+    "ms": 517,
+    "x": -591.7,
+    "z": 3.5
+   },
+   {
+    "tick": 3934,
+    "ms": 5250,
+    "x": -591.7,
+    "z": 3.5
+   },
+   {
+    "tick": 3979,
+    "ms": 217,
+    "x": -591.8,
+    "z": 3.5
+   },
+   {
+    "tick": 4009,
+    "ms": 450,
+    "x": -592.5,
+    "z": 2.5
+   },
+   {
+    "tick": 4072,
+    "ms": 467,
+    "x": -593.8,
+    "z": 0.7
+   },
+   {
+    "tick": 4134,
+    "ms": 450,
+    "x": -594.4,
+    "z": -0.3
+   },
+   {
+    "tick": 4197,
+    "ms": 467,
+    "x": -596.5,
+    "z": -5.0
+   },
+   {
+    "tick": 4260,
+    "ms": 400,
+    "x": -598.1,
+    "z": -10.7
+   },
+   {
+    "tick": 4324,
+    "ms": 400,
+    "x": -598.4,
+    "z": -16.5
+   },
+   {
+    "tick": 4387,
+    "ms": 400,
+    "x": -598.4,
+    "z": -22.6
+   },
+   {
+    "tick": 4449,
+    "ms": 383,
+    "x": -598.4,
+    "z": -28.7
+   },
+   {
+    "tick": 4512,
+    "ms": 383,
+    "x": -598.3,
+    "z": -32.7
+   },
+   {
+    "tick": 4575,
+    "ms": 383,
+    "x": -598.4,
+    "z": -38.0
+   },
+   {
+    "tick": 4639,
+    "ms": 417,
+    "x": -598.4,
+    "z": -44.2
+   },
+   {
+    "tick": 4702,
+    "ms": 400,
+    "x": -598.4,
+    "z": -50.4
+   },
+   {
+    "tick": 4764,
+    "ms": 383,
+    "x": -598.4,
+    "z": -56.6
+   },
+   {
+    "tick": 4827,
+    "ms": 383,
+    "x": -598.4,
+    "z": -62.8
+   },
+   {
+    "tick": 4890,
+    "ms": 383,
+    "x": -598.4,
+    "z": -69.1
+   },
+   {
+    "tick": 4954,
+    "ms": 383,
+    "x": -598.4,
+    "z": -75.5
+   },
+   {
+    "tick": 5017,
+    "ms": 383,
+    "x": -598.4,
+    "z": -81.7
+   },
+   {
+    "tick": 5079,
+    "ms": 383,
+    "x": -598.4,
+    "z": -87.9
+   },
+   {
+    "tick": 5142,
+    "ms": 383,
+    "x": -598.4,
+    "z": -94.2
+   },
+   {
+    "tick": 5205,
+    "ms": 383,
+    "x": -598.4,
+    "z": -100.4
+   },
+   {
+    "tick": 5269,
+    "ms": 383,
+    "x": -598.4,
+    "z": -106.8
+   },
+   {
+    "tick": 5332,
+    "ms": 383,
+    "x": -598.4,
+    "z": -113.1
+   },
+   {
+    "tick": 5394,
+    "ms": 317,
+    "x": -598.4,
+    "z": -119.2
+   },
+   {
+    "tick": 5457,
+    "ms": 333,
+    "x": -598.4,
+    "z": -125.5
+   },
+   {
+    "tick": 5520,
+    "ms": 317,
+    "x": -598.4,
+    "z": -131.8
+   },
+   {
+    "tick": 5584,
+    "ms": 333,
+    "x": -598.4,
+    "z": -138.1
+   },
+   {
+    "tick": 5647,
+    "ms": 333,
+    "x": -598.4,
+    "z": -144.4
+   },
+   {
+    "tick": 5709,
+    "ms": 317,
+    "x": -598.4,
+    "z": -150.6
+   },
+   {
+    "tick": 5772,
+    "ms": 333,
+    "x": -598.4,
+    "z": -156.8
+   },
+   {
+    "tick": 5835,
+    "ms": 333,
+    "x": -598.4,
+    "z": -163.1
+   },
+   {
+    "tick": 5899,
+    "ms": 350,
+    "x": -598.4,
+    "z": -169.4
+   },
+   {
+    "tick": 5962,
+    "ms": 350,
+    "x": -598.4,
+    "z": -175.7
+   },
+   {
+    "tick": 6024,
+    "ms": 367,
+    "x": -598.4,
+    "z": -181.9
+   },
+   {
+    "tick": 6087,
+    "ms": 350,
+    "x": -598.4,
+    "z": -188.1
+   },
+   {
+    "tick": 6150,
+    "ms": 367,
+    "x": -598.4,
+    "z": -194.4
+   },
+   {
+    "tick": 6214,
+    "ms": 383,
+    "x": -598.4,
+    "z": -200.8
+   },
+   {
+    "tick": 6277,
+    "ms": 383,
+    "x": -598.4,
+    "z": -207.0
+   },
+   {
+    "tick": 6339,
+    "ms": 400,
+    "x": -598.4,
+    "z": -213.2
+   },
+   {
+    "tick": 6402,
+    "ms": 400,
+    "x": -598.2,
+    "z": -217.7
+   },
+   {
+    "tick": 6465,
+    "ms": 383,
+    "x": -598.4,
+    "z": -222.4
+   },
+   {
+    "tick": 6529,
+    "ms": 400,
+    "x": -598.4,
+    "z": -228.5
+   },
+   {
+    "tick": 6592,
+    "ms": 400,
+    "x": -598.4,
+    "z": -234.7
+   },
+   {
+    "tick": 6654,
+    "ms": 400,
+    "x": -598.4,
+    "z": -240.8
+   },
+   {
+    "tick": 6717,
+    "ms": 416,
+    "x": -598.4,
+    "z": -247.1
+   },
+   {
+    "tick": 6780,
+    "ms": 400,
+    "x": -598.4,
+    "z": -253.4
+   },
+   {
+    "tick": 6844,
+    "ms": 417,
+    "x": -598.4,
+    "z": -259.7
+   },
+   {
+    "tick": 6907,
+    "ms": 417,
+    "x": -598.4,
+    "z": -266.0
+   },
+   {
+    "tick": 6969,
+    "ms": 383,
+    "x": -598.4,
+    "z": -272.2
+   },
+   {
+    "tick": 7032,
+    "ms": 367,
+    "x": -598.4,
+    "z": -278.4
+   },
+   {
+    "tick": 7095,
+    "ms": 383,
+    "x": -598.4,
+    "z": -284.7
+   },
+   {
+    "tick": 7159,
+    "ms": 367,
+    "x": -598.4,
+    "z": -291.1
+   },
+   {
+    "tick": 7222,
+    "ms": 367,
+    "x": -598.4,
+    "z": -297.3
+   },
+   {
+    "tick": 7284,
+    "ms": 367,
+    "x": -598.4,
+    "z": -303.5
+   },
+   {
+    "tick": 7347,
+    "ms": 367,
+    "x": -598.4,
+    "z": -309.8
+   },
+   {
+    "tick": 7410,
+    "ms": 350,
+    "x": -598.4,
+    "z": -316.0
+   },
+   {
+    "tick": 7474,
+    "ms": 367,
+    "x": -598.4,
+    "z": -322.4
+   },
+   {
+    "tick": 7537,
+    "ms": 367,
+    "x": -598.4,
+    "z": -328.7
+   },
+   {
+    "tick": 7599,
+    "ms": 383,
+    "x": -598.4,
+    "z": -334.9
+   },
+   {
+    "tick": 7662,
+    "ms": 400,
+    "x": -598.4,
+    "z": -341.1
+   },
+   {
+    "tick": 7725,
+    "ms": 383,
+    "x": -598.4,
+    "z": -347.4
+   },
+   {
+    "tick": 7788,
+    "ms": 367,
+    "x": -598.4,
+    "z": -353.7
+   },
+   {
+    "tick": 7851,
+    "ms": 383,
+    "x": -598.4,
+    "z": -359.9
+   },
+   {
+    "tick": 7914,
+    "ms": 367,
+    "x": -598.4,
+    "z": -366.2
+   },
+   {
+    "tick": 7978,
+    "ms": 367,
+    "x": -598.4,
+    "z": -372.6
+   },
+   {
+    "tick": 8040,
+    "ms": 367,
+    "x": -598.4,
+    "z": -378.7
+   },
+   {
+    "tick": 8103,
+    "ms": 367,
+    "x": -598.4,
+    "z": -385.0
+   },
+   {
+    "tick": 8166,
+    "ms": 367,
+    "x": -598.4,
+    "z": -391.3
+   },
+   {
+    "tick": 8229,
+    "ms": 383,
+    "x": -598.4,
+    "z": -397.1
+   },
+   {
+    "tick": 8293,
+    "ms": 367,
+    "x": -598.4,
+    "z": -397.1
+   },
+   {
+    "tick": 8355,
+    "ms": 400,
+    "x": -598.4,
+    "z": -397.1
+   },
+   {
+    "tick": 8418,
+    "ms": 367,
+    "x": -598.1,
+    "z": -395.8
+   },
+   {
+    "tick": 12992,
+    "ms": 350,
+    "x": -598.1,
+    "z": -396.0
+   }
+  ]
+ },
+ "l7-high-z1-gl": {
+  "runs": [
+   {
+    "level": "L7",
+    "finished": true,
+    "deaths": 17,
+    "wallSeconds": 275,
+    "simSeconds": 512,
+    "skipped": [
+     "departure"
+    ]
+   }
+  ],
+  "issues": [
+   {
+    "severity": "P0",
+    "tick": 30395,
+    "x": -30.9,
+    "z": 49.5,
+    "kind": "cannot-finish",
+    "text": "Driver could not finish step departure (\"Get everyone aboard the bus \u00b7 40\u00a0m\") after 1 s on it (8.5 min level cap: true); skipping it with the debug objective cheat"
+   }
+  ],
+  "framesOver150ms": []
+ },
+ "l9-low-z1-gl-road": {
+  "runs": [],
+  "issues": [
+   {
+    "severity": "P2",
+    "tick": 1232,
+    "x": -565.1,
+    "z": 1.2,
+    "kind": "stuck-navigating",
+    "text": "20 s without objective progress (distance 1035.0 m, no marker: false); HUD: \"Drive to the evacuation point \u00b7 1035\u00a0m\""
+   },
+   {
+    "severity": "P1",
+    "tick": 4774,
+    "x": -585,
+    "z": -7.9,
+    "kind": "hitch",
+    "text": "Frame of 6100 ms at tick 4774"
+   },
+   {
+    "severity": "P2",
+    "tick": 4834,
+    "x": -585,
+    "z": -7.9,
+    "kind": "hitch",
+    "text": "Frame of 700 ms at tick 4834"
+   },
+   {
+    "severity": "P2",
+    "tick": 4894,
+    "x": -585,
+    "z": -7.9,
+    "kind": "hitch",
+    "text": "Frame of 700 ms at tick 4894"
+   },
+   {
+    "severity": "P2",
+    "tick": 4954,
+    "x": -585,
+    "z": -7.9,
+    "kind": "hitch",
+    "text": "Frame of 700 ms at tick 4954"
+   },
+   {
+    "severity": "P2",
+    "tick": 5017,
+    "x": -585,
+    "z": -7.9,
+    "kind": "hitch",
+    "text": "Frame of 700 ms at tick 5017"
+   },
+   {
+    "severity": "P2",
+    "tick": 5079,
+    "x": -585,
+    "z": -7.9,
+    "kind": "hitch",
+    "text": "Frame of 700 ms at tick 5079"
+   }
+  ],
+  "framesOver150ms": [
+   {
+    "tick": 4774,
+    "ms": 6100,
+    "x": -585.0,
+    "z": -7.9
+   },
+   {
+    "tick": 4804,
+    "ms": 283,
+    "x": -585.0,
+    "z": -7.9
+   },
+   {
+    "tick": 4834,
+    "ms": 700,
+    "x": -585.0,
+    "z": -7.9
+   },
+   {
+    "tick": 4894,
+    "ms": 700,
+    "x": -585.0,
+    "z": -7.9
+   },
+   {
+    "tick": 4954,
+    "ms": 700,
+    "x": -585.0,
+    "z": -7.9
+   },
+   {
+    "tick": 5017,
+    "ms": 700,
+    "x": -585.0,
+    "z": -7.9
+   },
+   {
+    "tick": 5079,
+    "ms": 700,
+    "x": -585.0,
+    "z": -7.9
+   }
+  ]
+ },
+ "l9-low-z1-gl-fix2": {
+  "runs": [
+   {
+    "level": "L9",
+    "finished": false,
+    "deaths": 0,
+    "wallSeconds": 510,
+    "simSeconds": 502,
+    "skipped": []
+   }
+  ],
+  "issues": [
+   {
+    "severity": "P2",
+    "tick": 3686,
+    "x": -325.6,
+    "z": -334.3,
+    "kind": "stuck-navigating",
+    "text": "20 s without objective progress (distance 863.0 m, no marker: false); HUD: \"Drive to the evacuation point \u00b7 863\u00a0m\""
+   },
+   {
+    "severity": "P2",
+    "tick": 3765,
+    "x": -325.4,
+    "z": -334.2,
+    "kind": "hitch",
+    "text": "Frame of 1967 ms at tick 3765"
+   },
+   {
+    "severity": "P2",
+    "tick": 3825,
+    "x": -325.5,
+    "z": -333.9,
+    "kind": "hitch",
+    "text": "Frame of 967 ms at tick 3825"
+   },
+   {
+    "severity": "P2",
+    "tick": 3885,
+    "x": -325.3,
+    "z": -334.3,
+    "kind": "hitch",
+    "text": "Frame of 800 ms at tick 3885"
+   },
+   {
+    "severity": "P2",
+    "tick": 3945,
+    "x": -325.3,
+    "z": -334.3,
+    "kind": "hitch",
+    "text": "Frame of 800 ms at tick 3945"
+   },
+   {
+    "severity": "P2",
+    "tick": 4009,
+    "x": -325.1,
+    "z": -334.4,
+    "kind": "hitch",
+    "text": "Frame of 783 ms at tick 4009"
+   },
+   {
+    "severity": "P2",
+    "tick": 10132,
+    "x": -307.9,
+    "z": -334.3,
+    "kind": "stuck-navigating",
+    "text": "20 s without objective progress (distance 847.0 m, no marker: false); HUD: \"Shake off boarders \u00b7 swerve or handbrake while moving \u00b7 847\u00a0m\""
+   },
+   {
+    "severity": "P0",
+    "tick": 30125,
+    "x": -278.5,
+    "z": -332.3,
+    "kind": "cannot-finish",
+    "text": "Driver could not finish step approach (\"Shake off boarders \u00b7 swerve or handbrake while moving \u00b7 819\u00a0m\") after 3 s on it (8.5 min level cap: true); stopping without advancing the objective"
+   },
+   {
+    "severity": "P0",
+    "tick": 30125,
+    "x": -278.5,
+    "z": -332.3,
+    "kind": "mandatory-crossing-stalled",
+    "text": "The crossing must finish its real crash and crawl before handover; stopping instead of skipping the sequence"
+   }
+  ],
+  "framesOver150ms": [
+   {
+    "tick": 3765,
+    "ms": 1967,
+    "x": -325.4,
+    "z": -334.2
+   },
+   {
+    "tick": 3795,
+    "ms": 333,
+    "x": -325.5,
+    "z": -333.9
+   },
+   {
+    "tick": 3825,
+    "ms": 966,
+    "x": -325.5,
+    "z": -333.9
+   },
+   {
+    "tick": 3885,
+    "ms": 800,
+    "x": -325.3,
+    "z": -334.3
+   },
+   {
+    "tick": 3945,
+    "ms": 800,
+    "x": -325.3,
+    "z": -334.3
+   },
+   {
+    "tick": 4009,
+    "ms": 783,
+    "x": -325.1,
+    "z": -334.4
+   }
+  ]
+ },
+ "l10-high-z1-gl-visible": {
+  "runs": [],
+  "issues": [
+   {
+    "severity": "P2",
+    "tick": 4036,
+    "x": 678.9,
+    "z": 12.1,
+    "kind": "enemy-frozen",
+    "text": "Infected #109 in state chase 3.2 m away has not moved for ~5 s"
+   },
+   {
+    "severity": "P0",
+    "tick": 30175,
+    "x": 882.5,
+    "z": 14.4,
+    "kind": "cannot-finish",
+    "text": "Driver could not finish step farmstead (\"Find a way through the farms \u00b7 63\u00a0m\") after 0 s on it (8.5 min level cap: true); skipping it with the debug objective cheat"
+   }
+  ],
+  "framesOver150ms": [
+   {
+    "tick": 12035,
+    "ms": 367,
+    "x": 847.1,
+    "z": 25.4
+   },
+   {
+    "tick": 13729,
+    "ms": 367,
+    "x": 847.1,
+    "z": 25.4
+   },
+   {
+    "tick": 17291,
+    "ms": 383,
+    "x": 847.1,
+    "z": 25.4
+   },
+   {
+    "tick": 19436,
+    "ms": 367,
+    "x": 847.1,
+    "z": 25.4
+   },
+   {
+    "tick": 20276,
+    "ms": 383,
+    "x": 847.1,
+    "z": 25.4
+   },
+   {
+    "tick": 22396,
+    "ms": 367,
+    "x": 847.1,
+    "z": 25.4
+   },
+   {
+    "tick": 25389,
+    "ms": 383,
+    "x": 847.1,
+    "z": 25.4
+   },
+   {
+    "tick": 27277,
+    "ms": 367,
+    "x": 847.1,
+    "z": 25.4
+   },
+   {
+    "tick": 28126,
+    "ms": 367,
+    "x": 847.1,
+    "z": 25.4
+   },
+   {
+    "tick": 30992,
+    "ms": 383,
+    "x": 847.1,
+    "z": 25.4
+   },
+   {
+    "tick": 34736,
+    "ms": 367,
+    "x": 847.1,
+    "z": 25.4
+   }
+  ]
+ }
+}
