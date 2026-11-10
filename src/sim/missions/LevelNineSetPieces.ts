@@ -188,6 +188,11 @@ export class LevelNineSetPieces {
         const vehicle = car.entity.vehicle!;
         if (car.physics.hullDistance(e.transform.x, e.transform.z) <= 1.4 && vehicle.attached.length < 8 && this.w.vehicles!.active === car.entity.id) {
           const c = Math.cos(p.yaw), sn = Math.sin(p.yaw), side = (e.transform.x - p.x) * sn + (e.transform.z - p.z) * c >= 0 ? 1 : -1;
+          // Clinging at the side rail, as the hull's boarder slots pose it; left at the landing point (inside the hull) a
+          // shake-off on the next tick dropped it under the APC and the ram killed it outright.
+          const along = -car.physics.def.length * .25 + Math.floor(vehicle.attached.length / 2) * .65, reach = car.physics.def.width / 2 + .12;
+          Object.assign(e.transform, { x: p.x + c * along + sn * side * reach, z: p.z - sn * along + c * side * reach, y: p.y + .8 });
+          w.spatial.set(e.id, e.transform.x, e.transform.z);
           vehicle.attached.push(e.id); e.attachedTo = car.entity.id;
           (vehicle.apcBoarders ??= {})[e.id] = { startedAt: tick - 180, nextHit: tick + 60, side };
           w.events.emit({ type: 'vehicle.grabbed', tick, sourceId: car.entity.id, targetId: e.id });
@@ -214,13 +219,13 @@ export class LevelNineSetPieces {
     if ((a.phase === 'wait' || a.phase === 'cool') && (a.uses >= T.throws || passed)) { a.phase = 'free'; a.at = tick; this.freeze(e, false); delete e.infected.scripted; w.infected!.pursueTarget(e.id, 1); pursueCrossingVehicle(w, e.id); return; }
     const ready = a.phase === 'wait' && hull < T.startM || a.phase === 'cool' && tick >= a.at;
     if (ready && hull > T.stopM && e.attachedTo === undefined && !e.infected.specialAttack && w.combat!.query.visible(e.transform, p)) {
-      const target = this.throwTarget(T.windupTicks + T.flightTicks);
+      const target = this.throwTarget(T.windupTicks + T.flightTicks, a.uses);
       this.freeze(e, true); this.pose(e, 'alpha.grab-throw', 'telegraph', tick, tick + T.windupTicks, target);
       a.phase = 'throw'; a.at = tick + T.windupTicks; a.to = target; this.signal('thrower-windup', a.id); return;
     }
     if (a.phase === 'throw' && tick >= a.at) {
       // Re-aim at release: the landing marker shown at the windup start stays honest within a lane width.
-      const to = this.throwTarget(T.flightTicks), kind = T.items[a.uses % T.items.length] as ObstacleKind, from = { x: e.transform.x, z: e.transform.z };
+      const to = this.throwTarget(T.flightTicks, a.uses), item = T.items[a.uses % T.items.length] as ObstacleKind, kind: ObstacleKind = item === 'jersey-barrier' && car.physics.speed < T.heavyMinSpeed ? 'trash-can' : item, from = { x: e.transform.x, z: e.transform.z };
       const id = this.w.vehicles!.obstacles.spawn(kind, to);
       this.w.vehicles!.obstacles.launch(id, true);
       const o = w.entities.get(id)!; Object.assign(o.transform, { x: from.x, z: from.z, y: 2.4 });
@@ -233,9 +238,9 @@ export class LevelNineSetPieces {
     if (a.phase === 'cool' && tick >= a.at - T.intervalTicks + 30 && e.infected.thrownBy !== undefined) { this.freeze(e, false); this.hold(a.id, a.post); }
   }
   /** A point on the APC's lane, a little ahead of where the hull will be: the driver dodges or smashes it. Stopped hull: aim at the hull. */
-  private throwTarget(ticks: number): { x: number; z: number } {
+  private throwTarget(ticks: number, uses = 0): { x: number; z: number } {
     const car = this.car, p = car.entity.transform, at = this.predict(ticks);
-    if (car.physics.speed < 2) return { x: p.x + Math.cos(p.yaw) * 1.5, z: p.z - Math.sin(p.yaw) * 1.5 };
+    if (car.physics.speed < 2) { const d = (uses % 2 ? 1 : -1) * tune.thrower.stoppedSpreadM * (uses % 4 < 2 ? 1 : .3); return { x: p.x + Math.cos(p.yaw) * d, z: p.z - Math.sin(p.yaw) * d }; }
     return { x: at.x + Math.cos(p.yaw) * tune.thrower.leadM, z: at.z - Math.sin(p.yaw) * tune.thrower.leadM };
   }
   private flights(s: L9SetPieceState): void {

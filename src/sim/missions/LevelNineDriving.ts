@@ -289,11 +289,15 @@ export class LevelNineDriving {
     const w = this.w, s = this.state, car = this.car, p = car.entity.transform;
     const tanker = w.entities.get(s.tankerId);
     if (tanker && !s.tankerExploded) {
-      if (s.tankerFuseAt === null && car.physics.hullDistance(tanker.transform.x, tanker.transform.z) < 3) {
-        s.tankerFuseAt = w.tick + 120; this.signal('tanker-armed', tanker.id);
+      // r32-l9fun near miss: the leaking tanker catches as the APC comes within 30 m and goes up just after it has passed
+      // (or 2 s after a scrape), so the blast and its slow-motion land behind the hull instead of under it.
+      const gap = car.physics.hullDistance(tanker.transform.x, tanker.transform.z), scraped = gap < 3;
+      if (s.tankerFuseAt === null && (scraped || gap < 30 && p.x < tanker.transform.x)) {
+        s.tankerFuseAt = w.tick + (scraped ? 120 : 300); this.signal('tanker-armed', tanker.id);
         w.events.emit({ type: 'vfx.effect', tick: w.tick, kind: 'fire', position: { ...tanker.transform }, radius: 1.5 });
       }
-      if (s.tankerFuseAt !== null && w.tick >= s.tankerFuseAt) {
+      if (s.tankerFuseAt !== null && s.tankerFuseAt - w.tick > 120 && scraped) s.tankerFuseAt = w.tick + 120;
+      if (s.tankerFuseAt !== null && (w.tick >= s.tankerFuseAt || s.tankerFuseAt - w.tick > 120 && p.x > tanker.transform.x + 10)) {
         s.tankerExploded = true; tanker.health.current = 0; tanker.hidden = true;
         w.entities.get(s.tankerWreckId)!.hidden = false; w.interactables!.unblock(s.tankerId);
         w.explosions!.blast('explosion.gas-tanks', tanker.transform, { sourceId: tanker.id }); this.signal('tanker-exploded', tanker.id);

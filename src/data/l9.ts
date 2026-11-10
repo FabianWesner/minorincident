@@ -84,8 +84,8 @@ export const l9SetPieces: readonly L9SetPiece[] = [
   { id: 'thrower-1', kind: 'thrower', atX: -150 },
   { id: 'roadblock-1', kind: 'roadblock', atX: 40 },
   { id: 'pack-2', kind: 'chase-pack', atX: 120 },
-  { id: 'leapers-2', kind: 'leapers', atX: 180 },
-  { id: 'thrower-2', kind: 'thrower', atX: 240 },
+  { id: 'leapers-2', kind: 'leapers', atX: 160 },
+  { id: 'thrower-2', kind: 'thrower', atX: 200 },
 ];
 export const l9SetPieceTuning = {
   /** Staging distance ahead of the APC along its lane (spawn admission keeps >= 105 m, outside the zoomed-out frame). */
@@ -96,7 +96,10 @@ export const l9SetPieceTuning = {
   leaper: { count: 2, sideM: 7.5, /** crouch telegraph before the leap */ windupTicks: 30, flightTicks: 34, rangeM: 17, cooldownTicks: 240, uses: 3,
     /** durability the clinging Alpha tears off the hull, per strike */ hullDamage: 30, strikeTicks: 90 },
   thrower: { sideM: 13, windupTicks: 48, flightTicks: 54, throws: 4, intervalTicks: 80, startM: 60, stopM: 12, /** objects land this far ahead of the predicted hull */ leadM: 9,
-    items: ['barricade', 'trash-can', 'jersey-barrier', 'barricade'] as const, hullDamage: 50 },
+    /** Light debris is smashed (10 durability); the concrete block (3rd throw) must be dodged and is only thrown at a fast APC (>= heavyMinSpeed). */
+    items: ['barricade', 'trash-can', 'jersey-barrier', 'barricade'] as const, heavyMinSpeed: 7, hullDamage: 30,
+    /** A stopped hull is bracketed: throws alternate short/long by this much, so about half of them hit. */
+    stoppedSpreadM: 3.5 },
   roadblock: { slots: [-6, -3.6, -1.2, 1.2, 3.6, 6], /** Light bodies only: ploughing through is the payoff, heavy stalls belong to the ambient groups. */
     horde: ['infected.runner', 'infected.sprinter', 'infected.runner', 'infected.screamer', 'infected.runner', 'infected.crawler', 'infected.sprinter', 'infected.dog', 'infected.runner', 'infected.runner'] },
   /** Rail stall: the hatch defence gets a leaper on the hull, a thrower and a mixed rush on top of the reinforcement waves. */
