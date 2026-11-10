@@ -176,6 +176,13 @@ per type (close camera, video), a game-camera pass at zoom 1.5 on low and high, 
 - Scene Lab cannot isolate the national-guard or other named-npc infected looks (its L1 dressing replaces them with
   npc.civilian-*); add a `keepLook` fixture flag.
 
+### Game camera (zoom 1.5, low tier) - what the player sees
+- Done for suit, civ, riot, crawler, butcher role, Alpha brute, Mega, dog, lion, gorilla, elephant (`scenes-game-low/`; the
+  high-tier and remaining low runs were stopped at the time box). Scene Lab's zoom 1.5 is a 28.5 m radius: figures are ~60 px tall.
+  At that scale the suit worker's windup and the MG hits are indistinguishable from idle (`r31-suit-l4-game-low/shot-0190.png`
+  vs `shot-0435.png`: only the health bar changes) - the P1-A/P1-B fixes need exaggerated, whole-body motion to read in play.
+  The gorilla also ends its pound standing inside the courier (`r31-gorilla-game-low/shot-0435.png`), same cause as P1-D.
+
 ## Tooling notes for the follow-up lanes
 - The Scene Lab browser-pool context closes if the CLI blocks for > ~60 s: the in-process VP8 encode of an 18 s video at high load
   did that ("Target page, context or browser has been closed" before metrics). Workaround used here: `FFMPEG_BIN` pointing at a
