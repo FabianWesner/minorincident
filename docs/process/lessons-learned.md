@@ -338,3 +338,10 @@ A living record, updated after every lane or experiment. Short entries with evid
 ### 2026-11-10 — r30-l9bridge (L9 bridge checkpoint restart, Sonnet)
 - **Found:** the restart was the player's parking spot with the chasing bus alongside, and Continue froze the APC for 2.5 min: the L9 resume path (`LevelNineCrash.prepare`) restored absolute ticks into a tick-0 world (`impactStallUntil` 8890). Probe the resumed vehicle with real throttle (speed stayed 0.00) before judging "bot cannot steer around the bus".
 - **Apply:** any resume/restore path rebases every absolute tick it loads (vehicles, infected, lights); put "can it move / act within 5 s of restore" in the restore test. A checkpoint that snapshots where the player happened to stop needs an authored safe pose, not just a clear-threat pass.
+
+### 2026-11-10 — Sol at --effort low (orchestrator)
+- **Didn't work:** Sol 6.1 at `--effort low` (PO setting) ended its turn after investigating (s31-healthbars: 0 code changes; s31-zerodrift: half the brief). **Apply:** submit low-effort Sol lanes in goal mode (`--goal "<done criteria>"`, max-turns 12) so the job keeps working until the criteria hold.
+
+### 2026-11-10 — L8 bosses flat at night shipped (PO: "How could this pass QA?")
+- **Didn't work:** every L8 boss Scene Lab spec uses `"time": "L1"`/`"L4"` (daylight); the CrowdView night-figure fill that flattens big bodies only applies under the L8 zoo night preset, so the gate always saw them lit. r26-vqa reported "gorilla and elephant show as a flat pale-grey cut-out"; the orchestrator attributed it to the hit flash, fixed the flash and verified only the elephant under a lamp — never the lion/gorilla at night without fire. Real-play QA never reached the lion/gorilla arenas (10-min cap, no fixtures until 11-10).
+- **Apply:** boss/creature visual checks run in the level's real lighting preset (L8-zoo night), not a neutral preset; when a QA report names several bodies, verify every named body before closing it; gate rows for every L8 animal at night with an automatic flat-silhouette metric (luminance variance inside the figure mask).
