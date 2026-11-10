@@ -114,6 +114,7 @@ export class CrowdView extends Group {
   private readonly projection = new Matrix4();
   private readonly arenaScale = new Vector3(1.4, 1.4, 1.4);
   private readonly flinchScale = new Vector3();
+  private readonly shadowMatrix = new Matrix4();
   private readonly bounds = new Sphere(new Vector3(), 1);
   private disposed = false;
   private readonly batches = new Map<string, Batch>();
@@ -805,7 +806,10 @@ export class CrowdView extends Group {
       const presented = this.presentation.sample(e.id, e.transform, this.world.tick, alpha);
       const resting = b.state === 'dead' && !e.knockbackSlide ? this.corpsePosition(e, b.deadAt, alphaLookAssets.includes(def.asset) ? deathReach.get(batch.poses.clip) : undefined) : { ...e.transform, y: e.transform.y - .7 };
       const settle = b.state === 'dead' && !e.knockbackSlide ? reaction?.groundDeath ? 1 : Math.max(0, Math.min(1, (this.world.tick - b.deadAt - 8) / 52)) : 0;
-      const x = presented.x + (resting.x - e.transform.x) * settle, z = presented.z + (resting.z - e.transform.z) * settle;
+      let x = presented.x + (resting.x - e.transform.x) * settle, z = presented.z + (resting.z - e.transform.z) * settle;
+      // r32: a clinging monkey hangs on the courier's flank (render-only pull from its contact spot onto her body).
+      const clingTo = species === 'monkey' && animalPose?.airborne && !specialAttack ? this.world.entities.get(e.infected?.heardTargetId || 1) : undefined;
+      if (clingTo) { const dx = clingTo.transform.x - x, dz = clingTo.transform.z - z, d = Math.hypot(dx, dz); if (d > .45) { x += dx / d * (d - .42); z += dz / d * (d - .42); } }
       const blend = batch.poses.sample(e.id, clip, frame, renderTick / 60);
       const fade = 0;
       if (e.archetype === 'infected.crow') {
@@ -823,6 +827,8 @@ export class CrowdView extends Group {
           if (k > 0) this.transform.scale(this.flinchScale.set(1 + .05 * k, 1 - .06 * k, 1 + .05 * k));
         }
         if (b.state === 'dead') this.deadFeet.set(e.id, { id: e.id, x, y: this.transform.elements[13], z });
+        // r32: flying flamingos and leaping animals cast a contact shadow on the ground under them (reads height top-down).
+        if (animalLift > .3 && this.shadows.count < 350) { const g = this.world.districts?.groundHeight(x, z) ?? 0; this.shadowMatrix.makeTranslation(x, g + .02, z); this.shadows.setMatrixAt(this.shadows.count++, this.shadowMatrix); this.shadows.instanceMatrix.needsUpdate = true; }
         if (e.corpse) {
           // Start with the intact corpse source; ordinary limb severance is
           // applied below, while the Mega keeps its complete creature outline.
