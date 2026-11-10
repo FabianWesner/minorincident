@@ -164,6 +164,14 @@ export class NavGrid {
    * a blocked target cell costs up to 169 line tests). Invalidate only answers near changed blockers. */
   private readonly nearestMemo: { x: number; z: number; r: number; cell: number }[] = [];
   private readonly nearestBlockers = new Map<number, Pick<Wall, 'x' | 'z' | 'halfX' | 'halfZ'>>();
+  /** Geometry each live blocker was last baked with; a repeated identical announcement skips the cell re-bake (r29-respawn). */
+  private readonly blockerGeometry = new Map<number, string>();
+  /** Test hook: false forces the full re-bake of every announcement (the pre-r29 path). */
+  static fastReannounce = true;
+  private static geometryKey(w: Wall): string {
+    const f = w.navFootprint;
+    return `${w.x},${w.y},${w.z},${w.halfX},${w.halfY},${w.halfZ},${w.playerHalfX ?? ''},${w.playerHalfZ ?? ''},${f ? `${f.x},${f.z},${f.halfX},${f.halfZ},${f.yaw}` : ''}`;
+  }
   private nearestNext = 0;
   nearestCell(x: number, z: number, radius?: number): number {
     const r = radius ?? -1;
@@ -278,8 +286,8 @@ export class NavGrid {
     this.playerRoutes = null;
     this.reachMemo = null; this.previousReachMemo = null; this.reachComplete = false; this.reachComponent = null;
     this.indexWalls();
-    this.nearestBlockers.clear();
-    for (const [id, wall] of this.blockers) this.nearestBlockers.set(id, { x: wall.x, z: wall.z, halfX: wall.halfX, halfZ: wall.halfZ });
+    this.nearestBlockers.clear(); this.blockerGeometry.clear();
+    for (const [id, wall] of this.blockers) { this.nearestBlockers.set(id, { x: wall.x, z: wall.z, halfX: wall.halfX, halfZ: wall.halfZ }); this.blockerGeometry.set(id, NavGrid.geometryKey(wall)); }
     if (prepared) {
       this.blocked.set(prepared);
       for (const wall of this.blockers.values()) this.updateBlockerCells(wall);
@@ -298,6 +306,16 @@ export class NavGrid {
     this.playerRoutes?.setBlocker(id, this.playerWall(wall), blocked);
     this.reachMemo = null; this.previousReachMemo = null; this.reachComplete = false; this.reachComponent = null;
     const previousBounds = this.nearestBlockers.get(id);
+    const geometry = blocked ? NavGrid.geometryKey(wall) : '';
+    if (blocked) {
+      // Checkpoint restores re-announce hundreds of unchanged walls: the baked cells already match, so only refresh the references and caches.
+      if (NavGrid.fastReannounce && previousBounds && this.blockerGeometry.get(id) === geometry && this.blockers.has(id)) {
+        this.blockers.set(id, wall); this.indexBlocker(id, wall, wall);
+        this.target = -1; this.searching = false; this.invalidateNearest(wall);
+        return;
+      }
+      this.blockerGeometry.set(id, geometry);
+    } else this.blockerGeometry.delete(id);
     if (previousBounds) this.indexBlocker(id, previousBounds);
     if (blocked) { this.blockers.set(id, wall); this.indexBlocker(id, wall, wall); } else this.blockers.delete(id);
     // Keep old bounds even when the caller mutates its retained wall object in place.
