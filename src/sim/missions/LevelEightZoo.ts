@@ -25,12 +25,17 @@ export interface L8ZooState {
   escapeCheckpoint: boolean;
   keeperId: number; pondKeeperId: number; haleId: number; reyesId: number; dogId: number; broadcastAt: number; greetingAt: number; lionSpoken: boolean; haleGreetingAt: number;
   departureAt: number; chaseAt: number; departureFrom: Transform | null; haleFallAt: number; turnedAnimalId: number; animalInterceptionId: number; animalBiteStarted: boolean; keeperAttacked: boolean;
+  /** Nadia's guided walk: 0 leading, 1 aborted (she is gone/turned), 2 arrived at the plaza. */
+  guideDone: number; guideLeg: number; guideArrivedAt: number; guideWaiting: boolean; lionUntil: number;
 }
+/** r31-nadia: the sanctuary walk. Leg 2 is the lion enclosure stop (Nadia faces the cat and speaks); the last leg is the plaza centre. */
+const guideRoute: Point[] = [{ x: 24, z: 64 }, { x: 24, z: 0 }, { x: 40, z: 0 }, { x: -38, z: 0 }, { x: 0, z: 0 }];
+const guideLionLeg = 3, guideIntroTicks = 4 * 60, guideRestTicks = 15 * 60, guideMaxCalmTicks = 120 * 60;
 const distance = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
 /** Zoo story owns timing/entrances; the shared outbreak owns all bites, rescues and same-id transformations. */
 export class LevelEightZoo {
   readonly bosses: L8BossArenas;
-  state: L8ZooState = { arenas: [], startedAt: 0, breachedAt: 0, nextWave: 0, alphas: 0, carId: 0, busId: 0, roster: [], guards: [], animals: [], outlets: [], arrivals: [], escapeCheckpoint: false, keeperId: 0, pondKeeperId: 0, haleId: 0, reyesId: 0, dogId: 0, broadcastAt: 0, greetingAt: 0, lionSpoken: false, haleGreetingAt: 0, departureAt: 0, chaseAt: 0, departureFrom: null, haleFallAt: 0, turnedAnimalId: 0, animalInterceptionId: 0, animalBiteStarted: false, keeperAttacked: false };
+  state: L8ZooState = { arenas: [], startedAt: 0, breachedAt: 0, nextWave: 0, alphas: 0, carId: 0, busId: 0, roster: [], guards: [], animals: [], outlets: [], arrivals: [], escapeCheckpoint: false, keeperId: 0, pondKeeperId: 0, haleId: 0, reyesId: 0, dogId: 0, broadcastAt: 0, greetingAt: 0, lionSpoken: false, haleGreetingAt: 0, departureAt: 0, chaseAt: 0, departureFrom: null, haleFallAt: 0, turnedAnimalId: 0, animalInterceptionId: 0, animalBiteStarted: false, keeperAttacked: false, guideDone: 0, guideLeg: 0, guideArrivedAt: 0, guideWaiting: false, lionUntil: 0 };
   private prepared = false;
   private rosterCacheTick = -1;
   private rosterCacheRevision = -1;
@@ -210,13 +215,44 @@ export class LevelEightZoo {
     const seats = this.w.entities.get(this.state.carId)!.vehicle!.passengers ?? [];
     return this.passengers().every(id => seats.some(seat => seat.id === id && seat.phase === 'seated'));
   }
+  /** The calm lasts a minute, but never ends before Nadia has led the group into the plaza and they have had a moment to settle. */
+  private calmTicks(): number {
+    const s = this.state;
+    if (s.guideDone === 0) return guideMaxCalmTicks;
+    return s.guideDone === 2 ? Math.max(3600, s.guideArrivedAt - s.startedAt + guideRestTicks) : 3600;
+  }
+  /** Nadia waits near the courier, speaks, then leads at a walking pace 6-10 m ahead; she stops and turns back when the courier falls behind. */
+  private guide(): void {
+    const s = this.state, w = this.w, t = w.tick;
+    if (s.guideDone) return;
+    const keeper = w.entities.get(s.keeperId), c = keeper?.civilian, player = w.entities.get(1)!;
+    if (!keeper || !c || keeper.infection || keeper.health.current <= 0 || c.state !== 'calm') { s.guideDone = 1; return; }
+    c.pauseUntil = t + 2; // the shared tour schedule stays suspended while she leads
+    const stand = (look: Point) => {
+      keeper.transform.yaw = Math.atan2(look.x - keeper.transform.x, look.z - keeper.transform.z);
+      keeper.motion = { velocity: { x: 0, z: 0 }, speed: 0, moving: false, distance: keeper.motion?.distance ?? 0 };
+    };
+    const lion = w.entities.get(s.animals[0]);
+    if (t < s.startedAt + guideIntroTicks) { stand(player.transform); return; }
+    if (s.lionUntil > t) { if (lion) stand(lion.transform); return; }
+    const gap = distance(keeper.transform, player.transform);
+    if (gap > 10) s.guideWaiting = true; else if (gap < 7) s.guideWaiting = false;
+    if (s.guideWaiting) { stand(player.transform); return; }
+    const target = guideRoute[s.guideLeg];
+    w.npcs!.move(keeper, target, gap < 6 ? 3.4 : 2.6, c, .3, 2400);
+    if (distance(keeper.transform, target) > 1) return;
+    if (s.guideLeg === guideLionLeg && !s.lionSpoken && gap <= 14) { s.lionSpoken = true; s.lionUntil = t + 4 * 60; this.mission.radio('L8.nadia-lion'); }
+    if (++s.guideLeg >= guideRoute.length) {
+      s.guideDone = 2; s.guideArrivedAt = t;
+      c.pauseUntil = 0; c.scheduleStep = c.schedule!.length - 1; c.activityUntil = 0;
+    }
+  }
   private story(): void {
     const s = this.state, w = this.w, t = w.tick, player = w.entities.get(1)!;
-    const keeper = w.entities.get(s.keeperId), lion = w.entities.get(s.animals[0]), hale = w.entities.get(s.haleId);
+    const keeper = w.entities.get(s.keeperId), hale = w.entities.get(s.haleId);
     if (s.greetingAt && t >= s.greetingAt) { s.greetingAt = 0; this.mission.radio('L8.nadia-path'); }
-    if (!s.lionSpoken && keeper && lion && distance(keeper.transform, lion.transform) <= 18) { s.lionSpoken = true; this.mission.radio('L8.nadia-lion'); }
     if (s.broadcastAt && t >= s.broadcastAt && distance(player.transform, this.mission.def.anchors['central-plaza']) < 25) { s.broadcastAt = 0; this.mission.radio('L8.broadcast'); }
-    if (s.haleGreetingAt && t >= s.haleGreetingAt && !s.broadcastAt && distance(player.transform, this.mission.def.anchors['central-plaza']) < 18) { s.haleGreetingAt = 0; this.mission.radio('L8.hale-greeting'); }
+    if (s.haleGreetingAt && t >= s.haleGreetingAt && !s.broadcastAt && s.guideDone !== 0 && distance(player.transform, this.mission.def.anchors['central-plaza']) < 18) { s.haleGreetingAt = 0; this.mission.radio('L8.hale-greeting'); }
     const elephant = w.entities.get(s.animals[2]);
     if (elephant?.infected && s.arenas.some(a => a.id === 'elephant' && a.phase > 0) && !this.mission.state.states['elephant-turning']) {
       this.mission.setState('elephant-turning', true);
@@ -281,10 +317,11 @@ export class LevelEightZoo {
       // must not pin him hundreds of metres behind the final door staging.
       if (!this.approachBoardingSpot(hale, this.door(), 6)) w.npcs!.move(hale, this.door(), 6, hale.civilian, .2, 48000);
     }
+    if (!this.breached) this.guide();
     this.story();
     let pending = 0; for (const e of w.entities.iterate()) if (e.infection && !e.infected) pending++;
     ai.director.pendingTurns = pending;
-    if (!this.breached && t - s.startedAt >= 3600) {
+    if (!this.breached && t - s.startedAt >= this.calmTicks()) {
       s.breachedAt = t; s.nextWave = t + 600;
       // One ordinary armoured infected leads the southern approach; the authored three/six-member cohorts stay bounded.
       s.outlets.forEach((outlet, i) => { for (let n = 0; n < (ai.director.tier === 'low' ? 3 : 6); n++) this.release(outlet, i); });
@@ -413,7 +450,7 @@ export class LevelEightZoo {
   /** Cheat/test path (`completeObjective` before the breach): call the real tunnel breach; ordinary completion still requires the plaza rendezvous. */
   advance(): boolean {
     if (this.mission.state.states.breached) return false;
-    this.state.startedAt = this.w.tick - 3600; this.update();
+    this.state.startedAt = this.w.tick - guideMaxCalmTicks; this.state.guideDone ||= 1; this.update();
     return !!this.mission.state.states.breached;
   }
   /** Shared follow AI yields to the transport approach only during the escape. */
@@ -519,6 +556,12 @@ export class LevelEightZoo {
     // response: civilian steering overshoots these changing targets.
     if (this.breached) c.survivor!.briskAt = w.tick;
     const goal = formationSlot(p.transform, leaderHeading(p.transform.yaw, velocity), slot);
+    const plaza = this.mission.def.anchors['central-plaza'];
+    // r31-nadia: once Nadia has led the courier to the plaza the group settles inside the ring around its centre.
+    if (!this.breached && s.guideDone === 2 && distance(p.transform, plaza) <= (plaza.radius ?? 6) + 4) {
+      const angle = slot * 2.399, r = Math.min(4.6, 1.8 + .72 * Math.sqrt(slot + 1));
+      goal.x = plaza.x + Math.cos(angle) * r; goal.z = plaza.z + Math.sin(angle) * r;
+    }
     // Keep the evacuees on the courier's rear flank, within the camera and rifle
     // detail's defence. Sending them all the way back to a distant entry left
     // them outside the fight's visible rescue window. The elephant yard retains
@@ -605,7 +648,8 @@ export class LevelEightZoo {
     for (const [id, door] of data.doors) this.w.openDoors.set(id, { ...door, at: door.at + delta });
     // A checkpoint restored on tick zero can have a legitimate breach time of zero.
     this.state.startedAt += delta; if (this.breached) this.state.breachedAt += delta; if (this.state.nextWave) this.state.nextWave += delta;
-    for (const key of ['broadcastAt', 'greetingAt', 'haleGreetingAt', 'departureAt', 'haleFallAt'] as const) if (this.state[key]) this.state[key] += delta;
+    this.state.guideDone ??= 0; this.state.guideLeg ??= 0; this.state.guideArrivedAt ??= 0; this.state.lionUntil ??= 0;
+    for (const key of ['broadcastAt', 'greetingAt', 'haleGreetingAt', 'departureAt', 'haleFallAt', 'guideArrivedAt', 'lionUntil'] as const) if (this.state[key]) this.state[key] += delta;
     if (this.state.departureFrom) this.state.chaseAt += delta;
     this.w.storyLock = this.state.departureFrom && !this.mission.state.states.departed ? { scripted: null, skip: false } : null;
     for (const arrival of this.state.arrivals) arrival.tick += delta;
