@@ -393,6 +393,13 @@ test('every human and animal role validates and spawns with its catalog health a
 
 test('perception: sight cone, facing-independent gunshots, silent melee misses, bounded kill noise, screamer radius', async () => {
   const w = await arena();
+  // r31-aggro (PO 11-10): a courier hit outranks a director assignment (it used to be ignored while the infected was pressed at a survivor).
+  const pressed = spawn(w, 'runner', 4);
+  pressed.infected!.pressureTarget = { id: 999, until: w.tick + 600 };
+  hit(w, pressed, 'bullet', 1);
+  expect(pressed.infected!.provoked?.id).toBe(1);
+  expect(pressed.infected!.pressureTarget).toBeUndefined();
+  w.infected!.release(pressed);
   const inside = w.infected!.spawn('infected.runner', { x: -10, z: 0 }), outside = w.infected!.spawn('infected.runner', { x: 10, z: 0 });
   const far = w.infected!.spawn('infected.runner', { x: -15, z: 0 }), angle = w.infected!.spawn('infected.runner', { x: -5, z: 10 });
   step(w, 18);

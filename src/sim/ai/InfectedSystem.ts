@@ -39,6 +39,8 @@ import type { InfectedState } from './types';
 export interface InfectedSpawn { cureRegion?: CureRegion; state?: InfectedState['state']; yaw?: number; variant?: string; alphaType?: AlphaType; pack?: number; packIndex?: number; perched?: boolean; birds?: number; /** L1 v2 speed tier; derived from the variant when omitted. */ tier?: InfectedSpeedTier; /** E32 Mega Alpha introduced in a non-resident region (no loaded nav to validate against). */ offNav?: boolean }
 const l1Ticks = (seconds: number) => Math.round(seconds * 60);
 const provokeTicks = 12 * 60;
+/** Focus bias (metres) a courier hit gives her over survivors for the provocation window. */
+const provokeFocusBiasM = 12;
 const hearingReactionTicks = 15, hearingTurnRadS = 14;
 const lungeActiveTicks = 30;
 /** Bound prediction so moving couriers cannot make an unbounded lunge. */
@@ -209,14 +211,30 @@ export class InfectedSystem {
   private provoke(target: EntitySnapshot, sourceId: number): void {
     const b = target.infected!, source = this.world.entities.get(sourceId);
     if (!source || target.health.current <= 0 || b.pursuit || source.infected || !this.partyMember(source)) return;
+    // r31-aggro (PO 11-10 L4: "I shot at this Zombie, but it's not attack me, actually turning away from me"): a hit from the courier
+    // outranks a director assignment and whoever the infected was chasing. Bites already break off through grabHits.
+    if (sourceId === 1) delete b.pressureTarget;
     if (b.pressureTarget && this.world.tick < b.pressureTarget.until && sourceId !== b.pressureTarget.id) return;
     // A marching breach cohort keeps its courier assignment when a defender
     // shoots it. Damage and stagger still apply; the shot cannot cancel entry.
     if (sourceId !== 1 && this.world.scenario === 'L4' && b.breachApproach && !b.l4FlankTarget) return;
     delete b.scripted; delete b.breachApproach;
     b.provoked = { id: source.id, until: this.world.tick + provokeTicks };
+    if (sourceId === 1 && b.l1 && this.engageCourier(target, b.l1, source)) return;
     // Active director pressure already owns this actor's attack move and target.
     if (b.l1 && !(b.l1.focusId && this.world.tick < (b.l1.focusUntil ?? 0))) this.rush(target.id, source.transform, b.provoked.until);
+  }
+  /** The shot human brain drops its survivor (or director focus), snaps toward the courier and chases her; a grab in contact is left to
+   * finish/break off through the rescue rule (grabHits), after which `closest` prefers her through the focus bias. */
+  private engageCourier(target: EntitySnapshot, brain: L1Brain, courier: EntitySnapshot): boolean {
+    const b = target.infected!, tick = this.world.tick, until = b.provoked!.until;
+    brain.focusId = 1; brain.focusUntil = until; brain.focusBiasM = provokeFocusBiasM;
+    if (brain.mode === 'bite' || b.state === 'attack' || b.specialAttack || brain.mode === 'chase' && brain.targetId === 1) return true;
+    brain.mode = 'chase'; b.state = 'chase'; brain.targetId = 1; brain.hasGoal = false; brain.distractionId = 0; brain.cueUntil = 0; brain.search.completeApproach = false;
+    brain.seenX = courier.transform.x; brain.seenZ = courier.transform.z; brain.seenTick = tick;
+    brain.looking = true; brain.lookYaw = -Math.atan2(courier.transform.z - target.transform.z, courier.transform.x - target.transform.x);
+    brain.pauseUntil = tick + 9; brain.hearingUntil = tick + 9; brain.ignoreId = 0; brain.ignoreUntil = 0;
+    return true;
   }
   private provoker(b: InfectedState): EntitySnapshot | undefined {
     const p = b.provoked; if (!p) return undefined;
