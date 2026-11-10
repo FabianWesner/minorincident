@@ -95,7 +95,7 @@ Native checks:
   flags; the only flag is PARTIAL_LEVEL_SELECTION (single-level diagnostic run).
 - `npm run test:gate` (local, 59.6 s): 106/107 after the fixes in dc287742. The remaining failure
   `tests/engine/vehicles.test.ts > zooParkedBoarding` expects the L8 breach at `startedAt + 3599`; since r31-nadia
-  (6dc10856, on main) the breach waits for Nadia's guided walk (`calmTicks()`), so it fails on main too - not from this lane.
+  (6dc10856, on main) the breach waits for Nadia's guided walk (`calmTicks()`), so it most likely fails on main too (inferred from the code, not run on main); this lane does not touch the breach or the guide.
 - tsc clean; eslint clean on all touched files.
 
 ## Browser QA needed (follow-up QA lane)
