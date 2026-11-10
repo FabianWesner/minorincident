@@ -194,6 +194,7 @@ async function l9FloorApcThroughPile(): Promise<void> {
     expect(top, 'keeps its floor speed share once clear').toBeGreaterThanOrEqual(car.physics.def.topSpeed * .6 * .9);
   } finally { world.dispose(); }
   await l9FloorApcPackAtFence();
+  await l9SetPiecesFight();
 }
 
 // r29-l9pin (r28-vqa: 0.3 m in 56 s at (-265.7, -15.4), ~50 infected, boarders on the hull): nose against a yard fence inside a dense
@@ -239,6 +240,51 @@ async function l9FloorApcPackAtFence(): Promise<void> {
       expect(top, `moves at >= 2 m/s while breaking out (steer ${steer})`).toBeGreaterThanOrEqual(2);
     } finally { world.dispose(); }
   }
+}
+
+// r32-l9fun (PO 11-10 "real fight action not just dumb zombies"): on the road detour a leaper pounce lands on the hull, tears at it
+// until a handbrake throws it off (alive, knocked down), and a thrower lobs debris that lands on the APC's lane as ordinary,
+// smashable road obstacles (collider live, nothing left airborne).
+async function l9SetPiecesFight(): Promise<void> {
+  const world = await loadLevel('L9', 1, preset('L9-default'), 0, { quality: 'low' });
+  try {
+    const l9 = world.missions!.l9!, vehicles = world.vehicles!, car = vehicles.cars.get(l9.state.carId)!;
+    world.missions!.begin();
+    for (let i = 0; i < 5; i++) world.update();
+    const z0 = -305, pose = { x: -330, z: z0, y: car.physics.def.suspension + car.physics.def.wheelRadius + .15, yaw: 0 };
+    Object.assign(car.entity.transform, pose); Object.assign(car.physics.previous, pose); car.physics.body.setTranslation(pose, true);
+    car.physics.body.setRotation({ x: 0, y: 0, z: 0, w: 1 }, true); car.physics.body.setLinvel({ x: 0, y: 0, z: 0 }, true); car.physics.body.setAngvel({ x: 0, y: 0, z: 0 }, true);
+    const signals: string[] = [];
+    world.events.on('mission.signal', e => { if (e.type === 'mission.signal') signals.push(e.name); });
+    let leaperHits = 0;
+    world.events.on('vehicle.durability-hit', e => { if (e.type === 'vehicle.durability-hit' && world.entities.get(e.targetId)?.infected?.alphaType === 'leaper') leaperHits++; });
+    const drive = (shake: boolean) => {
+      const f = emptyInput(), p = car.entity.transform;
+      f.drive = { throttle: .7, steer: Math.max(-1, Math.min(1, (p.z - z0) * -.15 - p.yaw * 2)) }; f.brake = false; f.handbrake = shake;
+      world.applyInput(f, 'keyboard'); world.update();
+    };
+    let clung: number | undefined;
+    for (let i = 0; i < 1500 && clung === undefined; i++) { drive(false); clung = l9.driving.state.setPieces?.alphas.find(a => a.phase === 'hull')?.id; }
+    expect(clung, `a leaper pounce lands on the hull (signals ${signals.filter(n => n.includes('leaper') || n.includes('setpiece')).join(',')})`).toBeDefined();
+    const leaper = world.entities.get(clung!)!;
+    expect(car.entity.vehicle!.attached, 'the landed leaper clings to the hull').toContain(clung);
+    expect(leaper.transform.y, 'clinging above the road, at the side rail').toBeGreaterThan(1);
+    for (let i = 0; i < 100; i++) drive(false);
+    expect(leaperHits, 'the clinging leaper tears at the hull (landing + strike)').toBeGreaterThanOrEqual(2);
+    for (let i = 0; i < 10 && leaper.attachedTo !== undefined; i++) drive(true);
+    expect(leaper.attachedTo, 'a handbrake at speed throws it off').toBeUndefined();
+    expect(leaper.health.current, 'thrown off, not run over').toBeGreaterThan(0);
+    for (let i = 0; i < 1800 && !signals.includes('l9.thrower-landed') && !signals.includes('l9.thrower-hull-hit'); i++) drive(false);
+    for (let i = 0; i < 120; i++) drive(false);
+    const thrown = vehicles.obstacles.items.filter(o => !l9.driving.state.obstacleIds.includes(o.entity.id));
+    expect(signals.filter(n => n === 'l9.thrower-throw').length, 'the thrower lobs debris into the road').toBeGreaterThanOrEqual(1);
+    expect(thrown.length, 'thrown debris becomes road obstacles').toBeGreaterThanOrEqual(1);
+    for (const o of thrown) {
+      const flying = !!l9.driving.state.setPieces!.flights.some(f => f.obstacleId === o.entity.id);
+      expect(!!o.airborne, 'only debris still in flight is airborne').toBe(flying);
+      if (!o.broken && !flying) { expect(o.entity.transform.y).toBe(.5); expect(o.collider.isEnabled(), 'landed debris has a live collider').toBe(true); expect(Math.abs(o.entity.transform.z - z0), 'lands on the APC lane').toBeLessThan(8); }
+    }
+  } finally { world.dispose(); }
 }
 
 // r27-l9board: a diagonally parked APC puts the passenger door inside the hull's nav margin; the corgi halted 1.3 m short of it

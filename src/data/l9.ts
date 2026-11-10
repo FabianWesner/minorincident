@@ -63,7 +63,54 @@ export const l9Course = {
   bridge: { x: 482, z: 0, halfZ: 6, endX: 508 },
   /** r30-l9bridge: authored restart pose of the `bridge` checkpoint (clear lane east to the deck) and where the chasing bus is set back to. */
   bridgeStart: { x: 452, z: 0, yaw: 0, busBehindM: [60, 50, 42], busZ: [12, 0, -12] },
-  ramps: [{ id: 'overpass', x: -65, z: -330 }, { id: 'ditch', x: 80, z: -30 }],
+  /** Jumps on the route lines (r32-l9fun, PO 11-10 "driving fun, incl jumps"): road 2, countryside 2, shortcut 1. The detours skip them. */
+  ramps: [{ id: 'overpass', x: -65, z: -330 }, { id: 'ditch', x: 80, z: -30 }, { id: 'wreck-pile', x: 135, z: -330 }, { id: 'embankment', x: -105, z: 240 }, { id: 'creek-bank', x: 115, z: 240 }],
+  /** r32-l9fun: painted boost strips on the long straights (route lines); crossing one at speed gives the APC a 4 s engine boost. */
+  boosts: [{ x: -280, z: -330 }, { x: 230, z: -330 }, { x: -230, z: 240 }, { x: 225, z: 240 }, { x: -160, z: -30 }],
+  boost: { ticks: 240, halfX: 4, halfZ: 6, minSpeed: 4 },
   tanker: { x: -25, z: -330 },
   fire: { x: -20, z: 240, closeTicks: 900 },
+} as const;
+
+/**
+ * r32-l9fun (PO 2026-11-10: "make sure L9 has some driving fun ... and some real fight action not just dumb zombies").
+ * Set pieces fire once when the APC passes `atX` on any route (every route runs west to east) and are staged ~110 m
+ * ahead on the lane the APC is actually driving (route line or detour), outside the driving camera. Their encounter
+ * point is roughly `atX + 100`; the Mega sightings (-260, -90, 100) stay quiet beats between them.
+ * Kinds use the L9 Alpha types (leaper, thrower) and existing archetypes only; no infected stat changes.
+ */
+export type L9SetPieceKind = 'chase-pack' | 'leapers' | 'thrower' | 'roadblock' | 'smash' | 'stall-ambush';
+export interface L9SetPiece { id: string; kind: L9SetPieceKind; atX: number }
+export const l9SetPieces: readonly L9SetPiece[] = [
+  { id: 'pack-1', kind: 'chase-pack', atX: -500 },
+  { id: 'smash-1', kind: 'smash', atX: -450 },
+  { id: 'leapers-1', kind: 'leapers', atX: -300 },
+  { id: 'thrower-1', kind: 'thrower', atX: -150 },
+  { id: 'smash-2', kind: 'smash', atX: -60 },
+  { id: 'roadblock-1', kind: 'roadblock', atX: 40 },
+  { id: 'pack-2', kind: 'chase-pack', atX: 120 },
+  { id: 'leapers-2', kind: 'leapers', atX: 160 },
+  { id: 'thrower-2', kind: 'thrower', atX: 200 },
+  /** Waits at the rail crossing for the stall: a leaper beside the track and a thrower further out (they also hit an APC that drives on). */
+  { id: 'stall-ambush', kind: 'stall-ambush', atX: 265 },
+];
+export const l9SetPieceTuning = {
+  /** Staging distance ahead of the APC along its lane (spawn admission keeps >= 105 m, outside the zoomed-out frame). */
+  aheadM: 112,
+  /** Ambient patrol cadence once the set pieces carry the pacing (was 480 ticks: a dumb pack every 8 s). */
+  patrolTicks: 840,
+  pack: { types: ['infected.dog', 'infected.runner', 'infected.dog', 'infected.sprinter', 'infected.dog', 'infected.runner'], sideM: 16 },
+  leaper: { count: 2, sideM: 7.5, /** crouch telegraph before the leap */ windupTicks: 30, flightTicks: 34, rangeM: 17, cooldownTicks: 240, uses: 3,
+    /** durability the clinging Alpha tears off the hull, per strike */ hullDamage: 30, strikeTicks: 90 },
+  thrower: { sideM: 13, windupTicks: 48, flightTicks: 54, throws: 4, intervalTicks: 80, startM: 60, stopM: 12, /** objects land this far ahead of the predicted hull */ leadM: 9,
+    /** Light debris is smashed (10 durability); the concrete block (3rd throw) must be dodged and is only thrown at a fast APC (>= heavyMinSpeed). */
+    items: ['barricade', 'trash-can', 'jersey-barrier', 'barricade'] as const, heavyMinSpeed: 7, hullDamage: 30,
+    /** A stopped hull is bracketed: throws alternate short/long by this much, so about half of them hit. */
+    stoppedSpreadM: 3.5 },
+  /** Junk across the lane to plough through (light obstacles: 10 durability each, debris). */
+  smash: { items: ['trash-can', 'cone', 'mailbox', 'barricade', 'cone', 'trash-can', 'cone'] as const, slots: [-4.5, -3, -1.5, 0, 1.5, 3, 4.5] },
+  roadblock: { slots: [-6, -3.6, -1.2, 1.2, 3.6, 6], /** Light bodies only: ploughing through is the payoff, heavy stalls belong to the ambient groups. */
+    horde: ['infected.runner', 'infected.sprinter', 'infected.runner', 'infected.screamer', 'infected.runner', 'infected.crawler', 'infected.sprinter', 'infected.dog', 'infected.runner', 'infected.runner'] },
+  /** Rail stall: the hatch defence gets the waiting ambush (leaper + thrower, see stall-ambush) and a mixed rush on top of the reinforcement waves. */
+  stall: { ambushLeaperSideM: 9, ambushThrowerSideM: 26, rushAtTicks: 840, rush: ['infected.brute', 'infected.screamer', 'infected.runner', 'infected.sprinter', 'infected.armored', 'infected.runner'] },
 } as const;

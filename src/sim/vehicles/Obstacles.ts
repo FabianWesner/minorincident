@@ -4,7 +4,7 @@ import type { EntitySnapshot } from '../world/types';
 export const lightObstacles = ['fence', 'cone', 'barricade', 'trash-can', 'mailbox'] as const;
 export const heavyObstacles = ['jersey-barrier', 'wall', 'truck'] as const;
 export type ObstacleKind = typeof lightObstacles[number] | typeof heavyObstacles[number];
-interface Obstacle { entity: EntitySnapshot; collider: RAPIER.Collider; halfX: number; halfZ: number; light: boolean; broken: boolean }
+interface Obstacle { entity: EntitySnapshot; collider: RAPIER.Collider; halfX: number; halfZ: number; light: boolean; broken: boolean; /** r32-l9fun: thrown by an L9 Thrower, no contact until it lands. */ airborne?: boolean }
 /** Light obstacles have a fixed 24-body debris pool; heavy blockers remain Rapier geometry. */
 export class Obstacles {
   readonly items: Obstacle[] = [];
@@ -40,6 +40,16 @@ export class Obstacles {
       this.nextDebris = (this.nextDebris + 1) % 24;
     }
     this.world.events.emit({ type: 'vehicle.obstacle-broken', tick, targetId: item.entity.id });
+  }
+  /** r32-l9fun: a thrown obstacle has no collider or contact until it lands. */
+  launch(id: number, airborne: boolean): void {
+    const item = this.items.find(o => o.entity.id === id); if (!item || item.broken) return;
+    item.airborne = airborne || undefined; item.collider.setEnabled(!airborne);
+    if (!airborne) item.collider.setTranslation({ x: item.entity.transform.x, y: .5, z: item.entity.transform.z });
+  }
+  /** A thrown obstacle that lands on a hull bursts into debris (r32-l9fun), whatever its weight. */
+  smash(id: number, velocity: RAPIER.Vector, tick: number): void {
+    const item = this.items.find(o => o.entity.id === id); if (item && !item.broken) this.break(item, velocity, tick);
   }
   update(tick: number): void { for (const d of this.debris) if (d.expires && tick >= d.expires) { d.body.setEnabled(false); d.expires = 0; } }
   /** Rebind E12-restored records/colliders; tier changes have already freed native handles. */

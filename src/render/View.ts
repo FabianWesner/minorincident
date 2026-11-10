@@ -88,6 +88,8 @@ export class View {
   driving = false;
   /** The player is the driver (not a passenger): the follow camera widens a further 1.4x in view area. */
   driverWide = false;
+  /** r32-l9fun: the APC is in the air off an L9 ramp; the follow camera widens a little so the landing stays in frame. */
+  airborne = false;
   /** Eased follow-radius multiplier: 1 on foot, 1.15 as a passenger, 1.15 x sqrt(1.4) driving. Eased (~0.7 s), never snapped. */
   driveScale = 1;
   cameraShake = true;
@@ -196,7 +198,7 @@ export class View {
       this.zoomReturn = Math.max(0, this.zoomReturn - seconds);
       if (this.zoomReturn < 1e-8) { this.zoomReturn = 0; this.zoomRatio = Math.min(this.zoomRatio, this.maxZoom); }
     }
-    const driveTarget = this.driving ? (this.driverWide ? driveWideScale : 1.15) : 1;
+    const driveTarget = (this.driving ? (this.driverWide ? driveWideScale : 1.15) : 1) * (this.airborne ? 1.12 : 1);
     this.driveScale = seconds > 0 ? driveTarget + (this.driveScale - driveTarget) * Math.exp(-5 * seconds) : this.driveScale;
     if (Math.abs(this.driveScale - driveTarget) < 1e-4) this.driveScale = driveTarget;
     this.applyFraming(seconds);

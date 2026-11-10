@@ -766,6 +766,7 @@ export class GameView implements Lifecycle {
   private *doorBodies(): Generator<{ x: number; z: number }> {
     for (const e of this.world.entities.iterate()) if (!e.hidden && e.health.current > 0 && (e.id === 1 || e.civilian || e.infected)) yield e.transform;
   }
+  private l9Landings = 0;
   advance(seconds: number): void {
     this.districts?.advance(seconds);
     this.entityAssets?.advance();
@@ -778,6 +779,10 @@ export class GameView implements Lifecycle {
       const steering = playerSteers(this.world.vehicles);
       this.view.driving = steering || !!this.world.missions?.state.l2?.seated || !!this.world.missions?.state.l4?.seated;
       this.view.driverWide = steering;
+      // r32-l9fun: widen while the APC flies off a ramp, and land with a thump.
+      const l9Drive = this.world.missions?.l9?.state.driving;
+      this.view.airborne = steering && !!l9Drive?.jump;
+      if (l9Drive && l9Drive.jumped.length !== this.l9Landings) { if (l9Drive.jumped.length > this.l9Landings) this.view.shake(.8); this.l9Landings = l9Drive.jumped.length; }
       // E19 story beats: ease the game camera onto the beat (between courier and the other actor, a little closer),
       // then back to the follow camera; no cut, same isometric angle.
       // L7-E2: the departure shot takes the camera (it follows the bus), then hands it back.

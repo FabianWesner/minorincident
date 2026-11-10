@@ -31,12 +31,12 @@ export class LevelNineBot {
       return [a, ...route.risks.filter(p => along(p) > 0 && along(p) < length
         && Math.abs((p[0] - a[0]) * dz - (p[1] - a[1]) * dx) / length < 1).sort((p, q) => along(p) - along(q))];
     });
-    // A completion driver reads the road: it takes the open side of the solid
-    // collapsed sections, reserving jump attempts for the dedicated fixture.
-    this.path = base.flatMap((a, i, points) => {
+    // The safe completion driver keeps to its detour; the risky driver takes the jumps head on (r32-l9fun):
+    // a straight run-up on the ramp axis and full throttle from 45 m before the lip to the landing.
+    this.path = detour ? base : base.flatMap((a, i, points) => {
       const b = points[i + 1]; if (!b) return [a];
-      const ramps = l9Course.ramps.filter(r => r.x - 18 > a[0] && r.x + 22 < b[0] && Math.abs(r.z - a[1]) < 6);
-      return [a, ...ramps.flatMap(r => [[r.x - 18, r.z + 12], [r.x + 22, r.z + 12]] as Point[])];
+      const ramps = l9Course.ramps.filter(r => r.x - 30 > a[0] && r.x + 22 < b[0] && Math.abs(r.z - a[1]) < 6).sort((p, q) => p.x - q.x);
+      return [a, ...ramps.flatMap(r => [[r.x - 30, r.z], [r.x + 24, r.z]] as Point[])];
     });
     this.length = crossingRouteLength(this.path);
   }
@@ -73,9 +73,9 @@ export class LevelNineBot {
       const risk = (p: { x: number; z: number }) => Math.min(...humans.map(h => Math.hypot(p.x - h.x, p.z - h.z)));
       // A climbing body will bite the courier even after the hatch closes.
       // Clear those visible hull attackers before covering the walking crew.
-      const target = w.infected!.active.filter(e => !e.hidden && !e.infected?.hidden && (e.health.current > 0 || downed(e) && risk(e.transform) >= 8) && e.id !== driving.megaId && Math.hypot(e.transform.x - origin.x, e.transform.z - origin.z) < 30)
+      const target = w.infected!.active.filter(e => !e.hidden && !e.infected?.hidden && (e.health.current > 0 || downed(e) && risk(e.transform) >= 8) && e.id !== driving.megaId && Math.hypot(e.transform.x - origin.x, e.transform.z - origin.z) < 40)
         .sort((a, b) => Number(b.attachedTo === car.id) - Number(a.attachedTo === car.id) || risk(a.transform) - risk(b.transform))[0];
-      if (target) { const dx = target.transform.x - origin.x, dz = target.transform.z - origin.z, length = Math.hypot(dx, dz) || 1; f.selectedWeaponKey = length >= 8 && risk(target.transform) >= 8 ? 7 : length < 8 ? 6 : 5; f.aim = { x: dx / length, z: dz / length }; f.aimPoint = { x: target.transform.x, z: target.transform.z }; f.aimSource = 'keyboard'; f.activeAttack = true; f.left = { down: true, held: true, up: false }; }
+      if (target) { const dx = target.transform.x - origin.x, dz = target.transform.z - origin.z, length = Math.hypot(dx, dz) || 1; f.selectedWeaponKey = length < 8 ? 6 : 5; /* no launcher in L9 (PO 2026-11-10): MG at range, shotgun close */ f.aim = { x: dx / length, z: dz / length }; f.aimPoint = { x: target.transform.x, z: target.transform.z }; f.aimSource = 'keyboard'; f.activeAttack = true; f.left = { down: true, held: true, up: false }; }
       return f;
     }
     // A slow reverse is not a new block: counting it chained 90-tick reverses forever (r29-l9pin, --zero crept backwards 200 m).
@@ -110,7 +110,15 @@ export class LevelNineBot {
       if (driving.gateClosed && p.x < l9Course.gate.x + 4) target = [l9Course.gate.x + 6, l9Course.gate.sideZ];
       else target = [l9Course.evacuation.x, l9Course.evacuation.z];
       const distance = Math.hypot(target[0] - p.x, target[1] - p.z);
-      if (target[0] === l9Course.evacuation.x && (distance < l9Course.evacuation.radius - 1 || car.vehicle!.speed > Math.max(1, distance * .6))) { f.brake = true; return f; }
+      // Ease in: at the old .6 x distance the floor-speed APC (11 m/s, bus ramming behind) orbited the bay at full lock and
+      // slipped round the end of the bridge-gate wall (r32-l9fun seed 1). Arrive at <= 0.35 x distance m/s.
+      if (target[0] === l9Course.evacuation.x && (distance < l9Course.evacuation.radius - 1 || car.vehicle!.speed > Math.max(2, distance * .35))) { f.brake = true; return f; }
+      // Overshot the bay (a fast floor-speed arrival, r32-l9fun --zero): back straight into it instead of a turn-in-place
+      // between the bridge gate and the trucks, where the horde boarded the circling hull for minutes.
+      if (target[0] === l9Course.evacuation.x && p.x > l9Course.evacuation.x + 3 && p.x < 471 && Math.cos(p.yaw) > .3 && car.vehicle!.speed < 4) {
+        const back = Math.atan2(Math.sin(-Math.atan2(p.z - target[1], p.x - target[0]) - p.yaw), Math.cos(-Math.atan2(p.z - target[1], p.x - target[0]) - p.yaw));
+        f.drive = { throttle: -.7, steer: Math.max(-1, Math.min(1, -back * 2)) }; return f;
+      }
     }
     // Read nearby moving heavy bodies, just as the driver reads solid road
     // furniture. Ploughing into the same brute after every restart is not a
@@ -126,16 +134,26 @@ export class LevelNineBot {
       const bus = driving.busStoppedAt !== null ? w.entities.get(driving.busId) : undefined;
       const dx = (bus?.transform.x ?? p.x) - p.x, dz = (bus?.transform.z ?? p.z) - p.z;
       const ahead = dx * c - dz * s;
-      const blocker = heavy ?? (bus && ahead > 3 && ahead < 24 && Math.abs(dx * s + dz * c) < 6 ? bus : undefined);
+      // A thrown concrete block is a wall: read it like a brute (r32-l9fun). Light debris is ploughed through.
+      const block = p.x < 405 ? w.vehicles!.obstacles.items.find(o => {
+        const ox = o.entity.transform.x - p.x, oz = o.entity.transform.z - p.z, oa = ox * c - oz * s;
+        return !o.light && !o.broken && !o.airborne && oa > 4 && oa < 22 && Math.abs(ox * s + oz * c) < 4.5;
+      })?.entity : undefined;
+      // The leaking tanker sits in the overpass landing lane: pass it (near miss) instead of parking on it.
+      const tanker = driving.tankerExploded ? undefined : w.entities.get(driving.tankerId);
+      const tx = (tanker?.transform.x ?? p.x) - p.x, tz = (tanker?.transform.z ?? p.z) - p.z, tAhead = tx * c - tz * s;
+      const fuel = tanker && tAhead > 2 && tAhead < 26 && Math.abs(tx * s + tz * c) < 6 ? tanker : undefined;
+      const blocker = heavy ?? block ?? fuel ?? (bus && ahead > 3 && ahead < 24 && Math.abs(dx * s + dz * c) < 6 ? bus : undefined);
       if (blocker) {
-        const side = (blocker.transform.x - p.x) * s + (blocker.transform.z - p.z) * c >= 0 ? -1 : 1, clearance = blocker === bus ? 6 : 4.5;
+        const side = (blocker.transform.x - p.x) * s + (blocker.transform.z - p.z) * c >= 0 ? -1 : 1, clearance = blocker === bus || blocker === fuel ? 6 : 4.5;
         this.avoid = { x: blocker.transform.x + s * side * clearance, z: blocker.transform.z + c * side * clearance, until: w.tick + 240 };
       }
     }
     if (this.avoid) target = [this.avoid.x, this.avoid.z];
     const dx = target[0] - p.x, dz = target[1] - p.z, want = -Math.atan2(dz, dx);
     const delta = Math.atan2(Math.sin(want - p.yaw), Math.cos(want - p.yaw));
-    f.drive = { throttle: driving.evacuationDone ? 1 : this.throttle, steer: Math.max(-1, Math.min(1, delta * 2)) }; this.lastSteer = f.drive.steer;
+    const ramp = l9Course.ramps.some(r => Math.abs(p.z - r.z) < 4 && p.x > r.x - 45 && p.x < r.x + 20);
+    f.drive = { throttle: driving.evacuationDone || ramp ? 1 : this.throttle, steer: Math.max(-1, Math.min(1, delta * 2)) }; this.lastSteer = f.drive.steer;
     return f;
   }
 }

@@ -172,7 +172,7 @@ export class Vehicles {
           drive.throttle = scheme === 'mouse-only' ? (frame.left.held ? Math.min(1, Math.max(0, (distance - 1.2) / 2.8)) : 0) : Math.min(1, distance);
           drive.brake = (scheme === 'mouse-only' && !frame.left.held) || distance < (scheme === 'mouse-only' ? 1.2 : .05) || !!frame.brake;
         }
-        drive.boost = car.physics.def.id !== 'vehicle.military-apc' && scheme !== 'mouse-only' && frame.left.held;
+        drive.boost = car.physics.def.id !== 'vehicle.military-apc' && scheme !== 'mouse-only' && frame.left.held || !!this.world.missions?.l9?.driving.boosting(car.entity.id);
         drive.handbrake = frame.handbrake ?? frame.right.held;
         if ((scheme !== 'mouse-only' && frame.left.down) || (car.physics.def.emergency && this.world.tick % 60 === 0)) this.noise(car);
         // Recovery reverses on the opposite lock to the held steer (a three-point turn), so it adds to the turn the driver asks for
@@ -309,7 +309,7 @@ export class Vehicles {
       this.world.events.emit({ type: 'vehicle.obstacle-broken', tick: this.world.tick, targetId: entity.id });
     }
     for (const obstacle of this.obstacles.items) {
-      if (obstacle.broken) continue;
+      if (obstacle.broken || obstacle.airborne) continue;
       const dx = obstacle.entity.transform.x - p.x, dz = obstacle.entity.transform.z - p.z;
       const localX = dx * c - dz * s, localZ = dx * s + dz * c;
       const halfX = Math.abs(c) * obstacle.halfX + Math.abs(s) * obstacle.halfZ;
@@ -440,7 +440,8 @@ export class Vehicles {
     for (const id of this.infectedNeighbors) {
       if (!this.operable(car)) break;
       const target = this.world.entities.get(id)!;
-      if (target.kind !== 'infected' || target.hidden || target.infected?.hidden || (target.health.current <= 0 && (target.infected?.recoverAt ?? -1) < 0)) continue;
+      // A body in flight (thrown, or an L9 leaper mid-pounce) is not on the road: no ram, contact or grab until it lands.
+      if (target.kind !== 'infected' || target.hidden || target.infected?.hidden || target.infected?.thrownBy !== undefined || (target.health.current <= 0 && (target.infected?.recoverAt ?? -1) < 0)) continue;
       const distance = car.physics.hullDistance(target.transform.x, target.transform.z), radius = target.combat?.radius ?? .4;
       const dx = target.transform.x - p.x, dz = target.transform.z - p.z;
       const alongside = Math.abs(dx * s + dz * c) >= car.physics.def.width / 2 - .2 && Math.abs(dx * c - dz * s) < car.physics.def.length / 2 - .4;
@@ -552,7 +553,7 @@ export class Vehicles {
       return Math.max(Math.abs(lx) - (def.length / 2 + hx), Math.abs(lz) - (def.width / 2 + hz));
     };
     for (const item of this.obstacles.items) {
-      if (item.broken && !book[item.entity.id]) continue;
+      if (item.broken && !book[item.entity.id] || item.airborne) continue;
       note(item.entity.id, item.broken ? Infinity : boxGap(item.entity.transform.x, item.entity.transform.z, item.halfX, item.halfZ));
     }
     for (const wall of this.world.interactables?.walls ?? []) {
