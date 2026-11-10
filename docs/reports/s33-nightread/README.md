@@ -22,4 +22,4 @@ Worst sampled luma standard deviation, WebGL2 high (minimum 14):
 Dog and regular controls are numerically unchanged (7.71 and 7.43; exempt by body size).
 
 ## Checks
-Typecheck and lint pass. Focused render-contracts previously passed 14/14. Final full scene gate and post-commit test:gate are pending. Earlier test:gate failed its dirty-tree review freshness assertion (106 passed, 1 failed).
+Typecheck and lint pass. Focused render-contracts previously passed 14/14. `SCENE_PORT=4922 npm run scene:gate` passed 62/62 rows, 0 known and 0 skipped, in 10.7 minutes (test-results/scene-gate/summary.md). This includes all lion, Mega and zoo-lineup night rows on WebGL2/WebGPU, low/high, zoom 1.5. Post-commit `npm run test:gate` passed 107/107 tests in 27 files (169.9 s, within the 240 s budget). Earlier test:gate failed its dirty-tree review freshness assertion; it passes on the committed source. No raw captures were committed.
