@@ -142,6 +142,6 @@ export async function checkL8Story(): Promise<void> {
     expect(world.storyLock).toBeNull();
     expect([zoo.state.keeperId, zoo.state.haleId, zoo.state.reyesId]).toEqual(cast);
     for (const id of cast) expect(world.entities.get(id)!.health.current).toBeGreaterThan(0);
-    expect(zoo.state.greetingAt - world.tick).toBe(180);
+    expect(zoo.state.greetingAt - world.tick).toBe(540); // after the gate beat (soldier line, then the HUD line)
   } finally { off(); offBite(); offTurn(); world.dispose(); }
 }
