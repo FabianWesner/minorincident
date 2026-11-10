@@ -40,7 +40,7 @@ export interface InfectedSpawn { cureRegion?: CureRegion; state?: InfectedState[
 const l1Ticks = (seconds: number) => Math.round(seconds * 60);
 const provokeTicks = 12 * 60;
 /** Focus bias (metres) a courier hit gives her over survivors for the provocation window. */
-const provokeFocusBiasM = 12;
+const provokeFocusBiasM = 12, provokeEngageM = 8, provokeFocusTicks = 4 * 60;
 const hearingReactionTicks = 15, hearingTurnRadS = 14;
 const lungeActiveTicks = 30;
 /** Bound prediction so moving couriers cannot make an unbounded lunge. */
@@ -227,7 +227,10 @@ export class InfectedSystem {
   /** The shot human brain drops its survivor (or director focus), snaps toward the courier and chases her; a grab in contact is left to
    * finish/break off through the rescue rule (grabHits), after which `closest` prefers her through the focus bias. */
   private engageCourier(target: EntitySnapshot, brain: L1Brain, courier: EntitySnapshot): boolean {
-    const b = target.infected!, tick = this.world.tick, until = b.provoked!.until;
+    const b = target.infected!, tick = this.world.tick;
+    // Only a close shot redirects (the PO case: 3 m); a far one keeps the level's authored flow (L3-11 attack rate) and the 12 s provocation.
+    if (Math.hypot(courier.transform.x - target.transform.x, courier.transform.z - target.transform.z) > provokeEngageM) return false;
+    const until = Math.min(b.provoked!.until, tick + provokeFocusTicks);
     brain.focusId = 1; brain.focusUntil = until; brain.focusBiasM = provokeFocusBiasM;
     if (brain.mode === 'bite' || b.state === 'attack' || b.specialAttack || brain.mode === 'chase' && brain.targetId === 1) return true;
     brain.mode = 'chase'; b.state = 'chase'; brain.targetId = 1; brain.hasGoal = false; brain.distractionId = 0; brain.cueUntil = 0; brain.search.completeApproach = false;

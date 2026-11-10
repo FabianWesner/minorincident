@@ -12,7 +12,7 @@ The suited office infected is an `infected.runner` with the `inf.common-worker` 
 - Turning used the 3.2 rad/s look rate, so a 110-180 degree turn took ~0.7 s.
 
 ## Fix (shared AI, all levels, no stat changes)
-- `InfectedSystem.provoke`: a courier hit clears `pressureTarget`; new `engageCourier()` sets `l1.focusId=1` (12 s, bias 12 m), and unless mid-bite/mid-attack switches the brain to `chase` on her with a short fast snap (9 ticks at the hearing turn rate). A bite in contact already breaks off through the existing `grabHits` rescue rule, then `closest()` prefers her via the focus bias.
+- `InfectedSystem.provoke`: a courier hit clears `pressureTarget`; new `engageCourier()` sets `l1.focusId=1` (4 s, bias 12 m, only for shots within 8 m), and unless mid-bite/mid-attack switches the brain to `chase` on her with a short fast snap (9 ticks at the hearing turn rate). A bite in contact already breaks off through the existing `grabHits` rescue rule, then `closest()` prefers her via the focus bias.
 - `Perception.closest`: the shooter that provoked this infected is always accepted as a candidate (no facing/notice requirement) while the provocation lasts.
 - Test: `tests/engine/infected-ai.test.ts` (perception test) asserts a courier hit overrides a pressure assignment.
 - Probe: `tools/qa/aggro-probe.ts` (loads the real level, a runner/firefighter 3-6 m from the courier next to a survivor that it is already chasing/biting, courier shot with audible gunfire, pass = faces her < 45 deg within 0.5 s and targets her within 1 s).
@@ -25,7 +25,7 @@ The suited office infected is an `infected.runner` with the `inf.common-worker` 
 | L7 runner | 35 % (7/20) | 19/20 (95 %); the miss is an infected in its attack windup, which finishes first by design |
 | L4 firefighter (archetype brain) | 3/6 | 6/8 (2 skipped: spawn boxed in). The two misses walk a nav detour around an obstacle, not a target problem |
 
-(L4 trials of 20 were cut to 10 because the Mac was at load 25 from other lanes.)
+(Final code: L4 runner 10/10, L7 runner 9/10. L4 trials of 20 were cut to 10 because the Mac was at load 25 from other lanes.)
 
 ## Finding 2: hit detection vs hits-to-kill (`tools/qa/hit-rate-probe.ts`, standing target, 5 lateral offsets -0.4..0.4 m)
 Runner = 40 hp x INFECTED_TOUGHNESS 1.5 = 60 hp, capsule radius 0.35 m, ray tested at y in [-0.7, +1.1] around the 0.7 m centre.
@@ -56,8 +56,16 @@ Hit rate 100 % for every Alpha trial (assist Off and Default). So: no hit-detect
 
 Proposal (not implemented here: render change, needs browser QA): make the skin a function of the Alpha type, as docs/design/boss-and-alpha-moves.md 'Look cue' says (Brute biggest, Thrower lankier with long arms, Screamer thin jaw open, Leaper crouched, Armoured helmet/vest), i.e. use `alphaTypes[type].look` in CrowdView instead of the id hash, and keep the hash only for variation inside a type. Add an Alpha-only cue visible at distance and at night: a larger world-space health bar / red-orange rim or eye glint that regular infected lack, and a one-time "ALPHA" ping when one first sees the courier. Also the night figure fill (pale blue) hides skin differences, so the shape cue matters most.
 
-## Threat audit
-See the section appended below (L3,L4,L5,L7 skilled).
+## Role HP table (from `src/data/infected.ts`, x INFECTED_TOUGHNESS 1.5) and the L4 "suit" soaker
+Runner 60, sprinter 45, crawler 37, screamer 90, firefighter 210, hazmat 180, bloated 180 (explodes), riot 225 (shield), brute 450, armored 600 (front half x0.25 from non-explosive), butcher 1350, Alpha 300 (bullets x0.5). Only runner/sprinter get the `inf.common-worker`/civilian looks in L4 (`LevelFourWar.emerge`); the orchestrator's Opus audit reports brute/armored/butcher/screamer/bloated have no skin of their own and render as the office worker, which fits the PO's "ultra hard to kill suit zombie" (butcher = 22x a runner, brute 7.5x). I did not re-verify the draw fallback in a browser (no browsers in this lane). The stats are by design (see tables above); the fix is a distinct look per role (separate asset lane). Hit detection is fine in all measured cases (100 % with assist, geometry-correct without).
+
+## Threat audit (skilled, no flags beyond the Mac baseline, plus one)
+Final code (engage range 8 m, focus 4 s):
+- L4: FIRST_ATTACK_OVER_10_SECONDS, WAVE_FEWER_THAN_THREE_COHORT_MEMBERS (breach-south), L4-06, L4-07 = baseline.
+- L7: KITING (attacks/min, landed hits), SLOW_FOLLOWER 96/98 = baseline. L5 not re-run on the final code; the first version (focus 12 s, no range limit) matched baseline there (KITING only).
+- L3: L3-06 (baseline) **plus L3/KITING_LANDED_HITS_BELOW_2 (0 landed in the 20 s kiting probe: 2 attack starts, 0 hits, baseline 3 starts / 2 hits)**. This is a 20 s single-seed probe that any AI perturbation shifts; the first version also failed L3-11 attack rate (seed 1 65/min vs 24/min baseline), which is why the engage is limited to shots within 8 m and a 4 s focus (now seeds 30 / 12 / 15 per min, all within 3-25). Orchestrator decision needed on the kiting flag.
+- No follower/survivor-loss changes observed in L4/L5/L7 follower pace (0 skilled flags); L3 army line: seed 2 army 3 (baseline 0), seeds 1 and 3 army 0 (baseline 0), so L3-06 stays failing as on baseline.
+
 
 ## Browser QA needed
 - L4 war, WebGPU high and low, zoom 1.5: shoot a suited runner that is chasing a survivor from 3-6 m; it must turn to the courier within ~0.5 s and run at her (no turning away). Also a runner mid-bite: the bite breaks off when hit.
