@@ -1,0 +1,141 @@
+{
+  "name": "qa-health-bars-player-interaction",
+  "note": "Night: courier shoots three of eight infected; only those three and the close attacker should have bars.",
+  "seed": 7,
+  "size": 60,
+  "ground": "asphalt",
+  "time": "night",
+  "barArchetypes": [
+    "infected.runner"
+  ],
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "loadout": [
+        "weapon.pistol",
+        "weapon.fists"
+      ]
+    },
+    {
+      "id": "shot1",
+      "kind": "infected",
+      "at": [
+        8,
+        -5
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "shot2",
+      "kind": "infected",
+      "at": [
+        10,
+        0
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "shot3",
+      "kind": "infected",
+      "at": [
+        8,
+        5
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "biter",
+      "kind": "infected",
+      "at": [
+        -1,
+        0
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "idle1",
+      "kind": "infected",
+      "at": [
+        -12.0,
+        -7.5
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "idle2",
+      "kind": "infected",
+      "at": [
+        -15.0,
+        0.0
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "idle3",
+      "kind": "infected",
+      "at": [
+        -12.0,
+        7.5
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "idle4",
+      "kind": "infected",
+      "at": [
+        0.0,
+        15.0
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ]
+  },
+  "frames": 90,
+  "shots": [
+    0,
+    90
+  ],
+  "script": [
+    {
+      "frame": 1,
+      "actor": "courier",
+      "do": {
+        "attack": "shot1",
+        "seconds": 0.15
+      }
+    },
+    {
+      "frame": 30,
+      "actor": "courier",
+      "do": {
+        "attack": "shot2",
+        "seconds": 0.15
+      }
+    },
+    {
+      "frame": 60,
+      "actor": "courier",
+      "do": {
+        "attack": "shot3",
+        "seconds": 0.15
+      }
+    }
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "clippingMax": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000
+  }
+}
