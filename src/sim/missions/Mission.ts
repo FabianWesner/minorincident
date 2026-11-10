@@ -478,6 +478,12 @@ export class Mission {
     for (const step of Object.values(this.state.steps)) if (step.status === 'active') step.started += delta;
     if (checkpoint.arsenal && this.world.progression?.campaign) Object.assign(this.world.progression.campaign, structuredClone(checkpoint.arsenal));
     const entities = structuredClone(checkpoint.entities);
+    // Combat timers are absolute ticks. A live-save resume restarts the clock, so a Mega staggered at capture (tick ~50000) stayed stunned
+    // for minutes after loading (r29-l10mega). Keep the remaining time instead (the player's own vitals are reset separately).
+    for (const e of entities) if (e.id !== 1 && e.combat) {
+      if (e.combat.staggerUntil) e.combat.staggerUntil += delta;
+      for (const status of e.combat.statuses) { status.expires += delta; status.nextDot += delta; }
+    }
     // Mid-front saves may contain a fall still in flight; preserve its age on a fresh tick-zero clock.
     if (this.state.cureFront) for (const e of entities) if (e.infected?.state === 'dead' && e.infected.recoverAt < 0 && !e.corpse) e.infected.deadAt += delta;
     // Consumed health pickups stay consumed (00 §6.2: a respawn keeps the level's pickups; PO 2026-10-07 med packs never respawn).

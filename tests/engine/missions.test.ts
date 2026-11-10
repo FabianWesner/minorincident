@@ -18,6 +18,7 @@ import { loadLevel, runnerLevels } from '../../tools/sim-runner/levels';
 import { missionSandbox } from '../fixtures/scenarios/mission-sandbox';
 import { objectiveText } from '../../src/sim/missions/objectiveText';
 import { markerAnchor } from '../../src/sim/missions/markerAnchor';
+import { l10MegaResumeCheck } from '../helpers/l10MegaResume';
 import { checkL8Story } from '../helpers/l8Story';
 import { emergeResident, emergeSpeedMs, walkResidents } from '../../src/sim/outbreak/HouseEmergence';
 import { validateSave } from '../../src/sim/progression/Save';
@@ -279,6 +280,7 @@ test('interactions: ring, input and view predicates agree for every interact ste
       }
     } finally { levelWorld.dispose(); }
   }
+  await l10MegaResumeCheck();
 }, 240_000);
 
 // N11: the L6 service gates have their own predicate (the group's waypoint, else the next open gate ahead of the leader).
