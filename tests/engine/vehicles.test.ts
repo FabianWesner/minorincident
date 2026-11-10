@@ -158,6 +158,8 @@ async function l9FloorApcThroughPile(): Promise<void> {
     expect(Math.hypot(car.entity.transform.x - x0, car.entity.transform.z - z0), 'progress through 16 infected (8 heavy) in 10 s').toBeGreaterThanOrEqual(15);
     expect(top, 'keeps its floor speed share once clear').toBeGreaterThanOrEqual(car.physics.def.topSpeed * .6 * .9);
   } finally { world.dispose(); }
+}
+
 // r27-l9board: a diagonally parked APC puts the passenger door inside the hull's nav margin; the corgi halted 1.3 m short of it
 // (boarding radius 1.2 m) and the evacuation never completed. Corgi and Sam must now seat from several approach sides.
 async function l9CompanionsBoardDiagonalApc(): Promise<void> {
