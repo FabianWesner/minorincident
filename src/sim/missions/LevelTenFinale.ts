@@ -90,7 +90,10 @@ export class LevelTenFinale {
     if (state.steps.release.status === 'active' && pressed && distance <= console.radius && state.states['charge-active']
       && state.counters['charge-ticks'] === cureChargeTicks && state.states['mega-dead']) {
       state.states['cure-released'] = true;
+      // r31-epilogue P3: Voss's order ends with the release instead of lingering over the dust.
+      if (state.subtitle?.id === 'L10.release') state.subtitle = null;
       this.cure.release();
+      this.epilogue.gatherCured();
       world.events.emit({ type: 'mission.signal', tick: world.tick, name: 'cure-released' });
     }
   }

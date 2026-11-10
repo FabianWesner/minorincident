@@ -1,5 +1,8 @@
 import { BoxGeometry, Color, ConeGeometry, Group, InstancedMesh, Mesh, MeshBasicNodeMaterial, Object3D, PlaneGeometry, SphereGeometry } from 'three/webgpu';
-import { float, positionGeometry, positionWorld, sin, vec2 } from 'three/tsl';
+import { float, mix, positionGeometry, positionWorld, sin, smoothstep, step, vec2, vec3 } from 'three/tsl';
+import type { Node } from 'three/webgpu';
+import { cure } from '../../levels/L10/district';
+import { cureHangar } from '../../data/l10Story';
 import { Rng } from '../../core/Rng';
 import { noise } from '../SurfaceDetail';
 import type { Materials } from '../Materials';
@@ -13,6 +16,7 @@ export const overviewLandmarks = new Set([
   'kit.dispersal-turbine-hall', 'kit.dispersal-filtration-tower', 'kit.dispersal-tank-bullet', 'kit.dispersal-tank-sphere', 'kit.dispersal-platform',
 ]);
 
+const mistClouds = 22;
 /** Whole-level building footprints at subpixel detail, prepared once with the district. */
 export class LevelTenOverview extends Group {
   private readonly geometry = new BoxGeometry(1, 1, 1);
@@ -34,7 +38,32 @@ export class LevelTenOverview extends Group {
     const p = positionWorld.xz, parcel = p.div(vec2(180, 120)), cell = parcel.floor();
     const shade = sin(cell.dot(vec2(127.1, 311.7))).mul(43758.5453).fract();
     const parcelEdge = parcel.fract().sub(.5).abs(), verge = parcelEdge.x.max(parcelEdge.y).smoothstep(.46, .49);
-    const ground = materials.shaded(materials.look.nodes.grass.mul(1.1).mul(float(.88).add(shade.mul(.3)).sub(verge.mul(.12))).mul(noise(p.mul(.025)).mul(.12).add(.94)));
+    const countryside = materials.look.nodes.grass.mul(1.1).mul(float(.88).add(shade.mul(.3)).sub(verge.mul(.12)));
+    // r31-epilogue (PO: "could even zoom higher, so the entire level can be overseen"): the journey's places read as
+    // separate regions from the air — farm parcels, the fenced restricted zone, the hangar apron, the burned corridor
+    // and the dark complex — instead of one olive plain.
+    const region = (id: string) => cure.regions.find(r => r.id === id)!.envelope;
+    const within = (from: number, to: number): Node<'float'> => smoothstep(from - 25, from + 25, p.x).mul(float(1).sub(smoothstep(to - 25, to + 25, p.x)));
+    const [farmA] = region('crash-outskirts'), [, farmB] = region('industrial-area'), [zoneA, zoneB] = region('military-zone');
+    const [, corridorB] = region('destroyed-corridor'), [complexA, complexB] = region('dispersal-complex');
+    // Descending ramps as 1 - smoothstep (reversed edges are undefined in GLSL).
+    const near = (d: Node<'float'>, a: number, b: number): Node<'float'> => float(1).sub(smoothstep(a, b, d));
+    const inside = near(p.y.sub(cz).abs(), 200, 260);
+    const cropParcel = p.div(vec2(70, 46)), cropCell = cropParcel.floor(), crop = sin(cropCell.dot(vec2(41.3, 289.1))).mul(24634.6).fract();
+    const cropEdge = cropParcel.fract().sub(.5).abs(), cropVerge = cropEdge.x.max(cropEdge.y).smoothstep(.44, .49);
+    const farm = mix(mix(vec3(.80, .66, .30), vec3(.46, .34, .22), step(.45, crop)), materials.look.nodes.grass.mul(1.25), step(.78, crop)).mul(float(1).sub(cropVerge.mul(.25)));
+    const fence = near(p.x.sub(zoneA[0]).abs(), 2, 6).max(near(p.x.sub(zoneB[0]).abs(), 2, 6)).max(near(p.y.sub(cz).abs().sub(220).abs(), 2, 6));
+    const restricted = mix(vec3(.55, .54, .45), vec3(.2, .21, .2), fence.mul(within(zoneA[0], zoneB[0])));
+    const fromHangar = p.sub(vec2(cureHangar.centre.x, cureHangar.centre.z)).abs(), apron = near(fromHangar.x.sub(70).max(fromHangar.y.sub(45)), 0, 8);
+    const corridor = vec3(.36, .33, .28).mul(noise(p.mul(.05)).mul(.3).add(.8));
+    const console = cure.anchors['cure-console'], pad = near(p.sub(vec2(console[0], console[1])).length(), 150, 190);
+    let level: Node<'vec3'> = countryside;
+    level = mix(level, farm, within(farmA[0], farmB[0]).mul(inside));
+    level = mix(level, restricted, within(zoneA[0], zoneB[0]).mul(inside));
+    level = mix(level, vec3(.74, .72, .66), apron);
+    level = mix(level, corridor, within(region('destroyed-corridor')[0][0], corridorB[0]).mul(inside));
+    level = mix(level, vec3(.27, .27, .29), within(complexA[0], complexB[0]).mul(inside).max(pad));
+    const ground = materials.shaded(level.mul(noise(p.mul(.025)).mul(.12).add(.94)));
     this.landscape = new Mesh(new PlaneGeometry(100000, 100000), ground);
     this.landscape.rotation.x = -Math.PI / 2; this.landscape.position.set(cx, -.04, cz);
     this.landscape.name = 'L10-panorama-dry-landscape';
@@ -52,9 +81,9 @@ export class LevelTenOverview extends Group {
     this.forest = new InstancedMesh(new ConeGeometry(1, 1, 6), canopy, trees.length); this.forest.name = 'L10-panorama-woodland';
     trees.forEach((tree, i) => { this.forest.setMatrixAt(i, tree.matrix); this.forest.setColorAt(i, colors[i]); });
     // Soft ellipsoids retain a readable cloud silhouette at kilometre heights.
-    const mistMaterial = new MeshBasicNodeMaterial({ color: '#a9da72', transparent: true, depthWrite: false });
-    mistMaterial.opacityNode = positionGeometry.xz.length().smoothstep(.05, .95).oneMinus().pow(1.5).mul(noise(p.mul(.009)).mul(.09).add(.08));
-    this.mist = new InstancedMesh(new SphereGeometry(1, 16, 8), mistMaterial, 8); this.mist.name = 'L10-panorama-green-dust'; this.mist.frustumCulled = false;
+    const mistMaterial = new MeshBasicNodeMaterial({ color: '#b6f27a', transparent: true, depthWrite: false });
+    mistMaterial.opacityNode = positionGeometry.xz.length().smoothstep(.05, .95).oneMinus().pow(1.5).mul(noise(p.mul(.009)).mul(.12).add(.16));
+    this.mist = new InstancedMesh(new SphereGeometry(1, 16, 8), mistMaterial, mistClouds); this.mist.name = 'L10-panorama-green-dust'; this.mist.frustumCulled = false;
     const transform = new Object3D(), color = new Color();
     for (const [i, { p, origin }] of placements.entries()) {
       const asset = worldAssets[p.assetId], size = asset.dimensions;
@@ -69,10 +98,11 @@ export class LevelTenOverview extends Group {
     this.add(this.landscape, this.forest, this.walls, this.roofs, this.mist);
   }
   setCureTide(x: number, z: number, radius: number): void {
-    for (let i = 0; i < 8; i++) {
-      const spread = Math.min(radius, 4200) * (.15 + i / 9 * .8), cloud = this.mistTransform;
-      cloud.position.set(x - spread, 35 + i % 3 * 18, z + Math.sin(i * 2.4) * (100 + i * 14));
-      cloud.scale.set(180 + i % 3 * 90, 28 + i % 4 * 14, 130 + i % 4 * 40); cloud.updateMatrix(); this.mist.setMatrixAt(i, cloud.matrix);
+    // The tide follows the route west from the complex: low banks of green dust spread over the whole level.
+    for (let i = 0; i < mistClouds; i++) {
+      const u = i / (mistClouds - 1), spread = Math.min(radius, 3800) * (.05 + u * .95), cloud = this.mistTransform;
+      cloud.position.set(x - spread, 22 + i % 3 * 12, z + Math.sin(i * 2.4) * (60 + i % 5 * 34));
+      cloud.scale.set(170 + i % 3 * 80, 20 + i % 4 * 10, 120 + i % 4 * 45); cloud.updateMatrix(); this.mist.setMatrixAt(i, cloud.matrix);
     }
     this.mist.instanceMatrix.needsUpdate = true;
   }

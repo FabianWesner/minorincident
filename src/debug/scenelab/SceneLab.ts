@@ -458,6 +458,8 @@ export class SceneLab {
         mission.state.states['cure-released'] = true;
         mission.state.steps.release.status = 'completed'; mission.state.steps.epilogue.status = 'active';
         mission.l10!.cure.release();
+        // Same as a real release: the beat always has a small cured crowd around her.
+        if (ticks < 8 * 60) mission.l10!.epilogue.gatherCured();
         mission.state.cureFront!.elapsed = ticks; mission.state.cureFront!.radius = ticks / 6;
         mission.l10!.epilogue.update(); mission.l10!.cure.apply();
       }
