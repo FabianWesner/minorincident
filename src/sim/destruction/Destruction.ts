@@ -67,6 +67,10 @@ export class Destruction {
       o.present=present.has(o.id);
       this.rebaseFire(o);
     }
+    // The AI nav grids learn blocker state only from events, and they never saw the unblock below. After a checkpoint restore (not a
+    // world reset, which rebuilds them) only blockers whose state really changed need an event: re-announcing every intact wall made
+    // two grids re-bake the cells of every blocker (r28-l7l10: 330 ms frame on each L10 respawn).
+    const before = worldReset ? null : new Map(this.blockers.map(b => [b, b.active]));
     for (const b of this.blockers) {
       if (b.active && !worldReset) this.world.physics.removeBlocker(b.handle);
       const walls = this.world.interactables!.walls, index = walls.indexOf(b.wall);
@@ -79,7 +83,7 @@ export class Destruction {
       const prop = this.world.props?.items.find(item => item.id === o.id);
       if (prop) { this.propLinks.set(o.id, prop); this.world.entities.get(prop.entityId)!.environmentObject = o.id; }
     }
-    this.reconcile();
+    this.reconcile(before);
   }
   pose(object: DestructionObject): PropPose { return this.propLinks.get(object.id)?.pose ?? object.home; }
   /** Chunks free and recreate prop bodies while fire keeps its fixed-tick owner. */
@@ -96,7 +100,7 @@ export class Destruction {
     const wx = o.home.p[0] + c * x + s * z, wz = o.home.p[2] - s * x + c * z;
     return { x: wx, z: wz, y: o.home.p[1] + (box.min[1] + box.max[1]) * .5 * p.scale[1], halfX: Math.abs(c) * hx + Math.abs(s) * hz, halfZ: Math.abs(s) * hx + Math.abs(c) * hz, halfY: (box.max[1] - box.min[1]) * .5 * p.scale[1], navFootprint: { x: wx, z: wz, halfX: hx, halfZ: hz, yaw: p.yaw } };
   }
-  private reconcile(): void {
+  private reconcile(before: ReadonlyMap<Blocker, boolean> | null = null): void {
     let propsChanged=false;
     for(const o of this.objects) {
       const prop=this.activeProp(o.id); if(!prop) continue;
@@ -111,14 +115,19 @@ export class Destruction {
     if(propsChanged) this.world.props?.updateNavigation();
     let blockersChanged=false;
     for (const b of this.blockers) {
-      const active = b.object.present && b.object.state.hp[b.part] > 0; if (active === b.active) continue;
+      const active = b.object.present && b.object.state.hp[b.part] > 0;
+      if (active === b.active) {
+        // Rebuilt as inactive but announced as blocked before the restore: the AI grids still hold it.
+        if (before?.get(b) && !active && b.wall.y-b.wall.halfY < 1.6) this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id: b.id, wall: b.wall, blocked: false });
+        continue;
+      }
       b.active = active; blockersChanged=true;
       if (active) {
         const w = b.wall;
         b.handle = this.world.physics.addStatic({ min: [w.x-w.halfX,w.y-w.halfY,w.z-w.halfZ], max: [w.x+w.halfX,w.y+w.halfY,w.z+w.halfZ], navFootprint: w.navFootprint }, [0,0]);
         this.world.interactables!.walls.push(w); if (w.y-w.halfY < 1.6) this.world.districts!.nav.block(b.id, w);
       } else { this.world.physics.removeBlocker(b.handle); const walls = this.world.interactables!.walls, index = walls.indexOf(b.wall); if (index >= 0) walls.splice(index, 1); this.world.districts!.nav.unblock(b.id); }
-      if (b.wall.y-b.wall.halfY < 1.6) this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id: b.id, wall: b.wall, blocked: active });
+      if (b.wall.y-b.wall.halfY < 1.6 && before?.get(b) !== active) this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id: b.id, wall: b.wall, blocked: active });
     }
     if(blockersChanged) this.world.combat?.query.invalidate();
   }
