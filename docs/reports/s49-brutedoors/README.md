@@ -1,5 +1,13 @@
 # s49-brutedoors — wide-body path audit
 
+## Current status (2026-11-12)
+
+The corrected opening scanner is qualified across L1–L10 through completed per-level runs: **592 records**, zero unreachable paths and zero narrow openings. Counts: L1 0, L2 0, L3 7 across three streets, L4 39, L5 4, L6 12, L7 5, L8 4, L9 442 across six lanes, L10 79. L8 is a bounded outlet fixture, explicitly reported as `fixture-observed`, not mission completion; it checks all four wide outlet roles and their authored doorway widths, then stops after routes are proven (600-tick failure bound). L9/L10's final remote run exited zero and pulled its JSON report (824 s remote total). Tool lint passed.
+
+Three authored placement/admission fixes are committed: L5's butcher pair moved west to preserve its blocked second slot; L9's countryside second thrower stages before the bend so its post meets the 105 m admission distance; L10's industrial armored group moved south of the warehouse collision. IDs, stats, scales and corpses are retained. Browser checks for each fixed spot are listed below.
+
+**Goal not complete:** the required nightly gate remains red on L2 (live ambusher retired before reaching the census area). The latest remote threat gate also has L7=7 rather than 6, traced to low/skilled seed 2 timing out at 1200 s; no L7 gameplay edits were made. Remote `npm test` passed on retry in 191.3 s. Earlier historical status entries below are superseded by this current status and the later qualification notes.
+
 ## Result
 
 Added `tools/qa/wide-body-audit.ts`, a native campaign audit for wide infected bodies. It runs L1–L10 at high simulation quality, records authored/runtime wide spawns and their encounter source, samples player positions, and checks routes with the sim's navigation grid at the body's radius plus a 0.1 m margin. L4 uses its wide-body grid; L9 builds a full authored-world navigation grid so streamed districts are checked against the whole road extent. It also reports narrow ground-level openings on checked paths.

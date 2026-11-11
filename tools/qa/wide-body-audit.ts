@@ -3,7 +3,7 @@
  */
 import { mkdir, writeFile } from 'node:fs/promises';
 import { dirname } from 'node:path';
-import { runnerLevels, runLevel } from '../sim-runner/levels';
+import { runnerLevels, runLevel, LevelRunStopped } from '../sim-runner/levels';
 import { cureEncounters, curePaceEncounters, cureEncounterSlots, cureEncounterSpot } from '../../src/levels/L10/encounters';
 import { LevelNineSetPieces } from '../../src/sim/missions/LevelNineSetPieces';
 import { crossing } from '../../src/levels/L9/district';
@@ -58,11 +58,14 @@ for (const { level, l9Route, l9Detour, street } of streetScenarios) {
   let outcome = 'not-run';
   let coverage: Coverage | undefined;
   let authoredSource: string | undefined;
+  let l8FixtureObserved = false;
+  const authoredOpenings: LevelResult['narrowOpenings'] = [];
   const l6FixtureObserved = new Set<number>();
   const restoreSources: (() => void)[] = [];
   let audit: Pick<LevelResult, 'unreachable' | 'narrowOpenings'> = { unreachable: [], narrowOpenings: [] };
   const run = await runLevel(level, 'newbie', 1, level === 'L10' ? 3600 : 2400, street, undefined, undefined, 0, {
     quality: 'high', l9Route, l9Detour,
+    stopWhen: world => level === 'L8' && l8FixtureObserved && (spawns.length >= 4 && spawns.every(row => row.route) || world.tick >= 600),
     beforeBegin(world) {
       const ai = world.infected!, spawn = ai.spawn.bind(ai);
       if (level === 'L9') {
@@ -146,10 +149,17 @@ for (const { level, l9Route, l9Detour, street } of streetScenarios) {
           for (const index of [0, 1, 2, 3]) {
             const outlet = zoo.state.outlets[index];
             if (!outlet) continue;
-            zoo.release(outlet, index, index < 3);
+            authoredSource = `outlet-${index}`;
+            try { zoo.release(outlet, index, index < 3); } finally { authoredSource = undefined; }
+            const portal = outlet as { x: number; z: number; width?: number };
+            const body = spawns.find(row => row.cohort === `outlet-${index}`);
+            if (body && portal.width !== undefined && portal.width < 2 * clearanceFor(body)) {
+              authoredOpenings.push({ x: portal.x, z: portal.z, width: portal.width, required: 2 * clearanceFor(body), pathDistance: 0, walls: [`authored-outlet-${index}`], bodies: [body.id] });
+            }
             world.tick++;
           }
           checkRoutes();
+          l8FixtureObserved = true;
         }
         const result = update(...args);
         for (const entity of ai.active) recordWide(entity, 'active infected census');
@@ -213,6 +223,11 @@ for (const { level, l9Route, l9Detour, street } of streetScenarios) {
         const observed = quotas.flatMap(([group, count]) => Array.from({ length: Math.min(count, spawns.filter(row => row.cohort === `pack-${group}` && row.archetype === 'infected.alpha').length) }, (_, slot) => `pack-${group}/alpha-${slot}`));
         coverage = { expected, observed, missing: expected.filter(id => !observed.includes(id)) };
       }
+      if (level === 'L8') {
+        const expected = [0, 1, 2, 3].map(index => `outlet-${index}`);
+        const observed = expected.filter(id => spawns.some(row => row.cohort === id));
+        coverage = { expected, observed, missing: expected.filter(id => !observed.includes(id)) };
+      }
       if (level === 'L9') {
         // Road formations cycle brute/armored roles; shortcut groups author Alphas.
         const expected = l9Groups.filter(g => g.route === l9Route && (g.alphas > 0 || g.route === 'road' && g.runners >= 3)).map(g => g.id);
@@ -257,7 +272,7 @@ for (const { level, l9Route, l9Detour, street } of streetScenarios) {
         }
       }
       const unreachable = spawns.filter(row => !row.route);
-      const narrowOpenings: LevelResult['narrowOpenings'] = [];
+      const narrowOpenings: LevelResult['narrowOpenings'] = [...authoredOpenings];
       const apertures: { x: number; z: number; width: number; walls: string[] }[] = [];
       const apertureBuckets = new Map<string, typeof apertures>();
       const addAperture = (opening: typeof apertures[number]) => {
@@ -317,6 +332,9 @@ for (const { level, l9Route, l9Detour, street } of streetScenarios) {
       }
       audit = { unreachable, narrowOpenings };
     },
+  }).catch(error => {
+    if (error instanceof LevelRunStopped && level === 'L8') return { outcome: 'fixture-observed' };
+    throw error;
   });
   outcome = run.outcome;
   report.push({ level, ...(level === 'L3' ? { route: street } : {}), ...(l9Route ? { route: `${l9Route}/${l9Detour ? 'detour' : 'main'}` } : {}), outcome, ...(coverage ? { coverage } : {}), spawns: spawns.length, checks: spawns.length, ...audit, encounters: spawns.map(row => ({ id: row.id, archetype: row.archetype, variant: row.variant, radius: row.radius, x: row.x, z: row.z, tick: row.tick, player: row.player, cohort: row.cohort, source: row.source, reachable: !!row.route, activeAtEnd: row.active, ...(row.wave ? { wave: row.wave } : {}), ...(row.objective ? { objective: row.objective } : {}) })) });
