@@ -206,8 +206,11 @@ export class Outbreak {
     this.turning.length = 0; for (const e of world.entities.iterate()) if (e.infection && e.infection.phase !== 'stagger') this.turning.push(e);
     for (const e of world.entities.iterate()) {
       const c = e.civilian; if (!c || c.pet && !c.zooAnimal || !c.l1) continue;
-      // Inside a shop/house for a routine visit: only the routine clock runs.
-      if (e.hidden) { if (c.state === 'calm' && !e.infection) this.routine(e); continue; }
+      // Hidden passengers are owned by their vehicle. Running a civilian's
+      // ambient schedule here can finish an activity and clear `hidden`,
+      // leaving the passenger visible at the vehicle's last world position.
+      // Other hidden civilians keep their routine clock running inside shops/houses.
+      if (e.hidden) { if (e.passengerOf === undefined && c.state === 'calm' && !e.infection) this.routine(e); continue; }
       if (e.infection) { this.transform(e); continue; }
       if (c.state === 'grabbed') { this.held(e); continue; }
       if (c.state === 'finished' || c.state === 'infected') continue;

@@ -135,6 +135,14 @@ test('interactions: ring, input and view predicates agree for every interact ste
         expect(corgi.hidden).toBe(true);
         expect(car.entity.vehicle!.passengers?.find(p => p.id === corgi.id)?.phase).toBe('seated');
         expect(Math.hypot(corgi.transform.x - entry.x, corgi.transform.z - entry.z)).toBeLessThanOrEqual(.7);
+        const guards = crash.driving.state.soldiers.map(id => levelWorld.entities.get(id)!);
+        expect(guards.every(guard => guard.hidden && crash.driving.state.trucks.includes(guard.passengerOf!)), 'L9 guards stay hidden aboard their trucks until deployment');
+        const visibleGuardsNearStart = () => [...levelWorld.entities.iterate()].filter(e => e.civilian?.model === 'npc.national-guard' && !e.hidden && Math.hypot(e.transform.x + 550, e.transform.z) <= 30);
+        expect(visibleGuardsNearStart(), 'no visible soldier at the L9 start').toHaveLength(0);
+        for (let tick = 0; tick < 300; tick++) { levelWorld.applyInput({ ...emptyInput(), drive: { throttle: 1, steer: 0 } }, 'keyboard'); levelWorld.update(); }
+        expect(guards.every(guard => guard.hidden && crash.driving.state.trucks.includes(guard.passengerOf!)), 'L9 civilian routines cannot reveal truck passengers during the opening drive');
+        expect(visibleGuardsNearStart(), 'no visible soldier within 30 m of the L9 start after 5 s of driving').toHaveLength(0);
+        expect(levelWorld.entities.get(crash.driving.state.samId)?.civilian?.survivor?.key).toMatch(/^(sam|reyes)$/); // The later guard-line handoff retains its survivor identity.
       }
       if (level === 'L2') {
         mission.begin();
