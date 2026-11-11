@@ -42,3 +42,7 @@ The flat-silhouette probe now intersects its projected bounds with Scene Lab's e
 ## Ordinary-path follow-up
 
 Enabled the neutral selector on the civilian material path (gated by its infection node, so healthy civilians retain their original tint), and extended the crowd selector to non-atlas humanoids while excluding regular Alphas. Repeated WebGL2 high captures passed, and opened `all-human-hue/shot-0030.png`: ordinary hair now appears brown, though the reported body mean remains 30.60/27.33/50.16. This discrepancy needs investigation before using the mask statistics as acceptance evidence. Typecheck passed during this follow-up; the final selector edit still needs its checks. No capture/check process remains running.
+
+## Mask audit — previous figure statistics invalid
+
+Opened the exported geometry mask (`SCENE_MASK_OUT=/tmp/s36-mask.png`) from a passing diagnostic run. It includes magenta contact-shadow quads under every actor, and the ordinary actor's body is missing entirely. Therefore the earlier supposedly figure-only ordinary numbers were predominantly ground sampled through a shadow quad, and the heavy numbers are contaminated too. They must not be used as acceptance evidence. The next measurement change must exclude contact shadows and cover the ordinary NPC body path. Canvas readback now uses the same canvas dimensions as the mask and asserts equality. Typecheck and targeted lint passed before adding the optional mask export; no processes remain running.

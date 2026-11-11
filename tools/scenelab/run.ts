@@ -1,3 +1,4 @@
+import { writeFileSync } from 'node:fs';
 import { basename } from 'node:path';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
 import { PNG } from 'pngjs';
@@ -179,8 +180,11 @@ export async function measureFlatSilhouette(session: SceneSession, ids: string[]
       return { id, bodySizeM, rect: [Math.max(0, Math.floor((box.min.x + 1) * width / 2)), Math.max(0, Math.floor((1 - box.max.y) * height / 2)), Math.min(width, Math.ceil((box.max.x + 1) * width / 2)), Math.min(height, Math.ceil((1 - box.min.y) * height / 2))] };
     });
   }, ids);
-  const shot = PNG.sync.read(await session.page.screenshot({ type: 'png' }));
+  const canvas = await session.page.evaluate(async () => { await window.__SCENE__!.ready(); return document.querySelector('canvas')!.toDataURL('image/png'); });
+  const shot = PNG.sync.read(Buffer.from(canvas.slice(canvas.indexOf(',') + 1), 'base64'));
   const bodyMask = await captureCrowdMask(session.page);
+  if (process.env.SCENE_MASK_OUT) writeFileSync(process.env.SCENE_MASK_OUT, PNG.sync.write(bodyMask));
+  if (bodyMask.width !== shot.width || bodyMask.height !== shot.height) throw new Error('Figure mask dimensions changed');
   return projected.map(({ id, bodySizeM, rect: [x0, y0, x1, y1] }) => {
     let n = 0, sum = 0, sumSq = 0, red = 0, green = 0, blue = 0, saturation = 0, blueDominant = 0; const buckets = new Set<number>();
     for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) {
