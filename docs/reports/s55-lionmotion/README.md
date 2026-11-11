@@ -479,3 +479,14 @@ pelvis maximum 1.874 cm is at initialization frame 4, not frame 600. Their paw
 maxima remain at frame 600. This correction invalidates the inference that the
 zebra pelvis defect was caused directly by the imposed speed switch; the raw
 values remain valid and require phase-specific interpretation.
+
+## Zebra grounding isolation
+
+Zebra has `ss_preserveAnimalJoints` and declared soles; current constructor logic
+therefore still enters paw correction. Temporarily removed the second
+CrowdLocomotion whole-body ground call for animals, retaining PawContacts sole
+handling. Full centered zebra repeat produced identical metrics and maximum
+frame 743, including zero penetration. Reverted the no-effect source change.
+This rules out that second runtime ground pass as the zebra maximum's source;
+the baked pose or earlier correction requires comparison before declaring it
+the same defect as the cats. Raw experiment: `zebra-single-ground/`.
