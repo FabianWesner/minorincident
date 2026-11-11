@@ -143,3 +143,20 @@ Scheduling categories narrowed from toplevel/gpu/viz/cc to toplevel/gpu, retaini
 Created detached isolated worktree `/private/tmp/s37-r35-baseline` at93016109, ran required worktree setup and slim --no-assets, then built QA successfully. No lane game source change. Original-version preview4938, current instrumented fixture driver and recovered route, exclusive quiet low/WebGL2 zoom1/180s. `r35-lion-low-1.json` retains admission/load/frame/export receipts. Arena-lion reached,10,608post3s samples,max33.4ms,p99 16.8ms,zero>250ms,page errors0. Trace130,646,520bytes,dataLossOccurred:false. Setup5863ms;engine data16.4/sim136.7/view2899.2ms.
 
 The original game version itself passes this controlled sample; therefore disappearance of historical1817ms cannot be attributed solely to later lion/render changes. Combined with complete current dispatch-gap failures under shared load, external scheduling remains the leading hypothesis, not a proved unique historical cause. Further original-version repeat/L5 controls and final criterion audit still required. Detached worktree retained for reuse (no uncommitted source changes); owned preview4938 stopped and all commands terminal. Objective incomplete.
+
+### Original L5 quiet-control admission failure
+
+`r35-l5-admission-failure.json` retains the120s bounded admission attempt, exit75. Load stayed3.32–3.78 after cooldown, above the strict<3 gate; no L5 browser measurement started. This is unmeasured coverage. No gate bypass/restart, no foreign process signaled. Owned preview4938 stopped; detached original worktree remains for a later quiet slot.
+
+## Current completion audit (not achieved)
+
+| Requirement | Current authoritative evidence | Result |
+|---|---|---|
+| L8 lion and L5, low WebGL2/high WebGPU, ≥2runs each | Repeated baseline JSONs and objective logs show intended checkpoints | Covered, but not all pass |
+| No frame>250ms after3s | Shared L8 retained3233.3/600/1116.7ms failures; two exclusive current L8 controls50ms; old L8 control33.4ms; L5 repeated samples≤166.6ms | FAIL overall; quiet-only success cannot erase shared failures |
+| Causes attributed with evidence | Two complete marker-aligned failures show RAF dispatch gaps, adjacent JS≤18.1ms; unchanged node builds/small sim counters; screenshot-off failure; foreign contexts and elevated host load observed | Dispatch gap evidenced; specific scheduling source and historical cause unresolved |
+| Supported fix without visual/content/gameplay reduction | Only QA instrumentation/capture/export changes; no runtime game code changed | No supported runtime fix yet |
+| README before/after max/p99 and load delta | Baseline/control tables and raw JSON, setup clocks and capture-pair−25ms delta | Measurements retained; no causally supported before/after fix comparison |
+| Checks/commit/cleanup | Typecheck/lint passed for runner changes; subsequent category-only lint/diff-check; explicit lane commits; owned servers stopped | Done for completed changes |
+
+Next useful work is a narrow scheduling trace of a reproduced dispatch delay or completion of original L5 quiet controls when admission permits, rather than another speculative runtime change. Target remains active and incomplete.

@@ -1,0 +1,51 @@
+{
+  "exitCode": 75,
+  "coverage": "not run",
+  "reason": "quiet admission exceeded120s",
+  "conditions": [
+    {
+      "at": "2026-11-11T07:41:43.075Z",
+      "event": "quiet-admission-wait",
+      "cooldownSeconds": 17
+    },
+    {
+      "at": "2026-11-11T07:42:13.423Z",
+      "event": "quiet-admission-wait",
+      "granted": false,
+      "quiet": false,
+      "load": [
+        3.65576171875,
+        3.17529296875,
+        4.22216796875
+      ],
+      "busy": [],
+      "ignoredIdle": []
+    },
+    {
+      "at": "2026-11-11T07:42:44.099Z",
+      "event": "quiet-admission-wait",
+      "granted": false,
+      "quiet": false,
+      "load": [
+        3.77880859375,
+        3.25244140625,
+        4.21337890625
+      ],
+      "busy": [],
+      "ignoredIdle": []
+    },
+    {
+      "at": "2026-11-11T07:43:14.800Z",
+      "event": "quiet-admission-wait",
+      "granted": false,
+      "quiet": false,
+      "load": [
+        3.58447265625,
+        3.2578125,
+        4.18115234375
+      ],
+      "busy": [],
+      "ignoredIdle": []
+    }
+  ]
+}
