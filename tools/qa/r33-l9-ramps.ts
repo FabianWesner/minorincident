@@ -16,7 +16,10 @@ const errors: string[] = [];
 page.on('pageerror', e => errors.push(e.message));
 const where: Record<string, unknown> = {};
 const shoot = async (name: string, only?: number[]) => {
-  where[name] = await page.evaluate(() => { const s = window.__SS__!.getState(); const p = s.player!.transform; return { x: +p.x.toFixed(1), y: +p.y.toFixed(2), z: +p.z.toFixed(1) }; });
+  where[name] = await page.evaluate(() => { const s = window.__SS__!.getState(); const p = s.player!.transform; const game = (window.__SCENE__ as unknown as { game: Game }).game;
+    const car = game.world.vehicles!.cars.get(game.world.missions!.l9!.state.carId)!;
+    const rendered = game.view.labProbes().vehicles;
+    return { x: +p.x.toFixed(1), y: +p.y.toFixed(2), z: +p.z.toFixed(1), physicsWheels: car.physics.wheels, rendered: rendered?.snapshot() }; });
   for (const zoom of only ?? zooms) {
     await page.evaluate(async zoom => {
       const game = (window.__SCENE__ as unknown as { game: Game }).game, view = game.view.view;

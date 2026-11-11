@@ -297,7 +297,9 @@ export class VehicleView extends Group {
                 const ground = this.ground(this.contact.x, this.contact.z);
                 if (ground !== null) gap = Math.min(gap, this.contact.y - ground);
               }
-              if (!Number.isFinite(gap) || pass > 0 && gap >= 0) break;
+              // Only resolve penetration. A positive gap can be a real ramp or
+              // airborne pose above the road sampled by drawnGround.
+              if (!Number.isFinite(gap) || gap >= 0) break;
               const vertical = wheel.node.parent!.matrixWorld.elements[5];
               if (vertical > .1) wheel.node.position.y -= (gap - .001) / vertical;
             }
@@ -591,7 +593,7 @@ export class VehicleView extends Group {
     return !out.isEmpty();
   }
   wheelNodes(): Map<number, Object3D[]> { return new Map([...this.records].map(([id, r]) => [id, r.wheels.map(w => w.node)])); }
-  snapshot() { return [...this.records].map(([id, r]) => ({ id, entryRingVisible: r.door.visible, apcDamage: r.apc?.snapshot() ?? null, transitionCouriers: [...this.occupants.values()].filter(o => o.parent === r.parent && o.visible).map(o => ({ actorId: o.actorId, asset: o.asset, phase: 'exit', position: o.position.toArray() })), doors: ['doorL','doorR','door_near_0','door_near_1','door_far_0','door_far_1'].flatMap(name => { const node = r.model.getObjectByName(name); let meshes = 0; node?.traverse(child => { if (child instanceof Mesh) meshes++; }); return node ? [{ name, yaw: node.rotation.y, meshes }] : []; }), decay: r.decay ?? null, bloodCoverage: this.bloodEnabled ? r.blood : 0, windshieldBloodCoverage: this.bloodEnabled ? r.blood : 0, wheels: r.wheels.map(w => ({ spin: w.node.rotation.z, steer: w.node.rotation.y })), brake: r.brake.color.r, sirens: r.sirens.map(s => s.color.toArray()), placeholder: !!r.model.userData.placeholder, occupants: [...this.occupants.values()].filter(o => o.parent === r.model && o.visible).map(o => ({ actorId: o.actorId, asset: o.asset, seated: true, position: o.position.toArray(), handGapM: [...o.handGapM] })) })); }
+  snapshot() { return [...this.records].map(([id, r]) => ({ id, entryRingVisible: r.door.visible, apcDamage: r.apc?.snapshot() ?? null, transitionCouriers: [...this.occupants.values()].filter(o => o.parent === r.parent && o.visible).map(o => ({ actorId: o.actorId, asset: o.asset, phase: 'exit', position: o.position.toArray() })), doors: ['doorL','doorR','door_near_0','door_near_1','door_far_0','door_far_1'].flatMap(name => { const node = r.model.getObjectByName(name); let meshes = 0; node?.traverse(child => { if (child instanceof Mesh) meshes++; }); return node ? [{ name, yaw: node.rotation.y, meshes }] : []; }), decay: r.decay ?? null, bloodCoverage: this.bloodEnabled ? r.blood : 0, windshieldBloodCoverage: this.bloodEnabled ? r.blood : 0, wheels: r.wheels.map(w => ({ name: w.node.name, position: w.node.position.toArray(), contactOffset: w.contactOffset, spin: w.node.rotation.z, steer: w.node.rotation.y })), brake: r.brake.color.r, sirens: r.sirens.map(s => s.color.toArray()), placeholder: !!r.model.userData.placeholder, occupants: [...this.occupants.values()].filter(o => o.parent === r.model && o.visible).map(o => ({ actorId: o.actorId, asset: o.asset, seated: true, position: o.position.toArray(), handGapM: [...o.handGapM] })) })); }
   private releaseRecord(record: Record): void {
     record.apc?.dispose(); disposeTransportCab(record.model);
     record.crewRoof?.trim.traverse(node => { if (node instanceof Mesh) node.geometry.dispose(); });

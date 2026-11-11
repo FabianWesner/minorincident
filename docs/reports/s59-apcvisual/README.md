@@ -30,3 +30,5 @@ Sandbox restrictions lifted. The current high/WebGL2 `l9-apc-ram` capture passed
 The full high/WebGL2 r33 ramp tool completed with zero page errors. Opened `ramps-after-high-webgl2/overpass-air-z1.5.png`: middle/rear tyres remain visible, but front tyres still disappear into the ramp, so the wheel fix is incomplete. The rear roof bracket/red lamp is clearly identifiable in this frame. Further work is required.
 
 Found a separate roof depth defect: `transportRoof` inherited transparent glass material with depth writes disabled despite opacity one. The APC roof now uses an opaque clone with depth writes enabled, retaining the existing mesh/draw. Typecheck passed after this change. Flame captures remain outstanding.
+
+Ramp diagnostics proved the front wheel pivots were lowered to local Y -1.419 with contactOffset -2.058 m while Rapier reported ramp contact. The final terrain contact solver now resolves penetration only; it no longer lowers tyres toward sampled road beneath an elevated ramp. Runtime re-capture remains required. The r33 tool now records physics wheel contact/suspension and render wheel positions/correction offsets for direct diagnosis.
