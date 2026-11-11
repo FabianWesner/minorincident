@@ -19,3 +19,5 @@ Before/after visual review remains outstanding for both zooms, both quality tier
 ## Unrestricted environment follow-up
 
 The first WebGL2/high/zoom-1 capture run completed after sandbox removal. Opened `pullout-start.png` and `closing.png`: the fixture shows an awaiting-rescue corgi status and the later frame is covered by credits. These images do not establish the closing pose or panorama acceptance. The fixture/setup and capture timing need repair before the full before/after matrix. Prior browser and Git permission blockers are resolved.
+
+The follow-up capture explicitly retains a corgi actor and confirms the HUD now reports it following. Opened the resulting closing frame: the cinematic still is not framed. `SceneLab.applyCamera()` calls `view.follow()` on every epilogue fixture camera application (SceneLab.ts ~833), overriding the cinematic camera. Next capture pass must use the real campaign save replay rather than this isolated fixture path.
