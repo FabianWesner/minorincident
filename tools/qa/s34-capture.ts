@@ -10,17 +10,18 @@ import { resolve } from 'node:path';
 import { createServer } from 'vite';
 import { SceneSession, readSpec, port, type Backend } from '../scenelab/session';
 import { runSpec } from '../scenelab/run';
+import type { Game } from '../../src/Game';
 
 const side = process.env.S34_SIDE ?? 'after', tier = process.env.S34_TIER ?? 'low';
-const backend = process.env.S34_BACKEND ?? 'webgl2';
+const backend = process.env.S34_BACKEND ?? 'webgl2', burst = process.env.S34_BURST === '1';
 if (!['before', 'after'].includes(side) || !['low', 'high'].includes(tier) || !['webgl2', 'webgpu'].includes(backend)) throw new Error('Invalid capture selection');
 if (port !== 4928) throw new Error('S34 requires SCENE_PORT=4928');
 const baseline = execFileSync('git', ['rev-parse', 'e2db4c7e^'], { encoding: 'utf8' }).trim();
 const paths = execFileSync('git', ['diff', '--name-only', baseline, 'e2db4c7e', '--', 'src/render'], { encoding: 'utf8' }).trim().split('\n');
 const originals = new Map(paths.map(path => [resolve(path), execFileSync('git', ['show', `${baseline}:${path}`], { encoding: 'utf8' })]));
 const captureVersion = hashCapture();
-function hashCapture() { return createHash('sha256').update(paths.map(path => side === 'before' ? originals.get(resolve(path))! : readFileSync(path, 'utf8')).join('') + readFileSync('src/debug/scenelab/SceneLab.ts', 'utf8') + 'walk30-120-attack298-346-hit420-450-v3').digest('hex'); }
-const out = `test-results/s34-pairs/${side}-${backend}-${tier}`;
+function hashCapture() { return createHash('sha256').update(paths.map(path => side === 'before' ? originals.get(resolve(path))! : readFileSync(path, 'utf8')).join('') + readFileSync('src/debug/scenelab/SceneLab.ts', 'utf8') + 'sim-aligned-windows-v4').digest('hex'); }
+const out = `test-results/s34-pairs/${side}-${backend}-${tier}${burst ? '-burst' : ''}`;
 mkdirSync(out, { recursive: true });
 const hash = (value: string) => createHash('sha256').update(value).digest('hex');
 writeFileSync(`${out}/sources.json`, JSON.stringify({ side, baseline, paths: paths.map(path => ({ path, before: hash(originals.get(resolve(path))!), after: hash(readFileSync(path, 'utf8')) })) }, null, 2));
@@ -28,7 +29,9 @@ const server = await createServer({ configFile: resolve('vite.config.ts'), cache
   plugins: side === 'before' ? [{ name: 's34-before', enforce: 'pre', load(id) { return originals.get(id.split('?')[0]); } }] : [],
   server: { host: '127.0.0.1', port, strictPort: true } });
 const session = new SceneSession({ backend: backend as Backend, tier: tier as 'low' | 'high' });
-const shots = [30, 60, 90, 120, 298, 314, 330, 346, 420, 432, 438, 450];
+interface CaptureWindows { walk: number[]; attack: number[]; hit: number[]; sustained?: number[]; started: number; strike: number }
+const windowsRoot = 'test-results/s34-windows';
+mkdirSync(windowsRoot, { recursive: true });
 const results: unknown[] = [];
 try {
   await server.listen(); await session.open();
@@ -36,12 +39,41 @@ try {
     if (!/^[a-z0-9-]+$/.test(type)) throw new Error('Invalid fixture name');
     const spec = readSpec(resolve(`specs/scenes/r31-zombie-audit/game/${type}.json`));
     spec.name = `${type}-${mood}`; spec.time = time;
+    if (burst) {
+      // Isolate living MG responses using the same gun and unmodified infected stats.
+      spec.script = spec.script?.filter(row => row.frame === 120 || row.frame === 420).map(row => row.frame === 420 && 'do' in row && typeof row.do === 'object' && 'attack' in row.do ? { ...row, do: { ...row.do, seconds: 3 } } : row);
+      spec.frames = 480;
+    }
+    const windowsPath = `${windowsRoot}/${burst ? 'burst-' : ''}${spec.name}.json`;
+    if (burst) writeFileSync(windowsPath, JSON.stringify({ walk: [], attack: [], hit: [420, 428, 430, 432], sustained: [430, 432, 434, 436, 438, 440, 442, 444], started: 428, strike: 428 }));
+    if (!existsSync(windowsPath)) {
+      await session.load(spec);
+      const timing = await session.page.evaluate(async archetype => {
+        const lab = window.__SCENE__!, world = (lab as unknown as { game: Game }).game.world;
+        const attacks: { started: number; strike: number }[] = []; let moving = 0, previous = '';
+        for (let frame = 1; frame <= 510; frame++) {
+          await lab.step(1);
+          const e = world.infected!.active.find(e => e.archetype === archetype)!;
+          if (!moving && (e.motion?.speed ?? 0) > .2) moving = frame;
+          if (e.infected?.state === 'attack' && previous !== 'attack' && !e.infected.specialAttack && e.infected.until + 24 < 510) attacks.push({ started: frame, strike: e.infected.until });
+          previous = e.infected?.state ?? '';
+        }
+        const attack = attacks.find(a => a.started >= 180 && a.strike + 24 < 420) ?? attacks.find(a => a.started >= 180) ?? attacks[0];
+        if (!moving || !attack) throw new Error(`No walk/ordinary attack window for ${archetype}`);
+        return { moving, ...attack };
+      }, spec.actors?.find(a => a.kind === 'infected')?.archetype ?? 'infected.runner');
+      const windows: CaptureWindows = { walk: [10, 20, 30, 40].map(offset => timing.moving + offset), attack: [timing.started, timing.strike - 1, timing.strike + 8, timing.strike + 24], hit: [420, 432, 438, 450], started: timing.started, strike: timing.strike };
+      writeFileSync(windowsPath, JSON.stringify(windows, null, 2));
+    }
+    const windows = JSON.parse(readFileSync(windowsPath, 'utf8')) as CaptureWindows;
+    const shots = [...new Set([...windows.walk, ...windows.attack, ...windows.hit, ...(windows.sustained ?? [])])].sort((a, b) => a - b);
     if (existsSync(`${out}/${spec.name}/source-version.txt`) && readFileSync(`${out}/${spec.name}/source-version.txt`, 'utf8') === captureVersion && shots.every(frame => existsSync(`${out}/${spec.name}/shot-${String(frame).padStart(4, '0')}.png`)) && existsSync(`${out}/${spec.name}/metrics.json`)) {
       const previous = JSON.parse(readFileSync(`${out}/${spec.name}/metrics.json`, 'utf8')) as { checks: { pass: boolean } };
       if (previous.checks.pass) { console.log(`Already captured ${spec.name}`); continue; }
     }
     if (!session.isOpen) await session.open();
     const result = await runSpec(session, spec, { out: `${out}/${spec.name}`, shots });
+    writeFileSync(`${out}/${spec.name}/windows.json`, JSON.stringify(windows, null, 2));
     if (result.pass) writeFileSync(`${out}/${spec.name}/source-version.txt`, captureVersion);
     results.push({ name: spec.name, pass: result.pass, failed: result.failed });
     writeFileSync(`${out}/index.json`, JSON.stringify(results, null, 2));

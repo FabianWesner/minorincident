@@ -3,6 +3,7 @@
 python3 tools/qa/s34-strips.py test-results/s34-visual
 Captures stay in test-results; the centre crop preserves game-camera pixel size.
 """
+import json
 import pathlib
 import sys
 
@@ -18,7 +19,9 @@ windows = {
 for directory in sorted(pathlib.Path(sys.argv[1]).iterdir()):
     if not directory.is_dir():
         continue
-    for phase, frames in windows.items():
+    selected = {**windows, **(json.loads((directory / 'windows.json').read_text()) if (directory / 'windows.json').exists() else {})}
+    selected = {phase: frames for phase, frames in selected.items() if isinstance(frames, list) and frames}
+    for phase, frames in selected.items():
         paths = [directory / f'shot-{frame:04d}.png' for frame in frames]
         if not all(path.exists() for path in paths):
             continue
@@ -31,7 +34,7 @@ for directory in sorted(pathlib.Path(sys.argv[1]).iterdir()):
             draw.text(((index % 4) * 256 + 8, (index // 4) * 280 + 5), f'{directory.name} {phase} frame {frame}', fill='white')
         sheet.save(directory / f'strip-{phase}.jpg', quality=92)
 
-    strips = [directory / f'strip-{phase}.jpg' for phase in windows if (directory / f'strip-{phase}.jpg').exists()]
+    strips = [directory / f'strip-{phase}.jpg' for phase in selected if (directory / f'strip-{phase}.jpg').exists()]
     if strips:
         loaded = [Image.open(path) for path in strips]
         review = Image.new('RGB', (1024, sum(strip.height for strip in loaded)), '#181818')
