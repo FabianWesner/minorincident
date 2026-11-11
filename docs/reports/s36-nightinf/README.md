@@ -54,3 +54,18 @@ The QA ID pass now excludes non-body CrowdView meshes via `_parts`, and includes
 ## Full baseline matrix collected
 
 Captured the original render sources from `d7796292` with the corrected QA mask retained, then restored the current render sources byte-for-byte (clean tracked source diff). Eight baseline rows passed: WebGL2/WebGPU × low/high × actual game-camera zoom 1/1.5. Results are preserved in `baseline.json`; fixture definitions are `lineup-z1.json` and `lineup-z1.5.json`. Raw captures remain ignored. Opened `before-webgpu-high/s36-game-z1.5-webgpu/shot-0030.png`: ordinary at the upper left has cool skin/dark clothing, screamer near the lower right is pale grey-blue, and butcher's broad surfaces are muted lavender-grey. Brute and butcher retain larger silhouettes; bloated and screamer are closer to ordinary size. These are baseline observations, not acceptance. Current-source after matrix, per-class comparison and campaign preset checks remain pending. No capture process remains running.
+
+## Eight-row before/after night matrix
+
+All eight current-source rows passed. No class mean is blue-dominant (B > 1.1R and B > 1.1G) in any after row. Before, ordinary, brute, screamer and armored each failed all eight rows. Averages below cover both renderers, both tiers and both game-camera zooms. RGB and luma are 0–255; saturation is 0–1.
+
+| Class | Before RGB | After RGB | Saturation before → after | Luma before → after |
+|---|---|---|---|---|
+| ordinary | [52.28, 56.26, 74.81] | [62.4, 55.53, 57.07] | 0.317 → 0.275 | 56.75 → 57.11 |
+| brute | [75.68, 69.89, 84.0] | [73.51, 63.1, 61.59] | 0.206 → 0.196 | 72.15 → 65.21 |
+| butcher | [91.82, 81.0, 91.05] | [91.51, 79.14, 78.92] | 0.167 → 0.173 | 84.03 → 81.75 |
+| bloated | [109.47, 74.99, 82.07] | [110.89, 70.21, 67.01] | 0.333 → 0.418 | 82.83 → 78.63 |
+| screamer | [83.5, 83.25, 98.15] | [85.7, 81.59, 81.06] | 0.192 → 0.124 | 84.38 → 82.42 |
+| armored | [54.66, 57.09, 68.39] | [62.2, 63.6, 66.07] | 0.226 → 0.139 | 57.39 → 63.48 |
+
+Opened after WebGPU high zoom 1.5: ordinary hair reads brown rather than blue-grey; brute and butcher keep warmer shaded bodies; bloated retains red clothing; screamer is muted green-grey rather than pale lavender. Armored stays grey-green. Full data are in `after.json`. Heavy contrast comparison, campaign lighting variants and final checks remain pending. No browser/check is still running.
