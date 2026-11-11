@@ -142,3 +142,14 @@ comparison, lioness forepaw maximum fell from 21.7 to 13.2 cm and elephant from
 43.7 to 19.8 cm; final maxima and speed-normalized continuity still need analysis.
 The shared source changed after the passing remote suite, so those tests must be
 rerun for the final candidate. No completion claim is made.
+
+## Opened frame strip
+
+The probe can now capture consecutive canvas frames without the CLI video/sheet
+context failure. Opened `test-results/s55-lionmotion/cats-capture/sheet.jpg`, six
+consecutive frames at the walk-to-run transition, WebGL2/high zoom 1.5. Both cats
+remain visible with steady body silhouettes across the strip; their small size
+in this sheet does not support detailed paw acceptance. An earlier all-species
+strip cropped the cats and was rejected. Full-scale crops and longer motion
+inspection remain necessary. The completed numeric trace's largest cat paw
+steps are ~14.5 cm at run speed, so this is not yet a no-pop acceptance result.
