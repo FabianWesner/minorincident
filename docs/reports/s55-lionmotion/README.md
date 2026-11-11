@@ -309,3 +309,15 @@ zoo animals. A completed real-L8 repeat gives paw maxima 9.042 cm for lion and
 classification error but does not yet pass continuity acceptance. The solver
 must now be reassessed with anatomically correct input rather than the previous
 humanoid-clamped pose. Latest `l8-after` contains this run.
+
+## Original solver comparison and wall lean
+
+With healthy-animal classification fixed, restoring the original PawContacts
+still produced 66.89/66.29 cm maximum pelvis steps in a full real-L8 repeat.
+The support corrections were restored. Found a second humanoid-only layer
+applied after species clearing: the wall/contact branch set `lean = -.25` for
+animals too. Excluded species from that branch. The completed real-L8 repeat
+now measures pelvis maxima 0.8333 cm (lion), 0.5568 cm (lioness), and paw maxima
+10.336/14.088 cm. Raw evidence is under `no-animal-wall-lean/`. Removing an
+inappropriate humanoid layer is retained, but these paw maxima still need
+continuity/visual assessment before acceptance.
