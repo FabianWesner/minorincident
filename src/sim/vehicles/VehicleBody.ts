@@ -95,8 +95,11 @@ export class VehicleBody {
       const distance = Math.hypot(p.x - this.previous.x, p.z - this.previous.z);
       this.travelSum += distance - this.travel[this.travelIndex]; this.travel[this.travelIndex] = distance;
       this.travelIndex = (this.travelIndex + 1) % 180; this.travelCount = Math.min(180, this.travelCount + 1);
-      this.stuck = this.travelCount === 180 && this.travelSum < .5;
-    } else this.clearStuck();
+      // r34-l9qa: a horde shoving the APC creeps it ~0.3 m/s (0.9 m per 3 s window), which the old 0.5 m bound never called stuck.
+      this.stuck = this.travelCount === 180 && this.travelSum < 1.6;
+    } else if (!(this.intent.handbrake && Math.abs(this.intent.throttle) > .5 && !this.upsideDown)) this.clearStuck();
+    // r34-l9qa: a handbrake tap with the gas held pauses the stuck window instead of clearing it. The L9 driver taps the handbrake every
+    // ~1.5 s to throw boarders; each tap wiped the 3 s window, so an APC pinned in a horde was never recognised as stuck (no reverse, 0 m/s).
   }
   /** Exact planar distance from a point to the rectangular chassis, independent of yaw. */
   hullDistance(x: number, z: number): number {

@@ -130,7 +130,7 @@ export class InputSystem implements Lifecycle {
     this.scheme = scheme; this.hint.dataset.scheme = scheme;
     this.hint.textContent = this.drivingContext && scheme !== 'touch' ? scheme === 'mouse-only'
       ? 'Hold LMB and steer toward the cursor · release to brake · E / F exit'
-      : 'W gas · S brake / reverse · A / D steer left / right · LEFT to horn / boost · E / F exit' : {
+      : 'W gas · S brake / reverse · A / D steer left / right · K handbrake (throws boarders) · LEFT to horn / boost · E / F exit' : {
       'mouse-only': 'WASD / arrows move · mouse aims · LMB shoots · Space aim assist · Q / RMB switch · E / F interact · 1–9 slots',
       'mouse-keyboard': 'WASD / arrows move · mouse aims · LMB shoots · Space aim assist · Q / RMB switch · E / F interact · 1–9 slots',
       keyboard: 'WASD / arrows move · J / K / Space aim assist · 1–9 slots · Q · E / F interact',
