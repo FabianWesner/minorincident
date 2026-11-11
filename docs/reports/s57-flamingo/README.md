@@ -69,3 +69,11 @@ The corrected 360-frame fixture passes **8/8** day/night × low/high × WebGL2/W
 Found a reinforcement steering defect: `orbit()` used permanent slot IDs divided by the original count of eight, so slots 8/16/24 reused slot 0's target, and analogous pairs reused the other targets. Flamingo orbit now assigns evenly spaced targets to the currently living flock. Other arenas retain their original slot behavior. Runtime nearest-neighbor/body-overlap proof is still outstanding.
 
 A direct production-method probe with living slots 0/8/16/24/1/9/17/25 now yields a minimum orbit-target separation of 3.8268 m. This is a target geometry check, not live-body clearance evidence. Typecheck and lint pass after the orbit change.
+
+### Ordinary infected class gate expansion
+
+Added individual 180-frame pursuit rows for every `humanInfected` definition (runner, crawler, brute, screamer, sprinter, riot, bloated, firefighter, hazmat, armored, butcher, nurse, Alpha), plus infected dog and cat. Every row requires at least 2 m travel and non-null p95 contacts at ≤3 cm. These scene criteria correct the previous omission of class-specific motion assertions without adding unit cases.
+
+First batch: 11/15 pass. Runner fails p95 3.5 cm; crawler fails 10.3 cm. Cat and sprinter require the existing `allowRigid` audit option to exercise their actual production asset. After enabling that option, sprinter passes; cat still fails with zero travel and absent contacts at the distant trigger and needs a closer physical trigger fixture. The failures remain gate failures, without known-failure exemptions. Compact measured humanoid/dog receipts are in `class-first-pass.json`. Remaining work includes these failures and crow/healthy-animal coverage.
+
+The required remote `sh tools/remote/run.sh "$PWD" -- npm test` reached the healthy runner and collected exactly 150/150 budgeted cases (129 Vitest + 9 e2e + 12 invariant-browser). It timed out at 240.9 s (exit 124 inside the test wrapper, overall exit 1), so no green full-unit result is claimed. Sync took 147 s and remote execution 245 s; the terminal log is `test-results/s57-required-tests.log`. The scene runs are terminal; no checks were left running.
