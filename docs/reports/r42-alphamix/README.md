@@ -47,7 +47,7 @@ encounters). Earlier variants added L3-06, L3-11 (L3, above) and `FOLLOWER_WAIT_
 window, when the Screamer was on the fourth street near the boarding; moving it to the second street cleared it).
 Receipts are in the lane scratchpad (`r42/base`, `new2`, `newE`, `new3`), not in git.
 `sh tools/remote/run.sh $PWD -- npm test`: 27 files, 106 passed, 1 skipped (107 cases, limit 150).
-Nightly `waves.test.ts` + `war-waves.test.ts`: see the end of this file.
+Nightly `waves.test.ts` (2 of 4 fail) + `war-waves.test.ts` (pass): the `waves.test.ts` failures are identical on main and on this branch (the same 68 diff lines: L7 groups 700-704 and L8 tunnel cohorts report `admitted 0`), so not worse than main and unrelated to this change; worth a separate look.
 
 ## Browser QA needed
 - L6 high and low, zoom 1.5 and 1: hatch at x 126 (Screamer, thin hoodie Alpha) and x 198 (Leaper, crouched suit Alpha) arriving at
