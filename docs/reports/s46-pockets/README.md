@@ -1,61 +1,37 @@
-> Correction on resumed native inspection: the L4 courier has no civilian component. The earlier civilian-contact diagnosis and contact regression did not explain the shop scenario; that guard and regression have been removed. L4 remains unresolved pending an exact collision/attack trace. Earlier L4 claims below are superseded by this correction.
+# s46-pockets — shop contact and zebra fence
 
-# s46-pockets — L4 shop hits and L8 zebra fence
+## Result
 
-## Findings and fixes
+L4's stationary courier at `(5.9,36.4)` takes damage within 10 seconds on high and low. Turned L8 zebras remain dispersed in the paddock while she is outside; ordinary input through the gate still starts the fight. No combat stats changed and no corpse-removal behavior changed. Threat flags remain L4 4 / L8 0.
 
-- **L4 cause:** the courier carries the civilian contact component in this scenario. `nativeCivilianContact` applied civilian grab/turn behavior to every eligible L4 civilian, including player id 1, intercepting the Brute/Riot hit. The player now bypasses that civilian-only path and takes the existing combat damage. No infected definitions or damage values changed.
-- **L8 cause:** turned, dormant zebra arena actors orbited a shared center; while a tunnel carrier was turning the rest of the herd, each converted zebra chased a healthy herd mate. Engaged zebra staging could also remain aimed at the paddock fence after the courier left. Dormant zebras now walk to separated home points even while other herd members remain healthy. When an active zebra fight has no courier inside the authored enclosure zone, the staging lane and current move are cleared and the animals return to those points.
+## Causes and changes
 
-## Before and after
+The supermarket checkout excluded Brute's 0.6 m body from strike positions in the rear pocket. A native clearance scan found its nearest clear center 1.73 m away, beyond its 1.35 m stationary reach plus 0.15 m resolution tolerance. Repeated charges collided with the furniture. Moving the checkout and all its fixtures 0.7 m along local X opens the aisle. All interior and roofed supermarket tiers were rebuilt and packed; production collision was rebaked from the delivered GLB. Visual and collision geometry agree. An earlier civilian-contact hypothesis was disproved (the courier has no civilian component); that experimental guard and test were removed.
 
-- Before, the supplied L4 screenshot showed the Brute telegraph among shop shelves and the courier still at 100 HP. The code path above explains why the contact was diverted into a grab instead of damage. The new native regression drives an L4 Brute against the courier with god mode off and asserts HP loss and no civilian grab. The standalone `tools/qa/r42/l4-pocket-probe.ts` is not valid evidence for the target spot as written: relocation to `(5.9,36.4)` returns false, and the probe turns god mode on.
-- The L8 route regression turns a zebra while the courier is five metres outside the north gate, with the rest of the herd still healthy. It asserts the arena remains at phase 0, converted zebras settle away from both fences, and turned animals do not overlap. The route test then moves the courier inside and verifies the usual arena engagement and gate behavior.
-- Threat audit: L4 **4** flags, L8 **0** flags, matching the supplied baseline. The L4 flags remain in the wider level threat criteria; this lane introduces no additional flag.
+Dormant converted zebras chased healthy herd mates while a carrier turned the remaining animals, or orbited a shared center. They now return to separated central home points. An engaged herd also clears its attack/staging lane and returns home when the courier leaves the authored enclosure zone. Encounter state and combat stats are preserved.
 
-## Checks
+## Native and regression evidence
 
-- `npm run typecheck` — passed.
-- `npm run lint` — passed.
-- `npx vitest run tests/engine/l4-contact.test.ts tests/engine/missions.test.ts` — passed before the final L8 assertion was added; `npx vitest run tests/engine/missions.test.ts` — passed after it.
-- `npm test` — passed, 107 tests in 27 files, within the 150-case budget.
-- `npx vitest run --project nightly tests/qa/invariants/war-waves.test.ts` — passed, 2 tests.
-- `node --import tsx tools/qa/threat-audit.ts --levels L4,L8` — L4 4 flags / L8 0 flags.
-- The requested `sh tools/remote/run.sh "$PWD" -- npm test` could not dispatch: no healthy Hetzner runner was available and the wrapper does not admit `npm test` to its local fallback. The bounded local `npm test` command passed.
+The corrected `tools/qa/r42/l4-pocket-probe.ts` uses the original line-break checkpoint, normal pressure, god OFF, and the same teleport API as the reference capture. It samples the shop floor: actual pose `(5.89655,36.38879)`, y1.0774. The old probe reused start height and enabled god mode. Before the geometry change the corrected probe stayed at100HP. Afterward both `QUALITY=low` and `QUALITY=high` reach80HP by tick200 and50HP by tick600, without the diagnostic collision override.
+
+The existing L8 route test includes a turned zebra with healthy herd mates while the courier waits5m outside the gate. It verifies phase0, positions away from both fences and no stacked turned bodies, then normal engagement and gate closure after entry. Assertions were folded into existing cases.
+
+Final geometry checks:
+
+- Typecheck and lint pass.
+- Requested remote `npm test`: 27 files,106 passed/1 skipped;150/150 case budget;162.4s within240s.
+- Requested remote nightly war-waves: both tests pass; all high/low authored wave and collapse cohorts spawn, admit and reach their goal areas.
+- Refreshed native threat audit: both skilled routes complete; L4 4 flags/L8 0, equal to supplied baseline. The additional partial-level-selection diagnostic flag is expected.
+
+## Opened headless browser evidence
+
+One browser at a time through `tools/e2e-lock.sh`, WebGL2 Metal, zoom1.5, god OFF, preview4941. Raw captures remain outside Git. Owned preview servers were stopped.
+
+- High shop: `/private/tmp/s46-final-l4-high/s003-t615-idle.jpg`. Brute beside courier in the opened checkout aisle, visible hit reaction, HUD50/100. Logs:80HP tick267,50HP tick634.
+- Low shop: `/private/tmp/s46-final-l4-low/s003-t621-idle.jpg`. Same contact, hit blood and HUD50/100; checkout and fixtures coherent at low detail. Logs:70HP tick435,50HP tick621.
+- Outside zebra: `/private/tmp/s46-zebra-observed/s003-t982.jpg`. Explicit logged setup turns the native same-ID herd while courier waits `(60,57)`. Four distinct zebras stand across the central paddock with clear ground between them. After20s: phase0,150HP each,x54.08/58.10/62.13/66.14,z32.14–32.19. Camera-only observation logs positions; actor positions/stats were not rewritten.
+- Real-input zebra entry: `/private/tmp/s46-zebra-real-entry/s005-t1587.jpg`. Unmodified `l8-before-zebra` fixture, WASD route via `(40,64),(60,64),(60,48),(60,35)` and ordinary gun input. Arena remains phase0 on the outside path, enters phase1 after crossing, and progresses to phase2. Opened capture shows the active herd telegraph, courier firing inside, HUD68/100; later logs retain dead zebra entities while surviving members move and take damage. No page errors.
 
 ## Browser QA needed
 
-The required headless real-input capture has not been run. `npm run build:qa` passed, but binding the preview server on port 4941 failed with `listen EPERM`; this sandbox cannot open the local listener. The required worktree slimming step also failed when Git attempted to write `.git/worktrees/s46-pockets/config.worktree` outside the writable worktree. No browser window was opened and no screenshot was added to the repository.
-
-Open the cited S42 captures for reference:
-
-- L4: `/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/s42-vqa/l4-pocket-threat/s006-t816-idle.jpg` — Brute telegraph inside the shop; courier HUD reads 100/100.
-- L8: `/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/s42-vqa/l8-zebra-high-fight/s019-t6986.jpg` — zebra herd lined along the fence while the courier is outside the cluster.
-
-## Delivery state
-
-Committed as `bd2d8419` (`Fix L4 pocket hits and L8 zebra fence crowding`). No push, deploy, merge, main-branch edit, stat edit, or corpse removal was performed.
-
-## Exact shop collision trace (resumed)
-
-At `(5.9,36.4)`, native ground height is `0.3574`. The shop's compound collider includes a thin wall centered at `(4.975,36.78)` with half extents `(3.0775,0.0375)`, plus a counter at `(4.97,35.84255)` with half extents `(0.5,0.93755)` and nearby shelving at `(6.58725,33.88)` with half extents `(0.33775,2.125)`. The requested courier center is only 0.3425 m from the thin wall's near face, explaining why capsule admission rejects the exact point. This is direct geometry evidence; attack resolution and whether the reference capture used a forced placement remain to be traced.
-
-The capture used `missionControls.teleport`, which samples the shop floor and permits a 1.5 m projection. Reproducing that API places the courier at `(5.89655,36.38879)`, y `1.0774`; the earlier probe incorrectly reused the start height. With the correct pose, checkpoint and normal pressure, the native 10 s reproduction stays at 100 HP. Brute repeatedly attacks from z approximately 34.0, while Riot stops at `(7.7754,36.3875)`. The supplied probe now uses the same checkpoint/teleport, disables god mode, presses both enemies and logs HP. The zero-damage defect is reproduced; no L4 gameplay fix is yet proven.
-
-A native diagnostic temporarily required a body-width clear segment before Brute charge windup. This eliminated the repeated futile charge, but neither heavy reached the courier in 20 s: Brute parked at `(5.3,33.7)` and Riot at `(7.8,36.4)`, with HP still 100. The experimental guard was removed. This establishes that telegraph selection alone cannot satisfy the requested damage floor: the shop's body-width approach/aisle geometry must also be resolved.
-
-A 0.1 m native clearance scan around the courier found the nearest clear, visible Brute center at `(7.6,36.1)`, distance `1.73 m`. Brute radius is `0.6 m`; its unchanged strike reach against this stationary courier is `1.35 m` (plus the resolver's `0.15 m` tolerance). Thus the current furniture excludes Brute from every scanned strike position. Riot radius is `0.35 m`, and clear positions exist near `(5.9,36.3)`, so its final approach additionally needs navigation inspection. The checkout and shelf gap, rather than damage suppression, is now established as a physical constraint for Brute.
-
-A diagnostic-only 0.7 m checkout shift (four collision boxes, local +X) opens the approach: in the same mortal native 10 s probe the courier loses 50 HP, and Brute reaches `(5.37,35.16)`. The courier remains at the reference pocket. `PROBE_CHECKOUT_SHIFT=0.7` reproduces this experiment without changing production geometry. The production fix still needs the matching visual checkout reposition and collision rebake; collision-only movement is not a deliverable.
-
-Production interior LOD1/LOD2 and all three roofed supermarket tiers are rebuilt, packed, and the supermarket collision rebaked from the delivered GLB. With no diagnostic collision shift enabled, the native probe now records HP 80 at tick 200, 60 at tick 400 and 50 at tick 600; Brute reaches 1.3 m from the courier. Visual QA, both quality settings and the final regression/threat checks remain required.
-
-Final-geometry native quality probes: both `QUALITY=low` and `QUALITY=high` reach HP80 by tick200 and HP50 by tick600 with god OFF and no collision override. Typecheck and lint pass. The requested remote `npm test` now succeeds on runner 94.130.181.173: 27 files passed, 106 tests passed / 1 skipped, 150/150 collection budget, 162.4 s within 240 s. Nightly, threat audit and browser QA still need refreshing after the production geometry rebuild.
-
-Post-rebuild final checks: requested remote nightly `war-waves.test.ts` passes both tests (all high/low wave and collapse cohorts spawned/admitted/reached; 138.8 s). Refreshed threat audit completes both skilled routes and retains exactly L4 4 flags / L8 0 flags; its fifth reported flag is the expected partial-level-selection diagnostic flag. No threat flag increase. Real-input browser captures remain outstanding.
-
-Headless WebGL2 high, zoom1.5 browser recheck completed through `e2e-lock.sh` on preview port4941, god OFF, same line-break setup and stationary courier `(5.9,36.4)`. Real-time logs show HP80 at tick267, HP70 at449, HP50 at634 and HP30 at814, with no page errors. Opened `/private/tmp/s46-final-l4-high/s003-t615-idle.jpg`: Brute stands within striking distance in the opened checkout aisle, the courier is visible with a blood hit reaction and HUD50/100, and the relocated checkout remains coherent with its fixtures. The owned preview server was stopped. Low browser and zebra fixture rechecks remain outstanding.
-
-Low WebGL2 browser recheck also passes the mortal shop damage target: stationary `(5.9,36.4)` HP70 at tick435 and HP50 at621. Opened `/private/tmp/s46-final-l4-low/s003-t621-idle.jpg`: Brute is in contact with the courier, visible hit blood and HUD50/100; checkout geometry is coherent on low tier. The first zebra fixture browser run placed the courier at `(60,57)` outside the entry and held 20 s. Opened `/private/tmp/s46-final-zebra-outside/s003-t983-idle.jpg`: outside courier and followers are visible, but the herd is outside the camera frame, so this does not yet prove herd dispersion. The owned preview server was stopped.
-
-Zebra observed browser probe: `l8-before-zebra`, high WebGL2, god OFF, courier `(60,57)` outside the north gate; explicitly logged setup starts the four native same-ID infections to exercise the already-turned dormant herd. After 20 s, phase remains0, all four have150HP, and positions settle to x54.08/58.10/62.13/66.14, z32.14–32.19. Opened `/private/tmp/s46-zebra-observed/s003-t982.jpg`: four distinct zebras stand in a widely spaced central line, with clear ground between them and no animals at the near fence. The camera-only observation is logged by `--watch`; no actor positions or combat stats were changed after setup. No page errors. Owned preview stopped. A real-input entry/engagement pass remains to check continuation into the fight.
+No additional browser coverage is required for this lane's acceptance. WebGPU remains the repository's manual check. No push, deployment or merge was performed.
