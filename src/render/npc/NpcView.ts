@@ -207,7 +207,8 @@ export class NpcView extends Group {
         const seat = l10Closing.seat(this.world)!;
         hero.head.userData.closingRestY ??= hero.head.position.y;
         hero.head.position.y = (hero.head.userData.closingRestY as number) - .28;
-        hero.head.rotation.z -= .35;
+        hero.head.userData.closingRestZ ??= hero.head.rotation.z;
+        hero.head.rotation.z = (hero.head.userData.closingRestZ as number) - .35;
         hero.root.updateMatrixWorld(true); hero.head.getWorldPosition(this.point);
         hero.root.position.add(new Vector3(seat.x + .35 - this.point.x, 0, seat.z + .3 - this.point.z));
       }

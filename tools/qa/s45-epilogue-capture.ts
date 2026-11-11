@@ -32,10 +32,12 @@ try {
   }, { saved, zoom });
   await session.page.evaluate(() => window.__SS__!.step(120));
   await session.screenshot(`${out}/closing.png`);
-  await session.page.evaluate(() => window.__SS__!.step(600));
+  await session.page.evaluate(() => window.__SS__!.step(60));
+  await session.screenshot(`${out}/closing-late.png`);
+  await session.page.evaluate(() => window.__SS__!.step(540));
   await session.screenshot(`${out}/pullout-mid.png`);
   await session.page.evaluate(() => window.__SS__!.step(360));
   await session.screenshot(`${out}/pullout-end.png`);
-  writeFileSync(`${out}/receipt.json`, JSON.stringify({ backend, tier, zoom, errors: session.errors }, null, 2));
+  writeFileSync(`${out}/receipt.json`, JSON.stringify({ backend, tier, zoom, actual: await session.page.evaluate(() => window.__SS__!.perf().backend), errors: session.errors }, null, 2));
   if (session.errors.length) process.exitCode = 1;
 } finally { await session.close(); stopServer(); }
