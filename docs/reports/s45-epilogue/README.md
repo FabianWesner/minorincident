@@ -1,0 +1,21 @@
+# S45 Epilogue
+
+## Changes
+
+- Reduced and darkened the panorama tide clouds in `LevelTenOverview`; their broad transparent pale-green overlay was washing out the landscape during the cinematic pull-out.
+- In the closing presentation, align the corgi's animated head to a point over the courier's near knee. This is a render-only root translation and does not modify shared clips or simulation state.
+- Added `tools/qa/s45-epilogue-capture.ts` to capture the Scene Lab epilogue fixture at zoom 1 and 1.5, low/high quality, and WebGL2/WebGPU. It writes to ignored `test-results/`.
+
+## Validation
+
+- `npm run typecheck`: passed.
+- `npm run lint`: passed.
+- `npm test`: passed, 107 tests in 27 files; test budget reports 150/150 cases.
+- `sh tools/remote/run.sh "$PWD" -- npm test`: not run remotely; no healthy Hetzner runner is provisioned and the Mac fallback was not selected.
+- Scene Lab captures: not produced or opened. The required browser pool could not bind its local daemon socket (`listen EPERM` on 127.0.0.1:4329); the legacy headless launcher was also blocked when its GPU guard invoked `ps` (`Operation not permitted`).
+
+Before/after visual review remains outstanding for both zooms, both quality tiers, and both backends. The capture runner defaults to saving four frames per combination (`pullout-start`, `pullout-mid`, `pullout-end`, `closing`) and records browser errors in `receipt.json`.
+
+## Unrestricted environment follow-up
+
+The first WebGL2/high/zoom-1 capture run completed after sandbox removal. Opened `pullout-start.png` and `closing.png`: the fixture shows an awaiting-rescue corgi status and the later frame is covered by credits. These images do not establish the closing pose or panorama acceptance. The fixture/setup and capture timing need repair before the full before/after matrix. Prior browser and Git permission blockers are resolved.
