@@ -45,3 +45,9 @@ The filesystem/network restrictions were removed. Worktree slimming now succeeds
 Opened `test-results/scene-gate/webgl2-low-1/night-boss-zoo-lineup@low-z1.5/sheet.jpg`: three frames (0/30/60), separated animals across the slab. Flamingo remains grounded at the lower left, but the scale and frame spacing cannot establish a detailed stepping gait. Elephant, zebra and gorilla body movement is visible; numeric contact failures remain authoritative. The goal remains active and the next work is to isolate the failing contact phases and complete the dedicated movement fixtures.
 
 The earlier sandbox-only browser and Git blockers are historical. The filtered gate now supplies real failing motion evidence.
+
+### Contact-phase diagnosis
+
+`contact-diagnosis.json` records contiguous contacts from the saved rounded track. Before the heavy hit at frame 55, zebra support feet remain grounded through frame 46 while travelling 17.8/15.6 cm; elephant support feet travel 23.6/22.8 cm through frame 37. Gorilla's frame 26–41 contact travels 15.4 cm. These establish sustained support drift during locomotion, rather than only a hit transition. The diagnostic deliberately labels its unfiltered post-hit contacts as unsuitable for acceptance; production `summarizeMotion` excludes knockdown clips.
+
+`PawContacts.placeAnkle()` currently derives the desired sole orientation from the actor's current heading on every frame, including support. A pinned sole centre therefore still rotates its heel/toe during turns. The next implementation should retain orientation during support and release/re-step when reach is exhausted; its effect on shared animal contact code must be measured without changing lion-specific motion.
