@@ -7,6 +7,7 @@ import { runnerLevels, runLevel } from '../sim-runner/levels';
 import { cureEncounters, curePaceEncounters, cureEncounterSlots, cureEncounterSpot } from '../../src/levels/L10/encounters';
 import { LevelNineSetPieces } from '../../src/sim/missions/LevelNineSetPieces';
 import { crossing } from '../../src/levels/L9/district';
+import { l6Entries } from '../../src/data/l6';
 import { l3 } from '../../src/data/l3';
 import type { L3StreetChoice } from '../../src/debug/bot/LevelThreeBot';
 import { l9Groups, l9SetPieces, l9SetPieceTuning } from '../../src/data/l9';
@@ -148,6 +149,12 @@ for (const { level, l9Route, l9Detour, street } of streetScenarios) {
         const expected = l3.density.alphas.map((_, index) => `route-alpha-${index}`);
         const admitted = world.missions!.state.l3?.alphaAt ?? [];
         const observed = expected.filter((_, index) => admitted[index] > 0);
+        coverage = { expected, observed, missing: expected.filter(id => !observed.includes(id)) };
+      }
+      if (level === 'L6') {
+        const expected = l6Entries.map(entry => `hatch-${entry.door}`);
+        const ledger = world.missions!.state.l6!.spawnLog;
+        const observed = l6Entries.filter(entry => ledger.some(row => row.wave === 4 && row.door === entry.door && spawns.some(body => body.id === row.id && body.tick === row.tick))).map(entry => `hatch-${entry.door}`);
         coverage = { expected, observed, missing: expected.filter(id => !observed.includes(id)) };
       }
       if (level === 'L9') {

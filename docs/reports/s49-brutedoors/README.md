@@ -95,3 +95,7 @@ Required regression commands completed after the fix. Remote `npm test` passed (
 ## L3 street-branch qualification
 
 L3 now runs each explicit native street policy (Boulevard, Commerce, Oak) and requires its authored route-Alpha admission ledger. All three runs completed and passed the quota/path/opening checks: 1, 3, 3 wide records respectively, including repeated runtime admissions. Every recorded spawn origin has a checked path. Typecheck and tool lint passed. These are the three authored street branches of `l3.density.alphas`; the audit no longer relies on an auto-selected street for L3.
+
+## L6 hatch source census
+
+Added a coverage gate requiring a recorded wide actor matched by ID and spawn tick to each authored wave-4 hatch ledger entry. The native run completes with four pathable wide records, but covers only hatch 3. Hatches 2, 5, 6, 4 and 7 are missing from the wide census; the audit now exits failure rather than implying exhaustive coverage from that bot route. Closed/omitted hatch cohorts need an explicit open-hatch fixture before this level is fully qualified. This finding is a coverage gap, not a demonstrated collision blocker. Typecheck and tool lint passed.
