@@ -1,0 +1,33 @@
+{
+  "lane": "r41-vqa",
+  "date": "2026-11-11",
+  "build": "main ce7f44f2 (batch 80 + hotfix b80a)",
+  "method": "tools/qa/r28-vqa-fixture-play.ts real keyboard/mouse input, headless, one browser via tools/e2e-lock.sh, probe tools/qa/r41-vqa-probe.js",
+  "capturesDir": "/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/r41-vqa/",
+  "runs": [
+    { "name": "l10-mega-high-z15-gl", "level": "L10", "quality": "high", "zoom": 1.5, "backend": "webgl2", "god": false, "pageErrors": 0, "nanCourier": false, "hurtFrames": 1610, "maxFrameMs": 3733.2, "note": "two 3.7 s frames 200 m outside the arena, host load 6.4" },
+    { "name": "l10-mega-low-z1-gpu", "level": "L10", "quality": "low", "zoom": 1, "backend": "webgpu", "god": false, "pageErrors": 0, "nanCourier": false, "hurtFrames": 1293, "maxFrameMs": 216.6 },
+    { "name": "l10-megafight-high-z15-gpu", "level": "L10", "quality": "high", "zoom": 1.5, "backend": "webgpu", "god": false, "pageErrors": 0, "nanCourier": false, "hurtFrames": 3650, "maxFrameMs": 50, "note": "Mega 3000 -> 2090 HP, phase 2" },
+    { "name": "l8-start-low-z1-gl", "level": "L8", "quality": "low", "zoom": 1, "backend": "webgl2", "god": true, "pageErrors": 0, "nanCourier": false, "note": "flamingo engaged from marker" },
+    { "name": "l8-gorilla-high-z1-gpu", "level": "L8", "quality": "high", "zoom": 1, "backend": "webgpu", "god": true, "pageErrors": 0, "nanCourier": false, "note": "gorilla dead in ~7 s; elephant engaged" },
+    { "name": "l8-monkey-low-z15-gl", "level": "L8", "quality": "low", "zoom": 1.5, "backend": "webgl2", "god": false, "pageErrors": 0, "nanCourier": false, "hurtFrames": 90, "fires": 6 },
+    { "name": "l8-lion-high-z15-gl", "level": "L8", "quality": "high", "zoom": 1.5, "backend": "webgl2", "god": false, "pageErrors": 0, "nanCourier": false, "hurtFrames": 178 },
+    { "name": "l9-stall-high-z1-gpu", "level": "L9", "quality": "high", "zoom": 1, "backend": "webgpu", "god": true, "pageErrors": 0, "nanCourier": false, "note": "bridge 6645 -> collapse 6984 PASS" },
+    { "name": "l9-start-low-z15-gl", "level": "L9", "quality": "low", "zoom": 1.5, "backend": "webgl2", "god": false, "pageErrors": 0, "nanCourier": false, "note": "APC pinned 330 s at the bay barrier, no break-free" },
+    { "name": "l4-linebreak-low-z1-gl", "level": "L4", "quality": "low", "zoom": 1, "backend": "webgl2", "god": false, "pageErrors": 0, "nanCourier": false, "hurtFrames": 3388, "fires": 6 },
+    { "name": "l4-linebreak-high-z15-gpu", "level": "L4", "quality": "high", "zoom": 1.5, "backend": "webgpu", "god": false, "pageErrors": 0, "nanCourier": false, "hurtFrames": 2312, "note": "brute + riot stuck behind a shop shelf 180 s" }
+  ],
+  "notCovered": ["L1 (test-API level load void)", "companion/ally hit probe", "L4 hold step (line-1 not restorable)", "L4 cellar prompt", "L9 break-free jump look and overpass ramp landing", "full L10 Mega fight to phase 3"],
+  "findings": {
+    "P1": ["L9 APC pinned at the bay barrier 330 s without god; break-free never fires; 'Drive onto the bridge' stuck (hypothesis: handbrake taps suppress the stuck recovery, Vehicles.ts:182)"],
+    "P2": [
+      "L10 console arena has no boundary: courier runs 200-340 m into an empty dark plain, Mega follows; 3.7 s frames there (high WebGL2, load 6.4)",
+      "L8 gorilla cleared in ~7 s with the MG, never hits her",
+      "L8 monkey yard -> zebra leg marker points through the yard house (2/2 runs stalled 70 s / 167 s)",
+      "L9 bay without god: all survivors die, level continues with 0 saved (intended?)",
+      "L4 brute + riot stuck behind a shop shelf 5 m from the courier for 180 s"
+    ],
+    "P3": ["L8 flamingo flights stack over the group", "L8 Nadia near-black at night", "L10 gold occlusion outline without occluder", "L10 corgi across the railing", "L9 courier hidden inside the APC (expected)"]
+  },
+  "courierHurtRegression": "PASS on L4, L8, L9, L10 (0 page errors, no non-finite courier node, courier drawn in all opened frames); L1 not covered"
+}
