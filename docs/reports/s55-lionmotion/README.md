@@ -196,3 +196,13 @@ was reverted. This result rejects a contact-height-only fix and leaves the
 idle-to-walk ankle target/orientation conversion as the next investigation.
 `l8-after/frames.json` currently contains the rejected experiment; the accepted
 candidate's comparable trace remains `l8-webgpu-low/frames.json`.
+
+## Reproducible discontinuity analysis
+
+Added `analyze.ts <frames.json> [...]` to calculate root translation, root-relative
+pelvis vertical step, root-relative paw step, and worst clip transition. Applied
+to the accepted WebGPU-low L8 trace: lion root max 0.745 cm, pelvis 0.844 cm,
+paw 11.815 cm at frame 657 (`walk->walk`, handR); lioness root max 1.664 cm,
+pelvis 0.907 cm, paw 23.634 cm at frame 257 (`idle->walk`, handR). This localizes
+the remaining problem beyond root translation. Scratch-vector review did not
+establish an alias bug in placeAnkle/solve. No further source fix was accepted.
