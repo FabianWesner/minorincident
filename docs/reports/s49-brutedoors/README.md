@@ -127,3 +127,9 @@ Added source coverage requirements for all eight scheduled Alpha anchors and all
 Post-L5 remote nightly still reports five passed/one failed, solely L2 market-ambush 24 admitted/23 reached. Remote `npm test` first exceeded its 237 s reservation under contention, then passed on retry in 191.3 s (within 240 s). The remote threat run completed in 1261.9 s with counts 0,1,2,4,3,4,7,0,0,0: L5 retains three flags; L7's seven rather than six is an unresolved regression signal. No L7 gameplay changes were made by this lane.
 
 Review found the aperture scan covered opposing walls but omitted collinear wall ends (door jambs). Added those gaps. A fresh remote full audit passed L1, L2 and all L3 branches, then spent over fourteen CPU minutes in L4; it was explicitly stopped through remote wrapper cleanup (exit 130), and its remote Node PID was confirmed gone. This is not a passing full-audit receipt. Replaced linear aperture deduplication with local spatial buckets and added route-bounds pruning to control candidate cost. Typecheck and tool lint passed. The corrected scanner still requires a completed rerun, so prior zero-opening claims do not qualify its new door-jamb scope.
+
+## Corrected scanner L4 qualification and L7 probe
+
+The optimized collinear-jamb scanner completed the isolated L4 run: 39 wide records, all required sources observed, zero unreachable paths and zero narrow openings, exit zero. This validates its previously slow L4 case; remaining campaign scenarios still need the corrected scanner rerun.
+
+A focused remote L7 low/skilled seed-2 rerun reproduced `outcome: tick-budget`, `valid: false`, time 1200 s, state hash `93c3855b`. Its measured follower median was about 4.50 m/s; the extra threat failure reflects an incomplete native route rather than a demonstrated follower-speed failure. This remains unresolved and must not be described as the required L7=6 result. The probe completed (remote total 308 s). No checks remain running.
