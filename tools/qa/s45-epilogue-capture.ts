@@ -32,6 +32,15 @@ try {
   }, { saved, zoom });
   await session.page.evaluate(() => window.__SS__!.step(120));
   await session.screenshot(`${out}/closing.png`);
+  const joints = await session.page.evaluate(() => {
+    const g = (window.__SCENE__ as unknown as { game: Game }).game;
+    const rows: { name: string; at: number[] }[] = [];
+    g.view.scene.traverse(o => { if (/head|knee|shin|thigh/i.test(o.name)) {
+      const p = o.position.clone(); o.getWorldPosition(p);
+      if (p.distanceTo(g.view.camera.position) < 20) rows.push({ name: o.name, at: p.toArray() });
+    } }); return rows;
+  });
+  writeFileSync(`${out}/joints.json`, JSON.stringify(joints, null, 2));
   await session.page.evaluate(() => window.__SS__!.step(60));
   await session.screenshot(`${out}/closing-late.png`);
   await session.page.evaluate(() => window.__SS__!.step(540));

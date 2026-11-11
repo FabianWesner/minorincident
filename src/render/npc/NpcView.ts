@@ -206,11 +206,11 @@ export class NpcView extends Group {
         // Presentation-only contact: place the corgi's animated head on the courier's near knee.
         const seat = l10Closing.seat(this.world)!;
         hero.head.userData.closingRestY ??= hero.head.position.y;
-        hero.head.position.y = (hero.head.userData.closingRestY as number) - .28;
+        hero.head.position.y = (hero.head.userData.closingRestY as number);
         hero.head.userData.closingRestZ ??= hero.head.rotation.z;
-        hero.head.rotation.z = (hero.head.userData.closingRestZ as number) - .35;
+        hero.head.rotation.z = (hero.head.userData.closingRestZ as number) - 1.2;
         hero.root.updateMatrixWorld(true); hero.head.getWorldPosition(this.point);
-        hero.root.position.add(new Vector3(seat.x + .35 - this.point.x, 0, seat.z + .3 - this.point.z));
+        hero.root.position.add(new Vector3(seat.x + .26 - this.point.x, 0, seat.z + .12 - this.point.z));
       }
       hero.tongue?.update(time, motion.speed);
       if (hero.badge && e.escort) {
