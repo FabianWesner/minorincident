@@ -27,9 +27,9 @@ No level-layout change was indicated by the path/opening audit. No stat, scale, 
 
 - `npm run typecheck`: passed.
 - `npm run lint`: passed.
-- `npm test`: passed, 107 tests across 27 files; test budget reported 150/150 cases.
+- `npm test`: local passed, 107 tests across 27 files. Required remote retry passed with 106 passed and 1 skipped across 27 files; test budget reported 150/150 cases.
 - `node --import tsx/esm tools/qa/threat-audit.ts`: completed with the known counts L1=0, L2=1, L3=2, L4=4, L5=3, L6=4, L7=6, L8=0, L9=0, L10=0. L3/L5 retain the queued regression values; this lane made no encounter/threat changes.
-- Required remote nightly and full-test commands could not start: `tools/remote/run.sh` reported no healthy Hetzner runner. Local nightly fallback (`npx vitest run --project nightly tests/qa/invariants/waves.test.ts tests/qa/invariants/war-waves.test.ts --maxWorkers=4`) completed with five passing tests and one existing L2 market-ambush census failure (24 admitted, 23 reached). The war-wave tests passed.
+- The remote nightly retry completed after a runner became available: five tests passed and the high-tier L2 market-ambush failed (24 admitted, 23 reached); both war-wave tests passed. Earlier remote attempts had no healthy runner. Local nightly fallback (`npx vitest run --project nightly tests/qa/invariants/waves.test.ts tests/qa/invariants/war-waves.test.ts --maxWorkers=4`) completed with five passing tests and one existing L2 market-ambush census failure (24 admitted, 23 reached). The war-wave tests passed.
 - The requested slim-worktree command was attempted first, but its Git config write was blocked by the sandbox (`.git/worktrees/s49-brutedoors/config.worktree: Operation not permitted`). After filesystem restrictions were lifted, the required slim-worktree command succeeded. `node_modules` was already present. `docs/process/lessons-learned.md` was read.
 
 ## Browser QA needed
