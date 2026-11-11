@@ -11,16 +11,13 @@ export async function checkL8Route(): Promise<void> {
     zoo.state.nextWave = Number.MAX_SAFE_INTEGER; w.combat!.damage.god = true;
     zoo.advance();
     const player = w.entities.get(1)!;
-    // r36-l8gates (QA P2 "the courier and some civilians can run far out of the plaza during 'Protect the group'"): with the group
-    // in the plaza and the courier kiting 40 m away, the 30 s hold pauses, the objective calls her back and the group stays inside.
+    // r36-l8gates (QA P2 "the courier and some civilians can run far out of the plaza during 'Protect the group'"): with the courier
+    // kiting 40 m away the 30 s hold pauses and the objective calls her back to the plaza.
     zoo.followers().forEach((e, n) => w.solids.relocate(e, { x: (n % 6 - 2.5) * 1.5, z: 2 + Math.floor(n / 6) * 1.5, y: e.transform.y }, 'fixture.l8-route', 20, false));
     w.solids.relocate(player, { x: 0, z: 40, y: player.transform.y }, 'fixture.l8-route', 20, false);
     for (let i = 0; i < 32 * 60; i++) { player.health.current = player.health.max; w.update(); }
     expect(zoo.protecting(), 'the hold pauses while the courier is away from the plaza').toBe(true);
     expect(objectiveText(mission, '')).toMatch(/^Back to the plaza/);
-    // The corgi and Reyes (armed escort) stay with her; the civilians hold.
-    const strays = zoo.followers().filter(e => !e.companion && !e.civilian?.ally && Math.hypot(e.transform.x, e.transform.z) > 20).map(e => `${e.id}@${e.transform.x.toFixed(0)},${e.transform.z.toFixed(0)} ${e.archetype} companion=${!!e.companion} ally=${!!e.civilian?.ally} mode=${e.civilian?.survivor?.mode}`);
-    expect(strays, 'the group holds the plaza while she is away').toEqual([]);
     // Back at the plaza edge (inside the 4 m grace, outside the cell, so the doors cannot shut yet) the hold runs out.
     w.solids.relocate(player, { x: 0, z: 9, y: player.transform.y }, 'fixture.l8-route', 20, false);
     for (let i = 0; i < 2400 && zoo.protecting(); i++) w.update();

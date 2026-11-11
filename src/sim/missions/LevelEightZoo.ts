@@ -256,7 +256,8 @@ export class LevelEightZoo {
   /** The opening shock keeps the group in the plaza before the APC route appears. */
   protecting(): boolean { return this.breached && this.w.tick < this.state.breachedAt + 30 * 60 + (this.state.protectAway ?? 0); }
   /** r36-l8gates (QA P2 "the courier and some civilians can run far out of the plaza during 'Protect the group'"): the hold is
-   * fought in the plaza. Away from the cell (4 m grace) its 30 s pause and the objective calls her back; the group stays inside. */
+   * fought in the plaza. Away from the cell (4 m grace) its 30 s pause and the objective calls her back. The group keeps
+   * following her: alone in the plaza it would face the two hatch cohorts without her. */
   awayFromPlaza(): boolean {
     const p = this.w.entities.get(1)!.transform, c = l8PlazaCell;
     return p.x < c.x0 - 4 || p.x > c.x1 + 4 || p.z < c.z0 - 4 || p.z > c.z1 + 4;
@@ -646,9 +647,7 @@ export class LevelEightZoo {
     const goal = formationSlot(p.transform, leaderHeading(p.transform.yaw, velocity), slot);
     const plaza = this.mission.def.anchors['central-plaza'];
     // r31-nadia: once Nadia has led the courier to the plaza the group settles inside the ring around its centre.
-    // r36-l8gates: from the breach until the doors shut, a member already at the plaza holds that ring instead of following a kiting courier out.
-    const plazaHold = this.breached && !s.sealedAt && distance(e.transform, plaza) <= 20;
-    if (plazaHold || !this.breached && s.guideDone === 2 && distance(p.transform, plaza) <= (plaza.radius ?? 6) + 4) {
+    if (!this.breached && s.guideDone === 2 && distance(p.transform, plaza) <= (plaza.radius ?? 6) + 4) {
       const angle = slot * 2.399, r = Math.min(4.6, 1.8 + .72 * Math.sqrt(slot + 1));
       goal.x = plaza.x + Math.cos(angle) * r; goal.z = plaza.z + Math.sin(angle) * r;
     }
