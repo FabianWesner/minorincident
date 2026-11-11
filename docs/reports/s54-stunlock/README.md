@@ -91,3 +91,7 @@ Regression triage compared raw native receipts: L3 seed-1 route deaths changed 0
 ## Controlled allied-suppression diagnostic
 
 A temporary diagnostic limited the poise gate to `source.id === 1`, ran the unchanged L3/L5 audit stages, and restored the global source via an EXIT trap. It completed in 241.5 s. L3 returned exactly to baseline deaths/damage (0 / 140), L5 to 0 / 65; their flag list returned to the baseline L3 kiting and L5 skilled-rate flags. The tool additionally emits `PARTIAL_LEVEL_SELECTION` for this diagnostic, yielding 3 reported flags rather than 2 acceptance flags. L3 squad/competent-rate and L5 follower regressions cleared. This causally isolates the changed allied bullet suppression. The player-only condition was not retained: current source still applies the shared poise rule to every shooter. A solution preserving that rule remains required.
+
+## Ally rescue priority candidate
+
+Allied target selection now gives rescue priority to a live infected already executing an attack on a living party member, before distant Alpha priority. This is global and retains the shared poise rule; no damage/HP/fire-rate changes were made. `npcs.test.ts` passed 3/3. The L3/L5 diagnostic completed in 203.8 s: L3 now has 2 acceptance flags (kiting and squad counts/losses), clearing the added competent-rate flag; L5 retains its 3 flags. The sixth listed flag is PARTIAL_LEVEL_SELECTION. This improves those levels by one flag compared with global poise alone; a fresh full audit is required to establish the aggregate and other-level impact.
