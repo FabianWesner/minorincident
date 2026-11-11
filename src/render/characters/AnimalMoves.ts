@@ -42,7 +42,7 @@ export const flamingoCruise = 2.4;
 export class AnimalMoves {
   private readonly pose: AnimalPose = { crouch: 0, pitch: 0, roll: 0, head: 0, jaw: 0, front: 0, hind: 0, armsUp: 0, stamp: 0, trunk: 0, wing: 0, flap: 0, airborne: false };
   /** Smoothed render height per flying/leaping animal (m above its sim position). */
-  private readonly heights = new Map<number, { y: number; tick: number }>();
+  private readonly heights = new Map<number, { y: number; tick: number; pitch: number }>();
   private readonly dogStrikes = new Map<number, number>();
   /** Embedded dog bite phase, including render-only recovery; -1 outside an attack. */
   dogPhase = -1;
@@ -130,21 +130,23 @@ export class AnimalMoves {
         if (a.stage === 'telegraph') target = flamingoCruise + .9 * windup;
         else if (a.stage === 'active') target = (flamingoCruise + .9) - (flamingoCruise + .5) * Math.sin(Math.PI * Math.min(1, travel * 1.05));
       }
-      const h = this.heights.get(e.id) ?? { y: 0, tick: renderTick };
+      const h = this.heights.get(e.id) ?? { y: 0, tick: renderTick, pitch: 0 };
       const dt = Math.max(0, Math.min(.1, (renderTick - h.tick) / 60));
-      // Dive: follow the authored arc exactly; everything else eases (take-off, landing, a falling corpse).
-      h.y = a?.move === 'flamingo.dive' && a.stage === 'active' ? target : h.y + (target - h.y) * (1 - Math.exp(-dt * (dead ? 6 : 2.2)));
+      // Keep the same continuous render state across take-off, dive and landing.
+      // Snapping to the active arc teleported a partially climbed bird by 1.69 m.
+      const diving = a?.move === 'flamingo.dive' && a.stage === 'active';
+      h.y += (target - h.y) * (1 - Math.exp(-dt * (dead || diving ? 6 : 2.2)));
+      h.pitch += ((diving ? -.55 * Math.cos(Math.PI * travel) : .08) - h.pitch) * (1 - Math.exp(-dt * 6));
       h.tick = renderTick; this.heights.set(e.id, h);
       this.lift = h.y;
       if (h.y > .15) {
         p.airborne = true; p.wing = 1; p.hind = -1.25 * clamp01(h.y / .8);
-        const diving = a?.move === 'flamingo.dive' && a.stage === 'active';
         if (diving) {
           // Swoop: wings swept, nose down into the lane and up out of it.
-          p.pitch = -.55 * Math.cos(Math.PI * travel); p.wing = .45; p.flap = .25; p.head = -.2;
+          p.pitch = h.pitch; p.wing = .45; p.flap = .25; p.head = -.2;
         } else {
           const beat = a?.stage === 'telegraph' ? 4.6 : 3;
-          this.flightPhase = (t * beat) % 1; p.flap = Math.sin(this.flightPhase * Math.PI * 2) * .75; p.pitch = .08;
+          this.flightPhase = (t * beat) % 1; p.flap = Math.sin(this.flightPhase * Math.PI * 2) * .75; p.pitch = h.pitch;
         }
       }
       return p.airborne ? p : undefined;

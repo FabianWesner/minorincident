@@ -48,7 +48,7 @@ import { alphaCrowdClips } from '../../src/render/characters/crowdClipNames';
 import { AlphaMoves } from '../../src/render/characters/AlphaMoves';
 import { AnimalMoves } from '../../src/render/characters/AnimalMoves';
 import { InfectedMoves } from '../../src/render/characters/InfectedMoves';
-import { airborneFootTrack, summarizeMotion } from '../../src/debug/scenelab/motion';
+import { airborneFootTrack, footVerticalStepMaxCm, summarizeMotion } from '../../src/debug/scenelab/motion';
 import { LimbIK } from '../../src/render/characters/LimbIK';
 import { retargetClip, skinClips } from '../../src/render/characters/clips';
 import { alphaTypes } from '../../src/data/alphaTypes';
@@ -156,6 +156,10 @@ function checkOrdinaryInfectedPresentation(): void {
   expect(airborneFootTrack(flight.slice(1), 2, 1).complete).toBe(false);
   expect(airborneFootTrack(flight, 2, 2).complete).toBe(false);
   expect(airborneFootTrack([contact(1, 0), contact(2, 3)], 2, 1).clearanceMinCm).toBe(0);
+  expect(footVerticalStepMaxCm(flight, 2, 1)).toBe(0);
+  expect(footVerticalStepMaxCm([contact(1, 0), flight[1]], 2, 1)).toBe(50);
+  expect(footVerticalStepMaxCm(flight.slice(1), 2, 1)).toBe(Infinity);
+  expect(footVerticalStepMaxCm(flight, 2, 2)).toBe(Infinity);
   const moves = new InfectedMoves();
   const entity = (state: string, reaction?: object) => ({
     id: 44, archetype: 'infected.runner', health: { current: 60 },

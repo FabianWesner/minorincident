@@ -81,3 +81,19 @@ export function airborneFootTrack(frames: (Pick<MotionFrame, 'frame' | 'floor'> 
   }
   return { complete: true, clearanceMinCm: clearance * 100, travelMinM: Math.min(...travel) };
 }
+
+/** Largest consecutive sole-height change; incomplete/nonfinite tracks fail closed. */
+export function footVerticalStepMaxCm(frames: MotionFrame[], expectedFrames: number, feet: number): number {
+  if (frames.length !== expectedFrames || expectedFrames < 2) return Infinity;
+  let max = 0;
+  for (let i = 0; i < frames.length; i++) {
+    const f = frames[i];
+    if (f.frame !== i + 1 || f.feet.length !== feet) return Infinity;
+    for (let foot = 0; foot < feet; foot++) for (const point of ['heel', 'toe'] as const) {
+      const y = f.feet[foot][point][1];
+      if (!Number.isFinite(y)) return Infinity;
+      if (i) max = Math.max(max, Math.abs(y - frames[i - 1].feet[foot][point][1]) * 100);
+    }
+  }
+  return max;
+}

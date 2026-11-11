@@ -1,4 +1,4 @@
-import { airborneFootTrack, footYaw, summarizeMotion } from '../../src/debug/scenelab/motion';
+import { airborneFootTrack, footVerticalStepMaxCm, footYaw, summarizeMotion } from '../../src/debug/scenelab/motion';
 import { uncappedArgs } from '../perf/uncapped';
 import { spawn, execFileSync, type ChildProcess } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
@@ -249,6 +249,9 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
     const name = `${window.actor}.${window.from}-${window.to}`;
     checks.push({ name: `footWindowMotion.${name}`, pass: speed && summary.contacts >= window.contactsMin, value: complete ? summary.contacts : -1, limit: window.contactsMin });
     add(`footWindowP95Cm.${name}`, summary.slideP95Cm ?? Infinity, e.footSlideP95MaxCm ?? 3);
+  }
+  for (const [actor, requirement] of Object.entries(e.footVerticalStepActors ?? {})) {
+    add(`footVerticalStepCm.${actor}`, footVerticalStepMaxCm(metrics.actors[actor]?.track ?? [], spec.frames ?? Infinity, requirement.feet), requirement.maxCm);
   }
   add('footSinkMaxCm', Math.max(0, ...motion.map(m => m.sinkMaxCm)), e.footSinkMaxCm);
   add('footJitterRunMax', Math.max(0, ...Object.values(metrics.actors).filter(a => a.kind === 'courier').map(a => a.motion.jitterRunMax)), e.footJitterRunMax);

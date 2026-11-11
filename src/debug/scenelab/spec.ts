@@ -299,6 +299,8 @@ export interface Expectations {
   airborneFootActors?: Record<string, { feet: number; travelMinM: number }>;
   /** Deepest sole point below the floor, in cm (feet through the ground). */
   footSinkMaxCm?: number;
+  /** Complete consecutive sole tracks; catches teleports across flight phase boundaries. */
+  footVerticalStepActors?: Record<string, { feet: number; maxCm: number }>;
   /** Longest run of consecutive frames in which a courier sole zig-zags vertically by >= 0.8 cm (a bobbing body or foot). */
   footJitterRunMax?: number;
   /** Deepest torso/neck/head interpenetration between two living, standing actors, in cm (`metrics.bodies`; 2 cm slack). */
