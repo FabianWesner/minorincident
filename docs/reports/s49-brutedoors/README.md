@@ -61,3 +61,7 @@ Browser QA needed for this fixed spot: at the industrial warehouse near x=1400, 
 ## Post-fix regression gates
 
 After `b73f7976`, typecheck and lint passed. The exact remote `npm test` command passed (27 files, 106 passed/1 skipped; 150/150 case budget; 205 s). The exact remote nightly command completed with five passing tests and the same single high-tier L2 market-ambush failure (24 admitted, 23 reached); both war-wave tests passed. The threat audit completed with unchanged per-level counts 0,1,2,4,3,4,6,0,0,0 (L3/L5 are the explicitly queued regressions). No check was left running.
+
+## Spawn-origin qualification
+
+Corrected runtime route retries to retain each record's original spawn coordinates rather than accepting a route from its later position. The complete L1–L10 rerun exited zero with 242 records, zero unreachable paths and zero narrow openings: level counts 0,0,1,39,3,4,5,4,107,79. L8 retained its tick-budget outcome and four explicit outlet checks. L10 includes its 67 authored tier checks. Tool lint passed. This closes a false-pass risk from scripted movement or AI relocation; authored branch coverage outside L10 remains to be completed.

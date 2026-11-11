@@ -60,7 +60,9 @@ for (const level of runnerLevels.filter(level => !selectedLevels || selectedLeve
           if (row.route || !row.active) continue;
           const entity = world.entities.get(row.id);
           if (!entity?.infected || entity.health.current <= 0) continue;
-          const from = entity.transform;
+          // Prove the authored spawn can reach the route; a later AI relocation
+          // or scripted walk must not silently replace the start of this check.
+          const from = { x: row.x, z: row.z };
           const source = row.variant === megaAlpha.asset && world.megaPursuit ? world.megaPursuit.grid
             : level === 'L4' && row.radius > .4 ? (ai as unknown as { wideNav?: NavGrid }).wideNav ?? ai.nav.withClearance(.7) : ai.nav;
           if (source.cell(from.x, from.z) < 0) continue;
