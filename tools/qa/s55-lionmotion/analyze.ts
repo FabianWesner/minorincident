@@ -1,22 +1,27 @@
 import { readFileSync } from 'node:fs';
-interface Figure { id: number; clip: string; phase: number; joints?: Record<string, number[]> }
+interface Figure { id: number; clip: string; phase: number; forward?: number[]; joints?: Record<string, number[]> }
 interface Frame { figures: Figure[] }
 const paths = process.argv.slice(2);
 if (!paths.length) throw new Error('Usage: analyze.ts <frames.json> [...]');
 for (const path of paths) {
   const frames = JSON.parse(readFileSync(path, 'utf8')) as Frame[];
-  const actors = new Map<number, { samples: number; rootMaxM: number; pelvisMaxM: number; pawMaxM: number; worstFrame: number; transition: string }>();
+  const actors = new Map<number, { samples: number; rootMaxM: number; yawMaxRad: number; localPawMaxM: number; pelvisMaxM: number; pawMaxM: number; worstFrame: number; transition: string }>();
   for (let i = 1; i < frames.length; i++) for (const current of frames[i].figures) {
     const previous = frames[i - 1].figures.find(f => f.id === current.id);
     const joints = current.joints, old = previous?.joints;
     if (!joints?.root || !old?.root) continue;
-    const state = actors.get(current.id) ?? { samples: 0, rootMaxM: 0, pelvisMaxM: 0, pawMaxM: 0, worstFrame: 0, transition: '' };
+    const state = actors.get(current.id) ?? { samples: 0, rootMaxM: 0, yawMaxRad: 0, localPawMaxM: 0, pelvisMaxM: 0, pawMaxM: 0, worstFrame: 0, transition: '' };
     actors.set(current.id, state); state.samples++;
     const delta = joints.root.map((value, axis) => value - old.root[axis]);
     state.rootMaxM = Math.max(state.rootMaxM, Math.hypot(...delta));
     if (joints.hip && old.hip) state.pelvisMaxM = Math.max(state.pelvisMaxM, Math.abs(joints.hip[1] - old.hip[1] - delta[1]));
+    const yaw = Math.atan2(current.forward?.[2] ?? 0, current.forward?.[0] ?? 1), oldYaw = Math.atan2(previous?.forward?.[2] ?? 0, previous?.forward?.[0] ?? 1);
+    state.yawMaxRad = Math.max(state.yawMaxRad, Math.abs(Math.atan2(Math.sin(yaw - oldYaw), Math.cos(yaw - oldYaw))));
+    const local = (point: number[], origin: number[], heading: number) => { const x = point[0] - origin[0], z = point[2] - origin[2]; return [x * Math.cos(heading) + z * Math.sin(heading), point[1] - origin[1], -x * Math.sin(heading) + z * Math.cos(heading)]; };
     for (const name of ['handL', 'handR', 'footL', 'footR']) {
       if (!joints[name] || !old[name]) continue;
+      const a = local(joints[name], joints.root, yaw), b = local(old[name], old.root, oldYaw);
+      state.localPawMaxM = Math.max(state.localPawMaxM, Math.hypot(...a.map((value, axis) => value - b[axis])));
       const step = Math.hypot(...joints[name].map((value, axis) => value - old[name][axis] - delta[axis]));
       if (step > state.pawMaxM) { state.pawMaxM = step; state.worstFrame = i; state.transition = `${previous!.clip}->${current.clip} (${name})`; }
     }

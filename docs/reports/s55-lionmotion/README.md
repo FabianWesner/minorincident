@@ -365,3 +365,15 @@ frames and reported zero sole penetration and zero run-jitter count. New
 `test-results/s55-lionmotion/matrix/`. These are centered controlled scenes;
 real fixture acceptance, interval visual review, final type/lint/remote test and
 62/62 gate still must be completed on the final source.
+
+## Current real-fixture trace and heading-aware metric
+
+Repeated real L8 on current source; full 900-frame trace is `l8-current/`.
+Added yaw maximum and actor-coordinate paw maximum to `analyze.ts`, retaining
+world-relative measurements. This separates root heading motion from joint
+motion rather than labeling every turn-induced displacement a pose pop.
+Lion: root 0.745 cm, yaw 0.075 rad/frame, pelvis 0.833 cm, local paw 8.775 cm.
+Lioness: root 1.664 cm, yaw 0.100 rad/frame, pelvis 0.557 cm, local paw 9.203 cm.
+The lioness yaw matches the existing 6 rad/s presentation cap at 60 Hz. The
+local paw metric still needs speed/phase and visual acceptance; no completion
+claim follows solely from changing the measurement coordinates.
