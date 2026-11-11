@@ -32,3 +32,5 @@ The flame fixture includes a fire inside the cab and an infected in the fire beh
 Opened all five ramp matrix sheets: before tyres disappear at sampled ramp lips, after tyre silhouettes remain visible in all four configurations. Rack drift is 0.2599866 m before versus 0.000001718 m after in every configuration.
 
 Remote suite timeout and the fresh local navigation timeout remain unmet acceptance checks. Visual evidence and source fixes are committed; do not represent this report as a green remote acceptance run.
+
+Targeted recheck of the only local failure: `node node_modules/vitest/vitest.mjs run tests/engine/navigation.test.ts --project default --configLoader runner --maxWorkers=1` passed **4/4**, 30.15 s total, existing per-test timeout unchanged (`navigation-recheck.log`). This supports contention sensitivity; it does not replace the required full green suite. Render-only constraints rule out changing navigation or raising budgets. A healthy dedicated CPU runner/window is needed to finish full-suite acceptance; the execution-budget blocker has recurred across remote retries and the local full run.
