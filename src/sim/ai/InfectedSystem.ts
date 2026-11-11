@@ -981,7 +981,7 @@ export class InfectedSystem {
   private nativeCivilianContact(e: EntitySnapshot, target: EntitySnapshot, distance: number): boolean {
     const c = target.civilian;
     if (this.world.scenario !== 'L4' || e.infected!.l1 || !(l4InfectedArchetypes as readonly string[]).includes(e.archetype)
-      || !c?.l1 || target.health.current <= 0 || target.infection || !combatHeightReachable(e, target)) return false;
+      || target.id === 1 || !c?.l1 || target.health.current <= 0 || target.infection || !combatHeightReachable(e, target)) return false;
     // A neighbour's attack must not invoke the generic civilian hit reaction:
     // that reaction releases an existing grab as though the player rescued it.
     if (c.state === 'grabbed') return true;

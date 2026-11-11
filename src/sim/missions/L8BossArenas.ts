@@ -241,6 +241,19 @@ export class L8BossArenas {
     const w = this.w, arena = this.state.find(a => a.id === boss.arena)!;
     const def = l8BossArenas.find(a => a.id === boss.arena)!, p = w.entities.get(1)!, b = e.infected!;
     const roofHarasser = arena.id === 'monkey' && (boss.slot === 2 || boss.slot === 5);
+    if (arena.id === 'zebra' && arena.phase > 0 && arena.phase < 3) {
+      const stage = l8Route.find(r => r.id === 'zebra')!;
+      if (!inRect(p.transform, stage.zone)) {
+        // A courier who backs out of the paddock cannot be the target of a
+        // fence-side staging line. Drop that lane and return the herd to its
+        // spaced home positions until she re-enters.
+        arena.lane = undefined;
+        if (b.specialAttack) w.infected!.cancelSpecial(e.id);
+        const slot = boss.slot - (def.count - 1) / 2;
+        this.walk(e, { x: def.centre.x + slot * 4, z: def.centre.z }, 2);
+        return true;
+      }
+    }
     if (roofHarasser) {
       const inArena = distance(p.transform, def.centre) <= def.radius;
       if (arena.phase > 0 && arena.phase < 3 && inArena && !boss.roof && !boss.traversal && !boss.scattered && w.tick >= boss.readyAt) this.traverse(e, { x: -12, y: 4.8, z: boss.slot === 2 ? 12.5 : 15.5 }, true);
@@ -261,7 +274,12 @@ export class L8BossArenas {
     if (boss.scattered) { this.walk(e, { x: def.centre.x + 10, z: def.centre.z - 8 }, 6); return true; }
     if (!arena.phase) {
       const victim = arena.ids.map(id => w.entities.get(id)).find(v => v?.civilian && !v.infection && v.health.current > 0);
-      if (victim) {
+      if (arena.id === 'zebra') {
+        // Keep converted zebras grazing in a spaced home line even while a
+        // tunnel carrier is turning the rest of the herd.
+        const slot = boss.slot - (def.count - 1) / 2;
+        this.walk(e, { x: def.centre.x + slot * 4, z: def.centre.z }, 2);
+      } else if (victim) {
         this.walk(e, victim.transform, 3);
         if (distance(e.transform, victim.transform) < 1.8 && victim.civilian!.state !== 'grabbed') w.npcs!.civilians.outbreak!.grab(victim, e);
       } else if (arena.id === 'elephant') {
