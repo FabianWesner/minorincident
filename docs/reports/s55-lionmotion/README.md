@@ -215,3 +215,15 @@ to 38.46 cm at frame 264, versus 23.63 cm for the accepted candidate; lion was
 unchanged at 11.82 cm. The experiment was reverted. A simple rotation fade does
 not maintain contact/pose consistency during the transition. Current `l8-after`
 artifacts contain this rejected run; `l8-webgpu-low` retains accepted evidence.
+
+## Solve incoming animal pose before clip fade
+
+The animal path now optionally solves contacts on the incoming atlas pose before
+TRS blending with the outgoing displayed pose. Previously the already-corrected
+outgoing pose was blended first and then sent through contact correction again.
+The default human path retains its order. A completed 900-frame real-L8 repeat
+reduces lioness maximum paw step from 23.634 cm at idle->walk to 13.001 cm within
+walk; lion remains 11.815 cm. Lioness pelvis maximum is 1.111 cm. This validates
+the transition-order diagnosis but does not yet prove final visual smoothness.
+The latest `l8-after` trace is this accepted candidate. Shared palette changes
+require final finite-clip and regression validation.
