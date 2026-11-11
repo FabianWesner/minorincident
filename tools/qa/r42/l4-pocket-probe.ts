@@ -18,6 +18,9 @@ if (checkoutShift) for (const b of staticCollision['bld.supermarket'].boxes) {
 const w: any = new SimWorld(); await w.init();
 const c = compositions.L4;
 w.loadComposition(c, c.districts.map((d: any) => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), Number(process.env.TIER ?? 0));
+const quality = process.env.QUALITY === 'low' ? 'low' : 'high';
+w.infected.director.setTier(quality); w.npcs.setQuality(quality);
+console.log('quality', quality);
 applyCampaign(w, preset('L4-default'));
 const m = w.loadMission(resolveCampaignMission('L4', w.districts!)); m.begin(); m.loadCheckpoint('line-break');
 for (let i = 0; i < 5; i++) w.update();
