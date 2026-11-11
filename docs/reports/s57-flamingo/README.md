@@ -61,3 +61,11 @@ Typecheck and the 14 render-contract tests pass. Reopened the current three-fram
 ### Dedicated flamingo rows added
 
 Added day/night × low/high × WebGL2/WebGPU rows for a 360-frame flamingo fixture. The initial run exposed a vacuous fixture: infected `walk` consumes only the last waypoint, which was the spawn point, yielding zero travel and one static contact. Those eight apparent passes are rejected as acceptance evidence. The corrected fixture attracts the bird to a distinct walk target, then chases a distant courier, and requires at least 6 m of recorded travel. The corrected rows are committed for the next measurement; they have not yet been run. This also corrects the missing movement criterion in the scene gate.
+
+### Corrected flamingo matrix and reinforcement orbit
+
+The corrected 360-frame fixture passes **8/8** day/night × low/high × WebGL2/WebGPU rows. Every row records 11.673 m travel, peak 5.0 m/s, eight contacts and p95 0.1 cm. Compact current-source receipts are committed in `flamingo-current-matrix.json`. This establishes repeated movement in the fixture; before-source comparison, close stepping/flight review and complete class coverage remain required.
+
+Found a reinforcement steering defect: `orbit()` used permanent slot IDs divided by the original count of eight, so slots 8/16/24 reused slot 0's target, and analogous pairs reused the other targets. Flamingo orbit now assigns evenly spaced targets to the currently living flock. Other arenas retain their original slot behavior. Runtime nearest-neighbor/body-overlap proof is still outstanding.
+
+A direct production-method probe with living slots 0/8/16/24/1/9/17/25 now yields a minimum orbit-target separation of 3.8268 m. This is a target geometry check, not live-body clearance evidence. Typecheck and lint pass after the orbit change.

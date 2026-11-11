@@ -651,7 +651,13 @@ export class L8BossArenas {
     b.state = 'chase'; e.combat!.attacking = false; if (e.locomotion) resetResponse(e.locomotion);
   }
   private orbit(e: EntitySnapshot, arena: L8ArenaState, at: { x: number; z: number }, speed: number): void {
-    const def = l8BossArenas.find(a => a.id === arena.id)!, angle = this.w.tick / 130 + e.infected!.arenaBoss!.slot * Math.PI * 2 / def.count;
+    const def = l8BossArenas.find(a => a.id === arena.id)!;
+    // Reinforcements keep increasing slot IDs beyond the original flock size.
+    // Allocate the living flock around the ring so later flights never reuse
+    // the same modulo-eight targets as surviving birds from earlier flights.
+    const flock = arena.id === 'flamingo' ? arena.ids.filter(id => (this.w.entities.get(id)?.health.current ?? 0) > 0) : undefined;
+    const slot = flock ? flock.indexOf(e.id) : e.infected!.arenaBoss!.slot;
+    const angle = this.w.tick / 130 + slot * Math.PI * 2 / (flock?.length || def.count);
     const r = arena.id === 'flamingo' ? 5 : arena.id === 'gorilla' || arena.id === 'elephant' ? 2 : 7;
     const target = { x: at.x + Math.cos(angle) * r, z: at.z + Math.sin(angle) * r };
     this.walk(e, distance(e.transform, def.centre) > def.radius ? def.centre : target, speed);
