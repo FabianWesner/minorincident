@@ -1217,10 +1217,11 @@ export class GameView implements Lifecycle {
     // placement cut already clears the whole subject disc, and the near-camera depth slice drew the courier over every
     // nearer person and prop (PO #9 L2 start: on top of firefighter "2"; #26 L1: in front of the closed bay leaf and the horde).
     // L4's bulky riot/firefighter bodies overlap her well before five centres enter the usual 3 m band.
+    // Tall static props already clear their foreground through the placement lens; proximity to that cut is not x-ray cover.
     const courier = this.world.entities.get(1);
     const behindHull = !!current && !!(this.vehicles?.courierOccluded || this.entityAssets?.courierOccluded || courier && !courier.hidden && this.l8Gates?.courierOccluded(this.camera.position, courier.transform));
     courierXray.value = behindHull ? 1 : 0;
-    this.courierForeground = !!current && courierForegroundWanted(crowdSurroundsCourier(current, this.world.entities.iterate(), this.world.scenario === 'L4' ? 4.5 : 3) || this.nearLargeCorpse(current) || !!this.districts?.occlusion.courierTucked, megaOccludesCourier(this.camera.position, current, this.world.entities.iterate()), behindHull);
+    this.courierForeground = !!current && courierForegroundWanted(crowdSurroundsCourier(current, this.world.entities.iterate(), this.world.scenario === 'L4' ? 4.5 : 3) || this.nearLargeCorpse(current), megaOccludesCourier(this.camera.position, current, this.world.entities.iterate()), behindHull);
     // The seated copy shares the courier's prewarmed depth slice: retain her
     // silhouette among the crew as the scripted truck turns under the camera.
     this.character?.setForeground(this.courierForeground || !!this.world.missions?.state.l2?.seated);
