@@ -49,3 +49,12 @@ Check each item at low quality, zoom 1.5, WebGPU, with a progressed save, A/B ag
 - [ ] Q-328 (PO 11-01): no single survivor is slower than the group; escorting never means babysitting one straggler.
 - [ ] Q-323 (PO 11-01): every following survivor shows its health bar.
 - Every map/HUD icon keeps one meaning across levels (♪ = survivor call only); objectives use the objective marker. (PO 2026-11-08)
+
+## PO UAT 2026-11-11 (PROD b86)
+- Every enemy under continuous fire still completes attacks (no stun-lock); effective HP per hit direction is sane (no stacked armor).
+- Figures ≥ 8/10 "stunning" at zoom 1.5 (brutes/alphas/flamingos/lions failed).
+- No foot sliding (animals included); no flickering motion.
+- Markers and rings always on a walkable, lit path; never in open dark ground; in fights it is obvious where to stand.
+- Vehicles: no NPC under/inside the car at start; no flickering parts; FX depth-tested against the hull; wheels always drawn; the car never stops on zombie hits; running zombies over costs no armour; rammed props fly away and stay.
+- Every scripted stop (e.g. L9 rail stall) explains itself with a countdown and a "go" prompt; hatch view shows the courier from the waist up.
+- Chasers like the L9 school bus are telegraphed, dodgeable and beatable.
