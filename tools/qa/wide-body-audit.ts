@@ -8,6 +8,7 @@ import { cureEncounters, curePaceEncounters, cureEncounterSlots, cureEncounterSp
 import { LevelNineSetPieces } from '../../src/sim/missions/LevelNineSetPieces';
 import { crossing } from '../../src/levels/L9/district';
 import { followFrustum } from '../sim-runner/l3Bots';
+import { l7Encounters } from '../../src/data/l7';
 import { l5Wanderers } from '../../src/data/l5';
 import { l6Entries, l6Doors } from '../../src/data/l6';
 import { l3 } from '../../src/data/l3';
@@ -80,7 +81,7 @@ for (const { level, l9Route, l9Detour, street } of streetScenarios) {
         const objective = world.missions?.def.steps.find(step => world.missions!.state.steps[step.id].status === 'active')?.id;
         spawns.push({ id: entity.id, archetype: entity.archetype, variant: entity.infected?.variant, radius: entity.infected?.variant === megaAlpha.asset ? megaAlpha.radius : entity.combat!.radius,
           x: entity.transform.x, z: entity.transform.z, tick: world.tick, player: { x: world.entities.get(1)!.transform.x, z: world.entities.get(1)!.transform.z },
-          cohort: authoredSource ?? `${level}-tick-${world.tick}`, source, active: true, wave: entity.infected?.cureRegion ?? (entity.infected?.territory ? 'territory' : undefined), objective });
+          cohort: authoredSource ?? (level === 'L7' ? `pack-${entity.infected!.pack}` : `${level}-tick-${world.tick}`), source, active: true, wave: entity.infected?.cureRegion ?? (entity.infected?.territory ? 'territory' : undefined), objective });
       };
       const checkRoutes = () => {
         const targets = [...playerRoute, { x: world.entities.get(1)!.transform.x, z: world.entities.get(1)!.transform.z }];
@@ -190,6 +191,12 @@ for (const { level, l9Route, l9Detour, street } of streetScenarios) {
         const expected = l6Entries.map(entry => `hatch-${entry.door}`);
         const ledger = world.missions!.state.l6!.spawnLog;
         const observed = l6Entries.filter(entry => l6FixtureObserved.has(entry.door) || ledger.some(row => row.wave === 4 && row.door === entry.door && spawns.some(body => body.id === row.id && body.tick === row.tick))).map(entry => `hatch-${entry.door}`);
+        coverage = { expected, observed, missing: expected.filter(id => !observed.includes(id)) };
+      }
+      if (level === 'L7') {
+        const quotas = [[l7Encounters.firstStreetGroup, 1], [l7Encounters.firstStreetGroup + 1, 1], [l7Encounters.firstStreetGroup + 3, 1], [l7Encounters.finalGroup, 2]];
+        const expected = quotas.flatMap(([group, count]) => Array.from({ length: count }, (_, slot) => `pack-${group}/alpha-${slot}`));
+        const observed = quotas.flatMap(([group, count]) => Array.from({ length: Math.min(count, spawns.filter(row => row.cohort === `pack-${group}` && row.archetype === 'infected.alpha').length) }, (_, slot) => `pack-${group}/alpha-${slot}`));
         coverage = { expected, observed, missing: expected.filter(id => !observed.includes(id)) };
       }
       if (level === 'L9') {

@@ -113,3 +113,7 @@ The authored two-butcher formation at (14,28) admitted only its first member: ra
 The isolated L5 run now completes and exits zero with four wide records, all required admissions observed, zero unreachable paths and zero narrow openings. Typecheck and changed-file lint passed. Regression gates still need rerunning after this adjustment.
 
 Browser QA needed: inspect the butcher pair near (11,28)/(13.5,29.5), confirming both appear outside collision, move along the street without clipping, and do not crowd the adjacent frontage.
+
+## L7 Alpha cohort qualification
+
+Wide records now retain native L7 pack IDs. The audit requires all five authored Alpha slots: opening pack 701, street packs 702 and 704, and two final-corridor slots in pack 700. The isolated native run completes and exits zero with every slot observed, all five spawn origins pathable, and no narrow openings. Typecheck and tool lint passed. Ordinary L7 cohort members are runners and do not add other requested wide roles.
