@@ -84,3 +84,9 @@ Matched production zebra fixture matrix completed: 16 runs, nonempty species-iso
 Latest validation after species-mask fixes: typecheck, lint, and QA production build all pass (tree 39e63c56050db318e855781df4d2c3dcb7a67c5c). The shared HDR bloom pipeline has no current per-animal exclusion. Earlier high-white stripe experiments bloom into dark stripes and still miss 2x; the current shaded revision is retained while that acceptance conflict remains unresolved.
 
 Albedo-only zebra experiment: a neutral smoothstep remap of authored coat values gave p10 2.21, p90 168.84, contrast 166.63 at f0, below 250.86. Opened `test-results/s38-zebra-albedo/night-boss-zoo-lineup/sheet.jpg`. No emissive boost or compositor changes were used. The measured shaded revision was restored so the existing matrix remains applicable; experiment not retained.
+
+## Literal contrast criterion conflict
+
+A no-bloom prototype using the existing HDR alpha channel reached the maximum possible display-luma contrast, 255, for zebra f0/f30/f60 at WebGPU low z1.5 (`test-results/s38-zebra-no-bloom`). Opened its sheet. It is not retained: it clips the white stripes and changes the compositor protocol.
+
+The matched baseline matrix proves that literal 2x is impossible for every row with this metric: baseline WebGPU zoom-1 f30 p90−p10 is 128.9288, requiring 257.8576. Since RGB channels and the weighted display luma are bounded to [0,255], p90−p10 cannot exceed 255. Even perfect black/white output reaches at most 1.9778x in that row. An explicit criterion decision is needed (e.g. cap at display maximum or judge shaded stripe readability). The original shaded source is restored; no criterion or tolerance was changed.
