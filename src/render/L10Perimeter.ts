@@ -7,7 +7,7 @@ import type { Materials } from './Materials';
 export class L10Perimeter extends Group {
   private readonly geometry = new BoxGeometry(1, 1, 1);
   private readonly mesh: InstancedMesh | null = null;
-  private readonly pieces: { p: Vector3; s: Vector3; yaw: number; color: Color }[] = [];
+  private readonly pieces: { p: Vector3; s: Vector3; yaw: number; angle: number; color: Color }[] = [];
   private readonly hidden = new Vector3();
   private shown: boolean | null = null;
   constructor(private readonly world: SimWorld, materials: Materials) {
@@ -18,8 +18,8 @@ export class L10Perimeter extends Group {
       const horizontal = box.halfX > box.halfZ, length = 2 * (horizontal ? box.halfX : box.halfZ);
       const add = (along: number, y: number, width: number, height: number, depth: number, tint: string, angle = 0) => this.pieces.push({
         p: new Vector3(box.x + (horizontal ? along : 0), y, box.z + (horizontal ? 0 : along)),
-        s: new Vector3(horizontal ? width : depth, height, horizontal ? depth : width),
-        yaw: angle + (horizontal ? 0 : Math.PI / 2), color: new Color(tint),
+        s: new Vector3(width, height, depth),
+        yaw: horizontal ? 0 : Math.PI / 2, angle, color: new Color(tint),
       });
       // Repeated crash blocks form the base; alternating concrete tones and hazard paint break the long silhouette.
       for (let along = -length / 2 + 1.5, index = 0; along < length / 2; along += 3.2, index++) {
@@ -35,8 +35,8 @@ export class L10Perimeter extends Group {
       for (const y of [1.06, 2.42]) for (let along = -length / 2 + 1.6; along < length / 2; along += 3.2) add(along, y, 3.15, .1, .12, '#625c4e');
       // Cross-braces read as patched wire panels. They share the single instanced draw with every other piece.
       for (let along = -length / 2 + 1.6; along < length / 2 - 1.5; along += 6.4) {
-        add(along + 1.6, 1.75, 2.15, .075, .08, '#76664c', horizontal ? Math.PI / 4 : -Math.PI / 4);
-        add(along + 1.6, 1.75, 2.15, .075, .08, '#76664c', horizontal ? -Math.PI / 4 : Math.PI / 4);
+        add(along + 1.6, 1.75, 2.15, .075, .08, '#76664c', Math.PI / 4);
+        add(along + 1.6, 1.75, 2.15, .075, .08, '#76664c', -Math.PI / 4);
       }
     }
     this.mesh = new InstancedMesh(this.geometry, materials.fromColor('l10-perimeter-fence', new Color('#ffffff'), 0, true), this.pieces.length);
@@ -47,8 +47,8 @@ export class L10Perimeter extends Group {
     const up = !!this.world.missions?.state.states['perimeter-up'];
     if (!this.mesh || up === this.shown) return;
     this.shown = up;
-    const matrix = new Matrix4(), rotation = new Quaternion(), axis = new Vector3(0, 1, 0);
-    this.pieces.forEach((piece, i) => { rotation.setFromAxisAngle(axis, piece.yaw); matrix.compose(piece.p, rotation, up ? piece.s : this.hidden); this.mesh!.setMatrixAt(i, matrix); this.mesh!.setColorAt(i, piece.color); });
+    const matrix = new Matrix4(), rotation = new Quaternion(), axis = new Vector3(0, 1, 0), braceAxis = new Vector3(0, 0, 1), brace = new Quaternion();
+    this.pieces.forEach((piece, i) => { rotation.setFromAxisAngle(axis, piece.yaw).multiply(brace.setFromAxisAngle(braceAxis, piece.angle)); matrix.compose(piece.p, rotation, up ? piece.s : this.hidden); this.mesh!.setMatrixAt(i, matrix); this.mesh!.setColorAt(i, piece.color); });
     this.mesh.instanceMatrix.needsUpdate = true;
     if (this.mesh.instanceColor) this.mesh.instanceColor.needsUpdate = true;
   }

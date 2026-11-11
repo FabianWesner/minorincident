@@ -11,6 +11,8 @@ Status: implementation committed; full browser matrix and final visual acceptanc
 
 ## Evidence so far
 
+- Corrected perimeter transforms: vertical sides previously applied both swapped dimensions and a quarter-turn; braces previously rotated about Y. Pieces now use local width with side yaw, and braces rise in the fence plane. ESLint and QA build passed. A four-second headless low WebGL2 zoom-1 edge run completed with zero page errors; opened `/private/tmp/s43-edge-low-gl/s001-t187.jpg`. Concrete bases and diagonal braces now face correctly, with open ground inside the east edge. The intended instance color variation still appears uniformly pale gray and needs correction before visual acceptance. Owned preview stopped.
+
 - Resume with unrestricted permissions: `slim-worktree.sh --no-assets` succeeded. Headless real-input `r28-vqa-fixture-play.ts` ran on preview port 4938 through `e2e-lock.sh`, low WebGL2 zoom 1, for 8 seconds with god mode and no kiting. It completed with zero page errors. Opened `/private/tmp/s43-resume-l10/s003-t431.jpg`: courier and corgi are visible beside the tank during a Mega attack; the boundary is outside this frame. This is a runtime sanity check, not acceptance of the edge or the full matrix. The owned preview server was stopped after the run. Earlier sandbox limitations below are historical and no longer block local browser work.
 
 - Opened the prior `r42-arenas` sheet at `/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/r42/sheet-l10.jpg`. Its four panels show the former gray diagonal pipe fence crossing the fight and horde; it reads as a detached railing and overlaps the courier's fighting space. This is baseline evidence only, not a same-build comparison.
