@@ -59,7 +59,14 @@ export const l9Course = {
   railX: 380,
   repair: { x: 423, z: 18, radius: 8, ticks: 1200, durability: 300 },
   gate: { x: 440, z: 0, halfZ: 7, seconds: 60, announceX: 240, sideZ: 11 },
-  evacuation: { x: 457, z: 0, radius: 11, defendTicks: 1800, truckX: 459, truckZ: -16 },
+  /**
+   * r42-l9pin (r41-vqa P2-4: 0/4 saved twice): the chase pack that follows the APC into the bay turned every survivor 2-7 s after
+   * stepping out. Survivors now stay seated while a live infected is within `doorClearM` of the passenger door (the guard soldiers
+   * and the hatch gun thin the pack), and step out anyway after `waitMaxTicks` (fail-forward, no soft-lock).
+   */
+  evacuation: { x: 457, z: 0, radius: 11, defendTicks: 1800, truckX: 459, truckZ: -16, doorClearM: 8, waitMaxTicks: 2700 },
+  /** r42-l9pin: a driver holding the gas whose hull has not moved `moveM` for `ticks` is set free (any cause: pile, wedge, stall). */
+  pin: { ticks: 660, moveM: 5 },
   bridge: { x: 482, z: 0, halfZ: 6, endX: 508 },
   /** r33-l9polish: the bridge-gate wall (was halfZ 13: an APC circling the bay drove round its open end). It now runs to +-34 m, and the evacuation also starts from anywhere in the bay box. */
   bridgeGate: { x: 472, halfZ: 34 },

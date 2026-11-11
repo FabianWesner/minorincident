@@ -26,6 +26,8 @@ export interface L9DrivingState {
   fireAt: number | null; fireIds: number[]; jumped: string[]; jump: { id: string; airborne: boolean } | null;
   obstacleIds: number[]; waves: number[]; nextWave: number; lines: { id: string; at: number }[];
   /** r32-l9fun: authored set pieces (leapers, throwers, roadblock, packs) and measured jump airtime per ramp. */
+  /** r42-l9pin: the last survivor lost during the evacuation (HUD callout) and how many were alive at the last check. */
+  lost?: { key: string; at: number }; living?: number;
   setPieces?: L9SetPieceState; boostUntil?: number; airtime?: { id: string; ticks: number; speed: number; hard: boolean }[]; takeoffAt?: number | null;
 }
 export const emptyDriving = (): L9DrivingState => ({
@@ -212,27 +214,58 @@ export class LevelNineDriving {
    * nearest pose with 8 m of clear lane (behind, then to the sides, at 6-18 m), facing the clearest heading with a bias east.
    * Boarders ride along; no infected stat changes and nobody is removed.
    */
+  /** r42-l9pin: per evacuee, failed route ticks and how many truck spots were skipped (transient; a restore starts over). */
+  private readonly spotFail = new Map<number, number>();
+  private readonly spotSkip = new Map<number, number>();
+  /** r42-l9pin: live infected at the passenger door or on the hull; survivors wait inside while any are there. */
+  doorThreats(): number {
+    const w = this.w, door = w.vehicles!.passengerDoor(this.car.entity.id), carId = this.car.entity.id;
+    let n = 0;
+    for (const e of w.infected!.active) if (e.health.current > 0 && !e.hidden && !e.infected?.hidden && (e.attachedTo === carId || distance(e.transform, door) < cfg.evacuation.doorClearM)) n++;
+    return n;
+  }
+  /** r42-l9pin: where the hull stood when the driver last made progress with the gas held. */
+  private pin: { x: number; z: number; tick: number } | null = null;
   private breakFree(): void {
     const w = this.w, car = this.car, state = car.entity.vehicle!, p = car.entity.transform, tick = w.tick;
     if (state.recoveringUntil !== this.lastRecovery) {
       this.lastRecovery = state.recoveringUntil;
       if (state.recoveringUntil > tick) this.recoveryAt = [...this.recoveryAt.filter(t => tick - t < 1200), tick];
     }
-    if (this.recoveryAt.length < 3 || car.physics.speed > 1.5 || w.vehicles!.active !== car.entity.id || this.holding(car.entity.id)) return;
+    const driving = w.vehicles!.active === car.entity.id && !this.holding(car.entity.id) && this.mission.l9!.state.phase === 'driving';
+    // r42-l9pin (r41-vqa P1-1: APC frozen 330 s at the bay with the gas held, no recovery ever counted). The recovery count depends on
+    // the stuck window, which a held brake, an impact stall or the handbrake keep clearing or pausing. Watch the driver's own input
+    // instead: gas held (W, stick, or LMB in mouse-only) and the hull not `pin.moveM` from where it stood `pin.ticks` ago = pinned.
+    const input = w.inputFrame, gas = Math.abs(input.drive?.throttle ?? 0) > .5 || Math.hypot(input.move.x, input.move.z) > .5 || input.left.held;
+    if (!driving || !gas) this.pin = null;
+    else if (!this.pin || distance(p, this.pin) > cfg.pin.moveM) this.pin = { x: p.x, z: p.z, tick };
+    const pinned = !!this.pin && tick - this.pin.tick >= cfg.pin.ticks;
+    if (!driving || !pinned && (this.recoveryAt.length < 3 || car.physics.speed > 1.5)) return;
     const def = car.physics.def, r = def.width / 2 + .3;
-    const fits = (x: number, z: number, yaw: number) => {
+    // The whole hull (rear bumper to nose) plus an 8 m lane ahead must be clear; r41 put the rear half inside the shut gate. `bodies`
+    // false on the second pass: a pile around the hull must not veto every pose (boarders ride along, the rest are shoved by the hull).
+    const fits = (x: number, z: number, yaw: number, bodies: boolean) => {
       if (!w.chunks?.resident(x, z)) return false;
-      for (let d = 0; d <= def.length + 8; d += 1) {
+      for (let d = -def.length / 2 - .3; d <= def.length / 2 + 8; d += 1) {
         const px = x + Math.cos(yaw) * d, pz = z - Math.sin(yaw) * d;
-        if (!w.infected!.nav.clear(px, pz, r) || !w.solids.clear({ x: px, y: p.y, z: pz }, r, car.entity.id, true)) return false;
+        if (!w.infected!.nav.clear(px, pz, r) || !w.solids.clear({ x: px, y: p.y, z: pz }, r, car.entity.id, bodies)) return false;
       }
       return true;
     };
+    // Prefer no hop through a wall: the straight move from here to the new pose crosses no static solid (gate, fence, barrier).
+    const reach = (x: number, z: number) => {
+      const length = Math.hypot(x - p.x, z - p.z);
+      for (let d = .5; d < length; d += .5) if (!w.solids.clear({ x: p.x + (x - p.x) * d / length, y: p.y, z: p.z + (z - p.z) * d / length }, .2, car.entity.id, false)) return false;
+      return true;
+    };
     const yaws = [0, p.yaw, p.yaw + .6, p.yaw - .6, p.yaw + 1.2, p.yaw - 1.2, p.yaw + Math.PI].sort((a, b) => Math.cos(b) - Math.cos(a) + (b === p.yaw ? .25 : 0) - (a === p.yaw ? .25 : 0));
-    for (const dist of [6, 9, 12, 15, 18]) for (const side of [-Math.PI, -Math.PI / 2, Math.PI / 2, -Math.PI * .75, Math.PI * .75, Math.PI / 4 * 0]) {
+    // Passes: clear of bodies and reachable; reachable through a pile; last resort (a closed pocket) any clear pose.
+    for (const [bodies, straight] of [[true, true], [false, true], [false, false]] as const) for (const dist of [6, 9, 12, 15, 18]) for (const side of [-Math.PI, -Math.PI / 2, Math.PI / 2, -Math.PI * .75, Math.PI * .75, Math.PI / 4 * 0]) {
       const x = p.x + Math.cos(p.yaw + side) * dist, z = p.z - Math.sin(p.yaw + side) * dist;
+      if (straight && !reach(x, z)) continue;
       for (const yaw of yaws) {
-        if (!fits(x, z, yaw)) continue;
+        if (!fits(x, z, yaw, bodies)) continue;
+        this.pin = null; state.impactStallUntil = 0; car.physics.body.wakeUp();
         this.placeCar(car, x, z, yaw);
         const player = w.entities.get(1)!; Object.assign(player.transform, { x, z, yaw });
         w.physics.playerBody!.setTranslation(player.transform, true); w.previousPlayer = { ...player.transform }; w.spatial.set(1, x, z);
@@ -277,7 +310,9 @@ export class LevelNineDriving {
   update(): void {
     const s = this.state, w = this.w, car = this.car, p = car.entity.transform, tick = w.tick;
     for (const id of s.soldiers) {
-      const e = w.entities.get(id); if (!e?.hidden || !e.passengerOf || !e.civilian?.ally?.post) continue;
+      // r42-l9pin: the guards were found unhidden but still riding their truck at the level start (-550, 0): the old `hidden` test
+      // skipped them, so the bay had no guard line and the survivors walked out into the pack alone. A truck passenger deploys.
+      const e = w.entities.get(id); if (!e?.passengerOf || !s.trucks.includes(e.passengerOf) || !e.civilian?.ally?.post) continue;
       const nav = w.infected!.nav, post = e.civilian.ally.post;
       if (!w.chunks?.resident(post.x, post.z)) continue;
       const cell = nav.nearestCell(post.x, post.z, .35); if (cell < 0) continue;
@@ -490,7 +525,7 @@ export class LevelNineDriving {
     }
     if (s.evacuationAt === null || s.evacuationDone) return;
     const passengers = this.car.entity.vehicle!.passengers ?? [];
-    if (w.tick % 45 === 0) {
+    if (w.tick % 45 === 0 && (this.doorThreats() === 0 || w.tick - s.evacuationAt >= cfg.evacuation.waitMaxTicks)) {
       const next = passengers.find(p => p.id !== s.samId && alive(w.entities.get(p.id)) && !w.entities.get(p.id)?.companion && p.phase === 'seated');
       if (next && w.vehicles!.disembarkPassenger(this.car.entity.id, next.id)) s.evacuating.push(next.id);
     }
@@ -501,12 +536,21 @@ export class LevelNineDriving {
       // The bus can push the camp wreck into the eastern boarding lane.
       // Use the clear side of the actual truck, outside its body/nav margin;
       // routing to the blocked side only reaches a nearby cell and circles.
-      const target = { x: cfg.evacuation.truckX + slot % 3 * 9 + 2.5, z: cfg.evacuation.truckZ + 1 + Math.floor(slot / 3) * 1.1 };
-      if (!w.infected!.nav.clear(target.x, target.z, .5) || !w.solids.clear({ ...target, y: e.transform.y }, .35, e.id, false)) target.x -= 5;
+      // r42-l9pin: an APC parked in the truck lane covered the slot (and its 5 m fallback): Mia had no route and the evacuation never
+      // finished. Try the slot, its fallback, then the far side of each truck, and take the first open spot.
+      const base = { x: cfg.evacuation.truckX + slot % 3 * 9 + 2.5, z: cfg.evacuation.truckZ + 1 + Math.floor(slot / 3) * 1.1 };
+      const spots = [base, { x: base.x - 5, z: base.z }, ...[0, 1, 2].flatMap(i => [{ x: cfg.evacuation.truckX + i * 9 + 2.5, z: cfg.evacuation.truckZ - 1.5 }, { x: cfg.evacuation.truckX + i * 9 - 2.5, z: cfg.evacuation.truckZ - 1.5 }])];
+      const open = (p: { x: number; z: number }) => w.infected!.nav.clear(p.x, p.z, .5) && w.solids.clear({ ...p, y: e.transform.y }, .35, e.id, false);
+      const usable = spots.filter(open), skip = this.spotSkip.get(id) ?? 0;
+      const target = usable.length ? usable[skip % usable.length] : base;
       e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; if (e.civilian!.survivor) e.civilian!.survivor!.mode = 'hidden';
       // The far truck sits beyond the bridge-gate wall end: from an APC parked north of the bay the walk
       // around it exceeds the default 1600-node search (r27-l9apc, --zero run: Okafor stood forever).
-      if (s.truckEntering[id] === undefined) w.npcs!.move(e, target, 3, e.civilian!, .6, 8000);
+      if (s.truckEntering[id] === undefined && !w.npcs!.move(e, target, 3, e.civilian!, .6, 8000)) {
+        // No route to this spot for 1.5 s: take the next open one.
+        const failed = (this.spotFail.get(id) ?? 0) + 1; this.spotFail.set(id, failed);
+        if (failed >= 90) { this.spotFail.set(id, 0); this.spotSkip.set(id, skip + 1); }
+      } else this.spotFail.set(id, 0);
       w.spatial.set(id, e.transform.x, e.transform.z);
       if (distance(e.transform, target) < 1.2) {
         s.truckEntering[id] ??= w.tick; e.civilian!.story = { clip: 'npc-sit-down', start: s.truckEntering[id] };
@@ -517,6 +561,12 @@ export class LevelNineDriving {
       }
     }
     const living = s.roster.filter(id => id !== s.samId && alive(w.entities.get(id)));
+    if (s.living !== undefined && living.length < s.living) {
+      const gone = s.roster.find(id => id !== s.samId && !alive(w.entities.get(id)) && !s.evacuated.includes(id) && w.entities.get(id)?.civilian?.survivor?.key !== s.lost?.key);
+      const key = w.entities.get(gone ?? -1)?.civilian?.survivor?.key ?? 'a survivor';
+      s.lost = { key, at: w.tick }; this.signal('survivor-lost', gone);
+    }
+    s.living = living.length;
     const corgi = [...w.entities.iterate()].find(e => e.companion);
     const rosaWaiting = s.roster.some(id => { const e = w.entities.get(id); return alive(e) && e.civilian?.survivor?.key === 'rosa' && !s.hugDone; });
     if (corgi && corgi.passengerOf === undefined && !rosaWaiting) {
@@ -598,7 +648,15 @@ export class LevelNineDriving {
   text(): string {
     const s = this.state, p = this.car.entity.transform, tick = this.w.tick;
     if (s.stallAt !== null && !s.restarted) return `Defend the hatch · Restart ${Math.max(0, Math.ceil((1800 - tick + s.stallAt) / 60))} s`;
-    if (s.evacuationAt !== null && !s.evacuationDone) return `Cover the survivors · ${s.evacuated.length}/${s.roster.filter(id => id !== s.samId && alive(this.w.entities.get(id))).length} at the trucks`;
+    if (s.evacuationAt !== null && !s.evacuationDone) {
+      const count = `${s.evacuated.length}/${s.roster.filter(id => id !== s.samId && alive(this.w.entities.get(id))).length} at the trucks`;
+      // r42-l9pin (r41-vqa P2-4: survivors died with no word on the HUD): name the loss for 4 s, and say why they wait inside.
+      if (s.lost && tick - s.lost.at < 240) return `${s.lost.key === 'a survivor' ? 'A survivor' : s.lost.key[0].toUpperCase() + s.lost.key.slice(1)} was bitten · shoot from the hatch · ${count}`;
+      const waiting = (this.car.entity.vehicle!.passengers ?? []).some(p => p.id !== s.samId && !this.w.entities.get(p.id)?.companion && p.phase === 'seated') && tick - s.evacuationAt < cfg.evacuation.waitMaxTicks;
+      const threats = waiting ? this.doorThreats() : 0;
+      if (threats) return `Clear the door · ${threats} infected at the APC · shoot from the hatch · ${count}`;
+      return `Cover the survivors · ${count}`;
+    }
     const alphas = s.setPieces?.alphas ?? [];
     if (alphas.some(a => a.phase === 'hull') && !this.holding(this.car.entity.id)) return 'Leaper on the hull · swerve hard or handbrake (Space) to throw it off';
     if (this.car.entity.vehicle!.attached.length && !this.holding(this.car.entity.id)) return 'Shake off boarders · swerve or handbrake (Space) while moving';
