@@ -46,3 +46,7 @@ Enabled the neutral selector on the civilian material path (gated by its infecti
 ## Mask audit — previous figure statistics invalid
 
 Opened the exported geometry mask (`SCENE_MASK_OUT=/tmp/s36-mask.png`) from a passing diagnostic run. It includes magenta contact-shadow quads under every actor, and the ordinary actor's body is missing entirely. Therefore the earlier supposedly figure-only ordinary numbers were predominantly ground sampled through a shadow quad, and the heavy numbers are contaminated too. They must not be used as acceptance evidence. The next measurement change must exclude contact shadows and cover the ordinary NPC body path. Canvas readback now uses the same canvas dimensions as the mask and asserts equality. Typecheck and targeted lint passed before adding the optional mask export; no processes remain running.
+
+## Corrected geometry mask
+
+The QA ID pass now excludes non-body CrowdView meshes via `_parts`, and includes infected civilian instances via their existing `_overlay.y` infection value. Opened `/tmp/s36-mask-fixed.png`: all six complete silhouettes are present, with no contact-shadow quads. The passing WebGL2 high fixture now reports true figure mean RGB: ordinary 71.03/63.10/61.11; brute 73.39/61.82/59.36; butcher 87.52/76.37/75.00; bloated 100.39/68.72/64.14; screamer 89.04/78.77/78.60; armored 59.05/59.78/62.77. No class's mean is blue-dominant by the requested 10% threshold in this row. This is after-only evidence; the full baseline/matrix remains required. Typecheck and targeted ESLint passed after the mask correction.
