@@ -950,5 +950,2407 @@
     "walk": "Long stride and alternating shoulder silhouette are visible.",
     "attack": "High hand reaches out of the coil and drops through recovery.",
     "hit": "Head and chest arch backward and return, readable in the outline."
+  },
+  "before-webgl2-low/nurse-day": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        21,
+        31,
+        41,
+        51
+      ],
+      "attack": [
+        217,
+        237,
+        246,
+        262
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 217,
+      "strike": 238
+    },
+    "walk": "Alternating steps are visible; small shoe drift is clearer in the metric than the strip.",
+    "attack": "Windup hands change slightly, then return directly to the idle reach after strike.",
+    "hit": "Tracer/health changes occur with almost no sustained chest response."
+  },
+  "before-webgl2-low/nurse-night": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        135,
+        145,
+        155,
+        165
+      ],
+      "attack": [
+        250,
+        270,
+        279,
+        295
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 250,
+      "strike": 271
+    },
+    "walk": "Alternating steps remain visible in silhouette.",
+    "attack": "Windup returns to a nearly unchanged idle reach after contact.",
+    "hit": "No sustained body recoil is visible at the sampled bullet frames."
+  },
+  "before-webgl2-low/crawler-day": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        22,
+        32,
+        42,
+        52
+      ],
+      "attack": [
+        241,
+        261,
+        270,
+        286
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 241,
+      "strike": 262
+    },
+    "walk": "Low crawl advances with large measured foot sliding.",
+    "attack": "Prone body and hands barely change through the attack window.",
+    "hit": "Bullet effects occur while the torso stays nearly unchanged."
+  },
+  "before-webgl2-low/crawler-night": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        22,
+        32,
+        42,
+        52
+      ],
+      "attack": [
+        241,
+        261,
+        270,
+        286
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 241,
+      "strike": 262
+    },
+    "walk": "Low crawl silhouette advances with the same measured skid.",
+    "attack": "Prone silhouette remains nearly static through windup/strike/recovery samples.",
+    "hit": "No clear torso recoil accompanies the tracer and health loss."
+  },
+  "before-webgl2-low/dog-day": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        21,
+        31,
+        41,
+        51
+      ],
+      "attack": [
+        283,
+        321,
+        330,
+        346
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 283,
+      "strike": 322
+    },
+    "walk": "Gallop legs cycle, with severe measured paw sliding.",
+    "attack": "Gather/bite motion exists, but the later samples snap toward the old stance instead of a held recovery.",
+    "hit": "Health/tracer changes have little visible body or neck response."
+  },
+  "before-webgl2-low/dog-night": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        135,
+        145,
+        155,
+        165
+      ],
+      "attack": [
+        212,
+        250,
+        259,
+        275
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 212,
+      "strike": 251
+    },
+    "walk": "Gallop silhouette changes with severe measured paw drift.",
+    "attack": "Approach/bite is visible, but the settle lacks the held recovery of the after strip.",
+    "hit": "The body stays nearly unchanged through the bullet samples."
+  },
+  "before-webgl2-low/role-brute-day": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        21,
+        31,
+        41,
+        51
+      ],
+      "attack": [
+        229,
+        276,
+        285,
+        301
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 229,
+      "strike": 277
+    },
+    "walk": "Broad steps and arm carriage are already visible.",
+    "attack": "Long windup changes arm/body position, then returns directly to idle after strike.",
+    "hit": "The gun hit produces no clear sustained chest recoil at the sampled frames."
+  },
+  "before-webgl2-low/role-brute-night": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        135,
+        145,
+        155,
+        165
+      ],
+      "attack": [
+        311,
+        358,
+        367,
+        383
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 311,
+      "strike": 359
+    },
+    "walk": "Heavy stepping remains visible in silhouette.",
+    "attack": "Windup ends in the low idle carriage rather than a readable post-strike gesture.",
+    "hit": "Upper-body outline barely changes during the bullet samples."
+  },
+  "before-webgl2-low/role-armored-day": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        21,
+        31,
+        41,
+        51
+      ],
+      "attack": [
+        223,
+        243,
+        252,
+        268
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 223,
+      "strike": 244
+    },
+    "walk": "Alternating broad steps are already visible.",
+    "attack": "Small windup arm changes end directly in the idle reach.",
+    "hit": "Helmet/chest stay nearly unchanged through the bullet samples."
+  },
+  "before-webgl2-low/role-armored-night": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        135,
+        145,
+        155,
+        165
+      ],
+      "attack": [
+        256,
+        276,
+        285,
+        301
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 256,
+      "strike": 277
+    },
+    "walk": "Armored stepping silhouette remains visible.",
+    "attack": "Small windup returns to the idle arm carriage after contact.",
+    "hit": "Tracer/health changes occur with little sustained helmet or chest response."
+  },
+  "before-webgl2-low/role-butcher-day": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        21,
+        31,
+        41,
+        51
+      ],
+      "attack": [
+        274,
+        294,
+        303,
+        319
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 274,
+      "strike": 295
+    },
+    "walk": "Broad alternating steps and cleaver carriage are already present.",
+    "attack": "Windup changes cleaver/shoulder position, then the body returns directly to the low idle carriage.",
+    "hit": "Hat/chest remain almost unchanged through the gun samples."
+  },
+  "before-webgl2-low/role-butcher-night": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        135,
+        145,
+        155,
+        165
+      ],
+      "attack": [
+        265,
+        285,
+        294,
+        310
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 265,
+      "strike": 286
+    },
+    "walk": "Wide stepping remains readable in silhouette.",
+    "attack": "Windup arm carriage changes but no distinct held post-strike gesture appears.",
+    "hit": "Bullet effects do not produce clear sustained chest/hat recoil."
+  },
+  "before-webgl2-low/role-bloated-day": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        22,
+        32,
+        42,
+        52
+      ],
+      "attack": [
+        215,
+        274,
+        283,
+        299
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 215,
+      "strike": 275
+    },
+    "walk": "Alternating shamble already reads.",
+    "attack": "Existing discharge warning/cloud makes the attack identifiable; the post-strike body pose changes little.",
+    "hit": "Cloud and tracers change while the body stays nearly steady."
+  },
+  "before-webgl2-low/role-bloated-night": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        136,
+        146,
+        156,
+        166
+      ],
+      "attack": [
+        329,
+        388,
+        397,
+        413
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 329,
+      "strike": 389
+    },
+    "walk": "Stepping silhouette is already visible.",
+    "attack": "Existing warning/discharge effects read, with little held body strike after the windup.",
+    "hit": "Body response is weak next to the existing discharge effect."
+  },
+  "before-webgl2-low/role-screamer-day": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        70,
+        80,
+        90,
+        100
+      ],
+      "attack": [
+        355,
+        402,
+        411,
+        427
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 355,
+      "strike": 403
+    },
+    "walk": "Alternating stride is already readable.",
+    "attack": "Existing scream wave reads, but the body returns directly toward idle after windup.",
+    "hit": "Health/tracer effects have almost no sustained body recoil."
+  },
+  "before-webgl2-low/role-screamer-night": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        184,
+        194,
+        204,
+        214
+      ],
+      "attack": [
+        121,
+        168,
+        177,
+        193
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 121,
+      "strike": 169
+    },
+    "walk": "Long-step silhouette is already present.",
+    "attack": "Existing scream windup/wave is visible; the body folds into its old locomotion rather than a held strike/recovery.",
+    "hit": "No distinct sustained chest recoil appears through the bullet samples."
+  },
+  "before-webgl2-low/suit-l4-day": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        21,
+        31,
+        41,
+        51
+      ],
+      "attack": [
+        241,
+        261,
+        270,
+        286
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 241,
+      "strike": 262
+    },
+    "walk": "Alternating walking steps already read.",
+    "attack": "Small arm windup ends directly in the ordinary forward idle reach.",
+    "hit": "Tracer/health changes have little sustained chest/head reaction."
+  },
+  "before-webgl2-low/suit-l4-night": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        135,
+        145,
+        155,
+        165
+      ],
+      "attack": [
+        274,
+        294,
+        303,
+        319
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 274,
+      "strike": 295
+    },
+    "walk": "Leg alternation is visible in the suit outline.",
+    "attack": "Small windup returns to the low idle arms after contact.",
+    "hit": "No distinct sustained upper-body recoil accompanies the sampled hit."
+  },
+  "before-webgl2-low/native-bbqdad-day": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        21,
+        31,
+        41,
+        51
+      ],
+      "attack": [
+        241,
+        261,
+        270,
+        286
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 241,
+      "strike": 262
+    },
+    "walk": "Wide steps and cleaver carriage already read.",
+    "attack": "Arm windup changes end directly in the low idle carriage.",
+    "hit": "Broad torso/head remain nearly steady through the bullet samples."
+  },
+  "before-webgl2-low/native-bbqdad-night": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        135,
+        145,
+        155,
+        165
+      ],
+      "attack": [
+        274,
+        294,
+        303,
+        319
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 274,
+      "strike": 295
+    },
+    "walk": "Wide step silhouette is already visible.",
+    "attack": "Windup drops back into the low cleaver carriage without a held strike.",
+    "hit": "Body outline barely responds to tracer/health changes."
+  },
+  "before-webgl2-low/firefighter-day": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        21,
+        31,
+        41,
+        51
+      ],
+      "attack": [
+        241,
+        261,
+        270,
+        286
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 241,
+      "strike": 262
+    },
+    "walk": "Alternating boot steps and pack carriage already read.",
+    "attack": "Axe-arm windup changes end directly in the idle stance.",
+    "hit": "Helmet/chest remain nearly steady through the gun samples."
+  },
+  "before-webgl2-low/firefighter-night": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        135,
+        145,
+        155,
+        165
+      ],
+      "attack": [
+        274,
+        294,
+        303,
+        319
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 274,
+      "strike": 295
+    },
+    "walk": "Yellow boot/leg alternation is visible.",
+    "attack": "Short arm/shoulder windup returns to idle after contact.",
+    "hit": "Bullet effects occur without a clear sustained helmet/chest recoil."
+  },
+  "before-webgl2-low/hazmat-day": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        21,
+        31,
+        41,
+        51
+      ],
+      "attack": [
+        223,
+        243,
+        252,
+        268
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 223,
+      "strike": 244
+    },
+    "walk": "Alternating boots and tank carriage already read.",
+    "attack": "Small arm/shoulder windup drops directly back to idle after contact.",
+    "hit": "Hood/chest remain almost steady through tracer and health changes."
+  },
+  "before-webgl2-low/hazmat-night": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        135,
+        145,
+        155,
+        165
+      ],
+      "attack": [
+        256,
+        276,
+        285,
+        301
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 256,
+      "strike": 277
+    },
+    "walk": "Boot/leg alternation is visible in silhouette.",
+    "attack": "Ranged windup changes the shoulder slightly, then returns toward idle.",
+    "hit": "No clear sustained hood/chest recoil accompanies the bullet samples."
+  },
+  "before-webgl2-low/riot-day": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        21,
+        31,
+        41,
+        51
+      ],
+      "attack": [
+        180,
+        200,
+        209,
+        225
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 180,
+      "strike": 201
+    },
+    "walk": "Stepping and forward shield carriage already read.",
+    "attack": "Generic arm/shield windup ends in the idle shield position after contact.",
+    "hit": "Shield/helmet move only slightly; no clear held chest recoil appears."
+  },
+  "before-webgl2-low/riot-night": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        135,
+        145,
+        155,
+        165
+      ],
+      "attack": [
+        294,
+        314,
+        323,
+        339
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 294,
+      "strike": 315
+    },
+    "walk": "Armored steps and shield outline already read.",
+    "attack": "Small shield windup returns toward idle rather than a held post-strike shove.",
+    "hit": "Gun effects are visible with little sustained upper-body response."
+  },
+  "before-webgl2-low/civ-man-day": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        55,
+        65,
+        75,
+        85
+      ],
+      "attack": [
+        204,
+        224,
+        233,
+        249
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 204,
+      "strike": 225
+    },
+    "walk": "Alternating running steps already read.",
+    "attack": "Windup changes the hands but returns directly to the ordinary idle reach after strike.",
+    "hit": "Health and tracer changes occur without a clear sustained chest/head recoil."
+  },
+  "before-webgl2-low/civ-man-night": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        55,
+        65,
+        75,
+        85
+      ],
+      "attack": [
+        204,
+        224,
+        233,
+        249
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 204,
+      "strike": 225
+    },
+    "walk": "Running silhouette is already visible.",
+    "attack": "Hands briefly change in windup, then resume the low idle reach.",
+    "hit": "Little body response is visible through the sampled bullet frames."
+  },
+  "before-webgl2-low/civ-elderly-day": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        59,
+        69,
+        79,
+        89
+      ],
+      "attack": [
+        183,
+        203,
+        212,
+        228
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 183,
+      "strike": 204
+    },
+    "walk": "Short alternating steps are already visible.",
+    "attack": "Small windup hand changes return directly to idle after contact.",
+    "hit": "Head/chest stay nearly unchanged while health and tracer effects change."
+  },
+  "before-webgl2-low/civ-elderly-night": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        59,
+        69,
+        79,
+        89
+      ],
+      "attack": [
+        183,
+        203,
+        212,
+        228
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 183,
+      "strike": 204
+    },
+    "walk": "Short-step silhouette already reads.",
+    "attack": "Windup hands drop back to the usual idle carriage after strike.",
+    "hit": "No distinct sustained torso recoil appears at the sampled hit frames."
+  },
+  "before-webgl2-low/guard-day": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        42,
+        52,
+        62,
+        72
+      ],
+      "attack": [
+        191,
+        211,
+        220,
+        236
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 191,
+      "strike": 212
+    },
+    "walk": "Camouflaged guard model already has readable running steps.",
+    "attack": "Small arm windup returns directly to the ordinary low reach.",
+    "hit": "Helmet/chest remain nearly steady through the bullet samples."
+  },
+  "before-webgl2-low/guard-night": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        42,
+        52,
+        62,
+        72
+      ],
+      "attack": [
+        191,
+        211,
+        220,
+        236
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 191,
+      "strike": 212
+    },
+    "walk": "Running silhouette is visible under the helmet.",
+    "attack": "Windup ends back in idle without a held reaching strike.",
+    "hit": "Health/tracer effects have little sustained body response."
+  },
+  "before-webgl2-low/role-sprinter-day": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        42,
+        52,
+        62,
+        72
+      ],
+      "attack": [
+        191,
+        211,
+        220,
+        236
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 191,
+      "strike": 212
+    },
+    "walk": "Long alternating stride already reads.",
+    "attack": "Arm windup ends directly in the low forward idle carriage.",
+    "hit": "Head/chest stay nearly unchanged through the gun samples."
+  },
+  "before-webgl2-low/role-sprinter-night": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        42,
+        52,
+        62,
+        72
+      ],
+      "attack": [
+        191,
+        211,
+        220,
+        236
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 191,
+      "strike": 212
+    },
+    "walk": "Long-step silhouette is already visible.",
+    "attack": "Windup returns to the low idle reach rather than a held strike/recovery.",
+    "hit": "Upper-body silhouette barely responds to the sampled bullets."
+  },
+  "after-webgl2-high/nurse-day": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        21,
+        31,
+        41,
+        51
+      ],
+      "attack": [
+        217,
+        237,
+        246,
+        262
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 217,
+      "strike": 238
+    },
+    "walk": "Alternating shoe extension during approach.",
+    "attack": "Coil, raised-arm reach, then settled arms.",
+    "hit": "Head and chest snap back then settle.",
+    "qualityNote": "Opened high-WebGL2 composite: same readable action silhouettes; additional particles/blood detail."
+  },
+  "after-webgl2-high/nurse-night": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        135,
+        145,
+        155,
+        165
+      ],
+      "attack": [
+        250,
+        270,
+        279,
+        295
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 250,
+      "strike": 271
+    },
+    "walk": "Alternating stepping visible in the blue silhouette.",
+    "attack": "Arm raise and recovery remain visible in silhouette.",
+    "hit": "Backward head/chest recoil is visible despite low surface detail.",
+    "qualityNote": "Opened high-WebGL2 composite: same readable action silhouettes; additional particles/blood detail."
+  },
+  "after-webgl2-high/crawler-day": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        22,
+        32,
+        42,
+        52
+      ],
+      "attack": [
+        241,
+        261,
+        270,
+        286
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 241,
+      "strike": 262
+    },
+    "walk": "Low alternating crawl reach with planted lower legs.",
+    "attack": "Hands lift and reach through the ground-grab gesture, then return low.",
+    "hit": "Upper torso lifts away from the bullet, then returns.",
+    "qualityNote": "Opened high-WebGL2 composite: same readable action silhouettes; additional particles/blood detail."
+  },
+  "after-webgl2-high/crawler-night": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        22,
+        32,
+        42,
+        52
+      ],
+      "attack": [
+        241,
+        261,
+        270,
+        286
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 241,
+      "strike": 262
+    },
+    "walk": "Low crawl silhouette changes through the approach.",
+    "attack": "Raised-hand grab and low recovery remain distinct.",
+    "hit": "Torso pulls back from the hit then settles.",
+    "qualityNote": "Opened high-WebGL2 composite: same readable action silhouettes; additional particles/blood detail."
+  },
+  "after-webgl2-high/dog-day": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        21,
+        31,
+        41,
+        51
+      ],
+      "attack": [
+        283,
+        321,
+        330,
+        346
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 283,
+      "strike": 322
+    },
+    "walk": "Four-leg gallop changes through gather and extension.",
+    "attack": "Gather, spring/bite, then paws settle through recovery.",
+    "hit": "Body/neck snaps upward/back and relaxes while paws retain their stance.",
+    "qualityNote": "Opened high-WebGL2 composite: same readable action silhouettes; additional particles/blood detail."
+  },
+  "after-webgl2-high/dog-night": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        135,
+        145,
+        155,
+        165
+      ],
+      "attack": [
+        212,
+        250,
+        259,
+        275
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 212,
+      "strike": 251
+    },
+    "walk": "Alternating four-leg extension is visible in silhouette.",
+    "attack": "Gather and approach lead into the spring/bite, then a low settled recovery.",
+    "hit": "Body/neck silhouette snaps back and returns.",
+    "qualityNote": "Opened high-WebGL2 composite: same readable action silhouettes; additional particles/blood detail."
+  },
+  "after-webgl2-high/role-brute-day": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        21,
+        31,
+        41,
+        51
+      ],
+      "attack": [
+        229,
+        276,
+        285,
+        301
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 229,
+      "strike": 277
+    },
+    "walk": "Broad alternating planted steps with low arm carriage.",
+    "attack": "Long coil, high shoulder/arm strike, then arms settle.",
+    "hit": "Large backward chest/head recoil, then return.",
+    "qualityNote": "Opened high-WebGL2 composite: stepping, strike/recovery and hit silhouettes remain readable."
+  },
+  "after-webgl2-high/role-brute-night": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        135,
+        145,
+        155,
+        165
+      ],
+      "attack": [
+        311,
+        358,
+        367,
+        383
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 311,
+      "strike": 359
+    },
+    "walk": "Heavy step changes remain distinct in silhouette.",
+    "attack": "Calibrated samples show the full raised-arm strike and recovery.",
+    "hit": "Backward upper-body recoil remains visible in silhouette.",
+    "qualityNote": "Opened high-WebGL2 composite: stepping, strike/recovery and hit silhouettes remain readable."
+  },
+  "after-webgl2-high/role-armored-day": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        21,
+        31,
+        41,
+        51
+      ],
+      "attack": [
+        223,
+        243,
+        252,
+        268
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 223,
+      "strike": 244
+    },
+    "walk": "Alternating steps retain the broad armored outline.",
+    "attack": "Coil, arm above helmet through strike, then lowered recovery.",
+    "hit": "Helmet/chest recoil backward, then return to guard.",
+    "qualityNote": "Opened high-WebGL2 composite: stepping, strike/recovery and hit silhouettes remain readable."
+  },
+  "after-webgl2-high/role-armored-night": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        135,
+        145,
+        155,
+        165
+      ],
+      "attack": [
+        256,
+        276,
+        285,
+        301
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 256,
+      "strike": 277
+    },
+    "walk": "Alternating steps remain visible through the blue outline.",
+    "attack": "Raised-arm strike and lowered recovery now appear in the calibrated window.",
+    "hit": "Helmet and upper chest pull backward on the hit, then settle.",
+    "qualityNote": "Opened high-WebGL2 composite: stepping, strike/recovery and hit silhouettes remain readable."
+  },
+  "after-webgl2-high/role-butcher-day": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        21,
+        31,
+        41,
+        51
+      ],
+      "attack": [
+        274,
+        294,
+        303,
+        319
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 274,
+      "strike": 295
+    },
+    "walk": "Broad alternating step and cleaver carriage changes.",
+    "attack": "Chest coils and the cleaver/shoulder sweeps through the strike, then settles.",
+    "hit": "Hat/head and chest tilt backward visibly and recover.",
+    "qualityNote": "Opened high-WebGL2 composite: stepping, strike/recovery and hit silhouettes remain readable."
+  },
+  "after-webgl2-high/role-butcher-night": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        135,
+        145,
+        155,
+        165
+      ],
+      "attack": [
+        265,
+        285,
+        294,
+        310
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 265,
+      "strike": 286
+    },
+    "walk": "Wide stepping and cleaver outline remain visible.",
+    "attack": "Shoulder/cleaver sweep is smaller than the brute gesture but visible through the coil and recovery.",
+    "hit": "Large backward hat/chest recoil reads in silhouette.",
+    "qualityNote": "Opened high-WebGL2 composite: stepping, strike/recovery and hit silhouettes remain readable."
+  },
+  "after-webgl2-high/role-bloated-day": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        22,
+        32,
+        42,
+        52
+      ],
+      "attack": [
+        215,
+        274,
+        283,
+        299
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 215,
+      "strike": 275
+    },
+    "walk": "Alternating shamble with a low arm carriage.",
+    "attack": "Long coil precedes the discharge ring/cloud, with arms and chest changing through recovery.",
+    "hit": "Upper body snaps backward against the cloud backdrop and returns.",
+    "qualityNote": "Opened high-WebGL2: denser discharge smoke partly covers surface detail; action/recoil silhouette remains visible."
+  },
+  "after-webgl2-high/role-bloated-night": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        136,
+        146,
+        156,
+        166
+      ],
+      "attack": [
+        329,
+        388,
+        397,
+        413
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 329,
+      "strike": 389
+    },
+    "walk": "Alternating step silhouette remains visible.",
+    "attack": "Coil, discharge and settling body are distinct against the warning/ring.",
+    "hit": "Head/chest recoil remains distinct from the surrounding effect.",
+    "qualityNote": "Opened high-WebGL2: denser discharge smoke partly covers surface detail; action/recoil silhouette remains visible."
+  },
+  "after-webgl2-high/role-screamer-day": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        70,
+        80,
+        90,
+        100
+      ],
+      "attack": [
+        355,
+        402,
+        411,
+        427
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 355,
+      "strike": 403
+    },
+    "walk": "Alternating long steps and arm carriage changes.",
+    "attack": "Hands/chest coil, extend through the scream strike and recover with the wave.",
+    "hit": "Backward head/chest bend is visible, followed by recovery.",
+    "qualityNote": "Opened high-WebGL2: the same stepping, strike/recovery and recoil silhouettes remain readable."
+  },
+  "after-webgl2-high/role-screamer-night": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        184,
+        194,
+        204,
+        214
+      ],
+      "attack": [
+        121,
+        168,
+        177,
+        193
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 121,
+      "strike": 169
+    },
+    "walk": "Alternating legs and shoulders read in silhouette.",
+    "attack": "Distant scream windup, extended chest/arm strike and recovery are distinct.",
+    "hit": "Upper body recoils backward then returns to its idle reach.",
+    "qualityNote": "Opened high-WebGL2: the same stepping, strike/recovery and recoil silhouettes remain readable."
+  },
+  "after-webgl2-high/suit-l4-day": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        21,
+        31,
+        41,
+        51
+      ],
+      "attack": [
+        241,
+        261,
+        270,
+        286
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 241,
+      "strike": 262
+    },
+    "walk": "Alternating planted steps and relaxed forward hands.",
+    "attack": "Coiled arms open into a high hand/shoulder strike and return.",
+    "hit": "Strong backward chest/head recoil with the arm thrown up, then settle.",
+    "qualityNote": "Opened high-WebGL2: the same stepping, strike/recovery and recoil silhouettes remain readable."
+  },
+  "after-webgl2-high/suit-l4-night": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        135,
+        145,
+        155,
+        165
+      ],
+      "attack": [
+        274,
+        294,
+        303,
+        319
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 274,
+      "strike": 295
+    },
+    "walk": "Alternating legs are visible through the dark suit outline.",
+    "attack": "The high hand/shoulder strike separates from the torso, then lowers.",
+    "hit": "Backward chest/head snap is visible despite little suit surface detail.",
+    "qualityNote": "Opened high-WebGL2: the same stepping, strike/recovery and recoil silhouettes remain readable."
+  },
+  "after-webgl2-high/native-bbqdad-day": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        21,
+        31,
+        41,
+        51
+      ],
+      "attack": [
+        241,
+        261,
+        270,
+        286
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 241,
+      "strike": 262
+    },
+    "walk": "Wide alternating step with cleaver carriage moving.",
+    "attack": "Shoulder/cleaver carriage changes from coil to high strike and settles.",
+    "hit": "Broad torso and head recoil backward and return.",
+    "qualityNote": "Opened high-WebGL2: the same stepping, strike/recovery and recoil silhouettes remain readable."
+  },
+  "after-webgl2-high/native-bbqdad-night": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        135,
+        145,
+        155,
+        165
+      ],
+      "attack": [
+        274,
+        294,
+        303,
+        319
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 274,
+      "strike": 295
+    },
+    "walk": "Wide steps and apron/cleaver silhouette change visibly.",
+    "attack": "Arm/shoulder opens from the coil and returns to the low carriage.",
+    "hit": "Torso/head recoil reads against the otherwise steady leg stance.",
+    "qualityNote": "Opened high-WebGL2: the same stepping, strike/recovery and recoil silhouettes remain readable."
+  },
+  "after-webgl2-high/firefighter-day": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        21,
+        31,
+        41,
+        51
+      ],
+      "attack": [
+        241,
+        261,
+        270,
+        286
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 241,
+      "strike": 262
+    },
+    "walk": "Alternating boot steps with pack and axe carriage stable.",
+    "attack": "Shoulders/axe arm sweep out of the crouched coil, then settle.",
+    "hit": "Helmet and chest tilt sharply backward before returning.",
+    "qualityNote": "Opened high-WebGL2 composite: the same boot/leg motion, attack gesture and upper-body recoil remain visible."
+  },
+  "after-webgl2-high/firefighter-night": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        135,
+        145,
+        155,
+        165
+      ],
+      "attack": [
+        274,
+        294,
+        303,
+        319
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 274,
+      "strike": 295
+    },
+    "walk": "Alternating yellow boot/leg silhouette is readable.",
+    "attack": "Shoulder/axe-arm changes remain visible, with less surface detail.",
+    "hit": "Helmet/chest recoil and return are distinct in silhouette.",
+    "qualityNote": "Opened high-WebGL2 composite: the same boot/leg motion, attack gesture and upper-body recoil remain visible."
+  },
+  "after-webgl2-high/hazmat-day": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        21,
+        31,
+        41,
+        51
+      ],
+      "attack": [
+        223,
+        243,
+        252,
+        268
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 223,
+      "strike": 244
+    },
+    "walk": "Alternating boot steps under the steady tank pack.",
+    "attack": "Coil lowers the hands; shoulders/arms sweep through strike and recover.",
+    "hit": "Yellow hood and chest recoil backward, then resume the forward reach.",
+    "qualityNote": "Opened high-WebGL2 composite: the same boot/leg motion, attack gesture and upper-body recoil remain visible."
+  },
+  "after-webgl2-high/hazmat-night": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        135,
+        145,
+        155,
+        165
+      ],
+      "attack": [
+        256,
+        276,
+        285,
+        301
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 256,
+      "strike": 277
+    },
+    "walk": "Boot/leg alternation remains readable in silhouette.",
+    "attack": "Ranged windup and shoulder/arm extension are visible before recovery.",
+    "hit": "Hood/chest recoil reads against the steady pack and legs.",
+    "qualityNote": "Opened high-WebGL2 composite: the same boot/leg motion, attack gesture and upper-body recoil remain visible."
+  },
+  "after-webgl2-high/riot-day": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        21,
+        31,
+        41,
+        51
+      ],
+      "attack": [
+        180,
+        200,
+        209,
+        225
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 180,
+      "strike": 201
+    },
+    "walk": "Alternating armored steps with the shield held forward.",
+    "attack": "Shield lowers into coil then extends across the courier through the shove and settles.",
+    "hit": "Helmet/chest pull back with a changing shield angle.",
+    "qualityNote": "Opened high-WebGL2 composite: the same boot/leg motion, attack gesture and upper-body recoil remain visible."
+  },
+  "after-webgl2-high/riot-night": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        135,
+        145,
+        155,
+        165
+      ],
+      "attack": [
+        294,
+        314,
+        323,
+        339
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 294,
+      "strike": 315
+    },
+    "walk": "Stepping and shield carriage remain distinct.",
+    "attack": "Shield shove separates from the body through strike and recovery.",
+    "hit": "Head and shield angle recoil backward and return.",
+    "qualityNote": "Opened high-WebGL2 composite: the same boot/leg motion, attack gesture and upper-body recoil remain visible."
+  },
+  "after-webgl2-high/civ-man-day": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        55,
+        65,
+        75,
+        85
+      ],
+      "attack": [
+        204,
+        224,
+        233,
+        249
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 204,
+      "strike": 225
+    },
+    "walk": "Alternating steps and forward hand carriage.",
+    "attack": "Arms coil low, rise into the reaching strike and lower through recovery.",
+    "hit": "Chest/head pull back on the bullet before the next reaching pose.",
+    "qualityNote": "Opened high-WebGL2 composite: distinct model, stepping, reaching strike/recovery and chest/head recoil remain visible."
+  },
+  "after-webgl2-high/civ-man-night": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        55,
+        65,
+        75,
+        85
+      ],
+      "attack": [
+        204,
+        224,
+        233,
+        249
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 204,
+      "strike": 225
+    },
+    "walk": "Leg alternation and hand carriage are visible in silhouette.",
+    "attack": "Raised-hand reach and lowered recovery are distinct.",
+    "hit": "Backward upper-body recoil is visible before the next arm raise.",
+    "qualityNote": "Opened high-WebGL2 composite: distinct model, stepping, reaching strike/recovery and chest/head recoil remain visible."
+  },
+  "after-webgl2-high/civ-elderly-day": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        59,
+        69,
+        79,
+        89
+      ],
+      "attack": [
+        183,
+        203,
+        212,
+        228
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 183,
+      "strike": 204
+    },
+    "walk": "Short alternating steps under a stooped upper body.",
+    "attack": "Low coil changes into raised reaching hands, then lowers.",
+    "hit": "Head/chest lean back on the bullet, then return to the reach.",
+    "qualityNote": "Opened high-WebGL2 composite: distinct model, stepping, reaching strike/recovery and chest/head recoil remain visible."
+  },
+  "after-webgl2-high/civ-elderly-night": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        59,
+        69,
+        79,
+        89
+      ],
+      "attack": [
+        183,
+        203,
+        212,
+        228
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 183,
+      "strike": 204
+    },
+    "walk": "Short-step silhouette and stooped carriage remain readable.",
+    "attack": "Raised hands separate clearly from the low coil and recovery.",
+    "hit": "Backward head/chest response remains visible in silhouette.",
+    "qualityNote": "Opened high-WebGL2 composite: distinct model, stepping, reaching strike/recovery and chest/head recoil remain visible."
+  },
+  "after-webgl2-high/guard-day": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        42,
+        52,
+        62,
+        72
+      ],
+      "attack": [
+        191,
+        211,
+        220,
+        236
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 191,
+      "strike": 212
+    },
+    "walk": "Distinct camouflaged guard model with alternating running steps.",
+    "attack": "Arms coil low, extend up toward the target and recover.",
+    "hit": "Helmet/chest pull backward while the legs retain their stance.",
+    "qualityNote": "Opened high-WebGL2 composite: distinct model, stepping, reaching strike/recovery and chest/head recoil remain visible."
+  },
+  "after-webgl2-high/guard-night": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        42,
+        52,
+        62,
+        72
+      ],
+      "attack": [
+        191,
+        211,
+        220,
+        236
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 191,
+      "strike": 212
+    },
+    "walk": "Running leg alternation remains visible under the helmet outline.",
+    "attack": "High reach and lowered recovery separate from the torso.",
+    "hit": "Helmet/head and upper body recoil away from the hit.",
+    "qualityNote": "Opened high-WebGL2 composite: distinct model, stepping, reaching strike/recovery and chest/head recoil remain visible."
+  },
+  "after-webgl2-high/role-sprinter-day": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        42,
+        52,
+        62,
+        72
+      ],
+      "attack": [
+        191,
+        211,
+        220,
+        236
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 191,
+      "strike": 212
+    },
+    "walk": "Long asymmetric running extensions and alternating arms.",
+    "attack": "Forward coil, high reaching strike, then relaxed arm recovery.",
+    "hit": "Head/chest arch backward visibly before returning.",
+    "qualityNote": "Opened high-WebGL2 composite: distinct model, stepping, reaching strike/recovery and chest/head recoil remain visible."
+  },
+  "after-webgl2-high/role-sprinter-night": {
+    "version": "6ad50834d0406b8f1a203974339f00fd7065a6f7693888107997a4e75261d567",
+    "windows": {
+      "walk": [
+        42,
+        52,
+        62,
+        72
+      ],
+      "attack": [
+        191,
+        211,
+        220,
+        236
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 191,
+      "strike": 212
+    },
+    "walk": "Long stride and alternating shoulder silhouette are visible.",
+    "attack": "High hand reaches out of the coil and drops through recovery.",
+    "hit": "Head and chest arch backward and return, readable in the outline.",
+    "qualityNote": "Opened high-WebGL2 composite: distinct model, stepping, reaching strike/recovery and chest/head recoil remain visible."
+  },
+  "before-webgl2-high/nurse-day": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        21,
+        31,
+        41,
+        51
+      ],
+      "attack": [
+        217,
+        237,
+        246,
+        262
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 217,
+      "strike": 238
+    },
+    "walk": "Alternating steps are visible; small shoe drift is clearer in the metric than the strip.",
+    "attack": "Windup hands change slightly, then return directly to the idle reach after strike.",
+    "hit": "Tracer/health changes occur with almost no sustained chest response.",
+    "qualityNote": "Opened high-WebGL2 baseline: stepping remains visible, but post-strike recovery and sustained gun recoil retain the baseline limitations."
+  },
+  "before-webgl2-high/nurse-night": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        135,
+        145,
+        155,
+        165
+      ],
+      "attack": [
+        250,
+        270,
+        279,
+        295
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 250,
+      "strike": 271
+    },
+    "walk": "Alternating steps remain visible in silhouette.",
+    "attack": "Windup returns to a nearly unchanged idle reach after contact.",
+    "hit": "No sustained body recoil is visible at the sampled bullet frames.",
+    "qualityNote": "Opened high-WebGL2 baseline: stepping remains visible, but post-strike recovery and sustained gun recoil retain the baseline limitations."
+  },
+  "before-webgl2-high/crawler-day": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        22,
+        32,
+        42,
+        52
+      ],
+      "attack": [
+        241,
+        261,
+        270,
+        286
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 241,
+      "strike": 262
+    },
+    "walk": "Low crawl advances with large measured foot sliding.",
+    "attack": "Prone body and hands barely change through the attack window.",
+    "hit": "Bullet effects occur while the torso stays nearly unchanged.",
+    "qualityNote": "Opened high-WebGL2 baseline: stepping remains visible, but post-strike recovery and sustained gun recoil retain the baseline limitations."
+  },
+  "before-webgl2-high/crawler-night": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        22,
+        32,
+        42,
+        52
+      ],
+      "attack": [
+        241,
+        261,
+        270,
+        286
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 241,
+      "strike": 262
+    },
+    "walk": "Low crawl silhouette advances with the same measured skid.",
+    "attack": "Prone silhouette remains nearly static through windup/strike/recovery samples.",
+    "hit": "No clear torso recoil accompanies the tracer and health loss.",
+    "qualityNote": "Opened high-WebGL2 baseline: stepping remains visible, but post-strike recovery and sustained gun recoil retain the baseline limitations."
+  },
+  "before-webgl2-high/dog-day": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        21,
+        31,
+        41,
+        51
+      ],
+      "attack": [
+        283,
+        321,
+        330,
+        346
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 283,
+      "strike": 322
+    },
+    "walk": "Gallop legs cycle, with severe measured paw sliding.",
+    "attack": "Gather/bite motion exists, but the later samples snap toward the old stance instead of a held recovery.",
+    "hit": "Health/tracer changes have little visible body or neck response.",
+    "qualityNote": "Opened high-WebGL2 baseline: stepping remains visible, but post-strike recovery and sustained gun recoil retain the baseline limitations."
+  },
+  "before-webgl2-high/dog-night": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        135,
+        145,
+        155,
+        165
+      ],
+      "attack": [
+        212,
+        250,
+        259,
+        275
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 212,
+      "strike": 251
+    },
+    "walk": "Gallop silhouette changes with severe measured paw drift.",
+    "attack": "Approach/bite is visible, but the settle lacks the held recovery of the after strip.",
+    "hit": "The body stays nearly unchanged through the bullet samples.",
+    "qualityNote": "Opened high-WebGL2 baseline: stepping remains visible, but post-strike recovery and sustained gun recoil retain the baseline limitations."
+  },
+  "before-webgl2-high/role-brute-day": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        21,
+        31,
+        41,
+        51
+      ],
+      "attack": [
+        229,
+        276,
+        285,
+        301
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 229,
+      "strike": 277
+    },
+    "walk": "Broad steps and arm carriage are already visible.",
+    "attack": "Long windup changes arm/body position, then returns directly to idle after strike.",
+    "hit": "The gun hit produces no clear sustained chest recoil at the sampled frames.",
+    "qualityNote": "Opened high-WebGL2 baseline: stepping remains visible, but post-strike recovery and sustained gun recoil retain the baseline limitations."
+  },
+  "before-webgl2-high/role-brute-night": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        135,
+        145,
+        155,
+        165
+      ],
+      "attack": [
+        311,
+        358,
+        367,
+        383
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 311,
+      "strike": 359
+    },
+    "walk": "Heavy stepping remains visible in silhouette.",
+    "attack": "Windup ends in the low idle carriage rather than a readable post-strike gesture.",
+    "hit": "Upper-body outline barely changes during the bullet samples.",
+    "qualityNote": "Opened high-WebGL2 baseline: stepping remains visible, but post-strike recovery and sustained gun recoil retain the baseline limitations."
+  },
+  "before-webgl2-high/role-armored-day": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        21,
+        31,
+        41,
+        51
+      ],
+      "attack": [
+        223,
+        243,
+        252,
+        268
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 223,
+      "strike": 244
+    },
+    "walk": "Alternating broad steps are already visible.",
+    "attack": "Small windup arm changes end directly in the idle reach.",
+    "hit": "Helmet/chest stay nearly unchanged through the bullet samples.",
+    "qualityNote": "Opened high-WebGL2 baseline: existing effects and gait remain visible; the body still lacks a held post-strike gesture and sustained gun recoil."
+  },
+  "before-webgl2-high/role-armored-night": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        135,
+        145,
+        155,
+        165
+      ],
+      "attack": [
+        256,
+        276,
+        285,
+        301
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 256,
+      "strike": 277
+    },
+    "walk": "Armored stepping silhouette remains visible.",
+    "attack": "Small windup returns to the idle arm carriage after contact.",
+    "hit": "Tracer/health changes occur with little sustained helmet or chest response.",
+    "qualityNote": "Opened high-WebGL2 baseline: existing effects and gait remain visible; the body still lacks a held post-strike gesture and sustained gun recoil."
+  },
+  "before-webgl2-high/role-butcher-day": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        21,
+        31,
+        41,
+        51
+      ],
+      "attack": [
+        274,
+        294,
+        303,
+        319
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 274,
+      "strike": 295
+    },
+    "walk": "Broad alternating steps and cleaver carriage are already present.",
+    "attack": "Windup changes cleaver/shoulder position, then the body returns directly to the low idle carriage.",
+    "hit": "Hat/chest remain almost unchanged through the gun samples.",
+    "qualityNote": "Opened high-WebGL2 baseline: existing effects and gait remain visible; the body still lacks a held post-strike gesture and sustained gun recoil."
+  },
+  "before-webgl2-high/role-butcher-night": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        135,
+        145,
+        155,
+        165
+      ],
+      "attack": [
+        265,
+        285,
+        294,
+        310
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 265,
+      "strike": 286
+    },
+    "walk": "Wide stepping remains readable in silhouette.",
+    "attack": "Windup arm carriage changes but no distinct held post-strike gesture appears.",
+    "hit": "Bullet effects do not produce clear sustained chest/hat recoil.",
+    "qualityNote": "Opened high-WebGL2 baseline: existing effects and gait remain visible; the body still lacks a held post-strike gesture and sustained gun recoil."
+  },
+  "before-webgl2-high/role-bloated-day": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        22,
+        32,
+        42,
+        52
+      ],
+      "attack": [
+        215,
+        274,
+        283,
+        299
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 215,
+      "strike": 275
+    },
+    "walk": "Alternating shamble already reads.",
+    "attack": "Existing discharge warning/cloud makes the attack identifiable; the post-strike body pose changes little.",
+    "hit": "Cloud and tracers change while the body stays nearly steady.",
+    "qualityNote": "Opened high-WebGL2 baseline: existing effects and gait remain visible; the body still lacks a held post-strike gesture and sustained gun recoil."
+  },
+  "before-webgl2-high/role-bloated-night": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        136,
+        146,
+        156,
+        166
+      ],
+      "attack": [
+        329,
+        388,
+        397,
+        413
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 329,
+      "strike": 389
+    },
+    "walk": "Stepping silhouette is already visible.",
+    "attack": "Existing warning/discharge effects read, with little held body strike after the windup.",
+    "hit": "Body response is weak next to the existing discharge effect.",
+    "qualityNote": "Opened high-WebGL2 baseline: existing effects and gait remain visible; the body still lacks a held post-strike gesture and sustained gun recoil."
+  },
+  "before-webgl2-high/role-screamer-day": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        70,
+        80,
+        90,
+        100
+      ],
+      "attack": [
+        355,
+        402,
+        411,
+        427
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 355,
+      "strike": 403
+    },
+    "walk": "Alternating stride is already readable.",
+    "attack": "Existing scream wave reads, but the body returns directly toward idle after windup.",
+    "hit": "Health/tracer effects have almost no sustained body recoil.",
+    "qualityNote": "Opened high-WebGL2 baseline: existing effects and gait remain visible; the body still lacks a held post-strike gesture and sustained gun recoil."
+  },
+  "before-webgl2-high/role-screamer-night": {
+    "version": "550c5163c8491fd93e0892dbeed9a1f9d0f427315b17acd0f5abc1f35c15c56a",
+    "windows": {
+      "walk": [
+        184,
+        194,
+        204,
+        214
+      ],
+      "attack": [
+        121,
+        168,
+        177,
+        193
+      ],
+      "hit": [
+        420,
+        432,
+        438,
+        450
+      ],
+      "started": 121,
+      "strike": 169
+    },
+    "walk": "Long-step silhouette is already present.",
+    "attack": "Existing scream windup/wave is visible; the body folds into its old locomotion rather than a held strike/recovery.",
+    "hit": "No distinct sustained chest recoil appears through the bullet samples.",
+    "qualityNote": "Opened high-WebGL2 baseline: existing effects and gait remain visible; the body still lacks a held post-strike gesture and sustained gun recoil."
   }
 }
