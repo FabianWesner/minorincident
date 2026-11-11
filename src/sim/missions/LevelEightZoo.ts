@@ -1,3 +1,4 @@
+import { deterministicAtan2 } from '../../core/deterministicMath';
 import { l3 } from '../../data/l3';
 import { l8BossArenas, l8PlazaCell, l8Route, inRect } from '../../data/l8Bosses';
 import type { Mission } from './Mission';
@@ -280,7 +281,7 @@ export class LevelEightZoo {
     if (!keeper || !c || keeper.infection || keeper.health.current <= 0 || c.state !== 'calm') { s.guideDone = 1; return; }
     c.pauseUntil = t + 2; // the shared tour schedule stays suspended while she leads
     const stand = (look: Point) => {
-      keeper.transform.yaw = Math.atan2(look.x - keeper.transform.x, look.z - keeper.transform.z);
+      keeper.transform.yaw = deterministicAtan2(look.x - keeper.transform.x, look.z - keeper.transform.z);
       keeper.motion = { velocity: { x: 0, z: 0 }, speed: 0, moving: false, distance: keeper.motion?.distance ?? 0 };
     };
     const lion = w.entities.get(s.animals[0]);
@@ -323,7 +324,7 @@ export class LevelEightZoo {
       this.mission.setState('hale-keys', true); this.mission.radio('L8.hale-dying');
       hale.civilian.story = { clip: 'npc-give', start: t - 24 };
       hale.civilian.knockedUntil = t + 120;
-      hale.transform.yaw = -Math.atan2(player.transform.z - hale.transform.z, player.transform.x - hale.transform.x);
+      hale.transform.yaw = -deterministicAtan2(player.transform.z - hale.transform.z, player.transform.x - hale.transform.x);
       hale.motion = { velocity: { x: 0, z: 0 }, speed: 0, moving: false, distance: hale.motion?.distance ?? 0 };
       const shot = this.mission.def.cinematics['l8-hale'];
       shot.target = [hale.transform.x, 1, hale.transform.z]; shot.position = [hale.transform.x + 16, 12, hale.transform.z + 18];

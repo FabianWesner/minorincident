@@ -1,3 +1,4 @@
+import { deterministicAtan2 } from '../../core/deterministicMath';
 import { boxContact } from '../world/SolidGeometry';
 // Port of Bruno Simon folio-2025 PhysicsVehicle.js (MIT, 41046b5).
 // Four raycast wheels, low COM, engine taper, reverse braking and bounded stuck history.
@@ -81,8 +82,8 @@ export class VehicleBody {
     const p = this.body.translation(), q = this.body.rotation(), v = this.body.linvel();
     Object.assign(this.rotation, q);
     this.transform.x = p.x; this.transform.y = p.y; this.transform.z = p.z;
-    this.transform.yaw = Math.atan2(2 * (q.w * q.y + q.x * q.z), 1 - 2 * (q.y * q.y + q.z * q.z));
-    this.roll = Math.atan2(2 * (q.w * q.x + q.y * q.z), 1 - 2 * (q.x * q.x + q.z * q.z));
+    this.transform.yaw = deterministicAtan2(2 * (q.w * q.y + q.x * q.z), 1 - 2 * (q.y * q.y + q.z * q.z));
+    this.roll = deterministicAtan2(2 * (q.w * q.x + q.y * q.z), 1 - 2 * (q.x * q.x + q.z * q.z));
     this.speed = Math.hypot(v.x, v.z); this.forwardSpeed = v.x * Math.cos(this.transform.yaw) - v.z * Math.sin(this.transform.yaw);
     this.upsideDown = 1 - 2 * (q.x * q.x + q.z * q.z) < .4;
     this.upsideDownTicks = this.upsideDown && this.speed < 3 ? this.upsideDownTicks + 1 : 0;

@@ -1,3 +1,4 @@
+import { deterministicAtan2 } from '../../core/deterministicMath';
 import * as RAPIER from '@dimforge/rapier3d-compat';
 import { faceMotion, motionResponse, resetResponse, respond, playerMotionLimits } from './MotionResponse';
 import { FIXED_DT } from '../../core/Clock';
@@ -153,10 +154,10 @@ export class KinematicController {
     if (!enabled) return;
     const aim = input.aim;
     const aiming = aim && (input.left.held || input.right.held || input.left.down || input.right.down);
-    if (aiming && Math.hypot(aim.x, aim.z) > 0) transform.yaw = -Math.atan2(aim.z, aim.x);
+    if (aiming && Math.hypot(aim.x, aim.z) > 0) transform.yaw = -deterministicAtan2(aim.z, aim.x);
     else if (navigation) transform.yaw = faceMotion(this.response, transform.yaw, this.velocity.x, this.velocity.z);
     else if (magnitude > 0) {
-      const target = -Math.atan2(z, x), delta = Math.atan2(Math.sin(target - transform.yaw), Math.cos(target - transform.yaw));
+      const target = -deterministicAtan2(z, x), delta = deterministicAtan2(Math.sin(target - transform.yaw), Math.cos(target - transform.yaw));
       transform.yaw += Math.sign(delta) * Math.min(Math.abs(delta), survivor.turnSpeed * FIXED_DT);
     }
   }

@@ -1,10 +1,11 @@
+import { deterministicAtan2 } from '../../core/deterministicMath';
 import { inCorn } from '../../levels/L10/farm';
 import { actorRadius } from '../world/SolidRegistry';
 import { combatHeightReachable } from '../combat/height';
 import { infectedDef } from '../../data/infected';
 import { l1v2 } from '../../data/l1v2';
 import { npcs } from '../../data/npcs';
-import { motionLimits } from '../locomotion/MotionResponse';
+import { angleDelta, motionLimits } from '../locomotion/MotionResponse';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 const doorSides = [0, .5, -.5, .25, -.25, ...Array.from({ length: 56 }, (_, i) => Math.ceil((i + 1) / 2) * .15 * (i % 2 ? -1 : 1))];
@@ -68,7 +69,7 @@ export class Companion {
         Object.assign(e.transform, at); this.world.solids.admit(e, 'companion.respawn', 4);
       }
       const yaw = e.transform.yaw;
-      e.transform.yaw = -Math.atan2(player.z - e.transform.z, player.x - e.transform.x);
+      e.transform.yaw = -deterministicAtan2(player.z - e.transform.z, player.x - e.transform.x);
       if (!this.world.solids.clear(e.transform, actorRadius(e), e.id)) e.transform.yaw = yaw;
       delete c.contactYield; delete c.contactFrom; delete c.contactRejected;
       delete e.locomotion; c.velocity = { x: 0, z: 0 }; c.path.length = 0; c.goal = -1; c.pathIndex = 0; c.following = false; c.pickup = null;
@@ -86,7 +87,7 @@ export class Companion {
       if (length < .05) return false;
       const spine = .4 * Math.abs(Math.cos(e.transform.yaw) * nx - Math.sin(e.transform.yaw) * nz);
       if ((e.transform.x - door.x) * nx + (e.transform.z - door.z) * nz + .001 >= actorRadius(e) + spine + halfThickness) continue;
-      const yaw = e.transform.yaw; e.transform.yaw = -Math.atan2(nz, nx);
+      const yaw = e.transform.yaw; e.transform.yaw = -deterministicAtan2(nz, nx);
       let placed = false;
       for (let depth = 0; depth <= 4.8; depth += .15) for (const side of doorSides) {
         if (placed) break;
@@ -227,7 +228,7 @@ export class Companion {
           const threat = this.world.entities.get(c.warn!.threat), l = e.locomotion;
           if (l && Math.hypot(l.vx, l.vz) > .5) this.faceTravel(e, l.vx, l.vz);
           else if (threat) {
-            const look = -Math.atan2(threat.transform.z - e.transform.z, threat.transform.x - e.transform.x), delta = Math.atan2(Math.sin(look - e.transform.yaw), Math.cos(look - e.transform.yaw));
+            const look = -deterministicAtan2(threat.transform.z - e.transform.z, threat.transform.x - e.transform.x), delta = angleDelta(e.transform.yaw, look);
             e.transform.yaw += Math.sign(delta) * Math.min(Math.abs(delta), motionLimits.turnSpeed / 60); if (l) l.omega = 0;
           }
         }
@@ -265,7 +266,7 @@ export class Companion {
       // Shoved without moving itself (the courier walks into the standing corgi): it turns round quickly (12 rad/s) and
       // trots ahead instead of sliding backwards while still facing her.
       else if (e.motion && e.motion.speed > .5) {
-        const heading = -Math.atan2(e.motion.velocity.z, e.motion.velocity.x), delta = Math.atan2(Math.sin(heading - e.transform.yaw), Math.cos(heading - e.transform.yaw));
+        const heading = -deterministicAtan2(e.motion.velocity.z, e.motion.velocity.x), delta = angleDelta(e.transform.yaw, heading);
         e.transform.yaw += Math.sign(delta) * Math.min(Math.abs(delta), 12 / 60); if (e.locomotion) e.locomotion.omega = 0;
       }
       this.world.spatial.set(e.id, e.transform.x, e.transform.z);
@@ -292,7 +293,7 @@ export class Companion {
     if (!stalled && !separated || w.tick < progress.attempt || !unseen) return;
     progress.attempt = w.tick + 60;
     const v = player.survivor?.velocity, speed = Math.hypot(v?.x ?? 0, v?.z ?? 0);
-    const heading = speed > .5 ? Math.atan2(v!.z, v!.x) : -player.transform.yaw;
+    const heading = speed > .5 ? deterministicAtan2(v!.z, v!.x) : -player.transform.yaw;
     const radius = actorRadius(e), goal = ai.nav.nearestCell(player.transform.x, player.transform.z, radius);
     // Search just beyond the camera edge behind her. Verify a full route so a
     // rescue cannot put the dog in a different fence/building pocket.
@@ -306,7 +307,7 @@ export class Companion {
       // but an unseen relocation must not place the corgi on the other side of the barrier.
       if (w.scenario === 'L10' ? !ai.nav.visible(at, player.transform, radius) : !ai.nav.visible(at, player.transform, radius) && !ai.nav.path(from, goal, path, 16000)) continue;
       const yaw = e.transform.yaw;
-      e.transform.yaw = -Math.atan2(player.transform.z - at.z, player.transform.x - at.x);
+      e.transform.yaw = -deterministicAtan2(player.transform.z - at.z, player.transform.x - at.x);
       if (!w.solids.clear(at, radius, e.id) || !w.solids.relocate(e, at, 'companion.rejoin', 0)) { e.transform.yaw = yaw; continue; }
       e.hidden = false;
       c.pickup = null; c.state = 'follow'; c.courage = 100; c.following = true; c.path.length = 0; c.goal = -1; c.pathIndex = 0;
@@ -318,7 +319,7 @@ export class Companion {
     }
   }
   private faceTravel(e: EntitySnapshot, vx: number, vz: number): void {
-    const heading = -Math.atan2(vz, vx), error = Math.atan2(Math.sin(heading - e.transform.yaw), Math.cos(heading - e.transform.yaw));
+    const heading = -deterministicAtan2(vz, vx), error = angleDelta(e.transform.yaw, heading);
     if (Math.abs(error) > .3) { e.transform.yaw = heading - Math.sign(error) * .3; if (e.locomotion) e.locomotion.omega = 0; }
   }
   /** While riding, the corgi runs alongside at a fixed lateral offset (right of the heading, slightly behind), never in the cargo box. */

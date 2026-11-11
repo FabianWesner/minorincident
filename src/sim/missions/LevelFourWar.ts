@@ -1,3 +1,4 @@
+import { angleDelta } from '../locomotion/MotionResponse';
 import { alphaTypeFor } from '../../data/alphaTypes';
 import type { InfectedSystem } from '../ai/InfectedSystem';
 import type { Combat } from '../combat/Combat';
@@ -379,7 +380,7 @@ export class LevelFourWar {
     let step = Math.min(remaining, s.convoyV / 60);
     const poses = s.convoyS.map((at, i) => {
       const p = l4ConvoyPose(this.route, at + step, i, this.stations.end[i]), t = world.entities.get(s.convoyIds[i])!.transform;
-      const d = Math.atan2(Math.sin(p.yaw - t.yaw), Math.cos(p.yaw - t.yaw));
+      const d = angleDelta(t.yaw, p.yaw);
       return { x: p.x, y: t.y, z: p.z, yaw: t.yaw + d * .2 };
     });
     if (!this.clearance.canAdvance(poses)) { step = 0; s.convoyV = 0; }

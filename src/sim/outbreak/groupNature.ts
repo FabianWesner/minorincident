@@ -1,3 +1,4 @@
+import { deterministicAtan2, deterministicSin } from '../../core/deterministicMath';
 /**
  * r12-group (PO 11-08: "They move too parallel, there needs to be a bit more natural group movements"):
  * shared personality for every following survivor group (L5–L8). Everything here is a pure function of
@@ -61,7 +62,7 @@ export function looseSlotOffset(slot: number): { back: number; side: number } {
 export function swayOffset(id: number, tick: number, amplitude = .28): number {
   const period = 300 + personal(id, 11) * 260, phase = personal(id, 12) * Math.PI * 2;
   const t = tick / period * Math.PI * 2;
-  return amplitude * (.75 * Math.sin(t + phase) + .25 * Math.sin(2.3 * t + phase * 1.7));
+  return amplitude * (.75 * deterministicSin(t + phase) + .25 * deterministicSin(2.3 * t + phase * 1.7));
 }
 
 /** Reaction delay (ticks) before a resting follower sets off; the injured are slower. */
@@ -89,7 +90,7 @@ const scratch: number[] = [];
 export function idleLookYaw(world: SimWorld, e: EntitySnapshot): number | undefined {
   const me = e.transform, player = world.entities.get(1);
   if (!player) return undefined;
-  const face = (p: Point) => -Math.atan2(p.z - me.z, p.x - me.x);
+  const face = (p: Point) => -deterministicAtan2(p.z - me.z, p.x - me.x);
   // Fear first: the nearest visible infected within 12 m holds the gaze.
   let threat: EntitySnapshot | undefined, best = 12;
   for (const o of world.infected?.active ?? []) {

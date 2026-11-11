@@ -1,3 +1,4 @@
+import { deterministicSin, deterministicCos } from '../../core/deterministicMath';
 import type { SimWorld } from '../world/SimWorld';
 import type { CoverWall } from '../combat/HitQuery';
 import type { Point } from '../npc/types';
@@ -66,7 +67,7 @@ export function corpseDetour(world: SimWorld, e: EntitySnapshot, goal: Point): P
     for (const sign of [-1, 1]) {
       const path: Point[] = []; let from: Point = e.transform, travelled = 0;
       for (let step = 1; step <= 4; step++) {
-        const at = { x: body.transform.x + Math.cos(angle + sign * step * Math.PI / 4) * (reach + 1), z: body.transform.z + Math.sin(angle + sign * step * Math.PI / 4) * (reach + 1) };
+        const at = { x: body.transform.x + deterministicCos(angle + sign * step * Math.PI / 4) * (reach + 1), z: body.transform.z + deterministicSin(angle + sign * step * Math.PI / 4) * (reach + 1) };
         const x = at.x - from.x, z = at.z - from.z, length = Math.hypot(x, z);
         // Query a copied footprint at each proposed leg; skip its real body's
         // current reservation, while retaining every other actor and solid.
@@ -85,7 +86,7 @@ export function corpseDetour(world: SimWorld, e: EntitySnapshot, goal: Point): P
 /** First clear point on a 0.5 m, 16-ray ring search around `at` up to `maxD` metres, or undefined when none is clear. */
 export function findClearPoint(nav: { clear(x: number, z: number, r: number): boolean }, at: Point, radius: number, maxD: number): Point | undefined {
   for (let d = 0; d <= maxD; d += .5) for (let k = 0; k < (d ? 16 : 1); k++) {
-    const p = { x: at.x + Math.cos(k * Math.PI / 8) * d, z: at.z + Math.sin(k * Math.PI / 8) * d };
+    const p = { x: at.x + deterministicCos(k * Math.PI / 8) * d, z: at.z + deterministicSin(k * Math.PI / 8) * d };
     if (nav.clear(p.x, p.z, radius)) return p;
   }
   return undefined;
@@ -117,7 +118,7 @@ export function setWall(world: SimWorld, handles: Map<string, number>, key: stri
 /** Heading of the leader: its velocity when moving, otherwise its facing. */
 export function leaderHeading(yaw: number, velocity?: Point): Point {
   const speed = velocity ? Math.hypot(velocity.x, velocity.z) : 0;
-  return speed > .8 ? { x: velocity!.x / speed, z: velocity!.z / speed } : { x: Math.cos(yaw), z: -Math.sin(yaw) };
+  return speed > .8 ? { x: velocity!.x / speed, z: velocity!.z / speed } : { x: deterministicCos(yaw), z: -deterministicSin(yaw) };
 }
 
 /** Distance behind the leader of a follower slot (rows of three, 1.2 m apart). */
