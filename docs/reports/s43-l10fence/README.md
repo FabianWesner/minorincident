@@ -11,6 +11,8 @@ Status: implementation committed; full browser matrix and final visual acceptanc
 
 ## Evidence so far
 
+- Completed and opened all eight original-perimeter before rows. Final three WebGPU runs completed with zero page errors; paths and settings are inventoried in `capture-matrix.json`. Before views consistently show the uniform three-rail silhouette; after views show concrete bases, patched braces and hazard marks at the same east-edge pose. The comparison isolates renderer appearance only. Matched draw-count measurements and remaining acceptance checks are pending. Owned preview stopped.
+
 - Original-perimeter before matrix now has all four WebGL2 rows plus low WebGPU zoom 1. New high WebGL2 zoom-1.5 and low WebGPU zoom-1 captures were opened and showed intact original rails, with zero errors in both runs. Paths are in `capture-matrix.json`. Three WebGPU before rows remain. Owned preview stopped.
 
 - Added original-perimeter before rows low WebGL2 zoom 1.5 and high WebGL2 zoom 1, both opened and inventoried in `capture-matrix.json`. Four-second real-input runs had zero page errors. The old uniform rail pattern remains consistent at these quality/zoom settings. Five before rows remain missing. Owned preview stopped.
