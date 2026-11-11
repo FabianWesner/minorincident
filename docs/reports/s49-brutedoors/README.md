@@ -133,3 +133,9 @@ Review found the aperture scan covered opposing walls but omitted collinear wall
 The optimized collinear-jamb scanner completed the isolated L4 run: 39 wide records, all required sources observed, zero unreachable paths and zero narrow openings, exit zero. This validates its previously slow L4 case; remaining campaign scenarios still need the corrected scanner rerun.
 
 A focused remote L7 low/skilled seed-2 rerun reproduced `outcome: tick-budget`, `valid: false`, time 1200 s, state hash `93c3855b`. Its measured follower median was about 4.50 m/s; the extra threat failure reflects an incomplete native route rather than a demonstrated follower-speed failure. This remains unresolved and must not be described as the required L7=6 result. The probe completed (remote total 308 s). No checks remain running.
+
+## L2 lifecycle trace and opening-scan prefilter
+
+Reproduced the exact high-tier L2 census setup without changing the invariant. Actor 216 (`infected.runner`) is released at tick 1801 by `LevelTwoRescue.retireDistantAmbush`, called from `spawnEscape`/`update`, while at (-68.086,-17.652) with full probe health. It has not entered the measured market area. The recurring 23/24 miss is therefore a live encounter retirement, not an observed wide-body geometry jam. No L2 gameplay/test edit was made.
+
+The corrected scanner's next remote run completed L5 (4 wide records), L6 (12) and L7 (5), all pathable with no narrow openings. It was stopped during the long L8 phase via wrapper cleanup (exit 130); remote PID 354600 was confirmed gone. Added a semantics-preserving prefilter before collider pairing: only ground-level slender wall boxes can satisfy the existing pair conditions, so floors/compact props no longer participate in the quadratic scan. Typecheck and lint passed. The optimized L8–L10 scan still needs completion; no passing result is claimed for the interrupted portion.

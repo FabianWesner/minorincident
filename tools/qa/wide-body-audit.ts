@@ -268,8 +268,10 @@ for (const { level, l9Route, l9Detour, street } of streetScenarios) {
         const key = `${bx},${bz}`, bucket = apertureBuckets.get(key) ?? [];
         bucket.push(opening); apertureBuckets.set(key, bucket); apertures.push(opening);
       };
-      for (let i = 0; i < walls.length; i++) for (let j = i + 1; j < walls.length; j++) {
-        const a = walls[i], b = walls[j];
+      const openingWalls = walls.filter(wall => wall.y - wall.halfY <= 1.8 && wall.y + wall.halfY >= .05
+        && (wall.halfX > wall.halfZ * 2 || wall.halfZ > wall.halfX * 2));
+      for (let i = 0; i < openingWalls.length; i++) for (let j = i + 1; j < openingWalls.length; j++) {
+        const a = openingWalls[i], b = openingWalls[j];
         if (a.y - a.halfY > 1.8 || a.y + a.halfY < .05 || b.y - b.halfY > 1.8 || b.y + b.halfY < .05) continue;
         const horizontal = a.halfX > a.halfZ * 2 && b.halfX > b.halfZ * 2;
         const vertical = a.halfZ > a.halfX * 2 && b.halfZ > b.halfX * 2;
