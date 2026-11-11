@@ -147,6 +147,30 @@ test('the courier: knockback and post-physics writes never cross a thin solid; s
   expect(stairCourier.transform.x).toBeLessThan(11.51);
   expect(stairs.physics.world!.getCollider(riser)!.contactCollider(stairs.physics.playerCollider!, 0)?.distance ?? 0).toBeGreaterThanOrEqual(-.005);
 
+  // r36-l8gates (QA P1 "the courier ends up outside the closed exit gate while the gorilla is still alive"): a closed
+  // arena gate is a sim barrier only (no Rapier collider, no combat cover). A one-tick shove (charge 3.2 m, kick/swipe 3 m,
+  // Alpha throw 6 m), a de-penetration out of a solid that lands on her, or the nearest-free-spot search must never put
+  // her on the far side; an infected shoved into it stays on its side too.
+  for (const shove of ['knockback', 'alpha-throw', 'squeeze', 'nearest-spot', 'infected'] as const) {
+    const g = await arena(), c = g.entities.get(1)!, gate = { x: 12, z: 0, y: 1.5, halfX: .25, halfZ: 3.6, halfY: 1.5 };
+    g.solids.setBarrier('test.arena-gate', gate);
+    g.events.emit({ type: 'world.blocker.changed', tick: g.tick, id: 987656, blocked: true, wall: gate });
+    expect(g.solids.relocate(c, { x: 11.36, z: 0, y: .705 }, 'test.at-gate', 0, false)).toBe(true);
+    tick(g, 2);
+    if (shove === 'knockback') g.knockback(c, { x: 1, z: 0 }, 3);
+    if (shove === 'alpha-throw') g.knockback(c, { x: .96, z: .28 }, 6);
+    if (shove === 'squeeze') { g.solids.setBarrier('test.landed-crate', { x: 10.95, z: 0, y: 1, halfX: .5, halfZ: .5, halfY: 1 }); }
+    if (shove === 'nearest-spot') { g.solids.setBarrier('test.landed-crate', { x: 10.9, z: 0, y: 1, halfX: .5, halfZ: 1.5, halfY: 1 }); c.transform.x = 11.6; }
+    if (shove === 'infected') {
+      const runner = g.entities.get(g.infected!.spawn('infected.runner', { x: 11.3, z: 2 }, { state: 'idle' }))!;
+      tick(g, 1); g.knockback(runner, { x: 1, z: 0 }, 3.2); tick(g, 2);
+      expect(runner.transform.x, shove).toBeLessThan(12);
+      continue;
+    }
+    tick(g, 3);
+    expect(c.transform.x, shove).toBeLessThan(12 - .25);
+  }
+
   // The shotgun keeps its authored distance, but death positions advance over eight collision-tested ticks.
   for (const blocked of [false, true]) {
     const s = await arena(), runner = s.entities.get(s.infected!.spawn('infected.runner', { x: 10, z: 8 }, { state: 'idle' }))!;
