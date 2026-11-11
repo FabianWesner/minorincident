@@ -1,30 +1,67 @@
-# s55-lionmotion: investigation in progress
+# s55-lionmotion: completed
 
-Date: 2026-11-11
+Final audit: 2026-11-12. Motion fixes committed; no model assets, gameplay stats,
+corpse lifetime, or simulation behavior changed.
 
-## Current candidate summary
+## Result and acceptance evidence
 
-The motion defects found are: healthy zoo animals entered humanoid lean layers;
-continuous crowd skins missed the live-skin paw path; support correction could
-drop/release the pelvis abruptly; clip fades re-solved already corrected poses;
-and healthy cats lost their stalk crouch at a hard speed threshold.
+The flicker came from render correction, not root movement or atlas frame snapping:
+healthy zoo animals entered humanoid lean layers, private crowd skins missed the
+continuous paw path, support offsets snapped, and clip fades corrected the outgoing
+pose twice. Cats also lost their stalk crouch at a hard speed threshold. Shared
+contact state now uses elapsed animation time, so repeated rendering at the same
+timestamp cannot advance feet. The small fixes retain the existing gait/atlas system.
 
-The candidate fixes those render paths without asset or simulation-stat edits.
-The full objective is **not yet accepted**: the full remote unit suite and
-62-row scene gate now pass, but the consolidated acceptance audit and complete
-real-fixture comparison coverage remain.
+Metric: maximum adjacent-frame root translation, wrapped yaw, root-relative pelvis
+height, and heading-local paw displacement at 60 Hz. Raw traces retain fractional
+pose-atlas indices. The controlled route measures 10 s at 1 m/s and 5 s at 3.2 m/s;
+it overrides only test actors in the loaded real L8 save, on a flat interior lane.
+Natural AI behavior is measured separately below.
 
-| Measurement | Before | Current measured after | Scope |
-| --- | ---: | ---: | --- |
-| Maximum pelvis frame step | 98.05 cm | 0.37 cm | Controlled centered cat 10 s walk + 5 s run |
-| Speed-threshold pelvis step | 4.40 cm | 0.37 cm | Healthy cat, same walk clip |
-| Real L8 pelvis step, lion | 95.69 cm | 0.83 cm | Same 15 s fixture/probe |
-| Real L8 pelvis step, lioness | 100.80 cm | 0.56 cm | Same 15 s fixture/probe |
+| Matched L8 route metric | Before | After |
+| --- | ---: | ---: |
+| Lion maximum pelvis step | 98.05 cm | 0 cm |
+| Lioness maximum pelvis step | 98.05 cm | 0 cm |
+| Lion maximum local paw step | 56.83 cm | 5.58 cm |
+| Lioness maximum local paw step | 56.87 cm | 6.12 cm |
+| Maximum root step, both | 5.333 cm | 5.333 cm |
+| Maximum yaw step, both | 0 | 0 |
 
-All 16 centered cat backend/tier/zoom configurations drew 900/900 frames, with
-zero measured sole penetration and zero reported run jitter. These summaries
-are evidence with the detailed limits recorded below, not a completion claim.
+Both sides drew 900/900 frames (899 adjacent samples). Root displacement equals
+speed/60, rather than an unexplained position jump. Ordinary animated paw travel
+remains; the approximately one-metre runtime discontinuities are removed.
+[Matched comparison](cat-comparison.json).
 
+- Scene Lab: all 16 cat combinations (lion/lioness, WebGL2/WebGPU, high/low,
+  zoom 1/1.5) drew all 900 frames; no measured sole penetration or run jitter.
+- Real L8: all eight backend/tier/camera-scale combinations drew both cats for
+  900/900 frames, zero pelvis steps, root steps bounded by speed/60, and local paw
+  steps at most 6.12 cm. Backend receipts match requests. Fixture framing uses
+  explicit cinematic camera distance scales 1/1.5. [Matrix](fixture-matrix.json).
+- Natural L8: lion pelvis maximum 95.69 -> 0.83 cm; lioness 100.80 -> 0.56 cm,
+  with unchanged root/yaw maxima. Natural AI does not supply a five-second run,
+  hence the separate controlled route above.
+- Zebra, gorilla, elephant, monkey and flamingo have matched original/current
+  measurements. Large shared support pops are removed; zebra's remaining 8.11 cm
+  vertical step is exactly the authored atlas trajectory, not a runtime correction.
+  [Other species](zoo-comparison.json).
+- Five redraws at one timestamp produce zero joint drift. Infected cats remain
+  finite; full scene gates include courier and companion clips.
+- Opened and reviewed the synchronized twelve-frame [contact sheet](l8-contact-sheet.jpg):
+  horizontal bodies, attached limbs and intermediate walking poses; fence bars
+  obscure some feet. Also inspected the final prewarmed route frame 180: both cats
+  visible with horizontal bodies and attached limbs, clear of the fence.
+- Required remote `npm test`: exit 0, 27 files, 106 passed/1 skipped, within the
+  repository's 150-case cap. Final `SCENE_PORT=4952 npm run scene:gate`: **62/62**,
+  zero known/not-run. [Gate receipt](scene-gate-summary.md). Typecheck/lint also pass.
+
+Baseline render source: `60840f0d`; temporary baseline runs restored current source
+byte-for-byte. All browser runs were headless through the e2e lock on 4951/4952.
+No assets, specs, protected references, or deployment branches were changed.
+
+The remaining sections preserve the investigation history. Earlier incomplete
+status, failed attempts, and narrower coverage are superseded by this final audit
+and the full-coverage receipts above.
 
 ## Scope
 
