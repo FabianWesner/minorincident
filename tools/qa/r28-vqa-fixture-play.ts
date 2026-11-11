@@ -92,6 +92,7 @@ try {
   await page.mouse.click(640, 360);
   const key = weaponKey(values.weapon!); if (key) await page.keyboard.press(`Digit${key}`);
   const held = new Set<string>();
+  let firing = false;
   const press = async (keys: string[]) => {
     for (const k of [...held]) if (!keys.includes(k)) { await page.keyboard.up(k); held.delete(k); }
     for (const k of keys) if (!held.has(k)) { await page.keyboard.down(k); held.add(k); }
@@ -185,7 +186,9 @@ try {
     if (values['idle-when'] && new RegExp(values['idle-when']).test(`${e.objective} | ${e.tracker}`)) { await press([]); if (Date.now() - lastShot > shotEvery) { lastShot = Date.now(); await capture({ path: `${out}/s${String(shotN++).padStart(3, '0')}-t${e.tick}-idle.jpg`, type: 'jpeg', quality: 70 }); } if (Date.now() - lastLog > 3000) { lastLog = Date.now(); log({ idle: true, tick: e.tick, objective: e.objective, tracker: e.tracker, player: { x: +e.player.x.toFixed(1), z: +e.player.z.toFixed(1), hp: Math.round(e.player.hp) } }); } await page.waitForTimeout(100); continue; }
     if (values['hold-e'] && e.prompt) keys.push('KeyE');
     // While driving Space is the horn/boost (K the handbrake): only fire on foot.
-    if (target && !e.driving && !values['no-fire']) { await page.mouse.move(target.aim.x, target.aim.y); keys.push('Space'); }
+    const shoot = !!target && !e.driving && !values['no-fire'];
+    if (shoot) await page.mouse.move(target!.aim.x, target!.aim.y);
+    if (shoot !== firing) { if (shoot) await page.mouse.down(); else await page.mouse.up(); firing = shoot; }
     // r33-vqa: at the L9 rail-stall hatch the courier fights from the hull: select the weapon (keys do not take while
     // driving, retry here) and fire with the left mouse button at the nearest drawn enemy.
     // r35-vqa: the first weapon key can land while the briefing panel is still open; retry on foot until the wanted weapon is held.
@@ -222,6 +225,7 @@ try {
     await page.waitForTimeout(100);
   }
   await press([]);
+  if (firing) await page.mouse.up();
   const performanceSummary = await page.evaluate(() => {
     const w = window as unknown as { __r28FrameTimes: number[]; __r28LongFrames: { tick: number; ms: number; elapsedMs: number }[] };
     const times = w.__r28FrameTimes.slice().sort((a, b) => a - b);
