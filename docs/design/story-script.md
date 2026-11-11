@@ -40,8 +40,10 @@ hatches, army dogs among them — turned K9s that still wear their vests.
 - The player watches a keeper get pulled down at the flamingo pond, and a flamingo turn.
 
 **Beat 3 · Zoo outbreak (the animal fights).** The animals she just admired turn, one enclosure after another.
-Each is a boss fight with its own rules (see `boss-and-alpha-moves.md`): flamingo flock, zebra herd, monkey pack, the lion
-and lioness, the gorilla. Every arena blocks the way on until its boss falls. Normal ammunition for every weapon.
+Each is a boss fight with its own rules (see `boss-and-alpha-moves.md`), in route order (r33-l8route, PO 11-10: "The L8 needs a clear path the user has to move"):
+flamingo flock, lion and lioness, monkey pack, zebra herd, the gorilla, then the elephant at the APC. The zoo is one line of six cells: hedge lines and
+army barricades close every shortcut and each enclosure is the only door between two cells. Walking into an enclosure starts its fight, the entry gate
+shuts behind the group, and the exit gate opens when the boss falls (checkpoint at each exit gate). Normal ammunition for every weapon.
 - Objective: *Lead the group to the armored vehicle.*
 
 **Beat 4 · The old elephant (final boss, at the APC).** PO 2026-11-09: "Let's use some of the animals as L8 boss instead of the Mega."

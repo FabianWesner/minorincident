@@ -513,8 +513,9 @@ async function zooParkedBoarding(): Promise<void> {
     expect(mission.state.marker, 'the opening defence has no destination pin').toBeNull();
     expect(objectiveText(mission, mission.def.steps[1].text)).toBe('Protect the group!');
     world.tick = zoo.state.breachedAt + 1800; advance(1);
-    expect(mission.state.marker).toBe('arena-flamingo');
-    expect(mission.def.steps.find(step => step.id === 'escape')!.text).toMatch(/^Defeat Flamingo flock/);
+    // r33-l8route: the marker is the route node (back to the plaza until the doors shut, then the pond gate), never an arena across a fence.
+    expect(mission.state.marker).toBe('l8-route');
+    expect(mission.def.steps.find(step => step.id === 'escape')!.text).toMatch(/^(Back to the plaza|Through the flamingo pond)/);
     for (const restored of [false, true]) {
       if (restored) mission.restore('sanctuary');
       advance(60);

@@ -1,5 +1,5 @@
 import { L8ArenaBot } from './L8ArenaBot';
-import { l8BossArenas } from '../../data/l8Bosses';
+import { l8BossArenas, l8Route } from '../../data/l8Bosses';
 import { strikeAt } from './helpers';
 import { emptyInput, type InputFrame } from '../../input/InputFrame';
 import type { SimWorld } from '../../sim/world/SimWorld';
@@ -25,7 +25,9 @@ export class LevelEightBot {
       this.breachHoldStarted ||= w.tick;
       if (w.tick - this.breachHoldStarted < 60 * 60) return f;
     }
-    if (!calm && !zoo.protecting() && this.profile === 'complete') {
+    // r33-l8route: after the opening hold the courier walks the group back into the plaza; the doors shut once everyone is inside.
+    const unsealed = !calm && !zoo.protecting() && !zoo.state.sealedAt;
+    if (!calm && !zoo.protecting() && !unsealed && this.profile === 'complete') {
       const next = zoo.state.arenas.find(a => a.phase !== 3);
       if (next) return this.arenas.sample(next.id);
     }
@@ -42,9 +44,10 @@ export class LevelEightBot {
     let target = zoo.protecting() ? m.def.anchors['central-plaza'] : m.state.steps.sanctuary.status === 'active' ? calm ? w.entities.get(zoo.state.keeperId)!.transform : m.def.anchors['central-plaza'] : boarded ? door : { x: passengerDoor.x - 4, z: passengerDoor.z + 2 };
     if (!calm && !zoo.protecting() && this.profile === 'runner') target = p.x < 85 ? { x: 90, z: 60 } : { x: passengerDoor.x - 4, z: passengerDoor.z + 2 };
     if (zoo.protecting()) this.escapeLeg = 0;
-    if (!calm && !zoo.protecting() && !boarded && this.profile !== 'runner') {
-      // Stay on the public service boulevard; the shortest grid route cuts across the zebra paddock.
-      const road = [{ x: 26, z: 8 }, { x: 26, z: 60 }, { x: 88, z: 60 }];
+    if (unsealed) target = m.def.anchors['central-plaza'];
+    else if (!calm && !zoo.protecting() && !boarded && this.profile !== 'runner') {
+      // The east service lane is the only way to the yard: walk its route nodes, then the nav takes over inside the yard.
+      const road = l8Route.at(-1)!.nodes;
       if (p.x > 85 && p.z > 46) this.escapeLeg = road.length;
       while (this.escapeLeg < road.length && Math.hypot(p.x - road[this.escapeLeg].x, p.z - road[this.escapeLeg].z) < 2) this.escapeLeg++;
       if (this.escapeLeg < road.length) target = road[this.escapeLeg];

@@ -21,6 +21,7 @@ import { markerAnchor } from '../../src/sim/missions/markerAnchor';
 import { l10MegaResumeCheck } from '../helpers/l10MegaResume';
 import { l10MegaFightCheck } from '../helpers/l10MegaFight';
 import { checkL8Story } from '../helpers/l8Story';
+import { checkL8Route } from '../helpers/l8Route';
 import { emergeResident, emergeSpeedMs, walkResidents } from '../../src/sim/outbreak/HouseEmergence';
 import { validateSave } from '../../src/sim/progression/Save';
 import { corpseDetour } from '../../src/sim/missions/missionHelpers';
@@ -155,6 +156,7 @@ test('interactions: ring, input and view predicates agree for every interact ste
         expect(mission.state.marker).toBe('central-plaza');
         expect(objectiveText(mission, mission.def.steps[0].text)).toBe('Follow Nadia to the central plaza');
         await checkL8Story();
+        await checkL8Route();
         mission.completeObjective('sanctuary');
         expect(mission.state.states.breached, 'debug graph advancement still reconstructs the real breach checkpoint').toBe(true);
         mission.restore('sanctuary');

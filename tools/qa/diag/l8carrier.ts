@@ -6,7 +6,7 @@ import { loadLevel } from '../../sim-runner/levels';
 import { followFrustum } from '../../sim-runner/l3Bots';
 import { LevelEightBot } from '../../../src/debug/bot/LevelEightBot';
 import { preset } from '../../../src/sim/progression/Campaign';
-import { l8BossArenas } from '../../../src/data/l8Bosses';
+import { l8BossArenas, l8Route, inRect } from '../../../src/data/l8Bosses';
 const seed = Number(process.argv[2] ?? 1), quiet = process.argv[3] === 'quiet';
 const campaign: any = preset('L8-default' as any);
 campaign.seed = seed; campaign.settings.quality = 'low';
@@ -19,7 +19,8 @@ for (let i = 0; i < 1300 * 60 && !bot.finished; i++) {
   followFrustum(w); w.applyInput(bot.sample(), 'keyboard'); w.update();
   for (const a of zoo.state.arenas) {
     const def = l8BossArenas.find((d: any) => d.id === a.id)!;
-    if (a.phase === 0 && near[a.id] === undefined && (Math.hypot(player.transform.x - def.entry.x, player.transform.z - def.entry.z) < 12 || Math.hypot(player.transform.x - def.centre.x, player.transform.z - def.centre.z) < def.radius * .75)) near[a.id] = w.tick;
+    // r33-l8route: the courier inside the enclosure zone (the engage trigger), not near an entry point he passes during the calm tour.
+    if (a.phase === 0 && near[a.id] === undefined && inRect(player.transform, l8Route.find(r => r.id === a.id)!.zone)) near[a.id] = w.tick;
     if (a.phase >= 1 && start[a.id] === undefined) { start[a.id] = w.tick; aliveAtStart[a.id] = a.ids.filter((id: number) => (w.entities.get(id)?.health.current ?? 0) > 0).length; }
   }
   if (!quiet && i % (10 * 60) === 0) {

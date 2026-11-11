@@ -41,16 +41,16 @@ Level mix (keeps accepted levels recognisable; only the move sets grow):
 ## L8 animal boss fights (each a short arena)
 
 Each fight: one animal (or one pack), health bar shown when it engages, clear telegraphs, a tactic that wins, a fail state
-(the courier downed → checkpoint at the arena entry). PO 2026-11-09: every arena blocks the route until its boss falls; normal ammunition
+(the courier downed → checkpoint at the arena entry). PO 2026-11-09: every arena blocks the route until its boss falls (r33-l8route: the table is in route order flamingo, lion, monkey, zebra, gorilla, elephant; the fight starts when the courier steps into the enclosure, the entry gate shuts behind the group, the exit opens on the clear); normal ammunition
 for every weapon (no L8 rocket scarcity); every boss reacts to hits (stagger/turn/attack) and never idles while engaged. The elephant is
 the final L8 boss at the APC; the Mega does not appear in L8.
 
 | # | Boss | Arena | Moves (telegraph) | Winning tactic | Phases |
 |---|---|---|---|---|---|
 | 1 | **Flamingo flock** (6–8) | pond with reeds | Swarm circling, then line dive (shadow line on the ground 0.6 s) | Step out of the shadow line; shotgun/MG sweeps | Dives get faster when half are down |
-| 2 | **Zebra herd** (4–5) | paddock with fences | Stampede down a lane (dust + rumble 1 s), single kicks up close | Leave the lane (fences turn the herd); shoot stragglers | Second stampede from the opposite side |
+| 2 | **Lion** (later a lioness joins) | rock enclosure with cover | Stalks out of sight (low growl), pounce (crouch + eye glint 0.6 s), pin | Keep your back to rocks; dodge sideways on the glint; shoot in the recovery | Phase 2: the lioness flanks while the lion roars |
 | 3 | **Monkey pack** (6–10) | primate house, ropes and roofs | Harass from roofs, then grab-and-pull (a monkey hangs on the courier, weapon swap blocked 2 s), throw fruit/debris | Fight in the doorway choke point; shake off by melee | Leader monkey (bigger) appears when half are down; killing it scatters the rest |
-| 4 | **Lion** (later a lioness joins) | rock enclosure with cover | Stalks out of sight (low growl), pounce (crouch + eye glint 0.6 s), pin | Keep your back to rocks; dodge sideways on the glint; shoot in the recovery | Phase 2: the lioness flanks while the lion roars |
+| 4 | **Zebra herd** (4–5) | paddock with fences | Stampede down a lane (dust + rumble 1 s), single kicks up close | Leave the lane (fences turn the herd); shoot stragglers | Second stampede from the opposite side |
 | 5 | **Gorilla** | gorilla house, pillars, barrels | Chest-beat roar (stun 8 m, 1 s windup — interrupt by hitting it), throws barrels/benches (Thrower rules), ground pound (ring) | Break line of sight behind pillars; hit it during the chest-beat (it is exposed) | Phase 2 at half health: enraged, throws faster, smashes pillars (destruction system) |
 | 6 | **Elephant** | elephant yard, walls, a truck | Charge (trumpet + foot stamp 0.9 s), trunk swipe up close | Sidestep so it charges into a wall or the truck; it is stuck and exposed 2 s | Three successful wall hits end the fight (or damage) |
 

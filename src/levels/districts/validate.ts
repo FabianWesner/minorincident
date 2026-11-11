@@ -124,7 +124,7 @@ export function validateLayout(
     )
       errors.push(`road lane overlap ${p.id}`);
     // kit.crossing-crash is the L9 collapsed-road section: it must sit on the road by definition.
-    if (p.allowRoad && !["veh.wreck", "prop.traffic-cone", "kit.crossing-crash"].includes(p.assetId))
+    if (p.allowRoad && !["veh.wreck", "prop.traffic-cone", "kit.crossing-crash", "prop.jersey-barrier"].includes(p.assetId))
       errors.push(`illegal road exception ${p.id}`);
   }
   return errors;

@@ -1,4 +1,4 @@
-import { l8BossArenas, l8EncounterGates, l8YardGates, l8YardWalls, type L8BossId } from '../../data/l8Bosses';
+import { l8BossArenas, l8EncounterGates, l8GateClosed, l8PlazaGates, l8Route, l8YardGates, l8YardWalls, inRect, type L8BossId } from '../../data/l8Bosses';
 import type { InfectedSpecialMove } from '../../data/infected';
 import { propFootprint } from '../interact/PropSystem';
 import { boxContact, type SolidBox } from '../world/SolidGeometry';
@@ -16,6 +16,10 @@ export interface L8ArenaState {
   track?: { x: number; z: number; vx: number; vz: number; turn: number; at: number };
   /** r31-flamingo: flights called in so far (1 = the original flock). */
   flights?: number;
+  /** r33-l8route: the entry gate shuts behind the group once everyone is inside (or after the straggler window). */
+  armed?: boolean;
+  /** First tick the courier stood inside the enclosure while no animal had turned yet. */
+  zoneAt?: number;
 }
 const distance = (a: { x: number; z: number }, b: { x: number; z: number }) => Math.hypot(a.x - b.x, a.z - b.z);
 /** Arena state belongs to the L8 checkpoint seam. Turns retain the original healthy animal's entity ID. */
@@ -51,10 +55,9 @@ export class L8BossArenas {
       }
       this.state.push({ id: def.id, ids, carrier: 0, phase: 0, startedAt: 0, endedAt: 0, nextAt: 0, cycle: 0, wallHits: 0, grabs: 0, counters: 0 });
     }
-    this.updateGates();
   }
-  /** Closed keeper gates sit at the far end of each enclosure, leaving the authored entry open for its fight. */
-  private updateGates(): void {
+  /** r33-l8route: every cell door follows `l8GateClosed`; the pond's north door and the plaza doors follow the seal, the yard keeps its own locks. */
+  updateGates(): void {
     const breached = this.state.some(a => a.id === 'elephant' && !!a.breachAt);
     if (this.gateStates.get('breach') !== breached) {
       this.gateStates.set('breach', breached);
@@ -66,16 +69,30 @@ export class L8BossArenas {
       l8YardWalls.forEach((wall, i) => this.barrier(`l8.yard-wall.${i}`, 900810 + i, { ...wall, y: 1.5, halfY: 1.5 }, !(i === 2 && breached)));
       l8YardGates.forEach((gate, i) => this.barrier(`l8.yard-gate.${i}`, 900820 + i, { ...gate, y: 1.5, halfY: 1.5 }, yardClosed));
     }
-    const gates = l8EncounterGates;
-    for (const arena of this.state) {
-      const gate = gates[arena.id];
-      // Keep the tunnel's authored walk-out open while it can still reach a
-      // healthy pack member. The yard's keeper locks already block the escape.
-      const allTurned = arena.ids.every(id => { const e = this.w.entities.get(id); return !e?.civilian || e.health.current <= 0; });
-      const closed = arena.id === 'elephant' ? !!this.mission.state.states.breached && arena.phase !== 3 : arena.phase > 0 && arena.phase < 3 && allTurned;
-      if (this.gateStates.get(arena.id) === closed) continue;
-      this.gateStates.set(arena.id, closed);
-      this.barrier(`l8.arena-gate.${arena.id}`, 900830 + l8BossArenas.findIndex(a => a.id === arena.id), { ...gate, y: 1, halfY: 1 }, closed);
+    const ctx = { arenas: this.state, sealed: !!this.mission.l8!.state.sealedAt };
+    l8Route.forEach((stage, i) => {
+      for (const [side, box, navId] of [['entry', stage.entry, 900840 + i * 2], ['exit', stage.exit, 900841 + i * 2]] as const) {
+        if (!box) continue;
+        const key = `${stage.id}.${side}`, closed = l8GateClosed(key, ctx);
+        if (this.gateStates.get(key) === closed) continue;
+        this.gateStates.set(key, closed);
+        this.barrier(`l8.route-gate.${key}`, navId, { ...box, y: 1.5, halfY: 1.5 }, closed);
+      }
+    });
+    Object.entries(l8PlazaGates).forEach(([side, box], i) => {
+      const key = `plaza.${side}`, closed = l8GateClosed(key, ctx);
+      if (this.gateStates.get(key) === closed) return;
+      this.gateStates.set(key, closed);
+      this.barrier(`l8.plaza-gate.${side}`, 900860 + i, { ...box, y: 1.5, halfY: 1.5 }, closed);
+    });
+    // The elephant's drive-out gate shuts while he is loose in the yard.
+    const elephant = this.state.find(a => a.id === 'elephant');
+    if (elephant) {
+      const closed = !!this.mission.state.states.breached && elephant.phase !== 3;
+      if (this.gateStates.get('elephant') !== closed) {
+        this.gateStates.set('elephant', closed);
+        this.barrier('l8.arena-gate.elephant', 900830 + l8BossArenas.findIndex(a => a.id === 'elephant'), { ...l8EncounterGates.elephant, y: 1, halfY: 1 }, closed);
+      }
     }
   }
   private barrier(id: string, navId: number, wall: SolidBox, closed: boolean): void {
@@ -100,7 +117,8 @@ export class L8BossArenas {
       if (arena.phase === 3) continue;
       const def = l8BossArenas.find(a => a.id === arena.id)!;
       const previous = this.state[this.state.indexOf(arena) - 1];
-      const routeOpen = !previous || previous.phase === 3;
+      const routeOpen = previous ? previous.phase === 3 : !!this.mission.l8!.state.sealedAt;
+      const stage = l8Route.find(r => r.id === arena.id)!, inZone = inRect(player.transform, stage.zone);
       // The old elephant stays healthy in his enclosure until the vehicle-yard
       // finale is reachable; an early distant health bar must not be a dormant boss.
       if (arena.id === 'elephant' && !routeOpen) continue;
@@ -108,7 +126,7 @@ export class L8BossArenas {
       const healthy = arena.ids.map(id => w.entities.get(id)).filter(e => e?.civilian && !e.infection && e.health.current > 0);
       // Residents physically walk from real tunnels to animals; a player can interrupt every grab.
       if (arena.carrier && (w.entities.get(arena.carrier)?.health.current ?? 0) <= 0) { arena.carrier = 0; arena.carrierRetryAt = w.tick + 300; }
-      if (!arena.carrier && healthy.length && w.tick >= (arena.carrierRetryAt ?? 0)) arena.carrier = arena.id === 'flamingo' && !this.mission.l8!.state.animalBiteStarted ? 0 : arena.id === 'flamingo' && (w.entities.get(this.mission.l8!.state.animalInterceptionId)?.health.current ?? 0) > 0 ? this.mission.l8!.state.animalInterceptionId : this.mission.l8!.arenaCarrier(healthy[0]!.id);
+      if (!arena.carrier && healthy.length && w.tick >= (arena.carrierRetryAt ?? 0) && (routeOpen || arena.id === 'flamingo')) arena.carrier = arena.id === 'flamingo' && !this.mission.l8!.state.animalBiteStarted ? 0 : arena.id === 'flamingo' && (w.entities.get(this.mission.l8!.state.animalInterceptionId)?.health.current ?? 0) > 0 ? this.mission.l8!.state.animalInterceptionId : this.mission.l8!.arenaCarrier(healthy[0]!.id);
       const carrier = w.entities.get(arena.carrier), victim = healthy[0];
       if (carrier?.infected && carrier.health.current > 0 && !carrier.emerging && victim) {
         if (carrier.infected.arenaCarrier !== victim.id) { w.infected!.pursueTarget(carrier.id, victim.id); carrier.infected.arenaCarrier = victim.id; }
@@ -119,16 +137,21 @@ export class L8BossArenas {
         const elephant = w.entities.get(arena.ids[0]);
         if (elephant?.emerging && w.tick - arena.startedAt >= 60) elephant.emerging = false;
       }
-      const provoked = live.some(e => e.infected!.provoked?.id === 1 && (e.infected!.provoked?.until ?? 0) > w.tick);
       const hale = w.entities.get(this.mission.l8!.state.haleId);
       const finaleReady = arena.id !== 'elephant' || !hale || hale.health.current <= 0 || distance(hale.transform, this.mission.l8!.door()) < 2.5;
       if (arena.phase === 0 && arena.ids.every(id => (w.entities.get(id)?.health.current ?? 0) <= 0)) {
-        arena.phase = 3; arena.endedAt = w.tick; this.signal(arena, 'cleared'); continue;
+        arena.phase = 3; arena.endedAt = w.tick; this.signal(arena, 'cleared'); this.cleared(arena); continue;
       }
-      if (arena.phase === 0 && finaleReady && (routeOpen || provoked) && live.length && (distance(player.transform, def.entry) < 12 || arena.id === 'elephant' && distance(player.transform, def.centre) < def.radius
-        // A courier already inside the paddock (turned pack, no longer near the entry) used to wait ~340 s for a provocation.
-        || distance(player.transform, def.centre) < def.radius * .75 || provoked)) {
-        arena.phase = 1; arena.startedAt = w.tick; arena.nextAt = w.tick + 90;
+      // r33-l8route: the fight starts when the courier steps into the enclosure (the next one on the route), never from a distance. An animal that no
+      // tunnel runner could reach through the closed gates turns the moment the courier is among them.
+      if (arena.phase === 0 && routeOpen && inZone && !live.length && !arena.ids.some(id => !!w.entities.get(id)?.infection) && healthy.length) {
+        arena.zoneAt ??= w.tick;
+        if (w.tick - arena.zoneAt >= 150) for (const e of healthy) w.npcs!.civilians.outbreak!.infect(e!, arena.carrier || 1);
+      }
+      if (arena.phase === 0 && finaleReady && routeOpen && live.length && inZone && !this.mission.l8!.protecting()) {
+        // The restore point is taken in phase 0 with the entry gate still open (the courier stands just outside it).
+        this.mission.checkpoint(`arena-${arena.id}`, def.entry);
+        arena.phase = 1; arena.startedAt = w.tick; arena.nextAt = w.tick + 90; arena.armed = false;
         if (arena.id === 'elephant') {
           // The old elephant breaks into the vehicle yard for the final stand;
           // preserve the turned animal's entity and health for the whole fight.
@@ -143,8 +166,15 @@ export class L8BossArenas {
           }
         }
         for (const e of live) e.infected!.arenaBoss!.engaged = !(arena.id === 'lion' && e.infected!.arenaBoss!.slot === 1 || arena.id === 'monkey' && e.infected!.arenaBoss!.slot === 6);
-        this.mission.checkpoint(`arena-${arena.id}`, def.entry);
         this.announce(`${def.name}: ${def.counter}`); this.signal(arena, 'engaged');
+      }
+      // The entry gate closes behind the group: once every living follower is inside, or after 20 s when none is still at the gate (never on a follower).
+      if (arena.phase > 0 && arena.phase < 3 && !arena.armed && stage.entry) {
+        const gate = stage.entry, pending = this.mission.l8!.followers().filter(e => !inRect(e.transform, stage.zone));
+        const near = (e: EntitySnapshot, pad: number) => Math.abs(e.transform.x - gate.x) < gate.halfX + pad && Math.abs(e.transform.z - gate.z) < gate.halfZ + pad;
+        // A follower still near the gate (a civilian recovering from a flee) holds the gate open for up to 45 s; only one standing in the doorway holds it longer.
+        const since = w.tick - arena.startedAt;
+        if (inZone && Math.hypot(player.transform.x - gate.x, player.transform.z - gate.z) >= 5 && (!pending.length || since >= 1200 && !pending.some(e => near(e, 9)) || since >= 2700 && !pending.some(e => near(e, 1.5)))) arena.armed = true;
       }
       if (!arena.phase) continue;
       const pendingTurns = arena.ids.some(id => { const e = w.entities.get(id); return !!e?.infection || e?.civilian?.state === 'grabbed'; });
@@ -165,9 +195,18 @@ export class L8BossArenas {
         if (carrier?.infected) delete carrier.infected.arenaCarrier;
         arena.carrier = 0;
         for (const e of live) { w.infected!.cancelSpecial(e.id); e.infected!.arenaBoss!.engaged = false; e.infected!.state = 'scatter'; e.infected!.arenaBoss!.scattered = true; }
-        this.signal(arena, 'cleared');
+        this.signal(arena, 'cleared'); this.cleared(arena);
       }
     }
+  }
+  /** The exit (and the next entry) open at once; the restore point sits in the exit gate and a keeper line names the way on. */
+  private cleared(arena: L8ArenaState): void {
+    this.updateGates();
+    const stage = l8Route.find(r => r.id === arena.id)!;
+    if (!stage.exit) return;
+    this.mission.checkpoint(`cleared-${arena.id}`, { x: stage.exit.x, z: stage.exit.z });
+    const next = l8Route[l8Route.findIndex(r => r.id === arena.id) + 1];
+    if (next) this.mission.radio(next.clearedLine);
   }
   private callFlight(arena: L8ArenaState, def: typeof l8BossArenas[number]): void {
     arena.flights = (arena.flights ?? 1) + 1;
