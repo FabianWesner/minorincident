@@ -262,3 +262,13 @@ was therefore reverted, and prior PawContacts support corrections retained.
 The raw rejected run is `test-results/s55-lionmotion/authored-cats/`. No source
 simplification from that bypass was kept. The remaining task is to make the
 contact solver continuous while retaining planting and sole grounding.
+
+## Rejected catch-up restart guard
+
+Tested preserving active continuous-skin catch-up steps through the reach guard
+and phase wrap. The completed real-L8 repeat worsened maximum paw steps to
+14.629 cm for lion and 15.727 cm for lioness (accepted comparison 11.815/13.001
+cm). Reverted the source experiment. The reach guard's restart behavior alone
+does not explain the residual discontinuity. Direct target/solve instrumentation
+is still required before another contact-state change. `l8-after` currently
+contains this rejected run; earlier accepted summaries remain in this report.
