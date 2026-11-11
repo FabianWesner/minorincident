@@ -35,9 +35,9 @@ try {
   const joints = await session.page.evaluate(() => {
     const g = (window.__SCENE__ as unknown as { game: Game }).game;
     const rows: { name: string; at: number[] }[] = [];
-    g.view.scene.traverse(o => { if (/head|knee|shin|thigh/i.test(o.name)) {
+    g.view.scene.traverse(o => { if (/head|knee|shin|thigh|nose|muzzle/i.test(o.name)) {
       const p = o.position.clone(); o.getWorldPosition(p);
-      if (p.distanceTo(g.view.camera.position) < 20) rows.push({ name: o.name, at: p.toArray() });
+      if (p.distanceTo(g.view.camera.position) < 20) { rows.push({ name: o.name, at: p.toArray() }); if (o.name === 'head') for (const [axis, v] of [['x', [1,0,0]], ['y', [0,1,0]], ['z', [0,0,1]]] as const) rows.push({ name: `head-axis-${axis}`, at: o.localToWorld(p.clone().set(...v)).toArray() }); }
     } }); return rows;
   });
   writeFileSync(`${out}/joints.json`, JSON.stringify(joints, null, 2));
