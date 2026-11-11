@@ -1,4 +1,4 @@
-import { SolidRegistry } from './SolidRegistry';
+import { SolidRegistry, actorRadius } from './SolidRegistry';
 import { Destruction } from '../destruction/Destruction';
 import { cloneData } from '../../core/clone';
 import { finaleGunPlacement } from '../../data/minigun';
@@ -444,7 +444,11 @@ export class SimWorld implements Lifecycle {
     }
     this.solids.wrote(entity, 'combat.knockback');
     const distance = this.combat!.query.clearDistance(entity.transform, direction, impulse + (entity.combat?.radius ?? 0.4));
-    const move = Math.max(0, Math.min(impulse, distance - (entity.combat?.radius ?? 0.4)));
+    let move = Math.max(0, Math.min(impulse, distance - (entity.combat?.radius ?? 0.4)));
+    // r36-l8gates: sim barriers (arena/plaza gates, yard walls) are neither combat cover nor Rapier colliders. A one-tick
+    // shove (charge 3.2 m, zebra kick/elephant swipe 3 m, Alpha throw 6 m, blasts) moved the courier's capsule straight
+    // past a 0.5 m gate and the commit only validated the clear far side. Sweep the real footprint against every static solid.
+    if (entity.id === 1 && move > 0) move = Math.min(move, this.solids.sweep(entity, direction, move, actorRadius(entity), false, false));
     const nav = entity.infected ? this.infected?.infectedNav : this.infected?.nav;
     // Thin static colliders (picket fences, hedges) are on the walk grid, not in the combat wall query: knocked bodies
     // slide along them instead of passing through (PO #14).

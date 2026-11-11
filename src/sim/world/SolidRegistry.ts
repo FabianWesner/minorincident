@@ -59,6 +59,8 @@ export class SolidRegistry {
   failures = 0;
   admitted = 0;
   deferred = 0;
+  /** Commits that held a body on its side of a closed sim barrier (r36-l8gates diagnostics). */
+  barrierHolds = 0;
   private readonly barriers = new Map<string, SolidBox>();
   private barrierRevision = 0;
   private committedBarrierRevision = -1;
@@ -171,6 +173,32 @@ export class SolidRegistry {
     }
     else if (!this.barriers.delete(id)) return;
     this.barrierRevision++;
+  }
+
+  /** r36-l8gates: does the straight centre path from `a` to `b` cross the drawn core of a sim barrier (a closed gate)?
+   * End-point clearance alone let a shove, a projection or a nearest-free-spot search put a body on the far side of a 0.5 m gate. */
+  crossesBarrier(a: Point, b: Point): boolean {
+    if (!this.barriers.size) return false;
+    const dx = b.x - a.x, dz = b.z - a.z;
+    if (!dx && !dz) return false;
+    for (const box of this.barriers.values()) {
+      if (!(box.y + box.halfY > a.y - .6 && box.y - box.halfY < a.y + .65)) continue;
+      const hx = box.halfX - tolerance - skin, hz = box.halfZ - tolerance - skin;
+      const c = Math.cos(box.yaw ?? 0), s = Math.sin(box.yaw ?? 0), ox = a.x - box.x, oz = a.z - box.z;
+      const lx = ox * c - oz * s, lz = ox * s + oz * c, vx = dx * c - dz * s, vz = dx * s + dz * c;
+      // A body already inside the wall (a gate shut on it) may leave either way.
+      if (Math.abs(lx) < hx && Math.abs(lz) < hz) continue;
+      let t0 = 0, t1 = 1;
+      for (const [o, v, h] of [[lx, vx, hx], [lz, vz, hz]] as const) {
+        if (Math.abs(v) < 1e-9) { if (Math.abs(o) > h) { t0 = 2; break; } continue; }
+        let near = (-h - o) / v, far = (h - o) / v;
+        if (near > far) [near, far] = [far, near];
+        t0 = Math.max(t0, near); t1 = Math.min(t1, far);
+        if (t0 > t1) break;
+      }
+      if (t0 <= t1) return true;
+    }
+    return false;
   }
 
   /** Vehicles, ambient traffic, convoy and setpieces all register by stable entity ID, including on restore. */
@@ -374,7 +402,7 @@ export class SolidRegistry {
           const side = lateral < 0 ? -1 : 1, shift = side * (reach + skin) - lateral;
           to.x = t.x + direction.z * shift; to.z = t.z - direction.x * shift;
         }
-        if (this.relocate(other, to, 'special.swept-contact', 0, false)) continue;
+        if (!this.crossesBarrier(t, to) && this.relocate(other, to, 'special.swept-contact', 0, false)) continue;
       }
       distance = Math.max(0, entry - skin);
     }
@@ -410,7 +438,8 @@ export class SolidRegistry {
         }
         return false;
       }
-      if (!connected || p === at) return true;
+      if (!connected) return p === at || !this.crossesBarrier(at, p);
+      if (p === at) return true;
       const dx = p.x - at.x, dz = p.z - at.z, distance = Math.hypot(dx, dz);
       if (!distance) return true;
       direction.x = dx / distance; direction.z = dz / distance;
@@ -574,6 +603,9 @@ export class SolidRegistry {
     };
     for (const e of this.moved) {
       const proof = this.contactProofs[e.id], blocker = this.live[proof?.blocker ?? 0], p = e.transform, radius = this.bodyRadii[e.id];
+      // The courier never passes a closed gate between two committed poses (input, shoves, carried motion). Scripted moves use relocate/admit.
+      const from = e.id === 1 ? this.committedPoses[1] : undefined;
+      if (from && this.crossesBarrier(from, p)) { p.x = from.x; p.y = from.y; p.z = from.z; this.barrierHolds++; }
       // A previous contact is only a witness: retest its actual proposed pose,
       // current footprint, layer and attachment mask before rejecting movement.
       // If it has cleared, the normal registry query still checks every solid.
@@ -712,6 +744,8 @@ export class SolidRegistry {
         }
         const y = p.y; groundAgent(this.world, e);
         if (!valid || p.y !== y) valid = this.clear(p, radius, e.id, true, tolerance);
+        // A correction pushes a body out of contacts; it never carries it through a closed gate.
+        if (valid && this.crossesBarrier(proposed, p)) { valid = false; this.barrierHolds++; }
         if (!valid) {
           const to = old && this.clear(old, radius, e.id, true, tolerance) ? old : this.find(proposed, radius, e.id, 4, false);
           if (to) { Object.assign(p, to); valid = true; }

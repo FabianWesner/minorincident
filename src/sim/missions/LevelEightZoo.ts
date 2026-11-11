@@ -30,6 +30,8 @@ export interface L8ZooState {
   guideDone: number; guideLeg: number; guideArrivedAt: number; guideWaiting: boolean; lionUntil: number;
   /** r33-l8route: tick the plaza doors shut (0 = not yet), the route-marker leg/node, and the regions whose first walk-in wave has run (bit 1 north, 2 south, 4 east). */
   sealedAt: number; routeStage: number; routeNode: number; legWaves: number; plazaWaveAt: number; plazaBursts: number;
+  /** r36-l8gates: ticks of the "Protect the group" hold the courier spent away from the plaza (the hold pauses meanwhile). */
+  protectAway?: number;
 }
 /** r31-nadia: the sanctuary walk. Leg 2 is the lion enclosure stop (Nadia faces the cat and speaks); the last leg is the plaza centre. */
 const guideRoute: Point[] = [{ x: 24, z: 64 }, { x: 24, z: 0 }, { x: 40, z: 0 }, { x: -44, z: -10 }, { x: -40, z: 3 }, { x: 0, z: 0 }];
@@ -231,7 +233,7 @@ export class LevelEightZoo {
     const s = this.state, w = this.w, p = w.entities.get(1)!.transform;
     if (s.sealedAt || !this.breached || this.protecting() || !inRect(p, l8PlazaCell)) return;
     const outside = this.followers().filter(e => !inRect(e.transform, l8PlazaCell));
-    if (outside.length && w.tick < s.breachedAt + 75 * 60) return;
+    if (outside.length && w.tick < s.breachedAt + (s.protectAway ?? 0) + 75 * 60) return;
     s.sealedAt = w.tick;
     this.bosses.updateGates();
     this.mission.checkpoint('sealed');
@@ -252,7 +254,14 @@ export class LevelEightZoo {
   }
   private regionOutlets(region: number, index: number): boolean { return region === 1 ? index === 2 : region === 2 ? index === 0 || index === 3 : region === 4 ? index === 1 : region === 8 ? index >= 4 : false; }
   /** The opening shock keeps the group in the plaza before the APC route appears. */
-  protecting(): boolean { return this.breached && this.w.tick < this.state.breachedAt + 30 * 60; }
+  protecting(): boolean { return this.breached && this.w.tick < this.state.breachedAt + 30 * 60 + (this.state.protectAway ?? 0); }
+  /** r36-l8gates (QA P2 "the courier and some civilians can run far out of the plaza during 'Protect the group'"): the hold is
+   * fought in the plaza. Away from the cell (4 m grace) its 30 s pause and the objective calls her back. The group keeps
+   * following her: alone in the plaza it would face the two hatch cohorts without her. */
+  awayFromPlaza(): boolean {
+    const p = this.w.entities.get(1)!.transform, c = l8PlazaCell;
+    return p.x < c.x0 - 4 || p.x > c.x1 + 4 || p.z < c.z0 - 4 || p.z > c.z1 + 4;
+  }
   private passengersSeated(): boolean {
     const seats = this.w.entities.get(this.state.carId)!.vehicle!.passengers ?? [];
     return this.passengers().every(id => seats.some(seat => seat.id === id && seat.phase === 'seated'));
@@ -392,6 +401,7 @@ export class LevelEightZoo {
       this.mission.radio('L8.hale-breach');
     }
     if (this.breached) this.reyesFallback();
+    if (this.protecting() && this.awayFromPlaza()) s.protectAway = (s.protectAway ?? 0) + 1;
     this.mission.setState('apc-destroyed', w.entities.get(s.carId)!.health.current <= 0);
     const seated=this.w.vehicles!.active===s.carId;
     this.mission.setState('player-boarded',seated);
@@ -432,7 +442,7 @@ export class LevelEightZoo {
     // The first time the courier crosses a region with tunnels (after the seal), a small cohort walks in from its outlets.
     const here = s.sealedAt ? this.region(w.entities.get(1)!.transform) : 0;
     // "Protect the group!" is a sustained fight: two more bursts come out of the plaza hatches at 12 s and 24 s of the 30 s hold.
-    if (this.protecting() && s.plazaBursts < 2 && t >= s.breachedAt + (s.plazaBursts + 1) * 12 * 60) {
+    if (this.protecting() && s.plazaBursts < 2 && t >= s.breachedAt + (s.protectAway ?? 0) + (s.plazaBursts + 1) * 12 * 60) {
       s.plazaBursts++;
       s.outlets.forEach((outlet, i) => { if (i >= 4) for (let n = 0; n < (ai.director.tier === 'low' ? 2 : 3); n++) this.release(outlet, i); });
     }

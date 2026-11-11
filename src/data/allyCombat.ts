@@ -30,5 +30,6 @@ export const allyViewM = 22;
  * this close to itself; everything farther must be inside the player's view. Allies away from the player are not bound (option 3). Orchestrator decision 2026-10-13 on the PO's "they kill all Zombies before i see
  * them myself": no long-range clearing before the player sees it, but nobody dies off screen without defending. 0 = the strict rule. */
 export const allyOffscreenDefenceM: number = 6;
-/** Call-outs: per speaker cooldown, and the quiet time between any two call-outs. */
-export const allyCallout = { perAllyS: 9, globalS: 2.2 } as const;
+/** Call-outs: per speaker cooldown, the quiet time between any two call-outs, and between two of the same line from anyone
+ * (r36-l8gates P3: five rifle guards re-armed "They're inside!" every 2.2 s, so the bubble seemed to stay up for minutes). */
+export const allyCallout = { perAllyS: 9, globalS: 2.2, sameLineS: 30 } as const;

@@ -1,4 +1,4 @@
-import { BoxGeometry, Color, Group, InstancedMesh, Matrix4, Quaternion, Vector3 } from 'three/webgpu';
+import { Box3, BoxGeometry, Color, Group, InstancedMesh, Matrix4, Quaternion, Ray, Vector3 } from 'three/webgpu';
 import { l8EncounterGates, l8GateClosed, l8PlazaGates, l8Route, l8YardGates, l8YardWalls } from '../data/l8Bosses';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { Materials } from './Materials';
@@ -6,18 +6,25 @@ import type { Materials } from './Materials';
 /** Keeper fences draw the same boxes that own physical route admission (r33-l8route: the cell doors follow `l8GateClosed`, the same rule as the sim barriers). */
 export class L8Gates extends Group {
   private readonly geometry = new BoxGeometry(1, 1, 1);
-  private readonly rods: { p: Vector3; s: Vector3; gate: boolean; breach: boolean; key?: string }[] = [];
+  private readonly rods: { p: Vector3; s: Vector3; gate: boolean; breach: boolean; key?: string; panel: number }[] = [];
   private readonly mesh: InstancedMesh;
   private readonly poseMatrix = new Matrix4();
   private readonly poseRotation = new Quaternion();
   private readonly hiddenScale = new Vector3();
+  /** One drawn panel per gate/wall (its rods share the flag), for the courier x-ray test. */
+  private readonly panels: { bounds: Box3; shown: boolean }[] = [];
+  private readonly ray = new Ray();
+  private readonly target = new Vector3();
+  private readonly hit = new Vector3();
   constructor(private readonly world: SimWorld, materials: Materials) {
     super(); this.name = 'l8-keeper-gates';
     const fence = (box: { x: number; z: number; halfX: number; halfZ: number }, gate: boolean, breach = false, key?: string) => {
       const horizontal = box.halfX > box.halfZ, length = 2 * (horizontal ? box.halfX : box.halfZ);
+      const panel = this.panels.length;
+      this.panels.push({ bounds: new Box3(new Vector3(box.x - (horizontal ? box.halfX : .09), 0, box.z - (horizontal ? .09 : box.halfZ)), new Vector3(box.x + (horizontal ? box.halfX : .09), 2.8, box.z + (horizontal ? .09 : box.halfZ))), shown: true });
       const add = (along: number, y: number, width: number, height: number) => this.rods.push({
         p: new Vector3(box.x + (horizontal ? along : 0), y, box.z + (horizontal ? 0 : along)),
-        s: new Vector3(horizontal ? width : .18, height, horizontal ? .18 : width), gate, breach, key,
+        s: new Vector3(horizontal ? width : .18, height, horizontal ? .18 : width), gate, breach, key, panel,
       });
       for (const y of [.65, 1.55, 2.5]) add(0, y, length, .16);
       for (let along = -length / 2; along <= length / 2; along += 1) add(along, 1.4, .12, 2.8);
@@ -39,9 +46,22 @@ export class L8Gates extends Group {
       const hidden = rod.key === 'elephant' ? !this.world.missions?.state.states.breached || arenas?.find(a => a.id === 'elephant')?.phase === 3
         : rod.key ? !arenas || !l8GateClosed(rod.key, ctx)
         : rod.gate && !closed || rod.breach && !!arenas?.some(a => a.id === 'elephant' && a.phase > 0);
+      this.panels[rod.panel].shown = !hidden;
       this.poseMatrix.compose(rod.p, this.poseRotation, hidden ? this.hiddenScale : rod.s); this.mesh.setMatrixAt(i, this.poseMatrix);
     });
     this.mesh.instanceMatrix.needsUpdate = true;
+  }
+  /** r36-l8gates (QA P2 "L8 gate panels are drawn through the courier"): the panels stand inside the sim barrier, so she never
+   * overlaps one, but a 2.8 m lattice between the camera and her chest or head hides her behind its rods. Like a vehicle hull,
+   * the caller then draws her in the foreground slice with the gold contour. */
+  courierOccluded(camera: Vector3, courier: { x: number; y: number; z: number }): boolean {
+    for (const height of [.35, .85]) {
+      this.target.set(courier.x, courier.y + height, courier.z);
+      const distance = camera.distanceTo(this.target);
+      this.ray.origin.copy(camera); this.ray.direction.copy(this.target).sub(camera).normalize();
+      for (const panel of this.panels) if (panel.shown && this.ray.intersectBox(panel.bounds, this.hit) && this.hit.distanceTo(camera) < distance) return true;
+    }
+    return false;
   }
   dispose(): void { this.geometry.dispose(); this.mesh.dispose(); }
 }

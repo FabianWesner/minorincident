@@ -11,7 +11,8 @@ const clock = (ticks: number) => {
 };
 /** L8 Beat 1: the courier has arrived at the plaza and the calm runs until the (hidden) tunnel breach; "0 m" told the player nothing. */
 export function l8SanctuaryResting(mission: Mission): boolean {
-  if (!mission.def.l8 || mission.state.steps.sanctuary?.status !== 'active' || mission.state.states.breached) return false;
+  // r36-l8gates (QA P3 flicker): only once Nadia's tour has ended; her route crosses the plaza ring on the way to the lion.
+  if (!mission.def.l8 || mission.state.steps.sanctuary?.status !== 'active' || mission.state.states.breached || !mission.l8?.state.guideDone) return false;
   const plaza = mission.def.anchors['central-plaza'], p = mission.world.entities.get(1)?.transform;
   return !!plaza && !!p && Math.hypot(p.x - plaza.x, p.z - plaza.z) <= (plaza.radius ?? 6);
 }
@@ -58,7 +59,7 @@ export function objectiveText(mission: Mission, fallback: string): string {
   }
   if (mission.def.l8) {
     const zoo=mission.l8!, seated=w.vehicles!.active===zoo.state.carId;
-    if (zoo.protecting()) return 'Protect the group!';
+    if (zoo.protecting()) return zoo.awayFromPlaza() ? 'Back to the plaza! The group is under attack' : 'Protect the group!';
     if (l8SanctuaryResting(mission)) return 'Rest at the plaza with the group';
     if (zoo.state.departureFrom) return 'Something is following you.';
     const arena = zoo.bosses.statusText(); if (arena) return `${fallback} · ${arena}`;
