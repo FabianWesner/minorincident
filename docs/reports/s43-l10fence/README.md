@@ -11,6 +11,8 @@ Status: implementation committed; full browser matrix and final visual acceptanc
 
 ## Evidence so far
 
+- Added original-perimeter before rows low WebGL2 zoom 1.5 and high WebGL2 zoom 1, both opened and inventoried in `capture-matrix.json`. Four-second real-input runs had zero page errors. The old uniform rail pattern remains consistent at these quality/zoom settings. Five before rows remain missing. Owned preview stopped.
+
 - Prepared isolated before artifact `/private/tmp/s43-perimeter-before-dist`: current source with only `L10Perimeter.ts` replaced by its original `f58f6ef7` version for the build, then restored. Source checkout is clean. First matched-pose baseline row low WebGL2 zoom 1 completed with zero errors; opened `/private/tmp/s43-before-low-gl-z1/s001-t188.jpg`. Original uniform three-rail pattern contrasts with current concrete bases, braces and hazard marks. This isolates perimeter appearance rather than comparing all historical gameplay changes. Seven baseline matrix rows and matched draw-count comparison remain pending. Owned preview stopped.
 
 - Completed all eight current-build east-edge combinations (low/high × WebGL2/WebGPU × zoom 1/1.5). Last row low WebGL2 zoom 1.5: `/private/tmp/s43-edge-low-gl-z15/s001-t190.jpg`, opened, zero errors. `capture-matrix.json` inventories the eight opened rows; `perimeter-after.jpg` is the single small contact sheet. Geometry and colors are consistent across the matrix, with expected softer low-tier shadows. Baseline captures and matched draw-call measurements remain pending. Owned preview stopped.
