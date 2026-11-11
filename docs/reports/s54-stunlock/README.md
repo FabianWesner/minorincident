@@ -77,3 +77,5 @@ Zoo review found `L8BossArenas.control` returns while `Status.stunned` is true. 
 ## Fresh full audit after zoo-poise change
 
 `node --import tsx/esm tools/qa/threat-audit.ts --maxWorkers 4 --out test-results/s54-final-threat` completed in 822.8 seconds, exit 1, with 18 acceptance flags. Counts remain L1 0, L2 1, L3 3, L4 3, L5 3, L6 4, L7 4, L8 0, L9 0, L10 0. The exact flag list matches the preceding patched run. The zoo change added no flags, but the net +1 against the measured 17-flag baseline remains unresolved. The required remote `npm test` retry was canceled while still queued (exit 130), before test execution; it provides no new test result.
+
+Additional assertions now cover an ordinary infected's committed late windup and an arena elephant's heavy stagger cooldown plus windup preservation. The focused AI suite passed 5/5 cases after adding them; no registered test cases were added. These assertions cover the shared Damage gate, not full zoo authored-move integration.

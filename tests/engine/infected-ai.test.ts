@@ -424,6 +424,23 @@ test('every human and animal role validates and spawns with its catalog health a
     step(w, 73); fire(w, e);
     expect(e.combat!.staggerUntil).toBe(w.tick + 9);
   }
+  {
+    const w = await arena(), e = spawn(w, 'runner', 2);
+    e.infected!.state = 'attack'; e.infected!.until = w.tick + 1; e.combat!.attacking = true;
+    fire(w, e);
+    expect(e.combat!.staggerUntil, 'ordinary final-half windup is committed').toBe(0);
+    expect(e.combat!.attacking).toBe(true);
+  }
+  {
+    const w = await arena(), e = spawn(w, 'elephant', 2);
+    e.infected!.arenaBoss = { arena: 'elephant', slot: 0, engaged: true, exposedUntil: 0, readyAt: 0 };
+    fire(w, e); const first = e.combat!.staggerUntil;
+    step(w, 20); fire(w, e);
+    expect(e.combat!.staggerUntil, 'zoo boss light-hit poise uses the heavy cooldown').toBe(first);
+    e.infected!.state = 'attack'; e.infected!.until = w.tick + 60; e.combat!.attacking = true;
+    fire(w, e);
+    expect(e.combat!.attacking, 'zoo boss windup survives light gunfire').toBe(true);
+  }
   // Real catalog MG damage at contact: a heavy must finish an attack before dying.
   for (const role of ['brute', 'butcher']) {
     const w = await arena(1, false), e = spawn(w, role, 1.5), gun = action('weapon.army-mg');
