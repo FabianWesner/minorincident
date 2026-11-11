@@ -57,3 +57,7 @@ The audit now additionally enumerates all wide slots from `cureEncounters` and `
 Full-world collision diagnosis places the failed armored slot inside warehouse `bld.cure-warehouse:92/geometry-0` (warehouse extends to z=94). Its clearance-grid start cell is invalid; nearby road cells at z=100 connect normally. Moved `farm-road-pair-4` from (1400, 100) to (1400, 106), preserving its ID and roster. The armored slot now clears the warehouse's south face. The isolated L10 audit rerun completed with 79 records, zero unreachable paths and zero narrow openings. The earlier no-layout-change statement is superseded by this fix. Full regression gates still need rerunning after this layout adjustment.
 
 Browser QA needed for this fixed spot: at the industrial warehouse near x=1400, follow the three-member `farm-road-pair-4` approach along the south frontage; verify the armored body emerges outside the warehouse, reaches the road without clipping, and remains clear of the street lamp/container stack.
+
+## Post-fix regression gates
+
+After `b73f7976`, typecheck and lint passed. The exact remote `npm test` command passed (27 files, 106 passed/1 skipped; 150/150 case budget; 205 s). The exact remote nightly command completed with five passing tests and the same single high-tier L2 market-ambush failure (24 admitted, 23 reached); both war-wave tests passed. The threat audit completed with unchanged per-level counts 0,1,2,4,3,4,6,0,0,0 (L3/L5 are the explicitly queued regressions). No check was left running.
