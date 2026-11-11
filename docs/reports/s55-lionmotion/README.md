@@ -272,3 +272,15 @@ cm). Reverted the source experiment. The reach guard's restart behavior alone
 does not explain the residual discontinuity. Direct target/solve instrumentation
 is still required before another contact-state change. `l8-after` currently
 contains this rejected run; earlier accepted summaries remain in this report.
+
+## Direct target instrumentation
+
+Temporarily logged requested paw contacts, prior solved contacts, converted
+ankle targets and final solved contacts for legFR in the real fixture. Completed
+900 frames; raw log saved as `test-results/s55-lionmotion/instrumented/solver.json`.
+The trace contains a requested contact at Y=0.038 m whose solved contact remains
+at Y=0.393 m, demonstrating an unreachable target. Across one handoff the
+requested X changes ~0.284 m while actor root changes only 0.00134 m. Thus the
+remaining discontinuity is in contact generation/reachability, not sim root
+translation. Temporary renderer logging and fixture capture changes were removed.
+No new source fix is claimed from this diagnostic run.
