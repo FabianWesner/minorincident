@@ -419,7 +419,7 @@ export function validateSpec(spec: SceneSpec, assets: Map<string, AssetDef>): st
   let couriers = 0;
   spec.actors?.forEach((a, i) => {
     if (!['courier', 'pedestrian', 'infected', 'corgi', 'animal'].includes(a.kind)) errors.push(`actors[${i}].kind: ${a.kind}`);
-    if (a.kind === 'animal' && a.pet !== 'dog' && !['lion', 'gorilla', 'elephant', 'zebra', 'flamingo'].includes(a.species ?? '')) errors.push(`actors[${i}].species: ${a.species}`);
+    if (a.kind === 'animal' && a.pet !== 'dog' && !['lion', 'lioness', 'gorilla', 'elephant', 'zebra', 'flamingo'].includes(a.species ?? '')) errors.push(`actors[${i}].species: ${a.species}`);
     if (a.kind === 'courier') couriers++;
     if (a.at) point(a.at, `actors[${i}].at`);
     if (a.id) { if (ids.has(a.id)) errors.push(`duplicate id ${a.id}`); ids.add(a.id); }
