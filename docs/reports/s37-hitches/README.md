@@ -72,3 +72,9 @@ Same QA production build, tracing, routes, durations and zoom1; separate pooled 
 | L5 low repeat2 | 12,407 | 50.1ms | 16.8ms | 0 | 5243ms | 8.5 /214.8 /2477.5ms |
 
 There are now two low/WebGL2 samples per scene, all below250ms after3s. No game fix was applied, so these are repeated baselines rather than an improvement claim. High/WebGPU repeats, a reproducible cause for the historical outliers and a measured before/after load delta remain open. Raw logs/traces: `/private/tmp/s37-hitches/l8-route-baseline-2/` and `l5-baseline-2/`. All checks finished; owned preview4937 stopped.
+
+### Second high WebGPU samples — failure reproduced
+
+`repeat-high.json` retains full frame summaries and load clocks. Same recovered routes, durations, high/WebGPU zoom1, one reservation per run under10min, shared Mac/browser pool. L8 reached arena-lion and **FAILS**: 9,345 post3s intervals, max3233.3ms, p99 66.7ms,15frames>250ms (ticks5577–8617). L5:12,286intervals, max166.6ms, p99 16.8ms, zero>250ms. Both zero page errors. This failure is retained and cannot be excluded from acceptance.
+
+L8's650–3233ms gaps have unchanged nodeBuilds642, heap386MB, entities1205; captured simWorldMs12.9–30.5ms and simTickMs3–14.5ms. Full trace duration-event scan shows max FireAnimationFrame40.42ms, MajorGC43.81ms; neither explains3233.3ms. The browser-wide trace contains48 CpuProfiler::StartProfiling events (max240.76ms), HandlePostMessage max544.15ms and background script parsing230.72ms. Process/timestamp mapping is needed before attributing these shared-browser events to the measured renderer or external work. Raw trace/log: `/private/tmp/s37-hitches/l8-high-baseline-2/`; L5 in `l5-high-baseline-2/`. All owned commands terminal; preview4937 stopped.
