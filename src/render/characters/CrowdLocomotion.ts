@@ -344,7 +344,7 @@ export class CrowdLocomotion {
   correct(id: number, pose: Float32Array, instance: Matrix4, phase: number, name: string, scale: number, speed: number, layers?: CrowdLayers, time?: number, style?: GaitStyle): void {
     // Authored long articulated legs (zebra) stay attached at their shoulder/hip.
     // Their atlas grounds the complete pose; single-joint paw translation cannot preserve those pivots.
-    if (this.animal && this.preserveAnimalJoints) {
+    if (this.animal && (this.preserveAnimalJoints || this.animalSkin)) {
       if (layers) {
         this.load(pose, instance, layers, phase, style);
         this.store(pose, instance);

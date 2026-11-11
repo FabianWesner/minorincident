@@ -241,3 +241,14 @@ result and the full gate remains required for the final candidate. Log:
 The accepted L8 trace localizes both remaining paw maxima to the foreleg phase
 wrap near 0.5, within `walk`, pointing to touchdown handling after the clip-fade
 fix. No additional solver change was made in this continuation.
+
+## Authored-joint comparison
+
+Rejected the touchdown catch-up experiment: lion paw maximum increased to
+27.53 cm (lioness 18.15 cm). Reverted that experiment. Tested the existing
+preserve-authored-joints path for continuous crowd animal skins, avoiding a
+second paw IK solve over the already baked skin animation. The complete real
+L8 repeat gives zero root-relative pelvis jump for both cats, with paw maxima
+7.247 cm (lion) and 10.553 cm (lioness), compared with 11.815/13.001 cm for the
+prior corrected solver. This is a new candidate requiring ground-contact and
+visual validation, not final acceptance. `l8-after` now holds this comparison.
