@@ -48,7 +48,7 @@ import { alphaCrowdClips } from '../../src/render/characters/crowdClipNames';
 import { AlphaMoves } from '../../src/render/characters/AlphaMoves';
 import { AnimalMoves } from '../../src/render/characters/AnimalMoves';
 import { InfectedMoves } from '../../src/render/characters/InfectedMoves';
-import { summarizeMotion } from '../../src/debug/scenelab/motion';
+import { airborneFootTrack, summarizeMotion } from '../../src/debug/scenelab/motion';
 import { LimbIK } from '../../src/render/characters/LimbIK';
 import { retargetClip, skinClips } from '../../src/render/characters/clips';
 import { alphaTypes } from '../../src/data/alphaTypes';
@@ -151,6 +151,11 @@ function checkOrdinaryInfectedPresentation(): void {
   expect(summarizeMotion([contact(1, 0), contact(2, .01)]).slideMaxCm).toBe(1);
   expect(summarizeMotion([contact(1, 0), contact(2, .01)]).slideP95Cm).toBe(1);
   expect(summarizeMotion([contact(1, 0), contact(2, 1, 'knockdown'), contact(3, 2)]).slideMaxCm).toBe(0);
+  const flight = [contact(1, 0), contact(2, 3)].map(f => ({ ...f, feet: f.feet.map(p => ({ ...p, heel: [p.heel[0], .5, 0], toe: [p.toe[0], .5, 0] })) }));
+  expect(airborneFootTrack(flight, 2, 1)).toEqual({ complete: true, clearanceMinCm: 50, travelMinM: 3 });
+  expect(airborneFootTrack(flight.slice(1), 2, 1).complete).toBe(false);
+  expect(airborneFootTrack(flight, 2, 2).complete).toBe(false);
+  expect(airborneFootTrack([contact(1, 0), contact(2, 3)], 2, 1).clearanceMinCm).toBe(0);
   const moves = new InfectedMoves();
   const entity = (state: string, reaction?: object) => ({
     id: 44, archetype: 'infected.runner', health: { current: 60 },

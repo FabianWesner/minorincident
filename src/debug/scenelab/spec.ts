@@ -293,6 +293,8 @@ export interface Expectations {
   footSlideP95MaxCm?: number;
   /** Actors that must provide contact samples for the p95 gate; an absent actor or no contacts fails. */
   footSlideActors?: string[];
+  /** Explicit aerial actors: require all declared feet every frame and measured travel before accepting no contacts. */
+  airborneFootActors?: Record<string, { feet: number; travelMinM: number }>;
   /** Deepest sole point below the floor, in cm (feet through the ground). */
   footSinkMaxCm?: number;
   /** Longest run of consecutive frames in which a courier sole zig-zags vertically by >= 0.8 cm (a bobbing body or foot). */
