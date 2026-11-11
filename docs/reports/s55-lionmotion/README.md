@@ -490,3 +490,14 @@ frame 743, including zero penetration. Reverted the no-effect source change.
 This rules out that second runtime ground pass as the zebra maximum's source;
 the baked pose or earlier correction requires comparison before declaring it
 the same defect as the cats. Raw experiment: `zebra-single-ground/`.
+
+## Zebra raw atlas comparison
+
+Probe samples now include the active batch's fractional authored atlas frame
+index and uncorrected hip Y. Completed centered zebra run `zebra-atlas/`.
+At frames 742/743 raw atlas hip Y is 1.183549/1.102461 m; rendered hip Y is
+1.183549/1.102461 m to float precision. Therefore the 8.109 cm maximum is
+already in the baked gait, not introduced by runtime paw support release.
+The surrounding raw heights vary through the gait peak; this is distinct from
+the cats' solver discontinuity. Atlas indices (175.958 -> 176.993) and raw
+heights are retained for reproducibility rather than inferring pose from phase.
