@@ -83,3 +83,17 @@ Current-source WebGL2 high zoom 1.5 probes passed runtime checks for L8-zoo, L10
 ## Final-source 24-row colour matrix
 
 Captured all three requested night presets (`night` for L4 blackout segments, `L8-zoo`, `L10-night`) × WebGL2/WebGPU × low/high × game-camera zoom 1/1.5. All 24 runtime checks pass and all 144 class means satisfy the requested mean-channel threshold: no B > 1.1R and B > 1.1G. Full final-source data are in `final-matrix.json`; this supersedes `after.json` for final colour acceptance. Opened final WebGPU high L8-zoo zoom 1.5: ordinary retains brown hair and green clothing, brute/butcher show warm skin against dark apparel, bloated's red clothing is distinct, screamer is pale green rather than blue, armored's grey-green panels stay shaded. Remaining completion items: comparable baseline for the campaign-specific presets, final heavy contrast calculations, Alpha/zoo outline and draw-call controls, and scene gates. No process remains running.
+
+## Matched campaign baseline and heavy shading contrast
+
+All 24 original-render campaign baseline rows passed; current sources restored cleanly. `baseline-final.json` matches the presets/backends/tiers/zooms in `final-matrix.json`. Mean heavy body luma standard deviation divided by ordinary's (a surface-shading contrast measure) increases for every requested heavy:
+
+| Heavy | Before | Final |
+|---|---:|---:|
+| brute | 0.815 | 1.038 |
+| butcher | 1.017 | 1.159 |
+| bloated | 0.762 | 1.051 |
+| screamer | 0.735 | 0.967 |
+| armored | 1.218 | 1.233 |
+
+Geometry/silhouette area is unchanged, as required for render-only work. Mean RGB distance from ordinary falls for four heavies as their shared blue wash is removed; this is not claimed as a colour-distance improvement. The improved measurable distinction is directional body shading, alongside their retained size and authored clothing hues. Alpha/zoo outline controls, draw-call comparison and scene gates still remain. No process remains running.
