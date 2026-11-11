@@ -118,7 +118,7 @@ try {
       const m = await page.evaluate(() => { const pin = document.querySelector<HTMLElement>('[data-testid="minimap-objective"]'); return pin && !pin.hidden ? { x: Number(pin.dataset.worldX), z: Number(pin.dataset.worldZ) } : null; });
       if (m && Number.isFinite(m.x)) keys = dirKeys(e, m, extra.azimuth);
     } else if (target && target.d > 12) keys = dirKeys(e, target, extra.azimuth);
-    // r31-drivekeys / r32-l9fun: a driven vehicle takes classic car keys (W gas, A/D steer toward the goal, Space handbrake to
+    // r31-drivekeys / r32-l9fun: a driven vehicle takes classic car keys (W gas, A/D steer toward the goal, K handbrake to
     // throw boarders off), not screen-relative WASD.
     if (e.driving) {
       const goal = ri < route.length ? route[ri] : values['follow-marker'] ? await page.evaluate(() => { const pin = document.querySelector<HTMLElement>('[data-testid="minimap-objective"]'); return pin && !pin.hidden ? { x: Number(pin.dataset.worldX), z: Number(pin.dataset.worldZ) } : null; }) : null;
@@ -127,19 +127,19 @@ try {
         const want = -Math.atan2(goal.z - e.driving.z, goal.x - e.driving.x), delta = Math.atan2(Math.sin(want - e.driving.yaw), Math.cos(want - e.driving.yaw));
         keys.push('KeyW'); if (delta > .06) keys.push('KeyA'); else if (delta < -.06) keys.push('KeyD');
       }
-      const air = await page.evaluate(() => { const w = (window.__SCENE__ as unknown as { game: { world: unknown } }).game.world as { vehicles: { active: number | null; cars: Map<number, { entity: { transform: { y: number }; vehicle: { attached: number[] } } }> }; missions?: { l9?: { driving: { state: { setPieces?: { alphas: { phase: string }[] } } } } } }; const car = w.vehicles.active == null ? undefined : w.vehicles.cars.get(w.vehicles.active); return { y: car?.entity.transform.y ?? 0, boarders: car?.entity.vehicle.attached.length ?? 0, fight: (w.missions?.l9?.driving.state.setPieces?.alphas ?? []).filter(a => ['windup', 'air', 'hull', 'throw'].includes(a.phase)).map(a => a.phase) }; });
-      if (air.boarders && Date.now() % 1500 < 400) keys.push('Space');
+      const air = await page.evaluate(() => { const w = (window.__SCENE__ as unknown as { game: { world: unknown } }).game.world as { vehicles: { active: number | null; cars: Map<number, { physics: { speed: number }; entity: { transform: { y: number }; vehicle: { attached: number[] } } }> }; missions?: { l9?: { driving: { state: { setPieces?: { alphas: { phase: string }[] } } } } } }; const car = w.vehicles.active == null ? undefined : w.vehicles.cars.get(w.vehicles.active); return { y: car?.entity.transform.y ?? 0, speed: +(car?.physics.speed ?? 0).toFixed(1), boarders: car?.entity.vehicle.attached.length ?? 0, fight: (w.missions?.l9?.driving.state.setPieces?.alphas ?? []).filter(a => ['windup', 'air', 'hull', 'throw'].includes(a.phase)).map(a => a.phase) }; });
+      if (air.boarders && Date.now() % 1500 < 400) keys.push('KeyK'); // K = RIGHT = handbrake; Space is LEFT = horn/boost (r34-l9qa: the old Space taps never braked)
       // Event shots: the APC in the air off a ramp, and every leaper/thrower action, at most one per 1.2 s.
-      if ((air.y > 2.2 || air.fight.length) && Date.now() - lastEvent > 1200) { lastEvent = Date.now(); log({ eventShot: shotN, tick: e.tick, apcY: +air.y.toFixed(2), fight: air.fight, boarders: air.boarders }); await page.screenshot({ path: `${out}/s${String(shotN++).padStart(3, '0')}-t${e.tick}-${air.y > 2.2 ? 'air' : air.fight.join('+')}.jpg`, type: 'jpeg', quality: 70 }); }
+      if ((air.y > 2.2 || air.fight.length) && Date.now() - lastEvent > 1200) { lastEvent = Date.now(); log({ eventShot: shotN, tick: e.tick, apcY: +air.y.toFixed(2), apcSpeed: air.speed, keys, fight: air.fight, boarders: air.boarders }); await page.screenshot({ path: `${out}/s${String(shotN++).padStart(3, '0')}-t${e.tick}-${air.y > 2.2 ? 'air' : air.fight.join('+')}.jpg`, type: 'jpeg', quality: 70 }); }
     }
     if (values['hold-e'] && e.prompt) keys.push('KeyE');
-    // Space is the handbrake while driving: only fire on foot.
+    // While driving Space is the horn/boost (K the handbrake): only fire on foot.
     if (target && !e.driving) { await page.mouse.move(target.aim.x, target.aim.y); keys.push('Space'); }
     // r33-vqa: at the L9 rail-stall hatch the courier fights from the hull: select the weapon (keys do not take while
     // driving, retry here) and fire with the left mouse button at the nearest drawn enemy.
     const hatch = !!e.driving && /Defend the hatch/.test(e.objective ?? '');
     if (hatch) {
-      const want = weaponKey(values.weapon!); if (want && e.player.current !== values.weapon && Date.now() - lastTap > 1500) { lastTap = Date.now(); await page.keyboard.press(`Digit${want}`); }
+      const want = weaponKey(values.weapon!); if (want && e.player.current !== values.weapon && Date.now() - lastTap > 1500) { lastTap = Date.now(); await page.keyboard.press(`Digit${want}`); log({ hatchKey: want, tick: e.tick, rack: e.player.weapons, empty: e.player.emptyWeapons, had: e.player.current, ctx: await page.evaluate(() => { const g = (window.__SCENE__ as unknown as { game: { input: { drivingContext: boolean; mountedGunContext: boolean }; world: { mountedGun?: { mounted: boolean }; missions?: { l9?: { driving: { hatch: boolean } } } } } }).game; return { driving: g.input.drivingContext, mounted: g.input.mountedGunContext, hatch: g.world.missions?.l9?.driving.hatch, worldMounted: g.world.mountedGun?.mounted }; }) }); }
       if (target) { await page.mouse.move(target.aim.x, target.aim.y); await page.mouse.down(); await page.waitForTimeout(90); await page.mouse.up(); }
     }
     await press(keys);

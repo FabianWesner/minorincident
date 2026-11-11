@@ -8,6 +8,7 @@ const arg = (n: string, f: string) => { const i = process.argv.indexOf(n); retur
 const route = arg('--route', 'road'), seed = Number(arg('--seed', '1')), shoot = process.argv.includes('--shoot');
 const world = await loadLevel('L9', seed, preset('L9-default'), 0, { quality: 'low' });
 try {
+  if (process.argv.includes('--god')) world.combat!.damage.god = true; // r34-l9qa: god must also hold against hatch boarders
   const l9 = world.missions!.l9!, bot = new LevelNineBot(world, route, true), car = world.vehicles!.cars.get(l9.state.carId)!;
   const hp = () => world.entities.get(1)!.health.current;
   let stallT = -1, firstGrab = -1, dead = -1; const rows: string[] = [];
