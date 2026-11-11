@@ -1,99 +1,42 @@
-# s36-nightinf — measurement pending
+# s36-nightinf
 
-## Cause and render change
+## Result and cause
 
-The shared infected figure fill used the night preset's blue `rimColor` at full strength. This fill is distinct from the silhouette rim: reducing or recoloring it can preserve the approved rim while restoring the infected surface's own palette. `PaletteMaterial` now has a neutral-fill selector. Infected atlas materials select neutral fill; ordinary infected use a restrained 0.25 fill, while the five requested heavy asset classes use 0.55 to retain more surface shading. Alpha and zoo boss fill values and every rim value remain as before. No simulation, infected stats, AI, animation, geometry, or draw-call path was changed.
+Night infected retain their authored skin/clothing hue instead of a pale blue wash. Full blue moon fill and the final cool grade both contributed. Neutral, restrained figure fill and body hue restoration preserve surface colour; infection/night-gated grade protection prevents the composite from reintroducing blue. Heavy fill retains directional body shading; armored keeps s35’s 0.25 fill. Civilian infection uses its existing shader state. No simulation, stats, AI, animation, geometry, or draw-call path changed.
 
-Scene Lab's per-actor flat-silhouette sample now also records mean RGB, normalized saturation, mean luma, and the share of pixels for which B exceeds both R and G by more than 10%. These fields are intended for the required identical before/after matrix.
+The grazing Fresnel rim is excluded from body hue restoration. Alpha and zoo bosses keep their original fill/rim strengths and have neutral-fill selection zero, so the added correction and grade protection evaluate to zero for them. No outline code changed.
 
 ## Before/after measurements
 
-Not measured yet. The first capture attempt (`SCENE_PORT=4935 npm run scene -- /tmp/s36-night-lineup-z1.json --backend webgl2 --tier high`) failed before Chromium launched: the browser pool control server returned `listen EPERM` on `127.0.0.1:4329`. There is no valid before or after capture, so no numeric comparison is claimed here.
+Matched original render `d7796292` and final render: 3 presets (`night` for L4 blackout/night, `L8-zoo`, `L10-night`) × WebGL2/WebGPU × low/high × game-camera zoom 1/1.5 = 24 rows each. All 144 final class means satisfy B ≤ 1.1R or B ≤ 1.1G. Body pixels use an inspected geometry mask, excluding contact-shadow quads and including infected civilian bodies. RGB/luma are 0–255; saturation is HSV 0–1. Values below average all 24 rows.
 
-| Capture matrix | Before | After |
-|---|---:|---:|
-| Night, ordinary + brute/butcher/bloated/screamer/armored, low/high, zoom 1/1.5, WebGL2/WebGPU | pending | pending |
-| L8 night zoo, L4 dusk/night, L10 night scene checks | pending | pending |
-| Heavy-to-ordinary silhouette and colour contrast | pending | pending |
+| Class | Before RGB | Final RGB | Saturation before → final | Luma before → final |
+|---|---|---|---|---|
+| ordinary | [42.18, 57.4, 76.62] | [64.22, 57.77, 58.69] | 0.458 → 0.277 | 55.55 → 59.21 |
+| brute | [62.52, 69.38, 85.77] | [74.4, 64.3, 62.22] | 0.308 → 0.192 | 70.97 → 68.67 |
+| butcher | [70.66, 73.58, 87.5] | [82.65, 71.82, 71.4] | 0.284 → 0.175 | 73.96 → 74.09 |
+| bloated | [84.05, 66.98, 77.6] | [98.34, 62.24, 59.35] | 0.317 → 0.421 | 71.37 → 69.71 |
+| screamer | [72.31, 82.56, 99.64] | [85.53, 81.68, 80.66] | 0.292 → 0.124 | 81.61 → 82.42 |
+| armored | [44.87, 56.77, 71.32] | [57.45, 59.04, 61.32] | 0.385 → 0.145 | 55.29 → 58.86 |
+
+Heavy body luma standard deviation relative to ordinary increases: brute 0.815→1.038, butcher 1.017→1.159, bloated 0.762→1.051, screamer 0.735→0.967, armored 1.218→1.233. This measures stronger surface-shading distinction. Silhouette areas remain unchanged; brute/butcher are larger, while bloated/screamer retain smaller silhouettes and rely on authored hue and shading. Mean RGB distance from ordinary falls for four classes as their shared blue cast disappears; no colour-distance improvement is claimed.
+
+Authoritative data: `baseline-final.json`, `final-matrix.json`, and `draw-calls.json`. Earlier baseline/after/preset JSON files are intermediate diagnostics, superseded by these final matched datasets. Draw calls, shadow draw calls and triangle counts are identical before/after in all 24 rows.
 
 ## Captures opened
 
-None. The Scene Lab run failed before producing an image. The lineup specs used for the attempted fixture are temporary files under `/tmp`; no raw capture is in the repository.
+Raw images remain ignored in `test-results/s36-nightinf/`.
+
+- Before WebGPU high zoom 1.5: `before-webgpu-high/s36-game-z1.5-webgpu/shot-0030.png`. Ordinary and screamer read cool blue-grey; butcher surfaces look lavender-grey.
+- Final WebGPU high L8 zoo zoom 1.5: `final-webgpu-high/final-L8-zoo-z1.5-webgpu/shot-0030.png`. Brown hair, green ordinary clothing, warm brute/butcher skin, red bloated clothing and grey-green armored panels separate against the teal ground.
+- Final L10 night: `grade-protected/s36-L10-night/shot-0030.png`. Warm body colours survive the cool asphalt grade; armored panels stay shaded.
+- Opened the corrected mask: all six bodies present, no shadow quads.
+- Opened final gate WebGPU high zoo-lineup and Mega sheets. Zoo coats and moonlit outlines remain legible; Mega retains its dark body and strong rim.
 
 ## Checks
 
-- `npm run typecheck` — passed.
-- `npm run lint` — passed (the full command completed in the first check run); targeted ESLint on the three changed files also passed.
-- `git diff --check` — passed.
-- Scene Lab — blocked before browser start by the sandbox's `listen EPERM` on the browser pool's local control port.
-
-This report is intentionally incomplete. The goal remains open until the full matrix has valid before/after measurements, captures have been opened and described, the visual goals are confirmed, and the final report is updated.
-
-## Resumed verification (unrestricted environment)
-
-The permission restrictions are lifted. Slim-worktree now succeeds. The first Scene Lab run exposed an invalid fixture framing (ordinary outside the viewport); after widening to radius 28 and capturing frame 30, the WebGL2 high lineup passed with no console errors or clipping failures. Opened `test-results/s36-nightinf/webgl2-high-z1-fit/shot-0030.png`: all six figures are visible; brute and butcher are clearly larger, while bloated and screamer remain close to ordinary height. Ordinary still reads cool green/blue. This is not a completed visual fix.
-
-The current added RGB/saturation probe samples the entire projected bounding rectangle, including the blue ground. Its ordinary mean RGB is 41.84/43.25/61.95, saturation 0.3841, luma 44.30, and blue-dominant share 0.8907. These are diagnostic crop numbers, **not figure-pixel acceptance evidence**. A true figure mask is required before drawing conclusions from this probe. The full before/after matrix remains pending.
-
-## Figure-only probe and hue experiment
-
-The flat-silhouette probe now intersects its projected bounds with Scene Lab's existing crowd geometry mask, removing ground pixels. In the same WebGL2 high frame, the prototype neutral fill gave ordinary mean RGB 30.54/27.32/50.29 with 100% blue-dominant figure pixels. A subsequent body hue restoration experiment (excluding the grazing Fresnel rim) changed brute mean RGB from 63.01/55.57/62.62 to 64.68/55.00/57.84, butcher from 75.49/67.82/75.94 to 77.30/67.69/70.79, and armored from 53.95/53.86/64.86 to 54.22/53.79/61.43. Ordinary was unchanged, showing that its material path still needs investigation. Opened the experiment capture `test-results/s36-nightinf/masked-hue/shot-0030.png`: heavies retain more warm skin colour, but the small ordinary at the right remains cool. Both fixture runs passed with zero console errors and zero clipping failures. This experiment does not satisfy acceptance yet.
-
-## Ordinary-path follow-up
-
-Enabled the neutral selector on the civilian material path (gated by its infection node, so healthy civilians retain their original tint), and extended the crowd selector to non-atlas humanoids while excluding regular Alphas. Repeated WebGL2 high captures passed, and opened `all-human-hue/shot-0030.png`: ordinary hair now appears brown, though the reported body mean remains 30.60/27.33/50.16. This discrepancy needs investigation before using the mask statistics as acceptance evidence. Typecheck passed during this follow-up; the final selector edit still needs its checks. No capture/check process remains running.
-
-## Mask audit — previous figure statistics invalid
-
-Opened the exported geometry mask (`SCENE_MASK_OUT=/tmp/s36-mask.png`) from a passing diagnostic run. It includes magenta contact-shadow quads under every actor, and the ordinary actor's body is missing entirely. Therefore the earlier supposedly figure-only ordinary numbers were predominantly ground sampled through a shadow quad, and the heavy numbers are contaminated too. They must not be used as acceptance evidence. The next measurement change must exclude contact shadows and cover the ordinary NPC body path. Canvas readback now uses the same canvas dimensions as the mask and asserts equality. Typecheck and targeted lint passed before adding the optional mask export; no processes remain running.
-
-## Corrected geometry mask
-
-The QA ID pass now excludes non-body CrowdView meshes via `_parts`, and includes infected civilian instances via their existing `_overlay.y` infection value. Opened `/tmp/s36-mask-fixed.png`: all six complete silhouettes are present, with no contact-shadow quads. The passing WebGL2 high fixture now reports true figure mean RGB: ordinary 71.03/63.10/61.11; brute 73.39/61.82/59.36; butcher 87.52/76.37/75.00; bloated 100.39/68.72/64.14; screamer 89.04/78.77/78.60; armored 59.05/59.78/62.77. No class's mean is blue-dominant by the requested 10% threshold in this row. This is after-only evidence; the full baseline/matrix remains required. Typecheck and targeted ESLint passed after the mask correction.
-
-## Full baseline matrix collected
-
-Captured the original render sources from `d7796292` with the corrected QA mask retained, then restored the current render sources byte-for-byte (clean tracked source diff). Eight baseline rows passed: WebGL2/WebGPU × low/high × actual game-camera zoom 1/1.5. Results are preserved in `baseline.json`; fixture definitions are `lineup-z1.json` and `lineup-z1.5.json`. Raw captures remain ignored. Opened `before-webgpu-high/s36-game-z1.5-webgpu/shot-0030.png`: ordinary at the upper left has cool skin/dark clothing, screamer near the lower right is pale grey-blue, and butcher's broad surfaces are muted lavender-grey. Brute and butcher retain larger silhouettes; bloated and screamer are closer to ordinary size. These are baseline observations, not acceptance. Current-source after matrix, per-class comparison and campaign preset checks remain pending. No capture process remains running.
-
-## Eight-row before/after night matrix
-
-All eight current-source rows passed. No class mean is blue-dominant (B > 1.1R and B > 1.1G) in any after row. Before, ordinary, brute, screamer and armored each failed all eight rows. Averages below cover both renderers, both tiers and both game-camera zooms. RGB and luma are 0–255; saturation is 0–1.
-
-| Class | Before RGB | After RGB | Saturation before → after | Luma before → after |
-|---|---|---|---|---|
-| ordinary | [52.28, 56.26, 74.81] | [62.4, 55.53, 57.07] | 0.317 → 0.275 | 56.75 → 57.11 |
-| brute | [75.68, 69.89, 84.0] | [73.51, 63.1, 61.59] | 0.206 → 0.196 | 72.15 → 65.21 |
-| butcher | [91.82, 81.0, 91.05] | [91.51, 79.14, 78.92] | 0.167 → 0.173 | 84.03 → 81.75 |
-| bloated | [109.47, 74.99, 82.07] | [110.89, 70.21, 67.01] | 0.333 → 0.418 | 82.83 → 78.63 |
-| screamer | [83.5, 83.25, 98.15] | [85.7, 81.59, 81.06] | 0.192 → 0.124 | 84.38 → 82.42 |
-| armored | [54.66, 57.09, 68.39] | [62.2, 63.6, 66.07] | 0.226 → 0.139 | 57.39 → 63.48 |
-
-Opened after WebGPU high zoom 1.5: ordinary hair reads brown rather than blue-grey; brute and butcher keep warmer shaded bodies; bloated retains red clothing; screamer is muted green-grey rather than pale lavender. Armored stays grey-green. Full data are in `after.json`. Heavy contrast comparison, campaign lighting variants and final checks remain pending. No browser/check is still running.
-
-## Campaign preset gap and armored shading
-
-Measured heavy luma-spread relative to ordinary across the eight-row night matrix: brute 0.81→1.07, butcher 0.63→0.85, bloated 0.59→0.98, screamer 0.66→0.92; armored 1.12→1.01. Restored armored fill to s35's 0.25 to retain its panel shading; the night WebGL2 high zoom 1.5 luma standard deviation then measured 15.30 (versus the previous matrix average 13.68).
-
-Actual preset captures passed runtime checks, but colour acceptance failed: L8-zoo had no blue-dominant class mean; L10-night had five and L4 had two. Opened L10-night: dark ordinary clothing and broad heavy surfaces still take the cool final grade. Added infection/night-gated grade protection using the existing scene-alpha mechanism. This latest adjustment is not yet remeasured or code-checked; the previous eight-row after matrix is now historical evidence. No process remains running.
-
-## Grade-protection validation
-
-Current-source WebGL2 high zoom 1.5 probes passed runtime checks for L8-zoo, L10-night, generic night and L4. L8-zoo, L10-night and generic night now have zero blue-dominant class means; L4's daylight preset still has ordinary and armored above the threshold. `timeOfDay.ts` explicitly assigns generic `night` to L4 blackout/night segments, while `L4` is clean late-afternoon daylight. Opened the corrected L10-night capture: ordinary's brown hair and green clothing, butcher's warm skin, bloated's red and armored's dark grey-green panels survive the cool surrounding asphalt. `preset-probes.json` preserves the measurements. Full typecheck and lint pass on current source. Remaining: final source matrix across all requested night presets, contrast audit including restored armored fill, Alpha/zoo outline and draw-call controls, and final scene gates. No processes remain running.
-
-## Final-source 24-row colour matrix
-
-Captured all three requested night presets (`night` for L4 blackout segments, `L8-zoo`, `L10-night`) × WebGL2/WebGPU × low/high × game-camera zoom 1/1.5. All 24 runtime checks pass and all 144 class means satisfy the requested mean-channel threshold: no B > 1.1R and B > 1.1G. Full final-source data are in `final-matrix.json`; this supersedes `after.json` for final colour acceptance. Opened final WebGPU high L8-zoo zoom 1.5: ordinary retains brown hair and green clothing, brute/butcher show warm skin against dark apparel, bloated's red clothing is distinct, screamer is pale green rather than blue, armored's grey-green panels stay shaded. Remaining completion items: comparable baseline for the campaign-specific presets, final heavy contrast calculations, Alpha/zoo outline and draw-call controls, and scene gates. No process remains running.
-
-## Matched campaign baseline and heavy shading contrast
-
-All 24 original-render campaign baseline rows passed; current sources restored cleanly. `baseline-final.json` matches the presets/backends/tiers/zooms in `final-matrix.json`. Mean heavy body luma standard deviation divided by ordinary's (a surface-shading contrast measure) increases for every requested heavy:
-
-| Heavy | Before | Final |
-|---|---:|---:|
-| brute | 0.815 | 1.038 |
-| butcher | 1.017 | 1.159 |
-| bloated | 0.762 | 1.051 |
-| screamer | 0.735 | 0.967 |
-| armored | 1.218 | 1.233 |
-
-Geometry/silhouette area is unchanged, as required for render-only work. Mean RGB distance from ordinary falls for four heavies as their shared blue wash is removed; this is not claimed as a colour-distance improvement. The improved measurable distinction is directional body shading, alongside their retained size and authored clothing hues. Alpha/zoo outline controls, draw-call comparison and scene gates still remain. No process remains running.
+- `npm run typecheck` and `npm run lint`: passed on final render source.
+- `npx vitest run tests/shared/render-contracts.test.ts --maxWorkers=2 --configLoader runner`: 14/14 passed.
+- `SCENE_PORT=4935 npm run scene:gate -- --filter 'night-boss-*,alpha-variants-close,inf-looks,inf-horde-headwear,ped-bitten' --jobs 1 --out test-results/s36-nightinf/gate`: 16/16, zero known, zero skipped, both backends/tiers.
+- Final 24-row matrix and matched original 24-row matrix: all runtime checks passed, no console/clipping failures.
+- No raw captures committed. Servers owned by Scene Lab stopped with their sessions. No check remains running.
