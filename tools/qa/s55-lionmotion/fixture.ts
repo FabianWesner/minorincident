@@ -16,8 +16,9 @@ try {
       const samples = [];
       for (let frame = 0; frame < 60; frame++) {
         await window.__SS__!.step(1);
+        if (batchIndex === 2 && frame >= 54 || batchIndex === 3 && frame < 6) await window.__SS__!.screenshotReady();
         const ids = new Set([...game.world.entities.iterate()].filter(e => /lion/.test(e.civilian?.zooAnimal ?? e.archetype)).map(e => e.id));
-        samples.push({ png: batchIndex === 2 && frame >= 54 ? document.querySelector('canvas')!.toDataURL('image/png') : undefined, tick: game.world.tick, sim: [...ids].map(id => ({ id, transform: { ...game.world.entities.get(id)!.transform }, motion: structuredClone(game.world.entities.get(id)!.motion) })), figures: game.view.crowdFigures().filter(f => ids.has(f.id)) });
+        samples.push({ png: (batchIndex === 2 && frame >= 54 || batchIndex === 3 && frame < 6) ? document.querySelector('canvas')!.toDataURL('image/png') : undefined, tick: game.world.tick, sim: [...ids].map(id => ({ id, transform: { ...game.world.entities.get(id)!.transform }, motion: structuredClone(game.world.entities.get(id)!.motion) })), figures: game.view.crowdFigures().filter(f => ids.has(f.id)) });
       }
       return samples;
     }, batch);

@@ -389,3 +389,14 @@ window, which includes the lion's previous maximum frame 178. Fence bars obscure
 some feet, and this is not a full-interval or all-matrix acceptance statement.
 The lioness's maximum frame 182 is outside this six-frame window and remains to
 be inspected. Captures were opened rather than merely generated.
+
+## Extended strip audit and current static checks
+
+Current typecheck and lint both completed exit 0. Extended the capture through
+frame 185 and opened the 12-cell crop sheet. A batch-boundary pixel orientation
+change disagrees with the continuous recorded forward vectors (<=0.1 rad/frame),
+so direct in-task canvas reads cannot yet be trusted as synchronized consecutive
+GPU frames. Added screenshotReady synchronization before each captured frame;
+that capture change still needs a repeat run. Do not interpret the extended
+unsynchronized sheet as proof of either a new game pop or smoothness. Earlier
+single-window visual statements are limited by this discovery too.
