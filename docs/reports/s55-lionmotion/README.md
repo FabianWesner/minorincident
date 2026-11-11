@@ -64,3 +64,14 @@ inspection cannot establish smoothness. The run failed while producing the
 video/contact sheet with `browserContext.newPage: Target page, context or
 browser has been closed`; it reported no console errors. The 900-frame trace,
 complete video, before/after metric, and confirmed cause remain outstanding.
+
+## Focused 900-frame probe
+
+`tools/qa/s55-lionmotion/probe.ts` completed a headless WebGL2/high run without
+video/sheet creation and wrote `test-results/s55-lionmotion/probe/metrics.json`.
+It exposes a baseline-fixture problem: both infected actors in
+`r36-lion-cats-run.json` remained stationary for all 900 frames, with speed zero
+and clip `infected-search`; the healthy actors were idle. The scene's declarative
+walk/run state therefore does not currently exercise locomotion. Its screenshots
+must not be treated as walking/running evidence. The next probe must explicitly
+establish movement and assert nonzero travel before measuring continuity.
