@@ -641,3 +641,16 @@ lion 56.8951 cm -> 6.6525 cm; lioness 56.8876 cm -> 5.5835 cm. This is the
 explicit 10 s walk / 5 s run comparison in the loaded real L8 fixture; natural
 AI comparison above remains separate. Atlas frame indices are present in both
 traces. Evidence: `l8-interior-original/` and `l8-interior-route/`.
+
+## Matched other-species audit
+
+Completed original/current centered 900-frame comparisons for every named other
+species. Current source restored byte-for-byte after original runs; worktree
+clean. Pelvis maxima before -> after (cm): zebra 132.696 -> 8.109; elephant
+165.363 -> 1.874; gorilla 5.622 -> 0.793; monkey 1.108 -> 0.452; flamingo
+2.081 -> 0.833. All current runs drew 900/900 frames. Zebra's remaining maximum
+is exactly present in the baked atlas, separately isolated above; elephant's
+maximum is at initialization. Thus zebra/elephant shared the large runtime
+support/classification defect, and the common render fixes remove that defect.
+Durable machine-readable before/after measurements: [zoo-comparison.json](zoo-comparison.json).
+Raw original/current traces remain `original-<species>/` and `final-<species>/`.
