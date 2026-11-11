@@ -222,7 +222,8 @@ try {
     await page.evaluate(() => window.__SS__!.pause());
     const targets = await page.evaluate(species => {
       const g = (window.__SCENE__ as unknown as { game: import('../../src/Game').Game }).game;
-      return g.world.infected!.active.filter(e => species.includes(e.archetype) && e.health.current > 0 && !e.hidden && !e.infected?.hidden).map(e => ({ id: `entity:${e.id}`, archetype: e.archetype }));
+      const drawn = new Set(g.view.crowdFigures().filter(f => f.drawn).map(f => f.id));
+      return g.world.infected!.active.filter(e => drawn.has(e.id) && species.includes(e.archetype) && e.health.current > 0 && !e.hidden && !e.infected?.hidden).map(e => ({ id: `entity:${e.id}`, archetype: e.archetype }));
     }, values.measure.split(','));
     const samples = await measureFlatSilhouette({ page } as SceneSession, targets.map(t => t.id));
     writeFileSync(`${out}/figure-metrics.json`, JSON.stringify({ targets, samples }, null, 2));
