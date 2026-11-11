@@ -505,7 +505,7 @@ _hedge(-115.6, 12, -98.5, 12); _barricade(-98.5, 12, -93.5, 12); _hedge(-93.5, 1
 _hedge(-38, 12, -28, 12)
 _hedge(14, 12, 21.5, 12); _hedge(26.5, 12, 38, 12)
 _hedge(-14, -12, -14, -3); _hedge(-14, 3, -14, 8)
-_hedge(14, -12, 14, -3); _hedge(14, 3, 14, 7.5)   # stops short of the primate-yard fence corner at (14, 8): the east yard fence replaces the old z 8..12 hedge
+_hedge(14, -12, 14, -3); _hedge(14, 3, 14, 12)
 _hedge(82, -12, 82, -2.5); _barricade(82, -2.5, 82, 2.5); _hedge(82, 2.5, 82, 12)
 _hedge(82.4, 46, 83.7, 46)
 # Primate yard: a fixed crowd-fence compound round the reptile house, 5 m gates on the x=-24 path (north and south).
@@ -538,6 +538,8 @@ for _ox in (-10.4, 10.4): _route_boxes.append((_ox - 3.2, -11.6, _ox + 3.2, -1.9
 # Nothing may stand on a new line: drop only the dressing underneath (and the gorilla exit fence panels).
 _DRESS = {'prop.tree', 'prop.street-tree', 'prop.garden-bush', 'prop.garden-bush-small', 'prop.flower', 'prop.flower-bed.large', 'prop.street-lamp', 'prop.trash-bin', 'prop.bench', 'prop.sprinkler', 'prop.hose-reel', 'prop.street-sign'}
 _drop = set(_gorilla_exit_ids)
+# H9's last two pieces (z 7.5..12) lie inside the primate-yard east fence (x=14, z 8..32): drop them by id so no other id moves (r37-nightly).
+_drop |= {p['id'] for p in l.data['placements'][:_route_start + 200] if p['assetId'] == 'prop.hedge' and abs(p['position'][0] - 14) < .01 and 8 < p['position'][2] < 12}
 for p in l.data['placements'][:_route_start]:
     if p['assetId'] not in _DRESS: continue
     a = p['visualAabb']

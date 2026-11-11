@@ -115,7 +115,10 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly L4 ${tier}: every 
           const e = w.entities.get(id); if (!e || e.hidden || e.pendingAdmission || e.infected?.hidden) continue;
           admitted.add(arrival);
           const p = l4.perimeter, at = e.transform;
-          if (at.x > p.x0 - 1.5 && at.x < p.x1 + 1.5 && at.z > p.z0 - 1.5 && at.z < p.z1 + 1.5) {
+          // Goal reach is edge-to-goal: a body wider than a normal one (radius .35) stops that much further from the wall, so its
+          // band grows by (radius - .35). Unchanged for normal bodies (orchestrator decision, r37-nightly).
+          const band = 1.5 + Math.max(0, (e.combat?.radius ?? .35) - .35);
+          if (at.x > p.x0 - band && at.x < p.x1 + band && at.z > p.z0 - band && at.z < p.z1 + band) {
             reached.add(arrival); liveIds.delete(id); w.infected!.release(e); // Free the real cap for the remainder of this wave.
           }
         }
