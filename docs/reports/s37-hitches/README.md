@@ -33,3 +33,14 @@ Filesystem restrictions were lifted; slim-worktree setup, process inspection, QA
 The first current L8 low/WebGL2 diagnostic completed for 180 s under shared host load (another QA lane active): 10,606 post-3-s intervals, max 66.7 ms, p99 16.8 ms, zero >250 ms, no page errors. **Excluded from qualification:** marker following stalled at (-115.2, -53.4), checkpoint `cleared-flamingo`, so the lion arena was never reached. Raw log and working Chromium trace: `/private/tmp/s37-hitches/l8-baseline-1/` (trace 340,129,037 bytes). This validates the new logger/trace path, not the requested arena performance.
 
 Recovered actual r35 lion route from its reached/blocked events: `--route='-40,-51;0,-51;0,-64;-60,-64;-60,-56;-60,-12;-60,0;-24,0;-24,4' --block 120`. Use this explicit route for the next baseline; the historical run reached the arena at ~tick2053. Build QA succeeded. Earlier sandbox blockers are resolved.
+
+## Recovered-route baseline samples
+
+Current unchanged game source, QA production build, headless Metal WebGL2, low, zoom1, real input, one pooled browser per reservation (<10min). Shared Mac load; these are exploratory samples, not isolated reference-machine qualification.
+
+| Run | Duration | Post-3s samples | Max | p99 | >250ms | Coverage |
+|---|---:|---:|---:|---:|---:|---|
+| `l8-route-baseline-1` | 180s | 10,594 | 133.3ms | 16.8ms | 0 | Explicit recovered route reached `arena-lion`; lion chase/attack nearby. |
+| `l5-baseline-1` | 210s | 12,403 | 50.1ms | 16.8ms | 0 | Cellar → Mia → `survivor-1`; stationary (-31.1,-33.6), two drawn allies, no visible enemies, both historical event ticks covered. |
+
+Both runs had zero page errors. Logs and complete Chromium traces remain outside Git in `/private/tmp/s37-hitches/<run>/` (338,382,633 / 328,467,400 trace bytes). No game change was made: the historical >250ms failures did not recur in these first current samples. A clean current sample cannot retrospectively attribute the historical event. Repeat low/WebGL2 and high/WebGPU coverage, trace analysis, before/after/load delta and a supported attribution remain outstanding. Owned preview4937 stopped after both runs; no check left running.
