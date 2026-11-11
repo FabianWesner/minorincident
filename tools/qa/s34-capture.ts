@@ -1,7 +1,7 @@
 /** Matched audit captures. Run through tools/e2e-lock.sh with SCENE_PORT=4928.
  * S34_SIDE=before|after S34_TIER=low|high S34_BACKEND=webgl2|webgpu
  * S34_TYPES=nurse,crawler,dog (comma-separated r31 game fixture names).
- * Optional S34_BURST=1 isolates initial MG; S34_MOVING=1 selects a moving windup; S34_CLOSE=1 uses the original close fixture.
+ * Optional S34_BURST=1 isolates initial MG; S34_MOVING=1 selects a moving attack; S34_CLOSE=1 uses the original close fixture.
  * Before uses Git source overrides in Vite; no checkout or simulation edits.
  */
 import { execFileSync } from 'node:child_process';
@@ -31,7 +31,7 @@ const server = await createServer({ configFile: resolve('vite.config.ts'), cache
   plugins: side === 'before' ? [{ name: 's34-before', enforce: 'pre', load(id) { return originals.get(id.split('?')[0]); } }] : [],
   server: { host: '127.0.0.1', port, strictPort: true } });
 const session = new SceneSession({ backend: backend as Backend, tier: tier as 'low' | 'high' });
-interface CaptureWindows { walk: number[]; attack: number[]; hit: number[]; sustained?: number[]; started: number; strike: number; movingEvidence?: { frame: number; speed: number } }
+interface CaptureWindows { walk: number[]; attack: number[]; hit: number[]; sustained?: number[]; melee?: number[]; heavy?: number[]; started: number; strike: number; movingEvidence?: { frame: number; speed: number } }
 const windowsRoot = 'test-results/s34-windows';
 mkdirSync(windowsRoot, { recursive: true });
 const results: unknown[] = [];
@@ -52,25 +52,27 @@ try {
       await session.load(spec);
       const timing = await session.page.evaluate(async ({ archetype, movingOnly }) => {
         const lab = window.__SCENE__!, world = (lab as unknown as { game: Game }).game.world;
-        const attacks: { started: number; strike: number }[] = [], movingAttacks: { started: number; strike: number; speed: number }[] = []; let moving = 0, previous = '';
+        const attacks: { started: number; strike: number }[] = [], movingAttacks: { started: number; strike: number; speed: number; movingAt: number }[] = []; let moving = 0, previous = '', lastAttack: { started: number; strike: number } | undefined;
         for (let frame = 1; frame <= 510; frame++) {
           await lab.step(1);
           const e = world.infected!.active.find(e => e.archetype === archetype)!;
           if (!moving && (e.motion?.speed ?? 0) > .2) moving = frame;
-          if (e.infected?.state === 'attack' && previous !== 'attack' && !e.infected.specialAttack && e.infected.until + 24 < 510) attacks.push({ started: frame, strike: e.infected.until });
-          if (e.infected?.state === 'attack' && !e.infected.specialAttack && (e.motion?.speed ?? 0) > .06 && e.infected.until > frame + 4 && e.infected.until + 24 < 510) movingAttacks.push({ started: frame, strike: e.infected.until, speed: e.motion!.speed });
+          if (e.infected?.state === 'attack' && previous !== 'attack' && !e.infected.specialAttack && e.infected.until + 24 < 510) { lastAttack = { started: frame, strike: e.infected.until }; attacks.push(lastAttack); }
+          if (lastAttack && frame < 420 && frame < lastAttack.strike + 24 && (e.motion?.speed ?? 0) > .06) movingAttacks.push({ ...lastAttack, movingAt: frame, speed: e.motion!.speed });
           previous = e.infected?.state ?? '';
         }
-        const movingAttack = movingAttacks.find(a => a.strike > a.started + 8) ?? movingAttacks[0];
+        const movingAttack = movingAttacks.find(a => a.speed > .5 && a.movingAt < a.strike - 4) ?? movingAttacks.find(a => a.speed > .5) ?? movingAttacks[0];
         const attack = movingOnly ? movingAttack : attacks.find(a => a.started >= 180 && a.strike + 24 < 420) ?? attacks.find(a => a.started >= 180) ?? attacks[0];
         if (!moving || !attack) throw new Error(`No walk/ordinary attack window for ${archetype}`);
-        return { moving, ...attack, movingEvidence: movingOnly && movingAttack ? { frame: movingAttack.started, speed: movingAttack.speed } : undefined };
+        return { moving, ...attack, movingEvidence: movingOnly && movingAttack ? { frame: movingAttack.movingAt, speed: movingAttack.speed } : undefined };
       }, { archetype: spec.actors?.find(a => a.kind === 'infected')?.archetype ?? 'infected.runner', movingOnly });
-      const windows: CaptureWindows = { walk: [10, 20, 30, 40].map(offset => timing.moving + offset), attack: movingOnly ? [timing.started, Math.min(timing.started + 4, timing.strike - 1), Math.min(timing.started + 8, timing.strike - 1), timing.strike + 8, timing.strike + 24] : [timing.started, timing.strike - 1, timing.strike + 8, timing.strike + 24], hit: [420, 432, 438, 450], started: timing.started, strike: timing.strike, movingEvidence: timing.movingEvidence };
+      const movingAt = timing.movingEvidence?.frame ?? timing.started;
+      const windows: CaptureWindows = { walk: [10, 20, 30, 40].map(offset => timing.moving + offset), attack: movingOnly ? movingAt < timing.strike ? [timing.started, movingAt, Math.min(movingAt + 4, timing.strike - 1), timing.strike + 8, timing.strike + 24] : [timing.started, timing.strike - 1, movingAt, Math.min(movingAt + 4, timing.strike + 26), timing.strike + 26] : [timing.started, timing.strike - 1, timing.strike + 8, timing.strike + 24], hit: [420, 432, 438, 450], started: timing.started, strike: timing.strike, movingEvidence: timing.movingEvidence };
       writeFileSync(windowsPath, JSON.stringify(windows, null, 2));
     }
     const windows = JSON.parse(readFileSync(windowsPath, 'utf8')) as CaptureWindows;
-    const shots = [...new Set([...windows.walk, ...windows.attack, ...windows.hit, ...(windows.sustained ?? [])])].sort((a, b) => a - b);
+    if (close) { windows.melee = [510, 517, 522, 528]; windows.heavy = [600, 606, 618, 636]; }
+    const shots = [...new Set([...windows.walk, ...windows.attack, ...windows.hit, ...(windows.sustained ?? []), ...(windows.melee ?? []), ...(windows.heavy ?? [])])].sort((a, b) => a - b);
     if (existsSync(`${out}/${spec.name}/source-version.txt`) && readFileSync(`${out}/${spec.name}/source-version.txt`, 'utf8') === captureVersion && shots.every(frame => existsSync(`${out}/${spec.name}/shot-${String(frame).padStart(4, '0')}.png`)) && existsSync(`${out}/${spec.name}/metrics.json`)) {
       const previous = JSON.parse(readFileSync(`${out}/${spec.name}/metrics.json`, 'utf8')) as { checks: { pass: boolean } };
       if (previous.checks.pass) { console.log(`Already captured ${spec.name}`); continue; }
