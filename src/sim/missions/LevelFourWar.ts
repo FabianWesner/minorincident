@@ -1349,15 +1349,19 @@ export class LevelFourWar {
   /** Frees one cap slot for an authored street encounter: the idle regular farthest from the courier (never Alphas, authored arrivals or anything engaged). */
   private retireIdleFor(): boolean {
     const { world } = this.mission, s = this.s, ai = this.infected, player = world.entities.get(1)!.transform;
-    const authored = new Set<number>([...s.alphaIds, ...s.emergedIds, ...s.collapseIds, ...s.pendingDoor.map(q => q.id)]);
-    let pick: EntitySnapshot | undefined, far = 40;
+    const authored = new Set<number>([...s.alphaIds, ...s.pendingDoor.map(q => q.id)]);
+    // r41: on the low tier (cap 80) the war fills the cap and nothing is idle; an unseen body 30 m or more away that is not in melee is as good (it cannot reach the courier before the encounter matters).
+    let pick: EntitySnapshot | undefined, far = 40, farEngaged = 30, engaged: EntitySnapshot | undefined;
     for (const e of ai.active) {
       const b = e.infected;
       if (!b || authored.has(e.id) || e.health.current <= 0 || e.corpse || e.hidden || e.emerging || e.infectionRise || b.recoverAt >= 0 || b.scripted || b.breachApproach || b.specialAttack ||
-        b.state !== 'idle' && b.state !== 'wander' || ['chase', 'bite'].includes(b.l1?.mode ?? '') || e.combat?.attacking || e.archetype === 'infected.alpha') continue;
-      const d = dist(e.transform, player);
-      if (d > far && ai.director.offscreen(e.transform, e.transform.y - .7)) { far = d; pick = e; }
+        e.combat?.attacking || e.archetype === 'infected.alpha' || b.l1?.mode === 'bite' || b.state === 'attack') continue;
+      const d = dist(e.transform, player), idle = (b.state === 'idle' || b.state === 'wander') && !['chase', 'bite'].includes(b.l1?.mode ?? '');
+      if (!ai.director.offscreen(e.transform, e.transform.y - .7)) continue;
+      if (idle && d > far) { far = d; pick = e; }
+      else if (!idle && d > farEngaged) { farEngaged = d; engaged = e; }
     }
+    pick ??= engaged;
     if (!pick) return false;
     ai.release(pick); this.reserveSlots(); return true;
   }
@@ -1379,7 +1383,8 @@ export class LevelFourWar {
       // Passed groups must not claim the slots reserved for the streets ahead.
       const ahead = remaining - l4CellarDistance(q.home);
       // Existing camp stragglers need time to reach the next block on foot.
-      if (ahead < 0 || ahead > 72 || dist(q.home, p) > 72 || !onStreets && !early) continue;
+      // r41: authored street fights stand at their homes from the start of the collapse (out of view, 24 m away), so a courier who sprints out of the plaza cannot pass them before they exist.
+      if (ahead < 0 || ahead > 72 || dist(q.home, p) > 72 || !onStreets && !early && !q.roster) continue;
       const a = this.anchor(q.door);
       if (this.inGap(q.home) || !ai.director.offscreen(a) || dist(a, p) < 24) continue;
       // After the war, the spare regular slots feed small street groups, still under the same cap.
