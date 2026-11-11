@@ -1,3 +1,5 @@
+> Correction on resumed native inspection: the L4 courier has no civilian component. The earlier civilian-contact diagnosis and contact regression did not explain the shop scenario; that guard and regression have been removed. L4 remains unresolved pending an exact collision/attack trace. Earlier L4 claims below are superseded by this correction.
+
 # s46-pockets — L4 shop hits and L8 zebra fence
 
 ## Findings and fixes
@@ -32,4 +34,4 @@ Open the cited S42 captures for reference:
 
 ## Delivery state
 
-Changes are uncommitted. Git commit could not be verified in this managed sandbox because the linked worktree metadata resides outside the writable root. No push, deploy, merge, main-branch edit, stat edit, or corpse removal was performed.
+Committed as `bd2d8419` (`Fix L4 pocket hits and L8 zebra fence crowding`). No push, deploy, merge, main-branch edit, stat edit, or corpse removal was performed.

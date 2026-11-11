@@ -247,19 +247,6 @@ test('L4: every contact archetype interrupts approach/lure and attacks within 3 
   try {
     expect(Object.keys(cameraCheck.missions!.def.cinematics).filter(id => id.startsWith('l4-'))).toEqual([]);
     expect(cameraCheck.missions!.def.anchors['l4-breach-west']).toBeDefined();
-    // The player also carries the L4 civilian contact component. Heavy
-    // infected must still damage the courier instead of routing her through
-    // the civilian grab/turn path.
-    const courier = cameraCheck.entities.get(1)!, startHp = courier.health.current;
-    cameraCheck.combat!.damage.god = false;
-    const attackerId = cameraCheck.infected!.spawn('infected.brute', { x: courier.transform.x + .5, z: courier.transform.z }, { yaw: Math.PI });
-    cameraCheck.infected!.press(attackerId, courier.id, cameraCheck.tick + 600, 1);
-    const grabs: number[] = [], stopGrab = cameraCheck.events.on('civilian.grabbed', event => { if (event.type === 'civilian.grabbed' && event.sourceId === attackerId) grabs.push(event.targetId); });
-    for (let tick = 0; tick < 180 && courier.health.current === startHp; tick++) { cameraCheck.tick++; cameraCheck.infected!.update(); }
-    stopGrab();
-    expect(courier.health.current, 'L4 brute contact damages the courier').toBeLessThan(startHp);
-    expect(grabs, 'the courier is never treated as an abductable civilian').not.toContain(courier.id);
-    cameraCheck.infected!.release(cameraCheck.entities.get(attackerId)!);
   } finally { cameraCheck.dispose(); }
   const route = l4Route(), stations = l4ConvoyStations(route.length), violations: string[] = [];
   for (const [index, vehicle] of l4.convoy.vehicles.entries()) {
