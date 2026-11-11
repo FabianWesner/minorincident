@@ -468,3 +468,14 @@ A temporary 0.12 s stride easing experiment reduced zebra paw maximum to 9.801
 cm but left its 8.109 cm pelvis step unchanged, so it was reverted rather than
 kept as a fix for the identified defect. Raw centered traces and
 `zebra-stride-ease/` preserve the evidence.
+
+## Corrected species maximum-frame attribution
+
+The previous centered-species entry incorrectly associated pelvis maxima with
+`worstFrame`, which the analyzer tracked only for paws. Added a separate
+`pelvisWorstFrame` field. Zebra pelvis maximum 8.109 cm is at frame 743, phase
+0.346->0.391 (next frame changes 6.313 cm), not at the speed change. Elephant
+pelvis maximum 1.874 cm is at initialization frame 4, not frame 600. Their paw
+maxima remain at frame 600. This correction invalidates the inference that the
+zebra pelvis defect was caused directly by the imposed speed switch; the raw
+values remain valid and require phase-specific interpretation.
