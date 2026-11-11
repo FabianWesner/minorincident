@@ -22,7 +22,7 @@ import { weaponKey } from '../../src/data/weaponKeys';
 const { values, positionals } = parseArgs({ allowPositionals: true, options: {
   out: { type: 'string' }, quality: { type: 'string', default: 'low' }, zoom: { type: 'string', default: '1.5' }, backend: { type: 'string', default: 'webgpu' },
   seconds: { type: 'string', default: '300' }, shot: { type: 'string', default: '6' }, god: { type: 'boolean', default: false }, weapon: { type: 'string', default: 'weapon.army-mg' },
-  route: { type: 'string' }, 'follow-marker': { type: 'boolean', default: false }, 'hold-e': { type: 'boolean', default: false }, 'tap-e-when': { type: 'string' }, 'skip-credits-after': { type: 'string' }, dwell: { type: 'string', default: '0' }, reach: { type: 'string', default: '2.5' }, block: { type: 'string', default: '5' }, 'no-kite': { type: 'boolean', default: false }, range: { type: 'string', default: '22' }, setup: { type: 'string' }, trace: { type: 'boolean', default: false },
+  route: { type: 'string' }, 'follow-marker': { type: 'boolean', default: false }, 'hold-e': { type: 'boolean', default: false }, 'tap-e-when': { type: 'string' }, 'skip-credits-after': { type: 'string' }, dwell: { type: 'string', default: '0' }, reach: { type: 'string', default: '2.5' }, block: { type: 'string', default: '5' }, 'no-kite': { type: 'boolean', default: false }, range: { type: 'string', default: '22' }, setup: { type: 'string' }, trace: { type: 'boolean', default: false }, 'no-captures': { type: 'boolean', default: false },
   handbrake: { type: 'string', default: 'Space' }, prefer: { type: 'string' }, 'route-when': { type: 'string' }, 'idle-when': { type: 'string' },
 } });
 const [origin, name] = positionals;
@@ -38,6 +38,12 @@ const zoom = Number(values.zoom), range = Number(values.range);
 const fixture = direct ? null : readFixture(path);
 const context = await launchProfile(mkdtempSync(`${tmpdir()}/r28vqa-`), { headless: true, args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist', '--enable-unsafe-webgpu'], viewport: { width: 1280, height: 720 } });
 const page = await context.newPage();
+const capture = async (options: NonNullable<Parameters<typeof page.screenshot>[0]>) => {
+  if (values['no-captures']) return;
+  const started = Date.now(); log({ capture: 'start', path: options.path });
+  await page.screenshot(options);
+  log({ capture: 'end', path: options.path, durationMs: Date.now() - started });
+};
 const trace = values.trace ? await context.newCDPSession(page) : null;
 let traceStarted = false;
 await page.addInitScript({ content: 'window.__name = (f) => f;' }); // tsx keepNames helper inside evaluate callbacks
@@ -117,7 +123,7 @@ try {
       }
     }
     if (!e.player || (e.player && (await page.evaluate(() => !!window.__SS__!.missions.state()?.epilogue && window.__SS__!.missions.state()!.epilogue!.phase !== 'playable').catch(() => false)))) {
-      if (Date.now() - lastShot > shotEvery) { lastShot = Date.now(); await page.screenshot({ path: `${out}/s${String(shotN++).padStart(3, '0')}-t${e.tick}.jpg`, type: 'jpeg', quality: 70 }); }
+      if (Date.now() - lastShot > shotEvery) { lastShot = Date.now(); await capture({ path: `${out}/s${String(shotN++).padStart(3, '0')}-t${e.tick}.jpg`, type: 'jpeg', quality: 70 }); }
       await page.waitForTimeout(250); continue;
     }
     if (e.panel.visible && e.panel.button) { log({ panel: e.panel, tick: e.tick }); await page.getByTestId('mission-button').click({ timeout: 3000 }).catch(() => undefined); }
@@ -154,10 +160,10 @@ try {
       const air = await page.evaluate(() => { const w = (window.__SCENE__ as unknown as { game: { world: unknown } }).game.world as { vehicles: { active: number | null; cars: Map<number, { physics: { speed: number }; entity: { transform: { y: number }; vehicle: { attached: number[] } } }> }; missions?: { l9?: { driving: { state: { setPieces?: { alphas: { phase: string }[] } } } } } }; const car = w.vehicles.active == null ? undefined : w.vehicles.cars.get(w.vehicles.active); return { y: car?.entity.transform.y ?? 0, speed: +(car?.physics.speed ?? 0).toFixed(1), boarders: car?.entity.vehicle.attached.length ?? 0, fight: (w.missions?.l9?.driving.state.setPieces?.alphas ?? []).filter(a => ['windup', 'air', 'hull', 'throw'].includes(a.phase)).map(a => a.phase) }; });
       if (air.boarders && Date.now() % 1500 < 400) keys.push(values.handbrake!); // r35-vqa: Space is the driving handbrake since 258f211b (K still works); --handbrake KeyK to test K
       // Event shots: the APC in the air off a ramp, and every leaper/thrower action, at most one per 1.2 s.
-      if ((air.y > 2.2 || air.fight.length) && Date.now() - lastEvent > 1200) { lastEvent = Date.now(); log({ eventShot: shotN, tick: e.tick, apcY: +air.y.toFixed(2), apcSpeed: air.speed, keys, fight: air.fight, boarders: air.boarders }); await page.screenshot({ path: `${out}/s${String(shotN++).padStart(3, '0')}-t${e.tick}-${air.y > 2.2 ? 'air' : air.fight.join('+')}.jpg`, type: 'jpeg', quality: 70 }); }
+      if ((air.y > 2.2 || air.fight.length) && Date.now() - lastEvent > 1200) { lastEvent = Date.now(); log({ eventShot: shotN, tick: e.tick, apcY: +air.y.toFixed(2), apcSpeed: air.speed, keys, fight: air.fight, boarders: air.boarders }); await capture({ path: `${out}/s${String(shotN++).padStart(3, '0')}-t${e.tick}-${air.y > 2.2 ? 'air' : air.fight.join('+')}.jpg`, type: 'jpeg', quality: 70 }); }
     }
     // r35-vqa: --idle-when <regex on tracker>: let go of every key (no move, no fire) while it matches, e.g. the L9 crawl ring.
-    if (values['idle-when'] && new RegExp(values['idle-when']).test(`${e.objective} | ${e.tracker}`)) { await press([]); if (Date.now() - lastShot > shotEvery) { lastShot = Date.now(); await page.screenshot({ path: `${out}/s${String(shotN++).padStart(3, '0')}-t${e.tick}-idle.jpg`, type: 'jpeg', quality: 70 }); } if (Date.now() - lastLog > 3000) { lastLog = Date.now(); log({ idle: true, tick: e.tick, objective: e.objective, tracker: e.tracker, player: { x: +e.player.x.toFixed(1), z: +e.player.z.toFixed(1), hp: Math.round(e.player.hp) } }); } await page.waitForTimeout(100); continue; }
+    if (values['idle-when'] && new RegExp(values['idle-when']).test(`${e.objective} | ${e.tracker}`)) { await press([]); if (Date.now() - lastShot > shotEvery) { lastShot = Date.now(); await capture({ path: `${out}/s${String(shotN++).padStart(3, '0')}-t${e.tick}-idle.jpg`, type: 'jpeg', quality: 70 }); } if (Date.now() - lastLog > 3000) { lastLog = Date.now(); log({ idle: true, tick: e.tick, objective: e.objective, tracker: e.tracker, player: { x: +e.player.x.toFixed(1), z: +e.player.z.toFixed(1), hp: Math.round(e.player.hp) } }); } await page.waitForTimeout(100); continue; }
     if (values['hold-e'] && e.prompt) keys.push('KeyE');
     // While driving Space is the horn/boost (K the handbrake): only fire on foot.
     if (target && !e.driving) { await page.mouse.move(target.aim.x, target.aim.y); keys.push('Space'); }
@@ -181,7 +187,7 @@ try {
         frames: await page.evaluate(() => (window as unknown as { __r28Frames: unknown[] }).__r28Frames.splice(0)),
         mega: await page.evaluate(() => { const w = (window.__SCENE__ as unknown as { game: { world: { megaPursuit?: { entity(): { health: { current: number; max: number }; transform: { x: number; z: number }; infected?: Record<string, unknown>; combat?: { staggerUntil?: number } } | undefined } } } }).game.world; const m = w.megaPursuit?.entity(); if (!m) return null; const b = m.infected ?? {}; return { hp: Math.round(m.health.current), x: +m.transform.x.toFixed(1), z: +m.transform.z.toFixed(1), phase: b.megaPhase, weak: b.megaWeakTicks, armourBroken: b.megaArmourBroken, special: (b as { specialAttack?: { move?: string } }).specialAttack?.move ?? null, stagger: m.combat?.staggerUntil, gateSpent: !!window.__SS__!.missions.state()?.states['gate-spent'], megaId: (m as unknown as { id: number }).id, megaLod: window.__SS__!.crowdFigures().find(f => f.id === (m as unknown as { id: number }).id)?.lod ?? null, drawnFigures: window.__SS__!.crowdFigures().filter(f => f.drawn).length }; }).catch(() => null) });
     }
-    if (Date.now() - lastShot > shotEvery) { lastShot = Date.now(); await page.screenshot({ path: `${out}/s${String(shotN++).padStart(3, '0')}-t${e.tick}.jpg`, type: 'jpeg', quality: 70 }); }
+    if (Date.now() - lastShot > shotEvery) { lastShot = Date.now(); await capture({ path: `${out}/s${String(shotN++).padStart(3, '0')}-t${e.tick}.jpg`, type: 'jpeg', quality: 70 }); }
     await page.waitForTimeout(100);
   }
   await press([]);
