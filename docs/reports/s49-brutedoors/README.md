@@ -77,3 +77,11 @@ Native set-piece spawn instrumentation now records each actor's authored set-pie
 ## L9 six-lane audit
 
 Added optional L9 route/detour observation hooks to the shared runner, preserving its existing default road detour. The audit now drives all three authored routes and both main/detour traces. All six completed, recording 434 wide spawns total (road 136/107, countryside 57/45, shortcut 43/46), with zero unreachable paths and zero narrow openings among admitted bodies. The coverage gate correctly fails: `thrower-2` was not admitted on either countryside trace. Other expected fixed-group and set-piece quotas were met. This is a new admission-coverage finding requiring diagnosis, not a passing exhaustive result. Typecheck and lint passed; no check remains running.
+
+## Countryside thrower admission fix
+
+The native `thrower-2` diagnostic showed a clear/resident/director-safe post with available capacity, but only 96.81 m Euclidean separation from the APC. The lane bends within the nominal 112 m lookahead; even the spawner's 4 m search cannot meet its binding 105 m minimum. Added a countryside-only trigger at x=180 (default remains x=200). The resulting native post is 112.75 m away and admits successfully; the diagnostic drive completes. IDs, body sizes, counts and the admission minimum are retained. Typecheck and changed-file lint pass.
+
+A preliminary global trigger move was rejected: although road and countryside audit scenarios completed, the shortcut run took substantially longer and was explicitly interrupted before producing a result. The committed route-specific authoring preserves other routes' trigger positions. The complete six-lane audit and regression gates must be rerun for the committed fix.
+
+Browser QA needed: on both countryside traces, verify the second thrower is already present outside the driving frame before the bend near x=200, then throws from the verge without clipping the APC lane or appearing onscreen at admission.
