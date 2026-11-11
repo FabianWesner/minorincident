@@ -186,18 +186,20 @@ export async function measureFlatSilhouette(session: SceneSession, ids: string[]
   if (process.env.SCENE_MASK_OUT) writeFileSync(process.env.SCENE_MASK_OUT, PNG.sync.write(bodyMask));
   if (bodyMask.width !== shot.width || bodyMask.height !== shot.height) throw new Error('Figure mask dimensions changed');
   return projected.map(({ id, bodySizeM, rect: [x0, y0, x1, y1] }) => {
-    let n = 0, sum = 0, sumSq = 0, red = 0, green = 0, blue = 0, saturation = 0, blueDominant = 0; const buckets = new Set<number>();
+    let n = 0, sum = 0, sumSq = 0, red = 0, green = 0, blue = 0, saturation = 0, blueDominant = 0; const buckets = new Set<number>(), lumas: number[] = [];
     for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) {
       const i = (y * shot.width + x) * 4;
       if (!(bodyMask.data[i] > 200 && bodyMask.data[i + 1] < 60 && bodyMask.data[i + 2] > 200)) continue;
       const r = shot.data[i], g = shot.data[i + 1], b = shot.data[i + 2], l = .2126 * r + .7152 * g + .0722 * b;
-      n++; sum += l; sumSq += l * l; red += r; green += g; blue += b;
+      lumas.push(l); n++; sum += l; sumSq += l * l; red += r; green += g; blue += b;
       saturation += Math.max(r, g, b) ? (Math.max(r, g, b) - Math.min(r, g, b)) / Math.max(r, g, b) : 0;
       if (b > r * 1.1 && b > g * 1.1) blueDominant++;
       buckets.add((r >> 3) << 10 | (g >> 3) << 5 | (b >> 3));
     }
     const mean = n ? sum / n : 0;
-    return { id, bodySizeM, pixels: n, meanRgb: n ? [red / n, green / n, blue / n].map(v => +v.toFixed(2)) : [0, 0, 0], meanSaturation: n ? +(saturation / n).toFixed(4) : 0, blueDominantShare: n ? +(blueDominant / n).toFixed(4) : 0, colourBucketShare: n ? buckets.size / n : 0, lumaMean: +mean.toFixed(2), lumaStd: n ? Math.sqrt(Math.max(0, sumSq / n - mean * mean)) : 0, colourBuckets: buckets.size, rect: [x0, y0, x1, y1] };
+    lumas.sort((a, b) => a - b);
+    const percentile = (p: number) => n ? lumas[Math.floor((n - 1) * p)] : 0;
+    return { id, bodySizeM, lumaP10: percentile(.1), lumaP90: percentile(.9), lumaContrast: percentile(.9) - percentile(.1), pixels: n, meanRgb: n ? [red / n, green / n, blue / n].map(v => +v.toFixed(2)) : [0, 0, 0], meanSaturation: n ? +(saturation / n).toFixed(4) : 0, blueDominantShare: n ? +(blueDominant / n).toFixed(4) : 0, colourBucketShare: n ? buckets.size / n : 0, lumaMean: +mean.toFixed(2), lumaStd: n ? Math.sqrt(Math.max(0, sumSq / n - mean * mean)) : 0, colourBuckets: buckets.size, rect: [x0, y0, x1, y1] };
   });
 }
 
