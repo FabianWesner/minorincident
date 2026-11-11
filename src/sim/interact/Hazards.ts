@@ -23,14 +23,17 @@ export interface HazardOptions { hp?: number; radius?: number; burnTime?: number
 /** E11 hazard triggers/damage; E27 consumes arming/blast events for richer effects. */
 export class Hazards {
   readonly debris: DebrisPool;
-  private readonly damage: Damage;
+  private fallbackDamage: Damage | null = null;
+  /** r39-l10nan: campaign levels replace world.combat after the hazards exist (npc install). A cached Damage kept the old
+   * instance, so the god cheat (set on the live one) did not cover fire/toxic zones and the courier lost HP in god mode. */
+  private get damage(): Damage { return this.world.combat?.damage ?? (this.fallbackDamage ??= new Damage(this.world)); }
   private readonly neighbors: number[] = [];
   private readonly area = { x: 0, z: 0, r: 0 };
   private readonly blastTicks = new Int32Array(8).fill(-60);
   private blastCursor = 0;
   private readonly spreading: EntitySnapshot[] = [];
   constructor(private readonly world: SimWorld) {
-    this.debris = new DebrisPool(world.physics); this.damage = world.combat?.damage ?? new Damage(world);
+    this.debris = new DebrisPool(world.physics);
     world.events.on('combat.hit', e => {
       if (e.type !== 'combat.hit' || e.amount <= 0) return;
       const entity = world.entities.get(e.targetId); if (!entity) return;
