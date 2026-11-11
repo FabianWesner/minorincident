@@ -52,3 +52,15 @@ renderer limits crowd heading to 6 rad/s and needs to be measured in-browser.
    simulation-only baseline. Check the other zoo species with the same metric.
 3. Confirm the cause, make the motion-side fix, rerun before/after measurements,
    run the required test and scene gates, and update this report before commit.
+
+## Continuation: browser access restored
+
+The required slim step succeeded after sandbox restrictions were lifted. A
+headless WebGL2/high baseline run through `tools/e2e-lock.sh` on port 4951
+produced shots at frames 10, 25, and 40 in
+`test-results/s55-lionmotion/before/`. Frame 40 was opened: the walking/running
+cats show distinct limb poses alongside the idle animals. This single-frame
+inspection cannot establish smoothness. The run failed while producing the
+video/contact sheet with `browserContext.newPage: Target page, context or
+browser has been closed`; it reported no console errors. The 900-frame trace,
+complete video, before/after metric, and confirmed cause remain outstanding.
