@@ -75,3 +75,15 @@ and clip `infected-search`; the healthy actors were idle. The scene's declarativ
 walk/run state therefore does not currently exercise locomotion. Its screenshots
 must not be treated as walking/running evidence. The next probe must explicitly
 establish movement and assert nonzero travel before measuring continuity.
+
+## Controlled moving baseline
+
+The focused probe now asserts travel and applies a controlled simulation-tick
+trajectory to two healthy cats: 600 ticks at 1 m/s followed by 300 at 3.2 m/s.
+The completed 900-frame WebGL2/high run recorded 25.9833 m of travel per actor.
+This establishes an actually moving render fixture after both declarative scene
+paths and direct zoo waypoints failed to move actors in isolated Scene Lab.
+Existing motion summaries report zero grounded contacts and 9.6 cm maximum sole
+lift for both cats. These summaries are insufficient to prove continuity; the
+next step is to record presented root/yaw and joint pose changes per frame.
+No gameplay fix or confirmed flicker cause has been established.
