@@ -82,13 +82,15 @@ export class PawContacts {
       // to that pivot, then keep the drawn sole level; a knee-only endpoint
       // rotates a broad elephant foot across the ground during support.
       const ankleName = ({ legFL: 'handL', legFR: 'handR', legBL: 'footL', legBR: 'footR', legL: 'footL', legR: 'footR' } as Record<string, string>)[name];
-      const originalAnkle = continuous ? original.getObjectByName(ankleName) : undefined;
-      const ankle = originalAnkle ? root.getObjectByName(ankleName) : undefined;
+      const originalAnkle = continuous ? original.getObjectByName(ankleName) ?? original.getObjectByName(name.replace('leg', 'paw')) : undefined;
+      const ankle = originalAnkle ? root.getObjectByName(originalAnkle.name) : undefined;
       const pawAnkle = originalAnkle ? originalAnkle.worldToLocal(paw.clone()) : undefined;
       const ankleSoles = originalAnkle ? solePoints?.map(p => originalAnkle.worldToLocal(p.clone())) : undefined;
       const bindAnkle = originalAnkle?.getWorldQuaternion(new Quaternion()).premultiply(template.getWorldQuaternion(new Quaternion()).invert());
       const chainLength = originalAnkle && originalKnee ? original.getWorldPosition(new Vector3()).distanceTo(originalKnee.getWorldPosition(new Vector3())) + originalKnee.getWorldPosition(new Vector3()).distanceTo(originalAnkle.getWorldPosition(new Vector3())) : 0;
-      const sole = paw.y - this.origin.y;
+      // Declared soles are contact geometry: their world target is the actor's floor,
+      // even when the imported bind pose leaves a rear paw below that plane.
+      const sole = solePoints?.length ? 0 : paw.y - this.origin.y;
       return [{ leg, vertices, chainLength, ankle, pawAnkle, ankleSoles, bindAnkle, neutral: template.worldToLocal(paw.clone()), jointed: knee !== null && pawKnee !== null, knee: knee as Object3D | null, pawKnee, kneeVertices, rest: leg.position.clone(), turned: new Quaternion(), kneeTurned: new Quaternion(), ankleTurned: new Quaternion(), turning: false, paw: original.worldToLocal(paw), reach: bounds.max.y - bounds.min.y, sole, planted: new Vector3(), correction: new Vector3(), release: new Vector3(), phase: -1,
         /** Last drawn paw point (world), standing-hold state and the current settle step (-1: none). */
         last: null as Vector3 | null, held: false, step: -1, from: new Vector3(), fadeStart: 0 }];
@@ -337,7 +339,7 @@ export class PawContacts {
       if (grounded) {
         // A folded rear paw has a different lowest vertex from the bind pose.
         // Ground the drawn sole, retaining clearance during a settling step.
-        const bottom = foot.ankle ? this.paw.copy(foot.paw).applyMatrix4(foot.leg.matrixWorld).y : this.lowest(foot.vertices, foot.leg.matrixWorld);
+        const bottom = foot.ankle && foot.ankleSoles?.length ? this.lowest(foot.ankleSoles, foot.ankle.matrixWorld) : this.lowest(foot.vertices, foot.leg.matrixWorld);
         desired.y = lifted + floor - bottom + Math.max(0, desired.y - sole);
       } else desired.y = Math.max(desired.y, lifted);
       if (foot.ankle) {

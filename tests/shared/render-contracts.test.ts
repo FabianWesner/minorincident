@@ -46,6 +46,9 @@ import { skinnedBrow } from '../../src/render/characters/headMeasurements';
 import { characterNodes } from '../../src/data/survivor';
 import { alphaCrowdClips } from '../../src/render/characters/crowdClipNames';
 import { AlphaMoves } from '../../src/render/characters/AlphaMoves';
+import { InfectedMoves } from '../../src/render/characters/InfectedMoves';
+import { summarizeMotion } from '../../src/debug/scenelab/motion';
+import { LimbIK } from '../../src/render/characters/LimbIK';
 import { alphaTypes } from '../../src/data/alphaTypes';
 import { alphaLooks } from '../../src/data/alphaLooks';
 import { courierForegroundWanted, crowdSurroundsCourier } from '../../src/render/courierForeground';
@@ -129,6 +132,37 @@ function checkAlphaMoveSet(): void {
   expect(moves.sample(entity('brute', { state: 'chase', until: 200 }), 210, .5, 2)?.clip).toBe('alpha-strike');
   expect(moves.sample(entity('brute', { state: 'chase', until: 200 }), 240, .5, 2)).toBeUndefined();
   expect(moves.sample(entity('screamer', { specialAttack: { move: 'alpha.roar', stage: 'recovery', startTick: 100, activeTick: 160, recoveryUntil: 178 } }), 140, .5, 0)?.clip).toBe('stagger-left');
+}
+/** s34-zombiehits: ordinary attacks persist through a render-only recovery and one-tick gun reactions remain visible. */
+function checkOrdinaryInfectedPresentation(): void {
+  const root = new Group(), upper = new Object3D(), middle = new Object3D(), end = new Object3D();
+  root.add(upper); upper.add(middle); middle.add(end);
+  middle.position.set(0, -.4, 0); end.position.set(0, -.3, 0);
+  const ik = new LimbIK(upper, middle, end);
+  // Retargeted animation changes a joint offset after solver construction.
+  middle.position.set(.03, -.38, -.09); end.position.set(.01, -.28, -.03);
+  root.updateMatrixWorld(true);
+  const target = new Vector3(.1, -.5, .1);
+  ik.solve(target, new Vector3(1, 0, 0), new Quaternion());
+  expect(end.getWorldPosition(new Vector3()).distanceTo(target)).toBeLessThan(1e-5);
+  const contact = (frame: number, x: number, clip = 'idle') => ({ frame, clip, floor: 0, feet: [{ heel: [x, 0, 0], toe: [x + .1, 0, 0], yaw: 0 }] });
+  expect(summarizeMotion([contact(1, 0), contact(2, .01)]).slideMaxCm).toBe(1);
+  expect(summarizeMotion([contact(1, 0), contact(2, 1, 'knockdown'), contact(3, 2)]).slideMaxCm).toBe(0);
+  const moves = new InfectedMoves();
+  const entity = (state: string, reaction?: object) => ({
+    id: 44, archetype: 'infected.runner', health: { current: 60 },
+    infected: { state, until: 130, legLost: false },
+    combat: { reaction },
+  }) as unknown as EntitySnapshot;
+  const windup = moves.sample(entity('attack'), 'attack', 130, .5, 115, 0, 2.4, 'infected-lurch');
+  expect(windup.layers.attack).toBeCloseTo(.25);
+  expect(windup.layers.attackStyle).toBe(0);
+  const strike = moves.sample(entity('chase'), 'chase', 130, .5, 140, 0, 2.4, 'infected-lurch');
+  expect(strike.layers.attack).toBeGreaterThan(.5);
+  const reaction = { index: 0, started: 100, until: 101, direction: { x: 1, z: 0 }, from: { x: 0, z: 0 }, to: { x: 0, z: 0 }, heavy: false };
+  expect(InfectedMoves.flinch(entity('chase', reaction), 101)).toBeGreaterThan(.4);
+  expect(InfectedMoves.flinch(entity('chase', reaction), 110)).toBeGreaterThan(.5);
+  expect(InfectedMoves.flinch(entity('chase', reaction), 120)).toBe(0);
 }
 function checkFractionalCrowdPicking(): void {
   const matrices = new Float32Array(32);
@@ -492,7 +526,7 @@ test('textured corpse draws bind their surface and upload placements added after
 });
 
 test('skinned crowd: four-influence packing, joint·bind⁻¹ atlas rows, and corpse freezing with the shader blend', () => {
-  checkFractionalCrowdPicking(); checkAlphaMoveSet();
+  checkFractionalCrowdPicking(); checkAlphaMoveSet(); checkOrdinaryInfectedPresentation();
   const pose = (x: number, angle: number) => new Matrix4().compose(new Vector3(x, 1, 0), new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), angle), new Vector3(1, 1, 1));
   const { dominant, skin } = packSkin([3, 7, 12, 0], [.2, .5, .3, 0], 1);
   expect(dominant[0]).toBe(7);

@@ -4,7 +4,7 @@ import type { GaitStyle } from './CourierGroundContacts';
 
 const ease = (u: number): number => { const t = Math.max(0, Math.min(1, u)); return t * t * (3 - 2 * t); };
 /** Visible flinch per hit: short enough that every click of a fast combo reads as its own recoil. */
-export const flinchSeconds = .25;
+export const flinchSeconds = .3;
 /**
  * The zombie move set on top of the baked infected clips (presentation only, never read by the sim):
  * walkers drag one foot, runners lurch, attacks coil and lunge into a grab, light hits flinch for at most
@@ -29,9 +29,10 @@ export class InfectedMoves {
   static flinch(e: EntitySnapshot, renderTick: number): number {
     const r = e.combat?.reaction;
     if (!r || r.heavy || e.health.current <= 0) return 0;
-    const age = (renderTick - r.started) / 60, duration = Math.min(flinchSeconds, Math.max(1, r.until - r.started) / 60);
+    // Gun stagger can be one simulation tick by design. Keep a separate, fixed visual window so every hit is readable.
+    const age = (renderTick - r.started) / 60, duration = flinchSeconds;
     if (age < 0 || age >= duration) return 0;
-    return age < duration * .3 ? ease(age / (duration * .3)) : 1 - ease((age - duration * .3) / (duration * .7));
+    return age < duration * .12 ? ease(age / (duration * .12)) : 1 - ease((age - duration * .12) / (duration * .88));
   }
   /**
    * Layers and gait style for one infected figure. `gait` is the displayed locomotion clip (or undefined when standing),
@@ -42,20 +43,32 @@ export class InfectedMoves {
     layers.maxBodyLean = undefined;
     layers.bodyLean = undefined;
     layers.lean = layers.roll = layers.lunge = layers.lurch = layers.flinch = layers.chestBeat = layers.trunkSwipe = layers.throwPose = layers.shieldBreak = layers.heavyGait = 0;
+    layers.attack = undefined; layers.attackStyle = undefined;
     style.drag = 0; style.dragFoot = e.id % 2; style.stance = style.knee = style.maxSwing = style.stepRate = style.maxLift = style.pelvisHeight = style.footRoll = undefined;
+    // Broad infected soles settle flat during contact attacks instead of rolling a toe across the floor.
+    if (!gait) style.footRoll = 0;
     if (e.archetype === 'infected.riot' && (e.combat?.shieldBrokenUntil ?? 0) > renderTick) {
       const age = renderTick - (e.combat?.shieldBrokenAt ?? renderTick), remain = (e.combat?.shieldBrokenUntil ?? renderTick) - renderTick;
       layers.shieldBreak = ease(Math.min(1, age / 10, remain / 10));
     }
     // Lunge-grab: coil back through the windup, throw the body at the target as it ends, recover after the hit.
-    if (state === 'attack') {
-      const p = 1 - Math.max(0, until - renderTick) / Math.max(1, windup * 60);
-      layers.lunge = p < .55 ? -.05 * ease(p / .55) : -.05 + .27 * ease((p - .55) / .45);
-      this.strikes.set(e.id, until);
-    } else if (this.strikes.has(e.id)) {
-      const since = (renderTick - this.strikes.get(e.id)!) / 60;
-      if (since >= 0 && since < .45 && state !== 'dead') layers.lunge = .22 * (since < .1 ? 1 : 1 - ease((since - .1) / .35));
-      else this.strikes.delete(e.id);
+    if (state === 'attack') this.strikes.set(e.id, until);
+    const strikeAt = this.strikes.get(e.id);
+    if (state === 'attack' && strikeAt !== undefined) {
+      const p = Math.max(0, Math.min(1, 1 - (strikeAt - renderTick) / Math.max(1, windup * 60)));
+      layers.attack = .5 * p;
+      layers.lunge = p < .78 ? -.08 * ease(p / .78) : -.08 + .26 * ease((p - .78) / .22);
+    } else if (strikeAt !== undefined) {
+      const since = renderTick - strikeAt;
+      if (since >= 0 && since < 27 && state !== 'dead') {
+        layers.attack = .5 + .5 * since / 27;
+        layers.lunge = .18 * (since < 6 ? 1 : 1 - ease((since - 6) / 21));
+      } else this.strikes.delete(e.id);
+    }
+    if (layers.attack !== undefined) {
+      layers.attackStyle = e.archetype === 'infected.crawler' || e.infected?.legLost ? 2
+        : e.archetype === 'infected.riot' ? 3
+          : /brute|armored|butcher|screamer|bloated|hazmat|firefighter/.test(e.archetype) ? 1 : 0;
     }
     const special = e.infected?.specialAttack;
     if (special?.move === 'alpha.charge' && special.stage === 'telegraph') {

@@ -31,10 +31,10 @@ export interface AnimalPose {
 }
 const ease = (u: number): number => { const t = Math.max(0, Math.min(1, u)); return t * t * (3 - 2 * t); };
 const clamp01 = (u: number): number => Math.max(0, Math.min(1, u));
-export type AnimalSpecies = 'lion' | 'flamingo' | 'gorilla' | 'elephant' | 'monkey' | 'zebra';
+export type AnimalSpecies = 'dog' | 'lion' | 'flamingo' | 'gorilla' | 'elephant' | 'monkey' | 'zebra';
 export function animalSpecies(e: EntitySnapshot): AnimalSpecies | undefined {
   const id = e.civilian?.zooAnimal ?? e.archetype?.replace(/^infected\./, '');
-  return id === 'lion' || id === 'lioness' ? 'lion' : id === 'flamingo' || id === 'gorilla' || id === 'elephant' || id === 'monkey' || id === 'zebra' ? id : undefined;
+  return id === 'dog' || id === 'lion' || id === 'lioness' ? id === 'lioness' ? 'lion' : id : id === 'flamingo' || id === 'gorilla' || id === 'elephant' || id === 'monkey' || id === 'zebra' ? id : undefined;
 }
 /** Flamingo cruise height over the ground while the flock is engaged (m). */
 export const flamingoCruise = 2.4;
@@ -43,6 +43,9 @@ export class AnimalMoves {
   private readonly pose: AnimalPose = { crouch: 0, pitch: 0, roll: 0, head: 0, jaw: 0, front: 0, hind: 0, armsUp: 0, stamp: 0, trunk: 0, wing: 0, flap: 0, airborne: false };
   /** Smoothed render height per flying/leaping animal (m above its sim position). */
   private readonly heights = new Map<number, { y: number; tick: number }>();
+  private readonly dogStrikes = new Map<number, number>();
+  /** Embedded dog bite phase, including render-only recovery; -1 outside an attack. */
+  dogPhase = -1;
   /** Render-only height above the sim transform for this frame (flight, monkey leap/cling). */
   lift = 0;
   /** Phase override for the flight loop (0..1), or -1. */
@@ -51,6 +54,7 @@ export class AnimalMoves {
   /** Pose for one animal, or undefined when nothing species-specific applies this frame. */
   sample(e: EntitySnapshot, renderTick: number, speed: number, gaitPhase: number): AnimalPose | undefined {
     this.lift = 0; this.flightPhase = -1;
+    this.dogPhase = -1;
     const species = animalSpecies(e);
     if (!species || species === 'zebra') return undefined;
     const p = this.pose;
@@ -60,6 +64,29 @@ export class AnimalMoves {
     const windup = a ? ease((renderTick - a.startTick) / Math.max(1, a.activeTick - a.startTick)) : 0;
     const travel = a?.destination ? clamp01(Math.hypot(e.transform.x - a.area.x, e.transform.z - a.area.z) / Math.max(.5, Math.hypot(a.destination.x - a.area.x, a.destination.z - a.area.z))) : 0;
     const grabbing = !!b && b.grabUntil > renderTick && !dead;
+    if (species === 'dog') {
+      if (!b || dead) { this.dogStrikes.delete(e.id); return undefined; }
+      if (b.state === 'attack') this.dogStrikes.set(e.id, b.until);
+      const strikeAt = this.dogStrikes.get(e.id);
+      let phase: number | undefined;
+      if (b.state === 'attack' && strikeAt !== undefined) phase = .5 * clamp01(1 - (strikeAt - renderTick) / 39);
+      else if (strikeAt !== undefined && renderTick >= strikeAt && renderTick - strikeAt < 27) phase = .5 + .5 * (renderTick - strikeAt) / 27;
+      else if (strikeAt !== undefined) this.dogStrikes.delete(e.id);
+      if (phase !== undefined) {
+        this.dogPhase = phase < .5 ? phase * .8 : .4 + (phase - .5) * 1.2;
+        const strike = phase >= .5 ? 1 - clamp01((phase - .68) / .32) : 0;
+        // The embedded clip owns the four legs and body. A second limb pose
+        // on its recovery lifted the forequarters and dragged the rear paws.
+        p.head = -.05 * strike;
+        p.jaw = .75 * strike; p.airborne = phase > .56 && phase < .86;
+        // Give the authored spring a world-space arc; its in-place paw sweep
+        // otherwise crosses the floor while the contact solver is released.
+        this.lift = .12 * Math.sin(Math.PI * clamp01((phase - .5) / .4));
+        return p;
+      }
+      if (speed > .06) { p.pitch = Math.sin(gaitPhase * Math.PI * 2) * .08; p.head = -.06; }
+      return speed > .06 ? p : undefined;
+    }
     if (species === 'lion') {
       if (dead || !b) return speed > .06 && speed < 2.6 ? this.stalk(p, gaitPhase, .4) : undefined;
       if (a && (a.move === 'lion.pounce' || a.move === 'lion.flank')) {
