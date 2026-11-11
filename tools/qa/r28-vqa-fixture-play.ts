@@ -28,7 +28,7 @@ const { values, positionals } = parseArgs({ allowPositionals: true, options: {
   measure: { type: 'string' }, out: { type: 'string' }, quality: { type: 'string', default: 'low' }, zoom: { type: 'string', default: '1.5' }, backend: { type: 'string', default: 'webgpu' },
   seconds: { type: 'string', default: '300' }, shot: { type: 'string', default: '6' }, god: { type: 'boolean', default: false }, weapon: { type: 'string', default: 'weapon.army-mg' },
   route: { type: 'string' }, 'follow-marker': { type: 'boolean', default: false }, 'hold-e': { type: 'boolean', default: false }, 'tap-e-when': { type: 'string' }, 'skip-credits-after': { type: 'string' }, dwell: { type: 'string', default: '0' }, reach: { type: 'string', default: '2.5' }, block: { type: 'string', default: '5' }, 'no-kite': { type: 'boolean', default: false }, range: { type: 'string', default: '22' }, setup: { type: 'string' }, trace: { type: 'boolean', default: false }, 'trace-scheduling': { type: 'boolean', default: false }, 'trace-window': { type: 'boolean', default: false }, 'no-captures': { type: 'boolean', default: false },
-  handbrake: { type: 'string', default: 'Space' }, burst: { type: 'string' }, prefer: { type: 'string' }, watch: { type: 'string' }, 'route-when': { type: 'string' }, 'idle-when': { type: 'string' },
+  handbrake: { type: 'string', default: 'Space' }, burst: { type: 'string' }, prefer: { type: 'string' }, watch: { type: 'string' }, 'route-when': { type: 'string' }, 'idle-when': { type: 'string' }, 'no-hatch-fire': { type: 'boolean', default: false }, 'no-fire': { type: 'boolean', default: false },
 } });
 const [origin, name] = positionals;
 // `level:L7:corridor` loads a level at a mission checkpoint through the test API instead of a fixture.
@@ -55,7 +55,7 @@ let traceStarted = false, traceStopped = false;
 await page.addInitScript({ content: 'window.__name = (f) => f;' }); // tsx keepNames helper inside evaluate callbacks
 const errors: string[] = []; page.on('pageerror', e => { errors.push(String(e).slice(0, 200)); log({ pageError: String(e).slice(0, 300), ...(errors.length <= 3 ? { stack: String((e as Error).stack ?? '').slice(0, 1500) } : {}) }); }); // r38-vqa: stack of the first 3 page errors
 try {
-  await page.goto(`${origin}/?test=poses&testApi=1&scenelab=1&loadProfile=2&${values.backend === 'webgpu' ? '' : 'renderer=webgl&'}dpr=1&audio=muted&quality=${values.quality}`);
+  await page.goto(`${origin}/?test=poses&testApi=1&scenelab=1&preload=0&loadProfile=2&${values.backend === 'webgpu' ? '' : 'renderer=webgl&'}dpr=1&audio=muted&quality=${values.quality}`);
   await page.waitForFunction(() => !!window.__SS__, null, { timeout: 180000 });
   await page.evaluate(async q => { await window.__SS__!.ready; window.__SS__!.debug.figureJoints(true); window.__SS__!.settings.set({ quality: q as 'low' }); }, values.quality!);
   const loadStarted = Date.now();
@@ -109,6 +109,16 @@ try {
   let lastBurst = 0, lastEvent = 0, dwellUntil = 0, skipped = false, lastEnd = 0, lastTap = 0, lastShot = 0, lastLog = 0, ri = 0, lastText = '', shotN = 0, best = Infinity, bestAt = Date.now();
   while (Date.now() - start < seconds * 1000) {
     const e = await page.evaluate(look);
+    // Optional read-only probes request a capture at a special-move stage transition.
+    const stageShot = await page.evaluate(() => {
+      const w = window as unknown as { __s42Shot?: { tick: number; id: number; move: string; stage: string } };
+      const requested = w.__s42Shot; delete w.__s42Shot; return requested;
+    });
+    if (stageShot) {
+      const label = `${stageShot.move}-${stageShot.stage}`.replace(/[^a-zA-Z0-9.-]/g, '_');
+      log({ stageShot, captureTick: e.tick });
+      await capture({ path: `${out}/stage-${stageShot.id}-t${stageShot.tick}-${label}.jpg`, type: 'jpeg', quality: 80 });
+    }
     if (trace && values['trace-window'] && !traceStopped && await page.evaluate(() => (window as unknown as { __r28LongFrames: { ms: number; elapsedMs: number }[] }).__r28LongFrames.some(f => f.ms > 250 && f.elapsedMs >= 3000))) {
       traceStopped = true; await trace.send('Tracing.end'); log({ traceStoppedOnHitch: true, tick: e.tick });
     }
@@ -175,13 +185,13 @@ try {
     if (values['idle-when'] && new RegExp(values['idle-when']).test(`${e.objective} | ${e.tracker}`)) { await press([]); if (Date.now() - lastShot > shotEvery) { lastShot = Date.now(); await capture({ path: `${out}/s${String(shotN++).padStart(3, '0')}-t${e.tick}-idle.jpg`, type: 'jpeg', quality: 70 }); } if (Date.now() - lastLog > 3000) { lastLog = Date.now(); log({ idle: true, tick: e.tick, objective: e.objective, tracker: e.tracker, player: { x: +e.player.x.toFixed(1), z: +e.player.z.toFixed(1), hp: Math.round(e.player.hp) } }); } await page.waitForTimeout(100); continue; }
     if (values['hold-e'] && e.prompt) keys.push('KeyE');
     // While driving Space is the horn/boost (K the handbrake): only fire on foot.
-    if (target && !e.driving) { await page.mouse.move(target.aim.x, target.aim.y); keys.push('Space'); }
+    if (target && !e.driving && !values['no-fire']) { await page.mouse.move(target.aim.x, target.aim.y); keys.push('Space'); }
     // r33-vqa: at the L9 rail-stall hatch the courier fights from the hull: select the weapon (keys do not take while
     // driving, retry here) and fire with the left mouse button at the nearest drawn enemy.
     // r35-vqa: the first weapon key can land while the briefing panel is still open; retry on foot until the wanted weapon is held.
     if (!e.driving && e.player.current !== values.weapon && e.player.weapons?.includes(values.weapon!) && Date.now() - lastTap > 3000) { lastTap = Date.now(); const k = weaponKey(values.weapon!); if (k) { await page.keyboard.press(`Digit${k}`); log({ weaponKey: k, tick: e.tick, had: e.player.current }); } }
     const hatch = !!e.driving && /Defend the hatch/.test(e.objective ?? '');
-    if (hatch) {
+    if (hatch && !values['no-hatch-fire']) {
       const want = weaponKey(values.weapon!); if (want && e.player.current !== values.weapon && Date.now() - lastTap > 1500) { lastTap = Date.now(); await page.keyboard.press(`Digit${want}`); log({ hatchKey: want, tick: e.tick, rack: e.player.weapons, empty: e.player.emptyWeapons, had: e.player.current, ctx: await page.evaluate(() => { const g = (window.__SCENE__ as unknown as { game: { input: { drivingContext: boolean; mountedGunContext: boolean }; world: { mountedGun?: { mounted: boolean }; missions?: { l9?: { driving: { hatch: boolean } } } } } }).game; return { driving: g.input.drivingContext, mounted: g.input.mountedGunContext, hatch: g.world.missions?.l9?.driving.hatch, worldMounted: g.world.mountedGun?.mounted }; }) }); }
       if (target) { await page.mouse.move(target.aim.x, target.aim.y); await page.mouse.down(); await page.waitForTimeout(90); await page.mouse.up(); }
     }
