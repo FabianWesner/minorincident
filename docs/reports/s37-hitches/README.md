@@ -187,3 +187,9 @@ Acceptance clarification requested: exclusive quiet reference runs versus also r
 New optional `--trace-window` uses a64MB continuously recorded trace buffer, stops tracing when the input loop first observes a post3s frame>250ms, and keeps the normal full-run frame collector active. It records rollingWindow/stoppedOnHitch flags; trace completion listener is installed before tracing starts so early stop cannot lose its stream event. This bounds the retained scheduling history rather than promising full180s coverage.
 
 `rolling-1.json`:180s screenshot-free high/WebGPU lion route,max50.1ms,p99 16.8ms,zero>250ms,page errors0. No hitch trigger; recent-window export401,542,954bytes,dataLossOccurred:true (earlier ring events overwritten),rollingWindow:true,stoppedOnHitch:false. This validates no-trigger export lifecycle but does not validate a triggered causal window. Typecheck/lint/diff-check passed before run. All commands terminal; owned preview4937 stopped. No runtime game change; target and acceptance clarification remain open.
+
+### Bounded rolling retries2/3
+
+`rolling-retries.json` retains two further180s screenshot-free high/WebGPU samples, separate reservations each<10min. Run2:10,609post3s frames,max49.9ms,p99 16.8ms,zero>250ms. Run3:10,603frames,max50ms,p99 16.8ms,zero>250ms. Both stoppedOnHitch:false; no triggered causal window was obtained. The bounded batch ended after two attempts; these clean samples do not erase retained failures or prove the trigger path. All commands terminal; owned preview4937 stopped.
+
+No new runtime fix is justified by this batch. Acceptance clarification remains unanswered; original scope is unchanged. The remaining obstacle is establishing the specific source and a supported mitigation for intermittent external frame dispatch delays, while the historical traces needed for direct retrospective attribution were never retained. No completion claimed.

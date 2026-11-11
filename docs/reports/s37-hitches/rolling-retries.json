@@ -1,0 +1,112 @@
+[
+  {
+    "run": "l8-rolling-2",
+    "summary": {
+      "wall": "08:01:10",
+      "epochMs": 1794384070842,
+      "hostLoad": [
+        5.50927734375,
+        4.6650390625,
+        4.74755859375
+      ],
+      "end": true,
+      "frames": [],
+      "performanceSummary": {
+        "excludedInitialMs": 3000,
+        "samples": 10609,
+        "maxMs": 49.9,
+        "p99Ms": 16.8,
+        "over250": []
+      },
+      "errors": []
+    },
+    "trace": {
+      "wall": "08:01:26",
+      "epochMs": 1794384086357,
+      "hostLoad": [
+        6.01171875,
+        4.8125,
+        4.7978515625
+      ],
+      "trace": "/private/tmp/s37-hitches/l8-rolling-2/trace.json",
+      "bytes": 402634609,
+      "dataLossOccurred": true,
+      "rollingWindow": true,
+      "stoppedOnHitch": false
+    },
+    "load": {
+      "wall": "07:58:10",
+      "epochMs": 1794383890614,
+      "hostLoad": [
+        3.2880859375,
+        4.751953125,
+        4.83642578125
+      ],
+      "loadWallMs": 5949,
+      "loadTiming": {
+        "dataMs": 14.899999976158142,
+        "simMs": 141.5,
+        "viewMs": 3160.4000000059605
+      }
+    },
+    "hostLoad1Range": [
+      2.93408203125,
+      6.01171875
+    ]
+  },
+  {
+    "run": "l8-rolling-3",
+    "summary": {
+      "wall": "08:04:35",
+      "epochMs": 1794384275091,
+      "hostLoad": [
+        6.08837890625,
+        5.49365234375,
+        5.09033203125
+      ],
+      "end": true,
+      "frames": [],
+      "performanceSummary": {
+        "excludedInitialMs": 3000,
+        "samples": 10603,
+        "maxMs": 50,
+        "p99Ms": 16.8,
+        "over250": []
+      },
+      "errors": []
+    },
+    "trace": {
+      "wall": "08:04:48",
+      "epochMs": 1794384288838,
+      "hostLoad": [
+        6.0068359375,
+        5.494140625,
+        5.09423828125
+      ],
+      "trace": "/private/tmp/s37-hitches/l8-rolling-3/trace.json",
+      "bytes": 403002777,
+      "dataLossOccurred": true,
+      "rollingWindow": true,
+      "stoppedOnHitch": false
+    },
+    "load": {
+      "wall": "08:01:34",
+      "epochMs": 1794384094852,
+      "hostLoad": [
+        6.01611328125,
+        4.8515625,
+        4.8115234375
+      ],
+      "loadWallMs": 6321,
+      "loadTiming": {
+        "dataMs": 15.5,
+        "simMs": 149,
+        "viewMs": 3335
+      }
+    },
+    "hostLoad1Range": [
+      5.50146484375,
+      7.0224609375
+    ]
+  }
+]
