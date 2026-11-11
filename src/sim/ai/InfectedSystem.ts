@@ -106,6 +106,8 @@ export class InfectedSystem {
    * that these bodies cannot enter; routing them there left them standing at the first wall (nightly war-waves, r37). */
   private wideNav?: NavGrid;
   private static readonly wideBodyRadius = .4;
+  /** Wide-body searches run on their own per-tick allowance so they neither starve nor are starved by the shared `budget`. */
+  private wideBudget = 0;
   /** Infected steering, separation and impulses share this collision registry. Humans retain `nav`. */
   get infectedNav(): NavGrid { return this.admissionNav ?? this.nav; }
   excludeInfected(walls: readonly import('../combat/HitQuery').CoverWall[]): void {
@@ -402,7 +404,7 @@ export class InfectedSystem {
    * special moves, roar/pin holds, then the L1 or archetype brain. Every phase returns true when it consumed the actor's tick. */
   update(): void {
     if (this.world.progression?.campaign?.world?.infectionCleared && this.world.scenario !== 'L10' && this.world.missions?.state.id !== 'L10') for (const e of this.active) this.world.combat?.damage.cure(e);
-    const courier = this.world.entities.get(1)!; this.budget = 2000; this.routes = 0; this.director.update();
+    const courier = this.world.entities.get(1)!; this.budget = 2000; this.wideBudget = 12000; this.routes = 0; this.director.update();
     this.approachParty.length = 0;
     if (!this.world.inspectionGhost) for (const human of this.world.entities.iterate()) {
       if (human.hidden || human.health.current <= 0 || human.infection || human.infected) continue;
@@ -2104,7 +2106,8 @@ export class InfectedSystem {
     // shared flow. Making each compete for an individual A* search can leave
     // the new cohort waiting behind the rest of the horde for its whole cue.
     const courierApproach = b.breachApproach === 'inside' && b.pressureTarget?.id === 1 && b.pressureTarget.until > this.world.tick;
-    const useFlow = !heightGoal && this.active.length > 20 && !b.roar && !b.specialAttack && (!b.scripted || courierApproach) && !b.investigate && (courierApproach || (b.heardTargetId ?? 1) <= 1);
+    // The shared flow field is only built on the admission grid; a wide body on `wideNav` would read an empty field and stand still, so it searches.
+    const useFlow = nav !== this.wideNav && !heightGoal && this.active.length > 20 && !b.roar && !b.specialAttack && (!b.scripted || courierApproach) && !b.investigate && (courierApproach || (b.heardTargetId ?? 1) <= 1);
     if (!nav.visible(e.transform, target, e.combat!.radius)) {
       // Clear paths steer directly; cell searches are needed only around cover.
       // The nearest cell can lie across a thin doorway wall. Start on a
@@ -2119,9 +2122,10 @@ export class InfectedSystem {
       let next = from;
       if (useFlow) next = nav.flowWaypoint(from, e.transform, e.combat!.radius);
       else {
-        if ((b.goal !== to || b.pathIndex >= b.path.length) && (this.budget > 0 || nav === this.wideNav) && (!armyApproach || this.world.tick >= (b.pathRetryAt ?? 0))) {
-          let found = nav.path(from, to, b.path, nav === this.wideNav ? Math.max(this.budget, 12000) : this.budget); this.budget -= nav.expansions;
-          if (!found && nav === this.wideNav) found = this.reachableWideGoal(nav, from, x, z, b.path, 12000); b.pathIndex = 0; b.goal = to;
+        const wide = nav === this.wideNav;
+        if ((b.goal !== to || b.pathIndex >= b.path.length) && (wide ? this.wideBudget > 0 : this.budget > 0) && (!armyApproach || this.world.tick >= (b.pathRetryAt ?? 0))) {
+          let found = nav.path(from, to, b.path, wide ? this.wideBudget : this.budget); if (wide) this.wideBudget -= nav.expansions; else this.budget -= nav.expansions;
+          if (!found && wide) { found = this.reachableWideGoal(nav, from, x, z, b.path, Math.max(this.wideBudget, 0)); this.wideBudget -= nav.expansions; } b.pathIndex = 0; b.goal = to;
           // A distant failed request must yield the shared search budget to
           // later native archetypes, just as pedestrian searches already do.
           if (!found && armyApproach) b.pathRetryAt = this.world.tick + 15;
