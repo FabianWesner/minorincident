@@ -87,3 +87,15 @@ Existing motion summaries report zero grounded contacts and 9.6 cm maximum sole
 lift for both cats. These summaries are insufficient to prove continuity; the
 next step is to record presented root/yaw and joint pose changes per frame.
 No gameplay fix or confirmed flicker cause has been established.
+
+## Per-frame pose trace and probe correction
+
+The probe now saves all 900 presented crowd joint/phase samples in `frames.json`.
+Its original phase-0 trajectory was followed by simulation cleanup that overwrote
+motion with idle data. Moving the controlled trajectory to phase 1000 establishes
+both travel and the production walking animation. The completed run reports 66
+contact samples per cat, maximum planted-foot slide 5.3 cm, and maximum contact
+yaw drift 0.1 degrees. Healthy cats select `walk` even at the 3.2 m/s segment.
+The prior moving-root run therefore did not verify a walking animation and must
+not be treated as its baseline. The cause remains unconfirmed; the saved joint
+trace is now available for frame-to-frame discontinuity analysis.
