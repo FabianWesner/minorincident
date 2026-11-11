@@ -85,3 +85,9 @@ The native `thrower-2` diagnostic showed a clear/resident/director-safe post wit
 A preliminary global trigger move was rejected: although road and countryside audit scenarios completed, the shortcut run took substantially longer and was explicitly interrupted before producing a result. The committed route-specific authoring preserves other routes' trigger positions. The complete six-lane audit and regression gates must be rerun for the committed fix.
 
 Browser QA needed: on both countryside traces, verify the second thrower is already present outside the driving frame before the bend near x=200, then throws from the verge without clipping the APC lane or appearing onscreen at admission.
+
+## Countryside-only fix validation
+
+The complete six-lane L9 audit now exits zero: 442 wide records, zero unreachable paths/openings, and no missing fixed-group or set-piece quotas. Counts are road main/detour 136/107, countryside 61/49, shortcut 43/46. Road and shortcut counts match their pre-fix runs; both countryside traces now admit the missing second thrower.
+
+Required regression commands completed after the fix. Remote `npm test` passed (106 passed/1 skipped; 150/150 case budget; 209.3 s). Remote nightly remained five passed/one failed, solely L2 market-ambush 24 admitted/23 reached; war-waves passed. Threat counts stayed 0,1,2,4,3,4,6,0,0,0, including the queued L3/L5 regressions. The threat run took 1025.6 s under shared Mac load but completed. No check remains running. The red L2 nightly gate and exhaustive source coverage for other levels remain outstanding.
