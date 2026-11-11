@@ -168,7 +168,7 @@ export async function measureFlatSilhouette(session: SceneSession, ids: string[]
     const camera = game.view.camera, projection = new Matrix4().multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
     return ids.map(id => {
       const actor = (actors as { actors: Record<string, { entity: number }> }).actors[id];
-      const entityId = actor?.entity ?? (id === 'mega' ? [...game.world.entities.iterate()].find(e => e.infected?.pursuit)?.id : undefined);
+      const entityId = actor?.entity ?? (/^entity:\d+$/.test(id) ? Number(id.slice(7)) : undefined) ?? (id === 'mega' ? [...game.world.entities.iterate()].find(e => e.infected?.pursuit)?.id : undefined);
       if (entityId === undefined) throw new Error(`Flat silhouette: unknown actor ${id}`);
       const entity = game.world.entities.get(entityId); if (!entity) throw new Error(`Flat silhouette: missing entity ${id}`);
       const worldBox = pickBodies.bounds(entityId, new Box3());

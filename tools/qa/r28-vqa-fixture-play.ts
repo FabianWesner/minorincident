@@ -2,6 +2,7 @@
 //   E2E_PORT=4891 E2E_UNITS=1 sh tools/e2e-lock.sh npx tsx tools/qa/r28-vqa-fixture-play.ts <origin> <fixture> --out <dir>
 //     [--quality low|high] [--zoom 1.5] [--backend webgpu|webgl] [--seconds 300] [--shot 6] [--god] [--weapon weapon.army-mg]
 //     [--route x,z;x,z;...] [--follow-marker] [--hold-e] [--tap-e-when <regex on tracker>]
+// --measure infected.gorilla,infected.zebra: save final paused-frame body-mask metrics and PNG.
 // --burst <m>: 6 quick frames when a drawn enemy within m metres attacks (r38-vqa).
 // --watch <js>: evaluated (a=__SS__, g=game) and logged every 3 s; pair it with --setup to install a probe.
 // --dwell <s>: stand still for s seconds at each reached route point (with --hold-e, holds E on a prompt there).
@@ -19,10 +20,12 @@ import { launchProfile } from '../browser-pool/client';
 import { readFixture } from './fixture-io';
 import { loadFixtureInPage } from './load-fixture';
 import { look, type Eyes } from '../playtest/eyes';
+import { measureFlatSilhouette } from '../scenelab/run';
+import type { SceneSession } from '../scenelab/session';
 import { weaponKey } from '../../src/data/weaponKeys';
 
 const { values, positionals } = parseArgs({ allowPositionals: true, options: {
-  out: { type: 'string' }, quality: { type: 'string', default: 'low' }, zoom: { type: 'string', default: '1.5' }, backend: { type: 'string', default: 'webgpu' },
+  measure: { type: 'string' }, out: { type: 'string' }, quality: { type: 'string', default: 'low' }, zoom: { type: 'string', default: '1.5' }, backend: { type: 'string', default: 'webgpu' },
   seconds: { type: 'string', default: '300' }, shot: { type: 'string', default: '6' }, god: { type: 'boolean', default: false }, weapon: { type: 'string', default: 'weapon.army-mg' },
   route: { type: 'string' }, 'follow-marker': { type: 'boolean', default: false }, 'hold-e': { type: 'boolean', default: false }, 'tap-e-when': { type: 'string' }, 'skip-credits-after': { type: 'string' }, dwell: { type: 'string', default: '0' }, reach: { type: 'string', default: '2.5' }, block: { type: 'string', default: '5' }, 'no-kite': { type: 'boolean', default: false }, range: { type: 'string', default: '22' }, setup: { type: 'string' }, trace: { type: 'boolean', default: false }, 'trace-scheduling': { type: 'boolean', default: false }, 'trace-window': { type: 'boolean', default: false }, 'no-captures': { type: 'boolean', default: false },
   handbrake: { type: 'string', default: 'Space' }, burst: { type: 'string' }, prefer: { type: 'string' }, watch: { type: 'string' }, 'route-when': { type: 'string' }, 'idle-when': { type: 'string' },
@@ -215,6 +218,16 @@ try {
     const percentile = (p: number) => times.length ? +times[Math.max(0, Math.ceil(times.length * p) - 1)].toFixed(1) : null;
     return { excludedInitialMs: 3000, samples: times.length, maxMs: times.length ? +times[times.length - 1].toFixed(1) : null, p99Ms: percentile(.99), over250: w.__r28LongFrames.filter(f => f.elapsedMs >= 3000 && f.ms > 250) };
   });
+  if (values.measure) {
+    await page.evaluate(() => window.__SS__!.pause());
+    const targets = await page.evaluate(species => {
+      const g = (window.__SCENE__ as unknown as { game: import('../../src/Game').Game }).game;
+      return g.world.infected!.active.filter(e => species.includes(e.archetype) && e.health.current > 0 && !e.hidden && !e.infected?.hidden).map(e => ({ id: `entity:${e.id}`, archetype: e.archetype }));
+    }, values.measure.split(','));
+    const samples = await measureFlatSilhouette({ page } as SceneSession, targets.map(t => t.id));
+    writeFileSync(`${out}/figure-metrics.json`, JSON.stringify({ targets, samples }, null, 2));
+    await capture({ path: `${out}/measured.png` });
+  }
   log({ end: true, frames: await page.evaluate(() => (window as unknown as { __r28Frames: unknown[] }).__r28Frames.splice(0)), performanceSummary, errors });
   if (trace && traceStarted) {
     if (!traceStopped) await trace.send('Tracing.end');
