@@ -99,3 +99,9 @@ L3 now runs each explicit native street policy (Boulevard, Commerce, Oak) and re
 ## L6 hatch source census
 
 Added a coverage gate requiring a recorded wide actor matched by ID and spawn tick to each authored wave-4 hatch ledger entry. The native run completes with four pathable wide records, but covers only hatch 3. Hatches 2, 5, 6, 4 and 7 are missing from the wide census; the audit now exits failure rather than implying exhaustive coverage from that bot route. Closed/omitted hatch cohorts need an explicit open-hatch fixture before this level is fully qualified. This finding is a coverage gap, not a demonstrated collision blocker. Typecheck and tool lint passed.
+
+## L6 open-hatch fixture qualification
+
+Added an audit-only fixture that calls the production L6 wave-4 spawner for all six authored hatches, placing the courier out of view for admission, checking routes toward the tunnel center opposite each hatch, and restoring her start pose before the native run continues. The fixture retains cap/residency/offscreen checks and actual actor sizes. Admission receipts are captured immediately because native checkpoint restoration can replace the mission's final ledger. No bodies or corpses are removed by the fixture.
+
+The isolated final run completes and exits zero: all six hatch front members are observed, 12 total wide records have valid spawn-origin paths, and no narrow openings are reported. Typecheck and tool lint passed. This closes the five omitted-hatch coverage gaps previously listed.

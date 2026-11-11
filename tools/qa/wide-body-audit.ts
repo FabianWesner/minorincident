@@ -7,7 +7,8 @@ import { runnerLevels, runLevel } from '../sim-runner/levels';
 import { cureEncounters, curePaceEncounters, cureEncounterSlots, cureEncounterSpot } from '../../src/levels/L10/encounters';
 import { LevelNineSetPieces } from '../../src/sim/missions/LevelNineSetPieces';
 import { crossing } from '../../src/levels/L9/district';
-import { l6Entries } from '../../src/data/l6';
+import { followFrustum } from '../sim-runner/l3Bots';
+import { l6Entries, l6Doors } from '../../src/data/l6';
 import { l3 } from '../../src/data/l3';
 import type { L3StreetChoice } from '../../src/debug/bot/LevelThreeBot';
 import { l9Groups, l9SetPieces, l9SetPieceTuning } from '../../src/data/l9';
@@ -53,6 +54,7 @@ for (const { level, l9Route, l9Detour, street } of streetScenarios) {
   let outcome = 'not-run';
   let coverage: Coverage | undefined;
   let authoredSource: string | undefined;
+  const l6FixtureObserved = new Set<number>();
   const restoreSources: (() => void)[] = [];
   let audit: Pick<LevelResult, 'unreachable' | 'narrowOpenings'> = { unreachable: [], narrowOpenings: [] };
   const run = await runLevel(level, 'newbie', 1, level === 'L10' ? 3600 : 2400, street, undefined, undefined, 0, {
@@ -104,7 +106,29 @@ for (const { level, l9Route, l9Detour, street } of streetScenarios) {
       playerRoute.push({ x: world.entities.get(1)!.transform.x, z: world.entities.get(1)!.transform.z });
       const update = world.update.bind(world);
       let l8FixtureInjected = false;
+      let l6FixtureInjected = false;
       world.update = (...args: Parameters<typeof world.update>) => {
+        if (level === 'L6' && !l6FixtureInjected && world.missions?.l6) {
+          l6FixtureInjected = true;
+          const player = world.entities.get(1)!, original = { ...player.transform };
+          const move = (x: number, z: number) => {
+            Object.assign(player.transform, { x, z }); world.spatial.set(1, x, z);
+            world.physics.playerBody!.setTranslation(player.transform, true);
+            world.physics.playerBody!.setNextKinematicTranslation(player.transform);
+            followFrustum(world);
+          };
+          const subway = world.missions.l6 as unknown as { spawn(count: number, doors: number[], wave: number): number };
+          for (const entry of l6Entries) {
+            const door = l6Doors[entry.door];
+            move(door.x - 24, 15);
+            subway.spawn(entry.count, [entry.door], 4);
+            if (world.missions!.state.l6!.spawnLog.some(row => row.wave === 4 && row.door === entry.door && spawns.some(body => body.id === row.id && body.tick === row.tick))) l6FixtureObserved.add(entry.door);
+            move(door.x, 15);
+            playerRoute.push({ x: door.x, z: 15 });
+            checkRoutes();
+          }
+          Object.assign(player.transform, original); move(original.x, original.z);
+        }
         if (level === 'L8' && !l8FixtureInjected && world.missions?.l8) {
           l8FixtureInjected = true;
           // Exercise the authored outlet heavy roles once the mission's prepared
@@ -154,7 +178,7 @@ for (const { level, l9Route, l9Detour, street } of streetScenarios) {
       if (level === 'L6') {
         const expected = l6Entries.map(entry => `hatch-${entry.door}`);
         const ledger = world.missions!.state.l6!.spawnLog;
-        const observed = l6Entries.filter(entry => ledger.some(row => row.wave === 4 && row.door === entry.door && spawns.some(body => body.id === row.id && body.tick === row.tick))).map(entry => `hatch-${entry.door}`);
+        const observed = l6Entries.filter(entry => l6FixtureObserved.has(entry.door) || ledger.some(row => row.wave === 4 && row.door === entry.door && spawns.some(body => body.id === row.id && body.tick === row.tick))).map(entry => `hatch-${entry.door}`);
         coverage = { expected, observed, missing: expected.filter(id => !observed.includes(id)) };
       }
       if (level === 'L9') {
