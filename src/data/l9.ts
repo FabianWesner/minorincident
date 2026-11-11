@@ -66,7 +66,7 @@ export const l9Course = {
    */
   evacuation: { x: 457, z: 0, radius: 11, defendTicks: 1800, truckX: 459, truckZ: -16, doorClearM: 8, waitMaxTicks: 2700,
     /** r42 follow-up (orchestrator): after the 45 s wait they go once <= 2 infected are at the door; at 90 s they go regardless. */
-    releaseThreats: 2, capTicks: 5400,
+    releaseThreats: 2, capTicks: 5400, releaseCourierHp: .5,
     /** r42 follow-up: during the evacuation the guards fan out this far from the passenger door (posts 3 m apart). */
     guardOutM: 7 },
   /** r42 follow-up: the guard line takes its posts when the APC is this far west of the gate (earlier, the ambient pack killed it). */

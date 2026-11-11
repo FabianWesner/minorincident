@@ -240,7 +240,9 @@ export class LevelNineDriving {
   /** r42-l9pin: evacuees are still seated in the APC inside the wait window. */
   private waiting(): boolean {
     const s = this.state;
-    return s.evacuationAt !== null && !s.evacuationDone && this.w.tick - s.evacuationAt < cfg.evacuation.capTicks
+    const courier = this.w.entities.get(1)!, waited = s.evacuationAt === null ? 0 : this.w.tick - s.evacuationAt;
+    if (courier.health.current <= courier.health.max * cfg.evacuation.releaseCourierHp) return false;
+    return s.evacuationAt !== null && !s.evacuationDone && waited < cfg.evacuation.capTicks
       && (this.car.entity.vehicle!.passengers ?? []).some(p => p.id !== s.samId && !this.w.entities.get(p.id)?.companion && p.phase === 'seated');
   }
   /** r42-l9pin: live infected at the passenger door or on the hull; survivors wait inside while any are there. */
@@ -555,8 +557,10 @@ export class LevelNineDriving {
     if (s.evacuationAt === null || s.evacuationDone) return;
     const passengers = this.car.entity.vehicle!.passengers ?? [];
     // After the wait the door may hold a straggler or two (released at <= releaseThreats); the hard cap keeps fail-forward.
-    const waited = w.tick - s.evacuationAt;
-    if (w.tick % 45 === 0 && (this.doorThreats() === 0 || waited >= cfg.evacuation.waitMaxTicks && this.doorThreats() <= cfg.evacuation.releaseThreats || waited >= cfg.evacuation.capTicks)) {
+    // A courier at the open hatch at or below half health ends the wait at once: with the crew inside, the pack bit her instead and
+    // the W-only probe looped 12 deaths (each reloads evac-point and restarts the hold).
+    const waited = w.tick - s.evacuationAt, courier = w.entities.get(1)!, hurt = courier.health.current <= courier.health.max * cfg.evacuation.releaseCourierHp;
+    if (w.tick % 45 === 0 && (this.doorThreats() === 0 || hurt || waited >= cfg.evacuation.waitMaxTicks && this.doorThreats() <= cfg.evacuation.releaseThreats || waited >= cfg.evacuation.capTicks)) {
       const next = passengers.find(p => p.id !== s.samId && alive(w.entities.get(p.id)) && !w.entities.get(p.id)?.companion && p.phase === 'seated');
       if (next && w.vehicles!.disembarkPassenger(this.car.entity.id, next.id)) s.evacuating.push(next.id);
     }
