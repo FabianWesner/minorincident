@@ -12,15 +12,15 @@ try {
   if (process.env.MOTION_FIXTURE_ROUTE) await session.page.evaluate(() => {
     const game = (window.__SCENE__ as unknown as { game: import('../../../src/Game').Game }).game;
     const started = game.world.tick;
-    const cats = [...game.world.entities.iterate()].filter(e => /lion/.test(e.civilian?.zooAnimal ?? e.archetype)).map(e => ({ entity: e, x: e.transform.x, z: e.transform.z, distance: e.motion?.distance ?? 0 }));
+    const cats = [...game.world.entities.iterate()].filter(e => /lion/.test(e.civilian?.zooAnimal ?? e.archetype)).map(e => ({ entity: e, x: e.transform.x, z: -42, distance: e.motion?.distance ?? 0 }));
     game.world.events.on('sim.tick', () => {
       const seconds = (game.world.tick - started) / 60, speed = seconds <= 10 ? 1 : 3.2, distance = Math.min(10, seconds) + Math.max(0, seconds - 10) * 3.2;
       for (const cat of cats) {
-        cat.entity.transform.x = cat.x - distance; cat.entity.transform.z = cat.z; cat.entity.transform.yaw = Math.PI;
+        cat.entity.transform.x = cat.x - distance; cat.entity.transform.z = cat.z; cat.entity.transform.y = .7 + (game.world.districts?.pavingHeight(cat.entity.transform.x, cat.z) ?? 0); cat.entity.transform.yaw = Math.PI;
         cat.entity.motion = { velocity: { x: -speed, z: 0 }, speed, moving: true, distance: cat.distance + distance };
       }
       const x = cats[0].entity.transform.x;
-      game.view.view.cinematic({ position: [x + 17, 18, 3], target: [x, 0, -14] }, true);
+      game.view.view.cinematic({ position: [x + 17, 18, cats[0].z + 17], target: [x, 0, cats[0].z] }, true);
     }, 1000);
   });
   writeJson(`${out}/config.json`, { requestedBackend: process.env.MOTION_BACKEND ?? 'webgl2', tier: process.env.MOTION_TIER ?? 'high', actualBackend: await session.page.evaluate(() => (window.__SCENE__ as unknown as { game: import('../../../src/Game').Game }).game.view.renderer.selectedBackend), movement: process.env.MOTION_FIXTURE_ROUTE ? 'test-only route: 10 s at 1 m/s + 5 s at 3.2 m/s; gameplay stats unchanged' : 'natural fixture simulation, no speed overrides' });

@@ -617,3 +617,15 @@ real L8 scene follows a test-only straight route, 10 s at 1 m/s then 5 s at
 source gameplay stats. Config receipts clearly distinguish this from natural
 AI. Completed current-source route run `l8-controlled-current/`. Original-source
 route comparison and final measurement audit remain to be completed.
+
+## Flat interior real-fixture route
+
+Inspection located the synthetic route's 12 cm steps at real paving edges; its
+post-grounding transform override also delayed sim support height by one tick.
+The test route now samples support at the overridden destination and uses the
+interior enclosure lane Z=-42, with camera following that lane. No gameplay
+source/stat change. Completed 900 frames (`l8-interior-route/`): root maximum
+5.333 cm, exactly 3.2 m/s / 60, yaw zero, root-relative pelvis maximum zero for
+both cats; local paw maxima 6.652/5.583 cm. Natural-AI/curb observations remain
+separate and are not erased by this flat-route isolation. Original-source run
+of this identical interior route remains needed for its before/after comparison.
