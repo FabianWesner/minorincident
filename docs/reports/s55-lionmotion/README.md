@@ -165,3 +165,14 @@ still contradicts a complete smoothness claim. The candidate now carries its
 support offset across LOD handoffs and eases it out in standing hold, since
 walking-to-idle previously removed the full 8 cm correction. This latest change
 needs its repeat measurement and regression checks.
+
+## Avoid duplicate support during clip fades
+
+A real-L8 repeat exposed the walk-to-idle drop applying twice: the outgoing
+corrected pose is already lowered when blended, then PawContacts subtracts its
+support offset again. Support now constrains the hip to a rest-height ceiling
+instead of subtracting the offset from an already corrected pose. The completed
+900-frame real-L8 repeat reduced the lioness maximum pelvis step from 8.00 cm
+(original stop behavior) to 0.9071 cm; lion measured 0.8444 cm. Restore bookkeeping
+records the actual amount applied, preserving live actor restore behavior.
+Paw continuity, all requested matrices, and final checks remain outstanding.

@@ -19,9 +19,11 @@ export class PawContacts {
   private readonly feet;
   private pelvisDrop = 0;
   private supportOffset = 0;
+  private readonly pelvisHeight: number;
   private readonly liveSkin: boolean;
   private clip = '';
   constructor(private readonly root: Object3D, template = root) {
+    this.pelvisHeight = template.getObjectByName('hip')?.position.y ?? 0;
     template.updateWorldMatrix(true, true); template.getWorldPosition(this.origin);
     const body = template.getObjectByName('skin_body') as SkinnedMesh | undefined;
     const skeleton = template.getObjectByName('root');
@@ -250,7 +252,7 @@ export class PawContacts {
       supportDrop = this.supportOffset;
     }
     this.pelvisDrop = pelvis && supportDrop > 1e-4 ? supportDrop / pelvis.parent!.getWorldScale(new Vector3()).y : 0;
-    if (pelvis && this.pelvisDrop) { pelvis.position.y -= this.pelvisDrop; pelvis.updateWorldMatrix(false, true); }
+    if (pelvis && this.pelvisDrop) { const before = pelvis.position.y; pelvis.position.y = Math.min(before, this.pelvisHeight - this.pelvisDrop); this.pelvisDrop = before - pelvis.position.y; pelvis.updateWorldMatrix(false, true); }
     for (const [index, foot] of this.feet.entries()) {
       const p = (phase + offsets[index]) % 1, sole = this.origin.y + foot.sole;
       // A gait change (walk/trot/gallop use different foot offsets) or leaving a standing hold must not re-plant a
@@ -339,7 +341,7 @@ export class PawContacts {
       this.supportOffset = Math.max(0, this.supportOffset - dt * .5);
       const pelvis = this.root.getObjectByName('hip');
       this.pelvisDrop = pelvis ? this.supportOffset / pelvis.parent!.getWorldScale(new Vector3()).y : 0;
-      if (pelvis) { pelvis.position.y -= this.pelvisDrop; pelvis.updateWorldMatrix(false, true); }
+      if (pelvis) { const before = pelvis.position.y; pelvis.position.y = Math.min(before, this.pelvisHeight - this.pelvisDrop); this.pelvisDrop = before - pelvis.position.y; pelvis.updateWorldMatrix(false, true); }
     }
     this.root.updateWorldMatrix(true, true); this.root.getWorldPosition(this.origin);
     const floor = this.origin.y, partner = [3, 2, 1, 0];
