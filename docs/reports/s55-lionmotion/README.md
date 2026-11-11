@@ -629,3 +629,15 @@ source/stat change. Completed 900 frames (`l8-interior-route/`): root maximum
 both cats; local paw maxima 6.652/5.583 cm. Natural-AI/curb observations remain
 separate and are not erased by this flat-route isolation. Original-source run
 of this identical interior route remains needed for its before/after comparison.
+
+## Matched L8 walk/run before-after result
+
+Ran the identical interior test route against original 60840f0d render files,
+restored current files byte-for-byte in finally, and verified clean worktree.
+Both original/current traces have 900 ticks and 839 adjacent drawn samples per
+cat, with root max 5.333 cm and yaw zero in both. Original/current pelvis maxima:
+lion 98.0478 cm -> 0 cm; lioness 98.0468 cm -> 0 cm. Local paw maxima:
+lion 56.8951 cm -> 6.6525 cm; lioness 56.8876 cm -> 5.5835 cm. This is the
+explicit 10 s walk / 5 s run comparison in the loaded real L8 fixture; natural
+AI comparison above remains separate. Atlas frame indices are present in both
+traces. Evidence: `l8-interior-original/` and `l8-interior-route/`.
