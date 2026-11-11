@@ -50,6 +50,7 @@ import { AnimalMoves } from '../../src/render/characters/AnimalMoves';
 import { InfectedMoves } from '../../src/render/characters/InfectedMoves';
 import { summarizeMotion } from '../../src/debug/scenelab/motion';
 import { LimbIK } from '../../src/render/characters/LimbIK';
+import { retargetClip, skinClips } from '../../src/render/characters/clips';
 import { alphaTypes } from '../../src/data/alphaTypes';
 import { alphaLooks } from '../../src/data/alphaLooks';
 import { courierForegroundWanted, crowdSurroundsCourier } from '../../src/render/courierForeground';
@@ -176,6 +177,19 @@ function checkOrdinaryInfectedPresentation(): void {
   const repeat = entity('chase', { ...reaction, started: 106, until: 107 });
   expect(InfectedMoves.flinch(repeat, 107)).toBeLessThan(InfectedMoves.flinch(repeat, 109));
   expect(InfectedMoves.flinch(repeat, 116)).toBeLessThan(InfectedMoves.flinch(repeat, 109));
+}
+/** r39-l10nan: the in-place hit/attack clips that carry a crowd gaitShape (hurt, windup, swing, stagger-*) have no stride. Baking
+ * them as a planted walk cycle made every leg/hip track NaN: the courier's first 'hurt' drew her invisible for the rest of the
+ * level and NaN'd her gun muzzle (one RangeError per shot). Every retargeted clip must stay finite, rigid and skinned. */
+function checkFiniteActionClips(): void {
+  const rig = new Group(), node = (name: string, parent: Object3D, x: number, y: number, z: number) => { const n = new Object3D(); n.name = name; n.position.set(x, y, z); parent.add(n); return n; };
+  const hip = node('hip', rig, 0, .705, 0), torso = node('torso', hip, 0, .1, 0);
+  for (const [side, z] of [['L', .15], ['R', -.15]] as const) node(`hand${side}`, node(`foreArm${side}`, node(`arm${side}`, torso, 0, .3, z), 0, -.2, 0), 0, -.2, 0);
+  for (const [side, z] of [['L', .09], ['R', -.09]] as const) node(`foot${side}`, node(`shin${side}`, node(`leg${side}`, hip, 0, -.05, z), 0, -.3, 0), 0, -.3, 0);
+  for (const source of [undefined, skinClips]) for (const name of ['hurt', 'windup', 'swing', 'stagger-left', 'stagger-right', ...source ? [] : ['walk', 'run']]) {
+    const clip = retargetClip(rig, name, false, source);
+    for (const track of clip.tracks) expect(Array.from(track.values).every(Number.isFinite), `${source ? 'skin' : 'rigid'} ${name} ${track.name}`).toBe(true);
+  }
 }
 function checkFractionalCrowdPicking(): void {
   const matrices = new Float32Array(32);
@@ -539,7 +553,7 @@ test('textured corpse draws bind their surface and upload placements added after
 });
 
 test('skinned crowd: four-influence packing, joint·bind⁻¹ atlas rows, and corpse freezing with the shader blend', () => {
-  checkFractionalCrowdPicking(); checkAlphaMoveSet(); checkOrdinaryInfectedPresentation();
+  checkFractionalCrowdPicking(); checkAlphaMoveSet(); checkOrdinaryInfectedPresentation(); checkFiniteActionClips();
   const pose = (x: number, angle: number) => new Matrix4().compose(new Vector3(x, 1, 0), new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), angle), new Vector3(1, 1, 1));
   const { dominant, skin } = packSkin([3, 7, 12, 0], [.2, .5, .3, 0], 1);
   expect(dominant[0]).toBe(7);

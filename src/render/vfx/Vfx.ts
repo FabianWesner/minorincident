@@ -115,9 +115,17 @@ export class Vfx extends Group {
   lastExplosionRadius = 0;
   private readonly tracerRounds = new WeakMap<object, number>();
   readonly shots: { sourceId: number; tick: number; muzzle: number[]; tracerStart: number[]; end: number[] }[] = [];
+  private warnedMuzzle = false;
   private gunshot(sourceId: number, direction: { x: number; y?: number; z: number }, range: number, fallback: { x: number; z: number }, targetId?: number, dust?: 'hit' | 'miss'): void {
     const source = this.world.entities.get(sourceId), target = targetId === undefined ? undefined : this.world.entities.get(targetId);
-    const muzzle = this.targets.muzzle?.(sourceId, { ...direction, y: target && source ? (target.transform.y - source.transform.y) / range : direction.y ?? 0 }) ?? { x: fallback.x, y: (source?.transform.y ?? .7) + .45, z: fallback.z };
+    let muzzle = this.targets.muzzle?.(sourceId, { ...direction, y: target && source ? (target.transform.y - source.transform.y) / range : direction.y ?? 0 }) ?? { x: fallback.x, y: (source?.transform.y ?? .7) + .45, z: fallback.z };
+    // r39-l10nan: a drawn pose that went non-finite (a NaN clip) must not reach the hit query (one RangeError per shot);
+    // fall back to the sim origin and say so once.
+    if (!Number.isFinite(muzzle.x + muzzle.y + muzzle.z)) {
+      if (!this.warnedMuzzle) { this.warnedMuzzle = true; console.warn(`[Vfx] non-finite muzzle for entity ${sourceId}; using the sim origin`); }
+      muzzle = { x: fallback.x, y: (source?.transform.y ?? .7) + .45, z: fallback.z };
+    }
+    if (![muzzle.x, muzzle.y, muzzle.z, direction.x, direction.z, range].every(Number.isFinite)) return;
     // Descend from the actual rifle tip to the victim's torso, using the same 3D cover slabs as damage.
     if (target) {
       const dx = target.transform.x - muzzle.x, dz = target.transform.z - muzzle.z;

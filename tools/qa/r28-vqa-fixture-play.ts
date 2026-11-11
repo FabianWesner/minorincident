@@ -3,6 +3,7 @@
 //     [--quality low|high] [--zoom 1.5] [--backend webgpu|webgl] [--seconds 300] [--shot 6] [--god] [--weapon weapon.army-mg]
 //     [--route x,z;x,z;...] [--follow-marker] [--hold-e] [--tap-e-when <regex on tracker>]
 // --burst <m>: 6 quick frames when a drawn enemy within m metres attacks (r38-vqa).
+// --watch <js>: evaluated (a=__SS__, g=game) and logged every 3 s; pair it with --setup to install a probe.
 // --dwell <s>: stand still for s seconds at each reached route point (with --hold-e, holds E on a prompt there).
 // --skip-credits-after <s>: click the real 'Skip credits' button after s seconds of credits.
 // --tap-e-when: tap E (down/up) once a second while the tracker matches, e.g. 'Release the cure' (the L10 release has no prompt).
@@ -24,7 +25,7 @@ const { values, positionals } = parseArgs({ allowPositionals: true, options: {
   out: { type: 'string' }, quality: { type: 'string', default: 'low' }, zoom: { type: 'string', default: '1.5' }, backend: { type: 'string', default: 'webgpu' },
   seconds: { type: 'string', default: '300' }, shot: { type: 'string', default: '6' }, god: { type: 'boolean', default: false }, weapon: { type: 'string', default: 'weapon.army-mg' },
   route: { type: 'string' }, 'follow-marker': { type: 'boolean', default: false }, 'hold-e': { type: 'boolean', default: false }, 'tap-e-when': { type: 'string' }, 'skip-credits-after': { type: 'string' }, dwell: { type: 'string', default: '0' }, reach: { type: 'string', default: '2.5' }, block: { type: 'string', default: '5' }, 'no-kite': { type: 'boolean', default: false }, range: { type: 'string', default: '22' }, setup: { type: 'string' },
-  handbrake: { type: 'string', default: 'Space' }, burst: { type: 'string' }, prefer: { type: 'string' }, 'route-when': { type: 'string' }, 'idle-when': { type: 'string' },
+  handbrake: { type: 'string', default: 'Space' }, burst: { type: 'string' }, prefer: { type: 'string' }, watch: { type: 'string' }, 'route-when': { type: 'string' }, 'idle-when': { type: 'string' },
 } });
 const [origin, name] = positionals;
 // `level:L7:corridor` loads a level at a mission checkpoint through the test API instead of a fixture.
@@ -157,6 +158,8 @@ try {
     }
     if (Date.now() - lastLog > 3000) {
       lastLog = Date.now();
+      // r39-l10nan: --watch "<js using a=__SS__, g=game>": logged with every 3-s line (e.g. a render probe the --setup installed).
+      if (values.watch) log({ watch: await page.evaluate(js => { const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: unknown }).game; return new Function('a', 'g', js)(a, g) as unknown; }, values.watch).catch(err => String(err).slice(0, 200)), tick: e.tick });
       log({ tick: e.tick, player: { x: +e.player.x.toFixed(1), z: +e.player.z.toFixed(1), hp: Math.round(e.player.hp), weapon: e.player.current, riding: e.player.riding }, driving: e.driving, apcBar: extra.apcBar, checkpoint: extra.checkpoint,
         py: await page.evaluate(() => { const t = window.__SS__!.getEntity(1)?.transform; return t ? String(t.y) : null; }), barks: await page.evaluate(() => (document.body.innerText.match(/They're inside!|Reloading!|Behind us!/g) ?? []).join(',')), enemies: foes.slice(0, 6).map(b => ({ kind: b.archetype ?? b.kind, hp: Math.round(b.hp), max: b.max, d: +b.d.toFixed(1), state: b.state })), allies: e.allies.filter(a => a.drawn).length,
         frames: await page.evaluate(() => (window as unknown as { __r28Frames: unknown[] }).__r28Frames.splice(0)),

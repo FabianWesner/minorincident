@@ -60,9 +60,23 @@ export class KeyframeAnimator {
   /** Skeleton v2 chain/helpers (fitted courier skins only). */
   readonly bones: CourierBones | undefined;
   private readonly sampledPose: { node: Object3D; position: Vector3; rotation: Quaternion }[] = [];
+  /** Bind pose of every rig/chain node, the fail-safe for a non-finite mixer result. */
+  private readonly restPose: { node: Object3D; position: Vector3; rotation: Quaternion }[] = [];
+  private static warnedNonFinite = false;
+  /** r39-l10nan: one non-finite sample (a NaN clip track) was kept by the sampled-pose restore and the foot contacts, so the
+   * courier stayed invisible and her muzzle NaN for the rest of the level. Fall back to the bind pose for that frame. */
+  private guardFinitePose(): void {
+    let sum = 0;
+    for (const node of [this.rig.hip, this.rig.torso, this.rig.legL, this.rig.legR, this.rig.shinL, this.rig.shinR, this.rig.armR, this.rig.foreArmR]) { const p = node.position, q = node.quaternion; sum += p.x + p.y + p.z + q.x + q.y + q.z + q.w; }
+    if (Number.isFinite(sum)) return;
+    if (!KeyframeAnimator.warnedNonFinite) { KeyframeAnimator.warnedNonFinite = true; console.warn(`[KeyframeAnimator] non-finite pose after clip '${this.clip}'; reset to the bind pose`); }
+    for (const p of this.restPose) { p.node.position.copy(p.position); p.node.quaternion.copy(p.rotation); }
+    this.ground?.reset();
+  }
   constructor(private readonly rig: CharacterRig, clipSource?: typeof skinClips) {
     this.skin = clipSource === skinClips;
     this.bones = this.skin ? courierBones(rig.root) : undefined;
+    for (const node of new Set([...Object.values(rig), ...this.bones ? chainNodes(this.bones) : []])) this.restPose.push({ node, position: node.position.clone(), rotation: node.quaternion.clone() });
     if (this.skin) for (const node of [...Object.values(rig), ...this.bones ? chainNodes(this.bones) : []]) this.sampledPose.push({ node, position: node.position.clone(), rotation: node.quaternion.clone() });
     if (this.skin) this.ground = new CourierGroundContacts(rig);
     this.strides = clipSource === skinClips ? { ...strides, ...Object.fromEntries(Object.entries(skinGait).map(([k, g]) => [k, g.stride])) } : strides;
@@ -195,6 +209,7 @@ export class KeyframeAnimator {
       this.base.time = Math.max(0, Math.min(1, phase)) * this.base.getClip().duration; this.base.setEffectiveTimeScale(0);
     }
     this.mixer.update(dt);
+    this.guardFinitePose();
     for (const p of this.sampledPose) { p.position.copy(p.node.position); p.rotation.copy(p.node.quaternion); }
     if (this.skin && !['die', 'knockdown', 'get-up'].includes(name)) this.keepTorsoForward();
     const plantedAction = !ride && (name === 'hurt' || !!strike && !/kick|knee|spinning/.test(strike));
