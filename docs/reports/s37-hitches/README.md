@@ -131,3 +131,9 @@ Runner now supports `--trace-scheduling`, adding toplevel/gpu/viz/cc events to t
 `scheduling-1.json` retains completed180s screenshot-free high/WebGPU frame window:10,605samples after3s,max50ms,p99 16.8ms,zero>250ms,page errors0. It did not reproduce the dispatch gap. Adding browser/GPU/compositor/task categories exceeded Node's maximum string length during export (`RangeError: Invalid string length`); no usable trace was written. Command exited1 and is not represented as a successful trace capture.
 
 Runner now writes each CDP stream chunk directly to an open file and counts bytes, decoding base64 chunks if returned. This removes the whole-trace string allocation/length limit while retaining Chromium data-loss logging. Next scheduling reproduction must still demonstrate a complete export before attribution. Owned browser command terminal; preview4937 stopped. Runtime game unchanged; objective remains incomplete.
+
+### Scheduling diagnostic2 — streaming export works, broad trace still loses events
+
+`scheduling-2.json`:180s high/WebGPU screenshot-free route reached arena-lion;10,597post3s samples,max50.1ms,p99 16.8ms,zero>250ms,page errors0. Host load1 range2.67–4.28,setup6509ms. Streaming export completed976,749,345bytes, proving removal of the Node string-length limit; Chromium reports dataLossOccurred:true, so full-window causal claims remain disallowed. No failing gap reproduced in this sample.
+
+Scheduling categories narrowed from toplevel/gpu/viz/cc to toplevel/gpu, retaining devtools timeline/user markers: broad compositor event volume exceeds trace capacity. Lint/diff-check pass for this category-only adjustment. This is a diagnostic correction, not a game performance fix. All owned commands terminal; preview4937 stopped. Remaining: complete scheduling trace around an actual failure, supported mitigation, final like-for-like before/after/load audit. Goal incomplete.
