@@ -1174,7 +1174,7 @@ export class SceneLab {
     }))) this.convoyOverlapFrames++;
     this.sampleMega(); this.sampleGun(); this.sampleCure();
     this.recordPropPenetration();
-    const probes = this.game.view.labProbes(), figures = new Map(this.game.view.crowdFigures().map(f => [f.id, f]));
+    const probes = this.game.view.labProbes(), submittedFigures = this.game.view.crowdFigures(), figures = new Map(submittedFigures.map(f => [f.id, f]));
     if (this.frame % 10 === 0 && this.spec?.actors?.some(a => a.kind === 'courier') && probes.character) {
       const loose = probes.character.looseAttachments(), c = this.courierAttachments; c.samples++; c.attachments = Math.max(c.attachments, loose.length);
       for (const a of loose) if (a.gapCm > c.gapMaxCm) Object.assign(c, { gapMaxCm: a.gapCm, frame: this.frame, worst: a.name, worstAt: a.at });
@@ -1271,6 +1271,10 @@ export class SceneLab {
         if (f) {
           visible = f.drawn; lod = f.lod ?? 'lod1'; clipName = f.clip; joints = f.joints ?? null; forward = f.forward ?? forward;
           if (f.soles && f.soles.length >= 4) feet = Array.from({ length: f.soles.length / 2 }, (_, i) => [f.soles![i * 2], f.soles![i * 2 + 1]]).map(([heel, toe]) => ({ heel, toe, yaw: footYaw(heel, toe) }));
+          if (e?.archetype === 'infected.crow') feet = submittedFigures.filter(member => member.id === actor.entity).flatMap(member => {
+            const soles = member.soles;
+            return soles?.length ? Array.from({ length: soles.length / 2 }, (_, i) => ({ heel: soles[i * 2], toe: soles[i * 2 + 1], yaw: footYaw(soles[i * 2], soles[i * 2 + 1]) })) : member.feet.map(point => ({ heel: point, toe: point, yaw: 0 }));
+          });
         }
       }
       if (e && !e.hidden && e.health.current > 0 && !e.corpse && !(e.civilian?.state === 'infected')) {
