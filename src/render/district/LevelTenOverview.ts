@@ -81,8 +81,9 @@ export class LevelTenOverview extends Group {
     this.forest = new InstancedMesh(new ConeGeometry(1, 1, 6), canopy, trees.length); this.forest.name = 'L10-panorama-woodland';
     trees.forEach((tree, i) => { this.forest.setMatrixAt(i, tree.matrix); this.forest.setColorAt(i, colors[i]); });
     // Soft ellipsoids retain a readable cloud silhouette at kilometre heights.
-    const mistMaterial = new MeshBasicNodeMaterial({ color: '#b6f27a', transparent: true, depthWrite: false });
-    mistMaterial.opacityNode = positionGeometry.xz.length().smoothstep(.05, .95).oneMinus().pow(1.5).mul(noise(p.mul(.009)).mul(.12).add(.16));
+    // The release tide stays green, but kilometre-wide clouds must not tint the land like a pale overlay.
+    const mistMaterial = new MeshBasicNodeMaterial({ color: '#71805a', transparent: true, depthWrite: false });
+    mistMaterial.opacityNode = positionGeometry.xz.length().smoothstep(.05, .95).oneMinus().pow(1.5).mul(noise(p.mul(.009)).mul(.045).add(.055));
     this.mist = new InstancedMesh(new SphereGeometry(1, 16, 8), mistMaterial, mistClouds); this.mist.name = 'L10-panorama-green-dust'; this.mist.frustumCulled = false;
     const transform = new Object3D(), color = new Color();
     for (const [i, { p, origin }] of placements.entries()) {

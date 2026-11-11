@@ -189,8 +189,9 @@ export class NpcView extends Group {
       }
       const closing = e.companion && this.world.missions?.state.epilogue && this.world.missions.state.counters['epilogue-ticks'] >= 45 * 60;
       if (closing) {
-        const seat = l10Closing.seat(this.world)!, spot = l10Closing.corgi(seat); const returnTime = this.world.missions!.state.epilogue!.phase === 'thanks' ? this.world.missions!.state.epilogue!.phaseTicks / 60 : 6;
-        hero.root.position.set(spot.x + Math.max(0, 4.5 - returnTime * 1.5), .08, spot.z); hero.root.rotation.y = spot.yaw;
+        const seat = l10Closing.seat(this.world)!; const returnTime = this.world.missions!.state.epilogue!.phase === 'thanks' ? this.world.missions!.state.epilogue!.phaseTicks / 60 : 6;
+        // Settle beside the seated courier, facing her; the head is aligned to her near knee below.
+        hero.root.position.set(seat.x + .48 + Math.max(0, 4.5 - returnTime * 1.5), .08, seat.z + .48); hero.root.rotation.y = Math.PI / 2;
       }
       const down = e.escort?.state === 'downed' || e.escort?.state === 'dead' || this.world.tick < (e.escort?.knockedUntil ?? 0) || e.civilian?.state === 'down' || e.civilian?.state === 'rising';
       if (down && hero.animator) { hero.root.rotation.z = Math.PI / 2; hero.root.position.y = .25; }
@@ -201,6 +202,16 @@ export class NpcView extends Group {
       if (hero.animator && e.companion) hero.animator.sitAfter = this.world.missions?.state.cureFront ? .8 : 4;
       if (hero.animator) hero.animator.update(time, closing ? this.world.missions!.state.epilogue!.phase === 'thanks' && this.world.missions!.state.epilogue!.phaseTicks < 180 ? 1.5 : 0 : motion.speed, closing ? this.world.missions!.state.epilogue!.phaseTicks / 40 : distance, warn && { stage: warn.stage, toward: this.world.entities.get(warn.threat)?.transform ?? null });
       else hero.humanAnimator!.update(time, closingCast ? 0 : motion.speed, distance, down);
+      if (closing && hero.head) {
+        // Presentation-only contact: place the corgi's animated head on the courier's near knee.
+        const seat = l10Closing.seat(this.world)!;
+        hero.head.userData.closingRestY ??= hero.head.position.y;
+        hero.head.position.y = (hero.head.userData.closingRestY as number);
+        hero.head.userData.closingRestPitch ??= hero.head.rotation.z;
+        hero.head.rotation.z = (hero.head.userData.closingRestPitch as number) - .2;
+        hero.root.updateMatrixWorld(true); hero.head.getWorldPosition(this.point);
+        hero.root.position.add(new Vector3(seat.x + .26 - this.point.x, 0, seat.z + .52 - this.point.z));
+      }
       hero.tongue?.update(time, motion.speed);
       if (hero.badge && e.escort) {
         this.point.set(e.transform.x, hero.root.position.y + civilianHeight(hero.model) + .15, e.transform.z).project(camera);

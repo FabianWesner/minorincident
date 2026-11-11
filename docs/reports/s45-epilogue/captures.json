@@ -1,0 +1,77 @@
+{
+  "baseline": "fc167cd0",
+  "rawRoot": "test-results/s45-epilogue",
+  "finalLabel": "final",
+  "capturesPerCase": [
+    "closing.png",
+    "closing-late.png",
+    "pullout-mid.png",
+    "pullout-end.png"
+  ],
+  "rows": [
+    {
+      "case": "webgl2-high-z1",
+      "backend": "webgl2",
+      "tier": "high",
+      "zoom": 1,
+      "actual": "webgl",
+      "errors": []
+    },
+    {
+      "case": "webgl2-high-z1.5",
+      "backend": "webgl2",
+      "tier": "high",
+      "zoom": 1.5,
+      "actual": "webgl",
+      "errors": []
+    },
+    {
+      "case": "webgl2-low-z1",
+      "backend": "webgl2",
+      "tier": "low",
+      "zoom": 1,
+      "actual": "webgl",
+      "errors": []
+    },
+    {
+      "case": "webgl2-low-z1.5",
+      "backend": "webgl2",
+      "tier": "low",
+      "zoom": 1.5,
+      "actual": "webgl",
+      "errors": []
+    },
+    {
+      "case": "webgpu-high-z1",
+      "backend": "webgpu",
+      "tier": "high",
+      "zoom": 1,
+      "actual": "webgpu",
+      "errors": []
+    },
+    {
+      "case": "webgpu-high-z1.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "zoom": 1.5,
+      "actual": "webgpu",
+      "errors": []
+    },
+    {
+      "case": "webgpu-low-z1",
+      "backend": "webgpu",
+      "tier": "low",
+      "zoom": 1,
+      "actual": "webgpu",
+      "errors": []
+    },
+    {
+      "case": "webgpu-low-z1.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "zoom": 1.5,
+      "actual": "webgpu",
+      "errors": []
+    }
+  ]
+}

@@ -18,7 +18,7 @@ export const l10Closing = {
     const anchors = world.missions?.def.anchors, console = anchors?.['cure-console'];
     if (!console) return undefined;
     const origin = anchors['dispersal-origin'] ?? { x: console.x - finale.console.operator[0] * 2, z: console.z }, [fx, fz] = finale.platformStair.at;
-    return { x: origin.x + fx - .45, z: origin.z + fz };
+    return { x: origin.x + fx - .1, z: origin.z + fz };
   },
   /** The corgi sits against her right shin, turned to her, chin at knee height. */
   corgi(seat: Point): { x: number; z: number; yaw: number } { return { x: seat.x + .75, z: seat.z + .85, yaw: Math.PI * .8 }; },
