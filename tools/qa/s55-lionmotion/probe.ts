@@ -23,6 +23,7 @@ try {
       e.civilian.l1!.walkSpeed = 1;
     }
   });
+  writeJson(`${out}/config.json`, { species: speciesList, requestedBackend: process.env.MOTION_BACKEND ?? 'webgl2', tier: process.env.MOTION_TIER ?? 'high', zoom: Number(process.env.MOTION_ZOOM ?? 1.5), actualBackend: await session.page.evaluate(() => (window.__SCENE__ as unknown as { game: import('../../../src/Game').Game }).game.view.renderer.selectedBackend) });
   const samples: unknown[] = [];
   for (let i = 0; i < 15; i++) {
     if (i === 10) await session.page.evaluate(() => {

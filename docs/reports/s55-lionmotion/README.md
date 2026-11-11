@@ -354,3 +354,14 @@ the 15.3 cm maximum is the initial frame, not a later gait frame. Opened the
 WebGPU `strip-0.png`: horizontal body with attached articulated limbs, rather
 than the earlier humanoid-upright silhouette. This is a single-frame inspection;
 full strip/interval and remaining matrix acceptance still remain required.
+
+## Completed centered cat matrix
+
+Completed all 16 combinations: lion/lioness × WebGL2/WebGPU × high/low × zoom
+1/1.5, each 600 walk-speed frames + 300 run-speed frames. Every row drew 900/900
+frames and reported zero sole penetration and zero run-jitter count. New
+`config.json` receipts confirm actual backend `webgl` for WebGL2 requests and
+`webgpu` for WebGPU requests; no fallback rows. Raw traces/captures and summary:
+`test-results/s55-lionmotion/matrix/`. These are centered controlled scenes;
+real fixture acceptance, interval visual review, final type/lint/remote test and
+62/62 gate still must be completed on the final source.
