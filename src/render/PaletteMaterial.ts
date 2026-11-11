@@ -276,6 +276,10 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
         const body = nodes.threat.mul(nodes.emissiveOnly.oneMinus()).mul(lighting.nightThreat);
         // Apply the eye/body hierarchy to every night preset, after rim, pools and fog.
         // Preserve the darker subway ceiling and scale RGB together to retain authored hues.
+        // Preserve authored skin/clothing hue on the body; the grazing moon rim stays untouched.
+        const ownHue = surface.div(luminance(surface).max(.02)).mul(luminance(result));
+        const bodyColour = this.figureFillNeutral.mul(body).mul(fresnel.oneMinus()).mul(.85);
+        result.assign(mix(result, ownHue, bodyColour));
         const ceiling = mix(.1, .05, lighting.subwayDarkness).add(this.animalNightRead.mul(.3));
         result.mulAssign(mix(1, ceiling.div(luminance(result).max(ceiling)), body));
       }

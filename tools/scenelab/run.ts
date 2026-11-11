@@ -4,7 +4,7 @@ import { PNG } from 'pngjs';
 import { SceneSession, encodeWebm, evaluate, writeJson } from './session';
 import { canvasFrame, canvasFrameChecks } from '../../tests/e2e/canvas-frame';
 import { canvasEdgeNoise } from './edge-noise';
-import { hueDistance, LOW_CHROMA, measureLook } from './look';
+import { hueDistance, LOW_CHROMA, measureLook, captureCrowdMask } from './look';
 import { measureContrast, type ContrastResult } from './contrast';
 
 /** One scene run, shared by the CLI (cli.ts), the catalog (catalog.ts) and MCP `run_scene`:
@@ -180,10 +180,12 @@ export async function measureFlatSilhouette(session: SceneSession, ids: string[]
     });
   }, ids);
   const shot = PNG.sync.read(await session.page.screenshot({ type: 'png' }));
+  const bodyMask = await captureCrowdMask(session.page);
   return projected.map(({ id, bodySizeM, rect: [x0, y0, x1, y1] }) => {
     let n = 0, sum = 0, sumSq = 0, red = 0, green = 0, blue = 0, saturation = 0, blueDominant = 0; const buckets = new Set<number>();
     for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) {
-      const i = (y * shot.width + x) * 4; if (shot.data[i + 3] < 200) continue;
+      const i = (y * shot.width + x) * 4;
+      if (!(bodyMask.data[i] > 200 && bodyMask.data[i + 1] < 60 && bodyMask.data[i + 2] > 200)) continue;
       const r = shot.data[i], g = shot.data[i + 1], b = shot.data[i + 2], l = .2126 * r + .7152 * g + .0722 * b;
       n++; sum += l; sumSq += l * l; red += r; green += g; blue += b;
       saturation += Math.max(r, g, b) ? (Math.max(r, g, b) - Math.min(r, g, b)) / Math.max(r, g, b) : 0;
