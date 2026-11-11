@@ -10,8 +10,9 @@ drop/release the pelvis abruptly; clip fades re-solved already corrected poses;
 and healthy cats lost their stalk crouch at a hard speed threshold.
 
 The candidate fixes those render paths without asset or simulation-stat edits.
-The full objective is **not yet accepted**: final scene gate, final unit result,
-remaining species/fixture coverage and a consolidated before/after audit remain.
+The full objective is **not yet accepted**: the full remote unit suite and
+62-row scene gate now pass, but the consolidated acceptance audit and complete
+real-fixture comparison coverage remain.
 
 | Measurement | Before | Current measured after | Scope |
 | --- | ---: | ---: | --- |
@@ -523,3 +524,14 @@ the controlled tick trajectory (28.04 m travel), so these runs are not labeled
 constant-speed baselines. Raw evidence: `infected-lion/` and
 `infected-lioness-webgpu-low/`. This closes stationary infected-fixture coverage
 but does not substitute for the full final scene gate.
+
+
+## Current-source full scene gate result
+
+Ran `SCENE_PORT=4952 E2E_UNITS=1 npm run scene:gate` to terminal exit 0 on
+2026-11-12. **62/62 rows passed, 0 known, 0 not run**, in 10.4 minutes across
+seven batches. This includes night lion/zoo lineup, healthy zoo animals,
+courier locomotion/turns, companion corgi and pet-dog rows, on both render
+backends/tiers represented by the gate. Log: `final-scene-gate.log` and canonical
+`test-results/scene-gate/` receipts. No source changes occurred during the run.
+This supersedes the earlier intentionally stopped partial gate.
