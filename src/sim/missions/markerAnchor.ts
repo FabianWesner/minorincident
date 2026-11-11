@@ -1,6 +1,7 @@
 import type { Mission } from './Mission';
 import { cureWeaponPickups } from '../../levels/L10/encounters';
 import { l5 as l5Rescue } from '../../data/l5';
+import { l9Course } from '../../data/l9';
 // (l5Rescue.firstRescue.route is the survivor order of the first rescue)
 
 type Anchored = { x: number; z: number; y?: number; radius?: number };
@@ -12,7 +13,7 @@ export const objectiveRingRadius = .65;
  * L3 uses its next open route waypoint so navigation markers guide the player
  * around street closures instead of bearing straight through them.
  */
-export function markerAnchor(mission: (Pick<Mission, 'state' | 'def'> & { world?: Mission['world']; l8?: Mission['l8'] }) | null | undefined): Anchored | null {
+export function markerAnchor(mission: (Pick<Mission, 'state' | 'def'> & { world?: Mission['world']; l8?: Mission['l8']; l9?: Mission['l9'] }) | null | undefined): Anchored | null {
   // L10 final fight (r29-l10mega, PO finding: 'Kill the Mega Alpha' ran for minutes with no direction): the 'mega' step
   // has no authored waypoint, so while it is active the guidance follows the live Mega (HUD distance, edge arrow, minimap pin).
   if (mission?.def.id === 'L10' && mission.state.steps.mega?.status === 'active' && mission.world?.megaPursuit?.alive()) {
@@ -23,6 +24,13 @@ export function markerAnchor(mission: (Pick<Mission, 'state' | 'def'> & { world?
   if (mission?.def.id === 'L8' && mission.l8 && mission.world && mission.state.steps.sanctuary?.status === 'active' && mission.l8.state.guideDone === 0) {
     const nadia = mission.world.entities.get(mission.l8.state.keeperId);
     if (nadia) return { x: nadia.transform.x, z: nadia.transform.z, y: nadia.transform.y, radius: 2 };
+  }
+  // r39-markers (r38-vqa P2: 'the marker sits at the bridge gate, behind the trigger'): while L9 drives, the ring is where the next
+  // trigger fires: the evacuation bay until the survivors are aboard, then the middle of the bridge deck (the collapse needs the
+  // hull anywhere on the deck, any speed). The static authored anchor (x 470, the bridge-gate wall) stays only as the fallback.
+  if (mission?.def.id === 'L9' && mission.l9?.state.phase === 'driving') {
+    const drv = mission.l9.driving.state, b = l9Course.bridge, e = l9Course.evacuation;
+    return drv.evacuationDone ? { x: (b.x + b.endX) / 2, z: 0, radius: b.halfZ } : { x: e.x, z: e.z, radius: e.radius - 2 };
   }
   // r34-l8qa (r33-vqa: 'After she joins, nothing points to the church'): L5's search spots are unmarked (found by sound), but once the
   // first survivor follows, guidance points at the next one on the first-rescue route (Mr. Okafor in the church) until he is found.

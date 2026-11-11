@@ -20,6 +20,7 @@ import { Onboarding } from './Onboarding';
 import type { GameEvent } from '../sim/world/types';
 import type { Mission } from '../sim/missions/Mission';
 import { markerAnchor } from '../sim/missions/markerAnchor';
+import type { ObjectiveDef } from '../sim/missions/types';
 const text: typeof domText = (element, value) => domText(element, devicePrompt(value, document.body.classList.contains('touch-ui')));
 const sides = ['LEFT', 'RIGHT'] as const;
 const clamp = (x: number): number => Math.max(0, Math.min(1, x));
@@ -45,6 +46,7 @@ export class Hud {
   private readonly objectivePin = this.pin('objective');
   private readonly routePin = this.pin('route', '◆');
   private readonly cellarTurn = { x: 0, z: 0 };
+  private ringHold: { step: ObjectiveDef; until: number } | null = null;
   private readonly homePin = this.pin('home', '⌂');
   /** E23: the direction of the sign of life the courier just heard (4 s), and the survivors counter beside the objective. */
   private readonly cuePin = this.pin('cue', '♪');
@@ -372,7 +374,11 @@ export class Hud {
     // Explain standing interactions in their ring; optional objectives remain visible alongside the main task.
     if (objective && mission) {
       const optional = mission.def.steps.filter(step => step.optional && step !== objective && mission.state.steps[step.id].status === 'active');
-      const inRing = mission.interactStepInRange();
+      // r39-markers (r38-vqa P3: the L4 cellar prompt flipped between 'Hold still or press E' and 'Bar the cellar door'): a courier standing on
+      // the ring edge toggled in/out every frame. The prompt now lingers 0.75 s after the ring is left.
+      const nowIn = mission.interactStepInRange(), tick = this.game.world.tick;
+      if (nowIn) this.ringHold = { step: nowIn, until: tick + 45 };
+      const inRing = nowIn ?? (this.ringHold && this.ringHold.until > tick && mission.state.steps[this.ringHold.step.id]?.status === 'active' ? this.ringHold.step : null);
       if (inRing) {
         const seconds = inRing.complete.kind === 'interact' ? inRing.complete.seconds : 0;
         const progress = seconds ? Math.min(100, Math.round(mission.state.steps[inRing.id].interaction / (seconds * 60) * 100)) : 0;

@@ -6,7 +6,7 @@ import { allyState, updateAlly } from '../outbreak/Allies';
 import { emitEngine, stopEngine } from '../vehicles/ConvoySound';
 import type { Mission } from './Mission';
 import type { EntitySnapshot } from '../world/types';
-import type { DriveIntent } from '../vehicles/VehicleBody';
+import type { DriveIntent, VehicleBody } from '../vehicles/VehicleBody';
 import { pursueCrossingVehicle } from './LevelNineEncounters';
 import { Outbreak } from '../outbreak/Outbreak';
 import { clearThreat } from './Respawn';
@@ -203,6 +203,54 @@ export class LevelNineDriving {
     for (const id of car.entity.vehicle!.attached) { const e = w.entities.get(id); if (e) { e.transform.x = a.x; e.transform.z = a.z; w.spatial.set(id, a.x, a.z); } }
     clearThreat(w, a);
   }
+  private recoveryAt: number[] = [];
+  private lastRecovery = 0;
+  /**
+   * r39-markers (r38-vqa P2-2: 'APC stood still for 53 s, nose on a jersey barrier, school bus behind it, two leapers on the hull; the
+   * stuck recovery did not reverse it out'). The reverse recovery (Vehicles: stuck -> 1.5 s of reverse) has nowhere to go when the
+   * rear is a bus and a pile, and it repeats forever. Third recovery within 20 s with the hull still crawling: set the APC on the
+   * nearest pose with 8 m of clear lane (behind, then to the sides, at 6-18 m), facing the clearest heading with a bias east.
+   * Boarders ride along; no infected stat changes and nobody is removed.
+   */
+  private breakFree(): void {
+    const w = this.w, car = this.car, state = car.entity.vehicle!, p = car.entity.transform, tick = w.tick;
+    if (state.recoveringUntil !== this.lastRecovery) {
+      this.lastRecovery = state.recoveringUntil;
+      if (state.recoveringUntil > tick) this.recoveryAt = [...this.recoveryAt.filter(t => tick - t < 1200), tick];
+    }
+    if (this.recoveryAt.length < 3 || car.physics.speed > 1.5 || w.vehicles!.active !== car.entity.id || this.holding(car.entity.id)) return;
+    const def = car.physics.def, r = def.width / 2 + .3;
+    const fits = (x: number, z: number, yaw: number) => {
+      if (!w.chunks?.resident(x, z)) return false;
+      for (let d = 0; d <= def.length + 8; d += 1) {
+        const px = x + Math.cos(yaw) * d, pz = z - Math.sin(yaw) * d;
+        if (!w.infected!.nav.clear(px, pz, r) || !w.solids.clear({ x: px, y: p.y, z: pz }, r, car.entity.id, true)) return false;
+      }
+      return true;
+    };
+    const yaws = [0, p.yaw, p.yaw + .6, p.yaw - .6, p.yaw + 1.2, p.yaw - 1.2, p.yaw + Math.PI].sort((a, b) => Math.cos(b) - Math.cos(a) + (b === p.yaw ? .25 : 0) - (a === p.yaw ? .25 : 0));
+    for (const dist of [6, 9, 12, 15, 18]) for (const side of [-Math.PI, -Math.PI / 2, Math.PI / 2, -Math.PI * .75, Math.PI * .75, Math.PI / 4 * 0]) {
+      const x = p.x + Math.cos(p.yaw + side) * dist, z = p.z - Math.sin(p.yaw + side) * dist;
+      for (const yaw of yaws) {
+        if (!fits(x, z, yaw)) continue;
+        this.placeCar(car, x, z, yaw);
+        const player = w.entities.get(1)!; Object.assign(player.transform, { x, z, yaw });
+        w.physics.playerBody!.setTranslation(player.transform, true); w.previousPlayer = { ...player.transform }; w.spatial.set(1, x, z);
+        for (const id of state.attached) { const e = w.entities.get(id); if (e) { e.transform.x = x; e.transform.z = z; w.spatial.set(id, x, z); } }
+        state.recoveringUntil = 0; car.physics.clearStuck(); this.recoveryAt = [];
+        w.events.emit({ type: 'vehicle.recovering', tick, sourceId: car.entity.id });
+        return;
+      }
+    }
+  }
+  private placeCar(c: { entity: EntitySnapshot; physics: VehicleBody }, x: number, z: number, yaw: number): void {
+    const w = this.w, y = c.physics.def.suspension + c.physics.def.wheelRadius + .15, pose = { x, y, z, yaw };
+    Object.assign(c.entity.transform, pose); Object.assign(c.physics.previous, pose); c.physics.body.setTranslation(pose, true);
+    c.physics.body.setRotation({ x: 0, y: Math.sin(yaw / 2), z: 0, w: Math.cos(yaw / 2) }, true);
+    c.physics.body.setLinvel({ x: 0, y: 0, z: 0 }, true); c.physics.body.setAngvel({ x: 0, y: 0, z: 0 }, true);
+    c.physics.speed = c.physics.forwardSpeed = 0; if (c.entity.vehicle) c.entity.vehicle.speed = c.entity.vehicle.forwardSpeed = 0;
+    w.spatial.set(c.entity.id, x, z);
+  }
   /** r32-l9fun: the APC is on a boost strip's 4 s engine boost. */
   boosting(id: number): boolean { return id === this.mission.l9?.state.carId && this.w.tick < (this.state.boostUntil ?? -1) && !this.holding(id); }
   /** r36-l9l5: the run from the bay to the bridge head (evacuation done): heavy contacts no longer stop the hull. */
@@ -242,7 +290,7 @@ export class LevelNineDriving {
       if (s.roster.some(id => alive(w.entities.get(id)) && w.entities.get(id)!.civilian?.survivor?.key === 'mia')) this.line('L9.clingers');
     }
     if (!s.route && p.x > -340) { s.route = p.z < -150 ? 'road' : p.z > 120 ? 'countryside' : 'dry-shortcut'; this.signal(`route.${s.route}`); }
-    this.course(); this.bus();
+    this.course(); this.bus(); this.breakFree();
     this.setPieces.update(s.setPieces ??= emptySetPieces(), s.restarted ? null : s.stallAt, this.holding(car.entity.id) && s.stallAt === null);
     if (tick % 10 === 0) for (const id of [...s.waves, ...s.busPassengers.slice(0, s.busReleased)]) pursueCrossingVehicle(w, id);
     if (p.x >= cfg.gate.announceX && s.gateAt === null) { s.gateAt = tick; this.line('L9.gate'); this.signal('gate-countdown'); }
