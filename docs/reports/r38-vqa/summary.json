@@ -1,0 +1,35 @@
+{
+ "lane": "r38-vqa",
+ "date": "2026-11-11",
+ "base": "6bf0433a",
+ "model": "claude-opus-5-5",
+ "captures": "/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/r38-vqa",
+ "sheets": {
+  "l8-route": "sheet-l8-route.jpg",
+  "zombies": "sheet-zombies.jpg",
+  "l4": "sheet-l4.jpg",
+  "l9-l10": "sheet-l9-l10.jpg",
+  "l10-repro": "l10-repro-seq.jpg",
+  "l9-crawl": "l9-crawl-seq.jpg",
+  "l5": "sheet-l5.jpg",
+  "animals": ["crop-lion-low-z1.jpg", "crop-gorilla.jpg", "burst-zebra-s023.jpg", "burst-monkey-s004.jpg"]
+ },
+ "matrix": { "quality": ["low", "high"], "zoom": [0.5, 1, 1.5], "backend": ["webgl2", "webgpu"] },
+ "findings": [
+  { "id": "P1-1", "level": "L10", "title": "Courier not drawn after the Mega grab-throw at the dispersal console; RangeError per gunshot (gunshot -> ray -> nearby query)", "repro": "l10-dispersal-console, high, WebGL2, z1.5, god; 2/2", "evidence": ["l10-repro-high-z15-gl/s008-t921.jpg", "l10-repro-high-z15-gl/s023-t3127.jpg", "l10-console-high-z15-gl/s005-t1378.jpg"] },
+  { "id": "P2-1", "level": "L9", "title": "Drive onto the bridge: marker at the gate (~x 470) behind the collapse trigger (x 482-508, moving east); on the deck the HUD points back; 296 s without completion", "evidence": ["l9-stall-high-z1-gpu/s024-t7108.jpg", "l9-stall-high-z1-gpu/s042-t10503.jpg"] },
+  { "id": "P2-2", "level": "L9", "title": "APC still for 53 s nose on a jersey barrier with two hull leapers; stuck recovery did not free it (W + Space)", "evidence": ["l9-start-low-z15-gl/s031-t6033.jpg"] },
+  { "id": "P2-3", "level": "L8", "title": "Arena leg markers end 4 m outside the entry gates; courier stood 3.5 min in the monkey-gate ring", "evidence": ["l8-lion-low-z1-gpu/s057-t17053.jpg"] },
+  { "id": "P2-4", "level": "L8", "title": "Gorilla in chase at 4.3 m for 3 min without attacking while the courier hugs the NE corner behind the group", "evidence": ["l8-gorilla-high-z15-gl/s045-t13744.jpg"] },
+  { "id": "P2-5", "level": "L4", "title": "North-street heavy/Alpha groups engage but a sprinting courier reaches the cellar in 18 s", "evidence": ["l4-west-high-z15-gpu/s003-t799.jpg", "l4-west-high-z15-gpu/s004-t1040.jpg"] },
+  { "id": "P2-6", "level": "L9/L8", "title": "Frame hitches 4050/3216 ms (L9 low WebGL2), 600 ms (L8 monkey melee); shared Mac, re-measure", "evidence": ["l9-start-low-z15-gl/log.jsonl"] },
+  { "id": "P3-1", "level": "L8", "title": "Gorilla pale grey-green at night (yeti-like)", "evidence": ["crop-gorilla.jpg"] },
+  { "id": "P3-2", "level": "L8", "title": "Lion/lioness read as cats; flat full-bright ochre at night at low", "evidence": ["crop-lion-low-z1.jpg"] },
+  { "id": "P3-3", "level": "L8", "title": "Zebras glassy pale green at night", "evidence": ["burst-zebra-s023.jpg"] },
+  { "id": "P3-4", "level": "L4", "title": "Courier x-ray behind the EVAC bus reads as standing on its roof", "evidence": ["l4-north-low-z1-gl/s035-t6636.jpg"] },
+  { "id": "P3-5", "level": "L4", "title": "Cellar prompt alternates Hold still / Bar the cellar door", "evidence": ["l4-west-high-z15-gpu/log.jsonl"] },
+  { "id": "P3-6", "level": "L8", "title": "Gorilla tracker distance is not the distance to the gorilla", "evidence": ["l8-gorilla-high-z15-gl/s006-t1889.jpg"] }
+ ],
+ "verified_fixed": ["L8 gorilla gate escape (r35 P1)", "L8 breach Back to the plaza + hold pause", "L8 They're inside! bubble not stuck", "L8 Rest text no flicker", "L8 lion amber pounce ring", "L9 crawl crowd falls with the span", "L5 marker to Mia from the start", "L5 arrow above the hotbar", "L10 football zombies no flat pale patches (high WebGL2 z1.5)"],
+ "not_covered": ["x-ray at zoom 0.5", "L9 overpass landing by real input", "L4 east loop group 20", "nurse foot contact", "P1-1 on low/WebGPU/no god/PROD b75"]
+}
