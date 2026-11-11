@@ -44,6 +44,23 @@ export async function checkL8Route(): Promise<void> {
       const at = (d: number) => ({ x: gate.x + ux * d, z: gate.z + uz * d });
       const members = zoo.followers();
       members.forEach((e, n) => { const p = at(-4 - (n % 4) * 1.2); w.solids.relocate(e, { x: p.x + (uz ? (n - 4) * .8 : 0), z: p.z + (ux ? (n - 4) * .8 : 0), y: e.transform.y }, 'fixture.l8-route', 20, false); });
+      if (stage.id === 'zebra') {
+        // A zebra can turn while the courier is still outside its paddock.
+        // That must leave the encounter dormant and the herd away from both
+        // fences until she steps through the gate.
+        const outside = at(-5);
+        expect(w.solids.relocate(player, { ...outside, y: player.transform.y }, 'fixture.l8-route', 20, false)).toBe(true);
+        const firstZebra = w.entities.get(arena.ids[0])!;
+        expect(firstZebra.civilian).toBeDefined();
+        w.npcs!.civilians.outbreak!.infect(firstZebra, player.id);
+        for (let tick = 0; tick < 600; tick++) w.update();
+        const herd = arena.ids.map(id => w.entities.get(id)!).filter(e => e.infected?.arenaBoss?.arena === 'zebra' && e.health.current > 0);
+        expect(arena.phase, 'zebra encounter stays dormant while the courier is beyond the entry fence').toBe(0);
+        expect(herd.length, 'a zebra has turned before the courier enters').toBeGreaterThan(0);
+        expect(herd.every(e => Math.min(e.transform.z - 12, 52 - e.transform.z) > 8), `turned zebras hold away from both fences: ${herd.map(e => `${e.transform.x.toFixed(1)},${e.transform.z.toFixed(1)}`).join(' ')}`).toBe(true);
+        const gaps = herd.flatMap((e, i) => herd.slice(i + 1).map(other => Math.hypot(e.transform.x - other.transform.x, e.transform.z - other.transform.z)));
+        expect(gaps.every(gap => gap >= .75), `turned zebras do not overlap one another: gaps=${gaps.map(gap => gap.toFixed(1)).join(',')}`).toBe(true);
+      }
       const p0 = at((stage.depth ?? 5) + 1); w.solids.relocate(player, { ...p0, y: player.transform.y }, 'fixture.l8-route', 20, false);
       expect(inRect(player.transform, stage.zone), `${stage.id}: courier inside the enclosure`).toBe(true);
       let armedWith = -1;

@@ -184,6 +184,8 @@ for k in range(4):
             bpy.ops.mesh.primitive_uv_sphere_add(segments=(10,8,6)[LOD],ring_count=(6,5,4)[LOD],radius=.115,location=(px,py,1.52))
             finish(bpy.context.object,'apple','survivorRed'); rod('stem',(px,py,1.62),(px,py,1.67),.012,'woodWarm')
         else: package(px,py,1.51, ['foliage','survivorRed','schoolBusYellow','backpackTeal'][k],size=(.13,.15,.23),detail=False)
+# Keep a heavy-body aisle beside the checkout (L4 shop pocket).
+checkout_before = set(bpy.data.objects)
 # Compact checkout in the rear aisle, with conveyor, register, scanner and bagging tray.
 box('checkout_pedestal',(.03,2.28,.90),(.88,1.55,1.05),'backpackTeal',.04)
 box('checkout_counter',(.03,2.28,1.47),(1.0,1.75,.12),'sidewalk',.04)
@@ -199,6 +201,8 @@ box('bag',(-.27,1.65,1.74),(.26,.3,.4),'schoolBusYellow',.025)
 rod('lane_post',(.46,2.9,1.5),(.46,2.9,3.39),.023,'asphalt')
 box('lane_sign',(.46,2.9,2.91),(.13,.62,.63),'uiDark',.025)
 text('lane_number','2',(.536,2.9,2.91),.5,'picketWhite')
+for checkout_part in set(bpy.data.objects) - checkout_before:
+    checkout_part.location.x += .7
 # Wire shopping cart in the foreground: open basket, undercarriage, separate rolling wheels.
 cx,cy=-1.5,-3.45
 for z in [.70,1.38]:
