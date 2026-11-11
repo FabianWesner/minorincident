@@ -157,7 +157,10 @@ function buildRetargetedClip(root: Object3D, name: string, additive: boolean, so
     }
   }
   if (!additive && skinned && /^(idle|walk|run|mount|dismount)$/.test(name)) fitCourierLocomotion(root, name, source.duration, tracks);
-  if (!additive && !gait && gaitShape[name]) plantLocomotion(root, name, source.duration, tracks, gait);
+  // r39-l10nan: s34 gave the in-place hit/attack clips (hurt, windup, swing, stagger-*) a gaitShape for the crowd's runtime foot
+  // contacts. They have no stride, so baking them here as a walk cycle made every planted track NaN (the courier's 'hurt' clip
+  // drew her invisible for the rest of the level and NaN'd her gun muzzle). Only loop gaits with a stride are baked as planted.
+  if (!additive && !gait && gaitShape[name] && strides[name]) plantLocomotion(root, name, source.duration, tracks, gait);
   if (!additive && name === 'corgi-sit') fitCorgiSit(root, tracks);
   return new AnimationClip(name, source.duration, tracks);
 }

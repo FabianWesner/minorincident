@@ -49,7 +49,21 @@ test('native routing clears thin doorways and yields failed shared searches', as
   } finally { world.dispose(); }
   await failedNativeRouteYieldsBudget();
   await railingRouteKeepsItsStartingStep();
+  await hazardFireRespectsGod();
 });
+
+async function hazardFireRespectsGod(): Promise<void> {
+  const world = await loadLevel('L1', 1);
+  try {
+    // r39-l10nan: campaign levels replace world.combat after Hazards exist. Fire zones kept the first Damage, so the god cheat
+    // (set on the live one) did not cover them: the QA courier lost 20 HP in god mode and played 'hurt'.
+    world.combat!.damage.god = true;
+    const player = world.entities.get(1)!, hp = player.health.current;
+    world.hazards!.spawn('fire', { x: player.transform.x, z: player.transform.z }, { duration: 3, radius: 2 });
+    for (let t = 0; t < 130; t++) world.update();
+    expect(player.health.current, 'god mode covers hazard fire on a campaign level').toBe(hp);
+  } finally { world.dispose(); }
+}
 
 async function railingRouteKeepsItsStartingStep(): Promise<void> {
   const world = await loadLevel('L1', 1);
