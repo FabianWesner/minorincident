@@ -55,10 +55,16 @@
       "path": "/private/tmp/s43-edge-high-gpu-z15/s001-t182.jpg",
       "exists": true,
       "opened": true
+    },
+    {
+      "quality": "low",
+      "backend": "webgl2",
+      "zoom": 1.5,
+      "path": "/private/tmp/s43-edge-low-gl-z15/s001-t190.jpg",
+      "exists": true,
+      "opened": true
     }
   ],
-  "missingAfter": [
-    "low/webgl2/1.5 at east-edge pose"
-  ],
+  "missingAfter": [],
   "before": "prior r42 contact sheet only; full baseline matrix pending"
 }
