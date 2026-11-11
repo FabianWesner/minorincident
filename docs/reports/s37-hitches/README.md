@@ -61,3 +61,14 @@ L8 reached `arena-lion` with lion attacks and nearby runner/armored combat; L5 r
 `trace-summary.json` records maxima from all duration events in the four saved traces. Major GC maxima are 30.2–36.5ms and minor GC maxima 5.1–7.2ms. These traces do not reproduce a >250ms gameplay frame and therefore do not establish the historical cause. Maxima cover the complete diagnostic trace, including pre-play setup; they are not post-3s timing gates. CPU profiler startup itself takes192.6–307.7ms before the play collector starts, illustrating why setup/trace overhead cannot be assigned to the old in-play events.
 
 The runner now logs `loadWallMs` around fixture/direct level setup and the engine's `loadTiming` separately. Fixture setup includes checkpoint restoration and the existing paused setup steps; direct setup includes its existing60ticks. Compare like setup paths across repeats, and use engine loadTiming to distinguish engine load from harness preparation. No measured load-time delta is claimed yet.
+
+### Second low WebGL2 samples
+
+Same QA production build, tracing, routes, durations and zoom1; separate pooled reservations under10min each, shared host. Both reached the same arena/survivor checkpoints and had zero page errors. Compact retained receipt: `repeat-low.json`.
+
+| Run | Samples after3s | Max | p99 | >250ms | Setup wall | Engine data/sim/view |
+|---|---:|---:|---:|---:|---:|---|
+| L8 low repeat2 | 10,596 | 83.4ms | 16.8ms | 0 | 6196ms | 13.6 /145.8 /3008.5ms |
+| L5 low repeat2 | 12,407 | 50.1ms | 16.8ms | 0 | 5243ms | 8.5 /214.8 /2477.5ms |
+
+There are now two low/WebGL2 samples per scene, all below250ms after3s. No game fix was applied, so these are repeated baselines rather than an improvement claim. High/WebGPU repeats, a reproducible cause for the historical outliers and a measured before/after load delta remain open. Raw logs/traces: `/private/tmp/s37-hitches/l8-route-baseline-2/` and `l5-baseline-2/`. All checks finished; owned preview4937 stopped.
