@@ -141,3 +141,17 @@ Added independent phase expectations: every frame 60–180 must move at 2–3 m/
 The corrected phase-specific matrix passes **8/8** day/night × low/high × WebGL2/WebGPU. The dense capture records 32 contacts, p95 0 cm, natural walk pelvis range **3.55 cm** and run range **6.64 cm**; both feet repeatedly plant/lift in each phase. No added body-bob animation was retained: an exploratory layer was discarded after the true walking capture showed that existing contact geometry already supplies bob. Typecheck, lint and 14 render-contract tests pass.
 
 Opened `real-stride-review.png`: top row frames 40/46/52/58 (walk), bottom row 250/256/262/268 (run). The legs remain attached, a supporting foot stays level while the other flexes/lifts, and the body changes height. The crop prioritizes feet and pelvis and clips some head detail; model look is not judged here. `real-walk-run-matrix.json` preserves phase checks and bob measurements. A final full gate and matched original-source baseline remain outstanding after this QA-driver correction.
+
+### Matched original/current renderer matrix
+
+`tools/qa/s57-matched.ts` captured all eight day/night × low/high × WebGL2/WebGPU pairs with the same corrected walk/run fixture and current QA measurement code. Before overrides only renderer sources from original lane base `a842fdd1`; after uses `89028850`. No checkout or simulation mutation is involved. All **8/8 recorded simulation trajectories (frame, position, speed) are identical** between before and after. The tool passes ESLint and typecheck.
+
+| Phase/configuration | Original p95 | Current p95 | Original run grounded frames | Current run grounded frames |
+| --- | ---: | ---: | ---: | ---: |
+| Walk, all eight configurations | 0 cm | 0 cm | — | — |
+| Run, low day/night, both backends | N/A: no contacts | 0 cm | 0/121 | 51/121 |
+| Run, high day/night, both backends | N/A: no contacts | 0 cm | 0/121 | 53/121 |
+
+The original run p95 is **not zero**: it is undefined because chase automatically rendered cruise flight, leaving no foot contacts. The new per-phase motion gate fails that original behavior and passes all eight current rows. Full phase/contact details are in `matched-original-current.json`. This confirms the primary defect was grounded pursuit being replaced with flight, not a high measured slide on an already walking flamingo.
+
+Opened matched WebGL2 low day f250 before and after: the original bird is above the close camera and only its ground shadow remains in frame; the current bird is grounded with an extended supporting leg and a flexed/lifted foot. The cropped original frame is not used to judge its airborne body look. The current dense walking/running strip remains the visual gait evidence. Final full-suite validation is still required after the walk-driver correction.
