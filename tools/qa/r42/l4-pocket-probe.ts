@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any -- diagnostic (r42-arenas) */
 // L4 retreat pocket: ASCII of the admission nav and the wide-body nav around the supermarket (5.9, 36.4); then a brute + riot are put 5 m from
 // the courier and the probe measures whether they reach her. Usage: tsx l4-pocket-probe.ts [x0 z0 x1 z1] [fix]
+import { staticCollision } from '../../../src/assets/staticCollision';
 import { readFileSync } from 'node:fs';
 import { emptyInput } from '../../../src/input/InputFrame';
 import { compositions } from '../../../src/levels/compositions';
@@ -9,6 +10,11 @@ import { preset } from '../../../src/sim/progression/Campaign';
 import { applyCampaign } from '../../../src/sim/progression/apply';
 import { missionControls } from '../../../src/sim/missions/controls';
 import { SimWorld } from '../../../src/sim/world/SimWorld';
+// Diagnostic only: move the checkout collision to test aisle clearance before rebuilding its visual asset.
+const checkoutShift = Number(process.env.PROBE_CHECKOUT_SHIFT ?? 0);
+if (checkoutShift) for (const b of staticCollision['bld.supermarket'].boxes) {
+  if (b.min[0] > -.6 && b.max[0] < .7 && b.min[2] < -1.4 && b.max[2] > -3.3 && b.max[2] < -1.3) { b.min[0] += checkoutShift; b.max[0] += checkoutShift; }
+}
 const w: any = new SimWorld(); await w.init();
 const c = compositions.L4;
 w.loadComposition(c, c.districts.map((d: any) => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), Number(process.env.TIER ?? 0));
