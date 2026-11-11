@@ -1,6 +1,7 @@
 // Infected AI core: the shared state machine (idle → chase → attack → down/dead), perception, telegraphs and body
 // separation drive every enemy role in every level.
 import { afterEach, expect, test } from 'vitest';
+import { action } from '../../src/data/actions/catalog';
 import { animalInfected, humanInfected, infectedDefinitions, infectedRecovery, INFECTED_TOUGHNESS, validateInfected, infectedSpecialMoves } from '../../src/data/infected';
 import { infectedContactDistance, meleeRing } from '../../src/sim/ai/CharacterSeparation';
 import type { DamageEvent } from '../../src/sim/combat/Damage';
@@ -422,6 +423,17 @@ test('every human and animal role validates and spawns with its catalog health a
     expect(e.combat!.staggerUntil).toBe(first);
     step(w, 73); fire(w, e);
     expect(e.combat!.staggerUntil).toBe(w.tick + 9);
+  }
+  // Real catalog MG damage at contact: a heavy must finish an attack before dying.
+  for (const role of ['brute', 'butcher']) {
+    const w = await arena(1, false), e = spawn(w, role, 1.5), gun = action('weapon.army-mg');
+    for (let i = 0; i < 600 && e.health.current > 0; i++) {
+      if (i % Math.ceil(60 / gun.fireRate!) === 0) w.combat!.damage.apply({ attackId: i + 1, actionId: gun.id, sourceId: 1, targetId: e.id, origin: { x: 0, z: 0 }, direction: { x: 1, z: 0 }, base: gun.damage, multiplier: 1, type: 'bullet', knockback: gun.knockback, stagger: gun.stagger });
+      step(w, 1);
+    }
+    const hits = w.events.events().filter(event => event.type === 'combat.hit' && event.sourceId === e.id && event.targetId === 1);
+    if (process.env.S54_PROBE === '1') console.info(JSON.stringify({ scenario: 'catalog-mg-contact', role, ticks: w.tick, playerHitsLanded: hits.length, targetHp: e.health.current }));
+    expect(hits.length, `${role}: reaches contact and attacks before real MG damage kills it`).toBeGreaterThan(0);
   }
   // Native 15 m firing matrix: three campaign gun tiers plus the authored
   // stagger-bearing light-firearm control. Hits use tiny damage to isolate AI.

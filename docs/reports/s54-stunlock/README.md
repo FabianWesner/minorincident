@@ -65,3 +65,9 @@ The L9 `l9-before-rail-stall` real-input fixture completed (15 s, god off, burst
 ## Measured rotary-minigun regression probe
 
 The catalog rotary minigun carries stagger 0.1 at 20 shots/s. It is now included in the native 15 m matrix. A temporary run restored the pre-change Damage.ts from `0c0f8fc4^`, omitted only the new poise assertions, and ran the same probe; a shell exit trap restored both source and test afterward. Baseline rotary-minigun landed hits were brute 0, Alpha 0, runner 0. Patched counts were brute 3, Alpha 1 (signature), runner 2. Each window was 600 ticks with tiny damage to isolate AI rather than time-to-kill. Both focused test runs passed 5/5 cases. This is a measured before/after reproduction of continuous-fire stun lock; actual-damage and real-input acceptance remain outstanding.
+
+## Actual-damage contact probe
+
+Using the army MG catalog damage, fire rate, stagger and knockback, a brute starting at 1.5 m landed 2 attacks before dying at tick 193; a butcher landed 14 before dying at tick 577. God mode was off. These assertions are folded into the existing infected-AI test case. This establishes the requested at-contact survival-of-windup behavior with actual damage, separately from the tiny-damage 15 m approach matrix.
+
+Audit trace investigation found allied gunfire in `src/sim/outbreak/Allies.ts` authors positive bullet stagger (normally 0.25), unlike the campaign army-MG catalog. The global poise rule therefore also changes allied suppression, which can affect L3 squad survival and attack-rate acceptance. This is a plausible mechanism, not yet a proven causal attribution for each new flag.
