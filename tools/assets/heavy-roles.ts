@@ -115,7 +115,7 @@ export async function buildRole(role: Role, lod: number, io: Awaited<ReturnType<
     const e: number[] = [], j: number[] = [], w: number[] = [];
     for (let i = 0; i < P.getCount(); i++) {
       P.getElement(i, e); J.getElement(i, j); W.getElement(i, w);
-      const p0 = new Vector3(e[0], e[1], e[2]); let out = new Vector3(), total = 0;
+      const p0 = new Vector3(e[0], e[1], e[2]); const out = new Vector3(); let total = 0;
       for (let k = 0; k < 4; k++) {
         if (!w[k]) continue; const name = names[j[k]], d = role.deform[name];
         out.add((d ? applyDeform(p0, name, d, pos) : p0.clone()).multiplyScalar(w[k])); total += w[k];
@@ -179,7 +179,6 @@ export async function buildRole(role: Role, lod: number, io: Awaited<ReturnType<
   const swatches: string[] = [...new Set(role.pieces.map(p => p.colour))];
   const sw = Math.floor(png.width / STRIP);
   if (swatches.length > sw) throw Error('too many swatch colours');
-  let added = 0;
   for (const piece of role.pieces) {
     if (piece.lod !== undefined && lod > piece.lod) continue;
     const g = geometryFor(piece, lod);
@@ -199,8 +198,7 @@ export async function buildRole(role: Role, lod: number, io: Awaited<ReturnType<
       attrs.P.arr.push(pp.getX(i), pp.getY(i), pp.getZ(i)); attrs.N.arr.push(nn.getX(i), nn.getY(i), nn.getZ(i));
       attrs.T.arr.push(u, v); attrs.J.arr.push(jointIndex, 0, 0, 0); attrs.W.arr.push(1, 0, 0, 0); attrs.C.arr.push(jointIndex); indices.push(n0 + i);
     }
-    added += pp.count / 3;
-    for (const [sem, o] of Object.entries(extra)) for (let i = 0; i < pp.count * o.size; i++) o.arr.push(0);
+    for (const o of Object.values(extra)) for (let i = 0; i < pp.count * o.size; i++) o.arr.push(0);
   }
 
   // 3. atlas: recolour tinted classes, append swatch strip

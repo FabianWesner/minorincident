@@ -150,7 +150,7 @@ for x,z in [(-104,-32),(104,-32),(0,48)]:
 # HouseEmergence door contract in src/data/buildingDoors.ts). Door plane 3.05 m from the footprint centre; the
 # paved apron runs out to the path edge (2.5 m half width + 2.95 m). Interiors are an L-shaped dark vestibule, so
 # nothing inside is visible from outside even with the doors open. >= 20 m apart, all inside the perimeter.
-def outlet(n, door_x, door_z, nx, nz, yaw):
+def outlet(n, door_x, door_z, nx, nz, yaw, lamp=True):
     l.place('kit.zoo-tunnel-mouth',[door_x-3.05*nx,0,door_z-3.05*nz],yaw=yaw)
     cx,cz = door_x+nx*1.475, door_z+nz*1.475
     size = [2.95,.12,3.6] if nx else [3.6,.12,2.95]
@@ -158,7 +158,7 @@ def outlet(n, door_x, door_z, nx, nz, yaw):
     hx,hz = size[0]/2,size[2]/2
     l.data['surfaces'].append(dict(surface='tile',height=.12,polygon=[[cx-hx,cz-hz],[cx+hx,cz-hz],[cx+hx,cz+hz],[cx-hx,cz+hz],[cx-hx,cz-hz]]))
     l.anchor(f'tunnel-outlet-{n}',[door_x+nx*1.5,0,door_z+nz*1.5])
-    l.place('prop.street-lamp',[door_x+nx*2.2-nz*2.4,0,door_z+nz*2.2+nx*2.4])
+    if lamp: l.place('prop.street-lamp',[door_x+nx*2.2-nz*2.4,0,door_z+nz*2.2+nx*2.4])
 outlet(1,-101.45,32,1,0,0)                 # west loop, facing the x=-96 path
 outlet(2,101.45,32,-1,0,math.pi)           # east loop intercepts the APC approach
 outlet(3,-30,-69.45,0,1,-math.pi/2)        # north loop, facing the z=-64 path
@@ -530,8 +530,9 @@ l.data['roads']['nodes'] = [n for n in l.data['roads']['nodes'] if n['id'] not i
 
 # Two service hatches INSIDE the sealed plaza cell (story: infected pour out of the maintenance hatches next to the group): bunkers against the pond
 # fence line, doors facing the plaza ring, so the opening breach starts a real fight in the first seconds and a courier camping here is attacked.
-outlet(5, -10.4, -5, 0, 1, -math.pi / 2)
-outlet(6, 10.4, -5, 0, 1, -math.pi / 2)
+# No lamp: the plaza ring lamps light them, and the outlet lamp landed on a road lane (prop.street-lamp:1820, browser lane validator).
+outlet(5, -10.4, -5, 0, 1, -math.pi / 2, lamp=False)
+outlet(6, 10.4, -5, 0, 1, -math.pi / 2, lamp=False)
 for _ox in (-10.4, 10.4): _route_boxes.append((_ox - 3.2, -11.6, _ox + 3.2, -1.9))
 
 # Nothing may stand on a new line: drop only the dressing underneath (and the gorilla exit fence panels).
