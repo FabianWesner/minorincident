@@ -4,6 +4,7 @@ import type { SimWorld } from '../../../src/sim/world/SimWorld';
 import { l2, l2TruckPath } from '../../../src/data/l2';
 import { l3 } from '../../../src/data/l3';
 import { l6, l6Entries, l6Doors } from '../../../src/data/l6';
+import { LevelSevenEncounters } from '../../../src/sim/missions/LevelSevenEncounters';
 import { l7Encounters } from '../../../src/data/l7';
 import { cureEncounters, cureEncounterSlots } from '../../../src/levels/L10/encounters';
 import { followFrustum } from '../../../tools/sim-runner/l3Bots';
@@ -193,20 +194,20 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly authored wave cens
       expect(Math.hypot(e.transform.x - before[i].x, e.transform.z - before[i].z)).toBeLessThanOrEqual(l6.follow.speed / 60 + .005);
     });
   });
+  const authored = new Map<number, { runners: number; alphas: number }>();
+  const prototype = LevelSevenEncounters.prototype as unknown as { group(group: number, centre: { x: number; z: number }, count: number, alphas: number, resident?: boolean): void };
+  const group = prototype.group;
+  vi.spyOn(prototype, 'group').mockImplementation(function (this: LevelSevenEncounters, pack, centre, count, alphas, resident) {
+    authored.set(pack, { runners: count, alphas });
+    group.call(this, pack, centre, count, alphas, resident);
+  });
   await withWorld('L7', tier, w => {
     const c = w.l7Encounters!, ai = w.infected!, low = tier === 'low';
-    const authored = new Map<number, { runners: number; alphas: number }>();
-    const encounter = c as unknown as { group(group: number, centre: { x: number; z: number }, count: number, alphas: number, resident?: boolean): void };
-    const group = encounter.group.bind(c);
-    vi.spyOn(encounter, 'group').mockImplementation((pack, centre, count, alphas, resident) => {
-      authored.set(pack, { runners: count, alphas });
-      group(pack, centre, count, alphas, resident);
-    });
     c.start();
     // Drive the authored road thresholds through the mission controller. The opening pack is spawned directly by
     // prepare(), while later packs are queued; c.update() is also the production arrival-ledger observer for both.
     const player = w.entities.get(1)!;
-    for (const x of [286, 224, 184, 164, 94, 84]) {
+    for (const x of [286, 224, 184, 164, 94, 84, 77, -1]) {
       player.transform.x = x; w.spatial.set(player.id, x, player.transform.z);
       w.physics.playerBody!.setTranslation(player.transform, true);
       for (let tick = 0; tick < 240; tick++) {
@@ -283,7 +284,7 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly authored wave cens
       const movement = reach(w, ids, (id, x, z) => { const door = goals.get(id)!; return Math.hypot(x - door.ox, z - door.oz) < 12; }, routeFrames, undefined, true);
       for (const outlet of region.outlets) {
         const cohort = released.filter(a => a.outlet === outlet).map(a => a.id);
-        const expected = outlet >= 4 ? 1 : outlet === 2 ? (tier === 'low' ? 5 : 7) : (tier === 'low' ? 3 : 5);
+        const expected = outlet >= 4 ? 1 : (tier === 'low' ? 3 : 5);
         record(`L8/region-${region.name}-outlet-${outlet}`, expected, cohort, w, {
           admitted: cohort.filter(id => movement.admittedIds.includes(id)).length,
           reached: cohort.filter(id => movement.reachedIds.includes(id)).length,
@@ -291,7 +292,7 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly authored wave cens
       }
     }
     const eastIds = c.state.arrivals.filter(a => a.outlet === 1).map(a => a.id);
-    if (!eastIds.some(id => initial.some(a => a.id === id))) errors.push('L8/outlet-1: east region did not release the initially route-gated outlet');
+    if (!eastIds.some(id => !initial.some(a => a.id === id))) errors.push('L8/outlet-1: east region did not release the initially route-gated outlet');
   });
   await withWorld('L10', tier, w => {
     const m = w.missions!; m.loadCheckpoint('cure-disperse-ready');

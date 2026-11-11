@@ -15,3 +15,7 @@
 - Required `sh tools/ops/slim-worktree.sh "$PWD" --no-assets` was attempted first; it could not lock the shared worktree config under the parent repository's `.git` (`Operation not permitted`).
 
 The nightly census is therefore not verified green. No gameplay, AI, stat, or authored content files were changed. No claim is made about a genuinely missing authored cohort: the prior s39 remote run observed each of the measured L7 cohorts, and this turn could not rerun the suite after changing the test.
+
+## Restored remote access
+
+The exact remote command executed on 94.130.181.173, job `/srv/mi/jobs/s40-wavecensus2-b8a73c-11766-1794398818`, and failed 2 census tests while both L4 tests passed. It exposed fixture errors: opening quota observation occurred after population; thresholds for high packs 713/714 were not crossed; split-pack goal areas still used the parent centre; north incorrectly counted the already-spawned K9 twice; and the explicit east assertion had its membership predicate reversed. Observer timing, thresholds, north quota, and east predicate have been corrected. Split-pack goal-area assertions and a new remote run remain required. This supersedes the earlier runner availability blocker.
