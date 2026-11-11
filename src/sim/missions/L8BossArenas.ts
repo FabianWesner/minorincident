@@ -119,6 +119,8 @@ export class L8BossArenas {
       const previous = this.state[this.state.indexOf(arena) - 1];
       const routeOpen = previous ? previous.phase === 3 : !!this.mission.l8!.state.sealedAt;
       const stage = l8Route.find(r => r.id === arena.id)!, inZone = inRect(player.transform, stage.zone);
+      // r42-arenas: the gorilla house starts the fight only once she is well inside (not from the doorway, where the MG deleted it in 4 s).
+      const deep = inZone && (!stage.depth || !stage.entry || distance(player.transform, stage.entry) >= stage.depth);
       // The old elephant stays healthy in his enclosure until the vehicle-yard
       // finale is reachable; an early distant health bar must not be a dormant boss.
       if (arena.id === 'elephant' && !routeOpen) continue;
@@ -144,14 +146,16 @@ export class L8BossArenas {
       }
       // r33-l8route: the fight starts when the courier steps into the enclosure (the next one on the route), never from a distance. An animal that no
       // tunnel runner could reach through the closed gates turns the moment the courier is among them.
-      if (arena.phase === 0 && routeOpen && inZone && !live.length && !arena.ids.some(id => !!w.entities.get(id)?.infection) && healthy.length) {
+      if (arena.phase === 0 && routeOpen && deep && !live.length && !arena.ids.some(id => !!w.entities.get(id)?.infection) && healthy.length) {
         arena.zoneAt ??= w.tick;
         if (w.tick - arena.zoneAt >= 150) for (const e of healthy) w.npcs!.civilians.outbreak!.infect(e!, arena.carrier || 1);
       }
-      if (arena.phase === 0 && finaleReady && routeOpen && live.length && inZone && !this.mission.l8!.protecting()) {
+      if (arena.phase === 0 && finaleReady && routeOpen && live.length && deep && !this.mission.l8!.protecting()) {
         // The restore point is taken in phase 0 with the entry gate still open (the courier stands just outside it).
         this.mission.checkpoint(`arena-${arena.id}`, def.entry);
         arena.phase = 1; arena.startedAt = w.tick; arena.nextAt = w.tick + 90; arena.armed = false;
+        // r42-arenas: the gorilla opens with a charge-and-pound (cycle 3), not a roar from across the house.
+        if (arena.id === 'gorilla') { arena.cycle = 2; arena.nextAt = w.tick + 20; }
         if (arena.id === 'elephant') {
           // The old elephant breaks into the vehicle yard for the final stand;
           // preserve the turned animal's entity and health for the whole fight.
@@ -212,7 +216,8 @@ export class L8BossArenas {
     arena.flights = (arena.flights ?? 1) + 1;
     const w = this.w, zoo = this.mission.l8!, civilians = w.npcs!.civilians;
     for (let i = 0; i < 6; i++) {
-      const angle = i * Math.PI / 3 + .4, at = requireClearPoint(w, { x: def.centre.x + Math.cos(angle) * 10, z: def.centre.z + Math.sin(angle) * 10 }, .5, 6, `l8.${def.id}.flight`);
+      // r42-arenas (r41-vqa P3: 'flamingo flights stack up over the group'): each flight lands on its own ring and bearing, not on the same six points.
+      const flight = arena.flights ?? 2, angle = i * Math.PI / 3 + .4 + flight * .52, ring = 8 + (flight - 1) * 2.5, at = requireClearPoint(w, { x: def.centre.x + Math.cos(angle) * ring, z: def.centre.z + Math.sin(angle) * ring }, .5, 6, `l8.${def.id}.flight`);
       const id = civilians.spawn('cashier', at, { zooAnimal: 'flamingo', waypoints: [at, at] });
       arena.ids.push(id); zoo.state.animals.push(id);
       const animal = w.entities.get(id)!;
@@ -303,6 +308,7 @@ export class L8BossArenas {
     }
     if (b.specialAttack?.move === 'gorilla.roar' && b.specialAttack.stage === 'telegraph' && b.grabHits > 0) { arena.counters++; this.recover(e, 120); return true; }
     if (b.specialAttack) { this.advanceMove(e, arena); return true; }
+    if (arena.id === 'gorilla' && this.gorillaCover(e, arena, p)) return true;
     if (arena.id === 'elephant' && !this.mission.state.states['hale-keys']) {
       const hale = w.entities.get(this.mission.l8!.state.haleId);
       if (hale && hale.health.current > 0) {
@@ -335,10 +341,10 @@ export class L8BossArenas {
           if (w.infected!.props.nearestObject(e, 25, true)) { boss.barrage = 3; this.scavenge(e); } else this.start(e, move, 40, 0, radius);
           return true;
         }
-        this.walk(e, this.predict(e, .8, arena), arena.phase === 2 ? 6.5 : 5.5); return true;
+        this.walk(e, this.predict(e, .8, arena), arena.id === 'gorilla' ? 8.5 : arena.phase === 2 ? 6.5 : 5.5); return true;
       }
       delete boss.approachProgress;
-      delete boss.approach; this.start(e, move, 60, 0, radius); return true;
+      delete boss.approach; this.start(e, move, arena.id === 'gorilla' && move === 'gorilla.pound' ? 42 : 60, 0, radius); return true;
     }
     if (boss.hunt) {
       const hunt = boss.hunt;
@@ -403,6 +409,30 @@ export class L8BossArenas {
       this.start(e, 'elephant.swipe', 42, 0, 5.5); boss.readyAt = w.tick + 420;
     } else if (arena.id === 'elephant') this.walk(e, this.predict(e, .8, arena), 5);
     else this.orbit(e, arena, p.transform, arena.id === 'flamingo' ? 6 : 4);
+    return true;
+  }
+  /** r42-arenas (r41-vqa: 'the gorilla is dead in ~7 s to the MG ... and never hits her'). Its HP is untouched; a gorilla that loses >= 90 HP in 1.5 s
+   * while she is still more than 6 m away breaks line of sight behind the nearest standing pillar for ~2 s, then comes out at a run with a pound, so a
+   * stand-and-spray courier gets the fight on the animal's terms (a cover dance, then claws) instead of deleting it from the doorway. */
+  private gorillaCover(e: EntitySnapshot, arena: L8ArenaState, p: EntitySnapshot): boolean {
+    const w = this.w, boss = e.infected!.arenaBoss!, b = e.infected!;
+    const mark = boss.hpMark;
+    if (!mark || w.tick - mark.at > 90) boss.hpMark = { hp: e.health.current, at: w.tick };
+    const gap = distance(e.transform, p.transform);
+    if (boss.cover) {
+      const c = boss.cover;
+      if (w.tick >= c.until || gap < 3) { delete boss.cover; boss.coverAt = w.tick + 240; boss.approach = 'gorilla.pound'; boss.hpMark = { hp: e.health.current, at: w.tick }; return false; }
+      if (distance(e.transform, c) > 1) { this.walk(e, c, 8.5); c.hold = w.tick; return true; }
+      c.until = Math.min(c.until, (c.hold ?? w.tick) + 90);
+      return true;
+    }
+    if (arena.phase < 1 || w.tick < (boss.coverAt ?? 0) || gap <= 6 || !mark || mark.hp - e.health.current < 90 || w.tick - mark.at > 90) return false;
+    // Hide spot: a point beside a standing pillar that the courier's rifle line does not reach (the pillars are thin in x and long in z, so the spot depends on where she stands).
+    const spots = (w.destruction?.objects.filter(o => o.id.includes('l8-gorilla-pillar') && !o.state.collapsed) ?? []).flatMap(o => [[-2.4, -2.4], [-2.4, 0], [-2.4, 2.4], [2.4, -2.4], [2.4, 0], [2.4, 2.4], [0, -3.2], [0, 3.2]].map(([ox, oz]) => ({ x: o.home.p[0] + ox, z: o.home.p[2] + oz })))
+      .filter(c => !w.combat!.query.shotVisible(p.transform, { ...c, y: .7 }) && distance(c, p.transform) > 5).sort((a, c) => distance(p.transform, a) + .3 * distance(e.transform, a) - distance(p.transform, c) - .3 * distance(e.transform, c));
+    if (!spots.length) { boss.coverAt = w.tick + 240; return false; }
+    b.path.length = 0; b.goal = -1;
+    boss.cover = { ...spots[0], until: w.tick + 240 };
     return true;
   }
   /** Lead uses resolved past movement, including a sustained turn. Changing direction after the cue beats it. */

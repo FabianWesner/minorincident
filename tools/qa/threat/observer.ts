@@ -51,6 +51,8 @@ interface Row extends BlockedWindow {
   spawned: number; initial: number; seen: Set<string>; reachable: Set<string>; near: Set<string>;
   attacks: number; groupAttacks: number; firstAttack: number | null; firstGroupAttack: number | null; followers: Map<number, number[]>;
   last: Snapshot | null;
+  /** r42-arenas: ids of chasing infected within 6 m of the courier that did not move for 30 s. */
+  stuckChasers?: Set<number>;
 }
 export interface PhaseReceipt {
   legalPaths?: Row['legalPaths'];
@@ -60,6 +62,8 @@ export interface PhaseReceipt {
   groupAttacks: number; groupAttacksPerMinute: number; firstGroupAttackSeconds: number | null;
   followerSpeeds: { id: number; samples: number; median: number }[]; followerMin: number | null; followerMedian: number | null;
   maxBlockedSeconds: number; blockedEvidence: Snapshot | null; last: Snapshot | null; flags: string[];
+  /** r42-arenas: chasing infected within 6 m of the courier that stood still for 30 s (a safe pocket); each id also adds the STUCK_CHASER_OVER_30_SECONDS flag. */
+  stuckChasers?: number[];
 }
 export interface FollowerWaitReceipt {
   escortTicks: number; stationaryFarTicks: number; upperBoundPercent: number | null;
@@ -92,8 +96,9 @@ export function followerCoverageFlags(level: RunnerLevel, phases: readonly Pick<
   }
   return flags;
 }
-export function phaseFlags(p: Pick<PhaseReceipt, 'threat' | 'attacks' | 'maxBlockedSeconds' | 'followerSpeeds' | 'followerMedian'> & Partial<Pick<PhaseReceipt, 'groupAttacks'>>): string[] {
+export function phaseFlags(p: Pick<PhaseReceipt, 'threat' | 'attacks' | 'maxBlockedSeconds' | 'followerSpeeds' | 'followerMedian'> & Partial<Pick<PhaseReceipt, 'groupAttacks' | 'stuckChasers'>>): string[] {
   const flags: string[] = [];
+  if (p.stuckChasers?.length) flags.push('STUCK_CHASER_OVER_30_SECONDS');
   if (p.threat && p.attacks + (p.groupAttacks ?? 0) === 0) flags.push('ZERO_ATTACKS');
   if (p.threat && p.maxBlockedSeconds > 20) flags.push('UNREACHABLE_SHARE_OVER_30_PERCENT_FOR_OVER_20_SECONDS');
   if (p.followerMedian !== null && p.followerMedian > 0) for (const follower of p.followerSpeeds) {
@@ -437,8 +442,25 @@ export class ThreatObserver {
     if (stationaryFar) window.stationaryFarTicks++;
     this.waitWindows.set(windowKey, window);
   }
+  private readonly chaseWatch = new Map<number, { x: number; z: number; at: number; flagged: boolean }>();
+  /** r42-arenas (r41-vqa P2-5: a brute and a riot stood in 'chase' 5 m from her behind a shop shelf for 180 s): a chasing infected within 6 m of the courier that has not moved 0.5 m for 30 s is a safe pocket. */
+  private observeChasers(alive: EntitySnapshot[]): void {
+    const w = this.world, player = w.entities.get(1)!.transform, seen = new Set<number>();
+    for (const e of alive) {
+      if (e.infected?.state !== 'chase' || e.infected.scripted || e.hidden || Math.hypot(e.transform.x - player.x, e.transform.z - player.z) > 6 || Math.hypot(e.transform.x - player.x, e.transform.z - player.z) < 2.8) continue;
+      seen.add(e.id);
+      const watch = this.chaseWatch.get(e.id);
+      if (!watch || Math.hypot(e.transform.x - watch.x, e.transform.z - watch.z) > .5) { this.chaseWatch.set(e.id, { x: e.transform.x, z: e.transform.z, at: w.tick, flagged: false }); continue; }
+      if (w.tick - watch.at >= 1800 && !watch.flagged) {
+        watch.flagged = true;
+        for (const row of phases(w, this.level).map(phase => this.row(phase))) (row.stuckChasers ??= new Set()).add(e.id);
+      }
+    }
+    for (const id of this.chaseWatch.keys()) if (!seen.has(id)) this.chaseWatch.delete(id);
+  }
   private observePaths(): void {
     const w = this.world, player = w.entities.get(1)!, alive = this.living(), positions: Position[] = [];
+    this.observeChasers(alive);
     // L4-07: the intact camp perimeter is intentional. Its scheduling clock
     // is not an opening; wait for a recorded physical breach or removed gate.
     const camp = w.missions!.state.l4;
@@ -546,7 +568,7 @@ export class ThreatObserver {
           attacks: row.attacks, attacksPerMinute: row.ticks ? row.attacks * 3600 / row.ticks : 0, firstAttackSeconds: row.firstAttack,
           groupAttacks: row.groupAttacks, groupAttacksPerMinute: row.ticks ? row.groupAttacks * 3600 / row.ticks : 0, firstGroupAttackSeconds: row.firstGroupAttack,
           followerSpeeds, followerMin: speeds.length ? Math.min(...speeds) : null, followerMedian, boundedPaths: row.boundedPaths, legalPaths: row.legalPaths,
-          maxBlockedSeconds: row.maxBlockedSeconds, blockedEvidence: row.blockedEvidence, last: row.last, flags: [] };
+          maxBlockedSeconds: row.maxBlockedSeconds, blockedEvidence: row.blockedEvidence, last: row.last, flags: [], ...(row.stuckChasers?.size ? { stuckChasers: [...row.stuckChasers] } : {}) };
         receipt.flags = phaseFlags(receipt); return receipt;
       }), waves: this.waves.finish(),
     };

@@ -44,7 +44,7 @@ export async function checkL8Route(): Promise<void> {
       const at = (d: number) => ({ x: gate.x + ux * d, z: gate.z + uz * d });
       const members = zoo.followers();
       members.forEach((e, n) => { const p = at(-4 - (n % 4) * 1.2); w.solids.relocate(e, { x: p.x + (uz ? (n - 4) * .8 : 0), z: p.z + (ux ? (n - 4) * .8 : 0), y: e.transform.y }, 'fixture.l8-route', 20, false); });
-      const p0 = at(6); w.solids.relocate(player, { ...p0, y: player.transform.y }, 'fixture.l8-route', 20, false);
+      const p0 = at((stage.depth ?? 5) + 1); w.solids.relocate(player, { ...p0, y: player.transform.y }, 'fixture.l8-route', 20, false);
       expect(inRect(player.transform, stage.zone), `${stage.id}: courier inside the enclosure`).toBe(true);
       let armedWith = -1;
       let stragglers = '';

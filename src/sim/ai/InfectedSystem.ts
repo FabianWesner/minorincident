@@ -2098,9 +2098,16 @@ export class InfectedSystem {
     const grid = this.navigation.district(e.transform), b = e.infected!;
     const armyApproach = !!b.l4ArmyApproach || this.world.scenario === 'L4' && !!b.breachApproach;
     if (b.pathGrid !== grid) { b.pathGrid = grid; b.goal = -1; b.path.length = 0; }
-    const districtNav = this.navigation.grid(e.transform), nav = this.wideNav && districtNav === this.navigation.fallback && e.combat!.radius > InfectedSystem.wideBodyRadius ? this.wideNav : districtNav, heightGoal = this.world.districts ? heightRouteWaypoint(this.world.districts, e, target) : undefined;
+    const districtNav = this.navigation.grid(e.transform), nav = this.wideNav && districtNav === this.navigation.fallback && e.combat!.radius > InfectedSystem.wideBodyRadius && this.world.tick >= (b.wideFallbackUntil ?? 0) ? this.wideNav : districtNav, heightGoal = this.world.districts ? heightRouteWaypoint(this.world.districts, e, target) : undefined;
     target = this.navigation.target(e.transform, heightGoal ?? target);
     let x = target.x, z = target.z;
+    // r42-arenas (r41-vqa: 'a brute and a riot zombie stand in chase 5 m from her behind a shop shelf for 180 s'): the wide grid can leave a pocket no
+    // wide body path enters. A wide body within 10 m of the courier that has not closed on her in 4 s walks the admission grid for the next 10 s.
+    if (this.wideNav && nav === this.wideNav && Math.hypot(target.x - this.world.entities.get(1)!.transform.x, target.z - this.world.entities.get(1)!.transform.z) < 2) {
+      const gap = Math.hypot(e.transform.x - target.x, e.transform.z - target.z), mark = b.wideStuck;
+      if (gap > 10 || !mark || gap < mark.d - .5) b.wideStuck = { d: gap, at: this.world.tick };
+      else if (this.world.tick - mark.at >= 240 && gap > e.combat!.radius + 1.5) { b.wideFallbackUntil = this.world.tick + 600; b.wideStuck = { d: gap, at: this.world.tick }; b.path.length = 0; b.goal = -1; }
+    }
     // Only a courier chase can share its flow field; soldier and investigation goals need their own route.
     // Courier-assigned L4 breach walkers have the same destination as the
     // shared flow. Making each compete for an individual A* search can leave
