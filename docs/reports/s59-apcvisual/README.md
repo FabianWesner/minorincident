@@ -1,54 +1,34 @@
-# s59-apcvisual — APC render fixes
+# s59 APC visual fixes
 
-## Changes
+## Render changes
 
-- `Blasts` now draws flame cards before transparent cab glass (`renderOrder = -1`). The pooled cards retain depth testing, so opaque APC hull panels reject flames behind them; the later windshield draw overlays flames behind the glass. This changes ordering only and adds no draw call.
-- `VehicleView` now terrain-fits only tyres with Rapier contact in the current or previous physics tick. Unsupported wheels keep their suspension pose through ramp airtime instead of being pulled down to terrain below the APC.
+- **Rear roof part:** runtime ray picks identify the reported bracket as the loose weapon rack in `L9Props`. It used latest simulation position and yaw while the APC used interpolated position and full chassis rotation. Attached rack now uses the same interpolation and pitch/roll. Across alpha 0/.25/.5/.75/1, original relative translation spans **0.2599866 m**, fixed **0.000001718 m**, in all four backend/tier configurations.
+- **Flames:** the replacement APC armor roof inherited the transparent glass material, with depth writes disabled despite opacity one. Roof now has an opaque, depth-writing material. Flame cards draw before transparent glass and retain depth testing. The roof blocks fire while windshield glazing draws over flames behind it.
+- **Ramp tyres:** terrain contact fitting pulled front wheel pivots down by **2.058 m** toward the road beneath the ramp (local Y -1.419). Fitting now applies only to supported tyres and only lifts penetration, preserving the suspension pose (local Y 0.639 in the matching overpass frame).
+- **Red marks:** blood coverage is applied in the existing vehicle paint shader. Dents/cracks are appended to the roof geometry draw range. No separate coplanar blood decal draw is introduced. Ridden APC reveal is disabled, so courier x-ray is not causing the seated cab artifact.
 
-## Source review
+No gameplay changes; `LevelNineDriving.ts` unchanged. No mesh/draw added. Controlled flame matrix measures **43 draws before and after** in all eight rows.
 
-- `veh.military-apc.unarmed.glb` and its LOD1/LOD2 counterparts all retain the six named wheel pivots and their wheel meshes. The render path has no visibility toggle for them. `VehicleView` did, however, ground-fit all six wheel pivots unconditionally while a ramp jump was in progress; this is the cause addressed here.
-- APC hull front blood marks use the existing paint material's `bloodCoverage` shader. Staged armor dents and windshield cracks are appended to the existing `transportRoof` geometry/draw range by `ApcDamage`; neither uses an independent coplanar decal draw.
-- Vehicle reveal is disabled for the ridden APC and when the courier is hidden inside it. That rules out the courier foreground outline as the source in the seated/drive case; the forced flame render order was the cab-glass ordering issue found in source.
+## Opened before/after evidence
 
-## Verification status
+All below are under `test-results/s59-apcvisual/`:
 
-- `npm run typecheck`: passed.
-- `npm run lint -- --no-fix`: passed.
-- `npm test`: passed, 107 tests in 27 files, 211 seconds (the suite budget is 240 seconds). The prescribed remote wrapper had no healthy remote runner, so this ran locally.
-- `SCENE_PORT=4962 npm run scene:gate` remains pending. Browser captures are blocked: the shared coordinator cannot bind `127.0.0.1:4329` (`EPERM`), and the legacy headless path is stopped by `tools/mac-gpu-guard.py` because the sandbox denies `ps` (`PermissionError`).
-- Before/after captures have not been opened. `tools/qa/r33-l9-ramps.ts` still needs to capture both L9 ramps at zoom 1/1.5, low/high, WebGL2/WebGPU, and be reviewed alongside the APC flame/cab matrix.
+- `fire-full-matrix.jpg`: 16 cells, before/after × WebGL2/WebGPU × high/low × zoom 1/1.5. Opened: the old flame tongue overlays armor; fixed armor rejects it and glazing retains the visible fire behind the windshield. Every row passes console/backend/quality/draw checks.
+- `overpass-matrix.jpg`, `ditch-matrix.jpg`, `wreck-pile-matrix.jpg`, `embankment-matrix.jpg`, `creek-bank-matrix.jpg`: each opened, four backend/tier before/after pairs. Old tyre loss is visible at each sampled ramp lip; after tyres remain visible. All r33 captures report actual airborne poses and zero page errors.
+- `rack-before-after.jpg` and `rack-after-matrix.jpg`: opened. Rack alignment matches the measured interpolation improvement above.
+- Raw `night-before-*` / `night-after-*`: r33 tool uses explicit authored `L9-crossing` preset, static zoom 1/1.5, air and landing zoom 1.5, all four backend/tier configurations. Raw `fire-before-*` / `fire-after-*`: both zooms and all configurations.
+- `roof-picks/meta.json`: runtime identification of rack mesh. `night-*/meta.json`: physics wheel contacts/suspension, rendered wheel positions and rack interpolation matrices.
 
-## Draw-call budget
+The flame fixture includes a fire inside the cab and an infected in the fire behind/beside it. Scene Lab fixture files are `tools/qa/s59-apcvisual/fire-z1.json` and `fire-z1.5.json`.
 
-Both changes reuse existing meshes and materials. They introduce no geometry or render objects, so the source-level draw-call delta is zero; runtime counter verification remains pending with the captures.
+## Checks and limitations
 
-## Resumed capture verification
+- Typecheck and lint passed after rack fix (`typecheck-final.log`, `lint-final.log`).
+- Full scene gate: **62/62 passed**, zero known/not-run, 14.4 minutes (`scene-gate.log`, `test-results/scene-gate/`). This run preceded the rack interpolation fix; controlled rack matrices above cover that later change.
+- Prescribed remote `sh tools/remote/run.sh "$PWD" -- npm test` failed twice by reservation/test timeout, 240.5/241.4 s against 240 s; it is **not green** (`remote-test.log`, `remote-test-final.log`). No assertion failure reported before termination, but the suite did not finish.
+- Earlier local `npm test` passed 107 tests/27 files in 211 s. Fresh local run finished **106 passed / 1 failed** in 208.6 s: `tests/engine/navigation.test.ts:121` exceeded its existing 30-second timeout (33.7 s). No simulation files changed. Log: `local-test-final.log`.
+- Headless only, one browser via `tools/e2e-lock.sh`, ports 4961/4962. Owned servers stopped after capture runs. No push/deploy/merge.
 
-Sandbox restrictions lifted. The current high/WebGL2 `l9-apc-ram` capture passed and `test-results/s59-apcvisual/current/shot-0030.png` was opened: visible tyres are present on flat ground. Ramp, flame, roof flicker and full matrix verification remain outstanding.
+Opened all five ramp matrix sheets: before tyres disappear at sampled ramp lips, after tyre silhouettes remain visible in all four configurations. Rack drift is 0.2599866 m before versus 0.000001718 m after in every configuration.
 
-The full high/WebGL2 r33 ramp tool completed with zero page errors. Opened `ramps-after-high-webgl2/overpass-air-z1.5.png`: middle/rear tyres remain visible, but front tyres still disappear into the ramp, so the wheel fix is incomplete. The rear roof bracket/red lamp is clearly identifiable in this frame. Further work is required.
-
-Found a separate roof depth defect: `transportRoof` inherited transparent glass material with depth writes disabled despite opacity one. The APC roof now uses an opaque clone with depth writes enabled, retaining the existing mesh/draw. Typecheck passed after this change. Flame captures remain outstanding.
-
-Ramp diagnostics proved the front wheel pivots were lowered to local Y -1.419 with contactOffset -2.058 m while Rapier reported ramp contact. The final terrain contact solver now resolves penetration only; it no longer lowers tyres toward sampled road beneath an elevated ramp. Runtime re-capture remains required. The r33 tool now records physics wheel contact/suspension and render wheel positions/correction offsets for direct diagnosis.
-
-Re-capture `ramp-corrected` completed with zero page errors. Opened matching overpass-air-z1.5 frames and `test-results/s59-apcvisual/ramp-before-after.jpg`: front tyre is now present. Front pivot local Y changed from -1.419 to 0.639, contactOffset from -2.058 m to zero, with identical simulation pose/spin. This verifies the overpass high/WebGL2 case; full matrix and flame/roof investigation remain pending.
-
-Controlled flame fixture added under `tools/qa/s59-apcvisual/`: fires inside/behind cab with an infected beside it, zoom 1 and 1.5. All eight after rows (WebGL2/WebGPU, high/low, both zooms) passed backend/quality, console and draw budgets. Opened high/WebGL2 zoom 1 and low/WebGPU zoom 1.5: armor roof remains solid while fire is visible through windshield. These are after captures only; baseline comparison and full visual review remain pending. Output: `test-results/s59-apcvisual/fire-after-*`.
-
-Captured original pre-lane `transportModel`/`Blasts` at high/WebGL2 for both zooms, then restored current files. Opened `test-results/s59-apcvisual/fire-before-after.jpg`: before has a tall tongue visibly over the armor roof; after rejects that tongue at the roof while fire remains visible through the windshield. Matching frame 60, seed 31. Full before matrix and roof flicker investigation remain outstanding.
-
-## Current required checks (resumed environment)
-
-- `SCENE_PORT=4962 E2E_UNITS=1 npm run scene:gate`: **62/62 pass**, zero known/not-run, 14.4 minutes. Log: `test-results/s59-apcvisual/scene-gate.log`; results under `test-results/scene-gate/`.
-- Prescribed `sh tools/remote/run.sh "$PWD" -- npm test`: remote runner reachable, but **failed by timeout**, reservation 238 s / test budget 240.5 s (240 s cap). No green remote suite claim. Log: `test-results/s59-apcvisual/remote-test.log`.
-- Roof flicker remains unresolved. Source inspection identifies the thin rear antenna but no authored red roof lamp, so the exact reported bent bracket still needs runtime identification. No geometry change made on that uncertainty.
-
-Runtime ray pick of the reported rear roof bar identifies `mesh_1 / Group / root / Scene / Group / l9-driving-course`, at world (-85.226,2.214,-329.964). It is the loose weapon rack in `L9Props`, not APC body geometry. Attached rack used latest tick position and yaw while VehicleView interpolated chassis position and full quaternion, causing relative jitter/clipping on motion/ramps. Its attached pose now interpolates physics previous/current position and quaternion, with its mount offset rotated in chassis space. Visual sequence verification remains required. Diagnostic picks: `test-results/s59-apcvisual/roof-picks/meta.json`.
-
-Rack A/B proof: original `L9Props` and fixed code captured at identical overpass pose, with physics frozen and render alpha 0/.25/.5/.75/1. Original rack translation relative to rendered chassis spans **0.2599866 m**; fixed spans **0.000001718 m** (terrain-fitting numerical variation), rotation remains identity relative to chassis. Opened `test-results/s59-apcvisual/rack-before-after.jpg` and after overpass frame. Current code restored. Both capture runs had zero page errors. Typecheck and lint passed for the current rack implementation. Full matrix/refreshed suite remains outstanding; this proves the diagnosed rack/chassis interpolation defect for the high/WebGL2 overpass case.
-
-Full before/after capture coverage now exists: `night-before-*` / `night-after-*` cover the r33 ramp tool in all four backend/tier combinations with static zoom 1/1.5 and airborne/landing zoom 1.5. The tool explicitly sets `L9-crossing`. All runs completed with zero page errors. Flame baselines now cover all eight backend/tier/zoom rows; opened `fire-full-matrix.jpg` (16 cells). Roof rejects the formerly overdrawn tongue in every pair; draw-call maxima are **43 before and after in every row**. Current source files restored after baseline capture. Full ramp matrix contact-sheet review remains pending.
-
-Repeated required remote suite after rack fix again failed only by reservation/test timeout: 241.4 s against 240 s. Log `remote-test-final.log`. This remains a failed gate, not a green test result. All capture/check processes started in this pass are terminal and owned Vite stopped.
+Remote suite timeout and the fresh local navigation timeout remain unmet acceptance checks. Visual evidence and source fixes are committed; do not represent this report as a green remote acceptance run.
