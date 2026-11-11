@@ -19,6 +19,10 @@ export const finale = {
    * (the arena disc with the machinery, tanks and gate). A courier who runs further out does not drag it away: it waits at the edge
    * and goes back in with her. Spec: "leash/return when it drifts beyond ~25 m from the console". */
   leashRadius: 25,
+  /** r42-arenas (r41-vqa: 'there is no arena edge ... the courier ran 200 m and 340 m out into an empty dark plain'): once the Mega is in the yard a service-fence square of this half-size (m) closes around the console and stays until the cure is released. */
+  perimeterHalf: 55,
+  /** The Mega must be within this distance of the console before the perimeter closes (it arrives from the west road and must not be walled out). */
+  perimeterArm: 45,
   /** The HUD says "Back to the dispersal arena" only for a courier this far from the console (the Mega is then at the leash edge). */
   fightRadius: 33,
   /** E32 §5.7: the mounted gun stands at most this far from the console. */

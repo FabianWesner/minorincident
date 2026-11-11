@@ -4,6 +4,13 @@ import { finale } from '../../data/l10Finale';
 import { LevelTenStory } from './LevelTenStory';
 import type { Mission } from './Mission';
 
+/** The four sides of the arena perimeter (axis-aligned sim barriers, drawn by `L10Perimeter`). */
+export function perimeterBoxes(c: { x: number; z: number }): { x: number; z: number; halfX: number; halfZ: number }[] {
+  // The west side (the approach road) keeps a 12 m gate so infected arriving behind her can still enter; north, south and east are closed.
+  const h = finale.perimeterHalf, t = .25, gate = 6, seg = (h + t - gate) / 2;
+  return [{ x: c.x, z: c.z - h, halfX: h + t, halfZ: t }, { x: c.x, z: c.z + h, halfX: h + t, halfZ: t }, { x: c.x + h, z: c.z, halfX: t, halfZ: h + t },
+    { x: c.x - h, z: c.z - gate - seg, halfX: t, halfZ: seg }, { x: c.x - h, z: c.z + gate + seg, halfX: t, halfZ: seg }];
+}
 export const cureChargeTicks = 3600;
 export const cureChargeRadius = finale.holdRadius;
 /** The existing mission flags/counter are the entire serialized device predicate.
@@ -18,16 +25,30 @@ export class LevelTenFinale {
     const console = mission.def.anchors['cure-console'];
     if (console) mission.def.anchors['cure-mega'] = { ...console };
   }
+  private perimeterOn: boolean | null = null;
+  /** r42-arenas: a closed service-fence square around the console (sim barriers; the drawn fence follows `perimeter-up`). */
+  private perimeter(up: boolean): void {
+    if (this.perimeterOn === up || this.perimeterOn === null && !up) { this.perimeterOn = up; return; }
+    const { world, state, def } = this.mission, c = def.anchors['cure-console'];
+    if (!c) return;
+    this.perimeterOn = up; state.states['perimeter-up'] = up;
+    perimeterBoxes(c).forEach((box, i) => {
+      const wall = { ...box, y: 1.5, halfY: 1.5 };
+      world.solids.setBarrier(`l10.perimeter.${i}`, up ? wall : null);
+      world.events.emit({ type: 'world.blocker.changed', tick: world.tick, id: 900880 + i, blocked: up, wall });
+    });
+  }
   update(): void {
     this.story.update();
     const { world, state, def } = this.mission;
-    if (state.states['cure-released']) { this.cure.update(); this.epilogue.update(); return; }
+    if (state.states['cure-released']) { this.perimeter(false); this.cure.update(); this.epilogue.update(); return; }
     const player = world.entities.get(1)!, console = def.anchors['cure-console'];
     if (console && !state.states['arena-equipped'] && player.transform.x > console.x - 200 && world.chunks?.resident(console.x, console.z)) {
       for (const [i, [dx, dz]] of [[24, -4], [-18, 10]].entries()) state.actors[`arena-fuel-${i}`] = world.hazards!.spawn('propane', { x: console.x + dx, z: console.z + dz });
       state.actors['arena-gate-switch'] = world.interactables!.spawn('switch', { x: console.x + 10, z: console.z + 28 }, { label: 'Electrify the gate', radius: 2 });
       state.states['arena-equipped'] = true;
     }
+    this.perimeter(!!state.states['perimeter-up'] || !!state.states['cure-installed'] && !!console && !!world.megaPursuit?.entity() && Math.hypot(world.megaPursuit.entity()!.transform.x - console.x, world.megaPursuit.entity()!.transform.z - console.z) <= finale.perimeterArm);
     const pressed = world.inputFrame.interact && !state.states['console-held'];
     state.states['console-held'] = world.inputFrame.interact;
     const boss = world.megaPursuit;

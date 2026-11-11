@@ -39,6 +39,8 @@ export interface L8RouteStage {
   entry: L8Box | null; exit: L8Box | null;
   /** Marker nodes of the leg that leads to this arena, in walking order (r39-markers: the last one is 4-5 m INSIDE its entry gate and zone, where the fight starts; r38-vqa had them 4 m outside, so a marker-follower stood in the ring for 3.5 min). */
   nodes: readonly { x: number; z: number }[]; text: string; clearedLine: string;
+  /** r42-arenas: the fight starts only once the courier stands this far (m) inside the entry gate, so she cannot open it and shoot from the doorway. */
+  depth?: number;
 }
 export const l8Route: readonly L8RouteStage[] = [
   { id: 'flamingo', zone: { x0: -13, z0: -51, x1: 13, z1: -13 }, entry: { x: 0, z: -12, halfX: 3, halfZ: .25 }, exit: { x: 0, z: -52, halfX: 3, halfZ: .25 },
@@ -48,9 +50,9 @@ export const l8Route: readonly L8RouteStage[] = [
   { id: 'monkey', zone: { x0: -27, z0: 9, x1: 13, z1: 31 }, entry: { x: -24, z: 8, halfX: 2.5, halfZ: .25 }, exit: { x: -24, z: 32, halfX: 2.5, halfZ: .25 },
     nodes: [{ x: -60, z: -12 }, { x: -60, z: 0 }, { x: -24, z: 0 }, { x: -24, z: 12 }], text: 'Take the west boulevard to the primate yard', clearedLine: 'L8.route-monkey' },
   { id: 'zebra', zone: { x0: 39, z0: 13, x1: 81, z1: 51 }, entry: { x: 60, z: 52, halfX: 3, halfZ: .25 }, exit: { x: 60, z: 12, halfX: 3, halfZ: .25 },
-    nodes: [{ x: -24, z: 32 }, { x: -24, z: 64 }, { x: 60, z: 64 }, { x: 60, z: 48 }], text: 'Cross the visitor field to the zebra paddock', clearedLine: 'L8.route-zebra' },
+    nodes: [{ x: -24, z: 19 }, { x: -24, z: 32 }, { x: -24, z: 64 }, { x: 60, z: 64 }, { x: 60, z: 48 }], text: 'Cross the visitor field to the zebra paddock', clearedLine: 'L8.route-zebra' },
   { id: 'gorilla', zone: { x0: 39, z0: -51, x1: 81, z1: -13 }, entry: { x: 60, z: -12, halfX: 3, halfZ: .25 }, exit: { x: 82, z: -31.77, halfX: .25, halfZ: 3.6 },
-    nodes: [{ x: 60, z: 12 }, { x: 60, z: 0 }, { x: 60, z: -17 }], text: 'Cross the east boulevard into the gorilla house', clearedLine: 'L8.route-gorilla' },
+    nodes: [{ x: 60, z: 12 }, { x: 60, z: 0 }, { x: 60, z: -21 }], text: 'Cross the east boulevard into the gorilla house', clearedLine: 'L8.route-gorilla', depth: 7 },
   { id: 'elephant', zone: { x0: 86, z0: 54, x1: 118, z1: 86 }, entry: null, exit: null,
     nodes: [{ x: 82, z: -32 }, { x: 96, z: -32 }, { x: 96, z: 40 }, { x: 96, z: 56 }], text: 'Down the service lane to the armored vehicle', clearedLine: 'L8.route-elephant' },
 ];
