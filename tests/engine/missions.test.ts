@@ -22,7 +22,7 @@ import { l10MegaResumeCheck } from '../helpers/l10MegaResume';
 import { l10MegaFightCheck } from '../helpers/l10MegaFight';
 import { checkL8Story } from '../helpers/l8Story';
 import { checkL8Route } from '../helpers/l8Route';
-import { checkL8RouteMarkers, checkL9BridgeMarker, checkL9ApcPocket } from '../helpers/r39Markers';
+import { checkL8RouteMarkers, checkL9BridgeMarker, checkL9ApcPocket, checkL9EvacFailForward } from '../helpers/r39Markers';
 import { emergeResident, emergeSpeedMs, walkResidents } from '../../src/sim/outbreak/HouseEmergence';
 import { validateSave } from '../../src/sim/progression/Save';
 import { corpseDetour } from '../../src/sim/missions/missionHelpers';
@@ -294,7 +294,7 @@ test('interactions: ring, input and view predicates agree for every interact ste
   expect(fight.tankDamage, 'a fuel tank hurts the Mega').toBeGreaterThan(50);
   expect(fight.gateSpent && fight.gateDamage >= 900).toBe(true);
   // r39-markers: L8 route legs end inside their arena zones; the L9 bridge marker sits on the deck and the deck starts the collapse.
-  await checkL8RouteMarkers(); await checkL9BridgeMarker(); await checkL9ApcPocket();
+  await checkL8RouteMarkers(); await checkL9BridgeMarker(); await checkL9ApcPocket(); await checkL9EvacFailForward();
 }, 660_000);
 
 // N11: the L6 service gates have their own predicate (the group's waypoint, else the next open gate ahead of the leader).

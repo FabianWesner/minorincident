@@ -218,6 +218,12 @@ export class LevelNineDriving {
   private readonly spotFail = new Map<number, number>();
   private readonly spotSkip = new Map<number, number>();
   /**
+   * r43-l9loop: progress at the evacuation checkpoint that survives a death reload (the mission snapshot rewinds it). The passive courier at
+   * the open hatch died every ~23 s and each reload restarted the 30 s hold: a loop. From the 2nd death on, the reload keeps the hold
+   * and wait progress and the survivors already at the trucks.
+   */
+  private evacDeaths = 0; private evacProgress = 0; private evacSaved: number[] = []; private evacReapply: number[] = [];
+  /**
    * r42-l9pin follow-up (orchestrator: 'find why the deployed guards don't thin the pack'): the line held its fixed posts at
    * (447-459, -7). The APC stops anywhere in the bay, so the pack at its door was 10-25 m away and mostly behind the hull: 36-44 hits in
    * 90 s from four rifles, and the door never cleared. During the evacuation the guards take a fan of posts 7 m out from the passenger
@@ -555,6 +561,9 @@ export class LevelNineDriving {
       s.evacuationAt = w.tick; this.checkpoint('evac-point'); this.signal('evacuation-started');
     }
     if (s.evacuationAt === null || s.evacuationDone) return;
+    this.evacProgress = Math.max(this.evacProgress, w.tick - s.evacuationAt);
+    for (const id of s.evacuated) if (!this.evacSaved.includes(id)) this.evacSaved.push(id);
+    this.keepSaved();
     const passengers = this.car.entity.vehicle!.passengers ?? [];
     // After the wait the door may hold a straggler or two (released at <= releaseThreats); the hard cap keeps fail-forward.
     // A courier at the open hatch at or below half health ends the wait at once: with the crew inside, the pack bit her instead and
@@ -620,6 +629,21 @@ export class LevelNineDriving {
     const researchAboard = !alive(research) || this.car.entity.vehicle!.passengers?.some(p => p.id === research.id && p.phase === 'seated');
     if (w.tick - s.evacuationAt >= cfg.evacuation.defendTicks && living.every(id => s.evacuated.includes(id)) && dogAboard && researchAboard) {
       s.evacuationDone = true; s.boostUntil = w.tick + 420; this.line('L9.sam-stays'); this.rebuild(); this.signal('evacuation-complete'); this.checkpoint('bridge');
+    }
+  }
+  /** r43-l9loop: put survivors that were already at the trucks before a reload back there (hidden in the truck, out of the APC). */
+  private keepSaved(): void {
+    const w = this.w, s = this.state;
+    if (!this.evacReapply.length) return;
+    const vehicle = this.car.entity.vehicle!, seatedIds = new Set(this.evacReapply);
+    this.evacReapply = [];
+    for (const id of seatedIds) {
+      const e = w.entities.get(id); if (!alive(e) || s.evacuated.includes(id)) continue;
+      vehicle.passengers = (vehicle.passengers ?? []).filter(p => p.id !== id);
+      const slot = s.roster.filter(other => other !== s.samId).indexOf(id);
+      e.hidden = true; e.passengerOf = s.trucks[Math.max(0, slot) % 3]; w.spatial.delete(id);
+      s.evacuated.push(id); s.evacuating = s.evacuating.filter(other => other !== id);
+      this.signal('survivor-evacuated', id);
     }
   }
   /**
@@ -708,6 +732,12 @@ export class LevelNineDriving {
   }
   restore(delta: number): void {
     const s = this.state;
+    if (s.evacuationAt !== null && !s.evacuationDone) {
+      // A death at the evacuation checkpoint. The 1st reload starts the hold over; from the 2nd on it keeps the progress (fail forward).
+      this.evacDeaths++;
+      if (this.evacDeaths >= 2) { s.evacuationAt -= Math.min(this.evacProgress, cfg.evacuation.capTicks + cfg.evacuation.defendTicks); this.evacReapply = [...this.evacSaved]; }
+      else { this.evacProgress = 0; this.evacSaved = []; }
+    } else { this.evacDeaths = 0; this.evacProgress = 0; this.evacSaved = []; }
     for (const key of ['stallAt', 'gateAt', 'evacuationAt', 'busStoppedAt', 'busLineAt', 'tankerFuseAt', 'fireAt', 'hugAt'] as const) if (s[key] !== null) s[key]! += delta;
     if (s.megaSighting) s.megaSighting.startedAt += delta;
     if (s.setPieces) this.setPieces.restore(s.setPieces, delta);

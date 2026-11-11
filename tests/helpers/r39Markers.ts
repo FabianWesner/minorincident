@@ -71,3 +71,28 @@ export async function checkL9ApcPocket(): Promise<void> {
     } finally { world.dispose(); }
   }
 }
+
+/**
+ * r43-l9loop: the passive courier at the open hatch died every ~23 s and each reload of `evac-point` restarted the 30 s hold (12 deaths,
+ * no finish). The 1st reload still starts over; from the 2nd on the hold keeps its progress, so the loop always ends.
+ */
+export async function checkL9EvacFailForward(): Promise<void> {
+  const decoded = decodeSave(JSON.stringify(readFixture('tests/fixtures/saves/qa/l9-at-bridge.json.br').campaign));
+  if (decoded.status !== 'ok') throw new Error('fixture does not decode');
+  const world = await loadLevel('L9', 1, decoded.save, 0, { quality: 'low' });
+  try {
+    const m = world.missions!, l9 = m.l9!, run = 720;
+    l9.driving.state.evacuationDone = false; l9.driving.state.evacuationAt = world.tick; m.checkpoint('evac-point');
+    const waited = () => world.tick - l9.driving.state.evacuationAt!;
+    const seen: number[] = [];
+    for (let death = 1; death <= 3; death++) {
+      for (let i = 0; i < run; i++) { const f = emptyInput(); f.brake = true; world.applyInput(f, 'keyboard'); world.update(); }
+      seen.push(waited());
+      m.restore('evac-point');
+      seen.push(waited());
+    }
+    expect(seen[1], 'the 1st reload restarts the hold').toBeLessThan(5);
+    expect(seen[3], 'the 2nd reload keeps the hold progress').toBeGreaterThanOrEqual(run - 10);
+    expect(seen[5], 'the 3rd reload keeps adding up').toBeGreaterThanOrEqual(run * 2 - 20);
+  } finally { world.dispose(); }
+}
