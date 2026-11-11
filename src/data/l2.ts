@@ -5,10 +5,13 @@
  * Times in seconds, speeds in m/s. Starting tuning; every number is read by the L2 controller, bots and tests.
  */
 type P = readonly [number, number];
+/** L2's market shifts west to keep the rebuilt checkout's current collider clear of the east-side ambush approach. */
+const l2MarketShiftX = -.7;
 /** Behaviour of a trapped person at the glass (see `l2.rescue.atGlass`). */
 export type GlassRole = 'bang' | 'press' | 'plead' | 'look' | 'cower' | 'hug' | 'child';
 export const l2WeaponPickup = 'weapon.fire-axe' as const;
 export const l2 = {
+  marketShiftX: l2MarketShiftX,
   /** Beat 1-2: seeded calm, then the dispatch alarm independently of the optional fire axe. */
   calm: { alarmS: [20, 30] as P, crewToTruckMaxS: 8, crewRunMs: 4.2, civiliansOnBenches: 4 },
   /** Beat 3: drive from the original station apron through Elm, Juniper west and Main Row. */
@@ -29,7 +32,7 @@ export const l2 = {
      * banging, pressing on the glass (stand-off from the glass >= the pose's hand reach + margin, so no hand passes the pane;
      * `tests/unit/data/l2-glass.test.ts`),  waving both arms, looking back into the shop, crouched crying, holding a child.
      */
-    atGlass: [
+    atGlass: ([
       [-52.4, -42.95, 0, 'bang'], [-52.4, -41.45, 0, 'bang'], [-52.4, -44.6, 0, 'press'], [-52.3, -39.9, 0, 'plead'], [-52.3, -46.0, 0, 'plead'],
       [-52.85, -42.2, 0, 'look'], [-53.05, -43.85, 0, 'hug'], [-52.5, -43.8, 0, 'child'], [-52.95, -40.6, 0, 'cower'],
       [-55.05, -39.1, -Math.PI / 2, 'bang'], [-56.35, -39.1, -Math.PI / 2, 'press'], [-57.75, -38.95, -Math.PI / 2, 'plead'], [-53.65, -39.0, -Math.PI / 2, 'look'],
@@ -40,9 +43,9 @@ export const l2 = {
       [-54.2, -44.2, 0, 'cower'], [-54.2, -45.5, 0, 'plead'], [-54.35, -42.2, 0, 'press'],
       [-54.5, -40.6, -Math.PI / 2, 'plead'], [-55.4, -41.6, -Math.PI / 2, 'bang'], [-56.6, -41.25, -Math.PI / 2, 'press'],
       [-57.8, -41.2, -Math.PI / 2, 'plead'], [-59.0, -41.2, -Math.PI / 2, 'bang'], [-57.25, -42.6, -Math.PI / 2, 'cower'], [-58.7, -42.6, -Math.PI / 2, 'plead'],
-    ] as readonly (readonly [number, number, number, GlassRole])[],
+    ] as const).map(([x, z, yaw, role]) => [x + l2MarketShiftX, z, yaw, role] as const),
     /** The crew's places at the doors: three at the chained front doors, three at the loading door; one directs the people. */
-    crewDoors: [[-50.55, -43.05, 'pry'], [-48.6, -42.2, 'direct'], [-50.55, -41.35, 'pry'], [-57.0, -36.85, 'pry'], [-55.6, -36.6, 'pry'], [-54.2, -36.85, 'pry']] as readonly (readonly [number, number, 'pry' | 'direct'])[],
+    crewDoors: ([[-50.55, -43.05, 'pry'], [-48.6, -42.2, 'direct'], [-50.55, -41.35, 'pry'], [-57.0, -36.85, 'pry'], [-55.6, -36.6, 'pry'], [-54.2, -36.85, 'pry']] as const).map(([x, z, action]) => [x + l2MarketShiftX, z, action] as const),
     crewRunMs: 4.2,
     /**
      * Doors open: the people burst out running (a fan away from each door), look back at the shop, then flee for the police
@@ -156,9 +159,9 @@ export const l2Anchors: Record<string, P> = {
   'l2-crew-1': stationPoint(6.0, 3.1), 'l2-crew-2': stationPoint(3.0, .9), 'l2-crew-3': stationPoint(2.4, -.1), 'l2-crew-4': stationPoint(3.4, -.5),
   'l2-crew-5': truckPoint(-4.5, 3.6), 'l2-crew-6': stationPoint(5.4, -2.6),
   'l2-truck-stop': [-43.0, -32.0],
-  'l2-market': [-55.6, -42.2],
-  'l2-door-front': [-50.7, -42.2],
-  'l2-door-loading': [-55.6, -37.3],
+  'l2-market': [-56.3, -42.2],
+  'l2-door-front': [-51.4, -42.2],
+  'l2-door-loading': [-56.3, -37.3],
   'l2-forecourt': [-46.5, -38.0],
   /** Where the doors objective leads the courier: close enough that the game camera frames the people behind the glass. */
   'l2-watch': [-48.2, -40.0],

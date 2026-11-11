@@ -2,7 +2,7 @@ import { applyL1Aftermath, type L1Aftermath } from '../continuity';
 import { overlapsRoad, inside } from '../districts/validate';
 import { pushableProps } from '../../data/pushableProps';
 import { truckWallOverlap } from '../../sim/vehicles/L2TruckDrive';
-import { l2Anchors, l2Station, l2TruckPath, stationPoint } from '../../data/l2';
+import { l2, l2Anchors, l2Station, l2TruckPath, stationPoint } from '../../data/l2';
 import { FootprintIndex, findClearSpot, moveOffSolids, freestanding, firstOverlap, footprints, obstaclesOf, type Footprint } from '../placementClearance';
 import type { DistrictLayout, Placement, Tier } from '../districts/types';
 
@@ -107,13 +107,16 @@ const looseProp = (assetId: string) => assetId.startsWith('prop.') && !assetId.i
 // dressing. The pavement-only rule belongs to loose furniture.
 const roadsideProp = (assetId: string) => !assetId.startsWith('veh.') && !!pushableProps[assetId];
 /** The supermarket (Grove Market) replaces the eastern Main Row shop: its open east and south sides are the front and loading doors. */
-const MARKET: Placement = { id: 'l2-market', assetId: 'bld.supermarket', position: [-55.6, 0, -42.2], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: false, lightGroup: 'block-2', visualAabb: { min: [-59.8, 0, -46.7], max: [-51.4, 3.5, -37.7] } };
+const MARKET: Placement = { id: 'l2-market', assetId: 'bld.supermarket', position: [-55.6 + l2.marketShiftX, 0, -42.2], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: false, lightGroup: 'block-2', visualAabb: { min: [-59.8 + l2.marketShiftX, 0, -46.7], max: [-51.4 + l2.marketShiftX, 3.5, -37.7] } };
 
 /** The market's front (east wall, facing +X) and loading (south wall, facing +Z) doors: glazed double doors the mission opens (PO 10-15 "no visible door"). */
-const MARKET_DOORS: Placement[] = ([['l2-market-door-front', -51.35, -42.2, 0], ['l2-market-door-loading', -55.6, -37.65, -Math.PI / 2]] as const).map(([id, x, z, yaw]) => ({
+const MARKET_DOORS: Placement[] = ([['l2-market-door-front', -51.35, -42.2, 0], ['l2-market-door-loading', -55.6, -37.65, -Math.PI / 2]] as const).map(([id, baseX, z, yaw]) => {
+  const x = baseX + l2.marketShiftX;
+  return {
   id, assetId: 'kit.market-doors', position: [x, 0, z], yaw, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: false, lightGroup: 'block-2',
   visualAabb: { min: [x - 1.4, 0, z - 1.4], max: [x + 1.4, 2.9, z + 1.4] },
-}));
+  };
+});
 
 /**
  * L2 copy of the D-GROVE layout (same town as L1, a few hours later): authored L2 anchors, the market, the W1 dressing,
