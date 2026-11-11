@@ -227,3 +227,17 @@ walk; lion remains 11.815 cm. Lioness pelvis maximum is 1.111 cm. This validates
 the transition-order diagnosis but does not yet prove final visual smoothness.
 The latest `l8-after` trace is this accepted candidate. Shared palette changes
 require final finite-clip and regression validation.
+
+## Preliminary scene gate and lint
+
+Lint passed for the current candidate. Started the required 62-row scene gate on
+port 4952. Both WebGL2-low batches passed (16/16), including
+`night-boss-lion@low-z1.5`; the first four WebGPU-high rows also passed, including
+zoo staff. Stopped this preliminary run intentionally (exit 130) because the
+known touchdown discontinuity still requires source changes; it is not a 62/62
+result and the full gate remains required for the final candidate. Log:
+`test-results/s55-lionmotion/scene-gate.log`.
+
+The accepted L8 trace localizes both remaining paw maxima to the foreleg phase
+wrap near 0.5, within `walk`, pointing to touchdown handling after the clip-fade
+fix. No additional solver change was made in this continuation.
