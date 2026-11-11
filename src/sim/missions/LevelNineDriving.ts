@@ -217,6 +217,12 @@ export class LevelNineDriving {
   /** r42-l9pin: per evacuee, failed route ticks and how many truck spots were skipped (transient; a restore starts over). */
   private readonly spotFail = new Map<number, number>();
   private readonly spotSkip = new Map<number, number>();
+  /** r42-l9pin: evacuees are still seated in the APC inside the wait window. */
+  private waiting(): boolean {
+    const s = this.state;
+    return s.evacuationAt !== null && !s.evacuationDone && this.w.tick - s.evacuationAt < cfg.evacuation.waitMaxTicks
+      && (this.car.entity.vehicle!.passengers ?? []).some(p => p.id !== s.samId && !this.w.entities.get(p.id)?.companion && p.phase === 'seated');
+  }
   /** r42-l9pin: live infected at the passenger door or on the hull; survivors wait inside while any are there. */
   doorThreats(): number {
     const w = this.w, door = w.vehicles!.passengerDoor(this.car.entity.id), carId = this.car.entity.id;
@@ -636,7 +642,9 @@ export class LevelNineDriving {
   /** Reinforcements enter from beyond the largest driving frame, then run in. */
   private waves(): void {
     const w = this.w, s = this.state;
-    if (w.tick < s.nextWave || !this.holding(this.car.entity.id)) return;
+    // r42-l9pin: no reinforcements while the evacuees wait inside for a clear door: with waves every 6 s the guards never cleared it
+    // and the 45 s fallback walked them into the refilled pack (14 of 19 losses at 47-55 s). Waves resume once they are out.
+    if (w.tick < s.nextWave || !this.holding(this.car.entity.id) || this.waiting()) return;
     const at = this.car.entity.transform, ai = w.infected!;
     for (let i = 0; i < 8 && ai.director.count + 1 < ai.director.cap && ai.pool.length; i++) {
       const angle = Math.PI + (i - 3.5) * .13, p = { x: at.x + Math.cos(angle) * 105, z: at.z + Math.sin(angle) * 105 }, archetype = ['infected.sprinter', 'infected.dog', 'infected.runner', 'infected.armored'][i % 4];
@@ -652,8 +660,7 @@ export class LevelNineDriving {
       const count = `${s.evacuated.length}/${s.roster.filter(id => id !== s.samId && alive(this.w.entities.get(id))).length} at the trucks`;
       // r42-l9pin (r41-vqa P2-4: survivors died with no word on the HUD): name the loss for 4 s, and say why they wait inside.
       if (s.lost && tick - s.lost.at < 240) return `${s.lost.key === 'a survivor' ? 'A survivor' : s.lost.key[0].toUpperCase() + s.lost.key.slice(1)} was bitten · shoot from the hatch · ${count}`;
-      const waiting = (this.car.entity.vehicle!.passengers ?? []).some(p => p.id !== s.samId && !this.w.entities.get(p.id)?.companion && p.phase === 'seated') && tick - s.evacuationAt < cfg.evacuation.waitMaxTicks;
-      const threats = waiting ? this.doorThreats() : 0;
+      const threats = this.waiting() ? this.doorThreats() : 0;
       if (threats) return `Clear the door · ${threats} infected at the APC · shoot from the hatch · ${count}`;
       return `Cover the survivors · ${count}`;
     }
