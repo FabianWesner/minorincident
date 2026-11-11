@@ -2,7 +2,7 @@
 
 ## Status
 
-Acceptance is **not complete**. Render implementation is committed as `e2db4c7e`. The final foot-slide matrix passes all 24 day/night × low/high × WebGL2/WebGPU rows (maximum p95: nurse 1.8 cm, crawler 1.4 cm, dog 0.3 cm). The broader matched visual matrix, final-source 62/62 gate, draw-call comparison and full test gate remain outstanding. Historical investigation results below are superseded by the latest measurements.
+Acceptance is **not complete**: the exhaustive matched visual matrix is still in progress. Final renderer source `008ad99d` passes the full scene gate **62/62**; committed source `167385ab` passes typecheck, lint and full test gate **107/107**. The measured foot-slide matrix passes 24/24 rows (maximum p95: nurse 1.8 cm, crawler 1.4 cm, dog 0.3 cm); current matched captures also recheck those values. Opened-strip descriptions and source/window identifiers are recorded in `visual-review.json`. Historical investigation entries below are superseded by the latest results.
 
 ## Cause
 
@@ -25,8 +25,8 @@ Acceptance is **not complete**. Render implementation is committed as `e2db4c7e`
 | Nurse foot-slide p95 | 12.8 cm (archived r31 audit) | 1.8 cm (contiguous contacts, high WebGL2; other matrix rows pending) |
 | Crawler foot-slide p95 | Not reported (crawl excluded); independent archived-track recalculation was about 63 cm | 0.5 cm (detailed crawl contacts, high WebGL2; other matrix rows pending) |
 | Dog foot-slide p95 | 92.7 cm (archived r31 audit) | 0.2 cm (bite hop arc, high WebGL2; other matrix rows pending) |
-| Scene gate | Prior audit baseline only | **62/62 pass** on an earlier checkpoint; final source rerun pending |
-| Draw calls | Prior audit baseline only | Not measured |
+| Scene gate | Prior audit baseline only | **62/62 pass** on final renderer `008ad99d` (9.2 minutes) |
+| Draw calls | Nurse day 23/29/30; night 21/27/30 (p50/p95/max) | Identical matched nurse values; full matrix comparison pending |
 
 The archived before strips were opened: the suit attack strip showed little visible change through the attack, the suit hit strip showed effects without a clear body response, and the nurse walk strip showed foot drift. Nine first-pass after strips were generated and opened (attack, hit, and walk for nurse, crawler, dog): nurse shows an arm/chest attack change and recoil under gunfire; crawler shows a grab but its attack pelvis drop buried its torso; dog showed a gallop but weak gun-hit body response. Subsequent changes removed the crawler pelvis drop and prevented humanoid hunch/attack layers from rotating animal bodies. These subsequent changes still need matching strips reviewed. The requested low/high, day/night, WebGL2/WebGPU capture matrix remains outstanding.
 
@@ -131,3 +131,5 @@ Final renderer scene gate: source `008ad99d`, `SCENE_PORT=4928 E2E_UNITS=1 npm r
 Capture timing is now calibrated from simulation states, not fixed timestamps: the night preset delays approach by about 114 ticks. Each type/mood uses four moving approach frames plus windup start, last windup frame, strike+8 and strike+24. The same saved window is used by before and after, without altering stats, damage, AI or fixture combat inputs. A separate burst-only input variant uses the unchanged MG and infected stats while omitting prior damaging sequences, and samples every two ticks so the gun cadence cannot alias a repeated flinch into a frozen-looking strip.
 
 Opened low-WebGL2 brute and armored day/night composites: brute has a heavy alternating step, arm lift/recovery, backward chest recoil and a bat stagger; night silhouette preserves stepping/recoil but the old fixed attack timestamps missed its full strike. Armored shows a raised-arm strike and clear backward head/chest recoil in day; night old timestamps likewise missed the full strike. These fixed-time attack strips require replacement with the calibrated windows before acceptance.
+
+Final full test gate on committed source `167385ab`: **107/107** pass, 108.1 seconds within 240-second time budget and 150-case accounting cap. No additional test cases were added. All requested code gates are now green; matched visual/measurement matrix completion remains open.

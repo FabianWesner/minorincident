@@ -19,7 +19,7 @@ windows = {
 for directory in sorted(pathlib.Path(sys.argv[1]).iterdir()):
     if not directory.is_dir():
         continue
-    selected = {**windows, **(json.loads((directory / 'windows.json').read_text()) if (directory / 'windows.json').exists() else {})}
+    selected = json.loads((directory / 'windows.json').read_text()) if (directory / 'windows.json').exists() else windows
     selected = {phase: frames for phase, frames in selected.items() if isinstance(frames, list) and frames}
     for phase, frames in selected.items():
         paths = [directory / f'shot-{frame:04d}.png' for frame in frames]
