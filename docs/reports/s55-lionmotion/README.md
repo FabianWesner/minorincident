@@ -284,3 +284,15 @@ requested X changes ~0.284 m while actor root changes only 0.00134 m. Thus the
 remaining discontinuity is in contact generation/reachability, not sim root
 translation. Temporary renderer logging and fixture capture changes were removed.
 No new source fix is claimed from this diagnostic run.
+
+## Bind-pose reach calibration
+
+Read GLB JSON and composed node transforms without editing assets. Lion's bind
+foreleg shoulder is at Y=0.6713 m, ankle Y=0.1482 m, declared sole minimum
+Y=0.00282 m, and two-link chain length 0.5932 m: the bind pose can reach its
+floor. The rendered trace previously showed a shoulder near Y=1.1 m and contact
+near Y=0.4 m. Therefore the unreachable solve is not explained by missing sole
+metadata or bind geometry alone; the loaded locomotion pose/ancestor transforms
+must be compared with the bind calibration. Zebra and elephant bind soles also
+sit near zero. This changes the next investigation toward atlas pose construction
+and transform alignment, rather than another paw-state workaround.
