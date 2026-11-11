@@ -19,7 +19,7 @@ const baseline = execFileSync('git', ['rev-parse', 'e2db4c7e^'], { encoding: 'ut
 const paths = execFileSync('git', ['diff', '--name-only', baseline, 'e2db4c7e', '--', 'src/render'], { encoding: 'utf8' }).trim().split('\n');
 const originals = new Map(paths.map(path => [resolve(path), execFileSync('git', ['show', `${baseline}:${path}`], { encoding: 'utf8' })]));
 const captureVersion = hashCapture();
-function hashCapture() { return createHash('sha256').update(paths.map(path => side === 'before' ? originals.get(resolve(path))! : readFileSync(path, 'utf8')).join('') + readFileSync('src/debug/scenelab/SceneLab.ts', 'utf8') + 'walk132-melee510-mg800-v2').digest('hex'); }
+function hashCapture() { return createHash('sha256').update(paths.map(path => side === 'before' ? originals.get(resolve(path))! : readFileSync(path, 'utf8')).join('') + readFileSync('src/debug/scenelab/SceneLab.ts', 'utf8') + 'walk30-120-attack298-346-hit420-450-v3').digest('hex'); }
 const out = `test-results/s34-pairs/${side}-${backend}-${tier}`;
 mkdirSync(out, { recursive: true });
 const hash = (value: string) => createHash('sha256').update(value).digest('hex');
@@ -28,7 +28,7 @@ const server = await createServer({ configFile: resolve('vite.config.ts'), cache
   plugins: side === 'before' ? [{ name: 's34-before', enforce: 'pre', load(id) { return originals.get(id.split('?')[0]); } }] : [],
   server: { host: '127.0.0.1', port, strictPort: true } });
 const session = new SceneSession({ backend: backend as Backend, tier: tier as 'low' | 'high' });
-const shots = [132, 140, 148, 156, 164, 172, 180, 188, 298, 306, 314, 322, 330, 338, 346, 354, 420, 426, 432, 438, 444, 450, 456, 462, 510, 516, 522, 528, 534, 540, 546, 552, 800, 806, 812, 818, 824, 830, 836, 842];
+const shots = [30, 60, 90, 120, 298, 314, 330, 346, 420, 432, 438, 450];
 const results: unknown[] = [];
 try {
   await server.listen(); await session.open();
@@ -36,7 +36,7 @@ try {
     if (!/^[a-z0-9-]+$/.test(type)) throw new Error('Invalid fixture name');
     const spec = readSpec(resolve(`specs/scenes/r31-zombie-audit/game/${type}.json`));
     spec.name = `${type}-${mood}`; spec.time = time;
-    if (existsSync(`${out}/${spec.name}/source-version.txt`) && readFileSync(`${out}/${spec.name}/source-version.txt`, 'utf8') === captureVersion && existsSync(`${out}/${spec.name}/shot-0842.png`) && existsSync(`${out}/${spec.name}/shot-0132.png`) && existsSync(`${out}/${spec.name}/metrics.json`)) {
+    if (existsSync(`${out}/${spec.name}/source-version.txt`) && readFileSync(`${out}/${spec.name}/source-version.txt`, 'utf8') === captureVersion && shots.every(frame => existsSync(`${out}/${spec.name}/shot-${String(frame).padStart(4, '0')}.png`)) && existsSync(`${out}/${spec.name}/metrics.json`)) {
       const previous = JSON.parse(readFileSync(`${out}/${spec.name}/metrics.json`, 'utf8')) as { checks: { pass: boolean } };
       if (previous.checks.pass) { console.log(`Already captured ${spec.name}`); continue; }
     }

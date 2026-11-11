@@ -310,7 +310,8 @@ export class CrowdLocomotion {
     if (flinch) {
       // Recoil away from the hit: chest and head snap back along the hit, hips give a little.
       const x = layers.hitX ?? -1, z = layers.hitZ ?? 0;
-      torso.quaternion.premultiply(this.rotation.setFromAxisAngle(Z, -x * .42 * flinch)).premultiply(this.rotation.setFromAxisAngle(X, z * .32 * flinch));
+      const trunk = this.animal ? (this.rig as unknown as Record<string, Object3D>).body ?? torso : torso;
+      trunk.quaternion.premultiply(this.rotation.setFromAxisAngle(Z, -x * (this.animal ? .85 : .42) * flinch)).premultiply(this.rotation.setFromAxisAngle(X, z * (this.animal ? .45 : .32) * flinch));
       head?.quaternion.premultiply(this.rotation.setFromAxisAngle(Z, -x * .3 * flinch)).premultiply(this.rotation.setFromAxisAngle(X, z * .25 * flinch));
       hip.position.x += x * .04 * flinch / parentScale; hip.position.z += z * .04 * flinch / parentScale;
     }
