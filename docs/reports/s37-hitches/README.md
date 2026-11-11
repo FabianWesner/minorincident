@@ -44,3 +44,14 @@ Current unchanged game source, QA production build, headless Metal WebGL2, low, 
 | `l5-baseline-1` | 210s | 12,403 | 50.1ms | 16.8ms | 0 | Cellar → Mia → `survivor-1`; stationary (-31.1,-33.6), two drawn allies, no visible enemies, both historical event ticks covered. |
 
 Both runs had zero page errors. Logs and complete Chromium traces remain outside Git in `/private/tmp/s37-hitches/<run>/` (338,382,633 / 328,467,400 trace bytes). No game change was made: the historical >250ms failures did not recur in these first current samples. A clean current sample cannot retrospectively attribute the historical event. Repeat low/WebGL2 and high/WebGPU coverage, trace analysis, before/after/load delta and a supported attribution remain outstanding. Owned preview4937 stopped after both runs; no check left running.
+
+### First high WebGPU samples
+
+Same QA build and recovered routes, high quality, zoom1, headless Metal WebGPU, one browser per <10min reservation, shared Mac load. Backend was read from the runtime log.
+
+| Run | Duration | Post-3s samples | Max | p99 | >250ms |
+|---|---:|---:|---:|---:|---:|
+| `l8-high-baseline-1` | 180s | 10,587 | 66.6ms | 16.8ms | 0 |
+| `l5-high-baseline-1` | 210s | 12,415 | 33.4ms | 16.8ms | 0 |
+
+L8 reached `arena-lion` with lion attacks and nearby runner/armored combat; L5 reached `survivor-1` at (-30.7,-33.6), two allies and no visible enemies through both historical event windows. Zero page errors. Raw logs and traces remain in `/private/tmp/s37-hitches/<run>/`. First samples now exist for all four scene/backend combinations, but repeats and causal attribution remain incomplete. No gameplay/render change and no measured load delta yet. All owned checks finished and preview4937 stopped.
