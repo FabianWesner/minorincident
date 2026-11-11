@@ -11,6 +11,8 @@ Status: implementation committed; full browser matrix and final visual acceptanc
 
 ## Evidence so far
 
+- Current-source revalidation after the shading and tank fixes: `npm run typecheck` passed. The required `sh tools/remote/run.sh "$PWD" -- npm test` completed on runner 94.130.181.173 with exit 0: 27 files passed, 106 tests passed and 1 skipped, 150/150 registered cases, 161.9 s against the 240 s budget. This supersedes the earlier remote-runner-unavailable note; the remote job is terminal and cleaned up.
+
 - Perimeter matrix row: high WebGPU zoom 1.5 at the east edge, four-second real-input fixture run, zero page errors. Opened `/private/tmp/s43-edge-high-gpu-z15/s001-t182.jpg`; concrete base blocks, dark metal frames and hazard paint remain visible and aligned. Whole-scene draws sampled 70 then 73; this is not a matched before/after draw-count delta. Owned preview stopped. Remaining matrix rows and baseline captures are still required.
 
 - Post-fix tank repeat: identical isolated high WebGPU zoom-1.5 setup at `(4006.5,-39)`, five seconds, infected hidden. Foreground is now **false** at ticks 61 and 244 while the same tank placement lens remains active (`cover=1`, same named occluder). Opened `/private/tmp/s43-tank-fixed/s002-t303.jpg`; courier has normal shading without the gold foreground contour. Zero page errors. This directly verifies the redundant-tucked-trigger fix in this case; other backends/angles and true-cover preservation still need coverage. Owned preview stopped.
