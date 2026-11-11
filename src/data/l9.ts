@@ -104,10 +104,10 @@ export const l9SetPieceTuning = {
   patrolTicks: 840,
   pack: { types: ['infected.dog', 'infected.runner', 'infected.dog', 'infected.sprinter', 'infected.dog', 'infected.runner'], sideM: 16 },
   leaper: { count: 2, sideM: 7.5, /** crouch telegraph before the leap */ windupTicks: 30, flightTicks: 34, rangeM: 17, cooldownTicks: 240, uses: 3,
-    /** durability the clinging Alpha tears off the hull, per strike */ hullDamage: 30, strikeTicks: 90 },
+    /** durability the clinging Alpha tears off the hull, per strike (r36-l9l5: 30 -> 20, so the armour reaches the bay) */ hullDamage: 20, strikeTicks: 90 },
   thrower: { sideM: 13, windupTicks: 48, flightTicks: 54, throws: 4, intervalTicks: 80, startM: 60, stopM: 12, /** objects land this far ahead of the predicted hull */ leadM: 9,
     /** Light debris is smashed (10 durability); the concrete block (3rd throw) must be dodged and is only thrown at a fast APC (>= heavyMinSpeed). */
-    items: ['barricade', 'trash-can', 'jersey-barrier', 'barricade'] as const, heavyMinSpeed: 7, hullDamage: 30,
+    items: ['barricade', 'trash-can', 'jersey-barrier', 'barricade'] as const, heavyMinSpeed: 7, hullDamage: 20,
     /** A stopped hull is bracketed: [along, lateral] metres from the hull centre. The near ones (along +-1.2) hit and are smashed; the far ones land 6 m to the side of the road axis, where an unsmashed barricade cannot wedge the APC when it restarts. r33-l9polish: was +-3.5/1.05 along the axis (all four hit, 120 of 1000). */
     stoppedOffsetsM: [[0, 6], [-1.2, 0], [0, -6], [1.2, 0]] },
   /** Junk across the lane to plough through (light obstacles: 10 durability each, debris). */

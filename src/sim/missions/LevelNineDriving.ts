@@ -135,9 +135,10 @@ export class LevelNineDriving {
     const w = this.w, s = this.state;
     for (const handle of this.rampHandles) w.physics.removeBlocker(handle); this.rampHandles.length = 0;
     for (const [i, ramp] of cfg.ramps.entries()) {
+      // r36-l9l5: the landing block is 0.5 m high (was 1 m): a floored APC (~9.5 m/s) lands at +9..+12 m, on the block's front edge, nose-first.
       const angle = .18;
       this.rampHandles.push(w.physics.world!.createCollider(RAPIER.ColliderDesc.cuboid(6, .16, 3.3).setTranslation(ramp.x, 1.23, ramp.z).setRotation({ x: 0, y: 0, z: Math.sin(angle / 2), w: Math.cos(angle / 2) })).handle);
-      this.rampHandles.push(w.physics.addBlocker({ x: ramp.x + 12, y: .5, z: ramp.z, halfX: 3, halfY: .5, halfZ: 3.2 }));
+      this.rampHandles.push(w.physics.addBlocker({ x: ramp.x + 12, y: .25, z: ramp.z, halfX: 3, halfY: .25, halfZ: 3.2 }));
       w.events.emit({ type: 'world.blocker.changed', tick: w.tick, id: -900_900 - i, blocked: true, wall: { x: ramp.x + 6, y: 1, z: ramp.z, halfX: 12, halfY: 1, halfZ: 3.3 } });
     }
     w.interactables!.unblock(s.gateId); w.interactables!.unblock(s.bridgeGateId);
@@ -204,6 +205,8 @@ export class LevelNineDriving {
   }
   /** r32-l9fun: the APC is on a boost strip's 4 s engine boost. */
   boosting(id: number): boolean { return id === this.mission.l9?.state.carId && this.w.tick < (this.state.boostUntil ?? -1) && !this.holding(id); }
+  /** r36-l9l5: the run from the bay to the bridge head (evacuation done): heavy contacts no longer stop the hull. */
+  bridgeRun(id: number): boolean { return id === this.mission.l9?.state.carId && this.state.evacuationDone && this.mission.l9.state.phase === 'driving'; }
   holding(id: number): boolean {
     if (id !== this.mission.l9?.state.carId) return false;
     const s = this.state;
@@ -483,7 +486,7 @@ export class LevelNineDriving {
     }
     const researchAboard = !alive(research) || this.car.entity.vehicle!.passengers?.some(p => p.id === research.id && p.phase === 'seated');
     if (w.tick - s.evacuationAt >= cfg.evacuation.defendTicks && living.every(id => s.evacuated.includes(id)) && dogAboard && researchAboard) {
-      s.evacuationDone = true; this.line('L9.sam-stays'); this.rebuild(); this.signal('evacuation-complete'); this.checkpoint('bridge');
+      s.evacuationDone = true; s.boostUntil = w.tick + 420; this.line('L9.sam-stays'); this.rebuild(); this.signal('evacuation-complete'); this.checkpoint('bridge');
     }
   }
   /**

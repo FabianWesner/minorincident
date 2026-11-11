@@ -40,7 +40,7 @@ Check each item at low quality, zoom 1.5, WebGPU, with a progressed save, A/B ag
 - [ ] Q-250 (PO 10-30): starting/replaying level N (level select, continue, fresh, after a later level) offers only the weapons the story has given before or in level N.
 - [ ] Q-299 (PO 10-31): armed survivors (every L5-L10 body, slim and reverted) hold the gun in the hand, standing and walking.
 - [ ] Q-300 (PO 10-31): the corgi never fetches the L5 survivors' street weapons; no weapon appears under the courier's feet.
-- [ ] Q-302 (PO 10-31): L5 hiding places draw no ring, arrow or minimap pin (found by sound); survivor-only weapons have no yellow ring.
+- [ ] Q-302 (PO 10-31): L5 hiding places draw no ring, arrow or minimap pin (found by sound); survivor-only weapons have no yellow ring. Exception r36 (PO 'too hard ... cannot rescue my 1st survivor'): until anyone is found the off-screen arrow / HUD distance point to the first survivor on the route (Mia); no ring, no minimap pin, and Rosa, Sam, Dale stay unmarked.
 - [ ] Q-303 (PO 10-31): the L6 headlamp beam points where the head looks, also while moving one way and aiming another (WASD + mouse).
 - [ ] Q-304 (PO 10-31): seated, lying and downed survivors show no gun; no twisted torso around a rifle.
 - [ ] Q-305 (PO 10-31): L6 retreat: when everyone is through a gate, its prompt and ring stay at the gate until it is closed (E or click); the ring never walks ahead of the group.

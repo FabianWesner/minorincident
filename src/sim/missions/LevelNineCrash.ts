@@ -127,6 +127,7 @@ export class LevelNineCrash {
       s.approachTicks = Math.max(90, Math.ceil((1 + (-s.impactSpeed + Math.sqrt(s.impactSpeed ** 2 + 7 * afterLanding)) / 3.5) * 60));
       w.events.emit({ type: 'mission.signal', tick: w.tick, name: 'l9.crash-approach', actorId: s.carId });
     }
+    if (s.phase !== 'approach') this.collapseCull();
     if (s.phase !== 'crawl') this.lock();
     // The wounded crawl still belongs to the crash sequence. Keep its protection
     // after releasing the input lock, or a lingering fire can kill its one-HP courier.
@@ -235,6 +236,24 @@ export class LevelNineCrash {
           }
         }
       }
+    }
+  }
+  /**
+   * r36-l9l5 (r35-vqa: 'four infected stand next to the crawling courier for 2 minutes and do nothing'): the chasing pack ran across the
+   * deck behind the APC and reached the crawl, where the courier is invulnerable, so they stood at 1.1 m and every attack was absorbed.
+   * Root cause is the pack arriving at all: the span collapses under the APC, so from the fall on every live infected on the deck or the far
+   * bank (x past the bridge head) goes down with it into the pit (corpses stay, in the pit). The Mega Alpha's pursuit seam is never touched.
+   */
+  private collapseCull(): void {
+    const w = this.w, ai = w.infected; if (!ai) return;
+    const head = l9Course.bridge.x + 2;
+    for (const e of ai.active) {
+      if (!e.infected || e.infected.pursuit || e.hidden || e.id === this.driving.state.megaId || e.transform.x <= head) continue;
+      if (e.health.current > 0) {
+        w.combat?.damage.apply({ attackId: w.tick, actionId: 'l9.bridge-collapse', sourceId: this.state.carId, targetId: e.id, origin: e.transform, direction: { x: 1, z: 0 }, base: e.health.max * 10 + 1000, multiplier: 1, type: 'vehicle', knockback: 0, stagger: 0 });
+        if (e.health.current > 0) e.health.current = 0;
+      }
+      if (e.transform.y > -4.5) { e.transform.y = -4.8; if (e.attachedTo !== undefined) delete e.attachedTo; w.spatial.set(e.id, e.transform.x, e.transform.z); }
     }
   }
   /** Check both authored anchors against actual colliders and the whole crawl corridor. */

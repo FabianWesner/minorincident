@@ -74,17 +74,17 @@ export class L9Props extends Group {
         }
         fixed(earth, [ramp.x, 1.23 + .17, ramp.z], [11.6, .05, 3.4], .18);
         // Landing: an earth mound with a grass cap.
-        fixed(earth, [ramp.x + 12, .42, ramp.z], [6, .84, 6.4]);
-        fixed(top, [ramp.x + 12, .98, ramp.z], [6.2, .1, 6.6]);
-        for (const [dx, dz, size] of [[10.3, 3, .7], [13.2, -2.8, .6], [11.5, -3.1, .5]] as const) fixed(rubble, [ramp.x + dx, 1.1, ramp.z + dz], [size, size * .8, size], dx);
+        fixed(earth, [ramp.x + 12, .25, ramp.z], [6, .5, 6.4]);
+        fixed(top, [ramp.x + 12, .53, ramp.z], [6.2, .1, 6.6]);
+        for (const [dx, dz, size] of [[10.3, 3, .7], [13.2, -2.8, .6], [11.5, -3.1, .5]] as const) fixed(rubble, [ramp.x + dx, .62, ramp.z + dz], [size, size * .8, size], dx);
       } else if (kind === 'slab') {
         // A broken overpass span: spalled dark edges, transverse cracks and rebar sticking out of the lip.
         for (const side of [-1, 1]) fixed(rubble, [ramp.x, 1.23 + .17, ramp.z + side * 3.15], [12, .06, .5], .18);
         for (const u of [-4.2, -1.1, 2.3, 4.7]) fixed(rubble, [along(u), surface(u) + .01, ramp.z + (u > 0 ? .3 : -.4)], [.14, .04, 5.6], .18);
         for (let i = 0; i < 6; i++) fixed(rust, [along(6) + .55, surface(6) + .12 + (i % 2) * .08, ramp.z - 2.75 + i * 1.1], [1.3, .06, .06], .18 + .25 * (i % 3) / 2);
-        fixed(slab, [ramp.x + 12, .5, ramp.z], [6, 1, 6.4]);
-        for (const [dx, dz, w, h, a] of [[10.2, -1.6, 2.2, .35, .3], [13.0, 1.7, 2.4, .4, -.25], [12.1, -.2, 1.6, .3, .5]] as const) { fixed(rubble, [ramp.x + dx, 1.12 + h / 2 - .1, ramp.z + dz], [w, h, w * .8], a, dx); }
-        for (let i = 0; i < 5; i++) fixed(rust, [ramp.x + 9.8 + i * .9, 1.35 + (i % 2) * .15, ramp.z - 2.4 + i * 1.2], [1.1, .06, .06], .6 - i * .25);
+        fixed(slab, [ramp.x + 12, .25, ramp.z], [6, .5, 6.4]);
+        for (const [dx, dz, w, h, a] of [[10.2, -1.6, 2.2, .35, .3], [13.0, 1.7, 2.4, .4, -.25], [12.1, -.2, 1.6, .3, .5]] as const) { fixed(rubble, [ramp.x + dx, .62 + h / 2 - .1, ramp.z + dz], [w, h, w * .8], a, dx); }
+        for (let i = 0; i < 5; i++) fixed(rust, [ramp.x + 9.8 + i * .9, .85 + (i % 2) * .15, ramp.z - 2.4 + i * 1.2], [1.1, .06, .06], .6 - i * .25);
       } else {
         // Crushed-car pile: the surface is a patchwork of flattened roofs, wheels poke out at the sides.
         for (const u of [-4, 0, 4]) for (const [i, zc] of [-2.2, 0, 2.2].entries()) {
@@ -94,9 +94,9 @@ export class L9Props extends Group {
           fixed(rubble, [along(u) - .8, surface(u) + .05, ramp.z + zc], [.1, .04, 1.9], .18);
         }
         for (const side of [-1, 1]) for (const u of [-4.2, -1.4, 1.4, 4.2]) fixed(tyre, [along(u), surface(u) - .75, ramp.z + side * 3.28], [.85, .85, .3], .18);
-        // Landing: two layers of crushed car bodies filling the collapsed-block volume.
-        for (const [layer, y] of [[0, .27], [1, .77]] as const) for (const zc of layer ? [-1.6, 1.6] : [-2.2, 0, 2.2]) fixed(carPaint[(index + layer * 3 + Math.round(zc) + 4) % carPaint.length], [ramp.x + 12, y, ramp.z + zc], [layer ? 5.1 : 5.9, .5, layer ? 2.6 : 2.0], 0, zc * .06);
-        fixed(glass, [ramp.x + 12.2, 1.01, ramp.z - 1.6], [1.6, .03, 1.5]);
+        // Landing: one layer of crushed car bodies (r36-l9l5: the landing block is 0.5 m high so a floored APC lands on it cleanly).
+        for (const [layer, y] of [[0, .27]] as const) for (const zc of layer ? [-1.6, 1.6] : [-2.2, 0, 2.2]) fixed(carPaint[(index + layer * 3 + Math.round(zc) + 4) % carPaint.length], [ramp.x + 12, y, ramp.z + zc], [layer ? 5.1 : 5.9, .5, layer ? 2.6 : 2.0], 0, zc * .06);
+        fixed(glass, [ramp.x + 12.2, .53, ramp.z - 1.6], [1.6, .03, 1.5]);
       }
       for (const side of [-1, 1]) for (let i = 0; i < 6; i++) fixed(paint, [ramp.x - 10 + i * 1.5, .08, ramp.z + side * 3.6], [.7, .04, .2]);
       this.sign('RAMP  /  DETOUR', ramp.x - 13, ramp.z + 7, paint);
