@@ -1,3 +1,4 @@
+import { deterministicAtan2 } from '../../core/deterministicMath';
 import { actorRadius, solidLargeCorpse } from '../world/SolidRegistry';
 import { l2 } from '../../data/l2';
 import { l5 } from '../../data/l5';
@@ -160,7 +161,7 @@ export function installAgentMotion(world: SimWorld): void {
         a!.aimMoveRestUntil = world.tick + 30;
       }
       if (a && (!aiming || world.tick < (a.aimMoveRestUntil ?? 0))) delete a.aimMoveAt;
-      const heading = -Math.atan2(dz, dx), error = Math.atan2(Math.sin(heading - e.transform.yaw), Math.cos(heading - e.transform.yaw));
+      const heading = -deterministicAtan2(dz, dx), error = angleDelta(e.transform.yaw, heading);
       if (Math.abs(error) > .3) { e.transform.yaw = heading - Math.sign(error) * .3; if (e.locomotion) e.locomotion.omega = 0; }
     }
   }, SimPhase.cleanup + .6);

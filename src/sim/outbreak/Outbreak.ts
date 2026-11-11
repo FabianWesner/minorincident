@@ -1,3 +1,5 @@
+import { deterministicAtan2 } from '../../core/deterministicMath';
+import { angleDelta } from '../locomotion/MotionResponse';
 import { leastCrowdedModel, crowdAppearance, shirtTones, regularInfectedModels } from '../../data/crowdAppearance';
 import { isCorgi, storyProtected } from '../npc/storyProtection';
 import { SimPhase } from '../../core/EventBus';
@@ -293,7 +295,7 @@ export class Outbreak {
     this.world.events.emit({ type: 'civilian.state', tick: this.world.tick, id: e.id, state, until: c.until });
   }
   private face(e: EntitySnapshot, p: Vec2, rate: number): void {
-    const yaw = -Math.atan2(p.z - e.transform.z, p.x - e.transform.x), delta = Math.atan2(Math.sin(yaw - e.transform.yaw), Math.cos(yaw - e.transform.yaw));
+    const yaw = -deterministicAtan2(p.z - e.transform.z, p.x - e.transform.x), delta = angleDelta(e.transform.yaw, yaw);
     e.transform.yaw += Math.max(-rate, Math.min(rate, delta));
   }
   private dropProp(e: EntitySnapshot): void {
@@ -465,7 +467,7 @@ export class Outbreak {
   private readonly refugeOccupied: Vec2[] = [];
   /** Spread a group over clear exterior pavement; never target the door leaf or a spot beyond it. */
   private refugeSpot(e: EntitySnapshot, refuge: Refuge): Vec2 | null {
-    const nav = this.world.infected!.nav, angle = Math.atan2(e.transform.z - refuge.z, e.transform.x - refuge.x);
+    const nav = this.world.infected!.nav, angle = deterministicAtan2(e.transform.z - refuge.z, e.transform.x - refuge.x);
     // This synchronous search changes no actor. Borrow the same targets once,
     // rather than rescanning every district entity for each clear candidate.
     const neighbours = this.refugeOccupied; neighbours.length = 0;

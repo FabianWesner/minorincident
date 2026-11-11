@@ -1,3 +1,4 @@
+import { deterministicSin, deterministicCos } from '../../core/deterministicMath';
 import { cloneData } from '../../core/clone';
 import { solidLargeCorpse } from '../world/SolidRegistry';
 import { catalog as actionCatalog, mountedActions } from '../../data/actions/catalog';
@@ -1142,7 +1143,7 @@ export class InfectedSystem {
     const rng = this.l1Rng!, radius = l1v2.infected.attracted.pointRadiusM;
     brain.goalX = point.x; brain.goalZ = point.z;
     for (let k = 0; k < 6; k++) {
-      const angle = rng.next() * Math.PI * 2, r = Math.sqrt(rng.next()) * radius, x = point.x + Math.cos(angle) * r, z = point.z + Math.sin(angle) * r;
+      const angle = rng.next() * Math.PI * 2, r = Math.sqrt(rng.next()) * radius, x = point.x + deterministicCos(angle) * r, z = point.z + deterministicSin(angle) * r;
       if (this.infectedNav.clear(x, z, e.combat!.radius)) { brain.goalX = x; brain.goalZ = z; break; }
     }
     brain.mode = 'attracted'; e.infected!.state = 'attracted'; brain.hasGoal = true; brain.looking = false; brain.pauseUntil = 0; brain.distractionId = distractionId;

@@ -1,3 +1,4 @@
+import { deterministicAtan2 } from '../../core/deterministicMath';
 import type { SimWorld } from '../world/SimWorld';
 import type { DistrictLayout } from '../../levels/districts/types';
 import { buildingDoors, doorwayOf } from '../../data/buildingDoors';
@@ -134,7 +135,7 @@ export function emergeResident(world: SimWorld, house: HouseEmergence, tick: num
   const e = world.entities.get(id)!;
   if (!opts.archetype) outbreak.turnNow(e, opts.tier);
   place(world, house, e, -(opts.inside ?? emergeInsideM), opts.lateral ?? 0);
-  e.transform.yaw = -Math.atan2(house.nz, house.nx);
+  e.transform.yaw = -deterministicAtan2(house.nz, house.nx);
   let walk = (opts.inside ?? emergeInsideM) + Math.hypot(house.sx - house.x, house.sz - house.z), from: [number, number] = [house.sx, house.sz];
   for (const p of house.route) { walk += Math.hypot(p[0] - from[0], p[1] - from[1]); from = p; }
   walk /= house.speedMs ?? emergeSpeedMs;
@@ -189,7 +190,7 @@ export function walkResidents(world: SimWorld, house: HouseEmergence, tick: numb
     if (w.leg < 0) {
       const s = Math.min(end, (p.x - house.x) * house.nx + (p.z - house.z) * house.nz + step), lane = w.lane ?? 0;
       // Through the door in its lane (a double door takes two abreast), then onto the path line by the doorstep.
-      place(world, house, e, s, s <= 0 ? lane : lane * Math.max(0, 1 - s / Math.max(.5, end))); p.yaw = -Math.atan2(house.nz, house.nx);
+      place(world, house, e, s, s <= 0 ? lane : lane * Math.max(0, 1 - s / Math.max(.5, end))); p.yaw = -deterministicAtan2(house.nz, house.nx);
       if (w.branchAt !== undefined && s >= w.branchAt) w.leg = 0;
       else if (s >= end - 1e-6) w.leg = 0;
     } else if (w.leg < route.length) {
@@ -202,7 +203,7 @@ export function walkResidents(world: SimWorld, house: HouseEmergence, tick: numb
         if (w.stall >= 90) { w.leg = route.length; w.until++; continue; }
       }
       const [tx, tz] = route[w.leg], dx = tx - p.x, dz = tz - p.z, d = Math.hypot(dx, dz), m = Math.min(step, d);
-      if (d > 1e-6) { p.x += dx / d * m; p.z += dz / d * m; p.yaw = -Math.atan2(dz, dx); }
+      if (d > 1e-6) { p.x += dx / d * m; p.z += dz / d * m; p.yaw = -deterministicAtan2(dz, dx); }
       p.y = .7 + (world.districts?.groundHeight(p.x, p.z) ?? 0); world.spatial.set(e.id, p.x, p.z);
       // A shared service turn must accept a body-sized arrival: separation can keep two walkers circling its exact centre.
       if (d <= step || house.finishRoute && d <= actorRadius(e) + .2) w.leg++;

@@ -1,3 +1,4 @@
+import { deterministicSin, deterministicCos } from '../../core/deterministicMath';
 // Weather keyframes and seeded gusts adapt Bruno Simon Weather/YearCycles/Wind/Lightnings (MIT).
 import { Rng } from '../../core/Rng';
 import { weatherKinds, weatherPresets, weatherTimelines, type WeatherKey, type WeatherKind, type WeatherPreset } from '../../data/weather';
@@ -91,7 +92,7 @@ export class WeatherSystem {
       this.nextGust = tick + 180 + Math.floor(this.rng.next() * 240);
       this.gust = this.windStrength * (.5 + this.rng.next());
       const angle = .25 + (this.rng.next() - .5) * .4;
-      this.wind.x = Math.cos(angle); this.wind.z = Math.sin(angle);
+      this.wind.x = deterministicCos(angle); this.wind.z = deterministicSin(angle);
       if (this.windStrength > .1) this.world.events.emit({ type: 'weather.gust', tick, wind: { ...this.wind }, strength: this.gust });
     }
     if (this.gust > .5 && this.world.props) for (const prop of this.world.props.items) {
@@ -103,7 +104,7 @@ export class WeatherSystem {
       this.nextLightning = tick + 300 + Math.floor(this.rng.next() * 600);
       const player = this.world.entities.get(1)?.transform ?? { x: 0, z: 0 };
       const angle = this.rng.next() * Math.PI * 2, distance = 20 + this.rng.next() * 100;
-      this.strike({ x: player.x + Math.cos(angle) * distance, y: 0, z: player.z + Math.sin(angle) * distance });
+      this.strike({ x: player.x + deterministicCos(angle) * distance, y: 0, z: player.z + deterministicSin(angle) * distance });
     }
     for (let i = this.thunder.length - 1; i >= 0; i--) if (tick >= this.thunder[i].at) {
       const t = this.thunder.splice(i, 1)[0]; this.world.events.emit({ type: 'weather.thunder', tick, position: t.position, strikeTick: t.strikeTick });
@@ -137,7 +138,7 @@ export class WeatherSystem {
       if (distance < .001 || last.distance < stride) continue;
       last.distance %= stride;
       const yaw = -Math.atan2(dz, dx), lateral = last.side * (paw ? .045 : child ? .065 : .085);
-      const x = at.x + Math.sin(yaw) * lateral, z = at.z + Math.cos(yaw) * lateral;
+      const x = at.x + deterministicSin(yaw) * lateral, z = at.z + deterministicCos(yaw) * lateral;
       const footSupport = this.world.districts?.groundHeight(x, z) ?? this.world.physics.floorHeight(x, z);
       // The alternating foot may straddle a bridge edge/barrier even when the body is supported.
       if (Math.abs(footSupport - support) > .08) continue;

@@ -1,10 +1,12 @@
+import { checkSimDeterminism } from './simDeterminism';
 // Nightly performance measurement with a budget (not a per-change gate): Node sim p95 at the high and low tier caps.
 // Wall-clock budgets need a quiet machine; run via `npm run test:nightly`, never next to other heavy jobs.
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { expect, test } from 'vitest';
 import { measureHorde } from '../../tools/performance/sim';
 
-test('sim budget: p95 tick ≤ 4 ms with 200 living infected and ≤ 6 ms with 100 (low tier), no collision failures', async () => {
+test('sim determinism against Linux and budget: p95 tick ≤ 4 ms with 200 living infected and ≤ 6 ms with 100 (low tier), no collision failures', async () => {
+  checkSimDeterminism();
   const results = [];
   for (const [scenario, count, budget] of [['perf-horde-200', 200, 4], ['perf-horde-100', 100, 6]] as const) {
     const proof = await measureHorde(scenario);

@@ -1,3 +1,4 @@
+import { deterministicAtan2, deterministicAngleDelta, deterministicSin, deterministicCos } from '../core/deterministicMath';
 import { l1Pedestrians } from './npcs';
 
 /** Exterior horde roster, shared with render preloading so every combat archetype keeps its silhouette. */
@@ -410,11 +411,11 @@ export function l4Route(): { pts: RoutePoint[]; length: number } {
   const pts: RoutePoint[] = []; let s = 0;
   const push = (x: number, z: number, limit = Infinity) => {
     const last = pts[pts.length - 1];
-    if (last) { const d = Math.hypot(x - last.x, z - last.z); if (d < 1e-6) return; s += d; last.yaw = -Math.atan2(z - last.z, x - last.x); }
+    if (last) { const d = Math.hypot(x - last.x, z - last.z); if (d < 1e-6) return; s += d; last.yaw = -deterministicAtan2(z - last.z, x - last.x); }
     pts.push({ x, z, yaw: last ? last.yaw : 0, s, limit });
   };
   const line = (x0: number, z0: number, x1: number, z1: number) => { const n = Math.max(1, Math.round(Math.hypot(x1 - x0, z1 - z0) / 2)); for (let i = 0; i <= n; i++) push(x0 + (x1 - x0) * i / n, z0 + (z1 - z0) * i / n); };
-  const arc = (cx: number, cz: number, R: number, a0: number, a1: number) => { const n = 12, limit = Math.sqrt(c.lateralMs2 * R); for (let i = 1; i <= n; i++) { const a = a0 + (a1 - a0) * i / n; push(cx + Math.cos(a) * R, cz + Math.sin(a) * R, limit); } };
+  const arc = (cx: number, cz: number, R: number, a0: number, a1: number) => { const n = 12, limit = Math.sqrt(c.lateralMs2 * R); for (let i = 1; i <= n; i++) { const a = a0 + (a1 - a0) * i / n; push(cx + deterministicCos(a) * R, cz + deterministicSin(a) * R, limit); } };
   const H = Math.PI / 2;
   line(-84, zL, xC - RL, zL);
   arc(xC - RL, zL - RL, RL, H, 0);                 // left turn: east -> north
@@ -437,7 +438,7 @@ export function l4RoutePose(route: ReturnType<typeof l4Route>, s: number): { x: 
   let lo = 0, hi = pts.length - 1;
   while (hi - lo > 1) { const k = (lo + hi) >>> 1; if (pts[k].s < at) lo = k; else hi = k; }
   const a = pts[lo], b = pts[hi], f = (at - a.s) / ((b.s - a.s) || 1);
-  const delta = Math.atan2(Math.sin(b.yaw - a.yaw), Math.cos(b.yaw - a.yaw));
+  const delta = deterministicAngleDelta(a.yaw, b.yaw);
   return { x: a.x + (b.x - a.x) * f, z: a.z + (b.z - a.z) * f, yaw: a.yaw + delta * f, limit: Math.min(a.limit, b.limit) };
 }
 /**
@@ -458,9 +459,9 @@ export function l4ConvoyPose(pts: ReturnType<typeof l4Route>, at: number, index:
     const xT = Math.max(0, Math.min(1, 1 - (stop - at) / 5)), zT = Math.max(0, Math.min(1, 1 - (stop - at) / 12));
     pose.x += l4RearTruckParkOffset.x * xT * xT * (3 - 2 * xT);
     pose.z += l4RearTruckParkOffset.z * zT * zT * (3 - 2 * zT);
-    const dx = Math.cos(pose.yaw) + l4RearTruckParkOffset.x * 6 * xT * (1 - xT) / 5;
-    const dz = -Math.sin(pose.yaw) + l4RearTruckParkOffset.z * 6 * zT * (1 - zT) / 12;
-    pose.yaw = -Math.atan2(dz, dx);
+    const dx = deterministicCos(pose.yaw) + l4RearTruckParkOffset.x * 6 * xT * (1 - xT) / 5;
+    const dz = -deterministicSin(pose.yaw) + l4RearTruckParkOffset.z * 6 * zT * (1 - zT) / 12;
+    pose.yaw = -deterministicAtan2(dz, dx);
   }
   return pose;
 }

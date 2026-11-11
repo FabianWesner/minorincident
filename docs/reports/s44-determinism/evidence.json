@@ -1,0 +1,66 @@
+{
+  "matrix": {
+    "source": "Linux x86-64 Node 26; s44 final3 exact per-tick traces",
+    "runs": [
+      {
+        "level": "L8",
+        "seed": 3,
+        "quality": "low",
+        "policy": "complete",
+        "ticks": 7200,
+        "samples": 7200,
+        "sha256": "6d079765407cb433d9ab900a7dd9911284a0c40030cf6df61183c5da62bc21c3"
+      },
+      {
+        "level": "L1",
+        "seed": 3,
+        "quality": "low",
+        "policy": "complete",
+        "ticks": 1200,
+        "samples": 1200,
+        "sha256": "111315ee0840cbe649c2b0dadb8d08e78b24f28972464141d945cb1e7f3a9ea2"
+      },
+      {
+        "level": "L4",
+        "seed": 3,
+        "quality": "low",
+        "policy": "complete",
+        "ticks": 1200,
+        "samples": 1200,
+        "sha256": "89d406ae70db7e13d0a7a31425273a18f6e0c35b0c64b775e5c76c6ee0a63e29"
+      },
+      {
+        "level": "L9",
+        "seed": 3,
+        "quality": "low",
+        "policy": "complete",
+        "ticks": 1200,
+        "samples": 1200,
+        "sha256": "d8aaf1bcbaf4d7faaf4fd9fd3a540a5ecdb95a522b66acab4febc5ef41393298"
+      },
+      {
+        "level": "L10",
+        "seed": 3,
+        "quality": "low",
+        "policy": "complete",
+        "ticks": 1200,
+        "samples": 1200,
+        "sha256": "40606c9dd67f0d5fe52048728d21ff7831455c9e19ac7f83178d7d8010fdd191"
+      }
+    ]
+  },
+  "threatFlags": {
+    "L1": 0,
+    "L2": 1,
+    "L3": 1,
+    "L4": 4,
+    "L5": 1,
+    "L6": 4,
+    "L7": 6,
+    "L8": 0,
+    "L9": 0,
+    "L10": 0
+  },
+  "threatSeconds": 554.1721015,
+  "fixtureChecks": 15
+}

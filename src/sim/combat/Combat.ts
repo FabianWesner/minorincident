@@ -1,3 +1,4 @@
+import { deterministicAtan2, deterministicSin, deterministicCos } from '../../core/deterministicMath';
 import { actionResolver } from '../progression/apply';
 import type { ActionDef } from '../../data/actions/schema';
 import { ActionEffects } from './ActionEffects';
@@ -117,8 +118,8 @@ export class Combat {
     if (attack.def.category === 'ranged') {
       if (!attack.autoAim && !(attack.def.id === 'weapon.rocket-launcher' && attack.aimPoint)) this.assist.apply(source.id, source.transform, attack.aim, attack.def.range, attack.target === undefined ? attack.def.projectile?.speed : undefined);
       if (attack.def.spread && (attack.def.pellets ?? 1) === 1) {
-        const angle = Math.atan2(attack.aim.z, attack.aim.x) + (this.rng.next() - 0.5) * attack.def.spread * Math.PI / 180;
-        attack.aim.x = Math.cos(angle); attack.aim.z = Math.sin(angle);
+        const angle = deterministicAtan2(attack.aim.z, attack.aim.x) + (this.rng.next() - 0.5) * attack.def.spread * Math.PI / 180;
+        attack.aim.x = deterministicCos(angle); attack.aim.z = deterministicSin(angle);
       }
     }
     if (attack.def.category !== 'ranged') this.attackEvent(attack);
@@ -220,10 +221,10 @@ export class Combat {
       for (const target of this.query.melee(source.id, source.transform, attack.aim, def.range, def.arc, def.maxTargets, attack.inPlace, attack.target)) this.hit(attack, target, source.transform, 'melee');
     } else if ((def.pellets ?? 1) > 1) {
       this.pelletHits.clear();
-      const count = def.pellets!, angle = Math.atan2(attack.aim.z, attack.aim.x);
+      const count = def.pellets!, angle = deterministicAtan2(attack.aim.z, attack.aim.x);
       for (let i = 0; i < count; i++) {
         const direction = angle + (i / (count - 1) - 0.5) * def.spread * Math.PI / 180;
-        this.pelletDirection.x = Math.cos(direction); this.pelletDirection.y = attack.aim.y ?? 0; this.pelletDirection.z = Math.sin(direction);
+        this.pelletDirection.x = deterministicCos(direction); this.pelletDirection.y = attack.aim.y ?? 0; this.pelletDirection.z = deterministicSin(direction);
         const target = this.query.ray(source.id, { ...source.transform, y: source.transform.y + .45 }, this.pelletDirection, def.range);
         const blocked = this.environment(attack, { ...source.transform, y: source.transform.y+.45 }, this.pelletDirection, def.range, target, 1/count);
         if (target && !blocked) this.pelletHits.set(target, (this.pelletHits.get(target) ?? 0) + 1);
@@ -245,7 +246,7 @@ export class Combat {
    * sim angle atan2(z, x) falls); each infected in the radius is struck on the tick the sweep passes it. */
   private sweep(attack: Attack, source: EntitySnapshot): void {
     const def = attack.def, window = Math.max(1, attack.recoveryAt - attack.activeAt);
-    const swept = Math.PI * 2 * Math.min(1, (this.world.tick - attack.activeAt + 1) / window), start = Math.atan2(attack.aim.z, attack.aim.x);
+    const swept = Math.PI * 2 * Math.min(1, (this.world.tick - attack.activeAt + 1) / window), start = deterministicAtan2(attack.aim.z, attack.aim.x);
     // The sweep connects with the nearest few only (PO: fight a few, never the whole crowd at once).
     if (!attack.sweep) {
       const d = (e: EntitySnapshot) => Math.hypot(e.transform.x - source.transform.x, e.transform.z - source.transform.z);
@@ -255,7 +256,7 @@ export class Combat {
     for (const id of attack.sweep) {
       const target = this.world.entities.get(id);
       if (!target || attack.hit.has(id) || target.health.current <= 0) continue;
-      const angle = Math.atan2(target.transform.z - source.transform.z, target.transform.x - source.transform.x);
+      const angle = deterministicAtan2(target.transform.z - source.transform.z, target.transform.x - source.transform.x);
       if ((((start - angle) % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2) <= swept + 1e-9) this.hit(attack, target, source.transform, 'melee');
     }
   }

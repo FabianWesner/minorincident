@@ -1,3 +1,4 @@
+import { deterministicAtan2, deterministicAngleDelta } from '../../core/deterministicMath';
 import { l5 } from '../../data/l5';
 import { corpseDetour, formationBack, formationSlot } from '../missions/missionHelpers';
 import { idleEligible, looseSlotOffset, swayOffset } from './groupNature';
@@ -155,7 +156,7 @@ export function updateSurvivor(world: SimWorld, e: EntitySnapshot): boolean {
     world.npcs!.move(e, routed, speedMs, c, routed === p ? reach : 0);
   } else if (s.restAt === undefined || tick - s.restAt < 20 || !idleEligible(e)) {
     // Settled followers look around on their own (groupNature.idleLookYaw); until then face the courier.
-    const yaw = -Math.atan2(p.z - me.z, p.x - me.x), delta = Math.atan2(Math.sin(yaw - me.yaw), Math.cos(yaw - me.yaw));
+    const yaw = -deterministicAtan2(p.z - me.z, p.x - me.x), delta = deterministicAngleDelta(me.yaw, yaw);
     me.yaw += Math.max(-.1, Math.min(.1, delta));
   }
   world.spatial.set(e.id, me.x, me.z);
