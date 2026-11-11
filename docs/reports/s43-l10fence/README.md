@@ -11,6 +11,8 @@ Status: implementation committed; full browser matrix and final visual acceptanc
 
 ## Evidence so far
 
+- Nadia current-build check: eight-second real-input L8 start, low WebGL2 zoom 1, follow-marker, god mode; zero page errors. Opened `/private/tmp/s43-nadia-low-gl/s002-t250.jpg`. Nadia is inside the marker ring beside the courier; face, arms, teal clothing and headwear remain visible under the L8 night preset. This supports L8 low-tier readability only; L10 preset and daylight comparison remain pending. Owned preview stopped after the run.
+
 - Fixed the missing perimeter colors: `Materials.fromColor(..., world=true)` selected a single palette swatch and ignored the intended instance tint. The perimeter now supplies `_edgeColor` directly to the shared shaded-material graph. ESLint and QA build passed. The repeated four-second low WebGL2 zoom-1 edge run completed with zero errors; opened `/private/tmp/s43-edge-color-low-gl/s001-t188.jpg`. Dark steel, lighter concrete and a muted yellow hazard mark are now distinct under night lighting. The owned preview was stopped. Other matrix rows and gameplay pressure remain unverified.
 
 - Corrected perimeter transforms: vertical sides previously applied both swapped dimensions and a quarter-turn; braces previously rotated about Y. Pieces now use local width with side yaw, and braces rise in the fence plane. ESLint and QA build passed. A four-second headless low WebGL2 zoom-1 edge run completed with zero page errors; opened `/private/tmp/s43-edge-low-gl/s001-t187.jpg`. Concrete bases and diagonal braces now face correctly, with open ground inside the east edge. The intended instance color variation still appears uniformly pale gray and needs correction before visual acceptance. Owned preview stopped.
