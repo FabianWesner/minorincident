@@ -3,18 +3,16 @@ import { l1Pedestrians } from './npcs';
 /** Exterior horde roster, shared with render preloading so every combat archetype keeps its silhouette. */
 export const l4InfectedArchetypes = ['infected.runner', 'infected.crawler', 'infected.sprinter', 'infected.riot', 'infected.firefighter', 'infected.hazmat', 'infected.brute', 'infected.armored', 'infected.butcher'] as const;
 /** Already-infected arrivals: suit, fatigues and the five skinned civilian bodies with the infected material. */
-/** PO 11-10 ("in the army level there are tons of them"): brute, armored and butcher were a third of every arrival draw. This share of
- * heavy draws is replaced by an ordinary type (runner, sprinter, crawler, firefighter, ...), leaving each heavy a readable set piece. */
+/** PO 11-10 ("in the army level there are tons of them"): brute, armored and butcher were a third of every arrival draw. Thinned at the source:
+ * an arrival draw offers the six ordinary types plus one rotating heavy (1 of 7 = 14 % of an even draw) and, every third arrival, a second
+ * one (2 of 8), so a few set-piece pairs remain and all three heavies still appear. Least-represented-first, no gameplay RNG, no stat,
+ * count or wave-size change. */
 export const l4HeavyArchetypes = ['infected.brute', 'infected.armored', 'infected.butcher'] as const;
-export const l4HeavyReplaceShare = .6;
-/** Arrival draws before this index (the opening war waves and the first breach cohort) keep their original roster so the first contact timing is unchanged. */
-export const l4HeavyThinFrom = 0;
-/** Seconds after a breach opens during which arrivals keep the authored roster (the breach cohorts press the courier; first-contact audit). */
-export const l4HeavyBreachWindowS = 30;
-/** Level seconds before which arrivals keep the authored roster (war-0 and war-1 are audited for first contact). */
-export const l4HeavyThinFromS = 60;
-/** Stand-ins for a replaced heavy: fast, ready-to-attack types, so a wave still reaches the line when it did (crawlers/hazmat delay the first attack). */
-export const l4HeavyStandIns = ['infected.runner', 'infected.sprinter', 'infected.firefighter'] as const;
+const l4OrdinaryArchetypes = l4InfectedArchetypes.filter(a => !(l4HeavyArchetypes as readonly string[]).includes(a));
+export function l4ArrivalRoster(index: number): readonly string[] {
+  const h = Math.floor(Math.abs(index) / 3) % 3;
+  return index % 3 === 2 ? [...l4OrdinaryArchetypes, l4HeavyArchetypes[h], l4HeavyArchetypes[(h + 1) % 3]] : [...l4OrdinaryArchetypes, l4HeavyArchetypes[h]];
+}
 export const l4InfectedLooks = ['inf.common-worker', 'npc.national-guard', ...l1Pedestrians.models] as const;
 /** Two registered responder bodies share the same firefighter combat role. */
 export const l4FirefighterLooks = ['infected.firefighter', 'npc.firefighter-alive'] as const;
