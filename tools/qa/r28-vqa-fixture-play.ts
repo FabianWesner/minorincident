@@ -46,7 +46,9 @@ try {
   await page.goto(`${origin}/?test=poses&testApi=1&scenelab=1&loadProfile=2&${values.backend === 'webgpu' ? '' : 'renderer=webgl&'}dpr=1&audio=muted&quality=${values.quality}`);
   await page.waitForFunction(() => !!window.__SS__, null, { timeout: 180000 });
   await page.evaluate(async q => { await window.__SS__!.ready; window.__SS__!.debug.figureJoints(true); window.__SS__!.settings.set({ quality: q as 'low' }); }, values.quality!);
+  const loadStarted = Date.now();
   const state = fixture ? await loadFixtureInPage(page, fixture) : await page.evaluate(async ([lvl, cp]) => { const a = window.__SS__!; await a.loadLevel(lvl, { seed: 1, checkpoint: cp || undefined }); a.pause(); await a.step(60); const p = a.getEntity(1)!; return { level: lvl, checkpoint: a.missions.state()?.checkpoint, player: { x: p.transform.x, z: p.transform.z } }; }, [direct![1], direct![2] ?? ''] as const);
+  log({ loadWallMs: Date.now() - loadStarted, loadTiming: await page.evaluate(() => window.__SS__!.perf().loadTiming) });
   const backend = await page.evaluate(() => window.__SS__!.getState().render.backend);
   log({ fixture: fixture?.label ?? name, state, backend, quality: values.quality, zoom });
   // Explicit fixture setup (logged), e.g. lower a boss's HP so real shots finish it: --setup "<js using a=__SS__, g=game>".

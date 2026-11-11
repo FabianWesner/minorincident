@@ -55,3 +55,9 @@ Same QA build and recovered routes, high quality, zoom1, headless Metal WebGPU, 
 | `l5-high-baseline-1` | 210s | 12,415 | 33.4ms | 16.8ms | 0 |
 
 L8 reached `arena-lion` with lion attacks and nearby runner/armored combat; L5 reached `survivor-1` at (-30.7,-33.6), two allies and no visible enemies through both historical event windows. Zero page errors. Raw logs and traces remain in `/private/tmp/s37-hitches/<run>/`. First samples now exist for all four scene/backend combinations, but repeats and causal attribution remain incomplete. No gameplay/render change and no measured load delta yet. All owned checks finished and preview4937 stopped.
+
+### Trace inspection and load clock
+
+`trace-summary.json` records maxima from all duration events in the four saved traces. Major GC maxima are 30.2–36.5ms and minor GC maxima 5.1–7.2ms. These traces do not reproduce a >250ms gameplay frame and therefore do not establish the historical cause. Maxima cover the complete diagnostic trace, including pre-play setup; they are not post-3s timing gates. CPU profiler startup itself takes192.6–307.7ms before the play collector starts, illustrating why setup/trace overhead cannot be assigned to the old in-play events.
+
+The runner now logs `loadWallMs` around fixture/direct level setup and the engine's `loadTiming` separately. Fixture setup includes checkpoint restoration and the existing paused setup steps; direct setup includes its existing60ticks. Compare like setup paths across repeats, and use engine loadTiming to distinguish engine load from harness preparation. No measured load-time delta is claimed yet.
