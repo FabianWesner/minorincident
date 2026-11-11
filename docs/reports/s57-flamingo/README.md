@@ -1,6 +1,6 @@
 # S57 — flamingo gait and motion QA
 
-Final flight-transition validation is running; this report records the current implementation and measured evidence. Historical investigations and superseded results are preserved in [history.md](history.md).
+**Goal met and verified.** Flamingos walk/run with planted feet, living arena flocks remain separated, and the persistent motion gate passes. Historical investigations and superseded results are preserved in [history.md](history.md).
 
 ## Changes
 
@@ -40,8 +40,8 @@ Existing scene criteria were extended to correct missing foot-slide acceptance r
 
 - Typecheck: passed.
 - Render-contract tests: 14/14 passed, including contact, incomplete aerial/transition traces and finite clip controls.
-- Remote isolated `npm test`: previous final-grounded-source run passed within the unchanged 150-case budget, 181.6 s / 240 s. Repeating after flight smoothing.
-- `SCENE_PORT=4958 npm run scene:gate`: previous final-grounded-source run passed **87/87**, zero known failures or missing rows. Repeating after flight smoothing.
-- Lint and the final repeated suites: running; final receipts will replace this status after termination.
+- Remote `sh tools/remote/run.sh "$PWD" -- bash tools/remote/timing-isolated.sh --whole-run npm test`: **passed**, exit 0, 106 passed / 1 skipped, **181.9 s / 240 s**, collected **150/150** cases. The documented wrapper reserves both runner slots for timing; plain concurrent runs previously timed out. No budgets or test limits changed.
+- `SCENE_PORT=4958 npm run scene:gate`: **87/87 passed**, exit 0, zero known failures or missing rows, **14.0 min** after flight smoothing. [Full result](final-scene-gate.md); [motion values and assertions](final-motion-gate.json).
+- Lint: passed. Runtime source validated: `7a78c10d`; subsequent commits contain report artifacts only. [Remote test receipt](final-unit.txt).
 
 All browser captures use the headless lock/pool on port 4958. No push, deployment or merge performed.

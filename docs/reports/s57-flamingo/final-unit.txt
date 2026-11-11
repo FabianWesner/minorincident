@@ -1,0 +1,10 @@
+Command: sh tools/remote/run.sh "$PWD" -- bash tools/remote/timing-isolated.sh --whole-run npm test
+Runtime source: 7a78c10d
+
+[runner] both slots held for the complete command
+[test-budget] 150/150 test cases ({"vitest":129,"e2e":9,"invariantsBrowser":12}), 44/45 files
+ Test Files  27 passed (27)
+      Tests  106 passed | 1 skipped (107)
+   Duration  179.05s (tests 94%, transform 3%, import 2%)
+[test-budget] test: 181.9 s (budget 240 s)
+[remote] done exit=0 (runner 94.130.181.173, sync 57s, remote total 655s)
