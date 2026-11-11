@@ -9,7 +9,7 @@
 // Movement: WASD toward the next --route point (screen-relative, as the player sees it), then toward the objective marker
 // (--follow-marker) or the nearest enemy. Combat: mouse over the nearest drawn enemy's feet + attack while it is in range.
 // Logs (log.jsonl): objective/tracker text, HUD bars (APC armor), enemies (kind, hp), frames > 100 ms with tick.
-import { mkdirSync, appendFileSync, mkdtempSync, existsSync, writeFileSync } from 'node:fs';
+import { mkdirSync, appendFileSync, mkdtempSync, existsSync, writeFileSync, openSync, closeSync } from 'node:fs';
 import { tmpdir, loadavg } from 'node:os';
 import { resolve } from 'node:path';
 import { parseArgs } from 'node:util';
@@ -203,10 +203,16 @@ try {
     await trace.send('Tracing.end');
     const { stream, dataLossOccurred } = await completed;
     if (!stream) throw new Error('Chromium trace completed without a readable stream');
-    let data = '', eof = false;
-    while (!eof) { const chunk = await trace.send('IO.read', { handle: stream }); data += chunk.data; eof = chunk.eof; }
+    let bytes = 0, eof = false;
+    const file = openSync(`${out}/trace.json`, 'w');
+    try {
+      while (!eof) {
+        const chunk = await trace.send('IO.read', { handle: stream });
+        const data = Buffer.from(chunk.data, chunk.base64Encoded ? 'base64' : 'utf8');
+        writeFileSync(file, data); bytes += data.length; eof = chunk.eof;
+      }
+    } finally { closeSync(file); }
     await trace.send('IO.close', { handle: stream });
-    writeFileSync(`${out}/trace.json`, data);
-    log({ trace: `${out}/trace.json`, bytes: Buffer.byteLength(data), dataLossOccurred });
+    log({ trace: `${out}/trace.json`, bytes, dataLossOccurred });
   }
 } finally { await context.close(); }

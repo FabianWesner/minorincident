@@ -125,3 +125,9 @@ Observed setup delta(off−on)−25ms; no runtime load code changed. Higher/shar
 `capture-off-gap.json` retains exact marker PID3396/tid14887572 at230473130295us (tick7281,1116.7ms interval,elapsed121365ms) and neighboring measured-renderer tasks. The largest duration task in its preceding1200ms window is18.073ms; callbacks near−1146ms last8.287ms and near−18.131ms last18.073ms. Thus this screenshot-free failure is also a frame-dispatch gap, not a matching long game-JS task. Exclusive controls remain50ms max. The specific source of delayed dispatch (browser/compositor/GPU/OS) is still unresolved.
 
 Runner now supports `--trace-scheduling`, adding toplevel/gpu/viz/cc events to the otherwise narrower trace and retaining the same data-loss check. Use it with `--no-captures` for the next shared-load failing reproduction; this is diagnostic instrumentation only. No runtime prewarm/content/AI/stat change has been made, because captured failures have not identified such work as the cause. Historical r35 attribution remains indirect. Goal is not complete.
+
+### Scheduling diagnostic1 — export failure retained
+
+`scheduling-1.json` retains completed180s screenshot-free high/WebGPU frame window:10,605samples after3s,max50ms,p99 16.8ms,zero>250ms,page errors0. It did not reproduce the dispatch gap. Adding browser/GPU/compositor/task categories exceeded Node's maximum string length during export (`RangeError: Invalid string length`); no usable trace was written. Command exited1 and is not represented as a successful trace capture.
+
+Runner now writes each CDP stream chunk directly to an open file and counts bytes, decoding base64 chunks if returned. This removes the whole-trace string allocation/length limit while retaining Chromium data-loss logging. Next scheduling reproduction must still demonstrate a complete export before attribution. Owned browser command terminal; preview4937 stopped. Runtime game unchanged; objective remains incomplete.

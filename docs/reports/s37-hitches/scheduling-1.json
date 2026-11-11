@@ -1,0 +1,46 @@
+{
+  "run": "l8-scheduling-1",
+  "exportFailure": "RangeError: Invalid string length; trace not written",
+  "load": [
+    {
+      "wall": "07:25:43",
+      "epochMs": 1794381943563,
+      "hostLoad": [
+        3.4365234375,
+        5.93896484375,
+        6.77099609375
+      ],
+      "loadWallMs": 5738,
+      "loadTiming": {
+        "dataMs": 14.200000017881393,
+        "simMs": 134.2999999821186,
+        "viewMs": 3086.300000011921
+      }
+    }
+  ],
+  "summary": [
+    {
+      "wall": "07:28:43",
+      "epochMs": 1794382123710,
+      "hostLoad": [
+        3.7626953125,
+        4.9970703125,
+        6.2099609375
+      ],
+      "end": true,
+      "frames": [],
+      "performanceSummary": {
+        "excludedInitialMs": 3000,
+        "samples": 10605,
+        "maxMs": 50,
+        "p99Ms": 16.8,
+        "over250": []
+      },
+      "errors": []
+    }
+  ],
+  "hostLoad1Range": [
+    2.97265625,
+    4.6494140625
+  ]
+}
