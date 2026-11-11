@@ -51,7 +51,11 @@ export function openTransportCab(model: Object3D, def: VehicleDef): void {
   // its replacement panel opaque and add glazing at the front so the driver
   // remains readable through the windshield.
   roofGeometry.setAttribute('cabOpacity', new BufferAttribute(new Float32Array(count).fill(apc ? 1 : .22), 1));
-  const roof = new Mesh(roofGeometry, doorMaterial); roof.name = 'transportRoof'; roof.userData.transportCabPart = true; model.add(roof);
+  // Armor must populate depth before transparent fire and glazing. An opacity
+  // of one on the shared glass material still left the roof without depth writes.
+  const roofMaterial = apc ? doorMaterial.clone() : doorMaterial;
+  if (apc) { roofMaterial.transparent = false; roofMaterial.depthWrite = true; }
+  const roof = new Mesh(roofGeometry, roofMaterial); roof.name = 'transportRoof'; roof.userData.transportCabPart = true; model.add(roof);
   if (apc) {
     // A short, steep windscreen meets the full opaque cab roof. The former
     // shallow pane across most of the cab read as an open top at game zoom.

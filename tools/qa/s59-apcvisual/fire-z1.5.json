@@ -1,0 +1,82 @@
+{
+  "name": "s59-apc-fire-z1.5",
+  "seed": 31,
+  "ground": "asphalt",
+  "size": 40,
+  "time": "L9-crossing",
+  "dof": false,
+  "vehicles": [
+    {
+      "id": "apc",
+      "asset": "vehicle.military-apc",
+      "at": [
+        0,
+        0
+      ],
+      "health": 400,
+      "floor": true,
+      "driven": true
+    }
+  ],
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0.71,
+        2.025
+      ],
+      "yaw": 90
+    },
+    {
+      "id": "infected",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        1,
+        -2.3
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "apc",
+    "zoom": 1.5
+  },
+  "frames": 120,
+  "shots": [
+    30,
+    60,
+    90,
+    120
+  ],
+  "script": [
+    {
+      "frame": 1,
+      "effect": {
+        "fire": [
+          0.8,
+          -0.5
+        ],
+        "radius": 0.8,
+        "duration": 60
+      }
+    },
+    {
+      "frame": 1,
+      "effect": {
+        "fire": [
+          1,
+          -2.3
+        ],
+        "radius": 0.6,
+        "duration": 60
+      }
+    }
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300
+  }
+}

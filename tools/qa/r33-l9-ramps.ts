@@ -16,7 +16,29 @@ const errors: string[] = [];
 page.on('pageerror', e => errors.push(e.message));
 const where: Record<string, unknown> = {};
 const shoot = async (name: string, only?: number[]) => {
-  where[name] = await page.evaluate(() => { const s = window.__SS__!.getState(); const p = s.player!.transform; return { x: +p.x.toFixed(1), y: +p.y.toFixed(2), z: +p.z.toFixed(1) }; });
+  if (name === 'overpass-air') where.rackInterpolation = await page.evaluate(async () => {
+    const modulePath = '/node_modules/three/build/three.webgpu.js';
+    const { Matrix4 } = await import(modulePath);
+    const game = (window.__SCENE__ as unknown as { game: Game }).game;
+    const vehicles = game.view.labProbes().vehicles!;
+    const course = game.view.scene.getObjectByName('l9-driving-course')!;
+    const rack = Object.getOwnPropertyDescriptor(course, 'rack')!.value;
+    const records = Object.getOwnPropertyDescriptor(vehicles, 'records')!.value;
+    const record = records.get(game.world.missions!.l9!.state.carId);
+    const rows = [];
+    for (const alpha of [0, .25, .5, .75, 1]) {
+      vehicles.update(alpha); Object.getPrototypeOf(course).update.call(course, alpha);
+      record.parent.updateWorldMatrix(true, true); rack.updateWorldMatrix(true, true);
+      const local = new Matrix4().copy(record.parent.matrixWorld).invert().multiply(rack.matrixWorld);
+      rows.push({ alpha, chassisLocalMatrix: local.toArray() });
+    }
+    vehicles.update(1); Object.getPrototypeOf(course).update.call(course, 1);
+    return rows;
+  });
+  where[name] = await page.evaluate(() => { const s = window.__SS__!.getState(); const p = s.player!.transform; const game = (window.__SCENE__ as unknown as { game: Game }).game;
+    const car = game.world.vehicles!.cars.get(game.world.missions!.l9!.state.carId)!;
+    const rendered = game.view.labProbes().vehicles;
+    return { x: +p.x.toFixed(1), y: +p.y.toFixed(2), z: +p.z.toFixed(1), physicsWheels: car.physics.wheels, rendered: rendered?.snapshot() }; });
   for (const zoom of only ?? zooms) {
     await page.evaluate(async zoom => {
       const game = (window.__SCENE__ as unknown as { game: Game }).game, view = game.view.view;
@@ -24,6 +46,18 @@ const shoot = async (name: string, only?: number[]) => {
       await window.__SS__!.step(1); window.__SS__!.vfx.stepRender(1 / 30); await window.__SS__!.screenshotReady();
     }, zoom);
     await page.screenshot({ path: `${out}/${name}-z${zoom}.png` });
+    if (name === 'overpass-static' && zoom === 1) where.roofPicks = await page.evaluate(async () => {
+      const modulePath = '/node_modules/three/build/three.webgpu.js';
+      const { Raycaster, Vector2 } = await import(modulePath);
+      const game = (window.__SCENE__ as unknown as { game: Game }).game;
+      const rows = [];
+      for (let y = 175; y <= 225; y += 5) for (let x = 500; x <= 595; x += 5) {
+        const ray = new Raycaster(); ray.setFromCamera(new Vector2(x / 640 - 1, 1 - y / 360), game.view.view.camera);
+        const hit = ray.intersectObject(game.view.scene, true).find((h: { object: { visible: boolean } }) => h.object.visible);
+        if (hit) { const names = []; for (let n = hit.object; n; n = n.parent) names.push(n.name || n.type); rows.push({ x, y, names, point: hit.point.toArray() }); }
+      }
+      return rows;
+    });
   }
 };
 const place = async (x: number, z: number, yaw = 0) => {
@@ -38,7 +72,7 @@ const place = async (x: number, z: number, yaw = 0) => {
 try {
   await page.goto(`${origin}/?test=1&scenelab=1&renderer=${renderer}&quality=${quality}&audio=muted&dpr=1`);
   await page.waitForFunction(() => !!window.__SS__);
-  await page.evaluate(async q => { const a = window.__SS__!; await a.ready; a.pause(); a.settings.set({ quality: q }); await a.loadLevel('L9', { seed: 31 }); a.pause(); }, quality as 'low' | 'high');
+  await page.evaluate(async q => { const a = window.__SS__!; await a.ready; a.pause(); a.settings.set({ quality: q }); await a.loadLevel('L9', { seed: 31 }); a.pause(); a.settings.set({ timeOfDay: 'L9-crossing' }); }, quality as 'low' | 'high');
   const begin = page.getByRole('button', { name: 'Begin mission' });
   if (await begin.isVisible().catch(() => false)) await begin.click();
   await page.evaluate(() => { window.__SS__!.pause(); document.body.classList.add('ui-hidden'); });
