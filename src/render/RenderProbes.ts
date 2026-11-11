@@ -145,11 +145,14 @@ export class RenderProbes {
             const source = (Array.isArray(child.material) ? child.material[0] : child.material) as PaletteMaterial;
             let infected = false;
             for (let parent = child.parent; parent; parent = parent.parent) if (parent === t.crowd) { infected = true; break; }
+            infected = infected && child.geometry.hasAttribute('_parts');
+            const civilian = child.geometry.hasAttribute('_parts') && child.geometry.hasAttribute('_overlay') && !infected;
+            const maskColour = civilian ? attribute('_overlay', 'vec4').y.mod(2).greaterThan(.01).select(color('#ff00ff').rgb, color('#000000').rgb) : color(infected ? '#ff00ff' : '#000000').rgb;
             let masks = this.infectedIdMasks.get(source);
             if (!masks) { masks = []; this.infectedIdMasks.set(source, masks); }
-            const index = infected ? 1 : 0;
+            const index = civilian ? 2 : infected ? 1 : 0;
             masks[index] ??= new MeshBasicNodeMaterial({ ...stencilState(source), color: infected ? '#ff00ff' : '#000000', side: source.side, depthTest: source.depthTest, depthWrite: source.depthWrite, transparent: source.transparent, opacity: source.opacity, alphaTest: source.alphaTest, alphaToCoverage: source.alphaToCoverage, opacityNode: source.opacityNode, positionNode: source.positionNode, maskNode: source.maskNode, depthNode: source.depthNode });
-            if (source instanceof PaletteMaterial && !masks[index].outputNode) masks[index].outputNode = source.probeMaskOutput(color(infected ? '#ff00ff' : '#000000').rgb);
+            if (source instanceof PaletteMaterial && !masks[index].outputNode) masks[index].outputNode = source.probeMaskOutput(maskColour);
             child.material = masks[index];
           } else {
             const skyline = this.idPass === 'skyline';
