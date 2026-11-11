@@ -378,6 +378,8 @@ export const l4CollapseGroups: readonly (readonly [number, number, number, numbe
   // 'heavy': heavies + riot/firefighter, the street holds them in the open crossing between the block fronts;
   // 'alpha': the first body is an Alpha, escorted by the same heavy-rich mix.
   [-48, -39, 5, 0, 'heavy'], [-66, -40.2, 4, 0, 'alpha'], [48.5, -14, 5, 0, 'heavy'],
+  // r41-l4chase (r38-vqa P2: "L4 north street can be outrun ... sprinting gets her from the plaza exit to the cellar in 18 s"): a fourth fight stands in the street in front of the cellar approach (the door is at (-79.3, -45.3)), so a sprinting courier meets a held choke at the end of the run and must fight or take hits. Index 21 is stable.
+  [-74, -40.4, 4, 0, 'heavy'],
 ];
 /** Soldier pockets of the collapse (hold, engaged) with the infected that rush them, along the two routes. */
 export const l4Pockets: readonly { at: P[]; foes: P }[] = [
