@@ -117,3 +117,7 @@ Browser QA needed: inspect the butcher pair near (11,28)/(13.5,29.5), confirming
 ## L7 Alpha cohort qualification
 
 Wide records now retain native L7 pack IDs. The audit requires all five authored Alpha slots: opening pack 701, street packs 702 and 704, and two final-corridor slots in pack 700. The isolated native run completes and exits zero with every slot observed, all five spawn origins pathable, and no narrow openings. Typecheck and tool lint passed. Ordinary L7 cohort members are runners and do not add other requested wide roles.
+
+## L4 explicit heavy/Alpha source coverage
+
+Added source coverage requirements for all eight scheduled Alpha anchors and all four explicitly heavy/Alpha collapse encounter homes. The isolated high-tier native run completed with every required source observed: all eight anchors and homes (-48,-39), (-66,-40.2), (48.5,-14), (-74,-40.4). Its 39 recorded wide bodies all have spawn-origin paths, with no narrow openings. Typecheck and tool lint passed. Ordinary war/collapse wave role rotation remains captured by runtime census and existing nightly wave ledgers; this source gate specifically closes the explicit heavy/Alpha encounter coverage claim.

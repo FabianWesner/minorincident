@@ -8,6 +8,8 @@ import { cureEncounters, curePaceEncounters, cureEncounterSlots, cureEncounterSp
 import { LevelNineSetPieces } from '../../src/sim/missions/LevelNineSetPieces';
 import { crossing } from '../../src/levels/L9/district';
 import { followFrustum } from '../sim-runner/l3Bots';
+import { l4CollapseGroups } from '../../src/data/l4';
+import { l4AlphaEmergence } from '../../src/levels/L4/layout';
 import { l7Encounters } from '../../src/data/l7';
 import { l5Wanderers } from '../../src/data/l5';
 import { l6Entries, l6Doors } from '../../src/data/l6';
@@ -175,6 +177,18 @@ for (const { level, l9Route, l9Detour, street } of streetScenarios) {
         const expected = l3.density.alphas.map((_, index) => `route-alpha-${index}`);
         const admitted = world.missions!.state.l3?.alphaAt ?? [];
         const observed = expected.filter((_, index) => admitted[index] > 0);
+        coverage = { expected, observed, missing: expected.filter(id => !observed.includes(id)) };
+      }
+      if (level === 'L4') {
+        const state = world.missions!.state.l4!;
+        const expected = l4AlphaEmergence.map(entry => `alpha/${entry.anchor}`);
+        const observed = state.alphaAnchors.map(anchor => `alpha/${anchor}`);
+        for (const [x, z, , , kind] of l4CollapseGroups) {
+          if (!kind) continue;
+          const id = `collapse/${x},${z}`;
+          expected.push(id);
+          if (state.pendingDoor.some(entry => entry.home.x === x && entry.home.z === z && spawns.some(body => body.id === entry.id))) observed.push(id);
+        }
         coverage = { expected, observed, missing: expected.filter(id => !observed.includes(id)) };
       }
       if (level === 'L5') {
