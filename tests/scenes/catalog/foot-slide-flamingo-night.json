@@ -51,9 +51,10 @@
     }
   ],
   "camera": {
-    "mode": "follow",
-    "actor": "bird",
-    "zoom": 1.5
+    "mode": "close",
+    "target": "bird",
+    "radius": 5.5,
+    "azimuth": 45
   },
   "frames": 360,
   "shots": [
