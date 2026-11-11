@@ -586,8 +586,8 @@ export class Vehicles {
     const actor = this.world.entities.get(target.id), special = this.world.scenario === 'L9' && source === 'contact';
     const heavy = special && ['infected.brute', 'infected.armored', 'infected.riot', 'infected.elephant'].includes(actor?.archetype ?? '');
     const bloated = special && actor?.archetype === 'infected.bloated';
-    const amount = source === 'attack' ? apcDurability.attackDamage : heavy ? actor?.archetype === 'infected.elephant' ? 80 : 40 : bloated ? 60 : special ? apcFloor.l9LightContact : apcDurability.contactDamage;
-    this.damage(car.entity.id, amount);
+    const amount = source === 'attack' ? apcDurability.attackDamage : heavy ? actor?.archetype === 'infected.elephant' ? 80 : 40 : bloated ? 60 : apcDurability.contactDamage;
+    this.damage(car.entity.id, this.world.scenario === 'L9' && source !== 'obstacle' ? Math.round(amount * apcFloor.l9IntakeShare) : amount);
     const state = car.entity.vehicle!;
     // r36-l9l5: on the bridge run (evacuation done) heavies cost durability but never stop the hull, so the approach cannot become a stall wall.
     if (heavy && actor!.health.current > 0 && !this.world.missions?.l9?.driving.bridgeRun(car.entity.id) && car.physics.speed >= apcDurability.heavyStallMinSpeed && this.world.tick >= (state.impactStallUntil ?? -Infinity) + apcDurability.heavyStallGraceTicks) {
