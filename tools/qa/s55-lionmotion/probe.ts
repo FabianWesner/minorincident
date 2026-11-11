@@ -1,7 +1,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { SceneSession, readSpec, stopServer, writeJson } from '../../scenelab/session';
 const out = process.env.MOTION_OUT ?? 'test-results/s55-lionmotion/probe';
-const allSpecies = ['lion', 'lioness', 'zebra', 'gorilla', 'elephant', 'flamingo'] as const;
+const allSpecies = ['lion', 'lioness', 'zebra', 'gorilla', 'elephant', 'flamingo', 'monkey'] as const;
 const speciesList = process.env.MOTION_CATS ? allSpecies.slice(0, 2) : allSpecies;
 mkdirSync(out, { recursive: true });
 const session = new SceneSession({ backend: process.env.MOTION_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2', tier: process.env.MOTION_TIER === 'low' ? 'low' : 'high', viewport: { width: 960, height: 540 } });

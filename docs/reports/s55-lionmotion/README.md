@@ -321,3 +321,15 @@ now measures pelvis maxima 0.8333 cm (lion), 0.5568 cm (lioness), and paw maxima
 10.336/14.088 cm. Raw evidence is under `no-animal-wall-lean/`. Removing an
 inappropriate humanoid layer is retained, but these paw maxima still need
 continuity/visual assessment before acceptance.
+
+## Seven-species classified-input probe
+
+Fixed the Scene Lab animal validator's missing monkey entry (already supported
+by ZooSpecies and the spawn implementation), and included monkey in the probe.
+Completed 900 controlled frames per animal, 25.9833 m travel each. Reported
+maximum contact slide in cm: lion 15.3, lioness 10.9, zebra 18.0, gorilla 7.0,
+elephant 3.6; flamingo/monkey had no measured planted contacts. No measured sole
+penetration. Drawn-frame counts: 845, 883, 900, 900, 900, 666, 159 respectively.
+Thus this wide framing does not prove the full motion interval for every animal;
+monkey especially needs a centered capture. Raw results: `zoo-classified/`.
+These measurements expose remaining contact quality work and are not final gates.
