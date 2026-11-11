@@ -1,6 +1,6 @@
 import { megaAlpha } from '../../data/megaAlpha';
 import { insideCureHangar } from '../../data/l10Story';
-import { alphaDamageMultiplier, riotShieldResponse } from '../../data/infected';
+import { alphaDamageMultiplier, infectedDef, riotShieldResponse } from '../../data/infected';
 import { cureCanKill, storyProtected } from '../npc/storyProtection';
 import { Status } from './Status';
 import { l1v2 } from '../../data/l1v2';
@@ -161,6 +161,21 @@ export class Damage {
       return 0;
     }
     if (hit.type !== 'explosive' && hit.type !== 'status' && target.faction === source.faction) return 0;
+    // Light firearm hits still produce the one-frame visual reaction below, but
+    // must not repeatedly cancel an attack cycle. Heavies and Alphas get a
+    // longer shared poise window; ordinary infected can flinch at most once
+    // every 0.8 s. Their final half-windup is committed even on the first hit.
+    const brain = target.infected;
+    const lightFirearmHit = (hit.type === 'bullet' || hit.type === 'projectile') &&
+      hit.actionId !== 'weapon.shotgun' && hit.actionId !== 'weapon.rocket-launcher';
+    if (brain && lightFirearmHit && hit.stagger > 0 && !brain.pursuit && !brain.arenaBoss) {
+      const heavy = target.archetype === 'infected.alpha' || ['infected.brute', 'infected.butcher', 'infected.armored', 'infected.armoured-football', 'infected.bloated', 'infected.screamer'].includes(target.archetype ?? '');
+      const attack = brain.state === 'attack' || !!brain.specialAttack && brain.specialAttack.stage === 'telegraph';
+      const committed = brain.state === 'attack' && brain.until - this.world.tick <= Math.ceil(infectedDef(target.archetype ?? '').windup * 30);
+      if (attack && (heavy || committed)) hit = { ...hit, stagger: 0, knockback: 0, knockdown: false, knockdownTicks: 0 };
+      else if (this.world.tick < (brain.staggerReady ?? 0)) hit = { ...hit, stagger: 0, knockback: 0, knockdown: false, knockdownTicks: 0 };
+      else brain.staggerReady = this.world.tick + (heavy ? 90 : 48);
+    }
     const alphaSoldierHit = source.archetype === 'infected.alpha' && target.civilian?.ally?.role === 'soldier';
     if (target.civilian && !alphaSoldierHit && !hit.knockdownTicks && !(hit.stagger > 0 && hit.actionId.startsWith('infected.'))) { this.world.npcs?.civilians.hit(target, hit.type); if (hit.type === 'explosive' && hit.knockback > 0) this.world.npcs?.moveStep(target, hit.direction.x * hit.knockback, hit.direction.z * hit.knockback); return 0; }
     if (target.companion) { this.world.npcs?.companion.hit(target, hit.base * hit.multiplier); return 0; }
