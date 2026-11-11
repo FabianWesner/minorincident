@@ -535,3 +535,15 @@ courier locomotion/turns, companion corgi and pet-dog rows, on both render
 backends/tiers represented by the gate. Log: `final-scene-gate.log` and canonical
 `test-results/scene-gate/` receipts. No source changes occurred during the run.
 This supersedes the earlier intentionally stopped partial gate.
+
+## Repeated-render time correction
+
+The four final-fixture backend/tier runs completed, but readiness redraws exposed
+larger paw maxima (27.88/39.30 cm) in the captured interval. Found that crowd
+PawContacts advanced catch-up/support state by a hard-coded 1/60 s on every
+render, including redraws at the same render timestamp. CrowdLocomotion now
+passes measured elapsed render time, zero for same-time redraws, capped at
+0.1 s. A completed readiness-enabled fixture repeat measures local paw maxima
+7.473/8.547 cm and pelvis 0.852/1.058 cm. This is a new source correction;
+previous passing full tests/gate predate it and must be revalidated. Raw runs:
+`fixture-final-*` before this correction, `fixture-elapsed-time/` after.
