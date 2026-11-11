@@ -294,6 +294,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       });
       // Opaque courier meshes use scene alpha as a grade-protection mask. The
       // composite consumes it and writes opaque canvas alpha; no extra render pass.
+      if (nodes?.threat) graded.mulAssign(this.figureFillNeutral.mul(nodes.threat).mul(lighting.nightThreat).oneMinus());
       return vec4(result, this.fade.mul(nodes?.opacity ?? 1).mul(courierRead.oneMinus()).mul(graded));
     })();
     lighting.paletteMaterials.add(this);

@@ -534,7 +534,7 @@ export class CrowdView extends Group {
         material.animalNightRead.value = zooBoss ? 1 : 0;
         material.figureRim.value = zooBoss ? 2 : regularAlpha ? .7 : .25;
         material.figureFillNeutral.value = human && !healthy && !regularAlpha ? 1 : 0;
-        material.figureFill.value = regularAlpha || zooBoss ? .25 : nightHeavy ? .55 : human && !healthy ? .25 : 1;
+        material.figureFill.value = regularAlpha || zooBoss || asset === 'inf.armored-football' ? .25 : nightHeavy ? .55 : human && !healthy ? .25 : 1;
       }
       // The Alpha-sized Mega retains its silhouette at contact, like a regular Alpha.
       // Instances cannot be sorted independently in the transparent render list.

@@ -69,3 +69,9 @@ All eight current-source rows passed. No class mean is blue-dominant (B > 1.1R a
 | armored | [54.66, 57.09, 68.39] | [62.2, 63.6, 66.07] | 0.226 → 0.139 | 57.39 → 63.48 |
 
 Opened after WebGPU high zoom 1.5: ordinary hair reads brown rather than blue-grey; brute and butcher keep warmer shaded bodies; bloated retains red clothing; screamer is muted green-grey rather than pale lavender. Armored stays grey-green. Full data are in `after.json`. Heavy contrast comparison, campaign lighting variants and final checks remain pending. No browser/check is still running.
+
+## Campaign preset gap and armored shading
+
+Measured heavy luma-spread relative to ordinary across the eight-row night matrix: brute 0.81→1.07, butcher 0.63→0.85, bloated 0.59→0.98, screamer 0.66→0.92; armored 1.12→1.01. Restored armored fill to s35's 0.25 to retain its panel shading; the night WebGL2 high zoom 1.5 luma standard deviation then measured 15.30 (versus the previous matrix average 13.68).
+
+Actual preset captures passed runtime checks, but colour acceptance failed: L8-zoo had no blue-dominant class mean; L10-night had five and L4 had two. Opened L10-night: dark ordinary clothing and broad heavy surfaces still take the cool final grade. Added infection/night-gated grade protection using the existing scene-alpha mechanism. This latest adjustment is not yet remeasured or code-checked; the previous eight-row after matrix is now historical evidence. No process remains running.
