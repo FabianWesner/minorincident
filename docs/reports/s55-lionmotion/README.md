@@ -605,3 +605,15 @@ Remaining acceptance audit must explicitly reconcile the controlled 10 s walk /
 5 s run captures with the natural 15 s L8 fixture (which does not force a run),
 and ensure pose-index receipts exist for both environments. These measurement
 scope details cannot be inferred from green regression gates alone.
+
+## Real-fixture pose indices and explicit route mode
+
+The natural L8 fixture trace now records active fractional atlas frame indices
+and actual backend. Completed `l8-pose-index/`: 840 frames contain cat atlas
+receipts; natural maximum speeds were 0.447/0.999 m/s, so this sample cannot be
+called a run segment. Added explicit `MOTION_FIXTURE_ROUTE=1` mode: the loaded
+real L8 scene follows a test-only straight route, 10 s at 1 m/s then 5 s at
+3.2 m/s, overriding fixture transforms/motion after simulation without changing
+source gameplay stats. Config receipts clearly distinguish this from natural
+AI. Completed current-source route run `l8-controlled-current/`. Original-source
+route comparison and final measurement audit remain to be completed.

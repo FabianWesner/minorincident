@@ -9,6 +9,21 @@ try {
   await session.open();
   console.log(await loadFixtureInPage(session.page, readFixture('tests/fixtures/saves/qa/l8-before-lion.json.gz')));
   await session.page.evaluate(() => { window.__SS__!.debug.figureJoints(true); window.__SS__!.cheats.god(true); window.__SS__!.camera.cinematic({ position: [-28, 18, 3], target: [-45, 0, -14] }, true); });
+  if (process.env.MOTION_FIXTURE_ROUTE) await session.page.evaluate(() => {
+    const game = (window.__SCENE__ as unknown as { game: import('../../../src/Game').Game }).game;
+    const started = game.world.tick;
+    const cats = [...game.world.entities.iterate()].filter(e => /lion/.test(e.civilian?.zooAnimal ?? e.archetype)).map(e => ({ entity: e, x: e.transform.x, z: e.transform.z, distance: e.motion?.distance ?? 0 }));
+    game.world.events.on('sim.tick', () => {
+      const seconds = (game.world.tick - started) / 60, speed = seconds <= 10 ? 1 : 3.2, distance = Math.min(10, seconds) + Math.max(0, seconds - 10) * 3.2;
+      for (const cat of cats) {
+        cat.entity.transform.x = cat.x - distance; cat.entity.transform.z = cat.z; cat.entity.transform.yaw = Math.PI;
+        cat.entity.motion = { velocity: { x: -speed, z: 0 }, speed, moving: true, distance: cat.distance + distance };
+      }
+      const x = cats[0].entity.transform.x;
+      game.view.view.cinematic({ position: [x + 17, 18, 3], target: [x, 0, -14] }, true);
+    }, 1000);
+  });
+  writeJson(`${out}/config.json`, { requestedBackend: process.env.MOTION_BACKEND ?? 'webgl2', tier: process.env.MOTION_TIER ?? 'high', actualBackend: await session.page.evaluate(() => (window.__SCENE__ as unknown as { game: import('../../../src/Game').Game }).game.view.renderer.selectedBackend), movement: process.env.MOTION_FIXTURE_ROUTE ? 'test-only route: 10 s at 1 m/s + 5 s at 3.2 m/s; gameplay stats unchanged' : 'natural fixture simulation, no speed overrides' });
   const rows: unknown[] = [];
   for (let batch = 0; batch < 15; batch++) {
     const batchRows = await session.page.evaluate(async (batchIndex) => {
@@ -29,7 +44,9 @@ try {
           redraw = { tick: game.world.tick, maxJointDeltaM };
         }
         const ids = new Set([...game.world.entities.iterate()].filter(e => /lion/.test(e.civilian?.zooAnimal ?? e.archetype)).map(e => e.id));
-        samples.push({ redraw, png: (batchIndex === 2 && frame >= 54 || batchIndex === 3 && frame < 6) ? document.querySelector('canvas')!.toDataURL('image/png') : undefined, tick: game.world.tick, sim: [...ids].map(id => ({ id, transform: { ...game.world.entities.get(id)!.transform }, motion: structuredClone(game.world.entities.get(id)!.motion) })), figures: game.view.crowdFigures().filter(f => ids.has(f.id)) });
+        const crowd = (game.view as unknown as { crowd?: { batches: Map<string, { count: number; locomotion: { presentation: { frame: number } } }> } }).crowd;
+        const atlas = [...(crowd?.batches ?? [])].filter(([key, batch]) => /lion/.test(key) && batch.count > 0).map(([key, batch]) => ({ key, frameIndex: batch.locomotion.presentation.frame }));
+        samples.push({ atlas, redraw, png: (batchIndex === 2 && frame >= 54 || batchIndex === 3 && frame < 6) ? document.querySelector('canvas')!.toDataURL('image/png') : undefined, tick: game.world.tick, sim: [...ids].map(id => ({ id, transform: { ...game.world.entities.get(id)!.transform }, motion: structuredClone(game.world.entities.get(id)!.motion) })), figures: game.view.crowdFigures().filter(f => ids.has(f.id)) });
       }
       return samples;
     }, batch);
