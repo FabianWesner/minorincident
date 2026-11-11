@@ -4,6 +4,7 @@ import type { SimWorld } from '../../../src/sim/world/SimWorld';
 import { l2, l2TruckPath } from '../../../src/data/l2';
 import { l3 } from '../../../src/data/l3';
 import { l6, l6Entries, l6Doors } from '../../../src/data/l6';
+import { LevelSevenEncounters } from '../../../src/sim/missions/LevelSevenEncounters';
 import { l7Encounters } from '../../../src/data/l7';
 import { cureEncounters, cureEncounterSlots } from '../../../src/levels/L10/encounters';
 import { followFrustum } from '../../../tools/sim-runner/l3Bots';
@@ -193,12 +194,30 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly authored wave cens
       expect(Math.hypot(e.transform.x - before[i].x, e.transform.z - before[i].z)).toBeLessThanOrEqual(l6.follow.speed / 60 + .005);
     });
   });
+  const poses = new Map<number, { x: number; z: number }[]>();
+  let authoringPack = 0;
+  const placement = LevelSevenEncounters.prototype as unknown as { clearPoint(at: { x: number; z: number }, radius: number): { x: number; z: number } };
+  const clearPoint = placement.clearPoint;
+  vi.spyOn(placement, 'clearPoint').mockImplementation(function (this: LevelSevenEncounters, at, radius) {
+    const point = clearPoint.call(this, at, radius);
+    if (authoringPack) poses.get(authoringPack)!.push({ ...point });
+    return point;
+  });
+  const authored = new Map<number, { runners: number; alphas: number }>();
+  const prototype = LevelSevenEncounters.prototype as unknown as { group(group: number, centre: { x: number; z: number }, count: number, alphas: number, resident?: boolean): void };
+  const group = prototype.group;
+  vi.spyOn(prototype, 'group').mockImplementation(function (this: LevelSevenEncounters, pack, centre, count, alphas, resident) {
+    authored.set(pack, { runners: count, alphas });
+    poses.set(pack, []); authoringPack = pack;
+    try { group.call(this, pack, centre, count, alphas, resident); } finally { authoringPack = 0; }
+  });
   await withWorld('L7', tier, w => {
-    const c = w.l7Encounters!, ai = w.infected!; c.start();
+    const c = w.l7Encounters!, ai = w.infected!, low = tier === 'low';
+    c.start();
     // Drive the authored road thresholds through the mission controller. The opening pack is spawned directly by
     // prepare(), while later packs are queued; c.update() is also the production arrival-ledger observer for both.
     const player = w.entities.get(1)!;
-    for (const x of [286, 224, 184, 164, 94, 84]) {
+    for (const x of [286, 224, 184, 164, 94, 84, 77, -1]) {
       player.transform.x = x; w.spatial.set(player.id, x, player.transform.z);
       w.physics.playerBody!.setTranslation(player.transform, true);
       for (let tick = 0; tick < 240; tick++) {
@@ -209,20 +228,28 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly authored wave cens
         w.tick++;
       }
     }
-    for (let i = 0; i <= l7Encounters.streets.length; i++) {
-      const group = i === 0 ? l7Encounters.finalGroup : l7Encounters.firstStreetGroup + i - 1;
-      const expected = i === 0 ? (tier === 'low' ? 60 : 120) + 2 : (tier === 'low' ? 35 : 70) + ([1, 2, 4].includes(i) ? 1 : 0);
-      const arrivals = c.state.arrivals.filter(a => a.group === group), ids = arrivals.map(a => a.id);
+    const authoredPacks = [l7Encounters.finalGroup, ...l7Encounters.streets.map((_, i) => l7Encounters.firstStreetGroup + i)];
+    for (let i = 0; i < authoredPacks.length; i++) {
+      const cohort = authoredPacks[i];
+      const packs = i === 0 ? [cohort] : [cohort, ...(i === 1 ? [cohort + 4] : []), ...(i > 1 && !low ? [cohort + 10] : [])];
+      const expected = packs.reduce((sum, pack) => {
+        const quota = authored.get(pack);
+        if (!quota) errors.push(`L7/cohort-${cohort}: source did not author expected split pack ${pack}`);
+        return sum + (quota?.runners ?? 0) + (quota?.alphas ?? 0);
+      }, 0);
+      const arrivals = c.state.arrivals.filter(a => packs.includes(a.group)), ids = arrivals.map(a => a.id);
       const home = i === 0 ? l7Encounters.horde : l7Encounters.streets[i - 1];
       // These groups are authored idle at their destination: verify the admitted poses are in that area.
       // The second final Alpha now guards the eastern flank rather than the horde centre.
       const atGoal = arrivals.filter(a => i === 0 && a.alpha
         ? Math.min(Math.hypot(a.x + 64, a.z - 50), Math.hypot(a.x + 43, a.z - 41.7)) <= 6
-        : Math.hypot(a.x - home.x, a.z - home.z) <= 20).length;
+        : a.group >= l7Encounters.firstStreetGroup + 4
+          ? poses.get(a.group)!.some(p => Math.hypot(a.x - p.x, a.z - p.z) <= 20)
+          : Math.hypot(a.x - home.x, a.z - home.z) <= 20).length;
       // Ledger entries are the actual admitted director arrivals; not the requested count.
-      receipt[`L7/group-${group}`] = { authored: expected, spawned: ids.length, admitted: ids.length, reached: atGoal };
-      if (ids.length !== expected) errors.push(`L7/group-${group}: authored ${expected}, admitted ${ids.length}`);
-      if (atGoal !== expected) errors.push(`L7/group-${group}: authored ${expected}, admitted inside goal area ${atGoal}`);
+      receipt[`L7/cohort-${cohort}`] = { authored: expected, spawned: ids.length, admitted: ids.length, reached: atGoal };
+      if (ids.length !== expected) errors.push(`L7/cohort-${cohort} packs ${packs.join('+')}: authored ${expected}, admitted ${ids.length}`);
+      if (atGoal !== expected) errors.push(`L7/cohort-${cohort}: authored ${expected}, admitted inside goal area ${atGoal}`);
     }
   });
   await withWorld('L8', tier, w => {
@@ -232,24 +259,52 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly authored wave cens
     c.state.guideDone = 1;
     w.tick = c.state.startedAt + 3600; c.update();
     const initial = c.state.arrivals.slice();
-    const next = c.state.nextWave; c.state.nextWave = Infinity;
+    c.state.nextWave = Infinity;
     // The K9's new pond approach uses the whole authored service route, not the former short doorstep leg.
     const routeFrames = Math.ceil(Math.max(...c.state.outlets.map(o => { let from = [o.sx, o.sz], metres = 3; for (const at of o.route) { metres += Math.hypot(at[0]-from[0], at[1]-from[1]); from=at; } return metres/(o.speedMs ?? 1.6)+30; })) * 60);
     const initialGoals = new Map(initial.map(a => [a.id, c.state.outlets[a.outlet]]));
     const firstMovement = reach(w, initial.map(a => a.id), (id, x, z) => { const door = initialGoals.get(id)!; return Math.hypot(x - door.ox, z - door.oz) < 12; }, routeFrames);
     for (let outlet = 0; outlet < c.state.outlets.length; outlet++) {
       const ids = initial.filter(a => a.outlet === outlet).map(a => a.id);
-      record(`L8/tunnel-breach-${outlet}`, (tier === 'low' ? 3 : 6) + (outlet === 2 ? 1 : 0), ids, w, { admitted: ids.filter(id => firstMovement.admittedIds.includes(id)).length, reached: ids.filter(id => firstMovement.reachedIds.includes(id)).length });
+      const authored = outlet === 1 ? 0 : outlet >= 4 ? tier === 'low' ? 3 : 5 : (tier === 'low' ? 3 : 6) + (outlet === 2 ? 1 : 0);
+      record(`L8/tunnel-breach-${outlet}`, authored, ids, w, { admitted: ids.filter(id => firstMovement.admittedIds.includes(id)).length, reached: ids.filter(id => firstMovement.reachedIds.includes(id)).length });
     }
     for (const e of [...w.infected!.active]) w.infected!.release(e);
-    c.state.nextWave = Math.max(next, w.tick); c.update(); c.state.nextWave = Infinity;
-    const reinforcements = c.state.arrivals.slice(initial.length), reinforcementGoals = new Map(reinforcements.map(a => [a.id, c.state.outlets[a.outlet]]));
-    const reinforcementMovement = reach(w, reinforcements.map(a => a.id), (id, x, z) => { const door = reinforcementGoals.get(id)!; return Math.hypot(x - door.ox, z - door.oz) < 12; }, routeFrames);
-    for (let outlet = 0; outlet < c.state.outlets.length; outlet++) {
-      const ids = reinforcements.filter(a => a.outlet === outlet).map(a => a.id);
-      // PO 11-08: four total sustaining arrivals, one per outlet; the arenas carry the later outbreak.
-      record(`L8/tunnel-reinforcement-${outlet}`, 1, ids, w, { admitted: ids.filter(id => reinforcementMovement.admittedIds.includes(id)).length, reached: ids.filter(id => reinforcementMovement.reachedIds.includes(id)).length });
+    // Seal the plaza, then cross every production region. Region entry releases
+    // each outlet's authored cohort once; the east leg also opens initial outlet 1.
+    c.state.sealedAt = w.tick || 1;
+    c.state.breachedAt = (w.tick || 1) - 2000;
+    c.state.arenas[0]!.phase = 1;
+    const regions = [
+      { name: 'south', at: { x: 20, z: 30 }, outlets: [0, 3] },
+      { name: 'north', at: { x: 0, z: -70 }, outlets: [2] },
+      { name: 'east', at: { x: 90, z: 0 }, outlets: [1] },
+      { name: 'plaza', at: { x: 0, z: 0 }, outlets: [4, 5] },
+    ];
+    for (const region of regions) {
+      for (const e of [...w.infected!.active]) w.infected!.release(e);
+      const p = w.entities.get(1)!;
+      Object.assign(p.transform, region.at); w.spatial.set(1, p.transform.x, p.transform.z);
+      w.physics.playerBody!.setTranslation(p.transform, true); w.physics.playerBody!.setNextKinematicTranslation(p.transform);
+      const before = c.state.arrivals.length;
+      c.state.nextWave = w.tick;
+      c.update();
+      c.state.nextWave = Infinity;
+      const released = c.state.arrivals.slice(before).filter(a => region.outlets.includes(a.outlet));
+      const ids = released.map(a => a.id);
+      const goals = new Map(released.map(a => [a.id, c.state.outlets[a.outlet]]));
+      const movement = reach(w, ids, (id, x, z) => { const door = goals.get(id)!; return Math.hypot(x - door.ox, z - door.oz) < 12; }, routeFrames, undefined, true);
+      for (const outlet of region.outlets) {
+        const cohort = released.filter(a => a.outlet === outlet).map(a => a.id);
+        const expected = outlet >= 4 ? 1 : (tier === 'low' ? 3 : 5);
+        record(`L8/region-${region.name}-outlet-${outlet}`, expected, cohort, w, {
+          admitted: cohort.filter(id => movement.admittedIds.includes(id)).length,
+          reached: cohort.filter(id => movement.reachedIds.includes(id)).length,
+        });
+      }
     }
+    const eastIds = c.state.arrivals.filter(a => a.outlet === 1).map(a => a.id);
+    if (!eastIds.some(id => !initial.some(a => a.id === id))) errors.push('L8/outlet-1: east region did not release the initially route-gated outlet');
   });
   await withWorld('L10', tier, w => {
     const m = w.missions!; m.loadCheckpoint('cure-disperse-ready');
