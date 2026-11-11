@@ -185,3 +185,14 @@ WebGL2 high: lion pelvis 0.8444 cm / paw 11.815 cm, lioness pelvis 0.9071 cm /
 paw 23.634 cm. The shared remaining paw maximum occurs at frame 257 and still
 needs investigation. This backend comparison does not replace the full visual
 matrix or prove absence of pops.
+
+## Rejected elevated-paw handoff experiment
+
+A temporary change preserved the elevated last paw target when idle resumed
+walking and retained its Y during swing. The completed real L8 repeat reduced
+lion maximum root-relative paw step to 9.16 cm but increased lioness to 30.51 cm
+(from 23.63 cm), while pelvis maxima stayed below 1 cm. The source experiment
+was reverted. This result rejects a contact-height-only fix and leaves the
+idle-to-walk ankle target/orientation conversion as the next investigation.
+`l8-after/frames.json` currently contains the rejected experiment; the accepted
+candidate's comparable trace remains `l8-webgpu-low/frames.json`.
