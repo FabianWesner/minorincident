@@ -195,7 +195,7 @@ export class LevelNineSetPieces {
         if (tick < a.at) return;
         this.freeze(e, false);
         const vehicle = car.entity.vehicle!;
-        if (car.physics.hullDistance(e.transform.x, e.transform.z) <= 1.4 && vehicle.attached.length < 8 && this.w.vehicles!.active === car.entity.id) {
+        if (car.physics.hullDistance(e.transform.x, e.transform.z) <= 1.4 && vehicle.attached.length < 8 && this.w.vehicles!.active === car.entity.id && tick >= (vehicle.nextBoardAt ?? 0)) {
           const c = Math.cos(p.yaw), sn = Math.sin(p.yaw), side = (e.transform.x - p.x) * sn + (e.transform.z - p.z) * c >= 0 ? 1 : -1;
           // Clinging at the side rail, as the hull's boarder slots pose it; left at the landing point (inside the hull) a
           // shake-off on the next tick dropped it under the APC and the ram killed it outright.
