@@ -1,14 +1,16 @@
 import { mkdirSync } from 'node:fs';
 import { SceneSession, readSpec, stopServer, writeJson } from '../../scenelab/session';
-const out = 'test-results/s55-lionmotion/probe';
+const out = process.env.MOTION_OUT ?? 'test-results/s55-lionmotion/probe';
+const speciesList = ['lion', 'lioness', 'zebra', 'gorilla', 'elephant', 'flamingo'] as const;
 mkdirSync(out, { recursive: true });
 const session = new SceneSession({ backend: 'webgl2', tier: 'high', viewport: { width: 960, height: 540 } });
 try {
   await session.open();
   const spec = readSpec('specs/scenes/r36-lion-cats-run.json');
   spec.trace = true;
-  spec.actors = ['lion', 'lioness'].map((species, i) => ({ id: species, kind: 'animal' as const, species: species as 'lion' | 'lioness', at: [-15, i * 4] as [number, number], state: { walk: [[30, i * 4] as [number, number]], loop: true } }));
-  spec.script = ['lion', 'lioness'].map((actor, i) => ({ frame: 600, actor, do: { run: [[40, i * 4] as [number, number]], loop: true } }));
+  spec.actors = speciesList.map((species, i) => ({ id: species, kind: 'animal' as const, species: species, at: [-15, i * 4] as [number, number], state: { walk: [[30, i * 4] as [number, number]], loop: true } }));
+  spec.script = [];
+  spec.camera = { mode: 'game', target: [0, 0, 12], zoom: .5 };
   await session.load(spec);
   await session.page.evaluate(() => {
     const game = (window.__SCENE__ as unknown as { game: import('../../../src/Game').Game }).game;

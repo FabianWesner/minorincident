@@ -116,3 +116,18 @@ This is a candidate source fix, not completion: real L8, other species, full
 backend/tier/zoom captures, and regression gates remain outstanding. The raw
 before trace is `test-results/s55-lionmotion/before-frames.json`; current after
 trace is `test-results/s55-lionmotion/probe/frames.json`.
+
+## Broader validation
+
+Typecheck passed. The required remote `npm test` completed exit 0: 27 files,
+106 passed and 1 skipped, with the repository case budget 150/150. Test duration
+was 158.81 s (wrapper 161.5 s).
+
+The expanded controlled WebGL2/high probe completed 900 frames for lion,
+lioness, zebra, gorilla, elephant, and flamingo, each traveling 25.9833 m with
+zero measured sole penetration. Monkey is still missing because the isolated
+scene schema rejects a healthy monkey actor. Raw traces are under
+`test-results/s55-lionmotion/zoo-after/`. This is not a visual acceptance result.
+The two-cat trace still contains a 0.2474 m maximum root-relative forepaw step
+(after 0.5690 m before); the pelvis improvement alone does not establish smooth
+paws. Further solver analysis is required before completion.
