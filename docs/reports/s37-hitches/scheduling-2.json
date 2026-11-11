@@ -1,0 +1,54 @@
+{
+  "run": "l8-scheduling-2",
+  "summary": {
+    "wall": "07:34:17",
+    "epochMs": 1794382457489,
+    "hostLoad": [
+      3.37255859375,
+      3.74560546875,
+      5.19677734375
+    ],
+    "end": true,
+    "frames": [],
+    "performanceSummary": {
+      "excludedInitialMs": 3000,
+      "samples": 10597,
+      "maxMs": 50.1,
+      "p99Ms": 16.8,
+      "over250": []
+    },
+    "errors": []
+  },
+  "trace": {
+    "wall": "07:34:56",
+    "epochMs": 1794382496470,
+    "hostLoad": [
+      4.2802734375,
+      3.9443359375,
+      5.20263671875
+    ],
+    "trace": "/private/tmp/s37-hitches/l8-scheduling-2/trace.json",
+    "bytes": 976749345,
+    "dataLossOccurred": true
+  },
+  "load": {
+    "wall": "07:31:17",
+    "epochMs": 1794382277328,
+    "hostLoad": [
+      3.38916015625,
+      4.2578125,
+      5.69970703125
+    ],
+    "loadWallMs": 6509,
+    "loadTiming": {
+      "dataMs": 13.800000011920929,
+      "simMs": 142.5,
+      "viewMs": 3378.699999988079
+    }
+  },
+  "hostLoad1Range": [
+    2.6650390625,
+    4.2802734375
+  ],
+  "arenaSeen": true
+}

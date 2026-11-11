@@ -1,0 +1,122 @@
+{
+  "admission": [
+    {
+      "at": "2026-11-11T06:56:24.615Z",
+      "event": "quiet-admission-wait",
+      "granted": false,
+      "quiet": false,
+      "load": [
+        7.73095703125,
+        11.56884765625,
+        11.06298828125
+      ],
+      "busy": [
+        {
+          "pid": 75455,
+          "cpu": 0,
+          "ageSeconds": 5,
+          "command": "npm exec tsc --noEmit -p .     "
+        },
+        {
+          "pid": 75489,
+          "cpu": 41.7,
+          "ageSeconds": 4,
+          "command": "node /Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad8dbd372f944ac94/node_modules/.bin/tsc --noEmit -p ."
+        },
+        {
+          "pid": 75584,
+          "cpu": 31.3,
+          "ageSeconds": 2,
+          "command": "node --import tsx /Users/wesner/Workspace/minorincident/.claude/worktrees/s37-hitches/tools/browser-pool/wrapper.ts exclusive sh tools/e2e-lock.sh npx tsx tools/qa/r28-vqa-fixture-"
+        }
+      ],
+      "ignoredIdle": []
+    },
+    {
+      "at": "2026-11-11T06:56:55.236Z",
+      "event": "quiet-admission-wait",
+      "granted": true,
+      "quiet": false,
+      "load": [
+        6.3681640625,
+        10.89990234375,
+        10.8388671875
+      ],
+      "busy": [],
+      "ignoredIdle": []
+    },
+    {
+      "at": "2026-11-11T06:57:25.344Z",
+      "event": "quiet-admission-wait",
+      "granted": true,
+      "quiet": false,
+      "load": [
+        4.662109375,
+        10.06103515625,
+        10.5361328125
+      ],
+      "busy": [],
+      "ignoredIdle": []
+    },
+    {
+      "at": "2026-11-11T06:57:55.448Z",
+      "event": "quiet-admission-wait",
+      "granted": true,
+      "quiet": false,
+      "load": [
+        3.2001953125,
+        9.193359375,
+        10.2041015625
+      ],
+      "busy": [],
+      "ignoredIdle": []
+    },
+    {
+      "at": "2026-11-11T06:58:01.696Z",
+      "pool": true,
+      "quiet": true,
+      "load": [
+        2.86181640625,
+        8.92333984375,
+        10.09619140625
+      ],
+      "busy": [],
+      "ignoredIdle": []
+    }
+  ],
+  "load": [
+    {
+      "wall": "06:58:08",
+      "loadWallMs": 5719,
+      "loadTiming": {
+        "dataMs": 14.400000005960464,
+        "simMs": 133.2999999821186,
+        "viewMs": 3069.9000000059605
+      }
+    }
+  ],
+  "summary": [
+    {
+      "wall": "07:01:09",
+      "end": true,
+      "frames": [],
+      "performanceSummary": {
+        "excludedInitialMs": 3000,
+        "samples": 10604,
+        "maxMs": 50,
+        "p99Ms": 16.8,
+        "over250": []
+      },
+      "errors": []
+    }
+  ],
+  "trace": [
+    {
+      "wall": "07:01:35",
+      "trace": "/private/tmp/s37-hitches/l8-high-exclusive-1/trace.json",
+      "bytes": 300507313,
+      "dataLossOccurred": true
+    }
+  ],
+  "arenaSeen": true
+}

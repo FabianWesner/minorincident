@@ -1,0 +1,52 @@
+[
+  {
+    "run": "l8-route-baseline-2",
+    "load": {
+      "wall": "06:36:24",
+      "loadWallMs": 6196,
+      "loadTiming": {
+        "dataMs": 13.599999994039536,
+        "simMs": 145.80000001192093,
+        "viewMs": 3008.5
+      }
+    },
+    "summary": {
+      "wall": "06:39:24",
+      "end": true,
+      "frames": [],
+      "performanceSummary": {
+        "excludedInitialMs": 3000,
+        "samples": 10596,
+        "maxMs": 83.4,
+        "p99Ms": 16.8,
+        "over250": []
+      },
+      "errors": []
+    }
+  },
+  {
+    "run": "l5-baseline-2",
+    "load": {
+      "wall": "06:39:59",
+      "loadWallMs": 5243,
+      "loadTiming": {
+        "dataMs": 8.5,
+        "simMs": 214.80000001192093,
+        "viewMs": 2477.5
+      }
+    },
+    "summary": {
+      "wall": "06:43:30",
+      "end": true,
+      "frames": [],
+      "performanceSummary": {
+        "excludedInitialMs": 3000,
+        "samples": 12407,
+        "maxMs": 50.1,
+        "p99Ms": 16.8,
+        "over250": []
+      },
+      "errors": []
+    }
+  }
+]

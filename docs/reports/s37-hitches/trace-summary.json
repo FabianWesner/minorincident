@@ -1,0 +1,38 @@
+[
+  {
+    "run": "l8-route-baseline-1",
+    "eventMaxMs": {
+      "FireAnimationFrame": 32.65,
+      "MajorGC": 30.789,
+      "MinorGC": 6.287,
+      "CpuProfiler::StartProfiling": 249.844
+    }
+  },
+  {
+    "run": "l5-baseline-1",
+    "eventMaxMs": {
+      "FireAnimationFrame": 22.616,
+      "MajorGC": 30.169,
+      "MinorGC": 7.115,
+      "CpuProfiler::StartProfiling": 282.302
+    }
+  },
+  {
+    "run": "l8-high-baseline-1",
+    "eventMaxMs": {
+      "FireAnimationFrame": 64.46,
+      "MajorGC": 31.09,
+      "MinorGC": 5.099,
+      "CpuProfiler::StartProfiling": 307.659
+    }
+  },
+  {
+    "run": "l5-high-baseline-1",
+    "eventMaxMs": {
+      "FireAnimationFrame": 166.86,
+      "MajorGC": 36.523,
+      "MinorGC": 6.379,
+      "CpuProfiler::StartProfiling": 192.596
+    }
+  }
+]

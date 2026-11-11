@@ -11,8 +11,8 @@
 // Movement: WASD toward the next --route point (screen-relative, as the player sees it), then toward the objective marker
 // (--follow-marker) or the nearest enemy. Combat: mouse over the nearest drawn enemy's feet + attack while it is in range.
 // Logs (log.jsonl): objective/tracker text, HUD bars (APC armor), enemies (kind, hp), frames > 100 ms with tick.
-import { mkdirSync, appendFileSync, mkdtempSync, existsSync } from 'node:fs';
-import { tmpdir } from 'node:os';
+import { mkdirSync, appendFileSync, mkdtempSync, existsSync, writeFileSync, openSync, closeSync } from 'node:fs';
+import { tmpdir, loadavg } from 'node:os';
 import { resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 import { launchProfile } from '../browser-pool/client';
@@ -24,7 +24,7 @@ import { weaponKey } from '../../src/data/weaponKeys';
 const { values, positionals } = parseArgs({ allowPositionals: true, options: {
   out: { type: 'string' }, quality: { type: 'string', default: 'low' }, zoom: { type: 'string', default: '1.5' }, backend: { type: 'string', default: 'webgpu' },
   seconds: { type: 'string', default: '300' }, shot: { type: 'string', default: '6' }, god: { type: 'boolean', default: false }, weapon: { type: 'string', default: 'weapon.army-mg' },
-  route: { type: 'string' }, 'follow-marker': { type: 'boolean', default: false }, 'hold-e': { type: 'boolean', default: false }, 'tap-e-when': { type: 'string' }, 'skip-credits-after': { type: 'string' }, dwell: { type: 'string', default: '0' }, reach: { type: 'string', default: '2.5' }, block: { type: 'string', default: '5' }, 'no-kite': { type: 'boolean', default: false }, range: { type: 'string', default: '22' }, setup: { type: 'string' },
+  route: { type: 'string' }, 'follow-marker': { type: 'boolean', default: false }, 'hold-e': { type: 'boolean', default: false }, 'tap-e-when': { type: 'string' }, 'skip-credits-after': { type: 'string' }, dwell: { type: 'string', default: '0' }, reach: { type: 'string', default: '2.5' }, block: { type: 'string', default: '5' }, 'no-kite': { type: 'boolean', default: false }, range: { type: 'string', default: '22' }, setup: { type: 'string' }, trace: { type: 'boolean', default: false }, 'trace-scheduling': { type: 'boolean', default: false }, 'trace-window': { type: 'boolean', default: false }, 'no-captures': { type: 'boolean', default: false },
   handbrake: { type: 'string', default: 'Space' }, burst: { type: 'string' }, prefer: { type: 'string' }, watch: { type: 'string' }, 'route-when': { type: 'string' }, 'idle-when': { type: 'string' },
 } });
 const [origin, name] = positionals;
@@ -33,29 +33,56 @@ const direct = name?.startsWith('level:') ? name.split(':') : null;
 const path = direct ? 'direct' : ['', '.json.gz', '.json.br'].map(ext => resolve(existsSync(name) ? name : `tests/fixtures/saves/qa/${name}${ext}`)).find(existsSync);
 if (!origin || !path) throw new Error('usage: r28-vqa-fixture-play.ts <origin> <fixture> --out <dir>');
 const out = resolve(values.out!); mkdirSync(out, { recursive: true });
-const log = (o: object) => appendFileSync(`${out}/log.jsonl`, JSON.stringify({ wall: new Date().toISOString().slice(11, 19), ...o }) + '\n');
+if ((values.trace || values['trace-scheduling'] || values['trace-window']) && (out === process.cwd() || out.startsWith(`${process.cwd()}/`))) throw new Error('--trace requires --out outside the worktree so raw traces cannot be committed');
+const log = (o: object) => appendFileSync(`${out}/log.jsonl`, JSON.stringify({ wall: new Date().toISOString().slice(11, 19), epochMs: Date.now(), hostLoad: loadavg(), ...o }) + '\n');
 const route = (values.route ?? '').split(';').filter(Boolean).map(p => { const [x, z] = p.split(',').map(Number); return { x, z }; });
 const zoom = Number(values.zoom), range = Number(values.range);
 const fixture = direct ? null : readFixture(path);
 const context = await launchProfile(mkdtempSync(`${tmpdir()}/r28vqa-`), { headless: true, args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist', '--enable-unsafe-webgpu'], viewport: { width: 1280, height: 720 } });
 const page = await context.newPage();
+const capture = async (options: NonNullable<Parameters<typeof page.screenshot>[0]>) => {
+  if (values['no-captures']) return;
+  const started = Date.now(); log({ capture: 'start', path: options.path });
+  await page.screenshot(options);
+  log({ capture: 'end', path: options.path, durationMs: Date.now() - started });
+};
+const trace = values.trace || values['trace-scheduling'] || values['trace-window'] ? await context.newCDPSession(page) : null;
+const traceCompleted = trace ? new Promise<{ stream?: string; dataLossOccurred: boolean }>(resolve => trace.once('Tracing.tracingComplete', event => resolve(event))) : null;
+let traceStarted = false, traceStopped = false;
 await page.addInitScript({ content: 'window.__name = (f) => f;' }); // tsx keepNames helper inside evaluate callbacks
 const errors: string[] = []; page.on('pageerror', e => { errors.push(String(e).slice(0, 200)); log({ pageError: String(e).slice(0, 300), ...(errors.length <= 3 ? { stack: String((e as Error).stack ?? '').slice(0, 1500) } : {}) }); }); // r38-vqa: stack of the first 3 page errors
 try {
-  await page.goto(`${origin}/?test=poses&testApi=1&scenelab=1&${values.backend === 'webgpu' ? '' : 'renderer=webgl&'}dpr=1&audio=muted&quality=${values.quality}`);
+  await page.goto(`${origin}/?test=poses&testApi=1&scenelab=1&loadProfile=2&${values.backend === 'webgpu' ? '' : 'renderer=webgl&'}dpr=1&audio=muted&quality=${values.quality}`);
   await page.waitForFunction(() => !!window.__SS__, null, { timeout: 180000 });
   await page.evaluate(async q => { await window.__SS__!.ready; window.__SS__!.debug.figureJoints(true); window.__SS__!.settings.set({ quality: q as 'low' }); }, values.quality!);
+  const loadStarted = Date.now();
   const state = fixture ? await loadFixtureInPage(page, fixture) : await page.evaluate(async ([lvl, cp]) => { const a = window.__SS__!; await a.loadLevel(lvl, { seed: 1, checkpoint: cp || undefined }); a.pause(); await a.step(60); const p = a.getEntity(1)!; return { level: lvl, checkpoint: a.missions.state()?.checkpoint, player: { x: p.transform.x, z: p.transform.z } }; }, [direct![1], direct![2] ?? ''] as const);
+  log({ loadWallMs: Date.now() - loadStarted, loadTiming: await page.evaluate(() => window.__SS__!.perf().loadTiming) });
   const backend = await page.evaluate(() => window.__SS__!.getState().render.backend);
   log({ fixture: fixture?.label ?? name, state, backend, quality: values.quality, zoom });
   // Explicit fixture setup (logged), e.g. lower a boss's HP so real shots finish it: --setup "<js using a=__SS__, g=game>".
   if (values.setup) log({ setup: values.setup, result: await page.evaluate(js => { const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: unknown }).game; return String(new Function('a', 'g', js)(a, g)); }, values.setup) });
   if (values.god) { await page.evaluate(() => window.__SS__!.cheats.god(true)); log({ setup: 'god-mode' }); }
+  if (trace) {
+    await trace.send('Tracing.start', { traceConfig: { recordMode: values['trace-window'] ? 'recordContinuously' : 'recordAsMuchAsPossible', ...(values['trace-window'] ? { traceBufferSizeInKb: 65536 } : {}), excludedCategories: ['*'], includedCategories: ['devtools.timeline', 'blink.user_timing', ...(values['trace-scheduling'] || values['trace-window'] ? ['toplevel', 'gpu'] : [])] }, transferMode: 'ReturnAsStream' });
+    traceStarted = true;
+  }
   await page.evaluate(z => {
     const a = window.__SS__!; a.camera.follow(); a.camera.zoom(z);
-    const w = window as unknown as { __r28Frames: { tick: number; ms: number }[] }; w.__r28Frames = [];
-    let last = performance.now();
-    const loop = (now: number) => { const ms = now - last; last = now; if (ms > 100) w.__r28Frames.push({ tick: a.tick(), ms: Math.round(ms) }); requestAnimationFrame(loop); };
+    const w = window as unknown as { __r28Frames: { tick: number; ms: number; elapsedMs: number; perf?: ReturnType<typeof a.perf> }[]; __r28LongFrames: { tick: number; ms: number; elapsedMs: number }[]; __r28FrameTimes: number[]; __r28PlayStarted: number };
+    w.__r28Frames = []; w.__r28LongFrames = []; w.__r28FrameTimes = []; w.__r28PlayStarted = performance.now();
+    performance.mark('fixture-play-start');
+    let last = w.__r28PlayStarted;
+    const loop = (now: number) => {
+      const ms = now - last; last = now;
+      if (now - w.__r28PlayStarted >= 3000) w.__r28FrameTimes.push(ms);
+      if (ms > 100) {
+        const event = { tick: a.tick(), ms: +ms.toFixed(1), elapsedMs: Math.round(now - w.__r28PlayStarted) };
+        performance.mark('fixture-long-frame', { detail: event });
+        w.__r28LongFrames.push(event); w.__r28Frames.push({ ...event, perf: a.perf() });
+      }
+      requestAnimationFrame(loop);
+    };
     requestAnimationFrame(loop);
     a.resume();
   }, zoom);
@@ -79,6 +106,9 @@ try {
   let lastBurst = 0, lastEvent = 0, dwellUntil = 0, skipped = false, lastEnd = 0, lastTap = 0, lastShot = 0, lastLog = 0, ri = 0, lastText = '', shotN = 0, best = Infinity, bestAt = Date.now();
   while (Date.now() - start < seconds * 1000) {
     const e = await page.evaluate(look);
+    if (trace && values['trace-window'] && !traceStopped && await page.evaluate(() => (window as unknown as { __r28LongFrames: { ms: number; elapsedMs: number }[] }).__r28LongFrames.some(f => f.ms > 250 && f.elapsedMs >= 3000))) {
+      traceStopped = true; await trace.send('Tracing.end'); log({ traceStoppedOnHitch: true, tick: e.tick });
+    }
     const extra = await page.evaluate(() => {
       const t = document.body.innerText; const m = t.match(/APC (armor [^\n]*|barely functional)/);
       const a = window.__SS__!, s = a.missions.state();
@@ -99,7 +129,7 @@ try {
       }
     }
     if (!e.player || (e.player && (await page.evaluate(() => !!window.__SS__!.missions.state()?.epilogue && window.__SS__!.missions.state()!.epilogue!.phase !== 'playable').catch(() => false)))) {
-      if (Date.now() - lastShot > shotEvery) { lastShot = Date.now(); await page.screenshot({ path: `${out}/s${String(shotN++).padStart(3, '0')}-t${e.tick}.jpg`, type: 'jpeg', quality: 70 }); }
+      if (Date.now() - lastShot > shotEvery) { lastShot = Date.now(); await capture({ path: `${out}/s${String(shotN++).padStart(3, '0')}-t${e.tick}.jpg`, type: 'jpeg', quality: 70 }); }
       await page.waitForTimeout(250); continue;
     }
     if (e.panel.visible && e.panel.button) { log({ panel: e.panel, tick: e.tick }); await page.getByTestId('mission-button').click({ timeout: 3000 }).catch(() => undefined); }
@@ -136,10 +166,10 @@ try {
       const air = await page.evaluate(() => { const w = (window.__SCENE__ as unknown as { game: { world: unknown } }).game.world as { vehicles: { active: number | null; cars: Map<number, { physics: { speed: number }; entity: { transform: { y: number }; vehicle: { attached: number[] } } }> }; missions?: { l9?: { driving: { state: { setPieces?: { alphas: { phase: string }[] } } } } } }; const car = w.vehicles.active == null ? undefined : w.vehicles.cars.get(w.vehicles.active); return { y: car?.entity.transform.y ?? 0, speed: +(car?.physics.speed ?? 0).toFixed(1), boarders: car?.entity.vehicle.attached.length ?? 0, fight: (w.missions?.l9?.driving.state.setPieces?.alphas ?? []).filter(a => ['windup', 'air', 'hull', 'throw'].includes(a.phase)).map(a => a.phase) }; });
       if (air.boarders && Date.now() % 1500 < 400) keys.push(values.handbrake!); // r35-vqa: Space is the driving handbrake since 258f211b (K still works); --handbrake KeyK to test K
       // Event shots: the APC in the air off a ramp, and every leaper/thrower action, at most one per 1.2 s.
-      if ((air.y > 2.2 || air.fight.length) && Date.now() - lastEvent > 1200) { lastEvent = Date.now(); log({ eventShot: shotN, tick: e.tick, apcY: +air.y.toFixed(2), apcSpeed: air.speed, keys, fight: air.fight, boarders: air.boarders }); await page.screenshot({ path: `${out}/s${String(shotN++).padStart(3, '0')}-t${e.tick}-${air.y > 2.2 ? 'air' : air.fight.join('+')}.jpg`, type: 'jpeg', quality: 70 }); }
+      if ((air.y > 2.2 || air.fight.length) && Date.now() - lastEvent > 1200) { lastEvent = Date.now(); log({ eventShot: shotN, tick: e.tick, apcY: +air.y.toFixed(2), apcSpeed: air.speed, keys, fight: air.fight, boarders: air.boarders }); await capture({ path: `${out}/s${String(shotN++).padStart(3, '0')}-t${e.tick}-${air.y > 2.2 ? 'air' : air.fight.join('+')}.jpg`, type: 'jpeg', quality: 70 }); }
     }
     // r35-vqa: --idle-when <regex on tracker>: let go of every key (no move, no fire) while it matches, e.g. the L9 crawl ring.
-    if (values['idle-when'] && new RegExp(values['idle-when']).test(`${e.objective} | ${e.tracker}`)) { await press([]); if (Date.now() - lastShot > shotEvery) { lastShot = Date.now(); await page.screenshot({ path: `${out}/s${String(shotN++).padStart(3, '0')}-t${e.tick}-idle.jpg`, type: 'jpeg', quality: 70 }); } if (Date.now() - lastLog > 3000) { lastLog = Date.now(); log({ idle: true, tick: e.tick, objective: e.objective, tracker: e.tracker, player: { x: +e.player.x.toFixed(1), z: +e.player.z.toFixed(1), hp: Math.round(e.player.hp) } }); } await page.waitForTimeout(100); continue; }
+    if (values['idle-when'] && new RegExp(values['idle-when']).test(`${e.objective} | ${e.tracker}`)) { await press([]); if (Date.now() - lastShot > shotEvery) { lastShot = Date.now(); await capture({ path: `${out}/s${String(shotN++).padStart(3, '0')}-t${e.tick}-idle.jpg`, type: 'jpeg', quality: 70 }); } if (Date.now() - lastLog > 3000) { lastLog = Date.now(); log({ idle: true, tick: e.tick, objective: e.objective, tracker: e.tracker, player: { x: +e.player.x.toFixed(1), z: +e.player.z.toFixed(1), hp: Math.round(e.player.hp) } }); } await page.waitForTimeout(100); continue; }
     if (values['hold-e'] && e.prompt) keys.push('KeyE');
     // While driving Space is the horn/boost (K the handbrake): only fire on foot.
     if (target && !e.driving) { await page.mouse.move(target.aim.x, target.aim.y); keys.push('Space'); }
@@ -175,9 +205,31 @@ try {
         for (let k = 0; k < 6; k++) { const t = await page.evaluate(() => window.__SS__!.tick()); await page.screenshot({ path: `${out}/s${String(n0).padStart(3, '0')}-t${t}-b${k}.jpg`, type: 'jpeg', quality: 75 }); await page.waitForTimeout(60); }
       }
     }
-    if (Date.now() - lastShot > shotEvery) { lastShot = Date.now(); await page.screenshot({ path: `${out}/s${String(shotN++).padStart(3, '0')}-t${e.tick}.jpg`, type: 'jpeg', quality: 70 }); }
+    if (Date.now() - lastShot > shotEvery) { lastShot = Date.now(); await capture({ path: `${out}/s${String(shotN++).padStart(3, '0')}-t${e.tick}.jpg`, type: 'jpeg', quality: 70 }); }
     await page.waitForTimeout(100);
   }
   await press([]);
-  log({ end: true, frames: await page.evaluate(() => (window as unknown as { __r28Frames: unknown[] }).__r28Frames.splice(0)), errors });
+  const performanceSummary = await page.evaluate(() => {
+    const w = window as unknown as { __r28FrameTimes: number[]; __r28LongFrames: { tick: number; ms: number; elapsedMs: number }[] };
+    const times = w.__r28FrameTimes.slice().sort((a, b) => a - b);
+    const percentile = (p: number) => times.length ? +times[Math.max(0, Math.ceil(times.length * p) - 1)].toFixed(1) : null;
+    return { excludedInitialMs: 3000, samples: times.length, maxMs: times.length ? +times[times.length - 1].toFixed(1) : null, p99Ms: percentile(.99), over250: w.__r28LongFrames.filter(f => f.elapsedMs >= 3000 && f.ms > 250) };
+  });
+  log({ end: true, frames: await page.evaluate(() => (window as unknown as { __r28Frames: unknown[] }).__r28Frames.splice(0)), performanceSummary, errors });
+  if (trace && traceStarted) {
+    if (!traceStopped) await trace.send('Tracing.end');
+    const { stream, dataLossOccurred } = await traceCompleted!;
+    if (!stream) throw new Error('Chromium trace completed without a readable stream');
+    let bytes = 0, eof = false;
+    const file = openSync(`${out}/trace.json`, 'w');
+    try {
+      while (!eof) {
+        const chunk = await trace.send('IO.read', { handle: stream });
+        const data = Buffer.from(chunk.data, chunk.base64Encoded ? 'base64' : 'utf8');
+        writeFileSync(file, data); bytes += data.length; eof = chunk.eof;
+      }
+    } finally { closeSync(file); }
+    await trace.send('IO.close', { handle: stream });
+    log({ trace: `${out}/trace.json`, bytes, dataLossOccurred, rollingWindow: !!values['trace-window'], stoppedOnHitch: traceStopped });
+  }
 } finally { await context.close(); }

@@ -1,0 +1,203 @@
+# s37-hitches — frame hitch investigation
+
+Status: **goal not achieved**. Current shared-host L8 runs still contain frames above250ms. Complete traces attribute two reproductions to gaps in browser RAF dispatch with nearby game callbacks≤18.1ms; they do not identify the specific GPU/compositor/OS scheduling cause or retrospectively prove r35’s cause. Original r35 L8/L5 versions also pass controlled samples. No game runtime code has changed in this lane, so no runtime-fix load delta or before/after improvement is claimed.
+
+The canonical [measurement index](measurements.json) consolidates every completed frame window from the retained raw logs, with settings, max/p99, >250ms events, page errors, checkpoints, available load clocks and trace-loss flags. Route misses, overlapping-check diagnostics and export failures retain their limitations in the investigation below.
+
+| Evidence | Max / p99 | What it establishes |
+|---|---|---|
+| Current L8 low WebGL2 two baseline runs |133.3/16.8ms;83.4/16.8ms|Both sampled windows below250ms |
+| Current L5 low WebGL2 two baseline runs |50.1/16.8ms;50.1/16.8ms|Both sampled windows below250ms |
+| Current L8 high WebGPU two baseline runs |66.6/16.8ms;3233.3/66.7ms|Shared-host target fails |
+| Current L5 high WebGPU two baseline runs |33.4/16.8ms;166.6/16.8ms|Both sampled windows below250ms |
+| Current L8 high exclusive controls |50.0/16.8ms twice|Two controlled windows pass; does not erase shared failures |
+| Original r35 L8/L5 controlled samples |33.4/16.8ms;50.0/16.8ms|Historical game version does not reproduce failure in these samples |
+
+Runtime load-code delta: none (verified lane source diff under `src/` is empty). Measured load clocks are retained per run; comparisons across host conditions are not a supported performance-fix delta. Historical p99 and load clocks were never recorded, and no trace/profile artifact was found in the retained r35-vqa capture directory. Those values cannot be reconstructed from its >100ms-only log.
+
+Pending acceptance clarification: whether the250ms gate must hold during arbitrary shared-host contention or uses exclusive reference measurements. The original scope is retained until answered. A supported mitigation and complete causal attribution remain required.
+
+## Historical before samples (r35-vqa, 2026-11-11)
+
+These values come from the real-input logs cited in `docs/reports/r35-vqa/README.md`. They are context for reproducing the same runs, not a newly qualified baseline. The old logger retained only frames above 100 ms, so it cannot provide max or p99 across all frames.
+
+| Run | Settings | Long frames after first 3 s | Context recorded at the event | Load delta |
+|---|---|---:|---|---|
+| L8 lion (`l8-lion4-low-z1-gl`) | low, WebGL2, zoom 1 | 1817 ms at tick 7698 | Player at (-59.3, -12.6); lion at 1.9 m on the preceding sample; two runners visible; 2–3 allies. | not measured |
+| L5 cellar-to-Mia route (`l5c-low-z1-gl`) | low, WebGL2, zoom 1 | 667 ms at tick 9091; 583 ms at tick 10949 | Player stationary at (-32.6, -33.6); no enemies visible; two allies drawn at adjacent samples. | not measured |
+
+Raw source logs are in the shared scratchpad at `/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/r35-vqa/` (`l8-lion4-low-z1-gl/log.jsonl` and `l5c-low-z1-gl/log.jsonl`). The old report does not state host load for these samples.
+
+## Current evidence and measurement changes
+
+- The old fixture-play logger kept only intervals over 100 ms and had no performance counters attached to those intervals. This is insufficient for the requested p99 and causal attribution.
+- `tools/qa/r28-vqa-fixture-play.ts` now samples every RAF interval after the first 3 s, reports run max/p99 and the complete >250 ms event list, and attaches `Game.perf()` counters to long frames. It enables `loadProfile=2` so runtime node builds can be tied to material/object identities. `--trace` captures the Chromium main-thread/V8/GC timeline to the supplied output directory; it rejects output directories inside the worktree.
+- `npm run typecheck` passes with this instrumentation.
+- Controlled reruns have not started. The shared browser pool cannot bind port 4329 in this sandbox (`listen EPERM`); the legacy `tools/e2e-lock.sh` path also cannot read the process table required by `tools/mac-gpu-guard.py` (`ps` EPERM). Both browser admission paths were left intact; no gameplay browser ran.
+
+## Attribution and remaining work
+
+The L8 event coincides with a nearby active lion fight, which makes the encounter a useful reproduction window but does not prove shader compilation, FX, texture upload, or any other cause. The L5 events happened while stationary with no enemies visible, so nearby combat is a weak explanation; the logs still cannot distinguish deferred asset work, GC, CPU tasks, or external scheduling. No cause is yet supported strongly enough to justify a game change.
+
+Next: run at least two controlled baseline plays for each scene on low WebGL2 and high WebGPU, capture frame summaries and runtime counters, attribute each >250 ms event with a trace, implement the smallest evidence-backed fix without reducing content or quality, then repeat both runs and record per-run max/p99 plus load-time delta and host load.
+
+## 2026-11-11 continuation
+
+Filesystem restrictions were lifted; slim-worktree setup, process inspection, QA build and pooled browser admission now succeed. An owned orphan admission process from the restricted attempt was stopped by its exact PID. The owned preview on 4937 was stopped after the run.
+
+The first current L8 low/WebGL2 diagnostic completed for 180 s under shared host load (another QA lane active): 10,606 post-3-s intervals, max 66.7 ms, p99 16.8 ms, zero >250 ms, no page errors. **Excluded from qualification:** marker following stalled at (-115.2, -53.4), checkpoint `cleared-flamingo`, so the lion arena was never reached. Raw log and working Chromium trace: `/private/tmp/s37-hitches/l8-baseline-1/` (trace 340,129,037 bytes). This validates the new logger/trace path, not the requested arena performance.
+
+Recovered actual r35 lion route from its reached/blocked events: `--route='-40,-51;0,-51;0,-64;-60,-64;-60,-56;-60,-12;-60,0;-24,0;-24,4' --block 120`. Use this explicit route for the next baseline; the historical run reached the arena at ~tick2053. Build QA succeeded. Earlier sandbox blockers are resolved.
+
+## Recovered-route baseline samples
+
+Current unchanged game source, QA production build, headless Metal WebGL2, low, zoom1, real input, one pooled browser per reservation (<10min). Shared Mac load; these are exploratory samples, not isolated reference-machine qualification.
+
+| Run | Duration | Post-3s samples | Max | p99 | >250ms | Coverage |
+|---|---:|---:|---:|---:|---:|---|
+| `l8-route-baseline-1` | 180s | 10,594 | 133.3ms | 16.8ms | 0 | Explicit recovered route reached `arena-lion`; lion chase/attack nearby. |
+| `l5-baseline-1` | 210s | 12,403 | 50.1ms | 16.8ms | 0 | Cellar → Mia → `survivor-1`; stationary (-31.1,-33.6), two drawn allies, no visible enemies, both historical event ticks covered. |
+
+Both runs had zero page errors. Logs and complete Chromium traces remain outside Git in `/private/tmp/s37-hitches/<run>/` (338,382,633 / 328,467,400 trace bytes). No game change was made: the historical >250ms failures did not recur in these first current samples. A clean current sample cannot retrospectively attribute the historical event. Repeat low/WebGL2 and high/WebGPU coverage, trace analysis, before/after/load delta and a supported attribution remain outstanding. Owned preview4937 stopped after both runs; no check left running.
+
+### First high WebGPU samples
+
+Same QA build and recovered routes, high quality, zoom1, headless Metal WebGPU, one browser per <10min reservation, shared Mac load. Backend was read from the runtime log.
+
+| Run | Duration | Post-3s samples | Max | p99 | >250ms |
+|---|---:|---:|---:|---:|---:|
+| `l8-high-baseline-1` | 180s | 10,587 | 66.6ms | 16.8ms | 0 |
+| `l5-high-baseline-1` | 210s | 12,415 | 33.4ms | 16.8ms | 0 |
+
+L8 reached `arena-lion` with lion attacks and nearby runner/armored combat; L5 reached `survivor-1` at (-30.7,-33.6), two allies and no visible enemies through both historical event windows. Zero page errors. Raw logs and traces remain in `/private/tmp/s37-hitches/<run>/`. First samples now exist for all four scene/backend combinations, but repeats and causal attribution remain incomplete. No gameplay/render change and no measured load delta yet. All owned checks finished and preview4937 stopped.
+
+### Trace inspection and load clock
+
+`trace-summary.json` records maxima from all duration events in the four saved traces. Major GC maxima are 30.2–36.5ms and minor GC maxima 5.1–7.2ms. These traces do not reproduce a >250ms gameplay frame and therefore do not establish the historical cause. Maxima cover the complete diagnostic trace, including pre-play setup; they are not post-3s timing gates. CPU profiler startup itself takes192.6–307.7ms before the play collector starts, illustrating why setup/trace overhead cannot be assigned to the old in-play events.
+
+The runner now logs `loadWallMs` around fixture/direct level setup and the engine's `loadTiming` separately. Fixture setup includes checkpoint restoration and the existing paused setup steps; direct setup includes its existing60ticks. Compare like setup paths across repeats, and use engine loadTiming to distinguish engine load from harness preparation. No measured load-time delta is claimed yet.
+
+### Second low WebGL2 samples
+
+Same QA production build, tracing, routes, durations and zoom1; separate pooled reservations under10min each, shared host. Both reached the same arena/survivor checkpoints and had zero page errors. Compact retained receipt: `repeat-low.json`.
+
+| Run | Samples after3s | Max | p99 | >250ms | Setup wall | Engine data/sim/view |
+|---|---:|---:|---:|---:|---:|---|
+| L8 low repeat2 | 10,596 | 83.4ms | 16.8ms | 0 | 6196ms | 13.6 /145.8 /3008.5ms |
+| L5 low repeat2 | 12,407 | 50.1ms | 16.8ms | 0 | 5243ms | 8.5 /214.8 /2477.5ms |
+
+There are now two low/WebGL2 samples per scene, all below250ms after3s. No game fix was applied, so these are repeated baselines rather than an improvement claim. High/WebGPU repeats, a reproducible cause for the historical outliers and a measured before/after load delta remain open. Raw logs/traces: `/private/tmp/s37-hitches/l8-route-baseline-2/` and `l5-baseline-2/`. All checks finished; owned preview4937 stopped.
+
+### Second high WebGPU samples — failure reproduced
+
+`repeat-high.json` retains full frame summaries and load clocks. Same recovered routes, durations, high/WebGPU zoom1, one reservation per run under10min, shared Mac/browser pool. L8 reached arena-lion and **FAILS**: 9,345 post3s intervals, max3233.3ms, p99 66.7ms,15frames>250ms (ticks5577–8617). L5:12,286intervals, max166.6ms, p99 16.8ms, zero>250ms. Both zero page errors. This failure is retained and cannot be excluded from acceptance.
+
+L8's650–3233ms gaps have unchanged nodeBuilds642, heap386MB, entities1205; captured simWorldMs12.9–30.5ms and simTickMs3–14.5ms. Full trace duration-event scan shows max FireAnimationFrame40.42ms, MajorGC43.81ms; neither explains3233.3ms. The browser-wide trace contains48 CpuProfiler::StartProfiling events (max240.76ms), HandlePostMessage max544.15ms and background script parsing230.72ms. Process/timestamp mapping is needed before attributing these shared-browser events to the measured renderer or external work. Raw trace/log: `/private/tmp/s37-hitches/l8-high-baseline-2/`; L5 in `l5-high-baseline-2/`. All owned commands terminal; preview4937 stopped.
+
+### Failing trace process audit
+
+`failing-trace-processes.json` identifies measured renderer PID63443 from4937 script URLs; foreign renderers63585 (4931) and65593/65596 (4981) share this browser-wide trace. The measured renderer's traced RAF CPU max is40.42ms. Its RAF timestamps span95,247.934ms, shorter than the180s measurement; the largest measured gap occurred at131,320ms. This trace cannot directly attribute that largest gap. The previous export did not retain Chromium's data-loss flag, so buffer loss is a concern, not a proven cause.
+
+Runner trace capture now requests `recordAsMuchAsPossible`, removes verbose general V8/GC categories while retaining devtools timeline/CPU samples, and logs `dataLossOccurred`. Next controlled measurement should use repository `tools/perf/quiet-run.sh` exclusive admission around the existing e2e-lock invocation, with conditions receipt; the retained shared-load failure remains a failure. Foreign activity is evidenced but its causal role is not yet established. No game change is justified yet.
+
+### Exclusive L8 high control1
+
+`exclusive-l8-1.json` retains admission, load and frame receipts. Quiet admission waited while load fell7.73→3.20, then passed exclusive/load<3/no foreign browsers or build/test jobs. Same unchanged game build and route reached arena-lion. 10,604post3s frames, max50.0ms, p99 16.8ms, zero>250ms, zero page errors. This supports shared scheduling/resource contention as a hypothesis but one isolated clean control does not causally explain the shared failure.
+
+The new trace export explicitly reports `dataLossOccurred:true` at300,507,313bytes. It is unsuitable for full-window attribution; this is no longer hidden. Trace capture now excludes default categories and CPU-profiler sampling, retaining only devtools timeline/user timing to reduce capture pressure. Current RAF metrics remain separately recorded. Need complete failing/control trace, repeated exclusive controls and full original acceptance audit. Owned run terminal and preview4937 stopped. Target not achieved.
+
+### Exclusive L8 high control2 — complete trace
+
+`exclusive-l8-2.json` retains quiet admission/load/frame/export receipts. Exclusive/load<3 admission passed after the bounded wait. Same game build, route, high/WebGPU zoom1 and180s duration reached arena-lion.10,605post3s intervals, max50.0ms, p99 16.8ms, zero>250ms, zero page errors. Export132,557,761bytes, **dataLossOccurred:false**. `exclusive-l8-2-trace.json` verifies one RAF renderer PID87620,180,059.39ms traced RAF span, max RAF CPU33.73ms. This fixes the diagnostic capture gap without changing game content or rendering quality.
+
+Two exclusive controls now pass, versus the retained shared high/WebGPU failure (max3233.3ms). That is evidence consistent with shared resource/scheduling interference, but does not establish a unique cause for each shared or historical gap; the failing trace lacks the largest event window. Need a complete failing shared trace or another direct causal probe before claiming attribution. Target remains open. All owned processes/checks terminal; preview4937 stopped.
+
+### Complete shared failing trace with aligned marker
+
+`shared-complete-1.json` retains load/frame/export receipt and measured host-load range7.79–13.00. **Diagnostic only:** typecheck overlapped early play; check then terminated successfully. A later600ms frame occurred at tick9341 /155425ms, after that check exited. Max600ms,p99 33.3ms, one>250ms. Trace469,427,918bytes, dataLossOccurred:false. New user-timing markers align tick/ms/elapsed directly to trace timestamps; log lines retain epoch and host load.
+
+At the600ms event, measured renderer PID92775 marker timestamp229872677832us: preceding game RAF starts at marker−608.51ms and lasts11.27ms; next game RAF starts−16.78ms and lasts16.76ms. No matching long duration JS task appears in the measured renderer over the intervening interval. This directly attributes this reproduction's long interval to a gap in RAF dispatch, rather than600ms synchronous game JS work. It does not distinguish compositor/GPU/OS scheduling delay or retroactively identify r35's old event. Two exclusive controls were50ms max. Raw source remains `/private/tmp/s37-hitches/l8-high-shared-complete-1/trace.json` and log. No game visual/content reduction or sim change made. Target remains open; historical attribution and a supported mitigation/load delta still need completion. Typecheck/lint/diff-check pass; all owned processes terminal and preview4937 stopped.
+
+### Screenshot correlation — testable harness hypothesis
+
+`screenshot-correlation.json` matches historical and complete-reproduction hitch ticks to screenshot filename ticks. Historical L8 tick7698/1817ms follows screenshot tick7693 by5ticks; historical L5 tick10949/583ms follows screenshot10944 by5ticks, and L5 tick10483/317ms follows10478 by5ticks. Complete shared reproduction tick9341/600ms follows screenshot9336 by5ticks. Other L5 events have58/130tick offsets, so the correlation is not universal and is not yet causal proof.
+
+Runner capture calls now log exact start/end epochs and duration; `--no-captures` disables screenshots during measured play without changing game graphics/content or real-input behavior. This enables paired screenshot-on/off timing rather than guessing a game shader fix from missing evidence. Typecheck/lint/diff-check pass. No current browser/server process started in this investigation step. Next: paired runs under the same conditions with timed captures, then repeat screenshot-free windows for all four cells and compare load clocks. Historical screenshot-heavy QA intervals remain retained as failures until attribution is supported.
+
+### Capture-on/off pair1 — screenshot-only mitigation rejected
+
+`capture-pair-1.json` retains summaries, load clocks, host-load ranges, capture counts and trace status. Same game build/route/high WebGPU/zoom1/180s, sequential separate shared reservations. Both reached arena-lion, zero page errors.
+
+| Mode | max/p99 | >250ms | setup load | host load1 range | captures |
+|---|---|---:|---:|---|---|
+| capture on |233.3/16.8ms|0|6303ms|4.50–8.28|30; max198ms |
+| capture off |1116.7/16.8ms|1 at tick7281/elapsed121365ms|6278ms|6.11–10.69|0 |
+
+Observed setup delta(off−on)−25ms; no runtime load code changed. Higher/shared host load confounds a performance improvement claim. Capture suppression is **not sufficient**: a >1s frame occurs with zero screenshot calls. The prior screenshot correlation cannot justify calling screenshots the sole cause, and this failed sample remains part of acceptance. Need complete dispatch-gap analysis and a supported mitigation; game quality/content unchanged. All owned commands terminal; preview4937 stopped.
+
+### Capture-off complete gap analysis
+
+`capture-off-gap.json` retains exact marker PID3396/tid14887572 at230473130295us (tick7281,1116.7ms interval,elapsed121365ms) and neighboring measured-renderer tasks. The largest duration task in its preceding1200ms window is18.073ms; callbacks near−1146ms last8.287ms and near−18.131ms last18.073ms. Thus this screenshot-free failure is also a frame-dispatch gap, not a matching long game-JS task. Exclusive controls remain50ms max. The specific source of delayed dispatch (browser/compositor/GPU/OS) is still unresolved.
+
+Runner now supports `--trace-scheduling`, adding toplevel/gpu/viz/cc events to the otherwise narrower trace and retaining the same data-loss check. Use it with `--no-captures` for the next shared-load failing reproduction; this is diagnostic instrumentation only. No runtime prewarm/content/AI/stat change has been made, because captured failures have not identified such work as the cause. Historical r35 attribution remains indirect. Goal is not complete.
+
+### Scheduling diagnostic1 — export failure retained
+
+`scheduling-1.json` retains completed180s screenshot-free high/WebGPU frame window:10,605samples after3s,max50ms,p99 16.8ms,zero>250ms,page errors0. It did not reproduce the dispatch gap. Adding browser/GPU/compositor/task categories exceeded Node's maximum string length during export (`RangeError: Invalid string length`); no usable trace was written. Command exited1 and is not represented as a successful trace capture.
+
+Runner now writes each CDP stream chunk directly to an open file and counts bytes, decoding base64 chunks if returned. This removes the whole-trace string allocation/length limit while retaining Chromium data-loss logging. Next scheduling reproduction must still demonstrate a complete export before attribution. Owned browser command terminal; preview4937 stopped. Runtime game unchanged; objective remains incomplete.
+
+### Scheduling diagnostic2 — streaming export works, broad trace still loses events
+
+`scheduling-2.json`:180s high/WebGPU screenshot-free route reached arena-lion;10,597post3s samples,max50.1ms,p99 16.8ms,zero>250ms,page errors0. Host load1 range2.67–4.28,setup6509ms. Streaming export completed976,749,345bytes, proving removal of the Node string-length limit; Chromium reports dataLossOccurred:true, so full-window causal claims remain disallowed. No failing gap reproduced in this sample.
+
+Scheduling categories narrowed from toplevel/gpu/viz/cc to toplevel/gpu, retaining devtools timeline/user markers: broad compositor event volume exceeds trace capacity. Lint/diff-check pass for this category-only adjustment. This is a diagnostic correction, not a game performance fix. All owned commands terminal; preview4937 stopped. Remaining: complete scheduling trace around an actual failure, supported mitigation, final like-for-like before/after/load audit. Goal incomplete.
+
+### Original r35 game-version control1
+
+Created detached isolated worktree `/private/tmp/s37-r35-baseline` at93016109, ran required worktree setup and slim --no-assets, then built QA successfully. No lane game source change. Original-version preview4938, current instrumented fixture driver and recovered route, exclusive quiet low/WebGL2 zoom1/180s. `r35-lion-low-1.json` retains admission/load/frame/export receipts. Arena-lion reached,10,608post3s samples,max33.4ms,p99 16.8ms,zero>250ms,page errors0. Trace130,646,520bytes,dataLossOccurred:false. Setup5863ms;engine data16.4/sim136.7/view2899.2ms.
+
+The original game version itself passes this controlled sample; therefore disappearance of historical1817ms cannot be attributed solely to later lion/render changes. Combined with complete current dispatch-gap failures under shared load, external scheduling remains the leading hypothesis, not a proved unique historical cause. Further original-version repeat/L5 controls and final criterion audit still required. Detached worktree retained for reuse (no uncommitted source changes); owned preview4938 stopped and all commands terminal. Objective incomplete.
+
+### Original L5 quiet-control admission failure
+
+`r35-l5-admission-failure.json` retains the120s bounded admission attempt, exit75. Load stayed3.32–3.78 after cooldown, above the strict<3 gate; no L5 browser measurement started. This is unmeasured coverage. No gate bypass/restart, no foreign process signaled. Owned preview4938 stopped; detached original worktree remains for a later quiet slot.
+
+## Current completion audit (not achieved)
+
+| Requirement | Current authoritative evidence | Result |
+|---|---|---|
+| L8 lion and L5, low WebGL2/high WebGPU, ≥2runs each | Repeated baseline JSONs and objective logs show intended checkpoints | Covered, but not all pass |
+| No frame>250ms after3s | Shared L8 retained3233.3/600/1116.7ms failures; two exclusive current L8 controls50ms; old L8 control33.4ms; L5 repeated samples≤166.6ms | FAIL overall; quiet-only success cannot erase shared failures |
+| Causes attributed with evidence | Two complete marker-aligned failures show RAF dispatch gaps, adjacent JS≤18.1ms; unchanged node builds/small sim counters; screenshot-off failure; foreign contexts and elevated host load observed | Dispatch gap evidenced; specific scheduling source and historical cause unresolved |
+| Supported fix without visual/content/gameplay reduction | Only QA instrumentation/capture/export changes; no runtime game code changed | No supported runtime fix yet |
+| README before/after max/p99 and load delta | Baseline/control tables and raw JSON, setup clocks and capture-pair−25ms delta | Measurements retained; no causally supported before/after fix comparison |
+| Checks/commit/cleanup | Typecheck/lint passed for runner changes; subsequent category-only lint/diff-check; explicit lane commits; owned servers stopped | Done for completed changes |
+
+Next useful work is a narrow scheduling trace of a reproduced dispatch delay or completion of original L5 quiet controls when admission permits, rather than another speculative runtime change. Target remains active and incomplete.
+
+### Original L5 control2 completed
+
+`r35-l5-low-2.json` retains original93016109/low WebGL2/zoom1/210s recovered route, admission/load/frame/export receipts. Quiet admission passed after waiting, but host load later rose to6.47 at play end; this is exclusive-browser admission, not proof the whole host stayed quiet. Survivor-1 reached;12,411post3s frames,max50ms,p99 16.8ms,zero>250ms,page errors0. Trace100,017,466bytes,dataLossOccurred:false. Setup5067ms,engine data7.5/sim207.3/view2386.5ms. Thus both original scene versions have a controlled clean sample; old L5 does not reproduce its historical667/583ms here.
+
+Acceptance clarification requested: exclusive quiet reference runs versus also requiring shared-host contention to pass. No answer assumed; original objective and retained shared failures remain in scope. All owned checks terminal and preview4938 stopped. No runtime game fix or causal historical claim. Goal remains incomplete.
+
+### Rolling scheduling diagnostic1
+
+New optional `--trace-window` uses a64MB continuously recorded trace buffer, stops tracing when the input loop first observes a post3s frame>250ms, and keeps the normal full-run frame collector active. It records rollingWindow/stoppedOnHitch flags; trace completion listener is installed before tracing starts so early stop cannot lose its stream event. This bounds the retained scheduling history rather than promising full180s coverage.
+
+`rolling-1.json`:180s screenshot-free high/WebGPU lion route,max50.1ms,p99 16.8ms,zero>250ms,page errors0. No hitch trigger; recent-window export401,542,954bytes,dataLossOccurred:true (earlier ring events overwritten),rollingWindow:true,stoppedOnHitch:false. This validates no-trigger export lifecycle but does not validate a triggered causal window. Typecheck/lint/diff-check passed before run. All commands terminal; owned preview4937 stopped. No runtime game change; target and acceptance clarification remain open.
+
+### Bounded rolling retries2/3
+
+`rolling-retries.json` retains two further180s screenshot-free high/WebGPU samples, separate reservations each<10min. Run2:10,609post3s frames,max49.9ms,p99 16.8ms,zero>250ms. Run3:10,603frames,max50ms,p99 16.8ms,zero>250ms. Both stoppedOnHitch:false; no triggered causal window was obtained. The bounded batch ended after two attempts; these clean samples do not erase retained failures or prove the trigger path. All commands terminal; owned preview4937 stopped.
+
+No new runtime fix is justified by this batch. Acceptance clarification remains unanswered; original scope is unchanged. The remaining obstacle is establishing the specific source and a supported mitigation for intermittent external frame dispatch delays, while the historical traces needed for direct retrospective attribution were never retained. No completion claimed.
+
+## Blocked handoff after bounded investigation
+
+Current audit: clean lane worktree, no owned browser/server/check live, no game source diff under src/. Goal accounting reports approximately125minutes, reaching the requested~2h investigation time box. The acceptance question has remained unanswered across more than three consecutive continuations while independent controls and bounded rolling retries were completed.
+
+Cannot honestly claim full completion: historical full-frame/p99/load traces were not recorded; current intermittent shared-host failures are dispatch gaps with no matching long game-JS work, but specific GPU/compositor/OS attribution and a supported runtime mitigation remain unproved. Clean current/original controls cannot replace those failures. No evidence-backed game change is available from the captured work.
+
+Needed to resume meaningfully: an explicit acceptance/reference-condition decision (exclusive controlled timings versus shared-host contention) and, if shared failures remain required, an agreed controlled failing host condition or system-level scheduling capture that can distinguish GPU/compositor/OS delay. Original r35 traces would be needed for direct retrospective attribution; they are absent from retained artifacts. All reports and diagnostic code are committed; raw evidence and detached original checkout are retained at the documented private/tmp paths. Goal blocked, not complete. No tolerance/visual/content/gameplay reduction made.

@@ -1,0 +1,761 @@
+[
+  {
+    "run": "l5-baseline-1",
+    "settings": {
+      "backend": "webgl",
+      "quality": "low",
+      "zoom": 1
+    },
+    "frameSummary": {
+      "excludedInitialMs": 3000,
+      "samples": 12403,
+      "maxMs": 50.1,
+      "p99Ms": 16.8,
+      "over250": []
+    },
+    "errors": [],
+    "load": null,
+    "trace": {
+      "wall": "06:24:57",
+      "trace": "/private/tmp/s37-hitches/l5-baseline-1/trace.json",
+      "bytes": 328467400
+    },
+    "checkpoints": [
+      "outside",
+      "survivor-1"
+    ],
+    "rawLog": "/private/tmp/s37-hitches/l5-baseline-1/log.jsonl"
+  },
+  {
+    "run": "l5-baseline-2",
+    "settings": {
+      "backend": "webgl",
+      "quality": "low",
+      "zoom": 1
+    },
+    "frameSummary": {
+      "excludedInitialMs": 3000,
+      "samples": 12407,
+      "maxMs": 50.1,
+      "p99Ms": 16.8,
+      "over250": []
+    },
+    "errors": [],
+    "load": {
+      "wall": "06:39:59",
+      "loadWallMs": 5243,
+      "loadTiming": {
+        "dataMs": 8.5,
+        "simMs": 214.80000001192093,
+        "viewMs": 2477.5
+      }
+    },
+    "trace": {
+      "wall": "06:44:00",
+      "trace": "/private/tmp/s37-hitches/l5-baseline-2/trace.json",
+      "bytes": 319053759
+    },
+    "checkpoints": [
+      "outside",
+      "survivor-1"
+    ],
+    "rawLog": "/private/tmp/s37-hitches/l5-baseline-2/log.jsonl"
+  },
+  {
+    "run": "l5-high-baseline-1",
+    "settings": {
+      "backend": "webgpu",
+      "quality": "high",
+      "zoom": 1
+    },
+    "frameSummary": {
+      "excludedInitialMs": 3000,
+      "samples": 12415,
+      "maxMs": 33.4,
+      "p99Ms": 16.8,
+      "over250": []
+    },
+    "errors": [],
+    "load": null,
+    "trace": {
+      "wall": "06:33:48",
+      "trace": "/private/tmp/s37-hitches/l5-high-baseline-1/trace.json",
+      "bytes": 325815027
+    },
+    "checkpoints": [
+      "outside",
+      "survivor-1"
+    ],
+    "rawLog": "/private/tmp/s37-hitches/l5-high-baseline-1/log.jsonl"
+  },
+  {
+    "run": "l5-high-baseline-2",
+    "settings": {
+      "backend": "webgpu",
+      "quality": "high",
+      "zoom": 1
+    },
+    "frameSummary": {
+      "excludedInitialMs": 3000,
+      "samples": 12286,
+      "maxMs": 166.6,
+      "p99Ms": 16.8,
+      "over250": []
+    },
+    "errors": [],
+    "load": {
+      "wall": "06:48:39",
+      "loadWallMs": 7190,
+      "loadTiming": {
+        "dataMs": 13.5,
+        "simMs": 254.59999999403954,
+        "viewMs": 3700.5999999940395
+      }
+    },
+    "trace": {
+      "wall": "06:52:37",
+      "trace": "/private/tmp/s37-hitches/l5-high-baseline-2/trace.json",
+      "bytes": 356457863
+    },
+    "checkpoints": [
+      "outside",
+      "survivor-1"
+    ],
+    "rawLog": "/private/tmp/s37-hitches/l5-high-baseline-2/log.jsonl"
+  },
+  {
+    "run": "l8-baseline-1",
+    "settings": {
+      "backend": "webgl",
+      "quality": "low",
+      "zoom": 1
+    },
+    "frameSummary": {
+      "excludedInitialMs": 3000,
+      "samples": 10606,
+      "maxMs": 66.7,
+      "p99Ms": 16.8,
+      "over250": []
+    },
+    "errors": [],
+    "load": null,
+    "trace": {
+      "wall": "06:16:14",
+      "trace": "/private/tmp/s37-hitches/l8-baseline-1/trace.json",
+      "bytes": 340129037
+    },
+    "checkpoints": [
+      "cleared-flamingo"
+    ],
+    "rawLog": "/private/tmp/s37-hitches/l8-baseline-1/log.jsonl"
+  },
+  {
+    "run": "l8-capture-off-1",
+    "settings": {
+      "backend": "webgpu",
+      "quality": "high",
+      "zoom": 1
+    },
+    "frameSummary": {
+      "excludedInitialMs": 3000,
+      "samples": 10539,
+      "maxMs": 1116.7,
+      "p99Ms": 16.8,
+      "over250": [
+        {
+          "tick": 7281,
+          "ms": 1116.7,
+          "elapsedMs": 121365
+        }
+      ]
+    },
+    "errors": [],
+    "load": {
+      "wall": "07:20:03",
+      "epochMs": 1794381603154,
+      "hostLoad": [
+        7.201171875,
+        6.52783203125,
+        7.06689453125
+      ],
+      "loadWallMs": 6278,
+      "loadTiming": {
+        "dataMs": 15.199999988079071,
+        "simMs": 144.2000000178814,
+        "viewMs": 3207.0999999940395
+      }
+    },
+    "trace": {
+      "wall": "07:23:18",
+      "epochMs": 1794381798875,
+      "hostLoad": [
+        10.69482421875,
+        8.0205078125,
+        7.55322265625
+      ],
+      "trace": "/private/tmp/s37-hitches/l8-capture-off-1/trace.json",
+      "bytes": 304327292,
+      "dataLossOccurred": false
+    },
+    "checkpoints": [
+      "arena-lion",
+      "cleared-flamingo"
+    ],
+    "rawLog": "/private/tmp/s37-hitches/l8-capture-off-1/log.jsonl"
+  },
+  {
+    "run": "l8-capture-on-1",
+    "settings": {
+      "backend": "webgpu",
+      "quality": "high",
+      "zoom": 1
+    },
+    "frameSummary": {
+      "excludedInitialMs": 3000,
+      "samples": 10484,
+      "maxMs": 233.3,
+      "p99Ms": 16.8,
+      "over250": []
+    },
+    "errors": [],
+    "load": {
+      "wall": "07:16:40",
+      "epochMs": 1794381400452,
+      "hostLoad": [
+        4.9853515625,
+        6.3115234375,
+        7.1748046875
+      ],
+      "loadWallMs": 6303,
+      "loadTiming": {
+        "dataMs": 15.600000023841858,
+        "simMs": 152.2999999821186,
+        "viewMs": 3317.5
+      }
+    },
+    "trace": {
+      "wall": "07:19:54",
+      "epochMs": 1794381594805,
+      "hostLoad": [
+        6.609375,
+        6.40185546875,
+        7.0263671875
+      ],
+      "trace": "/private/tmp/s37-hitches/l8-capture-on-1/trace.json",
+      "bytes": 311717192,
+      "dataLossOccurred": false
+    },
+    "checkpoints": [
+      "arena-lion",
+      "cleared-flamingo"
+    ],
+    "rawLog": "/private/tmp/s37-hitches/l8-capture-on-1/log.jsonl"
+  },
+  {
+    "run": "l8-high-baseline-1",
+    "settings": {
+      "backend": "webgpu",
+      "quality": "high",
+      "zoom": 1
+    },
+    "frameSummary": {
+      "excludedInitialMs": 3000,
+      "samples": 10587,
+      "maxMs": 66.6,
+      "p99Ms": 16.8,
+      "over250": []
+    },
+    "errors": [],
+    "load": null,
+    "trace": {
+      "wall": "06:29:34",
+      "trace": "/private/tmp/s37-hitches/l8-high-baseline-1/trace.json",
+      "bytes": 321550616
+    },
+    "checkpoints": [
+      "arena-lion",
+      "cleared-flamingo"
+    ],
+    "rawLog": "/private/tmp/s37-hitches/l8-high-baseline-1/log.jsonl"
+  },
+  {
+    "run": "l8-high-baseline-2",
+    "settings": {
+      "backend": "webgpu",
+      "quality": "high",
+      "zoom": 1
+    },
+    "frameSummary": {
+      "excludedInitialMs": 3000,
+      "samples": 9345,
+      "maxMs": 3233.3,
+      "p99Ms": 66.7,
+      "over250": [
+        {
+          "tick": 5577,
+          "ms": 283.4,
+          "elapsedMs": 93122
+        },
+        {
+          "tick": 5601,
+          "ms": 266.6,
+          "elapsedMs": 93839
+        },
+        {
+          "tick": 5768,
+          "ms": 300,
+          "elapsedMs": 97588
+        },
+        {
+          "tick": 5809,
+          "ms": 650,
+          "elapsedMs": 98838
+        },
+        {
+          "tick": 5942,
+          "ms": 899.9,
+          "elapsedMs": 101872
+        },
+        {
+          "tick": 5947,
+          "ms": 266.7,
+          "elapsedMs": 102138
+        },
+        {
+          "tick": 6691,
+          "ms": 266.6,
+          "elapsedMs": 115554
+        },
+        {
+          "tick": 6765,
+          "ms": 266.6,
+          "elapsedMs": 117621
+        },
+        {
+          "tick": 6831,
+          "ms": 266.7,
+          "elapsedMs": 119104
+        },
+        {
+          "tick": 6853,
+          "ms": 266.7,
+          "elapsedMs": 119788
+        },
+        {
+          "tick": 7006,
+          "ms": 266.6,
+          "elapsedMs": 123504
+        },
+        {
+          "tick": 7070,
+          "ms": 300.1,
+          "elapsedMs": 124971
+        },
+        {
+          "tick": 7261,
+          "ms": 3233.3,
+          "elapsedMs": 131320
+        },
+        {
+          "tick": 7892,
+          "ms": 316.7,
+          "elapsedMs": 142237
+        },
+        {
+          "tick": 8617,
+          "ms": 616.7,
+          "elapsedMs": 154953
+        }
+      ]
+    },
+    "errors": [],
+    "load": {
+      "wall": "06:44:49",
+      "loadWallMs": 6380,
+      "loadTiming": {
+        "dataMs": 13.900000005960464,
+        "simMs": 150.69999998807907,
+        "viewMs": 3370.5999999940395
+      }
+    },
+    "trace": {
+      "wall": "06:48:29",
+      "trace": "/private/tmp/s37-hitches/l8-high-baseline-2/trace.json",
+      "bytes": 319668917
+    },
+    "checkpoints": [
+      "arena-lion",
+      "cleared-flamingo"
+    ],
+    "rawLog": "/private/tmp/s37-hitches/l8-high-baseline-2/log.jsonl"
+  },
+  {
+    "run": "l8-high-exclusive-1",
+    "settings": {
+      "backend": "webgpu",
+      "quality": "high",
+      "zoom": 1
+    },
+    "frameSummary": {
+      "excludedInitialMs": 3000,
+      "samples": 10604,
+      "maxMs": 50,
+      "p99Ms": 16.8,
+      "over250": []
+    },
+    "errors": [],
+    "load": {
+      "wall": "06:58:08",
+      "loadWallMs": 5719,
+      "loadTiming": {
+        "dataMs": 14.400000005960464,
+        "simMs": 133.2999999821186,
+        "viewMs": 3069.9000000059605
+      }
+    },
+    "trace": {
+      "wall": "07:01:35",
+      "trace": "/private/tmp/s37-hitches/l8-high-exclusive-1/trace.json",
+      "bytes": 300507313,
+      "dataLossOccurred": true
+    },
+    "checkpoints": [
+      "arena-lion",
+      "cleared-flamingo"
+    ],
+    "rawLog": "/private/tmp/s37-hitches/l8-high-exclusive-1/log.jsonl"
+  },
+  {
+    "run": "l8-high-exclusive-2",
+    "settings": {
+      "backend": "webgpu",
+      "quality": "high",
+      "zoom": 1
+    },
+    "frameSummary": {
+      "excludedInitialMs": 3000,
+      "samples": 10605,
+      "maxMs": 50,
+      "p99Ms": 16.8,
+      "over250": []
+    },
+    "errors": [],
+    "load": {
+      "wall": "07:04:44",
+      "loadWallMs": 5703,
+      "loadTiming": {
+        "dataMs": 16,
+        "simMs": 135.59999999403954,
+        "viewMs": 3048.800000011921
+      }
+    },
+    "trace": {
+      "wall": "07:07:50",
+      "trace": "/private/tmp/s37-hitches/l8-high-exclusive-2/trace.json",
+      "bytes": 132557761,
+      "dataLossOccurred": false
+    },
+    "checkpoints": [
+      "arena-lion",
+      "cleared-flamingo"
+    ],
+    "rawLog": "/private/tmp/s37-hitches/l8-high-exclusive-2/log.jsonl"
+  },
+  {
+    "run": "l8-high-shared-complete-1",
+    "settings": {
+      "backend": "webgpu",
+      "quality": "high",
+      "zoom": 1
+    },
+    "frameSummary": {
+      "excludedInitialMs": 3000,
+      "samples": 10364,
+      "maxMs": 600,
+      "p99Ms": 33.3,
+      "over250": [
+        {
+          "tick": 9341,
+          "ms": 600,
+          "elapsedMs": 155425
+        }
+      ]
+    },
+    "errors": [],
+    "load": {
+      "wall": "07:09:28",
+      "epochMs": 1794380968413,
+      "hostLoad": [
+        10.158203125,
+        5.87939453125,
+        7.2783203125
+      ],
+      "loadWallMs": 11352,
+      "loadTiming": {
+        "dataMs": 37.69999998807907,
+        "simMs": 173.60000002384186,
+        "viewMs": 6505.399999976158
+      }
+    },
+    "trace": {
+      "wall": "07:12:52",
+      "epochMs": 1794381172382,
+      "hostLoad": [
+        8.2587890625,
+        7.62939453125,
+        7.79345703125
+      ],
+      "trace": "/private/tmp/s37-hitches/l8-high-shared-complete-1/trace.json",
+      "bytes": 469427918,
+      "dataLossOccurred": false
+    },
+    "checkpoints": [
+      "arena-lion",
+      "cleared-flamingo"
+    ],
+    "rawLog": "/private/tmp/s37-hitches/l8-high-shared-complete-1/log.jsonl"
+  },
+  {
+    "run": "l8-route-baseline-1",
+    "settings": {
+      "backend": "webgl",
+      "quality": "low",
+      "zoom": 1
+    },
+    "frameSummary": {
+      "excludedInitialMs": 3000,
+      "samples": 10594,
+      "maxMs": 133.3,
+      "p99Ms": 16.8,
+      "over250": []
+    },
+    "errors": [],
+    "load": null,
+    "trace": {
+      "wall": "06:20:27",
+      "trace": "/private/tmp/s37-hitches/l8-route-baseline-1/trace.json",
+      "bytes": 338382633
+    },
+    "checkpoints": [
+      "arena-lion",
+      "cleared-flamingo"
+    ],
+    "rawLog": "/private/tmp/s37-hitches/l8-route-baseline-1/log.jsonl"
+  },
+  {
+    "run": "l8-route-baseline-2",
+    "settings": {
+      "backend": "webgl",
+      "quality": "low",
+      "zoom": 1
+    },
+    "frameSummary": {
+      "excludedInitialMs": 3000,
+      "samples": 10596,
+      "maxMs": 83.4,
+      "p99Ms": 16.8,
+      "over250": []
+    },
+    "errors": [],
+    "load": {
+      "wall": "06:36:24",
+      "loadWallMs": 6196,
+      "loadTiming": {
+        "dataMs": 13.599999994039536,
+        "simMs": 145.80000001192093,
+        "viewMs": 3008.5
+      }
+    },
+    "trace": {
+      "wall": "06:39:52",
+      "trace": "/private/tmp/s37-hitches/l8-route-baseline-2/trace.json",
+      "bytes": 320194608
+    },
+    "checkpoints": [
+      "arena-lion",
+      "cleared-flamingo"
+    ],
+    "rawLog": "/private/tmp/s37-hitches/l8-route-baseline-2/log.jsonl"
+  },
+  {
+    "run": "l8-scheduling-1",
+    "settings": {
+      "backend": "webgpu",
+      "quality": "high",
+      "zoom": 1
+    },
+    "frameSummary": {
+      "excludedInitialMs": 3000,
+      "samples": 10605,
+      "maxMs": 50,
+      "p99Ms": 16.8,
+      "over250": []
+    },
+    "errors": [],
+    "load": {
+      "wall": "07:25:43",
+      "epochMs": 1794381943563,
+      "hostLoad": [
+        3.4365234375,
+        5.93896484375,
+        6.77099609375
+      ],
+      "loadWallMs": 5738,
+      "loadTiming": {
+        "dataMs": 14.200000017881393,
+        "simMs": 134.2999999821186,
+        "viewMs": 3086.300000011921
+      }
+    },
+    "trace": null,
+    "checkpoints": [
+      "arena-lion",
+      "cleared-flamingo"
+    ],
+    "rawLog": "/private/tmp/s37-hitches/l8-scheduling-1/log.jsonl"
+  },
+  {
+    "run": "l8-scheduling-2",
+    "settings": {
+      "backend": "webgpu",
+      "quality": "high",
+      "zoom": 1
+    },
+    "frameSummary": {
+      "excludedInitialMs": 3000,
+      "samples": 10597,
+      "maxMs": 50.1,
+      "p99Ms": 16.8,
+      "over250": []
+    },
+    "errors": [],
+    "load": {
+      "wall": "07:31:17",
+      "epochMs": 1794382277328,
+      "hostLoad": [
+        3.38916015625,
+        4.2578125,
+        5.69970703125
+      ],
+      "loadWallMs": 6509,
+      "loadTiming": {
+        "dataMs": 13.800000011920929,
+        "simMs": 142.5,
+        "viewMs": 3378.699999988079
+      }
+    },
+    "trace": {
+      "wall": "07:34:56",
+      "epochMs": 1794382496470,
+      "hostLoad": [
+        4.2802734375,
+        3.9443359375,
+        5.20263671875
+      ],
+      "trace": "/private/tmp/s37-hitches/l8-scheduling-2/trace.json",
+      "bytes": 976749345,
+      "dataLossOccurred": true
+    },
+    "checkpoints": [
+      "arena-lion",
+      "cleared-flamingo"
+    ],
+    "rawLog": "/private/tmp/s37-hitches/l8-scheduling-2/log.jsonl"
+  },
+  {
+    "run": "r35-l5-low-2",
+    "settings": {
+      "backend": "webgl",
+      "quality": "low",
+      "zoom": 1
+    },
+    "frameSummary": {
+      "excludedInitialMs": 3000,
+      "samples": 12411,
+      "maxMs": 50,
+      "p99Ms": 16.8,
+      "over250": []
+    },
+    "errors": [],
+    "load": {
+      "wall": "07:46:55",
+      "epochMs": 1794383215699,
+      "hostLoad": [
+        3.2822265625,
+        3.53173828125,
+        4.111328125
+      ],
+      "loadWallMs": 5067,
+      "loadTiming": {
+        "dataMs": 7.5,
+        "simMs": 207.2999999821186,
+        "viewMs": 2386.5
+      }
+    },
+    "trace": {
+      "wall": "07:50:30",
+      "epochMs": 1794383430092,
+      "hostLoad": [
+        6.5166015625,
+        4.99169921875,
+        4.5947265625
+      ],
+      "trace": "/private/tmp/s37-hitches/r35-l5-low-2/trace.json",
+      "bytes": 100017466,
+      "dataLossOccurred": false
+    },
+    "checkpoints": [
+      "outside",
+      "survivor-1"
+    ],
+    "rawLog": "/private/tmp/s37-hitches/r35-l5-low-2/log.jsonl"
+  },
+  {
+    "run": "r35-lion-low-1",
+    "settings": {
+      "backend": "webgl",
+      "quality": "low",
+      "zoom": 1
+    },
+    "frameSummary": {
+      "excludedInitialMs": 3000,
+      "samples": 10608,
+      "maxMs": 33.4,
+      "p99Ms": 16.8,
+      "over250": []
+    },
+    "errors": [],
+    "load": {
+      "wall": "07:37:54",
+      "epochMs": 1794382674850,
+      "hostLoad": [
+        2.56103515625,
+        3.26708984375,
+        4.6796875
+      ],
+      "loadWallMs": 5863,
+      "loadTiming": {
+        "dataMs": 16.400000005960464,
+        "simMs": 136.69999998807907,
+        "viewMs": 2899.2000000178814
+      }
+    },
+    "trace": {
+      "wall": "07:41:00",
+      "epochMs": 1794382860015,
+      "hostLoad": [
+        2.416015625,
+        2.78564453125,
+        4.18896484375
+      ],
+      "trace": "/private/tmp/s37-hitches/r35-lion-low-1/trace.json",
+      "bytes": 130646520,
+      "dataLossOccurred": false
+    },
+    "checkpoints": [
+      "arena-lion",
+      "cleared-flamingo"
+    ],
+    "rawLog": "/private/tmp/s37-hitches/r35-lion-low-1/log.jsonl"
+  }
+]

@@ -1,0 +1,52 @@
+{
+  "run": "l8-rolling-1",
+  "summary": {
+    "wall": "07:57:02",
+    "epochMs": 1794383822962,
+    "hostLoad": [
+      4.154296875,
+      5.22705078125,
+      4.99853515625
+    ],
+    "end": true,
+    "frames": [],
+    "performanceSummary": {
+      "excludedInitialMs": 3000,
+      "samples": 10595,
+      "maxMs": 50.1,
+      "p99Ms": 16.8,
+      "over250": []
+    },
+    "errors": []
+  },
+  "trace": {
+    "wall": "07:57:16",
+    "epochMs": 1794383836610,
+    "hostLoad": [
+      4.4951171875,
+      5.248046875,
+      5.009765625
+    ],
+    "trace": "/private/tmp/s37-hitches/l8-rolling-1/trace.json",
+    "bytes": 401542954,
+    "dataLossOccurred": true,
+    "rollingWindow": true,
+    "stoppedOnHitch": false
+  },
+  "trigger": [],
+  "load": {
+    "wall": "07:54:02",
+    "epochMs": 1794383642822,
+    "hostLoad": [
+      7.43603515625,
+      6.41748046875,
+      5.2978515625
+    ],
+    "loadWallMs": 6470,
+    "loadTiming": {
+      "dataMs": 16.700000017881393,
+      "simMs": 150.19999998807907,
+      "viewMs": 3400
+    }
+  }
+}

@@ -1,0 +1,120 @@
+[
+  {
+    "run": "l8-capture-on-1",
+    "summary": {
+      "wall": "07:19:40",
+      "epochMs": 1794381580605,
+      "hostLoad": [
+        6.97265625,
+        6.45751953125,
+        7.05712890625
+      ],
+      "end": true,
+      "frames": [],
+      "performanceSummary": {
+        "excludedInitialMs": 3000,
+        "samples": 10484,
+        "maxMs": 233.3,
+        "p99Ms": 16.8,
+        "over250": []
+      },
+      "errors": []
+    },
+    "load": {
+      "wall": "07:16:40",
+      "epochMs": 1794381400452,
+      "hostLoad": [
+        4.9853515625,
+        6.3115234375,
+        7.1748046875
+      ],
+      "loadWallMs": 6303,
+      "loadTiming": {
+        "dataMs": 15.600000023841858,
+        "simMs": 152.2999999821186,
+        "viewMs": 3317.5
+      }
+    },
+    "trace": {
+      "wall": "07:19:54",
+      "epochMs": 1794381594805,
+      "hostLoad": [
+        6.609375,
+        6.40185546875,
+        7.0263671875
+      ],
+      "trace": "/private/tmp/s37-hitches/l8-capture-on-1/trace.json",
+      "bytes": 311717192,
+      "dataLossOccurred": false
+    },
+    "captureCount": 30,
+    "maxCaptureMs": 198,
+    "hostLoad1Range": [
+      4.498046875,
+      8.27978515625
+    ],
+    "arenaSeen": true
+  },
+  {
+    "run": "l8-capture-off-1",
+    "summary": {
+      "wall": "07:23:03",
+      "epochMs": 1794381783688,
+      "hostLoad": [
+        8.2021484375,
+        7.45068359375,
+        7.35009765625
+      ],
+      "end": true,
+      "frames": [],
+      "performanceSummary": {
+        "excludedInitialMs": 3000,
+        "samples": 10539,
+        "maxMs": 1116.7,
+        "p99Ms": 16.8,
+        "over250": [
+          {
+            "tick": 7281,
+            "ms": 1116.7,
+            "elapsedMs": 121365
+          }
+        ]
+      },
+      "errors": []
+    },
+    "load": {
+      "wall": "07:20:03",
+      "epochMs": 1794381603154,
+      "hostLoad": [
+        7.201171875,
+        6.52783203125,
+        7.06689453125
+      ],
+      "loadWallMs": 6278,
+      "loadTiming": {
+        "dataMs": 15.199999988079071,
+        "simMs": 144.2000000178814,
+        "viewMs": 3207.0999999940395
+      }
+    },
+    "trace": {
+      "wall": "07:23:18",
+      "epochMs": 1794381798875,
+      "hostLoad": [
+        10.69482421875,
+        8.0205078125,
+        7.55322265625
+      ],
+      "trace": "/private/tmp/s37-hitches/l8-capture-off-1/trace.json",
+      "bytes": 304327292,
+      "dataLossOccurred": false
+    },
+    "captureCount": 0,
+    "maxCaptureMs": 0,
+    "hostLoad1Range": [
+      6.10791015625,
+      10.69482421875
+    ],
+    "arenaSeen": true
+  }
+]
