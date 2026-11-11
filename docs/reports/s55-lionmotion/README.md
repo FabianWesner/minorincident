@@ -591,3 +591,17 @@ wrapper time within 240 s. Collection remains 150/150 repository cases. Log:
 `post-time-unit.log`. This supersedes the earlier full-unit result for the
 elapsed-time and declared-sole classification changes. Post-change 62-row scene
 gate and the final consolidated acceptance audit are still outstanding.
+
+## Post-timing-fix full scene gate
+
+Required `SCENE_PORT=4952 E2E_UNITS=1 npm run scene:gate` completed exit 0 on
+current render source: **62/62 pass, 0 known, 0 not run**, 10.9 minutes. All seven
+batches passed, including courier/companion and zoo rows. Log:
+`post-time-scene-gate.log`; durable receipt: [scene-gate-summary.md](scene-gate-summary.md).
+This supersedes the pre-timing-fix gate. No source changes were made during the
+run. Full remote unit suite also passes after the timing changes.
+
+Remaining acceptance audit must explicitly reconcile the controlled 10 s walk /
+5 s run captures with the natural 15 s L8 fixture (which does not force a run),
+and ensure pose-index receipts exist for both environments. These measurement
+scope details cannot be inferred from green regression gates alone.
