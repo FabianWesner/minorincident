@@ -1,6 +1,21 @@
 # s37-hitches — frame hitch investigation
 
-Status: in progress. No cause has been attributed and no game performance fix has been made. The historical samples below identify the event windows, but do not meet the lane's two-run comparison requirement. Current before/after p99, load-time delta, and machine-load status are still unmeasured.
+Status: **goal not achieved**. Current shared-host L8 runs still contain frames above250ms. Complete traces attribute two reproductions to gaps in browser RAF dispatch with nearby game callbacks≤18.1ms; they do not identify the specific GPU/compositor/OS scheduling cause or retrospectively prove r35’s cause. Original r35 L8/L5 versions also pass controlled samples. No game runtime code has changed in this lane, so no runtime-fix load delta or before/after improvement is claimed.
+
+The canonical [measurement index](measurements.json) consolidates every completed frame window from the retained raw logs, with settings, max/p99, >250ms events, page errors, checkpoints, available load clocks and trace-loss flags. Route misses, overlapping-check diagnostics and export failures retain their limitations in the investigation below.
+
+| Evidence | Max / p99 | What it establishes |
+|---|---|---|
+| Current L8 low WebGL2 two baseline runs |133.3/16.8ms;83.4/16.8ms|Both sampled windows below250ms |
+| Current L5 low WebGL2 two baseline runs |50.1/16.8ms;50.1/16.8ms|Both sampled windows below250ms |
+| Current L8 high WebGPU two baseline runs |66.6/16.8ms;3233.3/66.7ms|Shared-host target fails |
+| Current L5 high WebGPU two baseline runs |33.4/16.8ms;166.6/16.8ms|Both sampled windows below250ms |
+| Current L8 high exclusive controls |50.0/16.8ms twice|Two controlled windows pass; does not erase shared failures |
+| Original r35 L8/L5 controlled samples |33.4/16.8ms;50.0/16.8ms|Historical game version does not reproduce failure in these samples |
+
+Runtime load-code delta: none (verified lane source diff under `src/` is empty). Measured load clocks are retained per run; comparisons across host conditions are not a supported performance-fix delta. Historical p99 and load clocks were never recorded, and no trace/profile artifact was found in the retained r35-vqa capture directory. Those values cannot be reconstructed from its >100ms-only log.
+
+Pending acceptance clarification: whether the250ms gate must hold during arbitrary shared-host contention or uses exclusive reference measurements. The original scope is retained until answered. A supported mitigation and complete causal attribution remain required.
 
 ## Historical before samples (r35-vqa, 2026-11-11)
 
