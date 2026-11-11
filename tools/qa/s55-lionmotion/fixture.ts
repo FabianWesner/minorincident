@@ -2,9 +2,9 @@ import { mkdirSync } from 'node:fs';
 import { SceneSession, stopServer, writeJson } from '../../scenelab/session';
 import { readFixture } from '../fixture-io';
 import { loadFixtureInPage } from '../load-fixture';
-const out = 'test-results/s55-lionmotion/l8-after';
+const out = process.env.MOTION_OUT ?? 'test-results/s55-lionmotion/l8-after';
 mkdirSync(out, { recursive: true });
-const session = new SceneSession({ backend: 'webgl2', tier: 'high', viewport: { width: 1280, height: 720 } });
+const session = new SceneSession({ backend: process.env.MOTION_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2', tier: process.env.MOTION_TIER === 'low' ? 'low' : 'high', viewport: { width: 1280, height: 720 } });
 try {
   await session.open();
   console.log(await loadFixtureInPage(session.page, readFixture('tests/fixtures/saves/qa/l8-before-lion.json.gz')));

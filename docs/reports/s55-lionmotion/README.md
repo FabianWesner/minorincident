@@ -176,3 +176,12 @@ instead of subtracting the offset from an already corrected pose. The completed
 (original stop behavior) to 0.9071 cm; lion measured 0.8444 cm. Restore bookkeeping
 records the actual amount applied, preserving live actor restore behavior.
 Paw continuity, all requested matrices, and final checks remain outstanding.
+
+## WebGPU low real fixture
+
+Both probes now accept backend/tier configuration and the controlled scene also
+accepts zoom. The real fixture completed 900 frames on WebGPU low. Maxima match
+WebGL2 high: lion pelvis 0.8444 cm / paw 11.815 cm, lioness pelvis 0.9071 cm /
+paw 23.634 cm. The shared remaining paw maximum occurs at frame 257 and still
+needs investigation. This backend comparison does not replace the full visual
+matrix or prove absence of pops.

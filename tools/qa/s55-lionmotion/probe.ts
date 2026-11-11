@@ -4,14 +4,14 @@ const out = process.env.MOTION_OUT ?? 'test-results/s55-lionmotion/probe';
 const allSpecies = ['lion', 'lioness', 'zebra', 'gorilla', 'elephant', 'flamingo'] as const;
 const speciesList = process.env.MOTION_CATS ? allSpecies.slice(0, 2) : allSpecies;
 mkdirSync(out, { recursive: true });
-const session = new SceneSession({ backend: 'webgl2', tier: 'high', viewport: { width: 960, height: 540 } });
+const session = new SceneSession({ backend: process.env.MOTION_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2', tier: process.env.MOTION_TIER === 'low' ? 'low' : 'high', viewport: { width: 960, height: 540 } });
 try {
   await session.open();
   const spec = readSpec('specs/scenes/r36-lion-cats-run.json');
   spec.trace = true;
   spec.actors = speciesList.map((species, i) => ({ id: species, kind: 'animal' as const, species: species, at: [-15, i * 4] as [number, number], state: { walk: [[30, i * 4] as [number, number]], loop: true } }));
   spec.script = [];
-  spec.camera = { mode: 'game', target: [0, 0, process.env.MOTION_CATS ? 2 : 12], zoom: 1.5 };
+  spec.camera = { mode: 'game', target: [0, 0, process.env.MOTION_CATS ? 2 : 12], zoom: Number(process.env.MOTION_ZOOM ?? 1.5) };
   await session.load(spec);
   await session.page.evaluate(() => {
     const game = (window.__SCENE__ as unknown as { game: import('../../../src/Game').Game }).game;
