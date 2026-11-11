@@ -65,3 +65,7 @@ After `b73f7976`, typecheck and lint passed. The exact remote `npm test` command
 ## Spawn-origin qualification
 
 Corrected runtime route retries to retain each record's original spawn coordinates rather than accepting a route from its later position. The complete L1–L10 rerun exited zero with 242 records, zero unreachable paths and zero narrow openings: level counts 0,0,1,39,3,4,5,4,107,79. L8 retained its tick-budget outcome and four explicit outlet checks. L10 includes its 67 authored tier checks. Tool lint passed. This closes a false-pass risk from scripted movement or AI relocation; authored branch coverage outside L10 remains to be completed.
+
+## L9 fixed-group coverage receipt
+
+The audit now compares the production L9 admission ledger against every fixed group that authors the requested wide roles (road formations cycle brute/armored; shortcut formations explicitly author Alphas). All four expected groups were fully admitted: `road-1`, `road-2`, `dry-shortcut-3`, `dry-shortcut-6`. No expected group was missing in the isolated L9 rerun, which exited zero with 107 wide spawn records and no unreachable paths/openings. A missing group now fails the audit instead of silently passing a partial route census. Typecheck and tool lint passed. This qualifies fixed groups across alternate routes; L9 set-piece branch coverage remains separate work.

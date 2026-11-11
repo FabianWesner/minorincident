@@ -5,6 +5,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { dirname } from 'node:path';
 import { runnerLevels, runLevel } from '../sim-runner/levels';
 import { cureEncounters, curePaceEncounters, cureEncounterSlots, cureEncounterSpot } from '../../src/levels/L10/encounters';
+import { l9Groups } from '../../src/data/l9';
 import { infectedDef } from '../../src/data/infected';
 import { megaAlpha } from '../../src/data/megaAlpha';
 import { NavGrid, type Wall } from '../../src/sim/ai/NavGrid';
@@ -14,7 +15,8 @@ const margin = .1;
 const wide = (archetype: string, variant?: string) => archetype === 'infected.mega-alpha' || variant === megaAlpha.asset ||
   ['infected.brute', 'infected.butcher', 'infected.armored', 'infected.alpha'].includes(archetype);
 type Spawn = { id: number; archetype: string; variant?: string; radius: number; x: number; z: number; tick: number; player: { x: number; z: number }; cohort: string; source: string; active?: boolean; wave?: string; objective?: string; route?: number[]; pathGrid?: NavGrid };
-type LevelResult = { level: string; outcome: string; spawns: number; checks: number; unreachable: Spawn[]; narrowOpenings: { x: number; z: number; width: number; required: number; pathDistance: number; walls: string[]; bodies: number[] }[]; encounters: Spawn[] };
+type Coverage = { expected: string[]; observed: string[]; missing: string[] };
+type LevelResult = { coverage?: Coverage; level: string; outcome: string; spawns: number; checks: number; unreachable: Spawn[]; narrowOpenings: { x: number; z: number; width: number; required: number; pathDistance: number; walls: string[]; bodies: number[] }[]; encounters: Spawn[] };
 
 type AuditWall = Wall & { sourceId?: string };
 function fullWalls(world: SimWorld): AuditWall[] {
@@ -40,6 +42,7 @@ for (const level of runnerLevels.filter(level => !selectedLevels || selectedLeve
   const seenWideIds = new Set<number>();
   const playerRoute: { x: number; z: number }[] = [];
   let outcome = 'not-run';
+  let coverage: Coverage | undefined;
   let audit: Pick<LevelResult, 'unreachable' | 'narrowOpenings'> = { unreachable: [], narrowOpenings: [] };
   const run = await runLevel(level, 'newbie', 1, level === 'L10' ? 3600 : 2400, 'auto', undefined, undefined, 0, {
     quality: 'high',
@@ -118,6 +121,13 @@ for (const level of runnerLevels.filter(level => !selectedLevels || selectedLeve
     },
     beforeDispose(world) {
       const walls = fullWalls(world);
+      if (level === 'L9') {
+        // Road formations cycle brute/armored roles; shortcut groups author Alphas.
+        const expected = l9Groups.filter(g => g.alphas > 0 || g.route === 'road' && g.runners >= 3).map(g => g.id);
+        const ledger = world.missions!.l9!.state.encounters;
+        const observed = expected.filter(id => ledger?.spawned.includes(id));
+        coverage = { expected, observed, missing: expected.filter(id => !observed.includes(id)) };
+      }
       if (level === 'L10' && world.chunks) {
         const bounds = world.districts!.nav;
         const base = new NavGrid({ width: bounds.max[0] - bounds.min[0], depth: bounds.max[1] - bounds.min[1] }, walls, .3,
@@ -184,10 +194,10 @@ for (const level of runnerLevels.filter(level => !selectedLevels || selectedLeve
     },
   });
   outcome = run.outcome;
-  report.push({ level, outcome, spawns: spawns.length, checks: spawns.length, ...audit, encounters: spawns.map(row => ({ id: row.id, archetype: row.archetype, variant: row.variant, radius: row.radius, x: row.x, z: row.z, tick: row.tick, player: row.player, cohort: row.cohort, source: row.source, reachable: !!row.route, activeAtEnd: row.active, ...(row.wave ? { wave: row.wave } : {}), ...(row.objective ? { objective: row.objective } : {}) })) });
+  report.push({ level, outcome, ...(coverage ? { coverage } : {}), spawns: spawns.length, checks: spawns.length, ...audit, encounters: spawns.map(row => ({ id: row.id, archetype: row.archetype, variant: row.variant, radius: row.radius, x: row.x, z: row.z, tick: row.tick, player: row.player, cohort: row.cohort, source: row.source, reachable: !!row.route, activeAtEnd: row.active, ...(row.wave ? { wave: row.wave } : {}), ...(row.objective ? { objective: row.objective } : {}) })) });
   console.log(`[wide-body] ${level}: ${outcome}; ${spawns.length} wide spawns, ${audit.unreachable.length} unreachable, ${audit.narrowOpenings.length} narrow openings`);
 }
 const output = process.argv[2] ?? 'test-results/qa-wide-body/report.json';
 await mkdir(dirname(output), { recursive: true });
 await writeFile(output, JSON.stringify({ radiusMargin: margin, scope: selectedLevels ?? runnerLevels, note: 'Runtime encounter coverage uses the native campaign runner; each authored wide infected spawn is tested from its authored spawn to player route samples every ten simulation seconds on the sim navigation window baked with body radius plus margin. Streamed levels are checked as their navigation windows move. Narrow openings are paired ground-level collision boxes bordering the sampled path.', levels: report }, null, 2) + '\n');
-if (report.some(level => level.unreachable.length || level.narrowOpenings.length)) process.exitCode = 1;
+if (report.some(level => level.unreachable.length || level.narrowOpenings.length || level.coverage?.missing.length)) process.exitCode = 1;
