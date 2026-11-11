@@ -2,7 +2,9 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { SceneSession, readSpec, stopServer, writeJson } from '../../scenelab/session';
 const out = process.env.MOTION_OUT ?? 'test-results/s55-lionmotion/probe';
 const allSpecies = ['lion', 'lioness', 'zebra', 'gorilla', 'elephant', 'flamingo', 'monkey'] as const;
-const speciesList = process.env.MOTION_CATS ? allSpecies.slice(0, 2) : allSpecies;
+const selected = process.env.MOTION_SPECIES;
+if (selected && !allSpecies.some(species => species === selected)) throw new Error(`Unknown species ${selected}`);
+const speciesList = selected ? allSpecies.filter(species => species === selected) : process.env.MOTION_CATS ? allSpecies.slice(0, 2) : allSpecies;
 mkdirSync(out, { recursive: true });
 const session = new SceneSession({ backend: process.env.MOTION_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2', tier: process.env.MOTION_TIER === 'low' ? 'low' : 'high', viewport: { width: 960, height: 540 } });
 try {
@@ -11,7 +13,7 @@ try {
   spec.trace = true;
   spec.actors = speciesList.map((species, i) => ({ id: species, kind: 'animal' as const, species: species, at: [-15, i * 4] as [number, number], state: { walk: [[30, i * 4] as [number, number]], loop: true } }));
   spec.script = [];
-  spec.camera = { mode: 'game', target: [0, 0, process.env.MOTION_CATS ? 2 : 12], zoom: Number(process.env.MOTION_ZOOM ?? 1.5) };
+  spec.camera = { mode: 'game', target: selected ? selected : [0, 0, process.env.MOTION_CATS ? 2 : 12], zoom: Number(process.env.MOTION_ZOOM ?? 1.5) };
   await session.load(spec);
   await session.page.evaluate(() => {
     const game = (window.__SCENE__ as unknown as { game: import('../../../src/Game').Game }).game;
@@ -44,7 +46,7 @@ try {
     writeJson(`${out}/frames.json`, samples);
     const metrics = await session.metrics();
     writeJson(`${out}/metrics.json`, metrics);
-    if (i === 14) for (const [id, actor] of Object.entries(metrics.actors)) { if (actor.travelM < 1) throw new Error(`${id} did not move`); }
+    if (i === 14) for (const [id, actor] of Object.entries(metrics.actors)) { if (actor.travelM < 1) throw new Error(`${id} did not move`); if (selected && actor.drawnFrames < 900) throw new Error(`${id} drawn only ${actor.drawnFrames}/900 frames`); }
     console.log(`recorded ${(i + 1) * 60} frames`);
   }
 } finally { await session.close(); stopServer(); }

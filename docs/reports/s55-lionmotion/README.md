@@ -333,3 +333,14 @@ penetration. Drawn-frame counts: 845, 883, 900, 900, 900, 666, 159 respectively.
 Thus this wide framing does not prove the full motion interval for every animal;
 monkey especially needs a centered capture. Raw results: `zoo-classified/`.
 These measurements expose remaining contact quality work and are not final gates.
+
+## Centered coverage and stalk speed cutoff
+
+The probe now supports one selected species with a following camera and asserts
+900 drawn frames. Monkey, lion and lioness each passed 900/900 coverage. Monkey
+max pelvis/paw steps were 0.452/9.337 cm, no penetration. Both cats measured
+4.400 cm pelvis and 5.590 cm paw maxima; the pelvis step exposed AnimalMoves
+removing the healthy-lion 4.4 cm stalk crouch at speed 2.6 while keeping the same
+walk clip. Removed that abrupt cutoff, retaining the stalk pose for moving
+healthy cats. A completed centered lion repeat is saved at
+`lion-stalk-continuous/`; final matrices and regression checks remain required.
