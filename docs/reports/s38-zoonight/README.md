@@ -1,46 +1,16 @@
-# s38-zoonight — in progress
+# s38-zoonight — verification in progress
 
-## Cause
+The rendering changes are committed, but the full requested acceptance criteria are not yet met. In particular, zebra display-luma percentile contrast is 1.22× baseline rather than the required 2×.
 
-- Zoo boss surfaces received a shared additive night coat fill and a strong figure fill. That pushed dark gorilla fur toward pale green-grey, reduced zebra black/white contrast, and flattened low-quality lion shading.
-- The courier foreground depth node used the near-camera slice whenever foreground mode was active, even when `courierXray` indicated vehicle occlusion. That put her silhouette in front of the bus roof.
+## Cause and change
 
-## Change so far
+The additive coat fill and cool figure fill washed zoo coats toward pale green and flattened the tan cats. CrowdView now reduces flat fill, restores neutral coat hue, and gives gorilla fur a dark warm-neutral base. Species-specific material constants have distinct cache keys. The existing moonlit rim and attack feedback paths remain in place.
 
-- `CrowdView` now uses smaller per-draw night coat fills for zoo animals, a dark warm-neutral gorilla base, and a lower shared boss figure fill. The rim setting and attack flash path are unchanged.
-- The courier retains the existing depth slice for visibility. Vehicle x-ray fill is now a dim blue-grey silhouette with clothing detail suppressed and a restrained contour.
-- No simulation, stats, or animation-clip code changed.
+The courier's near-camera visibility slice displayed detailed, bright clothing over a whole vehicle hull, which read as standing on its roof. Removing that slice failed visibility (0.10 versus the unchanged 0.60 minimum), so it is retained. Vehicle x-ray now suppresses clothing detail and uses a dim blue-grey fill and restrained edge.
 
-## Before/after measurements
+Only render code and Scene Lab diagnostic metrics changed. No stats, AI, simulation, or animation clips changed. No dependencies or new test cases were added. The measured original and revised lineup both use 29 draw calls.
 
-The requested pixel measurements have not been collected yet. The before captures below were opened and confirm the reported appearance; the initial sandbox prevented browser runs. Later measured before/after numbers and current outstanding requirements are recorded below.
-
-| Subject | Before evidence opened | Before numbers | After numbers |
-|---|---|---:|---:|
-| Gorilla | r38 `crop-gorilla.jpg` — pale grey-green body under the night key | Not measured | Pending |
-| Zebra | r38 `burst-zebra-s023.jpg` — stripes visible but pale green cast | Not measured | Pending |
-| Lion/lioness | r38 `crop-lion-low-z1.jpg` — flat bright ochre at low quality | Not measured | Pending |
-| Courier behind L4 bus | r38 `l4-north-low-z1-gl/s035-t6636.jpg` — full-bright silhouette on the roof | Not measured | Pending |
-
-Original captures are in the r38 QA scratchpad and are not copied into the repository:
-`/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/r38-vqa/`.
-
-## Checks
-
-- `npm run typecheck` — passed.
-- `npm run lint` — passed.
-- `npm run build:qa` — passed.
-- `git diff --check` — passed.
-- Scene Lab gate for `night-boss-zoo-lineup`, `night-boss-lion`, and `seethrough-engine-on-foot` — not run. Both the normal runner and the `node --import tsx` retry failed because the browser-pool daemon was denied permission to listen on loopback (`EPERM`, ports 4329 and 4321).
-- Required `sh tools/ops/slim-worktree.sh "$PWD" --no-assets` — attempted first; failed because sandbox permissions deny locking the shared worktree git config at `.git/worktrees/s38-zoonight/config.worktree`.
-
-## Still required
-
-Run the low/high, WebGL2/WebGPU Scene Lab matrix and L8 fixture captures, plus an L4 bus-occlusion capture. Open the after captures, calculate per-animal pixel metrics against the corresponding before images, update this report, then commit the render changes and report.
-
-## Full-access continuation
-
-Slim-worktree now passes. Targeted Scene Lab completed: all eight zoo lineup/lion rows pass across both backends and qualities at zoom 1.5. Vehicle visibility failed at 0.10 against the existing 0.60 minimum; the depth-slice removal was reverted. Output: `test-results/s38-after/`. Pixel metrics, zoom 1, fixture captures and final visual review remain outstanding.
+## Quantitative comparison
 
 ## Measured original versus neutral-hue revision
 
@@ -55,34 +25,36 @@ Matched WebGPU low Scene Lab lineup, f0, zoom 1.5. Original sources were capture
 
 Opened `test-results/s38-neutral/night-boss-zoo-lineup/sheet.jpg`: gorilla reads as dark warm grey, zebra stripes are visible, both cats retain tan shading. This is partial evidence: the complete matrix, stripe percentile contrast target, real fixtures, L4 bus capture, and final checks remain outstanding.
 
-## Percentile metrics and WebGPU matrix
+## Matrix and acceptance status
 
-`tools/scenelab/run.ts` now records p10/p90 luma and their difference using the existing body mask. The neutral-hue revision was measured at both quality tiers and zooms 1/1.5 (`test-results/s38-matrix-webgpu`). For the four requested animals, low/high measurements match: lion/lioness shading-std ratio is 1.0. Zebra p90-p10 is 155.1 at zoom 1 and 152.6 at zoom 1.5. Gorilla luma is 42.27 / 50.98 at zoom 1 / 1.5. Original percentile comparison remains pending.
+`matrix-metrics.json` contains the target-animal samples for WebGL2/WebGPU × low/high × zoom 1/1.5. Lion and lioness low/high luma-standard-deviation ratios are 1.0. Gorilla revised mean RGB is near neutral and luma is below baseline. The revised zebra p90−p10 is 152.6 at zoom 1.5 and 155.1 at zoom 1. Original WebGPU low zoom-1.5 contrast is 125.43, so the revision reaches 1.22× rather than 2× (250.86 on a 0–255 scale). That requirement remains open.
 
-The zoom-1 rows fail the existing monkey control because it has zero measured pixels; all four requested animals have nonzero masks. This failure is retained and no tolerances were changed.
+The zoom-1 lineup rows fail the unchanged monkey control because it is offscreen; all four target animals have nonzero measured masks. Zoom-1.5 rows pass. The complete matched baseline matrix and equivalent fixture pixel measurements are not yet present. `intermediate-metrics.json` records an earlier revision and is not final acceptance evidence.
 
-The WebGL2 matrix now also completes. Both zoom-1 rows retain the same offscreen-monkey failure; zoom-1.5 rows pass. All target-animal samples are in `matrix-metrics.json`. Original zebra p90-p10 at WebGPU low zoom 1.5 is 125.43; revised is 152.6 (1.22x), below the requested 2x. This remains an open requirement.
+## Captures opened
 
-An EVAC-bus static-prop Scene Lab capture was opened (`test-results/s38-bus-after/shot-0000.png`). It uses a reveal cut (16,147 cut pixels), so it does not prove the production full-hull x-ray requirement. The inherited zero-cut check fails and is recorded. Vehicle-path capture remains required.
+Raw images remain in ignored `test-results/`; only one small contact sheet is committed.
 
-## Vehicle silhouette revision
+- Original r38 gorilla, lion, zebra, and L4 bus images were opened from the QA scratchpad cited in `docs/reports/r38-vqa/README.md`.
+- `s38-neutral/night-boss-zoo-lineup/sheet.jpg`: dark warm-grey gorilla, striped zebra, shaded tan cats.
+- `s38-fixture-gorilla-arena/s005-t1607.jpg`: live gorilla, WebGL2 low z1.5, dark charcoal/brown fur, pale moon edge and amber ring.
+- `s38-fixture-lion/s005-t1579.jpg`: live lion, WebGPU low z1, tan body with darker underside and mane; amber pounce and red threat cues intact.
+- `s38-fixture-zebra-visible/s004-t792-idle.jpg`: live zebra, WebGPU low z1.5, distinct dark/pale stripes without the prior glassy green cast; amber/red ring intact.
+- `s38-l4-production-bus-before/s000-t64-idle.jpg` and `s38-l4-production-bus/s000-t64-idle.jpg`: actual L4 line-break checkpoint, WebGL2 low z1, matched bus-relative setup and tick. Original gold clothing reads above the roof; revised dim silhouette reads through the intact hull. See [contact sheet](bus-before-after.jpg).
 
-Opened the vehicle-path bus captures (`test-results/s38-bus-vehicle/shot-0000.png` and `test-results/s38-bus-tinted/shot-0000.png`). The first retained detailed clothing and read as standing on the roof. The revision suppresses clothing detail and uses a dim blue-grey x-ray fill with a restrained edge. The opened revised image reads as a silhouette through the hull; the unchanged visibility, whole-hull and console checks pass. This school-bus Scene Lab control is not the requested production L4 EVAC fixture proof, which remains required.
+Production fixture runs log all setup in their `log.jsonl`. Gorilla and lion use real-input arena routes. The zebra capture enters `(60,34)`, waits 8.5 seconds for encounter activation, then places the courier 2 m beside a living active zebra within the enclosure. L4 selects the actual EVAC bus and places the courier at `(bus.x−2.4,bus.z−2.4)`. These setups affect captures only. Each run reports no page errors and its owned server was stopped.
 
-Loaded and played `l8-before-gorilla` for 15 seconds (WebGL2 low, zoom 1.5); opened `test-results/s38-fixture-gorilla/s000-t73.jpg`. This starts outside the gorilla arena, so it is not gorilla appearance proof. Retained zebra bodies in that production fixture show distinct black/white stripes. A route through the arena entry is still needed for the live boss capture. The owned fixture dev server was stopped after the run.
+The fixed L4 courier ROI's changed pixels drop mean luma 141.78 → 92.72 and RGB 182.80/134.64/91.76 → 87.37/92.99/105.73. `bus-comparison.json` records the diagnostic mask and its pose-edge limitation; this is not a semantic body mask.
 
-## Live gorilla fixture
+## Checks
 
-`l8-before-gorilla`, WebGL2 low, zoom 1.5, god mode, real-input route `60,0;60,-17;60,-25`, 30 s: reached `arena-gorilla`, no logged page errors. Opened `test-results/s38-fixture-gorilla-arena/s005-t1607.jpg`: dark charcoal/brown fur, pale moonlit edge, amber ring intact. Typecheck and lint pass on this revision. Owned fixture server stopped automatically after the run.
+- Required slim-worktree command passes after full access became available; node_modules was populated.
+- Typecheck and lint pass on the committed rendering source.
+- Latest QA build passes (tree d200a1ed62fb2213aa9a3097f06ecd9c867752ca).
+- Remote `tests/shared/render-contracts.test.ts`: 14/14 pass with at most 4 workers.
+- Targeted gate run: 9/9 on the earlier material revision; current neutral-hue matrix retains the zoom-1 monkey framing failures described above. Current bus Scene Lab visibility and whole-hull controls pass.
+- Diff whitespace check passes. No tolerance was loosened. No quiet-run or timing reservation was used.
 
-Live lion fixture: `l8-before-lion`, WebGPU low zoom 1, god mode, real-input route `-60,-47;-60,-35`, 30 s; no logged page errors. Opened `test-results/s38-fixture-lion/s005-t1579.jpg`: tan body with darker underside, dark mane and limbs, amber pounce cue and red threat ring remain visible. Owned server stopped automatically. This verifies the low-quality live lion appearance at the reported production camera.
+## Work remaining
 
-Production L4 EVAC-bus capture: direct `level:L4:line-break`, WebGL2 low zoom 1, god mode, 10 s idle. Logged setup selects the actual `veh.evac-bus` and teleports the courier to `(bus.x-2.4,bus.z-2.4)` for reproducible occlusion. Opened `test-results/s38-l4-production-bus/s000-t64-idle.jpg`: dark blue-grey x-ray silhouette through the intact EVAC hull, clothing detail suppressed. This is the actual production scene path; an exactly matched original-material capture remains to be collected. Owned server stopped automatically after completion.
-
-Matched production L4 before/after: opened both `s000-t64-idle.jpg` captures in `test-results/s38-l4-production-bus-before` and `test-results/s38-l4-production-bus`. Same checkpoint, camera, bus-relative setup, tick 64. Original gold figure reads as standing above the roof; revised cool dim silhouette reads as an x-ray through the hull. The one committed contact sheet is `bus-before-after.jpg`. A fixed courier ROI's changed pixels drop mean luma from 141.78 to 92.72 and RGB from 182.80/134.64/91.76 to 87.37/92.99/105.73; `bus-comparison.json` records the exact diagnostic mask and its pose-edge limitation. Original material was restored only for the before run, then current source was restored.
-
-Remote render-contract check: `sh tools/remote/run.sh "$PWD" -- npx vitest run tests/shared/render-contracts.test.ts --maxWorkers=4` passes all 14 tests. Zebra fixture `l8-before-zebra` reaches the fight without page errors (WebGPU low zoom 1.5), but opened `s005-t1596.jpg` has the herd mostly offscreen, so it does not establish live coat appearance. A closer fixture setup remains necessary.
-
-Latest `npm run build:qa` passes (tree d200a1ed62fb2213aa9a3097f06ecd9c867752ca). A logged teleport to nominal zebra centre `(60,34)` still leaves the herd clipped at the top of the opened `test-results/s38-fixture-zebra-close/s003-t613-idle.jpg`; no page errors. The next capture must use actual live zebra positions rather than the authored arena centre. This image is not counted as live stripe verification.
-
-Live zebra visual proof: opened `test-results/s38-fixture-zebra-visible/s004-t792-idle.jpg` (WebGPU low zoom 1.5). Logged setup first enters `(60,34)`, then after 8.5 s selects a living active zebra inside enclosure bounds and places the courier 2 m beside it. The delay is needed because the encounter activates around tick 395. The opened capture shows distinct dark/pale stripes without the prior green glassy coat; amber/red ring intact. This establishes the live appearance only; the separate 2x percentile criterion remains unmet.
+Meet the zebra contrast requirement or obtain an explicit revised criterion; collect the missing matched baseline/fixture matrix; repair the zoom-1 control framing without weakening checks; complete the final gate and capture audit. This report does not claim the goal achieved.
