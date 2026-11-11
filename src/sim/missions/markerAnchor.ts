@@ -1,5 +1,7 @@
 import type { Mission } from './Mission';
 import { cureWeaponPickups } from '../../levels/L10/encounters';
+import { l5 as l5Rescue } from '../../data/l5';
+// (l5Rescue.firstRescue.route is the survivor order of the first rescue)
 
 type Anchored = { x: number; z: number; y?: number; radius?: number };
 /** Outer edge of the objective torus, including its tube. Completion discs cover this whole area. */
@@ -21,6 +23,15 @@ export function markerAnchor(mission: (Pick<Mission, 'state' | 'def'> & { world?
   if (mission?.def.id === 'L8' && mission.l8 && mission.world && mission.state.steps.sanctuary?.status === 'active' && mission.l8.state.guideDone === 0) {
     const nadia = mission.world.entities.get(mission.l8.state.keeperId);
     if (nadia) return { x: nadia.transform.x, z: nadia.transform.z, y: nadia.transform.y, radius: 2 };
+  }
+  // r34-l8qa (r33-vqa: 'After she joins, nothing points to the church'): L5's search spots are unmarked (found by sound), but once the
+  // first survivor follows, guidance points at the next one on the first-rescue route (Mr. Okafor in the church) until he is found.
+  if (mission?.def.id === 'L5' && mission.state.steps.look?.status === 'active') {
+    const l5 = mission.state.l5, [first, next] = l5Rescue.firstRescue.route;
+    if (l5 && first && next && l5.survivors.find(r => r.key === first)?.status === 'following' && l5.survivors.find(r => r.key === next)?.status === 'hidden') {
+      const ring = mission.def.anchors[`l5-ring-${next}`] as Anchored | undefined;
+      if (ring) return ring;
+    }
   }
   const marker = mission?.state.marker;
   if (!mission || !marker) return null;

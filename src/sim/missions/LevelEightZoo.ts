@@ -32,7 +32,9 @@ export interface L8ZooState {
   sealedAt: number; routeStage: number; routeNode: number; legWaves: number; plazaWaveAt: number; plazaBursts: number;
 }
 /** r31-nadia: the sanctuary walk. Leg 2 is the lion enclosure stop (Nadia faces the cat and speaks); the last leg is the plaza centre. */
-const guideRoute: Point[] = [{ x: 24, z: 64 }, { x: 24, z: 0 }, { x: 40, z: 0 }, { x: -38, z: 0 }, { x: 0, z: 0 }];
+const guideRoute: Point[] = [{ x: 24, z: 64 }, { x: 24, z: 0 }, { x: 40, z: 0 }, { x: -44, z: -10 }, { x: -40, z: 3 }, { x: 0, z: 0 }];
+/** r34-l8qa: the lion line only plays with the lion inside the game camera frame (zoom 1.5 shows ~8 m up/down); the zoo lion paces at (-45,-13), so the stop is ~3 m from the fence, the lion ~5 m away. */
+const lionInFrame = 10;
 const guideLionLeg = 3, guideIntroTicks = 4 * 60, guideRestTicks = 15 * 60, guideMaxCalmTicks = 120 * 60;
 const distance = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
 /** Zoo story owns timing/entrances; the shared outbreak owns all bites, rescues and same-id transformations. */
@@ -281,7 +283,7 @@ export class LevelEightZoo {
     const target = guideRoute[s.guideLeg];
     w.npcs!.move(keeper, target, gap < 6 ? 3.4 : 2.6, c, .3, 2400);
     if (distance(keeper.transform, target) > 1) return;
-    if (s.guideLeg === guideLionLeg && !s.lionSpoken && gap <= 14) { s.lionSpoken = true; s.lionUntil = t + 4 * 60; this.mission.radio('L8.nadia-lion'); }
+    if (s.guideLeg === guideLionLeg && !s.lionSpoken && gap <= 14 && lion && distance(lion.transform, player.transform) <= lionInFrame) { s.lionSpoken = true; s.lionUntil = t + 4 * 60; this.mission.radio('L8.nadia-lion'); }
     if (++s.guideLeg >= guideRoute.length) {
       s.guideDone = 2; s.guideArrivedAt = t;
       c.pauseUntil = 0; c.scheduleStep = c.schedule!.length - 1; c.activityUntil = 0;
