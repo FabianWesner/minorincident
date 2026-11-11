@@ -160,9 +160,12 @@ export async function checkL8Cues(): Promise<void> {
   expect(objectiveText(mission, step().text)).toBe('Follow Nadia to the central plaza');
   missionControls(w).teleport(1, mission.def.anchors['central-plaza']); advance(2);
   expect(mission.state.states.breached).toBeFalsy();
+  // r36-l8gates (QA P3 "Rest at the plaza objective flickers during Nadia's tour"): her route crosses the plaza ring; no rest cue while she leads.
+  expect(l8SanctuaryResting(mission), 'no rest cue while Nadia still leads the tour').toBe(false);
+  zoo.state.guideDone = 2; zoo.state.guideArrivedAt = w.tick;
   expect(l8SanctuaryResting(mission)).toBe(true);
   expect(objectiveText(mission, step().text)).toBe('Rest at the plaza with the group');
-  // r31-nadia: Nadia is still leading in this probe (the courier was teleported), so the calm runs to its 120 s cap.
+  // The calm ends at the latest after its 120 s cap.
   w.tick = zoo.state.startedAt + 120 * 60 - 1; advance(2);
   expect(mission.state.states.breached).toBe(true);
   expect(mission.state.steps.escape.status).toBe('active');
