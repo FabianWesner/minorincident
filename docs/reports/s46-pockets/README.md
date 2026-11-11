@@ -35,3 +35,7 @@ Open the cited S42 captures for reference:
 ## Delivery state
 
 Committed as `bd2d8419` (`Fix L4 pocket hits and L8 zebra fence crowding`). No push, deploy, merge, main-branch edit, stat edit, or corpse removal was performed.
+
+## Exact shop collision trace (resumed)
+
+At `(5.9,36.4)`, native ground height is `0.3574`. The shop's compound collider includes a thin wall centered at `(4.975,36.78)` with half extents `(3.0775,0.0375)`, plus a counter at `(4.97,35.84255)` with half extents `(0.5,0.93755)` and nearby shelving at `(6.58725,33.88)` with half extents `(0.33775,2.125)`. The requested courier center is only 0.3425 m from the thin wall's near face, explaining why capsule admission rejects the exact point. This is direct geometry evidence; attack resolution and whether the reference capture used a forced placement remain to be traced.
