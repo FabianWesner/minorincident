@@ -18,7 +18,7 @@ export interface L9CrashState {
   encounters?: L9EncounterState;
   driving?: L9DrivingState;
 }
-const FALL = 90, IMPACT = 120, CRAWL = 360;
+const FALL = 90, IMPACT = 120, CRAWL = 360, CRAWL_AUTO = .8;
 const lerp = (a: number, b: number, t: number) => a + (b - a) * Math.min(1, Math.max(0, t));
 
 /** E31 L9-S6: fixed-tick, one-shot crash. Campaign equipment reset belongs to S7. */
@@ -210,7 +210,9 @@ export class LevelNineCrash {
         if (s.phase !== 'crawl') { s.phase = 'crawl'; s.crawlProgress = 0; w.storyLock = null; w.clearInput(); }
         const start = this.anchor(s.crawlAnchor), end = this.anchor('crawl-end'), p = w.entities.get(1)!;
         const dx = end.x - start.x, dz = end.z - start.z, length = Math.hypot(dx, dz), move = w.inputFrame.move;
-        const forward = Math.max(0, Math.min(1, (move.x * dx + move.z * dz) / length));
+        let forward = Math.max(0, Math.min(1, (move.x * dx + move.z * dz) / length));
+        // r34-l9qa: a player who lets go inside the yellow ring waited forever (2+ min at '1 m'). The last fifth of the crawl finishes on its own.
+        if ((s.crawlProgress ?? 0) >= CRAWL_AUTO) forward = Math.max(forward, .75);
         s.crawlProgress = Math.min(1, (s.crawlProgress ?? 0) + forward / CRAWL);
         const f = s.crawlProgress;
         Object.assign(w.previousPlayer!, p.transform);

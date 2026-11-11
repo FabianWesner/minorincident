@@ -492,7 +492,8 @@ export class Vehicles {
       target.combat!.attacking = tick >= climb.nextHit - 36;
       if (occupied && tick >= climb.nextHit) {
         const player = this.world.entities.get(1)!;
-        if (player.health.current > 0 && !player.hidden) this.world.player?.damage(10, tick, true);
+        // r34-l9qa: hatch boarders bypassed Damage.apply, so the god cheat (and the inspection ghost) did not protect the courier.
+        if (player.health.current > 0 && !player.hidden && !this.world.combat?.damage.god && !this.world.inspectionGhost) this.world.player?.damage(10, tick, true);
         climb.nextHit = tick + 60;
       }
     }

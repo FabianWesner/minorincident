@@ -73,7 +73,7 @@ try {
     return k;
   };
   const start = Date.now(), seconds = Number(values.seconds), shotEvery = Number(values.shot) * 1000;
-  let lastEvent = 0, dwellUntil = 0, skipped = false, lastEnd = 0, lastTap = 0, lastShot = 0, lastLog = 0, ri = 0, lastText = '', shotN = 0, best = Infinity, bestAt = Date.now();
+  let lastKey = 0, lastEvent = 0, dwellUntil = 0, skipped = false, lastEnd = 0, lastTap = 0, lastShot = 0, lastLog = 0, ri = 0, lastText = '', shotN = 0, best = Infinity, bestAt = Date.now();
   while (Date.now() - start < seconds * 1000) {
     const e = await page.evaluate(look);
     const extra = await page.evaluate(() => {
@@ -118,7 +118,7 @@ try {
       const m = await page.evaluate(() => { const pin = document.querySelector<HTMLElement>('[data-testid="minimap-objective"]'); return pin && !pin.hidden ? { x: Number(pin.dataset.worldX), z: Number(pin.dataset.worldZ) } : null; });
       if (m && Number.isFinite(m.x)) keys = dirKeys(e, m, extra.azimuth);
     } else if (target && target.d > 12) keys = dirKeys(e, target, extra.azimuth);
-    // r31-drivekeys / r32-l9fun: a driven vehicle takes classic car keys (W gas, A/D steer toward the goal, Space handbrake to
+    // r31-drivekeys / r32-l9fun: a driven vehicle takes classic car keys (W gas, A/D steer toward the goal, K handbrake to
     // throw boarders off), not screen-relative WASD.
     if (e.driving) {
       const goal = ri < route.length ? route[ri] : values['follow-marker'] ? await page.evaluate(() => { const pin = document.querySelector<HTMLElement>('[data-testid="minimap-objective"]'); return pin && !pin.hidden ? { x: Number(pin.dataset.worldX), z: Number(pin.dataset.worldZ) } : null; }) : null;
@@ -127,14 +127,18 @@ try {
         const want = -Math.atan2(goal.z - e.driving.z, goal.x - e.driving.x), delta = Math.atan2(Math.sin(want - e.driving.yaw), Math.cos(want - e.driving.yaw));
         keys.push('KeyW'); if (delta > .06) keys.push('KeyA'); else if (delta < -.06) keys.push('KeyD');
       }
-      const air = await page.evaluate(() => { const w = (window.__SCENE__ as unknown as { game: { world: unknown } }).game.world as { vehicles: { active: number | null; cars: Map<number, { entity: { transform: { y: number }; vehicle: { attached: number[] } } }> }; missions?: { l9?: { driving: { state: { setPieces?: { alphas: { phase: string }[] } } } } } }; const car = w.vehicles.active == null ? undefined : w.vehicles.cars.get(w.vehicles.active); return { y: car?.entity.transform.y ?? 0, boarders: car?.entity.vehicle.attached.length ?? 0, fight: (w.missions?.l9?.driving.state.setPieces?.alphas ?? []).filter(a => ['windup', 'air', 'hull', 'throw'].includes(a.phase)).map(a => a.phase) }; });
-      if (air.boarders && Date.now() % 1500 < 400) keys.push('Space');
+      const air = await page.evaluate(() => { const w = (window.__SCENE__ as unknown as { game: { world: unknown } }).game.world as { vehicles: { active: number | null; cars: Map<number, { physics: { speed: number }; entity: { transform: { y: number }; vehicle: { attached: number[] } } }> }; missions?: { l9?: { driving: { state: { setPieces?: { alphas: { phase: string }[] } } } } } }; const car = w.vehicles.active == null ? undefined : w.vehicles.cars.get(w.vehicles.active); return { y: car?.entity.transform.y ?? 0, speed: +(car?.physics.speed ?? 0).toFixed(1), boarders: car?.entity.vehicle.attached.length ?? 0, fight: (w.missions?.l9?.driving.state.setPieces?.alphas ?? []).filter(a => ['windup', 'air', 'hull', 'throw'].includes(a.phase)).map(a => a.phase) }; });
+      if (air.boarders && Date.now() % 1500 < 400) keys.push('KeyK'); // K = RIGHT = handbrake (Space is LEFT: horn/boost, r34-l9qa)
       // Event shots: the APC in the air off a ramp, and every leaper/thrower action, at most one per 1.2 s.
-      if ((air.y > 2.2 || air.fight.length) && Date.now() - lastEvent > 1200) { lastEvent = Date.now(); log({ eventShot: shotN, tick: e.tick, apcY: +air.y.toFixed(2), fight: air.fight, boarders: air.boarders }); await page.screenshot({ path: `${out}/s${String(shotN++).padStart(3, '0')}-t${e.tick}-${air.y > 2.2 ? 'air' : air.fight.join('+')}.jpg`, type: 'jpeg', quality: 70 }); }
+      if ((air.y > 2.2 || air.fight.length) && Date.now() - lastEvent > 1200) { lastEvent = Date.now(); log({ eventShot: shotN, tick: e.tick, apcY: +air.y.toFixed(2), apcSpeed: air.speed, keys, fight: air.fight, boarders: air.boarders }); await page.screenshot({ path: `${out}/s${String(shotN++).padStart(3, '0')}-t${e.tick}-${air.y > 2.2 ? 'air' : air.fight.join('+')}.jpg`, type: 'jpeg', quality: 70 }); }
     }
     if (values['hold-e'] && e.prompt) keys.push('KeyE');
-    // Space is the handbrake while driving: only fire on foot.
+    // While driving Space is the horn/boost (K the handbrake): only fire on foot.
     if (target && !e.driving) { await page.mouse.move(target.aim.x, target.aim.y); keys.push('Space'); }
+    // r34-l9qa: number keys are ignored while driving (by design) but must work at the L9 hatch: retry the weapon key until it sticks.
+    if (key && e.player.current && e.player.current !== values.weapon && e.player.weapons.includes(values.weapon!) && !e.driving && Date.now() - lastKey > 2500) {
+      lastKey = Date.now(); await page.keyboard.press(`Digit${key}`); log({ weaponKeyRetry: key, had: e.player.current, tick: e.tick });
+    }
     await press(keys);
     if (values['tap-e-when'] && new RegExp(values['tap-e-when']).test(e.tracker ?? '') && Date.now() - lastTap > 1000) {
       lastTap = Date.now(); if (!held.has('KeyE')) { await page.keyboard.down('KeyE'); await page.waitForTimeout(80); await page.keyboard.up('KeyE'); log({ tapE: e.tracker, tick: e.tick }); }
