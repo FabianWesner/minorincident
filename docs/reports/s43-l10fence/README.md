@@ -11,6 +11,8 @@ Status: implementation committed; full browser matrix and final visual acceptanc
 
 ## Evidence so far
 
+- Direct corgi railing probe: 15 seconds real-input movement along the closed east edge, starting companion beside courier via respawnNear. Low WebGL2 zoom 1, zero errors. All five logged courier/dog samples stay inside x=4057; corgi followed around x=4055 and then x=4052.7 as courier turned inward. Opened `/private/tmp/s43-corgi-east-rail/s002-t428.jpg`, showing both on the inner side. Receipts in `corgi-rail.json`. This verifies ordinary follow on the arena railing; offscreen catch-up across barriers still relies on the regression test and needs runtime coverage. Owned preview stopped.
+
 - Matched perimeter draw measurement, high WebGPU zoom 1.5: paused visibility toggles isolate the perimeter from moving-scene changes. Before samples: 70 shown/68 hidden and 72/70; after samples: 70/68 and 72/70. Both renderers cost 2 submissions, so the measured increase is **0**, within +2. Receipts in `draw-calls.json`; both runs had zero errors and owned previews were stopped.
 
 - Completed and opened all eight original-perimeter before rows. Final three WebGPU runs completed with zero page errors; paths and settings are inventoried in `capture-matrix.json`. Before views consistently show the uniform three-rail silhouette; after views show concrete bases, patched braces and hazard marks at the same east-edge pose. The comparison isolates renderer appearance only. Matched draw-count measurements and remaining acceptance checks are pending. Owned preview stopped.
