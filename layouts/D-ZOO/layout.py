@@ -553,6 +553,9 @@ for pid in sorted(_drop):
     for o in [o for o in l.empties if o.name == _nm or o.name.startswith(_nm + '.') or o.name.startswith(f'crown:{pid}:')]:
         l.empties.remove(o); bpy.data.objects.remove(o, do_unlink=True)
 print('r33-l8route added', len(l.data['placements']) - _route_start, 'pieces, dropped', len(_drop))
+# ...and the same two hedge pieces are re-placed 0.9 m east of the fence (appended, so no existing id moves): the plaza flank stays closed
+# exactly as before without cutting into the fence panels (r37-nightly; dropping them opened a route and broke the L8 flamingo gate test).
+for _hz in (8.6175, 10.8525): l.place('prop.hedge', [14.9, 0, _hz], yaw=math.pi / 2, scale=(0.8840819684716045, 1, 1))
 # Every enclosure panel is a cell wall: bolt them all (a pushable 22 kg panel is a door the herd or the player can open).
 for p in l.data['placements']:
     if p['assetId'] == 'prop.crowd-fence': p['fixed'] = True
