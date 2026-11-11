@@ -108,3 +108,14 @@ At the600ms event, measured renderer PID92775 marker timestamp229872677832us: pr
 `screenshot-correlation.json` matches historical and complete-reproduction hitch ticks to screenshot filename ticks. Historical L8 tick7698/1817ms follows screenshot tick7693 by5ticks; historical L5 tick10949/583ms follows screenshot10944 by5ticks, and L5 tick10483/317ms follows10478 by5ticks. Complete shared reproduction tick9341/600ms follows screenshot9336 by5ticks. Other L5 events have58/130tick offsets, so the correlation is not universal and is not yet causal proof.
 
 Runner capture calls now log exact start/end epochs and duration; `--no-captures` disables screenshots during measured play without changing game graphics/content or real-input behavior. This enables paired screenshot-on/off timing rather than guessing a game shader fix from missing evidence. Typecheck/lint/diff-check pass. No current browser/server process started in this investigation step. Next: paired runs under the same conditions with timed captures, then repeat screenshot-free windows for all four cells and compare load clocks. Historical screenshot-heavy QA intervals remain retained as failures until attribution is supported.
+
+### Capture-on/off pair1 — screenshot-only mitigation rejected
+
+`capture-pair-1.json` retains summaries, load clocks, host-load ranges, capture counts and trace status. Same game build/route/high WebGPU/zoom1/180s, sequential separate shared reservations. Both reached arena-lion, zero page errors.
+
+| Mode | max/p99 | >250ms | setup load | host load1 range | captures |
+|---|---|---:|---:|---|---|
+| capture on |233.3/16.8ms|0|6303ms|4.50–8.28|30; max198ms |
+| capture off |1116.7/16.8ms|1 at tick7281/elapsed121365ms|6278ms|6.11–10.69|0 |
+
+Observed setup delta(off−on)−25ms; no runtime load code changed. Higher/shared host load confounds a performance improvement claim. Capture suppression is **not sufficient**: a >1s frame occurs with zero screenshot calls. The prior screenshot correlation cannot justify calling screenshots the sole cause, and this failed sample remains part of acceptance. Need complete dispatch-gap analysis and a supported mitigation; game quality/content unchanged. All owned commands terminal; preview4937 stopped.
