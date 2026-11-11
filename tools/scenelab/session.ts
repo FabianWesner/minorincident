@@ -1,4 +1,4 @@
-import { airborneFootTrack } from '../../src/debug/scenelab/motion';
+import { airborneFootTrack, footYaw, summarizeMotion } from '../../src/debug/scenelab/motion';
 import { uncappedArgs } from '../perf/uncapped';
 import { spawn, execFileSync, type ChildProcess } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
@@ -240,6 +240,15 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   for (const actor of e.footSlideActors ?? []) {
     const value = metrics.actors[actor]?.motion.slideP95Cm ?? (airborne.has(actor) ? 0 : Infinity);
     checks.push({ name: `footSlideP95Cm.${actor}`, pass: value <= (e.footSlideP95MaxCm ?? 3), value, limit: e.footSlideP95MaxCm ?? 3 });
+  }
+  for (const window of e.footSlideWindows ?? []) {
+    const frames = (metrics.actors[window.actor]?.track ?? []).filter(f => f.frame >= window.from && f.frame <= window.to);
+    const samples = frames.map(f => ({ ...f, feet: f.feet.map(foot => ({ ...foot, yaw: footYaw(foot.heel, foot.toe) })) }));
+    const summary = summarizeMotion(samples), complete = frames.length === window.to - window.from + 1;
+    const speed = complete && frames.every(f => Number.isFinite(f.speed) && f.speed! >= window.speedMinMs && f.speed! <= window.speedMaxMs);
+    const name = `${window.actor}.${window.from}-${window.to}`;
+    checks.push({ name: `footWindowMotion.${name}`, pass: speed && summary.contacts >= window.contactsMin, value: complete ? summary.contacts : -1, limit: window.contactsMin });
+    add(`footWindowP95Cm.${name}`, summary.slideP95Cm ?? Infinity, e.footSlideP95MaxCm ?? 3);
   }
   add('footSinkMaxCm', Math.max(0, ...motion.map(m => m.sinkMaxCm)), e.footSinkMaxCm);
   add('footJitterRunMax', Math.max(0, ...Object.values(metrics.actors).filter(a => a.kind === 'courier').map(a => a.motion.jitterRunMax)), e.footJitterRunMax);

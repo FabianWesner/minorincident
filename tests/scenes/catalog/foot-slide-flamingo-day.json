@@ -78,6 +78,24 @@
         6,
         100
       ]
-    }
+    },
+    "footSlideWindows": [
+      {
+        "actor": "bird",
+        "from": 60,
+        "to": 180,
+        "speedMinMs": 2,
+        "speedMaxMs": 3,
+        "contactsMin": 6
+      },
+      {
+        "actor": "bird",
+        "from": 230,
+        "to": 350,
+        "speedMinMs": 4,
+        "speedMaxMs": 5.5,
+        "contactsMin": 6
+      }
+    ]
   }
 }

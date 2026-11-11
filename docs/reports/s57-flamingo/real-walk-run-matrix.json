@@ -1,0 +1,386 @@
+{
+  "dense": {
+    "shots": [
+      40,
+      46,
+      52,
+      58,
+      250,
+      256,
+      262,
+      268
+    ],
+    "walkHipRangeCm": 3.547179698944092,
+    "runHipRangeCm": 6.640762090682983
+  },
+  "rows": [
+    {
+      "backend": "webgl2",
+      "tier": "low",
+      "mood": "day",
+      "pass": true,
+      "motion": {
+        "frames": 360,
+        "torsoPitchMinDeg": 23.7,
+        "torsoPitchMaxDeg": 23.7,
+        "contacts": 32,
+        "slideMaxCm": 0,
+        "slideP95Cm": 0,
+        "yawDriftMaxDeg": 0,
+        "liftMaxCm": 8.1,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 1,
+        "worstSlideFrame": 1
+      },
+      "travelM": 19.98555878817077,
+      "windows": [
+        {
+          "name": "footWindowMotion.bird.60-180",
+          "pass": true,
+          "value": 11,
+          "limit": 6
+        },
+        {
+          "name": "footWindowP95Cm.bird.60-180",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footWindowMotion.bird.230-350",
+          "pass": true,
+          "value": 12,
+          "limit": 6
+        },
+        {
+          "name": "footWindowP95Cm.bird.230-350",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "backend": "webgl2",
+      "tier": "low",
+      "mood": "night",
+      "pass": true,
+      "motion": {
+        "frames": 360,
+        "torsoPitchMinDeg": 23.7,
+        "torsoPitchMaxDeg": 23.7,
+        "contacts": 32,
+        "slideMaxCm": 0,
+        "slideP95Cm": 0,
+        "yawDriftMaxDeg": 0,
+        "liftMaxCm": 8.1,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 1,
+        "worstSlideFrame": 1
+      },
+      "travelM": 19.98555878817077,
+      "windows": [
+        {
+          "name": "footWindowMotion.bird.60-180",
+          "pass": true,
+          "value": 11,
+          "limit": 6
+        },
+        {
+          "name": "footWindowP95Cm.bird.60-180",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footWindowMotion.bird.230-350",
+          "pass": true,
+          "value": 12,
+          "limit": 6
+        },
+        {
+          "name": "footWindowP95Cm.bird.230-350",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "backend": "webgl2",
+      "tier": "high",
+      "mood": "day",
+      "pass": true,
+      "motion": {
+        "frames": 360,
+        "torsoPitchMinDeg": 23.7,
+        "torsoPitchMaxDeg": 23.7,
+        "contacts": 32,
+        "slideMaxCm": 0,
+        "slideP95Cm": 0,
+        "yawDriftMaxDeg": 0,
+        "liftMaxCm": 8.5,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 1,
+        "worstSlideFrame": 1
+      },
+      "travelM": 19.98555878817077,
+      "windows": [
+        {
+          "name": "footWindowMotion.bird.60-180",
+          "pass": true,
+          "value": 11,
+          "limit": 6
+        },
+        {
+          "name": "footWindowP95Cm.bird.60-180",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footWindowMotion.bird.230-350",
+          "pass": true,
+          "value": 12,
+          "limit": 6
+        },
+        {
+          "name": "footWindowP95Cm.bird.230-350",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "backend": "webgl2",
+      "tier": "high",
+      "mood": "night",
+      "pass": true,
+      "motion": {
+        "frames": 360,
+        "torsoPitchMinDeg": 23.7,
+        "torsoPitchMaxDeg": 23.7,
+        "contacts": 32,
+        "slideMaxCm": 0,
+        "slideP95Cm": 0,
+        "yawDriftMaxDeg": 0,
+        "liftMaxCm": 8.5,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 1,
+        "worstSlideFrame": 1
+      },
+      "travelM": 19.98555878817077,
+      "windows": [
+        {
+          "name": "footWindowMotion.bird.60-180",
+          "pass": true,
+          "value": 11,
+          "limit": 6
+        },
+        {
+          "name": "footWindowP95Cm.bird.60-180",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footWindowMotion.bird.230-350",
+          "pass": true,
+          "value": 12,
+          "limit": 6
+        },
+        {
+          "name": "footWindowP95Cm.bird.230-350",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "backend": "webgpu",
+      "tier": "low",
+      "mood": "day",
+      "pass": true,
+      "motion": {
+        "frames": 360,
+        "torsoPitchMinDeg": 23.7,
+        "torsoPitchMaxDeg": 23.7,
+        "contacts": 32,
+        "slideMaxCm": 0,
+        "slideP95Cm": 0,
+        "yawDriftMaxDeg": 0,
+        "liftMaxCm": 8.1,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 1,
+        "worstSlideFrame": 1
+      },
+      "travelM": 19.98555878817077,
+      "windows": [
+        {
+          "name": "footWindowMotion.bird.60-180",
+          "pass": true,
+          "value": 11,
+          "limit": 6
+        },
+        {
+          "name": "footWindowP95Cm.bird.60-180",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footWindowMotion.bird.230-350",
+          "pass": true,
+          "value": 12,
+          "limit": 6
+        },
+        {
+          "name": "footWindowP95Cm.bird.230-350",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "backend": "webgpu",
+      "tier": "low",
+      "mood": "night",
+      "pass": true,
+      "motion": {
+        "frames": 360,
+        "torsoPitchMinDeg": 23.7,
+        "torsoPitchMaxDeg": 23.7,
+        "contacts": 32,
+        "slideMaxCm": 0,
+        "slideP95Cm": 0,
+        "yawDriftMaxDeg": 0,
+        "liftMaxCm": 8.1,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 1,
+        "worstSlideFrame": 1
+      },
+      "travelM": 19.98555878817077,
+      "windows": [
+        {
+          "name": "footWindowMotion.bird.60-180",
+          "pass": true,
+          "value": 11,
+          "limit": 6
+        },
+        {
+          "name": "footWindowP95Cm.bird.60-180",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footWindowMotion.bird.230-350",
+          "pass": true,
+          "value": 12,
+          "limit": 6
+        },
+        {
+          "name": "footWindowP95Cm.bird.230-350",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "backend": "webgpu",
+      "tier": "high",
+      "mood": "day",
+      "pass": true,
+      "motion": {
+        "frames": 360,
+        "torsoPitchMinDeg": 23.7,
+        "torsoPitchMaxDeg": 23.7,
+        "contacts": 32,
+        "slideMaxCm": 0,
+        "slideP95Cm": 0,
+        "yawDriftMaxDeg": 0,
+        "liftMaxCm": 8.5,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 1,
+        "worstSlideFrame": 1
+      },
+      "travelM": 19.98555878817077,
+      "windows": [
+        {
+          "name": "footWindowMotion.bird.60-180",
+          "pass": true,
+          "value": 11,
+          "limit": 6
+        },
+        {
+          "name": "footWindowP95Cm.bird.60-180",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footWindowMotion.bird.230-350",
+          "pass": true,
+          "value": 12,
+          "limit": 6
+        },
+        {
+          "name": "footWindowP95Cm.bird.230-350",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "backend": "webgpu",
+      "tier": "high",
+      "mood": "night",
+      "pass": true,
+      "motion": {
+        "frames": 360,
+        "torsoPitchMinDeg": 23.7,
+        "torsoPitchMaxDeg": 23.7,
+        "contacts": 32,
+        "slideMaxCm": 0,
+        "slideP95Cm": 0,
+        "yawDriftMaxDeg": 0,
+        "liftMaxCm": 8.5,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 1,
+        "worstSlideFrame": 1
+      },
+      "travelM": 19.98555878817077,
+      "windows": [
+        {
+          "name": "footWindowMotion.bird.60-180",
+          "pass": true,
+          "value": 11,
+          "limit": 6
+        },
+        {
+          "name": "footWindowP95Cm.bird.60-180",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footWindowMotion.bird.230-350",
+          "pass": true,
+          "value": 12,
+          "limit": 6
+        },
+        {
+          "name": "footWindowP95Cm.bird.230-350",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    }
+  ]
+}

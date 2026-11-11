@@ -293,6 +293,8 @@ export interface Expectations {
   footSlideP95MaxCm?: number;
   /** Actors that must provide contact samples for the p95 gate; an absent actor or no contacts fails. */
   footSlideActors?: string[];
+  /** Phase-specific motion proof: every frame must move at the requested speed and provide repeated contacts. */
+  footSlideWindows?: { actor: string; from: number; to: number; speedMinMs: number; speedMaxMs: number; contactsMin: number }[];
   /** Explicit aerial actors: require all declared feet every frame and measured travel before accepting no contacts. */
   airborneFootActors?: Record<string, { feet: number; travelMinM: number }>;
   /** Deepest sole point below the floor, in cm (feet through the ground). */

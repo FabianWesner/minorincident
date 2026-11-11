@@ -702,7 +702,16 @@ export class SceneLab {
       else if ('attack' in a) { b.state = 'chase'; }
       else if ('turn' in a) e.transform.yaw = rad(a.turn);
       else if ('hit' in a) this.hit(e, a.hit);
-      else if ('moveTo' in a || 'walk' in a || 'run' in a) { const p = toPoint('moveTo' in a ? a.moveTo : ('walk' in a ? a.walk : a.run).slice(-1)[0]); b.state = 'attracted' as typeof b.state; e.noiseTarget = undefined; world.infected!.noise(p, 30, true); }
+      else if ('walk' in a) {
+        // Use the production half-speed wander state for a real walking probe.
+        // A noise event may legitimately be ignored by an animal and cannot
+        // establish that the requested walk happened.
+        const p = toPoint(a.walk.at(-1)!), dx = p.x - e.transform.x, dz = p.z - e.transform.z, distance = Math.hypot(dx, dz);
+        b.state = 'wander'; b.dx = dx / (distance || 1); b.dz = dz / (distance || 1);
+        b.until = world.tick + Math.ceil(distance / Math.max(.01, b.speed / 2) * 60);
+        b.heardTargetId = 0; delete b.investigate; delete e.noiseTarget;
+      }
+      else if ('moveTo' in a || 'run' in a) { const p = toPoint('moveTo' in a ? a.moveTo : a.run.slice(-1)[0]); b.state = 'attracted' as typeof b.state; e.noiseTarget = undefined; world.infected!.noise(p, 30, true); }
       return;
     }
     // Corgi: it always follows the courier (Companion); turn/teleport are the only overrides.
