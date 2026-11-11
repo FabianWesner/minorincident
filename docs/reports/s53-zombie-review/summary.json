@@ -65,7 +65,7 @@
         "Same base Alpha massing beneath recolour",
         "Armour/fire identity lacks readable surface detail"
       ],
-      "fixRoute": "TRELLIS rebuild from PO-approved concept with distinct role silhouette, readable face and clean toy materials; retain role props; verify chase, attack, hit and corpse.",
+      "fixRoute": "TRELLIS rebuild from PO-approved concept with distinct role silhouette, readable face and clean toy materials; retain role props; verify chase, attack, hit and corpse. Repair hit reaction selection/blending; sampled hit retains infected-idle.",
       "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in alphaPoseMatrix",
       "assetFiles": {
         "notes.md": false,
@@ -82,7 +82,12 @@
       },
       "group": "Alpha",
       "priority": 1,
-      "pipelineCandidateManifests": []
+      "pipelineCandidateManifests": [],
+      "hitPoseFinding": {
+        "sampleFrame": 185,
+        "clip": "infected-idle",
+        "interpretation": "Hit sample lacks a distinct reaction; review defect/limitation, not evidence of a better unseen pose."
+      }
     },
     {
       "figure": "inf.alpha-hoodie",
@@ -94,7 +99,7 @@
         "Same hulking base silhouette and pose",
         "Torn colour patches read as mottling"
       ],
-      "fixRoute": "TRELLIS rebuild from PO-approved concept with distinct role silhouette, readable face and clean toy materials; retain role props; verify chase, attack, hit and corpse.",
+      "fixRoute": "TRELLIS rebuild from PO-approved concept with distinct role silhouette, readable face and clean toy materials; retain role props; verify chase, attack, hit and corpse. Repair hit reaction selection/blending; sampled hit retains infected-idle.",
       "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in alphaPoseMatrix",
       "assetFiles": {
         "notes.md": false,
@@ -111,7 +116,12 @@
       },
       "group": "Alpha",
       "priority": 1,
-      "pipelineCandidateManifests": []
+      "pipelineCandidateManifests": [],
+      "hitPoseFinding": {
+        "sampleFrame": 185,
+        "clip": "infected-idle",
+        "interpretation": "Hit sample lacks a distinct reaction; review defect/limitation, not evidence of a better unseen pose."
+      }
     },
     {
       "figure": "inf.alpha-suit",
@@ -123,7 +133,7 @@
         "Head is buried in hunched shoulders",
         "Low identity separation from base Alpha"
       ],
-      "fixRoute": "TRELLIS rebuild from PO-approved concept with distinct role silhouette, readable face and clean toy materials; retain role props; verify chase, attack, hit and corpse.",
+      "fixRoute": "TRELLIS rebuild from PO-approved concept with distinct role silhouette, readable face and clean toy materials; retain role props; verify chase, attack, hit and corpse. Repair hit reaction selection/blending; sampled hit retains alpha-pounce.",
       "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in alphaPoseMatrix",
       "assetFiles": {
         "notes.md": false,
@@ -140,7 +150,12 @@
       },
       "group": "Alpha",
       "priority": 1,
-      "pipelineCandidateManifests": []
+      "pipelineCandidateManifests": [],
+      "hitPoseFinding": {
+        "sampleFrame": 185,
+        "clip": "alpha-pounce",
+        "interpretation": "Hit sample lacks a distinct reaction; review defect/limitation, not evidence of a better unseen pose."
+      }
     },
     {
       "figure": "inf.alpha-worker",
@@ -152,7 +167,7 @@
         "Rubble shoulder and jacket details merge into noise",
         "Night loses material and facial volume"
       ],
-      "fixRoute": "TRELLIS rebuild from PO-approved concept with distinct role silhouette, readable face and clean toy materials; retain role props; verify chase, attack, hit and corpse.",
+      "fixRoute": "TRELLIS rebuild from PO-approved concept with distinct role silhouette, readable face and clean toy materials; retain role props; verify chase, attack, hit and corpse. Repair hit reaction selection/blending; sampled hit retains infected-idle.",
       "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in alphaPoseMatrix",
       "assetFiles": {
         "notes.md": false,
@@ -172,7 +187,12 @@
       "pipelineCandidateManifests": [],
       "trellis": true,
       "pipelineEvidence": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/alpha-worker/notes.md; v2/cast_solidify.py",
-      "lineageConfidence": "Documentary source family; deployed hash chain absent"
+      "lineageConfidence": "Documentary source family; deployed hash chain absent",
+      "hitPoseFinding": {
+        "sampleFrame": 185,
+        "clip": "infected-idle",
+        "interpretation": "Hit sample lacks a distinct reaction; review defect/limitation, not evidence of a better unseen pose."
+      }
     },
     {
       "figure": "inf.armored-football",
@@ -338,14 +358,14 @@
     {
       "figure": "inf.bloated",
       "pipeline": "Yes, derived \u2014 TRELLIS base inf.cashier with procedural deformation/props; no unique heavy inference",
-      "scoreDay": 4,
-      "scoreNight": 3,
+      "scoreDay": 2,
+      "scoreNight": 2,
       "defects": [
-        "Torso is a red rounded block with green dots",
-        "Head/hair detail is muddy at game scale",
-        "Night loses volume and garment separation"
+        "Attack deforms torso into an extreme tall tapered column",
+        "Red belly and coarse faceted limbs lack clean anatomical structure",
+        "Night flattens face and clothing; corpse remains surrounded by smoke"
       ],
-      "fixRoute": "TRELLIS rebuild from an approved silhouette concept; preserve role prop separately, then clean colour/material pass and animation review.",
+      "fixRoute": "Repair heavy-role skinning/attack deformation first; TRELLIS rebuild with stable massing and readable face, then material pass and all-pose regression review.",
       "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in heavyPoseMatrix",
       "assetFiles": {
         "notes.md": true,
@@ -717,7 +737,7 @@
         "Hands and face do not separate clearly",
         "Night flattens the crawl silhouette"
       ],
-      "fixRoute": "TRELLIS rebuild or retained-source silhouette cleanup; strengthen face and role garment/prop; clean material pass; verify native locomotion and corpse.",
+      "fixRoute": "TRELLIS rebuild or retained-source silhouette cleanup; strengthen face and role garment/prop; clean material pass; verify native locomotion and corpse. Repair hit reaction selection/blending; sampled hit retains crawl.",
       "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in rolePoseMatrix",
       "assetFiles": {
         "notes.md": true,
@@ -745,7 +765,12 @@
           "sha256": "a3863dc663b51c1fdf56d60d8716b088b0271f5e9e96bcf005485a9a9d665cad",
           "mentionsTrellis": true
         }
-      ]
+      ],
+      "hitPoseFinding": {
+        "sampleFrame": 185,
+        "clip": "crawl",
+        "interpretation": "Hit sample lacks a distinct reaction; review defect/limitation, not evidence of a better unseen pose."
+      }
     },
     {
       "figure": "inf.crow",
@@ -1016,7 +1041,7 @@
         "Back wound reads as a graphic red target",
         "Eyes are tiny glowing marks beneath broad ears"
       ],
-      "fixRoute": "TRELLIS rebuild/retained-source cleanup with species silhouette and readable infected face; improve clean material detail; verify native movement, attacks and corpse.",
+      "fixRoute": "TRELLIS rebuild/retained-source cleanup with species silhouette and readable infected face; improve clean material detail; verify native movement, attacks and corpse. Repair hit reaction selection/blending; sampled hit retains infected-idle.",
       "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in zooPoseMatrix",
       "assetFiles": {
         "notes.md": true,
@@ -1048,7 +1073,12 @@
       "nightPresetReviewed": "L8-zoo (isolated slab; no campaign practical placements)",
       "trellis": true,
       "pipelineEvidence": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.elephant/notes.md",
-      "lineageConfidence": "Documentary family/source lineage; embedded deployed-source hash unavailable"
+      "lineageConfidence": "Documentary family/source lineage; embedded deployed-source hash unavailable",
+      "hitPoseFinding": {
+        "sampleFrame": 185,
+        "clip": "infected-idle",
+        "interpretation": "Hit sample lacks a distinct reaction; review defect/limitation, not evidence of a better unseen pose."
+      }
     },
     {
       "figure": "inf.firefighter",
@@ -1098,7 +1128,7 @@
         "Sparse red spots look decorative",
         "Thin legs and pale body lack feather detail"
       ],
-      "fixRoute": "TRELLIS rebuild/retained-source cleanup with species silhouette and readable infected face; improve clean material detail; verify native movement, attacks and corpse.",
+      "fixRoute": "TRELLIS rebuild/retained-source cleanup with species silhouette and readable infected face; improve clean material detail; verify native movement, attacks and corpse. Repair hit reaction selection/blending; sampled hit retains run.",
       "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in zooPoseMatrix",
       "assetFiles": {
         "notes.md": true,
@@ -1130,7 +1160,12 @@
       "nightPresetReviewed": "L8-zoo (isolated slab; no campaign practical placements)",
       "trellis": true,
       "pipelineEvidence": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.flamingo/notes.md",
-      "lineageConfidence": "Documentary family/source lineage; embedded deployed-source hash unavailable"
+      "lineageConfidence": "Documentary family/source lineage; embedded deployed-source hash unavailable",
+      "hitPoseFinding": {
+        "sampleFrame": 185,
+        "clip": "run",
+        "interpretation": "Hit sample lacks a distinct reaction; review defect/limitation, not evidence of a better unseen pose."
+      }
     },
     {
       "figure": "inf.gorilla",
@@ -1242,7 +1277,7 @@
         "Body reads as a plain golden toy tube",
         "Little facial or infected detail visible"
       ],
-      "fixRoute": "TRELLIS rebuild/retained-source cleanup with species silhouette and readable infected face; improve clean material detail; verify native movement, attacks and corpse.",
+      "fixRoute": "TRELLIS rebuild/retained-source cleanup with species silhouette and readable infected face; improve clean material detail; verify native movement, attacks and corpse. Repair hit reaction selection/blending; sampled hit retains infected-idle.",
       "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in zooPoseMatrix",
       "assetFiles": {
         "notes.md": true,
@@ -1263,7 +1298,12 @@
       "nightPresetReviewed": "L8-zoo (isolated slab; no campaign practical placements)",
       "trellis": false,
       "pipelineEvidence": "tools/assets/build-l8-cats.ts:1; assets/amb.lion/build_cat.py",
-      "lineageConfidence": "Explicit current surface replacement script supersedes older TRELLIS candidate notes"
+      "lineageConfidence": "Explicit current surface replacement script supersedes older TRELLIS candidate notes",
+      "hitPoseFinding": {
+        "sampleFrame": 185,
+        "clip": "infected-idle",
+        "interpretation": "Hit sample lacks a distinct reaction; review defect/limitation, not evidence of a better unseen pose."
+      }
     },
     {
       "figure": "inf.lioness",
@@ -1275,7 +1315,7 @@
         "Face is tiny with dot features",
         "Low distinction beyond removing the mane"
       ],
-      "fixRoute": "TRELLIS rebuild/retained-source cleanup with species silhouette and readable infected face; improve clean material detail; verify native movement, attacks and corpse.",
+      "fixRoute": "TRELLIS rebuild/retained-source cleanup with species silhouette and readable infected face; improve clean material detail; verify native movement, attacks and corpse. Repair hit reaction selection/blending; sampled hit retains infected-idle.",
       "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in zooPoseMatrix",
       "assetFiles": {
         "notes.md": true,
@@ -1296,7 +1336,12 @@
       "nightPresetReviewed": "L8-zoo (isolated slab; no campaign practical placements)",
       "trellis": false,
       "pipelineEvidence": "tools/assets/build-l8-cats.ts:1; assets/amb.lion/build_cat.py",
-      "lineageConfidence": "Explicit current surface replacement script supersedes older TRELLIS candidate notes"
+      "lineageConfidence": "Explicit current surface replacement script supersedes older TRELLIS candidate notes",
+      "hitPoseFinding": {
+        "sampleFrame": 185,
+        "clip": "infected-idle",
+        "interpretation": "Hit sample lacks a distinct reaction; review defect/limitation, not evidence of a better unseen pose."
+      }
     },
     {
       "figure": "inf.mega-alpha",
@@ -1714,7 +1759,7 @@
         "Dense stripes and bright night rim conceal anatomy",
         "Face lacks readable infection or expression"
       ],
-      "fixRoute": "Retain TRELLIS source only after quadruped death/hit binding is corrected; rebuild corpse pose and weight mapping, then simplify stripe/material grouping.",
+      "fixRoute": "Retain TRELLIS source only after quadruped death/hit binding is corrected; rebuild corpse pose and weight mapping, then simplify stripe/material grouping. Repair hit reaction selection/blending; sampled hit retains infected-idle.",
       "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in zooPoseMatrix",
       "assetFiles": {
         "notes.md": true,
@@ -1734,7 +1779,12 @@
       "pipelineCandidateManifests": [],
       "nightPresetReviewed": "L8-zoo (isolated slab; no campaign practical placements)",
       "trellis": true,
-      "pipelineEvidence": "assets/inf.zebra/notes.md"
+      "pipelineEvidence": "assets/inf.zebra/notes.md",
+      "hitPoseFinding": {
+        "sampleFrame": 185,
+        "clip": "infected-idle",
+        "interpretation": "Hit sample lacks a distinct reaction; review defect/limitation, not evidence of a better unseen pose."
+      }
     }
   ],
   "freshCaptureAttempt": {
@@ -3630,7 +3680,6 @@
     "unscored": [],
     "incompleteRequirements": [
       "Missing 47th ID or explicit scope correction",
-      "Pose-specific gaps: Alpha base attack, some hit clips, obscured bloated corpse; retired static assets lack native motion",
       "Per-deployed-asset TRELLIS yes/no lineage for seven unresolved sources",
       "Measured frequency times screen-size priorities",
       "Final reviewed commit after evidence audit"
@@ -3638,7 +3687,9 @@
     "gameCodeOrAssetsChanged": false,
     "scoredDirectoryAssets": 46,
     "openedMotionMatrixCells": 764,
-    "openedMotionMatrixFigures": 33
+    "openedMotionMatrixFigures": 33,
+    "poseLimitations": "Production hit samples that retain locomotion are recorded as defects; 12 legacy assets lack an active native crowd animation path. No animation is invented for the static corpse set.",
+    "additionalOpenedPoseCells": 60
   },
   "corpseSetCapture": {
     "openedImages": 4,
@@ -5007,5 +5058,77 @@
       "High-tier run timed out at600 simulation seconds; low-tier completed at301.22 seconds.",
       "Population exposure only; no camera visibility or pixel-area measurement. Do not call this measured screen exposure."
     ]
+  },
+  "poseGapCapture": {
+    "captures": 40,
+    "openedSheets": [
+      "pose-gap-captures/alpha-sheet.jpg",
+      "pose-gap-captures/bloated-sheet.jpg"
+    ],
+    "clipAudit": {
+      "alpha": {
+        "20": {
+          "state": "chase",
+          "clip": "alpha-roar"
+        },
+        "50": {
+          "state": "chase",
+          "clip": "alpha-roar"
+        },
+        "80": {
+          "state": "chase",
+          "clip": "stagger-left"
+        },
+        "300": {
+          "state": "dead",
+          "clip": "death-back"
+        },
+        "360": {
+          "state": "dead",
+          "clip": "death-back"
+        }
+      },
+      "bloated": {
+        "20": {
+          "state": "chase",
+          "clip": "shamble"
+        },
+        "50": {
+          "state": "chase",
+          "clip": "infected-lurch"
+        },
+        "80": {
+          "state": "chase",
+          "clip": "infected-lurch"
+        },
+        "300": {
+          "state": "dead",
+          "clip": "death-back"
+        },
+        "360": {
+          "state": "dead",
+          "clip": "death-back"
+        }
+      }
+    },
+    "observations": [
+      "Bloated attack at frame80 stretches body into a tall tapered column; score reduced to day2/night2.",
+      "Bloated corpse at360 is visible below residual smoke, without warning X.",
+      "Alpha commanded ground-slam fixture; clips must be interpreted from receipts, not command name."
+    ]
+  },
+  "alphaSlamCapture": {
+    "captures": 20,
+    "openedSheet": "alpha-slam-captures/alpha-sheet.jpg",
+    "frames": [
+      10,
+      25,
+      40,
+      55,
+      70
+    ],
+    "clip": "alpha-slam at all five sampled ticks",
+    "fixture": "Explicit alphaType brute and special at frame1, avoiding automatic selection before frame5",
+    "finding": "Raised forearms and compressed slam body read, but face is tiny, grey masses coarse and night shading flat. Scores remain3/2."
   }
 }
