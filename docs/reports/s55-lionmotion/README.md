@@ -582,3 +582,12 @@ This directly attributes the removed whole-body discontinuity to presentation,
 with unchanged simulation movement. Raw `original-l8/` and
 `current-l8-comparison/` replace intermediate-candidate figures for final L8
 before/after reporting. Current typecheck/lint also passed before these runs.
+
+## Post-timing-fix full unit validation
+
+Required remote `npm test` completed exit 0 on current contact-time source:
+27 files passed; 106 tests passed, 1 skipped; 220.42 s test duration and 223.5 s
+wrapper time within 240 s. Collection remains 150/150 repository cases. Log:
+`post-time-unit.log`. This supersedes the earlier full-unit result for the
+elapsed-time and declared-sole classification changes. Post-change 62-row scene
+gate and the final consolidated acceptance audit are still outstanding.
