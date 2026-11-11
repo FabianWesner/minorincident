@@ -73,3 +73,7 @@ Using the army MG catalog damage, fire rate, stagger and knockback, a brute star
 Audit trace investigation found allied gunfire in `src/sim/outbreak/Allies.ts` authors positive bullet stagger (normally 0.25), unlike the campaign army-MG catalog. The global poise rule therefore also changes allied suppression, which can affect L3 squad survival and attack-rate acceptance. This is a plausible mechanism, not yet a proven causal attribution for each new flag.
 
 Zoo review found `L8BossArenas.control` returns while `Status.stunned` is true. Arena bosses were initially excluded from poise, leaving them vulnerable to the rotary minigun's positive stagger. They now use the heavy light-firearm cooldown and committed-telegraph rule too; pursuit Mega still uses its authored dedicated path. This is a new source change and invalidates the earlier full-audit receipt as final acceptance evidence; the full audit must be repeated.
+
+## Fresh full audit after zoo-poise change
+
+`node --import tsx/esm tools/qa/threat-audit.ts --maxWorkers 4 --out test-results/s54-final-threat` completed in 822.8 seconds, exit 1, with 18 acceptance flags. Counts remain L1 0, L2 1, L3 3, L4 3, L5 3, L6 4, L7 4, L8 0, L9 0, L10 0. The exact flag list matches the preceding patched run. The zoo change added no flags, but the net +1 against the measured 17-flag baseline remains unresolved. The required remote `npm test` retry was canceled while still queued (exit 130), before test execution; it provides no new test result.
