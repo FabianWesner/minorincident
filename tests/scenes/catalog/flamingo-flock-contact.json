@@ -1,0 +1,128 @@
+{
+  "name": "flamingo-flock-contact",
+  "note": "S57: live drawn-body overlap through flock dive and grounded recovery; 2 cm measurement slack only.",
+  "seed": 7,
+  "ground": "asphalt",
+  "size": 60,
+  "time": "L8-zoo",
+  "dof": false,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        2,
+        0
+      ],
+      "god": true,
+      "state": "idle"
+    },
+    {
+      "id": "animal",
+      "kind": "infected",
+      "archetype": "infected.flamingo",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 0,
+      "state": "idle"
+    },
+    {
+      "id": "member0",
+      "kind": "infected",
+      "archetype": "infected.flamingo",
+      "at": [
+        0,
+        1
+      ],
+      "yaw": 0,
+      "state": "idle"
+    },
+    {
+      "id": "member1",
+      "kind": "infected",
+      "archetype": "infected.flamingo",
+      "at": [
+        0,
+        -1
+      ],
+      "yaw": 0,
+      "state": "idle"
+    },
+    {
+      "id": "member2",
+      "kind": "infected",
+      "archetype": "infected.flamingo",
+      "at": [
+        1,
+        2
+      ],
+      "yaw": 0,
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "close",
+    "target": [
+      2,
+      0
+    ],
+    "radius": 6,
+    "azimuth": 45
+  },
+  "script": [
+    {
+      "frame": 0,
+      "actor": "animal",
+      "do": {
+        "special": "flamingo.dive",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 210,
+      "actor": "animal",
+      "do": {
+        "chase": "courier"
+      }
+    },
+    {
+      "frame": 210,
+      "actor": "member0",
+      "do": {
+        "chase": "courier"
+      }
+    },
+    {
+      "frame": 210,
+      "actor": "member1",
+      "do": {
+        "chase": "courier"
+      }
+    },
+    {
+      "frame": 210,
+      "actor": "member2",
+      "do": {
+        "chase": "courier"
+      }
+    }
+  ],
+  "frames": 300,
+  "shots": [
+    0,
+    35,
+    60,
+    84,
+    180
+  ],
+  "sheet": 15,
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "bodyOverlapMaxCm": 0,
+    "specialActiveMin": 1,
+    "specialActiveMove": "flamingo.dive"
+  }
+}
