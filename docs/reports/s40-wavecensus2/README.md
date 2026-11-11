@@ -19,3 +19,19 @@ The nightly census is therefore not verified green. No gameplay, AI, stat, or au
 ## Restored remote access
 
 The exact remote command executed on 94.130.181.173, job `/srv/mi/jobs/s40-wavecensus2-b8a73c-11766-1794398818`, and failed 2 census tests while both L4 tests passed. It exposed fixture errors: opening quota observation occurred after population; thresholds for high packs 713/714 were not crossed; split-pack goal areas still used the parent centre; north incorrectly counted the already-spawned K9 twice; and the explicit east assertion had its membership predicate reversed. Observer timing, thresholds, north quota, and east predicate have been corrected. Split-pack goal-area assertions and a new remote run remain required. This supersedes the earlier runner availability blocker.
+
+## Final verification
+
+The exact required remote command passed **4/4 tests** on 94.130.181.173, job `/srv/mi/jobs/s40-wavecensus2-b8a73c-29235-1794398935` (exit 0, Vitest duration 49.06 s). Both tier censuses and both L4 alarm tests passed. `npm run typecheck`, targeted ESLint, and `git diff --check` also passed.
+
+| L7 cohort | High authored / admitted / reached | Low authored / admitted / reached |
+| --- | --- | --- |
+| 700 | 122 / 122 / 122 | 62 / 62 / 62 |
+| 701 + 705 | 71 / 71 / 71 | 36 / 36 / 36 |
+| 702 (+ 712 high) | 71 / 71 / 71 | 36 / 36 / 36 |
+| 703 (+ 713 high) | 70 / 70 / 70 | 35 / 35 / 35 |
+| 704 (+ 714 high) | 71 / 71 / 71 | 36 / 36 / 36 |
+
+The quota observer now starts before world population. Split-pack positions are captured from the controller's source-authored clear placements; each arrival must remain within the existing 20 m tolerance of its own pack's authored road ranks. Parent-cohort and final Alpha checks retain their prior tolerances. The driver crosses the extra thresholds needed for packs 713 and 714.
+
+L8 initial outlets 0–5 admitted/reached 6,0,7,6,5,5 high and 3,0,4,3,3,3 low. South, north, and east regional outlets each admitted/reached 5 high or 3 low; plaza outlets 4 and 5 each admitted/reached one sustaining member. The initial K9 is counted once. The east assertion explicitly requires a new outlet-1 identity absent from the initial closed-gate cohort. No authored cohort in this scope failed to spawn, and every measured admitted identity reached its goal area. Only test tooling and this report changed; no default-project test cases were added.
