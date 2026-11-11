@@ -12,12 +12,14 @@ try {
   const spec = readSpec('specs/scenes/r36-lion-cats-run.json');
   spec.trace = true;
   spec.actors = speciesList.map((species, i) => ({ id: species, kind: 'animal' as const, species: species, at: [-15, i * 4] as [number, number], state: { walk: [[30, i * 4] as [number, number]], loop: true } }));
+  if (process.env.MOTION_INFECTED) spec.actors = speciesList.map((species, i) => ({ id: species, kind: 'infected' as const, archetype: `infected.${species}`, at: [-15, i * 4] as [number, number], state: 'idle' as const }));
   spec.script = [];
   spec.camera = { mode: 'game', target: selected ? selected : [0, 0, process.env.MOTION_CATS ? 2 : 12], zoom: Number(process.env.MOTION_ZOOM ?? 1.5) };
   await session.load(spec);
   await session.page.evaluate(() => {
     const game = (window.__SCENE__ as unknown as { game: import('../../../src/Game').Game }).game;
-    game.world.events.on('sim.tick', () => { for (const e of game.world.entities.iterate()) if (e.civilian?.zooAnimal) { const speed = e.civilian.l1!.walkSpeed ?? 1; e.transform.x += speed / 60; e.motion = { velocity: { x: speed, z: 0 }, speed, moving: true, distance: (e.motion?.distance ?? 0) + speed / 60 }; } }, 1000);
+    game.world.events.on('sim.tick', () => { for (const e of game.world.entities.iterate()) if (e.civilian?.zooAnimal || e.infected && e.id !== 1) { const speed = e.civilian?.l1?.walkSpeed ?? (e.infected!.speed || 1); e.transform.x += speed / 60; e.motion = { velocity: { x: speed, z: 0 }, speed, moving: true, distance: (e.motion?.distance ?? 0) + speed / 60 }; } }, 1000);
+    for (const e of game.world.entities.iterate()) if (e.infected) { e.infected.speed = 1; e.infected.state = 'idle'; }
     for (const e of game.world.entities.iterate()) if (e.civilian?.zooAnimal) {
       e.civilian.waypoints = [{ x: 40, z: e.transform.z }]; e.civilian.waypoint = 0; e.civilian.pauseUntil = 0;
       e.civilian.l1!.walkSpeed = 1;
@@ -28,7 +30,7 @@ try {
   for (let i = 0; i < 15; i++) {
     if (i === 10) await session.page.evaluate(() => {
       const game = (window.__SCENE__ as unknown as { game: import('../../../src/Game').Game }).game;
-      for (const e of game.world.entities.iterate()) if (e.civilian?.zooAnimal) e.civilian.l1!.walkSpeed = 3.2;
+      for (const e of game.world.entities.iterate()) { if (e.civilian?.zooAnimal) e.civilian.l1!.walkSpeed = 3.2; else if (e.infected) e.infected.speed = 3.2; }
     });
     const batch = await session.page.evaluate(async (batchIndex) => {
       const game = (window.__SCENE__ as unknown as { game: import('../../../src/Game').Game }).game;

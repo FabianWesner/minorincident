@@ -511,3 +511,15 @@ remains within the 150-case budget. Log: `final-unit-retry.log` under the lane's
 test-results. This result covers current render source; the earlier cancelled
 request is superseded. Full 62/62 scene gate and remaining acceptance audit are
 still outstanding, so the goal is not marked complete.
+
+## Infected cat locomotion coverage
+
+Probe now supports infected actors. Completed centered infected lion on WebGL2
+high and infected lioness on WebGPU low, each 900/900 drawn frames, active
+infected locomotion clips, zero measured penetration/run jitter. Both measured
+0.5500 cm pelvis maximum and 10.720 cm actor-coordinate paw maximum. Explicit
+scans found all saved joint components finite. AI movement contributes alongside
+the controlled tick trajectory (28.04 m travel), so these runs are not labeled
+constant-speed baselines. Raw evidence: `infected-lion/` and
+`infected-lioness-webgpu-low/`. This closes stationary infected-fixture coverage
+but does not substitute for the full final scene gate.
