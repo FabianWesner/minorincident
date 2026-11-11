@@ -379,3 +379,7 @@ A living record, updated after every lane or experiment. Short entries with evid
 ## 2026-11-11 orchestrator: invisible courier on PROD for ~3 h (b77 → hotfix 80a)
 - **What happened:** s34-zombiehits added foot-planting rows for hurt/windup/swing/stagger; the shared clip builder baked those non-stride clips as walk cycles → NaN hip/leg tracks. The courier's first `hurt` made her invisible for the rest of the level. The gate (unit, smoke, scene:gate, threat) never hurts the courier in a rendered scene; the s34 lane only checked infected.
 - **Apply:** any change to shared animation/clip code is checked on the courier and companion too (hurt, stagger, attack) — a render-contract test now asserts every baked clip is finite. Hotfixes go on top of the PROD commit in a separate worktree (cherry-pick only the fix), gate unit+build+smoke+scene:gate, deploy from there, then merge back into main.
+
+## 2026-11-11 orchestrator: a failed Cloudflare deploy looked successful (b83)
+- **What happened:** wrangler failed ("binding DB of type d1 failed to generate"), but deploy.sh piped its output through `grep | tail`, so the chain exited 0; the deploylog and push went ahead while PROD stayed on b82.
+- **Apply:** deploy.sh now exits 1 unless wrangler prints "Deployment complete" (epics-pipeline/deploy.sh). After each deploy, read the "Deployment complete" line before writing the deploylog entry; verify with `wrangler pages deployment list --environment production` when in doubt.
