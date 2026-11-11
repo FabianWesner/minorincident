@@ -375,3 +375,7 @@ A living record, updated after every lane or experiment. Short entries with evid
 - **Didn't work:** a Sol perf brief that allowed timing comparisons; its `quiet-run.sh` reserved every browser slot while the b79 gate ran, so smoke failed twice with "Fixture browser timeout of 60000ms during setup".
 - **Apply:** perf/hitch briefs say "no quiet-run/timing reservations; record frame times from normal fixture play only; the orchestrator schedules exclusive timing windows". Before reading a smoke failure as a regression, check `/tmp/minor-incident-e2e.lock.quiet*` and rerun once.
 - Also: scene:gate rows failing with "Execution context was destroyed" in one WebGPU-low batch passed on an immediate rerun (12/12) — rerun by `--filter` before triaging.
+
+## 2026-11-11 orchestrator: invisible courier on PROD for ~3 h (b77 → hotfix 80a)
+- **What happened:** s34-zombiehits added foot-planting rows for hurt/windup/swing/stagger; the shared clip builder baked those non-stride clips as walk cycles → NaN hip/leg tracks. The courier's first `hurt` made her invisible for the rest of the level. The gate (unit, smoke, scene:gate, threat) never hurts the courier in a rendered scene; the s34 lane only checked infected.
+- **Apply:** any change to shared animation/clip code is checked on the courier and companion too (hurt, stagger, attack) — a render-contract test now asserts every baked clip is finite. Hotfixes go on top of the PROD commit in a separate worktree (cherry-pick only the fix), gate unit+build+smoke+scene:gate, deploy from there, then merge back into main.
