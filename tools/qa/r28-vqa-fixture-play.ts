@@ -227,6 +227,7 @@ try {
     }, values.measure.split(','));
     const samples = [];
     for (const target of targets) samples.push(...await measureFlatSilhouette({ page } as SceneSession, [target.id], target.archetype));
+    if (!samples.length || samples.some(s => !s.pixels)) throw new Error('Requested fixture figures have no visible mask pixels');
     writeFileSync(`${out}/figure-metrics.json`, JSON.stringify({ targets, samples }, null, 2));
     await capture({ path: `${out}/measured.png` });
   }
