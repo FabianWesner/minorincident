@@ -102,12 +102,17 @@ export class InfectedSystem {
   readonly director: SpawnDirector;
   nav: NavGrid;
   private admissionNav?: NavGrid;
+  /** L4 only: the walk grid baked for wide bodies (brute, butcher: radius .6). The admission grid (clearance .35) still offers 1 m alleys
+   * that these bodies cannot enter; routing them there left them standing at the first wall (nightly war-waves, r37). */
+  private wideNav?: NavGrid;
+  private static readonly wideBodyRadius = .4;
   /** Infected steering, separation and impulses share this collision registry. Humans retain `nav`. */
   get infectedNav(): NavGrid { return this.admissionNav ?? this.nav; }
   excludeInfected(walls: readonly import('../combat/HitQuery').CoverWall[]): void {
     const n = this.nav;
     this.admissionNav = n.withClearance(['L1', 'L2', 'L4'].includes(this.world.scenario ?? '') ? .35 : n.clearance);
     for (const [i, wall] of walls.entries()) this.admissionNav.setBlocker(910_300 + i, wall, true);
+    if (this.world.scenario === 'L4') { this.wideNav = n.withClearance(.7); for (const [i, wall] of walls.entries()) this.wideNav.setBlocker(910_300 + i, wall, true); }
     this.navigation = new DistrictNavigation({ name: 'infected-admission', ground: n.ground, player: this.world.entities.get(1)!.transform, walls: [...n.walls, ...walls], navigation: this.navigation.districts.map(d => d.definition) }, this.admissionNav);
   }
   readonly rng: Rng;
@@ -167,14 +172,15 @@ export class InfectedSystem {
       this.pool.push({ id: 0, kind: 'infected', archetype: '', faction: 'infected', health: { current: 0, max: 0 }, transform: { x: 0, y: 0.7, z: 0, yaw: 0 }, infected: brain, combat: { radius: 0.35, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } }); this.counters.allocated++;
     }
     for (const [id, wall] of world.props?.navWalls ?? []) {
-      this.nav.setBlocker(id, wall, true); this.admissionNav?.setBlocker(id, wall, true);
+      this.nav.setBlocker(id, wall, true); this.admissionNav?.setBlocker(id, wall, true); this.wideNav?.setBlocker(id, wall, true);
       for (const d of this.navigation.districts) d.grid.setBlocker(id, wall, true);
     }
-    for (const wall of world.interactables?.walls ?? []) if (wall.entityId !== undefined) { this.nav.setBlocker(wall.entityId, wall, true); this.admissionNav?.setBlocker(wall.entityId, wall, true); for (const d of this.navigation.districts) d.grid.setBlocker(wall.entityId, wall, true); }
+    for (const wall of world.interactables?.walls ?? []) if (wall.entityId !== undefined) { this.nav.setBlocker(wall.entityId, wall, true); this.admissionNav?.setBlocker(wall.entityId, wall, true); this.wideNav?.setBlocker(wall.entityId, wall, true); for (const d of this.navigation.districts) d.grid.setBlocker(wall.entityId, wall, true); }
     world.events.on('world.blocker.changed', (event) => {
       if (event.type !== 'world.blocker.changed') return;
       this.nav.setBlocker(event.id, event.wall, event.blocked);
       this.admissionNav?.setBlocker(event.id, event.wall, event.blocked);
+      this.wideNav?.setBlocker(event.id, event.wall, event.blocked);
       for (const district of this.navigation.districts) district.grid.setBlocker(event.id, event.wall, event.blocked);
       for (const entity of this.active) { entity.infected!.goal = -1; entity.infected!.path.length = 0; if (entity.infected!.l1) entity.infected!.l1.directTick = -1; delete entity.infected!.birdMotion; delete entity.infected!.birdVertical; }
     });
@@ -2079,7 +2085,7 @@ export class InfectedSystem {
     const grid = this.navigation.district(e.transform), b = e.infected!;
     const armyApproach = !!b.l4ArmyApproach || this.world.scenario === 'L4' && !!b.breachApproach;
     if (b.pathGrid !== grid) { b.pathGrid = grid; b.goal = -1; b.path.length = 0; }
-    const nav = this.navigation.grid(e.transform), heightGoal = this.world.districts ? heightRouteWaypoint(this.world.districts, e, target) : undefined;
+    const districtNav = this.navigation.grid(e.transform), nav = this.wideNav && districtNav === this.navigation.fallback && e.combat!.radius > InfectedSystem.wideBodyRadius ? this.wideNav : districtNav, heightGoal = this.world.districts ? heightRouteWaypoint(this.world.districts, e, target) : undefined;
     target = this.navigation.target(e.transform, heightGoal ?? target);
     let x = target.x, z = target.z;
     // Only a courier chase can share its flow field; soldier and investigation goals need their own route.
@@ -2103,7 +2109,7 @@ export class InfectedSystem {
       if (useFlow) next = nav.flowWaypoint(from, e.transform, e.combat!.radius);
       else {
         if ((b.goal !== to || b.pathIndex >= b.path.length) && this.budget > 0 && (!armyApproach || this.world.tick >= (b.pathRetryAt ?? 0))) {
-          const found = nav.path(from, to, b.path, this.budget); this.budget -= nav.expansions; b.pathIndex = 0; b.goal = to;
+          const found = nav.path(from, to, b.path, nav === this.wideNav ? Math.max(this.budget, 12000) : this.budget); this.budget -= nav.expansions; b.pathIndex = 0; b.goal = to;
           // A distant failed request must yield the shared search budget to
           // later native archetypes, just as pedestrian searches already do.
           if (!found && armyApproach) b.pathRetryAt = this.world.tick + 15;
