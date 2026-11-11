@@ -267,6 +267,11 @@ export class PawContacts {
         // Touchdown away from where a grounded paw is drawn (after a gait change): a short lifted catch-up step.
         if (foot.last && foot.last.y < sole + .015 && Math.hypot(foot.last.x - foot.planted.x, foot.last.z - foot.planted.z) > .03) { foot.from.copy(foot.last).setY(sole); foot.step = 0; }
       }
+      if (this.liveSkin && foot.last && p > stance && foot.phase >= 0 && foot.phase <= stance) {
+        // A catch-up step may still be between its endpoints at lift-off.
+        // Begin swing at the last drawn paw rather than jumping to its target.
+        foot.planted.copy(foot.last); foot.fadeStart = stance;
+      }
       if (foot.ankle) {
         // A welded body has independently posed knees and ankles. Use world
         // targets directly; translating an entire rigid leg loses swing lift.

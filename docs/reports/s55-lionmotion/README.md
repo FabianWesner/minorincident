@@ -131,3 +131,14 @@ scene schema rejects a healthy monkey actor. Raw traces are under
 The two-cat trace still contains a 0.2474 m maximum root-relative forepaw step
 (after 0.5690 m before); the pelvis improvement alone does not establish smooth
 paws. Further solver analysis is required before completion.
+
+## Lift-off correction
+
+The remaining forepaw step occurs as stance ends while a catch-up step is still
+between endpoints. Swing used the planted target instead of the last drawn paw.
+The candidate now starts swing from that last drawn point. A completed six-species
+900-frame repeat is saved at `test-results/s55-lionmotion/zoo-swing/`. During the
+comparison, lioness forepaw maximum fell from 21.7 to 13.2 cm and elephant from
+43.7 to 19.8 cm; final maxima and speed-normalized continuity still need analysis.
+The shared source changed after the passing remote suite, so those tests must be
+rerun for the final candidate. No completion claim is made.
