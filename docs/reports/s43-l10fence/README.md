@@ -11,6 +11,8 @@ Status: implementation committed; full browser matrix and final visual acceptanc
 
 ## Evidence so far
 
+- Final-fill L8 night check: five-second real-input L8 start, low WebGL2 zoom 1, zero page errors. Opened `/private/tmp/s43-nadia-final-l8/s001-t134.jpg` and `s002-t261.jpg`. With fill 2 and healthy neutral tint, Nadia retains visible face/arms, green upper clothing, dark headwear and skirt in the marker ring. The first frame is less overlapped by the courier. This supersedes the earlier L8 fill-4 readability capture; final daylight parity still needs verification. Owned preview stopped.
+
 - Catch-up recovery with clear same-side candidates: courier `(4053,-27)` faces along the east rail, dog starts x~3998.81 with walking held. At tick 426 the dog relocates to `(4036.25,-46.89)` with `rejoining=true`, remaining inside rail x4057. Zero errors in ten seconds. This proves valid same-side relocation is retained; subsequent walking was intentionally suppressed. Added receipts to `corgi-rejoin.json`. Together with the rejected-across-rail probe and ordinary-follow route, this covers both rejection and valid destination selection. Owned preview stopped.
 
 - Forced offscreen catch-up probe: courier faces west at `(4055,-27)` beside east rail x=4057, dog starts ~56 m west with walking held to reproduce stalled progress. Ten-second observed run has zero errors; samples through tick 604 keep dog at x3998.81, with no relocation to the far side. Unsafe candidates are not accepted, but no valid recovery occurs in this setup; successful barrier-respecting recovery remains unproven. Receipts in `corgi-rejoin.json`. An initial idle-harness run skipped watch sampling and is not used as evidence. Owned preview stopped.
