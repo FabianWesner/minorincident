@@ -400,3 +400,15 @@ GPU frames. Added screenshotReady synchronization before each captured frame;
 that capture change still needs a repeat run. Do not interpret the extended
 unsynchronized sheet as proof of either a new game pop or smoothness. Earlier
 single-window visual statements are limited by this discovery too.
+
+## Synchronized real-L8 strip inspection
+
+Repeated the 900-frame fixture with screenshotReady before each captured frame.
+Opened the 12-cell enlarged `l8-synchronized/crops.jpg`; the previous pixel/trace
+batch mismatch is gone. Across frames 174–185 both cats turn and shift attached
+limbs incrementally with no visible whole-body height jump or frame replacement.
+The lioness progresses from diagonal toward the fence to facing forward; the
+lion's mane/head and forelegs move through intermediate poses. Fence bars still
+hide portions of the paws. This is evidence for the inspected interval, not an
+unqualified full-runtime acceptance. The reviewed sheet is committed as
+[l8-contact-sheet.jpg](l8-contact-sheet.jpg).
