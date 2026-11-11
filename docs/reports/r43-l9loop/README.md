@@ -43,7 +43,7 @@ Test (budget unchanged, folded into `tests/engine/missions.test.ts`): `checkL9Ev
 Checks:
 - `npx tsc --noEmit`, eslint on the two files: clean.
 - `tests/engine/missions.test.ts`: 6/6.
-- `npm test` remote: see the last section.
+- `npm test` remote: 27 files, 106 passed, 1 skipped, 158.9 s (budget 240 s), 150 cases.
 - `node --import tsx/esm tools/qa/threat-audit.ts --levels L9`: L9 skilled and passive complete. **2 L9 flags, `STUCK_CHASER_OVER_30_SECONDS`** (passive route, step/approach and phase/driving; five infected, ids 919 925 934 920 922, within 6 m of the passive courier standing still 30 s). The same 2 flags appear with the unchanged main file, so they come from the new r42-arenas STUCK_CHASER check, not from this lane (a passive courier at the bay with chasers standing at the hull). Not fixed here (scope).
 
 ## Browser QA needed
