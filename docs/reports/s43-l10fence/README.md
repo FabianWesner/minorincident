@@ -11,6 +11,8 @@ Status: implementation committed; full browser matrix and final visual acceptanc
 
 ## Evidence so far
 
+- Matched perimeter draw measurement, high WebGPU zoom 1.5: paused visibility toggles isolate the perimeter from moving-scene changes. Before samples: 70 shown/68 hidden and 72/70; after samples: 70/68 and 72/70. Both renderers cost 2 submissions, so the measured increase is **0**, within +2. Receipts in `draw-calls.json`; both runs had zero errors and owned previews were stopped.
+
 - Completed and opened all eight original-perimeter before rows. Final three WebGPU runs completed with zero page errors; paths and settings are inventoried in `capture-matrix.json`. Before views consistently show the uniform three-rail silhouette; after views show concrete bases, patched braces and hazard marks at the same east-edge pose. The comparison isolates renderer appearance only. Matched draw-count measurements and remaining acceptance checks are pending. Owned preview stopped.
 
 - Original-perimeter before matrix now has all four WebGL2 rows plus low WebGPU zoom 1. New high WebGL2 zoom-1.5 and low WebGPU zoom-1 captures were opened and showed intact original rails, with zero errors in both runs. Paths are in `capture-matrix.json`. Three WebGPU before rows remain. Owned preview stopped.
