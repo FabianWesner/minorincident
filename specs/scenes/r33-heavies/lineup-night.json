@@ -1,0 +1,109 @@
+{
+ "name": "r33-lineup-night",
+ "note": "r33-heavies: runner plus heavy roles, idle, fixed camera.",
+ "seed": 10,
+ "ground": "asphalt",
+ "time": "night",
+ "size": 60,
+ "dof": false,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -9,
+    9
+   ],
+   "yaw": 0,
+   "state": "idle"
+  },
+  {
+   "id": "runner",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    4.75,
+    -4.75
+   ],
+   "yaw": 30,
+   "state": "idle",
+   "allowRigid": true
+  },
+  {
+   "id": "brute",
+   "kind": "infected",
+   "archetype": "infected.brute",
+   "at": [
+    2.85,
+    -2.85
+   ],
+   "yaw": 30,
+   "state": "idle",
+   "allowRigid": true
+  },
+  {
+   "id": "armored",
+   "kind": "infected",
+   "archetype": "infected.armored",
+   "at": [
+    0.95,
+    -0.95
+   ],
+   "yaw": 30,
+   "state": "idle",
+   "allowRigid": true
+  },
+  {
+   "id": "butcher",
+   "kind": "infected",
+   "archetype": "infected.butcher",
+   "at": [
+    -0.95,
+    0.95
+   ],
+   "yaw": 30,
+   "state": "idle",
+   "allowRigid": true
+  },
+  {
+   "id": "screamer",
+   "kind": "infected",
+   "archetype": "infected.screamer",
+   "at": [
+    -2.85,
+    2.85
+   ],
+   "yaw": 30,
+   "state": "idle",
+   "allowRigid": true
+  },
+  {
+   "id": "bloated",
+   "kind": "infected",
+   "archetype": "infected.bloated",
+   "at": [
+    -4.75,
+    4.75
+   ],
+   "yaw": 30,
+   "state": "idle",
+   "allowRigid": true
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   0,
+   0,
+   1.0
+  ],
+  "zoom": 1.5
+ },
+ "frames": 60,
+ "shots": [
+  30
+ ],
+ "expect": {
+  "consoleErrors": 0
+ }
+}

@@ -1916,12 +1916,12 @@
     "category": "infected",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/inf.bloated.glb",
+    "glb": "public/assets/models/skinned/inf.bloated.lod0.glb",
     "dimensions": {
-      "x": 0.9946901463198907,
-      "y": 1.6441549931444603,
-      "z": 1.3270646429235706,
-      "tolerance": 0.1
+      "x": 0.6573857665061951,
+      "y": 1.9871043253007892,
+      "z": 1.0259881615638733,
+      "tolerance": 0.35
     },
     "forward": "+X",
     "frontNodes": [
@@ -1971,31 +1971,37 @@
     ],
     "sockets": [],
     "budget": {
-      "triangles": 40000,
-      "materials": 32,
-      "fileKB": 6000,
-      "drawCalls": 40
+      "triangles": 6800,
+      "materials": 2,
+      "fileKB": 600,
+      "drawCalls": 30
     },
     "decayVariants": [],
-    "sourceGlb": "assets/inf.bloated/model.glb",
+    "sourceGlb": "assets/inf.bloated/model.skin.glb",
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/inf.bloated.lod1.glb",
-      "lod2": "public/assets/models/inf.bloated.lod2.glb"
+      "lod1": "public/assets/models/skinned/inf.bloated.lod1.glb",
+      "lod2": "public/assets/models/skinned/inf.bloated.lod2.glb"
     },
-    "sourceScale": 1.04725043
+    "sourceScale": 1,
+    "crowdSkin": true,
+    "textureMode": "baseColor",
+    "authoredLodTriangles": {
+      "lod1": 2900,
+      "lod2": 2900
+    }
   },
   {
     "id": "inf.screamer",
     "category": "infected",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/inf.screamer.glb",
+    "glb": "public/assets/models/skinned/inf.screamer.lod0.glb",
     "dimensions": {
-      "x": 0.5169741214698448,
-      "y": 1.531064484160781,
-      "z": 1.0249194822194512,
-      "tolerance": 0.1
+      "x": 0.6690332889556885,
+      "y": 1.9719368824389192,
+      "z": 1.317747712135315,
+      "tolerance": 0.25
     },
     "forward": "+X",
     "frontNodes": [
@@ -2045,23 +2051,25 @@
     ],
     "sockets": [],
     "budget": {
-      "triangles": 40000,
-      "materials": 32,
-      "fileKB": 6000,
-      "drawCalls": 40
+      "triangles": 6300,
+      "materials": 2,
+      "fileKB": 600,
+      "drawCalls": 30
     },
     "decayVariants": [],
-    "sourceGlb": "assets/inf.screamer/model.glb",
+    "sourceGlb": "assets/inf.screamer/model.skin.glb",
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/inf.screamer.lod1.glb",
-      "lod2": "public/assets/models/inf.screamer.lod2.glb"
+      "lod1": "public/assets/models/skinned/inf.screamer.lod1.glb",
+      "lod2": "public/assets/models/skinned/inf.screamer.lod2.glb"
     },
-    "sourceScale": 1.04136095,
+    "sourceScale": 1,
     "authoredLodTriangles": {
-      "lod1": 6000,
-      "lod2": 5000
-    }
+      "lod1": 2600,
+      "lod2": 900
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "inf.sprinter",
@@ -2146,12 +2154,12 @@
     "category": "infected",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/inf.armored-football.glb",
+    "glb": "public/assets/models/skinned/inf.armored-football.lod0.glb",
     "dimensions": {
-      "x": 0.6665622842373855,
-      "y": 1.6277014385150408,
-      "z": 1.079909059799351,
-      "tolerance": 0.1
+      "x": 0.8909308910369873,
+      "y": 2.009622755563521,
+      "z": 1.4647113680839539,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -2201,35 +2209,37 @@
     ],
     "sockets": [],
     "budget": {
-      "triangles": 40000,
-      "materials": 32,
-      "fileKB": 6000,
-      "drawCalls": 40
+      "triangles": 6800,
+      "materials": 2,
+      "fileKB": 600,
+      "drawCalls": 30
     },
     "decayVariants": [],
-    "sourceGlb": "assets/inf.armored-football/model.glb",
+    "sourceGlb": "assets/inf.armored-football/model.skin.glb",
     "sourceForward": "+X",
-    "sourceScale": 0.92267472,
+    "sourceScale": 1,
     "lods": {
-      "lod1": "public/assets/models/inf.armored-football.lod1.glb",
-      "lod2": "public/assets/models/inf.armored-football.lod2.glb"
+      "lod1": "public/assets/models/skinned/inf.armored-football.lod1.glb",
+      "lod2": "public/assets/models/skinned/inf.armored-football.lod2.glb"
     },
     "authoredLodTriangles": {
-      "lod1": 7000,
-      "lod2": 6000
-    }
+      "lod1": 2700,
+      "lod2": 1050
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "inf.butcher",
     "category": "infected",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/inf.butcher.glb",
+    "glb": "public/assets/models/skinned/inf.butcher.lod0.glb",
     "dimensions": {
-      "x": 0.810926945114324,
-      "y": 1.5636515869159993,
-      "z": 1.159918246460348,
-      "tolerance": 0.1
+      "x": 1.541243463754654,
+      "y": 2.2967547533276313,
+      "z": 1.8702736496925354,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -2279,23 +2289,25 @@
     ],
     "sockets": [],
     "budget": {
-      "triangles": 40000,
-      "materials": 32,
-      "fileKB": 6000,
-      "drawCalls": 40
+      "triangles": 6200,
+      "materials": 2,
+      "fileKB": 600,
+      "drawCalls": 30
     },
     "decayVariants": [],
-    "sourceGlb": "assets/inf.butcher/model.glb",
+    "sourceGlb": "assets/inf.butcher/model.skin.glb",
     "sourceForward": "+X",
-    "sourceScale": 0.87406786,
+    "sourceScale": 1,
     "lods": {
-      "lod1": "public/assets/models/inf.butcher.lod1.glb",
-      "lod2": "public/assets/models/inf.butcher.lod2.glb"
+      "lod1": "public/assets/models/skinned/inf.butcher.lod1.glb",
+      "lod2": "public/assets/models/skinned/inf.butcher.lod2.glb"
     },
     "authoredLodTriangles": {
-      "lod1": 6000,
-      "lod2": 5000
-    }
+      "lod1": 2600,
+      "lod2": 2600
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "inf.nurse",
@@ -2378,14 +2390,13 @@
     "category": "infected",
     "status": "integrated",
     "tier": "hero",
-    "script": "assets/inf.brute/build.py",
-    "glb": "public/assets/models/inf.brute.glb",
-    "sourceGlb": "assets/inf.brute/model.glb",
+    "glb": "public/assets/models/skinned/inf.brute.lod0.glb",
+    "sourceGlb": "assets/inf.brute/model.skin.glb",
     "dimensions": {
-      "x": 0.9560065422223252,
-      "y": 2.2042301534886803,
-      "z": 1.9630503857380996,
-      "tolerance": 0.1
+      "x": 1.446196436882019,
+      "y": 2.3105751331401767,
+      "z": 1.9826635718345642,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -2435,21 +2446,24 @@
     ],
     "sockets": [],
     "budget": {
-      "triangles": 40000,
-      "materials": 32,
-      "fileKB": 6000,
-      "drawCalls": 40
+      "triangles": 6600,
+      "materials": 2,
+      "fileKB": 600,
+      "drawCalls": 30
     },
     "decayVariants": [],
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/inf.brute.lod1.glb",
-      "lod2": "public/assets/models/inf.brute.lod2.glb"
+      "lod1": "public/assets/models/skinned/inf.brute.lod1.glb",
+      "lod2": "public/assets/models/skinned/inf.brute.lod2.glb"
     },
     "authoredLodTriangles": {
-      "lod1": 6000,
-      "lod2": 5000
-    }
+      "lod1": 2700,
+      "lod2": 1000
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor",
+    "sourceScale": 1
   },
   {
     "id": "wpn.baseball-bat",
@@ -7718,20 +7732,44 @@
     "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/wpn.flamethrower.glb",
-    "dimensions": { "x": 1.1625, "y": 0.422119, "z": 0.355, "tolerance": 0.1 },
+    "dimensions": {
+      "x": 1.1625,
+      "y": 0.422119,
+      "z": 0.355,
+      "tolerance": 0.1
+    },
     "forward": "+X",
-    "frontNodes": ["front"],
-    "requiredNodes": ["grip", "muzzle", "flameOrigin", "pilot_light"],
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "grip",
+      "muzzle",
+      "flameOrigin",
+      "pilot_light"
+    ],
     "animatedNodes": [],
-    "sockets": ["grip", "muzzle", "flameOrigin"],
-    "budget": { "triangles": 1800, "materials": 8, "fileKB": 300, "drawCalls": 30 },
+    "sockets": [
+      "grip",
+      "muzzle",
+      "flameOrigin"
+    ],
+    "budget": {
+      "triangles": 1800,
+      "materials": 8,
+      "fileKB": 300,
+      "drawCalls": 30
+    },
     "decayVariants": [],
     "actionCategory": "ranged",
     "lods": {
       "lod1": "public/assets/models/wpn.flamethrower.lod1.glb",
       "lod2": "public/assets/models/wpn.flamethrower.lod2.glb"
     },
-    "authoredLodTriangles": { "lod1": 700, "lod2": 200 },
+    "authoredLodTriangles": {
+      "lod1": 700,
+      "lod2": 200
+    },
     "sourceGlb": "assets/wpn.flamethrower/model.glb",
     "script": "assets/wpn.flamethrower/build.py",
     "sourceForward": "+X"
@@ -13324,13 +13362,23 @@
     "tier": "side",
     "glb": "",
     "icon": "src/assets/icons/flamethrower.svg",
-    "dimensions": { "x": 0.1, "y": 0.1, "z": 0.1, "tolerance": 0.01 },
+    "dimensions": {
+      "x": 0.1,
+      "y": 0.1,
+      "z": 0.1,
+      "tolerance": 0.01
+    },
     "forward": "+X",
     "frontNodes": [],
     "requiredNodes": [],
     "animatedNodes": [],
     "sockets": [],
-    "budget": { "triangles": 12, "materials": 1, "fileKB": 2, "drawCalls": 1 },
+    "budget": {
+      "triangles": 12,
+      "materials": 1,
+      "fileKB": 2,
+      "drawCalls": 1
+    },
     "decayVariants": [],
     "nonModel": "ui"
   },
@@ -24250,7 +24298,10 @@
     },
     "decayVariants": [],
     "decalTexture": "public/assets/decals/l10-stories.png",
-    "decalGrid": [4, 4]
+    "decalGrid": [
+      4,
+      4
+    ]
   },
   {
     "id": "prop.l10-shovel",

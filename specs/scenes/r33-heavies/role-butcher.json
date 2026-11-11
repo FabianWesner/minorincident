@@ -1,0 +1,59 @@
+{
+ "name": "r33-role-butcher",
+ "note": "r33-heavies: runner plus heavy roles, idle, fixed camera.",
+ "seed": 10,
+ "ground": "asphalt",
+ "time": "L4",
+ "size": 60,
+ "dof": false,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -9,
+    9
+   ],
+   "yaw": 0,
+   "state": "idle"
+  },
+  {
+   "id": "runner",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -1.1,
+    1.1
+   ],
+   "yaw": 30,
+   "state": "idle",
+   "allowRigid": true
+  },
+  {
+   "id": "butcher",
+   "kind": "infected",
+   "archetype": "infected.butcher",
+   "at": [
+    1.1,
+    -1.1
+   ],
+   "yaw": 30,
+   "state": "idle",
+   "allowRigid": true
+  }
+ ],
+ "camera": {
+  "mode": "orbit",
+  "target": "butcher",
+  "radius": 5,
+  "polar": 72,
+  "azimuth": 135
+ },
+ "frames": 60,
+ "shots": [
+  30
+ ],
+ "expect": {
+  "consoleErrors": 0
+ }
+}
