@@ -170,6 +170,8 @@ export async function checkL8Cues(): Promise<void> {
   expect(objectiveText(mission, 'x')).toBe('Protect the group!');
   expect(mission.state.marker, 'marker from the first tick of the step').toBe('central-plaza');
   expect(markerAnchor(mission)).not.toBeNull();
+  // r33-l8route: the plaza hatches make the opening a real fight; this cue probe stands idle, so it needs protection to reach the end of the hold.
+  w.combat!.damage.god = true;
   for (let i = 0; i < 4000 && zoo.protecting(); i++) w.update();
   expect(zoo.protecting()).toBe(false);
   expect(mission.state.marker).not.toBeNull();

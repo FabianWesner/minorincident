@@ -29,7 +29,7 @@ export interface L8ZooState {
   /** Nadia's guided walk: 0 leading, 1 aborted (she is gone/turned), 2 arrived at the plaza. */
   guideDone: number; guideLeg: number; guideArrivedAt: number; guideWaiting: boolean; lionUntil: number;
   /** r33-l8route: tick the plaza doors shut (0 = not yet), the route-marker leg/node, and the regions whose first walk-in wave has run (bit 1 north, 2 south, 4 east). */
-  sealedAt: number; routeStage: number; routeNode: number; legWaves: number;
+  sealedAt: number; routeStage: number; routeNode: number; legWaves: number; plazaWaveAt: number; plazaBursts: number;
 }
 /** r31-nadia: the sanctuary walk. Leg 2 is the lion enclosure stop (Nadia faces the cat and speaks); the last leg is the plaza centre. */
 const guideRoute: Point[] = [{ x: 24, z: 64 }, { x: 24, z: 0 }, { x: 40, z: 0 }, { x: -38, z: 0 }, { x: 0, z: 0 }];
@@ -38,7 +38,7 @@ const distance = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
 /** Zoo story owns timing/entrances; the shared outbreak owns all bites, rescues and same-id transformations. */
 export class LevelEightZoo {
   readonly bosses: L8BossArenas;
-  state: L8ZooState = { arenas: [], startedAt: 0, breachedAt: 0, nextWave: 0, alphas: 0, carId: 0, busId: 0, roster: [], guards: [], animals: [], outlets: [], arrivals: [], escapeCheckpoint: false, keeperId: 0, pondKeeperId: 0, haleId: 0, reyesId: 0, dogId: 0, broadcastAt: 0, greetingAt: 0, lionSpoken: false, haleGreetingAt: 0, departureAt: 0, chaseAt: 0, departureFrom: null, haleFallAt: 0, turnedAnimalId: 0, animalInterceptionId: 0, animalBiteStarted: false, keeperAttacked: false, guideDone: 0, guideLeg: 0, guideArrivedAt: 0, guideWaiting: false, lionUntil: 0, sealedAt: 0, routeStage: -1, routeNode: 0, legWaves: 0 };
+  state: L8ZooState = { arenas: [], startedAt: 0, breachedAt: 0, nextWave: 0, alphas: 0, carId: 0, busId: 0, roster: [], guards: [], animals: [], outlets: [], arrivals: [], escapeCheckpoint: false, keeperId: 0, pondKeeperId: 0, haleId: 0, reyesId: 0, dogId: 0, broadcastAt: 0, greetingAt: 0, lionSpoken: false, haleGreetingAt: 0, departureAt: 0, chaseAt: 0, departureFrom: null, haleFallAt: 0, turnedAnimalId: 0, animalInterceptionId: 0, animalBiteStarted: false, keeperAttacked: false, guideDone: 0, guideLeg: 0, guideArrivedAt: 0, guideWaiting: false, lionUntil: 0, sealedAt: 0, routeStage: -1, routeNode: 0, legWaves: 0, plazaWaveAt: 0, plazaBursts: 0 };
   private prepared = false;
   private rosterCacheTick = -1;
   private rosterCacheRevision = -1;
@@ -149,11 +149,12 @@ export class LevelEightZoo {
         [[-24, -64], [0, -56], [0, -44], [-11, -40], [-11, -24], [1, -19.2]], // Enter the north gate and walk the dry shore around the pond.
         [[24, 64]], // Leave onto the boulevard toward the plaza instead of walking south around the bunker.
       ];
-      const route = [...exit.route, ...serviceRoutes[index]];
+      // Outlets 5 and 6 are the two hatches inside the plaza cell: they walk straight out at the group.
+      const route = [...exit.route, ...(serviceRoutes[index] ?? [])];
       const last = route.at(-1);
       // Alarm runners clear the entrance briskly; the larger high-tier queue
       // must still contact the courier within twenty seconds.
-      return { ...door, ...exit, route, finishRoute: true, ox: last?.[0] ?? exit.ox, oz: last?.[1] ?? exit.oz, next: 0, ids: [], speedMs: index === 2 ? 5.6 : index === 3 ? 6.8 : 4.2 };
+      return { ...door, ...exit, route, finishRoute: true, ox: last?.[0] ?? exit.ox, oz: last?.[1] ?? exit.oz, next: 0, ids: [], speedMs: index === 2 ? 5.6 : index === 3 ? 6.8 : index >= 4 ? 5 : 4.2 };
     });
     if (s.outlets.length < 3) throw new Error('Zoo requires at least three tunnel outlets');
     // The outlet exits above were checked with every route gate open; now the cells close.
@@ -240,13 +241,14 @@ export class LevelEightZoo {
     this.mission.radio(alive ? key : `${key}.soldier`);
   }
   /** Tunnel runners that walk in from the region the courier is crossing (north path, south field, east lane); the plaza, the lion and the primate leg have none. */
-  private region(p: Point): 0 | 1 | 2 | 4 {
+  private region(p: Point): 0 | 1 | 2 | 4 | 8 {
+    if (inRect(p, l8PlazaCell)) return 8;
     if (p.x >= 82) return p.z > -64 ? 4 : 0;
     if (p.z < -52 && p.x < 14) return 1;
     if (p.z > 12 && !inRect(p, l8Route[2].zone) && !inRect(p, l8Route[3].zone)) return 2;
     return 0;
   }
-  private regionOutlets(region: number, index: number): boolean { return region === 1 ? index === 2 : region === 2 ? index === 0 || index === 3 : region === 4 ? index === 1 : false; }
+  private regionOutlets(region: number, index: number): boolean { return region === 1 ? index === 2 : region === 2 ? index === 0 || index === 3 : region === 4 ? index === 1 : region === 8 ? index >= 4 : false; }
   /** The opening shock keeps the group in the plaza before the APC route appears. */
   protecting(): boolean { return this.breached && this.w.tick < this.state.breachedAt + 30 * 60; }
   private passengersSeated(): boolean {
@@ -364,7 +366,14 @@ export class LevelEightZoo {
     if (!this.breached && t - s.startedAt >= this.calmTicks()) {
       s.breachedAt = t; s.nextWave = t + 600;
       // One ordinary armoured infected leads the southern approach; the authored three/six-member cohorts stay bounded.
-      s.outlets.forEach((outlet, i) => { for (let n = 0; n < (ai.director.tier === 'low' ? 3 : 6); n++) this.release(outlet, i); });
+      // Only tunnels whose runners can walk to the courier now (the plaza hatches, the pond/north and the south one); the west and east cohorts walk in when
+      // the courier crosses their region (a cohort sealed behind hedges would stand harmless against a fence).
+      const nav = w.infected!.nav, goal = nav.nearestCell(w.entities.get(1)!.transform.x, w.entities.get(1)!.transform.z);
+      s.outlets.forEach((outlet, i) => {
+        const cell = nav.nearestCell(outlet.ox, outlet.oz);
+        if (i < 4 && !(cell >= 0 && goal >= 0 && nav.path(cell, goal, [], 400_000))) return;
+        for (let n = 0; n < (i >= 4 ? (ai.director.tier === 'low' ? 3 : 5) : ai.director.tier === 'low' ? 3 : 6); n++) this.release(outlet, i);
+      });
       // The parked hull has settled by the alarm. Capture its boarding action
       // point once; minor physics impulses must not steer the objective ring.
       Object.assign(this.mission.def.anchors.exit, this.boardingRing());
@@ -420,7 +429,18 @@ export class LevelEightZoo {
     }
     // The first time the courier crosses a region with tunnels (after the seal), a small cohort walks in from its outlets.
     const here = s.sealedAt ? this.region(w.entities.get(1)!.transform) : 0;
-    if (here && !(s.legWaves & here)) {
+    // "Protect the group!" is a sustained fight: two more bursts come out of the plaza hatches at 12 s and 24 s of the 30 s hold.
+    if (this.protecting() && s.plazaBursts < 2 && t >= s.breachedAt + (s.plazaBursts + 1) * 12 * 60) {
+      s.plazaBursts++;
+      s.outlets.forEach((outlet, i) => { if (i >= 4) for (let n = 0; n < (ai.director.tier === 'low' ? 2 : 3); n++) this.release(outlet, i); });
+    }
+    // A courier camping in the sealed plaza keeps being hunted from the two hatches in the cell (the flamingo fight has not started).
+    if (here === 8 && s.arenas[0]?.phase === 0 && t >= (s.plazaWaveAt ||= t + 40 * 60)) {
+      s.plazaWaveAt = t + 40 * 60;
+      const inCell = [...w.entities.iterate()].filter(e => e.infected && e.health.current > 0 && !e.hidden && inRect(e.transform, l8PlazaCell)).length;
+      if (inCell < 6) s.outlets.forEach((outlet, i) => { if (i >= 4) this.release(outlet, i); });
+    }
+    if (here && here !== 8 && !(s.legWaves & here)) {
       s.legWaves |= here;
       s.outlets.forEach((outlet, i) => { if (this.regionOutlets(here, i)) for (let n = 0; n < (ai.director.tier === 'low' ? 2 : 4); n++) this.release(outlet, i); });
     }
@@ -708,7 +728,7 @@ export class LevelEightZoo {
     for (const [id, door] of data.doors) this.w.openDoors.set(id, { ...door, at: door.at + delta });
     // A checkpoint restored on tick zero can have a legitimate breach time of zero.
     this.state.startedAt += delta; if (this.breached) this.state.breachedAt += delta; if (this.state.nextWave) this.state.nextWave += delta;
-    this.state.sealedAt ??= 0; this.state.routeStage ??= -1; this.state.routeNode ??= 0; this.state.legWaves ??= 0; if (this.state.sealedAt) this.state.sealedAt += delta;
+    this.state.plazaBursts ??= 0; this.state.plazaWaveAt ??= 0; if (this.state.plazaWaveAt) this.state.plazaWaveAt += delta; this.state.sealedAt ??= 0; this.state.routeStage ??= -1; this.state.routeNode ??= 0; this.state.legWaves ??= 0; if (this.state.sealedAt) this.state.sealedAt += delta;
     this.state.guideDone ??= 0; this.state.guideLeg ??= 0; this.state.guideArrivedAt ??= 0; this.state.lionUntil ??= 0;
     for (const key of ['broadcastAt', 'greetingAt', 'haleGreetingAt', 'gateToastAt', 'departureAt', 'haleFallAt', 'guideArrivedAt', 'lionUntil'] as const) if (this.state[key]) this.state[key] += delta;
     if (this.state.departureFrom) this.state.chaseAt += delta;

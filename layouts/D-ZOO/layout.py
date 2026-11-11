@@ -528,6 +528,12 @@ _dead = {'elephant-gate--1', 'elephant-gate-1', 'gorilla-gate--1'}
 l.data['roads']['edges'] = [e for e in l.data['roads']['edges'] if e['start'] not in _dead and e['end'] not in _dead]
 l.data['roads']['nodes'] = [n for n in l.data['roads']['nodes'] if n['id'] not in _dead]
 
+# Two service hatches INSIDE the sealed plaza cell (story: infected pour out of the maintenance hatches next to the group): bunkers against the pond
+# fence line, doors facing the plaza ring, so the opening breach starts a real fight in the first seconds and a courier camping here is attacked.
+outlet(5, -10.4, -5, 0, 1, -math.pi / 2)
+outlet(6, 10.4, -5, 0, 1, -math.pi / 2)
+for _ox in (-10.4, 10.4): _route_boxes.append((_ox - 3.2, -11.6, _ox + 3.2, -1.9))
+
 # Nothing may stand on a new line: drop only the dressing underneath (and the gorilla exit fence panels).
 _DRESS = {'prop.tree', 'prop.street-tree', 'prop.garden-bush', 'prop.garden-bush-small', 'prop.flower', 'prop.flower-bed.large', 'prop.street-lamp', 'prop.trash-bin', 'prop.bench', 'prop.sprinkler', 'prop.hose-reel', 'prop.street-sign'}
 _drop = set(_gorilla_exit_ids)
