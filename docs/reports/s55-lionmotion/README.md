@@ -667,3 +667,14 @@ camera setting. Initial camera relocation causes streaming gaps: 779–839 adjac
 pose samples per cat, so this does not prove full 900-frame drawn coverage.
 The harness must prewarm the route view before measurement to close that gap.
 No render-source changes were made; final tests/gates remain applicable.
+
+## Complete prewarmed real-fixture route matrix
+
+The route harness now places cats/camera and awaits streaming/readiness while
+paused before starting the measurement clock. It asserts both cats are present
+in every measured frame. Repeated all eight backend/tier/camera-scale rows:
+900/900 frames per cat, 899 adjacent samples, zero pelvis discontinuity in every
+row. Root step remains 5.333 cm (3.2 m/s / 60), yaw zero; local paw maximum is
+below 7 cm across all rows. Updated [fixture-matrix.json](fixture-matrix.json)
+contains the full-coverage receipts and supersedes the streaming-gap matrix.
+Only the QA harness changed; passing final render-source gates remain valid.

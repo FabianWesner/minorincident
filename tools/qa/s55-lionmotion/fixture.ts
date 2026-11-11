@@ -9,10 +9,17 @@ try {
   await session.open();
   console.log(await loadFixtureInPage(session.page, readFixture('tests/fixtures/saves/qa/l8-before-lion.json.gz')));
   await session.page.evaluate(() => { window.__SS__!.debug.figureJoints(true); window.__SS__!.cheats.god(true); window.__SS__!.camera.cinematic({ position: [-28, 18, 3], target: [-45, 0, -14] }, true); });
-  if (process.env.MOTION_FIXTURE_ROUTE) await session.page.evaluate((zoom) => {
+  if (process.env.MOTION_FIXTURE_ROUTE) await session.page.evaluate(async (zoom) => {
     const game = (window.__SCENE__ as unknown as { game: import('../../../src/Game').Game }).game;
-    const started = game.world.tick;
     const cats = [...game.world.entities.iterate()].filter(e => /lion/.test(e.civilian?.zooAnimal ?? e.archetype)).map(e => ({ entity: e, x: e.transform.x, z: -42, distance: e.motion?.distance ?? 0 }));
+    for (const cat of cats) { cat.entity.transform.z = cat.z; cat.entity.transform.yaw = Math.PI; }
+    const x = cats[0].x;
+    game.view.view.cinematic({ position: [x + 17 * zoom, 18 * zoom, cats[0].z + 17 * zoom], target: [x, 0, cats[0].z] }, true);
+    game.view.update(1);
+    await game.view.ready();
+    await window.__SS__!.screenshotReady();
+    await window.__SS__!.screenshotReady();
+    const started = game.world.tick;
     game.world.events.on('sim.tick', () => {
       const seconds = (game.world.tick - started) / 60, speed = seconds <= 10 ? 1 : 3.2, distance = Math.min(10, seconds) + Math.max(0, seconds - 10) * 3.2;
       for (const cat of cats) {
@@ -51,6 +58,7 @@ try {
       return samples;
     }, batch);
     for (const [index, sample] of batchRows.entries()) { if (sample.png) writeFileSync(`${out}/frame-${batch * 60 + index}.png`, Buffer.from(sample.png.split(',')[1], 'base64')); delete sample.png; }
+    if (process.env.MOTION_FIXTURE_ROUTE) for (const sample of batchRows) if (sample.figures.length !== 2) throw new Error(`Incomplete cat coverage at tick ${sample.tick}: ${sample.figures.length}/2`);
     rows.push(...batchRows);
     writeJson(`${out}/frames.json`, rows);
     console.log(`fixture ${rows.length} frames`);
