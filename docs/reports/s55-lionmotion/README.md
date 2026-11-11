@@ -18,8 +18,8 @@ real-fixture comparison coverage remain.
 | --- | ---: | ---: | --- |
 | Maximum pelvis frame step | 98.05 cm | 0.37 cm | Controlled centered cat 10 s walk + 5 s run |
 | Speed-threshold pelvis step | 4.40 cm | 0.37 cm | Healthy cat, same walk clip |
-| Real L8 pelvis step, lion | — | 0.83 cm | 15 s fixture sample |
-| Real L8 pelvis step, lioness | 8.00 cm during intermediate candidate | 0.56 cm | 15 s fixture sample |
+| Real L8 pelvis step, lion | 95.69 cm | 0.83 cm | Same 15 s fixture/probe |
+| Real L8 pelvis step, lioness | 100.80 cm | 0.56 cm | Same 15 s fixture/probe |
 
 All 16 centered cat backend/tier/zoom configurations drew 900/900 frames, with
 zero measured sole penetration and zero reported run jitter. These summaries
@@ -567,3 +567,18 @@ same-time five-redraw probe to centered scenes. A full centered zebra repeat
 records exactly 0 m joint drift across those redraws; raw `zebra-time-tracked/`.
 This is another source change, so the prior full-suite/gate receipts remain
 historical until the final post-change validation run.
+
+
+## Direct original/current real-L8 comparison
+
+Re-ran the identical readiness-enabled 900-frame fixture probe against original
+render source at 60840f0d, then restored current render files byte-for-byte in a
+finally block and verified a clean worktree. Repeated against restored current
+source. Both traces have 839 adjacent drawn samples per cat. Pelvis maxima:
+lion 95.686 cm -> 0.833 cm; lioness 100.802 cm -> 0.557 cm. Actor-coordinate paw
+maxima: lion 61.801 cm -> 8.775 cm; lioness 55.207 cm -> 9.203 cm. Root translation
+and yaw maxima are unchanged (lion 0.745 cm/0.075 rad, lioness 1.664 cm/0.100 rad).
+This directly attributes the removed whole-body discontinuity to presentation,
+with unchanged simulation movement. Raw `original-l8/` and
+`current-l8-comparison/` replace intermediate-candidate figures for final L8
+before/after reporting. Current typecheck/lint also passed before these runs.
