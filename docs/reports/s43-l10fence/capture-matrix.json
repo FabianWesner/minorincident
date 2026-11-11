@@ -1,0 +1,64 @@
+{
+  "after": [
+    {
+      "quality": "low",
+      "backend": "webgl2",
+      "zoom": 1,
+      "path": "/private/tmp/s43-edge-color-low-gl/s001-t188.jpg",
+      "exists": true,
+      "opened": true
+    },
+    {
+      "quality": "high",
+      "backend": "webgl2",
+      "zoom": 1,
+      "path": "/private/tmp/s43-edge-high-gl-z1/s001-t179.jpg",
+      "exists": true,
+      "opened": true
+    },
+    {
+      "quality": "high",
+      "backend": "webgl2",
+      "zoom": 1.5,
+      "path": "/private/tmp/s43-edge-high-gl-z15/s001-t186.jpg",
+      "exists": true,
+      "opened": true
+    },
+    {
+      "quality": "low",
+      "backend": "webgpu",
+      "zoom": 1,
+      "path": "/private/tmp/s43-edge-low-gpu-z1/s001-t193.jpg",
+      "exists": true,
+      "opened": true
+    },
+    {
+      "quality": "low",
+      "backend": "webgpu",
+      "zoom": 1.5,
+      "path": "/private/tmp/s43-edge-low-gpu-z15/s001-t198.jpg",
+      "exists": true,
+      "opened": true
+    },
+    {
+      "quality": "high",
+      "backend": "webgpu",
+      "zoom": 1,
+      "path": "/private/tmp/s43-edge-high-gpu-z1/s001-t187.jpg",
+      "exists": true,
+      "opened": true
+    },
+    {
+      "quality": "high",
+      "backend": "webgpu",
+      "zoom": 1.5,
+      "path": "/private/tmp/s43-edge-high-gpu-z15/s001-t182.jpg",
+      "exists": true,
+      "opened": true
+    }
+  ],
+  "missingAfter": [
+    "low/webgl2/1.5 at east-edge pose"
+  ],
+  "before": "prior r42 contact sheet only; full baseline matrix pending"
+}

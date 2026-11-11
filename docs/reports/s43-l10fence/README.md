@@ -11,6 +11,8 @@ Status: implementation committed; full browser matrix and final visual acceptanc
 
 ## Evidence so far
 
+- High WebGPU zoom-1 east-edge row captured and opened: `/private/tmp/s43-edge-high-gpu-z1/s001-t187.jpg`, zero page errors. Appearance agrees with the other rows. `capture-matrix.json` now inventories seven same-pose current-build rows; low WebGL2 zoom 1.5 remains missing at this pose (movement views exist). Full baseline matrix remains pending. Owned preview stopped.
+
 - Close-pursuer north-gap probe: existing Mega and up to six live infected placed behind the courier as an explicit fixture setup, then 15 seconds of real keyboard movement through the gap, low WebGL2 zoom 1.5, god mode. Mega started `(4045,15)` versus courier `(4042,20)`; at tick 262 courier was `(4033.9,25.6)`, Mega `(4039.9,21.7)`, armored chasers 8.7/10.4 m away. Courier cleared the corner by tick 442 `(4020.9,24.4)` and continued to `(4003.26,5.68)` by tick 811; corgi followed at `(4005.07,6.48)`. Opened `/private/tmp/s43-gap-pressure/s001-t262.jpg`, showing the moving courier in the passage with pursuers behind. Zero page errors; owned preview stopped. This supports route escape with pursuit despite the 3.65 m measured gap, but god mode prevents a survivability claim and does not establish every pin scenario.
 
 - Added east-edge zoom-1.5 rows: high WebGL2 (`/private/tmp/s43-edge-high-gl-z15/s001-t186.jpg`) and low WebGPU (`/private/tmp/s43-edge-low-gpu-z15/s001-t198.jpg`), both opened. Four-second runs completed with zero page errors. Base blocks, rails and braces stay aligned; low-tier shadows are softer, without lost barrier geometry. Owned preview stopped. These are current-build rows, not baseline comparisons.
