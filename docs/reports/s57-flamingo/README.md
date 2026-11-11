@@ -87,3 +87,9 @@ The production cat ambush branch remains hidden/perched until a target is within
 A trial increasing near-solver crowd swing clearance left runner/crawler metrics unchanged; it was reverted. The cheaper `GroundContacts` path rotated a support sole immediately after release, while horizontal travel correctly waited for the lifted portion of the swing. Matching yaw release to that travel window, and retaining at least 4 cm of swing clearance on small-scale figures, reduces runner p95 **3.5 → 2.4 cm** (max 6.5 → 3.2 cm) in the same 180-frame fixture. Crawler remains 10.3 cm and requires a separate reach/transition diagnosis. Trial gates completed; no tolerance changed. The near-solver source is restored exactly to the committed version.
 
 Typecheck, lint and the 14 render-contract tests pass after the distance-band correction. The runner/crawler trial batch is terminal (runner pass, crawler fail).
+
+### Crawler neutral-contact correction
+
+The prone crawler was using the upright solver's neutral point under the hip. The initial resting solve pulled its grounded feet forward by over 10 cm before pursuit; changing swing clearance could not fix that geometry. Crawl-specific contact construction now takes its neutral X/Z from the authored foot position in both the near and distant solvers. Upright figures retain their hip-based neutral point. The same 180-frame crawler row improves p95 **10.3 → 0.1 cm**, max 15.5 → 0.2 cm, with 19 contacts and identical 5.0142 m simulation travel. `crawler-neutral.json` records the current receipt. No lion-specific code or model changed.
+
+Typecheck, lint and 14/14 render-contract tests pass after the crawler correction. Opened the generated crawler sheet: the figure retains its prone silhouette and progresses across the surface, but the follow camera leaves it too small for detailed limb/step judgment. It is numerical motion evidence only; close framing remains required for visual acceptance.

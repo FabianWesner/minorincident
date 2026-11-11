@@ -71,14 +71,14 @@ export class CourierGroundContacts {
   pivot = false;
   private pivoting = false;
   /** `scaleNode` carries the leg-length world scale (crowd skeletons keep the asset scale below the instance frame). */
-  constructor(private rig: CharacterRig, private scaleNode: Object3D = rig.root) {
+  constructor(private rig: CharacterRig, private scaleNode: Object3D = rig.root, neutralFeet = false) {
     rig.root.updateWorldMatrix(true, true);
     rig.root.getWorldPosition(this.origin); rig.root.getWorldQuaternion(this.frame);
     const scale = scaleNode.getWorldScale(this.scale).y;
     this.sole = (rig.footL.getWorldPosition(this.joint).y - this.origin.y) / scale;
     this.feet = (['L', 'R'] as const).map((side, index) => {
       const upper = rig[`leg${side}`], middle = rig[`shin${side}`], end = rig[`foot${side}`];
-      const rest = upper.getWorldPosition(new Vector3()).sub(this.origin).applyQuaternion(this.frame.clone().invert()).divideScalar(scale);
+      const rest = (neutralFeet ? end : upper).getWorldPosition(new Vector3()).sub(this.origin).applyQuaternion(this.frame.clone().invert()).divideScalar(scale);
       return { ik: new LimbIK(upper, middle, end), a: middle.position.length(), b: end.position.length(), rest, side: index === 0 ? 1 : -1,
         target: new Vector3(), yaw: 0, pitch: 0, locked: false, fresh: true, planted: new Vector3(), plantYaw: 0, phase: -1, swing: undefined };
     });

@@ -15,7 +15,7 @@ export class GroundContacts {
   private readonly joint = new Vector3();
   private readonly sole: number;
   private lowering = 0;
-  constructor(private readonly rig: CharacterRig) {
+  constructor(private readonly rig: CharacterRig, neutralFeet = false) {
     rig.root.updateWorldMatrix(true, true);
     rig.root.getWorldPosition(this.origin);
     const scale = rig.root.getWorldScale(this.scale).y;
@@ -23,6 +23,7 @@ export class GroundContacts {
     this.feet = (['L', 'R'] as const).map(side => ({
       ik: new LimbIK(rig[`leg${side}`], rig[`shin${side}`], rig[`foot${side}`]),
       reach: (rig[`shin${side}`].position.length() + rig[`foot${side}`].position.length()) * .995,
+      x: neutralFeet ? (rig[`foot${side}`].getWorldPosition(this.joint).x - this.origin.x) / scale : 0,
       z: (rig[`foot${side}`].getWorldPosition(this.joint).z - this.origin.z) / scale,
       target: new Vector3(), planted: new Vector3(), start: new Vector3(), phase: -1,
       landing: new Vector3(), landed: false, swinging: false,
@@ -74,7 +75,7 @@ export class GroundContacts {
         // Move only while the sole clears the 1.2 cm contact band. The old low sin² arc dragged the shoe at both ends.
         const travel = Math.max(0, Math.min(1, (u - .18) / .64)), ease = travel * travel * (3 - 2 * travel);
         // Predicted next heel strike: where the actor will be at the end of swing.
-        if (!foot.landed) foot.landing.copy(this.origin).add(this.lateral).addScaledVector(this.forward, stride * (1 - p + stance / 2));
+        if (!foot.landed) foot.landing.copy(this.origin).add(this.lateral).addScaledVector(this.forward, foot.x * this.scale.y + stride * (1 - p + stance / 2));
         if (u >= .82) foot.landed = true;
         foot.target.copy(foot.landing);
         foot.target.y = this.origin.y + this.sole * this.scale.y;

@@ -353,7 +353,7 @@ export class CrowdLocomotion {
     }
     if (!layers && !this.animal && (!this.reach || !gaitShape[name])) return;
     let contacts = this.contacts.get(id);
-    if (!contacts && !this.animal && gaitShape[name]) { this.toRest(); contacts = new GroundContacts(this.rig); this.contacts.set(id, contacts); }
+    if (!contacts && !this.animal && gaitShape[name]) { this.toRest(); contacts = new GroundContacts(this.rig, name === 'crawl'); this.contacts.set(id, contacts); }
     const previous = this.footwork.far.get(id);
     if (contacts && previous && previous.owner !== this && time !== undefined && time - previous.time <= .3) {
       const left = previous.contacts.contact(0), right = previous.contacts.contact(1);
@@ -461,7 +461,7 @@ export class CrowdLocomotion {
       // Fading the leg solve lets a planted shoe slide toward the baked stride. Transfer its world contacts to the
       // cheaper solver instead, retaining the footwork budget for figures that are still near the camera.
       let contacts = this.contacts.get(id);
-      if (!contacts) { this.toRest(); contacts = new GroundContacts(this.rig); this.contacts.set(id, contacts); }
+      if (!contacts) { this.toRest(); contacts = new GroundContacts(this.rig, clip === 'crawl'); this.contacts.set(id, contacts); }
       contacts.inherit(phase, [state.contacts.contact(0), state.contacts.contact(1)]);
       this.footwork.states.delete(id); state = undefined;
     }
@@ -471,7 +471,7 @@ export class CrowdLocomotion {
         const far = previous && time - previous.time <= .3 ? previous.contacts : undefined, left = far?.contact(0), right = far?.contact(1);
         // A newly visible figure plants at its currently drawn foot positions.
         // Blending that first solve lets those contacts slide before they lock.
-        this.toRest(); state = { contacts: new CourierGroundContacts(this.rig, this.rig.hip.parent!), owner: this, time, weight: 1, active: 0, run: gaitStyles[clip]?.run ?? 0, stance: gaitStyles[clip]?.stance ?? .55 };
+        this.toRest(); state = { contacts: new CourierGroundContacts(this.rig, this.rig.hip.parent!, clip === 'crawl'), owner: this, time, weight: 1, active: 0, run: gaitStyles[clip]?.run ?? 0, stance: gaitStyles[clip]?.stance ?? .55 };
         if (left && right) state.contacts.inherit(phase, [left, right]);
         this.footwork.far.delete(id);
         this.footwork.states.set(id, state);
