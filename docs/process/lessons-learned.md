@@ -370,3 +370,8 @@ A living record, updated after every lane or experiment. Short entries with evid
 - **Worked:** a native fixture probe (`tools/qa/r36/gate-squeeze-probe.ts`: load the QA fixture with `missions.loadResume(fx.resume)`, press the courier on the gate, apply each displacement path) found the tunnel in one run; the real-input play only showed "she was outside".
 - **Didn't work:** holding the L8 breach group in the plaza while the courier is away: the hatches are inside the cell, so the group faces them alone. Pausing the hold timer away from the plaza keeps the fight there without separating them.
 - **Apply:** "drawn through" reports on thin gates: measure the drawn panel vs the barrier before moving geometry; a tall lattice between camera and courier is occlusion (use the x-ray contour path), not misalignment.
+
+## 2026-11-11 orchestrator: perf lane starved the deploy gate (b79)
+- **Didn't work:** a Sol perf brief that allowed timing comparisons; its `quiet-run.sh` reserved every browser slot while the b79 gate ran, so smoke failed twice with "Fixture browser timeout of 60000ms during setup".
+- **Apply:** perf/hitch briefs say "no quiet-run/timing reservations; record frame times from normal fixture play only; the orchestrator schedules exclusive timing windows". Before reading a smoke failure as a regression, check `/tmp/minor-incident-e2e.lock.quiet*` and rerun once.
+- Also: scene:gate rows failing with "Execution context was destroyed" in one WebGPU-low batch passed on an immediate rerun (12/12) — rerun by `--filter` before triaging.
