@@ -213,7 +213,7 @@ try {
     }
     // r38-vqa: --burst <m>: when a drawn enemy within m metres is attacking, take 6 quick frames (~150 ms apart, keys held)
     // so strikes, recoils and foot contacts are visible; at most one burst per 6 s. Frame names end in -b<k>.
-    if (values.burst && !e.driving && Date.now() - lastBurst > 6000) {
+    if (values.burst && (!e.driving || hatch) && Date.now() - lastBurst > 6000) {
       const near = foes.find(b => b.d < Number(values.burst) && b.attacking);
       if (near) {
         lastBurst = Date.now(); const n0 = shotN++;
