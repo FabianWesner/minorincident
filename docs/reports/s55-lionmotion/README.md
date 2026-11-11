@@ -547,3 +547,13 @@ passes measured elapsed render time, zero for same-time redraws, capped at
 7.473/8.547 cm and pelvis 0.852/1.058 cm. This is a new source correction;
 previous passing full tests/gate predate it and must be revalidated. Raw runs:
 `fixture-final-*` before this correction, `fixture-elapsed-time/` after.
+
+## Same-time redraw regression probe
+
+The fixture now explicitly repeats five `view.update(1)` calls at one paused
+simulation/render timestamp after readiness. Completed 900-frame run
+`redraw-check/`: at tick 235 maximum joint-position change across the five
+redraws is exactly 0 m. This directly validates the elapsed-time correction's
+intended idempotence, beyond comparing independent motion runs. Shared render
+contracts were rerun after that correction: 14/14 passed, exit 0. Full suite and
+62-row gate still need their post-correction reruns.

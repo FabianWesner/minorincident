@@ -17,8 +17,19 @@ try {
       for (let frame = 0; frame < 60; frame++) {
         await window.__SS__!.step(1);
         if (batchIndex === 2 && frame >= 54 || batchIndex === 3 && frame < 6) await window.__SS__!.screenshotReady();
+        let redraw: { tick: number; maxJointDeltaM: number } | undefined;
+        if (batchIndex === 2 && frame === 54) {
+          const before = structuredClone(game.view.crowdFigures());
+          for (let draw = 0; draw < 5; draw++) game.view.update(1);
+          let maxJointDeltaM = 0;
+          for (const current of game.view.crowdFigures()) {
+            const old = before.find(figure => figure.id === current.id);
+            for (const [name, point] of Object.entries(current.joints ?? {})) if (old?.joints?.[name]) maxJointDeltaM = Math.max(maxJointDeltaM, Math.hypot(...point.map((value, axis) => value - old.joints![name][axis])));
+          }
+          redraw = { tick: game.world.tick, maxJointDeltaM };
+        }
         const ids = new Set([...game.world.entities.iterate()].filter(e => /lion/.test(e.civilian?.zooAnimal ?? e.archetype)).map(e => e.id));
-        samples.push({ png: (batchIndex === 2 && frame >= 54 || batchIndex === 3 && frame < 6) ? document.querySelector('canvas')!.toDataURL('image/png') : undefined, tick: game.world.tick, sim: [...ids].map(id => ({ id, transform: { ...game.world.entities.get(id)!.transform }, motion: structuredClone(game.world.entities.get(id)!.motion) })), figures: game.view.crowdFigures().filter(f => ids.has(f.id)) });
+        samples.push({ redraw, png: (batchIndex === 2 && frame >= 54 || batchIndex === 3 && frame < 6) ? document.querySelector('canvas')!.toDataURL('image/png') : undefined, tick: game.world.tick, sim: [...ids].map(id => ({ id, transform: { ...game.world.entities.get(id)!.transform }, motion: structuredClone(game.world.entities.get(id)!.motion) })), figures: game.view.crowdFigures().filter(f => ids.has(f.id)) });
       }
       return samples;
     }, batch);
