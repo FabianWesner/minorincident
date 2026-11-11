@@ -23,6 +23,7 @@ const { values, positionals } = parseArgs({ allowPositionals: true, options: {
   out: { type: 'string' }, quality: { type: 'string', default: 'low' }, zoom: { type: 'string', default: '1.5' }, backend: { type: 'string', default: 'webgpu' },
   seconds: { type: 'string', default: '300' }, shot: { type: 'string', default: '6' }, god: { type: 'boolean', default: false }, weapon: { type: 'string', default: 'weapon.army-mg' },
   route: { type: 'string' }, 'follow-marker': { type: 'boolean', default: false }, 'hold-e': { type: 'boolean', default: false }, 'tap-e-when': { type: 'string' }, 'skip-credits-after': { type: 'string' }, dwell: { type: 'string', default: '0' }, reach: { type: 'string', default: '2.5' }, block: { type: 'string', default: '5' }, 'no-kite': { type: 'boolean', default: false }, range: { type: 'string', default: '22' }, setup: { type: 'string' },
+  handbrake: { type: 'string', default: 'Space' }, prefer: { type: 'string' }, 'route-when': { type: 'string' }, 'idle-when': { type: 'string' },
 } });
 const [origin, name] = positionals;
 // `level:L7:corridor` loads a level at a mission checkpoint through the test API instead of a fixture.
@@ -103,16 +104,19 @@ try {
     const text = `${e.objective} | ${e.tracker}`;
     if (text !== lastText) { lastText = text; log({ tick: e.tick, objective: e.objective, tracker: e.tracker, subtitle: e.subtitle, prompt: e.prompt, apcBar: extra.apcBar, checkpoint: extra.checkpoint, phase: extra.phase }); }
     const foes = e.enemies.filter(b => b.drawn && !b.corpse && b.hp > 0).sort((a, b) => a.d - b.d);
-    const target = foes.find(b => b.d < range);
+    // r35-vqa: --prefer <regex on kind/archetype>: aim at a matching enemy in range first (an L8 boss instead of a runner pressed to the far side of the fence).
+    const target = (values.prefer ? foes.find(b => b.d < range && new RegExp(values.prefer!).test(String(b.archetype ?? b.kind))) : undefined) ?? foes.find(b => b.d < range);
     let keys: string[] = [];
-    while (ri < route.length && Math.hypot(route[ri].x - e.player.x, route[ri].z - e.player.z) < (e.driving ? 8 : Number(values.reach))) { log({ reached: route[ri], tick: e.tick }); ri++; best = Infinity; bestAt = Date.now(); dwellUntil = Date.now() + Number(values.dwell) * 1000; }
-    if (ri < route.length) {
+    // r35-vqa: --route-when <regex on objective>: the route waits until the objective matches (e.g. after the L5 cellar).
+    const routeOn = !values['route-when'] || new RegExp(values['route-when']).test(e.objective ?? '');
+    while (routeOn && ri < route.length && Math.hypot(route[ri].x - e.player.x, route[ri].z - e.player.z) < (e.driving ? 8 : Number(values.reach))) { log({ reached: route[ri], tick: e.tick }); ri++; best = Infinity; bestAt = Date.now(); dwellUntil = Date.now() + Number(values.dwell) * 1000; }
+    if (routeOn && ri < route.length) {
       const d = Math.hypot(route[ri].x - e.player.x, route[ri].z - e.player.z);
       if (d < best - .5) { best = d; bestAt = Date.now(); }
       else if (Date.now() - bestAt > Number(values.block) * 1000) { log({ routeBlocked: route[ri], d: +d.toFixed(1), tick: e.tick }); ri++; best = Infinity; bestAt = Date.now(); }
     }
     if (Date.now() < dwellUntil) keys = [];
-    else if (ri < route.length) keys = dirKeys(e, route[ri], extra.azimuth, false, .3);
+    else if (routeOn && ri < route.length) keys = dirKeys(e, route[ri], extra.azimuth, false, .3);
     else if (target && target.d < 6 && !values['no-kite']) keys = dirKeys(e, target, extra.azimuth, true);
     else if (values['follow-marker'] && e.marker && e.marker.anchor) {
       const m = await page.evaluate(() => { const pin = document.querySelector<HTMLElement>('[data-testid="minimap-objective"]'); return pin && !pin.hidden ? { x: Number(pin.dataset.worldX), z: Number(pin.dataset.worldZ) } : null; });
@@ -128,15 +132,19 @@ try {
         keys.push('KeyW'); if (delta > .06) keys.push('KeyA'); else if (delta < -.06) keys.push('KeyD');
       }
       const air = await page.evaluate(() => { const w = (window.__SCENE__ as unknown as { game: { world: unknown } }).game.world as { vehicles: { active: number | null; cars: Map<number, { physics: { speed: number }; entity: { transform: { y: number }; vehicle: { attached: number[] } } }> }; missions?: { l9?: { driving: { state: { setPieces?: { alphas: { phase: string }[] } } } } } }; const car = w.vehicles.active == null ? undefined : w.vehicles.cars.get(w.vehicles.active); return { y: car?.entity.transform.y ?? 0, speed: +(car?.physics.speed ?? 0).toFixed(1), boarders: car?.entity.vehicle.attached.length ?? 0, fight: (w.missions?.l9?.driving.state.setPieces?.alphas ?? []).filter(a => ['windup', 'air', 'hull', 'throw'].includes(a.phase)).map(a => a.phase) }; });
-      if (air.boarders && Date.now() % 1500 < 400) keys.push('KeyK'); // K = RIGHT = handbrake; Space is LEFT = horn/boost (r34-l9qa: the old Space taps never braked)
+      if (air.boarders && Date.now() % 1500 < 400) keys.push(values.handbrake!); // r35-vqa: Space is the driving handbrake since 258f211b (K still works); --handbrake KeyK to test K
       // Event shots: the APC in the air off a ramp, and every leaper/thrower action, at most one per 1.2 s.
       if ((air.y > 2.2 || air.fight.length) && Date.now() - lastEvent > 1200) { lastEvent = Date.now(); log({ eventShot: shotN, tick: e.tick, apcY: +air.y.toFixed(2), apcSpeed: air.speed, keys, fight: air.fight, boarders: air.boarders }); await page.screenshot({ path: `${out}/s${String(shotN++).padStart(3, '0')}-t${e.tick}-${air.y > 2.2 ? 'air' : air.fight.join('+')}.jpg`, type: 'jpeg', quality: 70 }); }
     }
+    // r35-vqa: --idle-when <regex on tracker>: let go of every key (no move, no fire) while it matches, e.g. the L9 crawl ring.
+    if (values['idle-when'] && new RegExp(values['idle-when']).test(`${e.objective} | ${e.tracker}`)) { await press([]); if (Date.now() - lastShot > shotEvery) { lastShot = Date.now(); await page.screenshot({ path: `${out}/s${String(shotN++).padStart(3, '0')}-t${e.tick}-idle.jpg`, type: 'jpeg', quality: 70 }); } if (Date.now() - lastLog > 3000) { lastLog = Date.now(); log({ idle: true, tick: e.tick, objective: e.objective, tracker: e.tracker, player: { x: +e.player.x.toFixed(1), z: +e.player.z.toFixed(1), hp: Math.round(e.player.hp) } }); } await page.waitForTimeout(100); continue; }
     if (values['hold-e'] && e.prompt) keys.push('KeyE');
     // While driving Space is the horn/boost (K the handbrake): only fire on foot.
     if (target && !e.driving) { await page.mouse.move(target.aim.x, target.aim.y); keys.push('Space'); }
     // r33-vqa: at the L9 rail-stall hatch the courier fights from the hull: select the weapon (keys do not take while
     // driving, retry here) and fire with the left mouse button at the nearest drawn enemy.
+    // r35-vqa: the first weapon key can land while the briefing panel is still open; retry on foot until the wanted weapon is held.
+    if (!e.driving && e.player.current !== values.weapon && e.player.weapons?.includes(values.weapon!) && Date.now() - lastTap > 3000) { lastTap = Date.now(); const k = weaponKey(values.weapon!); if (k) { await page.keyboard.press(`Digit${k}`); log({ weaponKey: k, tick: e.tick, had: e.player.current }); } }
     const hatch = !!e.driving && /Defend the hatch/.test(e.objective ?? '');
     if (hatch) {
       const want = weaponKey(values.weapon!); if (want && e.player.current !== values.weapon && Date.now() - lastTap > 1500) { lastTap = Date.now(); await page.keyboard.press(`Digit${want}`); log({ hatchKey: want, tick: e.tick, rack: e.player.weapons, empty: e.player.emptyWeapons, had: e.player.current, ctx: await page.evaluate(() => { const g = (window.__SCENE__ as unknown as { game: { input: { drivingContext: boolean; mountedGunContext: boolean }; world: { mountedGun?: { mounted: boolean }; missions?: { l9?: { driving: { hatch: boolean } } } } } }).game; return { driving: g.input.drivingContext, mounted: g.input.mountedGunContext, hatch: g.world.missions?.l9?.driving.hatch, worldMounted: g.world.mountedGun?.mounted }; }) }); }

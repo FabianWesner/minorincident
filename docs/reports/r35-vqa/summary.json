@@ -1,0 +1,156 @@
+{
+ "lane": "r35-vqa",
+ "date": "2026-11-11",
+ "base": "93016109",
+ "model": "claude-opus-5-5",
+ "captures": "/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/r35-vqa",
+ "sheets": {
+  "l8-route": "/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/r35-vqa/sheet-l8-route.jpg",
+  "l8-animals": "/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/r35-vqa/sheet-l8-animals.jpg",
+  "heavies-scene": "/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/r35-vqa/sheet-heavies-scene.jpg",
+  "l4-l5": "/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/r35-vqa/sheet-l4-l5.jpg",
+  "l9": "/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/r35-vqa/sheet-l9.jpg"
+ },
+ "matrix": {
+  "quality": [
+   "low",
+   "high"
+  ],
+  "zoom": [
+   1,
+   1.5
+  ],
+  "backend": [
+   "webgl2",
+   "webgpu"
+  ]
+ },
+ "findings": [
+  {
+   "id": "P1-1",
+   "prio": "P1",
+   "level": "L8",
+   "title": "Courier ends outside the closed gorilla exit gate mid-fight (gorilla alive, group inside)",
+   "tick": "3945-4247",
+   "pos": "(81.4,-29) -> (86.1,-28.5)",
+   "quality": "high",
+   "zoom": 1,
+   "backend": "webgl2",
+   "capture": "/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/r35-vqa/l8-gorilla-high-z1-gl/s017-t4247.jpg"
+  },
+  {
+   "id": "P2-1",
+   "prio": "P2",
+   "level": "L8",
+   "title": "Lion/gorilla exit gate panels drawn through the courier",
+   "capture": "/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/r35-vqa/l8-lion4-low-z1-gl/s014-t3512.jpg"
+  },
+  {
+   "id": "P2-2",
+   "prio": "P2",
+   "level": "L8",
+   "title": "Lion/lioness tan now but still a spiky mane ball / bell shape, not a big cat",
+   "capture": "/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/r35-vqa/l8-lion4-low-z1-gl/s086-t21225.jpg"
+  },
+  {
+   "id": "P2-3",
+   "prio": "P2",
+   "level": "L9",
+   "title": "Bay to bridge took ~130 s through a 20+ horde with a floored APC",
+   "capture": "/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/r35-vqa/l9-stall-high-z1-gpu/s055-t12388.jpg"
+  },
+  {
+   "id": "P2-4",
+   "prio": "P2",
+   "level": "L9",
+   "title": "Four infected idle at 1 m around the crawling courier for 2 min, no damage",
+   "capture": "/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/r35-vqa/l9-crawl-low-z1-gpu/s018-t4435.jpg"
+  },
+  {
+   "id": "P2-5",
+   "prio": "P2",
+   "level": "L9",
+   "title": "Armour at the floor by 82 s; no bay arrival with armour (partly tool route off-road)",
+   "capture": "/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/r35-vqa/l9-start-low-z15-gl/s010-t3195.jpg"
+  },
+  {
+   "id": "P2-6",
+   "prio": "P2",
+   "level": "L9",
+   "title": "Overpass jump lands nose-first in the landing block (0.1 m/s, ~3 s)",
+   "capture": "/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/r35-vqa/l9-start-low-z15-gl/s028-t7573-air.jpg"
+  },
+  {
+   "id": "P2-7",
+   "prio": "P2",
+   "level": "L5",
+   "title": "No pointer to the first survivor (Mia); church marker after Mia works",
+   "capture": "/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/r35-vqa/l5-high-z15-gpu/s010-t3034.jpg"
+  },
+  {
+   "id": "P2-8",
+   "prio": "P2",
+   "level": "L8",
+   "title": "Breach: courier and civilians can leave the plaza far behind",
+   "capture": "/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/r35-vqa/l8-start-high-z15-gpu/s029-t8857.jpg"
+  },
+  {
+   "id": "P3-1",
+   "prio": "P3",
+   "level": "L8",
+   "title": "'Rest at the plaza' objective flicker on the tour"
+  },
+  {
+   "id": "P3-2",
+   "prio": "P3",
+   "level": "L8",
+   "title": "'They're inside!' bubble lingers for minutes"
+  },
+  {
+   "id": "P3-3",
+   "prio": "P3",
+   "level": "L8/L4",
+   "title": "Gate panels / melee piles hide the courier"
+  },
+  {
+   "id": "P3-4",
+   "prio": "P3",
+   "level": "L5",
+   "title": "Off-screen objective arrow over hotbar slot 1 (low z1)"
+  },
+  {
+   "id": "P3-5",
+   "prio": "P3",
+   "level": "L9",
+   "title": "Driving hint 'LEFT to horn / boost'"
+  },
+  {
+   "id": "P3-6",
+   "prio": "P3",
+   "level": "L8",
+   "title": "Night infected/corpses glassy pale blue"
+  },
+  {
+   "id": "P3-7",
+   "prio": "P3",
+   "level": "L8/L5",
+   "title": "Frame hitches 1817 ms (L8 t7698 low WebGL2), 667/583 ms (L5)"
+  }
+ ],
+ "fixed_confirmed": [
+  "L8 lion line with lion in frame",
+  "L8 flamingos pink",
+  "lion/lioness tan colour",
+  "L9 Space handbrake throws boarders",
+  "L9 evac starts in bay NE corner",
+  "L9 crawl ends in ring (with input)",
+  "L9 hatch weapon key",
+  "L5 church marker after Mia",
+  "heavies have own bodies"
+ ],
+ "not_covered": [
+  "monkey and zebra arenas",
+  "amber pounce ring in real play (not caught in a frame)",
+  "L9 crawl stop-in-ring by real input"
+ ]
+}
