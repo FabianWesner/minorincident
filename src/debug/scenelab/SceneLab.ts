@@ -544,6 +544,13 @@ export class SceneLab {
         world.entities.get(entity)!.transform.yaw = yaw;
       } else if (a.kind === 'infected') {
         entity = world.infected!.spawn(a.archetype ?? 'infected.runner', at, { yaw, state: 'idle', ...(a.alphaType ? { alphaType: a.alphaType } : {}), ...(a.look?.model ? { variant: a.look.model } : {}), ...(a.look?.tier ? { tier: a.look.tier } : {}) });
+        // A named turned-person fixture owns its appearance. Outbreak dressing
+        // otherwise replaces the requested variant with a random resident body.
+        if (a.look?.model?.startsWith('npc.')) world.entities.get(entity)!.appearance = {
+          entityId: entity, asset: a.look.model, tint: a.look.tint ?? '#ffffff',
+          accessories: a.look.accessories ?? [], handProp: a.look.handProp ?? null,
+          tier: a.look.tier ?? 'average', bornInfected: true,
+        };
         // A named Mega look is drawn exactly (the shipped Mega variant otherwise takes a look by entity id, CrowdView.alphaKey).
         if (a.look?.model && alphaLooks['inf.mega-alpha'].includes(a.look.model)) world.entities.get(entity)!.infected!.model = a.look.model;
         // L3 layout fixtures have no mission controller to apply the corridor's contact damage.

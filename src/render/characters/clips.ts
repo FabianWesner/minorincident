@@ -11,7 +11,7 @@ export const authoredClips = new Map(library.map(clip => [clip.name, clip]));
 for (const clip of alphaMoveClipData) authoredClips.set(clip.name, clip);
 /** Skin pilot: Mesh2Motion CC0 clips retargeted offline (tools/skinpilot/retarget.ts); same schema, overrides by name. */
 export const skinClips: typeof authoredClips = new Map(skinLibrary.map(clip => [clip.name, clip as unknown as (typeof library)[number]]));
-export const strides: Record<string, number> = { walk: .9, run: 1.17, shamble: .9, 'infected-run': 1.17, 'npc-walk': .9, 'npc-walk-relaxed': .9, 'npc-carry': .9, 'npc-cane': .9, 'corgi-walk': .55, 'corgi-trot': .8,
+export const strides: Record<string, number> = { walk: .9, run: 1.17, shamble: .9, crawl: .9, 'infected-run': 1.17, 'npc-walk': .9, 'npc-walk-relaxed': .9, 'npc-carry': .9, 'npc-cane': .9, 'corgi-walk': .55, 'corgi-trot': .8,
   // E19 §5.4 tiers read from cadence: frail chops short quick steps, the lurch is
   // medium, the athletic sprint covers ground in long low strides.
   'infected-frail': .95, 'infected-lurch': 1.25, 'infected-sprint': 1.75, 'civ-flee': 1.25, 'corgi-gallop': 1.1, 'dog-gallop': 1.1, ride: 3.2 };
@@ -33,10 +33,12 @@ export function cadenceStride(name: string, scale: number, speed: number, cycleR
  * tier gaits run at 3+ steps-pairs per second (frail chops quickest) and the stance stays within reach. */
 const crowdRunCadence: Record<string, number> = { 'infected-run': 3, 'infected-sprint': 3, 'civ-flee': 3, 'infected-lurch': 3, 'infected-frail': 3.3 };
 /** Minimum crowd gait cadence (cycles/s) per clip. */
-const minimumCadence: Record<string, number> = { shamble: 1.5, 'infected-lurch': 1.7, 'npc-walk': 1.6, 'npc-walk-relaxed': 1.5, 'npc-carry': 1.5, 'npc-cane': 1.3, 'infected-frail': 2.2 };
+const minimumCadence: Record<string, number> = { shamble: 1.5, crawl: 2.2, 'infected-lurch': 1.7, 'npc-walk': 1.6, 'npc-walk-relaxed': 1.5, 'npc-carry': 1.5, 'npc-cane': 1.3, 'infected-frail': 2.2 };
 /** Planted support per gait: stance fraction of the cycle and swing-foot lift (m). */
 export const gaitShape: Record<string, { stance: number; lift: number }> = {
   walk: { stance: .6, lift: .055 }, shamble: { stance: .6, lift: .055 }, 'npc-walk': { stance: .6, lift: .055 }, 'npc-walk-relaxed': { stance: .6, lift: .055 },
+  crawl: { stance: .58, lift: .025 },
+  windup: { stance: .58, lift: .025 }, swing: { stance: .55, lift: .025 }, hurt: { stance: .58, lift: .025 }, 'stagger-left': { stance: .56, lift: .025 }, 'stagger-right': { stance: .56, lift: .025 },
   run: { stance: .5, lift: .085 }, 'infected-run': { stance: .5, lift: .085 }, 'civ-flee': { stance: .5, lift: .08 },
   'infected-frail': { stance: .56, lift: .03 }, 'infected-lurch': { stance: .5, lift: .07 }, 'infected-sprint': { stance: .4, lift: .12 },
 };

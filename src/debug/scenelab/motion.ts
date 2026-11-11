@@ -13,7 +13,7 @@ export interface MotionSummary {
 const percentile = (a: number[], p: number) => a.slice().sort((x, y) => x - y)[Math.floor((a.length - 1) * p)];
 /** Clips whose feet legitimately leave the floor plane or are not standing (seated, knocked down, rising). */
 // r32-alphas: the Alpha pounce leaves the floor and the charge rush outruns its in-place cycle (9 m/s).
-export const unplantedClips = /death|knockdown|flung|get-up|crawl|collapse|rise|sit|stand-up|grabbed|bitten|down|alpha-pounce|alpha-charge/;
+export const unplantedClips = /death|knockdown|flung|get-up|collapse|rise|sit|stand-up|grabbed|bitten|down|alpha-pounce|alpha-charge/;
 
 export function summarizeMotion(frames: MotionFrame[], grounded = .012): MotionSummary {
   const used = frames.filter(f => f.feet.length && !(f.clip && unplantedClips.test(f.clip)));
@@ -31,6 +31,8 @@ export function summarizeMotion(frames: MotionFrame[], grounded = .012): MotionS
     let h1: number | undefined, h2: number | undefined, f1 = -9, f2 = -9, run = 0;   // lowest sole height (above the floor) of the last two consecutive frames
     for (const f of used) {
       const c = f.feet[i]; if (!c) continue;
+      // An excluded airborne/knockdown interval ends contact; never measure a jump across unobserved frames as slide.
+      if (previous && f.frame !== previous.frame + 1) close();
       const floor = floorOf(f), lowest = Math.min(c.heel[1], c.toe[1]);
       // Vertical zig-zag: the sole reverses by >= 0.8 cm on every consecutive frame. A gait touchdown reverses once or twice;
       // a bobbing body or a foot solver in a limit cycle keeps going (the run length counts the frames).

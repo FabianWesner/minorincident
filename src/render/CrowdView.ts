@@ -788,6 +788,8 @@ export class CrowdView extends Group {
             : movingClip ?? ((b.state as string) === 'search' || (b.state as string) === 'attracted' ? 'infected-search' : 'infected-idle');
       // Heavy reactions (deaths, finishers, kicks, blasts) knock down and get up, also while knocked back; light hits only flinch (InfectedMoves).
       const heavy = !!reaction?.heavy && tick < reaction.until && b.state !== 'dead';
+      const stagger = !batch.animal && !b.legLost && e.archetype !== 'infected.crawler' && e.archetype !== 'infected.alpha' && !mega && motion.speed <= .06 ? InfectedMoves.staggerClip(e, renderTick, e.transform.yaw) : undefined;
+      if (stagger) clip = stagger;
       if (heavy) clip = age < .48 ? reaction!.index % 2 ? 'knockdown' : 'flung' : age < .7 ? 'knockdown' : 'get-up';
       if (physical?.stage === 'telegraph') clip = 'windup';
       else if ((physical?.move === 'alpha.ground-slam' || physical?.move === 'gorilla.pound') && physical.stage === 'recovery') clip = 'swing';
@@ -807,6 +809,8 @@ export class CrowdView extends Group {
       // r32-animalmoves: species poses (lift/flight phase) are sampled once per figure and drive a few clip choices.
       const species = e.infected && !e.corpse ? animalSpecies(e) : undefined;
       const animalPose = species ? this.animalMoves.sample(e, renderTick, motion.speed, this.gait.sample(e.id, gaitDistance, 'corgi-trot', batch.strideScale, motion.speed)) : undefined;
+      const dogPhase = species === 'dog' && !heavy && !e.infectionRise ? this.animalMoves.dogPhase : -1;
+      if (dogPhase >= 0) clip = 'dog-lunge-bite';
       const animalLift = species ? Math.max(0, this.animalMoves.lift - Math.max(0, e.transform.y - .7 - (this.world.districts?.pavingHeight(e.transform.x, e.transform.z) ?? 0))) : 0, flightPhase = species ? this.animalMoves.flightPhase : -1;
       if (species === 'flamingo' && animalPose?.airborne && b.state !== 'dead') clip = 'run';
       if (species === 'zebra' && !heavy && b.state !== 'dead') {
@@ -822,7 +826,7 @@ export class CrowdView extends Group {
       const megaRate = 1.05 + (megaCycleRate - 1.05) * megaRun;
       const duration = authoredClips.get(clip)?.duration ?? 1;
       const dogWindupTicks = Math.ceil(batch.windup * 60), dogBiteT = renderTick - (b.until - dogWindupTicks);
-      const phase = alphaMove ? alphaMove.phase : primateStory ? Math.max(0, (renderTick - primateStory.start) / 96) % 1 : clip === 'dog-lunge-bite' ? Math.max(0, Math.min(1, dogBiteT < dogWindupTicks ? .4 * dogBiteT / dogWindupTicks : .4 + .6 * (dogBiteT - dogWindupTicks) / 24)) : clip === 'zebra-rear-kick' && specialAttack ? Math.min(1, (renderTick - specialAttack.startTick) / (specialAttack.activeTick - specialAttack.startTick + 36)) : clip === 'zebra-stampede' && specialAttack ? .5 + ((renderTick - specialAttack.activeTick) / 32 % 1) / 3 : e.infectionRise ? Math.min(1, (this.world.tick - e.infectionRise.started) / (e.infectionRise.until - e.infectionRise.started)) : b.state === 'dead' ? (reaction?.groundDeath ? 1 : Math.min(1, (this.world.tick - b.deadAt) / 60 / duration)) - InfectedMoves.stir(e, renderTick, duration) : clip === 'windup' ? e.infected?.specialAttack ? Math.min(1, (renderTick - e.infected.specialAttack.startTick) / (e.infected.specialAttack.activeTick - e.infected.specialAttack.startTick)) : Math.max(0, Math.min(1, 1 - (b.until - this.world.tick) / (batch.windup * 60))) : reaction && clip === 'get-up' ? Math.min(1, (age - .7) / getUpSpan(reaction)) : reaction && ['flung', 'knockdown', 'stagger-left', 'stagger-right'].includes(clip) ? Math.min(1, age / (reaction.heavy ? .48 : (reaction.until - reaction.started) / 60)) : strides[clip] ? this.gait.sample(e.id, gaitDistance, batch.animal ? clip === 'dog-gallop' ? 'corgi-gallop' : 'corgi-trot' : clip, batch.strideScale, motion.speed, heavyGait ? megaRate : undefined) : (renderTick / 60 + e.id * .137) / duration % 1;
+      const phase = alphaMove ? alphaMove.phase : primateStory ? Math.max(0, (renderTick - primateStory.start) / 96) % 1 : clip === 'dog-lunge-bite' ? dogPhase >= 0 ? dogPhase : Math.max(0, Math.min(1, dogBiteT < dogWindupTicks ? .4 * dogBiteT / dogWindupTicks : .4 + .6 * (dogBiteT - dogWindupTicks) / 24)) : clip === 'zebra-rear-kick' && specialAttack ? Math.min(1, (renderTick - specialAttack.startTick) / (specialAttack.activeTick - specialAttack.startTick + 36)) : clip === 'zebra-stampede' && specialAttack ? .5 + ((renderTick - specialAttack.activeTick) / 32 % 1) / 3 : e.infectionRise ? Math.min(1, (this.world.tick - e.infectionRise.started) / (e.infectionRise.until - e.infectionRise.started)) : b.state === 'dead' ? (reaction?.groundDeath ? 1 : Math.min(1, (this.world.tick - b.deadAt) / 60 / duration)) - InfectedMoves.stir(e, renderTick, duration) : clip === 'windup' ? e.infected?.specialAttack ? Math.min(1, (renderTick - e.infected.specialAttack.startTick) / (e.infected.specialAttack.activeTick - e.infected.specialAttack.startTick)) : Math.max(0, Math.min(1, 1 - (b.until - this.world.tick) / (batch.windup * 60))) : reaction && clip === 'get-up' ? Math.min(1, (age - .7) / getUpSpan(reaction)) : reaction && ['flung', 'knockdown', 'stagger-left', 'stagger-right'].includes(clip) ? Math.min(1, age / (reaction.heavy ? .48 : .3)) : strides[clip] ? this.gait.sample(e.id, gaitDistance, batch.animal ? clip === 'dog-gallop' ? 'corgi-gallop' : 'corgi-trot' : clip, batch.strideScale, motion.speed, heavyGait ? megaRate : undefined) : (renderTick / 60 + e.id * .137) / duration % 1;
       const zebraTell = species === 'zebra' && clip === 'zebra-stampede' && specialAttack?.move === 'zebra.stampede' && specialAttack.stage === 'telegraph';
       const animalPhase = flightPhase >= 0 && clip === 'run' ? flightPhase
         : zebraTell ? .5 * Math.min(1, (renderTick - specialAttack!.startTick) / Math.max(1, specialAttack!.activeTick - specialAttack!.startTick)) * ((renderTick / 9 | 0) % 2 ? 1 : .6)
@@ -879,6 +883,11 @@ export class CrowdView extends Group {
         const crawling = b.legLost || e.archetype === 'infected.crawler' || clip === 'crawl', moving = !!strides[clip] && motion.speed > .06;
         const lurchScale = this.world.scenario === 'L10' && e.archetype === 'infected.runner' ? .35 : 1;
         const { layers, style } = this.moves.sample(e, b.state, b.until, batch.windup, renderTick, presented.yaw, motion.speed, moving ? clip : undefined, lurchScale);
+        if (species) {
+          // Animal clips own the spine and gait; humanoid attack/hunch layers would rotate a horizontal body upright.
+          layers.lean = layers.roll = layers.lunge = layers.lurch = 0;
+          layers.attack = undefined;
+        }
         // The authored Alpha clip owns the whole body; the generic coil/lunge/arm-raise layers would fight it.
         if (alphaMove) { layers.lean = layers.lunge = layers.throwPose = 0; }
         // The Leaper runs low (its look cue: crouched); the clip owns it when it stands or pounces.
@@ -900,7 +909,7 @@ export class CrowdView extends Group {
         }
         if (this.world.scenario === 'L10' && e.archetype === 'infected.runner' && moving && !heavy) layers.maxBodyLean = 38 * Math.PI / 180;
         // G-17: standing and walking infected never lean past the 42 degree acceptance limit (idle hunch read 45-52 degrees on the womanB/manB rigs); attacks and crawlers keep their authored reach.
-        if (!heavy && !specialAttack && !alphaMove && !crawling && b.state !== 'dead' && b.state !== 'attack') layers.maxBodyLean = Math.min(layers.maxBodyLean ?? Infinity, 40 * Math.PI / 180);
+        if (!species && !heavy && !specialAttack && !alphaMove && !crawling && b.state !== 'dead' && b.state !== 'attack') layers.maxBodyLean = Math.min(layers.maxBodyLean ?? Infinity, 40 * Math.PI / 180);
         // The baked hunch already reaches toward the victim. Keep the added pelvis/torso lunge
         // inside the reserved contact space; distant windups retain their full coil and extension.
         const target = this.world.entities.get(e.infected?.heardTargetId || e.infected?.l1?.targetId || 1);
@@ -916,7 +925,7 @@ export class CrowdView extends Group {
           const k = Math.max(0, 1 - (this.world.tick - feedback.at) / 12);
           if (k > 0 && !layers.flinch) { layers.flinch = k; layers.hitX = -1; layers.hitZ = 0; }
         }
-        const layered = !crawling && (layers.animal || layers.maxBodyLean || layers.lean || layers.lunge || layers.flinch || layers.lurch || layers.chestBeat || layers.trunkSwipe || layers.throwPose || layers.shieldBreak || layers.heavyGait) ? layers : undefined;
+        const layered = (crawling ? layers.attack !== undefined || !!layers.flinch : layers.animal || layers.maxBodyLean || layers.lean || layers.lunge || layers.attack !== undefined || layers.flinch || layers.lurch || layers.chestBeat || layers.trunkSwipe || layers.throwPose || layers.shieldBreak || layers.heavyGait) ? layers : undefined;
         // Match the low L4 gait budget to its sixteen closest detailed bodies.
         // Contact-range actors and action poses keep the full leg solve; other
         // moving runners retain the existing procedural ground-contact solver.
@@ -932,7 +941,7 @@ export class CrowdView extends Group {
         pose.scale = batch.strideScale;
         pose.speed = motion.speed;
         pose.time = renderTick / 60;
-        pose.near = detailedFeet && !crawling;
+        pose.near = detailedFeet;
         pose.layers = layered;
         pose.style = style;
         pose.procedural = true;
