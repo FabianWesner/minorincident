@@ -289,8 +289,11 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       If(this.heroFigure.mul(courierForegroundOn).greaterThan(0), () => {
         // Behind a vehicle hull on foot she reads as seen through it: the wide-zoom x-ray contour at every distance.
         const distant = cameraPosition.distance(positionWorld).smoothstep(14, 26).max(courierXray);
+        // Suppress clothing detail and tint the vehicle x-ray as a dim silhouette.
+        // A fully lit body over a whole hull reads as standing on its roof.
+        result.assign(mix(result, vec3(.035, .075, .095), courierXray.mul(.92)));
         const courierEdge = normalView.dot(positionViewDirection).abs().oneMinus().pow(mix(3, 1.5, distant));
-        result.addAssign(color('#ffd17d').mul(courierEdge).mul(mix(.25, 1.2, distant)));
+        result.addAssign(color('#ffd17d').mul(courierEdge).mul(mix(.25, mix(.25, .14, courierXray), distant)));
       });
       // Opaque courier meshes use scene alpha as a grade-protection mask. The
       // composite consumes it and writes opaque canvas alpha; no extra render pass.

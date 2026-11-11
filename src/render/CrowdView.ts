@@ -476,7 +476,7 @@ export class CrowdView extends Group {
       // Zoo joint names and atlas widths are data addressed through integer
       // texels. They do not change the skinning graph; each draw binds its rig.
       const rigKey = zooSurface ? 'zoo' : baked.clip.parts.join('|');
-      const materialKey = sharedSurface && baked.texture ? `${rigKey}:${zooSurface ? 'per-draw' : poses.bindRow}:${baked.doubleSided}:${inlineAccessories}:${asset.startsWith('npc.')}:${baked.geometry.hasAttribute('_skin')}:${human}:${healthy}:${infectedAtlas}:${dogPalette}:${regularAlpha}` : undefined;
+      const materialKey = sharedSurface && baked.texture ? `${rigKey}:${zooSurface ? asset : poses.bindRow}:${baked.doubleSided}:${inlineAccessories}:${asset.startsWith('npc.')}:${baked.geometry.hasAttribute('_skin')}:${human}:${healthy}:${infectedAtlas}:${dogPalette}:${regularAlpha}` : undefined;
       let sharedSkin = materialKey ? this.sharedSkinMaterials.get(materialKey) : undefined;
       let material = sharedSkin?.material, surfaceAtlas = sharedSkin?.atlas;
       if (!material) {
@@ -502,9 +502,15 @@ export class CrowdView extends Group {
       const eyeDisc = parts.z.greaterThan(1.5);
       const eyeRadius = uv().sub(.5).mul(2).length();
       const eye = texelSample ? eyeDisc.or(texelSample.r.greaterThan(.5).and(texelSample.g.lessThan(texelSample.r.mul(.65))).and(texelSample.b.lessThan(.2)).and(parts.z.greaterThan(.5))).select(1, 0) : healthy ? parts.z.min(1).mul(feedbackState.z) : parts.z.min(1);
+      const animal = asset.replace(/^inf\./, '').replace(/^infected\./, '');
       // The baked colours retain their blue-grey/white identity under the game's
       // cool key: trade some directional light for a small neutral cloth bounce.
-      const base = healthy ? mix(albedo, vec3(.26, .3, .22), feedbackState.z.mul(.4)) : mix(infectedAtlas ? albedo.mul(.65) : albedo, vec3(0), eye);
+      const authoredBase = healthy ? mix(albedo, vec3(.26, .3, .22), feedbackState.z.mul(.4)) : mix(infectedAtlas ? albedo.mul(.65) : albedo, vec3(0), eye);
+      // The gorilla's authored atlas is green-grey. Restore a dark, warm-neutral fur read
+      // under zoo moonlight while retaining its local value changes and shadows.
+      const base = zooBoss && animal === 'gorilla'
+        ? mix(authoredBase, vec3(luminance(authoredBase)).mul(vec3(.72, .68, .61)), .88)
+        : authoredBase;
       const emission = healthy ? attribute('color', 'vec3').div(luminance(attribute('color', 'vec3')).max(.25)).mul(1.2) : infectedAtlas ? vec3(1, .04373, .02843).mul(eyeDisc.select(eyeRadius.smoothstep(1, .15).mul(3).add(3), 3)).mul(regularAlpha ? 2 : 1) : vec3(3, .25, .22).mul(zooBoss ? 2 : 1);
       // r32-alphas: Alpha eyes burn twice as bright as an ordinary infected's (night-readable 'this one is tough' cue).
       // alpha-white: the hit flash brightens the figure's own colours (glow ~ albedo x strength, about x2 on a
@@ -515,11 +521,15 @@ export class CrowdView extends Group {
       // additive atlas/figure fills washed those swatches pale lavender at night.
       // r34-l8qa: zoo animal bosses (tan lion/lioness, pink flamingo) read grey-blue at night: lift their own hue as a
       // luminance-normalised fill so the coat colour survives the cool key at zoom 1.5.
-      // The zoo materials are shared across species (see materialKey), so the boost is species-agnostic: a luminance-normalised
-      // coat colour with extra saturation (pink flamingo, tan lion) rather than a per-species constant.
+      // Keep a luminance-normalised coat hue; the material key preserves each species
+      // when its night fill and fur response differ.
       const coatLum = luminance(albedo).max(.2);
-      const animalHue = mix(vec3(luminance(albedo)), albedo, 1.5).max(0).div(coatLum).mul(.24);
-      const atlasFill = zooBoss || /^healthy\.(lion|lioness|gorilla|elephant|zebra|flamingo|monkey)$/.test(def.id) ? animalHue.mul(eye.oneMinus()) : infectedAtlas ? albedo.mul(regularAlpha ? .04 : .18).mul(eye.oneMinus()) : vec3(0);
+      const animalHue = mix(vec3(luminance(albedo)), albedo, 1.5).max(0).div(coatLum);
+      // Keep species identity without washing out the coat's directional shading. Dark gorillas
+      // need no flat bounce; the zebra's white stripes already read under moonlight, while the
+      // tan cats retain a smaller hue-preserving lift for low quality's simpler lighting.
+      const animalFill = animal === 'lion' || animal === 'lioness' ? .10 : animal === 'zebra' ? .025 : animal === 'gorilla' ? .015 : .12;
+      const atlasFill = zooBoss ? animalHue.mul(animalFill).mul(eye.oneMinus()) : /^healthy\.(lion|lioness|gorilla|elephant|zebra|flamingo|monkey)$/.test(def.id) ? animalHue.mul(.12) : infectedAtlas ? albedo.mul(regularAlpha ? .04 : .18).mul(eye.oneMinus()) : vec3(0);
       // Flash 0..1 is the ordinary hit pulse; 1..2 marks an L8 arena boss hit (r26-l8hitreact): a plain additive warm-white lift, since the
       // base*(1-base) pulse above is nearly invisible on dark animal coats.
       const flashValue = feedbackState.w.mod(2), bossFlash = flashValue.sub(1).max(0);
@@ -533,8 +543,8 @@ export class CrowdView extends Group {
         const nightHeavy = ['inf.brute', 'inf.butcher', 'inf.bloated', 'inf.screamer', 'inf.armored-football'].includes(asset);
         material.animalNightRead.value = zooBoss ? 1 : 0;
         material.figureRim.value = zooBoss ? 2 : regularAlpha ? .7 : .25;
-        material.figureFillNeutral.value = human && !healthy && !regularAlpha ? 1 : 0;
-        material.figureFill.value = regularAlpha || zooBoss || asset === 'inf.armored-football' ? .25 : nightHeavy ? .55 : human && !healthy ? .25 : 1;
+        material.figureFillNeutral.value = zooBoss || human && !healthy && !regularAlpha ? 1 : 0;
+        material.figureFill.value = zooBoss ? .08 : regularAlpha || asset === 'inf.armored-football' ? .25 : nightHeavy ? .55 : human && !healthy ? .25 : 1;
       }
       // The Alpha-sized Mega retains its silhouette at contact, like a regular Alpha.
       // Instances cannot be sorted independently in the transparent render list.

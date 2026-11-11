@@ -36,9 +36,9 @@ export const LOW_CHROMA = .12;
 export const hueDistance = (a: number, b: number) => { const d = Math.abs(a - b) % 360; return d > 180 ? 360 - d : d; };
 
 /** Same-pose infected mask: no lighting, texture, fog or cast-shadow pixels in the selection. */
-export async function captureCrowdMask(page: Page): Promise<PNG> {
+export async function captureCrowdMask(page: Page, species?: string): Promise<PNG> {
   try {
-    await page.evaluate(() => window.__SCENE__!.crowdMaskProbe(true));
+    await page.evaluate(species => window.__SCENE__!.crowdMaskProbe(true, species), species);
     const png = await page.evaluate(async () => { await window.__SCENE__!.ready(); return document.querySelector('canvas')!.toDataURL('image/png'); });
     return PNG.sync.read(Buffer.from(png.slice(png.indexOf(',') + 1), 'base64'));
   } finally {

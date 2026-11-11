@@ -1,0 +1,31 @@
+{
+  "method": "Pixels changing by >35 RGB levels inside fixed courier ROI; includes pose-edge changes, not a semantic body mask",
+  "roi": [
+    610,
+    245,
+    666,
+    371
+  ],
+  "rows": [
+    {
+      "label": "before",
+      "pixels": 3185,
+      "meanRgb": [
+        182.8,
+        134.64,
+        91.76
+      ],
+      "lumaMean": 141.78
+    },
+    {
+      "label": "after",
+      "pixels": 3185,
+      "meanRgb": [
+        87.37,
+        92.99,
+        105.73
+      ],
+      "lumaMean": 92.72
+    }
+  ]
+}

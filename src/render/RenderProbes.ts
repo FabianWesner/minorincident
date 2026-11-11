@@ -43,6 +43,7 @@ export class RenderProbes {
   foliageMask: boolean | 'crowns' = false;
   /** Depth-tested CrowdView silhouette (including retained bodies). */
   infectedIdPass = false;
+  infectedMaskSpecies?: string;
   /** Disable only solid discard, retaining placement eligibility and interior visibility. */
   solidCutOff = false;
   /** Reference frame: only named enclosing placements may clear the lens. */
@@ -145,7 +146,7 @@ export class RenderProbes {
             const source = (Array.isArray(child.material) ? child.material[0] : child.material) as PaletteMaterial;
             let infected = false;
             for (let parent = child.parent; parent; parent = parent.parent) if (parent === t.crowd) { infected = true; break; }
-            infected = infected && child.geometry.hasAttribute('_parts');
+            infected = infected && child.geometry.hasAttribute('_parts') && (!this.infectedMaskSpecies || [this.infectedMaskSpecies, this.infectedMaskSpecies.replace(/^infected\./, 'inf.')].includes(child.name.split(':')[0]));
             const civilian = child.geometry.hasAttribute('_parts') && child.geometry.hasAttribute('_overlay') && !infected;
             const maskColour = civilian ? attribute('_overlay', 'vec4').y.mod(2).greaterThan(.01).select(color('#ff00ff').rgb, color('#000000').rgb) : color(infected ? '#ff00ff' : '#000000').rgb;
             let masks = this.infectedIdMasks.get(source);
