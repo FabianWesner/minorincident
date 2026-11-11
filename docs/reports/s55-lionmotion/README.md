@@ -456,3 +456,15 @@ Ran `node node_modules/vitest/vitest.mjs run tests/shared/render-contracts.test.
 fractional crowd palette/picking checks. This targeted suite is useful shared
 render evidence but does not replace the pending required remote full suite,
 full scene gate, or a complete companion-clip runtime audit.
+
+## Centered remaining-species coverage
+
+Zebra, elephant, gorilla and flamingo each completed 900/900 centered frames.
+Pelvis/paw maxima (cm): zebra 8.109/12.132, elephant 1.874/11.886, gorilla
+0.793/11.673, flamingo 0.833/6.189. No measured penetration. Zebra and elephant
+largest paw steps occur at the imposed speed change frame 600. Elephant reports
+2 run-jitter frames; this is unresolved and prevents blanket acceptance.
+A temporary 0.12 s stride easing experiment reduced zebra paw maximum to 9.801
+cm but left its 8.109 cm pelvis step unchanged, so it was reverted rather than
+kept as a fix for the identified defect. Raw centered traces and
+`zebra-stride-ease/` preserve the evidence.
