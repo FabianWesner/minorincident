@@ -38,3 +38,9 @@ Re-capture `ramp-corrected` completed with zero page errors. Opened matching ove
 Controlled flame fixture added under `tools/qa/s59-apcvisual/`: fires inside/behind cab with an infected beside it, zoom 1 and 1.5. All eight after rows (WebGL2/WebGPU, high/low, both zooms) passed backend/quality, console and draw budgets. Opened high/WebGL2 zoom 1 and low/WebGPU zoom 1.5: armor roof remains solid while fire is visible through windshield. These are after captures only; baseline comparison and full visual review remain pending. Output: `test-results/s59-apcvisual/fire-after-*`.
 
 Captured original pre-lane `transportModel`/`Blasts` at high/WebGL2 for both zooms, then restored current files. Opened `test-results/s59-apcvisual/fire-before-after.jpg`: before has a tall tongue visibly over the armor roof; after rejects that tongue at the roof while fire remains visible through the windshield. Matching frame 60, seed 31. Full before matrix and roof flicker investigation remain outstanding.
+
+## Current required checks (resumed environment)
+
+- `SCENE_PORT=4962 E2E_UNITS=1 npm run scene:gate`: **62/62 pass**, zero known/not-run, 14.4 minutes. Log: `test-results/s59-apcvisual/scene-gate.log`; results under `test-results/scene-gate/`.
+- Prescribed `sh tools/remote/run.sh "$PWD" -- npm test`: remote runner reachable, but **failed by timeout**, reservation 238 s / test budget 240.5 s (240 s cap). No green remote suite claim. Log: `test-results/s59-apcvisual/remote-test.log`.
+- Roof flicker remains unresolved. Source inspection identifies the thin rear antenna but no authored red roof lamp, so the exact reported bent bracket still needs runtime identification. No geometry change made on that uncertainty.
