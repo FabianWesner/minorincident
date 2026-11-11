@@ -37,7 +37,7 @@ try {
     const rows: { name: string; at: number[] }[] = [];
     g.view.scene.traverse(o => { if (/head|knee|shin|thigh|nose|muzzle/i.test(o.name)) {
       const p = o.position.clone(); o.getWorldPosition(p);
-      if (p.distanceTo(g.view.camera.position) < 20) { rows.push({ name: o.name, at: p.toArray() }); if (o.name === 'head') for (const [axis, v] of [['x', [1,0,0]], ['y', [0,1,0]], ['z', [0,0,1]]] as const) rows.push({ name: `head-axis-${axis}`, at: o.localToWorld(p.clone().set(...v)).toArray() }); }
+      if (p.distanceTo(g.view.camera.position) < 20) { rows.push({ name: o.name, at: p.toArray() }); if (o.name === 'head') for (const [axis, v] of [['x', [1,0,0]], ['y', [0,1,0]], ['z', [0,0,1]]] as const) rows.push({ name: `head-axis-${axis}`, at: o.localToWorld(p.clone().set(v[0], v[1], v[2])).toArray() }); }
     } }); return rows;
   });
   writeFileSync(`${out}/joints.json`, JSON.stringify(joints, null, 2));
