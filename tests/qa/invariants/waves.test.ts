@@ -195,19 +195,19 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly authored wave cens
   });
   await withWorld('L7', tier, w => {
     const c = w.l7Encounters!, ai = w.infected!; c.start();
-    // The real director queues more than one cap. Let it admit and retire each batch; the arrival ledger survives retirement.
-    for (let batch = 0; batch < 20 && ai.director.queue.length; batch++) {
-      if (batch === 1) {
-        const player = w.entities.get(1)!, dx = 286 - player.transform.x;
-        for (const id of [1, ...c.state.roster.map(r => r.id)]) {
-          const e = w.entities.get(id); if (!e) continue; e.transform.x += dx; w.spatial.set(id, e.transform.x, e.transform.z);
-        }
-        w.physics.playerBody!.setTranslation(player.transform, true);
+    // Drive the authored road thresholds through the mission controller. The opening pack is spawned directly by
+    // prepare(), while later packs are queued; c.update() is also the production arrival-ledger observer for both.
+    const player = w.entities.get(1)!;
+    for (const x of [286, 224, 184, 164, 94, 84]) {
+      player.transform.x = x; w.spatial.set(player.id, x, player.transform.z);
+      w.physics.playerBody!.setTranslation(player.transform, true);
+      for (let tick = 0; tick < 240; tick++) {
+        followFrustum(w); c.update(); ai.director.update(); c.update();
+        if (!ai.director.queue.length) break;
+        // Release an admitted batch so the strict director can admit the next authored ranks.
+        for (const e of [...ai.active]) ai.release(e);
+        w.tick++;
       }
-      followFrustum(w);
-      ai.director.update(); c.update();
-      for (const e of [...ai.active]) ai.release(e);
-      w.tick++;
     }
     for (let i = 0; i <= l7Encounters.streets.length; i++) {
       const group = i === 0 ? l7Encounters.finalGroup : l7Encounters.firstStreetGroup + i - 1;
@@ -226,7 +226,11 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly authored wave cens
     }
   });
   await withWorld('L8', tier, w => {
-    const c = w.missions!.l8!; w.tick = c.state.startedAt + 3600; c.update();
+    const c = w.missions!.l8!;
+    // This fixture represents the guide-aborted branch: the production calm gate is 60 s there, but waits 120 s
+    // while the guide is still unresolved. Keep the breach gate and real outlet admission in the census path.
+    c.state.guideDone = 1;
+    w.tick = c.state.startedAt + 3600; c.update();
     const initial = c.state.arrivals.slice();
     const next = c.state.nextWave; c.state.nextWave = Infinity;
     // The K9's new pond approach uses the whole authored service route, not the former short doorstep leg.
