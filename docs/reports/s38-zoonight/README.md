@@ -60,3 +60,5 @@ The fixed L4 courier ROI's changed pixels drop mean luma 141.78 → 92.72 and RG
 Meet the zebra contrast requirement or obtain an explicit revised criterion; collect the missing matched baseline/fixture matrix; repair the zoom-1 control framing without weakening checks; complete the final gate and capture audit. This report does not claim the goal achieved.
 
 Framing correction: the zoom-1 monkey failure was specifically the f60 outward hit response (projected x0=1039 on a 960-pixel canvas), not idle or walk. The existing lineup now hits the monkey inward from `[9,-3.5]`, preserving the actor and thresholds. WebGPU low zoom 1 passes all existing checks (`test-results/s38-framing`). The remaining matrix must be recaptured with this fixture correction.
+
+Final corrected-framing lineup: 8/8 rows pass across WebGPU/WebGL2 × low/high × zoom 1/1.5 (`test-results/s38-final-webgpu`, `s38-final-webgl2`). `matrix-metrics.json` now contains these fresh samples. This supersedes the earlier offscreen-monkey failures; it does not supersede the open 2x zebra target.
