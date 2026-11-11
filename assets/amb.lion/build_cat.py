@@ -211,26 +211,24 @@ def build(species, lod):
     for s in (-1, 1):
         ellipsoid((.52, .945, s * .10), (.052, .06, .034), 6, 4, ('ear', .3), B_head)   # ears
         if lod < 2: ellipsoid((.535, .94, s * .102), (.03, .038, .022), 5, 3, ('earIn', .4), B_head)
-        ellipsoid((.685, .862, s * .072), (.05, .026, .045), 6, 3, ('coat', .1), B_head)  # brows
+        if lod < 2: ellipsoid((.685, .862, s * .072), (.05, .026, .045), 6, 3, ('coat', .1), B_head)  # brows
     if lod == 0:
         for s in (-1, 1):
             ellipsoid((.82, .735, s * .055), (.013, .033, .013), 5, 3, ('tooth', .1), B_head, axes=((1, 0, 0), (0, -1, 0), (0, 0, 1)))
             ellipsoid((.81, .715, s * .05), (.012, .028, .012), 5, 3, ('tooth', .1), B_jaw)
     # ---- mane (lion): a hood from the withers around the head, face left free, hanging as a bib under the chin
     if lion:
-        n_m = [28, 16, 10][lod]
+        n_m = [28, 16, 8][lod]
         stages = [  # t along neck->face axis, centre, up, down, side
             (.12, .74, .12, .17, .18), (.22, .755, .20, .27, .26), (.32, .775, .25, .34, .32), (.43, .79, .27, .36, .33),
             (.52, .80, .26, .32, .31), (.60, .81, .23, .27, .27), (.655, .815, .20, .22, .21),
         ]
-        mr = []
-        for (x, cy, up, down, side) in stages:
-            mr.append((x, cy, up, down, side))
+        mr = stages if lod < 2 else [stages[i] for i in (0, 2, 3, 4, 6)]
         verts = []; faces = []
         for (x, cy, up, down, side) in mr:
             for i in range(n_m):
                 t = math.tau * i / n_m
-                tooth = 1.0 + (.2 if (i % 2) else 0.0) + (.08 if x < .5 and i % 4 == 1 else 0)
+                tooth = 1.0 + (.2 if ((i % 2) if lod < 2 else ((i + 1) % 2)) else 0.0) + (.08 if x < .5 and i % 4 == 1 else 0)
                 ct, st = math.cos(t), math.sin(t)
                 vy = (up if st >= 0 else down) * st * tooth
                 verts.append((x - .02 * abs(st) * (x > .5 and 1 or 0), cy + vy, side * ct * tooth))
