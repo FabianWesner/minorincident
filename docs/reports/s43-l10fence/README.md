@@ -11,6 +11,8 @@ Status: implementation committed; full browser matrix and final visual acceptanc
 
 ## Evidence so far
 
+- Added east-edge zoom-1.5 rows: high WebGL2 (`/private/tmp/s43-edge-high-gl-z15/s001-t186.jpg`) and low WebGPU (`/private/tmp/s43-edge-low-gpu-z15/s001-t198.jpg`), both opened. Four-second runs completed with zero page errors. Base blocks, rails and braces stay aligned; low-tier shadows are softer, without lost barrier geometry. Owned preview stopped. These are current-build rows, not baseline comparisons.
+
 - Added perimeter matrix rows high WebGL2 zoom 1 and low WebGPU zoom 1. Both four-second real-input runs completed with zero page errors. Opened `/private/tmp/s43-edge-high-gl-z1/s001-t179.jpg` and `/private/tmp/s43-edge-low-gpu-z1/s001-t193.jpg`: aligned concrete bases, dark frames and hazard markings agree with the existing low WebGL2/high WebGPU captures. Both owned preview servers stopped after their runs. This expands current-build coverage, but does not supply the missing baseline matrix or prove horde escape.
 
 - Current-source revalidation after the shading and tank fixes: `npm run typecheck` passed. The required `sh tools/remote/run.sh "$PWD" -- npm test` completed on runner 94.130.181.173 with exit 0: 27 files passed, 106 tests passed and 1 skipped, 150/150 registered cases, 161.9 s against the 240 s budget. This supersedes the earlier remote-runner-unavailable note; the remote job is terminal and cleaned up.
