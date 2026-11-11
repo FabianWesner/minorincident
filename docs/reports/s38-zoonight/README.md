@@ -90,3 +90,11 @@ Albedo-only zebra experiment: a neutral smoothstep remap of authored coat values
 A no-bloom prototype using the existing HDR alpha channel reached the maximum possible display-luma contrast, 255, for zebra f0/f30/f60 at WebGPU low z1.5 (`test-results/s38-zebra-no-bloom`). Opened its sheet. It is not retained: it clips the white stripes and changes the compositor protocol.
 
 The matched baseline matrix proves that literal 2x is impossible for every row with this metric: baseline WebGPU zoom-1 f30 p90−p10 is 128.9288, requiring 257.8576. Since RGB channels and the weighted display luma are bounded to [0,255], p90−p10 cannot exceed 255. Even perfect black/white output reaches at most 1.9778x in that row. An explicit criterion decision is needed (e.g. cap at display maximum or judge shaded stripe readability). The original shaded source is restored; no criterion or tolerance was changed.
+
+## Current-state audit
+
+- Matched Scene Lab gorilla samples: 24/24 darker than original, 0/24 green-dominance violations under the stated 10% test.
+- Matched cat fixture shading ratios: all species/backend/zoom pairs exceed 0.8.
+- Original and revised Scene Lab/fixture matrix measurements, opened captures, production L4 before/after evidence, and commits are present.
+- Current remote render-contract check rerun after the mask changes: 14/14 pass. Worktree clean and no servers listening on 4935/4936 before this report update.
+- Literal zebra contrast remains a proven criterion conflict: some rows require a display-luma difference above 255. No criterion change has been approved, and this goal is not complete.
