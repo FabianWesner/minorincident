@@ -53,3 +53,7 @@ The post-change run improved L4 by one and L7 by two, but added two L3 flags and
 - Initial `slim-worktree.sh` could not lock the common Git worktree config outside the writable worktree.
 
 The implementation is not ready to count as complete: the threat-audit aggregate is worse by one flag, and real-input fixture validation is still outstanding.
+
+## Continuation evidence
+
+After sandbox restrictions were removed, `slim-worktree.sh` succeeded and the browser pool admitted headless L4 fixture-play runs. The first lacked the MG; the second explicitly set the loadout and logged `weapon.army-mg`, but the butcher remained at 2.9 m in chase with unchanged HP, so neither run proves an attack under fire. These runs completed with no page errors. A capture from the first was opened. A clear contact-position fixture is still needed.
