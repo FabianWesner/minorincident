@@ -252,3 +252,13 @@ L8 repeat gives zero root-relative pelvis jump for both cats, with paw maxima
 7.247 cm (lion) and 10.553 cm (lioness), compared with 11.815/13.001 cm for the
 prior corrected solver. This is a new candidate requiring ground-contact and
 visual validation, not final acceptance. `l8-after` now holds this comparison.
+
+## Reject authored-joint bypass on contact quality
+
+The full controlled two-cat repeat with authored-joint preservation measured
+95.4 cm / 92.3 cm maximum planted-foot slide, 32 cm lift and 4.9 cm penetration.
+This contradicts acceptable ground contact despite its stable pelvis. The bypass
+was therefore reverted, and prior PawContacts support corrections retained.
+The raw rejected run is `test-results/s55-lionmotion/authored-cats/`. No source
+simplification from that bypass was kept. The remaining task is to make the
+contact solver continuous while retaining planting and sole grounding.
