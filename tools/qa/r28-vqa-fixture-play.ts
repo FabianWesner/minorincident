@@ -9,7 +9,7 @@
 // Movement: WASD toward the next --route point (screen-relative, as the player sees it), then toward the objective marker
 // (--follow-marker) or the nearest enemy. Combat: mouse over the nearest drawn enemy's feet + attack while it is in range.
 // Logs (log.jsonl): objective/tracker text, HUD bars (APC armor), enemies (kind, hp), frames > 100 ms with tick.
-import { mkdirSync, appendFileSync, mkdtempSync, existsSync } from 'node:fs';
+import { mkdirSync, appendFileSync, mkdtempSync, existsSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { resolve } from 'node:path';
 import { parseArgs } from 'node:util';
@@ -22,7 +22,7 @@ import { weaponKey } from '../../src/data/weaponKeys';
 const { values, positionals } = parseArgs({ allowPositionals: true, options: {
   out: { type: 'string' }, quality: { type: 'string', default: 'low' }, zoom: { type: 'string', default: '1.5' }, backend: { type: 'string', default: 'webgpu' },
   seconds: { type: 'string', default: '300' }, shot: { type: 'string', default: '6' }, god: { type: 'boolean', default: false }, weapon: { type: 'string', default: 'weapon.army-mg' },
-  route: { type: 'string' }, 'follow-marker': { type: 'boolean', default: false }, 'hold-e': { type: 'boolean', default: false }, 'tap-e-when': { type: 'string' }, 'skip-credits-after': { type: 'string' }, dwell: { type: 'string', default: '0' }, reach: { type: 'string', default: '2.5' }, block: { type: 'string', default: '5' }, 'no-kite': { type: 'boolean', default: false }, range: { type: 'string', default: '22' }, setup: { type: 'string' },
+  route: { type: 'string' }, 'follow-marker': { type: 'boolean', default: false }, 'hold-e': { type: 'boolean', default: false }, 'tap-e-when': { type: 'string' }, 'skip-credits-after': { type: 'string' }, dwell: { type: 'string', default: '0' }, reach: { type: 'string', default: '2.5' }, block: { type: 'string', default: '5' }, 'no-kite': { type: 'boolean', default: false }, range: { type: 'string', default: '22' }, setup: { type: 'string' }, trace: { type: 'boolean', default: false },
   handbrake: { type: 'string', default: 'Space' }, prefer: { type: 'string' }, 'route-when': { type: 'string' }, 'idle-when': { type: 'string' },
 } });
 const [origin, name] = positionals;
@@ -31,16 +31,19 @@ const direct = name?.startsWith('level:') ? name.split(':') : null;
 const path = direct ? 'direct' : ['', '.json.gz', '.json.br'].map(ext => resolve(existsSync(name) ? name : `tests/fixtures/saves/qa/${name}${ext}`)).find(existsSync);
 if (!origin || !path) throw new Error('usage: r28-vqa-fixture-play.ts <origin> <fixture> --out <dir>');
 const out = resolve(values.out!); mkdirSync(out, { recursive: true });
+if (values.trace && (out === process.cwd() || out.startsWith(`${process.cwd()}/`))) throw new Error('--trace requires --out outside the worktree so raw traces cannot be committed');
 const log = (o: object) => appendFileSync(`${out}/log.jsonl`, JSON.stringify({ wall: new Date().toISOString().slice(11, 19), ...o }) + '\n');
 const route = (values.route ?? '').split(';').filter(Boolean).map(p => { const [x, z] = p.split(',').map(Number); return { x, z }; });
 const zoom = Number(values.zoom), range = Number(values.range);
 const fixture = direct ? null : readFixture(path);
 const context = await launchProfile(mkdtempSync(`${tmpdir()}/r28vqa-`), { headless: true, args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist', '--enable-unsafe-webgpu'], viewport: { width: 1280, height: 720 } });
 const page = await context.newPage();
+const trace = values.trace ? await context.newCDPSession(page) : null;
+let traceStarted = false;
 await page.addInitScript({ content: 'window.__name = (f) => f;' }); // tsx keepNames helper inside evaluate callbacks
 const errors: string[] = []; page.on('pageerror', e => { errors.push(String(e).slice(0, 200)); log({ pageError: String(e).slice(0, 300) }); });
 try {
-  await page.goto(`${origin}/?test=poses&testApi=1&scenelab=1&${values.backend === 'webgpu' ? '' : 'renderer=webgl&'}dpr=1&audio=muted&quality=${values.quality}`);
+  await page.goto(`${origin}/?test=poses&testApi=1&scenelab=1&loadProfile=2&${values.backend === 'webgpu' ? '' : 'renderer=webgl&'}dpr=1&audio=muted&quality=${values.quality}`);
   await page.waitForFunction(() => !!window.__SS__, null, { timeout: 180000 });
   await page.evaluate(async q => { await window.__SS__!.ready; window.__SS__!.debug.figureJoints(true); window.__SS__!.settings.set({ quality: q as 'low' }); }, values.quality!);
   const state = fixture ? await loadFixtureInPage(page, fixture) : await page.evaluate(async ([lvl, cp]) => { const a = window.__SS__!; await a.loadLevel(lvl, { seed: 1, checkpoint: cp || undefined }); a.pause(); await a.step(60); const p = a.getEntity(1)!; return { level: lvl, checkpoint: a.missions.state()?.checkpoint, player: { x: p.transform.x, z: p.transform.z } }; }, [direct![1], direct![2] ?? ''] as const);
@@ -49,11 +52,24 @@ try {
   // Explicit fixture setup (logged), e.g. lower a boss's HP so real shots finish it: --setup "<js using a=__SS__, g=game>".
   if (values.setup) log({ setup: values.setup, result: await page.evaluate(js => { const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: unknown }).game; return String(new Function('a', 'g', js)(a, g)); }, values.setup) });
   if (values.god) { await page.evaluate(() => window.__SS__!.cheats.god(true)); log({ setup: 'god-mode' }); }
+  if (trace) {
+    await trace.send('Tracing.start', { categories: 'devtools.timeline,v8,gc,disabled-by-default-v8.cpu_profiler', transferMode: 'ReturnAsStream' });
+    traceStarted = true;
+  }
   await page.evaluate(z => {
     const a = window.__SS__!; a.camera.follow(); a.camera.zoom(z);
-    const w = window as unknown as { __r28Frames: { tick: number; ms: number }[] }; w.__r28Frames = [];
-    let last = performance.now();
-    const loop = (now: number) => { const ms = now - last; last = now; if (ms > 100) w.__r28Frames.push({ tick: a.tick(), ms: Math.round(ms) }); requestAnimationFrame(loop); };
+    const w = window as unknown as { __r28Frames: { tick: number; ms: number; elapsedMs: number; perf?: ReturnType<typeof a.perf> }[]; __r28LongFrames: { tick: number; ms: number; elapsedMs: number }[]; __r28FrameTimes: number[]; __r28PlayStarted: number };
+    w.__r28Frames = []; w.__r28LongFrames = []; w.__r28FrameTimes = []; w.__r28PlayStarted = performance.now();
+    let last = w.__r28PlayStarted;
+    const loop = (now: number) => {
+      const ms = now - last; last = now;
+      if (now - w.__r28PlayStarted >= 3000) w.__r28FrameTimes.push(ms);
+      if (ms > 100) {
+        const event = { tick: a.tick(), ms: +ms.toFixed(1), elapsedMs: Math.round(now - w.__r28PlayStarted) };
+        w.__r28LongFrames.push(event); w.__r28Frames.push({ ...event, perf: a.perf() });
+      }
+      requestAnimationFrame(loop);
+    };
     requestAnimationFrame(loop);
     a.resume();
   }, zoom);
@@ -165,5 +181,22 @@ try {
     await page.waitForTimeout(100);
   }
   await press([]);
-  log({ end: true, frames: await page.evaluate(() => (window as unknown as { __r28Frames: unknown[] }).__r28Frames.splice(0)), errors });
+  const performanceSummary = await page.evaluate(() => {
+    const w = window as unknown as { __r28FrameTimes: number[]; __r28LongFrames: { tick: number; ms: number; elapsedMs: number }[] };
+    const times = w.__r28FrameTimes.slice().sort((a, b) => a - b);
+    const percentile = (p: number) => times.length ? +times[Math.max(0, Math.ceil(times.length * p) - 1)].toFixed(1) : null;
+    return { excludedInitialMs: 3000, samples: times.length, maxMs: times.length ? +times[times.length - 1].toFixed(1) : null, p99Ms: percentile(.99), over250: w.__r28LongFrames.filter(f => f.elapsedMs >= 3000 && f.ms > 250) };
+  });
+  log({ end: true, frames: await page.evaluate(() => (window as unknown as { __r28Frames: unknown[] }).__r28Frames.splice(0)), performanceSummary, errors });
+  if (trace && traceStarted) {
+    const completed = new Promise<string>(resolve => trace.once('Tracing.tracingComplete', event => resolve(event.stream ?? '')));
+    await trace.send('Tracing.end');
+    const stream = await completed;
+    if (!stream) throw new Error('Chromium trace completed without a readable stream');
+    let data = '', eof = false;
+    while (!eof) { const chunk = await trace.send('IO.read', { handle: stream }); data += chunk.data; eof = chunk.eof; }
+    await trace.send('IO.close', { handle: stream });
+    writeFileSync(`${out}/trace.json`, data);
+    log({ trace: `${out}/trace.json`, bytes: Buffer.byteLength(data) });
+  }
 } finally { await context.close(); }
