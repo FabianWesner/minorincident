@@ -206,3 +206,12 @@ paw 11.815 cm at frame 657 (`walk->walk`, handR); lioness root max 1.664 cm,
 pelvis 0.907 cm, paw 23.634 cm at frame 257 (`idle->walk`, handR). This localizes
 the remaining problem beyond root translation. Scratch-vector review did not
 establish an alias bug in placeAnkle/solve. No further source fix was accepted.
+
+## Rejected solve-weight experiment
+
+Tested easing the three solved limb rotations over the 0.12 s catch-up interval
+when leaving hold. The full real-L8 repeat increased lioness maximum paw step
+to 38.46 cm at frame 264, versus 23.63 cm for the accepted candidate; lion was
+unchanged at 11.82 cm. The experiment was reverted. A simple rotation fade does
+not maintain contact/pose consistency during the transition. Current `l8-after`
+artifacts contain this rejected run; `l8-webgpu-low` retains accepted evidence.
