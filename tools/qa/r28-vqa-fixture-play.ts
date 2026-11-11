@@ -22,7 +22,7 @@ import { weaponKey } from '../../src/data/weaponKeys';
 const { values, positionals } = parseArgs({ allowPositionals: true, options: {
   out: { type: 'string' }, quality: { type: 'string', default: 'low' }, zoom: { type: 'string', default: '1.5' }, backend: { type: 'string', default: 'webgpu' },
   seconds: { type: 'string', default: '300' }, shot: { type: 'string', default: '6' }, god: { type: 'boolean', default: false }, weapon: { type: 'string', default: 'weapon.army-mg' },
-  route: { type: 'string' }, 'follow-marker': { type: 'boolean', default: false }, 'hold-e': { type: 'boolean', default: false }, 'tap-e-when': { type: 'string' }, 'skip-credits-after': { type: 'string' }, dwell: { type: 'string', default: '0' }, 'no-kite': { type: 'boolean', default: false }, range: { type: 'string', default: '22' }, setup: { type: 'string' },
+  route: { type: 'string' }, 'follow-marker': { type: 'boolean', default: false }, 'hold-e': { type: 'boolean', default: false }, 'tap-e-when': { type: 'string' }, 'skip-credits-after': { type: 'string' }, dwell: { type: 'string', default: '0' }, reach: { type: 'string', default: '2.5' }, block: { type: 'string', default: '5' }, 'no-kite': { type: 'boolean', default: false }, range: { type: 'string', default: '22' }, setup: { type: 'string' },
 } });
 const [origin, name] = positionals;
 // `level:L7:corridor` loads a level at a mission checkpoint through the test API instead of a fixture.
@@ -63,10 +63,10 @@ try {
     for (const k of [...held]) if (!keys.includes(k)) { await page.keyboard.up(k); held.delete(k); }
     for (const k of keys) if (!held.has(k)) { await page.keyboard.down(k); held.add(k); }
   };
-  const dirKeys = (e: Eyes, to: { x: number; z: number }, azimuth: number, away = false): string[] => {
+  const dirKeys = (e: Eyes, to: { x: number; z: number }, azimuth: number, away = false, stop = 1.2): string[] => {
     const p = e.player!; let dx = to.x - p.x, dz = to.z - p.z; if (away) { dx = -dx; dz = -dz; }
     const right = Math.cos(azimuth) * dx - Math.sin(azimuth) * dz, down = Math.sin(azimuth) * dx + Math.cos(azimuth) * dz, len = Math.hypot(right, down);
-    if (len < 1.2) return [];
+    if (len < stop) return [];
     const k: string[] = [];
     if (Math.abs(right) / len > .34) k.push(right > 0 ? 'KeyD' : 'KeyA');
     if (Math.abs(down) / len > .34) k.push(down > 0 ? 'KeyS' : 'KeyW');
@@ -99,20 +99,20 @@ try {
       if (Date.now() - lastShot > shotEvery) { lastShot = Date.now(); await page.screenshot({ path: `${out}/s${String(shotN++).padStart(3, '0')}-t${e.tick}.jpg`, type: 'jpeg', quality: 70 }); }
       await page.waitForTimeout(250); continue;
     }
-    if (e.panel.visible && e.panel.button) { log({ panel: e.panel, tick: e.tick }); await page.getByTestId(e.panel.button).click().catch(() => undefined); }
+    if (e.panel.visible && e.panel.button) { log({ panel: e.panel, tick: e.tick }); await page.getByTestId('mission-button').click({ timeout: 3000 }).catch(() => undefined); }
     const text = `${e.objective} | ${e.tracker}`;
     if (text !== lastText) { lastText = text; log({ tick: e.tick, objective: e.objective, tracker: e.tracker, subtitle: e.subtitle, prompt: e.prompt, apcBar: extra.apcBar, checkpoint: extra.checkpoint, phase: extra.phase }); }
     const foes = e.enemies.filter(b => b.drawn && !b.corpse && b.hp > 0).sort((a, b) => a.d - b.d);
     const target = foes.find(b => b.d < range);
     let keys: string[] = [];
-    while (ri < route.length && Math.hypot(route[ri].x - e.player.x, route[ri].z - e.player.z) < (e.driving ? 8 : 2.5)) { log({ reached: route[ri], tick: e.tick }); ri++; best = Infinity; bestAt = Date.now(); dwellUntil = Date.now() + Number(values.dwell) * 1000; }
+    while (ri < route.length && Math.hypot(route[ri].x - e.player.x, route[ri].z - e.player.z) < (e.driving ? 8 : Number(values.reach))) { log({ reached: route[ri], tick: e.tick }); ri++; best = Infinity; bestAt = Date.now(); dwellUntil = Date.now() + Number(values.dwell) * 1000; }
     if (ri < route.length) {
       const d = Math.hypot(route[ri].x - e.player.x, route[ri].z - e.player.z);
       if (d < best - .5) { best = d; bestAt = Date.now(); }
-      else if (Date.now() - bestAt > 5000) { log({ routeBlocked: route[ri], d: +d.toFixed(1), tick: e.tick }); ri++; best = Infinity; bestAt = Date.now(); }
+      else if (Date.now() - bestAt > Number(values.block) * 1000) { log({ routeBlocked: route[ri], d: +d.toFixed(1), tick: e.tick }); ri++; best = Infinity; bestAt = Date.now(); }
     }
     if (Date.now() < dwellUntil) keys = [];
-    else if (ri < route.length) keys = dirKeys(e, route[ri], extra.azimuth);
+    else if (ri < route.length) keys = dirKeys(e, route[ri], extra.azimuth, false, .3);
     else if (target && target.d < 6 && !values['no-kite']) keys = dirKeys(e, target, extra.azimuth, true);
     else if (values['follow-marker'] && e.marker && e.marker.anchor) {
       const m = await page.evaluate(() => { const pin = document.querySelector<HTMLElement>('[data-testid="minimap-objective"]'); return pin && !pin.hidden ? { x: Number(pin.dataset.worldX), z: Number(pin.dataset.worldZ) } : null; });
@@ -135,6 +135,13 @@ try {
     if (values['hold-e'] && e.prompt) keys.push('KeyE');
     // Space is the handbrake while driving: only fire on foot.
     if (target && !e.driving) { await page.mouse.move(target.aim.x, target.aim.y); keys.push('Space'); }
+    // r33-vqa: at the L9 rail-stall hatch the courier fights from the hull: select the weapon (keys do not take while
+    // driving, retry here) and fire with the left mouse button at the nearest drawn enemy.
+    const hatch = !!e.driving && /Defend the hatch/.test(e.objective ?? '');
+    if (hatch) {
+      const want = weaponKey(values.weapon!); if (want && e.player.current !== values.weapon && Date.now() - lastTap > 1500) { lastTap = Date.now(); await page.keyboard.press(`Digit${want}`); }
+      if (target) { await page.mouse.move(target.aim.x, target.aim.y); await page.mouse.down(); await page.waitForTimeout(90); await page.mouse.up(); }
+    }
     await press(keys);
     if (values['tap-e-when'] && new RegExp(values['tap-e-when']).test(e.tracker ?? '') && Date.now() - lastTap > 1000) {
       lastTap = Date.now(); if (!held.has('KeyE')) { await page.keyboard.down('KeyE'); await page.waitForTimeout(80); await page.keyboard.up('KeyE'); log({ tapE: e.tracker, tick: e.tick }); }

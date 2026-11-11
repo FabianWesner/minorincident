@@ -1,0 +1,45 @@
+{
+  "lane": "r33-vqa",
+  "date": "2026-11-11",
+  "build": "713d8017",
+  "captures": "/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/r33-vqa/",
+  "sheets": {
+    "l8_nadia_plaza": "sheet-l8-nadia-plaza.jpg",
+    "l8_animals_play": "sheet-l8-animals-play.jpg",
+    "l8_animals_scene": "sheet-animals-scene-night.jpg",
+    "l8_lion_red_lane": "sheet-lion-redlane.jpg",
+    "alphas": "sheet-alphas-night-low-gpu.jpg",
+    "l9": "sheet-l9.jpg",
+    "l9_bridge": "sheet-l9-bridge.jpg",
+    "l5": "sheet-l5.jpg",
+    "l4_aggro_bars": "sheet-l4-aggro-bars.jpg"
+  },
+  "p1": [],
+  "p2": [
+    {"id": "lion-red-lane", "level": "L8", "where": "Scene Lab r32-animalmoves lion f620, lioness f140/f300", "quality": "high+low", "backend": "webgpu+webgl2", "zoom": 1.5, "text": "lion/lioness pounce still drawn with the red chevron Alpha lane"},
+    {"id": "lion-not-lion", "level": "L8", "where": "lion arena, real play t706/t1456", "quality": "high", "backend": "webgpu", "zoom": 1.5, "text": "lion reads as a dark shaggy ball, lioness as a black panther"},
+    {"id": "flamingo-grey", "level": "L8", "where": "flamingo arena t7333", "quality": "high", "backend": "webgpu", "zoom": 1.5, "text": "flamingos grey-blue, no pink"},
+    {"id": "lion-line-no-lion", "level": "L8", "where": "tick 3680, (-37.7,0.4)", "quality": "high", "backend": "webgpu", "zoom": 1.5, "text": "Nadia's lion line plays with no lion on screen"},
+    {"id": "l9-durability-floor", "level": "L9", "where": "start run, 34-55 s", "quality": "high", "backend": "webgl2", "zoom": 1, "text": "two leapers take the APC from 740 to the floor in ~20 s; no APC stakes for the remaining ~3 min"},
+    {"id": "l9-hatch-death-loop", "level": "L9", "where": "rail stall ticks 11354-16706", "quality": "high", "backend": "webgl2", "zoom": 1, "text": "courier killed 4x at the hatch despite god cheat; weapon keys do not work while in the APC (tool did not attack, fairness not judged)"},
+    {"id": "l9-bay-pin", "level": "L9", "where": "bay, x 475.195, ticks 6168-11903", "quality": "low", "backend": "webgpu", "zoom": 1.5, "text": "APC pinned 95 s with W held, 5 m from the bay; needs a manual S check (P1 if S fails)"},
+    {"id": "l9-crawl-ring", "level": "L9", "where": "bridge crawl, (546,0.1)", "quality": "high", "backend": "webgpu", "zoom": 1.5, "text": "courier inside the crawl-end ring 2+ min, step never completes without more forward input"},
+    {"id": "l5-empty", "level": "L5", "where": "cellar exit to Mia", "quality": "low", "backend": "webgpu", "zoom": 1.5, "text": "zero infected drawn on the way to Mia; no pointer to the church after she joins"},
+    {"id": "l9-hitch", "level": "L9", "where": "tick 3213 (1917 ms), 11627 (450 ms)", "quality": "high", "backend": "webgl2", "zoom": 1, "text": "frame hitches"}
+  ],
+  "p3": ["l8-objective-flicker-rest-at-plaza", "long-arena-objective-text-covers-ring", "night-corpses-glassy", "l9-smoke-hides-apc", "stale-qa-fixtures", "l9-hatch-bar-stack"],
+  "verdicts": {
+    "nadia_start": "fixed",
+    "launcher_toast": "works",
+    "lion_look": "partly",
+    "lion_moves": "partly (red lane remains in Scene Lab)",
+    "flamingo_slide": "looks fixed",
+    "elephant": "fixed",
+    "alphas_distinct": "fixed",
+    "l9_keys": "fixed",
+    "l9_fun": "mixed",
+    "l5_rescue": "fixed, over-corrected (empty)",
+    "l4_health_bars": "holds",
+    "l4_shot_engage": "1/1 hit trial passes"
+  }
+}
