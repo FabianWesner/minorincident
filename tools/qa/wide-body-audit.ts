@@ -4,6 +4,8 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import { dirname } from 'node:path';
 import { runnerLevels, runLevel } from '../sim-runner/levels';
+import { cureEncounters, curePaceEncounters, cureEncounterSlots, cureEncounterSpot } from '../../src/levels/L10/encounters';
+import { infectedDef } from '../../src/data/infected';
 import { megaAlpha } from '../../src/data/megaAlpha';
 import { NavGrid, type Wall } from '../../src/sim/ai/NavGrid';
 import type { SimWorld } from '../../src/sim/world/SimWorld';
@@ -114,6 +116,22 @@ for (const level of runnerLevels.filter(level => !selectedLevels || selectedLeve
     },
     beforeDispose(world) {
       const walls = fullWalls(world);
+      if (level === 'L10' && world.chunks) {
+        const bounds = world.districts!.nav;
+        const base = new NavGrid({ width: bounds.max[0] - bounds.min[0], depth: bounds.max[1] - bounds.min[1] }, walls, .3,
+          { x: (bounds.max[0] + bounds.min[0]) / 2, z: (bounds.max[1] + bounds.min[1]) / 2 }, null, .5);
+        for (const tier of ['high', 'low'] as const) for (const group of [...cureEncounters, ...curePaceEncounters]) {
+          for (const slot of cureEncounterSlots(group, tier).filter(slot => wide(slot.archetype))) {
+            const at = cureEncounterSpot(base, slot), radius = infectedDef(slot.archetype).radius;
+            const row: Spawn = { id: -spawns.length - 1, archetype: slot.archetype, radius, x: at?.x ?? slot.x, z: at?.z ?? slot.z,
+              tick: world.tick, player: { x: group.at[0], z: group.at[1] }, cohort: `${group.id}/${tier}`, source: `cureEncounterSlots:${slot.key}`, active: false };
+            const nav = base.withClearance(radius + margin);
+            const cells = at && path(nav, at, row.player);
+            if (cells) { row.route = cells; row.pathGrid = nav; }
+            spawns.push(row);
+          }
+        }
+      }
       if (level === 'L9' && world.chunks) {
         // L9 encounter packs can spawn several streamed districts behind the APC;
         // validate against the full authored road extent, not the last resident window.

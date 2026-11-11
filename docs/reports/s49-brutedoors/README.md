@@ -47,3 +47,7 @@ No browser session was used for this lane.
 The audit now returns a failing exit code when it reports an unreachable body or narrow opening. Its census is runtime coverage, not a proof that every authored branch was exercised; L8 explicitly needs the outlet fixture because the campaign bot exhausted its budget. Exhaustive authored encounter coverage remains unproven.
 
 The L2 nightly diagnostic identifies missing entity 216 with no final entity transform. This indicates a lifecycle loss rather than a demonstrated wide-body opening jam. This lane has no source or test changes relative to its base, and L2's audited census contains no wide bodies. The required nightly gate remains red.
+
+## Authored L10 coverage extension
+
+The audit now additionally enumerates all wide slots from `cureEncounters` and `curePaceEncounters` in both tiers, using the production slot and spot helpers against full-world collision. The isolated run completed with 79 records (12 runtime plus 67 authored checks) and two candidate failures: `farm-road-pair-4` armored at (1400.79, 91.03), once per tier, cannot reach its station (1400, 100) with the clearance margin. This supersedes the earlier zero-failure runtime result for L10. Production admission eligibility/lane adjustments still need qualification before classifying or fixing this candidate. Typecheck and tool lint passed.
