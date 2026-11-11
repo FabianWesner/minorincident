@@ -71,7 +71,8 @@ test('browser pool admission backs off under WindowServer pressure, keeps a one-
     const sourceDigest = reviewSourceDigest('L1');
     const reviewed: ReviewDecision = { ...review, row: 'L1-01', commit: currentCommit, sourceDigest };
     expect(reviewFreshness(reviewed, 'L1')).toBe('FRESH');
-    expect(reviewFreshness({ ...reviewed, sourceDigest: undefined }, 'L1')).toBe('FRESH');
+    // Without an explicit reviewed digest, freshness falls back to the saved commit; a dirty source tree can be stale.
+    expect(reviewFreshness({ ...reviewed, sourceDigest: undefined }, 'L1')).toBe(reviewSourceDigest('L1', currentCommit) === sourceDigest ? 'FRESH' : 'STALE');
     expect(reviewFreshness({ ...reviewed, sourceDigest: '1'.repeat(64) }, 'L1')).toBe('STALE');
     expect(reviewFreshness({ ...reviewed, sourceDigest: undefined, commit: 'f'.repeat(40) }, 'L1')).toBe('STALE');
   }

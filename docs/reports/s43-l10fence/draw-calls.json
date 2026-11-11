@@ -1,0 +1,31 @@
+{
+  "quality": "high",
+  "backend": "webgpu",
+  "zoom": 1.5,
+  "method": "pause, show perimeter, screenshotReady, sample; hide perimeter, screenshotReady, sample; restore and resume",
+  "before": [
+    {
+      "shown": 70,
+      "hidden": 68,
+      "cost": 2
+    },
+    {
+      "shown": 72,
+      "hidden": 70,
+      "cost": 2
+    }
+  ],
+  "after": [
+    {
+      "shown": 70,
+      "hidden": 68,
+      "cost": 2
+    },
+    {
+      "shown": 72,
+      "hidden": 70,
+      "cost": 2
+    }
+  ],
+  "increase": 0
+}

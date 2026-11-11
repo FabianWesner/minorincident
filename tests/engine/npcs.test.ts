@@ -102,6 +102,27 @@ test('civilians: seeded grab → bite → down → glowing eyes → rising → i
     w.loadMission(w.missions!.def);
     expect(w.events.listenerCount).toBe(listeners);
   }
+  // L10 hidden catch-up must not use a route that crosses a railing to choose the other side of a barrier.
+  {
+    const w = await world(), dog = w.entities.get(w.npcs!.companion.spawn())!, player = w.entities.get(1)!;
+    try {
+      w.scenario = 'L10';
+      Object.assign(player.transform, { x: 0, z: 0 });
+      Object.assign(dog.transform, { x: 20, z: 0 }); w.spatial.set(dog.id, dog.transform.x, dog.transform.z);
+      Object.assign(w.infected!.director.camera, { halfWidth: 2, halfDepth: 2 });
+      const visible = vi.spyOn(w.infected!.nav, 'visible').mockReturnValue(false);
+      vi.spyOn(w.infected!.nav, 'clear').mockReturnValue(true);
+      const path = vi.spyOn(w.infected!.nav, 'path').mockReturnValue(true);
+      vi.spyOn(w.infected!.director, 'offscreen').mockReturnValue(true);
+      vi.spyOn(w.npcs!, 'move').mockReturnValue(false);
+      const relocate = vi.spyOn(w.solids, 'relocate').mockReturnValue(true);
+      for (let tick = 1; tick <= 370; tick++) { w.tick = tick; w.npcs!.companion.update(); }
+      expect(relocate, 'an L10 rail cannot be bypassed by hidden catch-up').not.toHaveBeenCalled();
+      expect(path, 'L10 catch-up requires a direct clear line instead of an around-the-wall route').not.toHaveBeenCalled();
+      expect(dog.transform.x).toBe(20);
+      visible.mockRestore();
+    } finally { w.dispose(); }
+  }
 });
 
 test('escort: shared combat pace, follows through a maze, a 2 s stand revives to 50 %, unattended 20 s down fails the mission', async () => {
