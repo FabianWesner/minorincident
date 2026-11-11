@@ -160,3 +160,9 @@ The original game version itself passes this controlled sample; therefore disapp
 | Checks/commit/cleanup | Typecheck/lint passed for runner changes; subsequent category-only lint/diff-check; explicit lane commits; owned servers stopped | Done for completed changes |
 
 Next useful work is a narrow scheduling trace of a reproduced dispatch delay or completion of original L5 quiet controls when admission permits, rather than another speculative runtime change. Target remains active and incomplete.
+
+### Original L5 control2 completed
+
+`r35-l5-low-2.json` retains original93016109/low WebGL2/zoom1/210s recovered route, admission/load/frame/export receipts. Quiet admission passed after waiting, but host load later rose to6.47 at play end; this is exclusive-browser admission, not proof the whole host stayed quiet. Survivor-1 reached;12,411post3s frames,max50ms,p99 16.8ms,zero>250ms,page errors0. Trace100,017,466bytes,dataLossOccurred:false. Setup5067ms,engine data7.5/sim207.3/view2386.5ms. Thus both original scene versions have a controlled clean sample; old L5 does not reproduce its historical667/583ms here.
+
+Acceptance clarification requested: exclusive quiet reference runs versus also requiring shared-host contention to pass. No answer assumed; original objective and retained shared failures remain in scope. All owned checks terminal and preview4938 stopped. No runtime game fix or causal historical claim. Goal remains incomplete.

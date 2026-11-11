@@ -1,0 +1,136 @@
+{
+  "gameCommit": "93016109",
+  "summary": {
+    "wall": "07:50:25",
+    "epochMs": 1794383425789,
+    "hostLoad": [
+      6.474609375,
+      4.9580078125,
+      4.58056640625
+    ],
+    "end": true,
+    "frames": [],
+    "performanceSummary": {
+      "excludedInitialMs": 3000,
+      "samples": 12411,
+      "maxMs": 50,
+      "p99Ms": 16.8,
+      "over250": []
+    },
+    "errors": []
+  },
+  "load": {
+    "wall": "07:46:55",
+    "epochMs": 1794383215699,
+    "hostLoad": [
+      3.2822265625,
+      3.53173828125,
+      4.111328125
+    ],
+    "loadWallMs": 5067,
+    "loadTiming": {
+      "dataMs": 7.5,
+      "simMs": 207.2999999821186,
+      "viewMs": 2386.5
+    }
+  },
+  "trace": {
+    "wall": "07:50:30",
+    "epochMs": 1794383430092,
+    "hostLoad": [
+      6.5166015625,
+      4.99169921875,
+      4.5947265625
+    ],
+    "trace": "/private/tmp/s37-hitches/r35-l5-low-2/trace.json",
+    "bytes": 100017466,
+    "dataLossOccurred": false
+  },
+  "survivorSeen": true,
+  "admission": [
+    {
+      "at": "2026-11-11T07:44:58.443Z",
+      "event": "quiet-admission-wait",
+      "granted": false,
+      "quiet": false,
+      "load": [
+        4.05712890625,
+        3.63330078125,
+        4.22412109375
+      ],
+      "busy": [
+        {
+          "pid": 70269,
+          "cpu": 73.8,
+          "ageSeconds": 0,
+          "command": "node --import tsx /Users/wesner/Workspace/minorincident/.claude/worktrees/s37-hitches/tools/browser-pool/wrapper.ts exclusive sh tools/e2e-lock.sh npx tsx tools/qa/r28-vqa-fixture-"
+        }
+      ],
+      "ignoredIdle": []
+    },
+    {
+      "at": "2026-11-11T07:45:29.100Z",
+      "event": "quiet-admission-wait",
+      "granted": false,
+      "quiet": false,
+      "load": [
+        4.48583984375,
+        3.75244140625,
+        4.24462890625
+      ],
+      "busy": [],
+      "ignoredIdle": []
+    },
+    {
+      "at": "2026-11-11T07:45:59.833Z",
+      "event": "quiet-admission-wait",
+      "granted": false,
+      "quiet": false,
+      "load": [
+        4.005859375,
+        3.7099609375,
+        4.21240234375
+      ],
+      "busy": [],
+      "ignoredIdle": []
+    },
+    {
+      "at": "2026-11-11T07:46:30.489Z",
+      "event": "quiet-admission-wait",
+      "granted": true,
+      "quiet": false,
+      "load": [
+        3.33349609375,
+        3.576171875,
+        4.1455078125
+      ],
+      "busy": [
+        {
+          "pid": 86864,
+          "cpu": 2.1,
+          "ageSeconds": 1,
+          "command": "npm exec vitest run tests/shared/render-contracts.test.ts -t skinned crowd      "
+        },
+        {
+          "pid": 86931,
+          "cpu": 114.6,
+          "ageSeconds": 1,
+          "command": "node /Users/wesner/Workspace/minorincident/.claude/worktrees/agent-a8c4af49f2a8a810a/node_modules/.bin/vitest run tests/shared/render-contracts.test.ts -t skinned crowd"
+        }
+      ],
+      "ignoredIdle": []
+    },
+    {
+      "at": "2026-11-11T07:46:48.844Z",
+      "pool": true,
+      "quiet": true,
+      "load": [
+        2.958984375,
+        3.4736328125,
+        4.0947265625
+      ],
+      "busy": [],
+      "ignoredIdle": []
+    }
+  ]
+}
