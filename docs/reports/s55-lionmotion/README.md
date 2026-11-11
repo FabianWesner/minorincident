@@ -153,3 +153,15 @@ in this sheet does not support detailed paw acceptance. An earlier all-species
 strip cropped the cats and was rejected. Full-scale crops and longer motion
 inspection remain necessary. The completed numeric trace's largest cat paw
 steps are ~14.5 cm at run speed, so this is not yet a no-pop acceptance result.
+
+## Real L8 rendered fixture
+
+Added `fixture.ts`, loading the real `l8-before-lion` resume and stepping normal
+simulation for 900 frames. Camera framing was corrected after an initial run
+rendered neither cat. With the enclosure centered, both cats appeared in 840
+samples. Maximum pelvis step was 0.00844 m for lion and 0.0800 m for lioness;
+root-relative paw steps reached 0.1182 and 0.2363 m respectively. Thus real L8
+still contradicts a complete smoothness claim. The candidate now carries its
+support offset across LOD handoffs and eases it out in standing hold, since
+walking-to-idle previously removed the full 8 cm correction. This latest change
+needs its repeat measurement and regression checks.

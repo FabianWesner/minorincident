@@ -103,6 +103,7 @@ export class PawContacts {
   /** A texture/model or LOD handoff keeps world-space support points. */
   inherit(previous: PawContacts): void {
     this.clip = previous.clip;
+    this.supportOffset = previous.supportOffset;
     for (const foot of this.feet) {
       const old = previous.feet.find(other => other.leg.name === foot.leg.name); if (!old) continue;
       foot.phase = old.phase; foot.held = old.held; foot.step = old.step; foot.fadeStart = old.fadeStart;
@@ -334,6 +335,12 @@ export class PawContacts {
    * Once its authored spot is more than 6 cm away it takes a short lifted step there, diagonal pairs at a time, so a
    * stop from a gait settles into the stance in steps rather than a one-frame jump. Authored lifts (bark) still lift. */
   hold(dt: number, grounded = false): void {
+    if (this.liveSkin && this.supportOffset > 0) {
+      this.supportOffset = Math.max(0, this.supportOffset - dt * .5);
+      const pelvis = this.root.getObjectByName('hip');
+      this.pelvisDrop = pelvis ? this.supportOffset / pelvis.parent!.getWorldScale(new Vector3()).y : 0;
+      if (pelvis) { pelvis.position.y -= this.pelvisDrop; pelvis.updateWorldMatrix(false, true); }
+    }
     this.root.updateWorldMatrix(true, true); this.root.getWorldPosition(this.origin);
     const floor = this.origin.y, partner = [3, 2, 1, 0];
     for (const [index, foot] of this.feet.entries()) {
