@@ -1,0 +1,66 @@
+{
+  "run": "l8-high-shared-complete-1",
+  "qualification": "diagnostic only: early typecheck overlap",
+  "load": [
+    {
+      "wall": "07:09:28",
+      "epochMs": 1794380968413,
+      "hostLoad": [
+        10.158203125,
+        5.87939453125,
+        7.2783203125
+      ],
+      "loadWallMs": 11352,
+      "loadTiming": {
+        "dataMs": 37.69999998807907,
+        "simMs": 173.60000002384186,
+        "viewMs": 6505.399999976158
+      }
+    }
+  ],
+  "summary": [
+    {
+      "wall": "07:12:28",
+      "epochMs": 1794381148949,
+      "hostLoad": [
+        7.896484375,
+        7.51904296875,
+        7.76025390625
+      ],
+      "end": true,
+      "frames": [],
+      "performanceSummary": {
+        "excludedInitialMs": 3000,
+        "samples": 10364,
+        "maxMs": 600,
+        "p99Ms": 33.3,
+        "over250": [
+          {
+            "tick": 9341,
+            "ms": 600,
+            "elapsedMs": 155425
+          }
+        ]
+      },
+      "errors": []
+    }
+  ],
+  "trace": [
+    {
+      "wall": "07:12:52",
+      "epochMs": 1794381172382,
+      "hostLoad": [
+        8.2587890625,
+        7.62939453125,
+        7.79345703125
+      ],
+      "trace": "/private/tmp/s37-hitches/l8-high-shared-complete-1/trace.json",
+      "bytes": 469427918,
+      "dataLossOccurred": false
+    }
+  ],
+  "hostLoad1Range": [
+    7.791015625,
+    13.00439453125
+  ]
+}

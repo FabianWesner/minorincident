@@ -10,7 +10,7 @@
 // (--follow-marker) or the nearest enemy. Combat: mouse over the nearest drawn enemy's feet + attack while it is in range.
 // Logs (log.jsonl): objective/tracker text, HUD bars (APC armor), enemies (kind, hp), frames > 100 ms with tick.
 import { mkdirSync, appendFileSync, mkdtempSync, existsSync, writeFileSync } from 'node:fs';
-import { tmpdir } from 'node:os';
+import { tmpdir, loadavg } from 'node:os';
 import { resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 import { launchProfile } from '../browser-pool/client';
@@ -32,7 +32,7 @@ const path = direct ? 'direct' : ['', '.json.gz', '.json.br'].map(ext => resolve
 if (!origin || !path) throw new Error('usage: r28-vqa-fixture-play.ts <origin> <fixture> --out <dir>');
 const out = resolve(values.out!); mkdirSync(out, { recursive: true });
 if (values.trace && (out === process.cwd() || out.startsWith(`${process.cwd()}/`))) throw new Error('--trace requires --out outside the worktree so raw traces cannot be committed');
-const log = (o: object) => appendFileSync(`${out}/log.jsonl`, JSON.stringify({ wall: new Date().toISOString().slice(11, 19), ...o }) + '\n');
+const log = (o: object) => appendFileSync(`${out}/log.jsonl`, JSON.stringify({ wall: new Date().toISOString().slice(11, 19), epochMs: Date.now(), hostLoad: loadavg(), ...o }) + '\n');
 const route = (values.route ?? '').split(';').filter(Boolean).map(p => { const [x, z] = p.split(',').map(Number); return { x, z }; });
 const zoom = Number(values.zoom), range = Number(values.range);
 const fixture = direct ? null : readFixture(path);
@@ -62,12 +62,14 @@ try {
     const a = window.__SS__!; a.camera.follow(); a.camera.zoom(z);
     const w = window as unknown as { __r28Frames: { tick: number; ms: number; elapsedMs: number; perf?: ReturnType<typeof a.perf> }[]; __r28LongFrames: { tick: number; ms: number; elapsedMs: number }[]; __r28FrameTimes: number[]; __r28PlayStarted: number };
     w.__r28Frames = []; w.__r28LongFrames = []; w.__r28FrameTimes = []; w.__r28PlayStarted = performance.now();
+    performance.mark('fixture-play-start');
     let last = w.__r28PlayStarted;
     const loop = (now: number) => {
       const ms = now - last; last = now;
       if (now - w.__r28PlayStarted >= 3000) w.__r28FrameTimes.push(ms);
       if (ms > 100) {
         const event = { tick: a.tick(), ms: +ms.toFixed(1), elapsedMs: Math.round(now - w.__r28PlayStarted) };
+        performance.mark('fixture-long-frame', { detail: event });
         w.__r28LongFrames.push(event); w.__r28Frames.push({ ...event, perf: a.perf() });
       }
       requestAnimationFrame(loop);
