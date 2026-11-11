@@ -35,7 +35,7 @@ const hook = () => {
     wrap(an, 'update', 'animator.update'); wrap(an.ground, 'update', 'ground.update'); wrap(an.ground, 'groundPose', 'ground.groundPose'); wrap(an.mixer, 'update', 'mixer.update');
     wrap(ch.living, 'present', 'living.present'); wrap(ch.aim, 'update', 'aim.update'); wrap(ch.aim, 'aim', 'aim.aim');
     for (const k of Object.getOwnPropertyNames(Object.getPrototypeOf(ch.aim))) if (k !== 'constructor' && typeof ch.aim[k] === 'function' && !['update','aim'].includes(k)) wrap(ch.aim, k, 'aim.' + k);
-    for (const k of Object.getOwnPropertyNames(Object.getPrototypeOf(cv))) if (k !== 'constructor' && typeof cv[k] === 'function' && !['update'].includes(k) && !/^get |^set /.test(k)) { try { wrap(cv, k, 'view.' + k); } catch (e) {} }
+    for (const k of Object.getOwnPropertyNames(Object.getPrototypeOf(cv))) if (k !== 'constructor' && typeof cv[k] === 'function' && !['update'].includes(k) && !/^get |^set /.test(k)) { try { wrap(cv, k, 'view.' + k); } catch { /* not wrappable */ } }
     wrap(cv, 'update', 'view.update');
   }
 };
