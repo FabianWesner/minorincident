@@ -204,6 +204,8 @@ export class LevelNineDriving {
   }
   /** r32-l9fun: the APC is on a boost strip's 4 s engine boost. */
   boosting(id: number): boolean { return id === this.mission.l9?.state.carId && this.w.tick < (this.state.boostUntil ?? -1) && !this.holding(id); }
+  /** r36-l9l5: the run from the bay to the bridge head (evacuation done): heavy contacts no longer stop the hull. */
+  bridgeRun(id: number): boolean { return id === this.mission.l9?.state.carId && this.state.evacuationDone && this.mission.l9.state.phase === 'driving'; }
   holding(id: number): boolean {
     if (id !== this.mission.l9?.state.carId) return false;
     const s = this.state;
@@ -483,7 +485,7 @@ export class LevelNineDriving {
     }
     const researchAboard = !alive(research) || this.car.entity.vehicle!.passengers?.some(p => p.id === research.id && p.phase === 'seated');
     if (w.tick - s.evacuationAt >= cfg.evacuation.defendTicks && living.every(id => s.evacuated.includes(id)) && dogAboard && researchAboard) {
-      s.evacuationDone = true; this.line('L9.sam-stays'); this.rebuild(); this.signal('evacuation-complete'); this.checkpoint('bridge');
+      s.evacuationDone = true; s.boostUntil = w.tick + 420; this.line('L9.sam-stays'); this.rebuild(); this.signal('evacuation-complete'); this.checkpoint('bridge');
     }
   }
   /**
@@ -538,7 +540,7 @@ export class LevelNineDriving {
     if (w.tick < s.nextWave || !this.holding(this.car.entity.id)) return;
     const at = this.car.entity.transform, ai = w.infected!;
     for (let i = 0; i < 8 && ai.director.count + 1 < ai.director.cap && ai.pool.length; i++) {
-      const angle = Math.PI + (i - 3.5) * .13, p = { x: at.x + Math.cos(angle) * 105, z: at.z + Math.sin(angle) * 105 }, archetype = ['infected.sprinter', 'infected.dog', 'infected.runner', 'infected.armored'][i % 4];
+      const angle = Math.PI + (i - 3.5) * .13, p = { x: at.x + Math.cos(angle) * 105, z: at.z + Math.sin(angle) * 105 }, archetype = ['infected.sprinter', 'infected.dog', 'infected.runner', i === 7 ? 'infected.armored' : 'infected.runner'][i % 4];
       if (!w.chunks?.resident(p.x, p.z) || !ai.director.safe(archetype, p)) continue;
       const id = ai.spawn(archetype, p, { state: 'chase' }); ai.pursueTarget(id, 1); pursueCrossingVehicle(w, id); s.waves.push(id);
     }

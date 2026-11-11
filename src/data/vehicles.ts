@@ -11,7 +11,7 @@ export const apcDurability = {
   heavyStallTicks: 60, heavyStallGraceTicks: 240, heavyStallMinSpeed: 1.5,
 } as const;
 /** L9 mission floor (PO 10-13): at 0 the APC keeps driving at this share of the healthy top speed until the scripted crash. */
-export const apcFloor = { speedShare: .6, overspeedDamp: .015, obstacleContactGap: .1, stages: [.75, .5, .25, 0] as const } as const;
+export const apcFloor = { /** r36-l9l5: an L9 contact with a light infected (runner, sprinter, dog, screamer) costs this much durability (10 elsewhere); heavies keep 40-80. APC intake only, no infected stat changes. */ l9LightContact: 5, speedShare: .6, overspeedDamp: .015, obstacleContactGap: .1, stages: [.75, .5, .25, 0] as const } as const;
 /** E09 tuning in SI units; +X forward, +Y up, +Z left. */
 export interface VehicleDef {
   /** Door centre in authored +X metres, shared by interaction and presentation. */
