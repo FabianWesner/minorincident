@@ -7,7 +7,7 @@ import { ThreatObserver } from './observer';
 import assert from 'node:assert/strict';
 import { NavGrid } from '../../../src/sim/ai/NavGrid';
 import type { EntitySnapshot, GameEvent } from '../../../src/sim/world/types';
-import { median, isWalkingSample, PathProbe, phaseFlags, followerCoverageFlags, followerWaitFlags, observeBlocked, SpawnIdentities, type BlockedWindow } from './observer';
+import { median, isWalkingSample, PathProbe, phaseFlags, isVehicleHullAttacker, isWithinChaserDetectionRange, followerCoverageFlags, followerWaitFlags, observeBlocked, SpawnIdentities, type BlockedWindow } from './observer';
 import { WaveObserver, l6EntryFlags, waveFlags } from './waves';
 import { EventBus } from '../../../src/core/EventBus';
 import type { SimWorld } from '../../../src/sim/world/SimWorld';
@@ -240,6 +240,17 @@ export async function proveThreatAudit(): Promise<void> {
   assert(!phaseFlags({ ...good, attacks: 0, groupAttacks: 1 }).includes('ZERO_ATTACKS'));
   assert(!phaseFlags({ ...good, threat: false, attacks: 0 }).includes('ZERO_ATTACKS'));
   assert(phaseFlags({ ...good, maxBlockedSeconds: 20.01 }).some(flag => flag.startsWith('UNREACHABLE')));
+  assert.deepEqual(phaseFlags({ ...good, stuckChasers: [42] }), ['STUCK_CHASER_OVER_30_SECONDS']);
+  assert(isWithinChaserDetectionRange(5)); // L4 shop-shelf pocket remains in the on-foot detection window.
+  assert(isWithinChaserDetectionRange(2.8));
+  assert(isWithinChaserDetectionRange(6));
+  assert(!isWithinChaserDetectionRange(2.79));
+  assert(!isWithinChaserDetectionRange(6.01));
+  assert(isVehicleHullAttacker(true, 2.6, true, true, false));
+  assert(!isVehicleHullAttacker(true, 3.01, true, true, false));
+  assert(!isVehicleHullAttacker(false, 1, true, true, false));
+  assert(!isVehicleHullAttacker(true, 1, true, false, false));
+  assert(!isVehicleHullAttacker(true, 1, true, true, true));
   assert(phaseFlags({ ...good, followerSpeeds: [{ id: 2, median: 1.4, samples: 10 }] }).includes('SLOW_FOLLOWER:2'));
   assert.deepEqual(phaseFlags({ ...good, followerSpeeds: [{ id: 2, median: .95 * 2.2, samples: 10 }] }), []);
   assert(followerCoverageFlags('L5', []).some(flag => flag.includes('FOLLOWER_PACE_UNOBSERVED:31')));

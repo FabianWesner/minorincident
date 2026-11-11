@@ -8,6 +8,7 @@ import { phases, threatSteps, type Phase } from './phases';
 import { WaveObserver } from './waves';
 import { l3 } from '../../../src/data/l3';
 import { infectedDef } from '../../../src/data/infected';
+import { apcDurability } from '../../../src/data/vehicles';
 
 export const median = (values: readonly number[]): number | null => {
   const sorted = [...values].sort((a, b) => a - b), n = sorted.length;
@@ -106,6 +107,14 @@ export function phaseFlags(p: Pick<PhaseReceipt, 'threat' | 'attacks' | 'maxBloc
   }
   return flags;
 }
+
+/** A chaser within the occupied APC's real hull-attack envelope is engaging
+ * the player's vehicle, even though the hidden driver is several metres away. */
+export function isVehicleHullAttacker(inVehicle: boolean, hullDistance: number, aware: boolean, visible: boolean, incapacitated: boolean): boolean {
+  return inVehicle && aware && visible && !incapacitated && hullDistance <= apcDurability.surroundReach;
+}
+/** Preserve the r42 on-foot safe-pocket window (including the L4 shelf case). */
+export function isWithinChaserDetectionRange(distance: number): boolean { return distance >= 2.8 && distance <= 6; }
 
 /** Read-only queries run on a separate native NavGrid, retaining the exact baked mask/walls/live blockers.
  * Calling path() on the live grid changes resumable A* work and can change the completion policy's outcome. */
@@ -447,7 +456,23 @@ export class ThreatObserver {
   private observeChasers(alive: EntitySnapshot[]): void {
     const w = this.world, player = w.entities.get(1)!.transform, seen = new Set<number>();
     for (const e of alive) {
-      if (e.infected?.state !== 'chase' || e.infected.scripted || e.hidden || Math.hypot(e.transform.x - player.x, e.transform.z - player.z) > 6 || Math.hypot(e.transform.x - player.x, e.transform.z - player.z) < 2.8) continue;
+      if (e.infected?.state !== 'chase' || e.infected.scripted || e.hidden) continue;
+      const vehicleId = this.level === 'L9' ? w.vehicles?.active : null;
+      const car = vehicleId == null ? undefined : w.vehicles?.cars.get(vehicleId);
+      if (car) {
+        const vehicle = car.entity.vehicle!, driver = vehicle.driver == null ? undefined : w.entities.get(vehicle.driver);
+        const occupied = !!driver && driver.health.current > 0 && !driver.infected
+          || vehicle.passengers?.some(passenger => {
+            const occupant = w.entities.get(passenger.id);
+            return passenger.phase === 'seated' && !!occupant && occupant.health.current > 0 && !occupant.infected;
+          }) === true;
+        const aware = ['alerted', 'chase', 'attack', 'attracted', 'bite'].includes(e.infected.state);
+        const hullDistance = car.physics.hullDistance(e.transform.x, e.transform.z);
+        const visible = w.combat?.query.visible(e.transform, car.entity.transform) ?? false;
+        if (isVehicleHullAttacker(occupied, hullDistance, aware, visible, Status.stunned(e, w.tick))) continue;
+      }
+      const distance = Math.hypot(e.transform.x - player.x, e.transform.z - player.z);
+      if (!isWithinChaserDetectionRange(distance)) continue;
       seen.add(e.id);
       const watch = this.chaseWatch.get(e.id);
       if (!watch || Math.hypot(e.transform.x - watch.x, e.transform.z - watch.z) > .5) { this.chaseWatch.set(e.id, { x: e.transform.x, z: e.transform.z, at: w.tick, flagged: false }); continue; }
