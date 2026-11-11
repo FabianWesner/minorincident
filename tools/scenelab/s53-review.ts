@@ -5,8 +5,11 @@ const s = new SceneSession({ backend: 'webgpu', tier: 'high' });
 const receipts: unknown[] = [];
 try {
  await s.open();
- for (const name of ['alpha', 'alpha-worker', 'alpha-hoodie', 'alpha-suit', 'alpha-fire']) {
- const spec = readSpec(`${root}/alpha-specs/${name}.json`);
+ for (const name of ['mega-alpha', 'mega-alpha-ashen', 'mega-alpha-ember', 'dog']) {
+ const spec = readSpec(`${root}/heavy-specs/brute.json`);
+
+ const nightPreset = name === 'dog' ? 'L8-zoo' : 'L10-night';
+ spec.actors![0].archetype = name === 'dog' ? 'infected.dog' : 'infected.alpha'; spec.actors![0].look = { model: `inf.${name}` };
  spec.actors!.push({ id: 'courier', kind: 'courier', at: [4, 0], god: true });
  spec.camera = { mode: 'game', target: 'z', zoom: 1.5 };
  spec.script = [{ frame: 5, actor: 'z', do: 'chase' }, { frame: 180, actor: 'z', do: { hit: { from: 'courier', amount: 1 } } }, { frame: 240, actor: 'z', do: { corpse: true, ageTicks: 120 } }];
@@ -15,9 +18,12 @@ try {
  let previous = 0;
  for (const frame of [1, 30, 90, 130, 185, 245]) {
   await s.step(frame - previous); previous = frame;
-  const file = `${root}/motion-alphas/${name}/shot-${frame}.png`;
-  await s.screenshot(file);
-  receipts.push({ name, frame, file, metrics: await s.metrics() });
+  for (const time of ['L4', nightPreset] as const) for (const zoom of [1.5, 1]) {
+   await s.page.evaluate(({ time, zoom }) => { window.__SCENE__!.setTime(time); window.__SCENE__!.setCamera({ mode: 'game', target: 'z', zoom }); }, { time, zoom });
+   const file = `${root}/motion-mega-dog-matrix/${name}/${frame}-${time}-${zoom}.png`;
+   await s.screenshot(file);
+   receipts.push({ name, frame, time, zoom, file, metrics: await s.metrics() });
+  }
  }
  }
-} finally { writeJson(`${root}/motion-alphas/receipts.json`, receipts); await s.close(); stopServer(); }
+} finally { writeJson(`${root}/motion-mega-dog-matrix/receipts.json`, receipts); await s.close(); stopServer(); }

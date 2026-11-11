@@ -37,7 +37,7 @@
         "Crude shoulder growth dominates otherwise generic silhouette"
       ],
       "fixRoute": "TRELLIS rebuild from PO-approved concept with distinct role silhouette, readable face and clean toy materials; retain role props; verify chase, attack, hit and corpse.",
-      "reviewStatus": "PROVISIONAL idle-only, opened all four game-camera day/night zoom cells",
+      "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in alphaPoseMatrix",
       "assetFiles": {
         "notes.md": true,
         "report.json": false,
@@ -66,7 +66,7 @@
         "Armour/fire identity lacks readable surface detail"
       ],
       "fixRoute": "TRELLIS rebuild from PO-approved concept with distinct role silhouette, readable face and clean toy materials; retain role props; verify chase, attack, hit and corpse.",
-      "reviewStatus": "PROVISIONAL idle-only, opened all four game-camera day/night zoom cells",
+      "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in alphaPoseMatrix",
       "assetFiles": {
         "notes.md": false,
         "report.json": false,
@@ -95,7 +95,7 @@
         "Torn colour patches read as mottling"
       ],
       "fixRoute": "TRELLIS rebuild from PO-approved concept with distinct role silhouette, readable face and clean toy materials; retain role props; verify chase, attack, hit and corpse.",
-      "reviewStatus": "PROVISIONAL idle-only, opened all four game-camera day/night zoom cells",
+      "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in alphaPoseMatrix",
       "assetFiles": {
         "notes.md": false,
         "report.json": false,
@@ -124,7 +124,7 @@
         "Low identity separation from base Alpha"
       ],
       "fixRoute": "TRELLIS rebuild from PO-approved concept with distinct role silhouette, readable face and clean toy materials; retain role props; verify chase, attack, hit and corpse.",
-      "reviewStatus": "PROVISIONAL idle-only, opened all four game-camera day/night zoom cells",
+      "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in alphaPoseMatrix",
       "assetFiles": {
         "notes.md": false,
         "report.json": false,
@@ -144,7 +144,7 @@
     },
     {
       "figure": "inf.alpha-worker",
-      "pipeline": "Unknown (no local notes/report)",
+      "pipeline": "Yes \u2014 pipeline solidified Alpha-worker source",
       "scoreDay": 4,
       "scoreNight": 3,
       "defects": [
@@ -153,7 +153,7 @@
         "Night loses material and facial volume"
       ],
       "fixRoute": "TRELLIS rebuild from PO-approved concept with distinct role silhouette, readable face and clean toy materials; retain role props; verify chase, attack, hit and corpse.",
-      "reviewStatus": "PROVISIONAL idle-only, opened all four game-camera day/night zoom cells",
+      "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in alphaPoseMatrix",
       "assetFiles": {
         "notes.md": false,
         "report.json": false,
@@ -169,11 +169,14 @@
       },
       "group": "Alpha",
       "priority": 1,
-      "pipelineCandidateManifests": []
+      "pipelineCandidateManifests": [],
+      "trellis": true,
+      "pipelineEvidence": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/alpha-worker/notes.md; v2/cast_solidify.py",
+      "lineageConfidence": "Documentary source family; deployed hash chain absent"
     },
     {
       "figure": "inf.armored-football",
-      "pipeline": "Hybrid: procedural heavy-role deformation/additions on shipped skinned base; TRELLIS lineage of base requires verification",
+      "pipeline": "Yes, derived \u2014 TRELLIS base inf.common-worker with procedural deformation/props; no unique heavy inference",
       "scoreDay": 3,
       "scoreNight": 2,
       "defects": [
@@ -182,7 +185,7 @@
         "Night material becomes a flat grey cutout"
       ],
       "fixRoute": "TRELLIS rebuild from an approved silhouette concept; preserve role prop separately, then clean colour/material pass and animation review.",
-      "reviewStatus": "PROVISIONAL idle-only score; motion and exact runtime model provenance not yet verified",
+      "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in heavyPoseMatrix",
       "assetFiles": {
         "notes.md": true,
         "report.json": true,
@@ -197,7 +200,7 @@
         "sourceGlb": "assets/inf.armored-football/model.skin.glb"
       },
       "pipelineBase": "inf.common-worker",
-      "pipelineEvidence": "tools/assets/heavy-roles.ts; tools/assets/heavy-roles-data.ts",
+      "pipelineEvidence": "tools/assets/heavy-roles-data.ts; tools/assets/heavy-roles.ts; base source notes",
       "group": "human",
       "priority": 1,
       "pipelineCandidateManifests": [],
@@ -205,11 +208,13 @@
         "Armour stays readable during forward motion",
         "Hit snaps body into a stiff rear lean",
         "Corpse is a flat segmented grey form"
-      ]
+      ],
+      "trellis": true,
+      "lineageConfidence": "Explicit generator recipe plus documentary base lineage"
     },
     {
       "figure": "inf.baseball-cap",
-      "pipeline": "Legacy Blender/procedural (local notes/report; runtime use requires verification)",
+      "pipeline": "No \u2014 legacy Blender/procedural model",
       "scoreDay": 4,
       "scoreNight": 4,
       "defects": [
@@ -240,11 +245,13 @@
           "sha256": "f4841a76ee7c02b1da0820bf567f2c70c9abff6d5325fbb903d4d665f365aaf1",
           "mentionsTrellis": false
         }
-      ]
+      ],
+      "trellis": false,
+      "pipelineEvidence": "Manifest points to legacy model.glb; local notes/report describe procedural rigid construction."
     },
     {
       "figure": "inf.bathrobe-neighbor",
-      "pipeline": "Unverified: local notes describe a legacy Blender model; deployed skinned lineage must be checked",
+      "pipeline": "Yes \u2014 pipeline source processed from durable high; skinned delivery",
       "scoreDay": 3,
       "scoreNight": 2,
       "defects": [
@@ -253,7 +260,7 @@
         "Brown/orange overall colour obscures garment identity"
       ],
       "fixRoute": "TRELLIS concept/rebuild or retained-source cleanup; strengthen face, garment silhouette and clean colour blocks; preserve role prop, then verify native locomotion.",
-      "reviewStatus": "PROVISIONAL idle appearance:4 inspected cells and per-frame drawn-model assertion; nurse fixture role does not prove native runner behaviour",
+      "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in ordinaryPoseMatrix",
       "assetFiles": {
         "notes.md": true,
         "report.json": true,
@@ -275,11 +282,14 @@
           "sha256": "dc0492077b55b213bca82e3d84583c0a05bfa2fb6f4c393987321fd6dc8391db",
           "mentionsTrellis": false
         }
-      ]
+      ],
+      "trellis": true,
+      "pipelineEvidence": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave1/inf.bathrobe-neighbor/notes.md",
+      "lineageConfidence": "Documentary source lineage; no embedded deployed-source hash"
     },
     {
       "figure": "inf.bbq-dad",
-      "pipeline": "Unverified: local notes describe a legacy Blender model; deployed skinned lineage must be checked",
+      "pipeline": "Yes \u2014 pipeline source processed from durable high; skinned delivery",
       "scoreDay": 5,
       "scoreNight": 3,
       "defects": [
@@ -288,7 +298,7 @@
         "Night loses body volume despite readable spatula"
       ],
       "fixRoute": "TRELLIS concept/rebuild or retained-source cleanup; strengthen face, garment silhouette and clean colour blocks; preserve role prop, then verify native locomotion.",
-      "reviewStatus": "PROVISIONAL idle appearance:4 inspected cells and per-frame drawn-model assertion; nurse fixture role does not prove native runner behaviour",
+      "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in ordinaryPoseMatrix",
       "assetFiles": {
         "notes.md": true,
         "report.json": true,
@@ -320,11 +330,14 @@
           "sha256": "1eb077366402f94a130f398f2a8a1fd47895ad410afdbe477e0aa879b88aacd0",
           "mentionsTrellis": false
         }
-      ]
+      ],
+      "trellis": true,
+      "pipelineEvidence": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.bbq-dad/notes.md",
+      "lineageConfidence": "Documentary source lineage; no embedded deployed-source hash"
     },
     {
       "figure": "inf.bloated",
-      "pipeline": "Hybrid: procedural heavy-role deformation/additions on shipped skinned base; TRELLIS lineage of base requires verification",
+      "pipeline": "Yes, derived \u2014 TRELLIS base inf.cashier with procedural deformation/props; no unique heavy inference",
       "scoreDay": 4,
       "scoreNight": 3,
       "defects": [
@@ -333,7 +346,7 @@
         "Night loses volume and garment separation"
       ],
       "fixRoute": "TRELLIS rebuild from an approved silhouette concept; preserve role prop separately, then clean colour/material pass and animation review.",
-      "reviewStatus": "PROVISIONAL idle-only score; motion and exact runtime model provenance not yet verified",
+      "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in heavyPoseMatrix",
       "assetFiles": {
         "notes.md": true,
         "report.json": true,
@@ -348,7 +361,7 @@
         "sourceGlb": "assets/inf.bloated/model.skin.glb"
       },
       "pipelineBase": "inf.cashier",
-      "pipelineEvidence": "tools/assets/heavy-roles.ts; tools/assets/heavy-roles-data.ts",
+      "pipelineEvidence": "tools/assets/heavy-roles-data.ts; tools/assets/heavy-roles.ts; base source notes",
       "group": "human",
       "priority": 3,
       "pipelineCandidateManifests": [],
@@ -356,11 +369,13 @@
         "Round red belly remains role-readable",
         "Explosion telegraph/effects obscure body in later samples",
         "Corpse sample overlaps a large warning X; needs clear retained-corpse recapture"
-      ]
+      ],
+      "trellis": true,
+      "lineageConfidence": "Explicit generator recipe plus documentary base lineage"
     },
     {
       "figure": "inf.brute",
-      "pipeline": "Hybrid: procedural heavy-role deformation/additions on shipped skinned base; TRELLIS lineage of base requires verification",
+      "pipeline": "Yes, derived \u2014 TRELLIS base inf.common-worker with procedural deformation/props; no unique heavy inference",
       "scoreDay": 3,
       "scoreNight": 2,
       "defects": [
@@ -369,7 +384,7 @@
         "Night loses almost all surface shading"
       ],
       "fixRoute": "TRELLIS rebuild from an approved silhouette concept; preserve role prop separately, then clean colour/material pass and animation review.",
-      "reviewStatus": "PROVISIONAL idle-only score; motion and exact runtime model provenance not yet verified",
+      "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in heavyPoseMatrix",
       "assetFiles": {
         "notes.md": true,
         "report.json": true,
@@ -384,7 +399,7 @@
         "sourceGlb": "assets/inf.brute/model.skin.glb"
       },
       "pipelineBase": "inf.common-worker",
-      "pipelineEvidence": "tools/assets/heavy-roles.ts; tools/assets/heavy-roles-data.ts",
+      "pipelineEvidence": "tools/assets/heavy-roles-data.ts; tools/assets/heavy-roles.ts; base source notes",
       "group": "human",
       "priority": 1,
       "pipelineCandidateManifests": [
@@ -398,11 +413,13 @@
           "sha256": "2133d1a8f0541050b41bfefa89e9d6b71332ce6d1b00a145e3af3f47c8d50e43",
           "mentionsTrellis": true
         }
-      ]
+      ],
+      "trellis": true,
+      "lineageConfidence": "Explicit generator recipe plus documentary base lineage"
     },
     {
       "figure": "inf.butcher",
-      "pipeline": "Hybrid: procedural heavy-role deformation/additions on shipped skinned base; TRELLIS lineage of base requires verification",
+      "pipeline": "Yes, derived \u2014 TRELLIS base inf.bbq-dad with procedural deformation/props; no unique heavy inference",
       "scoreDay": 4,
       "scoreNight": 3,
       "defects": [
@@ -411,7 +428,7 @@
         "Bulky faceted limbs lose form at night"
       ],
       "fixRoute": "TRELLIS rebuild from an approved silhouette concept; preserve role prop separately, then clean colour/material pass and animation review.",
-      "reviewStatus": "PROVISIONAL idle-only score; motion and exact runtime model provenance not yet verified",
+      "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in heavyPoseMatrix",
       "assetFiles": {
         "notes.md": true,
         "report.json": true,
@@ -426,7 +443,7 @@
         "sourceGlb": "assets/inf.butcher/model.skin.glb"
       },
       "pipelineBase": "inf.bbq-dad",
-      "pipelineEvidence": "tools/assets/heavy-roles.ts; tools/assets/heavy-roles-data.ts",
+      "pipelineEvidence": "tools/assets/heavy-roles-data.ts; tools/assets/heavy-roles.ts; base source notes",
       "group": "human",
       "priority": 1,
       "pipelineCandidateManifests": [],
@@ -434,11 +451,13 @@
         "Cleaver and hat remain readable while approaching",
         "Broad stiff arms and polygon hat persist across poses",
         "Corpse folds pale limbs into blocky masses"
-      ]
+      ],
+      "trellis": true,
+      "lineageConfidence": "Explicit generator recipe plus documentary base lineage"
     },
     {
       "figure": "inf.cashier",
-      "pipeline": "Unverified: local notes describe a legacy Blender model; deployed skinned lineage must be checked",
+      "pipeline": "Yes \u2014 pipeline source processed from durable high; skinned delivery",
       "scoreDay": 3,
       "scoreNight": 2,
       "defects": [
@@ -447,7 +466,7 @@
         "Face and role cues disappear at far zoom"
       ],
       "fixRoute": "TRELLIS concept/rebuild or retained-source cleanup; strengthen face, garment silhouette and clean colour blocks; preserve role prop, then verify native locomotion.",
-      "reviewStatus": "PROVISIONAL idle appearance:4 inspected cells and per-frame drawn-model assertion; nurse fixture role does not prove native runner behaviour",
+      "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in ordinaryPoseMatrix",
       "assetFiles": {
         "notes.md": true,
         "report.json": true,
@@ -469,11 +488,14 @@
           "sha256": "b0889833892ca79723da1c1146855205395f254fdb33669792f0d80eb88f8d3c",
           "mentionsTrellis": false
         }
-      ]
+      ],
+      "trellis": true,
+      "pipelineEvidence": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave1/inf.cashier/notes.md",
+      "lineageConfidence": "Documentary source lineage; no embedded deployed-source hash"
     },
     {
       "figure": "inf.cat-black",
-      "pipeline": "Legacy Blender/procedural (local notes/report; runtime use requires verification)",
+      "pipeline": "No \u2014 legacy Blender/procedural model",
       "scoreDay": 3,
       "scoreNight": 3,
       "defects": [
@@ -509,11 +531,13 @@
           "sha256": "c8460280daf9cb834e5d706892f41ddfa919e9d6dd464d61d97c8b994ba7719f",
           "mentionsTrellis": true
         }
-      ]
+      ],
+      "trellis": false,
+      "pipelineEvidence": "Manifest points to legacy model.glb; local notes/report describe procedural rigid construction."
     },
     {
       "figure": "inf.cat-tabby",
-      "pipeline": "Legacy Blender/procedural (local notes/report; runtime use requires verification)",
+      "pipeline": "No \u2014 legacy Blender/procedural model",
       "scoreDay": 3,
       "scoreNight": 3,
       "defects": [
@@ -549,11 +573,13 @@
           "sha256": "3a83c375307636d4408728c9c6a5aeda0d38b422d86eec0b35116ef221e7e7b7",
           "mentionsTrellis": true
         }
-      ]
+      ],
+      "trellis": false,
+      "pipelineEvidence": "Manifest points to legacy model.glb; local notes/report describe procedural rigid construction."
     },
     {
       "figure": "inf.college-student",
-      "pipeline": "Legacy Blender/procedural (local notes/report; runtime use requires verification)",
+      "pipeline": "No \u2014 legacy Blender/procedural model",
       "scoreDay": 4,
       "scoreNight": 4,
       "defects": [
@@ -584,11 +610,13 @@
           "sha256": "576e5a57f3068212b1aead30574ee97b2af282cba5e8dd486121f91e5e1bae19",
           "mentionsTrellis": false
         }
-      ]
+      ],
+      "trellis": false,
+      "pipelineEvidence": "Manifest points to legacy model.glb; local notes/report describe procedural rigid construction."
     },
     {
       "figure": "inf.common-worker",
-      "pipeline": "TRELLIS (provenance text found)",
+      "pipeline": "Yes \u2014 TRELLIS source documented in local notes",
       "scoreDay": 5,
       "scoreNight": 3,
       "defects": [
@@ -597,7 +625,7 @@
         "Angular hair and claw hands lack finish"
       ],
       "fixRoute": "TRELLIS concept/rebuild or retained-source cleanup; strengthen face, garment silhouette and clean colour blocks; preserve role prop, then verify native locomotion.",
-      "reviewStatus": "PROVISIONAL idle appearance:4 inspected cells and per-frame drawn-model assertion; nurse fixture role does not prove native runner behaviour",
+      "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in ordinaryPoseMatrix",
       "assetFiles": {
         "notes.md": true,
         "report.json": true,
@@ -613,11 +641,13 @@
       },
       "group": "human",
       "priority": 3,
-      "pipelineCandidateManifests": []
+      "pipelineCandidateManifests": [],
+      "trellis": true,
+      "pipelineEvidence": "assets/inf.common-worker/notes.md"
     },
     {
       "figure": "inf.construction-worker",
-      "pipeline": "Legacy Blender/procedural (local notes/report; runtime use requires verification)",
+      "pipeline": "No \u2014 legacy Blender/procedural model",
       "scoreDay": 4,
       "scoreNight": 4,
       "defects": [
@@ -648,16 +678,22 @@
           "sha256": "ca64238706616d124cf0977cf84462a3be60a994a7fde665a9a318d25e606ded",
           "mentionsTrellis": false
         }
-      ]
+      ],
+      "trellis": false,
+      "pipelineEvidence": "Manifest points to legacy model.glb; local notes/report describe procedural rigid construction."
     },
     {
       "figure": "inf.corpse-poses",
-      "pipeline": "Legacy Blender/procedural (local notes/report; runtime use requires verification)",
-      "scoreDay": null,
-      "scoreNight": null,
-      "defects": null,
-      "fixRoute": null,
-      "reviewStatus": "not yet fully reviewed",
+      "pipeline": "No \u2014 legacy Blender/procedural model",
+      "scoreDay": 4,
+      "scoreNight": 3,
+      "defects": [
+        "Eyes glow strongly on supposedly dead bodies",
+        "Repeated orange hair and red sneakers make all four poses visually repetitive",
+        "Cloth and blood use coarse geometric patches"
+      ],
+      "fixRoute": "TRELLIS body rebuild with grounded posed variants; refine garment surfaces and corpse eye-emission policy.",
+      "reviewStatus": "PROVISIONAL:4 opened static network-fixture captures at game camera; borrowed template scale/orientation, not native runtime delivery",
       "assetFiles": {
         "notes.md": true,
         "report.json": true,
@@ -667,7 +703,9 @@
       "manifestPresent": false,
       "group": "corpse set",
       "priority": 4,
-      "pipelineCandidateManifests": []
+      "pipelineCandidateManifests": [],
+      "trellis": false,
+      "pipelineEvidence": "Manifest points to legacy model.glb; local notes/report describe procedural rigid construction."
     },
     {
       "figure": "inf.crawler",
@@ -680,7 +718,7 @@
         "Night flattens the crawl silhouette"
       ],
       "fixRoute": "TRELLIS rebuild or retained-source silhouette cleanup; strengthen face and role garment/prop; clean material pass; verify native locomotion and corpse.",
-      "reviewStatus": "PROVISIONAL idle-only:4 inspected cells with passing draw identity assertions",
+      "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in rolePoseMatrix",
       "assetFiles": {
         "notes.md": true,
         "report.json": true,
@@ -711,7 +749,7 @@
     },
     {
       "figure": "inf.crow",
-      "pipeline": "Legacy Blender/procedural (local notes/report; runtime use requires verification)",
+      "pipeline": "No \u2014 legacy Blender/procedural model",
       "scoreDay": 4,
       "scoreNight": 4,
       "defects": [
@@ -747,11 +785,13 @@
           "sha256": "c2d8fe52394675202b527830152d343e937f1f3c3fcae910d3b70d53f3aef0f9",
           "mentionsTrellis": true
         }
-      ]
+      ],
+      "trellis": false,
+      "pipelineEvidence": "Manifest points to legacy model.glb; local notes/report describe procedural rigid construction."
     },
     {
       "figure": "inf.delivery-driver",
-      "pipeline": "Unverified: local notes describe a legacy Blender model; deployed skinned lineage must be checked",
+      "pipeline": "Yes \u2014 pipeline source processed from durable high; skinned delivery",
       "scoreDay": 4,
       "scoreNight": 2,
       "defects": [
@@ -760,7 +800,7 @@
         "Night separates neither face nor limbs well"
       ],
       "fixRoute": "TRELLIS concept/rebuild or retained-source cleanup; strengthen face, garment silhouette and clean colour blocks; preserve role prop, then verify native locomotion.",
-      "reviewStatus": "PROVISIONAL idle appearance:4 inspected cells and per-frame drawn-model assertion; nurse fixture role does not prove native runner behaviour",
+      "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in ordinaryPoseMatrix",
       "assetFiles": {
         "notes.md": true,
         "report.json": true,
@@ -782,11 +822,14 @@
           "sha256": "437e901ea6633ecac83609c16e897b6b7e19bd400c34b91a49bc40bbf14899af",
           "mentionsTrellis": false
         }
-      ]
+      ],
+      "trellis": true,
+      "pipelineEvidence": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave1/inf.delivery-driver/notes.md",
+      "lineageConfidence": "Documentary source lineage; no embedded deployed-source hash"
     },
     {
       "figure": "inf.dog",
-      "pipeline": "Unknown (no local notes/report)",
+      "pipeline": "Yes, derived \u2014 infected coat of TRELLIS amb.dog source",
       "scoreDay": 3,
       "scoreNight": 2,
       "defects": [
@@ -795,7 +838,7 @@
         "Face and infection details collapse to glowing dots"
       ],
       "fixRoute": "TRELLIS retained-source refinement/rebuild with distinct silhouette, clean surfaces and readable face; colour/material detail pass, then native motion/corpse review.",
-      "reviewStatus": "PROVISIONAL idle-only:4 inspected cells and active render-batch identity assertion",
+      "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in megaDogPoseMatrix",
       "assetFiles": {
         "notes.md": false,
         "report.json": false,
@@ -832,11 +875,14 @@
           "sha256": "ac59ded36bc73b33bbc6de1005faedcaf1d6b4c09547e76b825e92161ade0552",
           "mentionsTrellis": false
         }
-      ]
+      ],
+      "trellis": true,
+      "pipelineEvidence": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/l1/README.md:18; cast/l1/inf.dog/source/manifest.json",
+      "lineageConfidence": "Explicit pipeline delivery table identifies infected coat derivative"
     },
     {
       "figure": "inf.dog-dachshund",
-      "pipeline": "Legacy Blender/procedural (local notes/report; runtime use requires verification)",
+      "pipeline": "No \u2014 legacy Blender/procedural model",
       "scoreDay": 3,
       "scoreNight": 3,
       "defects": [
@@ -872,11 +918,13 @@
           "sha256": "bf5bb8c9f30274e267331b5333c03e1a34ee076fc95f616589444e0e9a6e165a",
           "mentionsTrellis": true
         }
-      ]
+      ],
+      "trellis": false,
+      "pipelineEvidence": "Manifest points to legacy model.glb; local notes/report describe procedural rigid construction."
     },
     {
       "figure": "inf.dog-k9",
-      "pipeline": "Legacy Blender/procedural (local notes/report; runtime use requires verification)",
+      "pipeline": "No \u2014 legacy Blender/procedural model",
       "scoreDay": 4,
       "scoreNight": 4,
       "defects": [
@@ -912,11 +960,13 @@
           "sha256": "e48f8cb7c0b82d5f0cd5ec08759a88fd2c7cf3c7b22a3fcd81138a533f526b7e",
           "mentionsTrellis": true
         }
-      ]
+      ],
+      "trellis": false,
+      "pipelineEvidence": "Manifest points to legacy model.glb; local notes/report describe procedural rigid construction."
     },
     {
       "figure": "inf.dog-retriever",
-      "pipeline": "Legacy Blender/procedural (local notes/report; runtime use requires verification)",
+      "pipeline": "No \u2014 legacy Blender/procedural model",
       "scoreDay": 4,
       "scoreNight": 4,
       "defects": [
@@ -952,11 +1002,13 @@
           "sha256": "6d6236afa6472c9b0c9b9cf3e23c37a75cdf94fec0bef106d157694e345bed74",
           "mentionsTrellis": true
         }
-      ]
+      ],
+      "trellis": false,
+      "pipelineEvidence": "Manifest points to legacy model.glb; local notes/report describe procedural rigid construction."
     },
     {
       "figure": "inf.elephant",
-      "pipeline": "Unverified: local notes describe a legacy Blender model; deployed skinned lineage must be checked",
+      "pipeline": "Yes \u2014 documented pipeline high/source processing with later skinned delivery",
       "scoreDay": 4,
       "scoreNight": 3,
       "defects": [
@@ -965,7 +1017,7 @@
         "Eyes are tiny glowing marks beneath broad ears"
       ],
       "fixRoute": "TRELLIS rebuild/retained-source cleanup with species silhouette and readable infected face; improve clean material detail; verify native movement, attacks and corpse.",
-      "reviewStatus": "PROVISIONAL idle only:4 inspected cells, active render-batch asset assertions",
+      "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in zooPoseMatrix",
       "assetFiles": {
         "notes.md": true,
         "report.json": true,
@@ -992,11 +1044,15 @@
           "sha256": "03e092cc3a932be721f2c3350da1b59a76bc9a0af590fdb2efaf1935eafca265",
           "mentionsTrellis": true
         }
-      ]
+      ],
+      "nightPresetReviewed": "L8-zoo (isolated slab; no campaign practical placements)",
+      "trellis": true,
+      "pipelineEvidence": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.elephant/notes.md",
+      "lineageConfidence": "Documentary family/source lineage; embedded deployed-source hash unavailable"
     },
     {
       "figure": "inf.firefighter",
-      "pipeline": "Unverified: local notes describe a legacy Blender model; deployed skinned lineage must be checked",
+      "pipeline": "Yes \u2014 documented pipeline high/source processing with later skinned delivery",
       "scoreDay": 4,
       "scoreNight": 2,
       "defects": [
@@ -1005,7 +1061,7 @@
         "Tool and face disappear at farther zoom"
       ],
       "fixRoute": "TRELLIS rebuild or retained-source silhouette cleanup; strengthen face and role garment/prop; clean material pass; verify native locomotion and corpse.",
-      "reviewStatus": "PROVISIONAL idle-only:4 inspected cells with passing draw identity assertions",
+      "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in rolePoseMatrix",
       "assetFiles": {
         "notes.md": true,
         "report.json": true,
@@ -1027,11 +1083,14 @@
           "sha256": "dadb777bb075aca7cfd808de4258fb73f750df393c3cf5a7223ff7dcc04be238",
           "mentionsTrellis": false
         }
-      ]
+      ],
+      "trellis": true,
+      "pipelineEvidence": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave1/inf.firefighter/notes.md",
+      "lineageConfidence": "Documentary family/source lineage; embedded deployed-source hash unavailable"
     },
     {
       "figure": "inf.flamingo",
-      "pipeline": "Unverified: local notes describe a legacy Blender model; deployed skinned lineage must be checked",
+      "pipeline": "Yes \u2014 documented pipeline high/source processing with later skinned delivery",
       "scoreDay": 3,
       "scoreNight": 3,
       "defects": [
@@ -1040,7 +1099,7 @@
         "Thin legs and pale body lack feather detail"
       ],
       "fixRoute": "TRELLIS rebuild/retained-source cleanup with species silhouette and readable infected face; improve clean material detail; verify native movement, attacks and corpse.",
-      "reviewStatus": "PROVISIONAL idle only:4 inspected cells, active render-batch asset assertions",
+      "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in zooPoseMatrix",
       "assetFiles": {
         "notes.md": true,
         "report.json": true,
@@ -1067,20 +1126,24 @@
           "sha256": "9044800f736876e9ce9484d0408efb94992da2c43c703abeb9dc680dafe835c8",
           "mentionsTrellis": true
         }
-      ]
+      ],
+      "nightPresetReviewed": "L8-zoo (isolated slab; no campaign practical placements)",
+      "trellis": true,
+      "pipelineEvidence": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.flamingo/notes.md",
+      "lineageConfidence": "Documentary family/source lineage; embedded deployed-source hash unavailable"
     },
     {
       "figure": "inf.gorilla",
-      "pipeline": "Unverified: local notes describe a legacy Blender model; deployed skinned lineage must be checked",
-      "scoreDay": 4,
-      "scoreNight": 3,
+      "pipeline": "Yes \u2014 documented pipeline high/source processing with later skinned delivery",
+      "scoreDay": 3,
+      "scoreNight": 2,
       "defects": [
-        "Dark face is buried in black body",
-        "Back growth is a broad pale slab",
-        "Mottled shoulder masses and night rim distract from expression"
+        "Death-back corpse retains near-upright curled body",
+        "Black head and torso bury face/expression",
+        "Bright jagged night rim outlines noisy fur masses"
       ],
-      "fixRoute": "TRELLIS rebuild/retained-source cleanup with species silhouette and readable infected face; improve clean material detail; verify native movement, attacks and corpse.",
-      "reviewStatus": "PROVISIONAL idle only:4 inspected cells, active render-batch asset assertions",
+      "fixRoute": "Repair primate death/hit pose binding and grounded corpse; refine TRELLIS face and fur masses, then night material/rim pass.",
+      "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in zooPoseMatrix",
       "assetFiles": {
         "notes.md": true,
         "report.json": true,
@@ -1096,7 +1159,11 @@
       },
       "group": "animal",
       "priority": 3,
-      "pipelineCandidateManifests": []
+      "pipelineCandidateManifests": [],
+      "nightPresetReviewed": "L8-zoo (isolated slab; no campaign practical placements)",
+      "trellis": true,
+      "pipelineEvidence": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/gorilla/notes.md",
+      "lineageConfidence": "Documentary family/source lineage; embedded deployed-source hash unavailable"
     },
     {
       "figure": "inf.hazmat",
@@ -1109,7 +1176,7 @@
         "Suit folds and limbs merge in night"
       ],
       "fixRoute": "TRELLIS rebuild or retained-source silhouette cleanup; strengthen face and role garment/prop; clean material pass; verify native locomotion and corpse.",
-      "reviewStatus": "PROVISIONAL idle-only:4 inspected cells with passing draw identity assertions",
+      "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in rolePoseMatrix",
       "assetFiles": {
         "notes.md": true,
         "report.json": true,
@@ -1129,7 +1196,7 @@
     },
     {
       "figure": "inf.jogger",
-      "pipeline": "Unverified: local notes describe a legacy Blender model; deployed skinned lineage must be checked",
+      "pipeline": "Yes \u2014 pipeline source processed from durable high; skinned delivery",
       "scoreDay": 3,
       "scoreNight": 2,
       "defects": [
@@ -1138,7 +1205,7 @@
         "Thin limbs and head lack expression"
       ],
       "fixRoute": "TRELLIS concept/rebuild or retained-source cleanup; strengthen face, garment silhouette and clean colour blocks; preserve role prop, then verify native locomotion.",
-      "reviewStatus": "PROVISIONAL idle appearance:4 inspected cells and per-frame drawn-model assertion; nurse fixture role does not prove native runner behaviour",
+      "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in ordinaryPoseMatrix",
       "assetFiles": {
         "notes.md": true,
         "report.json": true,
@@ -1160,11 +1227,14 @@
           "sha256": "0f6b89d89f6336d1719f8616a51c72f632171ce775680fc0cbf0d06284fde6c7",
           "mentionsTrellis": false
         }
-      ]
+      ],
+      "trellis": true,
+      "pipelineEvidence": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave1/inf.jogger/notes.md",
+      "lineageConfidence": "Documentary source lineage; no embedded deployed-source hash"
     },
     {
       "figure": "inf.lion",
-      "pipeline": "Unverified: local notes describe a legacy Blender model; deployed skinned lineage must be checked",
+      "pipeline": "No \u2014 current body replaced with procedural Blender big-cat meshes; inherited rig/material delivery",
       "scoreDay": 3,
       "scoreNight": 2,
       "defects": [
@@ -1173,7 +1243,7 @@
         "Little facial or infected detail visible"
       ],
       "fixRoute": "TRELLIS rebuild/retained-source cleanup with species silhouette and readable infected face; improve clean material detail; verify native movement, attacks and corpse.",
-      "reviewStatus": "PROVISIONAL idle only:4 inspected cells, active render-batch asset assertions",
+      "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in zooPoseMatrix",
       "assetFiles": {
         "notes.md": true,
         "report.json": true,
@@ -1189,11 +1259,15 @@
       },
       "group": "animal",
       "priority": 3,
-      "pipelineCandidateManifests": []
+      "pipelineCandidateManifests": [],
+      "nightPresetReviewed": "L8-zoo (isolated slab; no campaign practical placements)",
+      "trellis": false,
+      "pipelineEvidence": "tools/assets/build-l8-cats.ts:1; assets/amb.lion/build_cat.py",
+      "lineageConfidence": "Explicit current surface replacement script supersedes older TRELLIS candidate notes"
     },
     {
       "figure": "inf.lioness",
-      "pipeline": "Unverified: local notes describe a legacy Blender model; deployed skinned lineage must be checked",
+      "pipeline": "No \u2014 current body replaced with procedural Blender big-cat meshes; inherited rig/material delivery",
       "scoreDay": 3,
       "scoreNight": 2,
       "defects": [
@@ -1202,7 +1276,7 @@
         "Low distinction beyond removing the mane"
       ],
       "fixRoute": "TRELLIS rebuild/retained-source cleanup with species silhouette and readable infected face; improve clean material detail; verify native movement, attacks and corpse.",
-      "reviewStatus": "PROVISIONAL idle only:4 inspected cells, active render-batch asset assertions",
+      "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in zooPoseMatrix",
       "assetFiles": {
         "notes.md": true,
         "report.json": false,
@@ -1218,11 +1292,15 @@
       },
       "group": "animal",
       "priority": 3,
-      "pipelineCandidateManifests": []
+      "pipelineCandidateManifests": [],
+      "nightPresetReviewed": "L8-zoo (isolated slab; no campaign practical placements)",
+      "trellis": false,
+      "pipelineEvidence": "tools/assets/build-l8-cats.ts:1; assets/amb.lion/build_cat.py",
+      "lineageConfidence": "Explicit current surface replacement script supersedes older TRELLIS candidate notes"
     },
     {
       "figure": "inf.mega-alpha",
-      "pipeline": "Unverified: local notes describe a legacy Blender model; deployed skinned lineage must be checked",
+      "pipeline": "Yes \u2014 TRELLIS Mega base with derived colour variants and procedural skull restoration",
       "scoreDay": 6,
       "scoreNight": 5,
       "defects": [
@@ -1231,7 +1309,7 @@
         "Spikes read as a repeated crown instead of integrated growth"
       ],
       "fixRoute": "TRELLIS retained-source refinement/rebuild with distinct silhouette, clean surfaces and readable face; colour/material detail pass, then native motion/corpse review.",
-      "reviewStatus": "PROVISIONAL idle-only:4 inspected cells and active render-batch identity assertion",
+      "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in megaDogPoseMatrix",
       "assetFiles": {
         "notes.md": true,
         "report.json": false,
@@ -1247,11 +1325,15 @@
       },
       "group": "Mega",
       "priority": 2,
-      "pipelineCandidateManifests": []
+      "pipelineCandidateManifests": [],
+      "nightPresetReviewed": "L10-night (isolated slab)",
+      "trellis": true,
+      "pipelineEvidence": "/Users/wesner/Workspace/minorincident_3dpipeline/v2/wave2_mega.py; cast/mega-alpha/notes.md; tools/assets/skin-crowd-build.ts:197",
+      "lineageConfidence": "Documentary family lineage; deployed byte-to-source hash linkage not embedded in GLB."
     },
     {
       "figure": "inf.mega-alpha-ashen",
-      "pipeline": "Unknown (no local notes/report)",
+      "pipeline": "Yes \u2014 TRELLIS Mega base with derived colour variants and procedural skull restoration",
       "scoreDay": 5,
       "scoreNight": 4,
       "defects": [
@@ -1260,7 +1342,7 @@
         "Dark torso lacks distinct material detail"
       ],
       "fixRoute": "TRELLIS retained-source refinement/rebuild with distinct silhouette, clean surfaces and readable face; colour/material detail pass, then native motion/corpse review.",
-      "reviewStatus": "PROVISIONAL idle-only:4 inspected cells and active render-batch identity assertion",
+      "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in megaDogPoseMatrix",
       "assetFiles": {
         "notes.md": false,
         "report.json": false,
@@ -1287,11 +1369,15 @@
           "sha256": "0f2741a5ccbb93ba5f279d7be5785989e0670fb78eabdec1dc825d96bbf4f6c5",
           "mentionsTrellis": true
         }
-      ]
+      ],
+      "nightPresetReviewed": "L10-night (isolated slab)",
+      "trellis": true,
+      "pipelineEvidence": "/Users/wesner/Workspace/minorincident_3dpipeline/v2/wave2_mega.py; cast/mega-alpha/notes.md; tools/assets/skin-crowd-build.ts:197",
+      "lineageConfidence": "Documentary family lineage; deployed byte-to-source hash linkage not embedded in GLB."
     },
     {
       "figure": "inf.mega-alpha-ember",
-      "pipeline": "Unknown (no local notes/report)",
+      "pipeline": "Yes \u2014 TRELLIS Mega base with derived colour variants and procedural skull restoration",
       "scoreDay": 6,
       "scoreNight": 5,
       "defects": [
@@ -1300,7 +1386,7 @@
         "Same crown and silhouette as base Mega"
       ],
       "fixRoute": "TRELLIS retained-source refinement/rebuild with distinct silhouette, clean surfaces and readable face; colour/material detail pass, then native motion/corpse review.",
-      "reviewStatus": "PROVISIONAL idle-only:4 inspected cells and active render-batch identity assertion",
+      "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in megaDogPoseMatrix",
       "assetFiles": {
         "notes.md": false,
         "report.json": false,
@@ -1327,11 +1413,15 @@
           "sha256": "0eb6af9ad9ba044788fd4d6354d877611e724f8cd5b1a97bd593038bbdc1ef67",
           "mentionsTrellis": true
         }
-      ]
+      ],
+      "nightPresetReviewed": "L10-night (isolated slab)",
+      "trellis": true,
+      "pipelineEvidence": "/Users/wesner/Workspace/minorincident_3dpipeline/v2/wave2_mega.py; cast/mega-alpha/notes.md; tools/assets/skin-crowd-build.ts:197",
+      "lineageConfidence": "Documentary family lineage; deployed byte-to-source hash linkage not embedded in GLB."
     },
     {
       "figure": "inf.monkey",
-      "pipeline": "Unverified: local notes describe a legacy Blender model; deployed skinned lineage must be checked",
+      "pipeline": "Yes, derived \u2014 shipped gorilla skin with procedural thinning, recolour and tail",
       "scoreDay": 3,
       "scoreNight": 2,
       "defects": [
@@ -1340,7 +1430,7 @@
         "Infection cue is a small red side patch"
       ],
       "fixRoute": "TRELLIS rebuild/retained-source cleanup with species silhouette and readable infected face; improve clean material detail; verify native movement, attacks and corpse.",
-      "reviewStatus": "PROVISIONAL idle only:4 inspected cells, active render-batch asset assertions",
+      "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in zooPoseMatrix",
       "assetFiles": {
         "notes.md": true,
         "report.json": false,
@@ -1356,11 +1446,15 @@
       },
       "group": "animal",
       "priority": 3,
-      "pipelineCandidateManifests": []
+      "pipelineCandidateManifests": [],
+      "nightPresetReviewed": "L8-zoo (isolated slab; no campaign practical placements)",
+      "trellis": true,
+      "pipelineEvidence": "tools/assets/build-l8-monkeys.ts; assets/inf.monkey/notes.md",
+      "lineageConfidence": "Explicit generator base mapping; documentary gorilla source family"
     },
     {
       "figure": "inf.nurse",
-      "pipeline": "Unverified: local notes describe a legacy Blender model; deployed skinned lineage must be checked",
+      "pipeline": "Yes \u2014 pipeline source processed from durable high; skinned delivery",
       "scoreDay": 3,
       "scoreNight": 2,
       "defects": [
@@ -1369,7 +1463,7 @@
         "Hair/face becomes a small mottled patch"
       ],
       "fixRoute": "TRELLIS rebuild or retained-source silhouette cleanup; strengthen face and role garment/prop; clean material pass; verify native locomotion and corpse.",
-      "reviewStatus": "PROVISIONAL idle-only:4 inspected cells with passing draw identity assertions",
+      "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in rolePoseMatrix",
       "assetFiles": {
         "notes.md": true,
         "report.json": true,
@@ -1391,7 +1485,10 @@
           "sha256": "2cc9607de8457c56632a8af3573b5b167d07ac7a8ea0c64e309760bdf3447a4f",
           "mentionsTrellis": false
         }
-      ]
+      ],
+      "trellis": true,
+      "pipelineEvidence": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave1/inf.nurse/notes.md",
+      "lineageConfidence": "Documentary source lineage; no embedded deployed-source hash"
     },
     {
       "figure": "inf.riot-cop",
@@ -1404,7 +1501,7 @@
         "Dark uniform loses form at distance"
       ],
       "fixRoute": "TRELLIS rebuild or retained-source silhouette cleanup; strengthen face and role garment/prop; clean material pass; verify native locomotion and corpse.",
-      "reviewStatus": "PROVISIONAL idle-only:4 inspected cells with passing draw identity assertions",
+      "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in rolePoseMatrix",
       "assetFiles": {
         "notes.md": true,
         "report.json": true,
@@ -1435,7 +1532,7 @@
     },
     {
       "figure": "inf.screamer",
-      "pipeline": "Hybrid: procedural heavy-role deformation/additions on shipped skinned base; TRELLIS lineage of base requires verification",
+      "pipeline": "Yes, derived \u2014 TRELLIS base inf.nurse with procedural deformation/props; no unique heavy inference",
       "scoreDay": 3,
       "scoreNight": 2,
       "defects": [
@@ -1444,7 +1541,7 @@
         "Night reduces body to a flat pale silhouette"
       ],
       "fixRoute": "TRELLIS rebuild from an approved silhouette concept; preserve role prop separately, then clean colour/material pass and animation review.",
-      "reviewStatus": "PROVISIONAL idle-only score; motion and exact runtime model provenance not yet verified",
+      "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in heavyPoseMatrix",
       "assetFiles": {
         "notes.md": true,
         "report.json": true,
@@ -1459,7 +1556,7 @@
         "sourceGlb": "assets/inf.screamer/model.skin.glb"
       },
       "pipelineBase": "inf.nurse",
-      "pipelineEvidence": "tools/assets/heavy-roles.ts; tools/assets/heavy-roles-data.ts",
+      "pipelineEvidence": "tools/assets/heavy-roles-data.ts; tools/assets/heavy-roles.ts; base source notes",
       "group": "human",
       "priority": 3,
       "pipelineCandidateManifests": [],
@@ -1467,11 +1564,13 @@
         "Thin gait and raised arms change pose visibly",
         "Face/mouth is weak from game distance",
         "Hit and corpse resemble generic human clips"
-      ]
+      ],
+      "trellis": true,
+      "lineageConfidence": "Explicit generator recipe plus documentary base lineage"
     },
     {
       "figure": "inf.skater",
-      "pipeline": "Legacy Blender/procedural (local notes/report; runtime use requires verification)",
+      "pipeline": "No \u2014 legacy Blender/procedural model",
       "scoreDay": 4,
       "scoreNight": 4,
       "defects": [
@@ -1496,11 +1595,13 @@
       },
       "group": "human",
       "priority": 4,
-      "pipelineCandidateManifests": []
+      "pipelineCandidateManifests": [],
+      "trellis": false,
+      "pipelineEvidence": "Manifest points to legacy model.glb; local notes/report describe procedural rigid construction."
     },
     {
       "figure": "inf.sprinter",
-      "pipeline": "Legacy Blender/procedural (local notes/report; runtime use requires verification)",
+      "pipeline": "No \u2014 legacy Blender/procedural model",
       "scoreDay": 4,
       "scoreNight": 4,
       "defects": [
@@ -1525,11 +1626,13 @@
       },
       "group": "human",
       "priority": 4,
-      "pipelineCandidateManifests": []
+      "pipelineCandidateManifests": [],
+      "trellis": false,
+      "pipelineEvidence": "Manifest points to legacy model.glb; local notes/report describe procedural rigid construction."
     },
     {
       "figure": "inf.suburban-mom",
-      "pipeline": "Unverified: local notes describe a legacy Blender model; deployed skinned lineage must be checked",
+      "pipeline": "Yes \u2014 pipeline source processed from durable high; skinned delivery",
       "scoreDay": 4,
       "scoreNight": 2,
       "defects": [
@@ -1538,7 +1641,7 @@
         "Clothing has weak material separation"
       ],
       "fixRoute": "TRELLIS concept/rebuild or retained-source cleanup; strengthen face, garment silhouette and clean colour blocks; preserve role prop, then verify native locomotion.",
-      "reviewStatus": "PROVISIONAL idle appearance:4 inspected cells and per-frame drawn-model assertion; nurse fixture role does not prove native runner behaviour",
+      "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in ordinaryPoseMatrix",
       "assetFiles": {
         "notes.md": true,
         "report.json": true,
@@ -1565,11 +1668,14 @@
           "sha256": "99a03a10ce3d8e81ac9dbf9cb3d67950165ae7f3fd417f1ccfad2975ecc4de74",
           "mentionsTrellis": true
         }
-      ]
+      ],
+      "trellis": true,
+      "pipelineEvidence": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.suburban-mom/notes.md",
+      "lineageConfidence": "Documentary source lineage; no embedded deployed-source hash"
     },
     {
       "figure": "inf.teen-skater",
-      "pipeline": "Legacy Blender/procedural (local notes/report; runtime use requires verification)",
+      "pipeline": "No \u2014 legacy Blender/procedural model",
       "scoreDay": 4,
       "scoreNight": 4,
       "defects": [
@@ -1594,20 +1700,22 @@
       },
       "group": "human",
       "priority": 4,
-      "pipelineCandidateManifests": []
+      "pipelineCandidateManifests": [],
+      "trellis": false,
+      "pipelineEvidence": "Manifest points to legacy model.glb; local notes/report describe procedural rigid construction."
     },
     {
       "figure": "inf.zebra",
-      "pipeline": "TRELLIS (provenance text found)",
-      "scoreDay": 5,
-      "scoreNight": 4,
+      "pipeline": "Yes \u2014 TRELLIS source documented in local notes",
+      "scoreDay": 3,
+      "scoreNight": 2,
       "defects": [
-        "Dense stripes merge at far zoom",
-        "Face lacks strong readable infection/expression",
-        "Night rim and pale stripes overwhelm body shading"
+        "Death-back corpse folds limbs and torso into an angular contorted striped heap",
+        "Dense stripes and bright night rim conceal anatomy",
+        "Face lacks readable infection or expression"
       ],
-      "fixRoute": "TRELLIS rebuild/retained-source cleanup with species silhouette and readable infected face; improve clean material detail; verify native movement, attacks and corpse.",
-      "reviewStatus": "PROVISIONAL idle only:4 inspected cells, active render-batch asset assertions",
+      "fixRoute": "Retain TRELLIS source only after quadruped death/hit binding is corrected; rebuild corpse pose and weight mapping, then simplify stripe/material grouping.",
+      "reviewStatus": "Opened day/night x zoom 1/1.5 motion matrix; fixture limitations and pose gaps recorded in zooPoseMatrix",
       "assetFiles": {
         "notes.md": true,
         "report.json": true,
@@ -1623,7 +1731,10 @@
       },
       "group": "animal",
       "priority": 3,
-      "pipelineCandidateManifests": []
+      "pipelineCandidateManifests": [],
+      "nightPresetReviewed": "L8-zoo (isolated slab; no campaign practical placements)",
+      "trellis": true,
+      "pipelineEvidence": "assets/inf.zebra/notes.md"
     }
   ],
   "freshCaptureAttempt": {
@@ -1671,7 +1782,15 @@
       "inf.crow",
       "inf.teen-skater"
     ],
-    "resolution": "Requested count47 is inconsistent with current46 directories and45 registered assets; no47th ID invented."
+    "resolution": "Requested count47 is inconsistent with current46 directories and45 registered assets; no47th ID invented.",
+    "runtimePaletteAliases": {
+      "ids": [
+        "inf.dog.black",
+        "inf.dog.cream"
+      ],
+      "source": "src/data/dogAppearance.ts",
+      "interpretation": "Shared dog rig palette aliases, not separate assets/<id> directories. Two additional identities do not resolve requested 47 versus actual 46 directories."
+    }
   },
   "alphaCapture": {
     "images": 20,
@@ -3508,19 +3627,1385 @@
     "scoredRegisteredAssets": 45,
     "directoryIds": 46,
     "requestedFigureCount": 47,
-    "unscored": [
-      "inf.corpse-poses"
-    ],
+    "unscored": [],
     "incompleteRequirements": [
-      "Missing47th ID or explicit scope correction",
-      "Corpse-set game-camera inspection and score",
-      "Full idle/chase/attack/hit/corpse x zoom1/1.5 x day/relevant-night capture matrix",
-      "Native ordinary locomotion evidence",
-      "Per-deployed-asset TRELLIS yes/no lineage",
+      "Missing 47th ID or explicit scope correction",
+      "Pose-specific gaps: Alpha base attack, some hit clips, obscured bloated corpse; retired static assets lack native motion",
+      "Per-deployed-asset TRELLIS yes/no lineage for seven unresolved sources",
       "Measured frequency times screen-size priorities",
-      "Final6\u20138 group sheets including motion",
-      "Final reviewed commit after all evidence complete"
+      "Final reviewed commit after evidence audit"
     ],
-    "gameCodeOrAssetsChanged": false
+    "gameCodeOrAssetsChanged": false,
+    "scoredDirectoryAssets": 46,
+    "openedMotionMatrixCells": 764,
+    "openedMotionMatrixFigures": 33
+  },
+  "corpseSetCapture": {
+    "openedImages": 4,
+    "receipt": "corpse-set/receipt.json",
+    "source": "assets/inf.corpse-poses/model.glb",
+    "limitations": "Network replacement of static manifest template; no shipped placement/scale claim"
+  },
+  "zooAuthoredNight": {
+    "preset": "L8-zoo",
+    "images": 14,
+    "opened": true,
+    "sheet": "zoo-authored-night-sheet.jpg",
+    "renderBatchAssertions": 14,
+    "observation": "Authored preset restores more volumetric shading than generic night but silhouettes remain dark; small faces weak and gorilla face is especially buried. Provisional night scores unchanged.",
+    "limitations": "Synthetic slab without authored zoo practical placements; idle only"
+  },
+  "megaAuthoredNight": {
+    "preset": "L10-night",
+    "images": 6,
+    "sheet": "mega-authored-night-sheet.jpg",
+    "opened": true,
+    "renderBatchAssertions": 6,
+    "observation": "Flat facial masks and crown shapes remain clear but coarse; shoulder/torso masses stay mottled and poorly separated. Scores unchanged.",
+    "limitations": [
+      "idle only",
+      "synthetic slab lacks campaign practical placements"
+    ]
+  },
+  "nativeRunnerCapturePlan": {
+    "verifiedSources": [
+      "src/sim/outbreak/Outbreak.ts:182",
+      "src/data/crowdAppearance.ts:33"
+    ],
+    "finding": "dressInfected preserves explicit regularInfectedModels in scenarioL4; isolated fixture is not that scenario and receives resident appearance.",
+    "nextAction": "Review harness should protect explicit inf model appearance during dressing before view init, then assert render-batch identity and native infected.runner archetype for all motion samples.",
+    "scopeBoundary": "Do not modify game files or movement/combat implementation. Any presentation override must be reported as a fixture limitation."
+  },
+  "ordinaryRunnerMotionAttempt": {
+    "sheet": "motion-ordinary-sheet.jpg",
+    "opened": true,
+    "images": 42,
+    "receipt": "motion-ordinary/receipts.json",
+    "appearanceIdentityAssertions": 35,
+    "appearanceOverride": "Review-only prototype wrapper protects explicit inf variants during dressing; original movement/combat remains installed.",
+    "travelMAtFrame130": {
+      "bathrobe-neighbor": 0.9701218802006459,
+      "bbq-dad": 0.9701218802006459,
+      "cashier": 0.9701218802006459,
+      "common-worker": 0.9701218802006459,
+      "delivery-driver": 0.9701218802006459,
+      "jogger": 0.9701218802006459,
+      "suburban-mom": 0.9701218802006459
+    },
+    "observations": [
+      "All7 requested figures remain drawn with correct asset IDs",
+      "Frames30/90/130 show little visible travel; native chase coverage is not proven",
+      "Hit/corpse changes visible; shared back-fall pose repeats across bodies"
+    ],
+    "limitations": [
+      "Sparse day zoom1.5 only",
+      "Need native L4 world/target initialization for trustworthy chase/attack capture"
+    ]
+  },
+  "targetedRunnerDiagnostic": {
+    "result": [
+      {
+        "frame": 1,
+        "state": "idle",
+        "travelM": 0,
+        "clip": "infected-idle",
+        "position": [
+          0,
+          0
+        ]
+      },
+      {
+        "frame": 30,
+        "state": "chase",
+        "travelM": 0.6215555555555556,
+        "clip": "infected-lurch",
+        "position": [
+          0.622,
+          0
+        ]
+      },
+      {
+        "frame": 90,
+        "state": "chase",
+        "travelM": 2.9197777777777776,
+        "clip": "infected-idle",
+        "position": [
+          2.92,
+          0
+        ]
+      },
+      {
+        "frame": 130,
+        "state": "chase",
+        "travelM": 2.9215555555555555,
+        "clip": "infected-idle",
+        "position": [
+          2.92,
+          0
+        ]
+      },
+      {
+        "frame": 185,
+        "state": "chase",
+        "travelM": 3.223333333333333,
+        "clip": "stagger-right",
+        "position": [
+          2.62,
+          0
+        ]
+      },
+      {
+        "frame": 245,
+        "state": "dead",
+        "travelM": 3.523333333333333,
+        "clip": "death-back",
+        "position": [
+          2.92,
+          0
+        ]
+      }
+    ],
+    "receipt": "motion-runner-targeted/receipts.json",
+    "fixtureChange": "Initialize l1.mode chase and targetId1 before stepping; no game source changes",
+    "visualInspection": "pending"
+  },
+  "runnerCooldownDiagnostic": {
+    "fixtureChange": "Initialize attack cooldown0 in addition to chase target",
+    "receipt": "motion-runner-ready/receipts.json",
+    "samples": [
+      {
+        "frame": 1,
+        "state": "idle",
+        "clip": "infected-idle",
+        "travelM": 0
+      },
+      {
+        "frame": 30,
+        "state": "chase",
+        "clip": "infected-lurch",
+        "travelM": 0.6215555555555556
+      },
+      {
+        "frame": 90,
+        "state": "chase",
+        "clip": "infected-idle",
+        "travelM": 2.9197777777777776
+      },
+      {
+        "frame": 130,
+        "state": "chase",
+        "clip": "infected-idle",
+        "travelM": 2.9215555555555555
+      },
+      {
+        "frame": 185,
+        "state": "chase",
+        "clip": "stagger-right",
+        "travelM": 3.223333333333333
+      },
+      {
+        "frame": 245,
+        "state": "dead",
+        "clip": "death-back",
+        "travelM": 3.523333333333333
+      }
+    ],
+    "visualInspection": "pending"
+  },
+  "runnerLiveBrainDiagnostic": {
+    "receipt": "motion-runner-brain/receipts.json",
+    "states": [
+      {
+        "frame": 1,
+        "tick": 1,
+        "state": "idle",
+        "cooldown": 0,
+        "special": "lunge",
+        "mode": "chase",
+        "target": 1,
+        "pause": 0
+      },
+      {
+        "frame": 30,
+        "tick": 30,
+        "state": "chase",
+        "cooldown": 0,
+        "special": "lunge",
+        "mode": "chase",
+        "target": 1,
+        "pause": 0
+      },
+      {
+        "frame": 90,
+        "tick": 90,
+        "state": "chase",
+        "cooldown": 101,
+        "special": "lunge",
+        "mode": "chase",
+        "target": 1,
+        "pause": 0
+      },
+      {
+        "frame": 130,
+        "tick": 130,
+        "state": "chase",
+        "cooldown": 155,
+        "special": "lunge",
+        "mode": "chase",
+        "target": 1,
+        "pause": 0
+      },
+      {
+        "frame": 185,
+        "tick": 185,
+        "state": "chase",
+        "cooldown": 209,
+        "special": "lunge",
+        "mode": "chase",
+        "target": 1,
+        "pause": 0
+      },
+      {
+        "frame": 245,
+        "tick": 245,
+        "state": "dead",
+        "cooldown": 263,
+        "special": "lunge",
+        "mode": null,
+        "target": null,
+        "pause": null
+      }
+    ]
+  },
+  "runnerDenseAttackProbe": {
+    "figure": "inf.common-worker",
+    "sheet": "motion-runner-strike-sheet.jpg",
+    "images": 10,
+    "opened": true,
+    "receipt": "motion-runner-strike/receipts.json",
+    "verifiedStates": {
+      "30-45": "chase/infected-lurch",
+      "50-60": "attack state with infected-lurch while approaching",
+      "65": "attack/windup",
+      "70-80": "recovery/infected-idle"
+    },
+    "observations": [
+      "Circle and approach communicate danger",
+      "Actual upper-body motion is brief and weakly separated from run",
+      "Arms snap into a broad rear-lean pose then recover; sparse clip labels do not expose strike frame"
+    ],
+    "limitations": [
+      "Need frames66-69 if a distinct strike-pose requirement is enforced",
+      "one figure/day/zoom only"
+    ]
+  },
+  "pipelineClassifications": {
+    "yes": 24,
+    "no": 15,
+    "unresolved": 7
+  },
+  "unresolvedSourceAudit": {
+    "alphaAuthoredCode": "assets/inf.alpha/variants.py explicitly builds base/fire/hoodie/suit from tools/blender/lowpoly.py with palette geometry and no image textures; current skinned-file linkage remains unresolved.",
+    "hazmatAuthoredCode": "assets/inf.hazmat/notes.md describes deterministic texture-free procedural geometry; old pipeline candidate checkpoint says no TRELLIS call. Neither alone proves current skinned source.",
+    "crawlerRiotCandidates": "rest-source manifests explicitly mark rigged_sources_accepted:false; rejected pilot source existence is insufficient deployed-lineage evidence.",
+    "geometryProbe": "Legacy GLBs contain no images; skinned GLBs contain atlas images. An atlas alone is not TRELLIS evidence."
+  },
+  "ordinaryTargetedPoseCapture": {
+    "images": 42,
+    "sheet": "motion-ordinary-targeted-sheet.jpg",
+    "opened": true,
+    "receipt": "motion-ordinary-targeted/receipts.json",
+    "drawIdentityAssertions": 35,
+    "frames": [
+      1,
+      30,
+      65,
+      67,
+      185,
+      245
+    ],
+    "observations": [
+      "Shared forward lurch and raised-arm windup preserved across all7 bodies",
+      "Back-lean hit and back-fall corpse repeat with little role-specific personality",
+      "BBQ apron/spatula and delivery pack remain readable; smaller bodies lose facial detail"
+    ],
+    "limitations": [
+      "Day zoom1.5 only",
+      "Frame67 still labels windup; a distinct impact clip remains unproven",
+      "Appearance dressing and initial chase/cooldown are fixture-controlled"
+    ]
+  },
+  "zooMotionProbe": {
+    "sheet": "motion-zoo-sheet.jpg",
+    "images": 42,
+    "opened": true,
+    "receipt": "motion-zoo/receipts.json",
+    "observations": [
+      "Elephant charge/tusk action reads, but broad smooth wound-marked body remains toy-simple",
+      "Flamingo flight separates from idle; corpse is a small angular pink fold",
+      "Gorilla has large readable motion arcs; torso remains a dark rough mass",
+      "Lion/lioness running and pounce silhouette reads but plain gold body and mane remain simplistic",
+      "Monkey tail curves in motion and cling pose reads; tiny face remains weak",
+      "Zebra kick/turn and side-fall show species identity; dense stripes still mask anatomy"
+    ],
+    "limitations": [
+      "Day zoom1.5 only",
+      "Sparse timeline needs per-figure pose label audit; not full matrix"
+    ]
+  },
+  "attackCriterionClarification": "Attack-state windup is valid evidence for the requested attack pose. A separately named impact clip was an added internal condition, not a user requirement; no longer a completion gate.",
+  "zooPoseMatrix": {
+    "captures": 168,
+    "perFigure": {
+      "elephant": 24,
+      "flamingo": 24,
+      "gorilla": 24,
+      "lion": 24,
+      "lioness": 24,
+      "monkey": 24,
+      "zebra": 24
+    },
+    "sheets": [
+      "/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/s53-zombie-review/motion-zoo-matrix/elephant-sheet.jpg",
+      "/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/s53-zombie-review/motion-zoo-matrix/flamingo-sheet.jpg",
+      "/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/s53-zombie-review/motion-zoo-matrix/gorilla-sheet.jpg",
+      "/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/s53-zombie-review/motion-zoo-matrix/lion-sheet.jpg",
+      "/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/s53-zombie-review/motion-zoo-matrix/lioness-sheet.jpg",
+      "/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/s53-zombie-review/motion-zoo-matrix/monkey-sheet.jpg",
+      "/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/s53-zombie-review/motion-zoo-matrix/zebra-sheet.jpg"
+    ],
+    "inspection": "All7 cropped and all7 full-frame replacement sheets opened; all168 capture cells inspected through sheets. Full frames confirm crop clipping was sheet-only.",
+    "receipt": "motion-zoo-matrix/receipts.json",
+    "settings": [
+      "WebGPU",
+      "high",
+      "game camera",
+      "L4 and L8-zoo",
+      "zoom1 and1.5"
+    ],
+    "frames": [
+      1,
+      30,
+      90,
+      130,
+      185,
+      245
+    ],
+    "clipAudit": {
+      "lion": {
+        "1": {
+          "state": "alerted",
+          "clip": "infected-idle"
+        },
+        "30": {
+          "state": "chase",
+          "clip": "windup"
+        },
+        "90": {
+          "state": "chase",
+          "clip": "infected-idle"
+        },
+        "130": {
+          "state": "chase",
+          "clip": "infected-idle"
+        },
+        "185": {
+          "state": "chase",
+          "clip": "infected-idle"
+        },
+        "245": {
+          "state": "dead",
+          "clip": "death-back"
+        }
+      },
+      "lioness": {
+        "1": {
+          "state": "alerted",
+          "clip": "infected-idle"
+        },
+        "30": {
+          "state": "attack",
+          "clip": "windup"
+        },
+        "90": {
+          "state": "chase",
+          "clip": "infected-idle"
+        },
+        "130": {
+          "state": "chase",
+          "clip": "infected-idle"
+        },
+        "185": {
+          "state": "stagger",
+          "clip": "infected-idle"
+        },
+        "245": {
+          "state": "dead",
+          "clip": "death-back"
+        }
+      },
+      "gorilla": {
+        "1": {
+          "state": "alerted",
+          "clip": "infected-idle"
+        },
+        "30": {
+          "state": "chase",
+          "clip": "windup"
+        },
+        "90": {
+          "state": "chase",
+          "clip": "swing"
+        },
+        "130": {
+          "state": "chase",
+          "clip": "windup"
+        },
+        "185": {
+          "state": "chase",
+          "clip": "stagger-right"
+        },
+        "245": {
+          "state": "dead",
+          "clip": "death-back"
+        }
+      },
+      "elephant": {
+        "1": {
+          "state": "alerted",
+          "clip": "infected-idle"
+        },
+        "30": {
+          "state": "chase",
+          "clip": "windup"
+        },
+        "90": {
+          "state": "chase",
+          "clip": "infected-lurch"
+        },
+        "130": {
+          "state": "chase",
+          "clip": "infected-lurch"
+        },
+        "185": {
+          "state": "chase",
+          "clip": "infected-idle"
+        },
+        "245": {
+          "state": "dead",
+          "clip": "death-back"
+        }
+      },
+      "zebra": {
+        "1": {
+          "state": "alerted",
+          "clip": "infected-idle"
+        },
+        "30": {
+          "state": "chase",
+          "clip": "infected-sprint"
+        },
+        "90": {
+          "state": "attack",
+          "clip": "shamble"
+        },
+        "130": {
+          "state": "chase",
+          "clip": "shamble"
+        },
+        "185": {
+          "state": "stagger",
+          "clip": "infected-idle"
+        },
+        "245": {
+          "state": "dead",
+          "clip": "death-back"
+        }
+      },
+      "flamingo": {
+        "1": {
+          "state": "alerted",
+          "clip": "infected-idle"
+        },
+        "30": {
+          "state": "chase",
+          "clip": "run"
+        },
+        "90": {
+          "state": "attack",
+          "clip": "run"
+        },
+        "130": {
+          "state": "chase",
+          "clip": "run"
+        },
+        "185": {
+          "state": "stagger",
+          "clip": "run"
+        },
+        "245": {
+          "state": "dead",
+          "clip": "death-back"
+        }
+      },
+      "monkey": {
+        "1": {
+          "state": "alerted",
+          "clip": "infected-idle"
+        },
+        "30": {
+          "state": "attack",
+          "clip": "windup"
+        },
+        "90": {
+          "state": "chase",
+          "clip": "infected-idle"
+        },
+        "130": {
+          "state": "chase",
+          "clip": "infected-idle"
+        },
+        "185": {
+          "state": "chase",
+          "clip": "stagger-right"
+        },
+        "245": {
+          "state": "dead",
+          "clip": "death-back"
+        }
+      }
+    },
+    "visualFindings": [
+      "Zebra corpse has strongly angular folded/stretched limbs",
+      "Gorilla corpse retains a near-upright curled form",
+      "Elephant red wound graphics dominate smooth large body",
+      "Night rim draws jagged bright contours around dark animal bodies"
+    ],
+    "remainingGaps": [
+      "Some hit requests leave locomotion/idle clips: explicit hit read remains weak",
+      "Synthetic slab has no authored campaign practical placements",
+      "Not a continuous gait video"
+    ]
+  },
+  "heavyPoseMatrix": {
+    "images": 120,
+    "perFigure": {
+      "armored-football": 24,
+      "brute": 24,
+      "screamer": 24,
+      "bloated": 24,
+      "butcher": 24
+    },
+    "openedSheets": 5,
+    "inspection": "All5 full-frame sheets opened and all120 cells inspected",
+    "presets": [
+      "L4",
+      "night"
+    ],
+    "zooms": [
+      1.5,
+      1
+    ],
+    "frames": [
+      1,
+      30,
+      90,
+      130,
+      185,
+      245
+    ],
+    "receipt": "motion-heavy-matrix/receipts.json",
+    "observations": [
+      "Butcher hat and cleaver remain identifiable but face is weak and body faceted",
+      "Armoured role becomes a dark small grey silhouette at night",
+      "Screamer communicates mostly via large warning ring, with generic thin body gesture",
+      "Bloated attack and corpse remain obscured by smoke and orange X warning",
+      "Brute retains broad coarse blocks and stiff hit/corpse shape"
+    ],
+    "limitations": [
+      "Bloated unobscured corpse still needed",
+      "Pose-specific clip audit pending",
+      "Synthetic environment lacks campaign practical placements"
+    ]
+  },
+  "alphaPoseMatrix": {
+    "captures": 120,
+    "perFigure": {
+      "alpha": 24,
+      "alpha-fire": 24,
+      "alpha-hoodie": 24,
+      "alpha-suit": 24,
+      "alpha-worker": 24
+    },
+    "inspection": "All5 full-frame sheets opened; all120 cells inspected",
+    "clipAudit": {
+      "alpha": {
+        "1": {
+          "state": "alerted",
+          "clip": "infected-idle"
+        },
+        "30": {
+          "state": "chase",
+          "clip": "alpha-charge"
+        },
+        "90": {
+          "state": "chase",
+          "clip": "alpha-charge"
+        },
+        "130": {
+          "state": "chase",
+          "clip": "alpha-charge"
+        },
+        "185": {
+          "state": "chase",
+          "clip": "stagger-left"
+        },
+        "245": {
+          "state": "dead",
+          "clip": "death-back"
+        }
+      },
+      "alpha-worker": {
+        "1": {
+          "state": "alerted",
+          "clip": "infected-idle"
+        },
+        "30": {
+          "state": "chase",
+          "clip": "infected-lurch"
+        },
+        "90": {
+          "state": "attack",
+          "clip": "alpha-strike"
+        },
+        "130": {
+          "state": "attack",
+          "clip": "alpha-strike"
+        },
+        "185": {
+          "state": "stagger",
+          "clip": "infected-idle"
+        },
+        "245": {
+          "state": "dead",
+          "clip": "death-back"
+        }
+      },
+      "alpha-hoodie": {
+        "1": {
+          "state": "alerted",
+          "clip": "infected-idle"
+        },
+        "30": {
+          "state": "chase",
+          "clip": "alpha-roar"
+        },
+        "90": {
+          "state": "chase",
+          "clip": "alpha-roar"
+        },
+        "130": {
+          "state": "chase",
+          "clip": "shamble"
+        },
+        "185": {
+          "state": "stagger",
+          "clip": "infected-idle"
+        },
+        "245": {
+          "state": "dead",
+          "clip": "death-back"
+        }
+      },
+      "alpha-suit": {
+        "1": {
+          "state": "alerted",
+          "clip": "alpha-pounce"
+        },
+        "30": {
+          "state": "chase",
+          "clip": "infected-lurch"
+        },
+        "90": {
+          "state": "attack",
+          "clip": "alpha-strike"
+        },
+        "130": {
+          "state": "attack",
+          "clip": "alpha-strike"
+        },
+        "185": {
+          "state": "stagger",
+          "clip": "alpha-pounce"
+        },
+        "245": {
+          "state": "dead",
+          "clip": "death-back"
+        }
+      },
+      "alpha-fire": {
+        "1": {
+          "state": "alerted",
+          "clip": "infected-idle"
+        },
+        "30": {
+          "state": "chase",
+          "clip": "infected-lurch"
+        },
+        "90": {
+          "state": "chase",
+          "clip": "alpha-bash"
+        },
+        "130": {
+          "state": "chase",
+          "clip": "alpha-bash"
+        },
+        "185": {
+          "state": "stagger",
+          "clip": "infected-idle"
+        },
+        "245": {
+          "state": "dead",
+          "clip": "death-back"
+        }
+      }
+    },
+    "receipt": "motion-alpha-matrix/receipts.json",
+    "observations": [
+      "Base/fire/hoodie/suit maintain very similar broad silhouette and folded corpse",
+      "Role is conveyed mainly by colour and warning geometry at farther zoom",
+      "Night leaves faces and surface detail weak, particularly hoodie/suit",
+      "Worker helmet/shoulder silhouette is more distinct but mottled body remains below8"
+    ],
+    "limitations": [
+      "Several hit samples label idle or other special rather than explicit stagger",
+      "Synthetic slab rather than authored practical-light locations"
+    ]
+  },
+  "rolePoseMatrix": {
+    "captures": 120,
+    "perFigure": {
+      "crawler": 24,
+      "firefighter": 24,
+      "hazmat": 24,
+      "nurse": 24,
+      "riot-cop": 24
+    },
+    "inspection": "All5 full-frame sheets opened and120 capture cells inspected",
+    "clipAudit": {
+      "crawler": {
+        "1": {
+          "state": "alerted",
+          "clip": "crawl"
+        },
+        "30": {
+          "state": "chase",
+          "clip": "crawl"
+        },
+        "90": {
+          "state": "attack",
+          "clip": "crawl"
+        },
+        "130": {
+          "state": "chase",
+          "clip": "crawl"
+        },
+        "185": {
+          "state": "stagger",
+          "clip": "crawl"
+        },
+        "245": {
+          "state": "dead",
+          "clip": "death-back"
+        }
+      },
+      "riot-cop": {
+        "1": {
+          "state": "alerted",
+          "clip": "infected-idle"
+        },
+        "30": {
+          "state": "chase",
+          "clip": "infected-lurch"
+        },
+        "90": {
+          "state": "attack",
+          "clip": "windup"
+        },
+        "130": {
+          "state": "chase",
+          "clip": "infected-idle"
+        },
+        "185": {
+          "state": "stagger",
+          "clip": "stagger-right"
+        },
+        "245": {
+          "state": "dead",
+          "clip": "death-back"
+        }
+      },
+      "hazmat": {
+        "1": {
+          "state": "alerted",
+          "clip": "infected-idle"
+        },
+        "30": {
+          "state": "chase",
+          "clip": "infected-lurch"
+        },
+        "90": {
+          "state": "chase",
+          "clip": "shamble"
+        },
+        "130": {
+          "state": "attack",
+          "clip": "windup"
+        },
+        "185": {
+          "state": "stagger",
+          "clip": "stagger-right"
+        },
+        "245": {
+          "state": "dead",
+          "clip": "death-back"
+        }
+      },
+      "firefighter": {
+        "1": {
+          "state": "alerted",
+          "clip": "infected-idle"
+        },
+        "30": {
+          "state": "chase",
+          "clip": "infected-lurch"
+        },
+        "90": {
+          "state": "attack",
+          "clip": "windup"
+        },
+        "130": {
+          "state": "chase",
+          "clip": "infected-idle"
+        },
+        "185": {
+          "state": "stagger",
+          "clip": "stagger-right"
+        },
+        "245": {
+          "state": "dead",
+          "clip": "death-back"
+        }
+      },
+      "nurse": {
+        "1": {
+          "state": "alerted",
+          "clip": "infected-idle"
+        },
+        "30": {
+          "state": "chase",
+          "clip": "infected-lurch"
+        },
+        "90": {
+          "state": "attack",
+          "clip": "windup"
+        },
+        "130": {
+          "state": "chase",
+          "clip": "infected-idle"
+        },
+        "185": {
+          "state": "stagger",
+          "clip": "stagger-right"
+        },
+        "245": {
+          "state": "dead",
+          "clip": "death-back"
+        }
+      }
+    },
+    "receipt": "motion-role-matrix/receipts.json",
+    "observations": [
+      "Crawler remains a low head/back lump, with weak hand and face separation in crawl/attack",
+      "Firefighter yellow clothes remain identifiable, but small face/tool and generic corpse lack finish",
+      "Hazmat keeps yellow suit and back-tank identity across poses; night still flattens detail",
+      "Nurse is a generic teal body with repeated humanoid windup/hit/back-fall shapes",
+      "Riot shield reads throughout motion and remains prominent on corpse; face/uniform detail is weak"
+    ],
+    "limitations": [
+      "Per-pose hit clips may remain generic or idle",
+      "Synthetic slab without campaign practical-light context"
+    ]
+  },
+  "ordinaryPoseMatrix": {
+    "captures": 140,
+    "perFigure": {
+      "bathrobe-neighbor": 20,
+      "bbq-dad": 20,
+      "cashier": 20,
+      "common-worker": 20,
+      "delivery-driver": 20,
+      "jogger": 20,
+      "suburban-mom": 20
+    },
+    "inspection": "All7 full-frame sheets opened; all140 cells inspected",
+    "receipt": "motion-ordinary-matrix/receipts.json",
+    "fixtureControls": [
+      "Protect explicit inf appearance during dressing",
+      "Initialize chase target and cooldown"
+    ],
+    "frames": [
+      1,
+      30,
+      65,
+      185,
+      245
+    ],
+    "clipAudit": {
+      "bathrobe-neighbor": {
+        "1": {
+          "state": "idle",
+          "clip": "infected-idle"
+        },
+        "30": {
+          "state": "chase",
+          "clip": "infected-frail"
+        },
+        "65": {
+          "state": "attack",
+          "clip": "infected-frail"
+        },
+        "185": {
+          "state": "chase",
+          "clip": "stagger-right"
+        },
+        "245": {
+          "state": "dead",
+          "clip": "death-back"
+        }
+      },
+      "bbq-dad": {
+        "1": {
+          "state": "idle",
+          "clip": "infected-idle"
+        },
+        "30": {
+          "state": "chase",
+          "clip": "infected-lurch"
+        },
+        "65": {
+          "state": "attack",
+          "clip": "windup"
+        },
+        "185": {
+          "state": "chase",
+          "clip": "stagger-right"
+        },
+        "245": {
+          "state": "dead",
+          "clip": "death-back"
+        }
+      },
+      "cashier": {
+        "1": {
+          "state": "idle",
+          "clip": "infected-idle"
+        },
+        "30": {
+          "state": "chase",
+          "clip": "infected-lurch"
+        },
+        "65": {
+          "state": "attack",
+          "clip": "windup"
+        },
+        "185": {
+          "state": "chase",
+          "clip": "stagger-right"
+        },
+        "245": {
+          "state": "dead",
+          "clip": "death-back"
+        }
+      },
+      "common-worker": {
+        "1": {
+          "state": "idle",
+          "clip": "infected-idle"
+        },
+        "30": {
+          "state": "chase",
+          "clip": "infected-lurch"
+        },
+        "65": {
+          "state": "attack",
+          "clip": "windup"
+        },
+        "185": {
+          "state": "chase",
+          "clip": "stagger-right"
+        },
+        "245": {
+          "state": "dead",
+          "clip": "death-back"
+        }
+      },
+      "delivery-driver": {
+        "1": {
+          "state": "idle",
+          "clip": "infected-idle"
+        },
+        "30": {
+          "state": "chase",
+          "clip": "infected-lurch"
+        },
+        "65": {
+          "state": "attack",
+          "clip": "windup"
+        },
+        "185": {
+          "state": "chase",
+          "clip": "stagger-right"
+        },
+        "245": {
+          "state": "dead",
+          "clip": "death-back"
+        }
+      },
+      "jogger": {
+        "1": {
+          "state": "idle",
+          "clip": "infected-idle"
+        },
+        "30": {
+          "state": "chase",
+          "clip": "infected-sprint"
+        },
+        "65": {
+          "state": "attack",
+          "clip": "windup"
+        },
+        "185": {
+          "state": "chase",
+          "clip": "stagger-right"
+        },
+        "245": {
+          "state": "dead",
+          "clip": "death-back"
+        }
+      },
+      "suburban-mom": {
+        "1": {
+          "state": "idle",
+          "clip": "infected-idle"
+        },
+        "30": {
+          "state": "chase",
+          "clip": "infected-lurch"
+        },
+        "65": {
+          "state": "attack",
+          "clip": "windup"
+        },
+        "185": {
+          "state": "chase",
+          "clip": "stagger-right"
+        },
+        "245": {
+          "state": "dead",
+          "clip": "death-back"
+        }
+      }
+    },
+    "observations": [
+      "Role props and colour keep BBQ and delivery figures distinguishable",
+      "Shared lurch/windup/stagger/back-fall lacks individual personality",
+      "Small faces become weak at zoom1.5 and night",
+      "No new evidence raises any figure to8"
+    ],
+    "limitations": [
+      "Presentation dressing protected and initial brain target/cooldown fixture-controlled",
+      "Synthetic slab lacks campaign practical placements"
+    ]
+  },
+  "megaDogPoseMatrix": {
+    "captures": 96,
+    "perFigure": {
+      "dog": 24,
+      "mega-alpha": 24,
+      "mega-alpha-ashen": 24,
+      "mega-alpha-ember": 24
+    },
+    "inspection": "All four full sheets opened individually; all 96 cells visually inspected.",
+    "receipt": "motion-mega-dog-matrix/receipts.json",
+    "limitations": [
+      "Mega uses infected.alpha fixture, not production pursuit controller"
+    ],
+    "observations": {
+      "dog": "Small generic tan silhouette; face and coat vanish at game distance, particularly zoo night. Corpse reads as a small flat shape. Scores remain 3/2.",
+      "mega-alpha": "Strong shoulder mass and readable skull accent in daylight; torso remains muddy, night face loses contrast, curled corpse loses identity. Scores remain 6/5.",
+      "mega-alpha-ashen": "Desaturated treatment flattens material separation and night face; shares base silhouette and folded corpse. Scores remain 5/4.",
+      "mega-alpha-ember": "Orange shoulders improve daytime separation but night suppresses ember identity; shared poses and folded corpse. Scores remain 6/5."
+    }
+  },
+  "groupSheetAssembly": {
+    "directory": "group-sheets",
+    "count": 8,
+    "sheets": [
+      "heavy.jpg",
+      "alpha.jpg",
+      "ordinary.jpg",
+      "role.jpg",
+      "zoo.jpg",
+      "mega-dog.jpg",
+      "retired-human.jpg",
+      "retired-animal.jpg"
+    ],
+    "selection": "Active rows: four idle zoom/preset views plus chase, attack sample, hit sample and corpse; full matrices retained separately. Retired static sheets; corpse-set day overview appended.",
+    "opened": [
+      "heavy.jpg",
+      "alpha.jpg",
+      "ordinary.jpg",
+      "role.jpg",
+      "zoo.jpg",
+      "mega-dog.jpg",
+      "retired-human.jpg",
+      "retired-animal.jpg"
+    ],
+    "remainingInspection": 0,
+    "inspection": "All eight group sheets opened individually. All 46 directory IDs represented. Frame numbers describe samples, not guaranteed clip names; receipt audits govern pose claims.",
+    "sha256": {
+      "heavy.jpg": "339ed0dc6615f17060aa1b146fb6a49b1dde5a3ef7699a907f52d935dd32007a",
+      "alpha.jpg": "8a3a9c9c207d33193903dcc93162dcba6726dff9dadd9ec57bfbe15db38e1703",
+      "ordinary.jpg": "222ac0a28611eebe3ec354cb7650741d0a20621323f1e0f0f6c49bdabd92e5e5",
+      "role.jpg": "3eb6d2307e0a572b02d99a3b02a309018bfdd3deabefd6bdbef444c82de298f4",
+      "zoo.jpg": "58ec7b810ae84744878c8ffe63aabe5af70d06b0bf9b82e40b59d916acf17c11",
+      "mega-dog.jpg": "b54051b2da65adb9388c83ca23e34d0d6e844289067f6e2e137eaad96a1e716e",
+      "retired-human.jpg": "c7c6a1958e4a8a969999a9a52ff7cf237c18dd627a7c9b1f5e956511ec1d77b3",
+      "retired-animal.jpg": "fbed8d1302df65ce602a052a59beaf4d46d244b0d41a77a59adac3e687c6dac4"
+    }
+  },
+  "l4PopulationCensus": {
+    "receipt": "/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/s53-zombie-review/l4-census/census.json",
+    "method": "Production L4 complete bot, seed 1, sampled every 0.5 s; world population exposure, not camera visibility",
+    "runs": [
+      {
+        "tier": "high",
+        "outcome": "timeout",
+        "simSeconds": 600
+      },
+      {
+        "tier": "low",
+        "outcome": "complete",
+        "simSeconds": 301.21666666666664
+      }
+    ],
+    "rows": [
+      {
+        "id": "inf.common-worker",
+        "inheritedV2": true,
+        "crowdSkin": true,
+        "high": {
+          "peak": 6,
+          "actorSeconds": 2658,
+          "infectedSeconds": 2658,
+          "corpseSeconds": 2225
+        },
+        "low": {
+          "peak": 5,
+          "actorSeconds": 1229,
+          "infectedSeconds": 1229,
+          "corpseSeconds": 960.5
+        }
+      },
+      {
+        "id": "inf.crawler",
+        "inheritedV2": false,
+        "crowdSkin": true,
+        "high": {
+          "peak": 11,
+          "actorSeconds": 5424,
+          "infectedSeconds": 5424,
+          "corpseSeconds": 2717.5
+        },
+        "low": {
+          "peak": 6,
+          "actorSeconds": 1568,
+          "infectedSeconds": 1568,
+          "corpseSeconds": 883
+        }
+      },
+      {
+        "id": "inf.riot-cop",
+        "inheritedV2": false,
+        "crowdSkin": true,
+        "high": {
+          "peak": 11,
+          "actorSeconds": 5950,
+          "infectedSeconds": 5950,
+          "corpseSeconds": 1680
+        },
+        "low": {
+          "peak": 9,
+          "actorSeconds": 2158,
+          "infectedSeconds": 2158,
+          "corpseSeconds": 748.5
+        }
+      },
+      {
+        "id": "inf.firefighter",
+        "inheritedV2": false,
+        "crowdSkin": true,
+        "high": {
+          "peak": 9,
+          "actorSeconds": 4446.5,
+          "infectedSeconds": 4446.5,
+          "corpseSeconds": 1154
+        },
+        "low": {
+          "peak": 4,
+          "actorSeconds": 803,
+          "infectedSeconds": 803,
+          "corpseSeconds": 466
+        }
+      },
+      {
+        "id": "inf.hazmat",
+        "inheritedV2": false,
+        "crowdSkin": true,
+        "high": {
+          "peak": 13,
+          "actorSeconds": 6949,
+          "infectedSeconds": 6949,
+          "corpseSeconds": 2275
+        },
+        "low": {
+          "peak": 8,
+          "actorSeconds": 2085.5,
+          "infectedSeconds": 2085.5,
+          "corpseSeconds": 1031.5
+        }
+      },
+      {
+        "id": "inf.brute",
+        "inheritedV2": false,
+        "crowdSkin": true,
+        "high": {
+          "peak": 11,
+          "actorSeconds": 5187.5,
+          "infectedSeconds": 5187.5,
+          "corpseSeconds": 987.5
+        },
+        "low": {
+          "peak": 8,
+          "actorSeconds": 1888,
+          "infectedSeconds": 1888,
+          "corpseSeconds": 629
+        }
+      },
+      {
+        "id": "inf.armored-football",
+        "inheritedV2": false,
+        "crowdSkin": true,
+        "high": {
+          "peak": 7,
+          "actorSeconds": 2882.5,
+          "infectedSeconds": 2882.5,
+          "corpseSeconds": 468.5
+        },
+        "low": {
+          "peak": 6,
+          "actorSeconds": 1505.5,
+          "infectedSeconds": 1505.5,
+          "corpseSeconds": 390
+        }
+      },
+      {
+        "id": "inf.butcher",
+        "inheritedV2": false,
+        "crowdSkin": true,
+        "high": {
+          "peak": 9,
+          "actorSeconds": 3974.5,
+          "infectedSeconds": 3974.5,
+          "corpseSeconds": 463.5
+        },
+        "low": {
+          "peak": 9,
+          "actorSeconds": 2117.5,
+          "infectedSeconds": 2117.5,
+          "corpseSeconds": 438.5
+        }
+      },
+      {
+        "id": "inf.alpha",
+        "inheritedV2": false,
+        "crowdSkin": true,
+        "high": {
+          "peak": 3,
+          "actorSeconds": 1520.5,
+          "infectedSeconds": 1520.5,
+          "corpseSeconds": 1021.5
+        },
+        "low": {
+          "peak": 4,
+          "actorSeconds": 655.5,
+          "infectedSeconds": 655.5,
+          "corpseSeconds": 405
+        }
+      },
+      {
+        "id": "inf.alpha-worker",
+        "inheritedV2": false,
+        "crowdSkin": true,
+        "high": {
+          "peak": 3,
+          "actorSeconds": 1450.5,
+          "infectedSeconds": 1450.5,
+          "corpseSeconds": 979.5
+        },
+        "low": {
+          "peak": 1,
+          "actorSeconds": 139,
+          "infectedSeconds": 139,
+          "corpseSeconds": 120.5
+        }
+      },
+      {
+        "id": "inf.alpha-hoodie",
+        "inheritedV2": false,
+        "crowdSkin": true,
+        "high": null,
+        "low": null
+      },
+      {
+        "id": "inf.alpha-fire",
+        "inheritedV2": false,
+        "crowdSkin": true,
+        "high": {
+          "peak": 3,
+          "actorSeconds": 1177,
+          "infectedSeconds": 1177,
+          "corpseSeconds": 93
+        },
+        "low": {
+          "peak": 2,
+          "actorSeconds": 245,
+          "infectedSeconds": 245,
+          "corpseSeconds": 182
+        }
+      },
+      {
+        "id": "inf.alpha-suit",
+        "inheritedV2": false,
+        "crowdSkin": true,
+        "high": null,
+        "low": null
+      }
+    ],
+    "limitations": [
+      "High-tier run timed out at600 simulation seconds; low-tier completed at301.22 seconds.",
+      "Population exposure only; no camera visibility or pixel-area measurement. Do not call this measured screen exposure."
+    ]
   }
 }
