@@ -344,3 +344,13 @@ removing the healthy-lion 4.4 cm stalk crouch at speed 2.6 while keeping the sam
 walk clip. Removed that abrupt cutoff, retaining the stalk pose for moving
 healthy cats. A completed centered lion repeat is saved at
 `lion-stalk-continuous/`; final matrices and regression checks remain required.
+
+## Centered low-tier backend comparison
+
+Lioness completed 900/900 drawn frames on WebGPU low zoom 1 and WebGL2 low zoom
+1. Both report 0.3667 cm pelvis and 5.5898 cm paw maxima, zero measured sole
+penetration, and zero run-jitter count. On WebGPU, contact slide p95 is 0.1 cm;
+the 15.3 cm maximum is the initial frame, not a later gait frame. Opened the
+WebGPU `strip-0.png`: horizontal body with attached articulated limbs, rather
+than the earlier humanoid-upright silhouette. This is a single-frame inspection;
+full strip/interval and remaining matrix acceptance still remain required.
