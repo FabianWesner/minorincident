@@ -113,13 +113,17 @@ export class LevelNineCrash {
       updateEncounters(w, s.encounters ??= emptyEncounters());
       // The actual bridge deck owns the finale. Reaching this x elsewhere in
       // the district cannot take the controls or move the vehicle sideways.
-      if (!this.driving.state.evacuationDone || car.transform.x < l9Course.bridge.x || car.transform.x > l9Course.bridge.endX || Math.abs(car.transform.z) > l9Course.bridge.halfZ || w.vehicles!.cars.get(s.carId)!.physics.body.linvel().x < 1) return;
+      if (!this.driving.state.evacuationDone || car.transform.x < l9Course.bridge.x || car.transform.x > l9Course.bridge.endX || Math.abs(car.transform.z) > l9Course.bridge.halfZ) return;
+      // r39-markers (r38-vqa P2-1): the deck itself starts the collapse, at any speed and heading. An APC held by boarders or crawling
+      // used to sit on the deck with the objective unmet; the scripted run-up below then goes east at a floor speed.
       this.mission.checkpoint('outskirts-approach');
       this.mission.setState('crash-started', true);
       s.phase = 'approach'; s.startedAt = w.tick; s.from = { ...car.transform }; s.preCrashDurability = car.health.current;
       const lip = this.anchor('crash-impact'), velocity = w.vehicles!.cars.get(s.carId)!.physics.body.linvel();
-      s.impactSpeed = Math.max(1, Math.hypot(velocity.x, velocity.z));
-      s.heading = { x: velocity.x / s.impactSpeed, z: velocity.z / s.impactSpeed };
+      const driven = Math.hypot(velocity.x, velocity.z), eastward = velocity.x >= 1;
+      s.impactSpeed = Math.max(eastward ? 1 : 8, driven);
+      s.heading = eastward ? { x: velocity.x / driven, z: velocity.z / driven } : { x: 1, z: 0 };
+      if (!eastward) s.from.yaw = 0;
       const along = Math.max(3, (lip.x - s.from.x) * s.heading.x + (lip.z - s.from.z) * s.heading.z);
       // The initial velocity is continuous. Once the creature lands and the
       // span tilts, gravity adds 3.5 m/s² down the broken deck.

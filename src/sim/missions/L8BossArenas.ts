@@ -320,7 +320,24 @@ export class L8BossArenas {
     if (boss.followUpThrow) { delete boss.followUpThrow; this.scavenge(e); }
     if (boss.approach) {
       const move = boss.approach, radius = move === 'gorilla.roar' ? 8 : 5;
-      if (distance(e.transform, p.transform) > radius - .8) { this.walk(e, this.predict(e, .8, arena), arena.phase === 2 ? 6.5 : 5.5); return true; }
+      const gap = distance(e.transform, p.transform);
+      if (gap > radius - .8) {
+        // r39-markers (r38-vqa P2-4: 'the gorilla stayed 4.3 m away in chase for 3 min, the courier in the NE corner with her group between
+        // them'): the walk to striking range is blocked by the group, so it never arrived and never struck. When it has not moved for 1.5 s
+        // it strikes from where it stands if the area reaches her (the pound/roar radius, plus its 2 m body reach), and otherwise throws
+        // a prop over the group (the barrage cycle); with nothing to throw it pounds regardless, so the fight always advances.
+        const stuck = boss.approachProgress;
+        if (!stuck || distance(e.transform, stuck) > .25) boss.approachProgress = { x: e.transform.x, z: e.transform.z, at: w.tick };
+        else if (w.tick - stuck.at >= 90) {
+          delete boss.approachProgress; b.path.length = 0; b.goal = -1;
+          if (gap <= radius + 2) { delete boss.approach; this.start(e, move, 40, 0, radius + 2); return true; }
+          delete boss.approach;
+          if (w.infected!.props.nearestObject(e, 25, true)) { boss.barrage = 3; this.scavenge(e); } else this.start(e, move, 40, 0, radius);
+          return true;
+        }
+        this.walk(e, this.predict(e, .8, arena), arena.phase === 2 ? 6.5 : 5.5); return true;
+      }
+      delete boss.approachProgress;
       delete boss.approach; this.start(e, move, 60, 0, radius); return true;
     }
     if (boss.hunt) {

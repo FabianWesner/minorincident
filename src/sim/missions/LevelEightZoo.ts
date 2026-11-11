@@ -415,7 +415,11 @@ export class LevelEightZoo {
         const def = l8BossArenas.find(value => value.id === next.id)!, stage = l8Route.find(value => value.id === next.id)!, p = w.entities.get(1)!.transform;
         let text: string, at: Point;
         if (!s.sealedAt) { text = 'Back to the plaza. The doors shut once the whole group is inside'; at = this.mission.def.anchors['central-plaza']; }
-        else if (next.phase > 0) { text = `${next.id === 'elephant' ? 'Bring down the elephant!' : `Defeat ${def.name}`} — ${def.counter}`; at = def.centre; }
+        else if (next.phase > 0) { text = `${next.id === 'elephant' ? 'Bring down the elephant!' : `Defeat ${def.name}`} — ${def.counter}`;
+          // r39-markers (r38-vqa P3 'the gorilla fight's distance readout is not the distance to the gorilla'): the marker follows the nearest live animal, not the arena centre.
+          let focus: Point = def.centre, best = Infinity;
+          for (const id of next.ids) { const a = w.entities.get(id); if (!a?.infected || a.health.current <= 0 || a.hidden) continue; const d = distance(a.transform, p); if (d < best) { best = d; focus = a.transform; } }
+          at = focus; }
         else {
           const index = l8Route.indexOf(stage);
           if (s.routeStage !== index) { s.routeStage = index; s.routeNode = 0; }
