@@ -1,6 +1,6 @@
 # S34 zombie hits and attacks
 
-Acceptance is **in progress**. Renderer implementation and required code gates pass. The exhaustive matched visual matrix, focused moving/burst proof and final evidence aggregation are still being completed. Do not treat this checkpoint as goal completion.
+Acceptance is **in progress**. The main renderer implementation passed the required code gates; an interpolation-boundary correction is now being revalidated. The exhaustive matched visual matrix, focused moving/burst proof and final evidence aggregation are still being completed. Do not treat this checkpoint as goal completion.
 
 ## Cause
 
@@ -71,3 +71,9 @@ Focused supplementary modes: `S34_BURST=1` isolates the initial MG with unchange
 Logs: `test-results/s34-typecheck.log`, `s34-lint.log`, `s34-focused.log`, `s34-test-gate-final.log`, `s34-scene-gate-final.log`. Full scene-gate artifacts are in `test-results/scene-gate/`. Renderer source has remained unchanged since `008ad99d`; subsequent changes concern capture tooling and evidence only.
 
 Historical investigations and superseded measurements remain available in the earlier report commits, particularly `217588c4`. No raw captures, forbidden reference assets or specs are committed.
+
+## Interpolation boundary follow-up
+
+The live renderer can be less than one tick behind the simulation at contact. Both ordinary and dog recovery caches previously deleted the strike when the simulation had left `attack` but render time was still fractionally before `until`. They now bridge that preceding render tick, clamp the recovery start to its contact pose, and retain the normal 27-tick tail. Existing render-contract cases now sample `129.25` after a simulation strike at `130`, then verify recovery at `140`; humanoid and dog assertions pass (14/14 total cases unchanged). The full code gates and matched after captures are being refreshed for this correction. Existing opened-image SHA-256 receipts allow exact-pixel repeats to be recognized without claiming a different image was reviewed.
+
+The six refreshed nurse/crawler/dog low-WebGL2 day/night composites were each reopened after the interpolation fix. Their image SHA-256 values are identical to the preceding fixed-step captures, and p95 remains nurse 1.8, crawler 1.4, dog 0.3 day / 0.6 night cm. The fix changes the live fractional boundary, while preserving these fixed-step poses.

@@ -70,7 +70,7 @@ export class AnimalMoves {
       const strikeAt = this.dogStrikes.get(e.id);
       let phase: number | undefined;
       if (b.state === 'attack' && strikeAt !== undefined) phase = .5 * clamp01(1 - (strikeAt - renderTick) / 39);
-      else if (strikeAt !== undefined && renderTick >= strikeAt && renderTick - strikeAt < 27) phase = .5 + .5 * (renderTick - strikeAt) / 27;
+      else if (strikeAt !== undefined && renderTick >= strikeAt - 1 && renderTick - strikeAt < 27) phase = .5 + .5 * Math.max(0, renderTick - strikeAt) / 27;
       else if (strikeAt !== undefined) this.dogStrikes.delete(e.id);
       if (phase !== undefined) {
         this.dogPhase = phase < .5 ? phase * .8 : .4 + (phase - .5) * 1.2;

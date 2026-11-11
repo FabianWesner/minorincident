@@ -8,7 +8,7 @@ export const flinchSeconds = .3;
 /**
  * The zombie move set on top of the baked infected clips (presentation only, never read by the sim):
  * walkers drag one foot, runners lurch, attacks coil and lunge into a grab, light hits flinch for at most
- * 0.25 s on planted feet. Knockdown/get-up stay with heavy reactions (deaths, finishers, blasts).
+ * 0.30 s on planted feet. Knockdown/get-up stay with heavy reactions (deaths, finishers, blasts).
  */
 export class InfectedMoves {
   private readonly strikes = new Map<number, number>();
@@ -66,9 +66,10 @@ export class InfectedMoves {
       layers.attack = .5 * p;
       layers.lunge = p < .78 ? -.08 * ease(p / .78) : -.08 + .26 * ease((p - .78) / .22);
     } else if (strikeAt !== undefined) {
+      // The sim may have struck while the interpolated render clock is still in its preceding tick.
       const since = renderTick - strikeAt;
-      if (since >= 0 && since < 27 && state !== 'dead') {
-        layers.attack = .5 + .5 * since / 27;
+      if (since >= -1 && since < 27 && state !== 'dead') {
+        layers.attack = .5 + .5 * Math.max(0, since) / 27;
         layers.lunge = .18 * (since < 6 ? 1 : 1 - ease((since - 6) / 21));
       } else this.strikes.delete(e.id);
     }
