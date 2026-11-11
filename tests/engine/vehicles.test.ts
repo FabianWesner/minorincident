@@ -102,7 +102,32 @@ test('enter, drive and exit: door dwell, input ownership (no attacks while drivi
   await l9FloorApcThroughPile();
   await l9CompanionsBoardDiagonalApc();
   await l9CheckpointLanes();
+  await l9BayAndHatch();
 }, 400_000);
+
+// r33-l9polish: (a) the bridge-gate wall spans +-34 m, so an APC cannot slip round its open end (was 13 m); an APC that stops anywhere
+// in the bay box (here 30 m north of the lane) still starts the evacuation. (b) The rail-stall hatch: infected climb aboard at most
+// one per boardSpacing ticks, so four boarders cannot pile up and kill the courier in 3 s.
+async function l9BayAndHatch(): Promise<void> {
+  const world = await loadLevel('L9', 1, preset('L9-default'), 0, { quality: 'low' });
+  try {
+    const l9 = world.missions!.l9!, vehicles = world.vehicles!, car = vehicles.cars.get(l9.state.carId)!, s = l9.driving.state;
+    world.missions!.begin();
+    for (let i = 0; i < 5; i++) world.update();
+    const wall = world.interactables!.walls.find(w => w.entityId === s.bridgeGateId);
+    expect(wall?.halfZ, 'bridge-gate wall reaches +-34 m').toBeGreaterThanOrEqual(34);
+    const pose = { x: 452, z: 30, y: car.physics.def.suspension + car.physics.def.wheelRadius + .15, yaw: 0 };
+    Object.assign(car.entity.transform, pose); Object.assign(car.physics.previous, pose); car.physics.body.setTranslation(pose, true);
+    car.physics.body.setLinvel({ x: 0, y: 0, z: 0 }, true); car.physics.body.setAngvel({ x: 0, y: 0, z: 0 }, true);
+    for (let i = 0; i < 90; i++) world.update();
+    expect(s.evacuationAt, 'evacuation starts from the bay corner, not only the 11 m radius').not.toBeNull();
+    // Hatch pacing: while stalled the vehicle carries the boarding spacing; the climb-aboard clock follows each boarder.
+    s.stallAt = world.tick; s.restarted = false; world.update();
+    expect(car.entity.vehicle!.boardSpacing, 'stalled hatch: boarders are spaced').toBeGreaterThanOrEqual(150);
+    s.restarted = true; world.update();
+    expect(car.entity.vehicle!.boardSpacing, 'after the restart the spacing is gone').toBe(0);
+  } finally { world.dispose(); }
+}
 
 // r30-l9bridge (r28-vqa P2): the L9 `bridge` checkpoint restarted the APC beside the chasing school bus. After restoring each L9
 // checkpoint fixture (resume) and after a death at the bridge (retry), nothing solid lies within 8 m ahead of the APC on its route

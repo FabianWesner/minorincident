@@ -195,14 +195,14 @@ export class LevelNineSetPieces {
         if (tick < a.at) return;
         this.freeze(e, false);
         const vehicle = car.entity.vehicle!;
-        if (car.physics.hullDistance(e.transform.x, e.transform.z) <= 1.4 && vehicle.attached.length < 8 && this.w.vehicles!.active === car.entity.id) {
+        if (car.physics.hullDistance(e.transform.x, e.transform.z) <= 1.4 && vehicle.attached.length < 8 && this.w.vehicles!.active === car.entity.id && tick >= (vehicle.nextBoardAt ?? 0)) {
           const c = Math.cos(p.yaw), sn = Math.sin(p.yaw), side = (e.transform.x - p.x) * sn + (e.transform.z - p.z) * c >= 0 ? 1 : -1;
           // Clinging at the side rail, as the hull's boarder slots pose it; left at the landing point (inside the hull) a
           // shake-off on the next tick dropped it under the APC and the ram killed it outright.
           const along = -car.physics.def.length * .25 + Math.floor(vehicle.attached.length / 2) * .65, reach = car.physics.def.width / 2 + .12;
           Object.assign(e.transform, { x: p.x + c * along + sn * side * reach, z: p.z - sn * along + c * side * reach, y: p.y + .8 });
           w.spatial.set(e.id, e.transform.x, e.transform.z);
-          vehicle.attached.push(e.id); e.attachedTo = car.entity.id;
+          vehicle.attached.push(e.id); e.attachedTo = car.entity.id; if (vehicle.boardSpacing) vehicle.nextBoardAt = tick + vehicle.boardSpacing;
           (vehicle.apcBoarders ??= {})[e.id] = { startedAt: tick - 180, nextHit: tick + 60, side };
           w.events.emit({ type: 'vehicle.grabbed', tick, sourceId: car.entity.id, targetId: e.id });
           this.hullHit(20, e.id); a.phase = 'hull'; a.nextStrike = tick + L.strikeTicks; this.signal('leaper-landed', a.id);
@@ -250,7 +250,7 @@ export class LevelNineSetPieces {
   /** A point on the APC's lane, a little ahead of where the hull will be: the driver dodges or smashes it. Stopped hull: aim at the hull. */
   private throwTarget(ticks: number, uses = 0): { x: number; z: number } {
     const car = this.car, p = car.entity.transform, at = this.predict(ticks);
-    if (car.physics.speed < 2) { const d = (uses % 2 ? 1 : -1) * tune.thrower.stoppedSpreadM * (uses % 4 < 2 ? 1 : .3); return { x: p.x + Math.cos(p.yaw) * d, z: p.z - Math.sin(p.yaw) * d }; }
+    if (car.physics.speed < 2) { const [a, l] = tune.thrower.stoppedOffsetsM[uses % tune.thrower.stoppedOffsetsM.length]; return { x: p.x + Math.cos(p.yaw) * a + Math.sin(p.yaw) * l, z: p.z - Math.sin(p.yaw) * a + Math.cos(p.yaw) * l }; }
     return { x: at.x + Math.cos(p.yaw) * tune.thrower.leadM, z: at.z - Math.sin(p.yaw) * tune.thrower.leadM };
   }
   private flights(s: L9SetPieceState): void {

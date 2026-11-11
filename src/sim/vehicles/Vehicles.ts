@@ -34,6 +34,8 @@ export interface VehicleState {
   apcContacts?: { sequence: number; infected: Record<number, APCContact>; obstacles?: Record<number, APCObstacleContact> };
   /** L9 boarders retain their climb and next bite across saves/checkpoints. */
   apcBoarders?: Record<number, { startedAt: number; nextHit: number; side?: number }>;
+  /** r33-l9polish: L9 stall hatch fairness. While `boardSpacing` > 0 the next infected may only climb aboard `boardSpacing` ticks after the previous one (`nextBoardAt`). */
+  boardSpacing?: number; nextBoardAt?: number;
   /** A heavy infected impact briefly kills momentum; this never permanently breaks the engine. */
   impactStallUntil?: number;
   /** L9 mission policy: durability clamps to 0 but the vehicle stays driveable at a capped speed, cannot be exited and is never destroyed by E09. Persisted with the entity. */
@@ -445,8 +447,9 @@ export class Vehicles {
       const distance = car.physics.hullDistance(target.transform.x, target.transform.z), radius = target.combat?.radius ?? .4;
       const dx = target.transform.x - p.x, dz = target.transform.z - p.z;
       const alongside = Math.abs(dx * s + dz * c) >= car.physics.def.width / 2 - .2 && Math.abs(dx * c - dz * s) < car.physics.def.length / 2 - .4;
-      if (state.floor && occupied && alongside && !target.attachedTo && target.health.current > 0 && !Status.stunned(target, tick) && !throwingBoarders && boarderTypes.includes(target.archetype) && distance <= radius + .2 && state.attached.length < boarderLimit) {
+      if (state.floor && occupied && alongside && !target.attachedTo && target.health.current > 0 && !Status.stunned(target, tick) && !throwingBoarders && boarderTypes.includes(target.archetype) && distance <= radius + .2 && state.attached.length < boarderLimit && tick >= (state.nextBoardAt ?? 0)) {
         state.attached.push(target.id); target.attachedTo = car.entity.id;
+        if (state.boardSpacing) state.nextBoardAt = tick + state.boardSpacing;
         boarders[target.id] = { startedAt: tick, nextHit: tick + 180, side: dx * s + dz * c >= 0 ? 1 : -1 };
         const contact = ledger.infected[id] ??= { contactId: null, separatedAt: null, windupAt: null, attackId: null, cooldownUntil: 0 };
         if (contact.contactId === null) { contact.contactId = ++ledger.sequence; this.apcHit(car, target, 'contact', contact.contactId, null); }
@@ -814,6 +817,7 @@ export class Vehicles {
       for (const contact of Object.values(state.apcContacts?.obstacles ?? {})) if (contact.separatedAt !== null) contact.separatedAt += delta;
       for (const boarder of Object.values(state.apcBoarders ?? {})) { boarder.startedAt += delta; boarder.nextHit += delta; }
       if (state.impactStallUntil) state.impactStallUntil += delta;
+      if (state.nextBoardAt) state.nextBoardAt += delta;
       for (const passenger of state.passengers ?? []) { passenger.started += delta; passenger.pauseUntil += delta; if (passenger.story) passenger.story.start += delta; }
       const physics = new VehicleBody(vehicleDef(entity.archetype), this.world.physics.world!, entity.transform, entity.transform.yaw);
       physics.overspeedDamp = apcFloor.overspeedDamp;
