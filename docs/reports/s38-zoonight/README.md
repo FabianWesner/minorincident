@@ -8,12 +8,12 @@
 ## Change so far
 
 - `CrowdView` now uses smaller per-draw night coat fills for zoo animals, a dark warm-neutral gorilla base, and a lower shared boss figure fill. The rim setting and attack flash path are unchanged.
-- The courier depth slice is disabled while the vehicle x-ray flag is active. Her x-ray fill is dimmed and its gold contour is restrained.
+- The courier retains the existing depth slice for visibility. Vehicle x-ray fill is now a dim blue-grey silhouette with clothing detail suppressed and a restrained contour.
 - No simulation, stats, or animation-clip code changed.
 
 ## Before/after measurements
 
-The requested pixel measurements have not been collected yet. The before captures below were opened and confirm the reported appearance; no after captures were generated because the local browser pool could not bind a loopback listener in this sandbox. Numeric before/after RGB, saturation, luma, stripe contrast, and lion variance must be added after Scene Lab runs.
+The requested pixel measurements have not been collected yet. The before captures below were opened and confirm the reported appearance; the initial sandbox prevented browser runs. Later measured before/after numbers and current outstanding requirements are recorded below.
 
 | Subject | Before evidence opened | Before numbers | After numbers |
 |---|---|---:|---:|
@@ -74,3 +74,5 @@ Loaded and played `l8-before-gorilla` for 15 seconds (WebGL2 low, zoom 1.5); ope
 ## Live gorilla fixture
 
 `l8-before-gorilla`, WebGL2 low, zoom 1.5, god mode, real-input route `60,0;60,-17;60,-25`, 30 s: reached `arena-gorilla`, no logged page errors. Opened `test-results/s38-fixture-gorilla-arena/s005-t1607.jpg`: dark charcoal/brown fur, pale moonlit edge, amber ring intact. Typecheck and lint pass on this revision. Owned fixture server stopped automatically after the run.
+
+Live lion fixture: `l8-before-lion`, WebGPU low zoom 1, god mode, real-input route `-60,-47;-60,-35`, 30 s; no logged page errors. Opened `test-results/s38-fixture-lion/s005-t1579.jpg`: tan body with darker underside, dark mane and limbs, amber pounce cue and red threat ring remain visible. Owned server stopped automatically. This verifies the low-quality live lion appearance at the reported production camera.
