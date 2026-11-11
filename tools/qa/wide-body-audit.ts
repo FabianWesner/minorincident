@@ -5,7 +5,8 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { dirname } from 'node:path';
 import { runnerLevels, runLevel } from '../sim-runner/levels';
 import { cureEncounters, curePaceEncounters, cureEncounterSlots, cureEncounterSpot } from '../../src/levels/L10/encounters';
-import { l9Groups } from '../../src/data/l9';
+import { LevelNineSetPieces } from '../../src/sim/missions/LevelNineSetPieces';
+import { l9Groups, l9SetPieces, l9SetPieceTuning } from '../../src/data/l9';
 import { infectedDef } from '../../src/data/infected';
 import { megaAlpha } from '../../src/data/megaAlpha';
 import { NavGrid, type Wall } from '../../src/sim/ai/NavGrid';
@@ -43,18 +44,32 @@ for (const level of runnerLevels.filter(level => !selectedLevels || selectedLeve
   const playerRoute: { x: number; z: number }[] = [];
   let outcome = 'not-run';
   let coverage: Coverage | undefined;
+  let authoredSource: string | undefined;
+  const restoreSources: (() => void)[] = [];
   let audit: Pick<LevelResult, 'unreachable' | 'narrowOpenings'> = { unreachable: [], narrowOpenings: [] };
   const run = await runLevel(level, 'newbie', 1, level === 'L10' ? 3600 : 2400, 'auto', undefined, undefined, 0, {
     quality: 'high',
     beforeBegin(world) {
       const ai = world.infected!, spawn = ai.spawn.bind(ai);
+      if (level === 'L9') {
+        const prototype = LevelNineSetPieces.prototype as unknown as Record<'stage' | 'stall', (this: unknown, ...args: unknown[]) => unknown>;
+        for (const method of ['stage', 'stall'] as const) {
+          const original = prototype[method];
+          prototype[method] = function (this: unknown, ...args: unknown[]) {
+            const previous = authoredSource;
+            authoredSource = method === 'stage' ? String(args[2]) : 'stall-rush';
+            try { return original.apply(this, args); } finally { authoredSource = previous; }
+          } as typeof original;
+          restoreSources.push(() => { prototype[method] = original as typeof prototype[typeof method]; });
+        }
+      }
       const recordWide = (entity: (typeof ai.active)[number], source: string) => {
         if (!wide(entity.archetype, entity.infected?.variant) || seenWideIds.has(entity.id)) return;
         seenWideIds.add(entity.id);
         const objective = world.missions?.def.steps.find(step => world.missions!.state.steps[step.id].status === 'active')?.id;
         spawns.push({ id: entity.id, archetype: entity.archetype, variant: entity.infected?.variant, radius: entity.infected?.variant === megaAlpha.asset ? megaAlpha.radius : entity.combat!.radius,
           x: entity.transform.x, z: entity.transform.z, tick: world.tick, player: { x: world.entities.get(1)!.transform.x, z: world.entities.get(1)!.transform.z },
-          cohort: `${level}-tick-${world.tick}`, source, active: true, wave: entity.infected?.cureRegion ?? (entity.infected?.territory ? 'territory' : undefined), objective });
+          cohort: authoredSource ?? `${level}-tick-${world.tick}`, source, active: true, wave: entity.infected?.cureRegion ?? (entity.infected?.territory ? 'territory' : undefined), objective });
       };
       const checkRoutes = () => {
         const targets = [...playerRoute, { x: world.entities.get(1)!.transform.x, z: world.entities.get(1)!.transform.z }];
@@ -120,12 +135,18 @@ for (const level of runnerLevels.filter(level => !selectedLevels || selectedLeve
       }) as typeof ai.release;
     },
     beforeDispose(world) {
+      for (const restore of restoreSources) restore();
       const walls = fullWalls(world);
       if (level === 'L9') {
         // Road formations cycle brute/armored roles; shortcut groups author Alphas.
         const expected = l9Groups.filter(g => g.alphas > 0 || g.route === 'road' && g.runners >= 3).map(g => g.id);
         const ledger = world.missions!.l9!.state.encounters;
         const observed = expected.filter(id => ledger?.spawned.includes(id));
+        for (const id of [...l9SetPieces.filter(piece => ['leapers', 'thrower', 'stall-ambush'].includes(piece.kind)).map(piece => piece.id), 'stall-rush']) {
+          expected.push(id);
+          const quota = id.startsWith('leapers-') ? l9SetPieceTuning.leaper.count : id === 'stall-ambush' ? 2 : id === 'stall-rush' ? l9SetPieceTuning.stall.rush.filter(role => wide(role)).length : 1;
+          if (spawns.filter(row => row.cohort === id).length >= quota) observed.push(id);
+        }
         coverage = { expected, observed, missing: expected.filter(id => !observed.includes(id)) };
       }
       if (level === 'L10' && world.chunks) {

@@ -69,3 +69,7 @@ Corrected runtime route retries to retain each record's original spawn coordinat
 ## L9 fixed-group coverage receipt
 
 The audit now compares the production L9 admission ledger against every fixed group that authors the requested wide roles (road formations cycle brute/armored; shortcut formations explicitly author Alphas). All four expected groups were fully admitted: `road-1`, `road-2`, `dry-shortcut-3`, `dry-shortcut-6`. No expected group was missing in the isolated L9 rerun, which exited zero with 107 wide spawn records and no unreachable paths/openings. A missing group now fails the audit instead of silently passing a partial route census. Typecheck and tool lint passed. This qualifies fixed groups across alternate routes; L9 set-piece branch coverage remains separate work.
+
+## L9 set-piece coverage receipt
+
+Native set-piece spawn instrumentation now records each actor's authored set-piece ID and requires the full wide-role quota: two each for `leapers-1`, `leapers-2`, `stall-ambush`, `stall-rush`, and one each for `thrower-1`/`thrower-2`. The isolated run recorded these exact quotas and all four fixed groups, with no missing sources and 107 pathable wide records. Set pieces with only dogs, ordinary runners or obstacles are excluded from this wide-role quota. Typecheck and tool lint passed before adding the quota comparison; the recorded counts satisfy that comparison. Route-dependent set-piece placements on unplayed alternate lanes remain a coverage limitation.
