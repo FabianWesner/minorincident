@@ -55,7 +55,7 @@ try {
   if (values.setup) log({ setup: values.setup, result: await page.evaluate(js => { const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: unknown }).game; return String(new Function('a', 'g', js)(a, g)); }, values.setup) });
   if (values.god) { await page.evaluate(() => window.__SS__!.cheats.god(true)); log({ setup: 'god-mode' }); }
   if (trace) {
-    await trace.send('Tracing.start', { traceConfig: { recordMode: 'recordAsMuchAsPossible', includedCategories: ['devtools.timeline', 'blink.user_timing', 'disabled-by-default-v8.cpu_profiler'] }, transferMode: 'ReturnAsStream' });
+    await trace.send('Tracing.start', { traceConfig: { recordMode: 'recordAsMuchAsPossible', excludedCategories: ['*'], includedCategories: ['devtools.timeline', 'blink.user_timing'] }, transferMode: 'ReturnAsStream' });
     traceStarted = true;
   }
   await page.evaluate(z => {
