@@ -377,3 +377,15 @@ Lioness: root 1.664 cm, yaw 0.100 rad/frame, pelvis 0.557 cm, local paw 9.203 cm
 The lioness yaw matches the existing 6 rad/s presentation cap at 60 Hz. The
 local paw metric still needs speed/phase and visual acceptance; no completion
 claim follows solely from changing the measurement coordinates.
+
+## Opened real-L8 consecutive strip
+
+The fixture probe now captures consecutive canvas frames 174–179. Completed
+900-frame run under `l8-visual-current/`, opened `sheet.jpg` and enlarged
+`crops.jpg`. Both cats remain behind the black fence with horizontal bodies;
+the lion's visible foreleg shifts incrementally while body position stays
+steady across the six frames. No whole-body jump is visible in this short
+window, which includes the lion's previous maximum frame 178. Fence bars obscure
+some feet, and this is not a full-interval or all-matrix acceptance statement.
+The lioness's maximum frame 182 is outside this six-frame window and remains to
+be inspected. Captures were opened rather than merely generated.
