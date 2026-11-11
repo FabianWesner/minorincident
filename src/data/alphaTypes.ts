@@ -23,6 +23,9 @@ const levelMix: Readonly<Record<string, readonly AlphaType[]>> = {
   L10: ['brute', 'thrower', 'screamer', 'leaper', 'armoured'],
 };
 
+/** The level's authored Alpha mix, in order (authored encounters pick slot n as mix[n % length] instead of hashing entity ids). */
+export function alphaMixFor(level: string): readonly AlphaType[] { return levelMix[level] ?? ['brute']; }
+
 /** Stable per-entity mix; earlier levels retain their original Alpha archetype and moves. */
 export function alphaTypeFor(level: string | undefined, entityId: number): AlphaType {
   const mix = levelMix[level ?? ''];

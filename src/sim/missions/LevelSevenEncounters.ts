@@ -5,6 +5,7 @@ import type { EntitySnapshot } from '../world/types';
 import type { Point } from '../npc/types';
 import { l7Encounters, l7Rocket } from '../../data/l7';
 import { l3 } from '../../data/l3';
+import { alphaMixFor } from '../../data/alphaTypes';
 import { infectedHumanBite } from '../../data/infected';
 import { corpseDetour, formationBack, formationSlot, leaderHeading, requireClearPoint, snapToClear } from './missionHelpers';
 import { NavGrid } from '../ai/NavGrid';
@@ -148,6 +149,12 @@ export class LevelSevenEncounters {
   private clearPoint(at: Point, radius: number): Point {
     return requireClearPoint(this.world, at, radius, 4, 'L7 encounter');
   }
+  /** r42: Alpha slots in encounter order (opening street = Brute, 2nd street = Screamer, 4th street = Thrower, then the two final-corridor Alphas Brute + Thrower) take the shared L7 mix (Brute, Thrower, Screamer). */
+  private alphaType(group: number, i: number) {
+    const first = l7Encounters.firstStreetGroup, mix = alphaMixFor('L7');
+    const slot = group === l7Encounters.finalGroup ? 3 + i : group === first ? 0 : group === first + 1 ? 2 : 1;
+    return mix[slot % mix.length]!;
+  }
   private group(group: number, centre: Point, count: number, alphas: number, resident = false): void {
     const ai = this.world.infected!;
     const admit = resident ? ai.spawn.bind(ai) : ai.director.request.bind(ai.director);
@@ -163,7 +170,7 @@ export class LevelSevenEncounters {
         ? i ? { x: -43, z: 41.7 } : { x: -64, z: 50 }
         : { x: centre.x, z: centre.z + (i ? 3 : -3) };
       admit('infected.alpha', streetPoint(at, .55), { pack: group, state: 'idle', yaw: Math.PI,
-        alphaType: group === l7Encounters.finalGroup ? i ? 'thrower' : 'brute' : group === l7Encounters.firstStreetGroup + 1 ? 'thrower' : 'brute' });
+        alphaType: this.alphaType(group, i) });
     }
     // Only the final horde spans the wide corridor. Street packs stay on the
     // road; the wide rows put Lakeshore residents behind frontage obstacles.

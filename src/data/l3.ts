@@ -87,6 +87,11 @@ export const l3 = {
     /** Segment 3 also holds the horde: two packs of 60 (PO 2026-11-07; was 125) at the on-ramp end of two avenues (seeded), streaming west. */
     horde: { packSize: 60, fromX: 72, toX: 132 },
     leashM: 9,
+    /** r42 Alpha mix: one Thrower waits on the courier's street at the end of S3. Admitted out of view once the courier is `alphaAheadM` short
+     * of it, then pressed at her within `alphaEngageM`. A Brute at x 14 or 66 and a Thrower at x 104 each failed the L3 threat criteria
+     * (L3-06 squad >= 2 at the army, L3-11 attacks/min), so L3 carries this one (docs/reports/r42-alphamix). */
+    alphas: [{ x: 116, type: 'thrower' }] as readonly { x: number; type: 'brute' | 'thrower' }[],
+    alphaAheadM: 36, alphaEngageM: 40,
     /** Side streets spill (PO 2026-11-07: 30 / 45, were 50 / 75): a shot within `nearM` of a cross-link in S2/S3 brings `size[seg]` out of the doors along it. */
     /** `policeM`: the spill runs at the nearest squad officer within this distance of the shot (else at the shot). */
     spill: { links: [-55, -15, 40, 85] as readonly number[], nearM: 14, doorM: 16, size: [30, 45] as P, maxPerLink: 2, cooldownS: 18, policeM: 25 },
