@@ -206,7 +206,7 @@ export interface L4State {
   /** PO 10-13 perimeter: the jersey barriers that close the convoy gate (entity ids) and the next "stay inside" call. */
   gateIds: number[]; barkAt: number;
   /** Collapse: infected planned at doors along both routes (emerge out of view) and the soldier pockets still to be placed. */
-  pendingDoor: { id: number; door: string; reserved?: boolean; home: { x: number; z: number } }[]; pockets: number[];
+  pendingDoor: { id: number; door: string; reserved?: boolean; roster?: 'heavy' | 'alpha'; home: { x: number; z: number } }[]; pockets: number[];
   /** Successful admissions per pocket; retained across retries and checkpoints. */
   pocketSpawned?: Record<number, number>;
   /** Spectacle: tank (route progress, next shot, shots fired), helicopter, HMG bursts, fuel truck and the live damage. */

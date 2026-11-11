@@ -1,9 +1,10 @@
+import { alphaTypeFor } from '../../data/alphaTypes';
 import type { InfectedSystem } from '../ai/InfectedSystem';
 import type { Combat } from '../combat/Combat';
 import { survivor } from '../../data/survivor';
 import { l4PerimeterSegments, l4WallSlots, l4BreachOf, l4Breaches, l4BreachSite, type L4BreachSide } from '../../data/l4Perimeter';
 import { Rng } from '../../core/Rng';
-import { l4, l4ArrivalRoster, l4InfectedArchetypes, l4InfectedLooks, l4FirefighterLooks, l4Anchors, l4Cars, l4CellarDistance, l4CollapseGroups, l4Crowd, l4Edges, l4Emergence, l4OffscreenMouths, l4BreachApproaches, l4Pockets, l4Posts, l4Route, l4RoutePose, l4ConvoyStations, l4ConvoyGate, l4ConvoyPose, type L4Weapon } from '../../data/l4';
+import { l4, l4ArrivalRoster, l4InfectedArchetypes, l4InfectedLooks, l4FirefighterLooks, l4Anchors, l4Cars, l4CellarDistance, l4CollapseGroups, l4EncounterRoster, l4Crowd, l4Edges, l4Emergence, l4OffscreenMouths, l4BreachApproaches, l4Pockets, l4Posts, l4Route, l4RoutePose, l4ConvoyStations, l4ConvoyGate, l4ConvoyPose, type L4Weapon } from '../../data/l4';
 import { balancedCrowdModel } from '../../data/crowdAppearance';
 import { l4AlphaEmergence } from '../../levels/L4/layout';
 import { infectedDef } from '../../data/infected';
@@ -904,14 +905,16 @@ export class LevelFourWar {
     }
     return ids;
   }
-  private emergenceRoom(push = false, headroom: number = this.headroom(), reservedSlot = false): number {
+  private emergenceRoom(push = false, headroom: number = this.headroom(), reservedSlot = false, authored = false): number {
     const ai = this.infected;
+    // An authored street encounter (r37) draws on the live cap itself: the quotas other cohorts reserve wait behind it.
+    if (authored) return Math.max(0, ai.director.cap - ai.director.pendingTurns - ai.director.count);
     const reserved = Math.max(0, ai.director.reserved - (reservedSlot ? 1 : 0));
     const keep = reservedSlot ? 0 : Math.max(0, headroom - this.streetReserve());
     const retreatReserve = push ? 0 : this.s.director.cutOffPending ?? 0;
     return Math.max(0, Math.floor(ai.director.cap * (push ? 1 : this.director.aliveShare())) - reserved - keep - ai.director.pendingTurns - retreatReserve - ai.director.count);
   }
-  private emerge(at: Point, push = false, headroom: number = this.headroom(), reservedSlot = false, roster: readonly string[] = l4InfectedArchetypes): number {
+  private emerge(at: Point, push = false, headroom: number = this.headroom(), reservedSlot = false, roster: readonly string[] = l4InfectedArchetypes, authored = false): number {
     const { world } = this.mission, ai = this.infected;
     // Every authored pressure path shares this guard, including collapse-director flanks.
     if (!this.outsidePerimeter(at)) return 0;
@@ -919,7 +922,7 @@ export class LevelFourWar {
     // Callers keep their pending count when no source is safe, so the group is
     // retried at a later eligible mouth instead of being dropped.
     if (!(ai.director.offscreen(at) || ai.director.occluded(at))) return 0;
-    if (!this.spawnRoom(this.low ? 0 : ai.director.reserved) || !this.emergenceRoom(push, headroom, reservedSlot) || !ai.pool.length || this.inGap(at)) return 0;
+    if (!this.spawnRoom(this.low ? 0 : ai.director.reserved) || !this.emergenceRoom(push, headroom, reservedSlot, authored) || !ai.pool.length || this.inGap(at)) return 0;
     // These arrivals were already infected before entering the district.
     // Use the existing infected pool/model batches; real camp civilians still
     // turn in place with their own identity, clothes and accessories.
@@ -930,7 +933,10 @@ export class LevelFourWar {
     const seed = this.s.emergedIds.length + this.s.collapseIds.length;
     const near = neighbours.map(e => ({ model: e.archetype!, x: e.transform.x, z: e.transform.z }));
     const archetype = balancedCrowdModel(roster === l4InfectedArchetypes ? l4ArrivalRoster(seed) : roster, near, at, seed);
-    const id = ai.spawn(archetype, at), e = world.entities.get(id)!;
+    // Street-north encounter leader: an Alpha outside the war's alphaIds (no war job), brute/armoured/thrower by the L4 mix.
+    const lead = archetype === 'infected.alpha';
+    const id = lead ? ai.spawn(archetype, at, { state: 'idle', alphaType: alphaTypeFor('L4', seed), yaw: -Math.PI / 2 }) : ai.spawn(archetype, at), e = world.entities.get(id)!;
+    if (lead && e.combat) e.combat.allyResist = l4.alphas.allyResist;
     // Admission can shift around another body. Validate the admitted pose too,
     // before it is drawn, and retain the caller's quota if that shift exposed it.
     if (!(ai.director.offscreen(e.transform) || ai.director.occluded(e.transform))) { ai.release(e); return 0; }
@@ -1334,11 +1340,26 @@ export class LevelFourWar {
   }
   private populateCollapse(): void {
     const s = this.s, scale = this.low ? .5 : 1;
-    for (const [index, [x, z, size, reserved = 0]] of l4CollapseGroups.entries()) {
+    for (const [index, [x, z, size, reserved = 0, kind]] of l4CollapseGroups.entries()) {
       // Street mouths are authored emergence points too. Lakeshore's middle blocks
       // have no building door within 14 m, so the old door-only plan silently skipped them.
-      for (let i = 0; i < Math.ceil(size * scale); i++) s.pendingDoor.push({ id: 0, door: `l4-street-edge-${index}`, home: { x, z }, reserved: i < Math.ceil(reserved * scale) });
+      for (let i = 0; i < Math.ceil(size * scale); i++) s.pendingDoor.push({ id: 0, door: `l4-street-edge-${index}`, home: { x, z }, reserved: i < Math.ceil(reserved * scale), ...(kind ? { roster: kind === 'alpha' && i > 0 ? 'heavy' as const : kind } : {}) });
     }
+  }
+  /** Frees one cap slot for an authored street encounter: the idle regular farthest from the courier (never Alphas, authored arrivals or anything engaged). */
+  private retireIdleFor(): boolean {
+    const { world } = this.mission, s = this.s, ai = this.infected, player = world.entities.get(1)!.transform;
+    const authored = new Set<number>([...s.alphaIds, ...s.emergedIds, ...s.collapseIds, ...s.pendingDoor.map(q => q.id)]);
+    let pick: EntitySnapshot | undefined, far = 40;
+    for (const e of ai.active) {
+      const b = e.infected;
+      if (!b || authored.has(e.id) || e.health.current <= 0 || e.corpse || e.hidden || e.emerging || e.infectionRise || b.recoverAt >= 0 || b.scripted || b.breachApproach || b.specialAttack ||
+        b.state !== 'idle' && b.state !== 'wander' || ['chase', 'bite'].includes(b.l1?.mode ?? '') || e.combat?.attacking || e.archetype === 'infected.alpha') continue;
+      const d = dist(e.transform, player);
+      if (d > far && ai.director.offscreen(e.transform, e.transform.y - .7)) { far = d; pick = e; }
+    }
+    if (!pick) return false;
+    ai.release(pick); this.reserveSlots(); return true;
   }
   private emergeCollapse(): void {
     const { world } = this.mission, s = this.s, ai = this.infected, p = world.entities.get(1)!.transform;
@@ -1363,7 +1384,10 @@ export class LevelFourWar {
       if (this.inGap(q.home) || !ai.director.offscreen(a) || dist(a, p) < 24) continue;
       // After the war, the spare regular slots feed small street groups, still under the same cap.
       const keep = early ? 0 : q.home.z > 30 ? 4 : q.home.x > 0 ? 2 : 0;
-      let id = this.emerge(a, false, keep, !!q.reserved), straggler = false;
+      const roster = q.roster ? (q.roster === 'alpha' ? ['infected.alpha'] : l4EncounterRoster) : undefined;
+      let id = this.emerge(a, false, keep, !!q.reserved, roster, !!q.roster), straggler = false;
+      // Street-north encounters (r37): a war population that still fills the cap yields one far, idle, unseen regular for each heavy/Alpha body.
+      if (!id && roster && this.retireIdleFor()) id = this.emerge(a, false, keep, !!q.reserved, roster, true);
       if (!id && onStreets && !q.reserved) {
         // A full war population already contains the stragglers. Send nearby unseen
         // regulars down the street on foot; retain their identity, HP and cap slots.
