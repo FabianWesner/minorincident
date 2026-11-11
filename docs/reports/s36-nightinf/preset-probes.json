@@ -1,0 +1,998 @@
+[
+  {
+    "path": "test-results/s36-nightinf/grade-protected/s36-L4/metrics.json",
+    "samples": [
+      {
+        "frame": 30,
+        "actors": [
+          {
+            "id": "ordinary",
+            "bodySizeM": 1.6308284071527621,
+            "pixels": 1085,
+            "meanRgb": [
+              79.81,
+              85.26,
+              104.12
+            ],
+            "meanSaturation": 0.2876,
+            "blueDominantShare": 0.7327,
+            "colourBucketShare": 0.1327188940092166,
+            "lumaMean": 85.46,
+            "lumaStd": 15.998386573745638,
+            "colourBuckets": 144,
+            "rect": [
+              431,
+              219,
+              463,
+              289
+            ]
+          },
+          {
+            "id": "brute",
+            "bodySizeM": 3.130603076737928,
+            "pixels": 4141,
+            "meanRgb": [
+              95.36,
+              88.08,
+              99.24
+            ],
+            "meanSaturation": 0.2587,
+            "blueDominantShare": 0.6037,
+            "colourBucketShare": 0.08959188601787008,
+            "lumaMean": 90.43,
+            "lumaStd": 29.483577533162613,
+            "colourBuckets": 371,
+            "rect": [
+              471,
+              234,
+              553,
+              343
+            ]
+          },
+          {
+            "id": "butcher",
+            "bodySizeM": 3.3672423623481462,
+            "pixels": 6919,
+            "meanRgb": [
+              122,
+              106.92,
+              112.52
+            ],
+            "meanSaturation": 0.2622,
+            "blueDominantShare": 0.4943,
+            "colourBucketShare": 0.06258129787541553,
+            "lumaMean": 110.53,
+            "lumaStd": 46.290602521669456,
+            "colourBuckets": 433,
+            "rect": [
+              544,
+              266,
+              640,
+              391
+            ]
+          },
+          {
+            "id": "bloated",
+            "bodySizeM": 1.858828416585495,
+            "pixels": 2354,
+            "meanRgb": [
+              120.15,
+              82.25,
+              83.77
+            ],
+            "meanSaturation": 0.3706,
+            "blueDominantShare": 0.127,
+            "colourBucketShare": 0.18394222599830076,
+            "lumaMean": 90.42,
+            "lumaStd": 30.245159664079534,
+            "colourBuckets": 433,
+            "rect": [
+              655,
+              356,
+              704,
+              438
+            ]
+          },
+          {
+            "id": "screamer",
+            "bodySizeM": 2.04126766219042,
+            "pixels": 2336,
+            "meanRgb": [
+              120.86,
+              113.23,
+              120.29
+            ],
+            "meanSaturation": 0.2127,
+            "blueDominantShare": 0.4242,
+            "colourBucketShare": 0.1934931506849315,
+            "lumaMean": 115.36,
+            "lumaStd": 32.64071957442707,
+            "colourBuckets": 452,
+            "rect": [
+              743,
+              408,
+              801,
+              499
+            ]
+          },
+          {
+            "id": "armored",
+            "bodySizeM": 2.532672181449138,
+            "pixels": 3808,
+            "meanRgb": [
+              69.85,
+              70.14,
+              80.01
+            ],
+            "meanSaturation": 0.2604,
+            "blueDominantShare": 0.5706,
+            "colourBucketShare": 0.09637605042016807,
+            "lumaMean": 70.79,
+            "lumaStd": 29.449459949453313,
+            "colourBuckets": 367,
+            "rect": [
+              854,
+              457,
+              926,
+              569
+            ]
+          }
+        ]
+      }
+    ],
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteLumaStd:ordinary",
+          "pass": true,
+          "value": 16,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteColourBucketShare:ordinary",
+          "pass": true,
+          "value": 0.1327188940092166,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteLumaStd:brute",
+          "pass": true,
+          "value": 29.48,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteColourBucketShare:brute",
+          "pass": true,
+          "value": 0.08959188601787008,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteLumaStd:butcher",
+          "pass": true,
+          "value": 46.29,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteColourBucketShare:butcher",
+          "pass": true,
+          "value": 0.06258129787541553,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteLumaStd:bloated",
+          "pass": true,
+          "value": 30.25,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteColourBucketShare:bloated",
+          "pass": true,
+          "value": 0.18394222599830076,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteLumaStd:screamer",
+          "pass": true,
+          "value": 32.64,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteColourBucketShare:screamer",
+          "pass": true,
+          "value": 0.1934931506849315,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteLumaStd:armored",
+          "pass": true,
+          "value": 29.45,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteColourBucketShare:armored",
+          "pass": true,
+          "value": 0.09637605042016807,
+          "limit": 0
+        },
+        {
+          "name": "canvas.f30.varianceMin",
+          "pass": true,
+          "value": 416.0723402579388,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f30.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    }
+  },
+  {
+    "path": "test-results/s36-nightinf/grade-protected/s36-L10-night/metrics.json",
+    "samples": [
+      {
+        "frame": 30,
+        "actors": [
+          {
+            "id": "ordinary",
+            "bodySizeM": 1.6308284071527621,
+            "pixels": 1085,
+            "meanRgb": [
+              62.76,
+              56.05,
+              57.04
+            ],
+            "meanSaturation": 0.2687,
+            "blueDominantShare": 0.2995,
+            "colourBucketShare": 0.1032258064516129,
+            "lumaMean": 57.54,
+            "lumaStd": 14.315133658849955,
+            "colourBuckets": 112,
+            "rect": [
+              431,
+              219,
+              463,
+              289
+            ]
+          },
+          {
+            "id": "brute",
+            "bodySizeM": 3.130603076737928,
+            "pixels": 4141,
+            "meanRgb": [
+              75.37,
+              64.73,
+              62.5
+            ],
+            "meanSaturation": 0.1988,
+            "blueDominantShare": 0.0792,
+            "colourBucketShare": 0.05264428881912581,
+            "lumaMean": 66.83,
+            "lumaStd": 14.562115857992216,
+            "colourBuckets": 218,
+            "rect": [
+              471,
+              234,
+              553,
+              343
+            ]
+          },
+          {
+            "id": "butcher",
+            "bodySizeM": 3.3672423623481462,
+            "pixels": 6919,
+            "meanRgb": [
+              91.3,
+              79.04,
+              78.24
+            ],
+            "meanSaturation": 0.1748,
+            "blueDominantShare": 0.1054,
+            "colourBucketShare": 0.019511490099725394,
+            "lumaMean": 81.59,
+            "lumaStd": 11.782132252219773,
+            "colourBuckets": 135,
+            "rect": [
+              544,
+              266,
+              640,
+              391
+            ]
+          },
+          {
+            "id": "bloated",
+            "bodySizeM": 1.858828416585495,
+            "pixels": 2354,
+            "meanRgb": [
+              111.83,
+              70.19,
+              66.54
+            ],
+            "meanSaturation": 0.419,
+            "blueDominantShare": 0.0476,
+            "colourBucketShare": 0.11469838572642312,
+            "lumaMean": 78.78,
+            "lumaStd": 12.54064106700123,
+            "colourBuckets": 270,
+            "rect": [
+              655,
+              356,
+              704,
+              438
+            ]
+          },
+          {
+            "id": "screamer",
+            "bodySizeM": 2.04126766219042,
+            "pixels": 2336,
+            "meanRgb": [
+              85.89,
+              82.01,
+              80.61
+            ],
+            "meanSaturation": 0.1217,
+            "blueDominantShare": 0.027,
+            "colourBucketShare": 0.04323630136986301,
+            "lumaMean": 82.73,
+            "lumaStd": 12.115065900145252,
+            "colourBuckets": 101,
+            "rect": [
+              743,
+              408,
+              801,
+              499
+            ]
+          },
+          {
+            "id": "armored",
+            "bodySizeM": 2.532672181449138,
+            "pixels": 3808,
+            "meanRgb": [
+              58.34,
+              59.75,
+              62.36
+            ],
+            "meanSaturation": 0.1364,
+            "blueDominantShare": 0.1329,
+            "colourBucketShare": 0.034926470588235295,
+            "lumaMean": 59.64,
+            "lumaStd": 16.72962830952033,
+            "colourBuckets": 133,
+            "rect": [
+              854,
+              457,
+              926,
+              569
+            ]
+          }
+        ]
+      }
+    ],
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteLumaStd:ordinary",
+          "pass": true,
+          "value": 14.32,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteColourBucketShare:ordinary",
+          "pass": true,
+          "value": 0.1032258064516129,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteLumaStd:brute",
+          "pass": true,
+          "value": 14.56,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteColourBucketShare:brute",
+          "pass": true,
+          "value": 0.05264428881912581,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteLumaStd:butcher",
+          "pass": true,
+          "value": 11.78,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteColourBucketShare:butcher",
+          "pass": true,
+          "value": 0.019511490099725394,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteLumaStd:bloated",
+          "pass": true,
+          "value": 12.54,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteColourBucketShare:bloated",
+          "pass": true,
+          "value": 0.11469838572642312,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteLumaStd:screamer",
+          "pass": true,
+          "value": 12.12,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteColourBucketShare:screamer",
+          "pass": true,
+          "value": 0.04323630136986301,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteLumaStd:armored",
+          "pass": true,
+          "value": 16.73,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteColourBucketShare:armored",
+          "pass": true,
+          "value": 0.034926470588235295,
+          "limit": 0
+        },
+        {
+          "name": "canvas.f30.varianceMin",
+          "pass": true,
+          "value": 99.02671256804297,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f30.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    }
+  },
+  {
+    "path": "test-results/s36-nightinf/grade-protected/s36-game-z1.5/metrics.json",
+    "samples": [
+      {
+        "frame": 30,
+        "actors": [
+          {
+            "id": "ordinary",
+            "bodySizeM": 1.6308284071527621,
+            "pixels": 1085,
+            "meanRgb": [
+              62.69,
+              55.72,
+              57.23
+            ],
+            "meanSaturation": 0.2686,
+            "blueDominantShare": 0.3051,
+            "colourBucketShare": 0.08755760368663594,
+            "lumaMean": 57.31,
+            "lumaStd": 13.345568177551272,
+            "colourBuckets": 95,
+            "rect": [
+              431,
+              219,
+              463,
+              289
+            ]
+          },
+          {
+            "id": "brute",
+            "bodySizeM": 3.130603076737928,
+            "pixels": 4141,
+            "meanRgb": [
+              73.45,
+              62.94,
+              61.34
+            ],
+            "meanSaturation": 0.1963,
+            "blueDominantShare": 0.0894,
+            "colourBucketShare": 0.050229413185220964,
+            "lumaMean": 65.06,
+            "lumaStd": 14.275051872181086,
+            "colourBuckets": 208,
+            "rect": [
+              471,
+              234,
+              553,
+              343
+            ]
+          },
+          {
+            "id": "butcher",
+            "bodySizeM": 3.3672423623481462,
+            "pixels": 6919,
+            "meanRgb": [
+              91.67,
+              79.26,
+              79.02
+            ],
+            "meanSaturation": 0.1732,
+            "blueDominantShare": 0.107,
+            "colourBucketShare": 0.019800549212313917,
+            "lumaMean": 81.88,
+            "lumaStd": 11.307370422717712,
+            "colourBuckets": 137,
+            "rect": [
+              544,
+              266,
+              640,
+              391
+            ]
+          },
+          {
+            "id": "bloated",
+            "bodySizeM": 1.858828416585495,
+            "pixels": 2354,
+            "meanRgb": [
+              110.77,
+              70.1,
+              67.05
+            ],
+            "meanSaturation": 0.4168,
+            "blueDominantShare": 0.0561,
+            "colourBucketShare": 0.10875106202209006,
+            "lumaMean": 78.53,
+            "lumaStd": 13.271969035343059,
+            "colourBuckets": 256,
+            "rect": [
+              655,
+              356,
+              704,
+              438
+            ]
+          },
+          {
+            "id": "screamer",
+            "bodySizeM": 2.04126766219042,
+            "pixels": 2336,
+            "meanRgb": [
+              85.73,
+              81.75,
+              81.17
+            ],
+            "meanSaturation": 0.1227,
+            "blueDominantShare": 0.0398,
+            "colourBucketShare": 0.04708904109589041,
+            "lumaMean": 82.55,
+            "lumaStd": 12.312941666122807,
+            "colourBuckets": 110,
+            "rect": [
+              743,
+              408,
+              801,
+              499
+            ]
+          },
+          {
+            "id": "armored",
+            "bodySizeM": 2.532672181449138,
+            "pixels": 3808,
+            "meanRgb": [
+              56.46,
+              57.63,
+              60.86
+            ],
+            "meanSaturation": 0.1408,
+            "blueDominantShare": 0.2209,
+            "colourBucketShare": 0.03623949579831933,
+            "lumaMean": 57.61,
+            "lumaStd": 15.30023527378808,
+            "colourBuckets": 138,
+            "rect": [
+              854,
+              457,
+              926,
+              569
+            ]
+          }
+        ]
+      }
+    ],
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteLumaStd:ordinary",
+          "pass": true,
+          "value": 13.35,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteColourBucketShare:ordinary",
+          "pass": true,
+          "value": 0.08755760368663594,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteLumaStd:brute",
+          "pass": true,
+          "value": 14.28,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteColourBucketShare:brute",
+          "pass": true,
+          "value": 0.050229413185220964,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteLumaStd:butcher",
+          "pass": true,
+          "value": 11.31,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteColourBucketShare:butcher",
+          "pass": true,
+          "value": 0.019800549212313917,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteLumaStd:bloated",
+          "pass": true,
+          "value": 13.27,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteColourBucketShare:bloated",
+          "pass": true,
+          "value": 0.10875106202209006,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteLumaStd:screamer",
+          "pass": true,
+          "value": 12.31,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteColourBucketShare:screamer",
+          "pass": true,
+          "value": 0.04708904109589041,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteLumaStd:armored",
+          "pass": true,
+          "value": 15.3,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteColourBucketShare:armored",
+          "pass": true,
+          "value": 0.03623949579831933,
+          "limit": 0
+        },
+        {
+          "name": "canvas.f30.varianceMin",
+          "pass": true,
+          "value": 142.85786654704418,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f30.variedTilesMin",
+          "pass": true,
+          "value": 57,
+          "limit": 8
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    }
+  },
+  {
+    "path": "test-results/s36-nightinf/grade-protected/s36-L8-zoo/metrics.json",
+    "samples": [
+      {
+        "frame": 30,
+        "actors": [
+          {
+            "id": "ordinary",
+            "bodySizeM": 1.6308284071527621,
+            "pixels": 1085,
+            "meanRgb": [
+              73.58,
+              68.26,
+              67.52
+            ],
+            "meanSaturation": 0.2735,
+            "blueDominantShare": 0.2793,
+            "colourBucketShare": 0.07557603686635944,
+            "lumaMean": 69.34,
+            "lumaStd": 9.204266544498806,
+            "colourBuckets": 82,
+            "rect": [
+              431,
+              219,
+              463,
+              289
+            ]
+          },
+          {
+            "id": "brute",
+            "bodySizeM": 3.130603076737928,
+            "pixels": 4141,
+            "meanRgb": [
+              76.53,
+              67.71,
+              64.41
+            ],
+            "meanSaturation": 0.1867,
+            "blueDominantShare": 0.0613,
+            "colourBucketShare": 0.05047090074861145,
+            "lumaMean": 69.35,
+            "lumaStd": 11.469959477599193,
+            "colourBuckets": 209,
+            "rect": [
+              471,
+              234,
+              553,
+              343
+            ]
+          },
+          {
+            "id": "butcher",
+            "bodySizeM": 3.3672423623481462,
+            "pixels": 6919,
+            "meanRgb": [
+              65.72,
+              58.16,
+              57.63
+            ],
+            "meanSaturation": 0.1716,
+            "blueDominantShare": 0.1231,
+            "colourBucketShare": 0.02240208122561064,
+            "lumaMean": 59.73,
+            "lumaStd": 19.405758554184388,
+            "colourBuckets": 155,
+            "rect": [
+              544,
+              266,
+              640,
+              391
+            ]
+          },
+          {
+            "id": "bloated",
+            "bodySizeM": 1.858828416585495,
+            "pixels": 2354,
+            "meanRgb": [
+              72.45,
+              46.96,
+              44.98
+            ],
+            "meanSaturation": 0.4148,
+            "blueDominantShare": 0.065,
+            "colourBucketShare": 0.102803738317757,
+            "lumaMean": 52.24,
+            "lumaStd": 14.065734713024813,
+            "colourBuckets": 242,
+            "rect": [
+              655,
+              356,
+              704,
+              438
+            ]
+          },
+          {
+            "id": "screamer",
+            "bodySizeM": 2.04126766219042,
+            "pixels": 2336,
+            "meanRgb": [
+              85.3,
+              82.08,
+              80.75
+            ],
+            "meanSaturation": 0.1229,
+            "blueDominantShare": 0.0295,
+            "colourBucketShare": 0.045376712328767124,
+            "lumaMean": 82.66,
+            "lumaStd": 12.220872610298414,
+            "colourBuckets": 106,
+            "rect": [
+              743,
+              408,
+              801,
+              499
+            ]
+          },
+          {
+            "id": "armored",
+            "bodySizeM": 2.532672181449138,
+            "pixels": 3808,
+            "meanRgb": [
+              58.8,
+              60.53,
+              63.23
+            ],
+            "meanSaturation": 0.1394,
+            "blueDominantShare": 0.1854,
+            "colourBucketShare": 0.03807773109243697,
+            "lumaMean": 60.36,
+            "lumaStd": 15.820238297359897,
+            "colourBuckets": 145,
+            "rect": [
+              854,
+              457,
+              926,
+              569
+            ]
+          }
+        ]
+      }
+    ],
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteLumaStd:ordinary",
+          "pass": true,
+          "value": 9.2,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteColourBucketShare:ordinary",
+          "pass": true,
+          "value": 0.07557603686635944,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteLumaStd:brute",
+          "pass": true,
+          "value": 11.47,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteColourBucketShare:brute",
+          "pass": true,
+          "value": 0.05047090074861145,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteLumaStd:butcher",
+          "pass": true,
+          "value": 19.41,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteColourBucketShare:butcher",
+          "pass": true,
+          "value": 0.02240208122561064,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteLumaStd:bloated",
+          "pass": true,
+          "value": 14.07,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteColourBucketShare:bloated",
+          "pass": true,
+          "value": 0.102803738317757,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteLumaStd:screamer",
+          "pass": true,
+          "value": 12.22,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteColourBucketShare:screamer",
+          "pass": true,
+          "value": 0.045376712328767124,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteLumaStd:armored",
+          "pass": true,
+          "value": 15.82,
+          "limit": 0
+        },
+        {
+          "name": "flatSilhouetteColourBucketShare:armored",
+          "pass": true,
+          "value": 0.03807773109243697,
+          "limit": 0
+        },
+        {
+          "name": "canvas.f30.varianceMin",
+          "pass": true,
+          "value": 442.66000768272534,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f30.variedTilesMin",
+          "pass": true,
+          "value": 46,
+          "limit": 8
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    }
+  }
+]

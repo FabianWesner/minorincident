@@ -13,6 +13,9 @@ export function l4ArrivalRoster(index: number): readonly string[] {
   const h = Math.floor(Math.abs(index) / 3) % 3;
   return index % 3 === 2 ? [...l4OrdinaryArchetypes, l4HeavyArchetypes[h], l4HeavyArchetypes[(h + 1) % 3]] : [...l4OrdinaryArchetypes, l4HeavyArchetypes[h]];
 }
+/** Street-north encounter kinds (see `l4CollapseGroups`): a heavy-rich explicit roster, optionally led by an Alpha. */
+export type L4EncounterKind = 'heavy' | 'alpha';
+export const l4EncounterRoster: readonly string[] = ['infected.brute', 'infected.armored', 'infected.butcher', 'infected.riot', 'infected.firefighter', 'infected.hazmat', 'infected.runner'];
 export const l4InfectedLooks = ['inf.common-worker', 'npc.national-guard', ...l1Pedestrians.models] as const;
 /** Two registered responder bodies share the same firefighter combat role. */
 export const l4FirefighterLooks = ['infected.firefighter', 'npc.firefighter-alive'] as const;
@@ -365,12 +368,16 @@ export const l4Glass: readonly (readonly [number, number, number])[] = [
   [-3, -44.8, 0], [12, -44.8, 0], [28, -44.8, 0], [-12, 39.2, 0], [-44, 39.2, 0], [26, 39.2, 0], [-30, -22.6, 0],
 ];
 /** Post-collapse street homes (x, z, size, optional reserved slots): out-of-view emergence or existing stragglers arriving on foot under the same cap. */
-export const l4CollapseGroups: readonly (readonly [number, number, number, number?])[] = [
+export const l4CollapseGroups: readonly (readonly [number, number, number, number?, L4EncounterKind?])[] = [
   [l4.collapse.egress[0], l4.collapse.egress[1], 2, 2],
   // Side-street pairs remain outside the protected Lakeshore corridor, with the full road open beside them.
   [20, 54, 2], [42, 54, 2, 2],
   [-84, -39.5, 3, 2], [-46, -37.4, 3], [-24, -37.4, 4, 2], [-4, -37.4, 4, 2], [18, -37.4, 4], [38, -37.4, 3], [50, -22, 4, 2], [50, -6, 4], [50, 12, 3, 2],
   [-46, 44, 3], [-20, 44, 4], [4, 44, 4], [26, 44, 3], [45, 44, 4], [58, 44, 3], [62, 28.6, 3],
+  // PO 2026-11-11 ("tons of tough zombies, add encounters on the street north"): three authored fights on the north street (plaza exit to Harbor Street west, the way the courier runs) and on Metro Road north (the marker's east loop). Same zombies as everywhere (no stat change): only count, mix and placement. Indices 18..20 are stable. No reserved slots (they would shrink the war's room during the hold); in the collapse they draw on the live cap directly.
+  // 'heavy': heavies + riot/firefighter, the street holds them in the open crossing between the block fronts;
+  // 'alpha': the first body is an Alpha, escorted by the same heavy-rich mix.
+  [-48, -39, 5, 0, 'heavy'], [-66, -40.2, 4, 0, 'alpha'], [48.5, -14, 5, 0, 'heavy'],
 ];
 /** Soldier pockets of the collapse (hold, engaged) with the infected that rush them, along the two routes. */
 export const l4Pockets: readonly { at: P[]; foes: P }[] = [

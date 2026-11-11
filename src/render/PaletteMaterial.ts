@@ -27,6 +27,8 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
   readonly figureRim = uniform(0).setGroup(this._uniformGroup);
   /** Moon bounce on crowd clothing, independent of the driven vehicle's hero rim. */
   readonly figureFill = uniform(0).setGroup(this._uniformGroup);
+  /** Preserve figure albedo when cool moon rim would otherwise blue-wash infected skin and clothing. */
+  readonly figureFillNeutral = uniform(0).setGroup(this._uniformGroup);
   /** Animal bosses retain coat detail above the ordinary infected night ceiling. */
   readonly animalNightRead = uniform(0).setGroup(this._uniformGroup);
   /** Only courier meshes receive the continuous survivor surface fill. */
@@ -130,7 +132,8 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       // their bright creases. Keep a continuous moonlit surface on figures,
       // including the dark swatches; ordinary world surfaces keep their albedo.
       // The corgi's moon bounce is a neutral lift of its own coat (PO #44): the blue rim tint turned its orange salmon and its white pink.
-      const figureFill = surface.max(vec3(.12)).mul(mix(lighting.rimColor, vec3(.6), this.companion)).mul(figureFillAmount).mul(lighting.rim).mul(.9);
+      const figureFillTint = mix(mix(lighting.rimColor, vec3(.6), this.companion), vec3(.6), this.figureFillNeutral.mul(nodes?.threat ?? 0));
+      const figureFill = surface.max(vec3(.12)).mul(figureFillTint).mul(figureFillAmount).mul(lighting.rim).mul(.9);
       const heroSurfaceFill = surface.mul(lighting.heroFillColor).mul(this.heroFigure).mul(lighting.heroSurfaceFill).mul(normalWorld.y.mul(.3).add(.7));
       const shaded = mix(lit, surface.mul(lighting.shadow), shadow).add(surface.mul(field.add(fill))).add(heroSurfaceFill).add(figureFill).add(rim).toVar();
       // Keep identity colours in the face/clothes; the camera-sized rim carries the silhouette.
@@ -273,6 +276,10 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
         const body = nodes.threat.mul(nodes.emissiveOnly.oneMinus()).mul(lighting.nightThreat);
         // Apply the eye/body hierarchy to every night preset, after rim, pools and fog.
         // Preserve the darker subway ceiling and scale RGB together to retain authored hues.
+        // Preserve authored skin/clothing hue on the body; the grazing moon rim stays untouched.
+        const ownHue = surface.div(luminance(surface).max(.02)).mul(luminance(result));
+        const bodyColour = this.figureFillNeutral.mul(body).mul(fresnel.oneMinus()).mul(.85);
+        result.assign(mix(result, ownHue, bodyColour));
         const ceiling = mix(.1, .05, lighting.subwayDarkness).add(this.animalNightRead.mul(.3));
         result.mulAssign(mix(1, ceiling.div(luminance(result).max(ceiling)), body));
       }
@@ -287,6 +294,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       });
       // Opaque courier meshes use scene alpha as a grade-protection mask. The
       // composite consumes it and writes opaque canvas alpha; no extra render pass.
+      if (nodes?.threat) graded.mulAssign(this.figureFillNeutral.mul(nodes.threat).mul(lighting.nightThreat).oneMinus());
       return vec4(result, this.fade.mul(nodes?.opacity ?? 1).mul(courierRead.oneMinus()).mul(graded));
     })();
     lighting.paletteMaterials.add(this);
