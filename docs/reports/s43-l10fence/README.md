@@ -11,6 +11,8 @@ Status: implementation committed; full browser matrix and final visual acceptanc
 
 ## Evidence so far
 
+- Forced offscreen catch-up probe: courier faces west at `(4055,-27)` beside east rail x=4057, dog starts ~56 m west with walking held to reproduce stalled progress. Ten-second observed run has zero errors; samples through tick 604 keep dog at x3998.81, with no relocation to the far side. Unsafe candidates are not accepted, but no valid recovery occurs in this setup; successful barrier-respecting recovery remains unproven. Receipts in `corgi-rejoin.json`. An initial idle-harness run skipped watch sampling and is not used as evidence. Owned preview stopped.
+
 - Direct corgi railing probe: 15 seconds real-input movement along the closed east edge, starting companion beside courier via respawnNear. Low WebGL2 zoom 1, zero errors. All five logged courier/dog samples stay inside x=4057; corgi followed around x=4055 and then x=4052.7 as courier turned inward. Opened `/private/tmp/s43-corgi-east-rail/s002-t428.jpg`, showing both on the inner side. Receipts in `corgi-rail.json`. This verifies ordinary follow on the arena railing; offscreen catch-up across barriers still relies on the regression test and needs runtime coverage. Owned preview stopped.
 
 - Matched perimeter draw measurement, high WebGPU zoom 1.5: paused visibility toggles isolate the perimeter from moving-scene changes. Before samples: 70 shown/68 hidden and 72/70; after samples: 70/68 and 72/70. Both renderers cost 2 submissions, so the measured increase is **0**, within +2. Receipts in `draw-calls.json`; both runs had zero errors and owned previews were stopped.
