@@ -118,9 +118,12 @@ if (what.has('qa')) {
           if (!p || !world.missions || !world.progression?.campaign) return;
           for (const a of l8BossArenas) {
             if (!wanted.has(a.id) || done.has(a.id) || engaged.has(`arena-${a.id}`)) continue;
-            if (Math.hypot(p.transform.x - a.entry.x, p.transform.z - a.entry.z) > 30) continue;
+            // r34-l8qa: after the breach, with the previous arena of the linear route cleared, right before this arena's gate.
+            const route = ['flamingo', 'lion', 'monkey', 'zebra', 'gorilla', 'elephant'], before = route[route.indexOf(a.id) - 1];
+            if (!world.missions.state.states.breached || before && !engaged.has(`cleared-${before}`)) continue;
+            if (Math.hypot(p.transform.x - a.entry.x, p.transform.z - a.entry.z) > 20) continue;
             done.add(a.id);
-            fixture(`l8-before-${a.id}`, 'mission-resume', 'L8', `Player within 30 m of the ${a.id} arena entry, arena not yet engaged.`, structuredClone(world.progression.campaign) as CampaignSave, world.missions.saveResume(false), { progression: 'L8-default', arena: a.id });
+            fixture(`l8-before-${a.id}`, 'mission-resume', 'L8', `Player within 20 m of the ${a.id} arena entry after the breach and the previous arena's clear, arena not yet engaged.`, structuredClone(world.progression.campaign) as CampaignSave, world.missions.saveResume(false), { progression: 'L8-default', arena: a.id });
           }
         };
       },

@@ -513,7 +513,13 @@ export class CrowdView extends Group {
       // white constant still dominates its near-black albedo.
       // Alphas have authored bruised skin and dark outfits. The ordinary crowd's
       // additive atlas/figure fills washed those swatches pale lavender at night.
-      const atlasFill = infectedAtlas ? albedo.mul(regularAlpha ? .04 : .18).mul(eye.oneMinus()) : vec3(0);
+      // r34-l8qa: zoo animal bosses (tan lion/lioness, pink flamingo) read grey-blue at night: lift their own hue as a
+      // luminance-normalised fill so the coat colour survives the cool key at zoom 1.5.
+      // The zoo materials are shared across species (see materialKey), so the boost is species-agnostic: a luminance-normalised
+      // coat colour with extra saturation (pink flamingo, tan lion) rather than a per-species constant.
+      const coatLum = luminance(albedo).max(.2);
+      const animalHue = mix(vec3(luminance(albedo)), albedo, 1.5).max(0).div(coatLum).mul(.24);
+      const atlasFill = zooBoss || /^healthy\.(lion|lioness|gorilla|elephant|zebra|flamingo|monkey)$/.test(def.id) ? animalHue.mul(eye.oneMinus()) : infectedAtlas ? albedo.mul(regularAlpha ? .04 : .18).mul(eye.oneMinus()) : vec3(0);
       // Flash 0..1 is the ordinary hit pulse; 1..2 marks an L8 arena boss hit (r26-l8hitreact): a plain additive warm-white lift, since the
       // base*(1-base) pulse above is nearly invisible on dark animal coats.
       const flashValue = feedbackState.w.mod(2), bossFlash = flashValue.sub(1).max(0);

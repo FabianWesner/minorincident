@@ -7,9 +7,9 @@ Format: gzip (`.json.gz`) or brotli (`.json.br`) of `{ kind, label, level, descr
 
 | Fixture | Level | Kind | Where the player starts |
 |---|---|---|---|
-| `l8-before-lion` | L8 | mission-resume | 30 m from the lion arena entry (-60,-8), arena not engaged |
-| `l8-before-gorilla` | L8 | mission-resume | 30 m from the gorilla arena entry (60,-8), arena not engaged |
-| `l8-before-elephant` | L8 | mission-resume | 30 m from the elephant arena entry (96,46) |
+| `l8-before-lion` | L8 | mission-resume | after the breach, checkpoint `cleared-flamingo`; the lion arena (entry (-60,-56)) is next, not engaged |
+| `l8-before-gorilla` | L8 | mission-resume | after the breach, checkpoint `cleared-zebra`; the gorilla arena (entry (60,-12)) is next, not engaged |
+| `l8-before-elephant` | L8 | mission-resume | after the breach, checkpoint `cleared-gorilla`; the elephant arena (entry (96,46)) is next |
 | `l8-elephant-apc-yard-engaged` | L8 | mission-resume | elephant just engaged at the vehicle yard (checkpoint `arena-elephant`), APC present |
 | `l9-before-rail-stall` | L9 | campaign-save | APC driving at x >= 320, 60 m before the rail crossing (x = 380, where it stalls) |
 | `l9-at-bridge` | L9 | campaign-save | `bridge` checkpoint (evacuation done), APC at the bridge |

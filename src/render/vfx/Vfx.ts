@@ -449,15 +449,18 @@ export class Vfx extends Group {
     // diving flock, a dust lane for the zebra stampede and the elephant charge, an amber landing ring for the lion's
     // pounce and the monkeys' leap (their bodies, eye glint and stamps carry the rest of the tell).
     const animalShape = move === 'flamingo.dive' ? 11 : move === 'zebra.stampede' || move === 'elephant.charge' ? 12 : undefined;
-    const animalRing = move === 'lion.pounce' || move === 'lion.flank' || move === 'monkey.grab';
+    // r34-l8qa: a lion's ordinary windup (special 'pin', no authored move: Scene Lab / free chase) used the shared red
+    // charge lane; it gets the same amber landing ring as the authored pounce.
+    const lionOrdinary = !move && (source?.archetype === 'infected.lion' || source?.archetype === 'infected.lioness');
+    const animalRing = move === 'lion.pounce' || move === 'lion.flank' || move === 'monkey.grab' || lionOrdinary;
     const animalColor = this.colorblind ? undefined : move === 'flamingo.dive' ? 0x12080c : move === 'zebra.stampede' ? 0xc9b07c : move === 'elephant.charge' ? 0x9c8463 : animalRing ? 0xffa53a : undefined;
-    if (animalRing && target && area) {
-      const ring = move === 'monkey.grab' ? .9 : 1.3, at = destination && move !== 'lion.pounce' ? destination : target;
+    if (animalRing && target && (area || lionOrdinary)) {
+      const ring = move === 'monkey.grab' ? .9 : 1.3, at = destination && move !== 'lion.pounce' && !lionOrdinary ? destination : target;
       const ringGround = this.world.districts?.groundHeight(at.x, at.z) ?? 0, duration = 'duration' in event ? event.duration : .6;
-      const ringSlot = this.telegraphs.spawn(this.time, 1e9, at.x, ringGround + .065, at.z, angle0(area), duration, 0, ring * 2, 8, animalColor ?? this.telegraphColor(kind), 0, 1, true);
+      const ringSlot = this.telegraphs.spawn(this.time, 1e9, at.x, ringGround + .065, at.z, area ? angle0(area) : angle, duration, 0, ring * 2, 8, animalColor ?? this.telegraphColor(kind), 0, 1, true);
       if (ringSlot >= 0) {
         this.visible = true;
-        this.tells.set(event.attackId, { slot: ringSlot, kind, spawned: this.time, x: at.x, z: at.z, angle: angle0(area), shape: 8, radius: ring, resolves: this.time + duration, ...(animalColor !== undefined ? { color: animalColor } : {}), ...(event.sourceId !== undefined ? { sourceId: event.sourceId } : {}) });
+        this.tells.set(event.attackId, { slot: ringSlot, kind, spawned: this.time, x: at.x, z: at.z, angle: area ? angle0(area) : angle, shape: 8, radius: ring, resolves: this.time + duration, ...(animalColor !== undefined ? { color: animalColor } : {}), ...(event.sourceId !== undefined ? { sourceId: event.sourceId } : {}) });
         this.telegraphs.opacity(ringSlot, 0);
       }
       return;
