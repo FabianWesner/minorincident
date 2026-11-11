@@ -75,7 +75,7 @@ export function civilianMaterial(shading: Materials | undefined, doubleSided: bo
     const material = shading?.shaded(base, glow, undefined, undefined, undefined, eye.mul(eyeGlow), undefined, undefined, eyeGlow.clamp(0, 1)) ?? Object.assign(new MeshLambertNodeMaterial(), { colorNode: base, emissiveNode: glow });
     // E25 night readability: crowd silhouettes take the preset's moonlit rim.
     livingStencil(material);
-    if ('figureRim' in material) { material.figureRim.value = .25; material.figureFill.value = 4; material.figureFillNeutral.value = 1; }
+    if ('figureRim' in material) { material.figureRim.value = .25; material.figureFill.value = 2; material.figureFillNeutral.value = 1; }
     material.side = doubleSided ? DoubleSide : FrontSide;
     const instance = mat4(attribute('_crowd0', 'vec4'), attribute('_crowd1', 'vec4'), attribute('_crowd2', 'vec4'), attribute('_crowd3', 'vec4')), part = parts.x;
     const outgoing = variant.w.div(2).floor(), weight = variant.w.mod(2);

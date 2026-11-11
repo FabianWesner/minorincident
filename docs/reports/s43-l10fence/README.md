@@ -11,6 +11,8 @@ Status: implementation committed; full browser matrix and final visual acceptanc
 
 ## Evidence so far
 
+- Reduced civilian fill to 2 and corrected neutral fill to apply to healthy figures (it previously multiplied the infected-state value). Opened `/private/tmp/s43-nadia-neutral/s001-t130.jpg`: Nadia remains readable under L10 night lighting with darker clothing and less blue wash than the fill-4 capture. ESLint, QA build and 14 render-contract tests pass. Owned preview stopped; broader preset/backend checks remain pending.
+
 - Nadia lighting comparisons: repeated L8 start with explicit `L10-night` and `L2` daylight lighting overrides, low WebGL2 zoom 1, four seconds each; both finished with zero page errors. Opened `/private/tmp/s43-nadia-l10night/s001-t127.jpg` and `/private/tmp/s43-nadia-day/s001-t129.jpg`. Her face and outfit remain visible under L10 moonlight, but the night fill makes the clothing noticeably pale compared with daylight. Daylight retains the green upper clothing, dark skirt and headwear. Night washout remains a visual concern before final acceptance; these captures do not prove unchanged daylight versus the baseline build. Owned preview stopped.
 
 - Nadia current-build check: eight-second real-input L8 start, low WebGL2 zoom 1, follow-marker, god mode; zero page errors. Opened `/private/tmp/s43-nadia-low-gl/s002-t250.jpg`. Nadia is inside the marker ring beside the courier; face, arms, teal clothing and headwear remain visible under the L8 night preset. This supports L8 low-tier readability only; L10 preset and daylight comparison remain pending. Owned preview stopped after the run.

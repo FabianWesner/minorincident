@@ -948,7 +948,7 @@ function checkCivilianShaderBindings(): void {
   expect(one.material.customProgramCacheKey()).toBe(same.material.customProgramCacheKey());
   expect(one.material.customProgramCacheKey()).toBe(other.material.customProgramCacheKey());
   const nightMaterial = one.material as PaletteMaterial;
-  expect(nightMaterial.figureFill.value, 'human civilians retain the s36 night figure fill').toBe(4);
+  expect(nightMaterial.figureFill.value, 'human civilians retain a restrained night figure fill').toBe(2);
   expect(nightMaterial.figureFillNeutral.value).toBe(1);
   const flipped = b.clone(); flipped.flipY = !b.flipY;
   const differentLayout = civilianMaterial(shading, false, pose, { bindRow: 0, atlas: flipped });
