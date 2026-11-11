@@ -72,7 +72,7 @@ const place = async (x: number, z: number, yaw = 0) => {
 try {
   await page.goto(`${origin}/?test=1&scenelab=1&renderer=${renderer}&quality=${quality}&audio=muted&dpr=1`);
   await page.waitForFunction(() => !!window.__SS__);
-  await page.evaluate(async q => { const a = window.__SS__!; await a.ready; a.pause(); a.settings.set({ quality: q }); await a.loadLevel('L9', { seed: 31 }); a.pause(); }, quality as 'low' | 'high');
+  await page.evaluate(async q => { const a = window.__SS__!; await a.ready; a.pause(); a.settings.set({ quality: q }); await a.loadLevel('L9', { seed: 31 }); a.pause(); a.settings.set({ timeOfDay: 'L9-crossing' }); }, quality as 'low' | 'high');
   const begin = page.getByRole('button', { name: 'Begin mission' });
   if (await begin.isVisible().catch(() => false)) await begin.click();
   await page.evaluate(() => { window.__SS__!.pause(); document.body.classList.add('ui-hidden'); });
