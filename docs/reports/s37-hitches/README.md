@@ -119,3 +119,9 @@ Runner capture calls now log exact start/end epochs and duration; `--no-captures
 | capture off |1116.7/16.8ms|1 at tick7281/elapsed121365ms|6278ms|6.11–10.69|0 |
 
 Observed setup delta(off−on)−25ms; no runtime load code changed. Higher/shared host load confounds a performance improvement claim. Capture suppression is **not sufficient**: a >1s frame occurs with zero screenshot calls. The prior screenshot correlation cannot justify calling screenshots the sole cause, and this failed sample remains part of acceptance. Need complete dispatch-gap analysis and a supported mitigation; game quality/content unchanged. All owned commands terminal; preview4937 stopped.
+
+### Capture-off complete gap analysis
+
+`capture-off-gap.json` retains exact marker PID3396/tid14887572 at230473130295us (tick7281,1116.7ms interval,elapsed121365ms) and neighboring measured-renderer tasks. The largest duration task in its preceding1200ms window is18.073ms; callbacks near−1146ms last8.287ms and near−18.131ms last18.073ms. Thus this screenshot-free failure is also a frame-dispatch gap, not a matching long game-JS task. Exclusive controls remain50ms max. The specific source of delayed dispatch (browser/compositor/GPU/OS) is still unresolved.
+
+Runner now supports `--trace-scheduling`, adding toplevel/gpu/viz/cc events to the otherwise narrower trace and retaining the same data-loss check. Use it with `--no-captures` for the next shared-load failing reproduction; this is diagnostic instrumentation only. No runtime prewarm/content/AI/stat change has been made, because captured failures have not identified such work as the cause. Historical r35 attribution remains indirect. Goal is not complete.

@@ -1,0 +1,97 @@
+[
+  {
+    "marker": {
+      "args": {
+        "data": {
+          "callTime": 230473130311,
+          "detail": "{\"tick\":7281,\"ms\":1116.7,\"elapsedMs\":121365}",
+          "navigationId": "D14A29CEAF24A0BD98F238695B2938EC",
+          "sampleTraceId": 1540616579083312,
+          "startTime": 128630.6000000238
+        }
+      },
+      "cat": "blink.user_timing",
+      "name": "fixture-long-frame",
+      "ph": "I",
+      "pid": 3396,
+      "s": "t",
+      "tid": 14887572,
+      "ts": 230473130295,
+      "tts": 87275526
+    },
+    "overlappingTasks": [
+      {
+        "name": "FireAnimationFrame",
+        "relativeStartMs": -18.131,
+        "durationMs": 18.073,
+        "tid": 14887572
+      },
+      {
+        "name": "FunctionCall",
+        "relativeStartMs": -18.13,
+        "durationMs": 18.057,
+        "tid": 14887572
+      },
+      {
+        "name": "FireAnimationFrame",
+        "relativeStartMs": 1.845,
+        "durationMs": 9.905,
+        "tid": 14887572
+      },
+      {
+        "name": "FunctionCall",
+        "relativeStartMs": 1.846,
+        "durationMs": 9.893,
+        "tid": 14887572
+      },
+      {
+        "name": "FireAnimationFrame",
+        "relativeStartMs": -1180.972,
+        "durationMs": 8.944,
+        "tid": 14887572
+      },
+      {
+        "name": "FunctionCall",
+        "relativeStartMs": -1180.971,
+        "durationMs": 8.936,
+        "tid": 14887572
+      },
+      {
+        "name": "FireAnimationFrame",
+        "relativeStartMs": -1196.114,
+        "durationMs": 8.345,
+        "tid": 14887572
+      },
+      {
+        "name": "FunctionCall",
+        "relativeStartMs": -1196.113,
+        "durationMs": 8.335,
+        "tid": 14887572
+      },
+      {
+        "name": "FireAnimationFrame",
+        "relativeStartMs": -1146.117,
+        "durationMs": 8.287,
+        "tid": 14887572
+      },
+      {
+        "name": "FunctionCall",
+        "relativeStartMs": -1146.116,
+        "durationMs": 8.278,
+        "tid": 14887572
+      },
+      {
+        "name": "FireAnimationFrame",
+        "relativeStartMs": -1162.875,
+        "durationMs": 7.867,
+        "tid": 14887572
+      },
+      {
+        "name": "FunctionCall",
+        "relativeStartMs": -1162.874,
+        "durationMs": 7.858,
+        "tid": 14887572
+      }
+    ]
+  }
+]

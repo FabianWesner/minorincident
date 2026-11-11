@@ -22,7 +22,7 @@ import { weaponKey } from '../../src/data/weaponKeys';
 const { values, positionals } = parseArgs({ allowPositionals: true, options: {
   out: { type: 'string' }, quality: { type: 'string', default: 'low' }, zoom: { type: 'string', default: '1.5' }, backend: { type: 'string', default: 'webgpu' },
   seconds: { type: 'string', default: '300' }, shot: { type: 'string', default: '6' }, god: { type: 'boolean', default: false }, weapon: { type: 'string', default: 'weapon.army-mg' },
-  route: { type: 'string' }, 'follow-marker': { type: 'boolean', default: false }, 'hold-e': { type: 'boolean', default: false }, 'tap-e-when': { type: 'string' }, 'skip-credits-after': { type: 'string' }, dwell: { type: 'string', default: '0' }, reach: { type: 'string', default: '2.5' }, block: { type: 'string', default: '5' }, 'no-kite': { type: 'boolean', default: false }, range: { type: 'string', default: '22' }, setup: { type: 'string' }, trace: { type: 'boolean', default: false }, 'no-captures': { type: 'boolean', default: false },
+  route: { type: 'string' }, 'follow-marker': { type: 'boolean', default: false }, 'hold-e': { type: 'boolean', default: false }, 'tap-e-when': { type: 'string' }, 'skip-credits-after': { type: 'string' }, dwell: { type: 'string', default: '0' }, reach: { type: 'string', default: '2.5' }, block: { type: 'string', default: '5' }, 'no-kite': { type: 'boolean', default: false }, range: { type: 'string', default: '22' }, setup: { type: 'string' }, trace: { type: 'boolean', default: false }, 'trace-scheduling': { type: 'boolean', default: false }, 'no-captures': { type: 'boolean', default: false },
   handbrake: { type: 'string', default: 'Space' }, prefer: { type: 'string' }, 'route-when': { type: 'string' }, 'idle-when': { type: 'string' },
 } });
 const [origin, name] = positionals;
@@ -31,7 +31,7 @@ const direct = name?.startsWith('level:') ? name.split(':') : null;
 const path = direct ? 'direct' : ['', '.json.gz', '.json.br'].map(ext => resolve(existsSync(name) ? name : `tests/fixtures/saves/qa/${name}${ext}`)).find(existsSync);
 if (!origin || !path) throw new Error('usage: r28-vqa-fixture-play.ts <origin> <fixture> --out <dir>');
 const out = resolve(values.out!); mkdirSync(out, { recursive: true });
-if (values.trace && (out === process.cwd() || out.startsWith(`${process.cwd()}/`))) throw new Error('--trace requires --out outside the worktree so raw traces cannot be committed');
+if ((values.trace || values['trace-scheduling']) && (out === process.cwd() || out.startsWith(`${process.cwd()}/`))) throw new Error('--trace requires --out outside the worktree so raw traces cannot be committed');
 const log = (o: object) => appendFileSync(`${out}/log.jsonl`, JSON.stringify({ wall: new Date().toISOString().slice(11, 19), epochMs: Date.now(), hostLoad: loadavg(), ...o }) + '\n');
 const route = (values.route ?? '').split(';').filter(Boolean).map(p => { const [x, z] = p.split(',').map(Number); return { x, z }; });
 const zoom = Number(values.zoom), range = Number(values.range);
@@ -44,7 +44,7 @@ const capture = async (options: NonNullable<Parameters<typeof page.screenshot>[0
   await page.screenshot(options);
   log({ capture: 'end', path: options.path, durationMs: Date.now() - started });
 };
-const trace = values.trace ? await context.newCDPSession(page) : null;
+const trace = values.trace || values['trace-scheduling'] ? await context.newCDPSession(page) : null;
 let traceStarted = false;
 await page.addInitScript({ content: 'window.__name = (f) => f;' }); // tsx keepNames helper inside evaluate callbacks
 const errors: string[] = []; page.on('pageerror', e => { errors.push(String(e).slice(0, 200)); log({ pageError: String(e).slice(0, 300) }); });
@@ -61,7 +61,7 @@ try {
   if (values.setup) log({ setup: values.setup, result: await page.evaluate(js => { const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: unknown }).game; return String(new Function('a', 'g', js)(a, g)); }, values.setup) });
   if (values.god) { await page.evaluate(() => window.__SS__!.cheats.god(true)); log({ setup: 'god-mode' }); }
   if (trace) {
-    await trace.send('Tracing.start', { traceConfig: { recordMode: 'recordAsMuchAsPossible', excludedCategories: ['*'], includedCategories: ['devtools.timeline', 'blink.user_timing'] }, transferMode: 'ReturnAsStream' });
+    await trace.send('Tracing.start', { traceConfig: { recordMode: 'recordAsMuchAsPossible', excludedCategories: ['*'], includedCategories: ['devtools.timeline', 'blink.user_timing', ...(values['trace-scheduling'] ? ['toplevel', 'gpu', 'viz', 'cc'] : [])] }, transferMode: 'ReturnAsStream' });
     traceStarted = true;
   }
   await page.evaluate(z => {
