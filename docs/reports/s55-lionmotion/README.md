@@ -2,6 +2,29 @@
 
 Date: 2026-11-11
 
+## Current candidate summary
+
+The motion defects found are: healthy zoo animals entered humanoid lean layers;
+continuous crowd skins missed the live-skin paw path; support correction could
+drop/release the pelvis abruptly; clip fades re-solved already corrected poses;
+and healthy cats lost their stalk crouch at a hard speed threshold.
+
+The candidate fixes those render paths without asset or simulation-stat edits.
+The full objective is **not yet accepted**: final scene gate, final unit result,
+remaining species/fixture coverage and a consolidated before/after audit remain.
+
+| Measurement | Before | Current measured after | Scope |
+| --- | ---: | ---: | --- |
+| Maximum pelvis frame step | 98.05 cm | 0.37 cm | Controlled centered cat 10 s walk + 5 s run |
+| Speed-threshold pelvis step | 4.40 cm | 0.37 cm | Healthy cat, same walk clip |
+| Real L8 pelvis step, lion | — | 0.83 cm | 15 s fixture sample |
+| Real L8 pelvis step, lioness | 8.00 cm during intermediate candidate | 0.56 cm | 15 s fixture sample |
+
+All 16 centered cat backend/tier/zoom configurations drew 900/900 frames, with
+zero measured sole penetration and zero reported run jitter. These summaries
+are evidence with the detailed limits recorded below, not a completion claim.
+
+
 ## Scope
 
 Investigate flicker reported for the L8 lion and lioness. Motion only; model assets
@@ -412,3 +435,13 @@ lion's mane/head and forelegs move through intermediate poses. Fence bars still
 hide portions of the paws. This is evidence for the inspected interval, not an
 unqualified full-runtime acceptance. The reviewed sheet is committed as
 [l8-contact-sheet.jpg](l8-contact-sheet.jpg).
+
+## Final unit rerun capacity wait
+
+Requested `sh tools/remote/run.sh "$PWD" -- npm test` on the current source.
+The FIFO wrapper remained live for over five minutes without admitting the
+suite. Two read-only runner-status checks confirmed a healthy runner with 2/2
+slots occupied and local fallback waiting on an active browser reservation.
+Cancelled this waiting request (exit 130); no tests started and no final pass is
+claimed. The earlier green remote suite predates later source changes and is
+insufficient for final acceptance. Log: `final-unit.log` under test-results.
