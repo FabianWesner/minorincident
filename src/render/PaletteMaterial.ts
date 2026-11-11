@@ -27,6 +27,8 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
   readonly figureRim = uniform(0).setGroup(this._uniformGroup);
   /** Moon bounce on crowd clothing, independent of the driven vehicle's hero rim. */
   readonly figureFill = uniform(0).setGroup(this._uniformGroup);
+  /** Preserve figure albedo when cool moon rim would otherwise blue-wash infected skin and clothing. */
+  readonly figureFillNeutral = uniform(0).setGroup(this._uniformGroup);
   /** Animal bosses retain coat detail above the ordinary infected night ceiling. */
   readonly animalNightRead = uniform(0).setGroup(this._uniformGroup);
   /** Only courier meshes receive the continuous survivor surface fill. */
@@ -130,7 +132,8 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       // their bright creases. Keep a continuous moonlit surface on figures,
       // including the dark swatches; ordinary world surfaces keep their albedo.
       // The corgi's moon bounce is a neutral lift of its own coat (PO #44): the blue rim tint turned its orange salmon and its white pink.
-      const figureFill = surface.max(vec3(.12)).mul(mix(lighting.rimColor, vec3(.6), this.companion)).mul(figureFillAmount).mul(lighting.rim).mul(.9);
+      const figureFillTint = mix(mix(lighting.rimColor, vec3(.6), this.companion), vec3(.6), this.figureFillNeutral);
+      const figureFill = surface.max(vec3(.12)).mul(figureFillTint).mul(figureFillAmount).mul(lighting.rim).mul(.9);
       const heroSurfaceFill = surface.mul(lighting.heroFillColor).mul(this.heroFigure).mul(lighting.heroSurfaceFill).mul(normalWorld.y.mul(.3).add(.7));
       const shaded = mix(lit, surface.mul(lighting.shadow), shadow).add(surface.mul(field.add(fill))).add(heroSurfaceFill).add(figureFill).add(rim).toVar();
       // Keep identity colours in the face/clothes; the camera-sized rim carries the silhouette.

@@ -529,7 +529,13 @@ export class CrowdView extends Group {
       livingStencil(material);
       // r32-alphas: Alphas carry a stronger moonlit outline than the crowd, so the bigger silhouette reads at night.
       // Broad football armor panels lose their directional shading under full moon fill (s35-l10stack).
-      if (material instanceof PaletteMaterial) { material.animalNightRead.value = zooBoss ? 1 : 0; material.figureRim.value = zooBoss ? 2 : regularAlpha ? .7 : .25; material.figureFill.value = regularAlpha || zooBoss || asset === 'inf.armored-football' ? .25 : 1; }
+      if (material instanceof PaletteMaterial) {
+        const nightHeavy = ['inf.brute', 'inf.butcher', 'inf.bloated', 'inf.screamer', 'inf.armored-football'].includes(asset);
+        material.animalNightRead.value = zooBoss ? 1 : 0;
+        material.figureRim.value = zooBoss ? 2 : regularAlpha ? .7 : .25;
+        material.figureFillNeutral.value = infectedAtlas ? 1 : 0;
+        material.figureFill.value = regularAlpha || zooBoss ? .25 : nightHeavy ? .55 : infectedAtlas ? .25 : 1;
+      }
       // The Alpha-sized Mega retains its silhouette at contact, like a regular Alpha.
       // Instances cannot be sorted independently in the transparent render list.
       // A shared 4x4 screen-door threshold keeps every surface of a corpse at

@@ -1,0 +1,36 @@
+# s36-nightinf — measurement pending
+
+## Cause and render change
+
+The shared infected figure fill used the night preset's blue `rimColor` at full strength. This fill is distinct from the silhouette rim: reducing or recoloring it can preserve the approved rim while restoring the infected surface's own palette. `PaletteMaterial` now has a neutral-fill selector. Infected atlas materials select neutral fill; ordinary infected use a restrained 0.25 fill, while the five requested heavy asset classes use 0.55 to retain more surface shading. Alpha and zoo boss fill values and every rim value remain as before. No simulation, infected stats, AI, animation, geometry, or draw-call path was changed.
+
+Scene Lab's per-actor flat-silhouette sample now also records mean RGB, normalized saturation, mean luma, and the share of pixels for which B exceeds both R and G by more than 10%. These fields are intended for the required identical before/after matrix.
+
+## Before/after measurements
+
+Not measured yet. The first capture attempt (`SCENE_PORT=4935 npm run scene -- /tmp/s36-night-lineup-z1.json --backend webgl2 --tier high`) failed before Chromium launched: the browser pool control server returned `listen EPERM` on `127.0.0.1:4329`. There is no valid before or after capture, so no numeric comparison is claimed here.
+
+| Capture matrix | Before | After |
+|---|---:|---:|
+| Night, ordinary + brute/butcher/bloated/screamer/armored, low/high, zoom 1/1.5, WebGL2/WebGPU | pending | pending |
+| L8 night zoo, L4 dusk/night, L10 night scene checks | pending | pending |
+| Heavy-to-ordinary silhouette and colour contrast | pending | pending |
+
+## Captures opened
+
+None. The Scene Lab run failed before producing an image. The lineup specs used for the attempted fixture are temporary files under `/tmp`; no raw capture is in the repository.
+
+## Checks
+
+- `npm run typecheck` — passed.
+- `npm run lint` — passed (the full command completed in the first check run); targeted ESLint on the three changed files also passed.
+- `git diff --check` — passed.
+- Scene Lab — blocked before browser start by the sandbox's `listen EPERM` on the browser pool's local control port.
+
+This report is intentionally incomplete. The goal remains open until the full matrix has valid before/after measurements, captures have been opened and described, the visual goals are confirmed, and the final report is updated.
+
+## Resumed verification (unrestricted environment)
+
+The permission restrictions are lifted. Slim-worktree now succeeds. The first Scene Lab run exposed an invalid fixture framing (ordinary outside the viewport); after widening to radius 28 and capturing frame 30, the WebGL2 high lineup passed with no console errors or clipping failures. Opened `test-results/s36-nightinf/webgl2-high-z1-fit/shot-0030.png`: all six figures are visible; brute and butcher are clearly larger, while bloated and screamer remain close to ordinary height. Ordinary still reads cool green/blue. This is not a completed visual fix.
+
+The current added RGB/saturation probe samples the entire projected bounding rectangle, including the blue ground. Its ordinary mean RGB is 41.84/43.25/61.95, saturation 0.3841, luma 44.30, and blue-dominant share 0.8907. These are diagnostic crop numbers, **not figure-pixel acceptance evidence**. A true figure mask is required before drawing conclusions from this probe. The full before/after matrix remains pending.
