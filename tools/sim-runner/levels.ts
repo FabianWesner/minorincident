@@ -44,6 +44,8 @@ export interface LevelReport {
 /** Optional observation/configuration for sim audits; the native input policies stay shared. */
 export interface LevelRunHooks {
   quality?: 'high' | 'low';
+  l9Route?: string;
+  l9Detour?: boolean;
   /** Preserve the native route/objectives while disabling player attacks and incoming damage. */
   passive?: boolean;
   /** QA observation window after native L10 charge activation; not a gameplay timer. */
@@ -133,7 +135,7 @@ export async function runLevel(level: RunnerLevel, policy: CompletionPolicy, see
       // E20: the shared L2 policy (ordinary inputs only), same as the browser bot.
       runL2(world, mission, policy, { seed, maxSeconds });
     } else if (level === 'L9') {
-      const bot = new LevelNineBot(world, 'road', true);
+      const bot = new LevelNineBot(world, hooks?.l9Route ?? 'road', hooks?.l9Detour ?? true);
       for (let i = 0; i < maxSeconds * 60 && mission.state.phase !== 'result' && mission.state.phase !== 'progression'; i++) { world.applyInput(bot.sample(), 'keyboard'); world.update(); }
     } else if (level === 'L8') {
       const bot = new LevelEightBot(world, hooks?.passive ? 'threat-passive' : policy);

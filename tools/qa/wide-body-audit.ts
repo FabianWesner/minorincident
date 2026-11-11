@@ -6,6 +6,7 @@ import { dirname } from 'node:path';
 import { runnerLevels, runLevel } from '../sim-runner/levels';
 import { cureEncounters, curePaceEncounters, cureEncounterSlots, cureEncounterSpot } from '../../src/levels/L10/encounters';
 import { LevelNineSetPieces } from '../../src/sim/missions/LevelNineSetPieces';
+import { crossing } from '../../src/levels/L9/district';
 import { l9Groups, l9SetPieces, l9SetPieceTuning } from '../../src/data/l9';
 import { infectedDef } from '../../src/data/infected';
 import { megaAlpha } from '../../src/data/megaAlpha';
@@ -17,7 +18,7 @@ const wide = (archetype: string, variant?: string) => archetype === 'infected.me
   ['infected.brute', 'infected.butcher', 'infected.armored', 'infected.alpha'].includes(archetype);
 type Spawn = { id: number; archetype: string; variant?: string; radius: number; x: number; z: number; tick: number; player: { x: number; z: number }; cohort: string; source: string; active?: boolean; wave?: string; objective?: string; route?: number[]; pathGrid?: NavGrid };
 type Coverage = { expected: string[]; observed: string[]; missing: string[] };
-type LevelResult = { coverage?: Coverage; level: string; outcome: string; spawns: number; checks: number; unreachable: Spawn[]; narrowOpenings: { x: number; z: number; width: number; required: number; pathDistance: number; walls: string[]; bodies: number[] }[]; encounters: Spawn[] };
+type LevelResult = { coverage?: Coverage; route?: string; level: string; outcome: string; spawns: number; checks: number; unreachable: Spawn[]; narrowOpenings: { x: number; z: number; width: number; required: number; pathDistance: number; walls: string[]; bodies: number[] }[]; encounters: Spawn[] };
 
 type AuditWall = Wall & { sourceId?: string };
 function fullWalls(world: SimWorld): AuditWall[] {
@@ -38,7 +39,10 @@ function clearanceFor(row: Spawn): number { return row.radius + margin; }
 
 const report: LevelResult[] = [];
 const selectedLevels = process.env.WIDE_BODY_LEVELS?.split(',') as typeof runnerLevels[number][] | undefined;
-for (const level of runnerLevels.filter(level => !selectedLevels || selectedLevels.includes(level))) {
+const scenarios = runnerLevels.filter(level => !selectedLevels || selectedLevels.includes(level)).flatMap<{ level: typeof runnerLevels[number]; l9Route: string | undefined; l9Detour: boolean | undefined }>(level => level === 'L9'
+  ? crossing.routes.flatMap(route => [false, true].map(detour => ({ level, l9Route: route.id, l9Detour: detour })))
+  : [{ level, l9Route: undefined, l9Detour: undefined }]);
+for (const { level, l9Route, l9Detour } of scenarios) {
   const spawns: Spawn[] = [];
   const seenWideIds = new Set<number>();
   const playerRoute: { x: number; z: number }[] = [];
@@ -48,7 +52,7 @@ for (const level of runnerLevels.filter(level => !selectedLevels || selectedLeve
   const restoreSources: (() => void)[] = [];
   let audit: Pick<LevelResult, 'unreachable' | 'narrowOpenings'> = { unreachable: [], narrowOpenings: [] };
   const run = await runLevel(level, 'newbie', 1, level === 'L10' ? 3600 : 2400, 'auto', undefined, undefined, 0, {
-    quality: 'high',
+    quality: 'high', l9Route, l9Detour,
     beforeBegin(world) {
       const ai = world.infected!, spawn = ai.spawn.bind(ai);
       if (level === 'L9') {
@@ -139,7 +143,7 @@ for (const level of runnerLevels.filter(level => !selectedLevels || selectedLeve
       const walls = fullWalls(world);
       if (level === 'L9') {
         // Road formations cycle brute/armored roles; shortcut groups author Alphas.
-        const expected = l9Groups.filter(g => g.alphas > 0 || g.route === 'road' && g.runners >= 3).map(g => g.id);
+        const expected = l9Groups.filter(g => g.route === l9Route && (g.alphas > 0 || g.route === 'road' && g.runners >= 3)).map(g => g.id);
         const ledger = world.missions!.l9!.state.encounters;
         const observed = expected.filter(id => ledger?.spawned.includes(id));
         for (const id of [...l9SetPieces.filter(piece => ['leapers', 'thrower', 'stall-ambush'].includes(piece.kind)).map(piece => piece.id), 'stall-rush']) {
@@ -215,8 +219,8 @@ for (const level of runnerLevels.filter(level => !selectedLevels || selectedLeve
     },
   });
   outcome = run.outcome;
-  report.push({ level, outcome, ...(coverage ? { coverage } : {}), spawns: spawns.length, checks: spawns.length, ...audit, encounters: spawns.map(row => ({ id: row.id, archetype: row.archetype, variant: row.variant, radius: row.radius, x: row.x, z: row.z, tick: row.tick, player: row.player, cohort: row.cohort, source: row.source, reachable: !!row.route, activeAtEnd: row.active, ...(row.wave ? { wave: row.wave } : {}), ...(row.objective ? { objective: row.objective } : {}) })) });
-  console.log(`[wide-body] ${level}: ${outcome}; ${spawns.length} wide spawns, ${audit.unreachable.length} unreachable, ${audit.narrowOpenings.length} narrow openings`);
+  report.push({ level, ...(l9Route ? { route: `${l9Route}/${l9Detour ? 'detour' : 'main'}` } : {}), outcome, ...(coverage ? { coverage } : {}), spawns: spawns.length, checks: spawns.length, ...audit, encounters: spawns.map(row => ({ id: row.id, archetype: row.archetype, variant: row.variant, radius: row.radius, x: row.x, z: row.z, tick: row.tick, player: row.player, cohort: row.cohort, source: row.source, reachable: !!row.route, activeAtEnd: row.active, ...(row.wave ? { wave: row.wave } : {}), ...(row.objective ? { objective: row.objective } : {}) })) });
+  console.log(`[wide-body] ${level}${l9Route ? `/${l9Route}/${l9Detour ? 'detour' : 'main'}` : ''}: ${outcome}; ${spawns.length} wide spawns, ${audit.unreachable.length} unreachable, ${audit.narrowOpenings.length} narrow openings`);
 }
 const output = process.argv[2] ?? 'test-results/qa-wide-body/report.json';
 await mkdir(dirname(output), { recursive: true });

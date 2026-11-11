@@ -73,3 +73,7 @@ The audit now compares the production L9 admission ledger against every fixed gr
 ## L9 set-piece coverage receipt
 
 Native set-piece spawn instrumentation now records each actor's authored set-piece ID and requires the full wide-role quota: two each for `leapers-1`, `leapers-2`, `stall-ambush`, `stall-rush`, and one each for `thrower-1`/`thrower-2`. The isolated run recorded these exact quotas and all four fixed groups, with no missing sources and 107 pathable wide records. Set pieces with only dogs, ordinary runners or obstacles are excluded from this wide-role quota. Typecheck and tool lint passed before adding the quota comparison; the recorded counts satisfy that comparison. Route-dependent set-piece placements on unplayed alternate lanes remain a coverage limitation.
+
+## L9 six-lane audit
+
+Added optional L9 route/detour observation hooks to the shared runner, preserving its existing default road detour. The audit now drives all three authored routes and both main/detour traces. All six completed, recording 434 wide spawns total (road 136/107, countryside 57/45, shortcut 43/46), with zero unreachable paths and zero narrow openings among admitted bodies. The coverage gate correctly fails: `thrower-2` was not admitted on either countryside trace. Other expected fixed-group and set-piece quotas were met. This is a new admission-coverage finding requiring diagnosis, not a passing exhaustive result. Typecheck and lint passed; no check remains running.
