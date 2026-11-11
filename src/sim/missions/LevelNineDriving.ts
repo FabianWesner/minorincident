@@ -217,10 +217,30 @@ export class LevelNineDriving {
   /** r42-l9pin: per evacuee, failed route ticks and how many truck spots were skipped (transient; a restore starts over). */
   private readonly spotFail = new Map<number, number>();
   private readonly spotSkip = new Map<number, number>();
+  /**
+   * r42-l9pin follow-up (orchestrator: 'find why the deployed guards don't thin the pack'): the line held its fixed posts at
+   * (447-459, -7). The APC stops anywhere in the bay, so the pack at its door was 10-25 m away and mostly behind the hull: 36-44 hits in
+   * 90 s from four rifles, and the door never cleared. During the evacuation the guards take a fan of posts 7 m out from the passenger
+   * door (clear nav cells only), facing it, with the hull behind the pack instead of between.
+   */
+  private coverDoor(): void {
+    const s = this.state, w = this.w;
+    if (s.evacuationAt === null || s.evacuationDone) return;
+    const c = this.car.entity.transform, door = w.vehicles!.passengerDoor(this.car.entity.id), nav = w.infected!.nav;
+    const dx = door.x - c.x, dz = door.z - c.z, len = Math.hypot(dx, dz) || 1, nx = dx / len, nz = dz / len;
+    const guards = s.soldiers.filter(id => id !== s.samId && alive(w.entities.get(id)) && w.entities.get(id)!.passengerOf === undefined && !!w.entities.get(id)!.civilian?.ally);
+    guards.forEach((id, i) => {
+      const a = w.entities.get(id)!.civilian!.ally!, side = (i - (guards.length - 1) / 2) * 3;
+      const want = { x: door.x + nx * cfg.evacuation.guardOutM - nz * side, z: door.z + nz * cfg.evacuation.guardOutM + nx * side };
+      if (a.post && distance(a.post, want) < 1.5) return;
+      const cell = nav.nearestCell(want.x, want.z, .35); if (cell < 0) return;
+      a.post = { x: nav.x(cell), z: nav.z(cell) };
+    });
+  }
   /** r42-l9pin: evacuees are still seated in the APC inside the wait window. */
   private waiting(): boolean {
     const s = this.state;
-    return s.evacuationAt !== null && !s.evacuationDone && this.w.tick - s.evacuationAt < cfg.evacuation.waitMaxTicks
+    return s.evacuationAt !== null && !s.evacuationDone && this.w.tick - s.evacuationAt < cfg.evacuation.capTicks
       && (this.car.entity.vehicle!.passengers ?? []).some(p => p.id !== s.samId && !this.w.entities.get(p.id)?.companion && p.phase === 'seated');
   }
   /** r42-l9pin: live infected at the passenger door or on the hull; survivors wait inside while any are there. */
@@ -318,6 +338,9 @@ export class LevelNineDriving {
     for (const id of s.soldiers) {
       // r42-l9pin: the guards were found unhidden but still riding their truck at the level start (-550, 0): the old `hidden` test
       // skipped them, so the bay had no guard line and the survivors walked out into the pack alone. A truck passenger deploys.
+      // r42-l9pin follow-up: deployed as soon as the camp streamed in, the line stood alone for minutes and the ambient pack killed
+      // all four before the APC arrived (seed 2: dead at ticks 19504-20560, APC at the bay at 24082). They take post when the APC nears.
+      if (p.x < cfg.gate.x - cfg.guardDeployM) break;
       const e = w.entities.get(id); if (!e?.passengerOf || !s.trucks.includes(e.passengerOf) || !e.civilian?.ally?.post) continue;
       const nav = w.infected!.nav, post = e.civilian.ally.post;
       if (!w.chunks?.resident(post.x, post.z)) continue;
@@ -352,7 +375,7 @@ export class LevelNineDriving {
       if (s.repairTicks === 1) this.signal('repair-started');
       if (s.repairTicks === cfg.repair.ticks) this.signal('repair-finished');
     }
-    this.evacuate(); this.waves();
+    this.evacuate(); this.coverDoor(); this.waves();
     // Once the stopped crew opens it, a bus nudge cannot magically close the
     // hatch and disable the player's weapon in the middle of the defence.
     if (!this.holding(car.entity.id)) s.hatchOpen = false; else if (car.physics.speed < 1) s.hatchOpen = true;
@@ -531,7 +554,9 @@ export class LevelNineDriving {
     }
     if (s.evacuationAt === null || s.evacuationDone) return;
     const passengers = this.car.entity.vehicle!.passengers ?? [];
-    if (w.tick % 45 === 0 && (this.doorThreats() === 0 || w.tick - s.evacuationAt >= cfg.evacuation.waitMaxTicks)) {
+    // After the wait the door may hold a straggler or two (released at <= releaseThreats); the hard cap keeps fail-forward.
+    const waited = w.tick - s.evacuationAt;
+    if (w.tick % 45 === 0 && (this.doorThreats() === 0 || waited >= cfg.evacuation.waitMaxTicks && this.doorThreats() <= cfg.evacuation.releaseThreats || waited >= cfg.evacuation.capTicks)) {
       const next = passengers.find(p => p.id !== s.samId && alive(w.entities.get(p.id)) && !w.entities.get(p.id)?.companion && p.phase === 'seated');
       if (next && w.vehicles!.disembarkPassenger(this.car.entity.id, next.id)) s.evacuating.push(next.id);
     }

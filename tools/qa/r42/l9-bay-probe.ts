@@ -18,6 +18,9 @@ try {
   let d = l9.driving.state;
   let recoveries = 0, relocations = 0, evacPos = '', evacTick = -1, doneTick = -1, piled = false, lastRecPos = { x: 0, z: 0 };
   const deaths: string[] = [];
+  const guardState = new Map<number, string | undefined>();
+  const guardShots = { shots: 0, hits: 0 };
+  world.events.on('ally.attack', e => { if (e.type === 'ally.attack' && d.soldiers.includes(e.sourceId) && d.evacuationAt !== null && !d.evacuationDone) { guardShots.shots++; if (e.hit) guardShots.hits++; } });
   world.events.on('vehicle.recovering', e => {
     if (e.type !== 'vehicle.recovering') return; recoveries++;
     const t = car().entity.transform; if (Math.hypot(t.x - lastRecPos.x, t.z - lastRecPos.z) > 5 && recoveries > 1) relocations++; lastRecPos = { x: t.x, z: t.z };
@@ -60,6 +63,7 @@ try {
     // --kill-in-evac: the r41 courier died at the open hatch during the hold (HP 20 -> checkpoint reload at evac-point).
     if (process.argv.includes('--kill-in-evac') && !killed && d.evacuationAt !== null && world.tick - d.evacuationAt === 600) { killed = true; world.player!.damage(999, world.tick, true); }
     world.applyInput(f, 'keyboard'); world.update();
+    if (verbose) for (const id of d.soldiers) { const st = world.entities.get(id)?.civilian?.state; if (st !== guardState.get(id)) { console.log('guard-state', world.tick, id, guardState.get(id), '->', st, JSON.stringify(world.entities.get(id)?.transform)); guardState.set(id, st); } }
     if (d.evacuationAt !== null && evacTick < 0) { evacTick = world.tick; evacPos = `${p.x.toFixed(1)},${p.z.toFixed(1)}`; }
     // Who turns a walking survivor: seconds into the hold, where, and whether the nearest infected came with a reinforcement wave.
     if (d.evacuationAt !== null && !d.evacuationDone) for (const id of d.roster) {
@@ -74,6 +78,11 @@ try {
     if (verbose && world.tick % 300 === 0) console.log(world.tick, p.x.toFixed(1), p.z.toFixed(1), 'v', car().physics.speed.toFixed(2), 'stuck', car().physics.stuck, 'rec', car().entity.vehicle!.recoveringUntil, 'att', car().entity.vehicle!.attached.length, 'active', world.vehicles!.active, 'driver', car().entity.vehicle!.driver, 'hold', l9.driving.holding(car().entity.id), 'stall', car().entity.vehicle!.impactStallUntil, l9.driving.text());
     if (verbose && world.tick % 600 === 0 && d.evacuationAt !== null && !d.evacuationDone) {
       const door = world.vehicles!.passengerDoor(car().entity.id);
+      for (const id of d.soldiers) {
+        const g = world.entities.get(id), a = g?.civilian?.ally; if (!g || !a || g.passengerOf !== undefined) continue;
+        const near = world.infected!.active.filter(z => z.health.current > 0 && !z.hidden && Math.hypot(z.transform.x - door.x, z.transform.z - door.z) < 8)[0];
+        console.log('guard', id, `${g.transform.x.toFixed(0)},${g.transform.z.toFixed(0)}`, 'engaged', a.engaged, 'target', a.targetId, 'clip', g.civilian?.story?.clip, 'state', g.civilian?.state, near ? `door-z d=${Math.hypot(near.transform.x - g.transform.x, near.transform.z - g.transform.z).toFixed(1)} heard=${world.infected!.hearing.hears(g, near.transform)} shotVis=${world.combat!.query.shotVisible(g.transform, near.transform, near.id)} navVis=${world.infected!.nav.visible(g.transform, near.transform, 0)}` : '');
+      }
       console.log('door', door.x.toFixed(1), door.z.toFixed(1), world.infected!.active.filter(z => z.health.current > 0 && !z.hidden && (z.attachedTo === car().entity.id || Math.hypot(z.transform.x - door.x, z.transform.z - door.z) < 8)).map(z => `${z.archetype.replace('infected.', '')}:${z.infected?.state}:${z.attachedTo === car().entity.id ? 'hull' : Math.hypot(z.transform.x - door.x, z.transform.z - door.z).toFixed(1)}:${Math.round(z.health.current)}`).join(' '), 'soldiers', d.soldiers.map(id => { const e = world.entities.get(id); return e ? `${JSON.stringify({ h: e.hidden, p: e.passengerOf, post: e.civilian?.ally?.post, role: e.civilian?.ally?.role })}${Math.round(e.health.current)}@${e.transform.x.toFixed(0)},${e.transform.z.toFixed(0)}` : '-'; }).join(' '));
     }
     if (l9.state.phase !== 'driving') { endReason = `phase ${l9.state.phase}`; break; }
@@ -92,5 +101,5 @@ try {
   }
   if (verbose) { const corgi = [...world.entities.iterate()].find(e => e.companion); console.log('corgi', corgi?.transform.x.toFixed(1), corgi?.transform.z.toFixed(1), 'pass', corgi?.passengerOf, 'hug', d.hugDone, JSON.stringify(d.hugSpot), 'passengers', JSON.stringify(car().entity.vehicle!.passengers)); }
   const roster = d.roster.filter(id => id !== d.samId).length;
-  console.log(JSON.stringify({ seed, mode, route, evacTick, evacPos, saved: savedAtDone, losses, of: roster, dead: deaths, doneTick, toBridgeS: doneTick > 0 ? +((world.tick - doneTick) / 60).toFixed(1) : null, end: endReason, endTick: world.tick, longestPinS: +pin.toFixed(1), courierDeaths, recoveries, relocations, apc: `${car().entity.transform.x.toFixed(1)},${car().entity.transform.z.toFixed(1)}`, durability: Math.round(car().entity.health.current), near8: world.infected!.active.filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x - car().entity.transform.x, e.transform.z - car().entity.transform.z) < 8).length }));
+  console.log(JSON.stringify({ seed, mode, route, evacTick, evacPos, saved: savedAtDone, losses, guardShots, of: roster, dead: deaths, doneTick, toBridgeS: doneTick > 0 ? +((world.tick - doneTick) / 60).toFixed(1) : null, end: endReason, endTick: world.tick, longestPinS: +pin.toFixed(1), courierDeaths, recoveries, relocations, apc: `${car().entity.transform.x.toFixed(1)},${car().entity.transform.z.toFixed(1)}`, durability: Math.round(car().entity.health.current), near8: world.infected!.active.filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x - car().entity.transform.x, e.transform.z - car().entity.transform.z) < 8).length }));
 } finally { world.dispose(); }

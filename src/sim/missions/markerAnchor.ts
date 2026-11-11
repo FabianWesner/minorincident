@@ -29,7 +29,12 @@ export function markerAnchor(mission: (Pick<Mission, 'state' | 'def'> & { world?
   // trigger fires: the evacuation bay until the survivors are aboard, then the middle of the bridge deck (the collapse needs the
   // hull anywhere on the deck, any speed). The static authored anchor (x 470, the bridge-gate wall) stays only as the fallback.
   if (mission?.def.id === 'L9' && mission.l9?.state.phase === 'driving') {
-    const drv = mission.l9.driving.state, b = l9Course.bridge, e = l9Course.evacuation;
+    const drv = mission.l9.driving.state, b = l9Course.bridge, e = l9Course.evacuation, g = l9Course.gate;
+    // r42-l9pin follow-up: with the gate shut the straight line to the bay ran into the gate; the marker-following APC sat against it
+    // for 400 s (native seed 2). West of the gate the ring is the side-fence gap nearest the hull ("ram the side fence").
+    const car = mission.world?.entities.get(mission.l9.state.carId)?.transform;
+    if (drv.gateClosed && drv.evacuationAt === null && car && car.x < g.x + 2 && car.x > g.x - 60 && Math.abs(car.z) < g.sideZ + 25)
+      return { x: g.x + 4, z: (car.z < 0 ? -1 : 1) * g.sideZ, radius: 3 };
     return drv.evacuationDone ? { x: (b.x + b.endX) / 2, z: 0, radius: b.halfZ } : { x: e.x, z: e.z, radius: e.radius - 2 };
   }
   // r34-l8qa (r33-vqa: 'After she joins, nothing points to the church'): L5's search spots are unmarked (found by sound), but once the

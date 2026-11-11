@@ -62,9 +62,15 @@ export const l9Course = {
   /**
    * r42-l9pin (r41-vqa P2-4: 0/4 saved twice): the chase pack that follows the APC into the bay turned every survivor 2-7 s after
    * stepping out. Survivors now stay seated while a live infected is within `doorClearM` of the passenger door (the guard soldiers
-   * and the hatch gun thin the pack), and step out anyway after `waitMaxTicks` (fail-forward, no soft-lock).
+   * and the hatch gun thin the pack), after `waitMaxTicks` they go once at most `releaseThreats` remain, and at `capTicks` regardless (fail-forward, no soft-lock).
    */
-  evacuation: { x: 457, z: 0, radius: 11, defendTicks: 1800, truckX: 459, truckZ: -16, doorClearM: 8, waitMaxTicks: 2700 },
+  evacuation: { x: 457, z: 0, radius: 11, defendTicks: 1800, truckX: 459, truckZ: -16, doorClearM: 8, waitMaxTicks: 2700,
+    /** r42 follow-up (orchestrator): after the 45 s wait they go once <= 2 infected are at the door; at 90 s they go regardless. */
+    releaseThreats: 2, capTicks: 5400,
+    /** r42 follow-up: during the evacuation the guards fan out this far from the passenger door (posts 3 m apart). */
+    guardOutM: 7 },
+  /** r42 follow-up: the guard line takes its posts when the APC is this far west of the gate (earlier, the ambient pack killed it). */
+  guardDeployM: 60,
   /** r42-l9pin: a driver holding the gas whose hull has not moved `moveM` for `ticks` is set free (any cause: pile, wedge, stall). */
   pin: { ticks: 660, moveM: 5 },
   bridge: { x: 482, z: 0, halfZ: 6, endX: 508 },
