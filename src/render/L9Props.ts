@@ -185,7 +185,16 @@ export class L9Props extends Group {
     }
     const p = car.transform, fall = Math.max(0, (t - approach) / 60), loose = ['fall', 'impact', 'crawl', 'done'].includes(s.phase);
     if (!loose) {
-      this.rack.position.set(p.x - Math.cos(p.yaw) * 2.2, p.y + .35, p.z + Math.sin(p.yaw) * 2.2); this.rack.rotation.set(0, p.yaw, 0);
+      const body = this.world.vehicles?.cars.get(s.carId)?.physics;
+      if (body) {
+        // Match VehicleView's interpolated chassis, including ramp pitch/roll.
+        // A tick-pose rack slid through the interpolated roof between sim ticks.
+        this.rack.quaternion.copy(body.previousRotation).slerp(this.rotationQ.copy(body.rotation), alpha);
+        this.positionV.set(-2.2, .35, 0).applyQuaternion(this.rack.quaternion);
+        this.rack.position.set(body.previous.x + (p.x - body.previous.x) * alpha, body.previous.y + (p.y - body.previous.y) * alpha, body.previous.z + (p.z - body.previous.z) * alpha).add(this.positionV);
+      } else {
+        this.rack.position.set(p.x - Math.cos(p.yaw) * 2.2, p.y + .35, p.z + Math.sin(p.yaw) * 2.2); this.rack.rotation.set(0, p.yaw, 0);
+      }
     } else {
       const from = s.fallFrom ?? s.from;
       this.rack.position.set(from.x + Math.cos(from.yaw) * Math.min(10, fall * 5) - 2, Math.max(-4.4, from.y + .5 - fall * fall * 3), from.z + Math.min(5, fall * 2));

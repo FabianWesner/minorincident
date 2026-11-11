@@ -27,6 +27,18 @@ const shoot = async (name: string, only?: number[]) => {
       await window.__SS__!.step(1); window.__SS__!.vfx.stepRender(1 / 30); await window.__SS__!.screenshotReady();
     }, zoom);
     await page.screenshot({ path: `${out}/${name}-z${zoom}.png` });
+    if (name === 'overpass-static' && zoom === 1) where.roofPicks = await page.evaluate(async () => {
+      const modulePath = '/node_modules/three/build/three.webgpu.js';
+      const { Raycaster, Vector2 } = await import(modulePath);
+      const game = (window.__SCENE__ as unknown as { game: Game }).game;
+      const rows = [];
+      for (let y = 175; y <= 225; y += 5) for (let x = 500; x <= 595; x += 5) {
+        const ray = new Raycaster(); ray.setFromCamera(new Vector2(x / 640 - 1, 1 - y / 360), game.view.view.camera);
+        const hit = ray.intersectObject(game.view.scene, true).find((h: { object: { visible: boolean } }) => h.object.visible);
+        if (hit) { const names = []; for (let n = hit.object; n; n = n.parent) names.push(n.name || n.type); rows.push({ x, y, names, point: hit.point.toArray() }); }
+      }
+      return rows;
+    });
   }
 };
 const place = async (x: number, z: number, yaw = 0) => {
