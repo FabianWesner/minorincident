@@ -27,6 +27,8 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
   readonly figureRim = uniform(0).setGroup(this._uniformGroup);
   /** Moon bounce on crowd clothing, independent of the driven vehicle's hero rim. */
   readonly figureFill = uniform(0).setGroup(this._uniformGroup);
+  /** Animal bosses retain coat detail above the ordinary infected night ceiling. */
+  readonly animalNightRead = uniform(0).setGroup(this._uniformGroup);
   /** Only courier meshes receive the continuous survivor surface fill. */
   readonly heroFigure = uniform(0).setGroup(this._uniformGroup);
   /** Q-178: extra night read for the textured heroine (muted red/denim/brown map), 0..1; only inside the night key branch. */
@@ -271,7 +273,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
         const body = nodes.threat.mul(nodes.emissiveOnly.oneMinus()).mul(lighting.nightThreat);
         // Apply the eye/body hierarchy to every night preset, after rim, pools and fog.
         // Preserve the darker subway ceiling and scale RGB together to retain authored hues.
-        const ceiling = mix(.1, .05, lighting.subwayDarkness);
+        const ceiling = mix(.1, .05, lighting.subwayDarkness).add(this.animalNightRead.mul(.3));
         result.mulAssign(mix(1, ceiling.div(luminance(result).max(ceiling)), body));
       }
       result.addAssign(this.hitFlash);
