@@ -93,7 +93,7 @@ export class PawContacts {
       const sole = solePoints?.length ? 0 : paw.y - this.origin.y;
       return [{ leg, vertices, chainLength, ankle, pawAnkle, ankleSoles, bindAnkle, neutral: template.worldToLocal(paw.clone()), jointed: knee !== null && pawKnee !== null, knee: knee as Object3D | null, pawKnee, kneeVertices, rest: leg.position.clone(), turned: new Quaternion(), kneeTurned: new Quaternion(), ankleTurned: new Quaternion(), turning: false, paw: original.worldToLocal(paw), reach: bounds.max.y - bounds.min.y, sole, planted: new Vector3(), correction: new Vector3(), release: new Vector3(), phase: -1,
         /** Last drawn paw point (world), standing-hold state and the current settle step (-1: none). */
-        last: null as Vector3 | null, held: false, step: -1, from: new Vector3(), fadeStart: 0 }];
+        orientation: null as Quaternion | null, last: null as Vector3 | null, held: false, step: -1, from: new Vector3(), fadeStart: 0 }];
     });
   }
   /** A texture/model or LOD handoff keeps world-space support points. */
@@ -101,6 +101,7 @@ export class PawContacts {
     this.clip = previous.clip;
     for (const foot of this.feet) {
       const old = previous.feet.find(other => other.leg.name === foot.leg.name); if (!old) continue;
+      foot.orientation = old.orientation?.clone() ?? null;
       foot.phase = old.phase; foot.held = old.held; foot.step = old.step; foot.fadeStart = old.fadeStart;
       foot.planted.copy(old.planted); foot.from.copy(old.from); foot.release.copy(old.release);
       foot.last = old.last ? (foot.last ?? new Vector3()).copy(old.last) : null;
@@ -145,7 +146,9 @@ export class PawContacts {
     }
     const target = this.target.copy(world);
     if (foot.step >= 0) target.y = Math.max(target.y, floor + arc(foot.step));
-    const desired = this.root.getWorldQuaternion(new Quaternion()).multiply(foot.bindAnkle);
+    const heading = this.root.getWorldQuaternion(new Quaternion()).multiply(foot.bindAnkle);
+    // A support sole keeps its world orientation as the body turns above it.
+    const desired = foot.orientation ?? heading;
     target.sub(foot.pawAnkle.clone().multiply(foot.ankle.getWorldScale(new Vector3())).applyQuaternion(desired));
     const orient = () => {
       foot.ankle!.quaternion.copy(foot.ankle!.parent!.getWorldQuaternion(new Quaternion()).invert().multiply(desired));
@@ -202,7 +205,7 @@ export class PawContacts {
   private readonly axis = new Vector3(); private readonly bend = new Vector3(); private readonly from = new Vector3(); private readonly to = new Vector3();
   private readonly parentTurn = new Quaternion();
   private readonly turn = new Quaternion();
-  reset(): void { for (const foot of this.feet) { foot.phase = -1; foot.release.set(0, 0, 0); foot.held = false; foot.last = null; } }
+  reset(): void { for (const foot of this.feet) { foot.phase = -1; foot.release.set(0, 0, 0); foot.held = false; foot.last = null; foot.orientation = null; } }
   /** Jointed (straight-legged) dogs hold a paw for a shorter part of the stride: their hip stands a full leg high, so a
    * paw planted further away than the attached leg reaches would drag. */
   stance(stride: number): number { return Math.min(.45, Math.min(...this.feet.map(f => f.reach)) * (this.feet.some(f => f.jointed) ? .5 : .75) / Math.max(.001, stride)); }
@@ -257,6 +260,7 @@ export class PawContacts {
         if (foot.last && foot.last.y < sole + .015 && Math.hypot(foot.last.x - foot.planted.x, foot.last.z - foot.planted.z) > .03) { foot.from.copy(foot.last).setY(sole); foot.step = 0; }
       }
       if (foot.ankle) {
+        if (!foot.orientation || p > stance || foot.step >= 0) foot.orientation = this.root.getWorldQuaternion(new Quaternion()).multiply(foot.bindAnkle!);
         // A welded body has independently posed knees and ankles. Use world
         // targets directly; translating an entire rigid leg loses swing lift.
         const world = this.point;
@@ -343,6 +347,7 @@ export class PawContacts {
         desired.y = lifted + floor - bottom + Math.max(0, desired.y - sole);
       } else desired.y = Math.max(desired.y, lifted);
       if (foot.ankle) {
+        if (!foot.orientation || foot.step >= 0) foot.orientation = this.root.getWorldQuaternion(new Quaternion()).multiply(foot.bindAnkle!);
         this.placeAnkle(foot, desired, sole);
         this.pawWorld(foot, foot.last ??= new Vector3());
         continue;

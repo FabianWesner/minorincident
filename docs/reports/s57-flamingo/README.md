@@ -51,3 +51,9 @@ The earlier sandbox-only browser and Git blockers are historical. The filtered g
 `contact-diagnosis.json` records contiguous contacts from the saved rounded track. Before the heavy hit at frame 55, zebra support feet remain grounded through frame 46 while travelling 17.8/15.6 cm; elephant support feet travel 23.6/22.8 cm through frame 37. Gorilla's frame 26–41 contact travels 15.4 cm. These establish sustained support drift during locomotion, rather than only a hit transition. The diagnostic deliberately labels its unfiltered post-hit contacts as unsuitable for acceptance; production `summarizeMotion` excludes knockdown clips.
 
 `PawContacts.placeAnkle()` currently derives the desired sole orientation from the actor's current heading on every frame, including support. A pinned sole centre therefore still rotates its heel/toe during turns. The next implementation should retain orientation during support and release/re-step when reach is exhausted; its effect on shared animal contact code must be measured without changing lion-specific motion.
+
+### Support-orientation correction
+
+The shared `PawContacts` solver now retains a sole's world orientation during support, follows the body heading during swing/settling steps, and carries orientation across LOD handoffs. It resets that state when contact solving is released. No lion-specific motion changed. The same four lineup rows now pass: **4/4, no known failures or missing rows**. WebGL2 low p95 before → after: flamingo 2.1 → 0 cm, zebra 15.6 → 0.4 cm, monkey 2.5 → 0.1 cm, lion 0 → 0 cm, lioness 0.4 → 0.1 cm, gorilla 4.5 → 0.3 cm, elephant 22.8 → 0 cm. This is the short existing fixture, not the requested full walk/run coverage.
+
+Typecheck and the 14 render-contract tests pass. Reopened the current three-frame lineup sheet: the animals remain separated and grounded, with attached limbs; its distant framing still cannot prove close-view gait quality. The full scope remains incomplete.
