@@ -55,7 +55,7 @@ try {
   if (values.setup) log({ setup: values.setup, result: await page.evaluate(js => { const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: unknown }).game; return String(new Function('a', 'g', js)(a, g)); }, values.setup) });
   if (values.god) { await page.evaluate(() => window.__SS__!.cheats.god(true)); log({ setup: 'god-mode' }); }
   if (trace) {
-    await trace.send('Tracing.start', { categories: 'devtools.timeline,v8,gc,disabled-by-default-v8.cpu_profiler', transferMode: 'ReturnAsStream' });
+    await trace.send('Tracing.start', { traceConfig: { recordMode: 'recordAsMuchAsPossible', includedCategories: ['devtools.timeline', 'blink.user_timing', 'disabled-by-default-v8.cpu_profiler'] }, transferMode: 'ReturnAsStream' });
     traceStarted = true;
   }
   await page.evaluate(z => {
@@ -191,14 +191,14 @@ try {
   });
   log({ end: true, frames: await page.evaluate(() => (window as unknown as { __r28Frames: unknown[] }).__r28Frames.splice(0)), performanceSummary, errors });
   if (trace && traceStarted) {
-    const completed = new Promise<string>(resolve => trace.once('Tracing.tracingComplete', event => resolve(event.stream ?? '')));
+    const completed = new Promise<{ stream?: string; dataLossOccurred: boolean }>(resolve => trace.once('Tracing.tracingComplete', event => resolve(event)));
     await trace.send('Tracing.end');
-    const stream = await completed;
+    const { stream, dataLossOccurred } = await completed;
     if (!stream) throw new Error('Chromium trace completed without a readable stream');
     let data = '', eof = false;
     while (!eof) { const chunk = await trace.send('IO.read', { handle: stream }); data += chunk.data; eof = chunk.eof; }
     await trace.send('IO.close', { handle: stream });
     writeFileSync(`${out}/trace.json`, data);
-    log({ trace: `${out}/trace.json`, bytes: Buffer.byteLength(data) });
+    log({ trace: `${out}/trace.json`, bytes: Buffer.byteLength(data), dataLossOccurred });
   }
 } finally { await context.close(); }
