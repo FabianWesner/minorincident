@@ -8,6 +8,7 @@ import { cureEncounters, curePaceEncounters, cureEncounterSlots, cureEncounterSp
 import { LevelNineSetPieces } from '../../src/sim/missions/LevelNineSetPieces';
 import { crossing } from '../../src/levels/L9/district';
 import { followFrustum } from '../sim-runner/l3Bots';
+import { l5Wanderers } from '../../src/data/l5';
 import { l6Entries, l6Doors } from '../../src/data/l6';
 import { l3 } from '../../src/data/l3';
 import type { L3StreetChoice } from '../../src/debug/bot/LevelThreeBot';
@@ -173,6 +174,16 @@ for (const { level, l9Route, l9Detour, street } of streetScenarios) {
         const expected = l3.density.alphas.map((_, index) => `route-alpha-${index}`);
         const admitted = world.missions!.state.l3?.alphaAt ?? [];
         const observed = expected.filter((_, index) => admitted[index] > 0);
+        coverage = { expected, observed, missing: expected.filter(id => !observed.includes(id)) };
+      }
+      if (level === 'L5') {
+        const expected = l5Wanderers.flatMap(group => {
+          const role = group.alpha ? 'infected.alpha' : group.archetype;
+          return role && wide(role) ? Array.from({ length: group.n }, (_, index) => `${role}/${group.at.join(',')}/${index}`) : [];
+        });
+        const counts = new Map<string, number>();
+        for (const row of spawns.filter(row => row.tick === 0)) counts.set(row.archetype, (counts.get(row.archetype) ?? 0) + 1);
+        const observed = expected.filter(id => { const role = id.split('/')[0], remaining = counts.get(role) ?? 0; counts.set(role, remaining - 1); return remaining > 0; });
         coverage = { expected, observed, missing: expected.filter(id => !observed.includes(id)) };
       }
       if (level === 'L6') {

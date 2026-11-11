@@ -105,3 +105,11 @@ Added a coverage gate requiring a recorded wide actor matched by ID and spawn ti
 Added an audit-only fixture that calls the production L6 wave-4 spawner for all six authored hatches, placing the courier out of view for admission, checking routes toward the tunnel center opposite each hatch, and restoring her start pose before the native run continues. The fixture retains cap/residency/offscreen checks and actual actor sizes. Admission receipts are captured immediately because native checkpoint restoration can replace the mission's final ledger. No bodies or corpses are removed by the fixture.
 
 The isolated final run completes and exits zero: all six hatch front members are observed, 12 total wide records have valid spawn-origin paths, and no narrow openings are reported. Typecheck and tool lint passed. This closes the five omitted-hatch coverage gaps previously listed.
+
+## L5 authored butcher pair fix
+
+The authored two-butcher formation at (14,28) admitted only its first member: raw second slot (16.5,29.5) fails the production .45 m clearance check and is silently skipped. Moved the formation anchor to (11,28); both resulting raw positions are clear. No roster or size changed. Added a source-derived L5 quota requiring both butchers and both authored Alphas rather than accepting the earlier three-body census.
+
+The isolated L5 run now completes and exits zero with four wide records, all required admissions observed, zero unreachable paths and zero narrow openings. Typecheck and changed-file lint passed. Regression gates still need rerunning after this adjustment.
+
+Browser QA needed: inspect the butcher pair near (11,28)/(13.5,29.5), confirming both appear outside collision, move along the street without clipping, and do not crowd the adjacent frontage.
