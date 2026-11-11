@@ -38,25 +38,36 @@ export async function checkL9BridgeMarker(): Promise<void> {
   } finally { world.dispose(); }
 }
 
-/** r38-vqa P2-2: an APC pinned between barriers with the throttle held is freed by the third failed recovery. */
+/**
+ * r38-vqa P2-2 / r42-l9pin (r41-vqa P1-1): an APC pinned between barriers with the gas held gets free within 15 s, also while the
+ * driver taps the handbrake as the shake-off hint says, and also when the hull cannot move at all (a held impact stall: the r41
+ * APC sat frozen 330 s and never counted a recovery). The new pose never overlaps a wall.
+ */
 export async function checkL9ApcPocket(): Promise<void> {
   const decoded = decodeSave(JSON.stringify(readFixture('tests/fixtures/saves/qa/l9-at-bridge.json.br').campaign));
   if (decoded.status !== 'ok') throw new Error('fixture does not decode');
-  const world = await loadLevel('L9', 1, decoded.save, 0, { quality: 'low' });
-  try {
-    const l9 = world.missions!.l9!, car = () => world.vehicles!.cars.get(l9.state.carId)!;
-    const { x, z } = car().entity.transform;
-    for (const [bx, bz, hx, hz, name] of [[x + 6, z, .5, 7, 'front'], [x - 8, z, .5, 7, 'rear'], [x - 1, z + 2.6, 7, .3, 'left'], [x - 1, z - 2.6, 7, .3, 'right']] as const) {
-      world.physics.world!.createCollider(RAPIER.ColliderDesc.cuboid(hx, 1.5, hz).setTranslation(bx, 1.5, bz));
-      world.solids.setBarrier(`r39.${name}`, { x: bx, y: 1.5, z: bz, halfX: hx, halfY: 1.5, halfZ: hz } as never);
-    }
-    let away = 0;
-    for (let i = 0; i < 1800 && !away; i++) {
-      const frame = emptyInput(); frame.drive = { throttle: 1, steer: 0 } as never; frame.brake = false;
-      world.applyInput(frame, 'keyboard'); world.update();
-      const t = car().entity.transform;
-      if (Math.abs(t.z - z) > 4 || t.x > x + 7 || t.x < x - 9) away = i;
-    }
-    expect(away, 'the APC left the pocket within 30 s').toBeGreaterThan(0);
-  } finally { world.dispose(); }
+  for (const variant of ['gas', 'gas+handbrake', 'frozen'] as const) {
+    const world = await loadLevel('L9', 1, decoded.save, 0, { quality: 'low' });
+    try {
+      const l9 = world.missions!.l9!, car = () => world.vehicles!.cars.get(l9.state.carId)!;
+      const { x, z } = car().entity.transform;
+      for (const [bx, bz, hx, hz, name] of [[x + 6, z, .5, 7, 'front'], [x - 8, z, .5, 7, 'rear'], [x - 1, z + 2.6, 7, .3, 'left'], [x - 1, z - 2.6, 7, .3, 'right']] as const) {
+        world.physics.world!.createCollider(RAPIER.ColliderDesc.cuboid(hx, 1.5, hz).setTranslation(bx, 1.5, bz));
+        world.solids.setBarrier(`r39.${name}`, { x: bx, y: 1.5, z: bz, halfX: hx, halfY: 1.5, halfZ: hz } as never);
+      }
+      let away = 0;
+      for (let i = 0; i < 900 && !away; i++) {
+        if (variant === 'frozen') car().entity.vehicle!.impactStallUntil = world.tick + 600;
+        const frame = emptyInput(); frame.drive = { throttle: 1, steer: 0 } as never; frame.brake = false;
+        if (variant === 'gas+handbrake') frame.handbrake = i % 90 < 24;
+        world.applyInput(frame, 'keyboard'); world.update();
+        const t = car().entity.transform;
+        if (Math.abs(t.z - z) > 4 || t.x > x + 7 || t.x < x - 9) away = i;
+      }
+      expect(away, `${variant}: the APC left the pocket within 15 s`).toBeGreaterThan(0);
+      const t = car().entity.transform, def = car().physics.def;
+      for (let d = -def.length / 2; d <= def.length / 2; d += 1)
+        expect(world.infected!.nav.clear(t.x + Math.cos(t.yaw) * d, t.z - Math.sin(t.yaw) * d, def.width / 2), `${variant}: hull clear of walls at ${d} m`).toBe(true);
+    } finally { world.dispose(); }
+  }
 }
