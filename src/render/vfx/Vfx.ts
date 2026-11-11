@@ -91,6 +91,8 @@ export class Vfx extends Group {
   private readonly tells = new Map<number, TelegraphThreat & { kind: TelegraphKind; spawned: number; sourceId?: number; color?: number }>();
   /** r32: per-attack cue counter for the animal telegraph effects (dust, stamps, eye glint), keyed by attack id. */
   private readonly animalCues = new Map<number, number>();
+  /** Emission clock for the L3 Alpha's render-only thrown-body streak. */
+  private readonly thrownBodyTrails = new Map<number, number>();
   private readonly hitIds = new Uint32Array(512);
   private readonly hitUntil = new Float64Array(512);
   private readonly hitPeak = new Float32Array(512);
@@ -622,6 +624,21 @@ export class Vfx extends Group {
       }
       if (a?.move === 'flamingo.dive' && a.hitIds.includes(1)) remaining = Math.max(remaining, (a.obstructionUntil ?? 0) - this.world.tick);
       if (a && this.enabled && this.animalCues) this.animalCue(e, a);
+      const flight = a?.projectile;
+      if (this.world.scenario === 'L3' && a?.stage === 'active' && (a.move === 'alpha.living-missile' || a.move === 'alpha.grab-throw') && flight && (flight.living || flight.corpse)) {
+        const body = this.world.entities.get(flight.objectId), last = this.thrownBodyTrails.get(a.attackId) ?? -Infinity;
+        if (this.enabled && body && this.time - last >= .05) {
+          // A short camera facing tracer ribbon rides behind the actual body.
+          // It uses the existing pooled particle draw and never feeds back to sim.
+          const length = 1.6, speed = 24;
+          this.particles.spawn(this.time - .04, .12, body.transform.x - flight.dx * length, body.transform.y + .2, body.transform.z - flight.dz * length,
+            flight.dx * speed, 0, flight.dz * speed, length, particleShape.tracer, 0xa7dfff, length, .09);
+          this.thrownBodyTrails.set(a.attackId, this.time);
+        }
+      }
+    }
+    if ((this.thrownBodyTrails?.size ?? 0) > 64) for (const id of this.thrownBodyTrails!.keys()) {
+      if (!this.world.infected?.active.some(e => e.infected?.specialAttack?.attackId === id && e.infected.specialAttack.stage === 'active')) this.thrownBodyTrails!.delete(id);
     }
     if (this.animalCues?.size > 64) for (const id of this.animalCues.keys()) if (!this.world.infected?.active.some(e => e.infected?.specialAttack?.attackId === id)) this.animalCues.delete(id);
     // Warning lifetime follows the sim snapshot, including paused step()/redraws.

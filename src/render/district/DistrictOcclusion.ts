@@ -303,7 +303,7 @@ export class DistrictOcclusion {
             // solids. Keep the courier behind the hull while opening its surface.
             this.cutPlacements.add(ref);
             if (tucked) this.courierTucked = true;
-            if ('hero' in entry && (tucked || (entry.id.startsWith('bld.') || entry.id.startsWith('veh.')) && this.coversLens(view, entry, ref))) this.lensPlacements.add(ref);
+            if ('hero' in entry && (tucked || (entry.id.startsWith('bld.') || entry.id.startsWith('veh.') || entry.id === 'kit.dispersal-console') && this.coversLens(view, entry, ref, entry.id === 'kit.dispersal-console' ? .25 : 2 / 3))) this.lensPlacements.add(ref);
             this.occluderId = `${entry.id}@${(x).toFixed(1)},${(z).toFixed(1)}`; blocked = true; break;
           }
         }
@@ -313,7 +313,7 @@ export class DistrictOcclusion {
   }
   /** Enclosing shells and nearby facades covering most of the screen must not leave a flat viewport.
    * Keep ordinary occluders on the courier disc (the garage fixture covers only ~60% by its bounding rectangle). */
-  private coversLens(view: View, entry: LodBatch, ref: Object3D): boolean {
+  private coversLens(view: View, entry: LodBatch, ref: Object3D, threshold = 2 / 3): boolean {
     const camera = view.camera, o = camera.position, [c, s, x, z] = DistrictOcclusion.footFrame(entry, ref);
     const dx = o.x - x, dz = o.z - z, lx = Math.abs((dx * c - dz * s) / ref.scale.x), lz = Math.abs((dx * s + dz * c) / ref.scale.z);
     const top = ref.position.y + entry.height * ref.scale.y;
@@ -327,7 +327,7 @@ export class DistrictOcclusion {
       p.applyMatrix4(camera.projectionMatrix);
       left = Math.min(left, p.x); right = Math.max(right, p.x); bottom = Math.min(bottom, p.y); upper = Math.max(upper, p.y);
     }
-    return Math.max(0, Math.min(1, right) - Math.max(-1, left)) * Math.max(0, Math.min(1, upper) - Math.max(-1, bottom)) / 4 >= 2 / 3;
+    return Math.max(0, Math.min(1, right) - Math.max(-1, left)) * Math.max(0, Math.min(1, upper) - Math.max(-1, bottom)) / 4 >= threshold;
   }
   private readonly barRay = Object.assign(new Raycaster(), { firstHitOnly: true });
   private readonly barBox = new Box3();
