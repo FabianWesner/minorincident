@@ -28,8 +28,9 @@ are evidence with the detailed limits recorded below, not a completion claim.
 ## Scope
 
 Investigate flicker reported for the L8 lion and lioness. Motion only; model assets
-are outside this lane. The cause and before/after render metric are not established
-yet. No source files have been changed.
+are outside this lane. The current candidate and measurements are summarized above. The sections below
+are a chronological investigation log; earlier limitations and claims are
+superseded where later measurements explicitly correct them.
 
 ## Current evidence
 
@@ -445,3 +446,13 @@ slots occupied and local fallback waiting on an active browser reservation.
 Cancelled this waiting request (exit 130); no tests started and no final pass is
 claimed. The earlier green remote suite predates later source changes and is
 insufficient for final acceptance. Log: `final-unit.log` under test-results.
+
+
+## Current shared render regression check
+
+Ran `node node_modules/vitest/vitest.mjs run tests/shared/render-contracts.test.ts
+--project default --configLoader runner --maxWorkers=4`: exit 0, 14/14 passed,
+3.16 s. This file includes the finite rigid/skinned action-clip helper and
+fractional crowd palette/picking checks. This targeted suite is useful shared
+render evidence but does not replace the pending required remote full suite,
+full scene gate, or a complete companion-clip runtime audit.
