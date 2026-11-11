@@ -20,8 +20,8 @@ const NAV_TRUCK = 900_201;
 const ESCAPE_PREPARE_M = 12, ESCAPE_PREPARE_LEAD_S = 15;
 /** Market openings (front east, loading south) and the checkpoint entrances (main gate, north and south side gates). */
 const WALLS: Record<string, CoverWall> = {
-  'door-front': { x: -51.3, y: .9, z: -42.2, halfX: .2, halfY: .9, halfZ: 4.6 },
-  'door-loading': { x: -55.6, y: .9, z: -37.6, halfX: 4.3, halfY: .9, halfZ: .2 },
+  'door-front': { x: -51.3 + l2.marketShiftX, y: .9, z: -42.2, halfX: .2, halfY: .9, halfZ: 4.6 },
+  'door-loading': { x: -55.6 + l2.marketShiftX, y: .9, z: -37.6, halfX: 4.3, halfY: .9, halfZ: .2 },
   'gate-main': { x: l2.checkpoint.gateX, y: .9, z: 30.1, halfX: .25, halfY: .9, halfZ: 5.6 },
   'gate-north': { x: 82, y: .9, z: 24.6, halfX: 3.1, halfY: .9, halfZ: .25 },
   // Join the fence post at x=83.6. The old 0.715 m jamb gap admitted a .7 m
@@ -218,11 +218,11 @@ export class LevelTwoRescue {
         // Search only inside the shop; generic admission can otherwise project
         // a crowded pose through the loading wall or the refrigerator bank.
         const poses: { x: number; z: number }[] = [];
-        for (let x = -59.1; x <= -52.3; x += .25) for (let z = -46; z <= -38.95; z += .25) poses.push({ x, z });
+        for (let x = -59.1 + l2.marketShiftX; x <= -52.3 + l2.marketShiftX; x += .25) for (let z = -46; z <= -38.95; z += .25) poses.push({ x, z });
         poses.sort((a, b) => Math.hypot(a.x - glass[0], a.z - glass[1]) - Math.hypot(b.x - glass[0], b.z - glass[1]));
         let admitted = false;
         for (const pose of [{ x: glass[0], z: glass[1] }, ...poses]) {
-          if (pose.x < -59.1 || pose.x > -52.3 || pose.z < -46 || pose.z > -38.95) continue;
+          if (pose.x < -59.1 + l2.marketShiftX || pose.x > -52.3 + l2.marketShiftX || pose.z < -46 || pose.z > -38.95) continue;
           Object.assign(e.transform, pose); groundAgent(this.world, e);
           if (!this.world.solids.clear(e.transform, e.combat!.radius, id)) continue;
           if (this.world.solids.admit(e, 'l2.trapped.pose', 0, false)) { admitted = true; break; }
@@ -231,7 +231,7 @@ export class LevelTwoRescue {
         if (!e.pendingAdmission) this.world.spatial.set(id, e.transform.x, e.transform.z);
         continue;
       }
-      e.hidden = true; e.transform.x = -55.6 + (i % 5 - 2) * 1.2; e.transform.z = -42.2 + (Math.floor(i / 5) % 6 - 2.5) * 1.1;
+      e.hidden = true; e.transform.x = -55.6 + l2.marketShiftX + (i % 5 - 2) * 1.2; e.transform.z = -42.2 + (Math.floor(i / 5) % 6 - 2.5) * 1.1;
       this.world.spatial.delete(id);
     }
     return ids;

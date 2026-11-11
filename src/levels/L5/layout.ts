@@ -111,8 +111,13 @@ export function l5Frontages(layout: DistrictLayout): { x: number; z: number; axi
 export function levelFiveLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
   return structuredClone(layouts).map(layout => {
     if (layout.district !== 'D-FAIR') return layout;
-    // Preserve the former shared supermarket navigation footprint in the L5 aftermath.
-    for (const p of layout.placements) if (p.assetId === 'bld.supermarket') p.collisionId = 'bld.supermarket.legacy';
+    // The 180° supermarkets share the north/south plaza row. The rebuilt
+    // checkout moved +0.7 m along local X (world -X at this yaw), so keep the
+    // current model and collider together while restoring the row's old
+    // checkout-side approach clearance.
+    for (const p of layout.placements) if (p.assetId === 'bld.supermarket' && Math.cos(p.yaw) < -.99) {
+      p.position[0] += .7; p.visualAabb.min[0] += .7; p.visualAabb.max[0] += .7;
+    }
     moveFairhavenCellar(layout);
     const door = layout.anchors['kessler-cellar-door'], inner = layout.anchors['cellar-interior'];
     for (const [name, [x, z]] of Object.entries(l5Anchors)) layout.anchors[name] = { position: [x, 0, z], yaw: 0 };
