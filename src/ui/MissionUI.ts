@@ -136,7 +136,10 @@ export class MissionUI {
         const offscreen=behind||this.point.z>1||this.point.z< -1||Math.abs(dx)>cx-margin||dy< -cy+top||dy>cy-margin;
         if(offscreen&&Math.abs(dx)+Math.abs(dy)<1e-6){dy=behind?1:-1;}
         const scale=offscreen?Math.min((cx-margin)/Math.max(1e-6,Math.abs(dx)),(cy-(dy<0?top:margin))/Math.max(1e-6,Math.abs(dy))):1;
-        style(this.marker,'left',`${cx+dx*scale}px`);style(this.marker,'top',`${cy+dy*scale}px`);
+        let markerX=cx+dx*scale,markerY=cy+dy*scale;
+        // r36-l9l5 (r35-vqa P3-4): the off-screen arrow sat on top of hotbar slot 1 (bottom-left weapon rack): keep it above the rack.
+        if(offscreen){const rack=document.querySelector('.hud-weapon-rack')?.getBoundingClientRect();if(rack&&rack.width>0&&markerX<rack.right+30&&markerY>rack.top-30)markerY=rack.top-30;}
+        style(this.marker,'left',`${markerX}px`);style(this.marker,'top',`${markerY}px`);
         attribute(this.marker,'data-offscreen',String(offscreen));attribute(this.marker,'data-anchor',state.marker!);
         style(this.marker,'--direction',`${Math.atan2(dy,dx)}rad`);this.text(this.marker,offscreen?'➜':'◆');
         this.marker.classList.toggle('offscreen',offscreen);

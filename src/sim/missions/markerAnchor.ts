@@ -32,6 +32,12 @@ export function markerAnchor(mission: (Pick<Mission, 'state' | 'def'> & { world?
       const ring = mission.def.anchors[`l5-ring-${next}`] as Anchored | undefined;
       if (ring) return ring;
     }
+    // r36-l9l5 (r35-vqa: 'still nothing points the player to Mia ... the marker-following courier stood at the cellar exit for 5 minutes'):
+    // before anyone is found, guidance points at the first survivor on the route (Mia), so the opening search has a direction.
+    if (l5 && first && l5.survivors.find(r => r.key === first)?.status === 'hidden' && !l5.survivors.some(r => r.status !== 'hidden')) {
+      const ring = mission.def.anchors[`l5-ring-${first}`] as Anchored | undefined;
+      if (ring) return ring;
+    }
   }
   const marker = mission?.state.marker;
   if (!mission || !marker) return null;
