@@ -168,8 +168,8 @@ export class Damage {
     const brain = target.infected;
     const lightFirearmHit = (hit.type === 'bullet' || hit.type === 'projectile') &&
       hit.actionId !== 'weapon.shotgun' && hit.actionId !== 'weapon.rocket-launcher';
-    if (brain && lightFirearmHit && hit.stagger > 0 && !brain.pursuit && !brain.arenaBoss) {
-      const heavy = target.archetype === 'infected.alpha' || ['infected.brute', 'infected.butcher', 'infected.armored', 'infected.armoured-football', 'infected.bloated', 'infected.screamer'].includes(target.archetype ?? '');
+    if (brain && lightFirearmHit && hit.stagger > 0 && !brain.pursuit) {
+      const heavy = !!brain.arenaBoss || target.archetype === 'infected.alpha' || ['infected.brute', 'infected.butcher', 'infected.armored', 'infected.armoured-football', 'infected.bloated', 'infected.screamer'].includes(target.archetype ?? '');
       const attack = brain.state === 'attack' || !!brain.specialAttack && brain.specialAttack.stage === 'telegraph';
       const committed = brain.state === 'attack' && brain.until - this.world.tick <= Math.ceil(infectedDef(target.archetype ?? '').windup * 30);
       if (attack && (heavy || committed)) hit = { ...hit, stagger: 0, knockback: 0, knockdown: false, knockdownTicks: 0 };
