@@ -538,6 +538,8 @@ for _ox in (-10.4, 10.4): _route_boxes.append((_ox - 3.2, -11.6, _ox + 3.2, -1.9
 # Nothing may stand on a new line: drop only the dressing underneath (and the gorilla exit fence panels).
 _DRESS = {'prop.tree', 'prop.street-tree', 'prop.garden-bush', 'prop.garden-bush-small', 'prop.flower', 'prop.flower-bed.large', 'prop.street-lamp', 'prop.trash-bin', 'prop.bench', 'prop.sprinkler', 'prop.hose-reel', 'prop.street-sign'}
 _drop = set(_gorilla_exit_ids)
+# H9's last two pieces (z 7.5..12) lie inside the primate-yard east fence (x=14, z 8..32): drop them by id so no other id moves (r37-nightly).
+_drop |= {p['id'] for p in l.data['placements'][:_route_start + 200] if p['assetId'] == 'prop.hedge' and abs(p['position'][0] - 14) < .01 and 8 < p['position'][2] < 12}
 for p in l.data['placements'][:_route_start]:
     if p['assetId'] not in _DRESS: continue
     a = p['visualAabb']
@@ -551,6 +553,9 @@ for pid in sorted(_drop):
     for o in [o for o in l.empties if o.name == _nm or o.name.startswith(_nm + '.') or o.name.startswith(f'crown:{pid}:')]:
         l.empties.remove(o); bpy.data.objects.remove(o, do_unlink=True)
 print('r33-l8route added', len(l.data['placements']) - _route_start, 'pieces, dropped', len(_drop))
+# ...and the same two hedge pieces are re-placed 0.9 m east of the fence (appended, so no existing id moves): the plaza flank stays closed
+# exactly as before without cutting into the fence panels (r37-nightly; dropping them opened a route and broke the L8 flamingo gate test).
+for _hz in (8.6175, 10.8525): l.place('prop.hedge', [14.9, 0, _hz], yaw=math.pi / 2, scale=(0.8840819684716045, 1, 1))
 # Every enclosure panel is a cell wall: bolt them all (a pushable 22 kg panel is a door the herd or the player can open).
 for p in l.data['placements']:
     if p['assetId'] == 'prop.crowd-fence': p['fixed'] = True
