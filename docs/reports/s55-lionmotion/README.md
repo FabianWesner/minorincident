@@ -296,3 +296,16 @@ metadata or bind geometry alone; the loaded locomotion pose/ancestor transforms
 must be compared with the bind calibration. Zebra and elephant bind soles also
 sit near zero. This changes the next investigation toward atlas pose construction
 and transform alignment, rather than another paw-state workaround.
+
+## Healthy animal classification fix
+
+Found that `CrowdView` restricted `animalSpecies` to `e.infected`. Healthy zoo
+animals therefore skipped the branch clearing humanoid layers and entered the
+40-degree humanoid body-lean clamp. Their horizontal bind rig was being rotated
+upright before the paw solve, explaining the shoulder-height discrepancy and
+unreachable floor targets. Species classification now includes living healthy
+zoo animals. A completed real-L8 repeat gives paw maxima 9.042 cm for lion and
+19.839 cm for lioness with current solver changes. This fixes a concrete pose
+classification error but does not yet pass continuity acceptance. The solver
+must now be reassessed with anatomically correct input rather than the previous
+humanoid-clamped pose. Latest `l8-after` contains this run.

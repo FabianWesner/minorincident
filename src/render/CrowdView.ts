@@ -823,7 +823,7 @@ export class CrowdView extends Group {
       if (specialAttack?.move === 'zebra.stampede' && specialAttack.stage === 'active') clip = 'zebra-stampede';
       if (specialAttack?.move === 'flamingo.dive' && specialAttack.stage === 'active') clip = 'run';
       // r32-animalmoves: species poses (lift/flight phase) are sampled once per figure and drive a few clip choices.
-      const species = e.infected && !e.corpse ? animalSpecies(e) : undefined;
+      const species = !e.corpse ? animalSpecies(e) : undefined;
       const animalPose = species ? this.animalMoves.sample(e, renderTick, motion.speed, this.gait.sample(e.id, gaitDistance, 'corgi-trot', batch.strideScale, motion.speed)) : undefined;
       const dogPhase = species === 'dog' && !heavy && !e.infectionRise ? this.animalMoves.dogPhase : -1;
       if (dogPhase >= 0) clip = 'dog-lunge-bite';
