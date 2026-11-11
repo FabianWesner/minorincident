@@ -11,6 +11,8 @@ Status: implementation committed; full browser matrix and final visual acceptanc
 
 ## Evidence so far
 
+- Scene Lab daylight fill toggle at paused L8 under L2 daylight: rim=0 for fill1 and fill2, zero errors. Opened `/private/tmp/s43-day-parity/fill-2.png`; Nadia retains green clothing, dark skirt and headwear. PNG difference is confined to courier bounds `(633,301)-(702,380)`; Nadia region `(1000,200)-(1120,350)` has no changed pixels. Receipt `day-parity.json`. This isolates fill strength in the current shader; it is not a historical-shader comparison. Scene Lab closed its browser and owned server.
+
 - Final-fill L8 night check: five-second real-input L8 start, low WebGL2 zoom 1, zero page errors. Opened `/private/tmp/s43-nadia-final-l8/s001-t134.jpg` and `s002-t261.jpg`. With fill 2 and healthy neutral tint, Nadia retains visible face/arms, green upper clothing, dark headwear and skirt in the marker ring. The first frame is less overlapped by the courier. This supersedes the earlier L8 fill-4 readability capture; final daylight parity still needs verification. Owned preview stopped.
 
 - Catch-up recovery with clear same-side candidates: courier `(4053,-27)` faces along the east rail, dog starts x~3998.81 with walking held. At tick 426 the dog relocates to `(4036.25,-46.89)` with `rejoining=true`, remaining inside rail x4057. Zero errors in ten seconds. This proves valid same-side relocation is retained; subsequent walking was intentionally suppressed. Added receipts to `corgi-rejoin.json`. Together with the rejected-across-rail probe and ordinary-follow route, this covers both rejection and valid destination selection. Owned preview stopped.
