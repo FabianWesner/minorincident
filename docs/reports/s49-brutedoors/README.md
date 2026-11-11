@@ -51,3 +51,9 @@ The L2 nightly diagnostic identifies missing entity 216 with no final entity tra
 ## Authored L10 coverage extension
 
 The audit now additionally enumerates all wide slots from `cureEncounters` and `curePaceEncounters` in both tiers, using the production slot and spot helpers against full-world collision. The isolated run completed with 79 records (12 runtime plus 67 authored checks) and two candidate failures: `farm-road-pair-4` armored at (1400.79, 91.03), once per tier, cannot reach its station (1400, 100) with the clearance margin. This supersedes the earlier zero-failure runtime result for L10. Production admission eligibility/lane adjustments still need qualification before classifying or fixing this candidate. Typecheck and tool lint passed.
+
+## L10 warehouse approach fix
+
+Full-world collision diagnosis places the failed armored slot inside warehouse `bld.cure-warehouse:92/geometry-0` (warehouse extends to z=94). Its clearance-grid start cell is invalid; nearby road cells at z=100 connect normally. Moved `farm-road-pair-4` from (1400, 100) to (1400, 106), preserving its ID and roster. The armored slot now clears the warehouse's south face. The isolated L10 audit rerun completed with 79 records, zero unreachable paths and zero narrow openings. The earlier no-layout-change statement is superseded by this fix. Full regression gates still need rerunning after this layout adjustment.
+
+Browser QA needed for this fixed spot: at the industrial warehouse near x=1400, follow the three-member `farm-road-pair-4` approach along the south frontage; verify the armored body emerges outside the warehouse, reaches the road without clipping, and remains clear of the street lamp/container stack.
