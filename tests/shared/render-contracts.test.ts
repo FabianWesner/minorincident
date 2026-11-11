@@ -53,7 +53,7 @@ import { LimbIK } from '../../src/render/characters/LimbIK';
 import { retargetClip, skinClips } from '../../src/render/characters/clips';
 import { alphaTypes } from '../../src/data/alphaTypes';
 import { alphaLooks } from '../../src/data/alphaLooks';
-import { courierForegroundWanted, crowdSurroundsCourier } from '../../src/render/courierForeground';
+import { courierForegroundWanted, crowdSurroundsCourier, megaOccludesCourier } from '../../src/render/courierForeground';
 import { DistrictOcclusion } from '../../src/render/district/DistrictOcclusion';
 import { isStructuralOccluder } from '../../src/assets/worldDefinitions';
 import { isUncutProp } from '../../src/assets/DistrictAssets';
@@ -947,6 +947,9 @@ function checkCivilianShaderBindings(): void {
   expect(one.material).toBe(same.material); expect(one.material).not.toBe(other.material);
   expect(one.material.customProgramCacheKey()).toBe(same.material.customProgramCacheKey());
   expect(one.material.customProgramCacheKey()).toBe(other.material.customProgramCacheKey());
+  const nightMaterial = one.material as PaletteMaterial;
+  expect(nightMaterial.figureFill.value, 'human civilians retain the s36 night figure fill').toBe(4);
+  expect(nightMaterial.figureFillNeutral.value).toBe(1);
   const flipped = b.clone(); flipped.flipY = !b.flipY;
   const differentLayout = civilianMaterial(shading, false, pose, { bindRow: 0, atlas: flipped });
   expect(differentLayout.material.customProgramCacheKey()).not.toBe(one.material.customProgramCacheKey());
@@ -1018,11 +1021,15 @@ test('crowd long guns use asset grip/muzzle sockets and the courier support-hand
 });
 
 function checkVehicleForegroundVeto(): void {
-  expect(courierForegroundWanted(true, Infinity)).toBe(true);
-  expect(courierForegroundWanted(false, 5)).toBe(true);
-  expect(courierForegroundWanted(false, Infinity)).toBe(false);
+  expect(courierForegroundWanted(true, false)).toBe(true);
+  expect(courierForegroundWanted(false, false)).toBe(false);
+  expect(courierForegroundWanted(false, true)).toBe(true);
   // vqa-3 P1: an on-foot vehicle hull stays whole; her own occluded chest/head turns the foreground contour on instead.
-  for (const crowd of [false, true]) for (const megaDistance of [5, Infinity]) {
-    expect(courierForegroundWanted(crowd, megaDistance, true)).toBe(true);
-  }
+  for (const crowd of [false, true]) for (const mega of [false, true]) expect(courierForegroundWanted(crowd, mega, true)).toBe(true);
+  const mega = { id: 4, infected: { pursuit: true }, hidden: false, health: { current: 100 }, transform: { x: 0, y: 4.65, z: 5 } } as unknown as EntitySnapshot;
+  expect(megaOccludesCourier({ x: 0, y: 10, z: 10 }, { x: 0, y: .7, z: 0 }, [mega])).toBe(true);
+  mega.transform.x = 6;
+  expect(megaOccludesCourier({ x: 0, y: 10, z: 10 }, { x: 0, y: .7, z: 0 }, [mega])).toBe(false);
+  mega.transform.x = 0; mega.transform.z = -4;
+  expect(megaOccludesCourier({ x: 0, y: 10, z: 10 }, { x: 0, y: .7, z: 0 }, [mega])).toBe(false);
 }

@@ -77,7 +77,7 @@ import { layoutLights } from './WorldLights';
 import { footprint, auraLight, pickupLight } from './LightField';
 import { timeOfDay as timeOfDayPresets } from '../data/timeOfDay';
 import { Environment } from './lighting/Environment';
-import { courierForegroundWanted, crowdSurroundsCourier } from './courierForeground';
+import { courierForegroundWanted, crowdSurroundsCourier, megaOccludesCourier } from './courierForeground';
 import { courierXray } from './characters/courierDepth';
 
 /** Presentation composition: E01 fixture or E02 lookdev, with state flowing only from sim to view. */
@@ -1220,7 +1220,7 @@ export class GameView implements Lifecycle {
     const courier = this.world.entities.get(1);
     const behindHull = !!current && !!(this.vehicles?.courierOccluded || this.entityAssets?.courierOccluded || courier && !courier.hidden && this.l8Gates?.courierOccluded(this.camera.position, courier.transform));
     courierXray.value = behindHull ? 1 : 0;
-    this.courierForeground = !!current && courierForegroundWanted(crowdSurroundsCourier(current, this.world.entities.iterate(), this.world.scenario === 'L4' ? 4.5 : 3) || this.nearLargeCorpse(current) || !!this.districts?.occlusion.courierTucked, this.megaDistance(current), behindHull);
+    this.courierForeground = !!current && courierForegroundWanted(crowdSurroundsCourier(current, this.world.entities.iterate(), this.world.scenario === 'L4' ? 4.5 : 3) || this.nearLargeCorpse(current) || !!this.districts?.occlusion.courierTucked, megaOccludesCourier(this.camera.position, current, this.world.entities.iterate()), behindHull);
     // The seated copy shares the courier's prewarmed depth slice: retain her
     // silhouette among the crew as the scripted truck turns under the camera.
     this.character?.setForeground(this.courierForeground || !!this.world.missions?.state.l2?.seated);

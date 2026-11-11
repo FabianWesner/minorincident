@@ -302,7 +302,9 @@ export class Companion {
       at.y += w.districts?.groundBelow(at.x, at.z, player.transform.y - .7) ?? 0;
       if (!ai.nav.clear(at.x, at.z, radius) || !ai.director.offscreen(at, at.y - .3)) continue;
       const path: number[] = [], from = ai.nav.nearestCell(at.x, at.z, radius);
-      if (!ai.nav.visible(at, player.transform, radius) && !ai.nav.path(from, goal, path, 16000)) continue;
+      // In L10 the visible railings are also hard scene boundaries. Catch-up may walk a route around one,
+      // but an unseen relocation must not place the corgi on the other side of the barrier.
+      if (w.scenario === 'L10' ? !ai.nav.visible(at, player.transform, radius) : !ai.nav.visible(at, player.transform, radius) && !ai.nav.path(from, goal, path, 16000)) continue;
       const yaw = e.transform.yaw;
       e.transform.yaw = -Math.atan2(player.transform.z - at.z, player.transform.x - at.x);
       if (!w.solids.clear(at, radius, e.id) || !w.solids.relocate(e, at, 'companion.rejoin', 0)) { e.transform.yaw = yaw; continue; }
