@@ -654,3 +654,16 @@ maximum is at initialization. Thus zebra/elephant shared the large runtime
 support/classification defect, and the common render fixes remove that defect.
 Durable machine-readable before/after measurements: [zoo-comparison.json](zoo-comparison.json).
 Raw original/current traces remain `original-<species>/` and `final-<species>/`.
+
+## Real-fixture route backend/tier/camera-scale matrix
+
+Completed eight current-source route runs (both backends, both quality tiers,
+camera distance scales 1/1.5), each 900 simulation ticks. Actual backend receipts
+match requests. All measured route intervals have zero pelvis discontinuity,
+root max 5.333 cm and local paw maxima 5.59–6.65 cm. Durable measurements:
+[fixture-matrix.json](fixture-matrix.json). Framing uses an explicit cinematic
+camera distance multiplier, recorded in config, rather than claiming a hidden
+camera setting. Initial camera relocation causes streaming gaps: 779–839 adjacent
+pose samples per cat, so this does not prove full 900-frame drawn coverage.
+The harness must prewarm the route view before measurement to close that gap.
+No render-source changes were made; final tests/gates remain applicable.

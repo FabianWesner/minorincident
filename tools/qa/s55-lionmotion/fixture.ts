@@ -9,7 +9,7 @@ try {
   await session.open();
   console.log(await loadFixtureInPage(session.page, readFixture('tests/fixtures/saves/qa/l8-before-lion.json.gz')));
   await session.page.evaluate(() => { window.__SS__!.debug.figureJoints(true); window.__SS__!.cheats.god(true); window.__SS__!.camera.cinematic({ position: [-28, 18, 3], target: [-45, 0, -14] }, true); });
-  if (process.env.MOTION_FIXTURE_ROUTE) await session.page.evaluate(() => {
+  if (process.env.MOTION_FIXTURE_ROUTE) await session.page.evaluate((zoom) => {
     const game = (window.__SCENE__ as unknown as { game: import('../../../src/Game').Game }).game;
     const started = game.world.tick;
     const cats = [...game.world.entities.iterate()].filter(e => /lion/.test(e.civilian?.zooAnimal ?? e.archetype)).map(e => ({ entity: e, x: e.transform.x, z: -42, distance: e.motion?.distance ?? 0 }));
@@ -20,10 +20,10 @@ try {
         cat.entity.motion = { velocity: { x: -speed, z: 0 }, speed, moving: true, distance: cat.distance + distance };
       }
       const x = cats[0].entity.transform.x;
-      game.view.view.cinematic({ position: [x + 17, 18, cats[0].z + 17], target: [x, 0, cats[0].z] }, true);
+      game.view.view.cinematic({ position: [x + 17 * zoom, 18 * zoom, cats[0].z + 17 * zoom], target: [x, 0, cats[0].z] }, true);
     }, 1000);
-  });
-  writeJson(`${out}/config.json`, { requestedBackend: process.env.MOTION_BACKEND ?? 'webgl2', tier: process.env.MOTION_TIER ?? 'high', actualBackend: await session.page.evaluate(() => (window.__SCENE__ as unknown as { game: import('../../../src/Game').Game }).game.view.renderer.selectedBackend), movement: process.env.MOTION_FIXTURE_ROUTE ? 'test-only route: 10 s at 1 m/s + 5 s at 3.2 m/s; gameplay stats unchanged' : 'natural fixture simulation, no speed overrides' });
+  }, Number(process.env.MOTION_ZOOM ?? 1));
+  writeJson(`${out}/config.json`, { requestedBackend: process.env.MOTION_BACKEND ?? 'webgl2', tier: process.env.MOTION_TIER ?? 'high', cameraDistanceScale: Number(process.env.MOTION_ZOOM ?? 1), actualBackend: await session.page.evaluate(() => (window.__SCENE__ as unknown as { game: import('../../../src/Game').Game }).game.view.renderer.selectedBackend), movement: process.env.MOTION_FIXTURE_ROUTE ? 'test-only route: 10 s at 1 m/s + 5 s at 3.2 m/s; gameplay stats unchanged' : 'natural fixture simulation, no speed overrides' });
   const rows: unknown[] = [];
   for (let batch = 0; batch < 15; batch++) {
     const batchRows = await session.page.evaluate(async (batchIndex) => {
