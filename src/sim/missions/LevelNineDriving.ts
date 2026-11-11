@@ -541,7 +541,7 @@ export class LevelNineDriving {
     if (w.tick < s.nextWave || !this.holding(this.car.entity.id)) return;
     const at = this.car.entity.transform, ai = w.infected!;
     for (let i = 0; i < 8 && ai.director.count + 1 < ai.director.cap && ai.pool.length; i++) {
-      const angle = Math.PI + (i - 3.5) * .13, p = { x: at.x + Math.cos(angle) * 105, z: at.z + Math.sin(angle) * 105 }, archetype = ['infected.sprinter', 'infected.dog', 'infected.runner', i === 7 ? 'infected.armored' : 'infected.runner'][i % 4];
+      const angle = Math.PI + (i - 3.5) * .13, p = { x: at.x + Math.cos(angle) * 105, z: at.z + Math.sin(angle) * 105 }, archetype = ['infected.sprinter', 'infected.dog', 'infected.runner', 'infected.armored'][i % 4];
       if (!w.chunks?.resident(p.x, p.z) || !ai.director.safe(archetype, p)) continue;
       const id = ai.spawn(archetype, p, { state: 'chase' }); ai.pursueTarget(id, 1); pursueCrossingVehicle(w, id); s.waves.push(id);
     }
