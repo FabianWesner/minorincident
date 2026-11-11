@@ -261,35 +261,48 @@ export class VehicleView extends Group {
       // A scripted fall already supplies world height. Ground settling would pull the hull
       // into the gully a second time and lift each wheel back onto a different road lip.
       if (this.ground && !state.scripted) {
-        updateTyreMatrices(record.wheels);
-        const heights = record.wheels.map(w => this.ground!(...this.wheelSpot(w.node)) ?? 0), mean = heights.reduce((a, b) => a + b, 0) / heights.length;
-        record.parent.position.y += mean;
-        for (let i = 0; i < record.wheels.length; i++) record.wheels[i].node.position.y += heights[i] - mean;
-        // Tyre faces can meet a paving edge between mesh vertices, especially with steering and body lean.
-        updateTyreMatrices(record.wheels);
-        for (const wheel of record.wheels) {
-          // Parked wheels meet the same immutable ground every frame. Reuse their correction until the pose changes;
-          // the matrix tolerance is below a micron, so this also covers sleeping physics jitter without visible sink.
-          if (wheel.contactGround === this.ground && wheel.contactPose.elements.every((v, i) => Math.abs(v - wheel.node.matrixWorld.elements[i]) < 1e-7)) {
-            wheel.node.position.y += wheel.contactOffset; continue;
-          }
-          wheel.contactPose.copy(wheel.node.matrixWorld); wheel.contactGround = this.ground;
-          const baseY = wheel.node.position.y;
-          // Moving a wheel along a leaning chassis also moves its tread sideways. Recheck the contact after settling:
-          // at the station's paving boundary that small shift can put a face over a different ground triangle.
-          for (let pass = 0; pass < 3; pass++) {
-            if (pass > 0) wheel.node.updateWorldMatrix(false, false);
-            let gap = Infinity;
-            for (const local of wheel.contacts) {
-              this.contact.copy(local).applyMatrix4(wheel.node.matrixWorld);
-              const ground = this.ground(this.contact.x, this.contact.z);
-              if (ground !== null) gap = Math.min(gap, this.contact.y - ground);
+        // Terrain fitting is a visual correction for supported tyres. Applying it to
+        // airborne wheels snaps them down to the road below a ramp, hiding the tyres
+        // inside the ramp while the chassis is still in the air.
+        const supported = record.wheels.map((_, i) => {
+          const index = i < 4 ? i : i - 2;
+          return body.previousWheels[index].contact || body.wheels[index].contact;
+        });
+        const supportedCount = supported.filter(Boolean).length;
+        if (supportedCount > 0) {
+          updateTyreMatrices(record.wheels);
+          const heights = record.wheels.map((w, i) => supported[i] ? this.ground!(...this.wheelSpot(w.node)) ?? 0 : 0);
+          const mean = heights.reduce((sum, height, i) => sum + (supported[i] ? height : 0), 0) / supportedCount;
+          record.parent.position.y += mean;
+          for (let i = 0; i < record.wheels.length; i++) if (supported[i]) record.wheels[i].node.position.y += heights[i] - mean;
+          // Tyre faces can meet a paving edge between mesh vertices, especially with steering and body lean.
+          updateTyreMatrices(record.wheels);
+          for (let i = 0; i < record.wheels.length; i++) {
+            if (!supported[i]) continue;
+            const wheel = record.wheels[i];
+            // Parked wheels meet the same immutable ground every frame. Reuse their correction until the pose changes;
+            // the matrix tolerance is below a micron, so this also covers sleeping physics jitter without visible sink.
+            if (wheel.contactGround === this.ground && wheel.contactPose.elements.every((v, i) => Math.abs(v - wheel.node.matrixWorld.elements[i]) < 1e-7)) {
+              wheel.node.position.y += wheel.contactOffset; continue;
             }
-            if (!Number.isFinite(gap) || pass > 0 && gap >= 0) break;
-            const vertical = wheel.node.parent!.matrixWorld.elements[5];
-            if (vertical > .1) wheel.node.position.y -= (gap - .001) / vertical;
+            wheel.contactPose.copy(wheel.node.matrixWorld); wheel.contactGround = this.ground;
+            const baseY = wheel.node.position.y;
+            // Moving a wheel along a leaning chassis also moves its tread sideways. Recheck the contact after settling:
+            // at the station's paving boundary that small shift can put a face over a different ground triangle.
+            for (let pass = 0; pass < 3; pass++) {
+              if (pass > 0) wheel.node.updateWorldMatrix(false, false);
+              let gap = Infinity;
+              for (const local of wheel.contacts) {
+                this.contact.copy(local).applyMatrix4(wheel.node.matrixWorld);
+                const ground = this.ground(this.contact.x, this.contact.z);
+                if (ground !== null) gap = Math.min(gap, this.contact.y - ground);
+              }
+              if (!Number.isFinite(gap) || pass > 0 && gap >= 0) break;
+              const vertical = wheel.node.parent!.matrixWorld.elements[5];
+              if (vertical > .1) wheel.node.position.y -= (gap - .001) / vertical;
+            }
+            wheel.contactOffset = wheel.node.position.y - baseY;
           }
-          wheel.contactOffset = wheel.node.position.y - baseY;
         }
       }
       const transition = this.world.vehicles!.transition;

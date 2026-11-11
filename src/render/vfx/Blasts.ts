@@ -276,7 +276,11 @@ export class Blasts extends Group {
         const color = directional.select(jetColor, uprightColor).mul(st.z).mul(heat);
         return vec4(color, mask.mul(st.w).mul(.9));
       })();
-      this.flames.renderOrder = 4;
+      // Keep flame cards before transparent cab glass. The APC glass has no
+      // depth writes, so placing this pooled mesh at render order 4 made
+      // flames behind the windshield overlay it regardless of their depth.
+      // Opaque hull parts still depth-test the cards and reject hidden flames.
+      this.flames.renderOrder = -1;
     }
     // Ground light pools (fake fire/flash light on the stylised, custom-lit town): origin(x,y,z,radius), color(r,g,b,intensity).
     const glowMaterial = new MeshBasicNodeMaterial({ transparent: true, depthWrite: false, blending: AdditiveBlending });
