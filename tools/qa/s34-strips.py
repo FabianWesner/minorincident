@@ -9,9 +9,11 @@ import sys
 from PIL import Image, ImageDraw
 
 windows = {
-    'walk': [84, 90, 96, 102, 108, 114, 120, 126],
+    'walk': [132, 140, 148, 156, 164, 172, 180, 188],
     'attack': [298, 306, 314, 322, 330, 338, 346, 354],
     'hit': [420, 426, 432, 438, 444, 450, 456, 462],
+    'melee': [510, 516, 522, 528, 534, 540, 546, 552],
+    'sustained': [800, 806, 812, 818, 824, 830, 836, 842],
 }
 for directory in sorted(pathlib.Path(sys.argv[1]).iterdir()):
     if not directory.is_dir():

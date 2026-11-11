@@ -163,6 +163,12 @@ function checkOrdinaryInfectedPresentation(): void {
   expect(InfectedMoves.flinch(entity('chase', reaction), 101)).toBeGreaterThan(.4);
   expect(InfectedMoves.flinch(entity('chase', reaction), 110)).toBeGreaterThan(.5);
   expect(InfectedMoves.flinch(entity('chase', reaction), 120)).toBe(0);
+  expect(InfectedMoves.staggerClip(entity('chase', reaction), 104, 0)).toBeUndefined();
+  expect(InfectedMoves.staggerClip(entity('chase', { ...reaction, until: 115, direction: { x: 0, z: -1 } }), 104, 0)).toBe('stagger-left');
+  expect(InfectedMoves.staggerClip(entity('chase', { ...reaction, until: 115, direction: { x: 0, z: 1 } }), 104, 0)).toBe('stagger-right');
+  const repeat = entity('chase', { ...reaction, started: 106, until: 107 });
+  expect(InfectedMoves.flinch(repeat, 107)).toBeLessThan(InfectedMoves.flinch(repeat, 109));
+  expect(InfectedMoves.flinch(repeat, 116)).toBeLessThan(InfectedMoves.flinch(repeat, 109));
 }
 function checkFractionalCrowdPicking(): void {
   const matrices = new Float32Array(32);

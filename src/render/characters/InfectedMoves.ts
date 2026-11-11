@@ -34,6 +34,13 @@ export class InfectedMoves {
     if (age < 0 || age >= duration) return 0;
     return age < duration * .12 ? ease(age / (duration * .12)) : 1 - ease((age - duration * .12) / (duration * .88));
   }
+  /** Ordinary melee stagger uses its authored side pose; bullets retain the moving flinch layer. */
+  static staggerClip(e: EntitySnapshot, renderTick: number, yaw: number): 'stagger-left' | 'stagger-right' | undefined {
+    const r = e.combat?.reaction;
+    if (!r || r.heavy || r.until - r.started <= 1 || e.health.current <= 0 || renderTick < r.started || renderTick - r.started >= flinchSeconds * 60) return;
+    const side = r.direction.x * Math.sin(yaw) + r.direction.z * Math.cos(yaw);
+    return side < 0 ? 'stagger-left' : 'stagger-right';
+  }
   /**
    * Layers and gait style for one infected figure. `gait` is the displayed locomotion clip (or undefined when standing),
    * `windup` the archetype's windup in seconds, `yaw` the presented heading.

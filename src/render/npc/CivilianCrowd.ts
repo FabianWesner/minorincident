@@ -419,8 +419,10 @@ class CivilianBatch extends Group {
     // Heavy reactions (deaths, finishers, blasts) knock the body down and get it up again; light hits flinch (InfectedMoves).
     const heavy = !!reaction?.heavy && tick < reaction.until && b.state !== 'dead';
     if (heavy) clip = age < .7 ? 'knockdown' : 'get-up';
+    const stagger = motion.speed <= .06 ? InfectedMoves.staggerClip(e, tick, e.transform.yaw) : undefined;
+    if (stagger) clip = stagger;
     const duration = authoredClips.get(clip)!.duration, renderTick = Math.max(0, tick + alpha - 1);
-    const phase = b.state === 'dead' ? (reaction?.groundDeath ? 1 : Math.min(1, (tick - b.deadAt) / 60 / duration)) - InfectedMoves.stir(e, renderTick, duration) : clip === 'windup' ? Math.max(0, Math.min(1, 1 - (b.until - this.world.tick) / ((windups.get(e.archetype) ?? .5) * 60))) : clip === 'get-up' ? Math.min(1, (age - .7) / getUpSpan(reaction!)) : heavy ? Math.min(1, age / .7) : strides[clip] ? this.gait.sample(e.id, Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60), clip, this.strideScale, motion.speed) : (renderTick / 60 + idleOffset(e.id)) / duration % 1;
+    const phase = b.state === 'dead' ? (reaction?.groundDeath ? 1 : Math.min(1, (tick - b.deadAt) / 60 / duration)) - InfectedMoves.stir(e, renderTick, duration) : clip === 'windup' ? Math.max(0, Math.min(1, 1 - (b.until - this.world.tick) / ((windups.get(e.archetype) ?? .5) * 60))) : clip === 'get-up' ? Math.min(1, (age - .7) / getUpSpan(reaction!)) : heavy ? Math.min(1, age / .7) : stagger ? Math.min(1, age / .3) : strides[clip] ? this.gait.sample(e.id, Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60), clip, this.strideScale, motion.speed) : (renderTick / 60 + idleOffset(e.id)) / duration % 1;
     const presented = this.presentation.sample(e.id, e.transform, tick, alpha);
     // Hunched silhouette: the whole body leans forward (pivot at the feet) on top of the tier gait's arms-forward pose.
     // QA2b: the read holds in every state - standing/searching infected sway and twitch on top of the hunch.

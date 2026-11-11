@@ -2,7 +2,7 @@
 
 ## Status
 
-Implementation checkpoint; acceptance is **not complete**. Implementation checkpoint committed as `e2db4c7e`; acceptance remains in progress. Scene Lab now runs after the environment permissions changed. The measured foot-slide limits still fail, and the full capture matrix and 62/62 scene gate remain outstanding.
+Acceptance is **not complete**. Render implementation is committed as `e2db4c7e`. The final foot-slide matrix passes all 24 day/night × low/high × WebGL2/WebGPU rows (maximum p95: nurse 1.8 cm, crawler 1.4 cm, dog 0.3 cm). The broader matched visual matrix, final-source 62/62 gate, draw-call comparison and full test gate remain outstanding. Historical investigation results below are superseded by the latest measurements.
 
 ## Cause
 
@@ -25,7 +25,7 @@ Implementation checkpoint; acceptance is **not complete**. Implementation checkp
 | Nurse foot-slide p95 | 12.8 cm (archived r31 audit) | 1.8 cm (contiguous contacts, high WebGL2; other matrix rows pending) |
 | Crawler foot-slide p95 | Not reported (crawl excluded); independent archived-track recalculation was about 63 cm | 0.5 cm (detailed crawl contacts, high WebGL2; other matrix rows pending) |
 | Dog foot-slide p95 | 92.7 cm (archived r31 audit) | 0.2 cm (bite hop arc, high WebGL2; other matrix rows pending) |
-| Scene gate | Prior audit baseline only | **62/62 pass**, 0 known, 0 not run (current source) |
+| Scene gate | Prior audit baseline only | **62/62 pass** on an earlier checkpoint; final source rerun pending |
 | Draw calls | Prior audit baseline only | Not measured |
 
 The archived before strips were opened: the suit attack strip showed little visible change through the attack, the suit hit strip showed effects without a clear body response, and the nurse walk strip showed foot drift. Nine first-pass after strips were generated and opened (attack, hit, and walk for nurse, crawler, dog): nurse shows an arm/chest attack change and recoil under gunfire; crawler shows a grab but its attack pelvis drop buried its torso; dog showed a gallop but weak gun-hit body response. Subsequent changes removed the crawler pelvis drop and prevented humanoid hunch/attack layers from rotating animal bodies. These subsequent changes still need matching strips reviewed. The requested low/high, day/night, WebGL2/WebGPU capture matrix remains outstanding.
@@ -93,3 +93,23 @@ Solver diagnostics (temporary throws removed): nurse at game zoom uses detailed 
 Root-cause correction for game-camera nurse: LimbIK cached bind-pose limb directions, while the loaded retargeted pose changes shin/ankle translations (observed shin offset [-0.0209,-0.3363,-0.0850]). It now derives lengths/directions from the current pose. `test-results/s34-nurse-live-offsets`: p95 1.8 cm, max 6.0 cm, sink 0 cm. A regression assertion changes offsets after solver construction and verifies target reach. This shared solver change requires broader scene and character validation; prior gate results are not final-source proof.
 
 Post-checkpoint high-WebGL2 day/night game-camera metrics completed successfully for all six rows: nurse p95 1.8 cm in both presets, crawler 1.4 cm in both, dog 0.3 cm in both (`test-results/s34-final-metrics/`). Clean-checkpoint `tests/tools/gate-tools.test.ts` passes 8/8, including the previously failing freshness assertion. Working tree was clean after the implementation commit. Remaining work still includes all ordinary type-group strip comparisons, remaining final-source matrices, final full gates and draw-call comparison.
+
+Post-checkpoint low-WebGL2 day/night game-camera metrics also pass: nurse 1.8 cm, crawler 1.4 cm, dog 0.3 cm in both presets. This replaces the pre-fix nurse 4.1 cm failure for these rows. Captures/metrics: `test-results/s34-final-metrics/*-low/`.
+
+High-WebGPU final-source day/night game-camera metrics pass: nurse 1.8 cm, crawler 1.4 cm, dog 0.3 cm in both presets. Added `tools/qa/s34-capture.ts` for matched Git-baseline/current captures on the same port and fixture, recording source hashes. Its baseline nurse low-WebGL2 day/night pilot completed and all six strips were opened: the baseline attack goes from a slight arm movement to a stationary reach, and gunfire changes the body only briefly; walking has alternating poses but its small slide is difficult to judge visually at zoom 1.5. The night baseline shows the same outline changes with much weaker body detail. Full paired comparisons remain pending. Capture runner typecheck/lint pass.
+
+Completed final-implementation foot-slide matrix: 24/24 game-camera zoom-1.5 rows (3 actors × day/night × low/high × WebGL2/WebGPU) have non-null p95 ≤3 cm. Aggregate checked from each actor motion summary; maximum p95 is nurse 1.8 cm, crawler 1.4 cm, dog 0.3 cm. Machine-readable aggregate: `test-results/s34-final-metrics/summary.json`. This proves those measured foot-slide rows, not the outstanding full-type visual acceptance.
+
+Expanded after-capture batch completed: 16/16 low-WebGL2 day/night game-camera scenes for suit-l4, native-bbqdad, firefighter, hazmat, riot, civ-man, civ-elderly and guard. All 48 walk/attack/hit strips composed under `test-results/s34-pairs/after-webgl2-low/`. These newly composed strips are not yet reviewed; baseline counterparts and other quality/backend rows remain outstanding.
+
+Visual review of all 48 expanded after strips is complete (low WebGL2, day/night, zoom 1.5). Suit-l4: alternating strides, high arm/chest attack change, backward gun recoil; dark night coat limits fine detail. Native-bbqdad: broad stepping, shoulder/arm attack and backward recoil visible in both presets. Firefighter: alternating boots, axe/arm and chest movement on strike, head/chest gun recoil. Hazmat: alternating steps and arm/chest changes; recoil is smaller and night detail weak. Riot: steps behind shield, asymmetric shield/arm attack, head/chest recoil. Civ-man, civ-elderly and guard: gait changes visible, but attack/flinch changes are small at game zoom; the three captures appear very similar in blue/green clothing. Their intended appearance coverage and action readability remain unresolved; these rows are not accepted solely because their scene checks passed. Baseline counterparts and remaining quality/backend rows still pending.
+
+Appearance check confirms the concern: first drawn appearance in all three `civ-man-day`, `civ-elderly-day`, and `guard-day` metrics is `npc.civilian-woman-a`, rather than the requested distinct models. The fixture/render appearance path must be corrected before claiming those type groups are visually verified.
+
+Fixture coverage correction: Scene Lab now preserves explicit `npc.*` infected appearances before outbreak dressing. The three corrected 90-frame fixtures report their intended man/elderly/guard assets. This changes fixture setup only; production combat and AI are unchanged.
+
+Capture-window correction: walk samples now cover chase frames 132–188 (the previous 84–126 window mostly sampled idle). Separate melee (510–552) and sustained MG (800–842) strips supplement attack and initial bullet-hit strips. The full matrix must use these corrected windows before acceptance.
+
+Standing ordinary melee reactions now select authored `stagger-left` / `stagger-right` by body-relative hit side for the fixed 0.30 s presentation window; moving hits retain the upper-body recoil layer. Kicks/blasts keep their existing knockdown/get-up behavior. Existing render-contract cases cover side selection, one-tick bullet reactions and a changing repeated-hit envelope (14/14 pass); typecheck and lint pass. Foot-slide and scene acceptance must be rerun after this addition.
+
+Corrected civ-man day strips (walk/attack/hit/melee/sustained) opened: chase frames show alternating planted steps and arm raise through approach; attack shows a reach/recovery; initial MG shows chest/head recoil. Bat contact bends the torso and ultimately downs the actor. Late sustained-fire frames show the already downed actor, so this strip cannot prove sustained flinches on a living target. This evidence limitation remains open.

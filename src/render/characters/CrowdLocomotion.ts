@@ -41,7 +41,7 @@ export interface CrowdLayers {
   animal?: AnimalPose;
 }
 /** Clips that stand on their feet: footwork locks the feet and turns become steps. */
-const standingClips = new Set(['idle', 'infected-idle', 'infected-search', 'npc-look-around', 'npc-gesture', 'npc-water', 'npc-wave', 'npc-glance', 'npc-give', 'npc-sign', 'npc-wave-in', 'npc-bang', 'npc-plead', 'npc-press', 'npc-hug', 'ff-pry', 'npc-stand-back', 'shoot', 'civ-startle', 'windup', 'swing', 'hurt']);
+const standingClips = new Set(['idle', 'infected-idle', 'infected-search', 'npc-look-around', 'npc-gesture', 'npc-water', 'npc-wave', 'npc-glance', 'npc-give', 'npc-sign', 'npc-wave-in', 'npc-bang', 'npc-plead', 'npc-press', 'npc-hug', 'ff-pry', 'npc-stand-back', 'shoot', 'civ-startle', 'windup', 'swing', 'hurt', 'stagger-left', 'stagger-right']);
 /** Crowd gait styles: stance (cycle fraction), run blend, knee scale. Shorter stance at speed keeps chibi legs within reach. */
 const gaitStyles: Record<string, { stance: number; run: number; knee?: number }> = {
   crawl: { stance: .3, run: .25, knee: .65 },
