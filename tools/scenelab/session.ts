@@ -225,6 +225,14 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   add('staticOverlap', clipping.static.length, e.staticOverlapMax);
   const motion = Object.values(metrics.actors).map(a => a.motion);
   add('footSlideMaxCm', Math.max(0, ...motion.map(m => m.slideMaxCm)), e.footSlideMaxCm);
+  if (e.footSlideP95MaxCm !== undefined) {
+    const p95 = motion.map(m => m.slideP95Cm).filter((value): value is number => value !== null && Number.isFinite(value));
+    add('footSlideP95MaxCm', p95.length ? Math.max(...p95) : Infinity, e.footSlideP95MaxCm);
+  }
+  for (const actor of e.footSlideActors ?? []) {
+    const value = metrics.actors[actor]?.motion.slideP95Cm ?? Infinity;
+    checks.push({ name: `footSlideP95Cm.${actor}`, pass: value <= (e.footSlideP95MaxCm ?? 3), value, limit: e.footSlideP95MaxCm ?? 3 });
+  }
   add('footSinkMaxCm', Math.max(0, ...motion.map(m => m.sinkMaxCm)), e.footSinkMaxCm);
   add('footJitterRunMax', Math.max(0, ...Object.values(metrics.actors).filter(a => a.kind === 'courier').map(a => a.motion.jitterRunMax)), e.footJitterRunMax);
   add('attackBodyOverlapMaxCm', metrics.attackOverlap?.depthCm ?? Infinity, e.attackBodyOverlapMaxCm);

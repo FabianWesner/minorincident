@@ -120,14 +120,15 @@ export class AnimalMoves {
       return undefined;
     }
     if (species === 'flamingo') {
-      const engaged = !!b && !dead && (!!b.arenaBoss?.engaged || b.state === 'chase' || b.state === 'attack' || !!a);
+      // Ordinary pursuit is a grounded walk. Only the authored flock dive
+      // takes off; previously arena engagement lifted every bird into cruise,
+      // so the contact solver correctly released its feet while it skated.
+      const flight = !!a && a.move === 'flamingo.dive' && a.stage !== 'recovery';
       let target = 0;
-      if (engaged) {
+      if (flight) {
         target = flamingoCruise + Math.sin(t * 1.3) * .25;
-        if (a?.move === 'flamingo.dive') {
-          if (a.stage === 'telegraph') target = flamingoCruise + .9 * windup;
-          else if (a.stage === 'active') target = (flamingoCruise + .9) - (flamingoCruise + .5) * Math.sin(Math.PI * Math.min(1, travel * 1.05));
-        }
+        if (a.stage === 'telegraph') target = flamingoCruise + .9 * windup;
+        else if (a.stage === 'active') target = (flamingoCruise + .9) - (flamingoCruise + .5) * Math.sin(Math.PI * Math.min(1, travel * 1.05));
       }
       const h = this.heights.get(e.id) ?? { y: 0, tick: renderTick };
       const dt = Math.max(0, Math.min(.1, (renderTick - h.tick) / 60));

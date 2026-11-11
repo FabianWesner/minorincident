@@ -149,6 +149,7 @@ function checkOrdinaryInfectedPresentation(): void {
   expect(end.getWorldPosition(new Vector3()).distanceTo(target)).toBeLessThan(1e-5);
   const contact = (frame: number, x: number, clip = 'idle') => ({ frame, clip, floor: 0, feet: [{ heel: [x, 0, 0], toe: [x + .1, 0, 0], yaw: 0 }] });
   expect(summarizeMotion([contact(1, 0), contact(2, .01)]).slideMaxCm).toBe(1);
+  expect(summarizeMotion([contact(1, 0), contact(2, .01)]).slideP95Cm).toBe(1);
   expect(summarizeMotion([contact(1, 0), contact(2, 1, 'knockdown'), contact(3, 2)]).slideMaxCm).toBe(0);
   const moves = new InfectedMoves();
   const entity = (state: string, reaction?: object) => ({
@@ -167,6 +168,9 @@ function checkOrdinaryInfectedPresentation(): void {
   const recoveringDog = { ...dog, infected: { ...dog.infected!, state: 'chase' as const } };
   dogs.sample(recoveringDog, 129.25, 0, 0); expect(dogs.dogPhase).toBeCloseTo(.4);
   dogs.sample(recoveringDog, 140, 0, 0); expect(dogs.dogPhase).toBeGreaterThan(.4);
+  const flamingos = new AnimalMoves(), flamingo = { ...entity('chase'), archetype: 'infected.flamingo' };
+  expect(flamingos.sample(flamingo, 129, 1.2, 0)).toBeUndefined();
+  expect(flamingos.lift).toBe(0);
   const reaction = { index: 0, started: 100, until: 101, direction: { x: 1, z: 0 }, from: { x: 0, z: 0 }, to: { x: 0, z: 0 }, heavy: false };
   expect(InfectedMoves.flinch(entity('chase', reaction), 101)).toBeGreaterThan(.4);
   expect(InfectedMoves.flinch(entity('chase', reaction), 110)).toBeGreaterThan(.5);

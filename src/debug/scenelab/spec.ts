@@ -289,6 +289,10 @@ export interface Expectations {
   /** Placement pairs whose LOD0 meshes cut through each other (`clipping.static` only; bone hits not counted). */
   staticOverlapMax?: number;
   footSlideMaxCm?: number;
+  /** Worst actor p95 grounded foot displacement per contact, in cm. */
+  footSlideP95MaxCm?: number;
+  /** Actors that must provide contact samples for the p95 gate; an absent actor or no contacts fails. */
+  footSlideActors?: string[];
   /** Deepest sole point below the floor, in cm (feet through the ground). */
   footSinkMaxCm?: number;
   /** Longest run of consecutive frames in which a courier sole zig-zags vertically by >= 0.8 cm (a bobbing body or foot). */
