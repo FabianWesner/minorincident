@@ -1,4 +1,5 @@
-import { BoxGeometry, Color, Group, InstancedMesh, Matrix4, Quaternion, Vector3 } from 'three/webgpu';
+import { BoxGeometry, Color, Group, InstancedBufferAttribute, InstancedMesh, Matrix4, Quaternion, Vector3 } from 'three/webgpu';
+import { attribute } from 'three/tsl';
 import { perimeterBoxes } from '../sim/missions/LevelTenFinale';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { Materials } from './Materials';
@@ -39,7 +40,10 @@ export class L10Perimeter extends Group {
         add(along + 1.6, 1.75, 2.15, .075, .08, '#76664c', -Math.PI / 4);
       }
     }
-    this.mesh = new InstancedMesh(this.geometry, materials.fromColor('l10-perimeter-fence', new Color('#ffffff'), 0, true), this.pieces.length);
+    this.geometry.setAttribute('_edgeColor', new InstancedBufferAttribute(new Float32Array(this.pieces.flatMap(piece => piece.color.toArray())), 3));
+    const material = materials.shaded(attribute('_edgeColor', 'vec3'));
+    material.name = 'l10-perimeter-fence';
+    this.mesh = new InstancedMesh(this.geometry, material, this.pieces.length);
     this.mesh.castShadow = this.mesh.receiveShadow = true; this.mesh.frustumCulled = false;
     this.add(this.mesh); this.update();
   }
@@ -48,9 +52,8 @@ export class L10Perimeter extends Group {
     if (!this.mesh || up === this.shown) return;
     this.shown = up;
     const matrix = new Matrix4(), rotation = new Quaternion(), axis = new Vector3(0, 1, 0), braceAxis = new Vector3(0, 0, 1), brace = new Quaternion();
-    this.pieces.forEach((piece, i) => { rotation.setFromAxisAngle(axis, piece.yaw).multiply(brace.setFromAxisAngle(braceAxis, piece.angle)); matrix.compose(piece.p, rotation, up ? piece.s : this.hidden); this.mesh!.setMatrixAt(i, matrix); this.mesh!.setColorAt(i, piece.color); });
+    this.pieces.forEach((piece, i) => { rotation.setFromAxisAngle(axis, piece.yaw).multiply(brace.setFromAxisAngle(braceAxis, piece.angle)); matrix.compose(piece.p, rotation, up ? piece.s : this.hidden); this.mesh!.setMatrixAt(i, matrix); });
     this.mesh.instanceMatrix.needsUpdate = true;
-    if (this.mesh.instanceColor) this.mesh.instanceColor.needsUpdate = true;
   }
   dispose(): void { this.geometry.dispose(); this.mesh?.dispose(); }
 }
