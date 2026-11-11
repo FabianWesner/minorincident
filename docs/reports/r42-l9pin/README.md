@@ -71,3 +71,62 @@ Totals: 49 → 56 of 100 survivors saved. Longest post-evacuation pin in every a
   - a "<Name> was bitten" callout appears on each loss.
 - **After "Drive onto the bridge" with the gas held:** the APC never stands > 12 s.
 - **Any break-free jump** lands with the whole hull clear of the gate, fences and barriers.
+
+## Follow-up (orchestrator decision: options 1 + 3; commits 424e69cb, 2d92bb9e)
+### Why the guards did not thin the pack
+1. **Dead before the APC arrived.** The guards took their posts as soon as the camp streamed in (tick ~6890). In slow arrivals the ambient pack killed all four before the APC reached the bay: seed 2 intended, civilian state `finished` at ticks 19504-20560, APC at 24082. The probe then showed `guardShots 0`.
+   - Fix: they take post only when the APC is within 60 m west of the gate (`l9Course.guardDeployM`).
+2. **Wrong place.** The posts are fixed at (447-459, -7). The APC stops anywhere in the bay, so the pack at its door was 10-25 m away and mostly behind the hull: 36-57 hits in 90 s from four rifles.
+   - Fix: `LevelNineDriving.coverDoor()`. During the evacuation each guard's post moves to a fan 7 m out from the passenger door, 3 m apart, on clear nav cells (`guardOutM`). With hold set, the ally walks there between targets.
+   - Result: seed 2 went from 57 shots / 36 hits to 467 shots / 267 hits.
+3. **Not found as a cause:** range (35 m), target choice, facing or shot visibility. The probe saw `shotVisible` and nav visibility true from every guard to the door infected.
+
+### Release rule (option 3)
+- After the 45 s wait, survivors step out once at most 2 infected are within the 8 m door radius.
+- At 90 s (`capTicks`) they step out regardless (fail-forward).
+- A courier at or below half health at the open hatch ends the wait at once (`releaseCourierHp`). This was added after the W-only probe looped 12 courier deaths. It did not stop that loop (see open).
+- No reinforcement waves while survivors wait (as before). HUD callouts are unchanged.
+
+### Marker to the side fence
+With the gate shut, the marker ran straight into the gate. The marker driver sat against it for 400 s (native seed 2), with break-free sending it back west each time. While the gate is shut, the evacuation has not started and the APC is up to 60 m west of the gate, the ring is now the side-fence gap nearest the hull (`markerAnchor`).
+
+### Tried and dropped
+`doorClearM` 12 instead of 8 made the marker drivers worse (marker-hud 1/5 seeds with >= 2 saved). Reverted.
+
+### Results, final commit 2d92bb9e
+Five seeds, no hatch shooting (`after.txt`; before = `before.txt`). Columns are survivors saved out of 4 per seed.
+
+| Driver | Before | After 1st pass (71c2af97) | Final | Target | Met |
+|---|---|---|---|---|---|
+| intended bot | 4 0 4 0 4 (3/5) | 4 1 4 1 4 (3/5) | **4 1 4 3 4 (4/5)** | >= 4/5 | yes |
+| marker-hud | 0 0 0 0 0 (0/5) | 4 2 1 0 0 (2/5) | 0 1 1 1 4 (1/5) | >= 3/5 | **no** |
+| marker-w | 0 4 2 0 0 (2/5) | 0 1 4 1 0 (1/5) | x 2 0 0 0 (1/5) | >= 3/5 | **no** |
+| west-edge | 3 4 3 3 3 | 4 4 4 4 4 | 4 4 4 4 4 | | |
+| pile50 | 4 3 4 0 4 | 4 3 4 1 4 | 4 3 0 1 4 | | |
+
+The intermediate state 424e69cb (before the courier-health release) measured marker-hud 4 2 1 0 0 (2/5) and marker-w x x 0 0 0 (0/5); the difference is within seed noise.
+
+**Why the marker drivers still lose survivors.** They drive the straight marker line with durability 0 and drag the whole road horde into the bay: 15-28 infected at the door. Screamers keep it topped up, and four rifles cannot clear it in 90 s. Losses are at the 90 s cap or 3-12 s after a brief clear spell.
+
+**Courier-death loop.** In marker-w seed 1 the APC stops at (457.3, -1.7) and the passive courier at the open hatch dies about every 23 s. Each death reloads `evac-point` and restarts the 30 s hold, so the run times out (12 deaths, 480 s). The half-health release did not break this loop: she dies while the crew is outside too.
+
+**Browser run of the final commit** (L9 level start, low, WebGL2, zoom 1.5, no god, follow-marker with Space taps, 560 s):
+- Evacuation at (467, -2) from tick 9881. No door wait needed: 0 → 1 → 2 → 3 → **4/4** by tick 11352.
+- "Drive onto the bridge" at 11685; the APC left at 11875 (no pin); the level finished.
+- Captures looked at: `r42/final2-l9-start-low-z15-gl/s051-t10658.jpg` (bay almost empty, survivors crossing, "Cover the survivors · 2/4 at the trucks") and `s054-t11750.jpg` (APC through the open bridge gate, "Drive onto the bridge · 20 m").
+- Intermediate run on 424e69cb (`r42/final-l9-start-low-z15-gl`):
+  - **1/4 saved.** Rosa and Dale were bitten 4-5 s after a brief clear spell. Then "Clear the door · 16 infected" for about 85 s, then one more loss.
+  - `s055-t11423.jpg`: APC against the bridge-gate barrier with about 16 infected on its west side.
+
+**Checks on 2d92bb9e:**
+- Remote `npm test`: 27 files, 106 passed, 1 skipped, 150/150 cases, 153.2 s.
+- `threat-audit --levels L9`: L9 skilled and passive complete, 0 L9 flags. The only flag is `PARTIAL_LEVEL_SELECTION`.
+- `tools/qa/r42/pocket-check.ts`: passed.
+- `tsc` and eslint: clean.
+
+### Open (orchestrator decision)
+- **Marker-driver target not met.** Possible levers:
+  - Thin the chase pack before the bay: the gate countdown or shut gate could hold the road horde outside the camp; the shut gate is a wall, but the side fence is open.
+  - A short covering-fire volley from the trucks when survivors step out.
+  - Accept that a passive marker-follower with a wrecked APC loses most survivors (fail-forward works).
+- **Courier-death loop at evac-point (passive hatch).** A fail-forward rule is needed, e.g. after 2 deaths at `evac-point` the hold timer keeps its progress across the reload, or the hatch stays shut while nobody shoots.
