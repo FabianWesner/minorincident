@@ -53,9 +53,14 @@ export function damageAmount(hit: DamageEvent, target: EntitySnapshot, shieldOpe
     if (target.infected?.specialAttack?.stage === 'recovery') multiplier *= 1.5;
     return Math.max(0, amount * multiplier);
   }
-  if (target.infected?.special === 'armor' && hit.type !== 'explosive' && hit.type !== 'status') {
-    const dx = hit.origin.x - target.transform.x, dz = hit.origin.z - target.transform.z, distance = Math.hypot(dx, dz);
-    if (!distance || (dx * Math.cos(target.transform.yaw) - dz * Math.sin(target.transform.yaw)) / distance >= 0.5) amount *= 0.25;
+  // PO 2026-11-11 ("almost unlimited health"): the armored plate is the armor. Front hits take half damage, flank/rear
+  // hits full; the plate no longer stacks with the generic armor factor (it was 25 % × 50 % = 12.5 % from the front).
+  if (target.infected?.special === 'armor') {
+    if (hit.type !== 'explosive' && hit.type !== 'status') {
+      const dx = hit.origin.x - target.transform.x, dz = hit.origin.z - target.transform.z, distance = Math.hypot(dx, dz);
+      if (!distance || (dx * Math.cos(target.transform.yaw) - dz * Math.sin(target.transform.yaw)) / distance >= 0.5) amount *= 0.5;
+    }
+    return Math.max(0, amount);
   }
   if (hit.type !== 'status') amount *= 1 - (target.combat?.armor ?? 0);
   return Math.max(0, amount);
