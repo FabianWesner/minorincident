@@ -135,9 +135,10 @@ export class LevelNineDriving {
     const w = this.w, s = this.state;
     for (const handle of this.rampHandles) w.physics.removeBlocker(handle); this.rampHandles.length = 0;
     for (const [i, ramp] of cfg.ramps.entries()) {
+      // r36-l9l5: the landing block is 0.5 m high (was 1 m): a floored APC (~9.5 m/s) lands at +9..+12 m, on the block's front edge, nose-first.
       const angle = .18;
       this.rampHandles.push(w.physics.world!.createCollider(RAPIER.ColliderDesc.cuboid(6, .16, 3.3).setTranslation(ramp.x, 1.23, ramp.z).setRotation({ x: 0, y: 0, z: Math.sin(angle / 2), w: Math.cos(angle / 2) })).handle);
-      this.rampHandles.push(w.physics.addBlocker({ x: ramp.x + 12, y: .5, z: ramp.z, halfX: 3, halfY: .5, halfZ: 3.2 }));
+      this.rampHandles.push(w.physics.addBlocker({ x: ramp.x + 12, y: .25, z: ramp.z, halfX: 3, halfY: .25, halfZ: 3.2 }));
       w.events.emit({ type: 'world.blocker.changed', tick: w.tick, id: -900_900 - i, blocked: true, wall: { x: ramp.x + 6, y: 1, z: ramp.z, halfX: 12, halfY: 1, halfZ: 3.3 } });
     }
     w.interactables!.unblock(s.gateId); w.interactables!.unblock(s.bridgeGateId);
