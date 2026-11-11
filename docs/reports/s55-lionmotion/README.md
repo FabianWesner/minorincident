@@ -99,3 +99,20 @@ yaw drift 0.1 degrees. Healthy cats select `walk` even at the 3.2 m/s segment.
 The prior moving-root run therefore did not verify a walking animation and must
 not be treated as its baseline. The cause remains unconfirmed; the saved joint
 trace is now available for frame-to-frame discontinuity analysis.
+
+## Confirmed solver discontinuity and candidate fix
+
+The controlled trace shows a smooth root but a 0.98048 m one-frame pelvis jump
+for both cats; the torso/head/tail follow it. PawContacts lowers the pelvis to
+reach an overextended planted target and removes that correction at stance end.
+Continuous-skin handling was gated on `root === template`, excluding private
+crowd pose skeletons. Enabling that path alone reduced the maximum jump only to
+0.73266 m. The candidate additionally bounds continuous-skin support correction
+to 8 cm and eases it at 0.5 m/s across stance boundaries, treating unreachable
+support as a catch-up step. A completed repeat of the same 900-frame probe gives
+0.0083334 m maximum pelvis change for each cat (98.05 cm -> 0.83 cm).
+
+This is a candidate source fix, not completion: real L8, other species, full
+backend/tier/zoom captures, and regression gates remain outstanding. The raw
+before trace is `test-results/s55-lionmotion/before-frames.json`; current after
+trace is `test-results/s55-lionmotion/probe/frames.json`.

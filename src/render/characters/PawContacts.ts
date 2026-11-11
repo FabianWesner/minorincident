@@ -18,6 +18,7 @@ export class PawContacts {
   private readonly forward = new Vector3();
   private readonly feet;
   private pelvisDrop = 0;
+  private supportOffset = 0;
   private readonly liveSkin: boolean;
   private clip = '';
   constructor(private readonly root: Object3D, template = root) {
@@ -25,7 +26,10 @@ export class PawContacts {
     const body = template.getObjectByName('skin_body') as SkinnedMesh | undefined;
     const skeleton = template.getObjectByName('root');
     const continuous = body?.isSkinnedMesh === true && (skeleton?.userData.crowdQuadruped === true || !!skeleton?.userData.animalSoles);
-    this.liveSkin = continuous && root === template;
+    // Crowd pose skeletons solve the same continuous skin as live actors.
+    // Excluding them plants the baked moving paw, overextends support, and
+    // drops the pelvis until stance ends in a whole-body snap.
+    this.liveSkin = continuous;
     const weightedPoints = (owner: Object3D): Vector3[] => {
       if (!body?.isSkinnedMesh) return [];
       const geometry = body.geometry, joints = geometry.getAttribute('skinIndex'), weights = geometry.getAttribute('skinWeight'), points: Vector3[] = [];
@@ -237,6 +241,13 @@ export class PawContacts {
       supportDrop = Math.max(supportDrop, hip.y - target.y - vertical);
     }
     const pelvis = this.root.getObjectByName('hip');
+    if (this.liveSkin) {
+      // Unreachable support becomes a catch-up step, not a body-length drop.
+      // Ease across stance boundaries rather than removing support in one frame.
+      const target = Math.max(0, Math.min(.08, supportDrop));
+      this.supportOffset += Math.max(-dt * .5, Math.min(dt * .5, target - this.supportOffset));
+      supportDrop = this.supportOffset;
+    }
     this.pelvisDrop = pelvis && supportDrop > 1e-4 ? supportDrop / pelvis.parent!.getWorldScale(new Vector3()).y : 0;
     if (pelvis && this.pelvisDrop) { pelvis.position.y -= this.pelvisDrop; pelvis.updateWorldMatrix(false, true); }
     for (const [index, foot] of this.feet.entries()) {
