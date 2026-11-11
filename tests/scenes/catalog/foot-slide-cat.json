@@ -12,7 +12,7 @@
       "id": "courier",
       "kind": "courier",
       "at": [
-        45,
+        4,
         0
       ],
       "god": true
@@ -31,6 +31,18 @@
     }
   ],
   "script": [
+    {
+      "frame": 0,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            25,
+            0
+          ]
+        ]
+      }
+    },
     {
       "frame": 10,
       "actor": "subject",

@@ -77,3 +77,7 @@ Added individual 180-frame pursuit rows for every `humanInfected` definition (ru
 First batch: 11/15 pass. Runner fails p95 3.5 cm; crawler fails 10.3 cm. Cat and sprinter require the existing `allowRigid` audit option to exercise their actual production asset. After enabling that option, sprinter passes; cat still fails with zero travel and absent contacts at the distant trigger and needs a closer physical trigger fixture. The failures remain gate failures, without known-failure exemptions. Compact measured humanoid/dog receipts are in `class-first-pass.json`. Remaining work includes these failures and crow/healthy-animal coverage.
 
 The required remote `sh tools/remote/run.sh "$PWD" -- npm test` reached the healthy runner and collected exactly 150/150 budgeted cases (129 Vitest + 9 e2e + 12 invariant-browser). It timed out at 240.9 s (exit 124 inside the test wrapper, overall exit 1), so no green full-unit result is claimed. Sync took 147 s and remote execution 245 s; the terminal log is `test-results/s57-required-tests.log`. The scene runs are terminal; no checks were left running.
+
+### Cat trigger corrected
+
+The production cat ambush branch remains hidden/perched until a target is within 5 m; the distant 45 m fixture could never activate it. The cat fixture now starts the courier 4 m away and runs her down the lane, exercising the production ambush release and pursuit. The row passes with actual travel and measured contacts; `cat-trigger.json` records the receipt. No cat stats or behavior changed. Runner/crawler slide failures remain unresolved.
