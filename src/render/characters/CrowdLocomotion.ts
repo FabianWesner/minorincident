@@ -120,7 +120,7 @@ export class CrowdLocomotion {
   private readonly pawSoles: { node: Object3D; points: Vector3[] }[];
   constructor(private readonly model: Object3D, clip: CrowdClip, readonly footwork = new CrowdFootwork()) {
     this.fourLegs = !!model.getObjectByName('legFL');
-    this.animalSkin = model.getObjectByName('root')?.userData.crowdQuadruped === true;
+    this.animalSkin = model.getObjectByName('root')?.userData.crowdQuadruped === true || !!model.getObjectByName('root')?.userData.animalSoles;
     this.animal = this.fourLegs || this.animalSkin;
     this.groundedAnimal = this.animal && (model.getObjectByName('root')?.userData.groundedAnimal === true || !!model.getObjectByName('root')?.userData.animalSoles);
     this.preserveAnimalJoints = model.getObjectByName('root')?.userData.ss_preserveAnimalJoints === true && !model.getObjectByName('root')?.userData.animalSoles;

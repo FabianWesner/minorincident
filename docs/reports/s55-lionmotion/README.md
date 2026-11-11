@@ -557,3 +557,13 @@ redraws is exactly 0 m. This directly validates the elapsed-time correction's
 intended idempotence, beyond comparing independent motion runs. Shared render
 contracts were rerun after that correction: 14/14 passed, exit 0. Full suite and
 62-row gate still need their post-correction reruns.
+
+## Declared-sole skin timing consistency
+
+Audit found zebra carries `animalSoles` but not `crowdQuadruped`. CrowdLocomotion
+now recognizes either marker as an animal skin, matching PawContacts, so declared
+sole rigs receive shared elapsed-time/contact handoff state too. Added the
+same-time five-redraw probe to centered scenes. A full centered zebra repeat
+records exactly 0 m joint drift across those redraws; raw `zebra-time-tracked/`.
+This is another source change, so the prior full-suite/gate receipts remain
+historical until the final post-change validation run.

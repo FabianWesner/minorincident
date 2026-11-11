@@ -37,13 +37,23 @@ try {
       const rows = [];
       for (let frame = 0; frame < 60; frame++) {
         await window.__SCENE__!.step(1);
+        let redrawMaxM: number | undefined;
+        if (batchIndex === 10 && frame === 0) {
+          const before = structuredClone(game.view.crowdFigures());
+          for (let draw = 0; draw < 5; draw++) game.view.update(1);
+          redrawMaxM = 0;
+          for (const figure of game.view.crowdFigures()) {
+            const old = before.find(value => value.id === figure.id);
+            for (const [name, point] of Object.entries(figure.joints ?? {})) if (old?.joints?.[name]) redrawMaxM = Math.max(redrawMaxM, Math.hypot(...point.map((value, axis) => value - old.joints![name][axis])));
+          }
+        }
         const crowd = (game.view as unknown as { crowd?: { batches: Map<string, { count: number; locomotion: { presentation: { frame: number } }; poses: { clip: { parts: string[]; matrices: Float32Array } } }> } }).crowd;
         const atlas = [...(crowd?.batches ?? [])].filter(([, batch]) => batch.count > 0).map(([key, batch]) => {
           const frameIndex = batch.locomotion.presentation.frame, clip = batch.poses.clip, width = clip.parts.length * 16, hip = clip.parts.indexOf('hip') * 16 + 13;
           const low = Math.floor(frameIndex), alpha = frameIndex - low;
           return { key, frameIndex, hipY: clip.matrices[low * width + hip] * (1 - alpha) + clip.matrices[Math.ceil(frameIndex) * width + hip] * alpha };
         });
-        rows.push({ atlas, png: batchIndex === 10 && frame < 6 ? document.querySelector('canvas')!.toDataURL('image/png') : undefined, tick: game.world.tick, figures: game.view.crowdFigures().map(f => ({ id: f.id, clip: f.clip, phase: f.phase, joints: f.joints, forward: f.forward, feet: f.feet })) });
+        rows.push({ redrawMaxM, atlas, png: batchIndex === 10 && frame < 6 ? document.querySelector('canvas')!.toDataURL('image/png') : undefined, tick: game.world.tick, figures: game.view.crowdFigures().map(f => ({ id: f.id, clip: f.clip, phase: f.phase, joints: f.joints, forward: f.forward, feet: f.feet })) });
       }
       return rows;
     }, i);
