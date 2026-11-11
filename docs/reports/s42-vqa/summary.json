@@ -1,0 +1,692 @@
+{
+  "report": "docs/reports/s42-vqa/README.md",
+  "status": "complete-with-observed-concerns-and-explicit-fixture-limits",
+  "build": "64172ec0e76d22db34aab37cb57b1f32847c99d5",
+  "openedContactSheets": "/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/s42-vqa/",
+  "runEvidenceSource": "/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/r43-vqa/",
+  "blockers": [],
+  "findings": [
+    {
+      "id": "L8-zebra-fence",
+      "severity": "P2 candidate",
+      "level": "L8",
+      "tick": 6986,
+      "position": {
+        "x": 59.5,
+        "z": 42.1
+      },
+      "settings": {
+        "quality": "high",
+        "zoom": 1.5,
+        "backend": "WebGL2",
+        "god": false
+      },
+      "capture": "l8-zebra-high-fight/s019-t6986.jpg",
+      "observation": "herd bunched against fence opposite courier; persistent blocking unproven"
+    },
+    {
+      "id": "L10-console-obstruction",
+      "severity": "P2 concern",
+      "level": "L10",
+      "tick": 2259,
+      "position": {
+        "x": 4003.1,
+        "z": -38.9,
+        "loggedAtTick": 2299
+      },
+      "settings": {
+        "quality": "high",
+        "zoom": 1.5,
+        "backend": "WebGPU",
+        "god": false
+      },
+      "capture": "r43-vqa/l10-fence-high-z15-gpu/s012-t2259-b2.jpg",
+      "observation": "foreground tank occupies much of frame; distinct from readable railing"
+    },
+    {
+      "id": "L3-projectile-readability",
+      "severity": "P3 concern",
+      "level": "L3",
+      "tick": 432,
+      "position": {
+        "x": 109.4,
+        "z": -29.2,
+        "actor": "Thrower"
+      },
+      "settings": {
+        "quality": "high",
+        "zoom": 1.5,
+        "backend": "WebGL2",
+        "god": false
+      },
+      "capture": "l3-stage/stage-119-t432-alpha.living-missile-active.jpg",
+      "observation": "danger circle readable; thrown body ambiguous among pursuers"
+    },
+    {
+      "id": "L4-close-heavy-safe-pocket",
+      "severity": "P2 candidate",
+      "level": "L4",
+      "tick": 816,
+      "position": {
+        "x": 5.9,
+        "z": 36.4
+      },
+      "settings": {
+        "quality": "high",
+        "backend": "WebGL2",
+        "zoom": 1.5,
+        "god": false
+      },
+      "capture": "l4-pocket-threat/s006-t816-idle.jpg",
+      "observation": "placed Brute/Riot approach and telegraph but courierHP100 for30s; cause unproven"
+    }
+  ],
+  "items": {
+    "1_L4_west_retreat": "covered targeted Harbor three-fight segment: pop-in0/62 new admissions; no-fire sprint caught/dead; cellar entered; close pocket no-damage concern recorded",
+    "2_new_alphas_L3_L6_L7": "covered: named variants, attacks/signatures and opened stage visuals; L3 thrown-body readability concern",
+    "3_L8_gorilla_and_night_zoo": "covered: inside no-god fight/hits/run-in-pound, pillar block, low/high animal colors, four flamingo flights without observed stack, monkey-zebra route",
+    "4_L10_console_fence": "reviewed: world barrier/camera readable; lethal backing-into-fence trap; unfairness not established; corgi same side in opened samples",
+    "5_L9_bay_b83": "covered: guards/callouts/3 saved without bay fire/APC escape; two hazard-damage deaths recover and progress in explicit QA fixture",
+    "6_L1_hits_and_courier_drawn": "covered for explicit fire-hurt setup"
+  },
+  "perLevelVerdicts": {
+    "L1": "courier visible while taking fire damage; short populated street run; no confirmed rendering defect",
+    "L3": "incomplete",
+    "L4": "hard, potentially too hard; not boring",
+    "L6": "dangerous narrow tunnel; Screamer roar and Leaper pounce execute; Screamer telegraph visually readable",
+    "L7": "dangerous, demanding escort; Screamer roar execution verified; animation readability incomplete",
+    "L8": "gorilla dangerous with handgun, reaches courier inside and damages her; pillar/charge sequence and remaining zoo checks open",
+    "L9": "spectacular crowded bay; no permanent APC pin in extended run; incomplete",
+    "L10": "dangerous readable arena fence; lethal if backed into; no corgi crossing in sampled captures"
+  },
+  "contactSheets": [
+    "sheet-01-courier-alphas.jpg",
+    "sheet-02-l4.jpg",
+    "sheet-03-zoo.jpg",
+    "sheet-04-l9.jpg",
+    "sheet-05-l10.jpg"
+  ],
+  "resumedLiveRun": {
+    "path": "l9-bay-low-gl",
+    "seconds": 90,
+    "backend": "WebGL2",
+    "quality": "low",
+    "zoom": 1.5,
+    "god": false,
+    "endTick": 5439,
+    "result": "approach only; bay 77 m away",
+    "errors": [],
+    "maxFrameMs": 183.3,
+    "p99FrameMs": 33.3,
+    "openedCapture": "l9-bay-low-gl/s012-t5384.jpg"
+  },
+  "extendedL9": {
+    "seconds": 240,
+    "god": false,
+    "backend": "WebGL2",
+    "quality": "low",
+    "zoom": 1.5,
+    "clearDoorTick": 5174,
+    "bittenTick": 8146,
+    "bridgeTick": 10907,
+    "reachedL10": true,
+    "errors": [],
+    "maxFrameMs": 966.5,
+    "p99FrameMs": 33.3,
+    "openedCaptures": [
+      "s022-t8783.jpg",
+      "s025-t10954.jpg",
+      "s029-t1566.jpg"
+    ]
+  },
+  "l1Recovery": {
+    "run": "l1-no-preload",
+    "seconds": 30,
+    "quality": "high",
+    "backend": "WebGL2",
+    "zoom": 1,
+    "god": false,
+    "openedCapture": "l1-no-preload/s003-t1525.jpg",
+    "hp": 100,
+    "courierDrawn": true,
+    "hitsVerified": false,
+    "errors": []
+  },
+  "l1HurtRun": {
+    "run": "l1-fire-hits",
+    "seconds": 30,
+    "god": false,
+    "quality": "low",
+    "zoom": 1.5,
+    "backend": "WebGPU",
+    "hurtFrames": 35,
+    "minHp": 86,
+    "hiddenFrames": 0,
+    "nonfinite": null,
+    "fireTicks": [
+      400,
+      600,
+      800
+    ],
+    "openedCaptures": [
+      "s002-t547.jpg",
+      "s007-t1770.jpg"
+    ]
+  },
+  "l3AlphaContact": {
+    "run": "l3-alpha-contact",
+    "seconds": 60,
+    "god": false,
+    "quality": "high",
+    "backend": "WebGL2",
+    "zoom": 1.5,
+    "setupPosition": [
+      90,
+      -28
+    ],
+    "endPosition": [
+      86.9,
+      -27.7
+    ],
+    "alphaDistance": 1.3,
+    "alphaMaxHp": 300,
+    "signatureVerified": false,
+    "openedCapture": "s014-t3585-b5.jpg"
+  },
+  "l3Signature": {
+    "run": "l3-signature",
+    "type": "thrower",
+    "spawn": [
+      116,
+      -28
+    ],
+    "move": "alpha.living-missile",
+    "telegraphTick": 382,
+    "activeTick": 430,
+    "recoveryTick": 460,
+    "completedTick": 508,
+    "signatureExecutionVerified": true,
+    "projectileVisualReadabilityVerified": false,
+    "openedCapture": "s002-t546.jpg"
+  },
+  "l7Attempt": {
+    "run": "l7-screamer",
+    "validForScreamer": false,
+    "reason": "rocket pickup prerequisite not completed",
+    "openedCapture": "s011-t2746.jpg",
+    "nextAction": "collect rocket launcher normally before westbound second-street approach",
+    "errors": []
+  },
+  "l7PickupRun": {
+    "run": "l7-pickup-west",
+    "rocketCollected": true,
+    "screamerSpawn": {
+      "tick": 1720,
+      "id": 108,
+      "type": "screamer",
+      "state": "idle",
+      "x": 173,
+      "z": 12,
+      "hp": 450
+    },
+    "signatureVerified": false,
+    "navigationObstacle": "truck at player217.6,24.8",
+    "openedCapture": "s014-t6839.jpg",
+    "errors": []
+  },
+  "l7StreetRoute": {
+    "run": "l7-street-route",
+    "quality": "high",
+    "backend": "WebGL2",
+    "zoom": 1.5,
+    "god": false,
+    "type": "screamer",
+    "move": "alpha.roar",
+    "telegraphTick": 1278,
+    "recoveryTick": 1338,
+    "position": [
+      186.4,
+      13.5
+    ],
+    "signatureExecutionVerified": true,
+    "openedCapture": "s004-t1516.jpg"
+  },
+  "l6AlphaTunnel": {
+    "run": "l6-alpha-tunnel",
+    "god": false,
+    "quality": "high",
+    "backend": "WebGL2",
+    "zoom": 1.5,
+    "screamerSpawnTick": 571,
+    "leaperSpawnTick": 783,
+    "pounceTelegraphTick": 988,
+    "pounceActiveTick": 1024,
+    "pounceRecoveryTick": 1028,
+    "screamerRoarVerified": false,
+    "openedCapture": "s004-t1215.jpg",
+    "setup": "shelter/stop/retreat completed; courier teleported to105,15 before real-input route"
+  },
+  "l6ScreamerRoar": {
+    "run": "l6-screamer-hold",
+    "god": false,
+    "quality": "low",
+    "backend": "WebGPU",
+    "zoom": 1,
+    "telegraphTick": 223,
+    "recoveryTick": 283,
+    "position": [
+      122.2,
+      12.85
+    ],
+    "openedTelegraphCapture": "s002-t250.jpg",
+    "visualReadability": "tall dark silhouette, red throat, large red area boundary spanning tunnel",
+    "errors": []
+  },
+  "gorillaHandgun": {
+    "run": "l8-gorilla-handgun",
+    "god": false,
+    "quality": "low",
+    "backend": "WebGPU",
+    "zoom": 1,
+    "weapon": "handgun",
+    "minHp": 70,
+    "poundTelegraphTick": 911,
+    "throwActiveTick": 1506,
+    "fightInsideVerified": true,
+    "pillarDuckVerified": false,
+    "chargePoundSequenceVerified": false,
+    "openedCaptures": [
+      "s007-t937.jpg",
+      "s012-t1548.jpg"
+    ],
+    "errors": []
+  },
+  "l4CellarApproach": {
+    "run": "l4-cellar-route",
+    "god": true,
+    "quality": "high",
+    "backend": "WebGL2",
+    "zoom": 1.5,
+    "position": [
+      -78.6,
+      -43.5
+    ],
+    "distanceToDoor": 2,
+    "doorVisuallyReadable": true,
+    "promptVerified": false,
+    "nextAction": "reduce driver reach from2.5m to0.5m",
+    "openedCapture": "s014-t3483.jpg"
+  },
+  "l4CellarEntry": {
+    "run": "l4-cellar-door",
+    "god": true,
+    "quality": "low",
+    "backend": "WebGPU",
+    "zoom": 1,
+    "waypointReach": 0.5,
+    "enteredCellar": true,
+    "entryTick": 1659,
+    "openedCapture": "s009-t1734.jpg",
+    "outsidePromptPresentationVerified": false,
+    "errors": []
+  },
+  "monkeyZebraTransition": {
+    "sourceRun": "r43-vqa/l8-monkey-low-z15-gl",
+    "god": false,
+    "backend": "WebGL2",
+    "quality": "low",
+    "zoom": 1.5,
+    "monkeyEndTick": 2096,
+    "crossingStartTick": 2104,
+    "lastMarkerTick": 4190,
+    "zebraStartTick": 4500,
+    "completedWithoutStall": true,
+    "openedCaptures": [
+      "s009-t2824.jpg",
+      "s013-t4049.jpg",
+      "s015-t4654.jpg"
+    ]
+  },
+  "l9NoHatchControl": {
+    "run": "l9-no-hatch-fire",
+    "seconds": 180,
+    "god": false,
+    "backend": "WebGL2",
+    "quality": "high",
+    "zoom": 1,
+    "reachedBay": false,
+    "reason": "global suppression stalled earlier rail hatch defense",
+    "openedCapture": "s090-t10777-hull.jpg",
+    "errors": []
+  },
+  "bayCountAudit": {
+    "numerator": "evacuated",
+    "denominator": "currently alive roster excluding Sam",
+    "lastBayHud": "1/2 at trucks at tick10037",
+    "finalSavedCountVerified": false
+  },
+  "l4PocketObservation": {
+    "run": "l4-old-pocket",
+    "god": false,
+    "quality": "high",
+    "backend": "WebGL2",
+    "zoom": 1.5,
+    "position": [
+      5.9,
+      36.4
+    ],
+    "hp": 100,
+    "seconds": 45,
+    "openedCapture": "s008-t2500-idle.jpg",
+    "heavyPursuitPreconditionVerified": false,
+    "result": "inconclusive for stuck-heavy defect"
+  },
+  "l10RailReview": {
+    "sourceRun": "r43-vqa/l10-edge-low-z1-gpu",
+    "god": false,
+    "quality": "low",
+    "backend": "WebGPU",
+    "zoom": 1,
+    "openedCaptures": [
+      "s010-t1705.jpg",
+      "s011-t1890.jpg"
+    ],
+    "position": [
+      4045.1,
+      -81.5
+    ],
+    "deathTick": 1890,
+    "worldBarrierReadable": true,
+    "cameraKeepsCourierVisible": true,
+    "corgiSameSideInSamples": true,
+    "unfairPinProven": false
+  },
+  "l9BayState": {
+    "run": "l9-bay-state",
+    "god": false,
+    "quality": "low",
+    "backend": "WebGL2",
+    "zoom": 1.5,
+    "evacuationDoneTick": 8441,
+    "saved": [
+      "dale",
+      "mia",
+      "okafor"
+    ],
+    "lost": [
+      "rosa"
+    ],
+    "guardsDeployed": 4,
+    "guardHitCounters": [
+      3,
+      19,
+      5,
+      2
+    ],
+    "openedCapture": "s010-t6567.jpg",
+    "bayHatchFireRoutine": false,
+    "reachedL10": true,
+    "errors": []
+  },
+  "flamingoAttempt": {
+    "run": "l8-flights",
+    "quality": "high",
+    "backend": "WebGL2",
+    "zoom": 1.5,
+    "god": true,
+    "phase": 2,
+    "additionalFlightCallout": true,
+    "stackingVerified": false,
+    "openedCapture": "s017-t10284.jpg",
+    "reason": "birds occluded/offscreen by service building",
+    "errors": []
+  },
+  "l3StageVisuals": {
+    "run": "l3-stage",
+    "god": false,
+    "quality": "high",
+    "backend": "WebGL2",
+    "zoom": 1.5,
+    "openedStages": [
+      "stage-119-t384-alpha.living-missile-telegraph.jpg",
+      "stage-119-t432-alpha.living-missile-active.jpg",
+      "stage-119-t463-alpha.living-missile-recovery.jpg"
+    ],
+    "dangerCircleReadable": true,
+    "thrownBodyReadability": "weak/inconclusive among pursuers",
+    "stageCaptureToolValidated": true,
+    "errors": []
+  },
+  "zooColorUpdate": {
+    "lionLow": {
+      "run": "l8-lion-low",
+      "openedCapture": "s010-t3117.jpg",
+      "assessment": "warm tawny bodies/light muzzles readable against cool dark terrain",
+      "god": false
+    },
+    "zebraHigh": {
+      "run": "l8-zebra-high",
+      "openedCapture": "s006-t1912.jpg",
+      "assessment": "approach only; animal not reached",
+      "verified": false
+    }
+  },
+  "zebraHighFight": {
+    "run": "l8-zebra-high-fight",
+    "god": false,
+    "quality": "high",
+    "backend": "WebGL2",
+    "zoom": 1.5,
+    "position": [
+      59.5,
+      42.1
+    ],
+    "tick": 6986,
+    "openedCapture": "s019-t6986.jpg",
+    "nightColorsReadable": true,
+    "finding": "P2 candidate: herd crowded at fence opposite courier; persistent blocking unproven",
+    "errors": []
+  },
+  "l4SprintCatch": {
+    "run": "l4-sprint-catch",
+    "god": false,
+    "quality": "low",
+    "backend": "WebGPU",
+    "zoom": 1,
+    "noFire": true,
+    "position": [
+      -63.5,
+      -39.3
+    ],
+    "tick": 1349,
+    "openedCapture": "s007-t1349.jpg",
+    "capturedHp": 0,
+    "caughtBeforeCellar": true,
+    "distanceToCellar": 17,
+    "respawned": true
+  },
+  "contactSheetsOpened": true,
+  "confirmedP1": [],
+  "validation": {
+    "typecheck": "passed after final tooling",
+    "lint": "passed after final tooling",
+    "probeSyntax": "passed",
+    "diffWhitespace": "passed",
+    "gameCodeChanged": false
+  },
+  "l7RoarVisual": {
+    "run": "l7-roar-stage",
+    "quality": "high",
+    "backend": "WebGL2",
+    "zoom": 1.5,
+    "god": false,
+    "openedCapture": "stage-108-t1361-alpha.roar-telegraph.jpg",
+    "assessment": "wide red threat boundary readable; pose partly obscured by crowd",
+    "errors": []
+  },
+  "l6PounceVisual": {
+    "run": "l6-pounce-stage",
+    "god": false,
+    "quality": "high",
+    "backend": "WebGL2",
+    "zoom": 1.5,
+    "openedCaptures": [
+      "stage-90-t988-alpha.pounce-telegraph.jpg",
+      "stage-90-t1028-alpha.pounce-recovery.jpg"
+    ],
+    "assessment": "readable chevron lane; moving courier evades; pounce misses",
+    "errors": []
+  },
+  "gorillaPillarRoute": {
+    "run": "l8-gorilla-pillars",
+    "quality": "high",
+    "backend": "WebGL2",
+    "zoom": 1.5,
+    "god": false,
+    "runInPoundTick": 1141,
+    "throwTick": 1835,
+    "pillarCoverAttempted": true,
+    "pillarProjectileImpactVerified": false,
+    "openedCaptures": [
+      "stage-398-t1141-gorilla.pound-telegraph.jpg",
+      "stage-398-t1835-gorilla.grab-throw-active.jpg"
+    ],
+    "errors": []
+  },
+  "l9PassiveBay": {
+    "run": "l9-bay-deaths",
+    "seconds": 300,
+    "quality": "low",
+    "backend": "WebGPU",
+    "zoom": 1,
+    "god": false,
+    "actualBayDeaths": 0,
+    "evacuationDone": true,
+    "openedCapture": "s020-t4488.jpg",
+    "twoDeathRecoveryVerified": false,
+    "errors": []
+  },
+  "l9TwoDeathRecovery": {
+    "run": "l9-two-death-fixture",
+    "god": false,
+    "quality": "low",
+    "backend": "WebGPU",
+    "zoom": 1,
+    "explicitSetup": "short fire patches under bay courier until two deaths; no direct HP/respawn mutation",
+    "deaths": [
+      6180,
+      6960
+    ],
+    "evacuatedAtDeaths": [
+      0,
+      1
+    ],
+    "finalEvacuatedIds": [
+      669,
+      671
+    ],
+    "reachedL10Checkpoint": "cure-pace-1",
+    "repeatDeathLoop": false,
+    "openedCaptures": [
+      "stage-1-t6180-bay.death-1.jpg",
+      "stage-1-t6960-bay.death-2.jpg"
+    ],
+    "errors": []
+  },
+  "flamingoInside": {
+    "run": "l8-flights-inside",
+    "quality": "high",
+    "backend": "WebGL2",
+    "zoom": 1.5,
+    "god": true,
+    "flights": 4,
+    "finalPhase": 3,
+    "fourthFlightSampleTick": 8660,
+    "livingAtSample": 7,
+    "openedCapture": "s024-t8753.jpg",
+    "stackingObserved": false,
+    "assessment": "separate living flight birds; scattered corpse trail; no same-point hovering pile",
+    "errors": []
+  },
+  "l4PocketThreat": {
+    "run": "l4-pocket-threat",
+    "god": false,
+    "quality": "high",
+    "backend": "WebGL2",
+    "zoom": 1.5,
+    "position": [
+      5.9,
+      36.4
+    ],
+    "seconds": 30,
+    "explicitSpawns": [
+      [
+        5.9,
+        31.4
+      ],
+      [
+        7.2,
+        31.6
+      ]
+    ],
+    "openedCapture": "s006-t816-idle.jpg",
+    "hpRemained": 100,
+    "assessment": "heavies enter and approach rather than old5m parking; close no-damage concern remains"
+  },
+  "l4FullRoutePop": {
+    "run": "l4-full-route-pop",
+    "quality": "high",
+    "backend": "WebGL2",
+    "zoom": 1.5,
+    "god": true,
+    "newAdmissions": 92,
+    "onScreenAdmissions": 0,
+    "routeWaypointsReached": 0,
+    "openedCapture": "s011-t6705.jpg",
+    "assessment": "opening crowd/knockback prevents no-fire driver route; no pop-in within sampled area",
+    "errors": []
+  },
+  "l4HarborPop": {
+    "run": "l4-harbor-pop",
+    "quality": "high",
+    "backend": "WebGL2",
+    "zoom": 1.5,
+    "god": true,
+    "newAdmissions": 62,
+    "onScreenAdmissions": 0,
+    "doorReachedTick": 1629,
+    "enteredCellarTick": 1653,
+    "openedCaptures": [
+      "s003-t981.jpg",
+      "s004-t1287.jpg",
+      "s005-t1589.jpg"
+    ],
+    "errors": []
+  },
+  "gorillaPillarBlock": {
+    "run": "l8-pillar-center",
+    "god": false,
+    "quality": "high",
+    "backend": "WebGL2",
+    "zoom": 1.5,
+    "attackId": 104,
+    "blockTick": 3231,
+    "recoveryTick": 3232,
+    "pillar": "D-ZOO/l8-gorilla-pillar-0",
+    "pillarPosition": [
+      55,
+      -28
+    ],
+    "blockDistanceToPillar": 0.294,
+    "openedCapture": "stage-398-t3232-gorilla.grab-throw-recovery.jpg",
+    "pillarBlockVerified": true,
+    "discardedProbeRecord": 1673,
+    "probeCorrection": "exclude prelaunch backwards extrapolation"
+  },
+  "completionAudit": {
+    "items1to6": "sampled real-input checks reported with opened evidence and explicit setup limitations",
+    "contactSheets": 5,
+    "gameCodeChanges": false,
+    "rawEvidenceOutsideGit": true
+  }
+}
