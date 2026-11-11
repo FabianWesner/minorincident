@@ -11,6 +11,8 @@ Status: implementation committed; full browser matrix and final visual acceptanc
 
 ## Evidence so far
 
+- Perimeter matrix row: high WebGPU zoom 1.5 at the east edge, four-second real-input fixture run, zero page errors. Opened `/private/tmp/s43-edge-high-gpu-z15/s001-t182.jpg`; concrete base blocks, dark metal frames and hazard paint remain visible and aligned. Whole-scene draws sampled 70 then 73; this is not a matched before/after draw-count delta. Owned preview stopped. Remaining matrix rows and baseline captures are still required.
+
 - Post-fix tank repeat: identical isolated high WebGPU zoom-1.5 setup at `(4006.5,-39)`, five seconds, infected hidden. Foreground is now **false** at ticks 61 and 244 while the same tank placement lens remains active (`cover=1`, same named occluder). Opened `/private/tmp/s43-tank-fixed/s002-t303.jpg`; courier has normal shading without the gold foreground contour. Zero page errors. This directly verifies the redundant-tucked-trigger fix in this case; other backends/angles and true-cover preservation still need coverage. Owned preview stopped.
 
 - Tank isolation probe (high WebGPU zoom 1.5, five seconds, infected explicitly hidden) exposed the remaining false foreground trigger: `courierForeground=true`, `cover=1`, `occluder=kit.dispersal-tank-bullet@4013.8,-39.0`. Opened `/private/tmp/s43-tank-uncovered/s002-t301.jpg`; zero page errors. The static tank lens already clears its foreground, so using `courierTucked` again as a courier depth-slice trigger is redundant and creates the gold outline. Removed that trigger from GameView while retaining placement lens clearing and actual vehicle/Mega/crowd cover. ESLint and QA build pass; post-fix runtime repeat is still required. Owned preview stopped.
