@@ -2,6 +2,7 @@
 //   E2E_PORT=4891 E2E_UNITS=1 sh tools/e2e-lock.sh npx tsx tools/qa/r28-vqa-fixture-play.ts <origin> <fixture> --out <dir>
 //     [--quality low|high] [--zoom 1.5] [--backend webgpu|webgl] [--seconds 300] [--shot 6] [--god] [--weapon weapon.army-mg]
 //     [--route x,z;x,z;...] [--follow-marker] [--hold-e] [--tap-e-when <regex on tracker>]
+// --burst <m>: 6 quick frames when a drawn enemy within m metres attacks (r38-vqa).
 // --dwell <s>: stand still for s seconds at each reached route point (with --hold-e, holds E on a prompt there).
 // --skip-credits-after <s>: click the real 'Skip credits' button after s seconds of credits.
 // --tap-e-when: tap E (down/up) once a second while the tracker matches, e.g. 'Release the cure' (the L10 release has no prompt).
@@ -23,7 +24,7 @@ const { values, positionals } = parseArgs({ allowPositionals: true, options: {
   out: { type: 'string' }, quality: { type: 'string', default: 'low' }, zoom: { type: 'string', default: '1.5' }, backend: { type: 'string', default: 'webgpu' },
   seconds: { type: 'string', default: '300' }, shot: { type: 'string', default: '6' }, god: { type: 'boolean', default: false }, weapon: { type: 'string', default: 'weapon.army-mg' },
   route: { type: 'string' }, 'follow-marker': { type: 'boolean', default: false }, 'hold-e': { type: 'boolean', default: false }, 'tap-e-when': { type: 'string' }, 'skip-credits-after': { type: 'string' }, dwell: { type: 'string', default: '0' }, reach: { type: 'string', default: '2.5' }, block: { type: 'string', default: '5' }, 'no-kite': { type: 'boolean', default: false }, range: { type: 'string', default: '22' }, setup: { type: 'string' },
-  handbrake: { type: 'string', default: 'Space' }, prefer: { type: 'string' }, 'route-when': { type: 'string' }, 'idle-when': { type: 'string' },
+  handbrake: { type: 'string', default: 'Space' }, burst: { type: 'string' }, prefer: { type: 'string' }, 'route-when': { type: 'string' }, 'idle-when': { type: 'string' },
 } });
 const [origin, name] = positionals;
 // `level:L7:corridor` loads a level at a mission checkpoint through the test API instead of a fixture.
@@ -38,7 +39,7 @@ const fixture = direct ? null : readFixture(path);
 const context = await launchProfile(mkdtempSync(`${tmpdir()}/r28vqa-`), { headless: true, args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist', '--enable-unsafe-webgpu'], viewport: { width: 1280, height: 720 } });
 const page = await context.newPage();
 await page.addInitScript({ content: 'window.__name = (f) => f;' }); // tsx keepNames helper inside evaluate callbacks
-const errors: string[] = []; page.on('pageerror', e => { errors.push(String(e).slice(0, 200)); log({ pageError: String(e).slice(0, 300) }); });
+const errors: string[] = []; page.on('pageerror', e => { errors.push(String(e).slice(0, 200)); log({ pageError: String(e).slice(0, 300), ...(errors.length <= 3 ? { stack: String((e as Error).stack ?? '').slice(0, 1500) } : {}) }); }); // r38-vqa: stack of the first 3 page errors
 try {
   await page.goto(`${origin}/?test=poses&testApi=1&scenelab=1&${values.backend === 'webgpu' ? '' : 'renderer=webgl&'}dpr=1&audio=muted&quality=${values.quality}`);
   await page.waitForFunction(() => !!window.__SS__, null, { timeout: 180000 });
@@ -74,7 +75,7 @@ try {
     return k;
   };
   const start = Date.now(), seconds = Number(values.seconds), shotEvery = Number(values.shot) * 1000;
-  let lastEvent = 0, dwellUntil = 0, skipped = false, lastEnd = 0, lastTap = 0, lastShot = 0, lastLog = 0, ri = 0, lastText = '', shotN = 0, best = Infinity, bestAt = Date.now();
+  let lastBurst = 0, lastEvent = 0, dwellUntil = 0, skipped = false, lastEnd = 0, lastTap = 0, lastShot = 0, lastLog = 0, ri = 0, lastText = '', shotN = 0, best = Infinity, bestAt = Date.now();
   while (Date.now() - start < seconds * 1000) {
     const e = await page.evaluate(look);
     const extra = await page.evaluate(() => {
@@ -157,9 +158,19 @@ try {
     if (Date.now() - lastLog > 3000) {
       lastLog = Date.now();
       log({ tick: e.tick, player: { x: +e.player.x.toFixed(1), z: +e.player.z.toFixed(1), hp: Math.round(e.player.hp), weapon: e.player.current, riding: e.player.riding }, driving: e.driving, apcBar: extra.apcBar, checkpoint: extra.checkpoint,
-        enemies: foes.slice(0, 6).map(b => ({ kind: b.archetype ?? b.kind, hp: Math.round(b.hp), max: b.max, d: +b.d.toFixed(1), state: b.state })), allies: e.allies.filter(a => a.drawn).length,
+        py: await page.evaluate(() => { const t = window.__SS__!.getEntity(1)?.transform; return t ? String(t.y) : null; }), barks: await page.evaluate(() => (document.body.innerText.match(/They're inside!|Reloading!|Behind us!/g) ?? []).join(',')), enemies: foes.slice(0, 6).map(b => ({ kind: b.archetype ?? b.kind, hp: Math.round(b.hp), max: b.max, d: +b.d.toFixed(1), state: b.state })), allies: e.allies.filter(a => a.drawn).length,
         frames: await page.evaluate(() => (window as unknown as { __r28Frames: unknown[] }).__r28Frames.splice(0)),
         mega: await page.evaluate(() => { const w = (window.__SCENE__ as unknown as { game: { world: { megaPursuit?: { entity(): { health: { current: number; max: number }; transform: { x: number; z: number }; infected?: Record<string, unknown>; combat?: { staggerUntil?: number } } | undefined } } } }).game.world; const m = w.megaPursuit?.entity(); if (!m) return null; const b = m.infected ?? {}; return { hp: Math.round(m.health.current), x: +m.transform.x.toFixed(1), z: +m.transform.z.toFixed(1), phase: b.megaPhase, weak: b.megaWeakTicks, armourBroken: b.megaArmourBroken, special: (b as { specialAttack?: { move?: string } }).specialAttack?.move ?? null, stagger: m.combat?.staggerUntil, gateSpent: !!window.__SS__!.missions.state()?.states['gate-spent'], megaId: (m as unknown as { id: number }).id, megaLod: window.__SS__!.crowdFigures().find(f => f.id === (m as unknown as { id: number }).id)?.lod ?? null, drawnFigures: window.__SS__!.crowdFigures().filter(f => f.drawn).length }; }).catch(() => null) });
+    }
+    // r38-vqa: --burst <m>: when a drawn enemy within m metres is attacking, take 6 quick frames (~150 ms apart, keys held)
+    // so strikes, recoils and foot contacts are visible; at most one burst per 6 s. Frame names end in -b<k>.
+    if (values.burst && !e.driving && Date.now() - lastBurst > 6000) {
+      const near = foes.find(b => b.d < Number(values.burst) && b.attacking);
+      if (near) {
+        lastBurst = Date.now(); const n0 = shotN++;
+        log({ burst: n0, tick: e.tick, foe: { kind: near.archetype ?? near.kind, d: +near.d.toFixed(1), state: near.state, speed: +near.speed.toFixed(1), hp: Math.round(near.hp) } });
+        for (let k = 0; k < 6; k++) { const t = await page.evaluate(() => window.__SS__!.tick()); await page.screenshot({ path: `${out}/s${String(n0).padStart(3, '0')}-t${t}-b${k}.jpg`, type: 'jpeg', quality: 75 }); await page.waitForTimeout(60); }
+      }
     }
     if (Date.now() - lastShot > shotEvery) { lastShot = Date.now(); await page.screenshot({ path: `${out}/s${String(shotN++).padStart(3, '0')}-t${e.tick}.jpg`, type: 'jpeg', quality: 70 }); }
     await page.waitForTimeout(100);

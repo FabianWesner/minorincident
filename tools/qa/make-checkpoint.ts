@@ -100,7 +100,7 @@ if (what.has('qa')) {
   };
   // L8: 30 m before each arena entry (not yet engaged) + the engaged elephant checkpoint (APC yard).
   if (qaParts.has('l8')) {
-    const wanted = new Set(['lion', 'gorilla', 'elephant']), done = new Set<string>(), engaged = new Set<string>();
+    const wanted = new Set(['lion', 'monkey', 'zebra', 'gorilla', 'elephant']), done = new Set<string>(), engaged = new Set<string>();
     await runLevel('L8', 'complete', seed, 1800, 'auto', preset('L8-default'), undefined, 0, {
       beforeBegin: world => {
         world.events.on('checkpoint.set', e => {
@@ -127,7 +127,7 @@ if (what.has('qa')) {
           }
         };
       },
-      stopWhen: () => done.size >= 4,
+      stopWhen: () => done.size >= wanted.size + 1,
     });
     console.log('L8 captured', [...done].join(','));
   }
