@@ -125,6 +125,8 @@ export function commerceFrontages(layout: DistrictLayout): { x: number; z: numbe
 export function levelThreeLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
   return structuredClone(layouts).map(layout => {
     if (layout.district !== 'D-CORRIDOR') return layout;
+    // The L3 corridor keeps the pre-checkout supermarket collision bake; the rebuilt checkout is scoped to L4.
+    for (const p of layout.placements) if (p.assetId === 'bld.supermarket') p.collisionId = 'bld.supermarket.legacy';
     for (const p of layout.placements) if (p.assetId === 'kit.highway-onramp') p.lightGroup = 'l3-highway';
     const ramps = layout.placements.filter(p => p.assetId === 'kit.highway-onramp');
     if (ramps.length === 2) {

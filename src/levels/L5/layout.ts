@@ -111,6 +111,8 @@ export function l5Frontages(layout: DistrictLayout): { x: number; z: number; axi
 export function levelFiveLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
   return structuredClone(layouts).map(layout => {
     if (layout.district !== 'D-FAIR') return layout;
+    // Preserve the former shared supermarket navigation footprint in the L5 aftermath.
+    for (const p of layout.placements) if (p.assetId === 'bld.supermarket') p.collisionId = 'bld.supermarket.legacy';
     moveFairhavenCellar(layout);
     const door = layout.anchors['kessler-cellar-door'], inner = layout.anchors['cellar-interior'];
     for (const [name, [x, z]] of Object.entries(l5Anchors)) layout.anchors[name] = { position: [x, 0, z], yaw: 0 };
