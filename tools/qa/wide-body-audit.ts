@@ -259,6 +259,15 @@ for (const { level, l9Route, l9Detour, street } of streetScenarios) {
       const unreachable = spawns.filter(row => !row.route);
       const narrowOpenings: LevelResult['narrowOpenings'] = [];
       const apertures: { x: number; z: number; width: number; walls: string[] }[] = [];
+      const apertureBuckets = new Map<string, typeof apertures>();
+      const addAperture = (opening: typeof apertures[number]) => {
+        const bx = Math.floor(opening.x * 2), bz = Math.floor(opening.z * 2);
+        for (let dx = -1; dx <= 1; dx++) for (let dz = -1; dz <= 1; dz++) {
+          if (apertureBuckets.get(`${bx + dx},${bz + dz}`)?.some(p => Math.hypot(p.x - opening.x, p.z - opening.z) < .5)) return;
+        }
+        const key = `${bx},${bz}`, bucket = apertureBuckets.get(key) ?? [];
+        bucket.push(opening); apertureBuckets.set(key, bucket); apertures.push(opening);
+      };
       for (let i = 0; i < walls.length; i++) for (let j = i + 1; j < walls.length; j++) {
         const a = walls[i], b = walls[j];
         if (a.y - a.halfY > 1.8 || a.y + a.halfY < .05 || b.y - b.halfY > 1.8 || b.y + b.halfY < .05) continue;
@@ -267,19 +276,36 @@ for (const { level, l9Route, l9Detour, street } of streetScenarios) {
         if (!horizontal && !vertical) continue;
         const overlap = horizontal ? Math.min(a.x + a.halfX, b.x + b.halfX) - Math.max(a.x - a.halfX, b.x - b.halfX)
           : Math.min(a.z + a.halfZ, b.z + b.halfZ) - Math.max(a.z - a.halfZ, b.z - b.halfZ);
-        if (overlap <= 0) continue;
+        if (overlap <= 0) {
+          // Collinear wall ends are door jambs; opposing long walls below
+          // cover alleys. Both forms can constrain a wide body on the path.
+          const crossOverlap = horizontal ? Math.min(a.z + a.halfZ, b.z + b.halfZ) - Math.max(a.z - a.halfZ, b.z - b.halfZ)
+            : Math.min(a.x + a.halfX, b.x + b.halfX) - Math.max(a.x - a.halfX, b.x - b.halfX);
+          const width = -overlap;
+          if (crossOverlap > 0 && width > 0 && width < 1.4) {
+            const x = horizontal ? (Math.min(a.x + a.halfX, b.x + b.halfX) + Math.max(a.x - a.halfX, b.x - b.halfX)) / 2
+              : (Math.max(a.x - a.halfX, b.x - b.halfX) + Math.min(a.x + a.halfX, b.x + b.halfX)) / 2;
+            const z = horizontal ? (Math.max(a.z - a.halfZ, b.z - b.halfZ) + Math.min(a.z + a.halfZ, b.z + b.halfZ)) / 2
+              : (Math.min(a.z + a.halfZ, b.z + b.halfZ) + Math.max(a.z - a.halfZ, b.z - b.halfZ)) / 2;
+            addAperture({ x, z, width, walls: [a.sourceId ?? 'unlabelled', b.sourceId ?? 'unlabelled'] });
+          }
+          continue;
+        }
         const width = horizontal ? Math.abs(a.z - b.z) - a.halfZ - b.halfZ : Math.abs(a.x - b.x) - a.halfX - b.halfX;
         if (width < 0 || width >= 1.4) continue;
         const x = horizontal ? (Math.max(a.x - a.halfX, b.x - b.halfX) + Math.min(a.x + a.halfX, b.x + b.halfX)) / 2 : (a.x + b.x) / 2;
         const z = horizontal ? (a.z + b.z) / 2 : (Math.max(a.z - a.halfZ, b.z - b.halfZ) + Math.min(a.z + a.halfZ, b.z + b.halfZ)) / 2;
-        if (!apertures.some(p => Math.hypot(p.x - x, p.z - z) < .5)) apertures.push({ x, z, width, walls: [a.sourceId ?? 'unlabelled', b.sourceId ?? 'unlabelled'] });
+        addAperture({ x, z, width, walls: [a.sourceId ?? 'unlabelled', b.sourceId ?? 'unlabelled'] });
       }
       for (const row of spawns) {
         const route = row.route; if (!route || !row.pathGrid) continue;
         const nav = row.pathGrid;
         const pathPoints = route.map(cell => ({ x: nav.x(cell), z: nav.z(cell) }));
+        const xs = pathPoints.map(p => p.x), zs = pathPoints.map(p => p.z);
+        const minX = Math.min(...xs) - .6, maxX = Math.max(...xs) + .6, minZ = Math.min(...zs) - .6, maxZ = Math.max(...zs) + .6;
         for (const opening of apertures) {
           const { x, z, width } = opening;
+          if (x < minX || x > maxX || z < minZ || z > maxZ) continue;
           const pathDistance = Math.min(...pathPoints.map(p => Math.hypot(p.x - x, p.z - z)));
           if (width >= 2 * clearanceFor(row) || pathDistance > .6) continue;
           const existing = narrowOpenings.find(item => Math.hypot(item.x - x, item.z - z) < .5 && Math.abs(item.width - width) < .25);
