@@ -81,3 +81,9 @@ The required remote `sh tools/remote/run.sh "$PWD" -- npm test` reached the heal
 ### Cat trigger corrected
 
 The production cat ambush branch remains hidden/perched until a target is within 5 m; the distant 45 m fixture could never activate it. The cat fixture now starts the courier 4 m away and runs her down the lane, exercising the production ambush release and pursuit. The row passes with actual travel and measured contacts; `cat-trigger.json` records the receipt. No cat stats or behavior changed. Runner/crawler slide failures remain unresolved.
+
+### Runner distance-band contact correction
+
+A trial increasing near-solver crowd swing clearance left runner/crawler metrics unchanged; it was reverted. The cheaper `GroundContacts` path rotated a support sole immediately after release, while horizontal travel correctly waited for the lifted portion of the swing. Matching yaw release to that travel window, and retaining at least 4 cm of swing clearance on small-scale figures, reduces runner p95 **3.5 → 2.4 cm** (max 6.5 → 3.2 cm) in the same 180-frame fixture. Crawler remains 10.3 cm and requires a separate reach/transition diagnosis. Trial gates completed; no tolerance changed. The near-solver source is restored exactly to the committed version.
+
+Typecheck, lint and the 14 render-contract tests pass after the distance-band correction. The runner/crawler trial batch is terminal (runner pass, crawler fail).

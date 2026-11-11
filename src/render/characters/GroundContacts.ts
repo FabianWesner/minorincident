@@ -50,7 +50,7 @@ export class GroundContacts {
     if (!worldReady) rig.root.updateWorldMatrix(true, true);
     rig.root.matrixWorld.decompose(this.origin, this.frame, this.scale);
     this.forward.set(1, 0, 0).applyQuaternion(this.frame); this.forward.y = 0; this.forward.normalize();
-    const stance = support ?? .55 - .31 * run, lift = Math.min((.06 + .055 * run) * this.scale.y, style?.maxLift ?? Infinity);
+    const stance = support ?? .55 - .31 * run, lift = Math.min(Math.max(.04, (.06 + .055 * run) * this.scale.y), style?.maxLift ?? Infinity);
     for (const [index, foot] of this.feet.entries()) {
       const p = (phase + index * .5) % 1;
       this.lateral.set(0, 0, foot.z * this.scale.y).applyQuaternion(this.frame);
@@ -97,7 +97,8 @@ export class GroundContacts {
     this.pole.copy(this.forward);
     for (const foot of this.feet) {
       const support = foot.release < 0 ? stance : foot.release;
-      if (foot.phase > support) foot.rotation.slerp(this.frame, Math.min(1, (foot.phase - support) / (1 - support) / .5));
+      // Delay sole yaw until the swing clears the ground, matching its travel window.
+      if (foot.phase > support) foot.rotation.slerp(this.frame, Math.max(0, Math.min(1, ((foot.phase - support) / (1 - support) - .18) / .5)));
       foot.ik.solve(foot.target, this.pole, foot.rotation, weight, true);
     }
   }
