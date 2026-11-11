@@ -8,7 +8,7 @@ export interface InputFrame {
   drive?: { throttle: number; steer: number };
   /** Touch/keyboard vehicle brake. */
   brake?: boolean;
-  /** Rear-wheel handbrake; RIGHT (K / touch RIGHT) while driving. */
+  /** Rear-wheel handbrake; RIGHT (Space / K / touch RIGHT) while driving. */
   handbrake?: boolean;
   /** Ignored legacy field retained for decoding historical recordings. */
   moveTarget?: Vec2;

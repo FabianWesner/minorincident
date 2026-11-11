@@ -549,8 +549,8 @@ export class LevelNineDriving {
     if (s.stallAt !== null && !s.restarted) return `Defend the hatch · Restart ${Math.max(0, Math.ceil((1800 - tick + s.stallAt) / 60))} s`;
     if (s.evacuationAt !== null && !s.evacuationDone) return `Cover the survivors · ${s.evacuated.length}/${s.roster.filter(id => id !== s.samId && alive(this.w.entities.get(id))).length} at the trucks`;
     const alphas = s.setPieces?.alphas ?? [];
-    if (alphas.some(a => a.phase === 'hull') && !this.holding(this.car.entity.id)) return 'Leaper on the hull · swerve hard or handbrake (K) to throw it off';
-    if (this.car.entity.vehicle!.attached.length && !this.holding(this.car.entity.id)) return 'Shake off boarders · swerve or handbrake (K) while moving';
+    if (alphas.some(a => a.phase === 'hull') && !this.holding(this.car.entity.id)) return 'Leaper on the hull · swerve hard or handbrake (Space) to throw it off';
+    if (this.car.entity.vehicle!.attached.length && !this.holding(this.car.entity.id)) return 'Shake off boarders · swerve or handbrake (Space) while moving';
     if (alphas.some(a => a.role === 'thrower' && (a.phase === 'throw' || a.phase === 'cool' && a.uses < 4)) && !this.holding(this.car.entity.id)) return 'Thrower ahead · dodge the debris or smash through';
     if (s.evacuationDone) return 'Drive onto the bridge';
     if (s.tankerFuseAt !== null && !s.tankerExploded && distance(p, cfg.tanker) < 30) return `Get clear of the tanker · ${Math.max(0, Math.ceil((s.tankerFuseAt - tick) / 60))} s`;
