@@ -9,6 +9,10 @@ export const l4HeavyArchetypes = ['infected.brute', 'infected.armored', 'infecte
 export const l4HeavyReplaceShare = .6;
 /** Arrival draws before this index (the opening war waves and the first breach cohort) keep their original roster so the first contact timing is unchanged. */
 export const l4HeavyThinFrom = 0;
+/** Seconds after a breach opens during which arrivals keep the authored roster (the breach cohorts press the courier; first-contact audit). */
+export const l4HeavyBreachWindowS = 30;
+/** Level seconds before which arrivals keep the authored roster (war-0 and war-1 are audited for first contact). */
+export const l4HeavyThinFromS = 60;
 /** Stand-ins for a replaced heavy: fast, ready-to-attack types, so a wave still reaches the line when it did (crawlers/hazmat delay the first attack). */
 export const l4HeavyStandIns = ['infected.runner', 'infected.sprinter', 'infected.firefighter'] as const;
 export const l4InfectedLooks = ['inf.common-worker', 'npc.national-guard', ...l1Pedestrians.models] as const;

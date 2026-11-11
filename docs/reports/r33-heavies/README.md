@@ -43,35 +43,29 @@ more than 15% (without it the registry falls back to LOD0 for the far tiers; che
 Scene Lab (real CrowdView, actors `infected.<role>`) shows the same: all five draw their own bodies next to the runner. Not run here:
 screamer/bloated in L9/L10 (not touched; their archetype->asset map is the same).
 
-## L4 mix (seed 1, complete bot, unique infected seen)
-Before (r31 census, old fallback): brute 12, armored 10, butcher 10 = 32 heavies. Same code with the new bodies, old mix: 10 + 12 + 8 = 30
-of 120 (25%).
-After (`l4HeavyReplaceShare = .6`): brute 8, armored 8, butcher 5 = 21 of 126 (17%); runner 25, sprinter 24, crawler 15, firefighter 12,
-riot 11, hazmat 10 (replacements are drawn from runner/sprinter/firefighter only).
-Mechanism: `LevelFourWar.emerge` re-draws a heavy pick as the least represented of runner/sprinter/firefighter for 60% of the draws
-(deterministic `appearanceSample`, no gameplay RNG). No stat, count or wave-size change. Knob: `l4HeavyReplaceShare` (0 = old mix; .75 gave
-11 of 126 = 9%, i.e. well past half). `l4HeavyThinFrom` is 0 (the "keep the first waves unchanged" variant with 60 failed the complete
-bot once, see below).
+## L4 mix and threat audit (follow-up after the orchestrator decision: breach cohorts keep their roster)
+Mechanism (`LevelFourWar.emerge`): a heavy pick is redrawn as the least represented of runner/sprinter/firefighter for `l4HeavyReplaceShare`
+(.6) of the draws (deterministic `appearanceSample`, no gameplay RNG, no stat/count/wave-size change). Thinning is paused for the first
+`l4HeavyThinFromS` (60 s) and for `l4HeavyBreachWindowS` (30 s) after every breach opens. A per-source flag was tried first and had no effect:
+the war-wave spawns come from the same `side`-tagged camp sources as the breach cohorts, so "breach cohort" had to be defined by time window.
 
-## Threat audit (L4 skilled, seed 1)
-`node --import tsx tools/qa/threat-audit.ts --levels L4`: skilled complete in every run below. **The "no flags beyond the Mac baseline"
-gate is not met and the knob has no clean setting**: the L4 first-contact timing is chaotic with respect to the roster (every change of the
-draw order reshuffles it). Baseline skilled flags: `war-0 WAVE_FIRST_ATTACK_OVER_20_SECONDS` only.
+Census (seed 1, complete bot, unique infected, L4): r31 before 12 + 10 + 10 = 32 heavies; old mix with the new bodies 29 of 120 (24.2%).
+| Setting (share .6 unless noted) | Heavies | L4 skilled threat flags (baseline: `war-0` only) | Complete |
+|---|---|---|---|
+| shipped: pause < 60 s and 30 s breach windows | 29 of 120 (24.2%): **no real reduction** | `war-0` only (= baseline) | yes |
+| thin from 0, 45 s breach windows | 24 of 126 (19.0%) | war-0 + breach-west + breach-north first attack > 20 s | yes |
+| thin from 0, no windows | 21 of 126 (16.7%) | same two extra flags | yes |
+| thin after 40 arrivals + 45 s windows | 23 of 124 (18.5%) | hold UNREACHABLE_SHARE_OVER_30_PERCENT, breach-south NO_ATTACK_WITHIN_20_SECONDS | yes (482 s) |
+| share .75, thin from 0 | 11 of ~126 (9%) | 9 flags | yes |
 
-| Setting | Skilled flags |
-|---|---|
-| share 0 (= old mix, harness check) | war-0 (baseline) |
-| .30 | breach-west, breach-north, breach-south first attack over 20 s (26 / ? / 20.02 s) |
-| .50 | war-0, breach-west, breach-south first attack; hold UNREACHABLE_SHARE_OVER_30_PERCENT |
-| .60 (shipped) | war-0 (baseline), breach-west, breach-north first attack over 20 s |
-| .75 (+ stand-ins) | war-0, breach-west (66 s), breach-south, more |
+**Result: the two goals conflict in this mechanism.** Only 17 of 103 `emerge` draws fall outside the protected windows, and the ones that
+matter (war-0/war-1, breach cohorts) are exactly the draws whose heavies reach the courier first; thinning any of them delays breach-west
+first contact (15 s -> 26-66 s) or leaves infected piled at the wire (heavies break it). The shipped default therefore keeps the audit at
+baseline and reduces nothing in the census; the real reduction needs a different lever (for example fewer heavies per authored wave in
+`l4.ts` data, or a PO call that breach first-contact may slip ~6-10 s). To get ~19% set `l4HeavyThinFromS = 0` and `l4HeavyBreachWindowS = 45`
+(two extra first-attack flags). L4 contact and spawn-director tests pass, typecheck passes; `war-waves` nightly fails identically on baseline.
 
-What I see: fewer tanks means the cohorts' first attack on the courier lands later (breach-west 15 s -> 66 s at .75) because the heavies are what
-survives the army fire and the wire; the hold step also sees more unreachable infected piled at the wire (heavies break it, `Barricades.dps` x5/x8).
-The honest options for the orchestrator/PO: ship .6 (the 2 breach cohort flags are first-contact timing, 5-6 s over the limit in a single
-seed), or ship share 0 with only the new bodies, or let the breach cohorts keep their roster (they are the ones flagged) and thin only
-the war waves (needs a source flag on `emerge`; not done, no time). The `war-waves` nightly invariant fails identically on baseline
-(`reached` 42/48 in war-0), so it is not caused by this lane. L4 contact and spawn-director unit tests pass; typecheck passes.
+Night: at night the heavies look washed out like the other crowd figures (WebGPU low lineup) - no action needed in this lane.
 
 ## Visual verification (Scene Lab, raw captures in the scratchpad, `r33-heavies/sl-<backend>-<tier>/`)
 Specs: `specs/scenes/r33-heavies/` (lineup of runner + 5 roles at game zoom 1.5 and 1.0 day, game zoom 1.5 night, orbit close lineup, and a
