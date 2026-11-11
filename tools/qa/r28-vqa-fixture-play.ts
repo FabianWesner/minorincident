@@ -22,7 +22,7 @@ import { weaponKey } from '../../src/data/weaponKeys';
 const { values, positionals } = parseArgs({ allowPositionals: true, options: {
   out: { type: 'string' }, quality: { type: 'string', default: 'low' }, zoom: { type: 'string', default: '1.5' }, backend: { type: 'string', default: 'webgpu' },
   seconds: { type: 'string', default: '300' }, shot: { type: 'string', default: '6' }, god: { type: 'boolean', default: false }, weapon: { type: 'string', default: 'weapon.army-mg' },
-  route: { type: 'string' }, 'follow-marker': { type: 'boolean', default: false }, 'hold-e': { type: 'boolean', default: false }, 'tap-e-when': { type: 'string' }, 'skip-credits-after': { type: 'string' }, dwell: { type: 'string', default: '0' }, reach: { type: 'string', default: '2.5' }, block: { type: 'string', default: '5' }, 'no-kite': { type: 'boolean', default: false }, range: { type: 'string', default: '22' }, setup: { type: 'string' }, trace: { type: 'boolean', default: false }, 'trace-scheduling': { type: 'boolean', default: false }, 'no-captures': { type: 'boolean', default: false },
+  route: { type: 'string' }, 'follow-marker': { type: 'boolean', default: false }, 'hold-e': { type: 'boolean', default: false }, 'tap-e-when': { type: 'string' }, 'skip-credits-after': { type: 'string' }, dwell: { type: 'string', default: '0' }, reach: { type: 'string', default: '2.5' }, block: { type: 'string', default: '5' }, 'no-kite': { type: 'boolean', default: false }, range: { type: 'string', default: '22' }, setup: { type: 'string' }, trace: { type: 'boolean', default: false }, 'trace-scheduling': { type: 'boolean', default: false }, 'trace-window': { type: 'boolean', default: false }, 'no-captures': { type: 'boolean', default: false },
   handbrake: { type: 'string', default: 'Space' }, prefer: { type: 'string' }, 'route-when': { type: 'string' }, 'idle-when': { type: 'string' },
 } });
 const [origin, name] = positionals;
@@ -31,7 +31,7 @@ const direct = name?.startsWith('level:') ? name.split(':') : null;
 const path = direct ? 'direct' : ['', '.json.gz', '.json.br'].map(ext => resolve(existsSync(name) ? name : `tests/fixtures/saves/qa/${name}${ext}`)).find(existsSync);
 if (!origin || !path) throw new Error('usage: r28-vqa-fixture-play.ts <origin> <fixture> --out <dir>');
 const out = resolve(values.out!); mkdirSync(out, { recursive: true });
-if ((values.trace || values['trace-scheduling']) && (out === process.cwd() || out.startsWith(`${process.cwd()}/`))) throw new Error('--trace requires --out outside the worktree so raw traces cannot be committed');
+if ((values.trace || values['trace-scheduling'] || values['trace-window']) && (out === process.cwd() || out.startsWith(`${process.cwd()}/`))) throw new Error('--trace requires --out outside the worktree so raw traces cannot be committed');
 const log = (o: object) => appendFileSync(`${out}/log.jsonl`, JSON.stringify({ wall: new Date().toISOString().slice(11, 19), epochMs: Date.now(), hostLoad: loadavg(), ...o }) + '\n');
 const route = (values.route ?? '').split(';').filter(Boolean).map(p => { const [x, z] = p.split(',').map(Number); return { x, z }; });
 const zoom = Number(values.zoom), range = Number(values.range);
@@ -44,8 +44,9 @@ const capture = async (options: NonNullable<Parameters<typeof page.screenshot>[0
   await page.screenshot(options);
   log({ capture: 'end', path: options.path, durationMs: Date.now() - started });
 };
-const trace = values.trace || values['trace-scheduling'] ? await context.newCDPSession(page) : null;
-let traceStarted = false;
+const trace = values.trace || values['trace-scheduling'] || values['trace-window'] ? await context.newCDPSession(page) : null;
+const traceCompleted = trace ? new Promise<{ stream?: string; dataLossOccurred: boolean }>(resolve => trace.once('Tracing.tracingComplete', event => resolve(event))) : null;
+let traceStarted = false, traceStopped = false;
 await page.addInitScript({ content: 'window.__name = (f) => f;' }); // tsx keepNames helper inside evaluate callbacks
 const errors: string[] = []; page.on('pageerror', e => { errors.push(String(e).slice(0, 200)); log({ pageError: String(e).slice(0, 300) }); });
 try {
@@ -61,7 +62,7 @@ try {
   if (values.setup) log({ setup: values.setup, result: await page.evaluate(js => { const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: unknown }).game; return String(new Function('a', 'g', js)(a, g)); }, values.setup) });
   if (values.god) { await page.evaluate(() => window.__SS__!.cheats.god(true)); log({ setup: 'god-mode' }); }
   if (trace) {
-    await trace.send('Tracing.start', { traceConfig: { recordMode: 'recordAsMuchAsPossible', excludedCategories: ['*'], includedCategories: ['devtools.timeline', 'blink.user_timing', ...(values['trace-scheduling'] ? ['toplevel', 'gpu'] : [])] }, transferMode: 'ReturnAsStream' });
+    await trace.send('Tracing.start', { traceConfig: { recordMode: values['trace-window'] ? 'recordContinuously' : 'recordAsMuchAsPossible', ...(values['trace-window'] ? { traceBufferSizeInKb: 65536 } : {}), excludedCategories: ['*'], includedCategories: ['devtools.timeline', 'blink.user_timing', ...(values['trace-scheduling'] || values['trace-window'] ? ['toplevel', 'gpu'] : [])] }, transferMode: 'ReturnAsStream' });
     traceStarted = true;
   }
   await page.evaluate(z => {
@@ -103,6 +104,9 @@ try {
   let lastEvent = 0, dwellUntil = 0, skipped = false, lastEnd = 0, lastTap = 0, lastShot = 0, lastLog = 0, ri = 0, lastText = '', shotN = 0, best = Infinity, bestAt = Date.now();
   while (Date.now() - start < seconds * 1000) {
     const e = await page.evaluate(look);
+    if (trace && values['trace-window'] && !traceStopped && await page.evaluate(() => (window as unknown as { __r28LongFrames: { ms: number; elapsedMs: number }[] }).__r28LongFrames.some(f => f.ms > 250 && f.elapsedMs >= 3000))) {
+      traceStopped = true; await trace.send('Tracing.end'); log({ traceStoppedOnHitch: true, tick: e.tick });
+    }
     const extra = await page.evaluate(() => {
       const t = document.body.innerText; const m = t.match(/APC (armor [^\n]*|barely functional)/);
       const a = window.__SS__!, s = a.missions.state();
@@ -199,9 +203,8 @@ try {
   });
   log({ end: true, frames: await page.evaluate(() => (window as unknown as { __r28Frames: unknown[] }).__r28Frames.splice(0)), performanceSummary, errors });
   if (trace && traceStarted) {
-    const completed = new Promise<{ stream?: string; dataLossOccurred: boolean }>(resolve => trace.once('Tracing.tracingComplete', event => resolve(event)));
-    await trace.send('Tracing.end');
-    const { stream, dataLossOccurred } = await completed;
+    if (!traceStopped) await trace.send('Tracing.end');
+    const { stream, dataLossOccurred } = await traceCompleted!;
     if (!stream) throw new Error('Chromium trace completed without a readable stream');
     let bytes = 0, eof = false;
     const file = openSync(`${out}/trace.json`, 'w');
@@ -213,6 +216,6 @@ try {
       }
     } finally { closeSync(file); }
     await trace.send('IO.close', { handle: stream });
-    log({ trace: `${out}/trace.json`, bytes, dataLossOccurred });
+    log({ trace: `${out}/trace.json`, bytes, dataLossOccurred, rollingWindow: !!values['trace-window'], stoppedOnHitch: traceStopped });
   }
 } finally { await context.close(); }
