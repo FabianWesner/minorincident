@@ -26,3 +26,7 @@ Both changes reuse existing meshes and materials. They introduce no geometry or 
 ## Resumed capture verification
 
 Sandbox restrictions lifted. The current high/WebGL2 `l9-apc-ram` capture passed and `test-results/s59-apcvisual/current/shot-0030.png` was opened: visible tyres are present on flat ground. Ramp, flame, roof flicker and full matrix verification remain outstanding.
+
+The full high/WebGL2 r33 ramp tool completed with zero page errors. Opened `ramps-after-high-webgl2/overpass-air-z1.5.png`: middle/rear tyres remain visible, but front tyres still disappear into the ramp, so the wheel fix is incomplete. The rear roof bracket/red lamp is clearly identifiable in this frame. Further work is required.
+
+Found a separate roof depth defect: `transportRoof` inherited transparent glass material with depth writes disabled despite opacity one. The APC roof now uses an opaque clone with depth writes enabled, retaining the existing mesh/draw. Typecheck passed after this change. Flame captures remain outstanding.
