@@ -2,7 +2,7 @@
 
 ## Status
 
-Implementation checkpoint; acceptance is **not complete**. Changes remain uncommitted while acceptance is in progress. Scene Lab now runs after the environment permissions changed. The measured foot-slide limits still fail, and the full capture matrix and 62/62 scene gate remain outstanding.
+Implementation checkpoint; acceptance is **not complete**. Implementation checkpoint committed as `e2db4c7e`; acceptance remains in progress. Scene Lab now runs after the environment permissions changed. The measured foot-slide limits still fail, and the full capture matrix and 62/62 scene gate remain outstanding.
 
 ## Cause
 
@@ -91,3 +91,5 @@ The game-camera nurse swing-clearance experiment (`test-results/s34-nurse-cleara
 Solver diagnostics (temporary throws removed): nurse at game zoom uses detailed contact solving (`near=true`, `grounded=true`, `want=true`, rest reach 0.416683 m). At render time 1.933 s the requested left ankle target was [2.1193, 0.2473, 0.1229] but the drawn ankle was [2.1673, 0.2361, 0.0873]. This confirms a target/solved-position mismatch during the failing swing; loaded-chain reach/length handling needs investigation. Diagnostic runs intentionally failed their console-error criterion and are not acceptance evidence.
 
 Root-cause correction for game-camera nurse: LimbIK cached bind-pose limb directions, while the loaded retargeted pose changes shin/ankle translations (observed shin offset [-0.0209,-0.3363,-0.0850]). It now derives lengths/directions from the current pose. `test-results/s34-nurse-live-offsets`: p95 1.8 cm, max 6.0 cm, sink 0 cm. A regression assertion changes offsets after solver construction and verifies target reach. This shared solver change requires broader scene and character validation; prior gate results are not final-source proof.
+
+Post-checkpoint high-WebGL2 day/night game-camera metrics completed successfully for all six rows: nurse p95 1.8 cm in both presets, crawler 1.4 cm in both, dog 0.3 cm in both (`test-results/s34-final-metrics/`). Clean-checkpoint `tests/tools/gate-tools.test.ts` passes 8/8, including the previously failing freshness assertion. Working tree was clean after the implementation commit. Remaining work still includes all ordinary type-group strip comparisons, remaining final-source matrices, final full gates and draw-call comparison.
