@@ -9,7 +9,9 @@ import type { EntitySnapshot, GameEvent } from '../../src/sim/world/types';
 import { clickable } from '../../src/input/ClickPick';
 import { l1v2 } from '../../src/data/l1v2';
 import { megaAlpha } from '../../src/data/megaAlpha';
-import { alphaTypeFor, alphaTypes } from '../../src/data/alphaTypes';
+import { alphaMixFor, alphaTypeFor, alphaTypes } from '../../src/data/alphaTypes';
+import { l3 } from '../../src/data/l3';
+import { l6HatchAlphas } from '../../src/data/l6';
 import { PropSystem } from '../../src/sim/interact/PropSystem';
 import { damageAmount } from '../../src/sim/combat/Damage';
 import { SimWorld } from '../../src/sim/world/SimWorld';
@@ -31,6 +33,10 @@ async function alphaTypeContracts() {
     expect(alphaTypeFor('L1', 18)).toBe('brute'); expect(alphaTypeFor('L2', 18)).toBe('brute');
     expect(alphaTypeFor('L5', 92)).not.toBe(alphaTypeFor('L5', 99));
     expect([75, 76, 137, 173].map(id => alphaTypeFor('L7', id))).toEqual(expect.arrayContaining(['brute', 'thrower', 'screamer']));
+    // r42: the authored route Alphas read the shared mix (L7 slots include the Screamer; L3 data and L6 hatch fronts use mix types).
+    expect(alphaMixFor('L7')).toEqual(expect.arrayContaining(['brute', 'thrower', 'screamer']));
+    for (const a of l3.density.alphas) expect(alphaMixFor('L3')).toContain(a.type);
+    for (const type of Object.values(l6HatchAlphas)) expect(alphaMixFor('L6')).toContain(type);
     for (const level of ['L3', 'L4', 'L5', 'L6', 'L7', 'L9', 'L10']) {
       const present = new Set(Array.from({ length: 80 }, (_, id) => alphaTypeFor(level, id)));
       expect(present.size, level).toBeGreaterThan(1);

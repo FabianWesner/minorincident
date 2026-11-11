@@ -5,7 +5,7 @@ import { Outbreak } from '../outbreak/Outbreak';
 import { Rng } from '../../core/Rng';
 import { seatAnchor } from '../npc/seats';
 import { leaveSeat } from '../npc/MorningRoutines';
-import { l6, l6Entries, l6BreachModels, l6Doors, l6InjuryLines } from '../../data/l6';
+import { l6, l6Entries, l6BreachModels, l6Doors, l6InjuryLines, l6HatchAlphas } from '../../data/l6';
 import { l5Survivors } from '../../data/l5';
 import type { EntitySnapshot } from '../world/types';
 import type { Point } from '../npc/types';
@@ -215,7 +215,10 @@ export class LevelSixSubway {
       // Shelter breach two retains a riot; hatch fronts use actual armored actors.
       let id:number;
       try {
-        id=front?ai.spawn(wave===1||hatchFront?'infected.armored':'infected.riot',at):o.spawnPedestrian(at,{model});
+        // r42 Alpha mix: the front member of the hatches at x 126 and x 198 is the level's Alpha (Screamer in the tunnel, Leaper
+        // later); it takes the armored front's cohort and cap slot. The other hatches keep the catalog armored front.
+        const alphaType=hatchFront?l6HatchAlphas[requested]:undefined;
+        id=alphaType?ai.spawn('infected.alpha',at,{alphaType}):front?ai.spawn(wave===1||hatchFront?'infected.armored':'infected.riot',at):o.spawnPedestrian(at,{model});
         const e=w.entities.get(id)!;
         if(!front)o.turnNow(e);
       }

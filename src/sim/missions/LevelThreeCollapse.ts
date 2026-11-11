@@ -532,6 +532,25 @@ export class LevelThreeCollapse {
     if (b.mode === 'attracted' && Math.hypot(b.goalX - goal.x, b.goalZ - goal.z) < 6) { b.search.until = w.tick + ticks(l3.finale.chaseS); return; }
     w.infected!.rush(id, goal, w.tick + ticks(l3.finale.chaseS));
   }
+  /** r42: the route Alphas. Admitted out of view ahead of the courier on her street (retried every call until the point is unseen), then pressed at her. */
+  private alphas(): void {
+    const { world } = this.mission, s = this.s, ai = world.infected!, tick = world.tick, player = world.entities.get(1)!.transform;
+    const at = s.alphaAt ??= l3.density.alphas.map(() => 0), ids = s.alphaIds ??= [];
+    for (const [i, a] of l3.density.alphas.entries()) {
+      if (!at[i]) {
+        if (player.x < a.x - l3.density.alphaAheadM || player.x > a.x || ai.director.count >= ai.director.cap || !ai.pool.length) continue;
+        // On the street the courier is walking (nearest of the three E-W lines), so the Alpha is met on her route.
+        const lineZ = Object.values(l3.map.streets).sort((u, v) => Math.abs(u - player.z) - Math.abs(v - player.z))[0];
+        const home = this.snap({ x: a.x, z: lineZ }, .8);
+        if (!ai.director.offscreen(home, world.districts?.groundHeight(home.x, home.z) ?? 0)) continue;
+        const id = ai.spawn('infected.alpha', home, { state: 'idle', alphaType: a.type, yaw: Math.PI });
+        at[i] = tick; ids[i] = id;
+      } else {
+        const e = world.entities.get(ids[i]);
+        if (e && e.health.current > 0 && Math.abs(e.transform.x - player.x) < l3.density.alphaEngageM && tick % 10 === 0) ai.press(e.id, 1, tick + ticks(2));
+      }
+    }
+  }
   private readonly closedDoors = new Set<string>();
   private emergePending(all = false): void {
     const { world } = this.mission, s = this.s, ai = world.infected!, p = world.entities.get(1)!.transform;
@@ -690,6 +709,7 @@ export class LevelThreeCollapse {
       this.emergeWaves(); this.squadUpdate(); this.pressure(); this.retire(); this.sealYard(); this.finale();
       if (s.phase === 'fallback' && player.transform.x > l3.map.corridor[0]) s.phase = 'corridor';
       // Populate a segment while the player is still well short of it (out of view, ahead of the squad).
+      this.alphas();
       for (let k = 1; k < 3; k++) if (!s.populated[k] && player.transform.x >= l3.map.segments[k][0] - l3.density.populateAheadM) this.populate(k);
       const seg = l3Segment(player.transform.x);
       if (seg > s.segment && seg >= 0) {

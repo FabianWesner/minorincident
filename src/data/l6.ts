@@ -34,3 +34,5 @@ export const l6InjuryLines = {
 
 /** Alternating sides leave the opposite half of the tunnel open. */
 export const l6Entries = [2, 5, 3, 6, 4, 7].map((door, i) => ({ door, count: 2, label: i % 2 ? 'Maintenance hatch' : 'Side passage' }));
+/** r42 Alpha mix (docs/design/boss-and-alpha-moves.md: L6 Screamer in the tunnels, Leaper): the front member of these entry doors. */
+export const l6HatchAlphas: Readonly<Record<number, 'screamer' | 'leaper'>> = { 3: 'screamer', 4: 'leaper' };
