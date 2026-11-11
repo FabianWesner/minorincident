@@ -435,12 +435,18 @@ export function allyOnScreen(world: SimWorld, p: { x: number; z: number; y?: num
   return (world.infected?.director as SpawnDirector | undefined)?.inFrame(p) ?? false;
 }
 const lastCallout = new WeakMap<SimWorld, number>();
+const lastLine = new WeakMap<SimWorld, Map<string, number>>();
 /** A short shout (speech bubble + bark) from a fighter the player can see; one at a time, each fighter rarely. */
 function callout(world: SimWorld, e: EntitySnapshot, text: "Reloading!" | "They're inside!" | 'Behind us!'): void {
   const a = e.civilian!.ally!, tick = world.tick;
   if (tick - (a.calloutAt ?? -1e9) < ticks(allyCallout.perAllyS) || tick - (lastCallout.get(world) ?? -1e9) < ticks(allyCallout.globalS)) return;
+  let lines = lastLine.get(world);
+  if (!lines) { lines = new Map(); lastLine.set(world, lines); }
+  // A level load restarts the clock: a stamp from the previous world tick range is not a recent line.
+  const said = lines.get(text) ?? -1e9;
+  if (said <= tick && tick - said < ticks(allyCallout.sameLineS)) return;
   if (!playerSees(world, e.transform, .85)) return;
-  a.calloutAt = tick; lastCallout.set(world, tick);
+  a.calloutAt = tick; lastCallout.set(world, tick); lines.set(text, tick);
   world.events.emit({ type: 'ally.callout', tick, id: e.id, text, position: { x: e.transform.x, z: e.transform.z } });
 }
 function tacticFor(a: AllyState): AllyTactic { return a.role === 'officer' ? allyTactics.officer : a.role === 'soldier' ? allyTactics.soldier : allyTactics.civilian; }
