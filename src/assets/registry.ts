@@ -82,7 +82,11 @@ export class AssetRegistry {
       } catch (error) { return fallback(String(error)); }
     }
     const highPath = lowGlb ?? (lod === 'lod0' ? def.glb : def.lods?.[lod] ?? def.glb);
-    const path = def.textureMode && !def.textureAtlasLow && this.textureSize === 512 ? highPath.replace(/\.glb$/, '.low.glb') : highPath;
+    // Keep the L8 gorilla's charcoal coat stable across quality tiers. Its
+    // reduced atlas variant shifts the nighttime body toward pale grey; the
+    // shared high atlas is small enough for this single hero species and uses
+    // the exact same geometry and draw path.
+    const path = def.textureMode && !def.textureAtlasLow && this.textureSize === 512 && def.id !== 'inf.gorilla' ? highPath.replace(/\.glb$/, '.low.glb') : highPath;
     if (!path) return fallback(`missing ${lod}`);
     let root: Object3D | undefined;
     try {

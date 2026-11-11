@@ -1183,7 +1183,12 @@ export class GameView implements Lifecycle {
       }
       // vqa-1 P2 (L10 R2 at max zoom): infected fighting her under a near-side roof read as faint ghosts in the disc rim or
       // vanished under it. On foot, the disc also clears the living infected within 3.2 m (the melee ring around her).
-      if (!this.world.entities.get(1)?.hidden) for (const id of this.world.spatial.query({ x: current.x, z: current.z, r: 3.2 }, this.revealNear, false)) {
+      // The finale fight spans the console yard, and a near-side tank can hide
+      // the Mega even while the courier remains visible. Include nearby living
+      // threats in the same projected reveal subject so the existing occluder
+      // cut follows the fight at both camera zooms.
+      const revealRadius = this.world.scenario === 'L10' ? 18 : 3.2;
+      if (!this.world.entities.get(1)?.hidden) for (const id of this.world.spatial.query({ x: current.x, z: current.z, r: revealRadius }, this.revealNear, false)) {
         const e = this.world.entities.get(id);
         if (!e?.infected || e.hidden || e.infected.hidden || e.health.current <= 0) continue;
         this.revealPet.min.set(e.transform.x - .45, feet, e.transform.z - .45); this.revealPet.max.set(e.transform.x + .45, feet + 1.9, e.transform.z + .45);
