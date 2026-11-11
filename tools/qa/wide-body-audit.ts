@@ -7,6 +7,8 @@ import { runnerLevels, runLevel } from '../sim-runner/levels';
 import { cureEncounters, curePaceEncounters, cureEncounterSlots, cureEncounterSpot } from '../../src/levels/L10/encounters';
 import { LevelNineSetPieces } from '../../src/sim/missions/LevelNineSetPieces';
 import { crossing } from '../../src/levels/L9/district';
+import { l3 } from '../../src/data/l3';
+import type { L3StreetChoice } from '../../src/debug/bot/LevelThreeBot';
 import { l9Groups, l9SetPieces, l9SetPieceTuning } from '../../src/data/l9';
 import { infectedDef } from '../../src/data/infected';
 import { megaAlpha } from '../../src/data/megaAlpha';
@@ -42,7 +44,8 @@ const selectedLevels = process.env.WIDE_BODY_LEVELS?.split(',') as typeof runner
 const scenarios = runnerLevels.filter(level => !selectedLevels || selectedLevels.includes(level)).flatMap<{ level: typeof runnerLevels[number]; l9Route: string | undefined; l9Detour: boolean | undefined }>(level => level === 'L9'
   ? crossing.routes.flatMap(route => [false, true].map(detour => ({ level, l9Route: route.id, l9Detour: detour })))
   : [{ level, l9Route: undefined, l9Detour: undefined }]);
-for (const { level, l9Route, l9Detour } of scenarios) {
+const streetScenarios = scenarios.flatMap(scenario => (scenario.level === 'L3' ? ['blvd', 'commerce', 'oak'] as const : ['auto'] as const).map(street => ({ ...scenario, street: street as L3StreetChoice })));
+for (const { level, l9Route, l9Detour, street } of streetScenarios) {
   const spawns: Spawn[] = [];
   const seenWideIds = new Set<number>();
   const playerRoute: { x: number; z: number }[] = [];
@@ -51,7 +54,7 @@ for (const { level, l9Route, l9Detour } of scenarios) {
   let authoredSource: string | undefined;
   const restoreSources: (() => void)[] = [];
   let audit: Pick<LevelResult, 'unreachable' | 'narrowOpenings'> = { unreachable: [], narrowOpenings: [] };
-  const run = await runLevel(level, 'newbie', 1, level === 'L10' ? 3600 : 2400, 'auto', undefined, undefined, 0, {
+  const run = await runLevel(level, 'newbie', 1, level === 'L10' ? 3600 : 2400, street, undefined, undefined, 0, {
     quality: 'high', l9Route, l9Detour,
     beforeBegin(world) {
       const ai = world.infected!, spawn = ai.spawn.bind(ai);
@@ -141,6 +144,12 @@ for (const { level, l9Route, l9Detour } of scenarios) {
     beforeDispose(world) {
       for (const restore of restoreSources) restore();
       const walls = fullWalls(world);
+      if (level === 'L3') {
+        const expected = l3.density.alphas.map((_, index) => `route-alpha-${index}`);
+        const admitted = world.missions!.state.l3?.alphaAt ?? [];
+        const observed = expected.filter((_, index) => admitted[index] > 0);
+        coverage = { expected, observed, missing: expected.filter(id => !observed.includes(id)) };
+      }
       if (level === 'L9') {
         // Road formations cycle brute/armored roles; shortcut groups author Alphas.
         const expected = l9Groups.filter(g => g.route === l9Route && (g.alphas > 0 || g.route === 'road' && g.runners >= 3)).map(g => g.id);
@@ -219,8 +228,8 @@ for (const { level, l9Route, l9Detour } of scenarios) {
     },
   });
   outcome = run.outcome;
-  report.push({ level, ...(l9Route ? { route: `${l9Route}/${l9Detour ? 'detour' : 'main'}` } : {}), outcome, ...(coverage ? { coverage } : {}), spawns: spawns.length, checks: spawns.length, ...audit, encounters: spawns.map(row => ({ id: row.id, archetype: row.archetype, variant: row.variant, radius: row.radius, x: row.x, z: row.z, tick: row.tick, player: row.player, cohort: row.cohort, source: row.source, reachable: !!row.route, activeAtEnd: row.active, ...(row.wave ? { wave: row.wave } : {}), ...(row.objective ? { objective: row.objective } : {}) })) });
-  console.log(`[wide-body] ${level}${l9Route ? `/${l9Route}/${l9Detour ? 'detour' : 'main'}` : ''}: ${outcome}; ${spawns.length} wide spawns, ${audit.unreachable.length} unreachable, ${audit.narrowOpenings.length} narrow openings`);
+  report.push({ level, ...(level === 'L3' ? { route: street } : {}), ...(l9Route ? { route: `${l9Route}/${l9Detour ? 'detour' : 'main'}` } : {}), outcome, ...(coverage ? { coverage } : {}), spawns: spawns.length, checks: spawns.length, ...audit, encounters: spawns.map(row => ({ id: row.id, archetype: row.archetype, variant: row.variant, radius: row.radius, x: row.x, z: row.z, tick: row.tick, player: row.player, cohort: row.cohort, source: row.source, reachable: !!row.route, activeAtEnd: row.active, ...(row.wave ? { wave: row.wave } : {}), ...(row.objective ? { objective: row.objective } : {}) })) });
+  console.log(`[wide-body] ${level}${level === 'L3' ? `/${street}` : ''}${l9Route ? `/${l9Route}/${l9Detour ? 'detour' : 'main'}` : ''}: ${outcome}; ${spawns.length} wide spawns, ${audit.unreachable.length} unreachable, ${audit.narrowOpenings.length} narrow openings`);
 }
 const output = process.argv[2] ?? 'test-results/qa-wide-body/report.json';
 await mkdir(dirname(output), { recursive: true });
