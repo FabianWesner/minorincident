@@ -158,7 +158,7 @@ export async function measureVehicleSilhouette(session: SceneSession, id: string
 }
 
 /** Flat-light diagnostic within each actor's projected posed-body bounds. */
-export async function measureFlatSilhouette(session: SceneSession, ids: string[]) {
+export async function measureFlatSilhouette(session: SceneSession, ids: string[], species?: string) {
   const projected = await session.page.evaluate(async (ids) => {
     const threePath = '/node_modules/three/build/three.webgpu.js', pickPath = '/src/render/characters/PickBodies.ts';
     const { Box3, Matrix4, Vector3 } = await import(/* @vite-ignore */ threePath);
@@ -182,7 +182,7 @@ export async function measureFlatSilhouette(session: SceneSession, ids: string[]
   }, ids);
   const canvas = await session.page.evaluate(async () => { await window.__SCENE__!.ready(); return document.querySelector('canvas')!.toDataURL('image/png'); });
   const shot = PNG.sync.read(Buffer.from(canvas.slice(canvas.indexOf(',') + 1), 'base64'));
-  const bodyMask = await captureCrowdMask(session.page);
+  const bodyMask = await captureCrowdMask(session.page, species);
   if (process.env.SCENE_MASK_OUT) writeFileSync(process.env.SCENE_MASK_OUT, PNG.sync.write(bodyMask));
   if (bodyMask.width !== shot.width || bodyMask.height !== shot.height) throw new Error('Figure mask dimensions changed');
   return projected.map(({ id, bodySizeM, rect: [x0, y0, x1, y1] }) => {

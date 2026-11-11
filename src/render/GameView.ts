@@ -969,7 +969,7 @@ export class GameView implements Lifecycle {
     const player = this.world.entities.get(1); return player ? this.megaDistance(player.transform) : Infinity;
   }
   /** Scene Lab: depth-tested CrowdView silhouette (including retained bodies), preserving the submitted instance/pose and accessory masks. */
-  probeCrowdMask(enabled: boolean): void { if (this.probes) this.probes.infectedIdPass = enabled; this.update(1); }
+  probeCrowdMask(enabled: boolean, species?: string): void { if (this.probes) { this.probes.infectedIdPass = enabled; this.probes.infectedMaskSpecies = enabled ? species : undefined; } this.update(1); }
   /** Project a world point to viewport-normalized coordinates, for masks and input integration. */
   project(x: number, y: number, z: number): number[] { return this.projection.set(x, y, z).project(this.camera).toArray(); }
   crowdFigures() { return [...(this.crowd?.getState().figures ?? []), ...(this.npcs?.snapshot().civilians.figures ?? [])]; }

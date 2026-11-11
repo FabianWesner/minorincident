@@ -225,7 +225,8 @@ try {
       const drawn = new Set(g.view.crowdFigures().filter(f => f.drawn).map(f => f.id));
       return g.world.infected!.active.filter(e => drawn.has(e.id) && species.includes(e.archetype) && e.health.current > 0 && !e.hidden && !e.infected?.hidden).map(e => ({ id: `entity:${e.id}`, archetype: e.archetype }));
     }, values.measure.split(','));
-    const samples = await measureFlatSilhouette({ page } as SceneSession, targets.map(t => t.id));
+    const samples = [];
+    for (const target of targets) samples.push(...await measureFlatSilhouette({ page } as SceneSession, [target.id], target.archetype));
     writeFileSync(`${out}/figure-metrics.json`, JSON.stringify({ targets, samples }, null, 2));
     await capture({ path: `${out}/measured.png` });
   }
