@@ -501,3 +501,13 @@ already in the baked gait, not introduced by runtime paw support release.
 The surrounding raw heights vary through the gait peak; this is distinct from
 the cats' solver discontinuity. Atlas indices (175.958 -> 176.993) and raw
 heights are retained for reproducibility rather than inferring pose from phase.
+
+## Current-source full remote unit result
+
+On 2026-11-12, retried the required remote `npm test` after status showed a free
+slot. It acquired slot 1 and completed exit 0: 27 files passed, 106 tests passed,
+1 skipped; duration 208.39 s, wrapper 211.5 s within 240 s. Repository collection
+remains within the 150-case budget. Log: `final-unit-retry.log` under the lane's
+test-results. This result covers current render source; the earlier cancelled
+request is superseded. Full 62/62 scene gate and remaining acceptance audit are
+still outstanding, so the goal is not marked complete.
