@@ -1,5 +1,5 @@
-// r39-markers (r38-vqa P2-1/P2-3, P3): objective markers must lead to where the trigger fires.
-import { expect, test } from 'vitest';
+// r39-markers (r38-vqa P2-1/P2-3, P3): objective markers must lead to where the trigger fires. Called from tests/engine/missions.test.ts.
+import { expect } from 'vitest';
 import * as RAPIER from '@dimforge/rapier3d-compat';
 import { emptyInput } from '../../src/input/InputFrame';
 import { l8Route, inRect } from '../../src/data/l8Bosses';
@@ -9,16 +9,18 @@ import { decodeSave } from '../../src/sim/progression/Save';
 import { loadLevel } from '../../tools/sim-runner/levels';
 import { readFixture } from '../../tools/qa/fixture-io';
 
-test('L8 route legs end inside their arena zone, where the fight starts (all six arenas)', () => {
+/** L8 route legs end inside their arena zone, where the fight starts (all six arenas). */
+export async function checkL8RouteMarkers(): Promise<void> {
   expect(l8Route.length).toBe(6);
   for (const stage of l8Route) {
     const last = stage.nodes[stage.nodes.length - 1];
     expect(inRect(last, stage.zone), `${stage.id}: last marker node inside its zone`).toBe(true);
     if (stage.entry) expect(Math.hypot(last.x - stage.entry.x, last.z - stage.entry.z), `${stage.id}: node past the entry gate`).toBeLessThan(10);
   }
-});
+}
 
-test('L9 bridge: the marker sits on the deck and a held, near-stationary APC on the deck starts the collapse', async () => {
+/** L9 bridge: the marker sits on the deck and a held, near-stationary APC on the deck starts the collapse. */
+export async function checkL9BridgeMarker(): Promise<void> {
   const decoded = decodeSave(JSON.stringify(readFixture('tests/fixtures/saves/qa/l9-at-bridge.json.br').campaign));
   if (decoded.status !== 'ok') throw new Error('fixture does not decode');
   const world = await loadLevel('L9', 1, decoded.save, 0, { quality: 'low' });
@@ -34,11 +36,10 @@ test('L9 bridge: the marker sits on the deck and a held, near-stationary APC on 
     for (let i = 0; i < 30 && l9.state.phase === 'driving'; i++) world.update();
     expect(l9.state.phase, 'standing on the deck is enough').not.toBe('driving');
   } finally { world.dispose(); }
-}, 120_000);
+}
 
-// r38-vqa P2-2: an APC pinned between a front barrier, a rear barrier and tight side rails (no room for the reverse three-point turn)
-// with the throttle held stayed at 0 m/s for 53 s; the third failed recovery now sets it on the nearest clear pose.
-test('L9 APC pinned in a pocket with W held is freed by the stuck recovery', async () => {
+/** r38-vqa P2-2: an APC pinned between barriers with the throttle held is freed by the third failed recovery. */
+export async function checkL9ApcPocket(): Promise<void> {
   const decoded = decodeSave(JSON.stringify(readFixture('tests/fixtures/saves/qa/l9-at-bridge.json.br').campaign));
   if (decoded.status !== 'ok') throw new Error('fixture does not decode');
   const world = await loadLevel('L9', 1, decoded.save, 0, { quality: 'low' });
@@ -58,4 +59,4 @@ test('L9 APC pinned in a pocket with W held is freed by the stuck recovery', asy
     }
     expect(away, 'the APC left the pocket within 30 s').toBeGreaterThan(0);
   } finally { world.dispose(); }
-}, 180_000);
+}
