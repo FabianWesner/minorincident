@@ -170,3 +170,4 @@ for (const level of runnerLevels.filter(level => !selectedLevels || selectedLeve
 const output = process.argv[2] ?? 'test-results/qa-wide-body/report.json';
 await mkdir(dirname(output), { recursive: true });
 await writeFile(output, JSON.stringify({ radiusMargin: margin, scope: selectedLevels ?? runnerLevels, note: 'Runtime encounter coverage uses the native campaign runner; each authored wide infected spawn is tested from its authored spawn to player route samples every ten simulation seconds on the sim navigation window baked with body radius plus margin. Streamed levels are checked as their navigation windows move. Narrow openings are paired ground-level collision boxes bordering the sampled path.', levels: report }, null, 2) + '\n');
+if (report.some(level => level.unreachable.length || level.narrowOpenings.length)) process.exitCode = 1;

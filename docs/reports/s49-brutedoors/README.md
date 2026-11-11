@@ -41,3 +41,9 @@ No fixed spots remain from this audit. A visual pass is still useful to confirm 
 - L9 roadside encounter approaches along the streamed APC route, where the audit checked 107 wide spawns against full-world navigation.
 
 No browser session was used for this lane.
+
+## Remaining qualification
+
+The audit now returns a failing exit code when it reports an unreachable body or narrow opening. Its census is runtime coverage, not a proof that every authored branch was exercised; L8 explicitly needs the outlet fixture because the campaign bot exhausted its budget. Exhaustive authored encounter coverage remains unproven.
+
+The L2 nightly diagnostic identifies missing entity 216 with no final entity transform. This indicates a lifecycle loss rather than a demonstrated wide-body opening jam. This lane has no source or test changes relative to its base, and L2's audited census contains no wide bodies. The required nightly gate remains red.
