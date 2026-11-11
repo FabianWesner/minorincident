@@ -16,6 +16,25 @@ const errors: string[] = [];
 page.on('pageerror', e => errors.push(e.message));
 const where: Record<string, unknown> = {};
 const shoot = async (name: string, only?: number[]) => {
+  if (name === 'overpass-air') where.rackInterpolation = await page.evaluate(async () => {
+    const modulePath = '/node_modules/three/build/three.webgpu.js';
+    const { Matrix4 } = await import(modulePath);
+    const game = (window.__SCENE__ as unknown as { game: Game }).game;
+    const vehicles = game.view.labProbes().vehicles!;
+    const course = game.view.scene.getObjectByName('l9-driving-course')!;
+    const rack = Object.getOwnPropertyDescriptor(course, 'rack')!.value;
+    const records = Object.getOwnPropertyDescriptor(vehicles, 'records')!.value;
+    const record = records.get(game.world.missions!.l9!.state.carId);
+    const rows = [];
+    for (const alpha of [0, .25, .5, .75, 1]) {
+      vehicles.update(alpha); Object.getPrototypeOf(course).update.call(course, alpha);
+      record.parent.updateWorldMatrix(true, true); rack.updateWorldMatrix(true, true);
+      const local = new Matrix4().copy(record.parent.matrixWorld).invert().multiply(rack.matrixWorld);
+      rows.push({ alpha, chassisLocalMatrix: local.toArray() });
+    }
+    vehicles.update(1); Object.getPrototypeOf(course).update.call(course, 1);
+    return rows;
+  });
   where[name] = await page.evaluate(() => { const s = window.__SS__!.getState(); const p = s.player!.transform; const game = (window.__SCENE__ as unknown as { game: Game }).game;
     const car = game.world.vehicles!.cars.get(game.world.missions!.l9!.state.carId)!;
     const rendered = game.view.labProbes().vehicles;
