@@ -191,7 +191,7 @@ export class NpcView extends Group {
       if (closing) {
         const seat = l10Closing.seat(this.world)!; const returnTime = this.world.missions!.state.epilogue!.phase === 'thanks' ? this.world.missions!.state.epilogue!.phaseTicks / 60 : 6;
         // Settle beside the seated courier, facing her; the head is aligned to her near knee below.
-        hero.root.position.set(seat.x + .48 + Math.max(0, 4.5 - returnTime * 1.5), .08, seat.z + .48); hero.root.rotation.y = Math.PI * .75;
+        hero.root.position.set(seat.x + .48 + Math.max(0, 4.5 - returnTime * 1.5), .08, seat.z + .48); hero.root.rotation.y = Math.PI / 2;
       }
       const down = e.escort?.state === 'downed' || e.escort?.state === 'dead' || this.world.tick < (e.escort?.knockedUntil ?? 0) || e.civilian?.state === 'down' || e.civilian?.state === 'rising';
       if (down && hero.animator) { hero.root.rotation.z = Math.PI / 2; hero.root.position.y = .25; }
@@ -205,8 +205,11 @@ export class NpcView extends Group {
       if (closing && hero.head) {
         // Presentation-only contact: place the corgi's animated head on the courier's near knee.
         const seat = l10Closing.seat(this.world)!;
+        hero.head.userData.closingRestY ??= hero.head.position.y;
+        hero.head.position.y = (hero.head.userData.closingRestY as number) - .28;
+        hero.head.rotation.z -= .35;
         hero.root.updateMatrixWorld(true); hero.head.getWorldPosition(this.point);
-        hero.root.position.add(new Vector3(seat.x + .22 - this.point.x, .64 - this.point.y, seat.z + .06 - this.point.z));
+        hero.root.position.add(new Vector3(seat.x + .35 - this.point.x, 0, seat.z + .3 - this.point.z));
       }
       hero.tongue?.update(time, motion.speed);
       if (hero.badge && e.escort) {
