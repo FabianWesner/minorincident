@@ -1,105 +1,57 @@
-# S67 — L9 APC driving blockage (in progress)
+# S67 — L9 APC driving blockage: HOLD
 
-The requested whole-route ≤5 s invariant is **not yet verified**. Do not use the focused passing tests as full-route acceptance.
+The full goal is **not achieved**. The committed changes fix retained-prop response and remove driving-pose recovery, but four primary-path native runs still lose onward progress for more than 5 seconds. Do not release this lane as a completed P1 fix.
 
 ## Implemented
 
-- `c38665de`: held forward APC throttle can turn a retained obstacle into a dynamic body from rest. Previously this required 5 m/s, so a stopped APC could not trigger the shove. Barrier identity and health persist.
-- `e67c6aff`: held forward APC throttle also applies a forward contact push to authored movable physics props from rest. Fixed/braced props remain excluded. No actor stats or position assignments were added.
-- Focused `tests/engine/vehicles.test.ts` passes (2 tests), including new from-rest barrier and authored-wreck assertions.
+- Held APC throttle can push retained obstacles and authored movable props from rest; the former impact-speed gates left already-stopped hulls unable to trigger a shove.
+- Continued contact pushes airborne retained props horizontally. Repeated pushes preserve vertical motion rather than relaunching a barrier into the chassis.
+- Jersey barriers roll around their long axis with no initial upward launch, avoiding the end-over-end ramp shape that beaches the APC.
+- A beached APC can use the existing mass-scaled physical lift and held-steering torque. The old 6–18 m driving relocation fallback is removed. No invulnerability, infected-stat changes, corpse deletion, bus removal, or barrier deletion was added.
+- Stationary evacuation approaches retry alternate truck spots even when navigation reports a reachable nearby cell.
 
-## Reproduction and open cause
+Focused assertions cover persistent barrier identity/health, initial and repeated launch motion, pushing props from rest, and physical beached recovery without assigning a pose. The old sealed-pocket test incorrectly required teleport escape from four enclosing walls. All three variants and 900-tick budgets remain; they now check confinement, pose continuity and physical penetration instead. No specs or protected reference folders were changed.
 
-The native W/route-steering diagnostic is `tools/qa/l9-progress-probe.ts` (still being developed). It excludes authored mission holds from driving-window measurements. It currently does not establish full-route completion or all seeds.
+## Final native regression
 
-On the same road-following policy, seed 3 recorded 9.13 s on starting main and 13.35 s on PROD `0b650749`, beside a jersey barrier/barricade in the road corridor. This blockage class predates current main. The PROD comparison used one isolated clone at `/tmp/s67-l9stuck-prod-0b650749` because the initial restricted environment could not create shared Git worktree metadata. Cleanup remains pending.
+Run `sh tools/qa/l9-progress-regression.sh`. It covers primary and detour lines on all three route choices, seeds 1–3, using held W with route steering. Authored holds use normal hatch/interact/combat input. The harness writes no actor poses, HP or mission progress. Completion, ≤300 active-driving ticks without meaningful route advance, and no >2 m driving position discontinuity are required. Scripted mission holds/crash phases are explicitly distinguished from unintended driving stalls.
 
-After both changes, a seed-3 diagnostic recorded a 5.27 s window, ticks 9546–9862, from (418.49, -276.02) to (396.13, -268.12). It is still a failure. Earlier in the same run, tick 9300, the APC reported 7.2 m/s while its position barely advanced. Infected contacts continually refreshed the ram velocity floor. Two parentless static colliders touched the chassis at approximately (414.62, 1.06, -277.07) and (417.37, 1.13, -283.35). An automatic reverse precedes the later turn. Static collider ownership and the path into that pocket remain under investigation.
+All 18 runs complete with zero position discontinuities. The command correctly returns **exit 1** because four progress windows fail. Full canonical receipts: [native-current.json](native-current.json).
 
-The existing mission pin fallback waits 660 ticks and can assign a new pose. It cannot serve as proof for this task's no-teleport requirement.
+| Path | Maximum no-progress seconds, seeds 1 / 2 / 3 | Result |
+|---|---|---|
+| primary road | 12.23 / 12.17 / 12.15 | **FAIL** |
+| primary countryside | 1.23 / 14.28 / 0.35 | **FAIL** |
+| primary dry-shortcut | 0.57 / 0.32 / 0.52 | PASS |
+| detour road | 4.58 / 0.63 / 0.37 | PASS |
+| detour countryside | 0.70 / 0.35 / 0.98 | PASS |
+| detour dry-shortcut | 0.33 / 0.75 / 4.55 | PASS |
+
+The remaining primary-road gap occurs around the first bend, with a roadside tree contact and subsequent steering recovery. The primary-country gap still needs a driver/geometry/contact diagnosis. Passing detours are not a substitute for these cases. Numerous mechanical/controller trials were rejected after full-matrix regressions; none of those uncommitted experiments remains.
+
+## Baseline / regression classification
+
+Starting main was `43c79eb1` (the QA finding references `91199b68`). The same blockage class was reproduced natively there and on exact PROD `0b650749`. The finalized detour driver on PROD completed seeds 1–3 but recorded 12.80 / 12.75 / 12.72 s gaps, so this class predates current main. [native-comparison.json](native-comparison.json) preserves that earlier same-policy road comparison; its fixed-side receipts predate the final primary-path audit and must not be read as full acceptance.
+
+The original manual steering trace was unavailable; its README was used as instructed. Native reproduction establishes the blockage class, not an exact replay of every QA input. One temporary PROD clone was used because the initial sandbox could not create shared worktree metadata; its status/processes were checked, receipts preserved, and the clone removed. No baseline checkout remains.
+
+## Final gates
+
+- `npm run verify -- E31`: **pass**, including typecheck/lint; 27 files / 107 tests, 91.65 s Vitest, 92.8 s budget wrapper.
+- Exact `sh tools/remote/run.sh "$PWD" -- npm test`: **pass** on 46.225.66.90; 27 files, 106 passed / 1 skipped, 198.38 s Vitest, 200.8 s against unchanged 240 s budget. No tests were trimmed.
+- L9 threat audit on the final production implementation: skilled complete, passive tick-budget, **0 L9 flags**. Exit 1 is the documented `PARTIAL_LEVEL_SELECTION` marker. This is not proof of the separate progress invariant.
+- Full native route regression: **FAIL**, as above. The goal remains open despite green unit/static gates.
 
 ## Browser QA needed
 
-Use LOW, god off, held W with ordinary steering. Recheck original QA HUD 632–639 m / ticks 8195–8929, then the HUD 121–122 m bus/roadside trap. Also inspect the native seed-3 pocket around world (418, -280), ticks 9300–9862. Browser verification and opened captures remain pending.
+For the QA lane: LOW, god off, W with ordinary steering. Recheck original HUD 632–639 m / ticks 8195–8929 and the later HUD 121–122 m bus/roadside trap. The source finding is `docs/reports/s66-b87qa/README.md`. Inspect retained furniture, wheel contact and actual displacement rather than the ram-inflated speed field alone. No visual-fix or opened-capture claim is made by this lane.
 
-## Remaining acceptance
+Current failing native windows for targeted observation:
+- primary countryside seed 2: ticks 7859–8716, [456.3248596191406, 243.7224578857422] → [391.025634765625, 202.26853942871094].
+- primary road seed 1: ticks 1757–2491, [-327.5335388183594, -344.0426330566406] → [-326.9681396484375, -341.3550109863281].
+- primary road seed 2: ticks 1757–2487, [-327.5335388183594, -344.0426330566406] → [-326.905029296875, -341.2874450683594].
+- primary road seed 3: ticks 1757–2486, [-327.5335388183594, -344.0426330566406] → [-326.924560546875, -341.3748474121094].
 
-Full-route native regression over seeds 1–3 with maximum active-driving no-progress window ≤5 s; verify retained props/corpses and no recovery teleport; L9 threat audit with 0 flags; typecheck/lint; exact remote npm test; final report receipts and baseline cleanup. No deployment, push or main movement performed.
+## Open work
 
-## Gate receipts after `73c36370`
-
-- Exact `sh tools/remote/run.sh "$PWD" -- npm test`: exit 0 on 94.130.181.173; 27 files, 106 passed / 1 skipped; Vitest 196.49 s, budget wrapper 199.1 s below 240 s. No test trimming.
-- `node --import tsx/esm tools/qa/threat-audit.ts --levels L9`: skilled complete, passive tick-budget, 0 L9 passive flags; exit 1 is the documented partial-selection diagnostic flag.
-- The road diagnostic remains red. Its latest waypoint-tracking policy completed seed 2 but recorded 10.05 s beside retained barriers. A lateral obstacle-launch experiment worsened the result and was reverted. These gates do not prove the requested driving invariant.
-
-## Native regression status
-
-`sh tools/qa/l9-progress-regression.sh` runs held-W road steering for seeds 1–3 and fails unless every child completes L9 and its active-driving no-progress window is at most 300 ticks. The probe uses intermediate route points and the APC's turn radius; authored holds use the existing combat bot. It never assigns actor positions, HP or mission progress. `--check` was proven red on seed 1's unresolved evacuation hold (exit 1, tick cap 20,000), despite a 0.37 s driving maximum. The final acceptance command must run without the diagnostic tick-cap environment variable.
-
-`b62d962d` avoids repeatedly lifting retained barriers into the chassis during subsequent pushes. `e77b7878` retries stationary truck approaches even when navigation reports a reachable nearby cell. With these changes, seed 2 completed with 4.42 s maximum and seed 3 completed with 3.00 s maximum. Seed 1 remains unfinished: survivor 672 leaves the APC but cycles truck approach targets without entering a truck. Target latching and deduplicating the update loop did not resolve it and were reverted. Current typecheck and lint pass. Full acceptance, fresh remote suite/threat audit after these last production changes, and browser QA remain outstanding.
-
-## Passing native road matrix and position audit
-
-After the probe was corrected to open the hatch through ordinary interact input during authored holds, `sh tools/qa/l9-progress-regression.sh` passes all three seeds on the current implementation. Seed 1 completes with a 0.37 s maximum, seed 2 with 4.42 s, and seed 3 with 3.00 s. The earlier seed-1 evacuation hang was a defence-policy failure: four live infected blocked the survivor while the hatch remained closed. No further production evacuation change was made to resolve that harness failure.
-
-The regression now also fails for any >2 m position step while L9 remains in its driving phase, including authored holds and their transitions. All three runs have zero such steps. This excludes the old 6–18 m pin relocation from these passing receipts. Scripted crash/fall phases are outside that audit. Current typecheck and lint pass. Final PROD comparison with this same driver, latest remote/threat receipts, baseline cleanup and browser QA remain pending; goal completion is not claimed.
-
-## Final same-policy PROD comparison
-
-The finalized regression ran unchanged on exact PROD `0b650749`: all seeds completed, but maximum stalls were 12.80 / 12.75 / 12.72 s. Fixed runs complete at 0.37 / 4.42 / 3.00 s with no position jumps. Full receipts are in `native-comparison.json`; they supersede earlier policy-specific diagnostic measurements. This blockage class predates current main and is not new relative to PROD.
-
-The sole baseline checkout was checked for tracked changes and live probe processes, its receipts preserved, and `/tmp/s67-l9stuck-prod-0b650749` removed. Baseline cleanup is complete.
-
-## Refreshed final static and threat checks
-
-On the implementation through `720f478b`, `npm run typecheck` and `npm run lint` pass. The refreshed L9 threat audit completes **both skilled and passive** routes with **0 L9 flags** (15.7 s total); exit 1 is solely `PARTIAL_LEVEL_SELECTION`, as expected for a selected-level diagnostic. This supersedes the earlier passive tick-budget result. The latest exact remote npm test and E31 verifier remain to be refreshed after the last production changes.
-
-The brief requests a **Browser QA needed** handoff section for the QA lane. The coordinates/ticks above remain that handoff; no visual presentation change is claimed by this lane and no browser capture is presented as proof. Native fixed-step input, physical prop retention assertions and the no-position-jump matrix provide this lane's movement evidence. The QA lane should still exercise the original real-input HUD/tick windows before release.
-
-## Final implementation gate refresh
-
-On committed implementation `e788f1aa`, `npm run verify -- E31` passes typecheck/lint and all 27 files / 107 tests (94.48 s Vitest, 95.7 s budget wrapper). Exact `sh tools/remote/run.sh "$PWD" -- npm test` also passes on 46.225.66.90: 27 files, 106 passed / 1 skipped, 187.37 s Vitest and 189.9 s against the unchanged 240 s budget. These supersede the older remote receipt.
-
-Completion audit still requires native coverage of the countryside and dry-shortcut branches before the road-only passing matrix can support a route-wide claim. The existing probe accepts those route IDs; the committed regression runner currently covers road only.
-
-## Expanded route audit — acceptance remains red
-
-The same driver was run over countryside and dry-shortcut seeds 1–3. All six runs completed, but countryside seeds 2/3 failed at 9.42 / 8.33 s, and dry-shortcut seed 3 failed at 5.05 s. Countryside seed 2 and shortcut seed 3 also exercised the existing 6 m pin relocation, violating this task's no-teleport condition. Country seed 1 and shortcut seeds 1/2 passed (0.37 / 0.32 / 0.32 s). Thus the road matrix must not be generalized to every L9 route. The committed regression runner now covers all three routes and all three seeds, preserving each failed receipt before returning failure.
-
-A bus backoff during active reverse recovery worsened country seed 2 to 16.27 s and was reverted. No production change from that experiment remains. The countryside bus/pocket recovery and shortcut pin cases remain open.
-
-## Heavy initial-launch experiment
-
-Removing the jersey barrier's initial upward velocity passed countryside seeds 1–3 (0.35 s each) and the focused barrier assertions, but the complete matrix exposed a new road seed-3 16.67 s stall plus a 6 m relocation. The experiment was reverted in full, including its temporary assertion. The final production state remains at the previously gated commits; all-route acceptance is still red. This rules out accepting the ground-launch change based only on the countryside case.
-
-## Physical pivot investigation
-
-Bounded yaw-impulse trials during measured low travel did not free the countryside seed-2 hedge/barrier/bus pocket: the maximum remained about 9.3–9.43 s and the old relocation still ran. Trials included both consecutive motion checks and the existing bounded travel history. They were reverted; no steering-torque change remains. The static pocket needs an effective physical escape before all-route acceptance can pass.
-
-## Wheel-contact evidence
-
-At countryside seed-2 tick 6300, all four wheel-contact flags are false while the chassis rests at y=1.234 on retained debris, throttle 1 and full steer. This explains why wheel engine/steering changes cannot move that pose. A limited suspension-droop experiment freed that case, but the full nine-run matrix regressed other routes (including a shortcut timeout), so it was reverted. The diagnostic can emit wheel state with `L9_CONTACT_TICK` for further investigation.
-
-## Beached recovery investigation
-
-Reusing a mass-scaled recovery lift plus held-steering yaw impulse improved countryside seed 2 from 9.42 s to 6.92 s; an earlier/stronger lift reached 5.58 s. Both still invoked the existing 6 m relocation and failed acceptance, so neither trial was retained. The current fallback also counts repeated physical recovery events toward relocation; any future physical recovery must be audited together with that legacy fallback rather than accepted from a shorter stall alone.
-
-## Primary-line coverage and corrected legacy test
-
-`abcf6f35` passes all nine **detour** route/seed runs: road 4.58 / 0.63 / 0.37 s, countryside 0.70 / 0.35 / 0.98 s, shortcut 0.33 / 0.75 / 4.55 s, all complete and without position discontinuities. This is insufficient for the primary jump/encounter lines. The regression now includes both primary and detour paths (18 runs). Primary road seeds 1–3 fail at 12.23 / 12.17 / 12.15 s; primary countryside seed 2 fails at 14.28 s. All primary runs complete, but acceptance remains red.
-
-The final local verifier and remote suite failed the old `checkL9ApcPocket` expectation that an APC held at W/zero steering escapes a sealed four-wall pocket by relocating. That assertion contradicts the explicit no-teleport requirement. All three input variants and their 900-tick budgets are retained; they now assert confinement, <1 m per-tick displacement, and <0.1 m physical contact penetration. Focused missions suite passes all 6 tests (49.59 s). This is a correction to a legacy test criterion, not a relaxed progress limit. Fresh full gates remain necessary after the primary-line failures are fixed.
-
-The refreshed threat audit on `abcf6f35` reports skilled complete, passive tick-budget, 0 L9 flags; its sole exit flag is partial-level selection. No completion claim is made.
-
-## Primary-corner controller and tyre trials
-
-A two-second centerline lookahead plus curvature-based steering reduced primary-road corner gaps, but firmer APC lateral tyre response failed the full 18-run audit: road detour seeds 2/3 regressed to 13.43 / 121.93 s. All 18 completed without position jumps, yet the progress invariant failed on several routes. The tyre change and uncommitted controller revision were reverted, restoring the committed regression policy. The primary-road tree contact and primary-country gap remain open; no passing subset from these trials is accepted as completion evidence.
-
-## Static-contact momentum projection trial
-
-Projecting the ram velocity floor along static contact normals passed an initial primary-road seed, but failed the complete 18-run matrix once derived speed was reported accurately. Several cases developed prolonged wall-following stalls despite the focused vehicle suite passing. The entire projection change was reverted. The underlying interaction still needs attention: the infected-contact speed floor can keep prescribing velocity into a fixed obstacle and make reported speed differ sharply from actual displacement. A passing single seed is not accepted as evidence for this mechanism.
-
-## Static-floor/earlier-reverse and lookahead audit
-
-Suspending the ram floor at fixed contacts plus a shorter APC stuck window passed primary-road seeds with the committed driver but still failed three other runs. Combining that trial with a curvature-based lookahead driver passed the two targeted country cases, then failed the complete 18-run matrix (including a primary-country timeout and prolonged road gaps). All uncommitted changes from both variants were reverted. No result from a targeted passing pair supersedes the red primary-line audit above. The committed implementation still requires a primary-route solution before completion can be claimed.
+Resolve all four primary-path progress failures without weakening the 5-second criterion, dropping route choices, removing retained actors/props, adding invulnerability, or reintroducing pose relocation. Repeat the full native matrix and required gates after the next production change. Refresh the baseline comparison if the driver policy changes. The current worktree is committed for review; no push, deploy, merge or main movement was performed.
