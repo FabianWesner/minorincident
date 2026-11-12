@@ -67,3 +67,7 @@ North now admits three and attacks after 8.13 s; west admits 22 and attacks afte
 ## Rejected high-tier fast alarm expansion
 
 Trialed 24 additional high-tier alarm runners/sprinters (42 versus 18 total, keeping low tier fixed and using the existing fast roster for the added portion). Focused audit completed in 47.8 s: skilled complete, two passive flags remained. High hold reached peak alive 75, but first-breach alive was only 47 at 50.08 s, peak plaza 51, and minimum plaza still 17. Reverted: this adds opening pressure without meeting either census requirement. Counts remain unchanged in the retained runtime.
+
+## L3 second-wave timing evidence
+
+Advancing only the second station wave, keeping its 25 members and all sources fixed, can clear the kiting-hit flag but regresses other criteria. At +10 s (instead of +20), the probe landed four moving hits (12/min) and made 15 attack starts; squad-loss verdict failed with army counts 0/3/0 across seeds. At +15 s it landed two moving hits and army counts passed (4/2/0), but native competent attack rate failed (31.51/21.50/43.31 per minute). At +12 s the army counts failed (1/2/0), although two seeds' competent rates passed (47.48/9.96/22.86). All three focused audits completed skilled routes. Reverted all timing trials: the retained L3 schedule is unchanged. This establishes a pacing mechanism for contact, but a timing-only second-wave adjustment has not met the no-regression requirement.
