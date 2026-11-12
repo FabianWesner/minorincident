@@ -244,3 +244,9 @@ Read-only renderer-instance probe (`cover-flags/log.jsonl`) samples all three po
 ## Cover projection comparison
 
 `pond-cover-projection.json` records read-only camera position, projected cover centres and stored frustum distances. At sampled ticks the camera remains near the courier (roughly y=11 m), and cover centres project outside its clip rectangle, consistent with culling. This differs from the visibly widened arena screenshot, but probes run between browser frames and are not synchronized to its draw. Therefore a Scene Lab camera/order mismatch is a hypothesis, not an established cause. Need a draw-synchronized comparison before changing production culling. No renderer change was made; browser/server are terminal.
+
+## Corrected in-arena cover diagnosis
+
+The synchronized diagnostic screenshot `cover-draw/s001-t460.jpg` was opened and shows the courier still outside the entry. Earlier camera probes omitted `--no-kite`, so automatic threat avoidance prevented arena entry. Comparing those receipts with different in-arena screenshots was invalid; no camera/frustum mismatch is established.
+
+Repeated with `--no-kite`, god on/no fire, current fixture. At tick 833 the objective is “Kill flamingos 0/8”, camera is widened (y≈50.26), and all three cover instances are selected at LOD1. Opened `cover-inside/s003-t833.jpg`: the arena is wide and pads/birds are visible, but the concrete covers remain visually absent. `pond-cover-inside.json` preserves the corrected receipt. This moves investigation to selected LOD1 asset/batching presentation, not frustum culling. No workaround was added. Browser/server are terminal.
