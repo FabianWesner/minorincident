@@ -29,7 +29,7 @@ Measured coverage is summarized below. No PROD A/B was performed. All incomplete
 | Level | HIGH zoom 1 | HIGH zoom 1.5 | LOW zoom 1 |
 |---|---|---|---|
 | L8 full | Merged build incomplete: 25/26 flamingos, 90 s driver stall | Incomplete: same 25/26 stall | Open |
-| L9 full | Incomplete: eight-minute cap at rail encounter | Open | Open |
+| L9 full | Incomplete: eight-minute cap at rail encounter | Finished in 281 s, five deaths | Open |
 | L3 first 3 min | Sample complete | Sample complete | Open |
 | L4 first 3 min | Sample complete | Sample complete | Open |
 | L7 first 3 min | Sample complete | Full route finished in 149 s | Open |
@@ -102,3 +102,7 @@ Fresh merged-build run with requested zoom 1.5 stopped at 348 seconds after 90.3
 ## Merged-revision validation retry
 
 `npm run typecheck` and `npm run lint` both passed again after the main merge. The specified unchanged `sh tools/remote/run.sh "$PWD" -- npm test` completed successfully on runner 46.225.66.90 (job `/srv/mi/jobs/s78-b88high-e8f96c-36761-1794504497`): exit 0, 208.9 s against the 240 s budget, 27 files passed, 106 tests passed and one skipped. Budget collection reported 150/150 cases across configured lanes; the executed default unit project reported 107 cases. No tests were trimmed or changed. This supersedes the initial infrastructure-blocked suite attempt, and does not close any visual or gameplay coverage gap.
+
+## L9 HIGH zoom 1.5 completion
+
+Merged-build real-input route finished in 281 seconds, five deaths, zero logged assists, no skips. One normal F hatch-toggle input was sent through control.json. Opened `campaign-hatch-toggle-input.jpg`: courier 100 HP, APC armor 310/1000, clear countdown and hatch instructions, attackers beside hull, lit wheels/hull. Opened `campaign-L9-result.jpg` for handover evidence. Run summary records finished=true; max no-progress 8.449 s excludes death/retry delays and changing countdowns, so it is not total stopped wall time. Two five-second enemy-frozen flags remain unconfirmed; P1 ally-passive refers to vehicle#667 losing armor while stationary, not an escort character. The route is finishable in this attempt, with significant lethal pressure (five deaths); fun/fairness and every temporal UAT vehicle criterion remain unclosed. A single F input before eventual completion does not prove it caused recovery. Summary simSeconds=0 is not valid timing; use wallSeconds and logged ticks. Raw evidence: `test-results/playtest/s78-b88high-l9-high-z15/`.
