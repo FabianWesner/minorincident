@@ -62,7 +62,7 @@ test('handling: deterministic scripted drives, speed-dependent steering for ever
   try {
     for (let i = 0; i < 60; i++) f.tick();
     f.car.body.setRotation({ x: 1, y: 0, z: 0, w: 0 }, true); f.car.body.setTranslation({ x: 0, y: .4, z: 0 }, true);
-    for (let i = 0; i < 179; i++) { f.tick(); expect(f.car.recoverFlip()).toBe(false); }
+    for (let i = 0; i < 179; i++) { f.car.body.setLinvel({ x: 5, y: 0, z: 0 }, true); f.tick(); expect(f.car.recoverFlip()).toBe(false); }
     f.tick(); expect(f.car.recoverFlip()).toBe(true);
     for (let i = 0; i < 600; i++) { f.tick(); f.car.recoverFlip(); }
     expect(f.car.upsideDown).toBe(false); expect(f.car.wheels.filter(w => w.contact)).toHaveLength(4);

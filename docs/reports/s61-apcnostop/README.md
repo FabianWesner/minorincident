@@ -55,3 +55,7 @@ The apparent hatch timer reset is explained by the real-input receipt: `runs-cam
 ## Bridge fixture and current audit
 
 The refreshed L9 threat audit completes both skilled and passive routes with zero L9 flags (18.9 s; aggregate partial-selection flag remains). The bridge fixture ran headlessly for 60 seconds on port 4963, moving from (452,0) to (562.4,49.4), but did not finish. Opened `test-results/playtest/s61-bridge/captures/campaign-L9-t2763.jpg`: the APC is overturned near the bay with a horde behind it. This is contradictory evidence for robust driving and needs investigation; it is not accepted as passing ramming evidence.
+
+## Moving rollover recovery
+
+The rollover investigation found a direct conflict: `VehicleBody.postPhysics` reset the rollover timer whenever speed was at least 3 m/s, while ram momentum can keep an inverted chassis above that speed. Removed that speed condition so the existing mass-scaled flip recovery can activate while moving. The existing rollover test now holds 5 m/s during the inversion delay and verifies recovery to four-wheel contact. Focused vehicle suite passes (2 tests, 62.74 s). Fresh browser verification remains required.

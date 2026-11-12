@@ -86,7 +86,8 @@ export class VehicleBody {
     this.roll = deterministicAtan2(2 * (q.w * q.x + q.y * q.z), 1 - 2 * (q.x * q.x + q.z * q.z));
     this.speed = Math.hypot(v.x, v.z); this.forwardSpeed = v.x * Math.cos(this.transform.yaw) - v.z * Math.sin(this.transform.yaw);
     this.upsideDown = 1 - 2 * (q.x * q.x + q.z * q.z) < .4;
-    this.upsideDownTicks = this.upsideDown && this.speed < 3 ? this.upsideDownTicks + 1 : 0;
+    // Ram momentum and external pushes can keep an inverted chassis moving; speed must not disable roll recovery.
+    this.upsideDownTicks = this.upsideDown ? this.upsideDownTicks + 1 : 0;
     for (let i = 0; i < 4; i++) {
       const w = this.wheels[i]; w.rotation += this.forwardSpeed * FIXED_DT / this.def.wheelRadius; w.steer = this.steeringAngle * (i < 2 ? 1 : 0);
       w.suspension += ((this.controller.wheelSuspensionLength(i) ?? this.def.suspension) - w.suspension) * (1 - Math.exp(-this.def.handling.suspensionResponse * FIXED_DT));
