@@ -146,6 +146,11 @@ async function checkRaisedMountedGun(): Promise<void> {
 
 test('loadout: both sides keep independent aims, racks wrap both ways with a switch lock, a cooling gun does not steal selection', async () => {
   checkArsenalRoles(); await checkMolotovCluster(); await checkFlameCluster(); await checkBlastClusters();
+  const rifle = await arena(); equip(rifle, ['weapon.hunting-rifle']);
+  const rifleHp = infectedDef('infected.runner').hp * INFECTED_TOUGHNESS;
+  const pierced = [dummy(rifle, 2, 0, rifleHp), dummy(rifle, 4, 0, rifleHp)];
+  fire(rifle); step(rifle, 60);
+  expect(pierced.map(id => health(rifle, id)), 'one rifle projectile pierces one infected and kills both ordinary targets').toEqual([0, 0]);
   const w = await arena(); equip(w, ['weapon.machine-gun']);
   fire(w); expect(w.getState().player!.weapons!.selectedSide).toBe('LEFT');
   w.setInput({ aim: { x: 0, z: 1 } }); step(w, 1);

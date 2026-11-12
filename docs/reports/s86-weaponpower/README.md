@@ -50,7 +50,7 @@ The requested fixed 160-HP armored/300-HP brute profiles differ from native spaw
 
 ## Native area checks
 
-Five 60-HP targets: molotov clears within 2 s after ignition and its patch lasts 8 s; flamethrower clears a narrow close cone within 3 s; centered pipe bomb and rocket blasts clear within 3 s. Rocket cluster coverage uses the native explosion API; its launcher execution is measured separately above. These assertions run in the existing combat case, retaining the 150-case repository budget.
+Five 60-HP targets: molotov clears within 2 s after ignition and its patch lasts 8 s; flamethrower clears a narrow close cone within 3 s; centered pipe bomb and rocket blasts clear within 3 s. Rocket cluster coverage uses the native explosion API; its launcher execution is measured separately above. These assertions run in the existing combat case, retaining the 150-case repository budget. A native hunting-rifle shot also kills two 60-HP ordinary targets aligned at 2 m and 4 m, verifying actual one-target piercing. Focused combat, typecheck and lint pass with this assertion.
 
 ## L10 pressure and remaining criterion
 
