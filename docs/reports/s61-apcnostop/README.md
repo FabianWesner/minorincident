@@ -71,3 +71,7 @@ Added read-only speed and forwardSpeed to playtest observations (typecheck passe
 ## Non-APC contact protection
 
 Review found that the generic car path armed ram protection using distance to the chassis centre. Changed it to the existing oriented hull distance, matching bumper contact rather than requiring penetration to the centre. Focused vehicle suite passes (2 tests, 63.84 s). Authored movable bins/crates already use `PropSystem.prePhysics` vehicle impulses and its momentum damage/knockdown path; this implementation remains separate from mission-owned obstacle entities.
+
+## Repeated barrier launches
+
+Fixed a retained barrier's second launch leaving its settled navigation blocker behind: blocker removal now happens before both initial body creation and subsequent relaunches. Focused vehicle suite passes (2 tests, 53.89 s). Review also confirms the separate map-destructible impact branch still uses `hazards.hit` for fences/cones/barricades/trash cans/mailboxes, so that path remains an explicit gap against the added never-vanish requirement.

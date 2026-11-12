@@ -45,12 +45,12 @@ export class Obstacles {
   ram(item: Obstacle, velocity: RAPIER.Vector, tick: number): void {
     if (item.broken) return;
     item.hitIds = new Set();
+    const p = item.entity.transform;
+    this.world.events.emit({ type: 'world.blocker.changed', tick, id: item.entity.id, blocked: false, wall: { ...p, halfX: item.halfX, halfY: .5, halfZ: item.halfZ } });
     if (item.body) {
       item.body.setLinvel({ x: velocity.x * .65, y: 2.2, z: velocity.z * .65 }, true);
       item.airborne = true; return;
     }
-    const p = item.entity.transform;
-    this.world.events.emit({ type: 'world.blocker.changed', tick, id: item.entity.id, blocked: false, wall: { ...p, halfX: item.halfX, halfY: .5, halfZ: item.halfZ } });
     this.world.physics.world!.removeCollider(item.collider, false);
     const world = this.world.physics.world!, body = world.createRigidBody(RAPIER.RigidBodyDesc.dynamic().setCcdEnabled(true).setTranslation(p.x, .5, p.z).setRotation({ x: 0, y: Math.sin(p.yaw / 2), z: 0, w: Math.cos(p.yaw / 2) }));
     const mass = item.light ? 8 : 55;
