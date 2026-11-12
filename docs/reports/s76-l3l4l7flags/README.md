@@ -2,7 +2,7 @@
 
 ## Outcome
 
-**Open.** The combined audit confirms L3 at zero flags, L4 at two, and L7 at two. Retained changes advance L3's second wave to +14 s, add one existing fast actor to L4's first west breach roster, and align L4's north approach mouths with its physical breach. L4's two population criteria and L7's two kiting criteria remain open. Zombie stats and audit rules are unchanged; L8 is untouched.
+**Open.** The combined audit confirms L3 at zero flags, L4 at two, and L7 at zero. Retained changes advance L3's second wave to +14 s, add one existing fast actor to L4's first west breach roster, and align L4's north approach mouths with its physical breach. Only L4's two population criteria remain open; L7's retained opening Alpha is staged 8.5 m east. Zombie stats and audit rules are unchanged; L8 is untouched.
 
 ## Exact audit lines
 
@@ -17,17 +17,16 @@ Baseline was audited at `b06e3197391052367c9ade363608afd997ca1196` before edits:
 After the retained combined changes, the exact requested command reported:
 
 ```text
-[qa:threat] L3: skilled complete, passive tick-budget, 0 passive flags (83.6s)
-[qa:threat] L4: skilled complete, passive tick-budget, 2 passive flags (83.2s)
-[qa:threat] L7: skilled complete, passive complete, 2 passive flags (97.0s)
+[qa:threat] L3: skilled complete, passive tick-budget, 0 passive flags (59.0s)
+[qa:threat] L4: skilled complete, passive tick-budget, 2 passive flags (121.4s)
+[qa:threat] L7: skilled complete, passive tick-budget, 0 passive flags (124.6s)
 ```
 
-The command summary was `[qa:threat] 97.6s; 5 fail flags; test-results/qa-threat/README.md` (the total includes the partial-selection diagnostic). Before had 8 fail flags by the same count, including that diagnostic.
+The command summary was `[qa:threat] 125.0s; 3 fail flags; test-results/qa-threat/README.md` (the total includes the partial-selection diagnostic). Before had 8 fail flags by the same count, including that diagnostic.
 
 Remaining acceptance flags:
 
 - L4: `criterion/L4-06 first breach:FAIL`, `criterion/L4-06 sustained horde:FAIL`
-- L7: `KITING_BELOW_ATTACKS_PER_MINUTE_2:0.00`, `KITING_LANDED_HITS_BELOW_2:0.00`
 
 ## Level-design change
 
@@ -138,3 +137,5 @@ Both skilled/passive multi-seed follower pace pass; skilled flags empty. Retreat
 Shortening existing street-group intervals from 2–4 s to 1–2 s (unchanged scheduled wave sizes/roster) worsened high-hold minima: alive at breach 42, peak alive 62/plaza 59, minimum plaza 8. Focused audit 51.0 s, skilled complete, three passive flags. Reverted: front-loading admissions fills occupied capacity earlier and does not sustain living pressure. Later street reservations were left intact to preserve their authored encounters.
 
 Earlier existing flank breach trial: south Alpha staged at +32 s (from +84), north at +40 (from +92), nests push beat +50 (from +104), with unchanged fallback deadlines/counts/roster. Focused audit 53.5 s, skilled complete, three passive flags; high hold remained 44 alive at first breach, peak plaza 51 and minimum plaza 20. Reverted: modest minimum improvement fails the 40 floor and adds another flag.
+
+Final retained-runtime remote retry passed on 46.225.66.90: 27 files passed, 106 tests passed/one skipped, 150/150 inventory present, 210.3 s within 240 s, exit 0. Exact combined audit confirms L3/L7 zero and L4 two flags with all skilled routes complete. Browser review remains needed; zero-flag objective is incomplete.
