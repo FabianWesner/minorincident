@@ -55,6 +55,6 @@ All four WebGL2 LOW visual companion scenes passed after access was restored. Op
 - Native measurement script completed and wrote the JSON receipt.
 - Scene/gate JSON syntax and `git diff --check` passed.
 - `npm run typecheck` and `npm run lint` passed on the final probe source.
-- Required `sh tools/remote/run.sh "$PWD" -- npm test` could not start: no healthy Hetzner runner is running/provisioned, and the runner rejects aggregate `npm test` on local Mac fallback. No test suite ran; no tests were trimmed.
+- Required `sh tools/remote/run.sh "$PWD" -- npm test` passed on runner 46.225.66.90: 27 files, 106 passed / 1 skipped; 197.0 s within the 240 s budget. Collection stayed at 150/150 cases.
 - Sandbox access was restored for captures and committing.
 - No gameplay code, stats, thresholds, or specs criteria were changed.
