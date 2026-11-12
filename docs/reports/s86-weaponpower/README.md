@@ -123,3 +123,5 @@ The same native firing harness also measured the requested fixed profiles below,
 Reproducibility: `native-targets.json` embeds the exact TypeScript harness sources for runtime HP, requested fixed HP, and cluster measurements, plus SHA-256 hashes of baseline/current weapon catalogs and execution instructions. These preserve the measurement method beyond the temporary `/tmp` files.
 
 Final consistency correction: machete source comment now states two hits against native ordinary infected; the role assertion derives its two-hit threshold from catalog HP times toughness. Focused combat and lint pass. This changes no gameplay values; catalog SHA receipts refer to the measured catalog before this comment-only correction.
+
+Durable validation receipt: [validation.json](validation.json) preserves the final all-level flag comparison, exact commands, remote-unit outcome, and L10 attack-start timestamps. It explicitly records the failing continuous-cadence gate and does not claim goal completion.
