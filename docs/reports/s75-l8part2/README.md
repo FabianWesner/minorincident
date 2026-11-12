@@ -176,3 +176,7 @@ The configurable runtime junction probe starts at (24,64), three pens cleared, t
 ## Gorilla-approach west branch
 
 Traced the post-zebra exterior path from (60,0) west toward (28,0), around the gorilla perimeter and into the eastern field. Added the missing west-side branch barrier at x=56.9, z=0 spanning the adjoining fence endpoints at z=±12; the existing east-side barrier bounds the other side of the north/south visitor corridor. Native nav reports target (108,0) disconnected from (60,0) with four pens cleared. Static post-zebra reachable area falls from 14,930 to 7,220 m². All six controlled route states still pass, including yard access after five clears. Typecheck/lint/diff checks pass. The post-gorilla service lane still opens a large region and remains under investigation; new fence captures and the final audit refresh remain required.
+
+## Service-lane detour evidence
+
+With five pens cleared, a controlled runtime probe from (96,-32) toward exterior target (108,-60) reports a connected native path. In the 20 s sample it walks south toward z=30, then turns outward near x=100.6/z=28.6, reaching x=107.35/z=7.30. Trial northern/eastern junction caps and continuous side-wall extensions did not eliminate the connection in the map model and were reverted. No service-lane geometry change was retained. The remaining investigation must include the open yard-side approaches after the five-clear unlock, rather than assuming the leak begins at the gorilla exit turn.
