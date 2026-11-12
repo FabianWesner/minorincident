@@ -154,3 +154,5 @@ Native before/after firing comparison (supersedes the earlier formula-based TTK 
 | assault-rifle | 3@0.383 → 3@0.383 | 2@0.25 → 2@0.25 | 24@3.183 → 24@3.183 | 18@2.383 → 18@2.383 | 19@2.517 → 19@2.517 | 10@1.317 → 10@1.317 |
 | flashbang | 4@>30 → 4@>30 | 4@>30 → 4@>30 | 4@>30 → 4@>30 | 4@>30 → 4@>30 | 4@>30 → 4@>30 | 4@>30 → 4@>30 |
 | flamethrower | 13@4.117 → 3@0.783 | 10@3.117 → 3@0.783 | 73@26.783 → 18@5.783 | 82@>30 → 17@5.45 | 60@22.117 → 15@4.783 | 49@16.117 → 10@3.117 |
+
+Nearest-group admission experiment: sorting authored groups by X distance from the courier completed in 1,016.0 s but produced only 54 attack starts and a 758.5 s longest gap. It was reverted. Receipt: `/tmp/s86-nearestgroups.json`. Prioritizing unadmitted groups alone cannot reclaim capacity held by distant living pursuers.
