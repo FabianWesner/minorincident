@@ -42,4 +42,4 @@ Opened `apc-consecutive.jpg`: HIGH zoom 1.5, consecutive frames 140–145, stati
 
 ## Largest production contact discontinuity
 
-The HIGH surrounded infected-3 left toe jumps from [-1.142, 0.040, -2.418] at frame 3 to [-0.816, 0.004, -2.621] at frame 4 (the toe is airborne at frame 3; the opposite heel/toe support and full contact interval must also be inspected). The other left-foot trace begins planted at frame 1 and the clip changes from infected-idle to infected-lurch at frame 4. The root advances only millimetres. This is a pose transition discontinuity rather than a 34 cm vehicle root shove. See `transition-trace.json`; subsequent lurch stance positions remain nearly fixed. No acceptance claim is made from this diagnosis.
+The HIGH surrounded infected-3 left toe jumps from [-1.144, 0.002, -2.705] at frame 3 to [-0.816, 0.004, -2.621] at frame 4. The root advances only millimetres while the clip changes from infected-idle to infected-lurch. This is a pose transition discontinuity rather than a 34 cm vehicle root shove. See `transition-trace.json`; subsequent lurch stance positions remain nearly fixed. No acceptance claim is made from this diagnosis.
