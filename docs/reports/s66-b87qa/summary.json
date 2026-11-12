@@ -48,6 +48,22 @@
         "position": "flamingo pond Phase2, HUD5m remaining",
         "capture": "docs/reports/s66-b87qa/l8-partial.jpg",
         "description": "Dead birds remain stacked vertically above the courier across successive opened frames; live-foot sliding remains unverified."
+      },
+      {
+        "finding": "Rail-stall explanation and restart cue",
+        "verdict": "FIXED",
+        "tick": 10408,
+        "position": "rail crossing, HUD78m remaining",
+        "capture": "docs/reports/s66-b87qa/l9-partial.jpg",
+        "evidence": "countdown18\u219215\u219210\u21926\u21922, Engine restarted \u2014 drive! (W), forward input then reduced distance78\u219240m"
+      },
+      {
+        "finding": "Hatch upper-body presentation",
+        "verdict": "FIXED",
+        "tick": 9278,
+        "position": "rail crossing, HUD79m remaining",
+        "capture": "docs/reports/s66-b87qa/l9-partial.jpg",
+        "evidence": "courier upper torso and weapon above hatch; F closes hatch and preserves courier health"
       }
     ],
     "openedCaptures": [
@@ -59,7 +75,7 @@
     ]
   },
   "coverage": {
-    "L9": "partial: normal start to HUD 157m, 43 real-input actions, no deaths; bay/bridge/end not verified",
+    "L9": "normal start to rail stall, countdown and hatch tested; restarted and drove to HUD40m; bay/bridge/end not completed",
     "L8": "normal start through plaza breach and flamingo Phase2; two deaths in flamingo attempts; lion arena not reached",
     "L4_continuous_fire": "attempted at ticks2875\u20133303: seven seconds MG trigger toward butcher in mixed crowd; health90\u21920, one death; attacker attribution inconclusive",
     "armored_front_vs_rear": "incomplete: shield broke under MG fire, no directional shot counts",
