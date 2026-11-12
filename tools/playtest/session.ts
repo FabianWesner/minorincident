@@ -579,6 +579,18 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     const fixture = readFixture(fixturePath);
     if (fixture.level !== first) throw new Error(`PLAYTEST_FIXTURE is ${fixture.level}, session starts ${first}`);
     log({ fixture: fixture.label, state: await loadFixtureInPage(page, fixture) });
+    if (process.env.PLAYTEST_RAM_AUDIT === '1') {
+      await page.exposeFunction('ramContactReceipt', (receipt: unknown) => log({ ramContact: receipt }));
+      await page.evaluate(() => {
+        const w = (window.__SCENE__ as unknown as { game: Game }).game.world;
+        w.events.on('vehicle.durability-hit', event => {
+          if (event.type !== 'vehicle.durability-hit' || event.source !== 'contact') return;
+          const car = w.vehicles?.cars.get(event.sourceId);
+          if (!car) return;
+          void (window as unknown as { ramContactReceipt: (r: unknown) => Promise<void> }).ramContactReceipt({ tick: w.tick, target: w.entities.get(event.targetId)?.archetype, speed: car.physics.speed, throttle: car.physics.intent.throttle, brake: car.physics.intent.brake, armorCost: event.before - event.after });
+        });
+      });
+    }
     await page.evaluate(z => { window.__SS__!.camera.zoom(z); window.__SS__!.resume(); }, o.zoom);
   } else await page.getByTestId(`level-${first}`).click({ timeout: 60_000, force: o.entry === 'debug' });
   log({ session: o.tag, entry: o.entry, levels: o.levels, quality: o.quality, heroine: o.heroine });

@@ -87,3 +87,7 @@ Folded a cone persistence case into the existing vehicle/prop test: ram retains 
 ## Current full local gate
 
 `npm run verify -- E31` passes after the map-prop adoption/rebuild changes: typecheck and lint pass, 27 Vitest files / 107 tests pass in 110.35 s (111.8 s budget wrapper, below 240 s). Global counted case budget remains 150/150. This supersedes the older local gate result; remote green and direct real-input horde-contact evidence remain outstanding.
+
+## Real-input contact receipts
+
+Added opt-in `PLAYTEST_RAM_AUDIT=1` read-only contact logging to fixture play (typecheck passes). A 60-second pre-rail fixture run records two forward-throttle, brake-off contacts: sprinter at tick 1066, 7.783 m/s, zero armour cost; runner at tick 1079, 8.843 m/s, zero armour cost. Opened capture `test-results/playtest/s61-contact-audit/captures/campaign-L9-t1043.jpg` near those contacts. The run subsequently reaches the hatch and fails its one-minute completion cap; it is contact evidence, not a passing full route or a per-tick minimum-speed measurement.
