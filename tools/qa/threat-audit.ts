@@ -108,7 +108,10 @@ for (const level of selected) {
   const passiveStage = stage(stageId(level, true));
   const passiveRun = passiveStage.native?.run ?? null, passiveObservation = passiveStage.native?.observation ?? null;
   const passiveFlags: string[] = passiveStage.error ? [`AUDIT_ERROR:${passiveStage.error}`] : [];
-  if (!run?.completed) passiveFlags.push(`INCOMPLETE_NATIVE_POLICY:${run?.outcome ?? 'error'}`);
+  // L9 has no bounded passive observation window: both its skilled and passive
+  // driving routes must reach the evacuation. Other passive policies may end
+  // at their documented observation cap with a tick-budget outcome.
+  if (level === 'L9' && !passiveRun?.completed) passiveFlags.push(`INCOMPLETE_NATIVE_POLICY:${passiveRun?.outcome ?? 'error'}`);
   const kiting = skilled?.kiting ?? null;
   if (!kiting) passiveFlags.push('MISSING_KITING_POLICY_RECEIPT');
   else if (kiting.kitingSeconds === 0 && level !== 'L9') passiveFlags.push('MISSING_KITING_ON_FOOT_SAMPLE');

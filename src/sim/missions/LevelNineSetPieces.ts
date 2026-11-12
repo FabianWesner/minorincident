@@ -19,6 +19,15 @@ export interface L9SetPieceState { fired: string[]; alphas: L9ScriptedAlpha[]; f
 export const emptySetPieces = (): L9SetPieceState => ({ fired: [], alphas: [], flights: [], packs: [] });
 
 type Lane = { x: number; z: number; dx: number; dz: number };
+const lineDistance = (p: { x: number; z: number }, points: Point[]): number => {
+  let best = Infinity;
+  for (let i = 1; i < points.length; i++) {
+    const [ax, az] = points[i - 1], [bx, bz] = points[i], dx = bx - ax, dz = bz - az;
+    const t = Math.max(0, Math.min(1, ((p.x - ax) * dx + (p.z - az) * dz) / (dx * dx + dz * dz)));
+    best = Math.min(best, Math.hypot(p.x - ax - dx * t, p.z - az - dz * t));
+  }
+  return best;
+};
 
 export class LevelNineSetPieces {
   constructor(private readonly w: SimWorld, private readonly carId: () => number, private readonly route: () => string | null, private readonly signal: (name: string, actorId?: number) => void) {}
@@ -254,8 +263,11 @@ export class LevelNineSetPieces {
     if (car.physics.speed < 2) { const [a, l] = tune.thrower.stoppedOffsetsM[uses % tune.thrower.stoppedOffsetsM.length]; return { x: p.x + Math.cos(p.yaw) * a + Math.sin(p.yaw) * l, z: p.z - Math.sin(p.yaw) * a + Math.cos(p.yaw) * l }; }
     // A fast turn can put the constant-velocity prediction far off the road. Keep thrown props on the authored route,
     // preserving the same forward lead while using its lane tangent for the short flight.
-    const along = Math.hypot(at.x - p.x, at.z - p.z), lane = this.lane(along + tune.thrower.leadM);
-    if (lane) return { x: lane.x, z: lane.z };
+    const route = crossing.routes.find(r => r.id === this.route());
+    const onDetour = route && lineDistance(p, route.detour) + 4 < lineDistance(p, route.points);
+    const along = Math.hypot(at.x - p.x, at.z - p.z), lateral = onDetour ? (uses % 2 === 0 ? 1 : -1) * 10 : 0;
+    const target = this.lane(along + tune.thrower.leadM, lateral);
+    if (target) return { x: target.x, z: target.z };
     return { x: at.x + Math.cos(p.yaw) * tune.thrower.leadM, z: at.z - Math.sin(p.yaw) * tune.thrower.leadM };
   }
   private flights(s: L9SetPieceState): void {
