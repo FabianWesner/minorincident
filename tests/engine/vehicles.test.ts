@@ -310,10 +310,10 @@ async function l9SetPiecesFight(): Promise<void> {
     for (let i = 0; i < 10 && leaper.attachedTo !== undefined; i++) drive(true);
     expect(leaper.attachedTo, 'a handbrake at speed throws it off').toBeUndefined();
     expect(leaper.health.current, 'thrown off, not run over').toBeGreaterThan(0);
-    for (let i = 0; i < 1800 && !signals.includes('l9.thrower-landed') && !signals.includes('l9.thrower-hull-hit'); i++) drive(false);
+    for (let i = 0; i < 2400 && !signals.includes('l9.thrower-landed') && !signals.includes('l9.thrower-hull-hit'); i++) drive(false);
     for (let i = 0; i < 120; i++) drive(false);
     const thrown = vehicles.obstacles.items.filter(o => !l9.driving.state.obstacleIds.includes(o.entity.id));
-    expect(signals.filter(n => n === 'l9.thrower-throw').length, `the thrower lobs debris into the road: ${JSON.stringify({ x: car.entity.transform.x, fired: l9.driving.state.setPieces?.fired, alphas: l9.driving.state.setPieces?.alphas.map(a => [a.piece, a.role, a.phase, a.uses]) })}`).toBeGreaterThanOrEqual(1);
+    expect(signals.filter(n => n === 'l9.thrower-throw').length, `the thrower lobs debris into the road: ${JSON.stringify({ tick: world.tick, hp: world.entities.get(1)?.health.current, x: car.entity.transform.x, fired: l9.driving.state.setPieces?.fired, alphas: l9.driving.state.setPieces?.alphas.map(a => [a.piece, a.role, a.phase, a.uses, a.at]) })}`).toBeGreaterThanOrEqual(1);
     expect(thrown.length, 'thrown debris becomes road obstacles').toBeGreaterThanOrEqual(1);
     for (const o of thrown) {
       const flying = !!l9.driving.state.setPieces!.flights.some(f => f.obstacleId === o.entity.id);

@@ -43,3 +43,5 @@ Real-input fixture play ran headlessly via the repository browser lock on port 4
 ## Barrier follow-up
 
 Jersey barriers now use the persistent dynamic ram response. A moving rammed prop damages and staggers each infected it hits once per launch; subsequent rams can launch the same retained prop again. Typecheck and lint pass. The focused vehicle suite exposed a changed timing dependency: its authored thrower was still in `throw` phase with zero completed throws when the test ended (APC x=-91.92), so the suite is not green after this follow-up. Investigate the thrower scheduling/test trajectory before completion.
+
+The thrower failure was diagnosed as late arrival: at test tick 2846 the thrower's release deadline was 2875, with the player alive at full health. Increasing the bounded route wait from 30 to 40 simulated seconds permits the same completed-throw and landing assertions to run. The focused vehicle suite now passes (2 tests, 51.94 s). No production throw timing was changed.
