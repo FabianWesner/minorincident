@@ -51,6 +51,13 @@ export class VehicleBody {
       this.wheels[i].suspension = this.previousWheels[i].suspension = def.suspension;
     }
   }
+  /** L9 tall transport hull: native contact prevents the chasing bus climbing into the APC. */
+  private transportShell: RAPIER.Collider | null = null;
+  enableTransportShell(): void {
+    if (this.transportShell) return;
+    this.transportShell = this.world.createCollider(RAPIER.ColliderDesc.cuboid(this.def.length / 2, 1.05, this.def.width / 2)
+      .setTranslation(0, .75, 0).setMass(0).setFriction(.3), this.body);
+  }
   prePhysics(): void {
     Object.assign(this.previous, this.transform);
     Object.assign(this.previousRotation, this.rotation);
@@ -76,7 +83,7 @@ export class VehicleBody {
       const v = this.body.linvel(), horizontal = Math.hypot(v.x, v.z), cap = this.def.topSpeed * this.speedCap;
       if (horizontal > cap * 1.02) { const k = Math.max(cap / horizontal, 1 - this.overspeedDamp); this.body.setLinvel({ x: v.x * k, y: v.y, z: v.z * k }, true); }
     }
-    this.controller.updateVehicle(FIXED_DT, RAPIER.QueryFilterFlags.EXCLUDE_SENSORS);
+    this.controller.updateVehicle(FIXED_DT, RAPIER.QueryFilterFlags.EXCLUDE_SENSORS, undefined, collider => collider.parent()?.handle !== this.body.handle);
   }
   postPhysics(): void {
     const p = this.body.translation(), q = this.body.rotation(), v = this.body.linvel();

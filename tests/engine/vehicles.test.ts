@@ -213,7 +213,18 @@ async function l9BusTelegraphAndWreck(): Promise<void> {
     // hits cost 120 armour from the APC, leaving its broader mission intact.
     s.busStoppedAt = null; s.busRams = 0; s.busHitAt = -1000; s.busRamAt = 0;
     const passiveArmor = apc.entity.health.current;
-    for (let i = 0; i < 3; i++) { s.busRamAt = world.tick; s.busRamZ = apc.entity.transform.z; l9.driving.update(); }
+    bus.entity.health.current = bus.entity.health.max;
+    for (let i = 0; i < 3; i++) {
+      // Establish a real native contact before resolving the telegraphed hit.
+      for (const [v, x] of [[apc, 200], [bus, 200 - (apc.physics.def.length + bus.physics.def.length) / 2 + .01]] as const) {
+        const pose = { x, y: 1, z: 6, yaw: 0 };
+        Object.assign(v.entity.transform, pose);
+        v.physics.body.setTranslation(pose, true); v.physics.body.setRotation({ x: 0, y: 0, z: 0, w: 1 }, true);
+        v.physics.body.setLinvel({ x: 0, y: 0, z: 0 }, true); v.physics.body.setAngvel({ x: 0, y: 0, z: 0 }, true);
+      }
+      world.physics.world!.step();
+      s.busRamAt = world.tick; s.busRamZ = 6; l9.driving.update();
+    }
     expect(apc.entity.health.current, 'a passive driver survives the bus ram cap').toBe(passiveArmor - 120);
     expect(apc.entity.health.current, 'the bus cannot destroy the APC on its own').toBeGreaterThan(0);
   } finally { world.dispose(); }

@@ -137,6 +137,8 @@ export class LevelNineDriving {
   /** Restored native fixtures share the ordinary entity state and checkpoint. */
   rebuild(): void {
     const w = this.w, s = this.state;
+    this.car.physics.enableTransportShell();
+    w.vehicles!.cars.get(s.busId)?.physics.enableTransportShell();
     for (const handle of this.rampHandles) w.physics.removeBlocker(handle); this.rampHandles.length = 0;
     for (const [i, ramp] of cfg.ramps.entries()) {
       // r36-l9l5: the landing block is 0.5 m high (was 1 m): a floored APC (~9.5 m/s) lands at +9..+12 m, on the block's front edge, nose-first.
@@ -539,7 +541,13 @@ export class LevelNineDriving {
     } else if (ramAt && w.tick >= ramAt) {
       const lateral = Math.abs(p.z - (s.busRamZ ?? p.z));
       s.busRamAt = 0; s.busHitAt = w.tick; s.busRams++;
-      if (lateral > 4.5) {
+      let physicalContact = false;
+      for (let i = 0; i < bus.physics.body.numColliders(); i++) for (let j = 0; j < car.physics.body.numColliders(); j++) {
+        w.physics.world!.contactPair(bus.physics.body.collider(i), car.physics.body.collider(j), manifold => {
+          if (Math.abs(manifold.normal().y) < .7 && manifold.numContacts() > 0) physicalContact = true;
+        });
+      }
+      if (lateral > 4.5 || !physicalContact) {
         const side = Math.sign(p.z - (s.busRamZ ?? p.z)) || 1;
         w.vehicles!.damage(s.busId, 600);
         // A successful dodge sends the bus toward the opposite verge, away
