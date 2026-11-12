@@ -167,3 +167,7 @@ Moving the four west approach mouths toward wall ends (z=-16/-12/16/20 instead o
 Using the existing fast roster for nine rather than three of the fixed 18 high-tier alarm arrivals worsened first-breach alive to 37 and minimum plaza to 15 (peak alive 59/plaza 48; 46.6 s, skilled complete, two flags). Reverted: changing this opening composition toward fast actors does not sustain the required population.
 
 West-mouth wall-offset trials were both rejected. At 1.5 m outside (from 3 m): first-breach alive 36, peak plaza 45/minimum 10, three passive flags (48.9 s). At 6 m outside: first-breach alive 39, peak plaza 44/minimum 13, three passive flags (51.2 s). Both skilled routes completed; reverted to 3 m. Shortening or lengthening this exterior leg alone does not preserve living population or all breach criteria.
+
+## Partial browser sample of retained L7
+
+Ran the existing headless playtest through `tools/e2e-lock.sh`/browser pool, one browser, port 4976, 600 s reservation, low quality, zoom 1.5, two-minute sample. It ended at the deliberate 120 s sampling limit: not finished, no objective skips, zero driver-reported issues (command exit 1 because completion was not claimed). Opened pickup tick-6 and corridor tick-2708 captures: the pickup ring is visible beside the truck; the later frame shows the following survivor formation and UI reporting 24/24 nearby. [Two-frame sheet](l7-browser-sample.jpg). This is partial visual evidence only; it does not establish full L7 completion, full Alpha-contact readability, or visual acceptance of L3/L4.
