@@ -36,6 +36,10 @@ The evade-only bounded control does not close a hatch and does not reach the exi
 
 The L6 threat audit includes `L6/early-close/1` as an additional observed run, records its run and observation, and aggregates its phase and wave flags alongside a completion check. The L6 receipt has zero skilled, passive, and early-close threat flags. The top-level receipt retains its existing `PARTIAL_LEVEL_SELECTION` diagnostic because the command selects only L6.
 
+## Validation
+
+Typecheck, lint, the focused mission suite (6 tests), and threat-audit proof passed. The required remote `sh tools/remote/run.sh $PWD -- npm test` passed on 46.225.66.90: 27 files, 106 passed, 1 skipped; test budget 202.7 seconds of 240. No browser was used.
+
 ## Browser QA needed
 
 No browser was launched. PO review is still needed to confirm the wider hatch prompt feels natural, the 15-second safety reward and break telegraph read clearly, and platform-mouth arrivals feel like an intentional continuation of the encounter.
