@@ -67,3 +67,7 @@ After the moving-recovery fix, the same bridge fixture completes L9 in 25 second
 A second exact remote `npm test` ran on 94.130.181.173 (initial load 1.22). L4 contact passed; world-systems explosions, navigation, and player movement exceeded their per-test timeouts, and the full suite was killed by its 240-second budget (240.5 s, exit 124). Remote green remains outstanding; do not claim completion from the local pass.
 
 Added read-only speed and forwardSpeed to playtest observations (typecheck passes). A fresh bridge fixture with two-second captures completes in 25 seconds, zero issues. At ticks 163/230/294 it reports 7.73/10.02/10.12 m/s; subsequent zero-speed observations are during the authored finale. Opened capture at tick 188: APC upright on bridge. The visible infected is behind the vehicle, so this run still does not prove the explicit horde-contact requirement.
+
+## Non-APC contact protection
+
+Review found that the generic car path armed ram protection using distance to the chassis centre. Changed it to the existing oriented hull distance, matching bumper contact rather than requiring penetration to the centre. Focused vehicle suite passes (2 tests, 63.84 s). Authored movable bins/crates already use `PropSystem.prePhysics` vehicle impulses and its momentum damage/knockdown path; this implementation remains separate from mission-owned obstacle entities.

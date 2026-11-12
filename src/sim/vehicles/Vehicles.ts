@@ -416,7 +416,7 @@ export class Vehicles {
         this.world.events.emit({ type: 'vehicle.grabbed', tick: this.world.tick, sourceId: car.entity.id, targetId: target.id }); continue;
       }
       const c = Math.cos(p.yaw), s = Math.sin(p.yaw), radius = target.combat?.radius ?? .4;
-      if (distance <= radius + .1 && car.entity.vehicle!.driver !== null && car.physics.intent.throttle > 0 && !car.physics.intent.brake) car.entity.vehicle!.ramImpactUntil = this.world.tick + 300;
+      if (car.physics.hullDistance(target.transform.x, target.transform.z) <= radius + .1 && car.entity.vehicle!.driver !== null && car.physics.intent.throttle > 0 && !car.physics.intent.brake) car.entity.vehicle!.ramImpactUntil = this.world.tick + 300;
       if (speed < 4 || Math.abs(dx * c - dz * s) > car.physics.def.length / 2 + radius + speed / 60 || Math.abs(dx * s + dz * c) > car.physics.def.width / 2 + radius || this.world.tick < (car.hits.get(target.id) ?? 0)) continue;
       car.hits.set(target.id, this.world.tick + 60);
       this.world.combat?.damage.apply({ attackId: this.world.tick, actionId: car.entity.archetype, sourceId: car.entity.id, targetId: target.id, origin: p, direction: { x: Math.cos(p.yaw), z: -Math.sin(p.yaw) }, base: speed * 30 * car.physics.def.ramStrength, multiplier: 1, type: 'vehicle', knockback: target.archetype === 'infected.brute' ? 3 : 1, stagger: .5 });
