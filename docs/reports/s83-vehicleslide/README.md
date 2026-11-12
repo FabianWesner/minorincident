@@ -111,3 +111,7 @@ The fixture launches a production kickable folding chair via PropSystem.kick bes
 `npm run qa:vehicle-motion` completed exit 0 with all twelve fixture/tier rows passing. Receipt: `full-contact-gate.json`. These are isolated production-system fixtures, not the requested campaign-context matrix. Native campaign rendered soles are available through GameView.crowdFigures(), enabling the next sampler without substituting isolated actors.
 
 Completion is still unproven: L9 driving/rail stall/hatch/detour and L7/L4 runtime contacts at HIGH/LOW need native motion traces; hull separation and crowd resolution need direct attribution; climb transitions and duplicate boarder slots need review. Final full validation must be rerun after the shared GroundContacts change (the recorded remote suite and L9 route/threat receipts predate it).
+
+## Native campaign sampler
+
+Added `tools/scenelab/vehicle-campaign-motion.ts`, which loads a native L9/L7/L4 mission, runs the production completion bot, samples GameView.crowdFigures rendered soles near actual vehicle hulls each tick, and groups contacts by actor and attached/hull-ground state. Empty coverage exits nonzero. The 1800-tick HIGH L9 opening observation completed with zero eligible samples (exit 1), so it establishes no campaign contact pass. Typecheck and targeted lint pass. The sampler needs later route/checkpoint windows and mission/vehicle progress context next. See `native-opening-sample.json`.
