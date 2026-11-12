@@ -262,3 +262,7 @@ Current in-arena read-only sample (`--no-kite`, no fire, god on, HIGH/zoom 1) co
 ## Redundant-cull control rejected
 
 A logged browser-only control disabled child mesh frustum culling for jersey batches after district partition, with all normal instance selection intact. Entered the pond using `--no-kite`, protected/no-fire HIGH/zoom 1. Opened `cover-cull-control/s002-t819.jpg`: covers still absent. Therefore disabling a possible second mesh-level cull does not solve the issue and no production culling change is justified by this test. The control is not retained in source. Browser/server are terminal; custom placement-attribute data/material behavior remains unverified.
+
+## Placement-upload control rejected
+
+A browser-only control marked the jersey custom placement interleave dirty after each partition, retaining positions, material, visibility and geometry. Current in-arena protected/no-fire HIGH/zoom-1 sample; opened `cover-upload-control/s002-t829.jpg`. Pond cover remains absent. Forcing a buffer upload alone is not a supported fix, and no upload/version change was retained. Browser/server are terminal; custom position-node/material behavior remains unverified.
