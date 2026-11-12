@@ -79,3 +79,9 @@ Opened `s004-t2486.jpg`: the courier is visible among the group at a fenced path
 Completed a 240 s headless marker-input run on port 4975 at HIGH/zoom 1, same driver and controls as the short sample. The courier travelled from (0,70) to the plaza near (0,0); the objective changed to “Rest at the plaza with the group”. The run ended normally with no browser errors and no frames over 250 ms in its measured interval. Raw evidence: ignored `test-results/s75-l8part2/full-start/`.
 
 Opened `s006-t7301.jpg`: courier and Nadia are visible on the fenced path, the party trails behind, the yellow ring is readable and a warm lamp lights the junction. This sample does not establish the launcher hand-in: its trace contains no explicit sanctuary gate/launcher prompt. It also does not yet establish the maximum travel stall. The start loadout/setup needs inspection before claiming that requirement. Browser and server are terminal.
+
+## Start-travel trace analysis
+
+`start-travel.json` analyzes 43 real-input position samples from tick 66 to 7825, before the first rest-at-plaza objective at tick 7940. The maximum observed interval until at least 1 m displacement is 6.117 s; no sampled interval exceeds 10 s. This supports the tour travel requirement at roughly three-second sampling resolution, but cannot establish sub-sample motion or classify story dwell separately.
+
+The earlier missing-prompt concern was mistaken: `L8Gate.surrenderHeavyWeapons()` runs automatically in `LevelEightZoo.begin()`, before the sanctuary checkpoint. No E prompt is authored for that handover. Browser evidence that a launcher was carried into this particular run remains unverified; the existing mission/save unit coverage checks removal separately. This clarification supersedes the report's suggestion that an explicit handover prompt should appear.
