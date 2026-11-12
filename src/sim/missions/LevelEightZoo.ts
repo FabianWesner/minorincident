@@ -151,7 +151,7 @@ export class LevelEightZoo {
       const exit = doorExit(w, door, start); if (!exit) throw new Error(`Disconnected zoo outlet ${door.house}`);
       const serviceRoutes: [number, number][][] = [
         [[-96, 32]],
-        [], // The eastern apron is already connected; normal pursuit owns the route.
+        [[96, 32]], // Clear the doorway onto the boulevard before normal pursuit takes over.
         [[-24, -64], [0, -56], [0, -44], [-11, -40], [-11, -24], [1, -19.2]], // Enter the north gate and walk the dry shore around the pond.
         [[24, 64]], // Leave onto the boulevard toward the plaza instead of walking south around the bunker.
       ];
