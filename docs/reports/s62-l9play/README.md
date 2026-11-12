@@ -47,3 +47,9 @@ Real-input capture exposed that VFX deleted the bus tell immediately because it 
 Moved the existing L7 route check from the overloaded A* test into the existing chaser-routing test; no assertions or timeout limits changed. This spreads world-load work across tests without increasing the 150-case total.
 
 The balanced-test remote run passed navigation (A* 12.8 s, chasers 27.8 s, unchanged 30 s limits), but the overall run timed out at 240.7 s. Remote gate remains incomplete; next work must reduce the oversized vehicle integration workload rather than raise the gate budget.
+
+## Native driver and QA workload
+
+Added `tools/qa/l9-bus-driver-proof.ts`: drives the production simulation through normal throttle/steering input, reacts to the ram countdown, and asserts <=1 bus hit and >=2 misses. Passed with 3 rams, 1 hit, 2 misses, APC armour 701 and bus health 400. This proves skill-based avoidance without assigning ram deadlines or moving the APC between attacks.
+
+Moved the existing full leaper/thrower sequence out of the per-change vehicle test into `tools/qa/l9-setpieces-proof.ts`, preserving every assertion. Standalone proof passes; typecheck and lint pass. Remote trimmed suite still timed out at 240.7 s before vehicle completion, so further level-specific workload needs moving to QA; no gate limit was raised.
