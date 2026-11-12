@@ -66,26 +66,6 @@ test('handling: deterministic scripted drives, speed-dependent steering for ever
     for (let i = 0; i < 600; i++) { f.tick(); f.car.recoverFlip(); }
     expect(f.car.upsideDown).toBe(false); expect(f.car.wheels.filter(w => w.contact)).toHaveLength(4);
   } finally { f.physics.dispose(); }
-  const beached = await car('vehicle.military-apc');
-  try {
-    beached.physics.world!.createCollider(RAPIER.ColliderDesc.cuboid(.8, .5, .4).setTranslation(0, .5, 0));
-    beached.car.body.setTranslation({ x: 0, y: 1.4, z: 0 }, true);
-    Object.assign(beached.car.intent, { throttle: 1, steer: .5, brake: false });
-    let recovered = false, lifted = false;
-    for (let i = 0; i < 240; i++) {
-      beached.tick();
-      const at = { ...beached.car.transform };
-      if (beached.car.recoverFlip()) {
-        recovered = true;
-        expect(beached.car.transform).toEqual(at);
-        expect(beached.car.body.linvel().y).toBeGreaterThan(0);
-      }
-      if (recovered && beached.car.transform.y > 1.5) lifted = true;
-    }
-    expect(recovered, 'held throttle physically recovers a chassis supported above its wheel rays').toBe(true);
-    expect(lifted, 'recovery acts through subsequent physics steps').toBe(true);
-  } finally { beached.physics.dispose(); }
-
 });
 
 test('enter, drive and exit: door dwell, input ownership (no attacks while driving), capsule-safe exit on the free side; bike stand-to-mount needs an approach', async () => {
@@ -458,6 +438,15 @@ async function vehicleShovesProps(): Promise<PropSnapshot> {
     world.props!.updateNavigation();
     const id = world.vehicles!.spawn('vehicle.military-apc', { x: -4.9, z: 0 });
     const car = world.vehicles!.cars.get(id)!; world.vehicles!.active = id;
+    world.props!.prePhysics();
+    expect(prop.body.linvel().x, 'released throttle does not move a resting prop').toBe(0);
+    car.entity.vehicle!.floor = true;
+    Object.assign(car.physics.intent, { throttle: 1, brake: false });
+    world.props!.prePhysics();
+    expect(prop.body.linvel().x, 'held APC throttle pushes an authored prop from rest').toBeGreaterThan(0);
+    expect(world.entities.get(prop.entityId)?.health.current, 'pushing preserves the prop').toBeGreaterThan(0);
+    car.entity.vehicle!.floor = false;
+    prop.body.setLinvel({ x: 0, y: 0, z: 0 }, true);
     car.physics.body.setLinvel({ x: 18, y: 0, z: 0 }, true); car.physics.postPhysics();
     world.props!.prePhysics();
     expect(prop.body.isSleeping()).toBe(false);

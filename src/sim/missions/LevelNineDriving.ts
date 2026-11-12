@@ -6,7 +6,7 @@ import { allyState, updateAlly } from '../outbreak/Allies';
 import { emitEngine, stopEngine } from '../vehicles/ConvoySound';
 import type { Mission } from './Mission';
 import type { EntitySnapshot } from '../world/types';
-import type { DriveIntent } from '../vehicles/VehicleBody';
+import type { DriveIntent, VehicleBody } from '../vehicles/VehicleBody';
 import { pursueCrossingVehicle } from './LevelNineEncounters';
 import { Outbreak } from '../outbreak/Outbreak';
 import { clearThreat } from './Respawn';
@@ -207,6 +207,15 @@ export class LevelNineDriving {
     for (const id of car.entity.vehicle!.attached) { const e = w.entities.get(id); if (e) { e.transform.x = a.x; e.transform.z = a.z; w.spatial.set(id, a.x, a.z); } }
     clearThreat(w, a);
   }
+  private recoveryAt: number[] = [];
+  private lastRecovery = 0;
+  /**
+   * r39-markers (r38-vqa P2-2: 'APC stood still for 53 s, nose on a jersey barrier, school bus behind it, two leapers on the hull; the
+   * stuck recovery did not reverse it out'). The reverse recovery (Vehicles: stuck -> 1.5 s of reverse) has nowhere to go when the
+   * rear is a bus and a pile, and it repeats forever. Third recovery within 20 s with the hull still crawling: set the APC on the
+   * nearest pose with 8 m of clear lane (behind, then to the sides, at 6-18 m), facing the clearest heading with a bias east.
+   * Boarders ride along; no infected stat changes and nobody is removed.
+   */
   /** r42-l9pin: per evacuee, failed route ticks and how many truck spots were skipped (transient; a restore starts over). */
   private readonly spotFail = new Map<number, number>();
   private readonly spotSkip = new Map<number, number>();
@@ -250,6 +259,66 @@ export class LevelNineDriving {
     let n = 0;
     for (const e of w.infected!.active) if (e.health.current > 0 && !e.hidden && !e.infected?.hidden && (e.attachedTo === carId || distance(e.transform, door) < cfg.evacuation.doorClearM)) n++;
     return n;
+  }
+  /** r42-l9pin: where the hull stood when the driver last made progress with the gas held. */
+  private pin: { x: number; z: number; tick: number } | null = null;
+  private breakFree(): void {
+    const w = this.w, car = this.car, state = car.entity.vehicle!, p = car.entity.transform, tick = w.tick;
+    if (state.recoveringUntil !== this.lastRecovery) {
+      this.lastRecovery = state.recoveringUntil;
+      if (state.recoveringUntil > tick) this.recoveryAt = [...this.recoveryAt.filter(t => tick - t < 1200), tick];
+    }
+    const driving = w.vehicles!.active === car.entity.id && !this.holding(car.entity.id) && this.mission.l9!.state.phase === 'driving';
+    // r42-l9pin (r41-vqa P1-1: APC frozen 330 s at the bay with the gas held, no recovery ever counted). The recovery count depends on
+    // the stuck window, which a held brake, an impact stall or the handbrake keep clearing or pausing. Watch the driver's own input
+    // instead: gas held (W, stick, or LMB in mouse-only) and the hull not `pin.moveM` from where it stood `pin.ticks` ago = pinned.
+    const input = w.inputFrame, gas = Math.abs(input.drive?.throttle ?? 0) > .5 || Math.hypot(input.move.x, input.move.z) > .5 || input.left.held;
+    if (!driving || !gas) this.pin = null;
+    else if (!this.pin || distance(p, this.pin) > cfg.pin.moveM) this.pin = { x: p.x, z: p.z, tick };
+    const pinned = !!this.pin && tick - this.pin.tick >= cfg.pin.ticks;
+    if (!driving || !pinned && (this.recoveryAt.length < 3 || car.physics.speed > 1.5)) return;
+    const def = car.physics.def, r = def.width / 2 + .3;
+    // The whole hull (rear bumper to nose) plus an 8 m lane ahead must be clear; r41 put the rear half inside the shut gate. `bodies`
+    // false on the second pass: a pile around the hull must not veto every pose (boarders ride along, the rest are shoved by the hull).
+    const fits = (x: number, z: number, yaw: number, bodies: boolean) => {
+      if (!w.chunks?.resident(x, z)) return false;
+      for (let d = -def.length / 2 - .3; d <= def.length / 2 + 8; d += 1) {
+        const px = x + Math.cos(yaw) * d, pz = z - Math.sin(yaw) * d;
+        if (!w.infected!.nav.clear(px, pz, r) || !w.solids.clear({ x: px, y: p.y, z: pz }, r, car.entity.id, bodies)) return false;
+      }
+      return true;
+    };
+    // Prefer no hop through a wall: the straight move from here to the new pose crosses no static solid (gate, fence, barrier).
+    const reach = (x: number, z: number) => {
+      const length = Math.hypot(x - p.x, z - p.z);
+      for (let d = .5; d < length; d += .5) if (!w.solids.clear({ x: p.x + (x - p.x) * d / length, y: p.y, z: p.z + (z - p.z) * d / length }, .2, car.entity.id, false)) return false;
+      return true;
+    };
+    const yaws = [0, p.yaw, p.yaw + .6, p.yaw - .6, p.yaw + 1.2, p.yaw - 1.2, p.yaw + Math.PI].sort((a, b) => Math.cos(b) - Math.cos(a) + (b === p.yaw ? .25 : 0) - (a === p.yaw ? .25 : 0));
+    // Passes: clear of bodies and reachable; reachable through a pile; last resort (a closed pocket) any clear pose.
+    for (const [bodies, straight] of [[true, true], [false, true], [false, false]] as const) for (const dist of [6, 9, 12, 15, 18]) for (const side of [-Math.PI, -Math.PI / 2, Math.PI / 2, -Math.PI * .75, Math.PI * .75, Math.PI / 4 * 0]) {
+      const x = p.x + Math.cos(p.yaw + side) * dist, z = p.z - Math.sin(p.yaw + side) * dist;
+      if (straight && !reach(x, z)) continue;
+      for (const yaw of yaws) {
+        if (!fits(x, z, yaw, bodies)) continue;
+        this.pin = null; car.physics.body.wakeUp();
+        this.placeCar(car, x, z, yaw);
+        const player = w.entities.get(1)!; Object.assign(player.transform, { x, z, yaw });
+        w.physics.playerBody!.setTranslation(player.transform, true); w.previousPlayer = { ...player.transform }; w.spatial.set(1, x, z);
+        for (const id of state.attached) { const e = w.entities.get(id); if (e) { e.transform.x = x; e.transform.z = z; w.spatial.set(id, x, z); } }
+        state.recoveringUntil = 0; car.physics.clearStuck(); this.recoveryAt = [];
+        w.events.emit({ type: 'vehicle.recovering', tick, sourceId: car.entity.id });
+        return;
+      }
+    }
+  }
+  private placeCar(c: { entity: EntitySnapshot; physics: VehicleBody }, x: number, z: number, yaw: number): void {
+    const w = this.w, y = c.physics.def.suspension + c.physics.def.wheelRadius + .15, pose = { x, y, z, yaw };
+    Object.assign(c.entity.transform, pose); Object.assign(c.physics.previous, pose); c.physics.body.setTranslation(pose, true);
+    c.physics.body.setRotation({ x: 0, y: Math.sin(yaw / 2), z: 0, w: Math.cos(yaw / 2) }, true);
+    c.physics.body.setLinvel({ x: 0, y: 0, z: 0 }, true); c.physics.body.setAngvel({ x: 0, y: 0, z: 0 }, true);
+    c.physics.speed = c.physics.forwardSpeed = 0; if (c.entity.vehicle) c.entity.vehicle.speed = c.entity.vehicle.forwardSpeed = 0;
+    w.spatial.set(c.entity.id, x, z);
   }
   /** r32-l9fun: the APC is on a boost strip's 4 s engine boost. */
   boosting(id: number): boolean { return id === this.mission.l9?.state.carId && this.w.tick < (this.state.boostUntil ?? -1) && !this.holding(id); }
@@ -295,7 +364,7 @@ export class LevelNineDriving {
       if (s.roster.some(id => alive(w.entities.get(id)) && w.entities.get(id)!.civilian?.survivor?.key === 'mia')) this.line('L9.clingers');
     }
     if (!s.route && p.x > -340) { s.route = p.z < -150 ? 'road' : p.z > 120 ? 'countryside' : 'dry-shortcut'; this.signal(`route.${s.route}`); }
-    this.course(); this.bus();
+    this.course(); this.bus(); this.breakFree();
     this.setPieces.update(s.setPieces ??= emptySetPieces(), s.restarted ? null : s.stallAt, this.holding(car.entity.id) && s.stallAt === null);
     if (tick % 10 === 0) for (const id of [...s.waves, ...s.busPassengers.slice(0, s.busReleased)]) pursueCrossingVehicle(w, id);
     if (p.x >= cfg.gate.announceX && s.gateAt === null) { s.gateAt = tick; this.line('L9.gate'); this.signal('gate-countdown'); }
@@ -545,8 +614,7 @@ export class LevelNineDriving {
       const before = { x: e.transform.x, z: e.transform.z };
       const approaching = s.truckEntering[id] === undefined;
       const moved = approaching && w.npcs!.move(e, target, 3, e.civilian!, .6, 8000);
-      // A route can end at the nearest clear cell without reaching the truck.
-      // Count that stationary approach too, so it can try the next open side.
+      // A reachable nearby cell can still leave an evacuee stationary short of the truck.
       if (approaching && (!moved || distance(e.transform, target) >= 1.2 && distance(e.transform, before) < .001)) {
         // No route to this spot for 1.5 s: take the next open one.
         const failed = (this.spotFail.get(id) ?? 0) + 1; this.spotFail.set(id, failed);
