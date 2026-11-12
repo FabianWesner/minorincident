@@ -51,9 +51,9 @@ test('molotov: its persistent fire drops an ordinary five-infected cluster withi
   fire(w, 'RIGHT', { x: 1, z: 0 }, { x: 2, z: 0 });
   for (let i = 0; i < 60 && !w.combat!.effects.zones.some(z => z.kind === 'fire'); i++) step(w, 1);
   const zone = w.combat!.effects.zones.find(z => z.kind === 'fire');
-  expect(zone).toBeDefined(); step(w, 120);
+  expect(zone).toBeDefined(); if (!zone) throw new Error('Molotov fire patch did not land'); step(w, 120);
   expect(ids.map(id => health(w, id))).toEqual([0, 0, 0, 0, 0]);
-  expect(zone?.expires! - zone?.created!).toBeGreaterThanOrEqual(8 * 60);
+  expect(zone.expires - zone.created).toBeGreaterThanOrEqual(8 * 60);
 });
 
 /** Broad-phase cover must agree with the exact wall tests, including rotated padding and mutable doors. */
