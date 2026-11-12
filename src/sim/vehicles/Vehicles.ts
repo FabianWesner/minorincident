@@ -300,16 +300,20 @@ export class Vehicles {
   private impacts(car: Car): void {
     const p = car.entity.transform, speed = car.physics.speed, c = Math.cos(p.yaw), s = Math.sin(p.yaw);
     const velocity = car.physics.body.linvel();
+    // Held APC throttle can push retained furniture from rest; requiring impact speed
+    // left a settled barrier immovable once the first contact had stopped the hull.
+    const pushing = car.entity.vehicle!.floor && this.active === car.entity.id && car.physics.intent.throttle > .5 && !car.physics.intent.brake;
+    const ramVelocity = pushing && speed < 5 ? { x: c * 5, y: velocity.y, z: -s * 5 } : velocity;
     const extent = car.physics.def.length / 2 + speed / 60;
     // E11-authored light props share their own damage, nav and debris lifecycle.
     const walls = this.world.interactables?.walls;
     for (let index = (walls?.length ?? 0) - 1; index >= 0; index--) {
       const wall = walls![index];
       const entity = wall.entityId === undefined ? undefined : this.world.entities.get(wall.entityId);
-      if (!entity?.destructible || entity.health.current <= 0 || !['fence', 'crate', 'cone', 'barricade', 'trash-can', 'mailbox'].includes(entity.destructible.kind) || speed < 5) continue;
+      if (!entity?.destructible || entity.health.current <= 0 || !['fence', 'crate', 'cone', 'barricade', 'trash-can', 'mailbox'].includes(entity.destructible.kind) || speed < 5 && !pushing) continue;
       const dx = entity.transform.x - p.x, dz = entity.transform.z - p.z;
       if (Math.abs(dx * c - dz * s) > extent + Math.abs(c) * wall.halfX + Math.abs(s) * wall.halfZ || Math.abs(dx * s + dz * c) > car.physics.def.width / 2 + Math.abs(s) * wall.halfX + Math.abs(c) * wall.halfZ) continue;
-      this.obstacles.ramDestructible(entity, wall.halfX, wall.halfZ, velocity, this.world.tick);
+      this.obstacles.ramDestructible(entity, wall.halfX, wall.halfZ, ramVelocity, this.world.tick);
       this.crash(car, speed);
       car.physics.body.setLinvel({ x: velocity.x * .9, y: velocity.y, z: velocity.z * .9 }, true);
     }
@@ -320,8 +324,8 @@ export class Vehicles {
       const halfX = Math.abs(c) * obstacle.halfX + Math.abs(s) * obstacle.halfZ;
       const halfZ = Math.abs(s) * obstacle.halfX + Math.abs(c) * obstacle.halfZ;
       if (Math.abs(localX) > extent + halfX || Math.abs(localZ) > car.physics.def.width / 2 + halfZ) continue;
-      if ((obstacle.light || obstacle.entity.archetype === 'obstacle.jersey-barrier') && speed >= 5) {
-        this.obstacles.ram(obstacle, velocity, this.world.tick);
+      if ((obstacle.light || obstacle.entity.archetype === 'obstacle.jersey-barrier') && (speed >= 5 || pushing)) {
+        this.obstacles.ram(obstacle, ramVelocity, this.world.tick);
         this.crash(car, speed);
         car.physics.body.setLinvel({ x: velocity.x * .9, y: velocity.y, z: velocity.z * .9 }, true);
       } else if (!obstacle.light && speed >= 2 && this.world.tick >= (car.hits.get(obstacle.entity.id) ?? 0)) {

@@ -422,6 +422,17 @@ async function vehicleShovesProps(): Promise<PropSnapshot> {
     expect(world.entities.get(barrierId)?.health.current, 'rammed barriers keep their identity and remain in the world').toBeGreaterThan(0);
     expect(barrier.body?.isDynamic(), 'rammed barriers become physics bodies').toBe(true);
     expect(barrier.entity.transform.x, 'the barrier tumbles away from the bumper').toBeGreaterThan(61);
+    const restingId = world.vehicles!.obstacles.spawn('jersey-barrier', { x: 100, z: 20 });
+    const pushingId = world.vehicles!.spawn('vehicle.military-apc', { x: 96, z: 20 });
+    const pushingCar = world.vehicles!.cars.get(pushingId)!;
+    pushingCar.entity.vehicle!.floor = true; world.vehicles!.active = pushingId;
+    const pushingInput = emptyInput(); pushingInput.drive = { throttle: 1, steer: 0 }; pushingInput.brake = false;
+    world.vehicles!.prePhysics(pushingInput, 'keyboard');
+    const resting = world.vehicles!.obstacles.items.find(o => o.entity.id === restingId)!;
+    expect(resting.body?.isDynamic(), 'held APC throttle pushes a barrier from rest').toBe(true);
+    expect(resting.body!.linvel().x).toBeGreaterThan(0);
+    expect(resting.entity.health.current, 'slow pushing preserves the barrier').toBe(1);
+    world.vehicles!.active = null;
     const coneId = world.hazards!.spawn('cone', { x: 65, z: 20 });
     const cone = world.entities.get(coneId)!;
     world.vehicles!.obstacles.ramDestructible(cone, .5, .15, { x: 10, y: 0, z: 0 }, world.tick);
