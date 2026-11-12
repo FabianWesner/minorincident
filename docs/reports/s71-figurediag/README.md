@@ -7,7 +7,7 @@
 | Working representative | Raw | Calibration/fitted high | Bake/flat | Neutral rig | HIGH game |
 |---|---:|---:|---:|---:|---|
 | BBQ-dad (higher-scoring ordinary alternative) | 6 | repaired bake remains 6 | colour match 5; flat 5 | regenerated candidate 5 | Candidate score **withdrawn**: GLB-only overrides did not pair official bakes; shipped S53 5/3 is separate |
-| Cashier (low scorer) | 6 | 5 after 42.9% head enlargement | repaired bake 4; flat 4 | regeneration rejected by topology guard | Current shipped 3/2; not a proven matched regenerated chain |
+| Cashier (low scorer) | 6 | 5 after 42.9% head enlargement | repaired bake 4; flat 4 | cleaned regenerated neutral 4 | Current shipped 3/2; not a proven matched regenerated chain |
 | Selected S52 butcher | 6 | fitted high 6 | pre-bind flat 5 | selected checkpoint 5 | **Matched delivery 5 day / 4 night**, both zooms |
 
 Studio scores use controlled overlapping camera/light comparisons. Game scores use native HIGH Scene Lab; studio/game context differences remain explicit. The biggest **confirmed avoidable integration failure** is mismatched geometry and official pose/UV bakes; pairing them restores the selected butcher's coherent appearance. This is not proof that the current shipped ordinary figures suffer that mismatch.
@@ -425,3 +425,9 @@ Retried binding with the recorded explicit scale 1.5288209712814274 and without 
 Replayed the retained `readable_components.py` algorithm with only its loop scoped to LOD0 in a scratch copy. It retained all original volume/area guards and removed exactly four faces, area fraction **.000438655 (0.0438655%)**, leaving 5,916 triangles. Retried the compatible rigid-template bind with recorded scale 1.5288209712814274, fixed +90° yaw and explicit eye reprojection: it now passes with **one component, zero open edges, 16 joints, two eyes**. Cleanup and bind reports are `cashier-cleanup.json` and `cashier-clean-binding.json`. This causally resolves the experimental topology rejection without weakening a guard.
 
 Cleanup was applied to a preserved flat scratch copy to isolate the four-face difference; the historical chain cleaned before colour processing, so this candidate is not claimed byte-identical to historical pre-binding output. Neutral appearance and motion remain unverified. Candidate: `/private/tmp/s71-cashier-stages/bound-clean.glb`. No production asset or converter source changed.
+
+## Controlled cleaned cashier neutral-rig score
+
+![Opened aligned cashier pre-binding versus neutral skin](cashier-neutral-comparison.jpg)
+
+Applied the inverse recorded body transform to the cleaned bound candidate, then rendered clean pre-binding flat and neutral skin with the same camera/light setup, skin evaluation and hidden-stump exclusion. Opened strict static rating **4 → 4 (0)**. Silhouette, apron and facial limitations remain close; the large hair mass still dominates, but neutral binding adds no visible whole-point quality loss. This completes the regenerated cashier studio sequence **raw 6 → historical head calibration 5 → repaired bake/flat 4 → cleaned neutral rig 4**. It does not certify motion, compression or historical delivery identity. The current shipped HIGH 3/2 remains a separate game-delivery observation until the candidate is integrated with its own matching official pose/UV bake. Scratch aligned model: `/private/tmp/s71-cashier-stages/bound-aligned.glb`.
