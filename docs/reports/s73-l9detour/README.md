@@ -43,7 +43,7 @@ No infected or prop/corpse removal, vehicle invulnerability, infected-stat chang
 - `npm run typecheck`: pass.
 - `npm run lint`: pass.
 - `node --import tsx/esm tools/qa/threat-audit.ts --levels L9`: L9 skilled complete, **0 L9 flags**. The diagnostic selection exits nonzero only for `PARTIAL_LEVEL_SELECTION`; it is not the complete all-level gate.
-- Required remote unit command `sh tools/remote/run.sh "$PWD" -- npm test`: **not run**. It exited 69 because the pool had no healthy Hetzner runner and this wrapper is ineligible for the Mac fallback. `tools/remote/README.md` says provisioning is an explicit orchestrator operation; no runner was provisioned in this job.
+- Required remote unit command `sh tools/remote/run.sh "$PWD" -- npm test`: **FAIL**, runner `94.130.181.173`, 196.8 s within the unchanged 240 s budget. 27 files: 26 passed / 1 failed; 105 tests passed / 1 failed / 1 skipped. The existing `checkL9ApcPocket` gas variant fails `the APC left the pocket within 15 s` (`tests/helpers/r39Markers.ts:67`). The physical reverse replacement has not cleared that sealed-pocket fixture. This is an open recovery regression; the test and its budget remain unchanged. The earlier network-blocked attempt is superseded by this completed remote run.
 
 ## Browser QA needed
 
