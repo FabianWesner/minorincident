@@ -43,8 +43,12 @@ export class LevelSevenDeparture {
   private readonly from = new Map<number, { x: number; z: number }>();
   private readonly approaches = new Map<number, { x: number; z: number; at: number; around?: { x: number; z: number }[] }>();
   private readonly progress = new Map<number, { distance: number; at: number; repathed?: boolean }>();
+  private readonly clearingGuards = new Set<number>();
+  private readonly evacuatedGuards = new Set<number>();
   private readonly boarding = l7CorridorAnchors['l7-bus-boarding'].position;
   private readonly wall: CoverWall = { x: l7Bus.x, y: 1.5, z: l7Bus.z, halfX: 4.68, halfY: 1.5, halfZ: 1.48 };
+  private readonly busHalfLength = 4.6;
+  private readonly busHalfWidth = 1.525;
   constructor(private readonly world: SimWorld) {}
   install(): void {
     const w = this.world;
@@ -56,6 +60,49 @@ export class LevelSevenDeparture {
   }
   private get bus(): EntitySnapshot { return this.world.entities.get(this.state.busId)!; }
   private get door() { return { x: cfg.door.x, z: cfg.door.z }; }
+  private clearance(e: EntitySnapshot, x: number): number {
+    const dx = Math.max(0, Math.abs(e.transform.x - x) - this.busHalfLength);
+    const dz = Math.max(0, Math.abs(e.transform.z - cfg.lane.z) - this.busHalfWidth);
+    return Math.hypot(dx, dz) - actorRadius(e);
+  }
+  /** Guards are not passengers; make a continuous lateral step clear of the parked or moving hull. */
+  private clearGuards(currentX: number, nextX = currentX, proactive = false): boolean {
+    const w = this.world, s = this.state;
+    const guards = [...w.entities.iterate()].filter(e => e.civilian?.ally?.role === 'soldier' && !e.hidden && e.passengerOf !== s.busId && e.health.current > 0);
+    let held = false;
+    for (const e of guards) {
+      if (this.evacuatedGuards.has(e.id)) continue;
+      const clearance = this.clearance(e, currentX), nextClearance = this.clearance(e, nextX);
+      if (clearance < .5 || nextClearance < .5) this.clearingGuards.add(e.id);
+      if (proactive && e.transform.x >= cfg.lane.fromX && e.transform.x <= cfg.lane.toX && Math.abs(e.transform.z - cfg.lane.z) < this.busHalfWidth + actorRadius(e) + 1.25) this.clearingGuards.add(e.id);
+      if (!this.clearingGuards.has(e.id)) continue;
+      const ally = e.civilian!.ally!;
+      if (ally.follow) delete ally.follow;
+      ally.engaged = false; ally.targetId = 0; ally.run = null; ally.hold = true;
+      const side = 1;
+      const targetZ = cfg.lane.z + 5.2 + (e.id % 4) * .7;
+      // Route around the nearest bus end before reaching the road shoulder;
+      // a direct lateral step is blocked while the guard is beside a bumper.
+      const dx = e.transform.x - currentX, end = Math.sign(dx) || (e.id % 2 ? -1 : 1);
+      const clearOfBumper = Math.abs(dx) >= this.busHalfLength + actorRadius(e) + .65;
+      const target = { x: proactive && clearOfBumper ? e.transform.x : currentX + end * (this.busHalfLength + actorRadius(e) + 1.25), z: targetZ };
+      ally.post = target;
+      e.civilian!.state = 'calm'; e.civilian!.vehicleYield = { target, until: Number.MAX_SAFE_INTEGER };
+      const step = 5.2 / 60;
+      const routed = w.npcs!.move(e, target, 5.2, e.civilian!, .15, 4800);
+      if (!proactive && Math.abs(dx) < this.busHalfLength + actorRadius(e) + .65) {
+        const moved = w.solids.sweep(e, { x: end, z: 0 }, step, actorRadius(e), false, true);
+        e.transform.x += end * moved;
+      } else if (!routed) {
+        const moved = w.solids.sweep(e, { x: 0, z: side }, Math.min(step, Math.abs(targetZ - e.transform.z)), actorRadius(e), false, true);
+        e.transform.z += side * moved;
+      }
+      w.spatial.set(e.id, e.transform.x, e.transform.z);
+      if (e.transform.z >= targetZ - .25) { this.clearingGuards.delete(e.id); this.evacuatedGuards.add(e.id); }
+      else held = true;
+    }
+    return held;
+  }
   /** The shot is playing (HUD hidden, camera taken over). */
   get cinematic(): boolean { return this.state.phase === 'departing' || this.state.phase === 'done'; }
   get fading(): boolean { return this.state.phase === 'done' || this.state.phase === 'departing' && this.world.tick - this.state.startedAt >= cfg.fadeAtSeconds * 60; }
@@ -128,6 +175,7 @@ export class LevelSevenDeparture {
     const player = w.entities.get(1)!;
     if (player.health.current <= 0) return;
     const d = Math.hypot(player.transform.x - this.boarding[0], player.transform.z - this.boarding[2]);
+    this.clearGuards(this.bus.transform.x, this.bus.transform.x, s.phase === 'waiting' && d <= cfg.boardRadius);
     // Reach the bus to start boarding, then cover a distant straggler without
     // recalling everyone already approaching the door back into the horde.
     if (s.phase === 'waiting' && d <= cfg.boardRadius) {
@@ -249,7 +297,12 @@ export class LevelSevenDeparture {
   }
   private drive(): void {
     const w = this.world, s = this.state, t = Math.min(1, (w.tick - s.startedAt) / (cfg.seconds * 60));
-    const x = cfg.lane.fromX + (cfg.lane.toX - cfg.lane.fromX) * ease(t), tr = this.bus.transform;
+    const desiredX = cfg.lane.fromX + (cfg.lane.toX - cfg.lane.fromX) * ease(t), tr = this.bus.transform;
+    // Support soldiers are not part of the boarding roster. They can still be
+    // following the courier at the door when the shot begins, so clear them
+    // from the bus's next hull position and hold the bus until they have room.
+    if (this.clearGuards(tr.x, desiredX)) { s.startedAt++; return; }
+    const x = desiredX;
     const speed = Math.abs(x - tr.x) * 60;
     tr.x = x; tr.z = cfg.lane.z; tr.yaw = 0; tr.y = w.districts!.groundHeight(x, cfg.lane.z) + .7;
     if ((w.tick - s.startedAt) % 6 === 0) emitEngine(w, s.busId, speed, true);
@@ -281,7 +334,7 @@ export class LevelSevenDeparture {
       survivors: escaped.map(e => e.civilian?.survivor?.key ?? `survivor-${e.id}`), escapedSurvivors: escaped,
     };
   }
-  snapshot() { return { state: structuredClone(this.state), from: [...this.from], progress: [...this.progress], handedOver: this.handedOver, tick: this.world.tick }; }
+  snapshot() { return { state: structuredClone(this.state), from: [...this.from], progress: [...this.progress], clearingGuards: [...this.clearingGuards], evacuatedGuards: [...this.evacuatedGuards], handedOver: this.handedOver, tick: this.world.tick }; }
   restore(saved: unknown): void {
     const record = saved as ReturnType<LevelSevenDeparture['snapshot']>, w = this.world, delta = w.tick - record.tick;
     this.state = structuredClone(record.state); this.handedOver = record.handedOver;
@@ -293,6 +346,8 @@ export class LevelSevenDeparture {
     // Detours belong to the discarded contact timeline; rebuild them from the restored actors.
     this.approaches.clear();
     this.progress.clear(); for (const [id, progress] of record.progress ?? []) this.progress.set(id, { ...progress, at: progress.at + delta });
+    this.clearingGuards.clear(); for (const id of record.clearingGuards ?? []) this.clearingGuards.add(id);
+    this.evacuatedGuards.clear(); for (const id of record.evacuatedGuards ?? []) this.evacuatedGuards.add(id);
     if (this.blocker !== undefined) { w.physics.removeBlocker(this.blocker); this.blocker = undefined; }
     const blocked = !this.cinematic;
     if (blocked) this.blocker = w.physics.addBlocker(this.wall);

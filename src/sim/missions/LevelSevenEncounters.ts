@@ -450,7 +450,7 @@ export class LevelSevenEncounters {
       this.trail.push({ x: player.x, z: player.z });
       if (this.trail.length > 128) this.trail.shift();
     }
-    if (this.state.started || this.world.missions!.state.steps.departure?.status === 'active') {
+    if (this.state.started || this.world.missions?.state.steps.departure?.status === 'active') {
       let remaining = 2.3 + Math.floor(slot / 2), newer: Point = player;
       for (let i = this.trail.length - 1; i >= 0; i--) {
         const older = this.trail[i], length = distance(older, newer);
