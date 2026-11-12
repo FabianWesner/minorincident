@@ -278,3 +278,9 @@ Repeated the plain magenta material/built-in-instancing control with normal dept
 ## Cutaway control rejected
 
 Protected in-arena control cloned the production jersey PaletteMaterial and disabled its see-through wrapper while preserving the custom position node, normal shading and depth. Opened `cover-cutaway-control/s002-t812.jpg`: covers remain visually absent. No cutaway change was retained. The remaining production graph includes night surface lighting/palette output, so illumination/readability must also be inspected rather than assuming discarded geometry. Browser/server are terminal.
+
+## Pond lighting readability improvement
+
+Added three street lamps around the pond rim to fill the previously dark west/north/east sectors. Opened `pond-lighting/s002-t831.jpg`, protected no-fire HIGH/zoom-1 in-arena sample: warm floor pools now reveal the dark concrete cover silhouettes and landing-pad ring. This establishes illumination/readability as a contributor to the earlier apparent absence; no GPU/culling workaround was needed. The faces remain dark, so this is not a stunning-score acceptance claim.
+
+After inspecting the frame, moved the west lamp from the exact landing-pad coordinate (-11,-32) to (-12.5,-32), outside the 11 m landing ring. Focused transformed-layout overlap checks across tiers 0–6 find no new-lamp overlaps; typecheck/lint/diff checks pass. The opened frame precedes that 1.5 m lamp adjustment, so a final-position capture remains required. Browser/server are terminal.
