@@ -91,3 +91,7 @@ Folded a cone persistence case into the existing vehicle/prop test: ram retains 
 ## Real-input contact receipts
 
 Added opt-in `PLAYTEST_RAM_AUDIT=1` read-only contact logging to fixture play (typecheck passes). A 60-second pre-rail fixture run records two forward-throttle, brake-off contacts: sprinter at tick 1066, 7.783 m/s, zero armour cost; runner at tick 1079, 8.843 m/s, zero armour cost. Opened capture `test-results/playtest/s61-contact-audit/captures/campaign-L9-t1043.jpg` near those contacts. The run subsequently reaches the hatch and fails its one-minute completion cap; it is contact evidence, not a passing full route or a per-tick minimum-speed measurement.
+
+## Passing remote gate
+
+Followed `docs/tools/remote-runner.md` timing guidance: `sh tools/remote/run.sh "$PWD" -- bash tools/remote/timing-isolated.sh --whole-run npm test -- --maxWorkers=2`. Both runner slots were held for the complete command. Result on 94.130.181.173: exit 0, 27 files passed, 106 tests passed / 1 skipped (107 total), Vitest 228.43 s, budget wrapper 231.1 s below 240 s. World-systems, navigation and player tests all passed. Earlier remote attempts used four workers and one slot; no test or budget limits were relaxed for this pass.
