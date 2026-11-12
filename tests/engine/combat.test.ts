@@ -29,7 +29,7 @@ const walls = (w: SimWorld) => w.combat!.query.walls as CoverWall[];
 const attacks = (w: SimWorld) => w.events.events().filter(e => e.type === 'combat.attack');
 const forehand = () => comboDefinition(rosterAction('weapon.bat'), 0);
 
-test('L10 arsenal roles: precision, close-mid and area weapons meet their core damage targets', () => {
+function checkArsenalRoles(): void {
   const handgun = rosterAction('weapon.handgun'), assault = rosterAction('weapon.assault-rifle');
   expect(rosterAction('weapon.machete').damage).toBeGreaterThanOrEqual(40);
   expect(rosterAction('weapon.machete').cooldown).toBeLessThan(rosterAction('weapon.fire-axe').cooldown);
@@ -43,9 +43,9 @@ test('L10 arsenal roles: precision, close-mid and area weapons meet their core d
   expect(rosterAction('weapon.pipe-bomb').damage).toBeGreaterThan(0);
   expect(rosterAction('weapon.flashbang').status?.kind).toBe('stunned');
   expect(rosterAction('weapon.flamethrower').status?.kind).toBe('burning');
-});
+}
 
-test('molotov: its persistent fire drops an ordinary five-infected cluster within two seconds', async () => {
+async function checkMolotovCluster(): Promise<void> {
   const w = await arena(); equip(w, ['weapon.fire-axe'], ['weapon.molotov']);
   const ids = [-1.2, -0.6, 0, 0.6, 1.2].map(z => dummy(w, 2, z, 40));
   fire(w, 'RIGHT', { x: 1, z: 0 }, { x: 2, z: 0 });
@@ -54,16 +54,16 @@ test('molotov: its persistent fire drops an ordinary five-infected cluster withi
   expect(zone).toBeDefined(); if (!zone) throw new Error('Molotov fire patch did not land'); step(w, 120);
   expect(ids.map(id => health(w, id))).toEqual([0, 0, 0, 0, 0]);
   expect(zone.expires - zone.created).toBeGreaterThanOrEqual(8 * 60);
-});
+}
 
-test('flamethrower: its close cone burns a five-infected cluster within three seconds', async () => {
+async function checkFlameCluster(): Promise<void> {
   const w = await arena(); equip(w, ['weapon.flamethrower']);
   const ids = [-0.3, -0.15, 0, 0.15, 0.3].map(z => dummy(w, 2, z, 40));
   fire(w); step(w, 180);
   expect(ids.map(id => health(w, id))).toEqual([0, 0, 0, 0, 0]);
-});
+}
 
-test('pipe bomb and rocket: a centered blast clears five ordinary infected in a three-second window', async () => {
+async function checkBlastClusters(): Promise<void> {
   for (const id of ['weapon.pipe-bomb', 'weapon.rocket-launcher']) {
     const w = await arena(); equip(w, ['weapon.fire-axe'], [id]);
     const ids = [-1.2, -0.6, 0, 0.6, 1.2].map(z => dummy(w, 2, z, 40));
@@ -72,7 +72,7 @@ test('pipe bomb and rocket: a centered blast clears five ordinary infected in a 
     step(w, 180);
     expect(ids.map(target => health(w, target)), id).toEqual([0, 0, 0, 0, 0]);
   }
-});
+}
 
 /** Broad-phase cover must agree with the exact wall tests, including rotated padding and mutable doors. */
 async function checkDynamicCover(): Promise<void> {
@@ -145,6 +145,7 @@ async function checkRaisedMountedGun(): Promise<void> {
 }
 
 test('loadout: both sides keep independent aims, racks wrap both ways with a switch lock, a cooling gun does not steal selection', async () => {
+  checkArsenalRoles(); await checkMolotovCluster(); await checkFlameCluster(); await checkBlastClusters();
   const w = await arena(); equip(w, ['weapon.machine-gun']);
   fire(w); expect(w.getState().player!.weapons!.selectedSide).toBe('LEFT');
   w.setInput({ aim: { x: 0, z: 1 } }); step(w, 1);

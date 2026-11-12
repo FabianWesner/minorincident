@@ -75,7 +75,9 @@ No browser runs were performed. Human visual QA should confirm the molotov visib
 
 - `npm run typecheck`: pass
 - `npm run lint`: pass
-- `npx vitest run tests/engine/combat.test.ts --maxWorkers=4 --configLoader runner`: pass (11 tests)
-- remote unit suite: three exact attempts found no healthy Hetzner runner; local Mac fallback rejected `npm test` as ineligible
+- `npx vitest run tests/engine/combat.test.ts --maxWorkers=4 --configLoader runner`: pass (7 cases, retaining all weapon assertions)
+- remote unit suite: pass on 46.225.66.90; 106 passed, 1 skipped, 27 files, 200.2 s / 240 s. The four new checks were consolidated into the existing combat case to retain the 150-case repository budget.
 - ten-level threat audit: pass, no new flags
 - attack-start condition: rate exceeded baseline; 30 s gap condition remains open (seven gaps, longest 250.2 s)
+
+Pacing investigation: `SpawnDirector.safe()` requires arrivals to be at least 18 m from the courier and offscreen or occluded. The rejected 5 m pressure-pulse experiment could never admit an actor; it was reverted. Future cadence work must use valid offscreen approach points.
