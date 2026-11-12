@@ -77,3 +77,7 @@ The driven=true fixture installed an idle pilot that overwrote scripted drive in
 ## Explicit airborne clinging proof
 
 The settled cling window (frames 181–300) now requires all two-foot heel/toe samples on every frame, minimum ground clearance >=1.2 cm, and >=2 m travel for every foot. Four actual attachment events and >=2 m vehicle travel remain mandatory. Both tiers pass this explicit airborne proof; ground p95 stays undefined and is not represented as zero. All six current fixture/tier rows pass. See `clinging-airborne.json`. Targeted lint passes. This does not yet validate climb-transition contacts, hull-relative pose quality, duplicate slots, push states, or campaign coverage.
+
+## Hull shove attribution
+
+A diagnostic wrapper records actual resolved displacement for the vehicle overlap resolver’s authored 0.12 m knockback calls. HIGH/LOW ram each execute seven nonblocked shoves (maximum 0.12 m); surrounded and clinging execute none. All six current rows still pass. Ram coverage now additionally requires a resolved shove, not just combat hits. Typecheck and targeted lint passed. See `shove-evidence.json`. Separate shove-only contact windows and prop-push/campaign contexts remain unverified.

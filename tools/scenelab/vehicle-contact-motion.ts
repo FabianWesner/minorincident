@@ -18,6 +18,16 @@ try {
         await session.page.evaluate(() => {
           const w = (window.__SCENE__ as unknown as { game: Game }).game.world;
           for (const e of w.infected!.active) { delete e.infected!.l1; e.infected!.state = 'chase'; }
+          const probe = window as unknown as { __s83Shoves: { tick: number; id: number; distance: number }[] };
+          probe.__s83Shoves = [];
+          const knockback = w.knockback.bind(w);
+          w.knockback = (entity, direction, impulse, ticks) => {
+            const x = entity.transform.x, z = entity.transform.z;
+            knockback(entity, direction, impulse, ticks);
+            // Vehicles' overlap resolver issues this exact authored nudge.
+            // Record its actual resolved displacement, including blocked nudges.
+            if (entity.infected && impulse === .12) probe.__s83Shoves.push({ tick: w.tick, id: entity.id, distance: Math.hypot(entity.transform.x - x, entity.transform.z - z) });
+          };
         });
         const cells: { frame: number; jpeg: Buffer }[] = [];
         const attachmentTrack = [];
@@ -37,6 +47,7 @@ try {
         }
         if (cells.length) await session.makeSheet(cells, `${out}/apc-consecutive.jpg`, 480);
         const metrics = await session.metrics();
+        const shoves = await session.page.evaluate(() => (window as unknown as { __s83Shoves: { tick: number; id: number; distance: number }[] }).__s83Shoves);
         const events = await session.page.evaluate(() => {
           const w = (window.__SCENE__ as unknown as { game: Game }).game.world;
           return w.events.events().filter(e => e.type.startsWith('vehicle.') || e.type === 'combat.hit');
@@ -49,7 +60,7 @@ try {
         const checks = actors.map(([id, actor]) => ({ actor: id, contacts: actor.motion.contacts,
           p95Cm: actor.motion.slideP95Cm, maxCm: actor.motion.slideMaxCm,
           pass: actor.motion.contacts >= 5 && actor.motion.slideP95Cm !== null && actor.motion.slideP95Cm <= 5 && actor.motion.slideMaxCm <= 15 }));
-        const contactProven = name === 'clinging' ? events.some(e => e.type === 'vehicle.grabbed') : name === 'ram' ? events.filter(e => e.type === 'combat.hit').length >= 6
+        const contactProven = name === 'clinging' ? events.some(e => e.type === 'vehicle.grabbed') : name === 'ram' ? events.filter(e => e.type === 'combat.hit').length >= 6 && shoves.some(shove => shove.distance > .001)
           : events.filter(e => e.type === 'vehicle.attack-windup').length >= 4 && events.some(e => e.type === 'vehicle.durability-hit');
         let vehicleTravelM = 0;
         for (let i = 1; i < attachmentTrack.length; i++) vehicleTravelM += Math.hypot(attachmentTrack[i].car.x - attachmentTrack[i - 1].car.x, attachmentTrack[i].car.z - attachmentTrack[i - 1].car.z);
@@ -57,7 +68,7 @@ try {
         const motionProven = name === 'clinging' ? airborneChecks.length === 4 && airborneChecks.every(check => check.pass) : checks.every(check => check.pass);
         const pass = contactProven && movingAttachmentProven && motionProven && session.errors.length === 0;
         if (!pass) process.exitCode = 1;
-        writeJson(`${out}/${tier}-${name}.json`, { pass, contactProven, movingAttachmentProven, vehicleTravelM, checks, airborneChecks, metrics, events, attachmentTrack });
+        writeJson(`${out}/${tier}-${name}.json`, { pass, contactProven, movingAttachmentProven, vehicleTravelM, checks, airborneChecks, metrics, events, attachmentTrack, shoves });
         console.log(JSON.stringify({ tier, name, events: events.length, actors: Object.fromEntries(Object.entries(metrics.actors).filter(([id]) => id.startsWith('infected')).map(([id, actor]) => [id, actor.motion])) }));
       }
     } finally { await session.close(); }
