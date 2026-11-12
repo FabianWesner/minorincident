@@ -185,3 +185,7 @@ Delaying the unchanged ordinary wave schedule after the alarm also failed. +12 s
 ## Partial high-tier L4 browser sample
 
 Headless playtest, browser pool/lock, one browser, port 4977, high quality, zoom 1.5, 600 s reservation, deliberate 120 s sample. Driver reported one P2 `stuck-navigating` warning at tick 1244 before reaching the hold; it subsequently progressed. Opened tick-2721 west-wall callout and tick-5423 north-breach captures: defenders and infected are visible around reception, bodies persist in the plaza, and the later frame shows ongoing fire near the tables. [Two-frame sheet](l4-browser-sample.jpg). Run ended unfinished at its sample limit, with no skips; command exit 1. This is visual evidence of a partial hold, not full completion or PO feel acceptance, and does not clear the census failures.
+
+## Criterion interpretation check
+
+`specs/epic-22-level-4-the-safe-city-falls.md` §6 replenishment explicitly keeps recoverable bodies' concurrency slots until they rise; its 2026-11-02 exclusion of downed/recoverable bodies is a low-tier cap override, with high-tier caps unchanged. Therefore the observed high-tier occupied-slot/living-count divergence is not evidence of an audit artifact. The two L4-06 failures remain genuine unmet acceptance criteria in this lane; no threshold, census rule, concurrency policy, recovery behavior or spec was changed to hide them.
