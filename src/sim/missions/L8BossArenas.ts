@@ -193,7 +193,8 @@ export class L8BossArenas {
       }
       // The entry gate closes behind the group: once every living follower is inside, or after 20 s when none is still at the gate (never on a follower).
       if (arena.phase > 0 && arena.phase < 3 && !arena.armed && stage.entry) {
-        const gate = stage.entry, pending = this.mission.l8!.followers().filter(e => !inRect(e.transform, stage.zone));
+        const gate = stage.entry, safeZone = { x0: stage.zone.x0 + 1, z0: stage.zone.z0 + 1, x1: stage.zone.x1 - 1, z1: stage.zone.z1 - 1 };
+        const pending = this.mission.l8!.followers().filter(e => !inRect(e.transform, safeZone));
         const near = (e: EntitySnapshot, pad: number) => Math.abs(e.transform.x - gate.x) < gate.halfX + pad && Math.abs(e.transform.z - gate.z) < gate.halfZ + pad;
         // A follower still near the gate (a civilian recovering from a flee) holds the gate open for up to 45 s; only one standing in the doorway holds it longer.
         const since = w.tick - arena.startedAt;
@@ -236,7 +237,7 @@ export class L8BossArenas {
     const w = this.w, zoo = this.mission.l8!, civilians = w.npcs!.civilians;
     for (let i = 0; i < 6; i++) {
       // r42-arenas (r41-vqa P3: 'flamingo flights stack up over the group'): each flight lands on its own ring and bearing, not on the same six points.
-      const flight = arena.flights ?? 2, angle = i * Math.PI / 3 + .4 + flight * .52, ring = 8 + (flight - 1) * 2.5, at = requireClearPoint(w, { x: def.centre.x + Math.cos(angle) * ring, z: def.centre.z + Math.sin(angle) * ring }, .5, 6, `l8.${def.id}.flight`);
+      const flight = arena.flights ?? 2, angle = i * Math.PI / 3 + .4 + flight * .52, ring = 9 + (flight - 1) * .5, at = requireClearPoint(w, { x: def.centre.x + Math.cos(angle) * ring, z: def.centre.z + Math.sin(angle) * ring }, .5, 1.5, `l8.${def.id}.flight`);
       const id = civilians.spawn('cashier', at, { zooAnimal: 'flamingo', waypoints: [at, at] });
       arena.ids.push(id); zoo.state.animals.push(id);
       const animal = w.entities.get(id)!;

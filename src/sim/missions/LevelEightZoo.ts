@@ -35,7 +35,7 @@ export interface L8ZooState {
   protectAway?: number;
 }
 /** r31-nadia: the sanctuary walk. Leg 2 is the lion enclosure stop (Nadia faces the cat and speaks); the last leg is the plaza centre. */
-const guideRoute: Point[] = [{ x: 24, z: 64 }, { x: 24, z: 0 }, { x: 60, z: 0 }, { x: 60, z: 8 }, { x: 60, z: -16 }, { x: 60, z: 0 }, { x: -60, z: 0 }, { x: -60, z: -16 }, { x: -60, z: 0 }, { x: 0, z: 0 }];
+const guideRoute: Point[] = [{ x: 24, z: 64 }, { x: 24, z: 0 }, { x: 60, z: 0 }, { x: 60, z: 8 }, { x: 60, z: -16 }, { x: 60, z: 0 }, { x: -60, z: 0 }, { x: -60, z: -16 }, { x: -60, z: 0 }, { x: 0, z: 0 }, { x: 0, z: -8 }, { x: 0, z: 0 }];
 /** The lion stop faces the compact pen from its public south gate. */
 const lionInFrame = 10;
 const guideLionLeg = 7, guideIntroTicks = 4 * 60, guideRestTicks = 15 * 60, guideMaxCalmTicks = 180 * 60;
@@ -120,11 +120,12 @@ export class LevelEightZoo {
       const radius = speciesId === 'elephant' ? 1.3 : .9;
       // Keep the calm animals at their public-facing enclosure fences so the keeper's boulevard route passes them.
       const compact = speciesId === 'lion' || speciesId === 'gorilla' || speciesId === 'zebra';
-      const gateSideZ = compact ? (anchor.z < 0 ? 8 : -8) : anchor.z < 0 ? 18 : -18;
+      const gateSideZ = speciesId === 'flamingo' ? 12.5 : compact ? (anchor.z < 0 ? 8 : -8) : anchor.z < 0 ? 18 : -18;
       const gateX = speciesId === 'flamingo' ? 0 : Math.sign(anchor.x) * (compact ? 60 : 45);
-      const at = this.point({ x: gateX + offset * 2, z: anchor.z + gateSideZ - (speciesId === 'flamingo' && offset === 0 ? 3 : 0) }, radius);
+      const at = this.point({ x: gateX + offset * 2, z: anchor.z + gateSideZ }, radius);
       const phase = offset + species.indexOf(speciesId);
-      const waypoints = Array.from({ length: 4 }, (_, n) => ({ x: at.x + Math.cos((phase + n) * Math.PI / 2) * 1.4, z: at.z + Math.sin((phase + n) * Math.PI / 2) * 1.4 }));
+      const routineRadius = speciesId === 'flamingo' ? .4 : 1.4;
+      const waypoints = Array.from({ length: 4 }, (_, n) => ({ x: at.x + Math.cos((phase + n) * Math.PI / 2) * routineRadius, z: at.z + Math.sin((phase + n) * Math.PI / 2) * routineRadius }));
       s.animals.push(civilians.spawn('cashier', at, { zooAnimal: speciesId, waypoints }));
     }
     this.bosses.prepare();
