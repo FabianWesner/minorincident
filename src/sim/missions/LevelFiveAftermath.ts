@@ -1,6 +1,6 @@
 import { action } from '../../data/actions/catalog';
 import { dialogue } from '../../data/dialogue';
-import { l5, l5DroppedWeapons, l5Fires, l5Loadout, l5Survivors, l5Wanderers, l5WeaponPickup } from '../../data/l5';
+import { l5, l5DroppedWeapons, l5Fires, l5Loadout, l5SearchRunner, l5Survivors, l5Wanderers, l5WeaponPickup } from '../../data/l5';
 import { l5Dressing } from '../../levels/L5/layout';
 import { Outbreak } from '../outbreak/Outbreak';
 import type { Mission } from './Mission';
@@ -163,7 +163,8 @@ export class LevelFiveAftermath {
     const { world } = this.mission, o = this.outbreak(), s = this.s, ai = world.infected!;
     const occupied: Point[] = [];
     const reachable = ai.nav.reachableFrom(ai.nav.startCell(this.anchor('l5-out'), .45));
-    let left = this.low ? l5.infected.start.low : l5.infected.start.high;
+    // Reserve one cap slot for the delayed search arrival below so the authored cohort remains at its tier cap after 38 s.
+    let left = (this.low ? l5.infected.start.low : l5.infected.start.high) - 1;
     for (const g of l5Wanderers) for (let k = 0; k < g.n && left > 0; k++) {
       if (ai.director.count >= ai.director.cap || !ai.pool.length) return;
       const alpha = !!g.alpha;
@@ -209,6 +210,20 @@ export class LevelFiveAftermath {
       const e = this.world.entities.get(id)!; if (e.pickup && 'kind' in e.pickup) e.pickup.amount = l5.medkits.heal;
       this.s.medkitIds.push(id);
     }
+  }
+
+  /** Join the opening search encounter without drawing the rescue group off its first route. */
+  private spawnSearchRunner(): void {
+    const { world } = this.mission, s = this.s, ai = world.infected;
+    if (!ai || s.searchRunnerId) return;
+    const at = this.snap({ x: l5SearchRunner.at[0], z: l5SearchRunner.at[1] }, .45);
+    if (this.inFirstRescueQuiet(at)) return;
+    const id = ai.spawn('infected.runner', at), e = this.entity(id);
+    if (!e?.infected) return;
+    const brain = e.infected.l1;
+    if (brain) { brain.homeX = e.transform.x; brain.homeZ = e.transform.z; brain.leashM = l5.infected.leashM; }
+    s.searchRunnerId = id;
+    s.infectedIds.push(id);
   }
 
   // ---------------------------------------------------------------------------------------------------------- beats
@@ -450,6 +465,7 @@ export class LevelFiveAftermath {
   update(): void {
     const { world, state } = this.mission, s = state.l5; if (!s || !world.infected) return;
     const tick = world.tick;
+    if (s.phase === 'search' && !s.searchRunnerId && tick >= s.startAt + ticks(l5SearchRunner.delayS)) this.spawnSearchRunner();
     if (s.phase === 'cellar' && state.steps.emerge.status === 'completed') this.emerge();
     if (s.phase === 'emerged' && tick >= s.emergedAt + ticks(l5.emerge.objectiveAfterS)) this.startSearch();
     // No marker ever points at a survivor (or at the search area): only the cellar brace and the Metro entrance are marked.

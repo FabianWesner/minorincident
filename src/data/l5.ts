@@ -35,6 +35,9 @@ export const l5 = {
   bots: { seeds: 20, completeMedianS: [120, 240] as P, newbieMedianS: [150, 300] as P, newbieMinSeeds: 18, newbieMaxMedianDeaths: 1 },
 } as const;
 
+/** A late west-street arrival joins the search just before its first sustained encounter. */
+export const l5SearchRunner = { at: [-37, 24] as P, delayS: 38 };
+
 /** The L4 end loadout (specs/epic-23 AC12): axe and bat on the left, the machine gun, the handgun and the kick on the right. */
 export const l5Loadout = { left: ['weapon.fire-axe', 'weapon.bat'], right: ['weapon.army-mg', 'weapon.handgun', 'weapon.kick'] } as const;
 
@@ -106,9 +109,7 @@ const l5AuthoredWanderers: readonly { at: P; lowAt?: P; n: number; alpha?: boole
 // cellar, authored starts and survivor hiding spots; post-snap spacing keeps added singles distinct from one another.
 const l5StreetBands = [-50, -37.4, -24, -12, 2, 14, 28, 43.6];
 const l5StreetColumns = [-68, -56, -40, -26, -12, 2, 14, 28, 44, 58, 66];
-const l5ProtectedSpots: readonly P[] = [
-  ...l5AuthoredWanderers.flatMap(g => Array.from({ length: g.n }, (_, k) => [g.at[0] + k * 2.5, g.at[1] + k * 1.5] as P)),
-];
+const l5ProtectedSpots: readonly P[] = l5AuthoredWanderers.flatMap(g => Array.from({ length: g.n }, (_, k) => [g.at[0] + k * 2.5, g.at[1] + k * 1.5] as P));
 const l5StreetSingles = [...Array.from({ length: 296 }, (_, i) => {
   const n = (i * 73) % 296, row = Math.floor(n / 37), col = n % 37;
   return { at: [-76 + col * 4, l5StreetBands[row]] as P, n: 1, spread: true };

@@ -186,10 +186,10 @@ export class LevelSixSubway {
       const mouth=(index:number,breachOffset=20)=>{const base=l6Doors[index];
         const rank=wave===4?this.s.spawnLog.filter(entry=>entry.wave===4&&entry.door===requested).length%2:0;
         const inward=wave===4?1.4+rank*1.4:1.4;
-        return {x:base.x+(wave===4?[-3,3][rank]:(i%2)*.8),z:base.z+(wave===1?breachOffset:index>1&&base.z<l6.tunnel.z?inward:-inward)};};
+        return {x:base.x+(wave===4?[-3,3][rank]:(i%2)*.8),z:base.z+(wave===1||wave===2?breachOffset:index>1&&base.z<l6.tunnel.z?inward:-inward)};};
       let door:number|undefined,at:Point|undefined,snapped=false;
       for(const index of candidates){
-        for(const offset of wave===1?[20,14,9]:[20]){
+        for(const offset of wave===1?[20,14,9]:wave===2?[14,9,20]:[20]){
           let candidate:Point;
           try{candidate=this.snap(mouth(index,offset),wave===4?w.entities.get(1)!.transform:undefined);snapped=true;}catch{continue;}
           if(ai.director.offscreen(candidate,.6)){door=index;at=candidate;break;}
@@ -218,15 +218,19 @@ export class LevelSixSubway {
         // r42 Alpha mix: the front member of the hatches at x 126 and x 198 is the level's Alpha (Screamer in the tunnel, Leaper
         // later); it takes the armored front's cohort and cap slot. The other hatches keep the catalog armored front.
         const alphaType=hatchFront?l6HatchAlphas[requested]:undefined;
-        id=alphaType?ai.spawn('infected.alpha',at,{alphaType}):front?ai.spawn(wave===1||hatchFront?'infected.armored':'infected.riot',at):o.spawnPedestrian(at,{model});
+        // Fast members lead the two announced breach cohorts so they stay with
+        // the retreating courier instead of being absorbed into the shelter crowd.
+        const openingRunner = wave === 1 && i === 0;
+        const breachDog = wave === 2 && i === 0;
+        id=alphaType?ai.spawn('infected.alpha',at,{alphaType}):openingRunner?ai.spawn('infected.runner',at):breachDog?ai.spawn('infected.dog',at):front?ai.spawn(wave===1||hatchFront?'infected.armored':'infected.riot',at):o.spawnPedestrian(at,{model});
         const e=w.entities.get(id)!;
-        if(!front)o.turnNow(e);
+        if(!front&&!openingRunner&&!breachDog)o.turnNow(e);
       }
       finally { ai.director.reserved = held; }
       const e=w.entities.get(id)!;
       // Opening arrivals converge on the protector from both accesses; later
       // arrivals take a short approach, then use ordinary human perception.
-      const until=w.tick+ticks(wave===4?20:courierApproach?12:2);
+      const until=w.tick+ticks(wave===2||wave===4?20:courierApproach?12:2);
       ai.press(id,1,until,4);
       ai.rush(id,w.entities.get(1)!.transform,until,true);
       spawned++;this.s.infectedIds.push(id);this.s.spawnLog.push({id,door,x:e.transform.x,z:e.transform.z,tick:w.tick,wave,offscreen:ai.director.offscreen(at,.6)});

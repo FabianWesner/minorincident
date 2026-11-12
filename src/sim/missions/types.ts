@@ -251,6 +251,8 @@ export interface L5State {
   /** The five survivors in casting order: entity id and fate (`hidden` until found, then `following`, `dead` or `turned`). */
   survivors: { key: string; id: number; status: 'hidden' | 'following' | 'dead' | 'turned' | 'sheltered'; foundAt: number; cueAt: number; lostAt: number; hold: number }[];
   found: number; lookoutId: number; stationIds: number[]; infectedIds: number[]; medkitIds: number[]; corpseIds: number[]; fireIds: number[];
+  /** Search arrival ledger; corpses remain in the world after this infected is killed. */
+  searchRunnerId?: number;
   /** Sunset gloom, 1 = full sun at the basement exit, falling monotonically; the sun intensity factor the renderer applies. */
   gloom: number;
   /** The latest sign of life the courier heard (HUD ping), and the "Wait!" bark. */
