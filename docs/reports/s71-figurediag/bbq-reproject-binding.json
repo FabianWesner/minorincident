@@ -1,0 +1,116 @@
+{
+  "rig": "public/assets/models/skinned/inf.bbq-dad.lod0.glb",
+  "out": "/private/tmp/s71-bbq-stages/bound-eyes-lod0.glb",
+  "bytes": 1739672,
+  "body": "/private/tmp/s71-bbq-stages/flat-lod0.glb",
+  "scale": 1.5135440464702141,
+  "yaw": 90,
+  "translation": [
+    -0.02212411361142949,
+    0.7671108977280183,
+    -0.01882406913966217
+  ],
+  "meanDistanceToRigidSurface": 0.06017054786516479,
+  "anatomyMaterials": [
+    "pal_blood"
+  ],
+  "contactOwnershipRepairs": 0,
+  "weightRelaxationPasses": 2,
+  "vertices": 6225,
+  "weldedVertices": 2964,
+  "triangles": 5944,
+  "bodyTriangleBudget": null,
+  "components": 1,
+  "openEdges": 0,
+  "unrelatedSeams": 0,
+  "maxInfluences": 2,
+  "zeroNormals": 0,
+  "jointNames": [
+    "root",
+    "hip",
+    "torso",
+    "head",
+    "armL",
+    "armR",
+    "foreArmL",
+    "foreArmR",
+    "handL",
+    "handR",
+    "legL",
+    "legR",
+    "shinL",
+    "shinR",
+    "footL",
+    "footR"
+  ],
+  "rigKind": "humanoid",
+  "capFits": [
+    {
+      "part": "head",
+      "rim": 3,
+      "triangles": 1,
+      "loops": 1,
+      "distance": 0.1528189780004725,
+      "method": "closed-part-surface"
+    },
+    {
+      "part": "armL",
+      "rim": 3,
+      "triangles": 1,
+      "loops": 1,
+      "distance": 0.0052726578649076655,
+      "method": "closed-part-surface"
+    },
+    {
+      "part": "armR",
+      "rim": 3,
+      "triangles": 1,
+      "loops": 1,
+      "distance": 0.044985270053344455,
+      "method": "closed-part-surface"
+    },
+    {
+      "part": "foreArmL",
+      "rim": 3,
+      "triangles": 1,
+      "loops": 1,
+      "distance": 0.09329277685831877,
+      "method": "closed-part-surface"
+    },
+    {
+      "part": "foreArmR",
+      "rim": 3,
+      "triangles": 1,
+      "loops": 1,
+      "distance": 0.12579277271405245,
+      "method": "closed-part-surface"
+    },
+    {
+      "part": "legL",
+      "rim": 3,
+      "triangles": 1,
+      "loops": 1,
+      "distance": 0.05162548142606863,
+      "method": "closed-part-surface"
+    },
+    {
+      "part": "legR",
+      "rim": 3,
+      "triangles": 1,
+      "loops": 1,
+      "distance": 0.011908016422157398,
+      "method": "closed-part-surface"
+    }
+  ],
+  "removedClosureTriangles": 0,
+  "removedDegenerateTriangles": 0,
+  "joints": 16,
+  "eyes": 0,
+  "seams": {
+    "torso/root": {
+      "seamVertices": 93,
+      "band": 0.1377789000029372,
+      "blended": 257
+    }
+  }
+}
