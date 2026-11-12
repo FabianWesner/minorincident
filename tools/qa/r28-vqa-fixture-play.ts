@@ -28,7 +28,7 @@ const { values, positionals } = parseArgs({ allowPositionals: true, options: {
   measure: { type: 'string' }, out: { type: 'string' }, quality: { type: 'string', default: 'low' }, zoom: { type: 'string', default: '1.5' }, backend: { type: 'string', default: 'webgpu' },
   seconds: { type: 'string', default: '300' }, shot: { type: 'string', default: '6' }, god: { type: 'boolean', default: false }, weapon: { type: 'string', default: 'weapon.army-mg' },
   route: { type: 'string' }, 'follow-marker': { type: 'boolean', default: false }, 'hold-e': { type: 'boolean', default: false }, 'tap-e-when': { type: 'string' }, 'skip-credits-after': { type: 'string' }, dwell: { type: 'string', default: '0' }, reach: { type: 'string', default: '2.5' }, block: { type: 'string', default: '5' }, 'no-kite': { type: 'boolean', default: false }, range: { type: 'string', default: '22' }, setup: { type: 'string' }, trace: { type: 'boolean', default: false }, 'trace-scheduling': { type: 'boolean', default: false }, 'trace-window': { type: 'boolean', default: false }, 'no-captures': { type: 'boolean', default: false },
-  handbrake: { type: 'string', default: 'Space' }, burst: { type: 'string' }, prefer: { type: 'string' }, watch: { type: 'string' }, 'route-when': { type: 'string' }, 'idle-when': { type: 'string' }, 'no-hatch-fire': { type: 'boolean', default: false }, 'no-fire': { type: 'boolean', default: false },
+  'dodge-bus': { type: 'boolean', default: false }, handbrake: { type: 'string', default: 'Space' }, burst: { type: 'string' }, prefer: { type: 'string' }, watch: { type: 'string' }, 'route-when': { type: 'string' }, 'idle-when': { type: 'string' }, 'no-hatch-fire': { type: 'boolean', default: false }, 'no-fire': { type: 'boolean', default: false },
 } });
 const [origin, name] = positionals;
 // `level:L7:corridor` loads a level at a mission checkpoint through the test API instead of a fixture.
@@ -177,6 +177,7 @@ try {
         const want = -Math.atan2(goal.z - e.driving.z, goal.x - e.driving.x), delta = Math.atan2(Math.sin(want - e.driving.yaw), Math.cos(want - e.driving.yaw));
         keys.push('KeyW'); if (delta > .06) keys.push('KeyA'); else if (delta < -.06) keys.push('KeyD');
       }
+      if (values['dodge-bus'] && /School bus lining up/.test(e.objective ?? '')) keys = ['KeyW', 'KeyD'];
       const air = await page.evaluate(() => { const w = (window.__SCENE__ as unknown as { game: { world: unknown } }).game.world as { vehicles: { active: number | null; cars: Map<number, { physics: { speed: number }; entity: { transform: { y: number }; vehicle: { attached: number[] } } }> }; missions?: { l9?: { driving: { state: { setPieces?: { alphas: { phase: string }[] } } } } } }; const car = w.vehicles.active == null ? undefined : w.vehicles.cars.get(w.vehicles.active); return { y: car?.entity.transform.y ?? 0, speed: +(car?.physics.speed ?? 0).toFixed(1), boarders: car?.entity.vehicle.attached.length ?? 0, fight: (w.missions?.l9?.driving.state.setPieces?.alphas ?? []).filter(a => ['windup', 'air', 'hull', 'throw'].includes(a.phase)).map(a => a.phase) }; });
       if (air.boarders && Date.now() % 1500 < 400) keys.push(values.handbrake!); // r35-vqa: Space is the driving handbrake since 258f211b (K still works); --handbrake KeyK to test K
       // Event shots: the APC in the air off a ramp, and every leaper/thrower action, at most one per 1.2 s.
@@ -193,7 +194,7 @@ try {
     // driving, retry here) and fire with the left mouse button at the nearest drawn enemy.
     // r35-vqa: the first weapon key can land while the briefing panel is still open; retry on foot until the wanted weapon is held.
     if (!e.driving && e.player.current !== values.weapon && e.player.weapons?.includes(values.weapon!) && Date.now() - lastTap > 3000) { lastTap = Date.now(); const k = weaponKey(values.weapon!); if (k) { await page.keyboard.press(`Digit${k}`); log({ weaponKey: k, tick: e.tick, had: e.player.current }); } }
-    const hatch = !!e.driving && /Defend the hatch/.test(e.objective ?? '');
+    const hatch = !!e.driving && /Engine stalled/.test(e.objective ?? '');
     if (hatch && !values['no-hatch-fire']) {
       const want = weaponKey(values.weapon!); if (want && e.player.current !== values.weapon && Date.now() - lastTap > 1500) { lastTap = Date.now(); await page.keyboard.press(`Digit${want}`); log({ hatchKey: want, tick: e.tick, rack: e.player.weapons, empty: e.player.emptyWeapons, had: e.player.current, ctx: await page.evaluate(() => { const g = (window.__SCENE__ as unknown as { game: { input: { drivingContext: boolean; mountedGunContext: boolean }; world: { mountedGun?: { mounted: boolean }; missions?: { l9?: { driving: { hatch: boolean } } } } } }).game; return { driving: g.input.drivingContext, mounted: g.input.mountedGunContext, hatch: g.world.missions?.l9?.driving.hatch, worldMounted: g.world.mountedGun?.mounted }; }) }); }
       if (target) { await page.mouse.move(target.aim.x, target.aim.y); await page.mouse.down(); await page.waitForTimeout(90); await page.mouse.up(); }

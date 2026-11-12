@@ -130,7 +130,6 @@ test('A*: budgeted search resumes across ticks within its expansion budget; conn
   const corner = { x: -.75, z: -2.75 }, next = nav.flowWaypoint(nav.nearestCell(corner.x, corner.z), corner, .35);
   expect(nav.visible(corner, { x: nav.x(next), z: nav.z(next) }, .35)).toBe(true);
   }
-  await checkL7Navigation();
   {
     const w = await loadLevel('L2', 1, undefined, 0, { quality: 'low' }); worlds.push(w);
     const nav = w.infected!.nav, path: number[] = [], from = nav.cell(5.25, -26.75), goal = nav.nearestCell(10, -30);
@@ -261,6 +260,7 @@ test('dynamic blockers: a prepared rebake equals a full rebake after doors and c
 }, 240_000);
 
 test('chasers path through a maze and an offset district without ever overlapping a static collider', async () => {
+  await checkL7Navigation();
   const w = await arena('maze'); expect(w.infected!.navigation.districts).toHaveLength(3);
   const e = w.entities.get(w.infected!.spawn('infected.runner', { x: -20, z: 0 }, { state: 'chase' }))!;
   for (let i = 0; i < 900; i++) { w.update(); expect(w.infected!.nav.clear(e.transform.x, e.transform.z, e.combat!.radius)).toBe(true); }

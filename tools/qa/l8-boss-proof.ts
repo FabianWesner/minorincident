@@ -1,9 +1,9 @@
-import { expect } from 'vitest';
+import assert from 'node:assert/strict';
 import { l8BossArenas } from '../../src/data/l8Bosses';
 import { objectiveText, l8SanctuaryResting } from '../../src/sim/missions/objectiveText';
 import { markerAnchor } from '../../src/sim/missions/markerAnchor';
 import { missionControls } from '../../src/sim/missions/controls';
-import { loadLevel } from '../qa/invariants/world';
+import { loadLevel } from '../../tests/qa/invariants/world';
 import { emptyInput } from '../../src/input/InputFrame';
 import type { EntitySnapshot } from '../../src/sim/world/types';
 import type { SimWorld } from '../../src/sim/world/SimWorld';
@@ -53,7 +53,6 @@ const dispose = (w: SimWorld) => w.dispose();
 export async function checkBossDamage(): Promise<void> {
   const w = await loadLevel('L8', 1);
   try {
-  const w = await loadLevel('L8', 1); 
   const zoo = w.missions!.l8!;
   zoo.state.nextWave = Number.MAX_SAFE_INTEGER;
   const failures: string[] = [];
@@ -90,14 +89,13 @@ export async function checkBossDamage(): Promise<void> {
       }
     }
   }
-  expect(failures).toEqual([]);
+  assert.deepEqual(failures, []);
   } finally { dispose(w); }
 }
 /** An ordinary infected takes damage from every firearm at 2 m and 8 m; the rocket refuses at 2 m. */
 export async function checkOrdinaryDamage(): Promise<void> {
   const w = await loadLevel('L8', 1);
   try {
-  const w = await loadLevel('L8', 1); 
   w.combat!.damage.god = true;
   const failures: string[] = [];
   for (const weapon of WEAPONS) for (const range of [2, 8]) {
@@ -108,14 +106,13 @@ export async function checkOrdinaryDamage(): Promise<void> {
     if (weapon === 'weapon.rocket-launcher' && range < 5) { if (fired || damage > 0) failures.push(`${label}: rocket fired inside the minimum range`); }
     else if (damage <= 0) failures.push(`${label}: no damage (fired=${fired})`);
   }
-  expect(failures).toEqual([]);
+  assert.deepEqual(failures, []);
   } finally { dispose(w); }
 }
 /** Bosses stay damageable inside their attack and phase states (dive, kick, charge, roar, swipe, phase 2, roof). */
 export async function checkBossStates(): Promise<void> {
   const w = await loadLevel('L8', 1);
   try {
-  const w = await loadLevel('L8', 1); 
   const zoo = w.missions!.l8!;
   zoo.state.nextWave = Number.MAX_SAFE_INTEGER;
   const start = (zoo.bosses as unknown as { start: Start }).start.bind(zoo.bosses);
@@ -145,38 +142,43 @@ export async function checkBossStates(): Promise<void> {
       if (shoot(w, boss, weapon, range, pin).damage <= 0) failures.push(`${def.id} [${name}] ${weapon} @${range} m: no damage`);
     }
   }
-  expect(failures).toEqual([]);
+  assert.deepEqual(failures, []);
   } finally { dispose(w); }
 }
 /** The sanctuary wait cue and the opening "Protect the group!" marker (r24 pre-PROD QA, both P2). */
 export async function checkL8Cues(): Promise<void> {
   const w = await loadLevel('L8', 1);
   try {
-  const w = await loadLevel('L8', 1); 
   const mission = w.missions!, zoo = mission.l8!, advance = (n: number) => { for (let i = 0; i < n; i++) w.update(); };
   const step = () => mission.def.steps.find(s => s.id === 'sanctuary')!;
   advance(2);
-  expect(l8SanctuaryResting(mission), 'far from the plaza the courier still follows Nadia').toBe(false);
-  expect(objectiveText(mission, step().text)).toBe('Follow Nadia to the central plaza');
+  assert.equal(l8SanctuaryResting(mission), false, 'far from the plaza the courier still follows Nadia');
+  assert.equal(objectiveText(mission, step().text), 'Follow Nadia to the central plaza');
   missionControls(w).teleport(1, mission.def.anchors['central-plaza']); advance(2);
-  expect(mission.state.states.breached).toBeFalsy();
+  assert.ok(!(mission.state.states.breached));
   // r36-l8gates (QA P3 "Rest at the plaza objective flickers during Nadia's tour"): her route crosses the plaza ring; no rest cue while she leads.
-  expect(l8SanctuaryResting(mission), 'no rest cue while Nadia still leads the tour').toBe(false);
+  assert.equal(l8SanctuaryResting(mission), false, 'no rest cue while Nadia still leads the tour');
   zoo.state.guideDone = 2; zoo.state.guideArrivedAt = w.tick;
-  expect(l8SanctuaryResting(mission)).toBe(true);
-  expect(objectiveText(mission, step().text)).toBe('Rest at the plaza with the group');
+  assert.equal(l8SanctuaryResting(mission), true);
+  assert.equal(objectiveText(mission, step().text), 'Rest at the plaza with the group');
   // The calm ends at the latest after its 120 s cap.
   w.tick = zoo.state.startedAt + 120 * 60 - 1; advance(2);
-  expect(mission.state.states.breached).toBe(true);
-  expect(mission.state.steps.escape.status).toBe('active');
-  expect(zoo.protecting()).toBe(true);
-  expect(objectiveText(mission, 'x')).toBe('Protect the group!');
-  expect(mission.state.marker, 'marker from the first tick of the step').toBe('central-plaza');
-  expect(markerAnchor(mission)).not.toBeNull();
+  assert.equal(mission.state.states.breached, true);
+  assert.equal(mission.state.steps.escape.status, 'active');
+  assert.equal(zoo.protecting(), true);
+  assert.equal(objectiveText(mission, 'x'), 'Protect the group!');
+  assert.equal(mission.state.marker, 'central-plaza', 'marker from the first tick of the step');
+  assert.notEqual(markerAnchor(mission), null);
   // r33-l8route: the plaza hatches make the opening a real fight; this cue probe stands idle, so it needs protection to reach the end of the hold.
   w.combat!.damage.god = true;
   for (let i = 0; i < 4000 && zoo.protecting(); i++) w.update();
-  expect(zoo.protecting()).toBe(false);
-  expect(mission.state.marker).not.toBeNull();
+  assert.equal(zoo.protecting(), false);
+  assert.notEqual(mission.state.marker, null);
   } finally { dispose(w); }
 }
+
+await checkL8Cues();
+await checkBossDamage();
+await checkOrdinaryDamage();
+await checkBossStates();
+console.log("L8 boss and cue proof passed");

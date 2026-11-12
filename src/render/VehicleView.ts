@@ -452,9 +452,11 @@ export class VehicleView extends Group {
   feedback(event: VehicleFeedbackEvent, enabled: boolean): void {
     this.feedbackEvents.set(event.id, { ...event, position: { ...event.position } }); this.bloodEnabled = enabled;
     const record = this.records.get(event.id); if (!record) return;
-    record.blood = event.blood; for (const material of record.paint) material.bloodCoverage.value = enabled ? event.blood : 0;
+    // The side-projected blood mask stretches into a red band on the APC's
+    // flat roof. Its dents, cracked glazing and smoke carry hull damage.
+    record.blood = event.blood; for (const material of record.paint) material.bloodCoverage.value = enabled && !record.apc ? event.blood : 0;
   }
-  setBloodEnabled(enabled: boolean): void { this.bloodEnabled = enabled; for (const record of this.records.values()) for (const material of record.paint) material.bloodCoverage.value = enabled ? record.blood : 0; }
+  setBloodEnabled(enabled: boolean): void { this.bloodEnabled = enabled; for (const record of this.records.values()) for (const material of record.paint) material.bloodCoverage.value = enabled && !record.apc ? record.blood : 0; }
   async ready(): Promise<void> { await Promise.all([...this.pending.values(), ...this.occupantLoads.values()]); this.update(1); await Promise.all(this.occupantLoads.values()); this.update(1); }
   /** Drawn ground height (GameView: the district's baked roads and paving); null where it draws none. */
   ground: ((x: number, z: number) => number | null) | null = null;

@@ -113,7 +113,9 @@ export class LevelNineCrash {
       updateEncounters(w, s.encounters ??= emptyEncounters());
       // The actual bridge deck owns the finale. Reaching this x elsewhere in
       // the district cannot take the controls or move the vehicle sideways.
-      if (!this.driving.state.evacuationDone || car.transform.x < l9Course.bridge.x || car.transform.x > l9Course.bridge.endX || Math.abs(car.transform.z) > l9Course.bridge.halfZ) return;
+      // The bridge crash only triggers when the APC is actually driving onto
+      // the deck, not when a player crosses the same strip while backing out.
+      if (!this.driving.state.evacuationDone || Math.cos(car.transform.yaw) <= 0 || car.transform.x < l9Course.bridge.x || car.transform.x > l9Course.bridge.endX || Math.abs(car.transform.z) > l9Course.bridge.halfZ) return;
       // r39-markers (r38-vqa P2-1): the deck itself starts the collapse, at any speed and heading. An APC held by boarders or crawling
       // used to sit on the deck with the objective unmet; the scripted run-up below then goes east at a floor speed.
       this.mission.checkpoint('outskirts-approach');

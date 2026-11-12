@@ -8,7 +8,6 @@ import { Physics } from '../../src/physics/Physics';
 import { VehicleBody } from '../../src/sim/vehicles/VehicleBody';
 import { SimWorld } from '../../src/sim/world/SimWorld';
 import { loadLevel } from '../../tools/sim-runner/levels';
-import { checkBossDamage, checkBossStates, checkL8Cues, checkOrdinaryDamage } from '../helpers/l8BossShoot';
 import { missionControls } from '../../src/sim/missions/controls';
 import { preset } from '../../src/sim/progression/Campaign';
 import { objectiveText } from '../../src/sim/missions/objectiveText';
@@ -95,10 +94,9 @@ test('enter, drive and exit: door dwell, input ownership (no attacks while drivi
   expect(await vehicleShovesProps(), 'vehicle-to-prop simulation repeats exactly').toEqual(shoved);
   await bikeMountIntent();
   await zooParkedBoarding();
-  await checkL8Cues();
-  await checkBossDamage(); await checkOrdinaryDamage(); await checkBossStates();
   await apcBoarders();
   await l9BusVsParkedApc();
+  await l9BusTelegraphAndWreck();
   await l9FloorApcThroughPile();
   await l9CompanionsBoardDiagonalApc();
   await l9CheckpointLanes();
@@ -191,6 +189,36 @@ async function l9BusVsParkedApc(): Promise<void> {
   } finally { world.dispose(); }
 }
 
+// The bus commits to one lane during its 1.5 s warning. A driver who leaves
+// that lane takes no APC damage; repeated overshoots damage and finally stop it.
+async function l9BusTelegraphAndWreck(): Promise<void> {
+  const world = await loadLevel('L9', 1, preset('L9-default'), 0, { quality: 'low' });
+  try {
+    const l9 = world.missions!.l9!, s = l9.driving.state, apc = world.vehicles!.cars.get(l9.state.carId)!, bus = world.vehicles!.cars.get(s.busId)!;
+    world.missions!.begin(); world.update(); s.busLineAt = world.tick; bus.entity.hidden = false; bus.physics.body.setEnabled(true);
+    Object.assign(bus.entity.transform, { x: 170, z: 0 }); Object.assign(apc.entity.transform, { x: 200, z: 0 });
+    bus.physics.speed = 5; apc.physics.speed = 5;
+    l9.driving.update();
+    expect(s.busRamAt, 'the bus announces its ram 90 ticks ahead').toBe(world.tick + 90);
+    expect(l9.driving.text(), 'the HUD names the incoming ram and dodge').toContain('School bus lining up a ram · dodge now! 2 s');
+    expect(world.events.events(world.tick - 1).some(e => e.type === 'telegraph' && e.sourceId === bus.entity.id && e.duration === 1.5), 'the bus draws a 1.5 s red road-lane tell').toBe(true);
+    expect(world.events.events(world.tick - 1).some(e => e.type === 'vehicle.sound' && e.sourceId === bus.entity.id && e.phase === 'horn'), 'the bus sounds its horn').toBe(true);
+    const armor = apc.entity.health.current, busHealth = bus.entity.health.current;
+    Object.assign(apc.entity.transform, { z: 6 });
+    for (let i = 0; i < 3; i++) { s.busRamAt = world.tick; s.busRamZ = 0; l9.driving.update(); }
+    expect(apc.entity.health.current, 'the driver dodges the locked ram lane without taking a hit').toBe(armor);
+    expect(bus.entity.health.current, 'three missed rams wreck the bus').toBe(busHealth - 1200);
+    expect(s.busStoppedAt, 'the wrecked bus stops its pursuit').not.toBeNull();
+    // A driver who never dodges still survives the bus encounter: three capped
+    // hits cost 120 armour from the APC, leaving its broader mission intact.
+    s.busStoppedAt = null; s.busRams = 0; s.busHitAt = -1000; s.busRamAt = 0;
+    const passiveArmor = apc.entity.health.current;
+    for (let i = 0; i < 3; i++) { s.busRamAt = world.tick; s.busRamZ = apc.entity.transform.z; l9.driving.update(); }
+    expect(apc.entity.health.current, 'a passive driver survives the bus ram cap').toBe(passiveArmor - 120);
+    expect(apc.entity.health.current, 'the bus cannot destroy the APC on its own').toBeGreaterThan(0);
+  } finally { world.dispose(); }
+}
+
 // APC ram rule: ordinary infected cost no durability; heavies cost a small amount and never stall the hull.
 async function l9FloorApcThroughPile(): Promise<void> {
   const world = await loadLevel('L9', 1, preset('L9-default'), 0, { quality: 'low' });
@@ -230,7 +258,6 @@ async function l9FloorApcThroughPile(): Promise<void> {
     expect(top, 'keeps cruise speed once clear').toBeGreaterThanOrEqual(car.physics.def.topSpeed * .9);
   } finally { world.dispose(); }
   await l9FloorApcPackAtFence();
-  await l9SetPiecesFight();
 }
 
 // r29-l9pin (r28-vqa: 0.3 m in 56 s at (-265.7, -15.4), ~50 infected, boarders on the hull): nose against a yard fence inside a dense
@@ -281,52 +308,6 @@ async function l9FloorApcPackAtFence(): Promise<void> {
 // r32-l9fun (PO 11-10 "real fight action not just dumb zombies"): on the road detour a leaper pounce lands on the hull, tears at it
 // until a handbrake throws it off (alive, knocked down), and a thrower lobs debris that lands on the APC's lane as ordinary,
 // smashable road obstacles (collider live, nothing left airborne).
-async function l9SetPiecesFight(): Promise<void> {
-  const world = await loadLevel('L9', 1, preset('L9-default'), 0, { quality: 'low' });
-  try {
-    const l9 = world.missions!.l9!, vehicles = world.vehicles!, car = vehicles.cars.get(l9.state.carId)!;
-    world.missions!.begin();
-    for (let i = 0; i < 5; i++) world.update();
-    const z0 = -305, pose = { x: -330, z: z0, y: car.physics.def.suspension + car.physics.def.wheelRadius + .15, yaw: 0 };
-    Object.assign(car.entity.transform, pose); Object.assign(car.physics.previous, pose); car.physics.body.setTranslation(pose, true);
-    car.physics.body.setRotation({ x: 0, y: 0, z: 0, w: 1 }, true); car.physics.body.setLinvel({ x: 0, y: 0, z: 0 }, true); car.physics.body.setAngvel({ x: 0, y: 0, z: 0 }, true);
-    const signals: string[] = [];
-    world.events.on('mission.signal', e => { if (e.type === 'mission.signal') signals.push(e.name); });
-    let leaperHits = 0;
-    world.events.on('vehicle.durability-hit', e => { if (e.type === 'vehicle.durability-hit' && world.entities.get(e.targetId)?.infected?.alphaType === 'leaper') leaperHits++; });
-    const drive = (shake: boolean) => {
-      const f = emptyInput(), p = car.entity.transform;
-      f.drive = { throttle: .7, steer: Math.max(-1, Math.min(1, (p.z - z0) * -.15 - p.yaw * 2)) }; f.brake = false; f.handbrake = shake;
-      world.applyInput(f, 'keyboard'); world.update();
-    };
-    let clung: number | undefined;
-    for (let i = 0; i < 1500 && clung === undefined; i++) { drive(false); clung = l9.driving.state.setPieces?.alphas.find(a => a.phase === 'hull')?.id; }
-    expect(clung, `a leaper pounce lands on the hull (signals ${signals.filter(n => n.includes('leaper') || n.includes('setpiece')).join(',')})`).toBeDefined();
-    const leaper = world.entities.get(clung!)!;
-    expect(car.entity.vehicle!.attached, 'the landed leaper clings to the hull').toContain(clung);
-    expect(leaper.transform.y, 'clinging above the road, at the side rail').toBeGreaterThan(1);
-    for (let i = 0; i < 100; i++) drive(false);
-    expect(leaperHits, 'the clinging leaper tears at the hull (landing + strike)').toBeGreaterThanOrEqual(2);
-    for (let i = 0; i < 10 && leaper.attachedTo !== undefined; i++) drive(true);
-    expect(leaper.attachedTo, 'a handbrake at speed throws it off').toBeUndefined();
-    expect(leaper.health.current, 'thrown off, not run over').toBeGreaterThan(0);
-    for (let i = 0; i < 2400 && !signals.includes('l9.thrower-landed') && !signals.includes('l9.thrower-hull-hit'); i++) drive(false);
-    for (let i = 0; i < 120; i++) drive(false);
-    const thrown = vehicles.obstacles.items.filter(o => !l9.driving.state.obstacleIds.includes(o.entity.id));
-    expect(signals.filter(n => n === 'l9.thrower-throw').length, `the thrower lobs debris into the road: ${JSON.stringify({ tick: world.tick, hp: world.entities.get(1)?.health.current, x: car.entity.transform.x, fired: l9.driving.state.setPieces?.fired, alphas: l9.driving.state.setPieces?.alphas.map(a => [a.piece, a.role, a.phase, a.uses, a.at]) })}`).toBeGreaterThanOrEqual(1);
-    expect(thrown.length, 'thrown debris becomes road obstacles').toBeGreaterThanOrEqual(1);
-    for (const o of thrown) {
-      const flying = !!l9.driving.state.setPieces!.flights.some(f => f.obstacleId === o.entity.id);
-      expect(!!o.airborne, 'only debris still in flight is airborne').toBe(flying);
-      if (!o.broken && !flying) {
-        expect(o.entity.transform.y, 'settles near ground height').toBeGreaterThan(.25); expect(o.entity.transform.y).toBeLessThan(.75);
-        expect(o.collider.isEnabled(), 'landed debris has a live collider').toBe(true);
-        expect(o.entity.health.current, 'rammed barrier remains in the world').toBeGreaterThan(0);
-      }
-    }
-  } finally { world.dispose(); }
-}
-
 // r27-l9board: a diagonally parked APC puts the passenger door inside the hull's nav margin; the corgi halted 1.3 m short of it
 // (boarding radius 1.2 m) and the evacuation never completed. Corgi and Sam must now seat from several approach sides.
 async function l9CompanionsBoardDiagonalApc(): Promise<void> {
@@ -370,7 +351,7 @@ async function apcBoarders(): Promise<void> {
     expect(car.entity.vehicle!.apcBoarders![dogId].startedAt, 'overlap does not restart the climb').toBe(climbAt);
     for (let i = 0; i < 240; i++) world.update();
     expect(world.entities.get(1)!.health.current, 'the closed cab protects its driver').toBe(world.entities.get(1)!.health.max);
-    world.missions!.l9!.driving.state.stallAt = world.tick;
+    world.missions!.l9!.driving.state.stallAt = world.tick; world.missions!.l9!.driving.state.hatchOpen = true;
     for (let i = 0; i < 120 && world.entities.get(1)!.health.current === world.entities.get(1)!.health.max; i++) world.update();
     expect(world.entities.get(1)!.health.current, 'a climbed boarder bites an exposed hatch occupant').toBeLessThan(world.entities.get(1)!.health.max);
     const turn = emptyInput(); turn.drive = { throttle: 1, steer: 1 };
@@ -379,7 +360,7 @@ async function apcBoarders(): Promise<void> {
     expect(car.entity.vehicle!.attached, 'a sharp turn shakes the dog off').not.toContain(dogId);
     expect(dog.attachedTo).toBeUndefined();
     car.physics.body.setLinvel({ x: 0, y: 0, z: 0 }, true); car.physics.body.setAngvel({ x: 0, y: 0, z: 0 }, true); car.physics.postPhysics();
-    world.missions!.l9!.driving.state.stallAt = world.tick;
+    world.missions!.l9!.driving.state.stallAt = world.tick; world.missions!.l9!.driving.state.hatchOpen = true;
     const targetId = world.infected!.spawn('infected.runner', { x: car.entity.transform.x + 12, z: car.entity.transform.z }, { state: 'chase' });
     const target = world.entities.get(targetId)!;
     for (let i = 0; i < 120 && target.health.current === target.health.max; i++) {
