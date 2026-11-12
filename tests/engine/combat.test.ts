@@ -47,7 +47,7 @@ function checkArsenalRoles(): void {
 
 async function checkMolotovCluster(): Promise<void> {
   const w = await arena(); equip(w, ['weapon.fire-axe'], ['weapon.molotov']);
-  const ids = [-1.2, -0.6, 0, 0.6, 1.2].map(z => dummy(w, 2, z, 40));
+  const ids = [-1.2, -0.6, 0, 0.6, 1.2].map(z => dummy(w, 2, z, infectedDef('infected.runner').hp * INFECTED_TOUGHNESS));
   fire(w, 'RIGHT', { x: 1, z: 0 }, { x: 2, z: 0 });
   for (let i = 0; i < 60 && !w.combat!.effects.zones.some(z => z.kind === 'fire'); i++) step(w, 1);
   const zone = w.combat!.effects.zones.find(z => z.kind === 'fire');
@@ -58,7 +58,7 @@ async function checkMolotovCluster(): Promise<void> {
 
 async function checkFlameCluster(): Promise<void> {
   const w = await arena(); equip(w, ['weapon.flamethrower']);
-  const ids = [-0.3, -0.15, 0, 0.15, 0.3].map(z => dummy(w, 2, z, 40));
+  const ids = [-0.3, -0.15, 0, 0.15, 0.3].map(z => dummy(w, 2, z, infectedDef('infected.runner').hp * INFECTED_TOUGHNESS));
   fire(w); step(w, 180);
   expect(ids.map(id => health(w, id))).toEqual([0, 0, 0, 0, 0]);
 }
@@ -66,7 +66,7 @@ async function checkFlameCluster(): Promise<void> {
 async function checkBlastClusters(): Promise<void> {
   for (const id of ['weapon.pipe-bomb', 'weapon.rocket-launcher']) {
     const w = await arena(); equip(w, ['weapon.fire-axe'], [id]);
-    const ids = [-1.2, -0.6, 0, 0.6, 1.2].map(z => dummy(w, 2, z, 40));
+    const ids = [-1.2, -0.6, 0, 0.6, 1.2].map(z => dummy(w, 2, z, infectedDef('infected.runner').hp * INFECTED_TOUGHNESS));
     if (id === 'weapon.rocket-launcher') w.explosions!.blast('explosion.rocket', { x: 2, z: 0 }, { sourceId: 1, actionId: id, radius: 6 });
     else fire(w, 'RIGHT', { x: 1, z: 0 }, { x: 2, z: 0 });
     step(w, 180);

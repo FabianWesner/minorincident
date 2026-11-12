@@ -93,3 +93,20 @@ Runtime actor trace (`/tmp/s86-actortrace.json`) confirms cap holders are living
 Native-health correction: nail damage is now 20 (120 raw DPS), so three nails cover the native ordinary infected's 60 HP. The assertion now reads `infectedDef().hp * INFECTED_TOUGHNESS`. Focused combat, typecheck and lint pass. The full threat audit and remote-unit receipt above predate this final 18→20 correction and require refresh before completion; the fixed-target nail TTK row above also predates this correction.
 
 Post-correction validation (20-damage nail gun): full ten-level audit `/tmp/s86-threat-nail20` completed in 384.3 s; every level's skilled/passive flag set matches the c9a9bbbd baseline, with the same two existing top-level L4 failures. Remote `sh tools/remote/run.sh "$PWD" -- npm test` passed on 94.130.181.173: 106 passed, one skipped, 27 files, 221.0 s / 240 s. This supersedes the earlier note requiring refresh after the nail correction. The pacing criterion and native-health TTK report refresh remain open.
+
+Native-health area verification: all cluster fixtures now derive ordinary HP from the infected catalog (60 HP). Molotov at 24 burn DPS left 2–3.5 HP after two seconds; 28 DPS clears all five within two seconds. Flame, pipe bomb and rocket also clear their five-target fixtures within three seconds at native HP. Focused combat, typecheck and lint pass. Full audit and remote-unit results above predate the 24→28 molotov correction and require refresh.
+
+Native direct-impact estimates below use `damageAmount()` with runtime HP and authored cadence, excluding reloads, travel and accuracy. They supplement the earlier fixed-target table; they are not full firing simulations. Ordinary=60, sprinter=45, Alpha=300, brute=450, armored=240.
+
+| Weapon | Ordinary | Sprinter | Alpha | Brute | Armored front | Armored rear |
+| --- | --- | --- | --- | --- | --- | --- |
+| bat | 3@1 | 3@1 | 14@6.5 | 21@10 | 22@10.5 | 11@5 |
+| fire-axe | 2@0.5 | 1@0 | 6@2.5 | 9@4 | 9@4 | 5@2 |
+| handgun | 3@0.67 | 3@0.67 | 30@9.67 | 23@7.33 | 24@7.67 | 12@3.67 |
+| army-mg | 5@0.4 | 4@0.3 | 43@4.2 | 33@3.2 | 35@3.4 | 18@1.7 |
+| shotgun | 1@0 | 1@0 | 2@0.5 | 2@0.5 | 2@0.5 | 1@0 |
+| rocket-launcher | 1@0 | 1@0 | 2@0.83 | 3@1.67 | 2@0.83 | 2@0.83 |
+| hunting-rifle | 1@0 | 1@0 | 2@1 | 2@1 | 2@1 | 1@0 |
+| nail-gun | 3@0.33 | 3@0.33 | 30@4.83 | 23@3.67 | 24@3.83 | 12@1.83 |
+| machete | 2@0.4 | 2@0.4 | 8@2.8 | 12@4.4 | 12@4.4 | 6@2 |
+| assault-rifle | 3@0.27 | 2@0.13 | 24@3.07 | 18@2.27 | 19@2.4 | 10@1.2 |
