@@ -63,3 +63,7 @@ Aligned the three existing north approach mouths at x=-22/-18.6/-15 (unchanged z
 ```
 
 North now admits three and attacks after 8.13 s; west admits 22 and attacks after 5.50 s; south admits four and attacks after 8.57 s. Only the two L4-06 flags remain. High hold: 44 alive at first breach (50.08 s), peak alive 59, peak plaza 56, minimum plaza 17. Typecheck and lint passed for this change. Remote suite must be repeated for the final combined implementation; the prior passing receipt predates this alignment. A rejected wider north offset also admitted three but produced no attack within 20 s, so it was reverted before this aligned trial.
+
+## Rejected high-tier fast alarm expansion
+
+Trialed 24 additional high-tier alarm runners/sprinters (42 versus 18 total, keeping low tier fixed and using the existing fast roster for the added portion). Focused audit completed in 47.8 s: skilled complete, two passive flags remained. High hold reached peak alive 75, but first-breach alive was only 47 at 50.08 s, peak plaza 51, and minimum plaza still 17. Reverted: this adds opening pressure without meeting either census requirement. Counts remain unchanged in the retained runtime.
