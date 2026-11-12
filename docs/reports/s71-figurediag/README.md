@@ -208,3 +208,9 @@ All inspected atlases contain mip chains. Cashier's LOD2 keeps the same triangle
 ## Cashier atlas-retention experiment preflight
 
 Compared all nine LOD1/LOD2 primitives through meshopt-decoded accessors. Present UV, joint-index and skin-weight arrays have zero differences; body UV arrays are byte-identical. Position arrays differ slightly (body maximum component difference 0.0003562 in accessor values), so the two documents must not be substituted wholesale and called a texture-only test. The planned experiment will retain the entire LOD2 document and replace only its embedded atlas bytes from LOD1 (288×384 instead of 72×96), keeping its geometry, UVs, skeleton and weights. Detailed attribute hashes and maximum differences are recorded in `cashier-lod-attribute-comparison.json` and `cashier-lod-attribute-deltas.json`. A runtime capture with confirmed drawn LOD remains necessary before assigning a score delta.
+
+## HIGH cashier atlas-retention capture
+
+![Opened original versus retained LOD2 atlas](cashier-atlas-high-runtime.jpg)
+
+Temporarily replaced only the embedded LOD2 atlas with LOD1's 288×384 KTX2 bytes, retaining the LOD2 document. `cashier-atlas-candidate-proof.json` records accessor comparison and image sizes. Captured corrected cashier HIGH/WebGL2 fixture at both zooms/day/night; checks passed. Opened result shows no meaningful overall score gain (**3/2 remains 3/2**). This is not yet a definitive texture-resolution null result: the drawn LOD and sampled texture must be observed directly, because a delivered bake or another LOD can bypass the modified file. Native captures/receipt are in `test-results/s71-figurediag/cashier-atlas-retained-high/`. Original GLB restored byte-for-byte; no asset replacement retained or recommended.
