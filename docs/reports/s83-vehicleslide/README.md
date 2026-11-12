@@ -89,3 +89,7 @@ A diagnostic wrapper records actual resolved displacement for the vehicle overla
 ## Standing reverse-push fixture
 
 A slow reverse drive exercises 493 unique resolved hull shoves per tier on ordinary infected without stat changes. All eight current fixture/tier rows pass: standing push worst p95/max HIGH 2.9/6.1 cm, LOW 2.3/5.5 cm. Typecheck and targeted lint pass. The diagnostic hook was found to wrap itself between scenes and duplicate records; the harness now retains the original knockback method. Reported shove counts are deduplicated by tick/entity from the captured run; a rerun after the hook fix remains due. See `standing-push.json`. Campaign contexts and prop pushing remain outstanding.
+
+## Corrected-hook rerun
+
+`npm run qa:vehicle-motion` completed exit 0 after the hook fix. All eight rows pass. Standing push HIGH/LOW each record exactly 493 records and 493 unique tick/entity pairs: HIGH worst p95/max 2.9/6.1 cm, LOW 2.3/5.5 cm. See `corrected-hook-results.json`. This closes the pending duplicate-hook rerun, not the full objective. PropSystem inspection identifies both infected-to-prop impulse and fast-prop-to-infected momentum paths as still needing direct coverage.
