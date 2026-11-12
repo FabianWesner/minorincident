@@ -84,3 +84,5 @@ Typecheck and lint pass. Focused combat: 7 cases pass, including all new weapon 
 Human QA should confirm visible molotov cluster burning, flamethrower cone readability, and weapon feel. No visual fix is claimed.
 
 Pulse admission instrumentation: 57 attempts, 55 safe points, 57 resident points, capacity available on 26 attempts, and 25 requests queued. The pulse mechanism was active rather than wholly rejected by safety checks, but single-runner arrivals did not sustain attack contact. Receipt: `/tmp/s86-pulse-admissions.json`; production behavior unchanged.
+
+Three-runner queued-pulse harness: replacing each single arrival with three ordinary runners, through the same safety/cap queue, completed in 1,015.0 s with 53 starts, five gaps over 30 s, and a 446.1 s longest gap. The experiment remained outside production. Receipt: `/tmp/s86-threepulse.json`. Increasing this pulse's count alone did not sustain contact.
