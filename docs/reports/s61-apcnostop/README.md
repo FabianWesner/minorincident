@@ -1,5 +1,21 @@
 # s61 — APC battering ram
 
+## Final status — complete
+
+Current implementation and verification satisfy the ram goal. Player-driven ram contacts retain forward motion; ordinary infected rams cost zero armour; heavy ram costs are 10 (20 elephant); hull attacks, boarders, hatch defence, bridge boost and pin recovery remain active. Retained road props use physics, can damage infected, and persist through collider rebuilds. Moving rollover recovery prevents the ram floor from disabling self-righting.
+
+Entry speed for each native comparison was 14.4 m/s. Baseline is vehicle code/tuning from `73db6c05`, run with the same probe; current files were restored before final verification.
+
+| Scenario | Before min m/s | After min m/s | Before recovery ticks | After recovery ticks | Before ram armour | After ram armour |
+|---|---:|---:|---:|---:|---:|---:|
+| Brute | 7.14 | 14.49 | 97 | 0 | 56 | 10 |
+| Six mixed | 1.35 | 14.44 | 102 | 0 | 119 | 20 |
+| Twenty ordinary | 14.49 | 14.49 | 52 | 0 | 140 | 0 |
+
+Raw receipts: [baseline](baseline-probe.json), [current](current-probe.json). Recovery means reaching 90% of configured cruise speed; contact costs are separated from other hull damage.
+
+Final evidence: E31 local gate passes (27 files, 107 tests); isolated two-worker remote npm test passes (106 passed, one skipped, 231.1 s within 240 s); final L9 threat audit completes skilled/passive with zero L9 flags (aggregate partial-selection flag is expected). Real-input six-pack fixture records minimum 6.745 m/s, 100% of impact entry speed, with throttle held through armored/dog contacts, and both nearby captures were opened. The bridge fixture completes L9 with zero deaths/assists/issues. Earlier failed experiments below are retained as investigation history and superseded by these final receipts.
+
 ## Change
 
 Removed the heavy-impact velocity reset and throttle hold. With forward throttle held, player vehicles now keep a rolling speed floor during infected contact, capped by the vehicle's current speed cap; braking and releasing throttle still work. Infected are nudged sideways out of the hull path, including persistent corpses. Ordinary infected ram contacts cost no durability for player vehicles; brute/armored/riot contacts cost 10 and elephant contacts cost 20. Hull attacks retain their existing durability cost. Rammed lightweight barriers become dynamic bodies, tumble, settle, and keep their entity, model, and collider. Failed L9 set-piece spawns retry, and a passing APC still gives its authored thrower a chance to attack.
