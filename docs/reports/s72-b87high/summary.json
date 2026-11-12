@@ -1,0 +1,33 @@
+{
+  "lane": "s72-b87high",
+  "worktreeHead": "9704a4896fc79e01c11349b46f662c147946d6e8",
+  "run": {
+    "quality": "high",
+    "viewport": "1280x720",
+    "zoomRequested": 1.5,
+    "backendRequested": "webgpu",
+    "backendObserved": null,
+    "entry": "normal campaign new game at L1, continue through L9",
+    "realInputDriver": "tools/playtest/play.ts",
+    "status": "blocked before browser startup",
+    "captures": []
+  },
+  "checks": {
+    "uncachedBuild": "passed",
+    "defaultBuild": "failed: shared cache lock outside writable worktree",
+    "preview": "failed: listen EPERM on 127.0.0.1:4917",
+    "browserPoolPreview": "failed: pool listener listen EPERM on 127.0.0.1:4329",
+    "typecheck": "not run",
+    "lint": "not run",
+    "tests": "not run"
+  },
+  "items": [
+    { "id": "L9-route-and-vehicle", "verdict": "UNVERIFIED", "historicalProdComparison": "s67 reports the blockage class reproduced on PROD 0b650749", "currentCapture": null },
+    { "id": "L9-hatch-and-bus", "verdict": "UNVERIFIED", "historical": "s66 LOW limited-scope observations only", "currentCapture": null },
+    { "id": "L8-flamingos", "verdict": "UNVERIFIED", "historical": "s68 fixture assertions and LOW controlled capture only", "currentCapture": null },
+    { "id": "L4-armored-and-heavies", "verdict": "UNVERIFIED", "historical": "s69/s70 native measurement evidence only", "currentCapture": null },
+    { "id": "new-glitches-and-pacing", "verdict": "UNVERIFIED", "currentCapture": null }
+  ],
+  "releaseVerdict": null,
+  "reason": "A valid GO/HOLD decision needs the requested current HIGH real-input observations; no browser page launched."
+}
