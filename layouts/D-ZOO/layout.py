@@ -626,8 +626,8 @@ _spur(8,20,24,20)
 # Visitor-route verges: append after the existing placement sequence. Public
 # road junctions and enclosure door approaches retain their clear openings.
 for _z in (-67.1, -60.9):
-    _fence(-60, _z, -27.2, _z); _fence(-20.8, _z, -3.2, _z)
-for _z in (60.9, 67.1): _fence(27.2, _z, 60, _z)
+    _fence(-56.8 if _z == -60.9 else -60, _z, -27.2, _z); _fence(-20.8, _z, -3.2, _z)
+for _z in (60.9, 67.1): _fence(27.2, _z, 56.8 if _z == 60.9 else 60, _z)
 for _z in (-3.1, 3.1): _fence(-56.8, _z, -27.2, _z)
 for _x in (-63.1, -56.9): _fence(_x, -17, _x, -3.2)
 for _x in (-27.1, -20.9):
