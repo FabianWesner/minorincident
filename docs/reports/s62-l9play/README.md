@@ -53,3 +53,11 @@ The balanced-test remote run passed navigation (A* 12.8 s, chasers 27.8 s, uncha
 Added `tools/qa/l9-bus-driver-proof.ts`: drives the production simulation through normal throttle/steering input, reacts to the ram countdown, and asserts <=1 bus hit and >=2 misses. Passed with 3 rams, 1 hit, 2 misses, APC armour 701 and bus health 400. This proves skill-based avoidance without assigning ram deadlines or moving the APC between attacks.
 
 Moved the existing full leaper/thrower sequence out of the per-change vehicle test into `tools/qa/l9-setpieces-proof.ts`, preserving every assertion. Standalone proof passes; typecheck and lint pass. Remote trimmed suite still timed out at 240.7 s before vehicle completion, so further level-specific workload needs moving to QA; no gate limit was raised.
+
+## Wreck counterplay and checkpoint proof
+
+Missed bus rams now deal 600 bus damage: two misses wreck it, allowing the demonstrated one-hit/two-dodge driver to finish the encounter. Native driver proof now asserts bus health zero and stopped pursuit; passed at tick 894 with armour 925, two misses and one hit. This supersedes earlier three-miss tuning.
+
+Moved the existing bay/checkpoint assertions intact into `tools/qa/l9-checkpoint-proof.ts`; standalone proof passes. Typecheck and lint pass. Headless encounter setup plus real W/D inputs recorded a stopped bus at tick 739, but the opened frame excluded the bus from the follow camera; this is not accepted as crash visual proof. Wider capture remains needed.
+
+The remote gate after moving checkpoint workload still timed out at 240.6 seconds. Further inspection of the remaining monolithic vehicle test is required; no budgets were raised.

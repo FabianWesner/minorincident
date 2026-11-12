@@ -30,4 +30,6 @@ try {
   console.log(JSON.stringify(result));
   assert.ok(result.hits <= 1, 'steering driver takes at most one ram');
   assert.ok(result.misses >= 2, 'steering input actually evades rams');
+  assert.equal(result.busHealth, 0, 'two missed rams wreck the bus');
+  assert.notEqual(result.stopped, null, 'the wreck stops pursuing');
 } finally { world.dispose(); }

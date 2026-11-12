@@ -13,8 +13,6 @@ import { missionControls } from '../../src/sim/missions/controls';
 import { preset } from '../../src/sim/progression/Campaign';
 import { objectiveText } from '../../src/sim/missions/objectiveText';
 import type { PropSnapshot } from '../../src/sim/interact/PropSystem';
-import { decodeSave } from '../../src/sim/progression/Save';
-import { readFixture } from '../../tools/qa/fixture-io';
 
 async function car(id = 'vehicle.sedan') {
   const physics = new Physics(); await physics.init();
@@ -102,66 +100,11 @@ test('enter, drive and exit: door dwell, input ownership (no attacks while drivi
   await l9BusTelegraphAndWreck();
   await l9FloorApcThroughPile();
   await l9CompanionsBoardDiagonalApc();
-  await l9CheckpointLanes();
-  await l9BayAndHatch();
 }, 400_000);
 
 // r33-l9polish: (a) the bridge-gate wall spans +-34 m, so an APC cannot slip round its open end (was 13 m); an APC that stops anywhere
 // in the bay box (here 30 m north of the lane) still starts the evacuation. (b) The rail-stall hatch: infected climb aboard at most
 // one per boardSpacing ticks, so four boarders cannot pile up and kill the courier in 3 s.
-async function l9BayAndHatch(): Promise<void> {
-  const world = await loadLevel('L9', 1, preset('L9-default'), 0, { quality: 'low' });
-  try {
-    const l9 = world.missions!.l9!, vehicles = world.vehicles!, car = vehicles.cars.get(l9.state.carId)!, s = l9.driving.state;
-    world.missions!.begin();
-    for (let i = 0; i < 5; i++) world.update();
-    const wall = world.interactables!.walls.find(w => w.entityId === s.bridgeGateId);
-    expect(wall?.halfZ, 'bridge-gate wall reaches +-34 m').toBeGreaterThanOrEqual(34);
-    const pose = { x: 452, z: 30, y: car.physics.def.suspension + car.physics.def.wheelRadius + .15, yaw: 0 };
-    Object.assign(car.entity.transform, pose); Object.assign(car.physics.previous, pose); car.physics.body.setTranslation(pose, true);
-    car.physics.body.setLinvel({ x: 0, y: 0, z: 0 }, true); car.physics.body.setAngvel({ x: 0, y: 0, z: 0 }, true);
-    for (let i = 0; i < 90; i++) world.update();
-    expect(s.evacuationAt, 'evacuation starts from the bay corner, not only the 11 m radius').not.toBeNull();
-    // Hatch pacing: while stalled the vehicle carries the boarding spacing; the climb-aboard clock follows each boarder.
-    s.stallAt = world.tick; s.restarted = false; world.update();
-    expect(car.entity.vehicle!.boardSpacing, 'stalled hatch: boarders are spaced').toBeGreaterThanOrEqual(150);
-    s.restarted = true; world.update();
-    expect(car.entity.vehicle!.boardSpacing, 'after the restart the spacing is gone').toBe(0);
-  } finally { world.dispose(); }
-}
-
-// r30-l9bridge (r28-vqa P2): the L9 `bridge` checkpoint restarted the APC beside the chasing school bus. After restoring each L9
-// checkpoint fixture (resume) and after a death at the bridge (retry), nothing solid lies within 8 m ahead of the APC on its route
-// (east to the bridge deck), and the bus is not within 30 m of the bridge restart.
-async function l9CheckpointLanes(): Promise<void> {
-  for (const name of ['l9-at-bridge.json.br', 'l9-before-rail-stall.json.gz']) {
-    const decoded = decodeSave(JSON.stringify(readFixture(`tests/fixtures/saves/qa/${name}`).campaign));
-    if (decoded.status !== 'ok') throw new Error(`${name} does not decode`);
-    const world = await loadLevel('L9', 1, decoded.save, 0, { quality: 'low' });
-    try {
-      const l9 = world.missions!.l9!, s = l9.driving.state;
-      const bridge = name.startsWith('l9-at-bridge');
-      expect(l9.driving.laneClear(8, bridge ? 0 : undefined, bridge), `${name}: 8 m of clear route ahead of the restored APC`).toBe(true);
-      if (!bridge) continue;
-      expect(s.evacuationDone).toBe(true);
-      expect(world.vehicles!.cars.get(l9.state.carId)!.entity.vehicle!.impactStallUntil ?? 0, 'saved absolute ticks are rebased: no impact stall left after Continue').toBeLessThanOrEqual(world.tick);
-      expect(l9.driving.laneClear(8), 'bridge resume: clear along the APC heading too').toBe(true);
-      // A restore rebuilds the vehicle bodies, so look the cars up each time.
-      const gap = () => { const bus = world.vehicles!.cars.get(s.busId)!, apc = world.vehicles!.cars.get(l9.state.carId)!; return Math.hypot(bus.entity.transform.x - apc.entity.transform.x, bus.entity.transform.z - apc.entity.transform.z); };
-      expect(gap(), 'bridge resume: the bus starts well behind the APC').toBeGreaterThanOrEqual(30);
-      let respawned = false; world.events.on('player.respawned', () => { respawned = true; });
-      for (let i = 0; i < 400; i++) world.update();
-      world.player!.damage(1000, world.tick, true);
-      for (let i = 0; i < 900 && !respawned; i++) world.update();
-      expect(respawned, 'the courier respawns at the bridge checkpoint').toBe(true);
-      for (let i = 0; i < 5; i++) world.update();
-      expect(l9.driving.laneClear(8), 'bridge retry: clear lane ahead').toBe(true);
-      expect(gap(), 'bridge retry: the bus starts well behind the APC').toBeGreaterThanOrEqual(30);
-      expect(world.vehicles!.active, 'bridge retry: the courier is still driving the APC').toBe(l9.state.carId);
-    } finally { world.dispose(); }
-  }
-}
-
 // L9 evacuation hold: before the fix the pursuing bus kept full throttle against the braked APC
 // (2.4 m first shove, then a 0.2 m/s creep, about 10 m over the hold). It must now stop short.
 async function l9BusVsParkedApc(): Promise<void> {

@@ -541,7 +541,7 @@ export class LevelNineDriving {
       s.busRamAt = 0; s.busHitAt = w.tick; s.busRams++;
       if (lateral > 4.5) {
         const side = Math.sign(p.z - (s.busRamZ ?? p.z)) || 1;
-        w.vehicles!.damage(s.busId, 400);
+        w.vehicles!.damage(s.busId, 600);
         // A successful dodge sends the bus toward the opposite verge, away
         // from the lane the player just chose.
         bus.physics.body.setLinvel({ x: Math.max(5, bus.physics.forwardSpeed), y: 0, z: -side * 4 }, true);
