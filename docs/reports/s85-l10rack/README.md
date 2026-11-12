@@ -32,3 +32,8 @@
 ## Touch correction
 
 Real CDP touch events exposed overlap between Flashbang's slot and the touch attack controls. `2f21534d` positions the rack directly from the active input scheme, above the attack controls. The rebuilt headless smoke test passed all 14 real touch selections as well as clicks and Q cycling. Opened the 390×844 capture: every rack slot is within the viewport and the attack controls are below the rack with a clear gap. Focused ESLint passed. Matched throwable before/after captures and empty-ammo visual review remain open.
+
+## Empty ammo and matched preview evidence
+
+- Corrected browser fixture reads the upgraded starting charge count (three in this campaign), spends all charges, reselects Molotov and verifies selected=true, empty=true and an Empty accessible label. Headless test passed; opened empty-molotov.png and saw the selected slot with its ! marker.
+- Built an isolated source archive with only ActionView.ts restored from af05750d. The same browser fixture passed against both builds. Opened before/after captures at HIGH zoom 1 and 1.5: the former thick continuous trajectory/ring is now thin and dashed with a thin ground ring. This LEFT-slot fixture was already gold before; the supplied PO screenshot documents the former RIGHT-slot cyan color. Camera/scene match; zoom 1 clips the ring at the edge, while zoom 1.5 shows the full circle. Updated review.jpg contains the four matched captures.
