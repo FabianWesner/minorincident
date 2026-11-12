@@ -1,3 +1,4 @@
+import { cureVignetteDecals } from '../../src/levels/L10/vignettes';
 import { clearGroundCoverFromRoads } from '../../src/levels/groundCoverRoads';
 // Nightly content invariants (PO 10-13 "This isn't a bug that I should ever face"): baseline ratchets over ALL assets and
 // districts. Known backlog lives in the baseline files next to this test; any NEW offender fails. Not per-change: they
@@ -231,6 +232,14 @@ function assertGroundCoverRoads(): void {
     const layouts = prepare ? prepare(source) : source;
     for (const layout of layouts) {
       const placements = clearGroundCoverFromRoads({ ...layout, placements: [...layout.placements, ...districtDecor(layout.district, layout.placements)] }).placements.filter(groundCover);
+      // L10 atlas decals are emitted separately from static placements; observe
+      // their actual rotated ground footprint as well (roof/wall paint is not ground cover).
+      if (layout.district === 'D-CURE') for (const d of cureVignetteDecals([...layout.placements, ...districtDecor(layout.district, layout.placements)]).filter(d => d.ground && !d.roof)) {
+        const [x,y,z] = d.position, c = Math.abs(Math.cos(d.yaw)), s = Math.abs(Math.sin(d.yaw));
+        const hx = (d.size[0]*c+d.size[1]*s)/2, hz = (d.size[0]*s+d.size[1]*c)/2;
+        placements.push({ id:d.id, assetId:'decal.l10-stories', position:d.position, yaw:d.yaw, scale:[1,1,1], minTier:0, maxTier:6, allowRoad:false, lightGroup:'decor',
+          visualAabb:{min:[x-hx,y,z-hz],max:[x+hx,y+.01,z+hz]} });
+      }
       for (const p of placements) {
         for (const road of layout.roads.edges) for (let i = 1; i < road.points.length; i++) {
           if (segmentDistanceToBox(road.points[i-1], road.points[i], p) < road.laneWidth / 2 - .01)
