@@ -33,3 +33,9 @@ Opened the HIGH surrounded sheet: a stationary APC with four infected moving awa
 ## Contact peak investigation
 
 The surrounded infected-3 maximum contact begins at frame 38, while its root is still at [-1, -2.5] with reported speed zero. The same contact spans the idle-to-lurch transition and subsequent movement. This points to checking pose/foot-anchor continuity before attributing that full contact displacement to vehicle shove. The gate now reports each required actor’s maximum as well as p95, preserving the aggregate checks. Typecheck passes after that harness change.
+
+## Production vehicle AI diagnostic
+
+`tools/scenelab/vehicle-contact-motion.ts` removes Scene Lab’s L1 search controller, matching the existing L9 APC harness. The prior catalog baseline did not do this. Both tiers now record 14 windups and 12 hull hits in surrounded and six combat hits in ram. Ram contacts pass; surrounded maximum remains 34.5 cm HIGH / 34.6 cm LOW, with p95 below 5 cm. See `native-contact-summary.json`. State-specific clinging/push coverage remains outstanding.
+
+Opened `apc-consecutive.jpg`: HIGH zoom 1.5, consecutive frames 140–145, stationary APC with infected at its front corner and rear side. The red attack arc advances beside the hull; feet are small at this framing, so this strip alone cannot certify planted-foot quality.
