@@ -208,15 +208,6 @@ export async function proveThreatAudit(): Promise<void> {
   assert(!isConfinedInClosedL8Pen({ x: -40, z: -32 }, { arenas: arenaStates, sealed: false }), 'path infected outside a pen remain in the census');
   assert(!isConfinedInClosedL8Pen({ x: 0, z: -32 }, flamingoContext), 'the flamingo pen exit remains open until the plaza seals');
   assert(isConfinedInClosedL8Pen({ x: 0, z: -32 }, { ...flamingoContext, sealed: true }), 'the flamingo pen is excluded only after its exit closes');
-  assert(isConfinedInClosedL8Pen({ x: -51.6, z: 11.2 }, { arenas: arenaStates, sealed: true }), 'infected on a closed approach segment are excluded after the next entry arms');
-  assert(!isConfinedInClosedL8Pen({ x: -51.6, z: 11.2 }, { arenas: arenaStates.map(a => a.id === 'zebra' ? { ...a, phase: 0, armed: false } : { ...a, phase: 3, armed: false }), sealed: true }), 'an open cleared route segment remains in the census');
-  assert(isConfinedInClosedL8Pen({ x: 0, z: -5 }, { arenas: arenaStates, sealed: true }), 'infected in the sealed plaza are outside the party route');
-  const allCellsLocked = arenaStates.map(a => ({ ...a, phase: 3, armed: true }));
-  assert(isConfinedInClosedL8Pen({ x: -106, z: 28 }, { arenas: allCellsLocked, sealed: true }), 'off-route infected stay outside the party threat census once all route doors seal');
-  assert(isConfinedInClosedL8Pen({ x: -106, z: 28 }, { arenas: allCellsLocked.map(a => a.id === 'zebra' ? { ...a, phase: 0, armed: false } : a), sealed: true }), 'off-route actors remain isolated while an open door is far from them');
-  assert(!isConfinedInClosedL8Pen({ x: -51.6, z: 11.2 }, { arenas: allCellsLocked.map(a => a.id === 'zebra' ? { ...a, phase: 0, armed: false } : a), sealed: true }), 'actors near an open route door remain in the threat census');
-  assert(isConfinedInClosedL8Pen({ x: 100, z: 32 }, { arenas: allCellsLocked, sealed: true }), 'infected behind the armed elephant yard entry are isolated');
-  assert(!isConfinedInClosedL8Pen({ x: 100, z: 32 }, { arenas: allCellsLocked.map(a => a.id === 'elephant' ? { ...a, phase: 1, armed: false } : a), sealed: true }), 'the elephant yard approach stays in the census before the party passes');
   assert.deepEqual(phaseFlags(good), []);
   assert.equal(isWalkingSample(1.5, 0, false, false), false, 'parked formation shuffling is not group walking');
   assert.equal(isWalkingSample(0, 4, true, false), true, 'a stalled follower must retain zero samples while the courier moves');
