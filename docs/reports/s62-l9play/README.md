@@ -33,3 +33,9 @@ The requested commit could not be created: `git add` was denied while creating t
 The slim-worktree setup succeeded. Headless real-input fixture play completed for 45 seconds, god off, with no page errors. Opened `s008-t1552.jpg` (stall 0:13 and progress bar) and `s012-t2547.jpg` (APC beyond the crossing, restart dialogue). Captures are under `test-results/s62-l9play/captures/`. The roof stripe and the bus dodge/crash visuals still require follow-up. Earlier permission failures above describe the first attempt; the resumed browser run succeeds.
 
 The resumed exact remote `npm test` command ran on 94.130.181.173, but failed: navigation A* budget test reported a failure and the complete run exceeded its 240-second budget (240.4 seconds, exit 124). The earlier local complete verifier remains green; the remote gate is not green and requires investigation.
+
+## Roof treatment follow-up
+
+Removed the APC's side-projected blood overlay, which stretched into the red roof band. Damage remains expressed by dents, cracked glass and smoke. Typecheck and lint pass. Opened `test-results/s62-l9play/roof-fix/s006-t1514.jpg`: no red band; courier arms and weapon visible above the hatch; stall HUD at 0:17 with bar and Sam's line. Headless 30-second real-input fixture run, god off, completed without page errors.
+
+Remote retry completed in 236.9 seconds (inside 240-second limit): 105 passed, 1 skipped, 1 navigation test failed; vehicle integration including bus dodge/wreck passed. The navigation failure remains to investigate.
