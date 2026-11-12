@@ -21,3 +21,10 @@
 - Run the extended L10 smoke case through the browser pool; inspect the full rack capture at 1280×720 and the 390×844 bounds.
 - Capture and open the HIGH Molotov preview at zoom 1 and 1.5; describe both captures.
 - Run the remote unit suite when a healthy runner is available.
+
+## Verification after sandbox removal
+
+- Remote `npm test`: PASS on 94.130.181.173, 27 files, 106 passed / 1 skipped, 224.1 s within 240 s.
+- Extended headless Chromium smoke case: PASS twice; final run explicitly captures 1280×720. All 14 hangar weapons selected by real clicks and Q cycling; 390×844 rack bounds passed.
+- Opened all four HIGH captures and the corrected desktop capture. Desktop rack is fully visible along the bottom; phone rack wraps within the viewport. The hunting-rifle icon contains HU (hunting rifle), with a Q shortcut badge and a full-name tooltip. Gold dashed Molotov trajectory and the ground ring are visible at zoom 1 and 1.5; the closer view clips the ring at the screen edge. [Review sheet](review.jpg).
+- These results supersede the earlier sandbox/runner blockers above. Remaining: matched before/after throwable captures and explicit empty-ammo presentation review.

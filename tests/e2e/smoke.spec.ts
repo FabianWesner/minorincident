@@ -243,6 +243,8 @@ test('L1 handover + outbreak: no shader builds after warm-up and no frame over 2
   expect(rackIds).toEqual(expect.arrayContaining(l10HangarWeapons));
   expect(await page.locator('.hud-weapon-rack .hud-weapon-choice').count()).toBeGreaterThanOrEqual(14);
   mkdirSync('test-results/smoke/l10-rack', { recursive: true });
+  await page.setViewportSize({ width: 1280, height: 720 });
+  await page.evaluate(async () => { await window.__SS__!.screenshotReady(); });
   await page.screenshot({ path: 'test-results/smoke/l10-rack/rack-high-1280x720.png' });
   for (const id of l10HangarWeapons) {
     await page.locator(`.hud-weapon-choice[data-weapon="${id}"]`).click();
