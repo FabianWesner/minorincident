@@ -1,0 +1,60 @@
+{
+  "lane": "s72-b87high",
+  "worktreeHead": "9704a4896fc79e01c11349b46f662c147946d6e8",
+  "run": {
+    "quality": "high",
+    "viewport": "1280x720",
+    "zoomRequested": null,
+    "backendRequested": "webgl2 (live driver explicitly requests it)",
+    "backendObserved": "webgl2-metal",
+    "entry": "normal menu with standard level-start save for L9, L8 and L4",
+    "realInputDriver": "tools/playtest/live.ts",
+    "status": "QA closed with sampled verdicts and explicit coverage limits",
+    "captures": [
+      "contact-sheet.jpg"
+    ],
+    "zoomEvidence": "explicit HIGH / zoom 1 verified in l8-verified, 50 actions; physical wheel -300 in earlier L8/L4 samples, exact close magnification unmeasured"
+  },
+  "checks": {
+    "uncachedBuild": "passed",
+    "defaultBuild": "failed: shared cache lock outside writable worktree",
+    "preview": "initial EPERM resolved; live preview ran on 4917",
+    "browserPoolPreview": "initial EPERM resolved; single pooled headless browser per reservation",
+    "typecheck": "passed",
+    "lint": "passed",
+    "tests": "passed unchanged rerun: 27 files, 106 passed / 1 skipped, 210.6 s / 240 s on 46.225.66.90; first attempt timed out at 246 s"
+  },
+  "items": [
+    {
+      "id": "L9-route-and-vehicle",
+      "verdict": "NOT FIXED sampled objective progress; continuous-W chassis blockage UNVERIFIED",
+      "historicalProdComparison": "s67 reports the blockage class reproduced on PROD 0b650749",
+      "currentCapture": "contact-sheet.jpg"
+    },
+    {
+      "id": "L9-hatch-and-bus",
+      "verdict": "FIXED rail countdown/restart/hatch in sample; UNVERIFIED bus telegraph",
+      "historical": "current HIGH turns 30/35 opened; bus still unverified",
+      "currentCapture": "contact-sheet.jpg"
+    },
+    {
+      "id": "L8-flamingos",
+      "verdict": "FIXED remaining-count HUD and sampled corpse column; UNVERIFIED continuous gait",
+      "historical": "current HIGH Phase 2 counts and horizontal fallen birds opened",
+      "currentCapture": "contact-sheet.jpg"
+    },
+    {
+      "id": "L4-armored-and-heavies",
+      "verdict": "UNVERIFIED",
+      "historical": "current HIGH real-input mixed fight captured; directional landed-shot count and isolated heavy attribution remain unverified",
+      "currentCapture": "contact-sheet.jpg"
+    },
+    {
+      "id": "new-glitches-and-pacing",
+      "verdict": "UNVERIFIED",
+      "currentCapture": "contact-sheet.jpg"
+    }
+  ],
+  "releaseVerdict": "GO",
+  "reason": "No NEW P1 or regression versus PROD established; partial coverage explicitly marked UNVERIFIED in README."
+}
