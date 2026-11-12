@@ -647,6 +647,10 @@ _barricade(3.1, -67.2, 3.1, -60.8)
 for _x in (-63.1, -56.9, -3.1, 3.1): _fence(_x, -60.8, _x, -46.8)
 
 _fence(-62.6, -67.1, -60, -67.1)
+# Southern turn verges and the closed lawn beyond the arrival junction.
+_fence(20.8, 67.1, 27.2, 67.1)
+for _x in (56.9, 63.1): _fence(_x, 46.8, _x, 60.8)
+
 # The plaza hold is a paved bounded gathering space, including its objective
 # centre and hatch approaches; no objective circle sits over dark lawn.
 l.box('plaza-floor', 'sidewalk', [28, .035, 24], [0, .0175, 0])
