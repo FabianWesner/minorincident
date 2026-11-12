@@ -1,6 +1,6 @@
 /** Controlled actual-L8 gate admission check; no combat completion claim. */
 import assert from 'node:assert/strict';
-import { writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync } from 'node:fs';
 import { l8GateClosed, l8Route, l8PlazaGates, l8ConnectorGates, l8YardGates, l8EncounterGates } from '../../src/data/l8Bosses';
 import { loadLevel } from '../sim-runner/levels';
 const w = await loadLevel('L8', 1);
@@ -42,7 +42,10 @@ try {
     assert((after[axis] - box[axis]) * side > 0, `${name}: six-metre shove crossed closed gate`);
     rows.push({ name, side, edge, diagonal, before, after });
   }
-  const out = process.env.L8_SHOVE_OUT ?? 'test-results/s75-l8part2/gate-shoves.json';
+  const out = process.env.L8_SHOVE_OUT ?? 'test-results/s77-l8route/gate-shoves.json';
+  mkdirSync(out.slice(0, out.lastIndexOf('/')), { recursive: true });
   writeFileSync(out, JSON.stringify({ pass: true, method: 'Actual L8 closed gates, controlled admission on both sides, centre and near-end admissions, straight and diagonal six-metre knockback; no normal travel or combat claim.', rows }, null, 2));
   console.log(JSON.stringify({ pass: true, cases: rows.length, out }));
 } finally { w.dispose(); }
+process.env.L8_CONFINEMENT_OUT ??= 'test-results/s77-l8route/route-confinement.json';
+await import('./l8-route-confinement');

@@ -94,9 +94,13 @@ export function l8GateClosed(key: string, ctx: L8GateContext): boolean {
   const index = ctx.arenas.findIndex(a => a.id === id), arena = ctx.arenas[index];
   if (!arena) return true;
   const fighting = arena.phase > 0 && arena.phase < 3;
-  if (side === 'entry') return (index > 0 && ctx.arenas[index - 1].phase !== 3) || fighting && !!arena.armed;
-  // Keep the completed section's exit open until the whole party is through the next entry gate.
-  if (ctx.arenas[index + 1]?.phase && ctx.arenas[index + 1].phase > 0 && ctx.arenas[index + 1].armed) return true;
+  if (side === 'entry') return (index > 0 && ctx.arenas[index - 1].phase !== 3) || fighting && !!arena.armed
+    // Once the party has entered the next enclosure and its entry gate is armed,
+    // seal the cleared pen on both ends. The return door stays open until then.
+    || arena.phase === 3 && (!!ctx.arenas[index + 1]?.armed || ctx.arenas[index + 1]?.phase === 3);
+  // Keep a completed section's exit open until the whole party is through the next entry gate.
+  const next = ctx.arenas[index + 1];
+  if (arena.phase === 3 && next?.phase && (next.phase === 3 || next.armed)) return true;
   // The pond's north door stays open while the tunnel runners need it (the opening alarm); it shuts with the plaza.
   if (id === 'flamingo') return ctx.sealed && arena.phase !== 3;
   return arena.phase !== 3;

@@ -9,7 +9,7 @@ import { WaveObserver } from './waves';
 import { l3 } from '../../../src/data/l3';
 import { infectedDef } from '../../../src/data/infected';
 import { apcDurability } from '../../../src/data/vehicles';
-import { l8GateClosed, l8Route, inRect, type L8GateContext } from '../../../src/data/l8Bosses';
+import { l8GateClosed, l8Route, l8PlazaCell, l8EncounterGates, inRect, type L8GateContext } from '../../../src/data/l8Bosses';
 
 export const median = (values: readonly number[]): number | null => {
   const sorted = [...values].sort((a, b) => a - b), n = sorted.length;
@@ -33,7 +33,7 @@ export class SpawnIdentities {
   }
 }
 export interface Position { identity: string; id: number; x: number; z: number; playerX: number; playerZ: number }
-export interface Snapshot { tick: number; alive: number; reachable: number; playerX: number; playerZ: number; positions: Position[] }
+export interface Snapshot { tick: number; alive: number; reachable: number; playerX: number; playerZ: number; positions: Position[]; l8RouteState?: { sealed: boolean; arenas: { id: string; phase: number; armed?: boolean }[]; doors: { id: string; entry: boolean; exit: boolean }[] } }
 export interface BlockedWindow { streakStart: number | null; maxBlockedSeconds: number; blockedEvidence: Snapshot | null }
 export function observeBlocked(window: BlockedWindow, snapshot: Snapshot): void {
   if (snapshot.alive > 0 && (snapshot.alive - snapshot.reachable) / snapshot.alive > .3) {
@@ -44,9 +44,30 @@ export function observeBlocked(window: BlockedWindow, snapshot: Snapshot): void 
 }
 /** An escape-step infected inside a pen is not a route threat while both pen doors are shut. */
 export function isConfinedInClosedL8Pen(position: { x: number; z: number }, context: L8GateContext): boolean {
-  return l8Route.some(stage => inRect(position, stage.zone)
+  if (l8Route.some(stage => inRect(position, stage.zone)
     && l8GateClosed(`${stage.id}.entry`, context)
-    && l8GateClosed(`${stage.id}.exit`, context));
+    && l8GateClosed(`${stage.id}.exit`, context))) return true;
+  // Completed visitor-route cells also contain infected outside the pen's inset
+  // combat zone. Once the next entry arms, both doors bound that whole authored
+  // approach segment. Off-route actors are contained only when every open route
+  // door is more than 18 m away from them; nearby actors stay in the census.
+  const nearEdge = (a: { x: number; z: number }, b: { x: number; z: number }) => {
+    const dx = b.x - a.x, dz = b.z - a.z, d2 = dx * dx + dz * dz || 1;
+    const t = Math.max(0, Math.min(1, ((position.x - a.x) * dx + (position.z - a.z) * dz) / d2));
+    return Math.hypot(position.x - a.x - t * dx, position.z - a.z - t * dz);
+  };
+  if (l8Route.some(stage => stage.nodes.slice(1).some((b, i) => nearEdge(stage.nodes[i]!, b) <= 12)
+    && l8GateClosed(`${stage.id}.entry`, context) && l8GateClosed(`${stage.id}.exit`, context))) return true;
+  if (inRect(position, l8PlazaCell) && ['w', 'e', 's'].every(side => l8GateClosed(`plaza.${side}`, context))) return true;
+  const elephant = context.arenas.find(arena => arena.id === 'elephant'), entry = l8EncounterGates.elephantEntry;
+  if (context.sealed && elephant && elephant.phase > 0 && elephant.armed && position.z < entry.z
+    && Math.hypot(position.x - entry.x, position.z - entry.z) <= 10.5) return true;
+  const pennedStages = l8Route.filter(stage => stage.entry && stage.exit);
+  const farFromStage = (stage: typeof l8Route[number]) => stage.nodes.slice(1).every((b, i) => nearEdge(stage.nodes[i]!, b) > 18);
+  const outsideRoute = l8Route.every(farFromStage);
+  const allOpenDoorsFarAway = pennedStages.every(stage => farFromStage(stage)
+    || l8GateClosed(`${stage.id}.entry`, context) && l8GateClosed(`${stage.id}.exit`, context));
+  return context.sealed && outsideRoute && allOpenDoorsFarAway;
 }
 /** Walking excludes a parked formation and physical incapacitation, but keeps a lagger's zero-speed samples. */
 export function isWalkingSample(speed: number, leaderSpeed: number, lagging: boolean, incapacitated: boolean): boolean {
@@ -584,7 +605,8 @@ export class ThreatObserver {
         if (percent <= bounded.minimumPercent) Object.assign(bounded, { minimumPercent: percent, worstTick: w.tick, nearby, reachable: boundedReachable, blockedIds: boundedBlockedIds, blockedPositions: boundedBlockedPositions });
       }
       for (const token of rowReachable) row.reachable.add(token);
-      const snapshot = { tick: w.tick, alive: rowAlive, reachable: rowReachable.size, playerX: player.transform.x, playerZ: player.transform.z, positions: rowPositions };
+      const snapshot = { tick: w.tick, alive: rowAlive, reachable: rowReachable.size, playerX: player.transform.x, playerZ: player.transform.z, positions: rowPositions,
+        ...(l8GateContext ? { l8RouteState: { sealed: l8GateContext.sealed, arenas: l8GateContext.arenas.map(a => ({ id: a.id, phase: a.phase, armed: a.armed })), doors: l8Route.filter(stage => stage.entry && stage.exit).map(stage => ({ id: stage.id, entry: l8GateClosed(`${stage.id}.entry`, l8GateContext), exit: l8GateClosed(`${stage.id}.exit`, l8GateContext) })) } } : {}) };
       row.last = snapshot;
       observeBlocked(row, snapshot);
     }
