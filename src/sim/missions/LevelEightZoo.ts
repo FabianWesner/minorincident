@@ -207,6 +207,12 @@ export class LevelEightZoo {
     const id = emergeResident(w, outlet, w.tick, alpha ? { archetype: 'infected.alpha' } : { ...(index === 3 ? { archetype: spearhead ? 'infected.armored' : 'infected.sprinter' } : {}), look: { role: 'cashier' } });
     if (id) {
       this.state.arrivals.push({ id, outlet: index, tick: w.tick, alpha }); if (alpha) this.state.alphas++;
+      if (index === 3 && !this.state.sealedAt) {
+        // Finish the opening southern approach inside the plaza before its
+        // keeper doors close, rather than releasing pursuit on the far apron.
+        const walk = outlet.walking?.find(walk => walk.id === id);
+        if (walk) walk.route = [...outlet.route, [24, 20], [24, 0], [0, 0]];
+      }
       if (index === 2 && !this.state.sealedAt) {
         const walk = outlet.walking?.find(walk => walk.id === id);
         if (walk) walk.route = [...outlet.route, [0, -44], [-11, -40], [-11, -24], [1, -19.2]];

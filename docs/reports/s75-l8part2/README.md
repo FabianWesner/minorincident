@@ -111,3 +111,13 @@ Single pooled headless WebGL2/Metal sample from `l8-elephant-apc-yard-engaged`, 
 Also opened `s002-t669.jpg`: the objective has advanced to boarding, courier HP 30, and the camera is much closer; the elephant body is partly cropped at the lower right. This is an unresolved boarding camera-state concern, not an arena framing pass. Raw images/log remain ignored under `test-results/s75-l8part2/`. Browser and server stopped.
 
 Audit inspection confirms the current remaining passive flag is the separate retreat-kiting probe: 20 s moving, 39.45 m travelled, 101 player attack starts, one infected attack start, zero landed hits. The passive escape census no longer supplies the flag. No threshold or other-level rule was changed.
+
+## Zero passive flags in targeted L8 audit
+
+The southern opening cohort now completes its scripted public-route approach through (24,20), (24,0) into the plaza before releasing normal pursuit. Previously it released on the far apron, where the seal could isolate it. Ordinary archetype stats, damage and thresholds are unchanged.
+
+Exact targeted rerun line:
+
+> L8: skilled complete, passive tick-budget, 0 passive flags (101.7s)
+
+The command still exits nonzero for partial-level selection and baseline-main-source provenance; this is not the requested full-audit receipt. Threat proof, typecheck, lint and diff checks pass after the change. The full audit and final remote unit rerun remain required.
