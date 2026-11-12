@@ -1,0 +1,169 @@
+{
+  "runtimeRevision": "8cad224a5e610df4165aa797e570d92fa16cd38d",
+  "sourceHash": "68a84149939f371b7874bb92c3fdca04a6e2141907424224dd04414dc6e8901d",
+  "observerHash": "7f071230f0c119a299d80bb53441cd9dd9db4ea0b3ec400a9caa3b631d45574d",
+  "command": "node --import tsx/esm tools/qa/threat-audit.ts --levels L3,L4,L7",
+  "flags": [
+    "L4/criterion/L4-06 first breach:FAIL",
+    "L4/criterion/L4-06 sustained horde:FAIL",
+    "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+  ],
+  "levels": [
+    {
+      "level": "L3",
+      "skilled": "complete",
+      "passive": "tick-budget",
+      "skilledFlags": [],
+      "passiveFlags": [],
+      "kiting": {
+        "kitingSeconds": 20.000000000000146,
+        "attacks": 4,
+        "attacksPerMinute": 11.999999999999913,
+        "samples": 1200,
+        "style": "retreat",
+        "minimumHordeSize": 3,
+        "minimumMoveSpeedMps": 0.05,
+        "diagnostics": {
+          "startTick": 631,
+          "endTick": 1830,
+          "firingFrames": 1200,
+          "playerAttackStarts": 60,
+          "framesWithoutThreats": 551,
+          "movingSeconds": 20.000000000000146,
+          "immobilizedSeconds": 0,
+          "distanceMeters": 39.942297285810874,
+          "bodyAvoidanceFrames": 0,
+          "phases": [
+            "step/defend",
+            "phase/attack"
+          ]
+        },
+        "hits": 1,
+        "stationaryHits": 0,
+        "hitsPerMinute": 2.9999999999999782
+      },
+      "l3Army": {
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "army": 4,
+            "attacksPerMinute": 21.533277169334458
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "army": 3,
+            "attacksPerMinute": 10.875
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "army": 0,
+            "attacksPerMinute": 34.30631868131868
+          }
+        ],
+        "measured": 3,
+        "within": 2,
+        "pass": true
+      }
+    },
+    {
+      "level": "L4",
+      "skilled": "complete",
+      "passive": "tick-budget",
+      "skilledFlags": [
+        "wave/breach-west:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+        "wave/breach-north:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+      ],
+      "passiveFlags": [
+        "criterion/L4-06 first breach:FAIL",
+        "criterion/L4-06 sustained horde:FAIL"
+      ],
+      "kiting": {
+        "kitingSeconds": 19.700000000000163,
+        "attacks": 19,
+        "attacksPerMinute": 57.86802030456805,
+        "samples": 1182,
+        "style": "retreat",
+        "minimumHordeSize": 3,
+        "minimumMoveSpeedMps": 0.05,
+        "diagnostics": {
+          "startTick": 2338,
+          "endTick": 3537,
+          "firingFrames": 1182,
+          "playerAttackStarts": 118,
+          "framesWithoutThreats": 112,
+          "movingSeconds": 19.683333333333497,
+          "immobilizedSeconds": 0,
+          "distanceMeters": 45.62773282639775,
+          "bodyAvoidanceFrames": 0,
+          "phases": [
+            "step/hold",
+            "phase/war"
+          ]
+        },
+        "hits": 8,
+        "stationaryHits": 1,
+        "hitsPerMinute": 24.365482233502338
+      },
+      "highHold": {
+        "tier": "high",
+        "holdComplete": true,
+        "firstBreachLevelSeconds": 50.083333333333336,
+        "firstBreachAfterTurnSeconds": 17.266666666666666,
+        "aliveAtFirstBreach": 44,
+        "peakAlive": 59,
+        "peakPlazaAlive": 56,
+        "minPlazaAliveAfter45Seconds": 17,
+        "samplesAfter45Seconds": 8700,
+        "arrivalEdges": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "threeDirectionsAtLeast60Degrees": true,
+        "maxGroupAtOneSourcePerTick": 5,
+        "firstAttackSeconds": 10.25,
+        "lineBreakAfterTurnSeconds": 190
+      }
+    },
+    {
+      "level": "L7",
+      "skilled": "complete",
+      "passive": "tick-budget",
+      "skilledFlags": [],
+      "passiveFlags": [],
+      "kiting": {
+        "kitingSeconds": 20.000000000000146,
+        "attacks": 4,
+        "attacksPerMinute": 11.999999999999913,
+        "samples": 1200,
+        "style": "retreat",
+        "minimumHordeSize": 3,
+        "minimumMoveSpeedMps": 0.05,
+        "diagnostics": {
+          "startTick": 75,
+          "endTick": 1274,
+          "firingFrames": 276,
+          "playerAttackStarts": 8,
+          "framesWithoutThreats": 510,
+          "movingSeconds": 18.883333333333542,
+          "immobilizedSeconds": 1.1166666666666676,
+          "distanceMeters": 37.59719306765831,
+          "bodyAvoidanceFrames": 0,
+          "phases": [
+            "step/corridor",
+            "phase/encounters"
+          ]
+        },
+        "hits": 2,
+        "stationaryHits": 0,
+        "hitsPerMinute": 5.9999999999999565
+      }
+    }
+  ]
+}
