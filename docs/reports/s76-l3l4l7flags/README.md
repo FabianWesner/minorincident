@@ -94,3 +94,5 @@ Moving the four close opening runners six metres west toward the street ranks al
 ## Armor flank placement constraint
 
 Moving the four armor-phase flank anchors toward the plaza produced an identical high-hold census (44 alive at breach, peak 59, plaza peak 56, minimum 17), two passive flags and skilled completion (55.8 s focused audit). Reverted. Inspection of `L4Collapse.push` explains why authored anchors cannot directly supply interior population: eligibility explicitly rejects `inside(p)`, requires offscreen/occluded and >=12 m from courier, and appends all exterior offscreen mouths. Further placement changes must operate on eligible exterior approaches; interior flank anchors are discarded.
+
+Combined the rejected high-tier-only +24 fast alarm cohort with a high-tier-only Alpha release at alarm +0 s, preserving low-tier +6 s timing. Focused audit: skilled complete, two passive flags; breach 43.72 s with 50 alive, peak alive 76, peak plaza 65, minimum plaza 17. Reverted the combined trial and its temporary tier-specific timing field: the transient higher plaza peak did not improve either required census window.
