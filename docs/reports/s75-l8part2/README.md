@@ -2,7 +2,7 @@
 
 ## Status
 
-Incomplete overall. The latest completed full audit reports L8 skilled complete, passive tick-budget, **2 passive flags**; the earlier zero-flag receipt is superseded by later geometry changes. The calm-tour regression is traced to the west gorilla-junction wall closing before the plaza seal; the current fix moves that wall into the seal-controlled connector gates. Current validation is recorded below. Existing captures and travel receipts precede the final geometry/lighting edits and are not final acceptance evidence.
+Incomplete overall; stopping at the requested timebox. The current full audit reports **L8 skilled complete, passive tick-budget, 0 passive flags** after the calm-tour wall fix. Required remote unit suite, focused mission test, typecheck and lint pass. Current geometry still needs a fresh marker-only real-input tour, final-position HIGH/zoom-1 captures and comprehensive live confinement/closure acceptance; flamingo part 2 and cover/lighting polish are implemented only to the extent documented below. Earlier captures and travel receipts precede final edits and are not final acceptance evidence.
 
 ## Audit change
 
@@ -290,3 +290,15 @@ After inspecting the frame, moved the west lamp from the exact landing-pad coord
 The latest full audit before this fix printed `[qa:threat] L8: skilled complete, passive tick-budget, 2 passive flags (295.7s)`. Passive flags were `KITING_LANDED_HITS_BELOW_2:0.00` and `UNOBSERVED_PASSIVE_CRITERION_STEP:escape`. The required unchanged remote suite then failed the mission interaction test because Nadia never reached the lion (distance approximately 86 m). The authored calm tour crosses x=56.9 at z=0; the new permanent wall blocked that crossing. Moved that same wall to `l8ConnectorGates`, preserving post-seal confinement while allowing the calm tour. No actor stats, thresholds or test expectations changed.
 
 Focused mission interaction test passes (1 passed, 5 unselected); typecheck and lint pass. Targeted L8 audit prints `[qa:threat] L8: skilled complete, passive tick-budget, 0 passive flags (99.2s)`. Full audit and required remote suite are being refreshed before final reporting.
+
+## Final validation and handoff
+
+Current full audit exact line:
+
+`[qa:threat] L8: skilled complete, passive tick-budget, 0 passive flags (229.8s)`
+
+Command: `node --import tsx/esm tools/qa/threat-audit.ts --out test-results/qa-threat-s75-final-seal --report test-results/s75-l8part2/threat-final-seal.md`. Terminal exit 1: 8 overall fail flags outside L8 (including audit provenance); this is not an all-level green claim. The L8 receipt is preserved in `final-seal-checks.json`.
+
+Required unchanged `sh tools/remote/run.sh "$PWD" -- npm test` passes on 94.130.181.173: 27 files, 106 tests passed, 1 skipped; 150-case collection passed; 225.6 seconds against the 240-second guard. Focused mission interaction test passes; typecheck, lint and diff checks pass. No checks remain running.
+
+Open at timebox: rerun marker-only real input from start through sanctuary against final fences; refresh six arena and final lamp-position captures and open them; refresh fixture geometry as appropriate; comprehensive current-state shove/corner/junction/boarding and live one-way closure coverage; uninterrupted flamingo walking/takeoff/landing/return quality acceptance and remaining deliberate cover/lighting/minimap/camera polish. The nightly asset-inventory failure recorded above remains unresolved; no baselines or thresholds were relaxed. Overall goal is not complete. No push, deployment or main movement occurred.
