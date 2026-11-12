@@ -6,7 +6,7 @@
 import { Rng } from '../core/Rng';
 import { worldAssets } from '../assets/worldDefinitions';
 import { l6, l6Doors } from '../data/l6';
-import { clearFarmFromSurfaces, cureFarmDecor, cureRoadsideFarmDecor, cureSouthernFieldDecor } from './L10/farmLayout';
+import { clearFarmFromRoads, clearFarmFromSurfaces, cureFarmDecor, cureRoadsideFarmDecor, cureSouthernFieldDecor } from './L10/farmLayout';
 import { cureRoadsideBelt } from './L10/roadsideBelt';
 import { cureCrossingStories } from './L10/crossingStories';
 import { cureForecourtDecor } from './L10/forecourts';
@@ -99,8 +99,8 @@ export function districtDecor(district: DistrictId, placements: readonly Placeme
     const farm = cureFarmDecor([...placements, ...belt, ...stories, ...forecourts]);
     const vignettes = cureVignettes([...placements, ...belt, ...stories, ...forecourts, ...farm]);
     const roadsideFarm = cureRoadsideFarmDecor([...placements, ...belt, ...stories, ...forecourts, ...farm, ...vignettes]);
-    const list = [...belt, ...stories, ...forecourts, ...clearFarmFromSurfaces(farm, cureEvacuationLane(vignettes)), ...roadsideFarm, ...vignettes,
-      ...cureSouthernFieldDecor([...placements, ...belt, ...stories, ...forecourts, ...farm, ...vignettes])];
+    const list = clearFarmFromRoads([...belt, ...stories, ...forecourts, ...clearFarmFromSurfaces(farm, cureEvacuationLane(vignettes)), ...roadsideFarm, ...vignettes,
+      ...cureSouthernFieldDecor([...placements, ...belt, ...stories, ...forecourts, ...farm, ...vignettes])]);
     cache.set(key, list); return list;
   }
   if (l7) {

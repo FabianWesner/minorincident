@@ -147,6 +147,26 @@ export function cureRoadsideFarmDecor(occupied: readonly Placement[]): Placement
   return out;
 }
 
+/** Remove crop tiles whose rendered footprint reaches any authored road or
+ * walking crossing. The tile is ~11 m wide, so a center-only lane clearance
+ * lets the field edge cover asphalt and its markings. */
+export function clearFarmFromRoads(placements: readonly Placement[]): Placement[] {
+  const lines = [...cure.regions.map(r => r.route), ...cure.detours.map(r => r.route), ...cureCrossingLines.map(r => r.line)];
+  const clear = (p: Placement) => lines.every(line => line.slice(1).every((b, i) => {
+    const a = line[i], x0 = p.visualAabb.min[0], x1 = p.visualAabb.max[0], z0 = p.visualAabb.min[2], z1 = p.visualAabb.max[2];
+    const inside = (q: Point) => q[0] >= x0 && q[0] <= x1 && q[1] >= z0 && q[1] <= z1;
+    const orient = (u: Point, v: Point, w: Point) => (v[0]-u[0])*(w[1]-u[1])-(v[1]-u[1])*(w[0]-u[0]);
+    const corners: Point[] = [[x0,z0],[x1,z0],[x1,z1],[x0,z1]];
+    const intersects = (u: Point, v: Point, c: Point, d: Point) => orient(u,v,c)*orient(u,v,d) <= 1e-8 && orient(c,d,u)*orient(c,d,v) <= 1e-8;
+    if (inside(a) || inside(b) || corners.some((c,j) => intersects(a,b,c,corners[(j+1)%4]))) return false;
+    const dx=b[0]-a[0], dz=b[1]-a[1], len2=dx*dx+dz*dz || 1;
+    const pointDistance=(q:Point)=>{const t=Math.max(0,Math.min(1,((q[0]-a[0])*dx+(q[1]-a[1])*dz)/len2));return Math.hypot(q[0]-a[0]-t*dx,q[1]-a[1]-t*dz);};
+    const boxDistance=(q:Point)=>Math.hypot(Math.max(x0-q[0],0,q[0]-x1),Math.max(z0-q[1],0,q[1]-z1));
+    return Math.min(boxDistance(a),boxDistance(b),...corners.map(pointDistance)) >= 3.01;
+  }));
+  return placements.filter(p => p.assetId !== 'veg.corn-block' || clear(p));
+}
+
 /** Clear the later vignette pavement, retaining landmarks and moving displaced field details into surviving crops. */
 export function clearFarmFromSurfaces(placements: readonly Placement[], surfaces: DistrictLayout['surfaces']): Placement[] {
   const bounds = surfaces.map(s => ({ minX: Math.min(...s.polygon.map(p => p[0])), maxX: Math.max(...s.polygon.map(p => p[0])), minZ: Math.min(...s.polygon.map(p => p[1])), maxZ: Math.max(...s.polygon.map(p => p[1])) }));
