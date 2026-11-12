@@ -31,7 +31,7 @@ Measured coverage is summarized below. No PROD A/B was performed. All incomplete
 | L8 full | Merged build incomplete: 25/26 flamingos, 90 s driver stall | Incomplete: same 25/26 stall | Open |
 | L9 full | Incomplete: eight-minute cap at rail encounter | Finished in 281 s, five deaths | Open |
 | L3 first 3 min | Sample complete | Sample complete | Sample complete |
-| L4 first 3 min | Sample complete | Sample complete | Open |
+| L4 first 3 min | Sample complete | Sample complete | Sample complete |
 | L7 first 3 min | Sample complete | Full route finished in 149 s | Open |
 
 The LOW target is zoom 1 per the job prompt. The PO checklist also calls for zoom 1.5 coverage; that additional LOW coverage is not claimed here.
@@ -110,3 +110,7 @@ Merged-build real-input route finished in 281 seconds, five deaths, zero logged 
 ## L3 LOW zoom 1 opening
 
 Completed the requested 180-second sample on the merged build: 2 deaths, 0 logged assists, no skips, no P1/P2 driver findings. P0 is the expected time cap. End objective distance 214 m; changed checkpoint second wave remains unreached. Opened `test-results/playtest/s78-b88high-l3-low-z1/captures/campaign-L3-t5432.jpg` for LOW visual review: courier, nearby infected and health bars remain readable against the plaza; the shown bodies are scattered, so this capture does not establish dense-crowd readability. Raw evidence and summary are in the same run directory. This opening sample does not close second-wave timing or matched PROD comparison.
+
+## L4 LOW zoom 1 opening
+
+Completed 181 seconds on the merged build: 5 deaths, 0 logged assists, no objective skips. P0 is the requested sample cap; the lone P2 is a convoy cinematic, confirmed by opened `campaign-L4-1242-stuck-navigating.jpg` (seated bus passengers, hidden HUD). Also opened `campaign-L4-t5423.jpg`: crowded west-breach fight, courier 90 HP, distinct health bars and readable ring amid corpses, soldiers and close brutes. Combat is active and dangerous; exact west runner and north-mouth alignment still need matched observation. Ended at north hold, 49 seconds remaining. Raw evidence: `test-results/playtest/s78-b88high-l4-low-z1/`.
