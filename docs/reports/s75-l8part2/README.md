@@ -160,3 +160,9 @@ Validated the flood seed at every state: plaza (0,0) is walkable, and reachable 
 ## Runtime west-junction reproduction and local closure
 
 Added `l8-junction-probe.ts`, which admits the courier at (-60,0) with two cleared pens, then sends ordinary keyboard InputFrames toward (-96,0), god on. Baseline reached x=-95.53 in about nine seconds by walking around the short branch wall. The west/east junction barriers now span to the adjoining fence lines at z=±12 instead of ending at ±3.2. The same 20 s probe no longer takes that direct west opening; it instead attempts a longer route toward the southern open region. Static reachable area after lion clear decreases from 19,635 to 14,141 m², so other openings remain. This is a local closure, not complete path confinement. Typecheck/lint/diff checks pass. Visual capture, native route regression and threat-audit rerun after this geometry change remain required; the prior zero-flag receipt predates it.
+
+## Primate approach cap
+
+The southern detour passed the outer primate approach fence at its z=32 end. Added a drawn/sim barrier across that end, joining x=-28.5 to the pen wall at x=-19.5 while keeping the marker route into the entry below it. Static reachable area after lion clear decreases from 14,141 to 5,161 m². The controlled 20 s west-exterior probe no longer reaches the exterior, though this bounded sample alone is not proof of total containment.
+
+All six native controlled route states pass after both junction barrier changes. The targeted audit reports `L8: skilled complete, passive tick-budget, 0 passive flags (149.6s)`; nonzero exit remains partial-selection/provenance only. Typecheck/lint/diff checks pass. Visual opening of this fence addition and broader post-monkey/post-zebra containment remain open. Raw route and audit receipts are in ignored `test-results/s75-l8part2/` and `test-results/qa-threat-s75-cap/`.
