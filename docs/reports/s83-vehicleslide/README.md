@@ -93,3 +93,7 @@ A slow reverse drive exercises 493 unique resolved hull shoves per tier on ordin
 ## Corrected-hook rerun
 
 `npm run qa:vehicle-motion` completed exit 0 after the hook fix. All eight rows pass. Standing push HIGH/LOW each record exactly 493 records and 493 unique tick/entity pairs: HIGH worst p95/max 2.9/6.1 cm, LOW 2.3/5.5 cm. See `corrected-hook-results.json`. This closes the pending duplicate-hook rerun, not the full objective. PropSystem inspection identifies both infected-to-prop impulse and fast-prop-to-infected momentum paths as still needing direct coverage.
+
+## Prop approach fixture
+
+Added a folding chair beside parked APC, between an ordinary pursuing infected and courier. HIGH/LOW chair displacement is 0.211918 m; infected p95/max HIGH 0.5/0.6 cm, LOW 0.2/0.5 cm. All ten rows pass; typecheck and targeted lint pass. The gate requires >=0.2 m prop displacement. This alone does not distinguish an infected impulse from natural settling; direct impulse attribution remains required before claiming prop-push coverage complete. Fast-prop knockback and campaign contexts also remain outstanding. See `prop-motion-baseline.json`.

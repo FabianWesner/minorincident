@@ -10,7 +10,7 @@ try {
     const session = new SceneSession({ tier });
     try {
       await session.open();
-      for (const name of ['ram', 'surrounded', 'clinging', 'push']) {
+      for (const name of ['ram', 'surrounded', 'clinging', 'push', 'prop-push']) {
         await session.load(readSpec(`tests/scenes/l9-apc/${name}.json`));
         await session.ready();
         // Match the production vehicle AI path; Scene Lab's L1 search controller
@@ -47,6 +47,10 @@ try {
         }
         if (cells.length) await session.makeSheet(cells, `${out}/apc-consecutive.jpg`, 480);
         const metrics = await session.metrics();
+        const propMotion = await session.page.evaluate(() => {
+          const w = (window.__SCENE__ as unknown as { game: Game }).game.world;
+          return (w.props?.items ?? []).map(p => ({ id: p.id, travelM: Math.hypot(p.pose.p[0] - p.home.p[0], p.pose.p[2] - p.home.p[2]) }));
+        });
         const shoves = await session.page.evaluate(() => (window as unknown as { __s83Shoves: { tick: number; id: number; distance: number }[] }).__s83Shoves);
         const events = await session.page.evaluate(() => {
           const w = (window.__SCENE__ as unknown as { game: Game }).game.world;
@@ -66,7 +70,7 @@ try {
         const checks = actors.map(([id, actor]) => ({ actor: id, contacts: actor.motion.contacts,
           p95Cm: actor.motion.slideP95Cm, maxCm: actor.motion.slideMaxCm,
           pass: actor.motion.contacts >= 5 && actor.motion.slideP95Cm !== null && actor.motion.slideP95Cm <= 5 && actor.motion.slideMaxCm <= 15 }));
-        const contactProven = name === 'push' ? shoves.some(shove => shove.distance > .001) : name === 'clinging' ? events.some(e => e.type === 'vehicle.grabbed') : name === 'ram' ? events.filter(e => e.type === 'combat.hit').length >= 6 && shoves.some(shove => shove.distance > .001)
+        const contactProven = name === 'prop-push' ? propMotion.some(p => p.travelM >= .2) : name === 'push' ? shoves.some(shove => shove.distance > .001) : name === 'clinging' ? events.some(e => e.type === 'vehicle.grabbed') : name === 'ram' ? events.filter(e => e.type === 'combat.hit').length >= 6 && shoves.some(shove => shove.distance > .001)
           : events.filter(e => e.type === 'vehicle.attack-windup').length >= 4 && events.some(e => e.type === 'vehicle.durability-hit');
         let vehicleTravelM = 0;
         for (let i = 1; i < attachmentTrack.length; i++) vehicleTravelM += Math.hypot(attachmentTrack[i].car.x - attachmentTrack[i - 1].car.x, attachmentTrack[i].car.z - attachmentTrack[i - 1].car.z);
@@ -74,7 +78,7 @@ try {
         const motionProven = name === 'clinging' ? airborneChecks.length === 4 && airborneChecks.every(check => check.pass) : checks.every(check => check.pass);
         const pass = contactProven && movingAttachmentProven && motionProven && session.errors.length === 0;
         if (!pass) process.exitCode = 1;
-        writeJson(`${out}/${tier}-${name}.json`, { pass, contactProven, movingAttachmentProven, vehicleTravelM, checks, airborneChecks, metrics, events, attachmentTrack, shoves, shoveWindows });
+        writeJson(`${out}/${tier}-${name}.json`, { pass, contactProven, movingAttachmentProven, vehicleTravelM, checks, airborneChecks, metrics, events, attachmentTrack, shoves, shoveWindows, propMotion });
         console.log(JSON.stringify({ tier, name, events: events.length, actors: Object.fromEntries(Object.entries(metrics.actors).filter(([id]) => id.startsWith('infected')).map(([id, actor]) => [id, actor.motion])) }));
       }
     } finally { await session.close(); }
