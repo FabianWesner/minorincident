@@ -32,15 +32,15 @@ Remaining acceptance flags:
 
 `LevelFourWar.emergePerimeterPressure` now uses one existing runner from the authored spearhead roster for the first arrival at the first west breach. The other two arrivals and subsequent breach cohorts retain their usual roster. This moved the west cohort's first attack inside the 20-second limit without increasing cohort size or heavy count. The L4 north/south alpha reorder trial was reverted: it still produced only two north breach members and reduced high-hold population peaks.
 
-L4 high-hold evidence after the retained change: first breach at 50.08 seconds (17.27 seconds after turn start), 41 alive at breach, peak population 56 (47 in plaza), and plaza minimum 15 over 8,700 post-threshold samples versus the requirement of 60 alive at first breach and 40 in the plaza through line break. Skilled routes completed for L3, L4, and L7. The audit remains short of acceptance.
+L4 high-hold evidence after the retained change: first breach at 50.08 seconds (17.27 seconds after turn start), 44 alive at breach, peak population 59 (56 in plaza), and plaza minimum 17 over 8,700 post-threshold samples versus the requirement of 60 alive at first breach and 40 in the plaza through line break. Skilled routes completed for L3, L4, and L7. The audit remains short of acceptance.
 
 ## Browser QA needed
 
-No visual changes were made and no browser QA was run. Level composition/timing was evaluated by the headless threat audit; browser review remains needed before considering any future visual or encounter-placement changes final.
+No browser QA has been run. Browser review remains needed for L3’s revised wave overlap, L4’s west spearhead and north approaches, and L7’s shifted opening Alpha. The headless simulation audit verifies contact and completion; it does not establish visual readability or preserve the PO-accepted feel by itself.
 
 ## Checks
 
-The exact threat audit above completed. `npm run typecheck` and `npm run lint` passed. The initial remote attempt found no healthy runner. The unchanged retry passed on `46.225.66.90`: 27 test files passed, 106 tests passed and 1 skipped, with the required 150/150 inventory present; 208.7 s under the 240 s budget (exit 0).
+The exact threat audit above completed. `npm run typecheck` and `npm run lint` passed. The initial remote attempt found no healthy runner. The unchanged retry passed on `46.225.66.90`: 27 test files passed, 106 tests passed and 1 skipped, with the required 150/150 inventory present; 210.3 s under the 240 s budget (exit 0).
 
 ## Rejected L7 rear-kerb trial
 
@@ -60,7 +60,7 @@ Aligned the three existing north approach mouths at x=-22/-18.6/-15 (unchanged z
 [qa:threat] L4: skilled complete, passive tick-budget, 2 passive flags (49.8s)
 ```
 
-North now admits three and attacks after 8.13 s; west admits 22 and attacks after 5.50 s; south admits four and attacks after 8.57 s. Only the two L4-06 flags remain. High hold: 44 alive at first breach (50.08 s), peak alive 59, peak plaza 56, minimum plaza 17. Typecheck and lint passed for this change. Remote suite must be repeated for the final combined implementation; the prior passing receipt predates this alignment. A rejected wider north offset also admitted three but produced no attack within 20 s, so it was reverted before this aligned trial.
+North now admits three and attacks after 8.13 s; west admits 22 and attacks after 5.50 s; south admits four and attacks after 8.57 s. Only the two L4-06 flags remain. High hold: 44 alive at first breach (50.08 s), peak alive 59, peak plaza 56, minimum plaza 17. Typecheck and lint passed for this change. The subsequent combined-runtime remote suite passed (210.3 s); see Checks. A rejected wider north offset also admitted three but produced no attack within 20 s, so it was reverted before this aligned trial.
 
 ## Rejected high-tier fast alarm expansion
 
