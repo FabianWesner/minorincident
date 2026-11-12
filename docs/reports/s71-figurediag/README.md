@@ -365,3 +365,11 @@ The removed S52 worktree's game branch remains available at `lane/s52-trellis-he
 ## Butcher checkpoint validation anchor confirmed
 
 Resolved the apparent hash mismatch: `tools/assets/validate.ts` emits `geometryHash(document)` for model validation, not the raw GLB SHA256. Computing that exact function on the recovered S52 branch checkpoint yields **ab6dd4ea6a0d0e29f8a21fbc88472e7295a4be9c736fb402baa147b2a80fe02d**, exactly matching the cap-fit3 receipt. The earlier comparison of binary SHA256 to geometry hash was invalid. Inventory confirms 5,773 triangles, 16 named joints, skin_body + seven stumps + eyes, and one 384×264 KTX2 atlas. Details in `butcher-checkpoint-inventory.json`. This confirms the validated geometry anchor, while byte/texture identity is a separate claim. The recovered committed delivery can now be used for neutral-rig inspection instead of an arbitrary experimental butcher rebind.
+
+## Selected butcher checkpoint neutral skin opened
+
+![Opened selected butcher checkpoint in neutral studio pose](butcher-selected-neutral.jpg)
+
+Decoded the recovered geometry-validation-matching S52 checkpoint's meshopt/KTX2 payload and imported it into Blender with skin evaluation. Removed objects explicitly tagged hidden/stumpFor, preserving eyes and the cleaver. Opened strict neutral studio rating: **5/10**. Eyes are attached, limbs continuous and cleaver retained. Cap/chef silhouette reads clearly, but cap occludes much of the face and the arms have little fine structure. No floating eyes or scattered visible stumps appear in this selected checkpoint. This is stronger rig-stage evidence than the invalid experimental template invocations above.
+
+The view is still independently framed in game-space orientation; it must be aligned to raw/pre-binding source cameras before a numerical inter-stage delta is defensible. S52's previously opened selected-delivery runtime sheet rates 5 day / 4 night, but its exact pose/camera differs from this neutral studio view. No runtime assets changed; decoder scratch cache inside the worktree was removed.
