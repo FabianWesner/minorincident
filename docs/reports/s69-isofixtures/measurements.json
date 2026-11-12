@@ -1,0 +1,531 @@
+{
+  "schema": "s69-isofixtures-v1",
+  "attackUnderFire": [
+    {
+      "role": "brute",
+      "distanceM": 6,
+      "weapon": "weapon.army-mg",
+      "durationSeconds": 10,
+      "shotsFired": 33,
+      "attackStarts": 2,
+      "landedHits": 2,
+      "windupCompletions": 2,
+      "playerHpLost": 14.33,
+      "targetHpEnd": 0,
+      "targetKilledAtSeconds": 3.217,
+      "positionAtEnd": {
+        "x": -1.87,
+        "z": 0
+      }
+    },
+    {
+      "role": "brute",
+      "distanceM": 6,
+      "weapon": "weapon.assault-rifle",
+      "durationSeconds": 10,
+      "shotsFired": 18,
+      "attackStarts": 1,
+      "landedHits": 1,
+      "windupCompletions": 1,
+      "playerHpLost": 0.73,
+      "targetHpEnd": 0,
+      "targetKilledAtSeconds": 2.283,
+      "positionAtEnd": {
+        "x": -1.87,
+        "z": 0
+      }
+    },
+    {
+      "role": "brute",
+      "distanceM": 3,
+      "weapon": "weapon.army-mg",
+      "durationSeconds": 10,
+      "shotsFired": 33,
+      "attackStarts": 2,
+      "landedHits": 2,
+      "windupCompletions": 2,
+      "playerHpLost": 13.6,
+      "targetHpEnd": 0,
+      "targetKilledAtSeconds": 3.217,
+      "positionAtEnd": {
+        "x": -2.209,
+        "z": 0
+      }
+    },
+    {
+      "role": "brute",
+      "distanceM": 3,
+      "weapon": "weapon.assault-rifle",
+      "durationSeconds": 10,
+      "shotsFired": 18,
+      "attackStarts": 2,
+      "landedHits": 1,
+      "windupCompletions": 1,
+      "playerHpLost": 0,
+      "targetHpEnd": 0,
+      "targetKilledAtSeconds": 2.283,
+      "positionAtEnd": {
+        "x": -1.87,
+        "z": 0
+      }
+    },
+    {
+      "role": "butcher",
+      "distanceM": 6,
+      "weapon": "weapon.army-mg",
+      "durationSeconds": 10,
+      "shotsFired": 97,
+      "attackStarts": 4,
+      "landedHits": 12,
+      "windupCompletions": 12,
+      "playerHpLost": 80,
+      "targetHpEnd": 0,
+      "targetKilledAtSeconds": 9.617,
+      "positionAtEnd": {
+        "x": 1.329,
+        "z": 0
+      }
+    },
+    {
+      "role": "butcher",
+      "distanceM": 6,
+      "weapon": "weapon.assault-rifle",
+      "durationSeconds": 10,
+      "shotsFired": 52,
+      "attackStarts": 3,
+      "landedHits": 8,
+      "windupCompletions": 8,
+      "playerHpLost": 50,
+      "targetHpEnd": 0,
+      "targetKilledAtSeconds": 6.817,
+      "positionAtEnd": {
+        "x": 1.33,
+        "z": 0
+      }
+    },
+    {
+      "role": "butcher",
+      "distanceM": 3,
+      "weapon": "weapon.army-mg",
+      "durationSeconds": 10,
+      "shotsFired": 97,
+      "attackStarts": 5,
+      "landedHits": 13,
+      "windupCompletions": 13,
+      "playerHpLost": 90,
+      "targetHpEnd": 0,
+      "targetKilledAtSeconds": 9.617,
+      "positionAtEnd": {
+        "x": 1.33,
+        "z": 0
+      }
+    },
+    {
+      "role": "butcher",
+      "distanceM": 3,
+      "weapon": "weapon.assault-rifle",
+      "durationSeconds": 10,
+      "shotsFired": 52,
+      "attackStarts": 3,
+      "landedHits": 9,
+      "windupCompletions": 9,
+      "playerHpLost": 60,
+      "targetHpEnd": 0,
+      "targetKilledAtSeconds": 6.817,
+      "positionAtEnd": {
+        "x": 1.329,
+        "z": 0
+      }
+    }
+  ],
+  "armoredShotsToKill": [
+    {
+      "target": "infected.armored",
+      "weapon": "weapon.handgun",
+      "direction": "front",
+      "shotsToKill": 60,
+      "landedDamage": 600,
+      "targetMaxHp": 600,
+      "ordinaryTarget": "infected.runner",
+      "ordinaryHp": 60,
+      "ordinaryShotsToKill": 3,
+      "ratioToOrdinary": 20
+    },
+    {
+      "target": "infected.armored",
+      "weapon": "weapon.handgun",
+      "direction": "rear",
+      "shotsToKill": 30,
+      "landedDamage": 600,
+      "targetMaxHp": 600,
+      "ordinaryTarget": "infected.runner",
+      "ordinaryHp": 60,
+      "ordinaryShotsToKill": 3,
+      "ratioToOrdinary": 10
+    },
+    {
+      "target": "infected.armored",
+      "weapon": "weapon.handgun",
+      "direction": "side",
+      "shotsToKill": 30,
+      "landedDamage": 600,
+      "targetMaxHp": 600,
+      "ordinaryTarget": "infected.runner",
+      "ordinaryHp": 60,
+      "ordinaryShotsToKill": 3,
+      "ratioToOrdinary": 10
+    },
+    {
+      "target": "infected.armored",
+      "weapon": "weapon.assault-rifle",
+      "direction": "front",
+      "shotsToKill": 47,
+      "landedDamage": 600,
+      "targetMaxHp": 600,
+      "ordinaryTarget": "infected.runner",
+      "ordinaryHp": 60,
+      "ordinaryShotsToKill": 3,
+      "ratioToOrdinary": 15.67
+    },
+    {
+      "target": "infected.armored",
+      "weapon": "weapon.assault-rifle",
+      "direction": "rear",
+      "shotsToKill": 24,
+      "landedDamage": 600,
+      "targetMaxHp": 600,
+      "ordinaryTarget": "infected.runner",
+      "ordinaryHp": 60,
+      "ordinaryShotsToKill": 3,
+      "ratioToOrdinary": 8
+    },
+    {
+      "target": "infected.armored",
+      "weapon": "weapon.assault-rifle",
+      "direction": "side",
+      "shotsToKill": 24,
+      "landedDamage": 600,
+      "targetMaxHp": 600,
+      "ordinaryTarget": "infected.runner",
+      "ordinaryHp": 60,
+      "ordinaryShotsToKill": 3,
+      "ratioToOrdinary": 8
+    },
+    {
+      "target": "infected.armored",
+      "weapon": "weapon.army-mg",
+      "direction": "front",
+      "shotsToKill": 86,
+      "landedDamage": 600,
+      "targetMaxHp": 600,
+      "ordinaryTarget": "infected.runner",
+      "ordinaryHp": 60,
+      "ordinaryShotsToKill": 5,
+      "ratioToOrdinary": 17.2
+    },
+    {
+      "target": "infected.armored",
+      "weapon": "weapon.army-mg",
+      "direction": "rear",
+      "shotsToKill": 43,
+      "landedDamage": 600,
+      "targetMaxHp": 600,
+      "ordinaryTarget": "infected.runner",
+      "ordinaryHp": 60,
+      "ordinaryShotsToKill": 5,
+      "ratioToOrdinary": 8.6
+    },
+    {
+      "target": "infected.armored",
+      "weapon": "weapon.army-mg",
+      "direction": "side",
+      "shotsToKill": 43,
+      "landedDamage": 600,
+      "targetMaxHp": 600,
+      "ordinaryTarget": "infected.runner",
+      "ordinaryHp": 60,
+      "ordinaryShotsToKill": 5,
+      "ratioToOrdinary": 8.6
+    },
+    {
+      "target": "infected.armored",
+      "weapon": "weapon.shotgun",
+      "direction": "front",
+      "shotsToKill": 5,
+      "landedDamage": 600,
+      "targetMaxHp": 600,
+      "ordinaryTarget": "infected.runner",
+      "ordinaryHp": 60,
+      "ordinaryShotsToKill": 1,
+      "ratioToOrdinary": 5
+    },
+    {
+      "target": "infected.armored",
+      "weapon": "weapon.shotgun",
+      "direction": "rear",
+      "shotsToKill": 3,
+      "landedDamage": 600,
+      "targetMaxHp": 600,
+      "ordinaryTarget": "infected.runner",
+      "ordinaryHp": 60,
+      "ordinaryShotsToKill": 1,
+      "ratioToOrdinary": 3
+    },
+    {
+      "target": "infected.armored",
+      "weapon": "weapon.shotgun",
+      "direction": "side",
+      "shotsToKill": 3,
+      "landedDamage": 600,
+      "targetMaxHp": 600,
+      "ordinaryTarget": "infected.runner",
+      "ordinaryHp": 60,
+      "ordinaryShotsToKill": 1,
+      "ratioToOrdinary": 3
+    }
+  ],
+  "apcRam": {
+    "level": "L9",
+    "surface": "authored road",
+    "infected": "infected.runner",
+    "count": 20,
+    "entrySpeedMps": 14.4,
+    "minRamSpeedMps": 14.487,
+    "minTouchSpeedMps": 16.2,
+    "contactCount": 20,
+    "armourBefore": 1000,
+    "armourAfter": 1000,
+    "armourLost": 0,
+    "ramArmourCost": 0,
+    "durabilityEventBreakdown": [
+      {
+        "source": "contact",
+        "cost": 0
+      },
+      {
+        "source": "contact",
+        "cost": 0
+      },
+      {
+        "source": "contact",
+        "cost": 0
+      },
+      {
+        "source": "contact",
+        "cost": 0
+      },
+      {
+        "source": "contact",
+        "cost": 0
+      },
+      {
+        "source": "contact",
+        "cost": 0
+      },
+      {
+        "source": "contact",
+        "cost": 0
+      },
+      {
+        "source": "contact",
+        "cost": 0
+      },
+      {
+        "source": "contact",
+        "cost": 0
+      },
+      {
+        "source": "contact",
+        "cost": 0
+      },
+      {
+        "source": "contact",
+        "cost": 0
+      },
+      {
+        "source": "contact",
+        "cost": 0
+      },
+      {
+        "source": "contact",
+        "cost": 0
+      },
+      {
+        "source": "contact",
+        "cost": 0
+      },
+      {
+        "source": "contact",
+        "cost": 0
+      },
+      {
+        "source": "contact",
+        "cost": 0
+      },
+      {
+        "source": "contact",
+        "cost": 0
+      },
+      {
+        "source": "contact",
+        "cost": 0
+      },
+      {
+        "source": "contact",
+        "cost": 0
+      },
+      {
+        "source": "contact",
+        "cost": 0
+      }
+    ],
+    "contacts": [
+      {
+        "target": "infected.runner",
+        "speedMps": 14.4869,
+        "armorCost": 0
+      },
+      {
+        "target": "infected.runner",
+        "speedMps": 14.4869,
+        "armorCost": 0
+      },
+      {
+        "target": "infected.runner",
+        "speedMps": 16.2204,
+        "armorCost": 0
+      },
+      {
+        "target": "infected.runner",
+        "speedMps": 16.2204,
+        "armorCost": 0
+      },
+      {
+        "target": "infected.runner",
+        "speedMps": 16.2204,
+        "armorCost": 0
+      },
+      {
+        "target": "infected.runner",
+        "speedMps": 16.2405,
+        "armorCost": 0
+      },
+      {
+        "target": "infected.runner",
+        "speedMps": 16.2603,
+        "armorCost": 0
+      },
+      {
+        "target": "infected.runner",
+        "speedMps": 16.2603,
+        "armorCost": 0
+      },
+      {
+        "target": "infected.runner",
+        "speedMps": 16.2799,
+        "armorCost": 0
+      },
+      {
+        "target": "infected.runner",
+        "speedMps": 16.2993,
+        "armorCost": 0
+      },
+      {
+        "target": "infected.runner",
+        "speedMps": 16.3183,
+        "armorCost": 0
+      },
+      {
+        "target": "infected.runner",
+        "speedMps": 16.3183,
+        "armorCost": 0
+      },
+      {
+        "target": "infected.runner",
+        "speedMps": 16.3558,
+        "armorCost": 0
+      },
+      {
+        "target": "infected.runner",
+        "speedMps": 16.3558,
+        "armorCost": 0
+      },
+      {
+        "target": "infected.runner",
+        "speedMps": 16.3741,
+        "armorCost": 0
+      },
+      {
+        "target": "infected.runner",
+        "speedMps": 16.3922,
+        "armorCost": 0
+      },
+      {
+        "target": "infected.runner",
+        "speedMps": 16.4101,
+        "armorCost": 0
+      },
+      {
+        "target": "infected.runner",
+        "speedMps": 16.4101,
+        "armorCost": 0
+      },
+      {
+        "target": "infected.runner",
+        "speedMps": 16.4452,
+        "armorCost": 0
+      },
+      {
+        "target": "infected.runner",
+        "speedMps": 16.4452,
+        "armorCost": 0
+      }
+    ],
+    "durationSeconds": 0.25,
+    "positionEnd": {
+      "x": -495.98,
+      "z": 0
+    }
+  },
+  "barrierPersistence": {
+    "level": "L9",
+    "method": "APC collision at 14.4 m/s; APC halted after impact",
+    "rammedByAPC": true,
+    "settledAfterSeconds": 2,
+    "maxTiltDuringTumbleDegrees": 12.99,
+    "maxCenterYDuringTumbleM": 0.823,
+    "remainingHealth": 1,
+    "existsAfter60s": true,
+    "dynamicBody": true,
+    "settledAt": {
+      "x": -477.7408447265625,
+      "y": 0.4999205470085144,
+      "z": 0.8860965371131897,
+      "rotation": {
+        "x": 0.000029561435439973138,
+        "y": 0.13309313356876373,
+        "z": -0.000008307437383336946,
+        "w": 0.9911035299301147
+      }
+    },
+    "after60s": {
+      "x": -477.5965576171875,
+      "y": 0.4999190866947174,
+      "z": 1.0116101503372192,
+      "rotation": {
+        "x": 1.590177731713993e-7,
+        "y": 0.13309313356876373,
+        "z": -2.341620408685685e-8,
+        "w": 0.9911035299301147
+      }
+    },
+    "horizontalDriftM": 0.1912,
+    "bottomHeightRangeM": [
+      -0.0001,
+      -0.0001
+    ],
+    "groundY": 0,
+    "onGroundWithin5cm": true,
+    "floatsOrSinks": false
+  }
+}

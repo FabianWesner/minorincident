@@ -1,0 +1,18 @@
+{
+  "name": "s69-brute-under-fire",
+  "note": "Isolated visual companion for native s69 continuous-fire measurements; one brute and courier at close range.",
+  "seed": 69,
+  "ground": "sidewalk",
+  "size": 40,
+  "time": "L1",
+  "dof": false,
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [0, 0], "god": true, "loadout": [["weapon.army-mg"], ["weapon.assault-rifle"]] },
+    { "id": "brute", "kind": "infected", "archetype": "infected.brute", "at": [2.5, 0], "yaw": 180, "state": "chase" }
+  ],
+  "script": [{ "frame": 1, "actor": "courier", "do": { "attack": "brute", "seconds": 8, "side": "LEFT" } }],
+  "camera": { "mode": "follow", "actor": "courier", "zoom": 1.5 },
+  "frames": 480,
+  "shots": [0, 240, 480],
+  "expect": { "consoleErrors": 0 }
+}
