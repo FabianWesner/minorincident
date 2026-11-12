@@ -28,7 +28,7 @@ Measured coverage is summarized below. No PROD A/B was performed. All incomplete
 
 | Level | HIGH zoom 1 | HIGH zoom 1.5 | LOW zoom 1 |
 |---|---|---|---|
-| L8 full | Merged build incomplete: 25/26 flamingos, 90 s driver stall | Open | Open |
+| L8 full | Merged build incomplete: 25/26 flamingos, 90 s driver stall | Incomplete: same 25/26 stall | Open |
 | L9 full | Incomplete: eight-minute cap at rail encounter | Open | Open |
 | L3 first 3 min | Sample complete | Sample complete | Open |
 | L4 first 3 min | Sample complete | Sample complete | Open |
@@ -94,3 +94,7 @@ Fresh merged-build HIGH zoom 1 attempt retained its browser profile at `test-res
 ## L7 HIGH zoom 1.5 completion
 
 Merged-build real-input attempt finished L7 in 149 seconds with no skips, zero deaths, zero assists and zero driver findings. Maximum recorded no-progress interval: 5.68 seconds. Opened `test-results/playtest/s78-b88high-l7-high-z15/captures/campaign-L7-t8120.jpg`: boarding HUD says 23/23 aboard, everyone aboard; courier 100 HP, visible lit bus and persistent corpse field. Nearby figures remain outside the bus in that frame, so the relationship between the boarded counter and visible bodies needs separate interpretation rather than automatic closure. Opened `campaign-L7-result.jpg` shows L8 loading, supporting the driver-recorded handover. The summary simSeconds is zero despite live tick progression, so use wallSeconds and capture ticks as timing evidence. Route is finishable for this attempt; this does not establish the exact Alpha relocation effect or a matched PROD improvement. Raw evidence: `test-results/playtest/s78-b88high-l7-high-z15/`.
+
+## L8 HIGH zoom 1.5 attempt
+
+Fresh merged-build run with requested zoom 1.5 stopped at 348 seconds after 90.3 seconds without progress, again at 25/26 flamingos; 0 deaths, 2 logged assists, no skips. Opened `test-results/playtest/s78-b88high-l8-high-z15/captures/campaign-L8-16499-stuck-at-ring.jpg`: partially depleted remaining enemy health bar inside the lit pen, courier/group at the center marker, corpse field visible. Wider requested zoom did not resolve the driver target-acquisition failure. The arena has authored camera framing, so this still does not prove the exact resulting camera scale matches the requested normal gameplay zoom. Full boarding, other animal pens, flicker/settling, and manual recovery remain open; no game soft-lock is assigned.
