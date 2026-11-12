@@ -155,6 +155,7 @@ export class MegaPursuit {
   }
 
   /** Per-tick bookkeeping before the AI phase: the introduction, death and the 2 Hz route refresh. */
+  private lastHurtTick = -Infinity;
   private tick(): void {
     const s = this.state, tick = this.world.tick;
     if (s.mode === 'dead') return;
@@ -170,6 +171,10 @@ export class MegaPursuit {
     // No authored stagger/stun outlasts 10 s (the electric gate is 3 s). A larger remainder is a stale absolute tick from another clock
     // (r29-l10mega: a resumed save kept the Mega stunned for minutes); keep a short stagger instead of a frozen boss.
     if (e.combat && e.combat.staggerUntil - tick > 600) e.combat.staggerUntil = tick + 60;
+    // PO 2026-11-12: hurtable but recovers fast before the cure (see megaAlpha.regenPerSecond).
+    if (e.health.current < s.hp) this.lastHurtTick = tick;
+    if (e.health.current > 0 && e.health.current < e.health.max && !this.world.missions?.state.states['cure-installed']
+      && tick - this.lastHurtTick >= megaAlpha.regenDelayTicks) e.health.current = Math.min(e.health.max, e.health.current + e.health.max * megaAlpha.regenPerSecond / 60);
     s.x = e.transform.x; s.z = e.transform.z; s.hp = e.health.current; s.maxHp = e.health.max;
     this.sound();
     if (tick - s.routeAt >= megaAlpha.routeTicks) this.refresh();

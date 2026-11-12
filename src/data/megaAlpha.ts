@@ -14,7 +14,12 @@ export const megaAlpha = {
   get cruiseMs(): number { return survivor.speed * this.cruiseFactor; },
   /** E32-AC12: ten direct rockets, independent of stock Alpha resistance/upgrades. */
   hp: 3000,
-  conventionalFloor: .9,
+  /** PO 2026-11-12: "Make it so I can hurt it, but it recovers very fast, so I cannot kill it." Before the cure, conventional hits
+   * take it down to this share of max HP (was .9: hits looked like they did nothing) and it regenerates once hits stop. */
+  conventionalFloor: .35,
+  /** Regeneration before the cure: starts this many ticks after the last hit, heals this share of max HP per second. */
+  regenDelayTicks: 60,
+  regenPerSecond: .12,
   directRocketFraction: .1,
   splashRocketFraction: .025,
   staggerTicks: 30,
