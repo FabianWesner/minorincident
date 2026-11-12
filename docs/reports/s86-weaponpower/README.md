@@ -127,3 +127,5 @@ Final consistency correction: machete source comment now states two hits against
 Durable validation receipt: [validation.json](validation.json) preserves the final all-level flag comparison, exact commands, remote-unit outcome, and L10 attack-start timestamps. It explicitly records the failing continuous-cadence gate and does not claim goal completion.
 
 Scope audit against c9a9bbbd: eight changed paths, limited to the global action catalog, L10 encounter data/controller, focused combat tests and this report directory. Infected definitions/AI, corpse residency/lifecycle, specs, threat-audit tools and all protected reference paths are unchanged. `validation.json` stores the checked path list.
+
+Native entity-budget receipt: {'peakLiving': 14, 'capViolations': 0, 'peakEntities': 89, 'peakCorpses': 1}. Living/cap checked every tick; resident entity/corpse peaks sampled each second. Saved in `validation.json`. These are resident counts, not a claim that sleeping corpses were removed.

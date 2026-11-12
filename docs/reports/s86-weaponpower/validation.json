@@ -359,5 +359,15 @@
     "corpseLifecycleUnchanged": true,
     "noBrowserRun": true,
     "noDeployOrPush": true
+  },
+  "entityBudget": {
+    "seed": 1,
+    "tier": "low",
+    "completionSeconds": 1010.0166666666667,
+    "peakLiving": 14,
+    "capViolations": 0,
+    "peakEntities": 89,
+    "peakCorpses": 1,
+    "sampleMethod": "living/cap each sim tick; resident entity/corpse peaks each 60 ticks"
   }
 }
