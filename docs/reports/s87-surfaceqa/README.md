@@ -23,3 +23,7 @@ The report and code are ready for commit. The required after image/contact sheet
 ## Follow-up with unrestricted access
 
 Commit `4d0c65fb` preserves the validated code and coordinate report. Headless Scene Lab successfully captured `test-results/s87-surfaceqa/seam-after/anchor-0.png` at `D-CURE/r2-r3-seam`. I opened it: the asphalt, crosswalk and lane markings are clear of corn. This inspector framing is not yet the requested matched HIGH zoom-1 capture. The requested remote unit run passed on runner 46.225.66.90: 27 files, 106 tests passed / one skipped, 150/150 inventory, 203.9 s against the 240 s budget.
+
+## Regional paving continuity
+
+The gate now samples all six L10 region handoffs at 0.05, 0.5 and 1 m on each side, with five lateral positions spanning the 6 m lane. Each of the 180 samples must belong to exactly one asphalt polygon, detecting paving gaps and overlaps independently of coincident route endpoints. The focused nightly decoration/ground-cover gate passes with these assertions.

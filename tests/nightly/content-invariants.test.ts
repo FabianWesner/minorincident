@@ -253,6 +253,26 @@ function assertGroundCoverRoads(): void {
     const previous = cure.regions[i-1], next = cure.regions[i], a = previous.route.at(-1)!, b = next.route[0]!;
     if (Math.hypot(a[0]-b[0], a[1]-b[1]) > .01) findings.push(`L10 D-CURE ${previous.id}-${next.id} road seam gap (${a[0].toFixed(2)},${a[1].toFixed(2)}) to (${b[0].toFixed(2)},${b[1].toFixed(2)})`);
   }
+  // Sample both sides of each regional handoff across the complete 6 m lane.
+  // A shared centerline alone cannot detect missing or doubled paving polygons.
+  const paving = loadLayout('D-CURE.layout.json').surfaces.filter(s => s.surface === 'asphalt');
+  const contains = (x: number, z: number, polygon: readonly (readonly number[])[]) => polygon.reduce((inside, a, i) => {
+    const b = polygon[(i + polygon.length - 1) % polygon.length];
+    return (a[1] > z) !== (b[1] > z) && x < (b[0] - a[0]) * (z - a[1]) / (b[1] - a[1]) + a[0] ? !inside : inside;
+  }, false);
+  for (let i = 1; i < cure.regions.length; i++) {
+    const seam = cure.regions[i].route[0];
+    for (const [side, line] of [[-1, cure.regions[i - 1].route], [1, cure.regions[i].route]] as const) {
+      const other = side === -1 ? line.at(-2)! : line[1];
+      const dx = other[0] - seam[0], dz = other[1] - seam[1], length = Math.hypot(dx, dz);
+      for (const along of [.05, .5, 1]) for (const lateral of [-2.9, -1.5, 0, 1.5, 2.9]) {
+        const x = seam[0] + dx / length * along - dz / length * lateral;
+        const z = seam[1] + dz / length * along + dx / length * lateral;
+        const count = paving.filter(s => contains(x, z, s.polygon)).length;
+        if (count !== 1) findings.push(`L10 D-CURE r${i}-r${i+1} seam ${count === 0 ? 'gap' : 'overlap'} at (${x.toFixed(2)},${z.toFixed(2)}): ${count} asphalt polygons`);
+      }
+    }
+  }
   const unique = [...new Set(findings)].sort();
   mkdirSync('test-results', { recursive: true });
   writeFileSync('test-results/ground-cover-roads.json', JSON.stringify({ count: unique.length, findings: unique }, null, 1));
