@@ -18,8 +18,18 @@ try {
         await session.page.evaluate(() => {
           const w = (window.__SCENE__ as unknown as { game: Game }).game.world;
           for (const e of w.infected!.active) { delete e.infected!.l1; e.infected!.state = 'chase'; }
-          const probe = window as unknown as { __s83Knockback?: Game['world']['knockback']; __s83Shoves: { tick: number; id: number; distance: number }[] };
+          const probe = window as unknown as { __s83PropImpulses: { tick: number; prop: string; magnitude: number; nearbyInfected: number[] }[]; __s83Knockback?: Game['world']['knockback']; __s83Shoves: { tick: number; id: number; distance: number }[] };
           probe.__s83Shoves = [];
+          probe.__s83PropImpulses = [];
+          for (const prop of w.props?.items ?? []) {
+            const applyImpulse = prop.body.applyImpulse.bind(prop.body);
+            prop.body.applyImpulse = (impulse, wake) => {
+              const magnitude = Math.hypot(impulse.x, impulse.z);
+              if (magnitude > 0) probe.__s83PropImpulses.push({ tick: w.tick, prop: prop.id, magnitude,
+                nearbyInfected: w.infected!.active.filter(e => e.health.current > 0 && Math.hypot(e.transform.x - prop.pose.p[0], e.transform.z - prop.pose.p[2]) <= prop.radius + .4).map(e => e.id) });
+              applyImpulse(impulse, wake);
+            };
+          }
           const knockback = probe.__s83Knockback ??= w.knockback.bind(w);
           w.knockback = (entity, direction, impulse, ticks) => {
             const x = entity.transform.x, z = entity.transform.z;
@@ -56,6 +66,7 @@ try {
           const w = (window.__SCENE__ as unknown as { game: Game }).game.world;
           return w.events.events().filter(e => e.type.startsWith('vehicle.') || e.type === 'combat.hit');
         });
+        const propImpulses = await session.page.evaluate(() => (window as unknown as { __s83PropImpulses: { tick: number; prop: string; magnitude: number; nearbyInfected: number[] }[] }).__s83PropImpulses);
         const actors = Object.entries(metrics.actors).filter(([id]) => id.startsWith('infected'));
         const shoveWindows = shoves.map(shove => {
           const actor = actors.find(([, actor]) => actor.entity === shove.id);
@@ -70,7 +81,7 @@ try {
         const checks = actors.map(([id, actor]) => ({ actor: id, contacts: actor.motion.contacts,
           p95Cm: actor.motion.slideP95Cm, maxCm: actor.motion.slideMaxCm,
           pass: actor.motion.contacts >= 5 && actor.motion.slideP95Cm !== null && actor.motion.slideP95Cm <= 5 && actor.motion.slideMaxCm <= 15 }));
-        const contactProven = name === 'prop-push' ? propMotion.some(p => p.travelM >= .2) : name === 'push' ? shoves.some(shove => shove.distance > .001) : name === 'clinging' ? events.some(e => e.type === 'vehicle.grabbed') : name === 'ram' ? events.filter(e => e.type === 'combat.hit').length >= 6 && shoves.some(shove => shove.distance > .001)
+        const contactProven = name === 'prop-push' ? propMotion.some(p => p.travelM >= .2) && propImpulses.some(p => p.nearbyInfected.length > 0) : name === 'push' ? shoves.some(shove => shove.distance > .001) : name === 'clinging' ? events.some(e => e.type === 'vehicle.grabbed') : name === 'ram' ? events.filter(e => e.type === 'combat.hit').length >= 6 && shoves.some(shove => shove.distance > .001)
           : events.filter(e => e.type === 'vehicle.attack-windup').length >= 4 && events.some(e => e.type === 'vehicle.durability-hit');
         let vehicleTravelM = 0;
         for (let i = 1; i < attachmentTrack.length; i++) vehicleTravelM += Math.hypot(attachmentTrack[i].car.x - attachmentTrack[i - 1].car.x, attachmentTrack[i].car.z - attachmentTrack[i - 1].car.z);
@@ -78,7 +89,7 @@ try {
         const motionProven = name === 'clinging' ? airborneChecks.length === 4 && airborneChecks.every(check => check.pass) : checks.every(check => check.pass);
         const pass = contactProven && movingAttachmentProven && motionProven && session.errors.length === 0;
         if (!pass) process.exitCode = 1;
-        writeJson(`${out}/${tier}-${name}.json`, { pass, contactProven, movingAttachmentProven, vehicleTravelM, checks, airborneChecks, metrics, events, attachmentTrack, shoves, shoveWindows, propMotion });
+        writeJson(`${out}/${tier}-${name}.json`, { pass, contactProven, movingAttachmentProven, vehicleTravelM, checks, airborneChecks, metrics, events, attachmentTrack, shoves, shoveWindows, propMotion, propImpulses });
         console.log(JSON.stringify({ tier, name, events: events.length, actors: Object.fromEntries(Object.entries(metrics.actors).filter(([id]) => id.startsWith('infected')).map(([id, actor]) => [id, actor.motion])) }));
       }
     } finally { await session.close(); }

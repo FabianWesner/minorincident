@@ -97,3 +97,7 @@ A slow reverse drive exercises 493 unique resolved hull shoves per tier on ordin
 ## Prop approach fixture
 
 Added a folding chair beside parked APC, between an ordinary pursuing infected and courier. HIGH/LOW chair displacement is 0.211918 m; infected p95/max HIGH 0.5/0.6 cm, LOW 0.2/0.5 cm. All ten rows pass; typecheck and targeted lint pass. The gate requires >=0.2 m prop displacement. This alone does not distinguish an infected impulse from natural settling; direct impulse attribution remains required before claiming prop-push coverage complete. Fast-prop knockback and campaign contexts also remain outstanding. See `prop-motion-baseline.json`.
+
+## Prop impulse attribution
+
+The harness records explicit horizontal applyImpulse calls and nearby living infected. The stationary-APC chair fixture records two such calls, both in infected contact range, at HIGH and LOW, plus 0.211918 m chair travel. Its strengthened gate passes; p95/max HIGH 0.5/0.6 cm and LOW 0.2/0.5 cm. All ten current rows pass. Typecheck and targeted lint pass. See `prop-impulse-evidence.json`. Fast-prop momentum knockback, broader actor variants, and campaign contexts remain unverified.
