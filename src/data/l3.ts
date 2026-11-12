@@ -24,7 +24,7 @@ export const l3 = {
   /** Section 5.5: waves from three directions (river path, Boulevard, Oak Avenue); first-of fallback rule. */
   attack: {
     /** PO 2026-11-07 ("Far too many Zombies"): 15 / 25 / 35 (were 30 / 60 / 100; low quality 15 / 30 / 50); low quality now uses the same waves. */
-    waves: [{ atS: 0, count: 15 }, { atS: 20, count: 25 }, { atS: 40, count: 35 }] as readonly { atS: number; count: number }[],
+    waves: [{ atS: 0, count: 15 }, { atS: 14, count: 25 }, { atS: 40, count: 35 }] as readonly { atS: number; count: number }[],
     fallback: { defenseS: 60, turned: 3, inside: 8 },
     /** Seconds between two emergences of one wave at one direction (they string out instead of a single blob). */
     staggerS: .1,

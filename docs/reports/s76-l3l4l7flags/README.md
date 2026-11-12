@@ -71,3 +71,13 @@ Trialed 24 additional high-tier alarm runners/sprinters (42 versus 18 total, kee
 ## L3 second-wave timing evidence
 
 Advancing only the second station wave, keeping its 25 members and all sources fixed, can clear the kiting-hit flag but regresses other criteria. At +10 s (instead of +20), the probe landed four moving hits (12/min) and made 15 attack starts; squad-loss verdict failed with army counts 0/3/0 across seeds. At +15 s it landed two moving hits and army counts passed (4/2/0), but native competent attack rate failed (31.51/21.50/43.31 per minute). At +12 s the army counts failed (1/2/0), although two seeds' competent rates passed (47.48/9.96/22.86). All three focused audits completed skilled routes. Reverted all timing trials: the retained L3 schedule is unchanged. This establishes a pacing mechanism for contact, but a timing-only second-wave adjustment has not met the no-regression requirement.
+
+## Retained L3 second-wave pacing
+
+Advancing the second wave to +14 s (from +20 s), with the same 25 members, sources and all other wave times, passed the focused audit:
+
+```text
+[qa:threat] L3: skilled complete, passive tick-budget, 0 passive flags (33.3s)
+```
+
+The moving probe recorded four attack starts and one landed hit in 20 seconds (3 hits/min). Skilled flags were also empty. Army counts across seeds were 4/3/0 (two pass); competent rates were 21.53/10.88/34.31 attacks/min (two pass). Typecheck and lint passed. The intermediate +16 s trial failed squad counts and retained a second flag, and was replaced by +14 s. The final combined three-level audit and remote suite remain due for the combined runtime.
