@@ -461,6 +461,7 @@ export class Hud {
       item.setAttribute('aria-label', item.title);
     }
     setHidden(this.weaponRack, !entries.length);
+    attribute(this.weaponRack, 'data-touch', String(this.game.input.scheme === 'touch'));
     // Manned minigun: the weapon icon shows the gun she holds, not the weapon she carries (rack and touch slots are untouched).
     if (gun?.mounted) shown = { id: 'weapon.rotary-minigun', name: 'Minigun', stats: gun.locked ? 'Overheated' : `Heat ${Math.round(gun.heat * 100)}%`, progress: 1, ammo: 0, charges: 0, state: gun.locked ? 'cooldown' : 'ready' };
     setHidden(this.weapon.root, !shown || (!player.weapons?.LEFT && !player.weapons?.RIGHT && !mission?.def.l1));
