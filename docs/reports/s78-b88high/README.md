@@ -28,7 +28,7 @@ Measured coverage is summarized below. No PROD A/B was performed. All incomplete
 
 | Level | HIGH zoom 1 | HIGH zoom 1.5 | LOW zoom 1 |
 |---|---|---|---|
-| L8 full | Incomplete: 24/26 flamingos, 90 s driver stall | Open | Open |
+| L8 full | Merged build incomplete: 25/26 flamingos, 90 s driver stall | Open | Open |
 | L9 full | Incomplete: eight-minute cap at rail encounter | Open | Open |
 | L3 first 3 min | Sample complete | Sample complete | Open |
 | L4 first 3 min | Sample complete | Sample complete | Open |
@@ -78,3 +78,7 @@ Completed 180 seconds of real input with 3 deaths, 0 logged assists and no objec
 L4 completed 180 seconds on the original bea2dc9d game revision, with 2 deaths and 0 logged assists, no skips. Reached south hold with 49 seconds remaining. The P2 no-marker interval matches the convoy introduction; the P0 is the sample cap. Opened `test-results/playtest/s78-b88high-l4-high-z15/captures/campaign-L4-t5423.jpg`: north-breach fight with many corpses, multiple visible live infected and soldiers, readable health bars and ring, courier at full HP in that frame. Combat is active; exact mouth alignment and west runner comparison remain unverified.
 
 After this sample, merged main (including 5c6b579f) as 4e6a3c94. `npm run build` passed with clean public-bundle assertion. Full L8 was not previously completed, so the next L8 start-to-boarding attempt must use this merged gate-closing build; the earlier bea2dc9d flamingo stall is historical evidence only. No code was edited by this QA lane.
+
+## L8 after main gate update — HIGH zoom 1
+
+Production build and QA build both passed after merging main including 5c6b579f. Fresh real-input attempt on this merged build stopped at 335 seconds after 90.6 seconds without progress: 25/26 flamingos killed, 0 deaths, 2 logged assists, no skips. Opening Nadia-follow pauses of 21–31 seconds recovered. Opened `test-results/playtest/s78-b88high-l8-merged-high-z1/captures/campaign-L8-15693-stuck-at-ring.jpg`: final enemy health bar is visible near the far pen edge, while courier/group remain at the center ring. The driver observation reports no nearby enemies. This supports a driver target-acquisition/navigation limitation, not a proven game soft-lock. Pen fencing, rim lights, corpse field and count HUD are visible. The gate change does not by itself complete the route in this attempt. Manual physical-input pursuit of the remaining target and the rest of the level are still required. No L8 UAT finding is closed from this still; flicker and settling require temporal inspection.
