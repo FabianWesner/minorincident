@@ -55,3 +55,9 @@ Current failing native windows for targeted observation:
 ## Open work
 
 Resolve all four primary-path progress failures without weakening the 5-second criterion, dropping route choices, removing retained actors/props, adding invulnerability, or reintroducing pose relocation. Repeat the full native matrix and required gates after the next production change. Refresh the baseline comparison if the driver policy changes. The current worktree is committed for review; no push, deploy, merge or main movement was performed.
+
+## Timeboxed handoff
+
+The requested approximately 2.5-hour work period ended with the goal still **HOLD**. A final lateral-momentum-preservation trial passed its focused unit assertion but produced a prolonged primary-country stall. Its remaining native batch was stopped after that verified failure at the timebox; it is not a completed matrix receipt. Both the production trial and temporary assertion were reverted. Shorter ram-protection windows also failed and were reverted.
+
+The canonical committed-source results remain `native-current.json`: all 18 complete without position jumps, four primary-path windows fail. The final committed-source E31 verifier and exact remote suite pass as listed above. No trial process or temporary baseline checkout remains. Further work must resolve the primary-road bend recovery and primary-country case; the goal is not marked achieved or blocked.
