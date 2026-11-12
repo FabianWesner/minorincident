@@ -64,7 +64,7 @@ export class LevelNineSetPieces {
   update(s: L9SetPieceState, stallAt: number | null, holding: boolean): void {
     const w = this.w, car = this.car, p = car.entity.transform;
     for (const piece of l9SetPieces) {
-      if (s.fired.includes(piece.id) || p.x < piece.atX || holding) continue;
+      if (s.fired.includes(piece.id) || p.x < (piece.atXByRoute?.[this.route() ?? ''] ?? piece.atX) || holding) continue;
       s.fired.push(piece.id);
       if (this.stage(s, piece.kind, piece.id)) this.signal(`setpiece.${piece.id}`);
     }

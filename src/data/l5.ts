@@ -93,7 +93,7 @@ export const l5PhotoSpots: readonly (readonly [string, readonly [number, number,
 /** The runner formerly near the new cellar exit patrols Lakeshore instead, keeping the relocated opening quiet.
  * Fixed infected starts are scattered in singles with a few authored pairs; low tier takes the first 100. */
 const l5AuthoredWanderers: readonly { at: P; lowAt?: P; n: number; alpha?: boolean; archetype?: string }[] = [
-  { at: [18, -50], n: 2 }, { at: [-56, 22], n: 1 }, { at: [14, 28], n: 2, archetype: 'infected.butcher' }, { at: [-22, 10], n: 1 }, { at: [44, 36], n: 1, alpha: true }, { at: [22, -37.4], n: 1 },
+  { at: [18, -50], n: 2 }, { at: [-56, 22], n: 1 }, { at: [11, 28], n: 2, archetype: 'infected.butcher' }, { at: [-22, 10], n: 1 }, { at: [44, 36], n: 1, alpha: true }, { at: [22, -37.4], n: 1 },
   { at: [-26, 40], n: 2 },
   // PO 11-10 ("I cannot rescue my 1st survivor"): the stretch from the cellar to Mia (first survivor) holds no authored group; the Alpha and the pair that stood there moved east to the middle of the level.
   { at: [4, -50], n: 1, alpha: true }, { at: [2, 43.6], n: 1 }, { at: [14, -2], n: 1 }, { at: [-12, 18], n: 1 }, { at: [44, -36.4], n: 2 },

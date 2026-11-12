@@ -37,7 +37,8 @@ export const curePaceEncounters: readonly CureEncounter[] = [
   { id: 'farm-road-pair-1', region: 'residential-fringe', at: [830, 80], regular: [3, 3], dogs: 0, alphas: 0 },
   { id: 'farm-road-pair-2', region: 'residential-fringe', at: [1125, 25], regular: [3, 3], dogs: 0, alphas: 0 },
   { id: 'farm-road-pair-3', region: 'industrial-area', at: [1305, 100], regular: [3, 3], dogs: 0, alphas: 0 },
-  { id: 'farm-road-pair-4', region: 'industrial-area', at: [1400, 100], regular: [3, 3], dogs: 0, alphas: 0 },
+  // Keep the armored slot south of the warehouse footprint (ends at z=94).
+  { id: 'farm-road-pair-4', region: 'industrial-area', at: [1400, 106], regular: [3, 3], dogs: 0, alphas: 0 },
   { id: 'farm-road-pair-5', region: 'industrial-area', at: [1690, 100], regular: [3, 3], dogs: 1, alphas: 0 },
   { id: 'military-approach-pair', region: 'military-zone', at: [1855, 25], regular: [3, 3], dogs: 0, alphas: 0 },
   { id: 'military-road-pair-1', region: 'military-zone', at: [2170, -75], regular: [3, 3], dogs: 0, alphas: 0 },

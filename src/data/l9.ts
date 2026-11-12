@@ -96,7 +96,7 @@ export const l9Course = {
  * Kinds use the L9 Alpha types (leaper, thrower) and existing archetypes only; no infected stat changes.
  */
 export type L9SetPieceKind = 'chase-pack' | 'leapers' | 'thrower' | 'roadblock' | 'smash' | 'stall-ambush';
-export interface L9SetPiece { id: string; kind: L9SetPieceKind; atX: number }
+export interface L9SetPiece { id: string; kind: L9SetPieceKind; atX: number; atXByRoute?: Record<string, number> }
 export const l9SetPieces: readonly L9SetPiece[] = [
   { id: 'pack-1', kind: 'chase-pack', atX: -500 },
   { id: 'smash-1', kind: 'smash', atX: -450 },
@@ -106,7 +106,9 @@ export const l9SetPieces: readonly L9SetPiece[] = [
   { id: 'roadblock-1', kind: 'roadblock', atX: 40 },
   { id: 'pack-2', kind: 'chase-pack', atX: 120 },
   { id: 'leapers-2', kind: 'leapers', atX: 160 },
-  { id: 'thrower-2', kind: 'thrower', atX: 200 },
+  // Stage before the countryside bend: at x=200 the curved 112 m lane
+  // puts this post only 97 m from the APC, inside the 105 m admission limit.
+  { id: 'thrower-2', kind: 'thrower', atX: 200, atXByRoute: { countryside: 180 } },
   /** Waits at the rail crossing for the stall: a leaper beside the track and a thrower further out (they also hit an APC that drives on). */
   { id: 'stall-ambush', kind: 'stall-ambush', atX: 265 },
 ];
