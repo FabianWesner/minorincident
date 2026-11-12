@@ -560,6 +560,11 @@ for _hz in (8.6175, 10.8525): l.place('prop.hedge', [14.9, 0, _hz], yaw=math.pi 
 for p in l.data['placements']:
     if p['assetId'] == 'prop.crowd-fence': p['fixed'] = True
 
+# Reserve filtered placement slots while appending: Layout.place uses list length
+# for IDs, so additions must start above every surviving original ID.
+_append_padding = [None] * (max(int(p['id'].rsplit(':', 1)[1]) for p in l.data['placements']) + 1 - len(l.data['placements']))
+l.data['placements'].extend(_append_padding)
+
 # Compact inner fighting pens are appended after the existing placement set,
 # preserving every generated placement ID. Dynamic L8 gate panels occupy gaps.
 def _arena_wall(cx, cz, half, entry_side, exit_side, gate_half=3):
@@ -597,6 +602,8 @@ _spur(-60,-52,-60,-46); _spur(-60,-18,-60,-12)
 _spur(60,52,60,46); _spur(60,18,60,12)
 _spur(60,-12,60,-18); _spur(74,-32,82,-32)
 _spur(-24,8,-24,20); _spur(-24,20,-20,20)
+
+l.data['placements'] = [p for p in l.data['placements'] if p is not None]
 
 # Static layout pieces with identical material/attribute layouts share a program.
 # PreRenderer still draws every piece, including its shadows, during warm-up.
