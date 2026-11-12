@@ -101,3 +101,7 @@ Remote `sh tools/remote/run.sh "$PWD" -- npm test` passed on 94.130.181.173: 106
 ## Combined headroom and focused-approach trials
 
 Headroom 36/45 plus updated, full-speed focused arrival: seed-1 LOW completed with 91 starts, 4.939/min, zero deaths, peak 23, 109.52 s adjusted gap; HIGH completed with 560 starts, 18.862/min, 20 deaths, peak 39, 145.05 s gap. Receipt `/private/tmp/s89-cap-directed.json`. Additional LOW trial resumed explicit focused approach when the L1 brain entered search: completed with 93 starts, 5.019/min, two deaths, peak 36, but 191.97 s gap (`/private/tmp/s89-cap-focused.json`). Both combinations fail cadence and were fully reverted. No production gameplay changes remain.
+
+## Authored-station interception trial
+
+Temporary trial retained initial idle state at journey stations and restricted mission pursuit refresh to the existing perception range instead of 160 m. Finale pursuit unchanged; actors were never relocated. Seed-1 LOW completed with 21 starts, 1.141/min, zero deaths and 191.45 s adjusted gap; HIGH with 61 starts, 3.303/min, one death and 274.00 s gap. Both regress rate and fail cadence. Fully reverted. Receipt `/private/tmp/s89-stations.json`. This disqualifies station waiting as a sufficient substitute for long-range pressure.
