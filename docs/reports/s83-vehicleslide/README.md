@@ -145,3 +145,9 @@ L9’s dry-shortcut controller spawns zebras after cast initialization, so their
 ## Stampede contact root cause fixed
 
 Zebra-stampede was absent from strides, so present() skipped procedural correction and moving zebras held their hooves. Adding its stride activates the existing paw solver; a separate full distance-driven contact phase avoids using the restricted attack-body phase as a gait. Native HIGH 9000-tick rerun now gives zebra p95 0.3–0.4 cm and max 0.7–0.9 cm across four groups (26–175 contacts each). Two sprinter maxima remain 30.2/22.5 cm, so the native command still fails. Typecheck and targeted lint pass. LOW verification and capture review of this visual fix remain due. See `stampede-contact-fix.json`.
+
+## Sprinter discontinuity investigation
+
+A tested change transferring detailed contacts on budget denial instead of fading them had no effect on the known native failures and was removed. Actor 888 still measures 30.2 cm max, with 14.7 cm and 12.5 cm consecutive grounded-foot jumps at frames 8835–8836; actor 918 still measures 22.5 cm max, with 6.4/7.9/8.2 cm jumps at frames 8739–8741. All are within shamble at LOD2, not clip-switch frames. See `sprinter-discontinuities.json`.
+
+Opened the native HIGH zoom-1.5 strip at frames 8834–8839 (local `test-results/s83-vehicleslide/campaign/L9-high-consecutive.jpg`): damaged APC at a roadside structure, dense infected and several zebras around its front/side. Individual feet are too small to identify the exact discontinuity visually. Next evidence must compare actual rendered feet with stored contact targets and IK reach. No speculative budget patch is retained.
