@@ -9,15 +9,15 @@
     "durationSeconds": 11.08
   },
   "playtest": {
-    "result": "partial_L9",
+    "result": "partial_L9_two_attempts",
     "headless": true,
     "quality": "low",
     "renderer": "WebGL2",
     "godMode": false,
     "realInput": true,
     "lockCommand": "E2E_UNITS=1 E2E_RESERVATION_SECONDS=600 E2E_PORT=4867 sh tools/e2e-lock.sh ...",
-    "exitCode": 124,
-    "blocker": "595-second browser reservation cap ended L9 at school-bus telegraph; no game failure established",
+    "exitCode": 130,
+    "blocker": null,
     "captures": [
       "test-results/s66-b87qa/00-menu.png",
       "test-results/s66-b87qa/l9/bus-telegraph-turn43.jpg"
@@ -30,11 +30,21 @@
         "position": "HUD objective distance 157 m, action 43",
         "tick": null,
         "capture": "test-results/s66-b87qa/l9/bus-telegraph-turn43.jpg"
+      },
+      {
+        "finding": "Recoverable L9 driving blockage near rails",
+        "verdict": "NEW",
+        "severity": "P1",
+        "tick": 8929,
+        "position": "HUD 632\u2013639m remaining, beside roadside wall/rail props",
+        "evidence": "ticks8195\u20138929 (12.23 simulated seconds), no meaningful onward objective progress despite forward input; spinning and impacts, not stationary softlock; source unresolved",
+        "capture": "docs/reports/s66-b87qa/l9-partial.jpg"
       }
     ],
     "openedCaptures": [
       "test-results/s66-b87qa/00-menu.png",
-      "test-results/s66-b87qa/l9/bus-telegraph-turn43.jpg"
+      "test-results/s66-b87qa/l9/bus-telegraph-turn43.jpg",
+      "docs/reports/s66-b87qa/l9-partial.jpg"
     ]
   },
   "coverage": {
