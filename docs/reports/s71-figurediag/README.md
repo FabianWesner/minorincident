@@ -214,3 +214,14 @@ Compared all nine LOD1/LOD2 primitives through meshopt-decoded accessors. Presen
 ![Opened original versus retained LOD2 atlas](cashier-atlas-high-runtime.jpg)
 
 Temporarily replaced only the embedded LOD2 atlas with LOD1's 288×384 KTX2 bytes, retaining the LOD2 document. `cashier-atlas-candidate-proof.json` records accessor comparison and image sizes. Captured corrected cashier HIGH/WebGL2 fixture at both zooms/day/night; checks passed. Opened result shows no meaningful overall score gain (**3/2 remains 3/2**). This is not yet a definitive texture-resolution null result: the drawn LOD and sampled texture must be observed directly, because a delivered bake or another LOD can bypass the modified file. Native captures/receipt are in `test-results/s71-figurediag/cashier-atlas-retained-high/`. Original GLB restored byte-for-byte; no asset replacement retained or recommended.
+
+## Direct cashier draw probe overturns standalone-atlas inference
+
+Temporary instrumentation at active-batch submission confirmed the original HIGH cashier fixture draws both LOD2 and LOD1 with **one shared 576×768 atlas UUID**, each with one instance. Exact output (UUID is session-local):
+
+```json
+{"name":"inf.cashier","role":"inf.cashier","lod":"lod2","count":1,"atlas":{"id":"9329dcdd-6262-4bbf-8f6a-0398380437e6","width":576,"height":768,"decodedBytesWithMips":2359276}}
+{"name":"inf.cashier","role":"inf.cashier","lod":"lod1","count":1,"atlas":{"id":"9329dcdd-6262-4bbf-8f6a-0398380437e6","width":576,"height":768,"decodedBytesWithMips":2359276}}
+```
+
+Therefore the earlier 72×96 standalone-LOD2 bottleneck hypothesis is **not established for this fixture**: the active material binds the shared LOD0-size atlas. The LOD2-file atlas replacement did not test displayed texture resolution, and its unchanged score must not be counted as a valid resolution null result. A proper test must replace or resize the actual shared atlas binding. This probe also directly identifies active LOD2/LOD1, rather than merely prepared batches. Temporary instrumentation/driver removed and runtime source restored.
