@@ -135,3 +135,22 @@ Actual firing matrix: [native-targets.json](native-targets.json) extends the rec
 | assault-rifle | 3@0.383 | 2@0.25 | 24@3.183 | 18@2.383 | 19@2.517 | 10@1.317 |
 | flashbang | 4@>30 | 4@>30 | 4@>30 | 4@>30 | 4@>30 | 4@>30 |
 | flamethrower | 3@0.783 | 3@0.783 | 18@5.783 | 17@5.45 | 15@4.783 | 10@3.117 |
+
+Native before/after firing comparison (supersedes the earlier formula-based TTK comparison): the same `SimWorld` harness was run with the c9a9bbbd weapon catalog and the current catalog, retaining identical current engine behavior and native-health fixtures. Catalog restoration was automatic and the gameplay source is unchanged. Each cell is `attacks@seconds before → after`; `>30` denotes a non-kill by the 30-second bound. Flashbang is intentionally nonlethal. Reload and charge delays are included. Full paired receipts are in `native-targets.json`.
+
+| Weapon | Ordinary 60 | Sprinter 45 | Alpha 300 | Brute 450 | Armor front 240 | Armor rear 240 |
+| --- | --- | --- | --- | --- | --- | --- |
+| bat | 3@0.767 → 3@0.767 | 3@0.767 → 3@0.767 | 13@4.167 → 13@4.167 | 89@>30 → 89@>30 | 20@6.517 → 20@6.517 | 10@3.15 → 10@3.15 |
+| fire-axe | 2@0.617 → 2@0.617 | 1@0.117 → 1@0.117 | 6@2.617 → 6@2.617 | 9@4.117 → 9@4.117 | 9@4.117 → 9@4.117 | 5@2.117 → 5@2.117 |
+| handgun | 3@0.783 → 3@0.783 | 3@0.783 → 3@0.783 | 30@9.783 → 30@9.783 | 23@7.45 → 23@7.45 | 24@7.783 → 24@7.783 | 12@3.783 → 12@3.783 |
+| army-mg | 5@0.533 → 5@0.533 | 4@0.433 → 4@0.433 | 43@4.333 → 43@4.333 | 33@3.333 → 33@3.333 | 35@3.533 → 35@3.533 | 18@1.833 → 18@1.833 |
+| shotgun | 1@0.117 → 1@0.117 | 1@0.117 → 1@0.117 | 2@0.617 → 2@0.617 | 2@0.617 → 2@0.617 | 2@0.617 → 2@0.617 | 1@0.117 → 1@0.117 |
+| rocket-launcher | 1@0.667 → 1@0.667 | 1@0.667 → 1@0.667 | 2@1.5 → 2@1.5 | 3@2.35 → 3@2.35 | 2@1.5 → 2@1.5 | 2@1.5 → 2@1.5 |
+| pipe-bomb | 2@2.017 → 2@2.017 | 2@2.017 → 2@2.017 | 2@2.267 → 2@2.267 | 3@14.017 → 3@14.017 | 2@2.267 → 2@2.267 | 2@2.267 → 2@2.267 |
+| hunting-rifle | 1@0.117 → 1@0.133 | 1@0.117 → 1@0.133 | 7@7.517 → 2@1.133 | 5@4.117 → 2@1.133 | 6@6.517 → 2@1.133 | 3@2.117 → 1@0.133 |
+| nail-gun | 5@0.817 → 3@0.483 | 4@0.65 → 3@0.483 | 43@8.583 → 30@6.417 | 33@6.917 → 23@3.817 | 35@7.25 → 24@3.983 | 18@2.983 → 12@1.983 |
+| machete | 2@0.55 → 2@0.5 | 2@0.55 → 2@0.5 | 10@4.167 → 8@2.9 | 15@6.383 → 12@4.483 | 15@6.383 → 12@4.483 | 8@3.25 → 6@2.083 |
+| molotov | 2@3.15 → 2@2.15 | 2@2.15 → 2@1.15 | 4@27.25 → 3@12.217 | 4@>30 → 3@18.217 | 3@19.217 → 2@8.15 | 3@19.217 → 2@8.15 |
+| assault-rifle | 3@0.383 → 3@0.383 | 2@0.25 → 2@0.25 | 24@3.183 → 24@3.183 | 18@2.383 → 18@2.383 | 19@2.517 → 19@2.517 | 10@1.317 → 10@1.317 |
+| flashbang | 4@>30 → 4@>30 | 4@>30 → 4@>30 | 4@>30 → 4@>30 | 4@>30 → 4@>30 | 4@>30 → 4@>30 | 4@>30 → 4@>30 |
+| flamethrower | 13@4.117 → 3@0.783 | 10@3.117 → 3@0.783 | 73@26.783 → 18@5.783 | 82@>30 → 17@5.45 | 60@22.117 → 15@4.783 | 49@16.117 → 10@3.117 |
