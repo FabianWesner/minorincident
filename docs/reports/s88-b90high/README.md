@@ -4,7 +4,7 @@
 
 ## Verdict
 
-**Provisional HOLD — QA incomplete.** The required HIGH/LOW coverage and exact first-hatch scenario remain open. No P1/P2 gameplay regression has yet been established by this run.
+**Provisional HOLD — QA incomplete.** The required HIGH/LOW coverage and exact first-hatch scenario remain open. P2: L7 departure visibly overlaps soldiers at the front bumper on HIGH zoom 1; reproduced in opened captures at 0.7 and 3.43 seconds.
 
 ## Current evidence
 
@@ -33,3 +33,7 @@ All of the following remain open at HIGH zoom 1 and 1.5, followed by LOW zoom 1:
 - Per-level stuck moments over ten seconds and fun/boring/harmless assessment; final P1/P2 list and evidence-based GO/HOLD.
 
 No check is running at this report checkpoint. No gameplay code was changed. Full raw evidence is retained under `test-results/s88-b90high/` and is not committed.
+
+## L7 HIGH zoom 1
+
+Completed in 284 wall seconds with no skipped objectives and zero driver issues. Departure carried 12 boarded identities. Opened captures `campaign-L7-departure-0-5.jpg`, `campaign-L7-departure-3.jpg`, and `campaign-L7-departure-8.jpg` under `test-results/s88-b90high/high-z1-l7/captures/`. Soldiers visibly overlap the front bumper in the first two frames; by 8.08 seconds the bus has moved clear. **P2, reproduced:** “The bus is crashing to soldiers.” The sequence completes, so no progression block was observed. The route has active combat and survivor losses; departure overlap is visually disruptive. Other quality/zoom passes remain open.
