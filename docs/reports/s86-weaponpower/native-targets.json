@@ -1517,5 +1517,114 @@
       "hp": 0,
       "killed": true
     }
-  ]
+  ],
+  "areaBefore": [
+    {
+      "weapon": "molotov",
+      "kills": 0,
+      "remainingHp": [
+        21.5,
+        20.75,
+        20,
+        20.75,
+        21.5
+      ],
+      "seconds": 3,
+      "method": "single native trigger"
+    },
+    {
+      "weapon": "flamethrower",
+      "kills": 0,
+      "remainingHp": [
+        29.599999999999987,
+        60,
+        36.800000000000026,
+        60,
+        29.599999999999987
+      ],
+      "seconds": 3,
+      "method": "sustained native trigger for three seconds"
+    },
+    {
+      "weapon": "pipe-bomb",
+      "kills": 5,
+      "remainingHp": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "seconds": 3,
+      "method": "single native trigger"
+    },
+    {
+      "weapon": "rocket-launcher",
+      "kills": 5,
+      "remainingHp": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "seconds": 3,
+      "method": "native centered explosion"
+    }
+  ],
+  "areaAfter": [
+    {
+      "weapon": "molotov",
+      "kills": 5,
+      "remainingHp": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "seconds": 3,
+      "method": "single native trigger"
+    },
+    {
+      "weapon": "flamethrower",
+      "kills": 5,
+      "remainingHp": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "seconds": 3,
+      "method": "sustained native trigger for three seconds"
+    },
+    {
+      "weapon": "pipe-bomb",
+      "kills": 5,
+      "remainingHp": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "seconds": 3,
+      "method": "single native trigger"
+    },
+    {
+      "weapon": "rocket-launcher",
+      "kills": 5,
+      "remainingHp": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "seconds": 3,
+      "method": "native centered explosion"
+    }
+  ],
+  "areaMethod": "Five inert native-HP ordinary targets (60 each), x2m, z -1.2,-0.6,0,0.6,1.2; flame close cone uses z offsets divided by4; same fixture baseline/current; three seconds from input/explosion"
 }
