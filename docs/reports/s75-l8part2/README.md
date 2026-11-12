@@ -266,3 +266,7 @@ A logged browser-only control disabled child mesh frustum culling for jersey bat
 ## Placement-upload control rejected
 
 A browser-only control marked the jersey custom placement interleave dirty after each partition, retaining positions, material, visibility and geometry. Current in-arena protected/no-fire HIGH/zoom-1 sample; opened `cover-upload-control/s002-t829.jpg`. Pond cover remains absent. Forcing a buffer upload alone is not a supported fix, and no upload/version change was retained. Browser/server are terminal; custom position-node/material behavior remains unverified.
+
+## Material/depth control breakthrough
+
+A temporary built-in-instancing control (same geometry/transforms, custom position node removed) did not restore cover; opened `cover-instance-control/s002-t732.jpg`. A second control uses built-in instancing plus a plain magenta MeshBasicNodeMaterial, depth testing off, double-sided, mesh culling off. Opened `cover-basic-control/s002-t813.jpg`: all three pond covers are clearly visible at their expected positions. This establishes drawable geometry/placement and narrows the difference to material/depth handling; the combined control does not distinguish those factors yet. Both controls are browser-only, with protected/no-fire HIGH/zoom-1 input, and were not retained in production. Browser/server are terminal.
