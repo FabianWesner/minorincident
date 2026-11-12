@@ -88,7 +88,7 @@ try {
       else stalled++;
       if (stalled > maxStalled) {
         maxStalled = stalled; maxAt = world.tick;
-        if (stalled >= 300) maxWindow = { start, end: world.tick, phase: l9.state.phase, held, progress: startProgress, startPosition,
+        maxWindow = { start, end: world.tick, phase: l9.state.phase, held, progress: startProgress, startPosition,
           endPosition: [p.x, p.z], speed: car.physics.speed, yaw: p.yaw, throttle: world.inputFrame.drive?.throttle, steer: world.inputFrame.drive?.steer,
           nearby: [...world.entities.iterate()].filter(e => e.id !== car.entity.id && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 12 && ['vehicle', 'physics-prop', 'obstacle'].includes(e.kind)).map(e => ({ kind: e.kind, archetype: e.archetype, hp: e.health?.current, at: [e.transform.x, e.transform.z], distance: Math.hypot(e.transform.x - p.x, e.transform.z - p.z), rammed: e.destructible?.rammed, physics: (() => { const prop = world.props?.items.find(item => item.entityId === e.id); return prop ? { fixed: prop.fixed, braced: prop.braced, mass: prop.mass, velocity: prop.body.linvel() } : null; })() })) };
       }
