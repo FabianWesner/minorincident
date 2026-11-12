@@ -125,3 +125,5 @@ Reproducibility: `native-targets.json` embeds the exact TypeScript harness sourc
 Final consistency correction: machete source comment now states two hits against native ordinary infected; the role assertion derives its two-hit threshold from catalog HP times toughness. Focused combat and lint pass. This changes no gameplay values; catalog SHA receipts refer to the measured catalog before this comment-only correction.
 
 Durable validation receipt: [validation.json](validation.json) preserves the final all-level flag comparison, exact commands, remote-unit outcome, and L10 attack-start timestamps. It explicitly records the failing continuous-cadence gate and does not claim goal completion.
+
+Scope audit against c9a9bbbd: eight changed paths, limited to the global action catalog, L10 encounter data/controller, focused combat tests and this report directory. Infected definitions/AI, corpse residency/lifecycle, specs, threat-audit tools and all protected reference paths are unchanged. `validation.json` stores the checked path list.

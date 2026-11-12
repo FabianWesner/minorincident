@@ -342,5 +342,22 @@
     "continuousCadencePass": false,
     "attackStartCount": 41
   },
-  "overallComplete": false
+  "overallComplete": false,
+  "scopeAudit": {
+    "changedPaths": [
+      "docs/reports/s86-weaponpower/README.md",
+      "docs/reports/s86-weaponpower/native-ordinary.json",
+      "docs/reports/s86-weaponpower/native-targets.json",
+      "docs/reports/s86-weaponpower/validation.json",
+      "src/data/actions/catalog.ts",
+      "src/levels/L10/encounters.ts",
+      "src/sim/missions/LevelTenEncounters.ts",
+      "tests/engine/combat.test.ts"
+    ],
+    "infectedStatsAndAiUnchanged": true,
+    "protectedPathsUnchanged": true,
+    "corpseLifecycleUnchanged": true,
+    "noBrowserRun": true,
+    "noDeployOrPush": true
+  }
 }
