@@ -6,8 +6,8 @@
 
 | Working representative | Raw | Calibration/fitted high | Bake/flat | Neutral rig | HIGH game |
 |---|---:|---:|---:|---:|---|
-| BBQ-dad (higher-scoring ordinary alternative) | 6 | repaired bake remains 6 | colour match 5; flat 5 | regenerated candidate 5 | Candidate score **withdrawn**: GLB-only overrides did not pair official bakes; shipped S53 5/3 is separate |
-| Cashier (low scorer) | 6 | 5 after 42.9% head enlargement | repaired bake 4; flat 4 | cleaned regenerated neutral 4 | Current shipped 3/2; not a proven matched regenerated chain |
+| BBQ-dad (higher-scoring ordinary alternative) | 6 | repaired bake remains 6 | colour match 5; flat 5 | regenerated candidate 5 | Matched regenerated candidate **5/3**; earlier GLB-only 3/2 withdrawn |
+| Cashier (low scorer) | 6 | 5 after 42.9% head enlargement | repaired bake 4; flat 4 | cleaned regenerated neutral 4 | Matched regenerated candidate **4/3**; current shipped 3/2 is separate |
 | Selected S52 butcher | 6 | fitted high 6 | pre-bind flat 5 | selected checkpoint 5 | **Matched delivery 5 day / 4 night**, both zooms |
 
 Studio scores use controlled overlapping camera/light comparisons. Game scores use native HIGH Scene Lab; studio/game context differences remain explicit. The biggest **confirmed avoidable integration failure** is mismatched geometry and official pose/UV bakes; pairing them restores the selected butcher's coherent appearance. This is not proof that the current shipped ordinary figures suffer that mismatch.
@@ -437,3 +437,11 @@ Applied the inverse recorded body transform to the cleaned bound candidate, then
 Encoded both regenerated bound candidates with the existing `compressSkin` ETC1S/meshopt route, then called official `skinCrowdBakes` using scratch asset definitions. Generated candidate geometry and official pose/UV bakes are retained in `/private/tmp`; mapping is `ordinary-diagnostic-deliveries.json`. Registry and `civilianBakes.json` were not edited. Temporary preparation driver, scratch public GLBs and newly generated public bake files were removed after copying to scratch.
 
 Both candidates emitted LOD1/2 **dimensions fallback** diagnostics because one diagnostic body was deliberately supplied for all requested LODs. Their three resulting bake contents are identical within each figure. This is suitable only for a fixed-geometry stage diagnostic, not validation of authentic distance LODs, performance or production delivery. Future request overrides must pair the scratch encoded GLB and scratch official bake for each figure, record route hits and retain these fallback limitations. Generation alone is not visual evidence.
+
+## Matched regenerated ordinary HIGH game stages accepted
+
+![Opened regenerated ordinary candidates with matched official bakes](ordinary-matched-candidate-high.jpg)
+
+Served each encoded regenerated GLB with its freshly generated official pose/UV bake through session-local routes. Both corrected explicit-variant HIGH/WebGL2 fixtures passed and were opened at both zooms/day/night. Coherent model identities replace the earlier stale-bake fragmentation. Strict game judgments: **BBQ-dad 5 day / 3 night; cashier 4 day / 3 night**. Receipts and route-hit logs remain under `test-results/s71-figurediag/{bbq,cashier}-matched-candidate-high/`. Temporary driver removed; production assets/mappings untouched.
+
+These complete same-regenerated-body HIGH stage observations: BBQ-dad **raw 6 → repaired bake 6 → colour/flat 5 → neutral rig 5 → HIGH game 5/3**; cashier **raw 6 → calibration 5 → repaired bake/flat 4 → cleaned neutral rig 4 → HIGH game 4/3**. Camera/light differ between controlled studio and native game contexts, so the night losses are presentation observations rather than isolated lighting coefficients. One candidate body/bake deliberately serves all requested LODs, with recorded dimension fallbacks; these are fixed-geometry diagnostics, not authentic distance-delivery or performance validation. Matched LOW candidate matrices remain pending.
