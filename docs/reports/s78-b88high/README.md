@@ -24,19 +24,17 @@ Target comparison: PROD batch 87 at <https://minor-incident.com>.
 
 ## Requested coverage
 
-Only the first L8 HIGH zoom 1 attempt was measured. No PROD A/B was performed.
+Measured coverage is summarized below. No PROD A/B was performed. All incomplete routes remain open.
 
-| Level / pass | Requested route and settings | Result |
-|---|---|---|
-| L8 HIGH zoom 1 | Opening through flamingo arena | Incomplete: 24/26, 90-second driver stall |
-| L8 HIGH zoom 1.5 | Full start → boarding | Unmeasured |
-| L8 LOW zoom 1.5 | Full start → boarding | Unmeasured |
-| L9 HIGH zoom 1 | Full level | Unmeasured |
-| L9 HIGH zoom 1.5 | Full level | Unmeasured |
-| L9 LOW zoom 1.5 | Full level | Unmeasured |
-| L3 HIGH zoom 1 / 1.5, LOW zoom 1.5 | First 3 minutes each | Unmeasured |
-| L4 HIGH zoom 1 / 1.5, LOW zoom 1.5 | First 3 minutes each | Unmeasured |
-| L7 HIGH zoom 1 / 1.5, LOW zoom 1.5 | First 3 minutes each | Unmeasured |
+| Level | HIGH zoom 1 | HIGH zoom 1.5 | LOW zoom 1 |
+|---|---|---|---|
+| L8 full | Incomplete: 24/26 flamingos, 90 s driver stall | Open | Open |
+| L9 full | Incomplete: eight-minute cap at rail encounter | Open | Open |
+| L3 first 3 min | Sample complete | Sample complete | Open |
+| L4 first 3 min | Sample complete | Open | Open |
+| L7 first 3 min | Sample complete | Open | Open |
+
+The LOW target is zoom 1 per the job prompt. The PO checklist also calls for zoom 1.5 coverage; that additional LOW coverage is not claimed here.
 
 ## Open PO findings (not re-checked)
 
@@ -70,3 +68,7 @@ Completed the requested 180-second real-input sample: 3 deaths, 0 logged assists
 ## L9 HIGH zoom 1 attempt (continuation)
 
 Real-input run ended at the eight-minute cap (482 seconds), unfinished at the rail stall: 19 deaths, 0 logged driver assists, no objective skips. Two driver P2 enemy-frozen observations were five-second stationary attack states near the courier; these are unconfirmed gameplay defects. P0 cannot-finish is the time-cap label. Opened `campaign-L9-t2714.jpg`: APC hull, headlights and three visible-side wheels are readable; this still does not prove no flicker or correct flame depth. Opened `campaign-L9-t18942.jpg`: 0 HP courier body across the windscreen, several attackers beside the hull, and rail-stall HUD explicitly showing countdown, shoot-boarders instruction, F hatch control, and inability to exit. Repeated countdowns therefore cannot be interpreted as a soft-lock without separating checkpoint replays from normal stall behavior. Driving traversed most of the road, but this attempt did not recover from the rail encounter and did not finish the level. The encounter supplies substantial lethal pressure; fun/fairness remains unresolved because the driver repeatedly dies. Restart/go prompt, soldier placement at start, school-bus telegraph/dodge/defeat, detour landings and recovery still require direct verification. No PO UAT vehicle finding is closed. Raw evidence: `test-results/playtest/s78-b88high-l9-high-z1/`. Other zoom/quality passes and PROD comparison remain open.
+
+## L3 HIGH zoom 1.5 opening (continuation)
+
+Completed 180 seconds of real input with 3 deaths, 0 logged assists and no objective skips. No P1/P2 driver finding; P0 is the expected time-cap label. Opened `campaign-L3-t5428.jpg`: courier at 35 HP in an active street fight, distinct nearby figures and health bars, readable arrow and objective. End distance was 355 m from checkpoint, so the attempt lost progress and did not reach the changed second wave. This is pressure rather than harmless combat, but death/replay and driver navigation prevent a reliable human difficulty judgment. Raw evidence: `test-results/playtest/s78-b88high-l3-high-z15/`.
