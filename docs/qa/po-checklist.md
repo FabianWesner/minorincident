@@ -1,5 +1,5 @@
 # PO checklist (grows with every PO finding)
-Check each item at low quality, zoom 1.5, WebGPU, with a progressed save, A/B against PROD.
+Check each item at high quality (the PO's setting) and again at low, zoom 1.5, WebGPU, with a progressed save, A/B against PROD.
 - L1 load time from the level click to Begin is no slower than PROD (P1-107).
 - Pedestrian hats/glasses sit on the head, normal size; no hexagon discs (P1-108, P1-115).
 - L1 depot clerk walks back into the shop and closes the door; nobody vanishes (P1-109).
