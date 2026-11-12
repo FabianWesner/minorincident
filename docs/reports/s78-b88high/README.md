@@ -98,3 +98,7 @@ Merged-build real-input attempt finished L7 in 149 seconds with no skips, zero d
 ## L8 HIGH zoom 1.5 attempt
 
 Fresh merged-build run with requested zoom 1.5 stopped at 348 seconds after 90.3 seconds without progress, again at 25/26 flamingos; 0 deaths, 2 logged assists, no skips. Opened `test-results/playtest/s78-b88high-l8-high-z15/captures/campaign-L8-16499-stuck-at-ring.jpg`: partially depleted remaining enemy health bar inside the lit pen, courier/group at the center marker, corpse field visible. Wider requested zoom did not resolve the driver target-acquisition failure. The arena has authored camera framing, so this still does not prove the exact resulting camera scale matches the requested normal gameplay zoom. Full boarding, other animal pens, flicker/settling, and manual recovery remain open; no game soft-lock is assigned.
+
+## Merged-revision validation retry
+
+`npm run typecheck` and `npm run lint` both passed again after the main merge. The specified unchanged `sh tools/remote/run.sh "$PWD" -- npm test` completed successfully on runner 46.225.66.90 (job `/srv/mi/jobs/s78-b88high-e8f96c-36761-1794504497`): exit 0, 208.9 s against the 240 s budget, 27 files passed, 106 tests passed and one skipped. Budget collection reported 150/150 cases across configured lanes; the executed default unit project reported 107 cases. No tests were trimmed or changed. This supersedes the initial infrastructure-blocked suite attempt, and does not close any visual or gameplay coverage gap.
