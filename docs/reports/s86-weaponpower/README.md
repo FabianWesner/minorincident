@@ -54,7 +54,7 @@ Five 60-HP targets: molotov clears within 2 s after ignition and its patch lasts
 
 ## L10 pressure and remaining criterion
 
-Current seed-1 low-tier skilled run: 39 attack starts, 2.33/minute from first attack to completion, 1009.02 s completion. Baseline: 40 starts, about 2.4/minute, 1,010.45 s. Current run has 6 gaps over 30 s; longest 350.77 s. The refreshed per-minute target also fails (2.33/minute versus approximately 2.39 baseline); continuous cadence fails. Earlier higher-rate receipts predate the final weapon corrections and do not prove current completion. Receipt: `/tmp/s86-current-cadence.json`.
+Current seed-1 low-tier skilled run: 41 attack starts, 2.447/minute from first attack to completion, 1,010.02 s completion. Baseline: 40 starts, approximately 2.386/minute, 1,010.45 s. The per-minute target passes narrowly. The longest attack-start gap remains 350.77 s, so the continuous 30-second criterion fails. Receipt: `/tmp/s86-finaleplus1.json`.
 
 Existing resident caps are retained: up to 15 regular/high and 22 finale/high, with lower low-tier limits. Native traces show 11–12 of 12 low-tier slots occupied while only 0–2 infected are within 30 m. Holders are living pursuers, not corpses. The protected hangar conversation lasts 56 s; clarification about excluding protected story periods is pending, and outdoor gaps remain independently unresolved.
 
@@ -62,7 +62,7 @@ Rejected experiments were reverted: larger static reserves, passed-anchor expiry
 
 ## Audit and checks
 
-Full current audit `/tmp/s86-threat-molotov28` completed in 382.1 s. All ten skilled/passive flag sets exactly match c9a9bbbd baseline receipts. Top-level exit is 1 because two pre-existing L4 criteria fail.
+Full current audit `/tmp/s86-threat-final-count` completed in 415.5 s. All ten skilled/passive flag sets exactly match c9a9bbbd baseline receipts. Top-level exit is 1 because two pre-existing L4 criteria fail.
 
 | Level | Skilled flags before → after | Passive flags before → after |
 | --- | --- | --- |
@@ -77,7 +77,7 @@ Full current audit `/tmp/s86-threat-molotov28` completed in 382.1 s. All ten ski
 | L9 | 0 → 0 | 0 → 0 |
 | L10 | 0 → 0 | 0 → 0 |
 
-Typecheck and lint pass. Focused combat: 7 cases pass, including all new weapon assertions. Remote `sh tools/remote/run.sh "$PWD" -- npm test`: 106 passed, 1 skipped, 27 files, 197.3 s / 240 s on 46.225.66.90. No browser runs. No deployment or push.
+Typecheck and lint pass. Focused combat: 7 cases pass, including all new weapon assertions. Remote `sh tools/remote/run.sh "$PWD" -- npm test`: 106 passed, 1 skipped, 27 files, 199.0 s / 240 s on 46.225.66.90. No browser runs. No deployment or push.
 
 ## Browser QA needed
 
@@ -96,3 +96,5 @@ Contact-only diagnostic: before cure release, outside the protected hangar, whil
 Longest contact-lull evidence: at tick 43,387 the courier was x3320/z94; nearby actors included an Alpha chasing at 24 m, armored chaser at 26 m, and an attracted sprinter with target 0 at 16 m (`/tmp/s86-lull-evidence.json`). Extending the L10 idle/wander pursuit refresh to attracted actors completed in 1,011.6 s but reduced starts to 34 and left a 309.6 s gap. The change was reverted (`/tmp/s86-refresh-attracted.json`).
 
 Finale count correction: increasing regular finale slots from 8/5 to 9/6 (high/low) yields 41 attack starts, 2.447/minute, and 1,010.02 s completion in the current native run. This restores the per-minute target above baseline (~2.386/minute), but the 350.77 s gap persists. Local L10 skilled/passive flags are both empty (`/tmp/s86-l10-finaleplus1`); typecheck, lint and seven focused combat cases pass. Full audit and remote units must refresh after this count change.
+
+Time-box handoff: current source is committed and final full audit/remote units are refreshed after the 9/6 finale count change and rifle-pierce assertion. Every level flag set matches baseline; all rejected gameplay experiments are reverted. Outstanding acceptance: sustained outdoor attack cadence (350.77 s maximum gap), plus clarification of the protected 56 s story exception. The goal is incomplete and no deployment/push occurred.
