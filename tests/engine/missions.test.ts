@@ -164,6 +164,15 @@ test('interactions: ring, input and view predicates agree for every interact ste
         // without adding another registered case or relaxing the scene gate.
         expect(mission.state.marker).toBe('central-plaza');
         expect(objectiveText(mission, mission.def.steps[0].text)).toBe('Follow Nadia to the central plaza');
+        const flock = mission.l8!.bosses.state.find(arena => arena.id === 'flamingo')!;
+        const savedPhase = flock.phase, savedPlayer = { ...player.transform };
+        flock.phase = 2; player.transform.x = -6; player.transform.z = -27;
+        const flockBodies = flock.ids.map(id => levelWorld.entities.get(id)!);
+        const savedHealth = flockBodies.map(body => body.health.current);
+        flockBodies.forEach((body, index) => { body.health.current = index < 3 ? 0 : body.health.max; });
+        expect(objectiveText(mission, mission.def.steps[0].text)).toBe('Follow Nadia to the central plaza · Flamingo flock · Phase 2 · 5 left');
+        flockBodies.forEach((body, index) => { body.health.current = savedHealth[index]; });
+        flock.phase = savedPhase; Object.assign(player.transform, savedPlayer);
         await checkL8Story();
         await checkL8Route();
         mission.completeObjective('sanctuary');
