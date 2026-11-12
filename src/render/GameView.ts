@@ -837,7 +837,12 @@ export class GameView implements Lifecycle {
       // Brief l3-polish: the station attack pulls back (eased) so the streams at the gates are on screen while the courier holds the yard.
       this.l3AttackScale += ((rescue ? 3.3 : l3AttackView(this.world) ? l3.attack.viewScale : 1) - this.l3AttackScale) * (1 - Math.exp(-4 * seconds));
       const l8Arena = this.world.missions?.l8?.state.arenas.find(arena => arena.phase > 0 && arena.phase < 3);
-      const l8Zone = l8Arena && l8Route.find(stage => stage.id === l8Arena.id)!.zone;
+      const l8Boarding = this.world.scenario === 'L8' && this.world.vehicles?.active === null
+        && this.world.missions?.l8?.state.arenas.every(arena => arena.phase === 3)
+        && !this.world.missions.l8.departing() && player.transform.x >= 80 && player.transform.x <= 120
+        && player.transform.z >= 35 && player.transform.z <= 95;
+      const l8Zone = l8Arena ? l8Route.find(stage => stage.id === l8Arena.id)!.zone
+        : l8Boarding ? { x0: 82, z0: 39, x1: 110, z1: 89 } : undefined;
       // Frame the entire bounded pen at default zoom, including its near edge.
       const l8Scale = l8Zone ? 4.5 * Math.max(1, 1 / this.view.camera.aspect) : 1;
       this.view.encounterScale = this.world.scenario === 'L3' ? this.l3AttackScale : l8Scale;

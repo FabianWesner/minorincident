@@ -142,3 +142,9 @@ The actual-L8 shove diagnostic now passes 378 cases: both sides, centre and 0.8 
 ## Return-flight presentation correction
 
 Inspection found that the new return leg reused the outbound `travel` arc, so flying back toward the origin could replay a dive-like pose. `AnimalMoves` now uses distance to the assigned pad for the return descent and excludes that leg from the outbound diving pitch. The red arena dive lane uses the authored area direction and destination length. Typecheck/lint/diff checks pass. This remains unaccepted visually until a new continuous/capture sample is opened; the earlier fight clear predates this presentation correction.
+
+## Boarding-yard camera correction
+
+`GameView` retains wide framing over the yard/APC approach while all pens are cleared and the courier remains on foot in the yard, until departure. Previously the final kill immediately dropped encounter scale to 1 and cropped the foreground body/truck. Typecheck/lint/diff checks pass.
+
+A normal 15 s engaged-elephant sample did not clear. A separate explicit camera-only control marked all arena phases cleared (logged setup; no combat claim), then captured HIGH/zoom 1 in one pooled headless WebGL2/Metal browser. Opened `boarding-camera-control/s001-t270.jpg`: boarding objective, party, truck, APC at lower left and the whole fenced yard/approach are visible together. The control retains a living elephant because it changes controller phases only. This verifies cleared-state framing, not the uninterrupted fight-to-boarding transition. Raw samples are ignored under `test-results/s75-l8part2/`; browser and server stopped.
