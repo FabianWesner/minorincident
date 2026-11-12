@@ -115,3 +115,7 @@ Completion is still unproven: L9 driving/rail stall/hatch/detour and L7/L4 runti
 ## Native campaign sampler
 
 Added `tools/scenelab/vehicle-campaign-motion.ts`, which loads a native L9/L7/L4 mission, runs the production completion bot, samples GameView.crowdFigures rendered soles near actual vehicle hulls each tick, and groups contacts by actor and attached/hull-ground state. Empty coverage exits nonzero. The 1800-tick HIGH L9 opening observation completed with zero eligible samples (exit 1), so it establishes no campaign contact pass. Typecheck and targeted lint pass. The sampler needs later route/checkpoint windows and mission/vehicle progress context next. See `native-opening-sample.json`.
+
+## Native L9 failure exposed
+
+The empty observations were affected by missing renderer.nextNodeFrame() calls during repeated fixed-step rendering: draw flags were stale. Advancing the node frame like Scene Lab now yields 123 eligible samples from five infected in the first 1800 native L9 ticks. The bot is driving and reaches about [-347,-250]. Actor 760, clip dog-gallop, frames 1531–1540 beside the hull, has measured p95 27 cm and max 66.2 cm. This contradicts completion despite isolated fixture passes. The native sampler now applies 5/15 cm failure limits. See `native-l9-driving-failure.json`. Prior no-sample observations do not establish absence of contacts. The context sampler typechecked; targeted lint passes after the draw-frame and threshold update.
