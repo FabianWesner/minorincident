@@ -1150,8 +1150,11 @@ export class LevelFourWar {
       if ((released.get(source.k) ?? 0) >= l4.war.group[1]) continue;
       // G-22: the first three bodies through a new breach are fast runners
       // that press the courier (`l4.war.spearhead`).
-      const breach = source.side ? s.breaches?.[source.side] : undefined, spearhead = !!breach && (breach.arrivals ?? 0) < 3
-        && Object.values(s.breaches ?? {}).some(other => other && other !== breach && other.openAt && other.openAt < breach.openAt);
+      const breach = source.side ? s.breaches?.[source.side] : undefined;
+      const priorBreach = Object.values(s.breaches ?? {}).some(other => other && other !== breach && other.openAt && other.openAt < (breach?.openAt ?? Infinity));
+      // The first west opening gets one runner into the moving courier's lane;
+      // keep the other two arrivals and all later breach cohorts on the usual roster.
+      const spearhead = !!breach && ((source.side === 'west' && (breach.arrivals ?? 0) === 0) || ((breach.arrivals ?? 0) < 3 && priorBreach));
       // fix69-r: the first three bodies of an open breach use the slots reserveSlots() holds for them.
       const owed = !!breach && (breach.arrivals ?? 0) < 3;
       const id = this.emerge({ x: source.at.x + (lane % 3 - 1) * .55, z: source.at.z + Math.floor(lane / 3) * .55 }, spearhead, this.headroom(), owed, spearhead ? l4.war.spearhead.archetypes : l4InfectedArchetypes);
