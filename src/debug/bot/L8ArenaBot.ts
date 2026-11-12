@@ -7,7 +7,7 @@ import { strikeAt } from './helpers';
 export class L8ArenaBot {
   private readonly walker = new Walker();
   constructor(private readonly w: SimWorld) {}
-  sample(id: L8BossId, policy: 'skilled' | 'passive' | 'standing' | 'kite' = 'skilled'): InputFrame {
+  sample(id: L8BossId, policy: 'skilled' | 'passive' | 'standing' | 'kite' = 'skilled', mgOnly = false): InputFrame {
     const w = this.w, f = emptyInput(), p = w.entities.get(1)!, zoo = w.missions!.l8!;
     const arena = zoo.state.arenas.find(a => a.id === id)!, def = l8BossArenas.find(a => a.id === id)!;
     if (p.health.current <= 0) return f;
@@ -36,7 +36,7 @@ export class L8ArenaBot {
     const target = intruder ?? targets[0];
     if (target) {
       const grabbed = policy === 'skilled' && zoo.bosses.swapBlocked();
-      const action = grabbed ? 'weapon.fire-axe' : intruder && Math.hypot(intruder.transform.x - p.transform.x, intruder.transform.z - p.transform.z) < 8 ? 'weapon.shotgun' : 'weapon.army-mg';
+      const action = !mgOnly && grabbed ? 'weapon.fire-axe' : !mgOnly && intruder && Math.hypot(intruder.transform.x - p.transform.x, intruder.transform.z - p.transform.z) < 8 ? 'weapon.shotgun' : 'weapon.army-mg';
       const choice = w.combat!.runner.loadout.activeEntries().find(e => e.id === action) ?? w.combat!.runner.loadout.activeEntries().find(e => e.id === 'weapon.army-mg');
       if (choice) { f.selectedSlot = { side: choice.side, index: choice.index }; strikeAt(f, target, choice.side, p.transform, false); if (grabbed) f[choice.side === 'LEFT' ? 'left' : 'right'].down = true; }
     }

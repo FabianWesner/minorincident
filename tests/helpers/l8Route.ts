@@ -37,6 +37,11 @@ export async function checkL8Route(): Promise<void> {
       if (!stage.entry) break;
       const arena = zoo.state.arenas[index], before = zoo.state.arenas.slice(0, index);
       for (const a of before) a.phase = 3;
+      if (index > 0) {
+        const previous = l8Route[index - 1]!;
+        expect(l8GateClosed(`${previous.id}.entry`, { arenas: zoo.state.arenas, sealed: true }), `${previous.id}: return entry remains open before the next gate arms`).toBe(false);
+        expect(l8GateClosed(`${previous.id}.exit`, { arenas: zoo.state.arenas, sealed: true }), `${previous.id}: forward exit remains open before the next gate arms`).toBe(false);
+      }
       // The opening tunnel cohort would make the group flee; this probe is about the gates, so the opening wave is gone.
       for (const e of w.infected!.active) if (!e.infected!.arenaBoss && !e.infected!.arenaCarrier) e.health.current = 0;
       zoo.bosses.updateGates();
@@ -73,6 +78,9 @@ export async function checkL8Route(): Promise<void> {
       expect(inRect(player.transform, stage.zone), `${stage.id}: courier inside the enclosure`).toBe(true);
       let armedWith = -1;
       let stragglers = '';
+      const entryNavId = 900840 + index * 2, previous = l8Route[index - 1], previousEntryNavId = index > 0 ? 900840 + (index - 1) * 2 : -1;
+      const closeTicks = new Map<number, number>();
+      w.events.on('world.blocker.changed', event => { if (event.type === 'world.blocker.changed' && event.blocked) closeTicks.set(event.id, event.tick); });
       for (let i = 0; i < 3600 && !arena.armed; i++) {
         w.update();
         if (arena.armed) {
@@ -83,11 +91,45 @@ export async function checkL8Route(): Promise<void> {
       expect(arena.phase, `${stage.id} engaged`).toBeGreaterThan(0);
       expect(markerAnchor(mission), `${stage.id}: combat marker stays at the arena centre`).toMatchObject({ x: (stage.zone.x0 + stage.zone.x1) / 2, z: (stage.zone.z0 + stage.zone.z1) / 2 });
       expect(arena.armed, `${stage.id}: the entry gate closes behind the group`).toBe(true);
+      const armedAt = w.tick;
+      expect(closeTicks.has(entryNavId), `${stage.id}: the entry barrier must still be physically open on the arming tick`).toBe(false);
+      if (index > 0) expect(closeTicks.has(previousEntryNavId), `${previous!.id}: its return barrier stays open until the party has passed`).toBe(false);
+      w.update();
+      expect(closeTicks.get(entryNavId), `${stage.id}: entry barrier closes on the next native tick`).toBe(armedAt + 1);
+      if (index > 0) expect(closeTicks.get(previousEntryNavId), `${previous!.id}: both doors close on the next native tick`).toBe(armedAt + 1);
       expect(armedWith, `${stage.id}: no follower left outside when the entry gate shuts (${stragglers})`).toBe(0);
       expect(l8GateClosed(`${stage.id}.entry`, { arenas: zoo.state.arenas, sealed: true })).toBe(true);
       expect(l8GateClosed(`${stage.id}.exit`, { arenas: zoo.state.arenas, sealed: true })).toBe(true);
+      if (index > 0) {
+        const previous = l8Route[index - 1]!;
+        expect(l8GateClosed(`${previous.id}.entry`, { arenas: zoo.state.arenas, sealed: true }), `${previous.id}: return entry closes after ${stage.id} arms`).toBe(true);
+        expect(l8GateClosed(`${previous.id}.exit`, { arenas: zoo.state.arenas, sealed: true }), `${previous.id}: forward exit closes after ${stage.id} arms`).toBe(true);
+      }
       arena.phase = 3; arena.armed = false; zoo.bosses.updateGates();
       expect(l8GateClosed(`${stage.id}.exit`, { arenas: zoo.state.arenas, sealed: true }), `${stage.id}: the exit opens on the clear`).toBe(false);
     }
+    // The elephant yard has a south entry fence instead of an l8Route `entry`
+    // box. Once the entire party has crossed it, both it and the gorilla return
+    // doors must close on the next native tick.
+    const elephant = zoo.state.arenas.find(a => a.id === 'elephant')!;
+    for (const arena of zoo.state.arenas) { arena.phase = arena.id === 'elephant' ? 1 : 3; arena.armed = false; }
+    const followers = zoo.followers();
+    followers.forEach((e, n) => w.solids.relocate(e, { x: 84 + n % 8 * 3, z: 54 + Math.floor(n / 8) * 3, y: e.transform.y }, 'fixture.l8-elephant-gate', 2, false));
+    w.solids.relocate(player, { x: 96, z: 52, y: player.transform.y }, 'fixture.l8-elephant-gate', 2, false);
+    const elephantAnimal = w.entities.get(elephant.ids[0])!;
+    expect(elephantAnimal.civilian).toBeDefined();
+    zoo.bosses.updateGates();
+    expect(w.solids.relocate(player, { x: 96, z: 52, y: player.transform.y }, 'fixture.l8-elephant-gate-open', 2, false)).toBe(true);
+    const closedAt = new Map<number, number>();
+    w.events.on('world.blocker.changed', event => { if (event.type === 'world.blocker.changed' && event.blocked && [900834, 900848, 900849].includes(event.id)) closedAt.set(event.id, event.tick); });
+    w.npcs!.civilians.outbreak!.infect(elephantAnimal, player.id);
+    for (let tick = 0; tick < 240 && !elephant.armed; tick++) w.update();
+    expect(elephant.armed, 'elephant gate arms after the party enters the yard').toBe(true);
+    const armedAt = w.tick;
+    expect(closedAt.size).toBe(0);
+    w.update();
+    expect(closedAt.get(900834), 'elephant south gate closes one tick after arming').toBe(armedAt + 1);
+    expect(closedAt.get(900848), 'gorilla return entry closes one tick after elephant entry').toBe(armedAt + 1);
+    expect(closedAt.get(900849), 'gorilla forward exit closes one tick after elephant entry').toBe(armedAt + 1);
   } finally { w.dispose(); }
 }
