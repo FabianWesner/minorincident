@@ -1,0 +1,51 @@
+{
+  "revision": "manifest-only",
+  "flags": [
+    "L7/KITING_BELOW_ATTACKS_PER_MINUTE_2:0.00",
+    "L7/KITING_LANDED_HITS_BELOW_2:0.00",
+    "L7/step/corridor:STUCK_CHASER_OVER_30_SECONDS",
+    "L7/phase/encounters:STUCK_CHASER_OVER_30_SECONDS",
+    "L7/FOLLOWER_WAIT_UPPER_BOUND_OVER_10_PERCENT",
+    "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+  ],
+  "levels": [
+    {
+      "level": "L2",
+      "flags": [],
+      "passiveFlags": []
+    },
+    {
+      "level": "L7",
+      "flags": [],
+      "passiveFlags": [
+        "KITING_BELOW_ATTACKS_PER_MINUTE_2:0.00",
+        "KITING_LANDED_HITS_BELOW_2:0.00",
+        "step/corridor:STUCK_CHASER_OVER_30_SECONDS",
+        "phase/encounters:STUCK_CHASER_OVER_30_SECONDS",
+        "FOLLOWER_WAIT_UPPER_BOUND_OVER_10_PERCENT"
+      ],
+      "seeds": [
+        {
+          "seed": 1,
+          "valid": true,
+          "outcome": "complete",
+          "nativeStateHash": "b8f0917d"
+        },
+        {
+          "seed": 2,
+          "valid": true,
+          "outcome": "complete",
+          "time": 106.85,
+          "nativeStateHash": "0d8a2d48"
+        },
+        {
+          "seed": 3,
+          "valid": true,
+          "outcome": "complete",
+          "time": 104.88333333333334,
+          "nativeStateHash": "80664438"
+        }
+      ]
+    }
+  ]
+}

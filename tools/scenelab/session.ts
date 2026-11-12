@@ -1,4 +1,4 @@
-import { airborneFootTrack, footVerticalStepMaxCm, footYaw, summarizeMotion } from '../../src/debug/scenelab/motion';
+import { airborneFootTrack, footVerticalStepMaxCm, footYaw, summarizeMotion, type MotionFrame } from '../../src/debug/scenelab/motion';
 import { uncappedArgs } from '../perf/uncapped';
 import { spawn, execFileSync, type ChildProcess } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
@@ -243,7 +243,9 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   }
   for (const window of e.footSlideWindows ?? []) {
     const frames = (metrics.actors[window.actor]?.track ?? []).filter(f => f.frame >= window.from && f.frame <= window.to);
-    const samples = frames.map(f => ({ ...f, feet: f.feet.map(foot => ({ ...foot, yaw: footYaw(foot.heel, foot.toe) })) }));
+    const samples: MotionFrame[] = frames.map(f => ({ ...f, feet: f.feet.map(foot => ({
+      heel: foot.heel, toe: foot.toe, yaw: footYaw(foot.heel, foot.toe),
+    })) }));
     const summary = summarizeMotion(samples), complete = frames.length === window.to - window.from + 1;
     const speed = complete && frames.every(f => Number.isFinite(f.speed) && f.speed! >= window.speedMinMs && f.speed! <= window.speedMaxMs);
     const name = `${window.actor}.${window.from}-${window.to}`;
@@ -251,7 +253,10 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
     add(`footWindowP95Cm.${name}`, summary.slideP95Cm ?? Infinity, e.footSlideP95MaxCm ?? 3);
   }
   for (const [actor, requirement] of Object.entries(e.footVerticalStepActors ?? {})) {
-    add(`footVerticalStepCm.${actor}`, footVerticalStepMaxCm(metrics.actors[actor]?.track ?? [], spec.frames ?? Infinity, requirement.feet), requirement.maxCm);
+    const frames = (metrics.actors[actor]?.track ?? []).map(f => ({ ...f, feet: f.feet.map(foot => ({
+      heel: foot.heel, toe: foot.toe, yaw: footYaw(foot.heel, foot.toe),
+    })) }));
+    add(`footVerticalStepCm.${actor}`, footVerticalStepMaxCm(frames, spec.frames ?? Infinity, requirement.feet), requirement.maxCm);
   }
   add('footSinkMaxCm', Math.max(0, ...motion.map(m => m.sinkMaxCm)), e.footSinkMaxCm);
   add('footJitterRunMax', Math.max(0, ...Object.values(metrics.actors).filter(a => a.kind === 'courier').map(a => a.motion.jitterRunMax)), e.footJitterRunMax);
