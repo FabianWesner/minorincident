@@ -39,9 +39,14 @@ async function crossingStorySequence(): Promise<void> {
     place(380, 0); l9.update();
     assert.notEqual(driving.stallAt, null, 'the rail stop is checkpointed and exposed');
     assert.equal(mission.state.checkpoint, 'mid-crossing');
-    for (let i = 0; i < 1800; i++) { w.applyInput(defend(), 'keyboard'); w.update(); player.health.current = player.health.max; }
+    assert.match(l9.driving.text(), /Engine stalled.*0:20.*■{10}.*shoot boarders.*F close\/open hatch.*cannot leave APC/);
+    for (let i = 0; i < 1200; i++) { w.applyInput(defend(), 'keyboard'); w.update(); player.health.current = player.health.max; }
     assert.ok((shots) > (0), 'the hatch admits the current carried gun');
-    assert.equal(driving.restarted, true, 'Sam restarts after thirty simulation seconds');
+    assert.equal(driving.restarted, true, 'Sam restarts after twenty simulation seconds');
+    assert.match(l9.driving.text(), /Engine restarted — drive! \(W\)/);
+    // Keep the remainder of this long story soak at its historical 30 s mark;
+    // the release proof above asserts the new 20 s restart independently.
+    for (let i = 0; i < 600; i++) { w.applyInput(defend(), 'keyboard'); w.update(); player.health.current = player.health.max; }
     assert.notEqual(car.entity.vehicle!.damage, 'exploded');
     place(423, 18); car.entity.health.current = 500;
     let repairDamage = 0;
@@ -76,6 +81,9 @@ async function crossingStorySequence(): Promise<void> {
     const restored = mission.l9!.driving.state;
     assert.equal(restored.evacuationDone, true); assert.equal((restored.evacuated).length, safeCount);
     car = w.vehicles!.cars.get(l9.state.carId)!;
+    // The authored `bridge` checkpoint also snapshots the post-drive crash
+    // approach controller; switch back to driving to isolate bridge-edge tests.
+    l9.state.phase = 'driving';
     place(510, 0, 10); l9.update(); assert.equal(String(l9.state.phase), 'driving', 'the far bank is not a bridge trigger');
     place(483, 0, 10, Math.PI); l9.update(); assert.equal(String(l9.state.phase), 'driving', 'driving back off the deck does not trigger the finale');
     place(483, 0, 10, .1); const before = { ...car.entity.transform };
@@ -83,7 +91,7 @@ async function crossingStorySequence(): Promise<void> {
     assert.deepEqual(l9.state.from, before, 'the crash starts at the actual hull transform');
     assert.ok(Math.abs((car.entity.transform.yaw) - (.1)) < 10 ** -(2), 'no yaw reset or sideways lerp');
     w.applyInput(emptyInput(), 'keyboard');
-    for (let i = 0; i < 1200 && l9.state.phase !== 'crawl'; i++) w.update();
+    for (let i = 0; i < 1200 && String(l9.state.phase) !== 'crawl'; i++) w.update();
     assert.equal(String(l9.state.phase), 'crawl');
     assert.equal(explosions, 0, 'the wreck has not exploded while she is still inside');
     const start = { ...player.transform }; for (let i = 0; i < 60; i++) w.update();

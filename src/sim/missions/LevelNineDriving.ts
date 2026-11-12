@@ -15,13 +15,13 @@ import { LevelNineSetPieces, emptySetPieces, type L9SetPieceState } from './Leve
 export interface L9DrivingState {
   prepared: boolean; roster: number[]; samId: number; megaId: number; soldiers: number[]; trucks: number[]; megaSightings?: number[]; megaSighting?: { index: number; startedAt: number; roadZ: number };
   boardersCalled: boolean; route: string | null; checkpoints: string[];
-  stallAt: number | null; restarted: boolean; repairTicks: number; repairActive: boolean; hatchOpen?: boolean;
+  stallAt: number | null; restarted: boolean; repairTicks: number; repairActive: boolean; hatchOpen?: boolean; hatchInteractHeld?: boolean;
   gateAt: number | null; gateClosed: boolean; gateId: number; bridgeGateId: number; fenceBroken: boolean;
   evacuationAt: number | null; evacuated: number[]; evacuating: number[]; evacuationDone: boolean;
   hugAt: number | null; hugDone: boolean;
   hugSpot?: { x: number; z: number; dogX: number; dogZ: number };
   truckEntering: Record<number, number>;
-  busId: number; busPassengers: number[]; busReleased: number; busHitAt: number; busRams: number; busStoppedAt: number | null; busLineAt: number | null;
+  busId: number; busPassengers: number[]; busReleased: number; busHitAt: number; busRams: number; busStoppedAt: number | null; busLineAt: number | null; busRamAt?: number; busRamZ?: number; busStunUntil?: number;
   tankerId: number; tankerWreckId: number; tankerFuseAt: number | null; tankerExploded: boolean; stampede: number[];
   fireAt: number | null; fireIds: number[]; jumped: string[]; jump: { id: string; airborne: boolean } | null;
   obstacleIds: number[]; waves: number[]; nextWave: number; lines: { id: string; at: number }[];
@@ -43,6 +43,8 @@ export const emptyDriving = (): L9DrivingState => ({
 /** r27-l9board: total number of damaging bus rams per level (40 durability each). */
 const tuneStall = l9SetPieceTuning.stall;
 const busRamCap = 3;
+const stallTicks = 20 * 60;
+const busTelegraphTicks = 90;
 const distance = (a: { x: number; z: number }, b: { x: number; z: number }) => Math.hypot(a.x - b.x, a.z - b.z);
 const alive = (e: EntitySnapshot | undefined): e is EntitySnapshot => !!e && e.health.current > 0 && !e.infected && !e.infection;
 
@@ -373,9 +375,9 @@ export class LevelNineDriving {
     // Rail lines cross every route. A damaged engine stalls here once; Sam's
     // restart is temporary and never defeats the 0-HP driveable floor.
     if (!s.restarted && s.stallAt === null && p.x >= cfg.railX - 3) {
-      s.stallAt = tick; this.line('L9.stall.sam'); this.signal('rail-stall'); this.checkpoint('mid-crossing');
+      s.stallAt = tick; s.hatchOpen = true; s.hatchInteractHeld = false; this.line('L9.stall.sam'); this.signal('rail-stall'); this.checkpoint('mid-crossing');
     }
-    if (s.stallAt !== null && !s.restarted && tick - s.stallAt >= 1800) { s.restarted = true; this.signal('engine-restarted'); }
+    if (s.stallAt !== null && !s.restarted && tick - s.stallAt >= stallTicks) { s.restarted = true; this.line('L9.stall.restart'); this.signal('engine-restarted'); }
     car.entity.vehicle!.boardSpacing = s.stallAt !== null && !s.restarted ? tuneStall.boardSpacingTicks : 0;
     s.repairActive = this.canRepair() && (w.inputFrame.interactHeld ?? w.inputFrame.interact);
     if (s.repairActive) {
@@ -386,7 +388,12 @@ export class LevelNineDriving {
     this.evacuate(); this.coverDoor(); this.waves();
     // Once the stopped crew opens it, a bus nudge cannot magically close the
     // hatch and disable the player's weapon in the middle of the defence.
-    if (!this.holding(car.entity.id)) s.hatchOpen = false; else if (car.physics.speed < 1) s.hatchOpen = true;
+    if (!this.holding(car.entity.id)) s.hatchOpen = false;
+    else if (car.physics.speed < 1) {
+      if (w.inputFrame.interact && !s.hatchInteractHeld) s.hatchOpen = !s.hatchOpen;
+      if (s.hatchOpen === undefined) s.hatchOpen = true;
+    }
+    s.hatchInteractHeld = !!w.inputFrame.interact;
     this.poseHatch();
     for (const id of this.hatch ? s.roster : []) {
       const e = w.entities.get(id);
@@ -401,16 +408,12 @@ export class LevelNineDriving {
     const player = this.w.entities.get(1)!;
     if (!this.hatch) { if (this.w.vehicles!.active === this.car.entity.id) { player.hidden = true; if (player.passengerOf === this.car.entity.id) delete player.passengerOf; } return; }
     const p = this.car.entity.transform, aim = this.w.inputFrame.aim;
-    Object.assign(player.transform, { x: p.x - Math.cos(p.yaw) * .5, z: p.z + Math.sin(p.yaw) * .5, y: p.y + .8, yaw: aim ? -Math.atan2(aim.z, aim.x) : p.yaw });
+    // Lift the full character above the roof line so the hatch reads as a
+    // deliberate firing position. Passengers remain seated and hidden inside.
+    Object.assign(player.transform, { x: p.x - Math.cos(p.yaw) * .5, z: p.z + Math.sin(p.yaw) * .5, y: p.y + 1.1, yaw: aim ? -Math.atan2(aim.z, aim.x) : p.yaw });
     player.hidden = false; player.passengerOf = this.car.entity.id;
     this.w.physics.playerBody!.setTranslation(player.transform, true); this.w.physics.playerBody!.setNextKinematicTranslation(player.transform);
-    for (const [i, id] of this.state.roster.entries()) {
-      const e = this.w.entities.get(id);
-      if (!e?.civilian?.ally || e.passengerOf !== this.car.entity.id) continue;
-      const side = i % 2 ? 1 : -1;
-      Object.assign(e.transform, { x: p.x - Math.cos(p.yaw) * 1.8 + Math.sin(p.yaw) * side * .7, z: p.z + Math.sin(p.yaw) * 1.8 + Math.cos(p.yaw) * side * .7, y: p.y + .8 });
-      e.hidden = false;
-    }
+    // No passenger is rendered through the hull during the hatch defense.
   }
   private course(): void {
     const w = this.w, s = this.state, car = this.car, p = car.entity.transform;
@@ -467,7 +470,9 @@ export class LevelNineDriving {
     }
   }
   private readonly busIntent = (intent: DriveIntent, bus: EntitySnapshot): void => {
-    const car = this.car.entity.transform, dx = car.x - bus.transform.x, dz = car.z - bus.transform.z;
+    if ((this.state.busStunUntil ?? 0) > this.w.tick) { intent.throttle = 0; intent.brake = true; intent.steer = 0; return; }
+    const car = this.car.entity.transform, targetZ = (this.state.busRamAt ?? 0) > this.w.tick ? (this.state.busRamZ ?? car.z) : car.z;
+    const dx = car.x - bus.transform.x, dz = targetZ - bus.transform.z;
     const delta = Math.atan2(Math.sin(-Math.atan2(dz, dx) - bus.transform.yaw), Math.cos(-Math.atan2(dz, dx) - bus.transform.yaw));
     intent.throttle = 1; intent.brake = false; intent.steer = Math.max(-1, Math.min(1, delta * 2));
     // r27-l9board: a bus glued to a crawling or stalled APC rammed it every 2 s (30 rams, durability 0 by the rail on the
@@ -524,9 +529,23 @@ export class LevelNineDriving {
     if (s.busLineAt === null) return;
     const bus = w.vehicles!.cars.get(s.busId); if (!bus) return;
     if (s.busStoppedAt === null && w.tick % 6 === 0) emitEngine(w, s.busId, bus.physics.speed);
-    const near = car.physics.hullDistance(bus.entity.transform.x, bus.entity.transform.z) < bus.physics.def.length / 2 + 1;
-    if (s.busStoppedAt === null && near && s.busRams < busRamCap && w.tick - s.busHitAt >= 120 && Math.max(bus.physics.speed, car.physics.speed) > 2) {
-      s.busHitAt = w.tick; s.busRams++; w.vehicles!.damage(car.entity.id, 40); this.signal('bus-ram', bus.entity.id);
+    const ramAt = s.busRamAt ?? 0;
+    if (s.busStoppedAt === null && !ramAt && s.busRams < busRamCap && w.tick - s.busHitAt >= 300 && Math.max(bus.physics.speed, car.physics.speed) > 2 && distance(bus.entity.transform, p) < 42) {
+      s.busRamAt = w.tick + busTelegraphTicks; s.busRamZ = p.z; this.signal('bus-ram-windup', bus.entity.id);
+      w.events.emit({ type: 'vehicle.sound', tick: w.tick, sourceId: bus.entity.id, position: { x: bus.entity.transform.x, y: bus.entity.transform.y, z: bus.entity.transform.z }, velocity: { x: bus.physics.forwardSpeed, z: 0 }, rpm: 0, speed: bus.physics.speed, health: bus.entity.health.current / bus.entity.health.max, phase: 'horn' });
+      // Reuse the pooled directional telegraph renderer for a broad red lane
+      // on the road, aimed along the APC's current heading.
+      w.events.emit({ type: 'telegraph', tick: w.tick, sourceId: bus.entity.id, attackId: 0x4000_0000 + w.tick, special: 'alpha.charge', move: 'alpha.charge', duration: busTelegraphTicks / 60, target: { id: 1, x: p.x, z: p.z }, area: { x: p.x, z: p.z, dx: Math.cos(p.yaw), dz: -Math.sin(p.yaw), radius: 2.5 } });
+    } else if (ramAt && w.tick >= ramAt) {
+      const lateral = Math.abs(p.z - (s.busRamZ ?? p.z));
+      s.busRamAt = 0; s.busHitAt = w.tick; s.busRams++;
+      if (lateral > 4.5) {
+        const side = Math.sign(p.z - (s.busRamZ ?? p.z)) || 1;
+        w.vehicles!.damage(s.busId, 400);
+        bus.physics.body.setLinvel({ x: Math.max(5, bus.physics.forwardSpeed), y: 0, z: side * 4 }, true);
+        s.busStunUntil = w.tick + 180; this.signal('bus-ram-missed', bus.entity.id);
+        if (bus.entity.health.current <= 0) { s.busStoppedAt = w.tick; w.vehicles!.autopilot.delete(s.busId); stopEngine(w, s.busId); this.signal('bus-wrecked', s.busId); }
+      } else if (s.busRams <= busRamCap) { w.vehicles!.damage(car.entity.id, 40); this.signal('bus-ram', bus.entity.id); }
     }
     let blocked = false;
     if (bus.physics.stuck) w.physics.world!.contactPairsWith(bus.physics.collider, collider => {
@@ -708,7 +727,13 @@ export class LevelNineDriving {
   }
   text(): string {
     const s = this.state, p = this.car.entity.transform, tick = this.w.tick;
-    if (s.stallAt !== null && !s.restarted) return `Defend the hatch · Restart ${Math.max(0, Math.ceil((1800 - tick + s.stallAt) / 60))} s`;
+    if (s.stallAt !== null && !s.restarted) {
+      const remaining = Math.max(0, stallTicks - tick + s.stallAt), seconds = Math.ceil(remaining / 60), filled = Math.ceil(remaining / stallTicks * 10);
+      const bar = `[${'■'.repeat(filled)}${'·'.repeat(10 - filled)}]`;
+      return `Engine stalled — hold the hatch (0:${String(seconds).padStart(2, '0')}) ${bar} · shoot boarders · F close/open hatch · cannot leave APC`;
+    }
+    if ((s.busRamAt ?? 0) > tick) return `School bus lining up a ram · dodge now! ${Math.ceil(((s.busRamAt ?? tick) - tick) / 60)} s`;
+    if (s.stallAt !== null && s.restarted && tick - s.stallAt < stallTicks + 180) return 'Engine restarted — drive! (W)';
     if (s.evacuationAt !== null && !s.evacuationDone) {
       const count = `${s.evacuated.length}/${s.roster.filter(id => id !== s.samId && alive(this.w.entities.get(id))).length} at the trucks`;
       // r42-l9pin (r41-vqa P2-4: survivors died with no word on the HUD): name the loss for 4 s, and say why they wait inside.
@@ -743,7 +768,7 @@ export class LevelNineDriving {
     if (s.setPieces) this.setPieces.restore(s.setPieces, delta);
     if (s.takeoffAt != null) s.takeoffAt += delta;
     if (s.boostUntil !== undefined) s.boostUntil += delta;
-    s.busHitAt += delta; s.nextWave += delta; for (const l of s.lines) l.at += delta;
+    s.busHitAt += delta; if (s.busRamAt) s.busRamAt += delta; if (s.busStunUntil) s.busStunUntil += delta; s.nextWave += delta; for (const l of s.lines) l.at += delta;
     for (const id of Object.keys(s.truckEntering)) s.truckEntering[Number(id)] += delta;
   }
 }

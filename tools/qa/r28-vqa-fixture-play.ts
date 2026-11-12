@@ -190,7 +190,7 @@ try {
     // driving, retry here) and fire with the left mouse button at the nearest drawn enemy.
     // r35-vqa: the first weapon key can land while the briefing panel is still open; retry on foot until the wanted weapon is held.
     if (!e.driving && e.player.current !== values.weapon && e.player.weapons?.includes(values.weapon!) && Date.now() - lastTap > 3000) { lastTap = Date.now(); const k = weaponKey(values.weapon!); if (k) { await page.keyboard.press(`Digit${k}`); log({ weaponKey: k, tick: e.tick, had: e.player.current }); } }
-    const hatch = !!e.driving && /Defend the hatch/.test(e.objective ?? '');
+    const hatch = !!e.driving && /Engine stalled/.test(e.objective ?? '');
     if (hatch && !values['no-hatch-fire']) {
       const want = weaponKey(values.weapon!); if (want && e.player.current !== values.weapon && Date.now() - lastTap > 1500) { lastTap = Date.now(); await page.keyboard.press(`Digit${want}`); log({ hatchKey: want, tick: e.tick, rack: e.player.weapons, empty: e.player.emptyWeapons, had: e.player.current, ctx: await page.evaluate(() => { const g = (window.__SCENE__ as unknown as { game: { input: { drivingContext: boolean; mountedGunContext: boolean }; world: { mountedGun?: { mounted: boolean }; missions?: { l9?: { driving: { hatch: boolean } } } } } }).game; return { driving: g.input.drivingContext, mounted: g.input.mountedGunContext, hatch: g.world.missions?.l9?.driving.hatch, worldMounted: g.world.mountedGun?.mounted }; }) }); }
       if (target) { await page.mouse.move(target.aim.x, target.aim.y); await page.mouse.down(); await page.waitForTimeout(90); await page.mouse.up(); }

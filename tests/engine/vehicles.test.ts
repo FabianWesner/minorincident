@@ -99,6 +99,7 @@ test('enter, drive and exit: door dwell, input ownership (no attacks while drivi
   await checkBossDamage(); await checkOrdinaryDamage(); await checkBossStates();
   await apcBoarders();
   await l9BusVsParkedApc();
+  await l9BusTelegraphAndWreck();
   await l9FloorApcThroughPile();
   await l9CompanionsBoardDiagonalApc();
   await l9CheckpointLanes();
@@ -189,6 +190,36 @@ async function l9BusVsParkedApc(): Promise<void> {
     }
     expect(closest, 'the bus really closed in on the APC').toBeLessThan(apc.physics.def.length / 2 + bus.physics.def.length / 2 + 7);
     expect(moved, 'APC displacement over a 30 s hold with the bus pursuing').toBeLessThanOrEqual(1.5);
+  } finally { world.dispose(); }
+}
+
+// The bus commits to one lane during its 1.5 s warning. A driver who leaves
+// that lane takes no APC damage; repeated overshoots damage and finally stop it.
+async function l9BusTelegraphAndWreck(): Promise<void> {
+  const world = await loadLevel('L9', 1, preset('L9-default'), 0, { quality: 'low' });
+  try {
+    const l9 = world.missions!.l9!, s = l9.driving.state, apc = world.vehicles!.cars.get(l9.state.carId)!, bus = world.vehicles!.cars.get(s.busId)!;
+    world.missions!.begin(); world.update(); s.busLineAt = world.tick; bus.entity.hidden = false; bus.physics.body.setEnabled(true);
+    Object.assign(bus.entity.transform, { x: 170, z: 0 }); Object.assign(apc.entity.transform, { x: 200, z: 0 });
+    bus.physics.speed = 5; apc.physics.speed = 5;
+    l9.driving.update();
+    expect(s.busRamAt, 'the bus announces its ram 90 ticks ahead').toBe(world.tick + 90);
+    expect(l9.driving.text(), 'the HUD names the incoming ram and dodge').toContain('School bus lining up a ram · dodge now! 2 s');
+    expect(world.events.events(world.tick - 1).some(e => e.type === 'telegraph' && e.sourceId === bus.entity.id && e.duration === 1.5), 'the bus draws a 1.5 s red road-lane tell').toBe(true);
+    expect(world.events.events(world.tick - 1).some(e => e.type === 'vehicle.sound' && e.sourceId === bus.entity.id && e.phase === 'horn'), 'the bus sounds its horn').toBe(true);
+    const armor = apc.entity.health.current, busHealth = bus.entity.health.current;
+    Object.assign(apc.entity.transform, { z: 6 });
+    for (let i = 0; i < 3; i++) { s.busRamAt = world.tick; s.busRamZ = 0; l9.driving.update(); }
+    expect(apc.entity.health.current, 'the driver dodges the locked ram lane without taking a hit').toBe(armor);
+    expect(bus.entity.health.current, 'three missed rams wreck the bus').toBe(busHealth - 1200);
+    expect(s.busStoppedAt, 'the wrecked bus stops its pursuit').not.toBeNull();
+    // A driver who never dodges still survives the bus encounter: three capped
+    // hits cost 120 armour from the APC, leaving its broader mission intact.
+    s.busStoppedAt = null; s.busRams = 0; s.busHitAt = -1000; s.busRamAt = 0;
+    const passiveArmor = apc.entity.health.current;
+    for (let i = 0; i < 3; i++) { s.busRamAt = world.tick; s.busRamZ = apc.entity.transform.z; l9.driving.update(); }
+    expect(apc.entity.health.current, 'a passive driver survives the bus ram cap').toBe(passiveArmor - 120);
+    expect(apc.entity.health.current, 'the bus cannot destroy the APC on its own').toBeGreaterThan(0);
   } finally { world.dispose(); }
 }
 
@@ -355,7 +386,7 @@ async function apcBoarders(): Promise<void> {
     expect(car.entity.vehicle!.apcBoarders![dogId].startedAt, 'overlap does not restart the climb').toBe(climbAt);
     for (let i = 0; i < 240; i++) world.update();
     expect(world.entities.get(1)!.health.current, 'the closed cab protects its driver').toBe(world.entities.get(1)!.health.max);
-    world.missions!.l9!.driving.state.stallAt = world.tick;
+    world.missions!.l9!.driving.state.stallAt = world.tick; world.missions!.l9!.driving.state.hatchOpen = true;
     for (let i = 0; i < 120 && world.entities.get(1)!.health.current === world.entities.get(1)!.health.max; i++) world.update();
     expect(world.entities.get(1)!.health.current, 'a climbed boarder bites an exposed hatch occupant').toBeLessThan(world.entities.get(1)!.health.max);
     const turn = emptyInput(); turn.drive = { throttle: 1, steer: 1 };
@@ -364,7 +395,7 @@ async function apcBoarders(): Promise<void> {
     expect(car.entity.vehicle!.attached, 'a sharp turn shakes the dog off').not.toContain(dogId);
     expect(dog.attachedTo).toBeUndefined();
     car.physics.body.setLinvel({ x: 0, y: 0, z: 0 }, true); car.physics.body.setAngvel({ x: 0, y: 0, z: 0 }, true); car.physics.postPhysics();
-    world.missions!.l9!.driving.state.stallAt = world.tick;
+    world.missions!.l9!.driving.state.stallAt = world.tick; world.missions!.l9!.driving.state.hatchOpen = true;
     const targetId = world.infected!.spawn('infected.runner', { x: car.entity.transform.x + 12, z: car.entity.transform.z }, { state: 'chase' });
     const target = world.entities.get(targetId)!;
     for (let i = 0; i < 120 && target.health.current === target.health.max; i++) {
