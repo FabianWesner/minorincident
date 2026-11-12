@@ -1,0 +1,1211 @@
+{
+  "source": "sh tools/qa/l9-progress-regression.sh",
+  "cases": [
+    {
+      "path": "primary",
+      "route": "road",
+      "seed": 1,
+      "maxNoProgressSeconds": 3.2,
+      "maxWindow": {
+        "start": 2744,
+        "end": 2936,
+        "phase": "driving",
+        "held": false,
+        "progress": 0.48125812586806505,
+        "startPosition": [
+          -29.792787551879883,
+          -330.0011901855469
+        ],
+        "endPosition": [
+          -29.16238021850586,
+          -329.9559631347656
+        ],
+        "speed": 4.477891464676931,
+        "yaw": 0.0024203187487552274,
+        "throttle": 1,
+        "steer": -0.0002561847630280423,
+        "nearby": [
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.barricade",
+            "hp": 120,
+            "at": [
+              -28.413301467895508,
+              -341.3454284667969
+            ],
+            "distance": 11.414071995749708,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 18,
+              "velocity": {
+                "x": -0.1481756567955017,
+                "y": 0.1650560051202774,
+                "z": -0.06541790813207626
+              }
+            }
+          },
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.crates",
+            "hp": 80,
+            "at": [
+              -24.550798416137695,
+              -319.61468505859375
+            ],
+            "distance": 11.322928904159307,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 35,
+              "velocity": {
+                "x": 2.190573411553487e-07,
+                "y": 6.200468760653166e-07,
+                "z": 1.543229046774286e-07
+              }
+            }
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.trash-can",
+            "hp": 1,
+            "at": [
+              -25.98366928100586,
+              -329.9763488769531
+            ],
+            "distance": 3.1787763058552363,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.trash-can",
+            "hp": 1,
+            "at": [
+              -29.2565491582685,
+              -336.00683593419853
+            ],
+            "distance": 6.051605524497864,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.barricade",
+            "hp": 1,
+            "at": [
+              -34.59867815209242,
+              -321.8002554578739
+            ],
+            "distance": 9.801474528540492,
+            "physics": null
+          }
+        ]
+      },
+      "positionJumps": [],
+      "finished": true,
+      "tick": 10873
+    },
+    {
+      "path": "primary",
+      "route": "road",
+      "seed": 2,
+      "maxNoProgressSeconds": 3.22,
+      "maxWindow": {
+        "start": 2744,
+        "end": 2937,
+        "phase": "driving",
+        "held": false,
+        "progress": 0.48124903090027854,
+        "startPosition": [
+          -29.8072452545166,
+          -330.0011901855469
+        ],
+        "endPosition": [
+          -29.174896240234375,
+          -330.0948791503906
+        ],
+        "speed": 4.463130598372657,
+        "yaw": 0.0010421358063430668,
+        "throttle": 1,
+        "steer": -0.01218989029138114,
+        "nearby": [
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.barricade",
+            "hp": 120,
+            "at": [
+              -28.41337013244629,
+              -341.3454284667969
+            ],
+            "distance": 11.276292916279358,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 18,
+              "velocity": {
+                "x": -0.11365494877099991,
+                "y": 0.10685407370328903,
+                "z": -0.04878474026918411
+              }
+            }
+          },
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.crates",
+            "hp": 80,
+            "at": [
+              -24.550798416137695,
+              -319.61468505859375
+            ],
+            "distance": 11.454987947987975,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 35,
+              "velocity": {
+                "x": 1.7869727741981478e-07,
+                "y": 5.114187047183805e-07,
+                "z": 1.426633104983921e-07
+              }
+            }
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.trash-can",
+            "hp": 1,
+            "at": [
+              -25.723154067993164,
+              -329.9034118652344
+            ],
+            "distance": 3.457048415182174,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.trash-can",
+            "hp": 1,
+            "at": [
+              -29.25676021547645,
+              -336.0528564449682
+            ],
+            "distance": 5.958539682937787,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.barricade",
+            "hp": 1,
+            "at": [
+              -34.45984149700192,
+              -322.09494249017916
+            ],
+            "distance": 9.587994208093008,
+            "physics": null
+          }
+        ]
+      },
+      "positionJumps": [],
+      "finished": true,
+      "tick": 10847
+    },
+    {
+      "path": "primary",
+      "route": "road",
+      "seed": 3,
+      "maxNoProgressSeconds": 3.27,
+      "maxWindow": {
+        "start": 2747,
+        "end": 2943,
+        "phase": "driving",
+        "held": false,
+        "progress": 0.4815412193389899,
+        "startPosition": [
+          -29.342771530151367,
+          -330.0003662109375
+        ],
+        "endPosition": [
+          -28.769798278808594,
+          -330.0958557128906
+        ],
+        "speed": 4.700289429707598,
+        "yaw": 0.0007330699352242924,
+        "throttle": 1,
+        "steer": -0.011911219129941494,
+        "nearby": [
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.barricade",
+            "hp": 120,
+            "at": [
+              -28.413368225097656,
+              -341.3454895019531
+            ],
+            "distance": 11.255278884648087,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 18,
+              "velocity": {
+                "x": 0.052891116589307785,
+                "y": -0.04891115054488182,
+                "z": 0.022642912343144417
+              }
+            }
+          },
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.crates",
+            "hp": 80,
+            "at": [
+              -24.550798416137695,
+              -319.61468505859375
+            ],
+            "distance": 11.298446712965061,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 35,
+              "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              }
+            }
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.trash-can",
+            "hp": 1,
+            "at": [
+              -26.11187171936035,
+              -329.97088623046875
+            ],
+            "distance": 2.660862823776746,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.trash-can",
+            "hp": 1,
+            "at": [
+              -29.256745029318175,
+              -336.0517578121565
+            ],
+            "distance": 5.975775008638749,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.barricade",
+            "hp": 1,
+            "at": [
+              -33.495316488747314,
+              -323.55129543594694
+            ],
+            "distance": 8.072285399501906,
+            "physics": null
+          }
+        ]
+      },
+      "positionJumps": [],
+      "finished": true,
+      "tick": 10865
+    },
+    {
+      "path": "primary",
+      "route": "countryside",
+      "seed": 1,
+      "maxNoProgressSeconds": 0.35,
+      "maxWindow": {
+        "start": 0,
+        "end": 21,
+        "phase": "driving",
+        "held": false,
+        "progress": 0,
+        "startPosition": [
+          -550,
+          0
+        ],
+        "endPosition": [
+          -549.4793090820312,
+          0
+        ],
+        "speed": 2.994755268096924,
+        "yaw": 0,
+        "throttle": 1,
+        "steer": 0,
+        "nearby": [
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.crowd-fence",
+            "hp": 80,
+            "at": [
+              -547.4840087890625,
+              9.781981468200684
+            ],
+            "distance": 9.983405466239603,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 22,
+              "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              }
+            }
+          }
+        ]
+      },
+      "positionJumps": [],
+      "finished": true,
+      "tick": 12213
+    },
+    {
+      "path": "primary",
+      "route": "countryside",
+      "seed": 2,
+      "maxNoProgressSeconds": 0.35,
+      "maxWindow": {
+        "start": 0,
+        "end": 21,
+        "phase": "driving",
+        "held": false,
+        "progress": 0,
+        "startPosition": [
+          -550,
+          0
+        ],
+        "endPosition": [
+          -549.4793090820312,
+          0
+        ],
+        "speed": 2.994755268096924,
+        "yaw": 0,
+        "throttle": 1,
+        "steer": 0,
+        "nearby": [
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.crowd-fence",
+            "hp": 80,
+            "at": [
+              -547.4840087890625,
+              9.781981468200684
+            ],
+            "distance": 9.983405466239603,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 22,
+              "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              }
+            }
+          }
+        ]
+      },
+      "positionJumps": [],
+      "finished": true,
+      "tick": 11325
+    },
+    {
+      "path": "primary",
+      "route": "countryside",
+      "seed": 3,
+      "maxNoProgressSeconds": 0.35,
+      "maxWindow": {
+        "start": 0,
+        "end": 21,
+        "phase": "driving",
+        "held": false,
+        "progress": 0,
+        "startPosition": [
+          -550,
+          0
+        ],
+        "endPosition": [
+          -549.4793090820312,
+          0
+        ],
+        "speed": 2.994755268096924,
+        "yaw": 0,
+        "throttle": 1,
+        "steer": 0,
+        "nearby": [
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.crowd-fence",
+            "hp": 80,
+            "at": [
+              -547.4840087890625,
+              9.781981468200684
+            ],
+            "distance": 9.983405466239603,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 22,
+              "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              }
+            }
+          }
+        ]
+      },
+      "positionJumps": [],
+      "finished": true,
+      "tick": 11568
+    },
+    {
+      "path": "primary",
+      "route": "dry-shortcut",
+      "seed": 1,
+      "maxNoProgressSeconds": 0.45,
+      "maxWindow": {
+        "start": 6801,
+        "end": 6828,
+        "phase": "driving",
+        "held": false,
+        "progress": 0.8481310968638052,
+        "startPosition": [
+          383.0557861328125,
+          -10.326483726501465
+        ],
+        "endPosition": [
+          383.47723388671875,
+          -10.281407356262207
+        ],
+        "speed": 1.94455388783392,
+        "yaw": -0.18722146588958838,
+        "throttle": 1,
+        "steer": 0.031022524388884254,
+        "nearby": [
+          {
+            "kind": "vehicle",
+            "archetype": "vehicle.school-bus",
+            "hp": 1091.6184868669352,
+            "at": [
+              376.35919189453125,
+              -11.109868049621582
+            ],
+            "distance": 7.166091607214221,
+            "physics": null
+          },
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.wheelbarrow",
+            "hp": 80,
+            "at": [
+              381.5622863769531,
+              -21.60529136657715
+            ],
+            "distance": 11.484658159659084,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 35,
+              "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              }
+            }
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.barricade",
+            "hp": 1,
+            "at": [
+              381.3571472167969,
+              -10.241353034973145
+            ],
+            "distance": 2.120465004812471,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.barricade",
+            "hp": 1,
+            "at": [
+              380.5090318212632,
+              -4.3816564171096095
+            ],
+            "distance": 6.604338320029236,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.trash-can",
+            "hp": 0,
+            "at": [
+              380.5914791802116,
+              -10.438974247765401
+            ],
+            "distance": 2.8900532090994773,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.trash-can",
+            "hp": 1,
+            "at": [
+              383.04189911457746,
+              -16.14046114027706
+            ],
+            "distance": 5.875204473702518,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.barricade",
+            "hp": 0,
+            "at": [
+              383.75755129487965,
+              -9.960085144616947
+            ],
+            "distance": 0.4264103809883669,
+            "physics": null
+          }
+        ]
+      },
+      "positionJumps": [],
+      "finished": true,
+      "tick": 10306
+    },
+    {
+      "path": "primary",
+      "route": "dry-shortcut",
+      "seed": 2,
+      "maxNoProgressSeconds": 1.83,
+      "maxWindow": {
+        "start": 6961,
+        "end": 7071,
+        "phase": "driving",
+        "held": false,
+        "progress": 0.8785415338708757,
+        "startPosition": [
+          418.3755187988281,
+          -19.369203567504883
+        ],
+        "endPosition": [
+          420.10235595703125,
+          -27.90418243408203
+        ],
+        "speed": 6.7357005784759565,
+        "yaw": 1.095198647813211,
+        "throttle": 1,
+        "steer": -1,
+        "nearby": [
+          {
+            "kind": "vehicle",
+            "archetype": "vehicle.school-bus",
+            "hp": 1088.2337829498836,
+            "at": [
+              411.2923278808594,
+              -33.81462860107422
+            ],
+            "distance": 10.608956998491857,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.barricade",
+            "hp": 1,
+            "at": [
+              422.21971140204107,
+              -19.109482917208243
+            ],
+            "distance": 9.045989922203804,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.trash-can",
+            "hp": 0,
+            "at": [
+              416.2259740599866,
+              -17.895902011541658
+            ],
+            "distance": 10.732754242408634,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.barricade",
+            "hp": 0,
+            "at": [
+              416.2195213429062,
+              -20.295862819456655
+            ],
+            "distance": 8.541834229188765,
+            "physics": null
+          }
+        ]
+      },
+      "positionJumps": [],
+      "finished": true,
+      "tick": 10417
+    },
+    {
+      "path": "primary",
+      "route": "dry-shortcut",
+      "seed": 3,
+      "maxNoProgressSeconds": 0.37,
+      "maxWindow": {
+        "start": 6715,
+        "end": 6737,
+        "phase": "driving",
+        "held": false,
+        "progress": 0.8481987057279645,
+        "startPosition": [
+          383.0400390625,
+          -9.718118667602539
+        ],
+        "endPosition": [
+          383.4599609375,
+          -9.637462615966797
+        ],
+        "speed": 2.3534283767107573,
+        "yaw": -0.14577283429738883,
+        "throttle": 1,
+        "steer": 0.052478012277853814,
+        "nearby": [
+          {
+            "kind": "vehicle",
+            "archetype": "vehicle.school-bus",
+            "hp": 1115.6450651483824,
+            "at": [
+              376.31658935546875,
+              -11.052043914794922
+            ],
+            "distance": 7.282087462394688,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.trash-can",
+            "hp": 1,
+            "at": [
+              381.60748291015625,
+              -11.322793960571289
+            ],
+            "distance": 2.5043994455553165,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.barricade",
+            "hp": 1,
+            "at": [
+              386.5086975097656,
+              -9.520663261413574
+            ],
+            "distance": 3.050973086786247,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.barricade",
+            "hp": 1,
+            "at": [
+              380.5837737462634,
+              -4.334891812414385
+            ],
+            "distance": 6.032388406404224,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.trash-can",
+            "hp": 0,
+            "at": [
+              380.69026157302494,
+              -10.393322949666667
+            ],
+            "distance": 2.870985791263068,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.trash-can",
+            "hp": 1,
+            "at": [
+              383.13809748889946,
+              -16.101286527222452
+            ],
+            "distance": 6.4718324789247585,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.barricade",
+            "hp": 0,
+            "at": [
+              383.8593332195577,
+              -9.935278377812585
+            ],
+            "distance": 0.49818916856929,
+            "physics": null
+          }
+        ]
+      },
+      "positionJumps": [],
+      "finished": true,
+      "tick": 10235
+    },
+    {
+      "path": "detour",
+      "route": "road",
+      "seed": 1,
+      "maxNoProgressSeconds": 0.37,
+      "maxWindow": {
+        "start": 0,
+        "end": 22,
+        "phase": "driving",
+        "held": false,
+        "progress": 0,
+        "startPosition": [
+          -550,
+          0
+        ],
+        "endPosition": [
+          -549.4268188476562,
+          0
+        ],
+        "speed": 3.144230842590332,
+        "yaw": 0,
+        "throttle": 1,
+        "steer": 0,
+        "nearby": [
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.crowd-fence",
+            "hp": 80,
+            "at": [
+              -547.4840087890625,
+              9.781981468200684
+            ],
+            "distance": 9.973047295987053,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 22,
+              "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              }
+            }
+          }
+        ]
+      },
+      "positionJumps": [],
+      "finished": true,
+      "tick": 12270
+    },
+    {
+      "path": "detour",
+      "route": "road",
+      "seed": 2,
+      "maxNoProgressSeconds": 0.37,
+      "maxWindow": {
+        "start": 0,
+        "end": 22,
+        "phase": "driving",
+        "held": false,
+        "progress": 0,
+        "startPosition": [
+          -550,
+          0
+        ],
+        "endPosition": [
+          -549.4268188476562,
+          0
+        ],
+        "speed": 3.144230842590332,
+        "yaw": 0,
+        "throttle": 1,
+        "steer": 0,
+        "nearby": [
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.crowd-fence",
+            "hp": 80,
+            "at": [
+              -547.4840087890625,
+              9.781981468200684
+            ],
+            "distance": 9.973047295987053,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 22,
+              "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              }
+            }
+          }
+        ]
+      },
+      "positionJumps": [],
+      "finished": true,
+      "tick": 12286
+    },
+    {
+      "path": "detour",
+      "route": "road",
+      "seed": 3,
+      "maxNoProgressSeconds": 0.37,
+      "maxWindow": {
+        "start": 0,
+        "end": 22,
+        "phase": "driving",
+        "held": false,
+        "progress": 0,
+        "startPosition": [
+          -550,
+          0
+        ],
+        "endPosition": [
+          -549.4268188476562,
+          0
+        ],
+        "speed": 3.144230842590332,
+        "yaw": 0,
+        "throttle": 1,
+        "steer": 0,
+        "nearby": [
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.crowd-fence",
+            "hp": 80,
+            "at": [
+              -547.4840087890625,
+              9.781981468200684
+            ],
+            "distance": 9.973047295987053,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 22,
+              "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              }
+            }
+          }
+        ]
+      },
+      "positionJumps": [],
+      "finished": true,
+      "tick": 12270
+    },
+    {
+      "path": "detour",
+      "route": "countryside",
+      "seed": 1,
+      "maxNoProgressSeconds": 0.35,
+      "maxWindow": {
+        "start": 0,
+        "end": 21,
+        "phase": "driving",
+        "held": false,
+        "progress": 0,
+        "startPosition": [
+          -550,
+          0
+        ],
+        "endPosition": [
+          -549.4793090820312,
+          0
+        ],
+        "speed": 2.994755268096924,
+        "yaw": 0,
+        "throttle": 1,
+        "steer": 0,
+        "nearby": [
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.crowd-fence",
+            "hp": 80,
+            "at": [
+              -547.4840087890625,
+              9.781981468200684
+            ],
+            "distance": 9.983405466239603,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 22,
+              "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              }
+            }
+          }
+        ]
+      },
+      "positionJumps": [],
+      "finished": true,
+      "tick": 12642
+    },
+    {
+      "path": "detour",
+      "route": "countryside",
+      "seed": 2,
+      "maxNoProgressSeconds": 0.35,
+      "maxWindow": {
+        "start": 0,
+        "end": 21,
+        "phase": "driving",
+        "held": false,
+        "progress": 0,
+        "startPosition": [
+          -550,
+          0
+        ],
+        "endPosition": [
+          -549.4793090820312,
+          0
+        ],
+        "speed": 2.994755268096924,
+        "yaw": 0,
+        "throttle": 1,
+        "steer": 0,
+        "nearby": [
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.crowd-fence",
+            "hp": 80,
+            "at": [
+              -547.4840087890625,
+              9.781981468200684
+            ],
+            "distance": 9.983405466239603,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 22,
+              "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              }
+            }
+          }
+        ]
+      },
+      "positionJumps": [],
+      "finished": true,
+      "tick": 12679
+    },
+    {
+      "path": "detour",
+      "route": "countryside",
+      "seed": 3,
+      "maxNoProgressSeconds": 0.35,
+      "maxWindow": {
+        "start": 0,
+        "end": 21,
+        "phase": "driving",
+        "held": false,
+        "progress": 0,
+        "startPosition": [
+          -550,
+          0
+        ],
+        "endPosition": [
+          -549.4793090820312,
+          0
+        ],
+        "speed": 2.994755268096924,
+        "yaw": 0,
+        "throttle": 1,
+        "steer": 0,
+        "nearby": [
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.crowd-fence",
+            "hp": 80,
+            "at": [
+              -547.4840087890625,
+              9.781981468200684
+            ],
+            "distance": 9.983405466239603,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 22,
+              "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              }
+            }
+          }
+        ]
+      },
+      "positionJumps": [],
+      "finished": true,
+      "tick": 12636
+    },
+    {
+      "path": "detour",
+      "route": "dry-shortcut",
+      "seed": 1,
+      "maxNoProgressSeconds": 0.32,
+      "maxWindow": {
+        "start": 0,
+        "end": 19,
+        "phase": "driving",
+        "held": false,
+        "progress": 0,
+        "startPosition": [
+          -550,
+          0
+        ],
+        "endPosition": [
+          -549.5764770507812,
+          0
+        ],
+        "speed": 2.6957294940948486,
+        "yaw": 0,
+        "throttle": 1,
+        "steer": 0,
+        "nearby": [
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.crowd-fence",
+            "hp": 80,
+            "at": [
+              -547.4840087890625,
+              9.781981468200684
+            ],
+            "distance": 10.003278706030434,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 22,
+              "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              }
+            }
+          }
+        ]
+      },
+      "positionJumps": [],
+      "finished": true,
+      "tick": 10230
+    },
+    {
+      "path": "detour",
+      "route": "dry-shortcut",
+      "seed": 2,
+      "maxNoProgressSeconds": 0.32,
+      "maxWindow": {
+        "start": 0,
+        "end": 19,
+        "phase": "driving",
+        "held": false,
+        "progress": 0,
+        "startPosition": [
+          -550,
+          0
+        ],
+        "endPosition": [
+          -549.5764770507812,
+          0
+        ],
+        "speed": 2.6957294940948486,
+        "yaw": 0,
+        "throttle": 1,
+        "steer": 0,
+        "nearby": [
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.crowd-fence",
+            "hp": 80,
+            "at": [
+              -547.4840087890625,
+              9.781981468200684
+            ],
+            "distance": 10.003278706030434,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 22,
+              "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              }
+            }
+          }
+        ]
+      },
+      "positionJumps": [],
+      "finished": true,
+      "tick": 10464
+    },
+    {
+      "path": "detour",
+      "route": "dry-shortcut",
+      "seed": 3,
+      "maxNoProgressSeconds": 0.32,
+      "maxWindow": {
+        "start": 0,
+        "end": 19,
+        "phase": "driving",
+        "held": false,
+        "progress": 0,
+        "startPosition": [
+          -550,
+          0
+        ],
+        "endPosition": [
+          -549.5764770507812,
+          0
+        ],
+        "speed": 2.6957294940948486,
+        "yaw": 0,
+        "throttle": 1,
+        "steer": 0,
+        "nearby": [
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.crowd-fence",
+            "hp": 80,
+            "at": [
+              -547.4840087890625,
+              9.781981468200684
+            ],
+            "distance": 10.003278706030434,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 22,
+              "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              }
+            }
+          }
+        ]
+      },
+      "positionJumps": [],
+      "finished": true,
+      "tick": 14496
+    }
+  ]
+}
