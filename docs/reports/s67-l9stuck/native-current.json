@@ -1,0 +1,4109 @@
+{
+  "runtimeCommit": "37fe81eb",
+  "command": "sh tools/qa/l9-progress-regression.sh",
+  "exitCode": 1,
+  "notes": "Final retained source. All maximum windows include positions; input policy unchanged across baselines.",
+  "results": [
+    {
+      "seed": 1,
+      "routeId": "road",
+      "pathId": "primary",
+      "positionJumps": [],
+      "evacuation": [
+        {
+          "id": 669,
+          "hp": 100,
+          "at": {
+            "x": 461.4954800340014,
+            "z": -14.816289641727685,
+            "y": 0.7,
+            "yaw": 1.356991955747337
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 8520
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 48,
+            "cells": []
+          }
+        },
+        {
+          "id": 670,
+          "hp": 100,
+          "at": {
+            "x": 470.4541972402096,
+            "z": -14.803039842120816,
+            "y": 0.7,
+            "yaw": 1.3359993996130364
+          },
+          "passengerOf": 683,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 9035
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 31,
+            "cells": []
+          }
+        },
+        {
+          "id": 671,
+          "hp": 100,
+          "at": {
+            "x": 479.48595887793726,
+            "z": -15.177447215627767,
+            "y": 0.7,
+            "yaw": -1.4683720780066634
+          },
+          "passengerOf": 684,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 9503
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 149,
+            "cells": []
+          }
+        },
+        {
+          "id": 672,
+          "hp": 100,
+          "at": {
+            "x": 461.430818905255,
+            "z": -13.72372883698892,
+            "y": 0.7,
+            "yaw": 1.2035847739627197
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 8723
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 33,
+            "cells": []
+          }
+        },
+        {
+          "id": 673,
+          "hp": 100,
+          "at": {
+            "x": 537.5407482588008,
+            "z": -6.954074825879714,
+            "y": 0.7,
+            "yaw": 0.09966865249108482
+          },
+          "phase": "hidden",
+          "story": null,
+          "hidden": false,
+          "route": {
+            "goal": -1,
+            "index": 0,
+            "cells": []
+          }
+        }
+      ],
+      "driving": {
+        "evacuationAt": 8092,
+        "evacuated": [
+          669,
+          672,
+          670,
+          671
+        ],
+        "evacuating": [
+          669,
+          670,
+          671,
+          672,
+          672
+        ],
+        "done": true,
+        "spotFailures": {
+          "669": 0,
+          "670": 0,
+          "671": 0,
+          "672": 0
+        },
+        "spotSkips": {},
+        "truckEntering": {
+          "669": 8520,
+          "670": 9035,
+          "671": 9503,
+          "672": 8723
+        },
+        "hugDone": true,
+        "hugSpot": {
+          "x": 467.81097675939407,
+          "z": 3.717771273767593,
+          "dogX": 467.81306989878243,
+          "dogZ": 4.417768144308813
+        }
+      },
+      "tick": 10872,
+      "phase": "done",
+      "playerHp": 93.99999999999977,
+      "maxNoProgressSeconds": 3.2,
+      "maxAt": 2936,
+      "maxWindow": {
+        "start": 2744,
+        "end": 2936,
+        "phase": "driving",
+        "held": false,
+        "progress": 0.48125812586806505,
+        "startPosition": [
+          -29.792787551879883,
+          -330.0011901855469
+        ],
+        "endPosition": [
+          -29.16238021850586,
+          -329.9559631347656
+        ],
+        "speed": 4.477891464676931,
+        "yaw": 0.0024203187487552274,
+        "throttle": 1,
+        "steer": -0.0002561847630280423,
+        "nearby": [
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.barricade",
+            "hp": 120,
+            "at": [
+              -28.413301467895508,
+              -341.3454284667969
+            ],
+            "distance": 11.414071995749708,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 18,
+              "velocity": {
+                "x": -0.1481756567955017,
+                "y": 0.1650560051202774,
+                "z": -0.06541790813207626
+              }
+            }
+          },
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.crates",
+            "hp": 80,
+            "at": [
+              -24.550798416137695,
+              -319.61468505859375
+            ],
+            "distance": 11.322928904159307,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 35,
+              "velocity": {
+                "x": 2.190573411553487e-07,
+                "y": 6.200468760653166e-07,
+                "z": 1.543229046774286e-07
+              }
+            }
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.trash-can",
+            "hp": 1,
+            "at": [
+              -25.98366928100586,
+              -329.9763488769531
+            ],
+            "distance": 3.1787763058552363,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.trash-can",
+            "hp": 1,
+            "at": [
+              -29.2565491582685,
+              -336.00683593419853
+            ],
+            "distance": 6.051605524497864,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.barricade",
+            "hp": 1,
+            "at": [
+              -34.59867815209242,
+              -321.8002554578739
+            ],
+            "distance": 9.801474528540492,
+            "physics": null
+          }
+        ]
+      },
+      "routeProgress": 0.9833,
+      "finished": true
+    },
+    {
+      "seed": 2,
+      "routeId": "road",
+      "pathId": "primary",
+      "positionJumps": [],
+      "evacuation": [
+        {
+          "id": 669,
+          "hp": 100,
+          "at": {
+            "x": 461.49440901073757,
+            "z": -14.812132356312487,
+            "y": 0.7,
+            "yaw": 1.3570630325859379
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 8520
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 48,
+            "cells": []
+          }
+        },
+        {
+          "id": 670,
+          "hp": 100,
+          "at": {
+            "x": 470.45884649188,
+            "z": -14.823534835298064,
+            "y": 0.7,
+            "yaw": 1.3353422624929387
+          },
+          "passengerOf": 683,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 9120
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 32,
+            "cells": []
+          }
+        },
+        {
+          "id": 671,
+          "hp": 100,
+          "at": {
+            "x": 479.485643145844,
+            "z": -15.176319491510196,
+            "y": 0.7,
+            "yaw": -1.4667255633047203
+          },
+          "passengerOf": 684,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 9483
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 145,
+            "cells": []
+          }
+        },
+        {
+          "id": 672,
+          "hp": 100,
+          "at": {
+            "x": 461.4188059806024,
+            "z": -13.709830425905736,
+            "y": 0.7,
+            "yaw": 1.1853707068953727
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 8608
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 28,
+            "cells": []
+          }
+        },
+        {
+          "id": 673,
+          "hp": 100,
+          "at": {
+            "x": 537.5407482588008,
+            "z": -6.954074825879714,
+            "y": 0.7,
+            "yaw": 0.09966865249108482
+          },
+          "phase": "hidden",
+          "story": null,
+          "hidden": false,
+          "route": {
+            "goal": -1,
+            "index": 0,
+            "cells": []
+          }
+        }
+      ],
+      "driving": {
+        "evacuationAt": 8076,
+        "evacuated": [
+          669,
+          672,
+          670,
+          671
+        ],
+        "evacuating": [
+          669,
+          670,
+          671,
+          672
+        ],
+        "done": true,
+        "spotFailures": {
+          "669": 0,
+          "670": 0,
+          "671": 0,
+          "672": 0
+        },
+        "spotSkips": {},
+        "truckEntering": {
+          "669": 8520,
+          "670": 9120,
+          "671": 9483,
+          "672": 8608
+        },
+        "hugDone": true,
+        "hugSpot": {
+          "x": 467.8100244709134,
+          "z": 3.7311183927992744,
+          "dogX": 467.81192730779895,
+          "dogZ": 4.431115806517202
+        }
+      },
+      "tick": 10856,
+      "phase": "done",
+      "playerHp": 93.99999999999977,
+      "maxNoProgressSeconds": 3.22,
+      "maxAt": 2937,
+      "maxWindow": {
+        "start": 2744,
+        "end": 2937,
+        "phase": "driving",
+        "held": false,
+        "progress": 0.48124903090027854,
+        "startPosition": [
+          -29.8072452545166,
+          -330.0011901855469
+        ],
+        "endPosition": [
+          -29.174896240234375,
+          -330.0948791503906
+        ],
+        "speed": 4.463130598372657,
+        "yaw": 0.0010421358063430668,
+        "throttle": 1,
+        "steer": -0.01218989029138114,
+        "nearby": [
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.barricade",
+            "hp": 120,
+            "at": [
+              -28.41337013244629,
+              -341.3454284667969
+            ],
+            "distance": 11.276292916279358,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 18,
+              "velocity": {
+                "x": -0.11365494877099991,
+                "y": 0.10685407370328903,
+                "z": -0.04878474026918411
+              }
+            }
+          },
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.crates",
+            "hp": 80,
+            "at": [
+              -24.550798416137695,
+              -319.61468505859375
+            ],
+            "distance": 11.454987947987975,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 35,
+              "velocity": {
+                "x": 1.7869727741981478e-07,
+                "y": 5.114187047183805e-07,
+                "z": 1.426633104983921e-07
+              }
+            }
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.trash-can",
+            "hp": 1,
+            "at": [
+              -25.723154067993164,
+              -329.9034118652344
+            ],
+            "distance": 3.457048415182174,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.trash-can",
+            "hp": 1,
+            "at": [
+              -29.25676021547645,
+              -336.0528564449682
+            ],
+            "distance": 5.958539682937787,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.barricade",
+            "hp": 1,
+            "at": [
+              -34.45984149700192,
+              -322.09494249017916
+            ],
+            "distance": 9.587994208093008,
+            "physics": null
+          }
+        ]
+      },
+      "routeProgress": 0.9833,
+      "finished": true
+    },
+    {
+      "seed": 3,
+      "routeId": "road",
+      "pathId": "primary",
+      "positionJumps": [],
+      "evacuation": [
+        {
+          "id": 669,
+          "hp": 100,
+          "at": {
+            "x": 461.4868130124864,
+            "z": -14.79167350878592,
+            "y": 0.7,
+            "yaw": 1.3561732228185517
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 8519
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 48,
+            "cells": []
+          }
+        },
+        {
+          "id": 670,
+          "hp": 100,
+          "at": {
+            "x": 470.4543792914267,
+            "z": -14.803179431642704,
+            "y": 0.7,
+            "yaw": 1.3362871898387727
+          },
+          "passengerOf": 683,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 9035
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 32,
+            "cells": []
+          }
+        },
+        {
+          "id": 671,
+          "hp": 100,
+          "at": {
+            "x": 479.4855173059002,
+            "z": -15.180817434434642,
+            "y": 0.7,
+            "yaw": -1.4679446741064177
+          },
+          "passengerOf": 684,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 9503
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 149,
+            "cells": []
+          }
+        },
+        {
+          "id": 672,
+          "hp": 100,
+          "at": {
+            "x": 461.43200446517426,
+            "z": -13.727485135723958,
+            "y": 0.7,
+            "yaw": 1.202608775140209
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 8723
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 33,
+            "cells": []
+          }
+        },
+        {
+          "id": 673,
+          "hp": 100,
+          "at": {
+            "x": 537.5407482588008,
+            "z": -6.954074825879714,
+            "y": 0.7,
+            "yaw": 0.09966865249108482
+          },
+          "phase": "hidden",
+          "story": null,
+          "hidden": false,
+          "route": {
+            "goal": -1,
+            "index": 0,
+            "cells": []
+          }
+        }
+      ],
+      "driving": {
+        "evacuationAt": 8096,
+        "evacuated": [
+          669,
+          672,
+          670,
+          671
+        ],
+        "evacuating": [
+          669,
+          670,
+          671,
+          672,
+          672
+        ],
+        "done": true,
+        "spotFailures": {
+          "669": 0,
+          "670": 0,
+          "671": 0,
+          "672": 0
+        },
+        "spotSkips": {},
+        "truckEntering": {
+          "669": 8519,
+          "670": 9035,
+          "671": 9503,
+          "672": 8723
+        },
+        "hugDone": true,
+        "hugSpot": {
+          "x": 467.8117750739391,
+          "z": 3.708697987273498,
+          "dogX": 467.81414359228785,
+          "dogZ": 4.40869398020548
+        }
+      },
+      "tick": 10876,
+      "phase": "done",
+      "playerHp": 83.99999999999977,
+      "maxNoProgressSeconds": 3.27,
+      "maxAt": 2943,
+      "maxWindow": {
+        "start": 2747,
+        "end": 2943,
+        "phase": "driving",
+        "held": false,
+        "progress": 0.4815412193389899,
+        "startPosition": [
+          -29.342771530151367,
+          -330.0003662109375
+        ],
+        "endPosition": [
+          -28.769798278808594,
+          -330.0958557128906
+        ],
+        "speed": 4.700289429707598,
+        "yaw": 0.0007330699352242924,
+        "throttle": 1,
+        "steer": -0.011911219129941494,
+        "nearby": [
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.barricade",
+            "hp": 120,
+            "at": [
+              -28.413368225097656,
+              -341.3454895019531
+            ],
+            "distance": 11.255278884648087,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 18,
+              "velocity": {
+                "x": 0.052891116589307785,
+                "y": -0.04891115054488182,
+                "z": 0.022642912343144417
+              }
+            }
+          },
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.crates",
+            "hp": 80,
+            "at": [
+              -24.550798416137695,
+              -319.61468505859375
+            ],
+            "distance": 11.298446712965061,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 35,
+              "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              }
+            }
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.trash-can",
+            "hp": 1,
+            "at": [
+              -26.11187171936035,
+              -329.97088623046875
+            ],
+            "distance": 2.660862823776746,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.trash-can",
+            "hp": 1,
+            "at": [
+              -29.256745029318175,
+              -336.0517578121565
+            ],
+            "distance": 5.975775008638749,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.barricade",
+            "hp": 1,
+            "at": [
+              -33.495316488747314,
+              -323.55129543594694
+            ],
+            "distance": 8.072285399501906,
+            "physics": null
+          }
+        ]
+      },
+      "routeProgress": 0.9833,
+      "finished": true
+    },
+    {
+      "seed": 1,
+      "routeId": "countryside",
+      "pathId": "primary",
+      "positionJumps": [],
+      "evacuation": [
+        {
+          "id": 669,
+          "hp": 100,
+          "at": {
+            "x": 461.4891628393965,
+            "z": -14.792622753104961,
+            "y": 0.7,
+            "yaw": 1.3564120783987983
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 9863
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 47,
+            "cells": []
+          }
+        },
+        {
+          "id": 670,
+          "hp": 100,
+          "at": {
+            "x": 470.4533083907599,
+            "z": -14.806264703742604,
+            "y": 0.7,
+            "yaw": 1.3325276663613161
+          },
+          "passengerOf": 683,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 10341
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 34,
+            "cells": []
+          }
+        },
+        {
+          "id": 671,
+          "hp": 100,
+          "at": {
+            "x": 479.4837485535436,
+            "z": -15.202832729488916,
+            "y": 0.7,
+            "yaw": -1.4693445089115653
+          },
+          "passengerOf": 684,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 10837
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 145,
+            "cells": []
+          }
+        },
+        {
+          "id": 672,
+          "hp": 100,
+          "at": {
+            "x": 461.42833500164204,
+            "z": -13.718224904547727,
+            "y": 0.7,
+            "yaw": 1.2029501056555612
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 10066
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 32,
+            "cells": []
+          }
+        },
+        {
+          "id": 673,
+          "hp": 100,
+          "at": {
+            "x": 537.5407482588008,
+            "z": -6.954074825879714,
+            "y": 0.7,
+            "yaw": 0.09966865249108482
+          },
+          "phase": "hidden",
+          "story": null,
+          "hidden": false,
+          "route": {
+            "goal": -1,
+            "index": 0,
+            "cells": []
+          }
+        }
+      ],
+      "driving": {
+        "evacuationAt": 9446,
+        "evacuated": [
+          669,
+          672,
+          670,
+          671
+        ],
+        "evacuating": [
+          669,
+          670,
+          671,
+          672,
+          672
+        ],
+        "done": true,
+        "spotFailures": {
+          "669": 0,
+          "670": 0,
+          "671": 0,
+          "672": 0
+        },
+        "spotSkips": {},
+        "truckEntering": {
+          "669": 9863,
+          "670": 10341,
+          "671": 10837,
+          "672": 10066
+        },
+        "hugDone": true,
+        "hugSpot": {
+          "x": 467.7651639700484,
+          "z": 3.3669519359198596,
+          "dogX": 467.7595416311512,
+          "dogZ": 4.06692935648807
+        }
+      },
+      "tick": 12213,
+      "phase": "done",
+      "playerHp": 100,
+      "maxNoProgressSeconds": 0.35,
+      "maxAt": 21,
+      "maxWindow": {
+        "start": 0,
+        "end": 21,
+        "phase": "driving",
+        "held": false,
+        "progress": 0,
+        "startPosition": [
+          -550,
+          0
+        ],
+        "endPosition": [
+          -549.4793090820312,
+          0
+        ],
+        "speed": 2.994755268096924,
+        "yaw": 0,
+        "throttle": 1,
+        "steer": 0,
+        "nearby": [
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.crowd-fence",
+            "hp": 80,
+            "at": [
+              -547.4840087890625,
+              9.781981468200684
+            ],
+            "distance": 9.983405466239603,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 22,
+              "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              }
+            }
+          }
+        ]
+      },
+      "routeProgress": 0.9806,
+      "finished": true
+    },
+    {
+      "seed": 2,
+      "routeId": "countryside",
+      "pathId": "primary",
+      "positionJumps": [],
+      "evacuation": [
+        {
+          "id": 669,
+          "hp": 100,
+          "at": {
+            "x": 461.48657507407404,
+            "z": -14.791470765603366,
+            "y": 0.7,
+            "yaw": 1.355661559041634
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 9005
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 47,
+            "cells": []
+          }
+        },
+        {
+          "id": 670,
+          "hp": 100,
+          "at": {
+            "x": 470.45447553029845,
+            "z": -14.810625689829534,
+            "y": 0.7,
+            "yaw": 1.3326103295571314
+          },
+          "passengerOf": 683,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 9480
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 32,
+            "cells": []
+          }
+        },
+        {
+          "id": 671,
+          "hp": 100,
+          "at": {
+            "x": 479.48487267231,
+            "z": -15.18281056526348,
+            "y": 0.7,
+            "yaw": -1.4664410619669386
+          },
+          "passengerOf": 684,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 9978
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 146,
+            "cells": []
+          }
+        },
+        {
+          "id": 672,
+          "hp": 100,
+          "at": {
+            "x": 461.4303924967183,
+            "z": -13.723698556138057,
+            "y": 0.7,
+            "yaw": 1.202641335480279
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 9209
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 32,
+            "cells": []
+          }
+        },
+        {
+          "id": 673,
+          "hp": 100,
+          "at": {
+            "x": 537.5407482588008,
+            "z": -6.954074825879714,
+            "y": 0.7,
+            "yaw": 0.09966865249108482
+          },
+          "phase": "hidden",
+          "story": null,
+          "hidden": false,
+          "route": {
+            "goal": -1,
+            "index": 0,
+            "cells": []
+          }
+        }
+      ],
+      "driving": {
+        "evacuationAt": 8586,
+        "evacuated": [
+          669,
+          672,
+          670,
+          671
+        ],
+        "evacuating": [
+          669,
+          670,
+          671,
+          672,
+          672
+        ],
+        "done": true,
+        "spotFailures": {
+          "669": 0,
+          "670": 0,
+          "671": 0,
+          "672": 0
+        },
+        "spotSkips": {},
+        "truckEntering": {
+          "669": 9005,
+          "670": 9480,
+          "671": 9978,
+          "672": 9209
+        },
+        "hugDone": true,
+        "hugSpot": {
+          "x": 467.75525924870897,
+          "z": 3.232220444740602,
+          "dogX": 467.7482321730319,
+          "dogZ": 3.9321851725715327
+        }
+      },
+      "tick": 11325,
+      "phase": "done",
+      "playerHp": 100,
+      "maxNoProgressSeconds": 0.35,
+      "maxAt": 21,
+      "maxWindow": {
+        "start": 0,
+        "end": 21,
+        "phase": "driving",
+        "held": false,
+        "progress": 0,
+        "startPosition": [
+          -550,
+          0
+        ],
+        "endPosition": [
+          -549.4793090820312,
+          0
+        ],
+        "speed": 2.994755268096924,
+        "yaw": 0,
+        "throttle": 1,
+        "steer": 0,
+        "nearby": [
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.crowd-fence",
+            "hp": 80,
+            "at": [
+              -547.4840087890625,
+              9.781981468200684
+            ],
+            "distance": 9.983405466239603,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 22,
+              "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              }
+            }
+          }
+        ]
+      },
+      "routeProgress": 0.9806,
+      "finished": true
+    },
+    {
+      "seed": 3,
+      "routeId": "countryside",
+      "pathId": "primary",
+      "positionJumps": [],
+      "evacuation": [
+        {
+          "id": 669,
+          "hp": 100,
+          "at": {
+            "x": 461.4901451319653,
+            "z": -14.804804738462376,
+            "y": 0.7,
+            "yaw": 1.356714755989467
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 9224
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 46,
+            "cells": []
+          }
+        },
+        {
+          "id": 670,
+          "hp": 100,
+          "at": {
+            "x": 470.4531241125197,
+            "z": -14.80281307192673,
+            "y": 0.7,
+            "yaw": 1.336527155282702
+          },
+          "passengerOf": 683,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 9746
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 34,
+            "cells": []
+          }
+        },
+        {
+          "id": 671,
+          "hp": 0,
+          "at": {
+            "x": 484.0327310835283,
+            "z": -5.710106146640961,
+            "y": 0.7,
+            "yaw": -1.875718329366421
+          },
+          "hidden": false,
+          "route": null
+        },
+        {
+          "id": 672,
+          "hp": 100,
+          "at": {
+            "x": 461.43209248734496,
+            "z": -13.729042985465872,
+            "y": 0.7,
+            "yaw": 1.2019541089999293
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 9428
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 31,
+            "cells": []
+          }
+        },
+        {
+          "id": 673,
+          "hp": 100,
+          "at": {
+            "x": 537.5407482588008,
+            "z": -6.954074825879714,
+            "y": 0.7,
+            "yaw": 0.09966865249108482
+          },
+          "phase": "hidden",
+          "story": null,
+          "hidden": false,
+          "route": {
+            "goal": -1,
+            "index": 0,
+            "cells": []
+          }
+        }
+      ],
+      "driving": {
+        "evacuationAt": 8805,
+        "evacuated": [
+          669,
+          672,
+          670
+        ],
+        "evacuating": [
+          669,
+          670,
+          671,
+          672,
+          672
+        ],
+        "done": true,
+        "spotFailures": {
+          "669": 0,
+          "670": 0,
+          "671": 59,
+          "672": 0
+        },
+        "spotSkips": {},
+        "truckEntering": {
+          "669": 9224,
+          "670": 9746,
+          "672": 9428
+        },
+        "hugDone": true,
+        "hugSpot": {
+          "x": 467.64070045327986,
+          "z": 2.968283496210432,
+          "dogX": 467.61728205668436,
+          "dogZ": 3.6678916570411175
+        }
+      },
+      "tick": 11568,
+      "phase": "done",
+      "playerHp": 100,
+      "maxNoProgressSeconds": 0.35,
+      "maxAt": 21,
+      "maxWindow": {
+        "start": 0,
+        "end": 21,
+        "phase": "driving",
+        "held": false,
+        "progress": 0,
+        "startPosition": [
+          -550,
+          0
+        ],
+        "endPosition": [
+          -549.4793090820312,
+          0
+        ],
+        "speed": 2.994755268096924,
+        "yaw": 0,
+        "throttle": 1,
+        "steer": 0,
+        "nearby": [
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.crowd-fence",
+            "hp": 80,
+            "at": [
+              -547.4840087890625,
+              9.781981468200684
+            ],
+            "distance": 9.983405466239603,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 22,
+              "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              }
+            }
+          }
+        ]
+      },
+      "routeProgress": 0.9806,
+      "finished": true
+    },
+    {
+      "seed": 1,
+      "routeId": "dry-shortcut",
+      "pathId": "primary",
+      "positionJumps": [],
+      "evacuation": [
+        {
+          "id": 669,
+          "hp": 100,
+          "at": {
+            "x": 461.48680100675784,
+            "z": -14.79231613844421,
+            "y": 0.7,
+            "yaw": 1.355618089764356
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 7975
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 47,
+            "cells": []
+          }
+        },
+        {
+          "id": 670,
+          "hp": 100,
+          "at": {
+            "x": 470.4588906133292,
+            "z": -14.823616177859,
+            "y": 0.7,
+            "yaw": 1.3354819912181184
+          },
+          "passengerOf": 683,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 8476
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 34,
+            "cells": []
+          }
+        },
+        {
+          "id": 671,
+          "hp": 100,
+          "at": {
+            "x": 479.48331448731875,
+            "z": -15.20144223401117,
+            "y": 0.7,
+            "yaw": -1.4674852459599428
+          },
+          "passengerOf": 684,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 8958
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 148,
+            "cells": []
+          }
+        },
+        {
+          "id": 672,
+          "hp": 100,
+          "at": {
+            "x": 461.42908482520085,
+            "z": -13.72865706886534,
+            "y": 0.7,
+            "yaw": 1.193232392982475
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 8161
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 29,
+            "cells": []
+          }
+        },
+        {
+          "id": 673,
+          "hp": 100,
+          "at": {
+            "x": 537.5407482588008,
+            "z": -6.954074825879714,
+            "y": 0.7,
+            "yaw": 0.09966865249108482
+          },
+          "phase": "hidden",
+          "story": null,
+          "hidden": false,
+          "route": {
+            "goal": -1,
+            "index": 0,
+            "cells": []
+          }
+        }
+      ],
+      "driving": {
+        "evacuationAt": 7539,
+        "evacuated": [
+          669,
+          672,
+          670,
+          671
+        ],
+        "evacuating": [
+          669,
+          670,
+          671,
+          672,
+          672
+        ],
+        "done": true,
+        "spotFailures": {
+          "669": 0,
+          "670": 0,
+          "671": 0,
+          "672": 0
+        },
+        "spotSkips": {},
+        "truckEntering": {
+          "669": 7975,
+          "670": 8476,
+          "671": 8958,
+          "672": 8161
+        },
+        "hugDone": true,
+        "hugSpot": {
+          "x": 467.8062777959583,
+          "z": 3.5049805437392063,
+          "dogX": 467.8067850116307,
+          "dogZ": 4.204980359976512
+        }
+      },
+      "tick": 10306,
+      "phase": "done",
+      "playerHp": 100,
+      "maxNoProgressSeconds": 0.45,
+      "maxAt": 6828,
+      "maxWindow": {
+        "start": 6801,
+        "end": 6828,
+        "phase": "driving",
+        "held": false,
+        "progress": 0.8481310968638052,
+        "startPosition": [
+          383.0557861328125,
+          -10.326483726501465
+        ],
+        "endPosition": [
+          383.47723388671875,
+          -10.281407356262207
+        ],
+        "speed": 1.94455388783392,
+        "yaw": -0.18722146588958838,
+        "throttle": 1,
+        "steer": 0.031022524388884254,
+        "nearby": [
+          {
+            "kind": "vehicle",
+            "archetype": "vehicle.school-bus",
+            "hp": 1091.6184868669352,
+            "at": [
+              376.35919189453125,
+              -11.109868049621582
+            ],
+            "distance": 7.166091607214221,
+            "physics": null
+          },
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.wheelbarrow",
+            "hp": 80,
+            "at": [
+              381.5622863769531,
+              -21.60529136657715
+            ],
+            "distance": 11.484658159659084,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 35,
+              "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              }
+            }
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.barricade",
+            "hp": 1,
+            "at": [
+              381.3571472167969,
+              -10.241353034973145
+            ],
+            "distance": 2.120465004812471,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.barricade",
+            "hp": 1,
+            "at": [
+              380.5090318212632,
+              -4.3816564171096095
+            ],
+            "distance": 6.604338320029236,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.trash-can",
+            "hp": 0,
+            "at": [
+              380.5914791802116,
+              -10.438974247765401
+            ],
+            "distance": 2.8900532090994773,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.trash-can",
+            "hp": 1,
+            "at": [
+              383.04189911457746,
+              -16.14046114027706
+            ],
+            "distance": 5.875204473702518,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.barricade",
+            "hp": 0,
+            "at": [
+              383.75755129487965,
+              -9.960085144616947
+            ],
+            "distance": 0.4264103809883669,
+            "physics": null
+          }
+        ]
+      },
+      "routeProgress": 0.976,
+      "finished": true
+    },
+    {
+      "seed": 2,
+      "routeId": "dry-shortcut",
+      "pathId": "primary",
+      "positionJumps": [],
+      "evacuation": [
+        {
+          "id": 669,
+          "hp": 100,
+          "at": {
+            "x": 461.4856164995479,
+            "z": -14.801853039061253,
+            "y": 0.7,
+            "yaw": 1.356640347488971
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 8094
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 46,
+            "cells": []
+          }
+        },
+        {
+          "id": 670,
+          "hp": 44,
+          "at": {
+            "x": 459.7135584575386,
+            "z": -2.772165181814496,
+            "y": 0.702,
+            "yaw": -1.1738298137635657
+          },
+          "hidden": false,
+          "route": null
+        },
+        {
+          "id": 671,
+          "hp": 100,
+          "at": {
+            "x": 479.48259904328165,
+            "z": -15.18599641959466,
+            "y": 0.7,
+            "yaw": -1.458823112379865
+          },
+          "passengerOf": 684,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 9095
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 159,
+            "cells": []
+          }
+        },
+        {
+          "id": 672,
+          "hp": 100,
+          "at": {
+            "x": 461.42974210457254,
+            "z": -13.718568683328767,
+            "y": 0.7,
+            "yaw": 1.2070087021452167
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 8209
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 31,
+            "cells": []
+          }
+        },
+        {
+          "id": 673,
+          "hp": 100,
+          "at": {
+            "x": 537.5407482588008,
+            "z": -6.954074825879714,
+            "y": 0.7,
+            "yaw": 0.09966865249108482
+          },
+          "phase": "hidden",
+          "hidden": false,
+          "route": {
+            "goal": -1,
+            "index": 0,
+            "cells": []
+          }
+        }
+      ],
+      "driving": {
+        "evacuationAt": 7635,
+        "evacuated": [
+          669,
+          672,
+          671
+        ],
+        "evacuating": [
+          669,
+          670,
+          671,
+          672
+        ],
+        "done": true,
+        "spotFailures": {
+          "669": 0,
+          "670": 59,
+          "671": 0,
+          "672": 0
+        },
+        "spotSkips": {},
+        "truckEntering": {
+          "669": 8094,
+          "671": 9095,
+          "672": 8209
+        },
+        "hugDone": true,
+        "hugSpot": {
+          "x": 469.0760385940435,
+          "z": 0.12822933709468254,
+          "dogX": 469.39698286502255,
+          "dogZ": 0.7503183780893877
+        }
+      },
+      "tick": 10417,
+      "phase": "done",
+      "playerHp": 100,
+      "maxNoProgressSeconds": 1.83,
+      "maxAt": 7071,
+      "maxWindow": {
+        "start": 6961,
+        "end": 7071,
+        "phase": "driving",
+        "held": false,
+        "progress": 0.8785415338708757,
+        "startPosition": [
+          418.3755187988281,
+          -19.369203567504883
+        ],
+        "endPosition": [
+          420.10235595703125,
+          -27.90418243408203
+        ],
+        "speed": 6.7357005784759565,
+        "yaw": 1.095198647813211,
+        "throttle": 1,
+        "steer": -1,
+        "nearby": [
+          {
+            "kind": "vehicle",
+            "archetype": "vehicle.school-bus",
+            "hp": 1088.2337829498836,
+            "at": [
+              411.2923278808594,
+              -33.81462860107422
+            ],
+            "distance": 10.608956998491857,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.barricade",
+            "hp": 1,
+            "at": [
+              422.21971140204107,
+              -19.109482917208243
+            ],
+            "distance": 9.045989922203804,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.trash-can",
+            "hp": 0,
+            "at": [
+              416.2259740599866,
+              -17.895902011541658
+            ],
+            "distance": 10.732754242408634,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.barricade",
+            "hp": 0,
+            "at": [
+              416.2195213429062,
+              -20.295862819456655
+            ],
+            "distance": 8.541834229188765,
+            "physics": null
+          }
+        ]
+      },
+      "routeProgress": 0.976,
+      "finished": true
+    },
+    {
+      "seed": 3,
+      "routeId": "dry-shortcut",
+      "pathId": "primary",
+      "positionJumps": [],
+      "evacuation": [
+        {
+          "id": 669,
+          "hp": 100,
+          "at": {
+            "x": 461.48683064366077,
+            "z": -14.792432130056202,
+            "y": 0.7,
+            "yaw": 1.35561669594848
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 7885
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 47,
+            "cells": []
+          }
+        },
+        {
+          "id": 670,
+          "hp": 100,
+          "at": {
+            "x": 470.45693932602404,
+            "z": -14.815070306262404,
+            "y": 0.7,
+            "yaw": 1.3356423976771732
+          },
+          "passengerOf": 683,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 8412
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 53,
+            "cells": []
+          }
+        },
+        {
+          "id": 671,
+          "hp": 100,
+          "at": {
+            "x": 479.48284704011184,
+            "z": -15.204553130677077,
+            "y": 0.7,
+            "yaw": -1.4668399799491871
+          },
+          "passengerOf": 684,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 8848
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 144,
+            "cells": []
+          }
+        },
+        {
+          "id": 672,
+          "hp": 100,
+          "at": {
+            "x": 461.424643220826,
+            "z": -13.722754775983153,
+            "y": 0.7,
+            "yaw": 1.1870214090439957
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 7974
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 27,
+            "cells": []
+          }
+        },
+        {
+          "id": 673,
+          "hp": 100,
+          "at": {
+            "x": 537.5407482588008,
+            "z": -6.954074825879714,
+            "y": 0.7,
+            "yaw": 0.09966865249108482
+          },
+          "phase": "hidden",
+          "story": null,
+          "hidden": false,
+          "route": {
+            "goal": -1,
+            "index": 0,
+            "cells": []
+          }
+        }
+      ],
+      "driving": {
+        "evacuationAt": 7468,
+        "evacuated": [
+          669,
+          672,
+          670,
+          671
+        ],
+        "evacuating": [
+          669,
+          670,
+          671,
+          672
+        ],
+        "done": true,
+        "spotFailures": {
+          "669": 0,
+          "670": 0,
+          "671": 0,
+          "672": 0
+        },
+        "spotSkips": {},
+        "truckEntering": {
+          "669": 7885,
+          "670": 8412,
+          "671": 8848,
+          "672": 7974
+        },
+        "hugDone": true,
+        "hugSpot": {
+          "x": 467.8049640503311,
+          "z": 3.502663377903119,
+          "dogX": 467.80519635133743,
+          "dogZ": 4.202663339357577
+        }
+      },
+      "tick": 10235,
+      "phase": "done",
+      "playerHp": 100,
+      "maxNoProgressSeconds": 0.37,
+      "maxAt": 6737,
+      "maxWindow": {
+        "start": 6715,
+        "end": 6737,
+        "phase": "driving",
+        "held": false,
+        "progress": 0.8481987057279645,
+        "startPosition": [
+          383.0400390625,
+          -9.718118667602539
+        ],
+        "endPosition": [
+          383.4599609375,
+          -9.637462615966797
+        ],
+        "speed": 2.3534283767107573,
+        "yaw": -0.14577283429738883,
+        "throttle": 1,
+        "steer": 0.052478012277853814,
+        "nearby": [
+          {
+            "kind": "vehicle",
+            "archetype": "vehicle.school-bus",
+            "hp": 1115.6450651483824,
+            "at": [
+              376.31658935546875,
+              -11.052043914794922
+            ],
+            "distance": 7.282087462394688,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.trash-can",
+            "hp": 1,
+            "at": [
+              381.60748291015625,
+              -11.322793960571289
+            ],
+            "distance": 2.5043994455553165,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.barricade",
+            "hp": 1,
+            "at": [
+              386.5086975097656,
+              -9.520663261413574
+            ],
+            "distance": 3.050973086786247,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.barricade",
+            "hp": 1,
+            "at": [
+              380.5837737462634,
+              -4.334891812414385
+            ],
+            "distance": 6.032388406404224,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.trash-can",
+            "hp": 0,
+            "at": [
+              380.69026157302494,
+              -10.393322949666667
+            ],
+            "distance": 2.870985791263068,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.trash-can",
+            "hp": 1,
+            "at": [
+              383.13809748889946,
+              -16.101286527222452
+            ],
+            "distance": 6.4718324789247585,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.barricade",
+            "hp": 0,
+            "at": [
+              383.8593332195577,
+              -9.935278377812585
+            ],
+            "distance": 0.49818916856929,
+            "physics": null
+          }
+        ]
+      },
+      "routeProgress": 0.976,
+      "finished": true
+    },
+    {
+      "seed": 1,
+      "routeId": "road",
+      "pathId": "detour",
+      "positionJumps": [
+        {
+          "tick": 4234,
+          "metres": 5.999999999999999,
+          "from": [
+            -8.24085807800293,
+            -305.00286865234375
+          ],
+          "to": [
+            -14.240752610997504,
+            -305.0384438254539
+          ]
+        }
+      ],
+      "evacuation": [
+        {
+          "id": 669,
+          "hp": 100,
+          "at": {
+            "x": 461.4958795917507,
+            "z": -14.81780588336885,
+            "y": 0.7,
+            "yaw": 1.357015054036933
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 10995
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 48,
+            "cells": []
+          }
+        },
+        {
+          "id": 670,
+          "hp": 100,
+          "at": {
+            "x": 470.45646594906196,
+            "z": -14.823194075151491,
+            "y": 0.7,
+            "yaw": 1.3293727990679205
+          },
+          "passengerOf": 683,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 11658
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 35,
+            "cells": []
+          }
+        },
+        {
+          "id": 671,
+          "hp": 100,
+          "at": {
+            "x": 479.48331381893684,
+            "z": -15.201264709166272,
+            "y": 0.7,
+            "yaw": -1.467376799269143
+          },
+          "passengerOf": 684,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 12329
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 129,
+            "cells": []
+          }
+        },
+        {
+          "id": 672,
+          "hp": 100,
+          "at": {
+            "x": 461.4225796307849,
+            "z": -13.717551585361665,
+            "y": 0.7,
+            "yaw": 1.1873780392423812
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 11083
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 28,
+            "cells": []
+          }
+        },
+        {
+          "id": 673,
+          "hp": 100,
+          "at": {
+            "x": 537.5407482588008,
+            "z": -6.954074825879714,
+            "y": 0.7,
+            "yaw": 0.09966865249108482
+          },
+          "phase": "hidden",
+          "story": null,
+          "hidden": false,
+          "route": {
+            "goal": -1,
+            "index": 0,
+            "cells": []
+          }
+        }
+      ],
+      "driving": {
+        "evacuationAt": 10548,
+        "evacuated": [
+          669,
+          672,
+          670,
+          671
+        ],
+        "evacuating": [
+          669,
+          670,
+          671,
+          672
+        ],
+        "done": true,
+        "spotFailures": {
+          "669": 0,
+          "670": 0,
+          "671": 0,
+          "672": 0
+        },
+        "spotSkips": {},
+        "truckEntering": {
+          "669": 10995,
+          "670": 11658,
+          "671": 12329,
+          "672": 11083
+        },
+        "hugDone": true,
+        "hugSpot": {
+          "x": 467.81009800487533,
+          "z": 3.7172477942384123,
+          "dogX": 467.81196064780045,
+          "dogZ": 4.41724531606355
+        }
+      },
+      "tick": 13354,
+      "phase": "done",
+      "playerHp": 100,
+      "maxNoProgressSeconds": 9,
+      "maxAt": 4323,
+      "maxWindow": {
+        "start": 3783,
+        "end": 4323,
+        "phase": "driving",
+        "held": false,
+        "progress": 0.49028346750239843,
+        "startPosition": [
+          -8.245207786560059,
+          -305.01123046875
+        ],
+        "endPosition": [
+          -7.714351654052734,
+          -310.4281311035156
+        ],
+        "speed": 9.36,
+        "yaw": 0.41551262670090344,
+        "throttle": 1,
+        "steer": -1,
+        "nearby": [
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.recycling-bin",
+            "hp": 80,
+            "at": [
+              -13.57900619506836,
+              -319.4317321777344
+            ],
+            "distance": 10.745185209624273,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 9,
+              "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              }
+            }
+          },
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.wheelbarrow",
+            "hp": 80,
+            "at": [
+              -11.282588005065918,
+              -320.641357421875
+            ],
+            "distance": 10.81860908281284,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 35,
+              "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              }
+            }
+          },
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.traffic-cone",
+            "hp": 25,
+            "at": [
+              -5.832444190979004,
+              -319.23980712890625
+            ],
+            "distance": 9.010394557177644,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 3.5,
+              "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              }
+            }
+          },
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.crates",
+            "hp": 80,
+            "at": [
+              -5.605340480804443,
+              -317.8809509277344
+            ],
+            "distance": 7.745479421001267,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 35,
+              "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              }
+            }
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.jersey-barrier",
+            "hp": 1,
+            "at": [
+              -7.242989540100098,
+              -304.9510498046875
+            ],
+            "distance": 5.497326786397429,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.barricade",
+            "hp": 1,
+            "at": [
+              -5.385928875418131,
+              -305.0000305175781
+            ],
+            "distance": 5.906422657338324,
+            "physics": null
+          }
+        ]
+      },
+      "routeProgress": 0.9827,
+      "finished": true
+    },
+    {
+      "seed": 2,
+      "routeId": "road",
+      "pathId": "detour",
+      "positionJumps": [
+        {
+          "tick": 4233,
+          "metres": 6.000000000000001,
+          "from": [
+            -8.401324272155762,
+            -304.611083984375
+          ],
+          "to": [
+            -14.378374101440368,
+            -304.0867984340793
+          ]
+        }
+      ],
+      "evacuation": [
+        {
+          "id": 669,
+          "hp": 100,
+          "at": {
+            "x": 461.4889215085626,
+            "z": -14.799496707322541,
+            "y": 0.7,
+            "yaw": 1.3558696335640983
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 10726
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 49,
+            "cells": []
+          }
+        },
+        {
+          "id": 670,
+          "hp": 100,
+          "at": {
+            "x": 470.45860321780515,
+            "z": -14.826459596936878,
+            "y": 0.7,
+            "yaw": 1.3334209764758436
+          },
+          "passengerOf": 683,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 11247
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 33,
+            "cells": []
+          }
+        },
+        {
+          "id": 671,
+          "hp": 60,
+          "at": {
+            "x": 465.95055084470295,
+            "z": -0.6326467918473554,
+            "y": 0.702,
+            "yaw": 3.7855599181833908
+          },
+          "hidden": false,
+          "route": null
+        },
+        {
+          "id": 672,
+          "hp": 100,
+          "at": {
+            "x": 461.4299115041049,
+            "z": -13.719829390894903,
+            "y": 0.7,
+            "yaw": 1.202917990818048
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 10744
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 31,
+            "cells": []
+          }
+        },
+        {
+          "id": 673,
+          "hp": 100,
+          "at": {
+            "x": 537.5407482588008,
+            "z": -6.954074825879714,
+            "y": 0.7,
+            "yaw": 0.09966865249108482
+          },
+          "phase": "hidden",
+          "hidden": false,
+          "route": {
+            "goal": -1,
+            "index": 0,
+            "cells": []
+          }
+        }
+      ],
+      "driving": {
+        "evacuationAt": 10172,
+        "evacuated": [
+          669,
+          672,
+          670
+        ],
+        "evacuating": [
+          669,
+          670,
+          671,
+          672
+        ],
+        "done": true,
+        "spotFailures": {
+          "669": 0,
+          "670": 0,
+          "671": 59,
+          "672": 0
+        },
+        "spotSkips": {},
+        "truckEntering": {
+          "669": 10726,
+          "670": 11247,
+          "672": 10744
+        },
+        "hugDone": true,
+        "hugSpot": {
+          "x": 468.1981626840633,
+          "z": 4.4465648564378135,
+          "dogX": 468.3153906284671,
+          "dogZ": 5.136679056444485
+        }
+      },
+      "tick": 12954,
+      "phase": "done",
+      "playerHp": 100,
+      "maxNoProgressSeconds": 9.73,
+      "maxAt": 4327,
+      "maxWindow": {
+        "start": 3743,
+        "end": 4327,
+        "phase": "driving",
+        "held": false,
+        "progress": 0.48987350296921434,
+        "startPosition": [
+          -8.871933937072754,
+          -304.6583557128906
+        ],
+        "endPosition": [
+          -8.376561164855957,
+          -309.2750549316406
+        ],
+        "speed": 7.950132419586796,
+        "yaw": 0.48244839617632024,
+        "throttle": 1,
+        "steer": -1,
+        "nearby": [
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.recycling-bin",
+            "hp": 80,
+            "at": [
+              -13.57900619506836,
+              -319.4317321777344
+            ],
+            "distance": 11.411552347235682,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 9,
+              "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              }
+            }
+          },
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.wheelbarrow",
+            "hp": 80,
+            "at": [
+              -11.282588005065918,
+              -320.641357421875
+            ],
+            "distance": 11.731914775326697,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 35,
+              "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              }
+            }
+          },
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.traffic-cone",
+            "hp": 25,
+            "at": [
+              -5.832444190979004,
+              -319.23980712890625
+            ],
+            "distance": 10.284396799505497,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 3.5,
+              "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              }
+            }
+          },
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.crates",
+            "hp": 80,
+            "at": [
+              -5.605340480804443,
+              -317.8809509277344
+            ],
+            "distance": 9.041079027156956,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 35,
+              "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              }
+            }
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.jersey-barrier",
+            "hp": 1,
+            "at": [
+              -7.28403377532959,
+              -304.8976745605469
+            ],
+            "distance": 4.51165989521619,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.barricade",
+            "hp": 1,
+            "at": [
+              -5.4185559276336335,
+              -305.0015869140625
+            ],
+            "distance": 5.197338153391388,
+            "physics": null
+          }
+        ]
+      },
+      "routeProgress": 0.9827,
+      "finished": true
+    },
+    {
+      "seed": 3,
+      "routeId": "road",
+      "pathId": "detour",
+      "positionJumps": [
+        {
+          "tick": 4216,
+          "metres": 6,
+          "from": [
+            -8.708963394165039,
+            -305.0484619140625
+          ],
+          "to": [
+            -14.707122976829037,
+            -304.89986305506267
+          ]
+        }
+      ],
+      "evacuation": [
+        {
+          "id": 669,
+          "hp": 100,
+          "at": {
+            "x": 461.4917126850853,
+            "z": -14.802421162991136,
+            "y": 0.7,
+            "yaw": 1.3568718351642937
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 11018
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 45,
+            "cells": []
+          }
+        },
+        {
+          "id": 670,
+          "hp": 100,
+          "at": {
+            "x": 470.4582743348347,
+            "z": -14.825281652663383,
+            "y": 0.7,
+            "yaw": 1.3333513846280516
+          },
+          "passengerOf": 683,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 11642
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 35,
+            "cells": []
+          }
+        },
+        {
+          "id": 671,
+          "hp": 100,
+          "at": {
+            "x": 479.48551527158327,
+            "z": -15.191794819900492,
+            "y": 0.7,
+            "yaw": -1.4717258498040877
+          },
+          "passengerOf": 684,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 12016
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 145,
+            "cells": []
+          }
+        },
+        {
+          "id": 672,
+          "hp": 100,
+          "at": {
+            "x": 461.4349437148337,
+            "z": -13.732144852682978,
+            "y": 0.7,
+            "yaw": 1.206959178658498
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 11224
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 21,
+            "cells": []
+          }
+        },
+        {
+          "id": 673,
+          "hp": 100,
+          "at": {
+            "x": 537.5407482588008,
+            "z": -6.954074825879714,
+            "y": 0.7,
+            "yaw": 0.09966865249108482
+          },
+          "phase": "hidden",
+          "story": null,
+          "hidden": false,
+          "route": {
+            "goal": -1,
+            "index": 0,
+            "cells": []
+          }
+        }
+      ],
+      "driving": {
+        "evacuationAt": 10580,
+        "evacuated": [
+          669,
+          672,
+          670,
+          671
+        ],
+        "evacuating": [
+          669,
+          670,
+          671,
+          672
+        ],
+        "done": true,
+        "spotFailures": {
+          "669": 0,
+          "670": 0,
+          "671": 0,
+          "672": 0
+        },
+        "spotSkips": {},
+        "truckEntering": {
+          "669": 11018,
+          "670": 11642,
+          "671": 12016,
+          "672": 11224
+        },
+        "hugDone": true,
+        "hugSpot": {
+          "x": 467.90165376917554,
+          "z": 4.128386211387117,
+          "dogX": 467.9336974697736,
+          "dogZ": 4.82765239908103
+        }
+      },
+      "tick": 13360,
+      "phase": "done",
+      "playerHp": 100,
+      "maxNoProgressSeconds": 9.37,
+      "maxAt": 4298,
+      "maxWindow": {
+        "start": 3736,
+        "end": 4298,
+        "phase": "driving",
+        "held": false,
+        "progress": 0.48997820652732726,
+        "startPosition": [
+          -8.711870193481445,
+          -305.033447265625
+        ],
+        "endPosition": [
+          -8.20112133026123,
+          -298.7032165527344
+        ],
+        "speed": 8.831999999999999,
+        "yaw": -0.42283443306519414,
+        "throttle": 1,
+        "steer": 1,
+        "nearby": [
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.jersey-barrier",
+            "hp": 1,
+            "at": [
+              -8.018684387207031,
+              -305.1724853515625
+            ],
+            "distance": 6.471840698725677,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.barricade",
+            "hp": 1,
+            "at": [
+              -6.153115579040275,
+              -305.0292053222656
+            ],
+            "distance": 6.649245180414812,
+            "physics": null
+          }
+        ]
+      },
+      "routeProgress": 0.9827,
+      "finished": true
+    },
+    {
+      "seed": 1,
+      "routeId": "countryside",
+      "pathId": "detour",
+      "positionJumps": [],
+      "evacuation": [
+        {
+          "id": 669,
+          "hp": 100,
+          "at": {
+            "x": 461.49404086340763,
+            "z": -14.819290322361299,
+            "y": 0.7,
+            "yaw": 1.357692847643953
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 10173
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 46,
+            "cells": []
+          }
+        },
+        {
+          "id": 670,
+          "hp": 100,
+          "at": {
+            "x": 470.45760862002845,
+            "z": -14.824491248689696,
+            "y": 0.7,
+            "yaw": 1.3319579687026197
+          },
+          "passengerOf": 683,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 10673
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 24,
+            "cells": []
+          }
+        },
+        {
+          "id": 671,
+          "hp": 0,
+          "at": {
+            "x": 471.29430358891636,
+            "z": -26.125166558955613,
+            "y": 0.7,
+            "yaw": -0.3279588105072177
+          },
+          "phase": "hidden",
+          "story": null,
+          "hidden": false,
+          "route": {
+            "goal": -1,
+            "index": 90,
+            "cells": []
+          }
+        },
+        {
+          "id": 672,
+          "hp": 100,
+          "at": {
+            "x": 461.42475251041583,
+            "z": -13.71833806686434,
+            "y": 0.7,
+            "yaw": 1.1922471124126393
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 10357
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 28,
+            "cells": []
+          }
+        },
+        {
+          "id": 673,
+          "hp": 100,
+          "at": {
+            "x": 537.5407482588008,
+            "z": -6.954074825879714,
+            "y": 0.7,
+            "yaw": 0.09966865249108482
+          },
+          "phase": "hidden",
+          "story": null,
+          "hidden": false,
+          "route": {
+            "goal": -1,
+            "index": 0,
+            "cells": []
+          }
+        }
+      ],
+      "driving": {
+        "evacuationAt": 9722,
+        "evacuated": [
+          669,
+          672,
+          670
+        ],
+        "evacuating": [
+          669,
+          670,
+          671,
+          672,
+          672
+        ],
+        "done": true,
+        "spotFailures": {
+          "669": 0,
+          "670": 0,
+          "671": 59,
+          "672": 0
+        },
+        "spotSkips": {},
+        "truckEntering": {
+          "669": 10173,
+          "670": 10673,
+          "672": 10357
+        },
+        "hugDone": true,
+        "hugSpot": {
+          "x": 467.7020983156955,
+          "z": 3.127592647330423,
+          "dogX": 467.68750011756663,
+          "dogZ": 3.8274404112129625
+        }
+      },
+      "tick": 12499,
+      "phase": "done",
+      "playerHp": 100,
+      "maxNoProgressSeconds": 0.37,
+      "maxAt": 3750,
+      "maxWindow": {
+        "start": 3728,
+        "end": 3750,
+        "phase": "driving",
+        "held": false,
+        "progress": 0.5010611289393455,
+        "startPosition": [
+          1.4951472282409668,
+          265.1766662597656
+        ],
+        "endPosition": [
+          2.0400640964508057,
+          265.1477966308594
+        ],
+        "speed": 2.0685585006497447,
+        "yaw": 0.05415655346033513,
+        "throttle": 1,
+        "steer": -0.08945332957522459,
+        "nearby": [
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.jersey-barrier",
+            "hp": 1,
+            "at": [
+              -3.0684919357299805,
+              264.53033447265625
+            ],
+            "distance": 5.145736511981892,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.barricade",
+            "hp": 1,
+            "at": [
+              -1.0400118827819824,
+              265.01416015625
+            ],
+            "distance": 3.0829736854525436,
+            "physics": null
+          }
+        ]
+      },
+      "routeProgress": 0.9812,
+      "finished": true
+    },
+    {
+      "seed": 2,
+      "routeId": "countryside",
+      "pathId": "detour",
+      "positionJumps": [],
+      "evacuation": [
+        {
+          "id": 669,
+          "hp": 100,
+          "at": {
+            "x": 461.48973932118514,
+            "z": -14.795648932287019,
+            "y": 0.7,
+            "yaw": 1.3556994821535924
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 10126
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 46,
+            "cells": []
+          }
+        },
+        {
+          "id": 670,
+          "hp": 100,
+          "at": {
+            "x": 470.45662455441465,
+            "z": -14.820135802802842,
+            "y": 0.7,
+            "yaw": 1.3323426997065846
+          },
+          "passengerOf": 683,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 10628
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 31,
+            "cells": []
+          }
+        },
+        {
+          "id": 671,
+          "hp": 60,
+          "at": {
+            "x": 467.13128695153097,
+            "z": -12.08814663392065,
+            "y": 0.7,
+            "yaw": -3.3932607170389955
+          },
+          "hidden": false,
+          "route": null
+        },
+        {
+          "id": 672,
+          "hp": 100,
+          "at": {
+            "x": 461.43201751661496,
+            "z": -13.735880078459862,
+            "y": 0.7,
+            "yaw": 1.1930441890077799
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 10311
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 27,
+            "cells": []
+          }
+        },
+        {
+          "id": 673,
+          "hp": 100,
+          "at": {
+            "x": 537.5407482588008,
+            "z": -6.954074825879714,
+            "y": 0.7,
+            "yaw": 0.09966865249108482
+          },
+          "phase": "hidden",
+          "hidden": false,
+          "route": {
+            "goal": -1,
+            "index": 0,
+            "cells": []
+          }
+        }
+      ],
+      "driving": {
+        "evacuationAt": 9679,
+        "evacuated": [
+          669,
+          672,
+          670
+        ],
+        "evacuating": [
+          669,
+          670,
+          671,
+          672,
+          672
+        ],
+        "done": true,
+        "spotFailures": {
+          "669": 0,
+          "670": 0,
+          "671": 59,
+          "672": 0
+        },
+        "spotSkips": {},
+        "truckEntering": {
+          "669": 10126,
+          "670": 10628,
+          "672": 10311
+        },
+        "hugDone": true,
+        "hugSpot": {
+          "x": 467.6776901695925,
+          "z": 3.0622949957826275,
+          "dogX": 467.6595969299746,
+          "dogZ": 3.7620611243428272
+        }
+      },
+      "tick": 12459,
+      "phase": "done",
+      "playerHp": 100,
+      "maxNoProgressSeconds": 0.35,
+      "maxAt": 21,
+      "maxWindow": {
+        "start": 0,
+        "end": 21,
+        "phase": "driving",
+        "held": false,
+        "progress": 0,
+        "startPosition": [
+          -550,
+          0
+        ],
+        "endPosition": [
+          -549.4793090820312,
+          0
+        ],
+        "speed": 2.994755268096924,
+        "yaw": 0,
+        "throttle": 1,
+        "steer": 0,
+        "nearby": [
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.crowd-fence",
+            "hp": 80,
+            "at": [
+              -547.4840087890625,
+              9.781981468200684
+            ],
+            "distance": 9.983405466239603,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 22,
+              "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              }
+            }
+          }
+        ]
+      },
+      "routeProgress": 0.9812,
+      "finished": true
+    },
+    {
+      "seed": 3,
+      "routeId": "countryside",
+      "pathId": "detour",
+      "positionJumps": [],
+      "evacuation": [
+        {
+          "id": 669,
+          "hp": 100,
+          "at": {
+            "x": 461.4917666981801,
+            "z": -14.810857759391757,
+            "y": 0.7,
+            "yaw": 1.3568950897329923
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 10223
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 47,
+            "cells": []
+          }
+        },
+        {
+          "id": 670,
+          "hp": 100,
+          "at": {
+            "x": 470.4579424102376,
+            "z": -14.82524106791326,
+            "y": 0.7,
+            "yaw": 1.3332610782359338
+          },
+          "passengerOf": 683,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 10702
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 34,
+            "cells": []
+          }
+        },
+        {
+          "id": 671,
+          "hp": 0,
+          "at": {
+            "x": 470.68859318792494,
+            "z": -21.348190682585937,
+            "y": 0.7,
+            "yaw": -1.0217909231093862
+          },
+          "phase": "hidden",
+          "story": null,
+          "hidden": false,
+          "route": {
+            "goal": -1,
+            "index": 89,
+            "cells": []
+          }
+        },
+        {
+          "id": 672,
+          "hp": 100,
+          "at": {
+            "x": 461.42359241314614,
+            "z": -13.70723663184545,
+            "y": 0.7,
+            "yaw": 1.2013005760711122
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 10425
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 32,
+            "cells": []
+          }
+        },
+        {
+          "id": 673,
+          "hp": 100,
+          "at": {
+            "x": 537.5407482588008,
+            "z": -6.954074825879714,
+            "y": 0.7,
+            "yaw": 0.09966865249108482
+          },
+          "phase": "hidden",
+          "story": null,
+          "hidden": false,
+          "route": {
+            "goal": -1,
+            "index": 0,
+            "cells": []
+          }
+        }
+      ],
+      "driving": {
+        "evacuationAt": 9809,
+        "evacuated": [
+          669,
+          672,
+          670
+        ],
+        "evacuating": [
+          669,
+          670,
+          671,
+          672,
+          672
+        ],
+        "done": true,
+        "spotFailures": {
+          "669": 0,
+          "670": 0,
+          "671": 59,
+          "672": 0
+        },
+        "spotSkips": {},
+        "truckEntering": {
+          "669": 10223,
+          "670": 10702,
+          "672": 10425
+        },
+        "hugDone": true,
+        "hugSpot": {
+          "x": 467.7580287532408,
+          "z": 3.3341914144262446,
+          "dogX": 467.7513979917685,
+          "dogZ": 4.034160008723372
+        }
+      },
+      "tick": 12588,
+      "phase": "done",
+      "playerHp": 100,
+      "maxNoProgressSeconds": 0.35,
+      "maxAt": 21,
+      "maxWindow": {
+        "start": 0,
+        "end": 21,
+        "phase": "driving",
+        "held": false,
+        "progress": 0,
+        "startPosition": [
+          -550,
+          0
+        ],
+        "endPosition": [
+          -549.4793090820312,
+          0
+        ],
+        "speed": 2.994755268096924,
+        "yaw": 0,
+        "throttle": 1,
+        "steer": 0,
+        "nearby": [
+          {
+            "kind": "physics-prop",
+            "archetype": "prop.crowd-fence",
+            "hp": 80,
+            "at": [
+              -547.4840087890625,
+              9.781981468200684
+            ],
+            "distance": 9.983405466239603,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 22,
+              "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              }
+            }
+          }
+        ]
+      },
+      "routeProgress": 0.9812,
+      "finished": true
+    },
+    {
+      "seed": 1,
+      "routeId": "dry-shortcut",
+      "pathId": "detour",
+      "positionJumps": [],
+      "evacuation": [
+        {
+          "id": 669,
+          "hp": 100,
+          "at": {
+            "x": 461.49459347953615,
+            "z": -14.812769340831025,
+            "y": 0.7,
+            "yaw": 1.3574368808919894
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 8244
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 47,
+            "cells": []
+          }
+        },
+        {
+          "id": 670,
+          "hp": 100,
+          "at": {
+            "x": 470.4522677656623,
+            "z": -14.801073677502211,
+            "y": 0.7,
+            "yaw": 1.3328683554878262
+          },
+          "passengerOf": 683,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 8832
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 31,
+            "cells": []
+          }
+        },
+        {
+          "id": 671,
+          "hp": 100,
+          "at": {
+            "x": 479.4859176316822,
+            "z": -15.185336279281493,
+            "y": 0.7,
+            "yaw": -1.470701250114283
+          },
+          "passengerOf": 684,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 9227
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 144,
+            "cells": []
+          }
+        },
+        {
+          "id": 672,
+          "hp": 100,
+          "at": {
+            "x": 461.43506063412474,
+            "z": -13.73144346428093,
+            "y": 0.7,
+            "yaw": 1.2069424192036384
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 8334
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 29,
+            "cells": []
+          }
+        },
+        {
+          "id": 673,
+          "hp": 100,
+          "at": {
+            "x": 537.5407482588008,
+            "z": -6.954074825879714,
+            "y": 0.7,
+            "yaw": 0.09966865249108482
+          },
+          "phase": "hidden",
+          "story": null,
+          "hidden": false,
+          "route": {
+            "goal": -1,
+            "index": 0,
+            "cells": []
+          }
+        }
+      ],
+      "driving": {
+        "evacuationAt": 7752,
+        "evacuated": [
+          669,
+          672,
+          670,
+          671
+        ],
+        "evacuating": [
+          669,
+          670,
+          671,
+          672
+        ],
+        "done": true,
+        "spotFailures": {
+          "669": 0,
+          "670": 0,
+          "671": 0,
+          "672": 0
+        },
+        "spotSkips": {},
+        "truckEntering": {
+          "669": 8244,
+          "670": 8832,
+          "671": 9227,
+          "672": 8334
+        },
+        "hugDone": true,
+        "hugSpot": {
+          "x": 467.75587974832894,
+          "z": 3.4338185349885983,
+          "dogX": 467.7559204437505,
+          "dogZ": 4.133818533805657
+        }
+      },
+      "tick": 10507,
+      "phase": "done",
+      "playerHp": 100,
+      "maxNoProgressSeconds": 5.42,
+      "maxAt": 5109,
+      "maxWindow": {
+        "start": 4784,
+        "end": 5109,
+        "phase": "driving",
+        "held": false,
+        "progress": 0.7642337825588748,
+        "startPosition": [
+          290.7382507324219,
+          7.962016582489014
+        ],
+        "endPosition": [
+          291.08612060546875,
+          7.3718976974487305
+        ],
+        "speed": 8.447999999999999,
+        "yaw": 0.033488161933823465,
+        "throttle": 1,
+        "steer": -0.0488017284853178,
+        "nearby": [
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.barricade",
+            "hp": 1,
+            "at": [
+              280.5270690917969,
+              7.865036964416504
+            ],
+            "distance": 10.570560780062797,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.barricade",
+            "hp": 1,
+            "at": [
+              290.9247131347656,
+              7.829726219177246
+            ],
+            "distance": 0.48544755319900224,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.trash-can",
+            "hp": 1,
+            "at": [
+              294.3267822265625,
+              7.795175552368164
+            ],
+            "distance": 3.2681878594865332,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.trash-can",
+            "hp": 1,
+            "at": [
+              290.7507586315864,
+              1.9309448502892366
+            ],
+            "distance": 5.451278339851973,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.barricade",
+            "hp": 0,
+            "at": [
+              292.2393371557815,
+              7.793248234726081
+            ],
+            "distance": 1.2277803904523048,
+            "physics": null
+          }
+        ]
+      },
+      "routeProgress": 0.9759,
+      "finished": true
+    },
+    {
+      "seed": 2,
+      "routeId": "dry-shortcut",
+      "pathId": "detour",
+      "positionJumps": [],
+      "evacuation": [
+        {
+          "id": 669,
+          "hp": 100,
+          "at": {
+            "x": 461.4866990943686,
+            "z": -14.810012597557694,
+            "y": 0.7,
+            "yaw": -4.782110940919607
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 6559
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 10,
+            "cells": []
+          }
+        },
+        {
+          "id": 670,
+          "hp": 100,
+          "at": {
+            "x": 470.53341153980944,
+            "z": -15.196303940568425,
+            "y": 0.7,
+            "yaw": -7.937215860500729
+          },
+          "passengerOf": 683,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 7400
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 56,
+            "cells": []
+          }
+        },
+        {
+          "id": 671,
+          "hp": 100,
+          "at": {
+            "x": 479.4827710975669,
+            "z": -15.182725563843954,
+            "y": 0.7,
+            "yaw": -1.4577904359337053
+          },
+          "passengerOf": 684,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 7511
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 147,
+            "cells": []
+          }
+        },
+        {
+          "id": 672,
+          "hp": 100,
+          "at": {
+            "x": 461.4952791742366,
+            "z": -13.72186878077039,
+            "y": 0.7,
+            "yaw": 1.5454726767808395
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 6636
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 16,
+            "cells": []
+          }
+        },
+        {
+          "id": 673,
+          "hp": 100,
+          "at": {
+            "x": 537.5407482588008,
+            "z": -6.954074825879714,
+            "y": 0.7,
+            "yaw": 0.09966865249108482
+          },
+          "phase": "hidden",
+          "story": null,
+          "hidden": false,
+          "route": {
+            "goal": -1,
+            "index": 0,
+            "cells": []
+          }
+        }
+      ],
+      "driving": {
+        "evacuationAt": 6151,
+        "evacuated": [
+          669,
+          672,
+          670,
+          671
+        ],
+        "evacuating": [
+          669,
+          670,
+          671,
+          672
+        ],
+        "done": true,
+        "spotFailures": {
+          "669": 0,
+          "670": 0,
+          "671": 0,
+          "672": 0
+        },
+        "spotSkips": {},
+        "truckEntering": {
+          "669": 6559,
+          "670": 7400,
+          "671": 7511,
+          "672": 6636
+        },
+        "hugDone": true,
+        "hugSpot": {
+          "x": 461.62096827871886,
+          "z": -6.219064608633353,
+          "dogX": 460.9403978412353,
+          "dogZ": -6.055284635426994
+        }
+      },
+      "tick": 10105,
+      "phase": "done",
+      "playerHp": 100,
+      "maxNoProgressSeconds": 13.33,
+      "maxAt": 9165,
+      "maxWindow": {
+        "start": 8365,
+        "end": 9165,
+        "phase": "driving",
+        "held": false,
+        "progress": 0.937237927576601,
+        "startPosition": [
+          480.93035888671875,
+          -21.56339454650879
+        ],
+        "endPosition": [
+          481.3182373046875,
+          -11.581571578979492
+        ],
+        "speed": 7.199999999999999,
+        "yaw": -0.9870022942891852,
+        "throttle": 1,
+        "steer": 0.12000138267362126,
+        "nearby": [
+          {
+            "kind": "physics-prop",
+            "archetype": "veh.wreck",
+            "hp": 80,
+            "at": [
+              486,
+              -8.399999618530273
+            ],
+            "distance": 5.660503694437135,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 1400,
+              "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              }
+            }
+          },
+          {
+            "kind": "physics-prop",
+            "archetype": "veh.military-truck",
+            "hp": 80,
+            "at": [
+              478.7561340332031,
+              -6.031881809234619
+            ],
+            "distance": 6.112563268724656,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 6800,
+              "velocity": {
+                "x": 1.6023982763290405,
+                "y": 2.1778296286356635e-06,
+                "z": 7.08941650390625
+              }
+            }
+          },
+          {
+            "kind": "physics-prop",
+            "archetype": "veh.pickup-red",
+            "hp": 80,
+            "at": [
+              470.2149353027344,
+              -10.180829048156738
+            ],
+            "distance": 11.191308903976871,
+            "physics": {
+              "fixed": false,
+              "braced": false,
+              "mass": 1450,
+              "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              }
+            }
+          }
+        ]
+      },
+      "routeProgress": 0.9602,
+      "finished": true
+    },
+    {
+      "seed": 3,
+      "routeId": "dry-shortcut",
+      "pathId": "detour",
+      "positionJumps": [],
+      "evacuation": [
+        {
+          "id": 669,
+          "hp": 100,
+          "at": {
+            "x": 461.4816137945487,
+            "z": -14.814656965723117,
+            "y": 0.7,
+            "yaw": 1.3531517364271148
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 7567
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 45,
+            "cells": []
+          }
+        },
+        {
+          "id": 670,
+          "hp": 100,
+          "at": {
+            "x": 470.4582677028314,
+            "z": -14.826590760095536,
+            "y": 0.7,
+            "yaw": 1.3335496816537662
+          },
+          "passengerOf": 683,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 8070
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 33,
+            "cells": []
+          }
+        },
+        {
+          "id": 671,
+          "hp": 100,
+          "at": {
+            "x": 479.4838117469708,
+            "z": -15.20482526510182,
+            "y": 0.7,
+            "yaw": -1.4700984399149342
+          },
+          "passengerOf": 684,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 8551
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 146,
+            "cells": []
+          }
+        },
+        {
+          "id": 672,
+          "hp": 100,
+          "at": {
+            "x": 461.43052679351706,
+            "z": -13.729415529428293,
+            "y": 0.7,
+            "yaw": 1.2058347197538863
+          },
+          "passengerOf": 682,
+          "phase": "hidden",
+          "story": {
+            "clip": "npc-sit-down",
+            "start": 7746
+          },
+          "hidden": true,
+          "route": {
+            "goal": -1,
+            "index": 27,
+            "cells": []
+          }
+        },
+        {
+          "id": 673,
+          "hp": 100,
+          "at": {
+            "x": 537.5407482588008,
+            "z": -6.954074825879714,
+            "y": 0.7,
+            "yaw": 0.09966865249108482
+          },
+          "phase": "hidden",
+          "story": null,
+          "hidden": false,
+          "route": {
+            "goal": -1,
+            "index": 0,
+            "cells": []
+          }
+        }
+      ],
+      "driving": {
+        "evacuationAt": 7135,
+        "evacuated": [
+          669,
+          672,
+          670,
+          671
+        ],
+        "evacuating": [
+          669,
+          670,
+          671,
+          672,
+          672
+        ],
+        "done": true,
+        "spotFailures": {
+          "669": 0,
+          "670": 0,
+          "671": 0,
+          "672": 0
+        },
+        "spotSkips": {},
+        "truckEntering": {
+          "669": 7567,
+          "670": 8070,
+          "671": 8551,
+          "672": 7746
+        },
+        "hugDone": true,
+        "hugSpot": {
+          "x": 467.44187881189725,
+          "z": 3.260665971103205,
+          "dogX": 467.39327281667244,
+          "dogZ": 3.9589764015195095
+        }
+      },
+      "tick": 9910,
+      "phase": "done",
+      "playerHp": 100,
+      "maxNoProgressSeconds": 6.05,
+      "maxAt": 6973,
+      "maxWindow": {
+        "start": 6610,
+        "end": 6973,
+        "phase": "driving",
+        "held": false,
+        "progress": 0.9051227254790629,
+        "startPosition": [
+          446.15380859375,
+          11.434633255004883
+        ],
+        "endPosition": [
+          445.44989013671875,
+          -9.39742660522461
+        ],
+        "speed": 8.552121934891225,
+        "yaw": 0.010058983294163241,
+        "throttle": 1,
+        "steer": -1,
+        "nearby": [
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.fence",
+            "hp": 1,
+            "at": [
+              444.52001953125,
+              -13.958909034729004
+            ],
+            "distance": 4.655296048329486,
+            "physics": null
+          },
+          {
+            "kind": "obstacle",
+            "archetype": "obstacle.barricade",
+            "hp": 1,
+            "at": [
+              449.7489318847656,
+              1.4176963567733765
+            ],
+            "distance": 11.638240615943031,
+            "physics": null
+          }
+        ]
+      },
+      "routeProgress": 0.9759,
+      "finished": true
+    }
+  ]
+}

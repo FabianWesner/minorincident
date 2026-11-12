@@ -117,7 +117,8 @@ export class PropSystem {
     const activeId = this.world.vehicles?.active;
     const car = activeId === null || activeId === undefined ? undefined : this.world.vehicles?.cars.get(activeId);
     let navChanged = false;
-    if (car && car.physics.speed > .35) for (const item of this.items) {
+    const pushing = !!car?.entity.vehicle?.floor && car.physics.intent.throttle > .5 && !car.physics.intent.brake;
+    if (car && (car.physics.speed > .35 || pushing)) for (const item of this.items) {
       if (item.fixed || item.braced || !item.body.isEnabled() || this.world.entities.get(item.entityId)?.health.current === 0) continue;
       const gap = car.physics.hullDistance(item.pose.p[0], item.pose.p[2]);
       if (gap > item.radius + .18 || Math.abs(item.pose.p[1] - .6) > item.half[1] + 1.5) continue;
@@ -126,7 +127,9 @@ export class PropSystem {
       const velocity = car.physics.body.linvel();
       const propVelocity = item.body.linvel();
       const nx = contact.normal1.x, nz = contact.normal1.z;
-      const speed = Math.min(car.physics.def.topSpeed, (velocity.x - propVelocity.x) * nx + (velocity.z - propVelocity.z) * nz);
+      const closing = (velocity.x - propVelocity.x) * nx + (velocity.z - propVelocity.z) * nz;
+      const enginePush = pushing ? 5 * Math.max(0, Math.cos(car.entity.transform.yaw) * nx - Math.sin(car.entity.transform.yaw) * nz) : 0;
+      const speed = Math.min(car.physics.def.topSpeed, Math.max(closing, enginePush));
       if (speed <= .35) continue;
       item.body.setBodyType(RAPIER.RigidBodyType.Dynamic, false);
       const impact = Math.min(item.mass * Math.min(12, speed * .7), car.physics.def.mass * speed * .08);

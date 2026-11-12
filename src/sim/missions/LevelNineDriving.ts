@@ -611,7 +611,11 @@ export class LevelNineDriving {
       e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; if (e.civilian!.survivor) e.civilian!.survivor!.mode = 'hidden';
       // The far truck sits beyond the bridge-gate wall end: from an APC parked north of the bay the walk
       // around it exceeds the default 1600-node search (r27-l9apc, --zero run: Okafor stood forever).
-      if (s.truckEntering[id] === undefined && !w.npcs!.move(e, target, 3, e.civilian!, .6, 8000)) {
+      const before = { x: e.transform.x, z: e.transform.z };
+      const approaching = s.truckEntering[id] === undefined;
+      const moved = approaching && w.npcs!.move(e, target, 3, e.civilian!, .6, 8000);
+      // A reachable nearby cell can still leave an evacuee stationary short of the truck.
+      if (approaching && (!moved || distance(e.transform, target) >= 1.2 && distance(e.transform, before) < .001)) {
         // No route to this spot for 1.5 s: take the next open one.
         const failed = (this.spotFail.get(id) ?? 0) + 1; this.spotFail.set(id, failed);
         if (failed >= 90) { this.spotFail.set(id, 0); this.spotSkip.set(id, skip + 1); }

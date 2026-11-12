@@ -438,6 +438,15 @@ async function vehicleShovesProps(): Promise<PropSnapshot> {
     world.props!.updateNavigation();
     const id = world.vehicles!.spawn('vehicle.military-apc', { x: -4.9, z: 0 });
     const car = world.vehicles!.cars.get(id)!; world.vehicles!.active = id;
+    world.props!.prePhysics();
+    expect(prop.body.linvel().x, 'released throttle does not move a resting prop').toBe(0);
+    car.entity.vehicle!.floor = true;
+    Object.assign(car.physics.intent, { throttle: 1, brake: false });
+    world.props!.prePhysics();
+    expect(prop.body.linvel().x, 'held APC throttle pushes an authored prop from rest').toBeGreaterThan(0);
+    expect(world.entities.get(prop.entityId)?.health.current, 'pushing preserves the prop').toBeGreaterThan(0);
+    car.entity.vehicle!.floor = false;
+    prop.body.setLinvel({ x: 0, y: 0, z: 0 }, true);
     car.physics.body.setLinvel({ x: 18, y: 0, z: 0 }, true); car.physics.postPhysics();
     world.props!.prePhysics();
     expect(prop.body.isSleeping()).toBe(false);
