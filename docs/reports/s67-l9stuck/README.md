@@ -67,3 +67,7 @@ Completion audit still requires native coverage of the countryside and dry-short
 The same driver was run over countryside and dry-shortcut seeds 1–3. All six runs completed, but countryside seeds 2/3 failed at 9.42 / 8.33 s, and dry-shortcut seed 3 failed at 5.05 s. Countryside seed 2 and shortcut seed 3 also exercised the existing 6 m pin relocation, violating this task's no-teleport condition. Country seed 1 and shortcut seeds 1/2 passed (0.37 / 0.32 / 0.32 s). Thus the road matrix must not be generalized to every L9 route. The committed regression runner now covers all three routes and all three seeds, preserving each failed receipt before returning failure.
 
 A bus backoff during active reverse recovery worsened country seed 2 to 16.27 s and was reverted. No production change from that experiment remains. The countryside bus/pocket recovery and shortcut pin cases remain open.
+
+## Heavy initial-launch experiment
+
+Removing the jersey barrier's initial upward velocity passed countryside seeds 1–3 (0.35 s each) and the focused barrier assertions, but the complete matrix exposed a new road seed-3 16.67 s stall plus a 6 m relocation. The experiment was reverted in full, including its temporary assertion. The final production state remains at the previously gated commits; all-route acceptance is still red. This rules out accepting the ground-launch change based only on the countryside case.
