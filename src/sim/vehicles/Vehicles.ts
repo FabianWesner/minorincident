@@ -318,12 +318,21 @@ export class Vehicles {
       car.physics.body.setLinvel({ x: velocity.x * .9, y: velocity.y, z: velocity.z * .9 }, true);
     }
     for (const obstacle of this.obstacles.items) {
-      if (obstacle.broken || obstacle.airborne) continue;
+      if (obstacle.broken || obstacle.airborne && !obstacle.body) continue;
       const dx = obstacle.entity.transform.x - p.x, dz = obstacle.entity.transform.z - p.z;
       const localX = dx * c - dz * s, localZ = dx * s + dz * c;
       const halfX = Math.abs(c) * obstacle.halfX + Math.abs(s) * obstacle.halfZ;
       const halfZ = Math.abs(s) * obstacle.halfX + Math.abs(c) * obstacle.halfZ;
       if (Math.abs(localX) > extent + halfX || Math.abs(localZ) > car.physics.def.width / 2 + halfZ) continue;
+      if (obstacle.airborne && obstacle.body) {
+        // A retained prop can still touch the bumper before settling. Keep pushing
+        // horizontally rather than waiting for rest or restarting its upward launch.
+        if (pushing) {
+          const v = obstacle.body.linvel(), closing = (ramVelocity.x - v.x) * c - (ramVelocity.z - v.z) * s;
+          if (closing > 0) obstacle.body.applyImpulse({ x: c * closing * obstacle.body.mass(), y: 0, z: -s * closing * obstacle.body.mass() }, true);
+        }
+        continue;
+      }
       if ((obstacle.light || obstacle.entity.archetype === 'obstacle.jersey-barrier') && (speed >= 5 || pushing)) {
         this.obstacles.ram(obstacle, ramVelocity, this.world.tick);
         this.crash(car, speed);

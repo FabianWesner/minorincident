@@ -432,6 +432,10 @@ async function vehicleShovesProps(): Promise<PropSnapshot> {
     expect(resting.body?.isDynamic(), 'held APC throttle pushes a barrier from rest').toBe(true);
     expect(resting.body!.linvel().x).toBeGreaterThan(0);
     expect(resting.entity.health.current, 'slow pushing preserves the barrier').toBe(1);
+    resting.body!.setLinvel({ x: 0, y: 1, z: 0 }, true);
+    world.vehicles!.prePhysics(pushingInput, 'keyboard');
+    expect(resting.body!.linvel().x, 'the bumper keeps pushing a retained prop before it settles').toBeGreaterThan(0);
+    expect(resting.body!.linvel().y, 'continued pushing does not relaunch the prop upward').toBe(1);
     world.vehicles!.active = null;
     const coneId = world.hazards!.spawn('cone', { x: 65, z: 20 });
     const cone = world.entities.get(coneId)!;
