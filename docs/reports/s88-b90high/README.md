@@ -4,7 +4,7 @@
 
 ## Verdict
 
-**Provisional HOLD — QA incomplete.** The required HIGH/LOW coverage and exact first-hatch scenario remain open. P2: L7 departure visibly overlaps soldiers at the front bumper on HIGH zoom 1; reproduced in opened captures at 0.7 and 3.43 seconds.
+**Provisional HOLD — QA incomplete.** Candidate P1: L8 post-14/14 checkpoint stall on HIGH/LOW. Confirmed P2: L7 departure visibly overlaps soldiers at the front bumper on HIGH zoom 1; reproduced in opened captures at 0.7 and 3.43 seconds.
 
 ## Current evidence
 
@@ -21,18 +21,26 @@
 
 Both checkpoint-yield captures were opened. The initial sample shows retreat HUD, survivor warning, armed courier and threats on the minimap. The extended attempt shows an exit objective at 0/1 and 24 metres, courier at 30 HP amid attacking infected and ground telegraphs. These illustrate a pressured attempt; they do not establish completion. [Contact sheet](contact-sheet.jpg) contains these inspected captures.
 
-## Remaining required coverage
+## Coverage audit (current)
 
-All of the following remain open at HIGH zoom 1 and 1.5, followed by LOW zoom 1:
+| Requested check | HIGH z1 | HIGH z1.5 | LOW z1 |
+| --- | --- | --- | --- |
+| L6 full; first hatch closed; every 30 s attack window | Incomplete: exit reached, first hatch not closed | Missing | Missing |
+| L7 departure / soldiers | Complete route; P2 overlap reproduced | Complete route; nearby soldier/body overlap observed | Complete route; nearby soldiers/body overlap observed |
+| L8 14/14 timing / driver-door handoff | 29.48 s; post-count stall in checkpoint | Camera assertion failure; unverified | 28.23 s; post-count stall after E at marker |
+| L9 rail / final bay | Progressed with manual F, 19 deaths | Missing | Progressed, zero deaths |
+| L9 playable L10 handover pose / school bus | Missing; loading transition only | Missing | Missing; loading transition only |
+| L10 first 5 min / gun selection | Rifle key+click passed; incomplete broader scope | Missing | Missing |
+| L10 every hangar weapon key+click | Later fixture: all 14 by click; machete key unresolved | Missing | Missing |
+| L10 knife | Missing (not in returned-arsenal fixture) | Missing | Missing |
+| L10 all molotov charges / prior weapon | Later fixture initial three charges exhausted; rifle restored | Missing | Missing |
+| L10 molotov blue lines | Post-use stills only; full aiming view missing | Missing | Missing |
+| L10 early hunting Mega damage+recovery | Missing confirmed hit/recovery telemetry | Missing | Missing |
+| L10 crops on roads | No systematic sweep | Missing | Missing |
 
-- L6 full completion and every 30-second attack window after the first hatch actually closes.
-- L7 bus departure versus soldiers.
-- L8 boarding to 14/14, timing and driver-door marker.
-- L9 rail hatch, final bay, handover pose and school-bus/APC overlap.
-- L10 first five minutes: every hangar weapon by click and key, all molotov charges and previous-weapon restoration, Mega damage/recovery, crops on roads.
-- Per-level stuck moments over ten seconds and fun/boring/harmless assessment; final P1/P2 list and evidence-based GO/HOLD.
+**Release verdict remains HOLD.** Confirmed P2: L7 bus/soldier overlap at HIGH z1. Candidate P1: L8 post-14/14 stall on checkpoint HIGH/LOW; source suggests Hale story gate, final runtime flags/fresh-route confirmation missing. No confirmed P1 is claimed yet. Unverified requirements independently prevent GO.
 
-No check is running at this report checkpoint. No gameplay code was changed. Full raw evidence is retained under `test-results/s88-b90high/` and is not committed.
+Commands: production build, QA build, typecheck and lint passed; prescribed remote unit command passed (232.3 s). Contact sheet exists from opened captures. Target gameplay tree remains 832d3978; subsequent commits contain report artifacts only. No deploy, push or main movement was performed. Raw evidence is retained in `test-results/s88-b90high/` and is not committed.
 
 ## L7 HIGH zoom 1
 
