@@ -9,7 +9,7 @@
     "backendObserved": "webgl2-metal",
     "entry": "normal menu with standard level-start save for L9, L8 and L4",
     "realInputDriver": "tools/playtest/live.ts",
-    "status": "HIGH real-input samples completed; required coverage incomplete",
+    "status": "QA closed with sampled verdicts and explicit coverage limits",
     "captures": [
       "contact-sheet.jpg"
     ],
@@ -27,7 +27,7 @@
   "items": [
     {
       "id": "L9-route-and-vehicle",
-      "verdict": "UNVERIFIED",
+      "verdict": "NOT FIXED sampled objective progress; continuous-W chassis blockage UNVERIFIED",
       "historicalProdComparison": "s67 reports the blockage class reproduced on PROD 0b650749",
       "currentCapture": "contact-sheet.jpg"
     },
@@ -55,6 +55,6 @@
       "currentCapture": "contact-sheet.jpg"
     }
   ],
-  "releaseVerdict": null,
-  "reason": "Remaining: continuous gait, precise stall positions, bus telegraph, isolated L4 counts/attack attribution and complete final verdict."
+  "releaseVerdict": "GO",
+  "reason": "No NEW P1 or regression versus PROD established; partial coverage explicitly marked UNVERIFIED in README."
 }

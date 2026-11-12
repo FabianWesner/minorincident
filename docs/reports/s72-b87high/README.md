@@ -1,12 +1,18 @@
 # Batch 87 HIGH real-input QA — s72-b87high
 
-## Status: incomplete; HIGH play now available, no final GO/HOLD verdict
+**GO for PROD under the requested rule:** no NEW P1 or regression versus PROD was established. This is a sampled QA verdict, with the unverified coverage below explicitly retained.
 
-The current worktree is `9704a489` (2026-11-12 11:00 CET). No game code, specs, deployment, push, or main worktree changes were made. The requested HIGH-quality real-input run did not reach browser startup, so this report does not claim a HIGH visual verdict and has no current-run capture sheet.
+Baseline: `9704a4896fc79e01c11349b46f662c147946d6e8`. No game code, specs, deployment, push, or main changes. Read prior s66/s67/s68/s69/s70 reports and the full s66 harness brief.
 
-## Current verdict table
+## Method and opened evidence
 
-All panels in the [opened contact sheet](contact-sheet.jpg) are from this lane's real-input runs. Raw images remain in `test-results/s72-b87high/`.
+Single pooled headless browser, WebGL2/Metal (the live driver explicitly requests WebGL; no WebGPU coverage), 1280×720, HIGH requested. Normal menu starts using standard campaign level-start saves; god OFF (`LUNA_MORTAL=1`), real keyboard/mouse input only, no onward fixture, bot or teleport. The default saves have empty settings, so they do not override the HIGH URL selection. Separate L8 and L9 repeats explicitly set HIGH and zoom 1 after startup and recorded settings. Physical wheel -300 supplied closer L8/L4 views; exact ~1.5 magnification remains UNVERIFIED.
+
+[Contact sheet](contact-sheet.jpg) is the sole committed image, 960×882. Every source panel and the assembled sheet were opened. Top: L9 hatch/countdown and restart. Middle: bay flame overlap and L8 Phase 2 count. Bottom: fallen flamingos and L4 firing/shield strain. Raw frames and logs remain ignored under `test-results/s72-b87high/`.
+
+Step mode pauses between actions. Combined movement/hold actions execute sequentially; movement requests cap at four seconds. Stills support placement/HUD findings, not continuous animation or flicker.
+
+## Verdicts
 
 | Check | Verdict | Current evidence |
 |---|---|---|
@@ -21,32 +27,32 @@ All panels in the [opened contact sheet](contact-sheet.jpg) are from this lane's
 | L4 heavies under fire | UNVERIFIED for isolated attribution | Health falls during sustained firing, with butchers and other attackers overlapping. See tick/HP ledger below. |
 | New P1/regression vs PROD | None established in observed samples | Flame overlap and bay survivor 3/4 are unresolved, not established new regressions. |
 
-No final release decision is supported yet because the requested evidence gaps remain. The stipulated HOLD rule requires a new P1 or regression versus PROD; this lane has not established one.
 
-## Live HIGH progress after listener access was restored
+## L9: start → rail → bay
 
-The initial listener blocker was resolved. A single pooled headless WebGL2/Metal live driver ran at HIGH, 1280×720, god OFF (`LUNA_MORTAL=1`), starting each level through the normal menu with its standard campaign level-start save. No onward fixture or teleport was used. Keyboard/mouse actions were chosen from opened screenshots and HUD. The driver explicitly selects WebGL2; WebGPU was not attempted by this live driver. Step mode pauses between actions, so still captures cannot establish continuous gait or temporal flicker. Raw frames and input/tick ledgers are in `test-results/s72-b87high/l9/` and `l8/`.
+First run drove from 1007 m through the rail stall/restart to the bay, reaching 3/4 survivors. Opened turn 30: hatch upper torso and 19-second countdown; turn 35: restart instruction; subsequent W reduces 83→62 m. Bay 4/4 and subsequent completion were not verified. Closed-hatch waiting during the rail countdown did not cost player health; APC armor fell sharply, so this sampled section was not harmless to the vehicle. Repeated waiting and survivor babysitting were the least active parts.
 
-- L9: normal start 1007 m → rail countdown at 86 m → restart at 83 m → bay, then 3/4 survivors at trucks. Opened turn 30 shows upper torso at hatch and explicit 19-second countdown; turn 35 shows restart instruction; turn 36 shows onward movement to 62 m. Thus rail cue/restart and hatch presentation are FIXED in this observed HIGH run. Hull and near-side wheels remain present in opened driving captures. Flame overlaps the side in bay views; depth/flicker remains UNVERIFIED. Bus warning was not caught. No precise >10 s held-W stall is established; HUD fluctuated around 561–566 m before steering recovered progress. This is not proof that the known PROD blockage class is fixed. Bay 4/4 remains UNVERIFIED.
-- L8: normal start → escort → plaza attack → real-input pond fight. Opened turn 50 shows Phase 2 / 3 left. A subsequent health/reset and return to Phase 1 indicate a retry, not a clear. Opened retry turns 53–58 show 8 → 7 → 6 → 5 left. Remaining-count text is FIXED. Multiple opened frames show horizontal fallen flamingos with no tall column in the sampled views; corpse placement is FIXED within that visual sample, while full-fight persistence remains unverified. Physical wheel input -300 was issued on turn 54 for a closer view; exact magnification was not measured. Continuous flock gait remains UNVERIFIED. The fight is dangerous (18 HP at last view), not harmless. The escort felt passive with a dense following crowd. The live session terminated with exit 124 at the reservation's 595-second limit, with 5 birds still left.
-- L4: fresh HIGH normal-start session is being started after the L8 browser closed.
+[Input/tick audit](input-audit.json): no objective-distance improvement beyond 561 m between ticks 3682–4375 (11.55 simulated seconds; endpoints 561→564→566→561→566). One second released W for handbrake. This is NOT FIXED for sampled onward objective progress, but continuous-held-W chassis blockage is UNVERIFIED: that run did not record positions. s67 reproduced this blockage class on exact PROD `0b650749`; this observation alone does not establish a new regression.
 
-These observations supersede the earlier statement that no browser launched; the final verdict, contact sheet and checks remain pending.
+A second normal L9 run explicitly recorded HIGH/zoom 1 and player positions through turn 20, tick 3591, objective 290 m, position x=167.3095/y=0.9954/z=-2.8017. It did not reach the rail. [Measured receipt](measured-route.json) preserves this attempt. Video capture was requested but no video artifact was produced; no temporal verdict relies on it. Hull/wheels were visible in driving frames; flame overlap near the bay remains ambiguous. Bus presence is visible, but its warning timing was not caught.
 
-### L4 HIGH observed exchange
+## L8: pond fight
 
-Normal campaign start → quartermaster → defence, MG granted by the game. At turn 20 (ticks 3780–4026), a four-second firing hold ended with HP 90→80. Subsequent four-second holds: turn 21 HP 80→89 (healing), turn 22 HP 89→97 (healing), turn 23 ticks 4520–4770 HP 97→76, turn 24 ticks 4770–5016 HP 76→65, turn 25 HP 65→35. Opened images show butchers approaching in attack poses, shield strain/break text, and several armored bodies on the ground. This confirms the encounter remains dangerous under firing; isolated butcher damage and rear/front landed-shot counts are UNVERIFIED because army fire, multiple attackers and healing overlap. s70's native ≈4× rear-HP measurements remain the numerical evidence, not these screenshots.
+Normal start → escort → plaza defence → pond. Opened turn 50 shows Phase 2 / 3 left. A health reset and return to Phase 1 indicate a retry, not a clear. Retry turns 53–58 show 8→7→6→5 left. Multiple opened frames show fallen birds horizontal across the ground, without the previous tall corpse column. Full-fight corpse persistence and continuous flock gait remain UNVERIFIED. Last view was 18 HP with five birds left: dangerous, not harmless. Escort travel felt passive with a dense following crowd.
 
-Opened [contact sheet](contact-sheet.jpg): top row rail hatch/countdown and restart; middle row bay flame overlap and L8 remaining count; bottom row horizontal fallen flamingos and L4 firing/shield strain. These are real-input HIGH frames. The sheet does not prove continuous gait or exact zoom.
+[Presentation audit](presentation-audit.json) records a separate 50-action explicit HIGH/zoom-1 repeat through the escort/plaza to the pond gate (12 m); it does not certify the prior fight's exact close magnification. That reservation ended before the repeated fight.
 
-Typecheck and lint passed after this QA. Remote full suite is running; its terminal result will be recorded before closing. No browser remains running.
+## L4: armored defence
 
-Remote full suite terminal receipt: first attempt timed out at 246.0 s; exact unchanged rerun **passed**, 27 files, 106 passed / 1 skipped, 150/150 registered cases, 208.03 s Vitest / 210.6 s budget wrapper (240 s limit), runner 46.225.66.90. No tests trimmed.
+Normal start → quartermaster → MG defence. Turn 20, ticks 3780–4026: four-second firing hold, HP 90→80. Later firing holds: 80→89 and 89→97 with healing, then ticks 4520–4770 HP 97→76, ticks 4770–5016 HP 76→65, then 65→35. Opened views show nearby butchers, shield strain/break and armored bodies. The encounter remains dangerous while firing, but army fire, healing and mixed attackers prevent isolated heavy-hit attribution or rear/front landed-shot counts. Those real-input questions remain UNVERIFIED. s70's native handgun 12 vs ordinary 3 rear hits (4×), rifle 10 vs 3, and MG 18 vs 5 are supporting prior evidence, not measurements from this run. No stat changes were made.
 
-### Saved-input audit
+## Checks and limits
 
-[Input/tick receipt](input-audit.json) preserves every L9 action with its measured simulated duration. Requested `ms:8000` movement/wait actions are capped by the live driver to 4000 ms; actions combining movement and a hold execute them sequentially. Thus turn 11 includes a 1-second W+A interval followed by a separate 1-second handbrake hold with W released. The HUD did not beat 561 m between ticks 3682 and 4375 (11.55 simulated seconds; endpoints 561→564→566→561→566). This supports **NOT FIXED** for a sampled loss of onward objective progress, but does not prove continuous-held-W chassis blockage: no positions were recorded and a brief handbrake interval released W. s67's exact-PROD comparison establishes that the blockage class already exists on PROD; an exact-location regression remains unverified. The prior statement that no >10-second progress-loss interval was established is superseded by this ledger audit, with these measurement limits.
+- `MI_BUILD_CACHE=off npm run build:qa`: PASS. Initial shared-cache/listener restrictions were resolved after access changed.
+- `npm run typecheck`: PASS.
+- `npm run lint`: PASS.
+- Exact remote `sh tools/remote/run.sh "$PWD" -- npm test`: first attempt timed out at 246 s; unchanged rerun PASS, 27 files, 106 passed / 1 skipped, 150/150 registered cases, 208.03 s Vitest / 210.6 s wrapper, runner 46.225.66.90. No tests trimmed.
 
-### Explicit presentation rerun
+All sessions/checks are terminal. Temporary driver removed. Remaining coverage: continuous gait, temporal flame/depth behavior, bus telegraph timing, exact close magnification, continuous-W stall positions, isolated armored counts/heavy attacks, bay completion. No new glitch was established as a P1 or PROD regression. The known progress-loss class remains an open gameplay issue; this report does not certify its absence.
 
-A temporary copy of the live driver set HIGH and API zoom 1 after normal L8 startup, and recorded presentation settings after each real input. [Presentation audit](presentation-audit.json) summarizes the receipts. This rerun reached the opened pond-gate objective but ended at the 595-second reservation cap before entering the fight. It verifies HIGH/zoom 1 during the escort and plaza defence, not the previous fight capture zoom or continuous gait. The temporary driver was removed; no runtime game source changed.
+GO
