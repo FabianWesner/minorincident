@@ -454,6 +454,14 @@ async function vehicleShovesProps(): Promise<PropSnapshot> {
     expect(prop.body.isSleeping()).toBe(false);
     expect(prop.body.linvel().x).toBeGreaterThan(0);
     expect(world.props!.navWalls.has(prop.entityId)).toBe(false);
+    car.entity.vehicle!.floor = true;
+    car.physics.body.setLinvel({ x: 0, y: 0, z: 0 }, true); car.physics.postPhysics();
+    prop.body.setLinvel({ x: 0, y: 0, z: 0 }, true);
+    Object.assign(car.physics.intent, { throttle: 1, brake: false });
+    world.props!.prePhysics();
+    expect(prop.body.linvel().x, 'held APC throttle pushes an authored wreck from rest').toBeGreaterThan(0);
+    car.entity.vehicle!.floor = false;
+    car.physics.body.setLinvel({ x: 18, y: 0, z: 0 }, true); car.physics.postPhysics();
     prop.body.setLinvel({ x: 30, y: 0, z: 0 }, true);
     world.props!.prePhysics();
     expect(prop.body.linvel().x, 'a prop already escaping the bumper gets no additional impulse').toBe(30);
