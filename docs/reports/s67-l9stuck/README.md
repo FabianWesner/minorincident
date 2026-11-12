@@ -71,3 +71,7 @@ A bus backoff during active reverse recovery worsened country seed 2 to 16.27 s 
 ## Heavy initial-launch experiment
 
 Removing the jersey barrier's initial upward velocity passed countryside seeds 1–3 (0.35 s each) and the focused barrier assertions, but the complete matrix exposed a new road seed-3 16.67 s stall plus a 6 m relocation. The experiment was reverted in full, including its temporary assertion. The final production state remains at the previously gated commits; all-route acceptance is still red. This rules out accepting the ground-launch change based only on the countryside case.
+
+## Physical pivot investigation
+
+Bounded yaw-impulse trials during measured low travel did not free the countryside seed-2 hedge/barrier/bus pocket: the maximum remained about 9.3–9.43 s and the old relocation still ran. Trials included both consecutive motion checks and the existing bounded travel history. They were reverted; no steering-torque change remains. The static pocket needs an effective physical escape before all-route acceptance can pass.
