@@ -81,3 +81,7 @@ Advancing the second wave to +14 s (from +20 s), with the same 25 members, sourc
 ```
 
 The moving probe recorded four attack starts and one landed hit in 20 seconds (3 hits/min). Skilled flags were also empty. Army counts across seeds were 4/3/0 (two pass); competent rates were 21.53/10.88/34.31 attacks/min (two pass). Typecheck and lint passed. The intermediate +16 s trial failed squad counts and retained a second flag, and was replaced by +14 s. The final combined three-level audit and remote suite remain due for the combined runtime.
+
+## Further rejected L7 close-pack placements
+
+Moving the four close runners' lateral kerb offset from 5.5 m to 3.5 m retained zero kiting attacks/hits and introduced two departure follower flags (four passive flags total; passive tick-budget). Keeping the original lateral offset while moving only the first pair to x=280 retained zero attacks/hits and introduced stuck-chaser and follower flags (12 passive flags total; passive tick-budget). Both focused audits completed skilled routes. Both changes were reverted; they crowd the formation without supplying moving contact. The retained L7 implementation remains unchanged.
