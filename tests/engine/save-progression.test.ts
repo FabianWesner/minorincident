@@ -253,7 +253,7 @@ test('save decoding: presets round-trip, v0 migrates, corrupt/unknown data and s
 test('crossing handover: needs the finished crawl, commits once, drops weapons and transport, keeps passengers and the corgi', () => {
   const rack = (ids: string[]) => ({ rack: ids.map(id => ({ id })) });
   const make = (finished: boolean) => {
-    const player = { id: 1, transform: { x: 3, y: .7, z: 4, yaw: 1 }, health: { current: 10, max: 100 }, weapons: { LEFT: rack(['weapon.bat']), RIGHT: rack(['weapon.shotgun']) } };
+    const player = { id: 1, transform: { x: 3, y: .7, z: 4, yaw: 1 }, health: { current: 10, max: 100 }, survivor: { scriptedClip: 'crawl', knockdown: { started: 0, until: 120 }, attack: { started: 0, endsAt: 120 }, animation: 'knockdown', animationTick: 30 }, weapons: { LEFT: rack(['weapon.bat']), RIGHT: rack(['weapon.shotgun']) } };
     const pose = { x: 1, y: .7, z: 2, yaw: 0 };
     const corgi = { id: 7, kind: 'companion', archetype: 'char.corgi', companion: { path: [], courage: 1, until: 0, barkAt: 0, hurtAt: 0 }, health: { current: 8, max: 8 }, transform: pose };
     const rider = { id: 8, kind: 'civilian', health: { current: 40, max: 50 }, transform: pose }, dead = { id: 9, kind: 'civilian', health: { current: 0, max: 50 }, transform: pose };
@@ -261,6 +261,7 @@ test('crossing handover: needs the finished crawl, commits once, drops weapons a
     const entities = new Map<number, unknown>([[1, player], [7, corgi], [8, rider], [9, dead], [20, pickup], [21, crate]]);
     const projectiles = [{}, {}], setLoadout = vi.fn(), removed: number[] = [];
     const world = {
+      tick: 120,
       missions: { l9: { state: { finished, preCrashDurability: 55 } } },
       entities: { get: (id: number) => entities.get(id), iterate: () => entities.values(), remove: (id: number) => { removed.push(id); entities.delete(id); } },
       getEntity: (id: number) => entities.get(id), spatial: new Map<number, unknown>(),
@@ -278,6 +279,10 @@ test('crossing handover: needs the finished crawl, commits once, drops weapons a
   const { save, world, player, projectiles, setLoadout, removed } = make(true);
   const before = [...new Set([...save.ownedActions, 'weapon.bat', 'weapon.shotgun'])].filter(id => catalog[id].category !== 'ability' && id !== 'weapon.fire-axe');
   commitCrossingHandover(save, world as never);
+  expect(player.survivor.scriptedClip, 'L10 handover releases the completed L9 crawl pose').toBeUndefined();
+  expect(player.survivor.knockdown).toBeUndefined(); expect(player.survivor.attack).toBeUndefined();
+  expect(player.survivor.animation, 'handover starts ordinary on-foot locomotion').toBe('idle'); expect(player.survivor.animationTick).toBe(120);
+  expect(player.health.current, 'handover restores ordinary on-foot health').toBe(100);
   const handover = save.crossingHandover!;
   expect(handover.applied && handover.checkpoint).toBe('cure-crash');
   expect([...handover.lostWeapons].sort(), 'every combat weapon is lost').toEqual(before.sort());

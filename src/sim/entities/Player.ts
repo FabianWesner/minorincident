@@ -68,14 +68,19 @@ export class Player {
     if (this.entity.survivor!.diedAt !== null) return;
     this.action = action; this.actionUntil = tick + duration; this.animate(action, tick); this.entity.survivor!.animationTick = tick;
   }
+  /** A return to ordinary on-foot control must release every transient presentation layer. */
+  resetPose(tick: number): void {
+    const state=this.entity.survivor!;
+    this.action=null; delete state.attack; delete state.knockdown; delete state.scriptedClip;
+    state.animation='idle'; state.animationTick=tick; this.locomotion.reset(); state.velocity=this.locomotion.velocity;
+  }
   /** Missions restore serialized records, then reset controller-local damage/action timers. */
   restoreVitals(tick: number): void {
     const state=this.entity.survivor!;
     this.entity.health.current=this.entity.health.max; state.diedAt=null; state.invulnerableUntil=tick;
-    this.lastDamage=-Infinity; this.action=null; delete state.attack; delete state.knockdown; this.locomotion.reset(); state.velocity=this.locomotion.velocity;
+    this.lastDamage=-Infinity; this.resetPose(tick);
     if (this.entity.combat) this.entity.combat.staggerUntil = tick;
     this.entity.locomotion = this.locomotion.response;
-    this.animate('idle',tick);
   }
   setCheckpoint(position: { x: number; y: number; z: number }): void {
     if (!Object.values(position).every(Number.isFinite)) throw new RangeError('Checkpoint must be finite');

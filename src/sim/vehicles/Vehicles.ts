@@ -281,6 +281,9 @@ export class Vehicles {
   }
   private leave(car: Car): void {
     const player = this.world.entities.get(1)!;
+    // Scripted poses (notably L9's crawl) own the full rig until explicitly
+    // cleared. Never carry one through a vehicle exit into on-foot locomotion.
+    this.world.player?.resetPose(this.world.tick);
     delete player.passengerOf;
     Object.assign(player.transform, this.position); player.hidden = false; Object.assign(this.world.previousPlayer!, player.transform);
     this.world.physics.playerBody!.setTranslation(player.transform, true); this.world.physics.playerBody!.setNextKinematicTranslation(player.transform);
