@@ -138,3 +138,7 @@ Added `tools/qa/l8-gate-shoves.ts`: loads real L8, arms its pens and seals the p
 ## Gate-end and diagonal extension
 
 The actual-L8 shove diagnostic now passes 378 cases: both sides, centre and 0.8 m inset from each gate end, straight and ±0.35 tangential shove components. Adjacent gate/fence joins hold against these immediate six-metre attempts. The compact committed receipt preserves coverage and the SHA-256 of the full ignored raw receipt. Fifteen assertions over the five route transitions additionally confirm that a completed exit stays open while the next party enters, then closes when that next fight arms. This proves the gate predicate, not live follower closure timing. Typecheck/lint/diff checks pass. General junction/path-boundary traversal and boarding-area movement remain separate open coverage.
+
+## Return-flight presentation correction
+
+Inspection found that the new return leg reused the outbound `travel` arc, so flying back toward the origin could replay a dive-like pose. `AnimalMoves` now uses distance to the assigned pad for the return descent and excludes that leg from the outbound diving pitch. The red arena dive lane uses the authored area direction and destination length. Typecheck/lint/diff checks pass. This remains unaccepted visually until a new continuous/capture sample is opened; the earlier fight clear predates this presentation correction.

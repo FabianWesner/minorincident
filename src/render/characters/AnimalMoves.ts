@@ -1,4 +1,5 @@
 import type { EntitySnapshot } from '../../sim/world/types';
+import { l8FlamingoLanding } from '../../data/l8Bosses';
 
 /**
  * r32-animalmoves: the L8 animal signature moves as presentation only (never read by the sim). Each species gets its
@@ -129,12 +130,16 @@ export class AnimalMoves {
         target = flamingoCruise + Math.sin(t * 1.3) * .25;
         if (a.stage === 'telegraph') target = flamingoCruise + .9 * windup;
         else if (a.stage === 'active') target = (flamingoCruise + .9) - (flamingoCruise + .5) * Math.sin(Math.PI * Math.min(1, travel * 1.05));
+        if (a.impactTick !== undefined && b.arenaBoss) {
+          const pad = l8FlamingoLanding(b.arenaBoss.slot);
+          target = flamingoCruise * Math.min(1, Math.hypot(e.transform.x - pad.x, e.transform.z - pad.z) / 3);
+        }
       }
       const h = this.heights.get(e.id) ?? { y: 0, tick: renderTick, pitch: 0 };
       const dt = Math.max(0, Math.min(.1, (renderTick - h.tick) / 60));
       // Keep the same continuous render state across take-off, dive and landing.
       // Snapping to the active arc teleported a partially climbed bird by 1.69 m.
-      const diving = a?.move === 'flamingo.dive' && a.stage === 'active';
+      const diving = a?.move === 'flamingo.dive' && a.stage === 'active' && a.impactTick === undefined;
       h.y += (target - h.y) * (1 - Math.exp(-dt * (dead || diving ? 6 : 2.2)));
       h.pitch += ((diving ? -.55 * Math.cos(Math.PI * travel) : .08) - h.pitch) * (1 - Math.exp(-dt * 6));
       h.tick = renderTick; this.heights.set(e.id, h);
