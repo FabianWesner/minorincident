@@ -187,5 +187,24 @@
     "L8 lion arena",
     "L2 market (optional)",
     "L7 bus (optional)"
-  ]
+  ],
+  "completionAudit": {
+    "goalAchieved": false,
+    "timeboxDeadlineUTC": "2026-11-12T05:05:04Z",
+    "requiredChecks": {
+      "L9 full route": "verified through L10 arrival",
+      "L8 flamingo arena": "verified clear",
+      "L8 lion arena": "not played",
+      "continuous animal motion": "unverified",
+      "L4 continuous automatic fire": "played; consecutive damage captures retained; butcher-only attribution inconclusive",
+      "armored front versus rear shots-to-kill": "unmeasured",
+      "zoom1 and close1.5 across required levels": "incomplete",
+      "opened captures and verdicts": "retained for supported findings",
+      "README and JSON": "committed",
+      "at most3 small committed sheets": "verified3",
+      "raw captures under test-results": "verified referenced captures exist",
+      "no code changes or deploy/push/main movement": "report-only diff verified"
+    },
+    "decision": "HOLD; full goal remains unachieved. Further gameplay requires extending the original time box."
+  }
 }
