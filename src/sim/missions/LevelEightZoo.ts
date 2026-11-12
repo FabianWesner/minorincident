@@ -452,7 +452,18 @@ export class LevelEightZoo {
           const label = next.id === 'flamingo' ? 'flamingos' : next.id === 'monkey' ? 'monkeys' : next.id === 'zebra' ? 'zebras' : next.id === 'lion' ? 'lions' : next.id;
           text = `Kill ${label} ${next.ids.length - alive}/${next.ids.length}`;
           // The bounded-arena objective stays on safe ground rather than following airborne animals.
-          at = { x: (stage.zone.x0 + stage.zone.x1) / 2, z: (stage.zone.z0 + stage.zone.z1) / 2 }; }
+          at = { x: (stage.zone.x0 + stage.zone.x1) / 2, z: (stage.zone.z0 + stage.zone.z1) / 2 };
+          // s78 QA: with the last one or two flamingos idling at the far rim, a centre marker
+          // reads as "done here". Point at the nearest survivor, clamped 2 m inside the pen.
+          if (next.id === 'flamingo' && alive > 0 && alive <= 2) {
+            let best: Point | null = null, bestD = Infinity;
+            for (const id of next.ids) {
+              const e = w.entities.get(id);
+              if (!e || e.health.current <= 0) continue;
+              const d = distance(p, e.transform); if (d < bestD) { bestD = d; best = e.transform; }
+            }
+            if (best) at = { x: Math.min(stage.zone.x1 - 2, Math.max(stage.zone.x0 + 2, best.x)), z: Math.min(stage.zone.z1 - 2, Math.max(stage.zone.z0 + 2, best.z)) };
+          } }
         else {
           const index = l8Route.indexOf(stage);
           if (inRect(p, stage.zone)) { at = { x: (stage.zone.x0 + stage.zone.x1) / 2, z: (stage.zone.z0 + stage.zone.z1) / 2 }; text = stage.text; }
