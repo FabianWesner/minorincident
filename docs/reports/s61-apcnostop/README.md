@@ -39,3 +39,7 @@ The earlier sandbox blockers are resolved. `sh tools/ops/slim-worktree.sh "$PWD"
 The required remote `sh tools/remote/run.sh "$PWD" -- npm test` ran on 178.104.70.127 but failed: L4 contact and world-systems cases reported failures, then the 240-second test budget terminated the suite (exit 124, 240.8 s). This requires follow-up; remote green is not established.
 
 Real-input fixture play ran headlessly via the repository browser lock on port 4963 using `l9-before-rail-stall.json.gz`. It reached the hatch defence but failed to finish after its eight-minute cap, repeatedly showing Restart 29/30 s. Artifacts are in `test-results/playtest/s61-apcnostop`. This run does not establish the requested rolling-horde evidence. Goal remains incomplete.
+
+## Barrier follow-up
+
+Jersey barriers now use the persistent dynamic ram response. A moving rammed prop damages and staggers each infected it hits once per launch; subsequent rams can launch the same retained prop again. Typecheck and lint pass. The focused vehicle suite exposed a changed timing dependency: its authored thrower was still in `throw` phase with zero completed throws when the test ended (APC x=-91.92), so the suite is not green after this follow-up. Investigate the thrower scheduling/test trajectory before completion.

@@ -321,7 +321,7 @@ export class Vehicles {
       const halfX = Math.abs(c) * obstacle.halfX + Math.abs(s) * obstacle.halfZ;
       const halfZ = Math.abs(s) * obstacle.halfX + Math.abs(c) * obstacle.halfZ;
       if (Math.abs(localX) > extent + halfX || Math.abs(localZ) > car.physics.def.width / 2 + halfZ) continue;
-      if (obstacle.light && speed >= 5) {
+      if ((obstacle.light || obstacle.entity.archetype === 'obstacle.jersey-barrier') && speed >= 5) {
         this.obstacles.ram(obstacle, velocity, this.world.tick);
         this.crash(car, speed);
         car.physics.body.setLinvel({ x: velocity.x * .9, y: velocity.y, z: velocity.z * .9 }, true);

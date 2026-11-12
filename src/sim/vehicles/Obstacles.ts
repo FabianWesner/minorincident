@@ -4,7 +4,7 @@ import type { EntitySnapshot } from '../world/types';
 export const lightObstacles = ['fence', 'cone', 'barricade', 'trash-can', 'mailbox'] as const;
 export const heavyObstacles = ['jersey-barrier', 'wall', 'truck'] as const;
 export type ObstacleKind = typeof lightObstacles[number] | typeof heavyObstacles[number];
-interface Obstacle { entity: EntitySnapshot; collider: RAPIER.Collider; body?: RAPIER.RigidBody; halfX: number; halfZ: number; light: boolean; broken: boolean; /** r32-l9fun: thrown by an L9 Thrower, no contact until it lands. */ airborne?: boolean }
+interface Obstacle { entity: EntitySnapshot; collider: RAPIER.Collider; body?: RAPIER.RigidBody; hitIds?: Set<number>; halfX: number; halfZ: number; light: boolean; broken: boolean; /** r32-l9fun: thrown by an L9 Thrower, no contact until it lands. */ airborne?: boolean }
 /** Light obstacles have a fixed 24-body debris pool; heavy blockers remain Rapier geometry. */
 export class Obstacles {
   readonly items: Obstacle[] = [];
@@ -43,7 +43,12 @@ export class Obstacles {
   }
   /** Vehicle impacts throw a prop clear but keep its identity, model and collider for the rest of the level. */
   ram(item: Obstacle, velocity: RAPIER.Vector, tick: number): void {
-    if (item.broken || item.body) return;
+    if (item.broken) return;
+    item.hitIds = new Set();
+    if (item.body) {
+      item.body.setLinvel({ x: velocity.x * .65, y: 2.2, z: velocity.z * .65 }, true);
+      item.airborne = true; return;
+    }
     const p = item.entity.transform;
     this.world.events.emit({ type: 'world.blocker.changed', tick, id: item.entity.id, blocked: false, wall: { ...p, halfX: item.halfX, halfY: .5, halfZ: item.halfZ } });
     this.world.physics.world!.removeCollider(item.collider, false);
@@ -68,6 +73,12 @@ export class Obstacles {
     for (const item of this.items) {
       const body = item.body; if (!body?.isValid() || !body.isEnabled()) continue;
       const p = body.translation(), r = body.rotation();
+      const velocity = body.linvel(), speed = Math.hypot(velocity.x, velocity.z);
+      if (speed >= 2) for (const target of this.world.entities.iterate()) {
+        if (item.hitIds?.has(target.id) || target.kind !== 'infected' || target.health.current <= 0 || Math.abs(target.transform.x - p.x) > item.halfX + .5 || Math.abs(target.transform.z - p.z) > item.halfZ + .5 || Math.abs(target.transform.y - p.y) > 1.5) continue;
+        item.hitIds?.add(target.id);
+        this.world.combat?.damage.apply({ attackId: item.entity.id, actionId: item.entity.archetype, sourceId: item.entity.id, targetId: target.id, origin: item.entity.transform, direction: { x: velocity.x / speed, z: velocity.z / speed }, base: speed * 8, multiplier: 1, type: 'vehicle', knockback: 3, stagger: 1 });
+      }
       Object.assign(item.entity.transform, { x: p.x, y: p.y, z: p.z, yaw: 2 * Math.atan2(r.y, r.w) });
       if (!item.airborne || Math.hypot(body.linvel().x, body.linvel().y, body.linvel().z) > .25 || Math.hypot(body.angvel().x, body.angvel().y, body.angvel().z) > .25 || p.y > .65) continue;
       item.airborne = undefined; body.setLinvel({ x: 0, y: 0, z: 0 }, true); body.setAngvel({ x: 0, y: 0, z: 0 }, true);
