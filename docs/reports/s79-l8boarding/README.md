@@ -4,9 +4,13 @@ Date: 2026-11-12
 Baseline: `c9a9bbbd` (`main`)  
 Scope: L8 final boarding after the elephant is cleared.
 
+## Fixed HIGH real-input boarding verification
+
+The fixed build ran from `tests/fixtures/saves/qa/l8-before-elephant.json.br` at HIGH zoom 1, headless on port 4981 through the browser pool. Ordinary input cleared the elephant and reached **14/14 aboard in 32.73 seconds** (post-kill objective tick 1299; first 14/14 tick 3263). No objective skips were used. Opened the fixed capture: HUD 14/14, yard crowd gone, elephant corpse retained by the truck. [Opened before/after sheet](boarding-sheet.jpg) shows reproduction left and fixed boarding right. Raw run: `test-results/playtest/s79-fixed-elephant/`. The driver subsequently stopped 8 m from the APC driver door; full departure is not claimed. Zero raw L8 threat flags remains unproven.
+
 ## Confirmed reproduction and correction
 
-The retained HIGH zoom 1 real-input run reproduced s78 at tick 28521: `0/14 aboard · 22 m`, courier `(95.4, 53.2)` still at the elephant kill position, and `no marker: true`. Opened [reproduction capture](boarding-repro.jpg): party and courier remain inside the yard beside the persistent elephant corpse; the yellow ring at the APC marks the destination. The prior interpretation that the courier was already at the APC was incorrect.
+The retained HIGH zoom 1 real-input run reproduced s78 at tick 28521: `0/14 aboard · 22 m`, courier `(95.4, 53.2)` still at the elephant kill position, and `no marker: true`. Opened [reproduction capture](boarding-sheet.jpg): party and courier remain inside the yard beside the persistent elephant corpse; the yellow ring at the APC marks the destination. The prior interpretation that the courier was already at the APC was incorrect.
 
 Root cause: after the final kill, `LevelEightZoo` immediately changed the objective to “Cover the survivors” and set `waypoint = false`. Boarding itself only activates when the courier is within 12 m of the APC door. The marker-driven input route therefore stopped 22 m away before boarding was active. The native boarding fixture passed because it already placed the courier at the pickup.
 
@@ -58,3 +62,5 @@ Opened `captures/campaign-L8-t27148.jpg`: courier at full HP in the gorilla habi
 ## Post-correction checks
 
 Typecheck, lint, all 20 boarding matrix cases (maximum 35.49 s), and the 432-shove/16-edge confinement probe passed after the objective guidance change. The threat command completed in 98 seconds. Its console summary reports zero passive flags, but inspecting the raw level receipt reveals `step/escape:UNREACHABLE_SHARE_OVER_30_PERCENT_FOR_OVER_20_SECONDS` on the skilled route. Thus **zero L8 flags is not established**; the earlier summary-only claim is insufficient. This raw flag and fixed-build HIGH browser boarding completion remain open. The prior remote unit result predates the small guidance correction. No checks remain running.
+
+The unchanged remote unit suite also passed after the code correction on runner `46.225.66.90`, job `/srv/mi/jobs/s79-l8boarding-6f0b2d-91994-1794512837`: 27 files, 106 passed and one skipped, 204.4 seconds against 240 seconds. All processes from this verification are terminal.
