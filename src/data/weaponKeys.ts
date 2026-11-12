@@ -5,6 +5,7 @@ const preferred = [
   'weapon.fists', 'weapon.bat', 'weapon.fire-axe', 'weapon.handgun', 'weapon.army-mg',
   'weapon.shotgun', 'weapon.rocket-launcher', 'weapon.molotov', 'weapon.pipe-bomb',
 ];
+const fallbackKeys: Readonly<Record<string, number>> = Object.fromEntries(preferred.map((id, index) => [id, index + 1]));
 const weaponIds = Object.keys(catalog).filter(id => id.startsWith('weapon.') && id !== 'weapon.kick' && id !== 'weapon.pistol');
 const orderedIds = [...preferred.filter(id => weaponIds.includes(id)), ...weaponIds.filter(id => !preferred.includes(id))];
 export const weaponKeys: Readonly<Record<string, number>> = Object.fromEntries(orderedIds.map((id, index) => [id, index + 1]));
@@ -13,4 +14,10 @@ export const weaponKeys: Readonly<Record<string, number>> = Object.fromEntries(o
 export function weaponKey(id: string): number | undefined {
   const canonical = id === 'weapon.kick' ? 'weapon.fists' : id === 'weapon.pistol' ? 'weapon.handgun' : id;
   return weaponKeys[canonical];
+}
+
+/** Campaign auto-fallback keeps its original nine-weapon priority order. */
+export function weaponFallbackPriority(id: string): number | undefined {
+  const canonical = id === 'weapon.kick' ? 'weapon.fists' : id === 'weapon.pistol' ? 'weapon.handgun' : id;
+  return fallbackKeys[canonical];
 }

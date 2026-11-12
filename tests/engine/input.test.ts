@@ -190,18 +190,16 @@ test('weapon selection: one fixed order drives number keys, cycling and touch sl
   expect(c.input.selectWeaponKey(0)).toBe(false); expect(c.input.selectWeaponKey(10)).toBe(true);
   c.input.clear(); c.key('Digit0', true); c.key('Digit0', false); expect(c.sample().selectedWeaponKey).toBe(10);
   c.input.setDriving(true); expect(c.input.selectWeaponKey(3)).toBe(false); expect(c.sample().selectedWeaponKey).toBeUndefined();
-});
 
-test('every carried weapon has a unique rack shortcut and click/key selection resolves every catalog entry', () => {
   const ids = Object.keys(catalog).filter(id => id.startsWith('weapon.') && id !== 'weapon.kick' && id !== 'weapon.pistol');
   expect(Object.keys(weaponKeys).sort()).toEqual(ids.sort());
   expect(new Set(Object.values(weaponKeys)).size).toBe(ids.length);
-  const loadout = new Loadout(ids, ['weapon.bat'], undefined, ids.length);
+  const catalogLoadout = new Loadout(ids, ['weapon.bat'], undefined, ids.length);
   ids.forEach((id, index) => {
     const key = weaponKey(id)!;
     expect(key).toBeGreaterThan(0);
-    loadout.input({ ...emptyInput(), selectedWeaponKey: key }, index * 30 + 30);
-    expect(loadout.current(loadout.state.selectedSide).id).toBe(id);
+    catalogLoadout.input({ ...emptyInput(), selectedWeaponKey: key }, index * 30 + 30);
+    expect(catalogLoadout.current(catalogLoadout.state.selectedSide).id).toBe(id);
   });
   const cycle = new Loadout(ids.slice(0, 3), ids.slice(3, 6));
   const entries = cycle.activeEntries();

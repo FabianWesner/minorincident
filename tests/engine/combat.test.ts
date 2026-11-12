@@ -125,20 +125,18 @@ test('loadout: both sides keep independent aims, racks wrap both ways with a swi
   h.setInput({ left: { down: false, held: true, up: false }, right: { down: true, held: false, up: true } }); step(h, 1);
   h.setInput({ aim: { x: 0, z: 1 }, right: { down: false, held: false, up: false } }); step(h, 1);
   expect(h.entities.get(1)!.weapons!.selectedSide).toBe('RIGHT');
-});
 
-test('throwables stay selected while charges remain and return to the previously selected weapon on the last charge', async () => {
-  const w = await arena(); equip(w, ['weapon.fire-axe'], ['weapon.molotov']);
-  w.setInput({ selectorSide: 'RIGHT', aim: { x: 1, z: 0 }, right: { down: true, held: false, up: true } }); step(w, 1); w.clearInput();
-  const loadout = w.combat!.runner.loadout, molotov = loadout.state.RIGHT.rack[0];
+  const throwable = await arena(); equip(throwable, ['weapon.fire-axe'], ['weapon.molotov']);
+  throwable.setInput({ selectorSide: 'RIGHT', aim: { x: 1, z: 0 }, right: { down: true, held: false, up: true } }); step(throwable, 1); throwable.clearInput();
+  const loadout = throwable.combat!.runner.loadout, molotov = loadout.state.RIGHT.rack[0];
   expect(molotov.charges).toBe(1);
   expect(loadout.current(loadout.state.selectedSide).id).toBe('weapon.molotov');
-  step(w, 20);
-  w.setInput({ aim: { x: 1, z: 0 }, right: { down: true, held: false, up: true } }); step(w, 1); w.clearInput();
+  step(throwable, 20);
+  throwable.setInput({ aim: { x: 1, z: 0 }, right: { down: true, held: false, up: true } }); step(throwable, 1); throwable.clearInput();
   expect(molotov.charges).toBe(0);
   expect(loadout.current(loadout.state.selectedSide).id).toBe('weapon.fire-axe');
-  step(w, 15);
-  expect(w.events.events()).toContainEqual(expect.objectContaining({ type: 'loadout.switched', actionId: 'weapon.fire-axe' }));
+  step(throwable, 15);
+  expect(throwable.events.events()).toContainEqual(expect.objectContaining({ type: 'loadout.switched', actionId: 'weapon.fire-axe' }));
 });
 
 test('melee: the swing hits inside its arc/range once per target and respects maxTargets', async () => {

@@ -12,7 +12,7 @@ import { AimAssist } from './AimAssist';
 import { Status } from './Status';
 import { ticks } from '../../data/actions/schema';
 import { actionExplosions } from '../../data/explosions';
-import { weaponKey } from '../../data/weaponKeys';
+import { weaponFallbackPriority } from '../../data/weaponKeys';
 import type { InputFrame, Vec2 } from '../../input/InputFrame';
 import type { EntitySnapshot } from '../world/types';
 import type { SimWorld } from '../world/SimWorld';
@@ -82,8 +82,8 @@ export class Combat {
     const canUseCarriedWeapon = (this.world.vehicles?.active == null || !!this.world.missions?.l9?.driving.hatch) && this.world.missions?.l9?.state.phase !== 'crawl';
     if (emptySide && player.health.current > 0 && canUseCarriedWeapon && !this.world.mountedGun?.mounted && !Status.stunned(player, this.world.tick)) {
       this.world.events.emit({ type: 'combat.empty', tick: this.world.tick, sourceId: 1, actionId: loadout.current(emptySide).id, position: { ...player.transform } });
-      const best = loadout.activeEntries().filter(e => weaponKey(e.id) !== undefined && (e.index === -1 || loadout.hasAmmo(loadout.state[e.side].rack[e.index])))
-        .sort((a, b) => weaponKey(b.id)! - weaponKey(a.id)!)[0]!;
+      const best = loadout.activeEntries().filter(e => weaponFallbackPriority(e.id) !== undefined && (e.index === -1 || loadout.hasAmmo(loadout.state[e.side].rack[e.index])))
+        .sort((a, b) => weaponFallbackPriority(b.id)! - weaponFallbackPriority(a.id)!)[0]!;
       loadout.state.selectedSide = best.side; loadout.state[best.side].index = best.index; loadout.state[best.side].swapUntil = this.world.tick + 15;
       this.world.controls.reset();
       frame = { ...frame, left: { down: false, held: false, up: false }, right: { down: false, held: false, up: false } };
