@@ -99,3 +99,7 @@ A two-second centerline lookahead plus curvature-based steering reduced primary-
 ## Static-contact momentum projection trial
 
 Projecting the ram velocity floor along static contact normals passed an initial primary-road seed, but failed the complete 18-run matrix once derived speed was reported accurately. Several cases developed prolonged wall-following stalls despite the focused vehicle suite passing. The entire projection change was reverted. The underlying interaction still needs attention: the infected-contact speed floor can keep prescribing velocity into a fixed obstacle and make reported speed differ sharply from actual displacement. A passing single seed is not accepted as evidence for this mechanism.
+
+## Static-floor/earlier-reverse and lookahead audit
+
+Suspending the ram floor at fixed contacts plus a shorter APC stuck window passed primary-road seeds with the committed driver but still failed three other runs. Combining that trial with a curvature-based lookahead driver passed the two targeted country cases, then failed the complete 18-run matrix (including a primary-country timeout and prolonged road gaps). All uncommitted changes from both variants were reverted. No result from a targeted passing pair supersedes the red primary-line audit above. The committed implementation still requires a primary-route solution before completion can be claimed.
