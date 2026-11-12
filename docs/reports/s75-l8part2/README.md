@@ -270,3 +270,7 @@ A browser-only control marked the jersey custom placement interleave dirty after
 ## Material/depth control breakthrough
 
 A temporary built-in-instancing control (same geometry/transforms, custom position node removed) did not restore cover; opened `cover-instance-control/s002-t732.jpg`. A second control uses built-in instancing plus a plain magenta MeshBasicNodeMaterial, depth testing off, double-sided, mesh culling off. Opened `cover-basic-control/s002-t813.jpg`: all three pond covers are clearly visible at their expected positions. This establishes drawable geometry/placement and narrows the difference to material/depth handling; the combined control does not distinguish those factors yet. Both controls are browser-only, with protected/no-fire HIGH/zoom-1 input, and were not retained in production. Browser/server are terminal.
+
+## Normal-depth material comparison
+
+Repeated the plain magenta material/built-in-instancing control with normal depth testing enabled. Opened `cover-depth-control/s002-t817.jpg`: all three pond covers remain visible. This excludes floor depth occlusion in that control and focuses investigation on the production material graph (including its discard/cutaway behavior). The previous built-in-instancing-only control retained that production graph and did not show covers. No basic material override is retained. Browser/server are terminal.
