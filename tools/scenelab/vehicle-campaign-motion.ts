@@ -35,7 +35,7 @@ try {
         const cars = [...w.vehicles!.cars.values()];
         const hull = cars.find(car => car.physics.hullDistance(e.transform.x, e.transform.z) <= 3);
         if (!hull) continue;
-        result.push({ id: e.id, archetype: e.archetype, state: e.attachedTo !== undefined ? 'attached' : 'hull-ground', frame,
+        result.push({ id: e.id, archetype: e.archetype, lod: figure.lod, model: e.infected.model, instanceKey: figure.instanceKey, state: e.attachedTo !== undefined ? 'attached' : 'hull-ground', frame,
           clip: figure.clip, speed: e.motion?.speed ?? 0, at: [e.transform.x, e.transform.z],
           floor: w.districts?.pavingHeight(e.transform.x, e.transform.z) ?? 0,
           feet: Array.from({ length: figure.soles.length / 2 }, (_, i) => ({ heel: figure.soles![2 * i], toe: figure.soles![2 * i + 1] })) });

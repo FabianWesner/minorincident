@@ -119,3 +119,7 @@ Added `tools/scenelab/vehicle-campaign-motion.ts`, which loads a native L9/L7/L4
 ## Native L9 failure exposed
 
 The empty observations were affected by missing renderer.nextNodeFrame() calls during repeated fixed-step rendering: draw flags were stale. Advancing the node frame like Scene Lab now yields 123 eligible samples from five infected in the first 1800 native L9 ticks. The bot is driving and reaches about [-347,-250]. Actor 760, clip dog-gallop, frames 1531–1540 beside the hull, has measured p95 27 cm and max 66.2 cm. This contradicts completion despite isolated fixture passes. The native sampler now applies 5/15 cm failure limits. See `native-l9-driving-failure.json`. Prior no-sample observations do not establish absence of contacts. The context sampler typechecked; targeted lint passes after the draw-frame and threshold update.
+
+## Native gallop LOD investigation
+
+The sampler now records archetype and LOD. The failing actor is infected.dog at LOD2 with two sole pairs. An experimental global LOD1 override reduced p95/max to 20.2/26.8 cm but did not fix it and was removed. Probe initialization now also recognizes declared animalSoles, matching CrowdLocomotion; the native LOD2 result remains 27/66.2 cm, so this actor still lacks a four-paw declaration or uses a reduced rig. The measurement needs rig/asset inspection before claiming the true paws slide by that amount. No LOD behavior change is retained. Typecheck passed for added sampler metadata; targeted lint passes. See `native-dog-lod-trace.json`.

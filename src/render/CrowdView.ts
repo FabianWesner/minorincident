@@ -443,7 +443,7 @@ export class CrowdView extends Group {
       }
       baked.geometry.userData.crowdLod = lod;
       const locomotion = new CrowdLocomotion(model, baked.clip, this.footwork);
-      const probe = new CrowdFigureProbe(); probe.lod = lod; probe.sole = locomotion.sole; if (model.getObjectByName('legFL') || model.getObjectByName('root')?.userData.crowdQuadruped === true || alphaLooks['inf.mega-alpha'].includes(asset)) probe.animal(model);
+      const probe = new CrowdFigureProbe(); probe.lod = lod; probe.sole = locomotion.sole; if (model.getObjectByName('legFL') || model.getObjectByName('root')?.userData.crowdQuadruped === true || !!model.getObjectByName('root')?.userData.animalSoles || alphaLooks['inf.mega-alpha'].includes(asset)) probe.animal(model);
       if (!baked.clip.binds || !baked.geometry.hasAttribute('_skin')) throw new Error(`${asset} is missing the v2 skinned crowd contract`);
       this.accessories?.registerSkull(asset, baked.geometry);
       const poses = new CrowdPosePalette(baked.clip, capacity), texture = poses.texture;
