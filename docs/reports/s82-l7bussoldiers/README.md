@@ -16,8 +16,10 @@ The evacuation bus waits for every campaign survivor in its boarding roster, but
 - Remote `npm test`: passed on 46.225.66.90 in 209.2 s: 27 files, 106 passed and 1 skipped; collection budget receipt 150/150 cases.
 - `git diff --check`: passed.
 - `threat-audit --levels L7`: L7 report has **0 flags**. The command exits nonzero because its aggregate report adds `PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate` when only L7 is selected; this is a selection marker, not an L7 gameplay flag. Passive audit reached its 1200-second tick budget; skilled L7 completed.
-- Scene Lab capture at HIGH quality and zoom 1 / 1.5 remains unmeasured. `scene:catalog` exited 75 before launching a browser: the permitted browser-pool startup failed with `listen EPERM` on `127.0.0.1:4329`. After the sandbox restriction was lifted, the pool launched successfully. Both zoom captures then failed during fixture setup because the opening encounter point (267.5,12) lies outside the scene bounds. A temporary wider-bounds fixture passed that stage but failed in `LevelSevenEncounters.formationGoal` because Scene Lab has no mission controller. No capture was created or reviewed, so there is no visual claim in this report.
+- Scene Lab HIGH/WebGL2 at zoom 1 and 1.5: **2/2 passed**, headless, one browser, port 4917. Opened both sheets and the combined [boarding review](boarding-review.jpg). Frames 0–400 show the group approaching the parked bus; frames 500–1100 show the lit bus and external actors in the departure view. The wider zoom includes more of the crossing and road. Images document the sequence; the native probe supplies the quantitative clearance assertion.
 
-## Open acceptance item
+## Capture reproduction
 
-Run the two required Scene Lab captures through the browser pool, open them, describe the boarding moment, and attach the reviewed small sheet here. The gameplay clearance probe and L7 threat flags pass; the visual review is the remaining acceptance item.
+The original scene bounds exclude the opening encounter setup at (267.5,12). For this review, copy `tests/scenes/l7-departure/departure.json` to a temporary scene directory and set `layout.bbox` to `[[-100,-20],[290,80]]`; all actors, events and camera settings remain authored. Run `SCENE_PORT=4917 npm run scene:catalog -- --dir <temporary-directory> --matrix --tier high --backend webgl2 --jobs 1 --only l7-departure@high-z1,l7-departure@high-z1.5 --out <output-directory>`.
+
+The follower formation now tolerates the missing mission controller in Scene Lab. Production missions still use the same departure state check. No threat harness files changed.
