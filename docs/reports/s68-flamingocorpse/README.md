@@ -14,9 +14,9 @@ Phase 2 now appends the living flock count to the objective status, for example 
 - `npm run lint`: **passed**.
 - `git diff --check`: **passed**.
 - Required remote `sh tools/remote/run.sh "$PWD" -- npm test`: **not run**. Runner returned exit 69 because there is no healthy Hetzner runner running or provisioned; it reports the Mac local slot cannot run this wrapped command.
-- Requested LOW pond capture at zoom 1 and 1.5: **not captured yet**. The locked headless browser pool failed to start when its local service bind returned `listen EPERM` on port 4329. The capture must still be opened and visually reviewed after browser-pool access is available.
-- Commit: **not created**. Explicit staging was rejected because Git could not create the common worktree `index.lock` (`Operation not permitted`); the sandbox exposes this worktree's `.git` metadata as read-only. The source and report remain in the worktree unstaged.
+- LOW pond capture: **opened and reviewed** at zoom 1 and 1.5. [Review sheet](pond-review.jpg). A controlled actual-L8 fixture spawned 26 production infected flamingos at flight Y 3.1, permanently settled them, then photographed the paused pond. Bodies spread horizontally around the courier with no vertical column; some silhouettes overlap in projection. Headless WebGL2/Metal through the browser pool, private port 4939; zero console errors. This is a controlled death fixture, not a full fight playthrough.
+- Code committed as `43843dd3`. The earlier sandbox restriction is resolved.
 
 ## Open
 
-The unit/native check verifies ground-relative Y and footprint separation through the production corpse layout. Runtime visual confirmation of the actual L8 pond at both requested zooms and the full remote unit suite remain open. No deployment, push, or main worktree changes were made.
+The unit/native check verifies ground-relative Y and footprint separation through the production corpse layout. The full remote unit suite remains open; its retry is queued. No deployment, push, or main worktree changes were made.
