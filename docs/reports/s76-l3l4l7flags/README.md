@@ -207,3 +207,17 @@ Original lane time box closed at approximately 149 minutes of goal time. Final i
 ## Post-time-box composition investigation
 
 Unrestricted high-tier durable-ordinary filtering cleared sustained density (minimum 47, peak plaza 83), with first-breach alive 57 and one census flag. It is **rejected**, not retained: successful high-hold war admissions increased brute/armored/butcher from baseline 7/6/6 to 12/13/13 (peak living 7/6/6 → 11/11/12). Same replay/counter, phase war only; counts commit after each update only for visible successful spawn records, so failed/released admission attempts are excluded. Earlier post-selection substitution reached minimum 31 but bypassed balancing and was discarded. Runtime restored to the validated committed roster; the unbounded durable candidate violates the explicit no-heavy-increase constraint. Any composition follow-up must preserve original heavy quotas before acceptance.
+
+## Zero-flag candidate — composition constraint pending
+
+Uncommitted candidate explicitly limits high-hold brute/armored/butcher admissions to baseline 7/6/6 and uses existing riot/firefighter ordinary ranks; west Alpha release is high-tier +0 s / low-tier +6 s. Successful high-hold admissions verify 7/6/6, eight Alphas, but riots rise 11→35 and firefighters 11→38. This changes the tougher responder mix materially. Clarification was requested whether the PO's no-heavy-increase rule includes these responders despite their code classification as ordinary. No acceptance/completion claim is made while that remains unresolved; candidate browser review is also still needed.
+
+Combined candidate command (`--out test-results/qa-threat-candidate-final`):
+
+```text
+[qa:threat] L3: skilled complete, passive tick-budget, 0 passive flags (37.0s)
+[qa:threat] L4: skilled complete, passive tick-budget, 0 passive flags (93.0s)
+[qa:threat] L7: skilled complete, passive tick-budget, 0 passive flags (95.0s)
+```
+
+Summary: 95.4 s, only the partial-selection diagnostic flag. L4 first breach 46.60 s / 69 alive; sustained minimum 42. Typecheck and lint passed. Required remote `npm test` passed on 46.225.66.90: 27 files, 106 tests passed / one skipped, full 150/150 inventory, 219.9 s under 240 s (exit 0). Candidate remains uncommitted in four runtime files pending the composition constraint; the compact `current-audit.json` still describes the earlier committed two-flag runtime.
