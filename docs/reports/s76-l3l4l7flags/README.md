@@ -43,3 +43,7 @@ No visual changes were made and no browser QA was run. Level composition/timing 
 ## Checks
 
 The exact threat audit above completed. `npm run typecheck` and `npm run lint` passed. The initial remote attempt found no healthy runner. The unchanged retry passed on `46.225.66.90`: 27 test files passed, 106 tests passed and 1 skipped, with the required 150/150 inventory present; 208.7 s under the 240 s budget (exit 0).
+
+## Rejected L7 rear-kerb trial
+
+Moved two of the existing four close opening runners from x=273 to x=284, keeping z=9.5/20.5 and the roster/count fixed. Focused audit `--levels L7 --out test-results/qa-threat-L7-rear-kerb` completed in 53.0 s: skilled and passive routes completed, but passive flags rose from 2 to 11 (nine follower-pace flags), with zero kiting attacks/hits. The 20 s probe began at tick 75, recorded one player attack start, and had 431 frames without threats. This trial was reverted in full; rear pressure at the forming party is not an acceptable fix. The committed runtime remains the validated partial L4 change.
