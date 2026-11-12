@@ -605,6 +605,17 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         });
       });
     }
+    if (process.env.PLAYTEST_RAM_PACK === '1') {
+      log({ ramPack: await page.evaluate(() => {
+        const w = (window.__SCENE__ as unknown as { game: Game }).game.world;
+        const id = w.vehicles!.active!, car = w.vehicles!.cars.get(id)!, p = car.entity.transform;
+        const c = Math.cos(p.yaw), s = Math.sin(p.yaw);
+        return ['infected.brute', 'infected.armored', 'infected.runner', 'infected.sprinter', 'infected.crawler', 'infected.dog'].map((type, i) => {
+          const along = 12 + Math.floor(i / 3) * 1.2, side = (i % 3 - 1) * .7;
+          return w.infected!.spawn(type, { x: p.x + c * along + s * side, z: p.z - s * along + c * side }, { state: 'chase' });
+        });
+      }) });
+    }
     await page.evaluate(z => { window.__SS__!.camera.zoom(z); window.__SS__!.resume(); }, o.zoom);
   } else await page.getByTestId(`level-${first}`).click({ timeout: 60_000, force: o.entry === 'debug' });
   log({ session: o.tag, entry: o.entry, levels: o.levels, quality: o.quality, heroine: o.heroine });
