@@ -23,3 +23,9 @@ The PO screenshot at `/private/tmp/claude-501/-Users-wesner-Workspace-minorincid
 - Open and describe a consecutive-frame APC capture strip at HIGH zoom 1.5.
 - L9 threat audit completed: zero skilled and passive L9 flags. The overall diagnostic command exits 1 solely for `PARTIAL_LEVEL_SELECTION`; this is not a complete campaign gate. See `threat-summary.json`.
 - Run the complete requested validation set, including the remote unit suite, and commit the remaining gate/capture work when focused checks pass.
+
+## Vehicle-contact baseline
+
+The ram and surrounded Scene Lab fixtures now assert 5 cm p95 and 15 cm maximum and retain actor traces. Both HIGH and LOW runs fail. The aggregate p95 10.8 cm / max 19.5 cm is the courier boarding transition; surrounded infected p95 values are 1–2.5 cm, with one infected maximum 16.9 cm at frame 38. See `contact-baseline.json`. These initial fixtures do not yet prove every requested contact state occurred.
+
+Opened the HIGH surrounded sheet: a stationary APC with four infected moving away around its hull. The catalog sheet samples every 19 frames, so it does not satisfy the consecutive-frame capture requirement.
