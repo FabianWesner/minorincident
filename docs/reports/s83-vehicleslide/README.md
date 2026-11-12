@@ -81,3 +81,7 @@ The settled cling window (frames 181–300) now requires all two-foot heel/toe s
 ## Hull shove attribution
 
 A diagnostic wrapper records actual resolved displacement for the vehicle overlap resolver’s authored 0.12 m knockback calls. HIGH/LOW ram each execute seven nonblocked shoves (maximum 0.12 m); surrounded and clinging execute none. All six current rows still pass. Ram coverage now additionally requires a resolved shove, not just combat hits. Typecheck and targeted lint passed. See `shove-evidence.json`. Separate shove-only contact windows and prop-push/campaign contexts remain unverified.
+
+## Per-shove windows and executable entry point
+
+`npm run qa:vehicle-motion` runs the persistent contact diagnostic under the browser lock on a default unique 49xx port. HIGH/LOW six-row run completed exit 0. Per-shove windows now retain nine frames (tick-2 through tick+6) with clip labels and independently recomputed motion. All seven ram shove windows transition into knockdown/death and contain no planted contacts: they prove reaction coverage, not standing shove slide. Separate low-speed surviving push coverage is still needed. Typecheck and targeted lint pass. See `shove-windows.json`.

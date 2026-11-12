@@ -2,7 +2,7 @@
 import { mkdirSync } from 'node:fs';
 import { SceneSession, readSpec, stopServer, writeJson } from './session';
 import type { Game } from '../../src/Game';
-import { airborneFootTrack } from '../../src/debug/scenelab/motion';
+import { airborneFootTrack, footYaw, summarizeMotion } from '../../src/debug/scenelab/motion';
 const out = 'test-results/s83-vehicleslide/native-contact';
 mkdirSync(out, { recursive: true });
 try {
@@ -53,6 +53,12 @@ try {
           return w.events.events().filter(e => e.type.startsWith('vehicle.') || e.type === 'combat.hit');
         });
         const actors = Object.entries(metrics.actors).filter(([id]) => id.startsWith('infected'));
+        const shoveWindows = shoves.map(shove => {
+          const actor = actors.find(([, actor]) => actor.entity === shove.id);
+          const samples = (actor?.[1].track ?? []).filter(f => f.frame >= shove.tick - 2 && f.frame <= shove.tick + 6);
+          return { ...shove, actor: actor?.[0] ?? null, from: shove.tick - 2, to: shove.tick + 6,
+            frames: samples.length, clips: [...new Set(samples.map(f => f.clip))], motion: summarizeMotion(samples.map(f => ({ ...f, feet: f.feet.map(foot => ({ ...foot, yaw: footYaw(foot.heel, foot.toe) })) }))) };
+        });
         const airborneChecks = name === 'clinging' ? actors.map(([id, actor]) => {
           const proof = airborneFootTrack((actor.track ?? []).filter(f => f.frame >= 181 && f.frame <= 300), 120, 2);
           return { actor: id, ...proof, pass: proof.complete && proof.clearanceMinCm >= 1.2 && proof.travelMinM >= 2 };
@@ -68,7 +74,7 @@ try {
         const motionProven = name === 'clinging' ? airborneChecks.length === 4 && airborneChecks.every(check => check.pass) : checks.every(check => check.pass);
         const pass = contactProven && movingAttachmentProven && motionProven && session.errors.length === 0;
         if (!pass) process.exitCode = 1;
-        writeJson(`${out}/${tier}-${name}.json`, { pass, contactProven, movingAttachmentProven, vehicleTravelM, checks, airborneChecks, metrics, events, attachmentTrack, shoves });
+        writeJson(`${out}/${tier}-${name}.json`, { pass, contactProven, movingAttachmentProven, vehicleTravelM, checks, airborneChecks, metrics, events, attachmentTrack, shoves, shoveWindows });
         console.log(JSON.stringify({ tier, name, events: events.length, actors: Object.fromEntries(Object.entries(metrics.actors).filter(([id]) => id.startsWith('infected')).map(([id, actor]) => [id, actor.motion])) }));
       }
     } finally { await session.close(); }
