@@ -645,7 +645,9 @@ export class Vfx extends Group {
     // Waiting for advance() left staged deaths ringed until real time resumed.
     for (const [attackId, tell] of this.tells) if (tell.sourceId !== undefined) {
       const source = this.world.entities.get(tell.sourceId), brain = source?.infected;
-      const pending = brain && brain.attackId === attackId && (source.health.current > 0 && !source.corpse && (brain.specialAttack?.stage === 'telegraph' || brain.state === 'attack') || brain.state === 'dead' && brain.special === 'explode' && this.world.tick < brain.until);
+      const bus = this.world.missions?.l9?.driving.state;
+      const vehicleWarning = !!source?.vehicle && bus?.busId === source.id && (bus.busRamAt ?? 0) > this.world.tick;
+      const pending = vehicleWarning || brain && brain.attackId === attackId && (source.health.current > 0 && !source.corpse && (brain.specialAttack?.stage === 'telegraph' || brain.state === 'attack') || brain.state === 'dead' && brain.special === 'explode' && this.world.tick < brain.until);
       if (!pending) { if (brain?.attackId === attackId && tell.kind === 'bloated' && this.world.tick >= brain.until) this.effect('explosion', source!.transform.x, source!.transform.z, 3);
         else if (source && source.health.current > 0 && brain?.attackId === attackId && brain.special === 'scream') this.effect('screamer', source.transform.x, source.transform.z, 20);
         this.telegraphs.remove(tell.slot); this.tells.delete(attackId); }

@@ -39,3 +39,11 @@ The resumed exact remote `npm test` command ran on 94.130.181.173, but failed: n
 Removed the APC's side-projected blood overlay, which stretched into the red roof band. Damage remains expressed by dents, cracked glass and smoke. Typecheck and lint pass. Opened `test-results/s62-l9play/roof-fix/s006-t1514.jpg`: no red band; courier arms and weapon visible above the hatch; stall HUD at 0:17 with bar and Sam's line. Headless 30-second real-input fixture run, god off, completed without page errors.
 
 Remote retry completed in 236.9 seconds (inside 240-second limit): 105 passed, 1 skipped, 1 navigation test failed; vehicle integration including bus dodge/wreck passed. The navigation failure remains to investigate.
+
+## Bus lane rendering follow-up
+
+Real-input capture exposed that VFX deleted the bus tell immediately because it had no infected AI brain. Vehicle warnings now follow the bus ram countdown instead. Opened `test-results/s62-l9play/bus-lane-fix/s009-t667.jpg`: red lane and HUD warning visible, APC steered outside the lane by real W/D input (`--dodge-bus`). Typecheck and lint pass. Native ram tests alone did not reveal this renderer defect.
+
+Moved the existing L7 route check from the overloaded A* test into the existing chaser-routing test; no assertions or timeout limits changed. This spreads world-load work across tests without increasing the 150-case total.
+
+The balanced-test remote run passed navigation (A* 12.8 s, chasers 27.8 s, unchanged 30 s limits), but the overall run timed out at 240.7 s. Remote gate remains incomplete; next work must reduce the oversized vehicle integration workload rather than raise the gate budget.
