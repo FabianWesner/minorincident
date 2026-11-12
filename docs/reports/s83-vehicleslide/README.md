@@ -101,3 +101,7 @@ Added a folding chair beside parked APC, between an ordinary pursuing infected a
 ## Prop impulse attribution
 
 The harness records explicit horizontal applyImpulse calls and nearby living infected. The stationary-APC chair fixture records two such calls, both in infected contact range, at HIGH and LOW, plus 0.211918 m chair travel. Its strengthened gate passes; p95/max HIGH 0.5/0.6 cm and LOW 0.2/0.5 cm. All ten current rows pass. Typecheck and targeted lint pass. See `prop-impulse-evidence.json`. Fast-prop momentum knockback, broader actor variants, and campaign contexts remain unverified.
+
+## Fast-prop momentum fixture
+
+The fixture launches a production kickable folding chair via PropSystem.kick beside the APC, without changing actor stats. Both tiers record prop.momentum at tick 8, 1.2 m authored knockback, positive damage and a surviving infected. Grounded p95/max HIGH 0.2/0.4 cm, LOW 0.2/0.2 cm. The focused two-row run passes; typecheck and targeted lint pass. `VEHICLE_MOTION_SCENE=prop-momentum npm run qa:vehicle-motion` selects it; unknown scene filters fail. See `prop-momentum-evidence.json`. The full twelve-row rerun and campaign context coverage remain due.

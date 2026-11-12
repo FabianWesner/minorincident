@@ -5,12 +5,14 @@ import type { Game } from '../../src/Game';
 import { airborneFootTrack, footYaw, summarizeMotion } from '../../src/debug/scenelab/motion';
 const out = 'test-results/s83-vehicleslide/native-contact';
 mkdirSync(out, { recursive: true });
+const scenes = ['ram', 'surrounded', 'clinging', 'push', 'prop-push', 'prop-momentum'];
+if (process.env.VEHICLE_MOTION_SCENE && !scenes.includes(process.env.VEHICLE_MOTION_SCENE)) throw new Error('Unknown VEHICLE_MOTION_SCENE');
 try {
   for (const tier of ['high', 'low'] as const) {
     const session = new SceneSession({ tier });
     try {
       await session.open();
-      for (const name of ['ram', 'surrounded', 'clinging', 'push', 'prop-push']) {
+      for (const name of scenes.filter(name => !process.env.VEHICLE_MOTION_SCENE || name === process.env.VEHICLE_MOTION_SCENE)) {
         await session.load(readSpec(`tests/scenes/l9-apc/${name}.json`));
         await session.ready();
         // Match the production vehicle AI path; Scene Lab's L1 search controller
@@ -42,6 +44,11 @@ try {
         const cells: { frame: number; jpeg: Buffer }[] = [];
         const attachmentTrack = [];
         for (let frame = 1; frame <= 300; frame++) {
+          if (name === 'prop-momentum' && frame === 1) await session.page.evaluate(() => {
+            const w = (window.__SCENE__ as unknown as { game: Game }).game.world;
+            const prop = w.props!.items[0];
+            if (!prop || !w.props!.kick(prop.entityId, { x: 1, z: 0 })) throw new Error('Momentum fixture must launch a kickable prop');
+          });
           await session.step(1);
           if (name === 'clinging') attachmentTrack.push(await session.page.evaluate(() => {
             const w = (window.__SCENE__ as unknown as { game: Game }).game.world;
@@ -81,7 +88,7 @@ try {
         const checks = actors.map(([id, actor]) => ({ actor: id, contacts: actor.motion.contacts,
           p95Cm: actor.motion.slideP95Cm, maxCm: actor.motion.slideMaxCm,
           pass: actor.motion.contacts >= 5 && actor.motion.slideP95Cm !== null && actor.motion.slideP95Cm <= 5 && actor.motion.slideMaxCm <= 15 }));
-        const contactProven = name === 'prop-push' ? propMotion.some(p => p.travelM >= .2) && propImpulses.some(p => p.nearbyInfected.length > 0) : name === 'push' ? shoves.some(shove => shove.distance > .001) : name === 'clinging' ? events.some(e => e.type === 'vehicle.grabbed') : name === 'ram' ? events.filter(e => e.type === 'combat.hit').length >= 6 && shoves.some(shove => shove.distance > .001)
+        const contactProven = name === 'prop-momentum' ? events.some(e => e.type === 'combat.hit' && e.actionId === 'prop.momentum') : name === 'prop-push' ? propMotion.some(p => p.travelM >= .2) && propImpulses.some(p => p.nearbyInfected.length > 0) : name === 'push' ? shoves.some(shove => shove.distance > .001) : name === 'clinging' ? events.some(e => e.type === 'vehicle.grabbed') : name === 'ram' ? events.filter(e => e.type === 'combat.hit').length >= 6 && shoves.some(shove => shove.distance > .001)
           : events.filter(e => e.type === 'vehicle.attack-windup').length >= 4 && events.some(e => e.type === 'vehicle.durability-hit');
         let vehicleTravelM = 0;
         for (let i = 1; i < attachmentTrack.length; i++) vehicleTravelM += Math.hypot(attachmentTrack[i].car.x - attachmentTrack[i - 1].car.x, attachmentTrack[i].car.z - attachmentTrack[i - 1].car.z);

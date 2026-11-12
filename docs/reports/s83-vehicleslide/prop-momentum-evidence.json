@@ -1,0 +1,76 @@
+[
+  {
+    "tier": "high",
+    "pass": true,
+    "checks": [
+      {
+        "actor": "infected-0",
+        "contacts": 18,
+        "p95Cm": 0.2,
+        "maxCm": 0.4,
+        "pass": true
+      }
+    ],
+    "hits": [
+      {
+        "tick": 8,
+        "attackId": 8,
+        "actionId": "prop.momentum",
+        "sourceId": 1599903158,
+        "targetId": 4,
+        "position": {
+          "x": 1.5265555555555552,
+          "y": 0.7,
+          "z": 3.200000000069429,
+          "yaw": -1.7970861325944867e-09
+        },
+        "direction": {
+          "x": 0.9950914701617865,
+          "z": 0
+        },
+        "knockback": 1.2,
+        "amount": 0.7945019754375489,
+        "damageType": "prop",
+        "cause": "prop",
+        "type": "combat.hit"
+      }
+    ]
+  },
+  {
+    "tier": "low",
+    "pass": true,
+    "checks": [
+      {
+        "actor": "infected-0",
+        "contacts": 19,
+        "p95Cm": 0.2,
+        "maxCm": 0.2,
+        "pass": true
+      }
+    ],
+    "hits": [
+      {
+        "tick": 8,
+        "attackId": 8,
+        "actionId": "prop.momentum",
+        "sourceId": 1599903158,
+        "targetId": 4,
+        "position": {
+          "x": 1.5265555555555552,
+          "y": 0.7,
+          "z": 3.200000000069429,
+          "yaw": -1.7970861325944867e-09
+        },
+        "direction": {
+          "x": 0.9950914701617865,
+          "z": 0
+        },
+        "knockback": 1.2,
+        "amount": 0.7945019754375489,
+        "damageType": "prop",
+        "cause": "prop",
+        "type": "combat.hit"
+      }
+    ]
+  }
+]

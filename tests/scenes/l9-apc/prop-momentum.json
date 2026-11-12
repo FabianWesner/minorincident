@@ -1,0 +1,59 @@
+{
+  "name": "l9-apc-prop-momentum",
+  "note": "Ordinary infected approaches light chair beside parked APC; prop motion is mandatory.",
+  "seed": 31,
+  "ground": "asphalt",
+  "size": 70,
+  "dof": false,
+  "time": "L6",
+  "trace": true,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        15,
+        3.2
+      ],
+      "god": true
+    },
+    {
+      "id": "infected-0",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        1.5,
+        3.2
+      ]
+    }
+  ],
+  "props": [
+    {
+      "id": "chair",
+      "asset": "prop.folding-chair",
+      "at": [
+        0,
+        3.2
+      ]
+    }
+  ],
+  "vehicles": [
+    {
+      "id": "apc",
+      "asset": "vehicle.military-apc",
+      "at": [
+        0,
+        0
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "infected-0",
+    "zoom": 1.5
+  },
+  "frames": 300,
+  "expect": {
+    "consoleErrors": 0
+  }
+}
