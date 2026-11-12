@@ -298,7 +298,8 @@ test('L1 handover + outbreak: no shader builds after warm-up and no frame over 2
   const l10GunBuilds = await page.evaluate(async () => {
     const a = window.__SS__!;
     a.cheats.infiniteCharges(false); a.input.clear(); a.cheats.killAll(); await a.step(180);
-    for (let i = 0; i < 2; i++) {
+    const charges = a.getState().player!.weapons!.LEFT.rack[0].charges;
+    for (let i = 0; i < charges; i++) {
       a.input.set({ left: { down: true, held: false, up: true }, aim: { x: 1, z: 0 } }); await a.step(1); a.input.clear(); await a.step(20);
     }
     const p = a.getState().player!;
