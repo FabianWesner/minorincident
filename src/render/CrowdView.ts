@@ -961,6 +961,7 @@ export class CrowdView extends Group {
         pose.blend = blend;
         pose.clip = clip;
         pose.phase = phase;
+        pose.contactPhase = species === 'zebra' && clip === 'zebra-stampede' ? this.gait.sample(e.id, gaitDistance, 'corgi-gallop', batch.strideScale, motion.speed) : undefined;
         pose.instance = this.transform;
         pose.scale = batch.strideScale;
         pose.speed = motion.speed;

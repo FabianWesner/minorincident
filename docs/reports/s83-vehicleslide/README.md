@@ -141,3 +141,7 @@ Current-source full typecheck and lint pass. Remote complete npm test passes on 
 ## Late zebra cast baseline
 
 L9’s dry-shortcut controller spawns zebras after cast initialization, so their existing render role is now registered alongside the dogs. Native HIGH rerun has four hoof pairs, confirming the fallback is gone, but zebra motion still fails: p95/max up to 44.8/530.8 cm on actor 858 and 108.2/140.3 cm on actor 804. The two sprinter maximum failures remain 30.2 and 22.5 cm. Typecheck and targeted lint pass. Correct-species rendering is retained; these are failing hoof-contact traces requiring an actual locomotion fix, not a completed motion acceptance. See `zebra-cast-baseline.json`.
+
+## Stampede contact root cause fixed
+
+Zebra-stampede was absent from strides, so present() skipped procedural correction and moving zebras held their hooves. Adding its stride activates the existing paw solver; a separate full distance-driven contact phase avoids using the restricted attack-body phase as a gait. Native HIGH 9000-tick rerun now gives zebra p95 0.3–0.4 cm and max 0.7–0.9 cm across four groups (26–175 contacts each). Two sprinter maxima remain 30.2/22.5 cm, so the native command still fails. Typecheck and targeted lint pass. LOW verification and capture review of this visual fix remain due. See `stampede-contact-fix.json`.
