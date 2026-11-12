@@ -2,6 +2,20 @@
 
 **Status: diagnosis in progress. HIGH quality is the primary in-game acceptance view (PO correction); LOW is secondary.** This report separates measured game scores from source-pipeline observations. The raw → bake → rig → game stage score series and controlled cheap-lever sweep are not yet complete; cells marked **unmeasured** must not be read as inferred scores.
 
+## Latest stage findings and evidence limits
+
+| Working representative | Raw | Calibration/fitted high | Bake/flat | Neutral rig | HIGH game |
+|---|---:|---:|---:|---:|---|
+| BBQ-dad (higher-scoring ordinary alternative) | 6 | repaired bake remains 6 | colour match 5; flat 5 | regenerated candidate 5 | Candidate score **withdrawn**: GLB-only overrides did not pair official bakes; shipped S53 5/3 is separate |
+| Cashier (low scorer) | 6 | 5 after 42.9% head enlargement | repaired bake 4; flat 4 | regeneration rejected by topology guard | Current shipped 3/2; not a proven matched regenerated chain |
+| Selected S52 butcher | 6 | fitted high 6 | pre-bind flat 5 | selected checkpoint 5 | **Matched delivery 5 day / 4 night**, both zooms |
+
+Studio scores use controlled overlapping camera/light comparisons. Game scores use native HIGH Scene Lab; studio/game context differences remain explicit. The biggest **confirmed avoidable integration failure** is mismatched geometry and official pose/UV bakes; pairing them restores the selected butcher's coherent appearance. This is not proof that the current shipped ordinary figures suffer that mismatch.
+
+The largest isolated pre-rig score changes are cashier's historical proportion calibration (−1) and geometry/bake processing (−1), and BBQ-dad's colour match (−1). Butcher loses one point before binding, with no further neutral-bind whole-point loss and a night penalty in game. Raw figures in the controlled views rate 6, already below the PO's 8/10 threshold; postprocessing preservation alone has not demonstrated an 8/10 recipe.
+
+**Correction:** the earlier BBQ-dad regenerated HIGH 3/2 and claimed neutral-to-game −2/−3 transition are withdrawn as valid art-stage measurements. Like the rejected butcher GLB-only capture, that session replaced GLBs without matching official bake binaries. Its apparent deformation cannot establish rig or lighting loss. The identity-matrix experiments also remain invalid bind-pose comparisons. Historical notes below preserve the diagnostic trail, but this latest summary supersedes their provisional interpretations.
+
 ## Current verified results
 
 | HIGH primary view | Day | Night | Opened evidence |
@@ -19,7 +33,7 @@ All three have fresh HIGH/WebGL2 day/night captures at zoom 1 and 1.5. No figure
 | Quality LOW → HIGH | Existing butcher | +0 / +0 |
 | Retained bake → flattened texture, identical mesh | Static unlit butcher source | No overall visual improvement; no runtime delta measured |
 
-**Completion gaps:** matched raw/bake/neutral-rig scores and biggest-stage-loss attribution; same-lineage butcher game capture; texture-size/filter, normal/AO, rim/outline, LOD-distance and silhouette-scale experiments; expected recipe score supported by those results. No rendering fix is recommended for promotion on current evidence. The provisional recipe below remains a hypothesis, not a demonstrated route to 8/10.
+**Completion gaps:** matched complete ordinary stage series and final biggest-stage-loss attribution; selected-butcher matched LOW capture; texture-size/filter, normal/AO, rim/outline, LOD-distance and silhouette-scale experiments; expected recipe score supported by those results. No rendering fix is recommended for promotion on current evidence. The provisional recipe below remains a hypothesis, not a demonstrated route to 8/10.
 
 The source-hash manifest now pins all three current game LOD0/1/2 GLBs as well as retained raw inputs. Different hashes alone do not prove or disprove derivation; they prevent silently comparing changing artifacts across later captures.
 
