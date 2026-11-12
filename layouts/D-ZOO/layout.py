@@ -611,7 +611,10 @@ _spur(-24,8,-24,20); _spur(-24,20,-20,20)
 # Fence the arrival boulevard's lawn edges; leave its public junctions open.
 # The boundary sits outside the 5 m road lane and preserves the existing IDs.
 for _edge_x in (20.9, 27.1):
-    _fence(_edge_x, 3.2, _edge_x, 60.8)
+    if _edge_x == 20.9:
+        _fence(_edge_x, 3.2, _edge_x, 16.8); _fence(_edge_x, 23.2, _edge_x, 60.8)
+    else: _fence(_edge_x, 3.2, _edge_x, 60.8)
+_spur(8,20,24,20)
 # The plaza hold is a paved bounded gathering space, including its objective
 # centre and hatch approaches; no objective circle sits over dark lawn.
 l.box('plaza-floor', 'sidewalk', [28, .035, 24], [0, .0175, 0])
@@ -621,7 +624,7 @@ l.data['placements'] = [p for p in l.data['placements'] if p is not None]
 # Clear dressing and obsolete panels under the new arena perimeter, after ID
 # allocation so every remaining placement retains its authored identifier.
 _new_fences = [p for p in l.data['placements'] if p['assetId'] == 'prop.crowd-fence' and int(p['id'].rsplit(':', 1)[1]) >= _arena_first_id]
-_arena_drop = set()
+_arena_drop = {p['id'] for p in l.data['placements'] if p['assetId'] == 'prop.crowd-fence' and int(p['id'].rsplit(':', 1)[1]) < _arena_first_id and abs(p['position'][0] - 14) < .01 and abs(p['position'][2] - 20) < 4}
 for p in l.data['placements']:
     if p in _new_fences: continue
     if p['assetId'] not in _DRESS | {'prop.picket-fence', 'prop.hedge', 'prop.crowd-fence'}: continue

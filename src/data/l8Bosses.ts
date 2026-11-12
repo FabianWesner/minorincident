@@ -52,7 +52,7 @@ export const l8Route: readonly L8RouteStage[] = [
   { id: 'monkey', zone: { x0: -20, z0: 6, x1: 8, z1: 34 }, entry: { x: -20, z: 20, halfX: .25, halfZ: 3 }, exit: { x: 8, z: 20, halfX: .25, halfZ: 3 },
     nodes: [{ x: -60, z: -12 }, { x: -60, z: 0 }, { x: -24, z: 0 }, { x: -24, z: 12 }, { x: -20, z: 20 }], text: 'Enter the primate yard', clearedLine: 'L8.route-monkey' },
   { id: 'zebra', zone: { x0: 46, z0: 18, x1: 74, z1: 46 }, entry: { x: 60, z: 46, halfX: 3, halfZ: .25 }, exit: { x: 60, z: 18, halfX: 3, halfZ: .25 },
-    nodes: [{ x: -24, z: 19 }, { x: -24, z: 32 }, { x: -24, z: 64 }, { x: 60, z: 64 }, { x: 60, z: 46 }], text: 'Enter the zebra paddock', clearedLine: 'L8.route-zebra' },
+    nodes: [{ x: 24, z: 20 }, { x: 24, z: 64 }, { x: 60, z: 64 }, { x: 60, z: 46 }], text: 'Enter the zebra paddock', clearedLine: 'L8.route-zebra' },
   { id: 'gorilla', zone: { x0: 46, z0: -46, x1: 74, z1: -18 }, entry: { x: 60, z: -18, halfX: 3, halfZ: .25 }, exit: { x: 74, z: -32, halfX: .25, halfZ: 3 },
     nodes: [{ x: 60, z: 12 }, { x: 60, z: 0 }, { x: 60, z: -18 }], text: 'Enter the gorilla house', clearedLine: 'L8.route-gorilla', depth: 7 },
   { id: 'elephant', zone: { x0: 82, z0: 39, x1: 110, z1: 67 }, entry: null, exit: null,
