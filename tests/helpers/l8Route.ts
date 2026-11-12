@@ -1,6 +1,7 @@
 import { expect } from 'vitest';
-import { inRect, l8Route, l8GateClosed } from '../../src/data/l8Bosses';
+import { inRect, l8Route, l8GateClosed, l8ConnectorGates } from '../../src/data/l8Bosses';
 import { loadLevel } from '../qa/invariants/world';
+import { markerAnchor } from '../../src/sim/missions/markerAnchor';
 import { objectiveText } from '../../src/sim/missions/objectiveText';
 
 /** r33-l8route: per gate, the group follows the courier in and nobody is left behind the closing entry gate; the exit opens on the clear and the previous cell stays reachable. */
@@ -24,12 +25,14 @@ export async function checkL8Route(): Promise<void> {
     expect(zoo.protecting()).toBe(false);
     // Unsealed: the doors are still open, the fight cannot start from the plaza.
     expect(zoo.state.sealedAt).toBe(0);
+    l8ConnectorGates.forEach((_, i) => expect(l8GateClosed(`connector.${i}`, { arenas: zoo.state.arenas, sealed: false })).toBe(false));
     Object.assign(player.transform, { x: 0, z: 0 });
     zoo.followers().forEach((e, n) => w.solids.relocate(e, { x: (n % 6 - 2.5) * 1.5, z: 2 + Math.floor(n / 6) * 1.5, y: e.transform.y }, 'fixture.l8-route', 20, false));
     for (let i = 0; i < 400 && !zoo.state.sealedAt; i++) w.update();
     expect(zoo.state.sealedAt, 'the plaza doors shut once the group is inside').toBeGreaterThan(0);
     const closedKeys = (): string[] => l8Route.flatMap(s => [`${s.id}.entry`, `${s.id}.exit`]).filter(k => !k.startsWith('elephant') && l8GateClosed(k, { arenas: zoo.state.arenas, sealed: true }));
     expect(closedKeys()).toContain('lion.entry');
+    l8ConnectorGates.forEach((_, i) => expect(l8GateClosed(`connector.${i}`, { arenas: zoo.state.arenas, sealed: true })).toBe(true));
     for (const [index, stage] of l8Route.entries()) {
       if (!stage.entry) break;
       const arena = zoo.state.arenas[index], before = zoo.state.arenas.slice(0, index);
@@ -43,7 +46,12 @@ export async function checkL8Route(): Promise<void> {
       void len;
       const at = (d: number) => ({ x: gate.x + ux * d, z: gate.z + uz * d });
       const members = zoo.followers();
-      members.forEach((e, n) => { const p = at(-4 - (n % 4) * 1.2); w.solids.relocate(e, { x: p.x + (uz ? (n - 4) * .8 : 0), z: p.z + (ux ? (n - 4) * .8 : 0), y: e.transform.y }, 'fixture.l8-route', 20, false); });
+      members.forEach((e, n) => {
+        // Queue on the actual narrow approach, not a fan spread onto lawn.
+        const side = (n % 3 - 1) * 1.1, row = Math.floor(n / 3) * 1.2;
+        const p = stage.id === 'monkey' ? { x: -24 + side, z: 16 - row } : at(-4 - row);
+        w.solids.relocate(e, { x: p.x + (stage.id !== 'monkey' && uz ? side : 0), z: p.z + (stage.id !== 'monkey' && ux ? side : 0), y: e.transform.y }, 'fixture.l8-route', 1, false);
+      });
       if (stage.id === 'zebra') {
         // A zebra can turn while the courier is still outside its paddock.
         // That must leave the encounter dormant and the herd away from both
@@ -57,7 +65,7 @@ export async function checkL8Route(): Promise<void> {
         const herd = arena.ids.map(id => w.entities.get(id)!).filter(e => e.infected?.arenaBoss?.arena === 'zebra' && e.health.current > 0);
         expect(arena.phase, 'zebra encounter stays dormant while the courier is beyond the entry fence').toBe(0);
         expect(herd.length, 'a zebra has turned before the courier enters').toBeGreaterThan(0);
-        expect(herd.every(e => Math.min(e.transform.z - 12, 52 - e.transform.z) > 8), `turned zebras hold away from both fences: ${herd.map(e => `${e.transform.x.toFixed(1)},${e.transform.z.toFixed(1)}`).join(' ')}`).toBe(true);
+        expect(herd.every(e => e.transform.z > 20 && e.transform.z < 44), `turned zebras stay inside the compact arena: ${herd.map(e => `${e.transform.x.toFixed(1)},${e.transform.z.toFixed(1)}`).join(' ')}`).toBe(true);
         const gaps = herd.flatMap((e, i) => herd.slice(i + 1).map(other => Math.hypot(e.transform.x - other.transform.x, e.transform.z - other.transform.z)));
         expect(gaps.every(gap => gap >= .75), `turned zebras do not overlap one another: gaps=${gaps.map(gap => gap.toFixed(1)).join(',')}`).toBe(true);
       }
@@ -73,6 +81,7 @@ export async function checkL8Route(): Promise<void> {
         }
       }
       expect(arena.phase, `${stage.id} engaged`).toBeGreaterThan(0);
+      expect(markerAnchor(mission), `${stage.id}: combat marker stays at the arena centre`).toMatchObject({ x: (stage.zone.x0 + stage.zone.x1) / 2, z: (stage.zone.z0 + stage.zone.z1) / 2 });
       expect(arena.armed, `${stage.id}: the entry gate closes behind the group`).toBe(true);
       expect(armedWith, `${stage.id}: no follower left outside when the entry gate shuts (${stragglers})`).toBe(0);
       expect(l8GateClosed(`${stage.id}.entry`, { arenas: zoo.state.arenas, sealed: true })).toBe(true);

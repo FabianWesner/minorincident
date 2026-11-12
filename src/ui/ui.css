@@ -61,6 +61,7 @@ body.full-ui:not([data-ui-screen=game]) [data-touch-controls],body.full-ui:not([
 .hud-companion{position:absolute;top:130px;left:24px;display:flex;align-items:center;gap:8px;padding:6px 12px}
 .hud-companion .hud-portrait{width:42px;height:42px;font-size:26px;background:#355465}
 .hud-map{position:absolute;right:max(20px,env(safe-area-inset-right));top:max(20px,env(safe-area-inset-top));width:168px;height:168px;border-radius:50%;background:repeating-linear-gradient(45deg,#3e455780 0 18px,#50506580 18px 36px),#293447;border:3px solid #fff0d4;box-shadow:0 4px 0 #10182488}
+.minimap-arena-boundary{position:absolute;z-index:1;box-sizing:border-box;transform:translate(-50%,-50%);border:2px solid #f4d88a;border-radius:4px;background:#f4d88a18;pointer-events:none}
 .hud-map-n{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:#182333;border:2px solid #fff0d4;border-radius:6px;padding:0 4px}
 .hud-pin{position:absolute;transform:translate(-50%,-50%);width:12px;height:12px;border:1px solid #182333;border-radius:50%;background:#ee4350}
 .hud-pin-threat[data-mega="true"]{width:16px;height:16px;background:#ff1428;border:2px solid #fff0d4;box-shadow:0 0 0 3px #ff142888,0 0 12px #ff1428;animation:mega-dot-pulse .8s ease-in-out infinite alternate;z-index:4}

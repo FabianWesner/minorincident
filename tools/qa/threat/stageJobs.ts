@@ -48,7 +48,8 @@ async function execute(job: StageJob): Promise<StageResult> {
       const kiting: KitingReceipt = { kitingSeconds: 0, attacks: 0, attacksPerMinute: 0, samples: 0 };
       result.native = native;
       // Preserve every existing passive observation window, including L5's full 1,200 seconds.
-      const windows: Partial<Record<RunnerLevel, number>> = { L3: 70, L4: 250, L6: 110, L8: 150 };
+      // L8's fenced tour can take 180 s; retain at least the full 20 s breach attack window.
+      const windows: Partial<Record<RunnerLevel, number>> = { L3: 70, L4: 250, L6: 110, L8: 210 };
       const runStarted = performance.now();
       native.run = await runLevel(job.level, 'complete', job.seed, job.passive ? windows[job.level] : undefined, 'auto', campaignFor(job.level, job.seed), undefined, 0, {
         quality: 'low', passive: job.passive,

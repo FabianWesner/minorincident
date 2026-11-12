@@ -162,15 +162,15 @@ test('interactions: ring, input and view predicates agree for every interact ste
         // The existing outlet scene exposed queued residents first becoming
         // visible on the apron. Exercise its native six-person door queue here,
         // without adding another registered case or relaxing the scene gate.
-        expect(mission.state.marker).toBe('central-plaza');
-        expect(objectiveText(mission, mission.def.steps[0].text)).toBe('Follow Nadia to the central plaza');
+        expect(mission.state.marker).toBe('l8-route');
+        expect(objectiveText(mission, mission.def.steps[0].text)).toBe('Follow Nadia');
         const flock = mission.l8!.bosses.state.find(arena => arena.id === 'flamingo')!;
         const savedPhase = flock.phase, savedPlayer = { ...player.transform };
         flock.phase = 2; player.transform.x = -6; player.transform.z = -27;
         const flockBodies = flock.ids.map(id => levelWorld.entities.get(id)!);
         const savedHealth = flockBodies.map(body => body.health.current);
         flockBodies.forEach((body, index) => { body.health.current = index < 3 ? 0 : body.health.max; });
-        expect(objectiveText(mission, mission.def.steps[0].text)).toBe('Follow Nadia to the central plaza · Flamingo flock · Phase 2 · 5 left');
+        expect(objectiveText(mission, mission.def.steps[0].text)).toBe('Follow Nadia · Flamingo flock · Phase 2 · 5 left');
         flockBodies.forEach((body, index) => { body.health.current = savedHealth[index]; });
         flock.phase = savedPhase; Object.assign(player.transform, savedPlayer);
         await checkL8Story();
@@ -213,6 +213,10 @@ test('interactions: ring, input and view predicates agree for every interact ste
         expect(levelWorld.entities.get(stuck)!.transform.z, 'it stopped at the panel, not past it').toBeLessThan(-26);
         // r27-l8board: the corgi pressed into a fallen elephant's footprint (queue head, seed 1) got no corpse detour,
         // and a boarding member that cannot move for 1.5 s is moved along its route instead of idling for 30 s.
+        // Boarding happens after the elephant pen exit opens.
+        const boardingPhases = mission.l8!.state.arenas.map(arena => arena.phase);
+        for (const arena of mission.l8!.state.arenas) arena.phase = 3;
+        mission.l8!.bosses.updateGates();
         const elephant = levelWorld.infected!.spawn('infected.elephant', { x: 103.6, z: 57.7 }, { state: 'idle' }), body = levelWorld.entities.get(elephant)!;
         body.health.current = 0; Object.assign(body.infected!, { state: 'dead', deadAt: levelWorld.tick - 120, recoverAt: -1 }); levelWorld.infected!.settle(body);
         const dog = levelWorld.entities.get(levelWorld.npcs!.companion.spawn())!;
@@ -222,6 +226,8 @@ test('interactions: ring, input and view predicates agree for every interact ste
         for (let frame = 0; frame < 100; frame++) { jam.unjamBoarding(dog, away); levelWorld.tick++; }
         expect(Math.hypot(dog.transform.x - before.x, dog.transform.z - before.z), 'a stalled boarding member is moved along its route after 1.5 s').toBeGreaterThan(.5);
         levelWorld.entities.delete(elephant); levelWorld.entities.delete(dog.id);
+        mission.l8!.state.arenas.forEach((arena, i) => { arena.phase = boardingPhases[i]; });
+        mission.l8!.bosses.updateGates();
         // Settling before the alarm chooses the real boarding destination;
         // later hull nudges must not drag a fixed objective around the map.
         const zoo = mission.l8!, car = levelWorld.entities.get(zoo.state.carId)!;

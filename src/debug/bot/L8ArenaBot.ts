@@ -1,12 +1,11 @@
 import { emptyInput, type InputFrame } from '../../input/InputFrame';
-import { l8BossArenas, type L8BossId } from '../../data/l8Bosses';
+import { l8BossArenas, l8Route, inRect, type L8BossId } from '../../data/l8Bosses';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import { Walker } from './Walker';
 import { strikeAt } from './helpers';
 /** Uses visible windups and ordinary movement/weapon input; there is no damage or mission-state assistance. */
 export class L8ArenaBot {
   private readonly walker = new Walker();
-  private readonly entered = new Set<L8BossId>();
   constructor(private readonly w: SimWorld) {}
   sample(id: L8BossId, policy: 'skilled' | 'passive' | 'standing' | 'kite' = 'skilled'): InputFrame {
     const w = this.w, f = emptyInput(), p = w.entities.get(1)!, zoo = w.missions!.l8!;
@@ -18,8 +17,11 @@ export class L8ArenaBot {
       (Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 6 || Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 22 && group.some(member => member!.civilian?.state === 'grabbed' && member!.civilian.attacker === e.id || e.infected!.l1?.biteTargetId === member!.id)) && w.combat!.query.visible(p.transform, e.transform)).sort((a,b) => Math.hypot(a.transform.x-p.transform.x,a.transform.z-p.transform.z)-Math.hypot(b.transform.x-p.transform.x,b.transform.z-p.transform.z))[0] : undefined;
 
     if (!arena.phase) {
-      if (Math.hypot(p.transform.x - def.entry.x, p.transform.z - def.entry.z) < 2) this.entered.add(id);
-      f.move = this.walker.step(w, this.entered.has(id) ? def.centre : def.entry, this.entered.has(id) ? 5 : 1.25, `arena-${id}-${this.entered.has(id)}`) ?? f.move;
+      const stage = l8Route.find(stage => stage.id === id)!;
+      const inside = inRect(p.transform, stage.zone);
+      const marker = w.missions!.state.marker;
+      const approach = marker === 'l8-route' ? w.missions!.def.anchors[marker] : def.entry;
+      f.move = this.walker.step(w, inside ? def.centre : approach, inside ? 5 : .75, `arena-${id}-${inside}`) ?? f.move;
       if (intruder) { const gun = w.combat!.runner.loadout.activeEntries().find(e => e.id === 'weapon.shotgun') ?? w.combat!.runner.loadout.activeEntries().find(e => e.id === 'weapon.army-mg'); if (gun) { f.selectedSlot = { side: gun.side, index: gun.index }; strikeAt(f, intruder, gun.side, p.transform, false); } }
       return f;
     }

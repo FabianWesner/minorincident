@@ -1,4 +1,4 @@
-import { l8BossArenas, l8EncounterGates, l8GateClosed, l8PlazaGates, l8Route, l8YardGates, l8YardWalls, inRect, type L8BossId } from '../../data/l8Bosses';
+import { l8PathWalls, l8ConnectorGates, l8BossArenas, l8EncounterGates, l8GateClosed, l8PlazaGates, l8Route, l8YardGates, l8YardWalls, inRect, type L8BossId } from '../../data/l8Bosses';
 import type { InfectedSpecialMove } from '../../data/infected';
 import { propFootprint } from '../interact/PropSystem';
 import { boxContact, type SolidBox } from '../world/SolidGeometry';
@@ -66,6 +66,7 @@ export class L8BossArenas {
     const yardClosed = this.state.some(a => a.id !== 'elephant' && a.phase !== 3);
     if (this.gateStates.get('yard') !== yardClosed) {
       this.gateStates.set('yard', yardClosed);
+      l8PathWalls.forEach((wall, i) => this.barrier(`l8.path-wall.${i}`, 900890 + i, { ...wall, y: 1.5, halfY: 1.5 }, true));
       l8YardWalls.forEach((wall, i) => this.barrier(`l8.yard-wall.${i}`, 900810 + i, { ...wall, y: 1.5, halfY: 1.5 }, !(i === 2 && breached)));
       l8YardGates.forEach((gate, i) => this.barrier(`l8.yard-gate.${i}`, 900820 + i, { ...gate, y: 1.5, halfY: 1.5 }, yardClosed));
     }
@@ -85,6 +86,12 @@ export class L8BossArenas {
       this.gateStates.set(key, closed);
       this.barrier(`l8.plaza-gate.${side}`, 900860 + i, { ...box, y: 1.5, halfY: 1.5 }, closed);
     });
+    l8ConnectorGates.forEach((box, i) => {
+      const key = `connector.${i}`, closed = l8GateClosed(key, ctx);
+      if (this.gateStates.get(key) === closed) return;
+      this.gateStates.set(key, closed);
+      this.barrier(`l8.connector-gate.${i}`, 900880 + i, { ...box, y: 1.5, halfY: 1.5 }, closed);
+    });
     // The elephant's drive-out gate shuts while he is loose in the yard.
     const elephant = this.state.find(a => a.id === 'elephant');
     if (elephant) {
@@ -92,6 +99,17 @@ export class L8BossArenas {
       if (this.gateStates.get('elephant') !== closed) {
         this.gateStates.set('elephant', closed);
         this.barrier('l8.arena-gate.elephant', 900830 + l8BossArenas.findIndex(a => a.id === 'elephant'), { ...l8EncounterGates.elephant, y: 1, halfY: 1 }, closed);
+      }
+      const yardClosed = this.state.some(a => a.id !== 'elephant' && a.phase !== 3);
+      const entryClosed = yardClosed || elephant.phase > 0 && elephant.armed === true;
+      if (this.gateStates.get('elephantEntry') !== entryClosed) {
+        this.gateStates.set('elephantEntry', entryClosed);
+        this.barrier('l8.arena-gate.elephant-entry', 900834, { ...l8EncounterGates.elephantEntry, y: 1.5, halfY: 1.5 }, entryClosed);
+      }
+      const exitClosed = elephant.phase !== 3;
+      if (this.gateStates.get('elephantExit') !== exitClosed) {
+        this.gateStates.set('elephantExit', exitClosed);
+        this.barrier('l8.arena-gate.elephant-exit', 900835, { ...l8EncounterGates.elephantExit, y: 1.5, halfY: 1.5 }, exitClosed);
       }
     }
   }
@@ -139,8 +157,6 @@ export class L8BossArenas {
         const elephant = w.entities.get(arena.ids[0]);
         if (elephant?.emerging && w.tick - arena.startedAt >= 60) elephant.emerging = false;
       }
-      const hale = w.entities.get(this.mission.l8!.state.haleId);
-      const finaleReady = arena.id !== 'elephant' || !hale || hale.health.current <= 0 || distance(hale.transform, this.mission.l8!.door()) < 2.5;
       if (arena.phase === 0 && arena.ids.every(id => (w.entities.get(id)?.health.current ?? 0) <= 0)) {
         arena.phase = 3; arena.endedAt = w.tick; this.signal(arena, 'cleared'); this.cleared(arena); continue;
       }
@@ -150,7 +166,7 @@ export class L8BossArenas {
         arena.zoneAt ??= w.tick;
         if (w.tick - arena.zoneAt >= 150) for (const e of healthy) w.npcs!.civilians.outbreak!.infect(e!, arena.carrier || 1);
       }
-      if (arena.phase === 0 && finaleReady && routeOpen && live.length && deep && !this.mission.l8!.protecting()) {
+      if (arena.phase === 0 && routeOpen && live.length && deep && !this.mission.l8!.protecting()) {
         // The restore point is taken in phase 0 with the entry gate still open (the courier stands just outside it).
         this.mission.checkpoint(`arena-${arena.id}`, def.entry);
         arena.phase = 1; arena.startedAt = w.tick; arena.nextAt = w.tick + 90; arena.armed = false;
@@ -160,11 +176,21 @@ export class L8BossArenas {
           // The old elephant breaks into the vehicle yard for the final stand;
           // preserve the turned animal's entity and health for the whole fight.
           const elephant = live[0]!;
+          // Hale stages at the vehicle door, outside the compact arena. Move
+          // him inside for the final charge so the encounter remains bounded.
+          const hale = w.entities.get(this.mission.l8!.state.haleId);
+          if (hale?.civilian && hale.health.current > 0) {
+            const at = { x: 96, z: 61 };
+            if (w.solids.relocate(hale, { ...at, y: hale.transform.y }, 'l8.hale-elephant-arena', 2)) {
+              const ally = hale.civilian.ally;
+              if (ally) { ally.post = at; ally.run = at; ally.hold = true; }
+            }
+          }
           const breached = w.solids.relocate(elephant, { x: 89, z: 42, y: .7 }, 'l8.elephant-wall-breach', 2);
           if (breached) {
             elephant.emerging = true; elephant.infected!.path.length = 0; elephant.infected!.goal = -1;
             elephant.transform.yaw = -Math.atan2(player.transform.z - elephant.transform.z, player.transform.x - elephant.transform.x);
-            const door = this.mission.l8!.door(), dx = door.x - elephant.transform.x, dz = door.z - elephant.transform.z, d = Math.hypot(dx, dz) || 1;
+            const target = hale?.transform ?? this.mission.l8!.door(), dx = target.x - elephant.transform.x, dz = target.z - elephant.transform.z, d = Math.hypot(dx, dz) || 1;
             this.start(elephant, 'elephant.charge', 60, d, 1.75, { x: dx / d, z: dz / d });
             arena.nextAt = w.tick + 360;
           }
@@ -174,10 +200,10 @@ export class L8BossArenas {
       }
       // The entry gate closes behind the group: once every living follower is inside, or after 20 s when none is still at the gate (never on a follower).
       if (arena.phase > 0 && arena.phase < 3 && !arena.armed && stage.entry) {
-        const gate = stage.entry;
+        const gate = stage.entry, safeZone = { x0: stage.zone.x0 + 1, z0: stage.zone.z0 + 1, x1: stage.zone.x1 - 1, z1: stage.zone.z1 - 1 };
         const near = (e: EntitySnapshot, pad: number) => Math.abs(e.transform.x - gate.x) < gate.halfX + pad && Math.abs(e.transform.z - gate.z) < gate.halfZ + pad;
         // A centre inside the zone can still overlap the closing gate's solid body.
-        const pending = this.mission.l8!.followers().filter(e => !inRect(e.transform, stage.zone) || near(e, 1.5));
+        const pending = this.mission.l8!.followers().filter(e => !inRect(e.transform, safeZone) || near(e, 1.5));
         // A follower still near the gate (a civilian recovering from a flee) holds the gate open for up to 45 s; only one standing in the doorway holds it longer.
         const since = w.tick - arena.startedAt;
         if (inZone && Math.hypot(player.transform.x - gate.x, player.transform.z - gate.z) >= 5 && (!pending.length || since >= 1200 && !pending.some(e => near(e, 9)) || since >= 2700 && !pending.some(e => near(e, 1.5)))) arena.armed = true;
@@ -219,7 +245,7 @@ export class L8BossArenas {
     const w = this.w, zoo = this.mission.l8!, civilians = w.npcs!.civilians;
     for (let i = 0; i < 6; i++) {
       // r42-arenas (r41-vqa P3: 'flamingo flights stack up over the group'): each flight lands on its own ring and bearing, not on the same six points.
-      const flight = arena.flights ?? 2, angle = i * Math.PI / 3 + .4 + flight * .52, ring = 8 + (flight - 1) * 2.5, at = requireClearPoint(w, { x: def.centre.x + Math.cos(angle) * ring, z: def.centre.z + Math.sin(angle) * ring }, .5, 6, `l8.${def.id}.flight`);
+      const flight = arena.flights ?? 2, angle = i * Math.PI / 3 + .4 + flight * .52, ring = 9 + (flight - 1) * .5, at = requireClearPoint(w, { x: def.centre.x + Math.cos(angle) * ring, z: def.centre.z + Math.sin(angle) * ring }, .5, 1.5, `l8.${def.id}.flight`);
       const id = civilians.spawn('cashier', at, { zooAnimal: 'flamingo', waypoints: [at, at] });
       arena.ids.push(id); zoo.state.animals.push(id);
       const animal = w.entities.get(id)!;

@@ -517,14 +517,16 @@ async function zooParkedBoarding(): Promise<void> {
     world.tick = 3124; advance(1);
     expect(mission.state.steps.sanctuary.status).toBe('active');
     expect(mission.state.steps.escape.status).toBe('pending');
-    expect(mission.state.marker).toBe('central-plaza');
+    expect(mission.state.marker).toBe('l8-route');
+    expect(mission.def.anchors['l8-route']).toMatchObject({ x: world.entities.get(zoo.state.keeperId)!.transform.x, z: world.entities.get(zoo.state.keeperId)!.transform.z });
     expect(mission.state.steps.depart.status).toBe('pending');
     mission.restore('sanctuary');
-    expect(mission.state.marker).toBe('central-plaza');
+    expect(mission.state.marker).toBe('l8-route');
+    expect(mission.def.anchors['l8-route']).toMatchObject({ x: world.entities.get(zoo.state.keeperId)!.transform.x, z: world.entities.get(zoo.state.keeperId)!.transform.z });
     expect(mission.state.steps.escape.status).toBe('pending');
     missionControls(world).teleport(1, zoo.door());
-    // r31-nadia: while Nadia still leads (a courier camping the APC never follows her), the calm lasts its 120 s cap before the breach.
-    world.tick = zoo.state.startedAt + 120 * 60 - 1; advance(1);
+    // r31-nadia: while Nadia still leads (a courier camping the APC never follows her), the calm lasts its 180 s cap before the breach.
+    world.tick = zoo.state.startedAt + 180 * 60 - 1; advance(1);
     expect(mission.state.states.breached).toBe(true);
     expect(mission.state.steps.sanctuary.status, 'camping the APC does not skip the plaza after the breach').toBe('active');
     expect(mission.state.checkpoint, 'APC camping must not award the escape-route checkpoint').toBe('breach');
@@ -539,7 +541,7 @@ async function zooParkedBoarding(): Promise<void> {
     world.tick = zoo.state.breachedAt + 1800; advance(1);
     // r33-l8route: the marker is the route node (back to the plaza until the doors shut, then the pond gate), never an arena across a fence.
     expect(mission.state.marker).toBe('l8-route');
-    expect(mission.def.steps.find(step => step.id === 'escape')!.text).toMatch(/^(Back to the plaza|Through the flamingo pond)/);
+    expect(mission.def.steps.find(step => step.id === 'escape')!.text).toMatch(/^(Back to the plaza|Return to the plaza|Enter the flamingo pond)/);
     for (const restored of [false, true]) {
       if (restored) mission.restore('sanctuary');
       advance(60);

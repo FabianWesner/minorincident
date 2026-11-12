@@ -62,7 +62,7 @@ export function objectiveText(mission: Mission, fallback: string): string {
     if (zoo.protecting()) return zoo.awayFromPlaza() ? 'Back to the plaza! The group is under attack' : 'Protect the group!';
     if (l8SanctuaryResting(mission)) return 'Rest at the plaza with the group';
     if (zoo.state.departureFrom) return 'Something is following you.';
-    const arena = zoo.bosses.statusText(); if (arena) return `${fallback} · ${arena}`;
+    if (zoo.bosses.statusText()) return fallback;
     if (!seated && zoo.boarding() && !zoo.canBoardDriver()) {
       const ids = zoo.passengers(), car = w.vehicles!.cars.get(zoo.state.carId)!.entity.vehicle!;
       const aboard = ids.filter(id => car.passengers?.some(p => p.id === id && p.phase === 'seated')).length;

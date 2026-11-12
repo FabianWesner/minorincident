@@ -9,6 +9,7 @@ import { SurvivorRadar } from './SurvivorRadar';
 import { healthFraction } from './health';
 import type { SimWorld } from '../sim/world/SimWorld';
 import { weatherLabels } from '../data/weather';
+import { l8BossArenas, l8Route, inRect } from '../data/l8Bosses';
 // Adapted from folio-2025 Map.js / Notifications.js by Bruno Simon (MIT, 41046b5):
 // world-to-map projection, persistent DOM pins, and identity-preserving text updates.
 import type { Game } from '../Game';
@@ -42,6 +43,7 @@ export class Hud {
   private readonly fullText = node('p', 'objective-full-text');
   private readonly trackerText = node('span', 'objective-text');
   private readonly map = node('div', 'minimap');
+  private readonly arenaBoundary = node('span', 'minimap-arena-boundary');
   private readonly playerPin = this.pin('player', '▲');
   private readonly objectivePin = this.pin('objective');
   private readonly routePin = this.pin('route', '◆');
@@ -137,7 +139,9 @@ export class Hud {
     const north = node('span', 'minimap-north', 'N'); north.className = 'hud-map-n';
     this.cuePin.hidden = true; this.survivorText.hidden = this.cueText.hidden = true;
     this.routePin.style.background = '#64d9ee'; this.routePin.setAttribute('aria-label', 'Next turn on the cellar route');
-    this.map.append(north, this.routePin, this.playerPin, this.objectivePin, this.homePin, this.cuePin);
+    this.arenaBoundary.className = 'minimap-arena-boundary';
+    this.arenaBoundary.hidden = true;
+    this.map.append(north, this.arenaBoundary, this.routePin, this.playerPin, this.objectivePin, this.homePin, this.cuePin);
     // Allocated once; no entity snapshots, DOM creation, or pin lists per frame.
     for (let i = 0; i < 256; i++) { const pin = this.pin(`threat-${i}`); pin.classList.add('hud-pin-threat'); pin.hidden = true; this.threats.push(pin); this.map.append(pin); }
     for (let i = 0; i < 16; i++) { const pin = this.pin(`discovery-${i}`, '✦'); pin.classList.add('hud-pin-discovery'); pin.hidden = true; this.discoveries.push(pin); this.map.append(pin); }
@@ -327,6 +331,16 @@ export class Hud {
     style(this.vignette, 'opacity', String(clamp((.3 - hp) / .3)));
     let corgi = null, pinCount = 0, discoveryCount = 0;
     const px = player.transform.x, pz = player.transform.z;
+    const activeL8Arena = mission?.def.l8 ? mission.l8?.state.arenas.find(a => a.phase > 0 && a.phase < 3) : undefined;
+    const arenaDef = activeL8Arena && l8BossArenas.find(a => a.id === activeL8Arena.id);
+    const arenaZone = arenaDef && l8Route.find(stage => stage.id === arenaDef.id)!.zone;
+    setHidden(this.arenaBoundary, !arenaDef);
+    if (arenaDef && arenaZone) {
+      const dx = ((arenaZone.x0 + arenaZone.x1) / 2 - px) / 30 * 44, dz = ((arenaZone.z0 + arenaZone.z1) / 2 - pz) / 30 * 44;
+      style(this.arenaBoundary, 'width', `${(arenaZone!.x1 - arenaZone!.x0) / 30 * 44}%`);
+      style(this.arenaBoundary, 'height', `${(arenaZone!.z1 - arenaZone!.z0) / 30 * 44}%`);
+      style(this.arenaBoundary, 'left', `${50 + dx}%`); style(this.arenaBoundary, 'top', `${50 + dz}%`);
+    }
     for (const entity of world.entities.iterate()) {
       if (entity.archetype.includes('corgi')) corgi = entity;
       if (world.scenario === 'L10' && entity.pickup && !entity.hidden && !('collected' in entity.pickup && entity.pickup.collected) && Math.hypot(entity.transform.x - px, entity.transform.z - pz) <= 25 && discoveryCount < this.discoveries.length) {
@@ -334,6 +348,7 @@ export class Hud {
         attribute(pin, 'aria-label', 'Optional discovery'); this.place(pin, entity.transform.x, entity.transform.z, px, pz);
       }
       if (entity.faction !== 'infected' || entity.health.current <= 0 || ((entity.hidden || entity.infected?.hidden) && !world.weather?.reveals.has(entity.id)) || Math.hypot(entity.transform.x - px, entity.transform.z - pz) > (world.weather?.reveals.has(entity.id) ? 40 : 30)) continue;
+      if (mission?.def.l8 && (!arenaZone || !inRect(entity.transform, arenaZone))) continue;
       const pin = this.threats[pinCount]; if (!pin) break; pinCount++;
       setHidden(pin, false); attribute(pin, 'data-entity-id', String(entity.id)); attribute(pin, 'data-mega', String(isMega(entity)));
       attribute(pin, 'data-kind', entity.archetype === 'infected.dog' ? 'dog' : entity.archetype === 'infected.alpha' ? 'alpha' : 'regular');

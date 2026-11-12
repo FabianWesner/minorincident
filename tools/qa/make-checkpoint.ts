@@ -100,7 +100,7 @@ if (what.has('qa')) {
   };
   // L8: 30 m before each arena entry (not yet engaged) + the engaged elephant checkpoint (APC yard).
   if (qaParts.has('l8')) {
-    const wanted = new Set(['lion', 'monkey', 'zebra', 'gorilla', 'elephant']), done = new Set<string>(), engaged = new Set<string>();
+    const wanted = new Set(['flamingo', 'lion', 'monkey', 'zebra', 'gorilla', 'elephant']), done = new Set<string>(), engaged = new Set<string>();
     await runLevel('L8', 'complete', seed, 1800, 'auto', preset('L8-default'), undefined, 0, {
       beforeBegin: world => {
         world.events.on('checkpoint.set', e => {
@@ -121,9 +121,9 @@ if (what.has('qa')) {
             // r34-l8qa: after the breach, with the previous arena of the linear route cleared, right before this arena's gate.
             const route = ['flamingo', 'lion', 'monkey', 'zebra', 'gorilla', 'elephant'], before = route[route.indexOf(a.id) - 1];
             if (!world.missions.state.states.breached || before && !engaged.has(`cleared-${before}`)) continue;
-            if (Math.hypot(p.transform.x - a.entry.x, p.transform.z - a.entry.z) > 20) continue;
+            if (Math.hypot(p.transform.x - a.entry.x, p.transform.z - a.entry.z) > 5) continue;
             done.add(a.id);
-            fixture(`l8-before-${a.id}`, 'mission-resume', 'L8', `Player within 20 m of the ${a.id} arena entry after the breach and the previous arena's clear, arena not yet engaged.`, structuredClone(world.progression.campaign) as CampaignSave, world.missions.saveResume(false), { progression: 'L8-default', arena: a.id });
+            fixture(`l8-before-${a.id}`, 'mission-resume', 'L8', `Player within 5 m of the ${a.id} arena entry after the breach and the previous arena's clear, arena not yet engaged.`, structuredClone(world.progression.campaign) as CampaignSave, world.missions.saveResume(false), { progression: 'L8-default', arena: a.id });
           }
         };
       },

@@ -1,5 +1,5 @@
 import { Box3, BoxGeometry, Color, Group, InstancedMesh, Matrix4, Quaternion, Ray, Vector3 } from 'three/webgpu';
-import { l8EncounterGates, l8GateClosed, l8PlazaGates, l8Route, l8YardGates, l8YardWalls } from '../data/l8Bosses';
+import { l8PathWalls, l8ConnectorGates, l8EncounterGates, l8GateClosed, l8PlazaGates, l8Route, l8YardGates, l8YardWalls } from '../data/l8Bosses';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { Materials } from './Materials';
 
@@ -29,11 +29,15 @@ export class L8Gates extends Group {
       for (const y of [.65, 1.55, 2.5]) add(0, y, length, .16);
       for (let along = -length / 2; along <= length / 2; along += 1) add(along, 1.4, .12, 2.8);
     };
+    l8PathWalls.forEach(box => fence(box, false));
     l8YardWalls.forEach((box, i) => { if (i !== 2) fence(box, false); });
     l8YardGates.forEach(box => fence(box, true));
     for (const stage of l8Route) { if (stage.entry) fence(stage.entry, true, false, `${stage.id}.entry`); if (stage.exit) fence(stage.exit, true, false, `${stage.id}.exit`); }
     for (const [side, box] of Object.entries(l8PlazaGates)) fence(box, true, false, `plaza.${side}`);
+    l8ConnectorGates.forEach((box, i) => fence(box, true, false, `connector.${i}`));
     fence(l8EncounterGates.elephant, true, false, 'elephant');
+    fence(l8EncounterGates.elephantEntry, true, false, 'elephantEntry');
+    fence(l8EncounterGates.elephantExit, true, false, 'elephantExit');
     this.mesh = new InstancedMesh(this.geometry, materials.fromColor('l8-keeper-fence', new Color('#b7a269'), 0, true), this.rods.length);
     this.mesh.castShadow = this.mesh.receiveShadow = true;
     this.add(this.mesh); this.update();
@@ -44,6 +48,8 @@ export class L8Gates extends Group {
     const ctx = { arenas: arenas ?? [], sealed: !!this.world.missions?.l8?.state.sealedAt };
     this.rods.forEach((rod, i) => {
       const hidden = rod.key === 'elephant' ? !this.world.missions?.state.states.breached || arenas?.find(a => a.id === 'elephant')?.phase === 3
+        : rod.key === 'elephantEntry' ? !!arenas && arenas.every(a => a.id === 'elephant' || a.phase === 3) && !(arenas.find(a => a.id === 'elephant')?.phase && arenas.find(a => a.id === 'elephant')?.armed)
+        : rod.key === 'elephantExit' ? arenas?.find(a => a.id === 'elephant')?.phase === 3
         : rod.key ? !arenas || !l8GateClosed(rod.key, ctx)
         : rod.gate && !closed || rod.breach && !!arenas?.some(a => a.id === 'elephant' && a.phase > 0);
       this.panels[rod.panel].shown = !hidden;

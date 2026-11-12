@@ -6,6 +6,7 @@ import math
 import random
 import runpy
 from sslib.layout import Layout, empty
+from sslib.palette import mat
 
 l = Layout('D-ZOO', 'Sunset Grove Zoo', size=(300, 240))
 l.yaw_matches_collision = True
@@ -388,7 +389,7 @@ for e in list(l.data['roads']['edges']):
     else:
         for xx in (x0 - h - 1.4, x0 + h): l.data['lawns'].append(dict(min=[xx, min(z0, z1)], max=[xx + 1.4, max(z0, z1)]))
 # 2) Habitat floors: one slab per enclosure, 3 cm proud (above the 2 cm mown stripes, below the 12 cm gate paving), visual only.
-HABITAT = {'lion': 'khaki', 'elephant': 'trouserSeam', 'zebra': 'gloveKhaki', 'gorilla': 'foliageDark', 'flamingo': 'apronOlive'}
+HABITAT = {name: 'sidewalk' for name in _encl}
 for k, (cx, cz, w, d) in _encl.items():
     l.box('habitat-floor', HABITAT[k], [w - 1.2, .03, d - 1.2], [cx, .015, cz])
 # Savanna tufts in the zebra paddock (grass blades, non-solid); the gate line (enclosure centre x) stays open.
@@ -559,6 +560,139 @@ for _hz in (8.6175, 10.8525): l.place('prop.hedge', [14.9, 0, _hz], yaw=math.pi 
 # Every enclosure panel is a cell wall: bolt them all (a pushable 22 kg panel is a door the herd or the player can open).
 for p in l.data['placements']:
     if p['assetId'] == 'prop.crowd-fence': p['fixed'] = True
+
+# Reserve filtered placement slots while appending: Layout.place uses list length
+# for IDs, so additions must start above every surviving original ID.
+_append_padding = [None] * (max(int(p['id'].rsplit(':', 1)[1]) for p in l.data['placements']) + 1 - len(l.data['placements']))
+l.data['placements'].extend(_append_padding)
+_arena_first_id = len(l.data['placements'])
+
+# Compact inner fighting pens are appended after the existing placement set,
+# preserving every generated placement ID. Dynamic L8 gate panels occupy gaps.
+def _arena_wall(cx, cz, half, entry_side, exit_side, gate_half=3):
+    def across_x(z, side):
+        if side in (entry_side, exit_side):
+            _fence(cx-half, z, cx-gate_half, z); _fence(cx+gate_half, z, cx+half, z)
+        else: _fence(cx-half, z, cx+half, z)
+    def across_z(x, side):
+        if side in (entry_side, exit_side):
+            _fence(x, cz-half, x, cz-3); _fence(x, cz+3, x, cz+half)
+        else: _fence(x, cz-half, x, cz+half)
+    across_x(cz-half, 'north'); across_x(cz+half, 'south')
+    # Flamingo sides already use the continuous outer enclosure fences.
+    if cx != 0:
+        if cx == 96: _fence(cx-half, 52.3, cx-half, cz+half)
+        else: across_z(cx-half, 'west')
+        across_z(cx+half, 'east')
+for _cx, _cz, _in, _out in [(0, -32, 'south', 'north'), (-60, -32, 'north', 'south'),
+                            (60, 32, 'north', 'south'), (60, -32, 'south', 'east'),
+                            (-6, 20, 'west', 'east'), (96, 53, 'south', 'north')]:
+    _arena_wall(_cx, _cz, 14, _in, _out, 5 if _cx == 96 else 3)
+    # Continuous low ground strip makes the bounded combat floor readable at
+    # night. It is visual only and lies inside the fence, including gate gaps.
+    for _side in (-1, 1):
+        for _size, _at in [([27.4, .025, .14], [_cx, .14, _cz + _side * 13.7]),
+                           ([.14, .025, 27.4], [_cx + _side * 13.7, .14, _cz])]:
+            _strip = l.box('arena-edge-light', 'picketWhite', _size, _at)
+            _strip.data.materials.clear(); _strip.data.materials.append(mat('picketWhite', emissive=True))
+for _cx, _cz, _sx, _sz in [(-6, 20, 28, 28), (96, 53, 28, 28)]:
+    l.box('arena-floor', 'sidewalk', [_sx, .035, _sz], [_cx, .0175, _cz])
+
+# The western service spur now ends at the sealed elephant pen wall.
+# Keep its paving but remove the obsolete through-road connection.
+l.data['roads']['edges'] = [e for e in l.data['roads']['edges'] if e['id'] != 'p60:64--p96:64']
+
+# Paved visitor spurs connect the existing public loop to the appended pen gates.
+def _spur(x0, z0, x1, z1, width=4):
+    if abs(x1-x0) > abs(z1-z0):
+        xlo, xhi = min(x0,x1), max(x0,x1); zlo, zhi = z0-width/2, z0+width/2
+    else:
+        xlo, xhi = x0-width/2, x0+width/2; zlo, zhi = min(z0,z1), max(z0,z1)
+    l.box('clean-path', 'asphalt', [xhi-xlo,.12,zhi-zlo], [(xlo+xhi)/2,.06,(zlo+zhi)/2])
+    l.data['surfaces'].append(dict(surface='tile',height=.12,polygon=[[xlo,zlo],[xhi,zlo],[xhi,zhi],[xlo,zhi],[xlo,zlo]]))
+_spur(0,-12,0,-18); _spur(0,-46,0,-52)
+_spur(-60,-52,-60,-46); _spur(-60,-18,-60,-12)
+_spur(60,52,60,46); _spur(60,18,60,12)
+_spur(60,-12,60,-18); _spur(74,-32,82,-32)
+_spur(-24,8,-24,20); _spur(-24,20,-20,20)
+
+# Fence the arrival boulevard's lawn edges; leave its public junctions open.
+# The boundary sits outside the 5 m road lane and preserves the existing IDs.
+for _edge_x in (20.9, 27.1):
+    if _edge_x == 20.9:
+        _fence(_edge_x, 3.2, _edge_x, 16.8); _fence(_edge_x, 23.2, _edge_x, 60.8)
+    else: _fence(_edge_x, 3.2, _edge_x, 60.8)
+_spur(8,20,24,20)
+# Visitor-route verges: append after the existing placement sequence. Public
+# road junctions and enclosure door approaches retain their clear openings.
+for _z in (-67.1, -60.9):
+    _fence(-56.8 if _z == -60.9 else -60, _z, -27.2, _z); _fence(-20.8, _z, -3.2, _z)
+for _z in (60.9, 67.1): _fence(27.2, _z, 56.8 if _z == 60.9 else 60, _z)
+for _z in (-3.1, 3.1): _fence(-56.8, _z, -27.2, _z)
+for _x in (-63.1, -56.9): _fence(_x, -17, _x, -3.2)
+for _x in (-27.1, -20.9):
+    _fence(_x, 3.2, _x, 16.8)
+for _z in (16.9, 23.1): _fence(8.3, _z, 20.8, _z)
+for _x in (56.9, 63.1):
+    _fence(_x, -17, _x, -3.2); _fence(_x, 3.2, _x, 17)
+for _x in (92.9, 99.1):
+    _fence(_x, -28.8, _x, -3.2); _fence(_x, 3.2, _x, 28.8)
+    _fence(_x, 35.2, _x, 38)
+
+# Cap unused branches: these junctions turn toward the next animal gate.
+_fence(-27.2, -67.1, -20.8, -67.1); _fence(-3.2, -67.1, 2.6, -67.1)
+_barricade(-27.2, -60.9, -20.8, -60.9)
+_barricade(-63.1, -67.2, -63.1, -60.8)
+_barricade(3.1, -67.2, 3.1, -60.8)
+for _x in (-63.1, -56.9, -3.1, 3.1): _fence(_x, -60.8, _x, -46.8)
+
+_fence(-62.6, -67.1, -60, -67.1)
+# Southern turn verges and the closed lawn beyond the arrival junction.
+_fence(20.8, 67.1, 27.2, 67.1)
+for _x in (56.9, 63.1): _fence(_x, 46.8, _x, 60.8)
+
+# The gorilla's east gate turns south into the service lane, never onto lawn.
+for _z in (-35.1, -28.9): _fence(74.8, _z, 92.8, _z)
+_barricade(92.8, -35.1, 99.2, -35.1)
+
+# The opening tour uses the same bounded paving as the later arena route.
+_barricade(-4.2, 60.9, 4.2, 60.9)
+_fence(4.2, 60.9, 20.8, 60.9)
+_fence(4.2, 67.1, 20.8, 67.1)
+for _z in (-3.1, 3.1):
+    _fence(27.2, _z, 56.8, _z)
+    _fence(-20.8, _z, -14.8, _z)
+for _x in (-3.1, 3.1): _fence(_x, -17.2, _x, -12.2)
+
+# The plaza hold is a paved bounded gathering space, including its objective
+# centre and hatch approaches; no objective circle sits over dark lawn.
+l.box('plaza-floor', 'sidewalk', [28, .035, 24], [0, .0175, 0])
+l.data['surfaces'].append(dict(surface='tile', height=.035, polygon=[[-14,-12],[14,-12],[14,12],[-14,12],[-14,-12]]))
+
+l.data['placements'] = [p for p in l.data['placements'] if p is not None]
+# Clear dressing and obsolete panels under the new arena perimeter, after ID
+# allocation so every remaining placement retains its authored identifier.
+_new_fences = [p for p in l.data['placements'] if p['assetId'] == 'prop.crowd-fence' and int(p['id'].rsplit(':', 1)[1]) >= _arena_first_id]
+_arena_drop = {p['id'] for p in l.data['placements'] if p['assetId'] == 'prop.crowd-fence' and int(p['id'].rsplit(':', 1)[1]) < _arena_first_id and abs(p['position'][0] - 14) < .01 and abs(p['position'][2] - 20) < 4}
+# Remove old dressing from the newly fenced gorilla exit paving, after IDs are allocated.
+_arena_drop |= {p['id'] for p in l.data['placements'] if p['assetId'] in _DRESS
+                and p['visualAabb']['max'][0] > 74 and p['visualAabb']['min'][0] < 96
+                and p['visualAabb']['max'][2] > -34.5 and p['visualAabb']['min'][2] < -29.5}
+for p in l.data['placements']:
+    if p in _new_fences: continue
+    if p['assetId'] not in _DRESS | {'prop.picket-fence', 'prop.hedge', 'prop.crowd-fence'}: continue
+    a = p['visualAabb']
+    for fence in _new_fences:
+        b = fence['visualAabb']
+        if a['max'][0] > b['min'][0] - .15 and a['min'][0] < b['max'][0] + .15 and a['max'][2] > b['min'][2] - .15 and a['min'][2] < b['max'][2] + .15:
+            _arena_drop.add(p['id']); break
+for pid in _arena_drop:
+    p = next(p for p in l.data['placements'] if p['id'] == pid)
+    l.data['placements'].remove(p)
+    l.data['colliders'] = [c for c in l.data['colliders'] if c['id'] != pid]
+    idx = int(pid.rsplit(':', 1)[1]); name = f"inst:{p['assetId']}:{idx + 1}"
+    for obj in [obj for obj in l.empties if obj.name == name or obj.name.startswith(name + '.') or obj.name.startswith(f'crown:{pid}:')]:
+        l.empties.remove(obj); bpy.data.objects.remove(obj, do_unlink=True)
 
 # Static layout pieces with identical material/attribute layouts share a program.
 # PreRenderer still draws every piece, including its shadows, during warm-up.

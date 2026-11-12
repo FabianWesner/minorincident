@@ -21,7 +21,8 @@ export function turnArena(w: SimWorld, id: string): EntitySnapshot[] {
 /** Shoot `target` from `range` along the first clear bearing; returns damage dealt by the real weapon pipeline. */
 export function shoot(w: SimWorld, target: EntitySnapshot, weapon: string, range: number, pin: () => void): { damage: number; fired: boolean; shots: number; noLine?: boolean } {
   const player = w.entities.get(1)!, q = w.combat!.query;
-    const goal = { x: target.transform.x, z: target.transform.z }, hp = target.health.current;
+  pin(); // Establish the fixture pose before choosing the firing bearing.
+  const goal = { x: target.transform.x, z: target.transform.z }, hp = target.health.current;
   let last: { damage: number; fired: boolean; shots: number } | undefined;
   for (let k = 0; k < 16; k++) {
     const a = k * Math.PI / 8, at = { x: goal.x + Math.cos(a) * range, z: goal.z + Math.sin(a) * range };
@@ -59,7 +60,8 @@ export async function checkBossDamage(): Promise<void> {
   for (const def of l8BossArenas) {
     const bosses = turnArena(w, def.id);
     for (const boss of bosses) {
-      const home = { x: boss.transform.x, z: boss.transform.z, y: boss.transform.y };
+      // Damage probes need an unobstructed floor point, away from the monkey house roof.
+      const home = def.id === 'monkey' ? { x: 0, z: 26, y: .7 } : { x: boss.transform.x, z: boss.transform.z, y: boss.transform.y };
       // Seven flamingos / zebras / monkeys share one body model per type: the first, the monkey leader and the lioness are the distinct cases.
       const slots = def.id === 'monkey' ? [0, def.count - 1] : def.id === 'lion' ? [0, 1] : [0];
       if (!slots.includes(boss.infected!.arenaBoss!.slot)) continue;
@@ -67,7 +69,7 @@ export async function checkBossDamage(): Promise<void> {
       for (const weapon of WEAPONS) for (const range of [2, 8]) {
         // r31-flamingo: the bosses now have small HP; a big pool keeps every probe shot from killing the boss (a death opens gates/phases and changes the next probes).
         boss.health.max = boss.health.current = 1e6; boss.corpse = false;
-        const pin = () => { for (const other of w.entities.iterate()) if (other !== boss && other.infected && other.id !== 1) { other.transform.x = home.x + 400; other.transform.z = home.z + 400; } boss.transform.x = home.x; boss.transform.z = home.z; boss.health.current = Math.max(1, boss.health.current); };
+        const pin = () => { for (const other of w.entities.iterate()) if (other !== boss && other.infected && other.id !== 1) { other.transform.x = home.x + 400; other.transform.z = home.z + 400; w.spatial.set(other.id, other.transform.x, other.transform.z); } boss.transform.x = home.x; boss.transform.z = home.z; boss.transform.y = home.y; boss.infected!.arenaBoss!.exposedUntil = 0; w.spatial.set(boss.id, home.x, home.z); boss.health.current = Math.max(1, boss.health.current); };
         const { damage, fired, noLine } = shoot(w, boss, weapon, range, pin);
         if (noLine) { failures.push(`${def.id}#${boss.infected!.arenaBoss!.slot} ${weapon} @${range} m: no clear firing line`); continue; }
         boss.health.max = def.id === 'monkey' && boss.infected!.arenaBoss!.slot === def.count - 1 ? def.hp * 2 : def.hp; boss.health.current = boss.health.max;
@@ -124,10 +126,10 @@ export async function checkBossStates(): Promise<void> {
   const failures: string[] = [];
   for (const def of l8BossArenas) {
     const boss = turnArena(w, def.id)[0], arena = zoo.state.arenas.find(a => a.id === def.id)!;
-    const home = { x: boss.transform.x, z: boss.transform.z };
+    const home = { x: boss.transform.x, z: boss.transform.z, y: boss.transform.y };
     const pin = () => {
       for (const other of w.entities.iterate()) if (other !== boss && other.infected && other.id !== 1) { other.transform.x = home.x + 400; other.transform.z = home.z + 400; }
-      boss.transform.x = home.x; boss.transform.z = home.z; boss.health.current = Math.max(1, boss.health.current);
+      boss.transform.x = home.x; boss.transform.z = home.z; boss.transform.y = home.y; boss.infected!.arenaBoss!.exposedUntil = 0; w.spatial.set(boss.id, home.x, home.z); boss.health.current = Math.max(1, boss.health.current);
     };
     const cases: Array<[string, () => void]> = [
       ...(moves[def.id] ?? []).map(([move, windup, range, radius]): [string, () => void] => [move, () => start(boss, move, windup, range, radius)]),
@@ -153,7 +155,7 @@ export async function checkL8Cues(): Promise<void> {
   const step = () => mission.def.steps.find(s => s.id === 'sanctuary')!;
   advance(2);
   assert.equal(l8SanctuaryResting(mission), false, 'far from the plaza the courier still follows Nadia');
-  assert.equal(objectiveText(mission, step().text), 'Follow Nadia to the central plaza');
+  assert.equal(objectiveText(mission, step().text), 'Follow Nadia');
   missionControls(w).teleport(1, mission.def.anchors['central-plaza']); advance(2);
   assert.ok(!(mission.state.states.breached));
   // r36-l8gates (QA P3 "Rest at the plaza objective flickers during Nadia's tour"): her route crosses the plaza ring; no rest cue while she leads.
