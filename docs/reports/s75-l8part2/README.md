@@ -152,3 +152,7 @@ A normal 15 s engaged-elephant sample did not clear. A separate explicit camera-
 ## Static route diagnostic correction
 
 Updated `r33-l8route-flood.py` to include actual runtime path walls and seal-only connector gates, previously absent from this map-only model. Re-run `route-flood.json` preserves arena ordering and no premature yard access; no sampled map boundary is reachable in any sealed route state. However, reachable area still grows to 19,635 m² after lion clear and 28,877 m² after zebra clear. Therefore its PASS must not be interpreted as proof of the strict 3–5 m visitor-path requirement. Local junction/off-path containment remains unresolved and needs geometry/runtime investigation. The model uses layout AABBs and a 0.4 m dilation, not real-input traversal.
+
+## West route opening investigation
+
+Validated the flood seed at every state: plaza (0,0) is walkable, and reachable masks contain no blocked cells. Opened a generated collider/reachability map for two cleared pens. A shortest grid route from the plaza to (-96,0) follows the authored pond/lion corridor, then travels near (-62.25,-6.75), (-62.25,3.25), (-71.75,3.75), (-81.75,3.75), (-91.75,3.75). This locates a west-junction route into the broad exterior region. A temporary extension of branch-barrier half-length from 3.2 to 4.5 m did not eliminate that region and was reverted. No geometry fix is claimed. A runtime reproduction and actual fence-boundary inspection are required before changing the layout.
