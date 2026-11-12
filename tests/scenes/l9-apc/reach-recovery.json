@@ -1,0 +1,149 @@
+{
+  "name": "l9-apc-reach-recovery",
+  "note": "Budget-exhausted contact solver: native failing sprinter body variants beside a slowly reversing APC; production stats unchanged.",
+  "seed": 31,
+  "ground": "asphalt",
+  "size": 70,
+  "dof": false,
+  "time": "L6",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0.71,
+        2.025
+      ],
+      "yaw": 90
+    },
+    {
+      "id": "infected-0",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -8.0,
+        0.7
+      ],
+      "look": {
+        "model": "inf.delivery-driver"
+      }
+    },
+    {
+      "id": "infected-1",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -8.8,
+        -0.7
+      ],
+      "look": {
+        "model": "inf.bathrobe-neighbor"
+      }
+    },
+    {
+      "id": "infected-2",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -9.6,
+        0.7
+      ],
+      "look": {
+        "model": "inf.suburban-mom"
+      }
+    },
+    {
+      "id": "infected-3",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -10.4,
+        -0.7
+      ],
+      "look": {
+        "model": "inf.delivery-driver"
+      }
+    },
+    {
+      "id": "infected-4",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -11.2,
+        0.7
+      ],
+      "look": {
+        "model": "inf.bathrobe-neighbor"
+      }
+    },
+    {
+      "id": "infected-5",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -12.0,
+        -0.7
+      ],
+      "look": {
+        "model": "inf.suburban-mom"
+      }
+    }
+  ],
+  "vehicles": [
+    {
+      "id": "apc",
+      "asset": "vehicle.military-apc",
+      "at": [
+        0,
+        0
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "apc",
+    "zoom": 1.5
+  },
+  "script": [
+    {
+      "frame": 1,
+      "actor": "courier",
+      "do": {
+        "interact": true
+      }
+    },
+    {
+      "frame": 80,
+      "actor": "courier",
+      "do": {
+        "drive": {
+          "throttle": -0.15,
+          "seconds": 3
+        }
+      }
+    }
+  ],
+  "frames": 260,
+  "shots": [
+    140,
+    141,
+    142,
+    143,
+    144,
+    145
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "footSlideP95MaxCm": 5,
+    "footSlideMaxCm": 15,
+    "footSlideActors": [
+      "infected-0",
+      "infected-1",
+      "infected-2",
+      "infected-3",
+      "infected-4",
+      "infected-5"
+    ]
+  },
+  "trace": true
+}

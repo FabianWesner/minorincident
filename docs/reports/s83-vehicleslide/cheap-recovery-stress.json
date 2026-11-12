@@ -1,0 +1,292 @@
+{
+  "before": [
+    {
+      "tier": "high",
+      "name": "reach-recovery",
+      "events": 18,
+      "actors": {
+        "infected-0": {
+          "frames": 300,
+          "torsoPitchMinDeg": -51.4,
+          "torsoPitchMaxDeg": 15.7,
+          "contacts": 46,
+          "slideMaxCm": 96.9,
+          "slideP95Cm": 13.3,
+          "yawDriftMaxDeg": 9.5,
+          "liftMaxCm": 54.3,
+          "sinkMaxCm": 0.1,
+          "jitterRunMax": 4,
+          "worstSlideFrame": 147
+        },
+        "infected-1": {
+          "frames": 300,
+          "torsoPitchMinDeg": -92.4,
+          "torsoPitchMaxDeg": 59.1,
+          "contacts": 33,
+          "slideMaxCm": 1.9,
+          "slideP95Cm": 0.4,
+          "yawDriftMaxDeg": 11.5,
+          "liftMaxCm": 6.2,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 125
+        },
+        "infected-2": {
+          "frames": 300,
+          "torsoPitchMinDeg": -135.5,
+          "torsoPitchMaxDeg": 158,
+          "contacts": 33,
+          "slideMaxCm": 1.6,
+          "slideP95Cm": 0.5,
+          "yawDriftMaxDeg": 8.9,
+          "liftMaxCm": 6.3,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 3,
+          "worstSlideFrame": 190
+        },
+        "infected-3": {
+          "frames": 300,
+          "torsoPitchMinDeg": -61.2,
+          "torsoPitchMaxDeg": 10.4,
+          "contacts": 38,
+          "slideMaxCm": 41.3,
+          "slideP95Cm": 28.4,
+          "yawDriftMaxDeg": 15.3,
+          "liftMaxCm": 26.3,
+          "sinkMaxCm": 0.1,
+          "jitterRunMax": 4,
+          "worstSlideFrame": 106
+        },
+        "infected-4": {
+          "frames": 300,
+          "torsoPitchMinDeg": -141.1,
+          "torsoPitchMaxDeg": 96.6,
+          "contacts": 25,
+          "slideMaxCm": 0.6,
+          "slideP95Cm": 0.4,
+          "yawDriftMaxDeg": 2.7,
+          "liftMaxCm": 6.1,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 174
+        },
+        "infected-5": {
+          "frames": 300,
+          "torsoPitchMinDeg": -119.9,
+          "torsoPitchMaxDeg": 63.9,
+          "contacts": 35,
+          "slideMaxCm": 0.8,
+          "slideP95Cm": 0.3,
+          "yawDriftMaxDeg": 4.7,
+          "liftMaxCm": 6.2,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 297
+        }
+      }
+    },
+    {
+      "tier": "low",
+      "name": "reach-recovery",
+      "events": 18,
+      "actors": {
+        "infected-0": {
+          "frames": 300,
+          "torsoPitchMinDeg": -51.7,
+          "torsoPitchMaxDeg": 15.7,
+          "contacts": 44,
+          "slideMaxCm": 95.4,
+          "slideP95Cm": 13.1,
+          "yawDriftMaxDeg": 8.9,
+          "liftMaxCm": 52.5,
+          "sinkMaxCm": 0.1,
+          "jitterRunMax": 4,
+          "worstSlideFrame": 147
+        },
+        "infected-1": {
+          "frames": 300,
+          "torsoPitchMinDeg": -92.4,
+          "torsoPitchMaxDeg": 86.1,
+          "contacts": 33,
+          "slideMaxCm": 1.9,
+          "slideP95Cm": 0.5,
+          "yawDriftMaxDeg": 11.5,
+          "liftMaxCm": 6.1,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 125
+        },
+        "infected-2": {
+          "frames": 300,
+          "torsoPitchMinDeg": -135.6,
+          "torsoPitchMaxDeg": 157.8,
+          "contacts": 31,
+          "slideMaxCm": 1.6,
+          "slideP95Cm": 0.9,
+          "yawDriftMaxDeg": 8.9,
+          "liftMaxCm": 16.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 3,
+          "worstSlideFrame": 190
+        },
+        "infected-3": {
+          "frames": 300,
+          "torsoPitchMinDeg": -60.7,
+          "torsoPitchMaxDeg": 10.4,
+          "contacts": 37,
+          "slideMaxCm": 41.3,
+          "slideP95Cm": 25.5,
+          "yawDriftMaxDeg": 8.1,
+          "liftMaxCm": 26.3,
+          "sinkMaxCm": 0.1,
+          "jitterRunMax": 5,
+          "worstSlideFrame": 106
+        },
+        "infected-4": {
+          "frames": 300,
+          "torsoPitchMinDeg": -144.2,
+          "torsoPitchMaxDeg": 94.5,
+          "contacts": 26,
+          "slideMaxCm": 1.4,
+          "slideP95Cm": 0.7,
+          "yawDriftMaxDeg": 8.4,
+          "liftMaxCm": 6,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 174
+        },
+        "infected-5": {
+          "frames": 300,
+          "torsoPitchMinDeg": -116.4,
+          "torsoPitchMaxDeg": 63.9,
+          "contacts": 34,
+          "slideMaxCm": 0.5,
+          "slideP95Cm": 0.3,
+          "yawDriftMaxDeg": 3,
+          "liftMaxCm": 6.2,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 297
+        }
+      }
+    }
+  ],
+  "after": [
+    {
+      "tier": "high",
+      "pass": true,
+      "cheapProven": true,
+      "contactProven": true,
+      "checks": [
+        {
+          "actor": "infected-0",
+          "contacts": 39,
+          "p95Cm": 1.6,
+          "maxCm": 2.3,
+          "pass": true
+        },
+        {
+          "actor": "infected-1",
+          "contacts": 33,
+          "p95Cm": 0.4,
+          "maxCm": 1.9,
+          "pass": true
+        },
+        {
+          "actor": "infected-2",
+          "contacts": 33,
+          "p95Cm": 0.5,
+          "maxCm": 1.6,
+          "pass": true
+        },
+        {
+          "actor": "infected-3",
+          "contacts": 39,
+          "p95Cm": 1.3,
+          "maxCm": 1.7,
+          "pass": true
+        },
+        {
+          "actor": "infected-4",
+          "contacts": 25,
+          "p95Cm": 0.4,
+          "maxCm": 0.6,
+          "pass": true
+        },
+        {
+          "actor": "infected-5",
+          "contacts": 35,
+          "p95Cm": 0.3,
+          "maxCm": 0.8,
+          "pass": true
+        }
+      ],
+      "drawnFrames": {
+        "infected-0": 300,
+        "infected-1": 300,
+        "infected-2": 300,
+        "infected-3": 300,
+        "infected-4": 300,
+        "infected-5": 300
+      }
+    },
+    {
+      "tier": "low",
+      "pass": true,
+      "cheapProven": true,
+      "contactProven": true,
+      "checks": [
+        {
+          "actor": "infected-0",
+          "contacts": 36,
+          "p95Cm": 1.6,
+          "maxCm": 4.5,
+          "pass": true
+        },
+        {
+          "actor": "infected-1",
+          "contacts": 33,
+          "p95Cm": 0.5,
+          "maxCm": 1.9,
+          "pass": true
+        },
+        {
+          "actor": "infected-2",
+          "contacts": 31,
+          "p95Cm": 0.9,
+          "maxCm": 1.6,
+          "pass": true
+        },
+        {
+          "actor": "infected-3",
+          "contacts": 36,
+          "p95Cm": 1.3,
+          "maxCm": 1.7,
+          "pass": true
+        },
+        {
+          "actor": "infected-4",
+          "contacts": 26,
+          "p95Cm": 0.7,
+          "maxCm": 1.4,
+          "pass": true
+        },
+        {
+          "actor": "infected-5",
+          "contacts": 34,
+          "p95Cm": 0.3,
+          "maxCm": 0.5,
+          "pass": true
+        }
+      ],
+      "drawnFrames": {
+        "infected-0": 300,
+        "infected-1": 300,
+        "infected-2": 300,
+        "infected-3": 300,
+        "infected-4": 300,
+        "infected-5": 300
+      }
+    }
+  ]
+}

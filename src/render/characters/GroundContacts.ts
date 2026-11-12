@@ -69,6 +69,10 @@ export class GroundContacts {
       }
       // A reversal releases the old support in a lifted step instead of rotating a planted shoe with the body.
       if (p <= stance && foot.release < 0 && foot.rotation.angleTo(this.frame) > .5) foot.release = p;
+      // A shove can consume the remaining stance reach before the gait phase
+      // reaches toe-off. Release early while there is still room to lift.
+      this.joint.setFromMatrixPosition(foot.ik.upper.matrixWorld);
+      if (stride > 0 && p <= stance && foot.release < 0 && Math.hypot(this.joint.x - foot.planted.x, this.joint.z - foot.planted.z) > foot.reach * this.scale.y * .65) foot.release = p;
       const support = foot.release < 0 ? stance : foot.release;
       if (p <= support) { foot.swinging = false; foot.planted.y = this.origin.y + this.sole * this.scale.y; foot.target.copy(foot.planted); }
       else {
@@ -90,19 +94,34 @@ export class GroundContacts {
     }
     // Bend support knees enough to reach long, low-cadence strides. Restore comes
     // from the mixer each frame, so this correction cannot accumulate.
-    let lowering = 0;
+    let lowering = 0, minimumRaise = -Infinity;
     for (const foot of this.feet) {
       this.joint.setFromMatrixPosition(foot.ik.upper.matrixWorld);
       const dx = foot.target.x - this.joint.x, dz = foot.target.z - this.joint.z, reach = foot.reach * this.scale.y;
       const height = Math.sqrt(Math.max(.01, reach * reach - dx * dx - dz * dz));
       lowering = Math.max(lowering, this.joint.y - foot.target.y - height);
+      // Retargeted body clips can have unequal loaded leg segments. Keep the
+      // pelvis outside their inner reach sphere, just like detailed footwork.
+      const a = foot.ik.middle.position.length() * this.scale.y, b = foot.ik.end.position.length() * this.scale.y;
+      const inner = Math.sqrt(a * a + b * b + 2 * a * b * Math.cos(5 * Math.PI / 6));
+      minimumRaise = Math.max(minimumRaise, foot.target.y + Math.sqrt(Math.max(0, inner * inner - dx * dx - dz * dz)) - this.joint.y);
     }
-    this.lowering = style?.pelvisHeight === undefined ? Math.min(.15, lowering / this.scale.y) * weight : 0;
+    this.lowering = style?.pelvisHeight === undefined ? Math.min(.15, lowering / this.scale.y, -minimumRaise / this.scale.y) * weight : 0;
     // The caller refreshed the rig above. Only lowering changes its parent matrices.
-    if (this.lowering > 0) { rig.hip.position.y -= this.lowering; rig.hip.updateMatrixWorld(true); }
+    if (this.lowering !== 0) { rig.hip.position.y -= this.lowering; rig.hip.updateMatrixWorld(true); }
     this.pole.copy(this.forward);
     for (const foot of this.feet) {
       const support = foot.release < 0 ? stance : foot.release;
+      // An abrupt resolved push may still outrun the planned swing. Recover
+      // above the floor rather than letting IK clamp a grounded, travelling shoe.
+      this.joint.setFromMatrixPosition(foot.ik.upper.matrixWorld);
+      const reach = (foot.ik.middle.position.length() + foot.ik.end.position.length()) * this.scale.y * .99;
+      if (stride > 0 && this.joint.distanceTo(foot.target) > reach) {
+        foot.target.y = Math.max(foot.target.y, this.origin.y + this.sole * this.scale.y + .04 * this.scale.y);
+        const dx = foot.target.x - this.joint.x, dz = foot.target.z - this.joint.z;
+        const horizontal = Math.hypot(dx, dz), allowed = Math.sqrt(Math.max(0, reach * reach - (foot.target.y - this.joint.y) ** 2));
+        if (horizontal > allowed) { foot.target.x = this.joint.x + dx * allowed / horizontal; foot.target.z = this.joint.z + dz * allowed / horizontal; }
+      }
       // Delay sole yaw until the swing clears the ground, matching its travel window.
       if (foot.phase > support) foot.rotation.slerp(this.frame, Math.max(0, Math.min(1, ((foot.phase - support) / (1 - support) - .18) / .5)));
       foot.ik.solve(foot.target, this.pole, foot.rotation, weight, true);
