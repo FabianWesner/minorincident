@@ -11,6 +11,12 @@ L9 now adds massless native upper contact shells to the school bus and APC. The 
 - Typecheck and lint pass on the current source.
 - HIGH and LOW Scene Lab rows pass, zero console errors. Opened both sheets: bus nose meets the APC rear, separate roof silhouettes, clear APC windscreen throughout frames 0–120. HIGH has softer lighting; LOW preserves the same geometry and readable separation. Combined retained sheet: [contact-sheet.jpg](contact-sheet.jpg). This static visual row complements the moving native probe.
 
-## Remaining gates
+## Final-source gate rerun
 
-Rerun the full remote unit suite, L9 threat audit and all 18 L9 progress regressions on the final source. Earlier full-suite failures were resolved in focused vehicle tests; the full rerun is still required. Earlier L9 threat receipt had flags [], with wrapper exit 1 for PARTIAL_LEVEL_SELECTION. No tools/qa/threat files were changed.
+- Remote full suite on 46.225.66.90: exit 0, 27 files passed, 106 tests passed / 1 skipped, 205.6 s (240 s budget).
+- `sh tools/qa/l9-progress-regression.sh`: exit 0; all 18 primary/detour × road/countryside/dry-shortcut × seeds 1–3 receipts completed.
+- L9 threat audit: skilled route completes, but passive route fails at the 600 s budget while remaining near the rail (x≈377.9, z≈-195.6), with later crowd collision invariant failures. Flags include `L9/INCOMPLETE_NATIVE_POLICY:mission-failed` and the normal partial-selection wrapper flag. This violates the required zero L9 flags and remains open. No threat harness files were changed.
+
+## Remaining work
+
+Resolve the passive rail restart/contact regression, then rerun the affected gates. The goal is not complete. No checks remain running.
