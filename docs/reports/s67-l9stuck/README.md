@@ -91,3 +91,7 @@ Reusing a mass-scaled recovery lift plus held-steering yaw impulse improved coun
 The final local verifier and remote suite failed the old `checkL9ApcPocket` expectation that an APC held at W/zero steering escapes a sealed four-wall pocket by relocating. That assertion contradicts the explicit no-teleport requirement. All three input variants and their 900-tick budgets are retained; they now assert confinement, <1 m per-tick displacement, and <0.1 m physical contact penetration. Focused missions suite passes all 6 tests (49.59 s). This is a correction to a legacy test criterion, not a relaxed progress limit. Fresh full gates remain necessary after the primary-line failures are fixed.
 
 The refreshed threat audit on `abcf6f35` reports skilled complete, passive tick-budget, 0 L9 flags; its sole exit flag is partial-level selection. No completion claim is made.
+
+## Primary-corner controller and tyre trials
+
+A two-second centerline lookahead plus curvature-based steering reduced primary-road corner gaps, but firmer APC lateral tyre response failed the full 18-run audit: road detour seeds 2/3 regressed to 13.43 / 121.93 s. All 18 completed without position jumps, yet the progress invariant failed on several routes. The tyre change and uncommitted controller revision were reverted, restoring the committed regression policy. The primary-road tree contact and primary-country gap remain open; no passing subset from these trials is accepted as completion evidence.
