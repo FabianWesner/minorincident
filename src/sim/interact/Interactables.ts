@@ -90,7 +90,7 @@ export class Interactables {
     this.blockers.clear(); this.walls.length = 0; this.nav = nav;
     for (const [id, wall] of this.authoredWalls) {
       const entity = this.world.entities.get(id);
-      if (entity && entity.health.current > 0 && !entity.interactable?.open && !entity.destructible?.broken) this.block(id, wall);
+      if (entity && entity.health.current > 0 && !entity.interactable?.open && !entity.destructible?.broken && !entity.destructible?.rammed) this.block(id, wall);
     }
   }
   private complete(id: number): void {

@@ -1,7 +1,7 @@
 import * as RAPIER from '@dimforge/rapier3d-compat';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
-export const lightObstacles = ['fence', 'cone', 'barricade', 'trash-can', 'mailbox'] as const;
+export const lightObstacles = ['fence', 'crate', 'cone', 'barricade', 'trash-can', 'mailbox'] as const;
 export const heavyObstacles = ['jersey-barrier', 'wall', 'truck'] as const;
 export type ObstacleKind = typeof lightObstacles[number] | typeof heavyObstacles[number];
 interface Obstacle { entity: EntitySnapshot; collider: RAPIER.Collider; body?: RAPIER.RigidBody; hitIds?: Set<number>; halfX: number; halfZ: number; light: boolean; broken: boolean; /** r32-l9fun: thrown by an L9 Thrower, no contact until it lands. */ airborne?: boolean }
@@ -40,6 +40,14 @@ export class Obstacles {
       this.nextDebris = (this.nextDebris + 1) % 24;
     }
     this.world.events.emit({ type: 'vehicle.obstacle-broken', tick, targetId: item.entity.id });
+  }
+  /** Retain map-authored destructibles instead of destroying their entity on a vehicle impact. */
+  ramDestructible(entity: EntitySnapshot, halfX: number, halfZ: number, velocity: RAPIER.Vector, tick: number): void {
+    this.world.interactables!.unblock(entity.id);
+    entity.destructible!.rammed = { halfX, halfZ };
+    const collider = this.world.physics.world!.createCollider(RAPIER.ColliderDesc.cuboid(halfX, .5, halfZ).setTranslation(entity.transform.x, .5, entity.transform.z));
+    const item: Obstacle = { entity, collider, halfX, halfZ, light: true, broken: false };
+    this.items.push(item); this.ram(item, velocity, tick);
   }
   /** Vehicle impacts throw a prop clear but keep its identity, model and collider for the rest of the level. */
   ram(item: Obstacle, velocity: RAPIER.Vector, tick: number): void {
@@ -90,7 +98,9 @@ export class Obstacles {
   rebuild(worldReset = false): void {
     if (!worldReset) this.dispose(); else this.items.length = this.debris.length = 0;
     this.nextDebris = 0;
-    for (const entity of this.world.entities.iterate()) if (entity.kind === 'obstacle') {
+    for (const entity of this.world.entities.iterate()) {
+      if (entity.destructible?.rammed && entity.health.current > 0) { const { halfX, halfZ } = entity.destructible.rammed; this.ramDestructible(entity, halfX, halfZ, { x: 0, y: 0, z: 0 }, this.world.tick); continue; }
+      if (entity.kind !== 'obstacle') continue;
       const kind = entity.archetype.replace(/^obstacle\./, '') as ObstacleKind;
       if ([...lightObstacles, ...heavyObstacles].includes(kind)) this.bind(entity, kind);
     }

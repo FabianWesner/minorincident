@@ -75,3 +75,7 @@ Review found that the generic car path armed ram protection using distance to th
 ## Repeated barrier launches
 
 Fixed a retained barrier's second launch leaving its settled navigation blocker behind: blocker removal now happens before both initial body creation and subsequent relaunches. Focused vehicle suite passes (2 tests, 53.89 s). Review also confirms the separate map-destructible impact branch still uses `hazards.hit` for fences/cones/barricades/trash cans/mailboxes, so that path remains an explicit gap against the added never-vanish requirement.
+
+## Map destructible retention
+
+Replaced the vehicle impact branch's lethal `hazards.hit` with adoption of the same entity by the obstacle physics owner. Fences, crates, cones, barricades, trash cans and mailboxes retain health/identity and are launched dynamically. Saved destructible dimensions identify adopted bodies during collider rebuilds; the interactable owner skips their original authored static blocker. Typecheck, lint and focused vehicle suite pass (2 tests, 94.14 s). A dedicated persistence/restore regression and fresh runtime verification of this path remain necessary.

@@ -306,13 +306,12 @@ export class Vehicles {
     for (let index = (walls?.length ?? 0) - 1; index >= 0; index--) {
       const wall = walls![index];
       const entity = wall.entityId === undefined ? undefined : this.world.entities.get(wall.entityId);
-      if (!entity?.destructible || entity.health.current <= 0 || !['fence', 'cone', 'barricade', 'trash-can', 'mailbox'].includes(entity.destructible.kind) || speed < 5) continue;
+      if (!entity?.destructible || entity.health.current <= 0 || !['fence', 'crate', 'cone', 'barricade', 'trash-can', 'mailbox'].includes(entity.destructible.kind) || speed < 5) continue;
       const dx = entity.transform.x - p.x, dz = entity.transform.z - p.z;
       if (Math.abs(dx * c - dz * s) > extent + Math.abs(c) * wall.halfX + Math.abs(s) * wall.halfZ || Math.abs(dx * s + dz * c) > car.physics.def.width / 2 + Math.abs(s) * wall.halfX + Math.abs(c) * wall.halfZ) continue;
-      this.world.hazards!.hit(entity.id, entity.health.max, 'vehicle');
+      this.obstacles.ramDestructible(entity, wall.halfX, wall.halfZ, velocity, this.world.tick);
       this.crash(car, speed);
       car.physics.body.setLinvel({ x: velocity.x * .9, y: velocity.y, z: velocity.z * .9 }, true);
-      this.world.events.emit({ type: 'vehicle.obstacle-broken', tick: this.world.tick, targetId: entity.id });
     }
     for (const obstacle of this.obstacles.items) {
       if (obstacle.broken || obstacle.airborne) continue;
@@ -578,7 +577,7 @@ export class Vehicles {
     }
     for (const wall of this.world.interactables?.walls ?? []) {
       const entity = wall.entityId === undefined ? undefined : this.world.entities.get(wall.entityId);
-      if (entity?.destructible && entity.health.current > 0 && ['fence', 'cone', 'barricade', 'trash-can', 'mailbox'].includes(entity.destructible.kind)) note(entity.id, boxGap(entity.transform.x, entity.transform.z, wall.halfX, wall.halfZ));
+      if (entity?.destructible && entity.health.current > 0 && ['fence', 'crate', 'cone', 'barricade', 'trash-can', 'mailbox'].includes(entity.destructible.kind)) note(entity.id, boxGap(entity.transform.x, entity.transform.z, wall.halfX, wall.halfZ));
     }
     for (const [id, boxes] of this.wrecks) {
       let gap = Infinity; for (const b of boxes) gap = Math.min(gap, boxGap(b.x, b.z, b.halfX, b.halfZ));
