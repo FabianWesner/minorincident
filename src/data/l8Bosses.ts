@@ -2,7 +2,7 @@
  * r31-flamingo (PO 11-10): HP is sized to the L8 weapons (handgun, axe, shotgun, MG; no rocket). Damage.ts applies x0.6 outside an exposed window (x1.8 inside) and x0.2 from allies,
  * so one hit is handgun 12, MG 8.4, axe ~34, shotgun ~110-145. Flamingo/monkey 36: handgun 3, MG 5, axe 2, shotgun 1. Zebra 150: shotgun 2. Lion 250 ~ 30 MG. Gorilla 500 ~ 60 MG. Elephant 1200 chips; the 3 wall impacts end it. Entries sit on connected public paths. */
 export const l8BossArenas = [
-  { id: 'flamingo', name: 'Flamingo flock', count: 8, hp: 36, centre: { x: 0, z: -32 }, entry: { x: 0, z: -18 }, radius: 14, counter: 'Step sideways out of the shadow lane; sweep the birds as they land.' },
+  { id: 'flamingo', name: 'Flamingo flock', count: 8, hp: 36, centre: { x: 0, z: -32 }, entry: { x: 0, z: -18 }, radius: 14, counter: 'Step out of the red lanes. Use the barriers and fire as the birds land.' },
   { id: 'lion', name: 'Lion and lioness', count: 2, hp: 250, centre: { x: -60, z: -32 }, entry: { x: -60, z: -46 }, radius: 14, counter: 'Keep your back to the rocks. Dodge sideways at the glint and fire after the landing.' },
   { id: 'monkey', name: 'Monkey pack', count: 7, hp: 36, centre: { x: -6, z: 20 }, entry: { x: -20, z: 20 }, radius: 12, counter: 'Use the doorway to stop the pack surrounding you. Melee shakes off a grab.' },
   { id: 'zebra', name: 'Zebra herd', count: 4, hp: 150, centre: { x: 60, z: 32 }, entry: { x: 60, z: 46 }, radius: 14, counter: 'Leave the dust lane. The fence turns the herd; shoot the stragglers.' },
