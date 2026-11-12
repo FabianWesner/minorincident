@@ -45,17 +45,17 @@ export interface L8RouteStage {
   depth?: number;
 }
 export const l8Route: readonly L8RouteStage[] = [
-  { id: 'flamingo', zone: { x0: -13, z0: -45, x1: 13, z1: -19 }, entry: { x: 0, z: -18, halfX: 3, halfZ: .25 }, exit: { x: 0, z: -46, halfX: 3, halfZ: .25 },
+  { id: 'flamingo', zone: { x0: -14, z0: -46, x1: 14, z1: -18 }, entry: { x: 0, z: -18, halfX: 3, halfZ: .25 }, exit: { x: 0, z: -46, halfX: 3, halfZ: .25 },
     nodes: [{ x: 0, z: -9 }, { x: 0, z: -18 }], text: 'Enter the flamingo pond', clearedLine: 'L8.route-flamingo' },
-  { id: 'lion', zone: { x0: -73, z0: -45, x1: -47, z1: -19 }, entry: { x: -60, z: -46, halfX: 3, halfZ: .25 }, exit: { x: -60, z: -18, halfX: 3, halfZ: .25 },
+  { id: 'lion', zone: { x0: -74, z0: -46, x1: -46, z1: -18 }, entry: { x: -60, z: -46, halfX: 3, halfZ: .25 }, exit: { x: -60, z: -18, halfX: 3, halfZ: .25 },
     nodes: [{ x: 0, z: -52 }, { x: 0, z: -64 }, { x: -60, z: -64 }, { x: -60, z: -46 }], text: 'Enter the lion habitat', clearedLine: 'L8.route-lion' },
-  { id: 'monkey', zone: { x0: -18, z0: 8, x1: 6, z1: 32 }, entry: { x: -20, z: 20, halfX: .25, halfZ: 3 }, exit: { x: 8, z: 20, halfX: .25, halfZ: 3 },
+  { id: 'monkey', zone: { x0: -20, z0: 6, x1: 8, z1: 34 }, entry: { x: -20, z: 20, halfX: .25, halfZ: 3 }, exit: { x: 8, z: 20, halfX: .25, halfZ: 3 },
     nodes: [{ x: -60, z: -12 }, { x: -60, z: 0 }, { x: -24, z: 0 }, { x: -24, z: 12 }, { x: -20, z: 20 }], text: 'Enter the primate yard', clearedLine: 'L8.route-monkey' },
-  { id: 'zebra', zone: { x0: 47, z0: 19, x1: 73, z1: 45 }, entry: { x: 60, z: 46, halfX: 3, halfZ: .25 }, exit: { x: 60, z: 18, halfX: 3, halfZ: .25 },
+  { id: 'zebra', zone: { x0: 46, z0: 18, x1: 74, z1: 46 }, entry: { x: 60, z: 46, halfX: 3, halfZ: .25 }, exit: { x: 60, z: 18, halfX: 3, halfZ: .25 },
     nodes: [{ x: -24, z: 19 }, { x: -24, z: 32 }, { x: -24, z: 64 }, { x: 60, z: 64 }, { x: 60, z: 46 }], text: 'Enter the zebra paddock', clearedLine: 'L8.route-zebra' },
-  { id: 'gorilla', zone: { x0: 47, z0: -45, x1: 73, z1: -19 }, entry: { x: 60, z: -18, halfX: 3, halfZ: .25 }, exit: { x: 74, z: -32, halfX: .25, halfZ: 3 },
+  { id: 'gorilla', zone: { x0: 46, z0: -46, x1: 74, z1: -18 }, entry: { x: 60, z: -18, halfX: 3, halfZ: .25 }, exit: { x: 74, z: -32, halfX: .25, halfZ: 3 },
     nodes: [{ x: 60, z: 12 }, { x: 60, z: 0 }, { x: 60, z: -18 }], text: 'Enter the gorilla house', clearedLine: 'L8.route-gorilla', depth: 7 },
-  { id: 'elephant', zone: { x0: 82, z0: 40, x1: 110, z1: 66 }, entry: null, exit: null,
+  { id: 'elephant', zone: { x0: 82, z0: 39, x1: 110, z1: 67 }, entry: null, exit: null,
     nodes: [{ x: 82, z: -32 }, { x: 96, z: -32 }, { x: 96, z: 40 }, { x: 96, z: 39 }], text: 'Enter the elephant yard', clearedLine: 'L8.route-elephant' },
 ];
 /** The plaza's three doors shut once the group stands inside the plaza cell after the breach hold. */
