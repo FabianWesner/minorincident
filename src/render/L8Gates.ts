@@ -1,5 +1,5 @@
 import { Box3, BoxGeometry, Color, Group, InstancedMesh, Matrix4, Quaternion, Ray, Vector3 } from 'three/webgpu';
-import { l8EncounterGates, l8GateClosed, l8PlazaGates, l8Route, l8YardGates, l8YardWalls } from '../data/l8Bosses';
+import { l8ConnectorGates, l8EncounterGates, l8GateClosed, l8PlazaGates, l8Route, l8YardGates, l8YardWalls } from '../data/l8Bosses';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { Materials } from './Materials';
 
@@ -33,6 +33,7 @@ export class L8Gates extends Group {
     l8YardGates.forEach(box => fence(box, true));
     for (const stage of l8Route) { if (stage.entry) fence(stage.entry, true, false, `${stage.id}.entry`); if (stage.exit) fence(stage.exit, true, false, `${stage.id}.exit`); }
     for (const [side, box] of Object.entries(l8PlazaGates)) fence(box, true, false, `plaza.${side}`);
+    l8ConnectorGates.forEach((box, i) => fence(box, true, false, `connector.${i}`));
     fence(l8EncounterGates.elephant, true, false, 'elephant');
     fence(l8EncounterGates.elephantEntry, true, false, 'elephantEntry');
     fence(l8EncounterGates.elephantExit, true, false, 'elephantExit');

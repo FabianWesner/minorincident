@@ -1,5 +1,5 @@
 import { expect } from 'vitest';
-import { inRect, l8Route, l8GateClosed } from '../../src/data/l8Bosses';
+import { inRect, l8Route, l8GateClosed, l8ConnectorGates } from '../../src/data/l8Bosses';
 import { loadLevel } from '../qa/invariants/world';
 import { objectiveText } from '../../src/sim/missions/objectiveText';
 
@@ -24,12 +24,14 @@ export async function checkL8Route(): Promise<void> {
     expect(zoo.protecting()).toBe(false);
     // Unsealed: the doors are still open, the fight cannot start from the plaza.
     expect(zoo.state.sealedAt).toBe(0);
+    l8ConnectorGates.forEach((_, i) => expect(l8GateClosed(`connector.${i}`, { arenas: zoo.state.arenas, sealed: false })).toBe(false));
     Object.assign(player.transform, { x: 0, z: 0 });
     zoo.followers().forEach((e, n) => w.solids.relocate(e, { x: (n % 6 - 2.5) * 1.5, z: 2 + Math.floor(n / 6) * 1.5, y: e.transform.y }, 'fixture.l8-route', 20, false));
     for (let i = 0; i < 400 && !zoo.state.sealedAt; i++) w.update();
     expect(zoo.state.sealedAt, 'the plaza doors shut once the group is inside').toBeGreaterThan(0);
     const closedKeys = (): string[] => l8Route.flatMap(s => [`${s.id}.entry`, `${s.id}.exit`]).filter(k => !k.startsWith('elephant') && l8GateClosed(k, { arenas: zoo.state.arenas, sealed: true }));
     expect(closedKeys()).toContain('lion.entry');
+    l8ConnectorGates.forEach((_, i) => expect(l8GateClosed(`connector.${i}`, { arenas: zoo.state.arenas, sealed: true })).toBe(true));
     for (const [index, stage] of l8Route.entries()) {
       if (!stage.entry) break;
       const arena = zoo.state.arenas[index], before = zoo.state.arenas.slice(0, index);

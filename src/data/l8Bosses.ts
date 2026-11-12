@@ -62,13 +62,20 @@ export const l8Route: readonly L8RouteStage[] = [
 export const l8PlazaGates = {
   w: { x: -14, z: 0, halfX: .25, halfZ: 3 }, e: { x: 14, z: 0, halfX: .25, halfZ: 3 }, s: { x: 24, z: 12, halfX: 2.5, halfZ: .25 },
 } as const;
+/** Unused road branches stay open for the tour and outbreak, then seal the visitor route. */
+export const l8ConnectorGates = [
+  { x: 20.9, z: 64, halfX: .25, halfZ: 3.2 },
+  { x: 63.1, z: 64, halfX: .25, halfZ: 3.2 },
+  { x: 92.9, z: 0, halfX: .25, halfZ: 3.2 },
+  { x: 99.1, z: 0, halfX: .25, halfZ: 3.2 },
+] as const;
 /** The plaza cell: the group must be inside it for the gates to shut. */
 export const l8PlazaCell = { x0: -13, z0: -11, x1: 13, z1: 7 } as const;
 
 export interface L8GateContext { arenas: readonly { id: L8BossId; phase: number; armed?: boolean }[]; sealed: boolean }
 /** One rule for the sim barriers and the drawn fences: `<id>.entry`, `<id>.exit` or `plaza.<w|e|s>`. */
 export function l8GateClosed(key: string, ctx: L8GateContext): boolean {
-  if (key.startsWith('plaza.')) return ctx.sealed;
+  if (key.startsWith('plaza.') || key.startsWith('connector.')) return ctx.sealed;
   const [id, side] = key.split('.') as [L8BossId, 'entry' | 'exit'];
   const index = ctx.arenas.findIndex(a => a.id === id), arena = ctx.arenas[index];
   if (!arena) return true;

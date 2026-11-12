@@ -129,7 +129,7 @@ export async function checkBossStates(): Promise<void> {
   const failures: string[] = [];
   for (const def of l8BossArenas) {
     const boss = turnArena(w, def.id)[0], arena = zoo.state.arenas.find(a => a.id === def.id)!;
-    const home = { x: boss.transform.x, z: boss.transform.z };
+    const home = { x: boss.transform.x, z: boss.transform.z, y: boss.transform.y };
     const pin = () => {
       for (const other of w.entities.iterate()) if (other !== boss && other.infected && other.id !== 1) { other.transform.x = home.x + 400; other.transform.z = home.z + 400; }
       boss.transform.x = home.x; boss.transform.z = home.z; boss.transform.y = home.y; boss.infected!.arenaBoss!.exposedUntil = 0; w.spatial.set(boss.id, home.x, home.z); boss.health.current = Math.max(1, boss.health.current);

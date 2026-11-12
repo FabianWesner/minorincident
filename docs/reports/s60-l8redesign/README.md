@@ -16,11 +16,11 @@
 
 | Check | Latest result / limitation |
 |---|---|
-| D-ZOO rebuild | PASS, hash `78150abd7ebc9231668d4b066c988732c696838be04ed0359f962c946ec27eee` |
+| D-ZOO rebuild | PASS, hash `8a3e94c9a30816092e9487be49ed9211a0765dedde5ff627a67ec177a391f8a9` |
 | Layout validation | Zero errors; zero new tier-5 placement overlaps after connector rebuild |
-| Post-rebuild smoke | PASS, 6 QA + 1 public tests, 141.9 s, ports 4965/4966, headless through e2e-lock |
-| Typecheck / lint | PASS before latest layout-only connector edits |
-| Mission scenarios | 6/6 PASS against latest geometry, 69.53 s; gate fixture queues followers on narrow approaches |
+| Post-rebuild smoke | PASS, 6 QA + 1 public tests, 226.8 s, ports 4965/4966, headless through e2e-lock |
+| Typecheck / lint | PASS, including crossroad gates and fixture height fix |
+| Mission scenarios | 6/6 PASS against latest geometry, 153.40 s; gate fixture queues followers on narrow approaches |
 | L8 wave census | All L8 cohorts reach full counts, high and low, after north-route split |
 | Whole waves file | FAIL: high L2 market 24 admitted / 23 reached; reproduced using base source `73db6c05` |
 | Remote nightly | Latest run 6 passed / 3 failed: supermarket inventory, L2 high waves, L8 low north cohort. Subsequent local fix clears the L8 failure; remote rerun pending. Placement invariant PASS across all tiers |
@@ -61,3 +61,5 @@ Current remote npm test attempted again(150/150 registered), timed out240.6s. Ve
 Damage-probe resolution: shoot() captured target goal before pin() relocated monkey leader; first shot aimed at stale pre-fixture position. Establish fixture pose before computing bearings. Direct vehicles+navigation now6/6 PASS82.68s, unchanged production damage assertions. Remote full-suite budget remains unresolved; no running checks.
 
 South/east probes: arrival junction south, zebra junction east, zebra spur side, and east crossroad directions all had12m open sweeps; zebra junction south already blocked2.425m. Added source south arrival lawn cap and zebra-spur verges. Crossroad caps need phase-aware gate handling because outbreak access uses them; no static cap added there. Rebuild pending, no checks running.
+
+Crossroad gates now close unused west-arrival, east-zebra and east-service branches at the plaza seal, sharing physics/render gate rules; they remain open for the initial tour/outbreak. Southern lawn cap and zebra-spur verges rebuilt. Smoke7/7 PASS226.8s, missions6/6 PASS153.40s. Remote census confirms every L8 cohort high+low reaches full count. Final threat/full-suite/nightly results pending.

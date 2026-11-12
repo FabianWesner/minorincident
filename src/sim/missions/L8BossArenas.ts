@@ -1,4 +1,4 @@
-import { l8BossArenas, l8EncounterGates, l8GateClosed, l8PlazaGates, l8Route, l8YardGates, l8YardWalls, inRect, type L8BossId } from '../../data/l8Bosses';
+import { l8ConnectorGates, l8BossArenas, l8EncounterGates, l8GateClosed, l8PlazaGates, l8Route, l8YardGates, l8YardWalls, inRect, type L8BossId } from '../../data/l8Bosses';
 import type { InfectedSpecialMove } from '../../data/infected';
 import { propFootprint } from '../interact/PropSystem';
 import { boxContact, type SolidBox } from '../world/SolidGeometry';
@@ -84,6 +84,12 @@ export class L8BossArenas {
       if (this.gateStates.get(key) === closed) return;
       this.gateStates.set(key, closed);
       this.barrier(`l8.plaza-gate.${side}`, 900860 + i, { ...box, y: 1.5, halfY: 1.5 }, closed);
+    });
+    l8ConnectorGates.forEach((box, i) => {
+      const key = `connector.${i}`, closed = l8GateClosed(key, ctx);
+      if (this.gateStates.get(key) === closed) return;
+      this.gateStates.set(key, closed);
+      this.barrier(`l8.connector-gate.${i}`, 900880 + i, { ...box, y: 1.5, halfY: 1.5 }, closed);
     });
     // The elephant's drive-out gate shuts while he is loose in the yard.
     const elephant = this.state.find(a => a.id === 'elephant');
