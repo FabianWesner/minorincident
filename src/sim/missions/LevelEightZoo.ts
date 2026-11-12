@@ -394,6 +394,10 @@ export class LevelEightZoo {
       // the courier crosses their region (a cohort sealed behind hedges would stand harmless against a fence).
       const nav = w.infected!.nav, goal = nav.nearestCell(w.entities.get(1)!.transform.x, w.entities.get(1)!.transform.z);
       s.outlets.forEach((outlet, i) => {
+        // These remote cohorts belong to their later route regions. A path
+        // before the plaza seal is not proof they can finish that long walk
+        // before its doors shut behind the opening defence.
+        if (i === 0 || i === 1) return;
         const cell = nav.nearestCell(outlet.ox, outlet.oz);
         if (i < 4 && !(cell >= 0 && goal >= 0 && nav.path(cell, goal, [], 400_000))) return;
         for (let n = 0; n < (i >= 4 ? (ai.director.tier === 'low' ? 3 : 5) : ai.director.tier === 'low' ? 3 : 6); n++) this.release(outlet, i);
