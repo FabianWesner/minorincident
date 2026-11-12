@@ -503,7 +503,7 @@ export class CrowdLocomotion {
       this.footwork.states.delete(id);
     }
     if ((strides[clip] && speed > .06) || layers || this.animal && !this.preserveAnimalJoints && standingClips.has(clip)) {
-      const row = poses.correct(id, frame, blend[0], blend[1], pose => this.correct(id, pose, instance, phase, clip, scale, speed, layers, time, style), this.animal);
+      const row = poses.correct(id, frame, blend[0], blend[1], pose => this.correct(id, pose, instance, phase, clip, scale, speed, layers, time, style));
       blend[1] = 1; return row;
     }
     this.reset(id);

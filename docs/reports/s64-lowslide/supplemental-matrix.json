@@ -1,0 +1,3308 @@
+{
+  "sourceSha256": "67acc7dedb9ee3a803940791f888beb943069887dbbeb1c3b3d0776012379317",
+  "rowsPassed": 152,
+  "coverage": {
+    "infected.armored": {
+      "fixture": "s64-day-foot-slide-armored.json",
+      "actor": "subject",
+      "combinations": 8
+    },
+    "infected.riot": {
+      "fixture": "s64-day-foot-slide-riot.json",
+      "actor": "subject",
+      "combinations": 8
+    },
+    "infected.firefighter": {
+      "fixture": "s64-day-foot-slide-firefighter.json",
+      "actor": "subject",
+      "combinations": 8
+    },
+    "infected.runner": {
+      "fixture": "s64-day-night-boss-zoo-lineup.json",
+      "actor": "regular",
+      "combinations": 8
+    },
+    "infected.sprinter": {
+      "fixture": "s64-day-foot-slide-sprinter.json",
+      "actor": "subject",
+      "combinations": 8
+    },
+    "infected.crawler": {
+      "fixture": "s64-day-foot-slide-crawler.json",
+      "actor": "subject",
+      "combinations": 8
+    },
+    "infected.hazmat": {
+      "fixture": "s64-day-foot-slide-hazmat.json",
+      "actor": "subject",
+      "combinations": 8
+    },
+    "infected.alpha": {
+      "fixture": "s64-day-foot-slide-alpha.json",
+      "actor": "subject",
+      "combinations": 8
+    },
+    "infected.screamer": {
+      "fixture": "s64-day-foot-slide-screamer.json",
+      "actor": "subject",
+      "combinations": 8
+    },
+    "infected.flamingo": {
+      "fixture": "s64-day-foot-slide-flamingo-day.json",
+      "actor": "bird",
+      "combinations": 8
+    },
+    "infected.zebra": {
+      "fixture": "s64-day-night-boss-zoo-lineup.json",
+      "actor": "zebra",
+      "combinations": 8
+    },
+    "infected.monkey": {
+      "fixture": "s64-day-night-boss-zoo-lineup.json",
+      "actor": "monkey",
+      "combinations": 8
+    },
+    "infected.lion": {
+      "fixture": "s64-day-night-boss-zoo-lineup.json",
+      "actor": "lion",
+      "combinations": 8
+    },
+    "infected.lioness": {
+      "fixture": "s64-day-night-boss-zoo-lineup.json",
+      "actor": "lioness",
+      "combinations": 8
+    },
+    "infected.gorilla": {
+      "fixture": "s64-day-night-boss-zoo-lineup.json",
+      "actor": "gorilla",
+      "combinations": 8
+    },
+    "infected.elephant": {
+      "fixture": "s64-day-night-boss-zoo-lineup.json",
+      "actor": "elephant",
+      "combinations": 8
+    },
+    "infected.dog": {
+      "fixture": "s64-day-foot-slide-dog.json",
+      "actor": "subject",
+      "combinations": 8
+    },
+    "infected.crow": {
+      "fixture": "s64-day-foot-slide-crow.json",
+      "actor": "subject",
+      "combinations": 8
+    },
+    "infected.brute": {
+      "fixture": "s64-day-foot-slide-brute.json",
+      "actor": "subject",
+      "combinations": 8
+    },
+    "infected.bloated": {
+      "fixture": "s64-day-foot-slide-bloated.json",
+      "actor": "subject",
+      "combinations": 8
+    },
+    "infected.nurse": {
+      "fixture": "s64-day-foot-slide-nurse.json",
+      "actor": "subject",
+      "combinations": 8
+    },
+    "infected.cat": {
+      "fixture": "s64-day-foot-slide-cat.json",
+      "actor": "subject",
+      "combinations": 8
+    },
+    "infected.butcher": {
+      "fixture": "s64-day-foot-slide-butcher.json",
+      "actor": "subject",
+      "combinations": 8
+    }
+  },
+  "overrides": {
+    "day": "L1",
+    "night": "L8-zoo",
+    "megaNight": "L10-night",
+    "tiers": [
+      "low",
+      "high"
+    ],
+    "zooms": [
+      1,
+      1.5
+    ],
+    "flamingoCamera": {
+      "mode": "follow",
+      "actor": "bird"
+    }
+  },
+  "rows": [
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-runner@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-nurse@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 2,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 2,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-crow@low-z1.5",
+      "checks": [
+        {
+          "name": "airborneFeet.subject",
+          "pass": true,
+          "value": 3.353993742246025,
+          "limit": 2
+        },
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-night-boss-zoo-lineup@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 1.6,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.flamingo",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.zebra",
+          "pass": true,
+          "value": 0.7,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.monkey",
+          "pass": true,
+          "value": 0.3,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.lion",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.lioness",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.gorilla",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.elephant",
+          "pass": true,
+          "value": 1.6,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.dog",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.regular",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-bloated@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 1.8,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 1.8,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-brute@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-crow@low-z1",
+      "checks": [
+        {
+          "name": "airborneFeet.subject",
+          "pass": true,
+          "value": 3.353993742246025,
+          "limit": 2
+        },
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-hazmat@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-firefighter@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-sprinter@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 1.7,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 1.7,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-cat@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-brute@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-alpha@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-butcher@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-firefighter@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-riot@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-sprinter@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 1.7,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 1.7,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-alpha@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-screamer@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.8,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.8,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-runner@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 2.4,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 2.4,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-crawler@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-armored@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-dog@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-butcher@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-night-boss-zoo-lineup@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 1.6,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.flamingo",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.zebra",
+          "pass": true,
+          "value": 0.7,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.monkey",
+          "pass": true,
+          "value": 0.3,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.lion",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.lioness",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.gorilla",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.elephant",
+          "pass": true,
+          "value": 1.6,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.dog",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.regular",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-hazmat@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-bloated@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 1.8,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 1.8,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-armored@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-riot@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-cat@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-crawler@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-screamer@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-flamingo-day@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.bird",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-nurse@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-flamingo-day@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.3,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.bird",
+          "pass": true,
+          "value": 0.3,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-low",
+      "row": "s64-day-foot-slide-dog@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-crawler@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-runner@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.5,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.5,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-butcher@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-alpha@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-crow@high-z1.5",
+      "checks": [
+        {
+          "name": "airborneFeet.subject",
+          "pass": true,
+          "value": 3.353993742246025,
+          "limit": 2
+        },
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-screamer@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.8,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.8,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-riot@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-nurse@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 2,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 2,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-flamingo-day@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.3,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.bird",
+          "pass": true,
+          "value": 0.3,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-night-boss-zoo-lineup@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 1.6,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.flamingo",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.zebra",
+          "pass": true,
+          "value": 0.7,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.monkey",
+          "pass": true,
+          "value": 0.3,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.lion",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.lioness",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.gorilla",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.elephant",
+          "pass": true,
+          "value": 1.6,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.dog",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.regular",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-firefighter@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-runner@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 2.6,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 2.6,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-armored@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-butcher@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-bloated@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 1.8,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 1.8,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-cat@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-dog@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-brute@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-dog@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-alpha@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-cat@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-armored@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-bloated@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 1.8,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 1.8,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-crawler@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-firefighter@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-night-boss-zoo-lineup@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 1.6,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.flamingo",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.zebra",
+          "pass": true,
+          "value": 0.7,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.monkey",
+          "pass": true,
+          "value": 0.3,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.lion",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.lioness",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.gorilla",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.elephant",
+          "pass": true,
+          "value": 1.6,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.dog",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.regular",
+          "pass": true,
+          "value": 0.4,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-brute@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-sprinter@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.9,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.9,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-hazmat@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-hazmat@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-nurse@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-screamer@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-crow@high-z1",
+      "checks": [
+        {
+          "name": "airborneFeet.subject",
+          "pass": true,
+          "value": 3.353993742246025,
+          "limit": 2
+        },
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-riot@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-sprinter@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.9,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.9,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "day-high",
+      "row": "s64-day-foot-slide-flamingo-day@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.bird",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-bloated@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 1.8,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 1.8,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-sprinter@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 1.7,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 1.7,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-flamingo-day@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.bird",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-flamingo-day@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.3,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.bird",
+          "pass": true,
+          "value": 0.3,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-armored@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-crow@low-z1",
+      "checks": [
+        {
+          "name": "airborneFeet.subject",
+          "pass": true,
+          "value": 3.353993742246025,
+          "limit": 2
+        },
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-bloated@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 1.8,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 1.8,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-butcher@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-dog@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-butcher@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-alpha@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-hazmat@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-crawler@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-runner@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 2.4,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 2.4,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-brute@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-night-boss-zoo-lineup@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 1.6,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.flamingo",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.zebra",
+          "pass": true,
+          "value": 0.7,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.monkey",
+          "pass": true,
+          "value": 0.3,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.lion",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.lioness",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.gorilla",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.elephant",
+          "pass": true,
+          "value": 1.6,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.dog",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.regular",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-firefighter@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-night-boss-zoo-lineup@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 1.6,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.flamingo",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.zebra",
+          "pass": true,
+          "value": 0.7,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.monkey",
+          "pass": true,
+          "value": 0.3,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.lion",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.lioness",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.gorilla",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.elephant",
+          "pass": true,
+          "value": 1.6,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.dog",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.regular",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-screamer@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-armored@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-dog@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-screamer@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.8,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.8,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-riot@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-sprinter@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 1.7,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 1.7,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-cat@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-alpha@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-cat@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-firefighter@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-nurse@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-riot@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-crow@low-z1.5",
+      "checks": [
+        {
+          "name": "airborneFeet.subject",
+          "pass": true,
+          "value": 3.353993742246025,
+          "limit": 2
+        },
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-crawler@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-runner@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-brute@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-hazmat@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-low",
+      "row": "s64-night-foot-slide-nurse@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 2,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 2,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-sprinter@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.9,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.9,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-nurse@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-firefighter@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-crow@high-z1",
+      "checks": [
+        {
+          "name": "airborneFeet.subject",
+          "pass": true,
+          "value": 3.353993742246025,
+          "limit": 2
+        },
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-hazmat@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-night-boss-zoo-lineup@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 1.6,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.flamingo",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.zebra",
+          "pass": true,
+          "value": 0.7,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.monkey",
+          "pass": true,
+          "value": 0.3,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.lion",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.lioness",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.gorilla",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.elephant",
+          "pass": true,
+          "value": 1.6,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.dog",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.regular",
+          "pass": true,
+          "value": 0.4,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-night-boss-zoo-lineup@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 1.6,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.flamingo",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.zebra",
+          "pass": true,
+          "value": 0.7,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.monkey",
+          "pass": true,
+          "value": 0.3,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.lion",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.lioness",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.gorilla",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.elephant",
+          "pass": true,
+          "value": 1.6,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.dog",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.regular",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-flamingo-day@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.bird",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-brute@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-crow@high-z1.5",
+      "checks": [
+        {
+          "name": "airborneFeet.subject",
+          "pass": true,
+          "value": 3.353993742246025,
+          "limit": 2
+        },
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-runner@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.5,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.5,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-flamingo-day@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.3,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.bird",
+          "pass": true,
+          "value": 0.3,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-dog@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-butcher@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-alpha@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-cat@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-dog@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-cat@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-brute@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-armored@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-butcher@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-runner@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 2.6,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 2.6,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-bloated@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 1.8,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 1.8,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-hazmat@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-armored@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-bloated@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 1.8,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 1.8,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-crawler@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-riot@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-screamer@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-riot@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-firefighter@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.2,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-screamer@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.8,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.8,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-crawler@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-nurse@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 2,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 2,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-sprinter@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.9,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.9,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "night-high",
+      "row": "s64-night-foot-slide-alpha@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.subject",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "mega",
+      "row": "s64-mega-night@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.mega",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "mega",
+      "row": "s64-mega-night@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.mega",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "mega",
+      "row": "s64-mega-day@high-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.mega",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "mega",
+      "row": "s64-mega-day@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.mega",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "mega",
+      "row": "s64-mega-day@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.mega",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "mega",
+      "row": "s64-mega-night@low-z1.5",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.mega",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "mega",
+      "row": "s64-mega-night@low-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.mega",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    },
+    {
+      "group": "mega",
+      "row": "s64-mega-day@high-z1",
+      "checks": [
+        {
+          "name": "footSlideP95MaxCm",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        },
+        {
+          "name": "footSlideP95Cm.mega",
+          "pass": true,
+          "value": 0.1,
+          "limit": 3
+        }
+      ]
+    }
+  ]
+}

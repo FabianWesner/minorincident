@@ -1,0 +1,846 @@
+[
+  {
+    "scene": "ped-walk-all@low",
+    "backend": "webgpu",
+    "tier": "low",
+    "checks": [
+      {
+        "name": "footSlideMaxCm",
+        "pass": true,
+        "value": 2.8,
+        "limit": 6
+      }
+    ]
+  },
+  {
+    "scene": "dog-pet-trot@low-z1.5",
+    "backend": "webgpu",
+    "tier": "low",
+    "checks": [
+      {
+        "name": "footSlideMaxCm",
+        "pass": true,
+        "value": 0.3,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95MaxCm",
+        "pass": true,
+        "value": 0.3,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.dog-run",
+        "pass": true,
+        "value": 0.3,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.dog-flee",
+        "pass": true,
+        "value": 0.1,
+        "limit": 3
+      }
+    ]
+  },
+  {
+    "scene": "night-boss-zoo-lineup@high-z1.5",
+    "backend": "webgl2",
+    "tier": "high",
+    "checks": [
+      {
+        "name": "footSlideP95MaxCm",
+        "pass": true,
+        "value": 1.6,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.flamingo",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.zebra",
+        "pass": true,
+        "value": 0.7,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.monkey",
+        "pass": true,
+        "value": 0.3,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.lion",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.lioness",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.gorilla",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.elephant",
+        "pass": true,
+        "value": 1.6,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.dog",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.regular",
+        "pass": true,
+        "value": 0.4,
+        "limit": 3
+      }
+    ]
+  },
+  {
+    "scene": "foot-slide-flamingo-day@high",
+    "backend": "webgl2",
+    "tier": "high",
+    "checks": [
+      {
+        "name": "footSlideP95MaxCm",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.bird",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      }
+    ]
+  },
+  {
+    "scene": "foot-slide-flamingo-night@high",
+    "backend": "webgl2",
+    "tier": "high",
+    "checks": [
+      {
+        "name": "footSlideP95MaxCm",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.bird",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      }
+    ]
+  },
+  {
+    "scene": "night-boss-zoo-lineup@high-z1.5",
+    "backend": "webgpu",
+    "tier": "high",
+    "checks": [
+      {
+        "name": "footSlideP95MaxCm",
+        "pass": true,
+        "value": 1.6,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.flamingo",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.zebra",
+        "pass": true,
+        "value": 0.7,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.monkey",
+        "pass": true,
+        "value": 0.3,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.lion",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.lioness",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.gorilla",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.elephant",
+        "pass": true,
+        "value": 1.6,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.dog",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.regular",
+        "pass": true,
+        "value": 0.4,
+        "limit": 3
+      }
+    ]
+  },
+  {
+    "scene": "inf-chase-l3@high-z0.5",
+    "backend": "webgpu",
+    "tier": "high",
+    "checks": [
+      {
+        "name": "footSlideP95MaxCm",
+        "pass": true,
+        "value": 0.4,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.z1",
+        "pass": true,
+        "value": 0.2,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.z2",
+        "pass": true,
+        "value": 0.4,
+        "limit": 3
+      }
+    ]
+  },
+  {
+    "scene": "foot-slide-flamingo-day@high",
+    "backend": "webgpu",
+    "tier": "high",
+    "checks": [
+      {
+        "name": "footSlideP95MaxCm",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.bird",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      }
+    ]
+  },
+  {
+    "scene": "foot-slide-flamingo-night@high",
+    "backend": "webgpu",
+    "tier": "high",
+    "checks": [
+      {
+        "name": "footSlideP95MaxCm",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.bird",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      }
+    ]
+  },
+  {
+    "scene": "inf-chase-l1@low-z1.5",
+    "backend": "webgl2",
+    "tier": "low",
+    "checks": [
+      {
+        "name": "footSlideP95MaxCm",
+        "pass": true,
+        "value": 0.5,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.z1",
+        "pass": true,
+        "value": 0.5,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.z2",
+        "pass": true,
+        "value": 0.2,
+        "limit": 3
+      }
+    ]
+  },
+  {
+    "scene": "foot-slide-flamingo-day@low",
+    "backend": "webgpu",
+    "tier": "low",
+    "checks": [
+      {
+        "name": "footSlideP95MaxCm",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.bird",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      }
+    ]
+  },
+  {
+    "scene": "night-boss-zoo-lineup@low-z1.5",
+    "backend": "webgpu",
+    "tier": "low",
+    "checks": [
+      {
+        "name": "footSlideP95MaxCm",
+        "pass": true,
+        "value": 1.6,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.flamingo",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.zebra",
+        "pass": true,
+        "value": 0.7,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.monkey",
+        "pass": true,
+        "value": 0.3,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.lion",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.lioness",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.gorilla",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.elephant",
+        "pass": true,
+        "value": 1.6,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.dog",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.regular",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      }
+    ]
+  },
+  {
+    "scene": "foot-slide-flamingo-night@low",
+    "backend": "webgpu",
+    "tier": "low",
+    "checks": [
+      {
+        "name": "footSlideP95MaxCm",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.bird",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      }
+    ]
+  },
+  {
+    "scene": "ped-walk-all@high",
+    "backend": "webgl2",
+    "tier": "high",
+    "checks": [
+      {
+        "name": "footSlideMaxCm",
+        "pass": true,
+        "value": 2.8,
+        "limit": 6
+      }
+    ]
+  },
+  {
+    "scene": "courier-locomotion-f@high-z1.5",
+    "backend": "webgl2",
+    "tier": "high",
+    "checks": [
+      {
+        "name": "footSlideMaxCm",
+        "pass": true,
+        "value": 0.4,
+        "limit": 6
+      }
+    ]
+  },
+  {
+    "scene": "foot-slide-crawler@low-z1.5",
+    "backend": "webgl2",
+    "tier": "low",
+    "checks": [
+      {
+        "name": "footSlideP95MaxCm",
+        "pass": true,
+        "value": 0.1,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.subject",
+        "pass": true,
+        "value": 0.1,
+        "limit": 3
+      }
+    ]
+  },
+  {
+    "scene": "foot-slide-runner@low-z1.5",
+    "backend": "webgl2",
+    "tier": "low",
+    "checks": [
+      {
+        "name": "footSlideP95MaxCm",
+        "pass": true,
+        "value": 2.4,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.subject",
+        "pass": true,
+        "value": 2.4,
+        "limit": 3
+      }
+    ]
+  },
+  {
+    "scene": "foot-slide-flamingo-day@low",
+    "backend": "webgl2",
+    "tier": "low",
+    "checks": [
+      {
+        "name": "footSlideP95MaxCm",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.bird",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      }
+    ]
+  },
+  {
+    "scene": "night-boss-zoo-lineup@low-z1.5",
+    "backend": "webgl2",
+    "tier": "low",
+    "checks": [
+      {
+        "name": "footSlideP95MaxCm",
+        "pass": true,
+        "value": 1.6,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.flamingo",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.zebra",
+        "pass": true,
+        "value": 0.7,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.monkey",
+        "pass": true,
+        "value": 0.3,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.lion",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.lioness",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.gorilla",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.elephant",
+        "pass": true,
+        "value": 1.6,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.dog",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.regular",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      }
+    ]
+  },
+  {
+    "scene": "foot-slide-sprinter@low-z1.5",
+    "backend": "webgl2",
+    "tier": "low",
+    "checks": [
+      {
+        "name": "footSlideP95MaxCm",
+        "pass": true,
+        "value": 1.7,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.subject",
+        "pass": true,
+        "value": 1.7,
+        "limit": 3
+      }
+    ]
+  },
+  {
+    "scene": "foot-slide-flamingo-night@low",
+    "backend": "webgl2",
+    "tier": "low",
+    "checks": [
+      {
+        "name": "footSlideP95MaxCm",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.bird",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      }
+    ]
+  },
+  {
+    "scene": "foot-slide-brute@low-z1.5",
+    "backend": "webgl2",
+    "tier": "low",
+    "checks": [
+      {
+        "name": "footSlideP95MaxCm",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.subject",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      }
+    ]
+  },
+  {
+    "scene": "foot-slide-screamer@low-z1.5",
+    "backend": "webgl2",
+    "tier": "low",
+    "checks": [
+      {
+        "name": "footSlideP95MaxCm",
+        "pass": true,
+        "value": 0.2,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.subject",
+        "pass": true,
+        "value": 0.2,
+        "limit": 3
+      }
+    ]
+  },
+  {
+    "scene": "foot-slide-riot@low-z1.5",
+    "backend": "webgl2",
+    "tier": "low",
+    "checks": [
+      {
+        "name": "footSlideP95MaxCm",
+        "pass": true,
+        "value": 0.1,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.subject",
+        "pass": true,
+        "value": 0.1,
+        "limit": 3
+      }
+    ]
+  },
+  {
+    "scene": "foot-slide-butcher@low-z1.5",
+    "backend": "webgl2",
+    "tier": "low",
+    "checks": [
+      {
+        "name": "footSlideP95MaxCm",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.subject",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      }
+    ]
+  },
+  {
+    "scene": "foot-slide-nurse@low-z1.5",
+    "backend": "webgl2",
+    "tier": "low",
+    "checks": [
+      {
+        "name": "footSlideP95MaxCm",
+        "pass": true,
+        "value": 0.2,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.subject",
+        "pass": true,
+        "value": 0.2,
+        "limit": 3
+      }
+    ]
+  },
+  {
+    "scene": "foot-slide-dog@low-z1.5",
+    "backend": "webgl2",
+    "tier": "low",
+    "checks": [
+      {
+        "name": "footSlideP95MaxCm",
+        "pass": true,
+        "value": 0.2,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.subject",
+        "pass": true,
+        "value": 0.2,
+        "limit": 3
+      }
+    ]
+  },
+  {
+    "scene": "foot-slide-firefighter@low-z1.5",
+    "backend": "webgl2",
+    "tier": "low",
+    "checks": [
+      {
+        "name": "footSlideP95MaxCm",
+        "pass": true,
+        "value": 0.2,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.subject",
+        "pass": true,
+        "value": 0.2,
+        "limit": 3
+      }
+    ]
+  },
+  {
+    "scene": "foot-slide-armored@low-z1.5",
+    "backend": "webgl2",
+    "tier": "low",
+    "checks": [
+      {
+        "name": "footSlideP95MaxCm",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.subject",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      }
+    ]
+  },
+  {
+    "scene": "foot-slide-bloated@low-z1.5",
+    "backend": "webgl2",
+    "tier": "low",
+    "checks": [
+      {
+        "name": "footSlideP95MaxCm",
+        "pass": true,
+        "value": 1.8,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.subject",
+        "pass": true,
+        "value": 1.8,
+        "limit": 3
+      }
+    ]
+  },
+  {
+    "scene": "foot-slide-hazmat@low-z1.5",
+    "backend": "webgl2",
+    "tier": "low",
+    "checks": [
+      {
+        "name": "footSlideP95MaxCm",
+        "pass": true,
+        "value": 0.1,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.subject",
+        "pass": true,
+        "value": 0.1,
+        "limit": 3
+      }
+    ]
+  },
+  {
+    "scene": "foot-slide-alpha@low-z1.5",
+    "backend": "webgl2",
+    "tier": "low",
+    "checks": [
+      {
+        "name": "footSlideP95MaxCm",
+        "pass": true,
+        "value": 0.1,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.subject",
+        "pass": true,
+        "value": 0.1,
+        "limit": 3
+      }
+    ]
+  },
+  {
+    "scene": "foot-slide-crow@low-z1.5",
+    "backend": "webgl2",
+    "tier": "low",
+    "checks": [
+      {
+        "name": "footSlideP95MaxCm",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.subject",
+        "pass": true,
+        "value": 0,
+        "limit": 3
+      }
+    ]
+  },
+  {
+    "scene": "foot-slide-cat@low-z1.5",
+    "backend": "webgl2",
+    "tier": "low",
+    "checks": [
+      {
+        "name": "footSlideP95MaxCm",
+        "pass": true,
+        "value": 0.2,
+        "limit": 3
+      },
+      {
+        "name": "footSlideP95Cm.subject",
+        "pass": true,
+        "value": 0.2,
+        "limit": 3
+      }
+    ]
+  }
+]
