@@ -793,6 +793,23 @@ test('corpse pages: bodies persist past the old cap, bounds stay conservative, c
 
 });
 
+test('L8 flamingo flight deaths settle on the ground and spread into non-overlapping footprints', () => {
+  const records = new Map<number, EntitySnapshot>();
+  const world = { scenario: 'L8', entities: { revision: 0, get: (id: number) => records.get(id), *iterate() { yield* records.values(); } },
+    districts: { districts: [], supportBelow: () => 0 },
+    infected: { nav: { clear: () => true, move: (p: { x: number; z: number }, dx: number, dz: number) => { p.x += dx; p.z += dz; } } } } as unknown as SimWorld;
+  const layout = new CorpseLayout(world); layout.beginFrame(Infinity);
+  const birds = Array.from({ length: 26 }, (_, index) => ({ id: 2000 + index, archetype: 'infected.flamingo', health: { current: 0 },
+    transform: { x: 0, y: 3.1, z: 0, yaw: 0 }, combat: { radius: .3 }, corpse: true } as unknown as EntitySnapshot));
+  for (const bird of birds) { records.set(bird.id, bird); const pose = layout.place(bird); expect('ax' in pose).toBe(true); if ('ax' in pose) expect(pose.y, 'flight height is discarded for the frozen corpse').toBeCloseTo(0); }
+  const placements = [...layout.bodies.values()];
+  expect(placements).toHaveLength(birds.length);
+  expect(layout.audit().heapPairs, 'no flamingo corpse footprints overlap or form vertical layers').toBe(0);
+  for (let i = 0; i < placements.length; i++) for (let j = i + 1; j < placements.length; j++) {
+    expect(Math.hypot(placements[i].x - placements[j].x, placements[i].z - placements[j].z), 'corpse centers remain separated').toBeGreaterThan(.6);
+  }
+});
+
 test('LOD selection: authored distance bands with hysteresis; game-camera-size crowd figures never take the far silhouette', () => {
   expect([0, 7, 9, 25].map(d => pickLod(d))).toEqual(['lod0', 'lod0', 'lod1', 'lod2']);
   expect(pickLod(9, 'lod0')).toBe('lod0'); expect(pickLod(10.5, 'lod0')).toBe('lod1');

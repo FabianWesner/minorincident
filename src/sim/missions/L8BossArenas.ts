@@ -670,7 +670,13 @@ export class L8BossArenas {
   statusText(): string | null {
     const p = this.w.entities.get(1)!.transform;
     const arena = this.state.find(a => a.phase > 0 && a.phase < 3 && distance(p, l8BossArenas.find(d => d.id === a.id)!.centre) < 32);
-    return arena ? `${l8BossArenas.find(d => d.id === arena.id)!.name} · Phase ${arena.phase}` : null;
+    if (!arena) return null;
+    const name = l8BossArenas.find(d => d.id === arena.id)!.name;
+    if (arena.id === 'flamingo' && arena.phase === 2) {
+      const remaining = arena.ids.filter(id => (this.w.entities.get(id)?.health.current ?? 0) > 0).length;
+      return `${name} · Phase 2 · ${remaining} left`;
+    }
+    return `${name} · Phase ${arena.phase}`;
   }
   swapBlocked(): boolean { return this.w.infected!.active.some(e => e.health.current > 0 && e.infected!.arenaBoss?.arena === 'monkey' && e.infected!.grabUntil > this.w.tick); }
   restore(delta: number): void { this.gateStates.clear(); this.updateGates(); for (const a of this.state) { if (a.startedAt) a.startedAt += delta; if (a.endedAt) a.endedAt += delta; if (a.nextAt) a.nextAt += delta; if (a.track) a.track.at += delta; if (a.carrierRetryAt) a.carrierRetryAt += delta; if (a.breachAt) a.breachAt += delta; if (a.lane?.startedAt !== undefined) a.lane.startedAt += delta; } }

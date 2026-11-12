@@ -96,6 +96,10 @@ function evaluateCandidate(state: SearchState, x: number, z: number, yaw: number
     if (maxX < Math.min(other.ax, other.bx) - reach || minX > Math.max(other.ax, other.bx) + reach
       || maxZ < Math.min(other.az, other.bz) - reach || minZ > Math.max(other.az, other.bz) + reach) continue;
     if (segmentDistanceSquared(ax, az, bx, bz, other) >= (radius + other.radius) ** 2) continue;
+    // The L8 flock can leave more than twenty small bodies in one pond. These
+    // must find separate ground footprints; layering them turns the pile into
+    // the tall column seen after aerial deaths.
+    if (state.e.archetype === 'infected.flamingo') return;
     if (corpsePose(other.body.id) === ownPose && yawDistance(yaw, other.yaw) < .2) return;
     // Stable insertion into the used prefix retains the old height sort
     // and bucket tie order without resizing the scratch backing store.
@@ -263,6 +267,10 @@ export class CorpseLayout {
     const player = this.world.entities.get(1)?.transform;
     let feet = e.transform.y - .7;
     const support = this.world.districts, nav = this.world.infected?.nav;
+    // Flamingos die at their current flight height. Their frozen corpse pose
+    // is a ground presentation, so use the surface below that point as the
+    // search origin instead of carrying the aerial height into corpse layout.
+    if (e.archetype === 'infected.flamingo') feet = support?.supportBelow(e.transform.x, e.transform.z, feet) ?? 0;
     if (this.vehicleDistrict !== support) {
       this.vehicleDistrict = support; this.parkedVehicles.length = 0;
       this.neighborPoses.fill(undefined); this.layerPoses.fill(undefined);
