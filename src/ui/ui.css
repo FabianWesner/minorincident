@@ -367,7 +367,8 @@ body.debug-tools .hud-navigation{margin-top:var(--debug-row)}
 .hud-weapon-choice img{pointer-events:none;width:24px;height:24px;object-fit:contain}
 .hud-weapon-choice[data-selected=true]{border-color:#ffe0a0;background:#495040;box-shadow:0 0 0 1px #ffe0a0}
 .hud-weapon-key{position:absolute;right:0;bottom:0;min-width:13px;border-radius:3px;background:#0b111c;color:#fff3da;text-align:center;font:700 12px/14px system-ui,sans-serif}
-.touch-ui .hud-weapon-rack{display:none}
+.hud-weapon-choice[data-empty=true]::after{content:'!';position:absolute;left:1px;top:0;color:#ffbc84;font:700 13px/14px system-ui,sans-serif}
+.touch-ui .hud-weapon-rack{bottom:150px;max-width:calc(100vw - 56px)}
 .hud-pin-threat[data-kind=alpha][data-mega=false]{background:#ff9b32;width:7px;height:7px}
 .hud-pin-threat[data-kind=dog]{border-radius:0;clip-path:polygon(50% 0,100% 100%,0 100%);width:7px;height:7px}
 .hud-pin-discovery{background:transparent;color:#ffe0a0;font-size:13px;width:14px;height:14px;line-height:14px;text-align:center}

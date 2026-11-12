@@ -451,8 +451,16 @@ export class Hud {
       }
     }
     const selectedId = shown?.id === 'weapon.kick' ? 'weapon.fists' : shown?.id;
-    for (const [id, item] of this.weaponRackItems) attribute(item, 'data-selected', String(id === selectedId && !gun?.mounted));
-    setHidden(this.weaponRack, !entries.length || this.game.input.scheme === 'touch');
+    for (const [id, item] of this.weaponRackItems) {
+      attribute(item, 'data-selected', String(id === selectedId && !gun?.mounted));
+      const entry = entries.find(entry => entry.id === id)!;
+      const empty = entry.index >= 0 && !world.combat!.runner.loadout.hasAmmo(world.combat!.runner.loadout.state[entry.side].rack[entry.index]);
+      attribute(item, 'data-empty', String(empty));
+      const key = weaponKey(id), shortcut = key === undefined ? '' : key <= 9 ? String(key) : key === 10 ? '0' : 'Q (cycle)';
+      item.title = `${label(id)}${empty ? ' · Empty' : ''}${shortcut ? ` · ${shortcut}` : ''}`;
+      item.setAttribute('aria-label', item.title);
+    }
+    setHidden(this.weaponRack, !entries.length);
     // Manned minigun: the weapon icon shows the gun she holds, not the weapon she carries (rack and touch slots are untouched).
     if (gun?.mounted) shown = { id: 'weapon.rotary-minigun', name: 'Minigun', stats: gun.locked ? 'Overheated' : `Heat ${Math.round(gun.heat * 100)}%`, progress: 1, ammo: 0, charges: 0, state: gun.locked ? 'cooldown' : 'ready' };
     setHidden(this.weapon.root, !shown || (!player.weapons?.LEFT && !player.weapons?.RIGHT && !mission?.def.l1));
