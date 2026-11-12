@@ -42,7 +42,18 @@ export class LevelEightBot {
     // driver's side door as this origin leaves the rear evacuees >10 m away
     // on the redesigned north-facing APC. Board the driver last.
     let target = zoo.protecting() ? m.def.anchors['central-plaza'] : m.state.steps.sanctuary.status === 'active' ? calm ? w.entities.get(zoo.state.keeperId)!.transform : m.def.anchors['central-plaza'] : boarded ? door : { x: passengerDoor.x - 4, z: passengerDoor.z + 2 };
-    if (!calm && !zoo.protecting() && this.profile === 'runner') target = p.x < 85 ? { x: 90, z: 60 } : { x: passengerDoor.x - 4, z: passengerDoor.z + 2 };
+    if (!calm && !zoo.protecting() && this.profile === 'runner') {
+      const priorPensClear = zoo.state.arenas.filter(a => a.id !== 'elephant').every(a => a.phase === 3);
+      if (priorPensClear) {
+        // The elephant leg starts at the gorilla exit; the runner may still be
+        // at the plaza. Replay the authored public route so it never cuts
+        // across sealed service lanes or enclosure walls.
+        const road = l8Route.flatMap(stage => stage.nodes);
+        if (p.x > 85 && p.z > 46) this.escapeLeg = road.length;
+        while (this.escapeLeg < road.length && Math.hypot(p.x - road[this.escapeLeg].x, p.z - road[this.escapeLeg].z) < 2) this.escapeLeg++;
+        target = this.escapeLeg < road.length ? road[this.escapeLeg] : { x: 90, z: 60 };
+      } else target = p.x < 85 ? { x: 90, z: 60 } : { x: passengerDoor.x - 4, z: passengerDoor.z + 2 };
+    }
     if (zoo.protecting()) this.escapeLeg = 0;
     if (unsealed) target = m.def.anchors['central-plaza'];
     else if (!calm && !zoo.protecting() && !boarded && this.profile !== 'runner') {
