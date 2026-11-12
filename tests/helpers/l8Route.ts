@@ -1,6 +1,7 @@
 import { expect } from 'vitest';
 import { inRect, l8Route, l8GateClosed, l8ConnectorGates } from '../../src/data/l8Bosses';
 import { loadLevel } from '../qa/invariants/world';
+import { markerAnchor } from '../../src/sim/missions/markerAnchor';
 import { objectiveText } from '../../src/sim/missions/objectiveText';
 
 /** r33-l8route: per gate, the group follows the courier in and nobody is left behind the closing entry gate; the exit opens on the clear and the previous cell stays reachable. */
@@ -80,6 +81,7 @@ export async function checkL8Route(): Promise<void> {
         }
       }
       expect(arena.phase, `${stage.id} engaged`).toBeGreaterThan(0);
+      expect(markerAnchor(mission), `${stage.id}: combat marker stays at the arena centre`).toMatchObject({ x: (stage.zone.x0 + stage.zone.x1) / 2, z: (stage.zone.z0 + stage.zone.z1) / 2 });
       expect(arena.armed, `${stage.id}: the entry gate closes behind the group`).toBe(true);
       expect(armedWith, `${stage.id}: no follower left outside when the entry gate shuts (${stragglers})`).toBe(0);
       expect(l8GateClosed(`${stage.id}.entry`, { arenas: zoo.state.arenas, sealed: true })).toBe(true);

@@ -154,8 +154,8 @@ test('interactions: ring, input and view predicates agree for every interact ste
         // The existing outlet scene exposed queued residents first becoming
         // visible on the apron. Exercise its native six-person door queue here,
         // without adding another registered case or relaxing the scene gate.
-        expect(mission.state.marker).toBe('central-plaza');
-        expect(objectiveText(mission, mission.def.steps[0].text)).toBe('Follow Nadia to the central plaza');
+        expect(mission.state.marker).toBe('l8-route');
+        expect(objectiveText(mission, mission.def.steps[0].text)).toBe('Follow Nadia');
         await checkL8Story();
         await checkL8Route();
         mission.completeObjective('sanctuary');

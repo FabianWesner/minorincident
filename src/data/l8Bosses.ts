@@ -14,6 +14,12 @@ export const l8ArenaKeys = l8BossArenas.map(a => `arena-${a.id}`);
 
 /** The service yard has two public approaches. Its keeper gates hold the
  * vehicle route until the five enclosure fights are cleared. */
+/** Close unused public-road branches without interrupting Nadia's visitor route. */
+export const l8PathWalls = [
+  { x: -3.1, z: 64, halfX: .25, halfZ: 3.2 },
+  { x: -63.1, z: 0, halfX: .25, halfZ: 3.2 },
+  { x: 63.1, z: 0, halfX: .25, halfZ: 3.2 },
+] as const;
 export const l8YardWalls = [
   { x: 84, z: 51, halfX: .25, halfZ: 5 },
   { x: 84, z: 77, halfX: .25, halfZ: 13 },

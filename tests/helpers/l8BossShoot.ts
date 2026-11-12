@@ -159,7 +159,7 @@ export async function checkL8Cues(): Promise<void> {
   const step = () => mission.def.steps.find(s => s.id === 'sanctuary')!;
   advance(2);
   expect(l8SanctuaryResting(mission), 'far from the plaza the courier still follows Nadia').toBe(false);
-  expect(objectiveText(mission, step().text)).toBe('Follow Nadia to the central plaza');
+  expect(objectiveText(mission, step().text)).toBe('Follow Nadia');
   missionControls(w).teleport(1, mission.def.anchors['central-plaza']); advance(2);
   expect(mission.state.states.breached).toBeFalsy();
   // r36-l8gates (QA P3 "Rest at the plaza objective flickers during Nadia's tour"): her route crosses the plaza ring; no rest cue while she leads.

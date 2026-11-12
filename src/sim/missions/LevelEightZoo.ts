@@ -184,6 +184,8 @@ export class LevelEightZoo {
     s.startedAt = t; s.greetingAt = t + 9 * 60; s.lionSpoken = false;
     if (surrenderHeavyWeapons(this.w, this.mission).length) s.gateToastAt = t + gateToastDelay;
     s.broadcastAt = t + 20 * 60; s.haleGreetingAt = t + 38 * 60;
+    const guide = this.w.entities.get(s.keeperId)!.transform;
+    Object.assign(this.mission.def.anchors['l8-route'], { x: guide.x, z: guide.z });
     this.mission.checkpoint('sanctuary');
   }
   door(): Point {
@@ -432,17 +434,15 @@ export class LevelEightZoo {
       const next = s.arenas.find(a => a.phase !== 3);
       const step = this.mission.def.steps.find(value => value.id === 'escape');
       if (next) {
-        const def = l8BossArenas.find(value => value.id === next.id)!, stage = l8Route.find(value => value.id === next.id)!, p = w.entities.get(1)!.transform;
+        const stage = l8Route.find(value => value.id === next.id)!, p = w.entities.get(1)!.transform;
         let text: string, at: Point;
         if (!s.sealedAt) { text = 'Return to the plaza'; at = this.mission.def.anchors['central-plaza']; }
         else if (next.phase > 0) {
           const alive = next.ids.filter(id => (w.entities.get(id)?.health.current ?? 0) > 0).length;
           const label = next.id === 'flamingo' ? 'flamingos' : next.id === 'monkey' ? 'monkeys' : next.id === 'zebra' ? 'zebras' : next.id === 'lion' ? 'lions' : next.id;
           text = `Kill ${label} ${next.ids.length - alive}/${next.ids.length}`;
-          // r39-markers (r38-vqa P3 'the gorilla fight's distance readout is not the distance to the gorilla'): the marker follows the nearest live animal, not the arena centre.
-          let focus: Point = def.centre, best = Infinity;
-          for (const id of next.ids) { const a = w.entities.get(id); if (!a?.infected || a.health.current <= 0 || a.hidden) continue; const d = distance(a.transform, p); if (d < best) { best = d; focus = a.transform; } }
-          at = focus; }
+          // The bounded-arena objective stays on safe ground rather than following airborne animals.
+          at = { x: (stage.zone.x0 + stage.zone.x1) / 2, z: (stage.zone.z0 + stage.zone.z1) / 2 }; }
         else {
           const index = l8Route.indexOf(stage);
           if (inRect(p, stage.zone)) { at = { x: (stage.zone.x0 + stage.zone.x1) / 2, z: (stage.zone.z0 + stage.zone.z1) / 2 }; text = stage.text; }
@@ -776,6 +776,11 @@ export class LevelEightZoo {
       for (const arena of this.state.arenas) for (const id of arena.ids) if (this.w.entities.get(id)?.infected && this.w.entities.get(id)!.health.current > 0) this.bosses.turned(id);
     }
     this.bosses.restore(delta);
+    if (!this.breached) {
+      const guide = this.w.entities.get(this.state.keeperId)!.transform;
+      Object.assign(this.mission.def.anchors['l8-route'], { x: guide.x, z: guide.z });
+      this.mission.state.marker = 'l8-route';
+    }
     this.w.openDoors.clear();
     for (const [id, door] of data.doors) this.w.openDoors.set(id, { ...door, at: door.at + delta });
     // A checkpoint restored on tick zero can have a legitimate breach time of zero.

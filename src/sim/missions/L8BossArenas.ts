@@ -1,4 +1,4 @@
-import { l8ConnectorGates, l8BossArenas, l8EncounterGates, l8GateClosed, l8PlazaGates, l8Route, l8YardGates, l8YardWalls, inRect, type L8BossId } from '../../data/l8Bosses';
+import { l8PathWalls, l8ConnectorGates, l8BossArenas, l8EncounterGates, l8GateClosed, l8PlazaGates, l8Route, l8YardGates, l8YardWalls, inRect, type L8BossId } from '../../data/l8Bosses';
 import type { InfectedSpecialMove } from '../../data/infected';
 import { propFootprint } from '../interact/PropSystem';
 import { boxContact, type SolidBox } from '../world/SolidGeometry';
@@ -66,6 +66,7 @@ export class L8BossArenas {
     const yardClosed = this.state.some(a => a.id !== 'elephant' && a.phase !== 3);
     if (this.gateStates.get('yard') !== yardClosed) {
       this.gateStates.set('yard', yardClosed);
+      l8PathWalls.forEach((wall, i) => this.barrier(`l8.path-wall.${i}`, 900890 + i, { ...wall, y: 1.5, halfY: 1.5 }, true));
       l8YardWalls.forEach((wall, i) => this.barrier(`l8.yard-wall.${i}`, 900810 + i, { ...wall, y: 1.5, halfY: 1.5 }, !(i === 2 && breached)));
       l8YardGates.forEach((gate, i) => this.barrier(`l8.yard-gate.${i}`, 900820 + i, { ...gate, y: 1.5, halfY: 1.5 }, yardClosed));
     }

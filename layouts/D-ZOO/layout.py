@@ -651,6 +651,19 @@ _fence(-62.6, -67.1, -60, -67.1)
 _fence(20.8, 67.1, 27.2, 67.1)
 for _x in (56.9, 63.1): _fence(_x, 46.8, _x, 60.8)
 
+# The gorilla's east gate turns south into the service lane, never onto lawn.
+for _z in (-35.1, -28.9): _fence(74.8, _z, 92.8, _z)
+_barricade(92.8, -35.1, 99.2, -35.1)
+
+# The opening tour uses the same bounded paving as the later arena route.
+_barricade(-4.2, 60.9, 4.2, 60.9)
+_fence(4.2, 60.9, 20.8, 60.9)
+_fence(4.2, 67.1, 20.8, 67.1)
+for _z in (-3.1, 3.1):
+    _fence(27.2, _z, 56.8, _z)
+    _fence(-20.8, _z, -14.8, _z)
+for _x in (-3.1, 3.1): _fence(_x, -17.2, _x, -12.2)
+
 # The plaza hold is a paved bounded gathering space, including its objective
 # centre and hatch approaches; no objective circle sits over dark lawn.
 l.box('plaza-floor', 'sidewalk', [28, .035, 24], [0, .0175, 0])
@@ -661,6 +674,10 @@ l.data['placements'] = [p for p in l.data['placements'] if p is not None]
 # allocation so every remaining placement retains its authored identifier.
 _new_fences = [p for p in l.data['placements'] if p['assetId'] == 'prop.crowd-fence' and int(p['id'].rsplit(':', 1)[1]) >= _arena_first_id]
 _arena_drop = {p['id'] for p in l.data['placements'] if p['assetId'] == 'prop.crowd-fence' and int(p['id'].rsplit(':', 1)[1]) < _arena_first_id and abs(p['position'][0] - 14) < .01 and abs(p['position'][2] - 20) < 4}
+# Remove old dressing from the newly fenced gorilla exit paving, after IDs are allocated.
+_arena_drop |= {p['id'] for p in l.data['placements'] if p['assetId'] in _DRESS
+                and p['visualAabb']['max'][0] > 74 and p['visualAabb']['min'][0] < 96
+                and p['visualAabb']['max'][2] > -34.5 and p['visualAabb']['min'][2] < -29.5}
 for p in l.data['placements']:
     if p in _new_fences: continue
     if p['assetId'] not in _DRESS | {'prop.picket-fence', 'prop.hedge', 'prop.crowd-fence'}: continue
