@@ -236,3 +236,7 @@ The new jersey pieces initially used asset height (~0.95 m), below the ordinary 
 ## Pond cover renderer selection receipt
 
 Corrected a diagnostic watch that initially omitted `return`, then captured read-only `DistrictView.lodState()` during a protected no-fire HIGH/zoom-1 pond sample. `pond-cover-lod.json` preserves only the three pond cover instances and their sampled bands. The instances exist in the renderer; a later sample selects one at LOD2 and marks two culled. This narrows the missing-wide-cover issue to renderer selection/culling, rather than absent layout IDs, but does not yet establish the faulty rule. No culling bypass was added. Browser and server exited.
+
+## Cover visibility flags excluded
+
+Read-only renderer-instance probe (`cover-flags/log.jsonl`) samples all three pond refs at ticks 72/267/450. Each has the expected unchanged position and only `placementId` in userData: no `interiorHidden`, `destructed`, `highOnly`, prop/death flags or tier exclusion. Camera far plane is 600 m on this layout, so the widened arena is not beyond its far plane. These observations narrow the missing-cover path to frustum/bounds selection rather than hidden state. No rendering override was added. Browser/server are terminal; this is diagnostic evidence, not a visual acceptance pass.
