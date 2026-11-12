@@ -119,3 +119,5 @@ The same native firing harness also measured the requested fixed profiles below,
 | assault-rifle | 2@0.25 → 2@0.25 | 2@0.25 → 2@0.25 | 24@3.183 → 24@3.183 | 12@1.583 → 12@1.583 | 13@1.717 → 13@1.717 | 7@0.917 → 7@0.917 |
 | flashbang | 4@>30 → 4@>30 | 4@>30 → 4@>30 | 4@>30 → 4@>30 | 4@>30 → 4@>30 | 4@>30 → 4@>30 | 4@>30 → 4@>30 |
 | flamethrower | 10@3.117 → 2@0.45 | 7@2.117 → 2@0.45 | 73@26.783 → 18@5.783 | 60@20.117 → 12@3.783 | 43@14.117 → 10@3.117 | 34@11.117 → 7@2.117 |
+
+Reproducibility: `native-targets.json` embeds the exact TypeScript harness sources for runtime HP, requested fixed HP, and cluster measurements, plus SHA-256 hashes of baseline/current weapon catalogs and execution instructions. These preserve the measurement method beyond the temporary `/tmp` files.
