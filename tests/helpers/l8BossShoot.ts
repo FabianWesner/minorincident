@@ -60,7 +60,8 @@ export async function checkBossDamage(): Promise<void> {
   for (const def of l8BossArenas) {
     const bosses = turnArena(w, def.id);
     for (const boss of bosses) {
-      const home = { x: boss.transform.x, z: boss.transform.z, y: boss.transform.y };
+      // Damage probes need an unobstructed floor point, away from the monkey house roof.
+      const home = def.id === 'monkey' ? { x: 0, z: 26, y: .7 } : { x: boss.transform.x, z: boss.transform.z, y: boss.transform.y };
       // Seven flamingos / zebras / monkeys share one body model per type: the first, the monkey leader and the lioness are the distinct cases.
       const slots = def.id === 'monkey' ? [0, def.count - 1] : def.id === 'lion' ? [0, 1] : [0];
       if (!slots.includes(boss.infected!.arenaBoss!.slot)) continue;
@@ -68,7 +69,7 @@ export async function checkBossDamage(): Promise<void> {
       for (const weapon of WEAPONS) for (const range of [2, 8]) {
         // r31-flamingo: the bosses now have small HP; a big pool keeps every probe shot from killing the boss (a death opens gates/phases and changes the next probes).
         boss.health.max = boss.health.current = 1e6; boss.corpse = false;
-        const pin = () => { for (const other of w.entities.iterate()) if (other !== boss && other.infected && other.id !== 1) { other.transform.x = home.x + 400; other.transform.z = home.z + 400; } boss.transform.x = home.x; boss.transform.z = home.z; boss.health.current = Math.max(1, boss.health.current); };
+        const pin = () => { for (const other of w.entities.iterate()) if (other !== boss && other.infected && other.id !== 1) { other.transform.x = home.x + 400; other.transform.z = home.z + 400; w.spatial.set(other.id, other.transform.x, other.transform.z); } boss.transform.x = home.x; boss.transform.z = home.z; boss.transform.y = home.y; boss.infected!.arenaBoss!.exposedUntil = 0; w.spatial.set(boss.id, home.x, home.z); boss.health.current = Math.max(1, boss.health.current); };
         const { damage, fired, noLine } = shoot(w, boss, weapon, range, pin);
         if (noLine) { failures.push(`${def.id}#${boss.infected!.arenaBoss!.slot} ${weapon} @${range} m: no clear firing line`); continue; }
         boss.health.max = def.id === 'monkey' && boss.infected!.arenaBoss!.slot === def.count - 1 ? def.hp * 2 : def.hp; boss.health.current = boss.health.max;
@@ -130,7 +131,7 @@ export async function checkBossStates(): Promise<void> {
     const home = { x: boss.transform.x, z: boss.transform.z };
     const pin = () => {
       for (const other of w.entities.iterate()) if (other !== boss && other.infected && other.id !== 1) { other.transform.x = home.x + 400; other.transform.z = home.z + 400; }
-      boss.transform.x = home.x; boss.transform.z = home.z; boss.health.current = Math.max(1, boss.health.current);
+      boss.transform.x = home.x; boss.transform.z = home.z; boss.transform.y = home.y; boss.infected!.arenaBoss!.exposedUntil = 0; w.spatial.set(boss.id, home.x, home.z); boss.health.current = Math.max(1, boss.health.current);
     };
     const cases: Array<[string, () => void]> = [
       ...(moves[def.id] ?? []).map(([move, windup, range, radius]): [string, () => void] => [move, () => start(boss, move, windup, range, radius)]),
