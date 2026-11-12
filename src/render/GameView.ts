@@ -3,6 +3,7 @@ import { cureDust } from './CureDust';
 import { updateCorn } from './Corn';
 import { solidLargeCorpse } from '../sim/world/SolidRegistry';
 import { l6Doors, l6Entries } from '../data/l6';
+import { l8Route } from '../data/l8Bosses';
 import { MilitaryPerimeter } from './MilitaryPerimeter';
 import { l3, l3AttackView } from '../data/l3';
 import { l2RescueView } from '../data/l2';
@@ -833,7 +834,11 @@ export class GameView implements Lifecycle {
       const rescue = this.world.scenario === 'L3' && !!this.world.missions?.state.l3?.finaleAt && !this.world.missions.state.l3.barrierClosedAt && player.transform.x >= 195;
       // Brief l3-polish: the station attack pulls back (eased) so the streams at the gates are on screen while the courier holds the yard.
       this.l3AttackScale += ((rescue ? 3.3 : l3AttackView(this.world) ? l3.attack.viewScale : 1) - this.l3AttackScale) * (1 - Math.exp(-4 * seconds));
-      this.view.encounterScale = this.world.scenario === 'L3' ? this.l3AttackScale : 1;
+      const l8Arena = this.world.missions?.l8?.state.arenas.find(arena => arena.phase > 0 && arena.phase < 3);
+      const l8Zone = l8Arena && l8Route.find(stage => stage.id === l8Arena.id)!.zone;
+      // Frame the entire bounded pen at default zoom, including its near edge.
+      const l8Scale = l8Zone ? 4.5 * Math.max(1, 1 / this.view.camera.aspect) : 1;
+      this.view.encounterScale = this.world.scenario === 'L3' ? this.l3AttackScale : l8Scale;
       this.view.zoomFloor = this.world.scenario === 'L2' ? l2RescueView(this.world, this.view.playerZoom, this.view.zoomFloor, seconds) : 0;
       const ending = this.world.missions?.state.epilogue;
       const pull = ending ? epiloguePull(this.world.missions!.state.counters['epilogue-ticks']) : 0;
@@ -855,6 +860,7 @@ export class GameView implements Lifecycle {
       // Brief l3-polish (the phone finale cropped the group at the right edge): a portrait screen pulls less toward the line, so
       // the courier and her group stay in frame next to the surge.
       if (this.world.scenario === 'L3') this.view.pull(202, 0, rescue ? (this.view.camera.aspect < 1 ? .45 : .8) : 0, rescue ? 1.6 : undefined);
+      if (this.world.scenario === 'L8') this.view.pull(l8Zone ? (l8Zone.x0 + l8Zone.x1) / 2 : 0, l8Zone ? (l8Zone.z0 + l8Zone.z1) / 2 : 0, l8Zone ? 1 : 0, 0);
       this.updateEnding();
       const focus = this.vehicles?.rideFocus(this.rideFocus) ? this.rideFocus : player.transform;
       if (this.cameraSnap) { this.cameraSnap = false; this.view.snapTo(focus); }
