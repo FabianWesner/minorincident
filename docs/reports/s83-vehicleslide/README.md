@@ -21,5 +21,5 @@ The PO screenshot at `/private/tmp/claude-501/-Users-wesner-Workspace-minorincid
 - Extend the persistent Scene Lab motion gate to directly create and measure vehicle push, hull separation, clinging/boarding, and ram knockback states. Include grab/hatch attackers, prop pushes, and crowd overlap near vehicles where those paths can move infected roots.
 - Run each contact state in L9 driving, stalled-at-rail, hatch-fight, and detour contexts, plus the relevant L7/L4 vehicle scenes, at HIGH and LOW. Prove per-state p95 <= 5 cm and max <= 15 cm with sufficient foot-contact samples.
 - Open and describe a consecutive-frame APC capture strip at HIGH zoom 1.5.
-- Run the L9 threat audit and confirm zero flags.
+- L9 threat audit completed: zero skilled and passive L9 flags. The overall diagnostic command exits 1 solely for `PARTIAL_LEVEL_SELECTION`; this is not a complete campaign gate. See `threat-summary.json`.
 - Run the complete requested validation set, including the remote unit suite, and commit the remaining gate/capture work when focused checks pass.
