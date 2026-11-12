@@ -8,7 +8,9 @@ export default defineConfig({
   test: {
     environment: 'node',
     pool: 'threads',
-    maxWorkers: 4,
+    // Each loaded campaign world is large; two workers avoid concurrent heap
+    // pressure on shared runners and the busy development Mac.
+    maxWorkers: 2,
     testTimeout: 30_000,
     restoreMocks: true,
     setupFiles: ['tests/setup/node-gltf-images.ts'],

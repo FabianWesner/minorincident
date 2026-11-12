@@ -1,77 +1,46 @@
-# S62 L9 gameplay: rail stall and school bus
+# S62 L9 rail stall, hatch and bus counterplay
 
-## Design decisions
+## Design
 
-- The rail stop lasts 20 seconds (1,200 simulation ticks) on all three routes. The HUD shows `Engine stalled — hold the hatch (0:SS)` with a 10-segment countdown bar, shooting and hatch-toggle instructions, and says the player cannot leave the APC. Sam calls out the hold. At restart, the objective says `Engine restarted — drive! (W)` and Sam gives the same direction.
-- The rail transition opens the hatch. The courier is raised in the hatch to show her upper body and her aim still follows the mouse. Passengers stay hidden inside the APC during the defense. F/E toggles the hatch where allowed; the stall HUD explicitly explains the exit restriction. The roof band was not changed because it is the authored APC damage treatment, outside this gameplay lane.
-- The bus locks the courier's lane for a 1.5-second warning, sounds a positional horn, and emits a red lane telegraph. Steering at least 4.5 m out of the lane avoids damage, hurts the bus by 400, and stuns it for 3 seconds. Three missed attacks destroy it and stop its pursuit. A hit costs 40 APC armour, capped at three hits (120 total).
+- Rail stall: 20 seconds / 1,200 ticks on every route. HUD names the stalled engine, counts down `0:SS`, draws a ten-cell bar, explains shooting/closing the hatch and the restriction on leaving the APC. Sam announces the hold and restart. On restart: `Engine restarted — drive! (W)`.
+- Hatch: opens on the rail transition; courier raised to show her arms and weapon, aim follows the mouse; F/E toggles the hatch while holding. Passengers remain inside. Removed the APC's side-projected blood overlay, which stretched into a red roof band; dents, cracked glazing and smoke show damage.
+- Bus: locks a lane for a 1.5-second HUD/red-road warning and horn. Steering 4.5 m out of the lane avoids the ram. A miss sends it toward the opposite verge, stuns it for three seconds and costs it 600 health. Two misses wreck it. Successful rams cost 40 APC armour, capped at three hits. A destroyed bus stops pursuit, explodes after its existing delay, and remains as a wreck.
+- No infected stats or corpse removal changed.
 
-## Scope and overlap
+## Evidence
 
-The rail, hatch, and bus behavior live in `LevelNineDriving.ts`; Sam's lines are in `src/data/dialogue.ts`. `LevelNineCrash.ts` has a narrow eastbound-heading guard exposed by the story proof's restored bridge checkpoint. `tools/qa/l9-story-proof.ts`, `tools/qa/r28-vqa-fixture-play.ts`, and the existing vehicle integration tests were updated. No infected stats or corpse handling changed.
+| Requirement | Result |
+| --- | --- |
+| Rail recovery on road, countryside, dry shortcut | Isolated native recovery matrix (bus/waves suppressed): each restarted at +1,200 ticks, then drove 13.83 m in 120 ticks. |
+| Countdown, hatch and restart story | `node --import tsx/esm tools/qa/l9-story-proof.ts`: passed through phase `done`, including ten-cell bar assertion. |
+| Skilled bus driver <=1 hit | `node --import tsx/esm tools/qa/l9-bus-driver-proof.ts`: real simulation throttle/steering, 2 misses / 1 hit, APC armour 925, bus health 0, stopped pursuit; delayed explosion completed and wreck entity retained. No attack deadlines or player poses assigned after encounter setup. |
+| Passive driver survives to bay | `r42/l9-bay-probe.ts --route road --mode w --max 151`: bay at tick 9009, durability 535 at tick 9060, zero courier deaths. The later unattended evacuation hold can still consume armour; arrival survival is verified. |
+| L9 threat flags | Latest `node --import tsx/esm tools/qa/threat-audit.ts --levels L9`: skilled/passive complete, **0 L9 passive flags**. Exit 1 is solely `PARTIAL_LEVEL_SELECTION`, the tool's selected-level diagnostic status. |
+| Checkpoint/bay safety | `tools/qa/l9-checkpoint-proof.ts`: passed, preserving original checkpoint resume/retry and bay assertions. |
+| Leaper/thrower scene | `tools/qa/l9-setpieces-proof.ts`: passed, preserving original assertions. |
+| Existing boss roster/cues | `tools/qa/l8-boss-proof.ts`: passed, preserving original assertions. |
+| Typecheck/lint | Passed on current implementation. |
+| Final local verifier | `npm run verify -- E31`: passed typecheck, lint, 27 files / 107 tests; test phase 93.0 s. |
+| Final exact remote npm test | `sh tools/remote/run.sh "$PWD" -- npm test`: exit 0, 27 files, 106 passed / 1 skipped, 187.7 s against unchanged 240 s budget; 150 configured cases. |
 
-## Validation
+## Opened headless captures
 
-- All-route native recovery probe: road, countryside, and dry shortcut each restarted at +1,200 ticks and moved 13.83 m in the following 120 driven ticks.
-- `node --import tsx/esm tools/qa/l9-story-proof.ts`: passed; rail countdown/restart, hatch defense and downstream story sequence completed.
-- `node --import tsx/esm tools/verify.ts E31`: passed typecheck, lint, and all 107 unit tests (27 files; `npm test` test-budget wrapper reported 142.5 seconds against a 240-second budget, 150 configured cases). The `npm run verify -- E31` launcher could not create its tsx IPC socket under the sandbox, so the same verifier was run directly. One earlier run hit a flaky child-process cleanup assertion; reruns passed.
-- Latest `node --import tsx/esm tools/qa/l9-story-proof.ts`: passed with the ten-cell countdown assertion; phase `done`.
-- Bus integration assertions cover the 90-tick warning, 1.5-second red telegraph, horn event, dodge without APC damage, three missed attacks wrecking the bus, and three undodged attacks costing 120 armour while leaving the APC alive.
-- `node --import tsx/esm tools/qa/threat-audit.ts --levels L9`: 0 L9 passive flags. Exit 1 is the audit's `PARTIAL_LEVEL_SELECTION` diagnostic status.
-- `tools/qa/r42/l9-bay-probe.ts --route road --mode w --max 360` reached the bay at x=468.7/z=8.5 without courier death. Ambient infected later destroyed the APC during the evacuation hold (durability 0, 79 infected nearby), so this run does not establish post-arrival survival through the hold.
-- `sh tools/remote/run.sh "$PWD" -- npm test`: no healthy remote runner; the wrapper declined local fallback for `npm test`.
-- Real-input capture was attempted through `tools/e2e-lock.sh` with one headless browser, ports 4967/4968. The browser-pool daemon could not bind 127.0.0.1 (EPERM, ports 4328 and 4329), so no screenshots were produced or visually inspected.
+All runs used `tools/e2e-lock.sh`, one headless browser, ports 4967/4968, Space handbrake, god off. Servers were stopped afterward. Capture root: `test-results/s62-l9play/`.
 
-## Worktree setup
+- `roof-fix/s006-t1514.jpg`: countdown 0:17, bar, Sam's line, arms/weapon visible above hatch; no red roof band.
+- `captures/s012-t2547.jpg`: APC beyond the crossing, Sam's restart line; log also records the `Drive! (W)` objective.
+- `bus-lane-fix/s009-t667.jpg`: red lane and dodge HUD, APC steering out with W/D input. Fixed a renderer defect found here: infected-only telegraph cleanup immediately deleted vehicle warnings; bus warnings now follow the active ram countdown.
+- `bus-camera/s025-t982.jpg`: bus front visibly crumpled against a roadside obstacle; runtime records stopped pursuit. Presentation-only camera targeting kept the bus in view. Encounter setup establishes the initial car/bus poses, then all driving is keyboard input.
+- A separate `bus-wide` real-input run records bus HP 0 and `damage: exploded` at ticks 876 and 1066; native proof independently verifies wreck persistence.
 
-The required `sh tools/ops/slim-worktree.sh "$PWD" --no-assets` command was attempted first but could not lock the shared worktree Git config under the sandbox (`Operation not permitted`). `node_modules` was already present. No files in the protected reference directories were edited.
+## Scope and test workload
 
-The requested commit could not be created: `git add` was denied while creating the shared repository's `.git/worktrees/s62-l9play/index.lock` (`Operation not permitted`). The worktree edits and this report remain available for commit outside this sandbox.
+Gameplay changes: `LevelNineDriving.ts`, Sam dialogue, and a narrow eastbound-heading guard in `LevelNineCrash.ts` exposed by the story checkpoint proof. Render changes: APC blood-overlay removal in `VehicleView.ts`, vehicle telegraph lifetime in VFX. These are the small overlaps with neighboring gameplay/render lanes.
 
-## Resumed with full permissions
+The per-change vehicle test had accumulated level-specific story checks, contrary to `docs/qa/test-strategy.md`. Moved those checks to the standalone QA proofs above, preserving their assertions and running them successfully. Fixed four shadowed duplicate world loads that leaked the worlds actually exercised by the boss helpers. Reduced Vitest workers from four to two to avoid concurrent large-world heap pressure on shared runners/the busy Mac. No assertions or test-budget limits were raised; configured count remains at most 150.
 
-The slim-worktree setup succeeded. Headless real-input fixture play completed for 45 seconds, god off, with no page errors. Opened `s008-t1552.jpg` (stall 0:13 and progress bar) and `s012-t2547.jpg` (APC beyond the crossing, restart dialogue). Captures are under `test-results/s62-l9play/captures/`. The roof stripe and the bus dodge/crash visuals still require follow-up. Earlier permission failures above describe the first attempt; the resumed browser run succeeds.
+Earlier remote runs timed out at 240 seconds and exposed a navigation test with too much world-loading work. Its L7 check now runs in the existing chaser test, preserving assertions and the 30-second limits. Final results above supersede the earlier failed runs.
 
-The resumed exact remote `npm test` command ran on 94.130.181.173, but failed: navigation A* budget test reported a failure and the complete run exceeded its 240-second budget (240.4 seconds, exit 124). The earlier local complete verifier remains green; the remote gate is not green and requires investigation.
+## Repository handling
 
-## Roof treatment follow-up
-
-Removed the APC's side-projected blood overlay, which stretched into the red roof band. Damage remains expressed by dents, cracked glass and smoke. Typecheck and lint pass. Opened `test-results/s62-l9play/roof-fix/s006-t1514.jpg`: no red band; courier arms and weapon visible above the hatch; stall HUD at 0:17 with bar and Sam's line. Headless 30-second real-input fixture run, god off, completed without page errors.
-
-Remote retry completed in 236.9 seconds (inside 240-second limit): 105 passed, 1 skipped, 1 navigation test failed; vehicle integration including bus dodge/wreck passed. The navigation failure remains to investigate.
-
-## Bus lane rendering follow-up
-
-Real-input capture exposed that VFX deleted the bus tell immediately because it had no infected AI brain. Vehicle warnings now follow the bus ram countdown instead. Opened `test-results/s62-l9play/bus-lane-fix/s009-t667.jpg`: red lane and HUD warning visible, APC steered outside the lane by real W/D input (`--dodge-bus`). Typecheck and lint pass. Native ram tests alone did not reveal this renderer defect.
-
-Moved the existing L7 route check from the overloaded A* test into the existing chaser-routing test; no assertions or timeout limits changed. This spreads world-load work across tests without increasing the 150-case total.
-
-The balanced-test remote run passed navigation (A* 12.8 s, chasers 27.8 s, unchanged 30 s limits), but the overall run timed out at 240.7 s. Remote gate remains incomplete; next work must reduce the oversized vehicle integration workload rather than raise the gate budget.
-
-## Native driver and QA workload
-
-Added `tools/qa/l9-bus-driver-proof.ts`: drives the production simulation through normal throttle/steering input, reacts to the ram countdown, and asserts <=1 bus hit and >=2 misses. Passed with 3 rams, 1 hit, 2 misses, APC armour 701 and bus health 400. This proves skill-based avoidance without assigning ram deadlines or moving the APC between attacks.
-
-Moved the existing full leaper/thrower sequence out of the per-change vehicle test into `tools/qa/l9-setpieces-proof.ts`, preserving every assertion. Standalone proof passes; typecheck and lint pass. Remote trimmed suite still timed out at 240.7 s before vehicle completion, so further level-specific workload needs moving to QA; no gate limit was raised.
-
-## Wreck counterplay and checkpoint proof
-
-Missed bus rams now deal 600 bus damage: two misses wreck it, allowing the demonstrated one-hit/two-dodge driver to finish the encounter. Native driver proof now asserts bus health zero and stopped pursuit; passed at tick 894 with armour 925, two misses and one hit. This supersedes earlier three-miss tuning.
-
-Moved the existing bay/checkpoint assertions intact into `tools/qa/l9-checkpoint-proof.ts`; standalone proof passes. Typecheck and lint pass. Headless encounter setup plus real W/D inputs recorded a stopped bus at tick 739, but the opened frame excluded the bus from the follow camera; this is not accepted as crash visual proof. Wider capture remains needed.
-
-The remote gate after moving checkpoint workload still timed out at 240.6 seconds. Further inspection of the remaining monolithic vehicle test is required; no budgets were raised.
-
-## Current-code vehicle and explosion evidence
-
-Focused vehicle integration on the current two-miss tuning passes (2 tests, 72.83 seconds locally). Temporary profiling instrumentation was removed after the run; it yielded no helper-level timing output. Headless real-input encounter with zoom 2.5 recorded bus health 0 and damage `exploded` at tick 876, still exploded at tick 1066. Opened `bus-wide/s017-t876.jpg`: bus remains outside follow framing, so this is runtime explosion evidence but not accepted visual crash proof. No source changes in this follow-up.
-
-## Passive arrival, visible collision and test leak
-
-Passive road driver (`r42/l9-bay-probe.ts --route road --mode w --max 151`) reaches the bay at tick 9009; at tick 9060 APC durability is 535 with zero courier deaths. This directly verifies survival to the bay, superseding the earlier post-arrival hold ambiguity.
-
-Opened `test-results/s62-l9play/bus-camera/s025-t982.jpg`: bus front is visibly crumpled against a roadside obstacle. The real-input encounter's log reports stopped pursuit at tick 739. This collision screenshot complements the separately verified native two-miss zero-health wreck and the explosion state from the previous real-input run. God remained off; camera targeting changed presentation only.
-
-Found four duplicate world loads in `tests/helpers/l8BossShoot.ts`: each helper shadowed its outer world inside try and disposed only the unused outer world. Removed the four duplicate loads, so all assertions exercise the same world that finally disposes. This is a test-resource fix outside L9 gameplay scope, necessary to investigate the remote budget failures. No assertions, counts, or timeout limits changed. Typecheck and lint pass.
-
-After the duplicate-world fix, the remote gate still timed out at 241.3 seconds. No completion claim: the remaining L8 story/boss content dominates the monolithic vehicle test and requires relocation under the repository's test strategy, preserving it as QA coverage. Temporary timing instrumentation has been removed; only the four-world resource fix is retained.
+Initial restricted-sandbox setup/staging/browser attempts failed. After full access was supplied, slim-worktree setup succeeded, captures ran and commits were created. No protected reference directories or specs were edited. No push, deployment, merge or main-branch changes.

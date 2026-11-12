@@ -32,4 +32,8 @@ try {
   assert.ok(result.misses >= 2, 'steering input actually evades rams');
   assert.equal(result.busHealth, 0, 'two missed rams wreck the bus');
   assert.notEqual(result.stopped, null, 'the wreck stops pursuing');
+  for (let i = 0; i < 240; i++) world.update();
+  assert.equal(bus.entity.vehicle!.damage, 'exploded', 'the wreck completes its crash explosion');
+  assert.equal(world.entities.get(bus.entity.id), bus.entity, 'the bus remains as a wreck');
+  console.log('Bus explosion completed; wreck entity retained');
 } finally { world.dispose(); }

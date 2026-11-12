@@ -8,7 +8,6 @@ import { Physics } from '../../src/physics/Physics';
 import { VehicleBody } from '../../src/sim/vehicles/VehicleBody';
 import { SimWorld } from '../../src/sim/world/SimWorld';
 import { loadLevel } from '../../tools/sim-runner/levels';
-import { checkBossDamage, checkBossStates, checkL8Cues, checkOrdinaryDamage } from '../helpers/l8BossShoot';
 import { missionControls } from '../../src/sim/missions/controls';
 import { preset } from '../../src/sim/progression/Campaign';
 import { objectiveText } from '../../src/sim/missions/objectiveText';
@@ -93,8 +92,6 @@ test('enter, drive and exit: door dwell, input ownership (no attacks while drivi
   expect(await vehicleShovesProps(), 'vehicle-to-prop simulation repeats exactly').toEqual(shoved);
   await bikeMountIntent();
   await zooParkedBoarding();
-  await checkL8Cues();
-  await checkBossDamage(); await checkOrdinaryDamage(); await checkBossStates();
   await apcBoarders();
   await l9BusVsParkedApc();
   await l9BusTelegraphAndWreck();
