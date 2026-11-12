@@ -98,3 +98,24 @@ Longest contact-lull evidence: at tick 43,387 the courier was x3320/z94; nearby 
 Finale count correction: increasing regular finale slots from 8/5 to 9/6 (high/low) yields 41 attack starts, 2.447/minute, and 1,010.02 s completion in the current native run. This restores the per-minute target above baseline (~2.386/minute), but the 350.77 s gap persists. Local L10 skilled/passive flags are both empty (`/tmp/s86-l10-finaleplus1`); typecheck, lint and seven focused combat cases pass. Full audit and remote units must refresh after this count change.
 
 Time-box handoff: current source is committed and final full audit/remote units are refreshed after the 9/6 finale count change and rifle-pierce assertion. Every level flag set matches baseline; all rejected gameplay experiments are reverted. Outstanding acceptance: sustained outdoor attack cadence (350.77 s maximum gap), plus clarification of the protected 56 s story exception. The goal is incomplete and no deployment/push occurred.
+
+## Requested fixed-HP native comparison
+
+The same native firing harness also measured the requested fixed profiles below, distinct from runtime toughness-scaled HP above. Before uses c9a9bbbd catalog; after uses current catalog. Conditions and `attacks@seconds` notation match the native-health table; a 30 s non-kill is `>30`. Receipts are `requestedFixedHpBefore`/`requestedFixedHpAfter` in `native-targets.json`.
+
+| Weapon | Ordinary 40 | Fast runner 30 | Alpha 300 | Brute 300 | Armor front 160 | Armor rear 160 |
+| --- | --- | --- | --- | --- | --- | --- |
+| bat | 2@0.417 → 2@0.417 | 2@0.417 → 2@0.417 | 13@4.167 → 13@4.167 | 89@>30 → 89@>30 | 14@4.483 → 14@4.483 | 7@2.133 → 7@2.133 |
+| fire-axe | 1@0.117 → 1@0.117 | 1@0.117 → 1@0.117 | 6@2.617 → 6@2.617 | 6@2.617 → 6@2.617 | 6@2.617 → 6@2.617 | 3@1.117 → 3@1.117 |
+| handgun | 2@0.45 → 2@0.45 | 2@0.45 → 2@0.45 | 30@9.783 → 30@9.783 | 15@4.783 → 15@4.783 | 16@5.117 → 16@5.117 | 8@2.45 → 8@2.45 |
+| army-mg | 3@0.333 → 3@0.333 | 3@0.333 → 3@0.333 | 43@4.333 → 43@4.333 | 22@2.233 → 22@2.233 | 23@2.333 → 23@2.333 | 12@1.233 → 12@1.233 |
+| shotgun | 1@0.117 → 1@0.117 | 1@0.117 → 1@0.117 | 2@0.617 → 2@0.617 | 2@0.617 → 2@0.617 | 2@0.617 → 2@0.617 | 1@0.117 → 1@0.117 |
+| rocket-launcher | 1@0.667 → 1@0.667 | 1@0.667 → 1@0.667 | 2@1.5 → 2@1.5 | 2@1.517 → 2@1.517 | 1@0.667 → 1@0.667 | 1@0.667 → 1@0.667 |
+| pipe-bomb | 2@2.017 → 2@2.017 | 2@2.017 → 2@2.017 | 2@2.267 → 2@2.267 | 2@2.267 → 2@2.267 | 2@2.267 → 2@2.267 | 2@2.267 → 2@2.267 |
+| hunting-rifle | 1@0.117 → 1@0.133 | 1@0.117 → 1@0.133 | 7@7.517 → 2@1.133 | 4@3.117 → 1@0.133 | 4@3.117 → 2@1.133 | 2@1.117 → 1@0.133 |
+| nail-gun | 3@0.483 → 2@0.317 | 3@0.483 → 2@0.317 | 43@8.583 → 30@6.417 | 22@3.65 → 15@2.483 | 23@3.817 → 16@2.65 | 12@1.983 → 8@1.317 |
+| machete | 2@0.55 → 1@0.1 | 1@0.117 → 1@0.1 | 10@4.167 → 8@2.9 | 10@4.167 → 8@2.9 | 10@4.167 → 8@2.9 | 5@1.9 → 4@1.3 |
+| molotov | 2@2.15 → 2@1.15 | 2@1.15 → 2@1.15 | 4@27.25 → 3@12.217 | 4@27.25 → 3@12.217 | 3@13.217 → 2@5.15 | 3@13.217 → 2@5.15 |
+| assault-rifle | 2@0.25 → 2@0.25 | 2@0.25 → 2@0.25 | 24@3.183 → 24@3.183 | 12@1.583 → 12@1.583 | 13@1.717 → 13@1.717 | 7@0.917 → 7@0.917 |
+| flashbang | 4@>30 → 4@>30 | 4@>30 → 4@>30 | 4@>30 → 4@>30 | 4@>30 → 4@>30 | 4@>30 → 4@>30 | 4@>30 → 4@>30 |
+| flamethrower | 10@3.117 → 2@0.45 | 7@2.117 → 2@0.45 | 73@26.783 → 18@5.783 | 60@20.117 → 12@3.783 | 43@14.117 → 10@3.117 | 34@11.117 → 7@2.117 |
