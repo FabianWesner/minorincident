@@ -163,3 +163,5 @@ Combining immediate west Alpha release (+0 s), shorter (-37,21) approach and +24
 [Compact retained-runtime receipt](current-audit.json) preserves source/observer hashes, exact remaining flags, skilled/passive outcomes, kiting receipts and high-hold census from the combined audit. Its runtime revision predates later report-only commits; `git diff 8cad224a -- src tools` is empty for the retained implementation, confirming those audit inputs are unchanged.
 
 Moving the four west approach mouths toward wall ends (z=-16/-12/16/20 instead of -12/-4/8/16) failed: first-breach alive 31 at 51.08 s, peak alive 54/plaza 49, minimum plaza 17; skilled mission-failed and five passive flags (72.7 s). Reverted all source positions; avoiding the central lane by this geometry does not preserve the complete encounter.
+
+Using the existing fast roster for nine rather than three of the fixed 18 high-tier alarm arrivals worsened first-breach alive to 37 and minimum plaza to 15 (peak alive 59/plaza 48; 46.6 s, skilled complete, two flags). Reverted: changing this opening composition toward fast actors does not sustain the required population.
