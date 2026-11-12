@@ -27,7 +27,7 @@ export class GroundContacts {
       z: (rig[`foot${side}`].getWorldPosition(this.joint).z - this.origin.z) / scale,
       target: new Vector3(), planted: new Vector3(), start: new Vector3(), phase: -1,
       landing: new Vector3(), landed: false, swinging: false,
-      rotation: new Quaternion(), release: -1,
+      rotation: new Quaternion(), release: -1, inherited: false,
     }));
   }
   reset(): void { for (const foot of this.feet) foot.phase = -1; }
@@ -42,6 +42,7 @@ export class GroundContacts {
     for (const [i, foot] of this.feet.entries()) {
       foot.phase = (phase + i * .5) % 1; foot.planted.copy(contacts[i].target); foot.target.copy(foot.planted); foot.start.copy(foot.planted);
       foot.rotation.setFromAxisAngle(new Vector3(0, 1, 0), contacts[i].yaw); foot.release = -1; foot.landed = false; foot.swinging = false;
+      foot.inherited = true;
     }
   }
   /** Mixer bindings skip unchanged values. Undo our last offset before it runs. */
@@ -54,6 +55,10 @@ export class GroundContacts {
     const stance = support ?? .55 - .31 * run, lift = Math.min(Math.max(.04, (.06 + .055 * run) * this.scale.y), style?.maxLift ?? Infinity);
     for (const [index, foot] of this.feet.entries()) {
       const p = (phase + index * .5) % 1;
+      // A detailed contact can transfer midway through the cheap solver's
+      // swing. Start that swing at the inherited plant, not halfway to its
+      // predicted landing point in the first frame.
+      if (foot.inherited) { foot.release = p > stance ? p : -1; foot.inherited = false; }
       this.lateral.set(0, 0, foot.z * this.scale.y).applyQuaternion(this.frame);
       if (foot.phase < 0 || p < foot.phase) {
         // Admission and touchdown keep the drawn contact, rather than jumping to a theoretical stride plant.

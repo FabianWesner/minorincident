@@ -55,3 +55,9 @@ The diagnostic now exits nonzero unless each infected supplies at least five con
 ## Remote unit suite
 
 `sh tools/remote/run.sh "$PWD" -- npm test` completed exit 0 on 46.225.66.90: 27 files passed, 106 tests passed and 1 skipped (107 collected), test-budget 204.3 s / 240 s. The complete command was run without test selection or trimming; this checkout’s count differs from the older 150-case job description. Local transcript: `/private/tmp/s83-unit.log`.
+
+## Contact inheritance fix
+
+Temporary instrumentation confirmed the detailed foot solver hands contacts to the cheaper solver as movement starts. No invalid-pose fallback fired. The incoming phase could already be mid-swing, so the cheap solver moved the inherited foot toward a landing immediately. GroundContacts now starts that first swing at the inherited plant. The same diagnostic passes: HIGH ram p95/max 0.3/0.8 cm; HIGH surrounded 2.7/13.9 cm; LOW ram 0.3/0.6 cm; LOW surrounded 3.5/4.0 cm. Typecheck and targeted lint pass. See `contact-after-inheritance.json`.
+
+Reopened the updated consecutive HIGH zoom-1.5 strip: APC stationary, infected by the front corner and rear side, attack arc beside the hull. Foot detail remains small; numeric contact traces provide the measurable proof for these two fixtures. Missing push/clinging and campaign contexts prevent completion.
