@@ -24,7 +24,7 @@ Each opened frame shows the full pen outline and minimap boundary. They predate 
 
 ## §4 — plaza, breach, finale
 
-Kept the Nadia tour, breach, timed plaza defence, Back-to-the-plaza rule, six-Alpha order, launcher hand-in and APC departure story. Added a paved plaza floor. Hale stages inside the bounded elephant pen, and the charge/death predicate uses that pen so the finale does not depend on him already reaching the APC door. Mission/story assertions passed before the final assertion cleanup; the final remote result is recorded below.
+Kept the Nadia tour, breach, timed plaza defence, Back-to-the-plaza rule, six-Alpha order, launcher hand-in and APC departure story. Added a paved plaza floor. Hale stages inside the bounded elephant pen, and the charge/death predicate uses that pen so the finale does not depend on him already reaching the APC door. Final remote mission/story assertions pass, including all six mission scenarios.
 
 ## Validation
 
@@ -34,11 +34,11 @@ Kept the Nadia tour, breach, timed plaza defence, Back-to-the-plaza rule, six-Al
 | Layout validator | PASS, zero errors |
 | Placement IDs vs pre-pass HEAD | Zero surviving IDs changed; 74 appended, eight filtered after generation |
 | Typecheck / lint | PASS during final assertion/marker work |
-| Mission scenarios | Six passed after centre-marker assertion, 75.93 s; final remote run pending below |
+| Mission scenarios | Final remote six scenarios PASS, 208.10 s |
 | Native L8 fixture generation | All seven stages captured after new path barriers; this generation precedes the final cap-material correction and was not copied over the committed fixtures |
-| Final smoke | Running at report preparation; result to be appended |
-| Final remote npm test | Running at report preparation; result to be appended |
-| Remote nightly | All L8 cohorts high/low pass. Inventory/placement completion still running at report preparation |
+| Final smoke | PASS, 6 QA + 1 public tests, 184.9 s, ports4965/4966 through e2e-lock |
+| Final remote npm test | PASS on94.130.181.173: 27 files,106 passed/1 skipped,218.5 s;150/150 registered cases. Prior178.104.70.127 attempt hit240.9 s; unchanged-source retry passes |
+| Remote nightly | All L8 cohorts high/low PASS. Latest intermediate-geometry run cancelled at the time-box handoff before inventory/placement completed; earlier run had 7 passed / 2 baseline failures |
 | Threat audit | Skilled policy completes. Passive first attack 3.42 s after breach; reachability fails (17/25 for 30 s), plus automatic PARTIAL_LEVEL_SELECTION. See [receipt](threat-audit.md) |
 
 Continuous full-start real-input `--follow-marker`, god OFF, zoom 1, 390 s: cleared flamingo → lion → monkey; no browser errors; max frame 83.3 ms, p99 16.8 ms, no frames over 250 ms. This run precedes the last connector pass. No exhaustive ≤10 s stall proof is claimed.
@@ -54,3 +54,7 @@ The two earlier nightly failures have baseline evidence: L2 high market 24 admit
 5. Check remaining arena lighting/minimap/camera states and portrait behavior. Part 2 separately owns flamingo mechanics and deliberate cover/telegraph work; model/motion lanes remain untouched.
 
 Earlier investigation details: [validation history](validation-history.md).
+
+Final assertion cleanup: sanctuary marker/text assertions now match Follow Nadia / l8-route, including immediate checkpoint restore and live Nadia coordinates. Local vehicles2/2 PASS190.68s. An earlier remote run passed vehicles but retained the last stale missions marker expectation; that assertion is now corrected. Post-fix remote run on178.104.70.127 hit240.9s batch timeout; unchanged-source retry on94.130.181.173 PASS218.5s per orchestrator instruction. Implementation commit487c5405.
+
+Handoff complete at the orchestrator’s requested stop. Implementation commit `487c5405`; README records implemented §1/§2/§4, opened zoom-1 captures, exact passing/unfinished gates and next-lane leftovers. No owned checks, browser jobs or preview servers remain running. The original full goal is not marked achieved.
