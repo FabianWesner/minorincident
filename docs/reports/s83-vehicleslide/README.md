@@ -65,3 +65,7 @@ Reopened the updated consecutive HIGH zoom-1.5 strip: APC stationary, infected b
 ## Clinging coverage
 
 Added a floor-policy driven APC fixture with infected at the actual boarding boundary (2 m lateral), followed by throttle input. Both HIGH and LOW record four vehicle.grabbed events. All four actors have zero ground contacts, so p95 is null and the gate deliberately fails; this is not a 0 cm slide pass. Attachment-relative foot motion, actual APC travel, and clearance need explicit proof before this state can pass. See `clinging-baseline.json`. Targeted lint passes.
+
+## Attachment movement audit
+
+Per-tick hull-relative tracing shows the clinging fixture’s APC travels exactly 0 m on HIGH and LOW despite its throttle script. Moving-cling coverage is therefore absent; the diagnostic now separately requires >=2 m of vehicle travel. The trace also reveals coincident boarder pairs: IDs 4/5 share along -1.4225, side +1.595; IDs 6/7 share along -0.7725, side -1.595. Attachment clearance rises from 0.1 m to 0.8 m, while horizontal slots stay fixed. Both the ineffective drive fixture and duplicate-side slot assignment require follow-up.

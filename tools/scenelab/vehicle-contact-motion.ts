@@ -19,8 +19,19 @@ try {
           for (const e of w.infected!.active) { delete e.infected!.l1; e.infected!.state = 'chase'; }
         });
         const cells: { frame: number; jpeg: Buffer }[] = [];
+        const attachmentTrack = [];
         for (let frame = 1; frame <= 300; frame++) {
           await session.step(1);
+          if (name === 'clinging') attachmentTrack.push(await session.page.evaluate(() => {
+            const w = (window.__SCENE__ as unknown as { game: Game }).game.world;
+            const car = [...w.vehicles!.cars.values()][0].entity, p = car.transform;
+            const c = Math.cos(p.yaw), s = Math.sin(p.yaw);
+            return { tick: w.tick, car: { x: p.x, y: p.y, z: p.z, yaw: p.yaw },
+              actors: w.infected!.active.map(e => ({ id: e.id, attached: e.attachedTo === car.id,
+                along: (e.transform.x - p.x) * c - (e.transform.z - p.z) * s,
+                side: (e.transform.x - p.x) * s + (e.transform.z - p.z) * c,
+                height: e.transform.y - p.y, speed: e.motion?.speed ?? null })) };
+          }));
           if (tier === 'high' && name === 'surrounded' && frame >= 140 && frame <= 145) cells.push({ frame, jpeg: await session.snapshot() });
         }
         if (cells.length) await session.makeSheet(cells, `${out}/apc-consecutive.jpg`, 480);
@@ -35,9 +46,12 @@ try {
           pass: actor.motion.contacts >= 5 && actor.motion.slideP95Cm !== null && actor.motion.slideP95Cm <= 5 && actor.motion.slideMaxCm <= 15 }));
         const contactProven = name === 'clinging' ? events.some(e => e.type === 'vehicle.grabbed') : name === 'ram' ? events.filter(e => e.type === 'combat.hit').length >= 6
           : events.filter(e => e.type === 'vehicle.attack-windup').length >= 4 && events.some(e => e.type === 'vehicle.durability-hit');
-        const pass = contactProven && checks.every(check => check.pass) && session.errors.length === 0;
+        let vehicleTravelM = 0;
+        for (let i = 1; i < attachmentTrack.length; i++) vehicleTravelM += Math.hypot(attachmentTrack[i].car.x - attachmentTrack[i - 1].car.x, attachmentTrack[i].car.z - attachmentTrack[i - 1].car.z);
+        const movingAttachmentProven = name !== 'clinging' || vehicleTravelM >= 2;
+        const pass = contactProven && movingAttachmentProven && checks.every(check => check.pass) && session.errors.length === 0;
         if (!pass) process.exitCode = 1;
-        writeJson(`${out}/${tier}-${name}.json`, { pass, contactProven, checks, metrics, events });
+        writeJson(`${out}/${tier}-${name}.json`, { pass, contactProven, movingAttachmentProven, vehicleTravelM, checks, metrics, events, attachmentTrack });
         console.log(JSON.stringify({ tier, name, events: events.length, actors: Object.fromEntries(Object.entries(metrics.actors).filter(([id]) => id.startsWith('infected')).map(([id, actor]) => [id, actor.motion])) }));
       }
     } finally { await session.close(); }
