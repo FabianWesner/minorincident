@@ -73,13 +73,38 @@
       "docs/reports/s66-b87qa/l9-partial.jpg",
       "docs/reports/s66-b87qa/l8-partial.jpg",
       "docs/reports/s66-b87qa/l4-partial.jpg",
-      "test-results/s66-b87qa/l9-route/.frames/turn-000056-action.jpg"
+      "test-results/s66-b87qa/l9-route/.frames/turn-000056-action.jpg",
+      "test-results/s66-b87qa/l9-last/.frames/turn-000012-action.jpg",
+      "test-results/s66-b87qa/l9-last/.frames/turn-000013-action.jpg",
+      "test-results/s66-b87qa/l9-last/.frames/turn-000017-action.jpg",
+      "test-results/s66-b87qa/l9-last/.frames/turn-000064-action.jpg",
+      "test-results/s66-b87qa/l9-last/.frames/turn-000071-action.jpg",
+      "test-results/s66-b87qa/l9-last/.frames/turn-000072-action.jpg",
+      "test-results/s66-b87qa/l9-last/.frames/turn-000073-action.jpg",
+      "test-results/s66-b87qa/l9-last/.frames/turn-000074-action.jpg",
+      "test-results/s66-b87qa/l9-last/.frames/turn-000075-action.jpg",
+      "test-results/s66-b87qa/l9-last/.frames/turn-000078-action.jpg",
+      "test-results/s66-b87qa/l9-last/.frames/turn-000079-action.jpg",
+      "test-results/s66-b87qa/l9-last/.frames/turn-000080-action.jpg",
+      "test-results/s66-b87qa/l9-last/.frames/turn-000081-action.jpg",
+      "test-results/s66-b87qa/l9-last/.frames/turn-000082-action.jpg"
     ],
-    "zoom": "prior captures default, exact1/1.5 not yet instrumented",
-    "continuousMotionGate": false
+    "zoom": "L9-last explicitly camera.zoom(1); API1.5 wider frame also opened; three real wheel-up notches give ~1.52x close magnification (turn17), opened. Earlier L8/L4 exact zoom unverified.",
+    "continuousMotionGate": false,
+    "L9FinalRun": {
+      "deaths": 0,
+      "survivorsEvacuated": 4,
+      "bayTick": 13006,
+      "bridgeTick": 14018,
+      "crawlEndTick": 14888,
+      "transitionTo": "L10",
+      "arrivalTick": 60,
+      "health": 100,
+      "exitCode": 130
+    }
   },
   "coverage": {
-    "L9": "normal start through rail restart and evacuation bay cover, 2/4 at trucks, tick10203 HP100 APC780; bridge/end not completed",
+    "L9": "COMPLETE normal start \u2192 rail restart \u2192 bay4/4 tick13006 \u2192 bridge \u2192 crawl0m tick14888 \u2192 automatic L10 arrival tick60; final run0deaths HP100",
     "L8": "normal start through plaza breach and flamingo Phase2; two deaths in flamingo attempts; lion arena not reached",
     "L4_continuous_fire": "attempted at ticks2875\u20133303: seven seconds MG trigger toward butcher in mixed crowd; health90\u21920, one death; attacker attribution inconclusive",
     "armored_front_vs_rear": "incomplete: shield broke under MG fire, no directional shot counts",
