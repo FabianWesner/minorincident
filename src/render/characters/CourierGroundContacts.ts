@@ -317,6 +317,16 @@ export class CourierGroundContacts {
     const locked = this.feet.filter(f => f.locked);
     let height = Infinity, minimumHeight = -Infinity, maximumHeight = Infinity;
     for (const foot of this.feet) {
+      // Unequal thigh/shin lengths also impose an inner reach limit. A low
+      // pelvis can put a swing target inside that sphere: IK folds fully back
+      // and the travelling toe scrapes the floor instead of reaching its arc.
+      this.joint.setFromMatrixPosition(foot.ik.upper.matrixWorld);
+      const a = this.delta.setFromMatrixPosition(foot.ik.middle.matrixWorld).distanceTo(this.joint);
+      const b = this.neutral.setFromMatrixPosition(foot.ik.end.matrixWorld).distanceTo(this.delta);
+      const innerReach = Math.sqrt(Math.max(0, a * a + b * b + 2 * a * b * Math.cos(150 * DEG)));
+      const tx = foot.target.x - this.joint.x, tz = foot.target.z - this.joint.z;
+      const hipOffset = this.joint.y - this.landing.setFromMatrixPosition(rig.hip.matrixWorld).y;
+      minimumHeight = Math.max(minimumHeight, foot.target.y + (foot.swing ? .02 * s : 0) + Math.sqrt(Math.max(0, innerReach * innerReach - tx * tx - tz * tz)) - hipOffset);
       const reaching = !foot.locked && foot.swing ? ease((foot.swing.u - .4) / .45) : 0;
       if (!foot.locked && reaching <= 0) continue;
       this.joint.setFromMatrixPosition(foot.ik.upper.matrixWorld);
@@ -348,7 +358,7 @@ export class CourierGroundContacts {
     const filtered = style?.pelvisHeight === undefined
       ? current + (height - current) * (1 - Math.exp(-dt / (height < current ? .03 : .05)))
       : this.origin.y + style.pelvisHeight;
-    height = locked.length ? Math.min(maximumHeight, Math.max(minimumHeight, filtered)) : filtered;
+    height = Math.min(maximumHeight, Math.max(minimumHeight, filtered));
     this.pelvisHeight = height - this.origin.y;
     this.joint.setFromMatrixPosition(rig.hip.matrixWorld);
     const parentScale = rig.hip.parent!.getWorldScale(this.delta).y;

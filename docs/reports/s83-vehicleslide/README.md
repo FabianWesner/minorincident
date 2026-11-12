@@ -2,7 +2,7 @@
 
 ## Status
 
-**In progress.** The L9 attached-infected animation speed defect is fixed and focused checks pass. The requested all-state HIGH/LOW contact motion gate and visual capture review are not yet complete, so the acceptance objective is not met.
+**In progress; acceptance is not yet met.** Shared contact fixes and twelve HIGH/LOW vehicle-contact fixture rows pass. Native HIGH L9 now passes all 72 grounded actor/context groups (maximum 3.4 cm, highest p95 2.8 cm). Native airborne/transition coverage, LOW late-route verification, and L7/L4 contexts remain open. No deployment or push.
 
 ## Finding and change
 
@@ -151,3 +151,17 @@ Zebra-stampede was absent from strides, so present() skipped procedural correcti
 A tested change transferring detailed contacts on budget denial instead of fading them had no effect on the known native failures and was removed. Actor 888 still measures 30.2 cm max, with 14.7 cm and 12.5 cm consecutive grounded-foot jumps at frames 8835–8836; actor 918 still measures 22.5 cm max, with 6.4/7.9/8.2 cm jumps at frames 8739–8741. All are within shamble at LOD2, not clip-switch frames. See `sprinter-discontinuities.json`.
 
 Opened the native HIGH zoom-1.5 strip at frames 8834–8839 (local `test-results/s83-vehicleslide/campaign/L9-high-consecutive.jpg`): damaged APC at a roadside structure, dense infected and several zebras around its front/side. Individual feet are too small to identify the exact discontinuity visually. Next evidence must compare actual rendered feet with stored contact targets and IK reach. No speculative budget patch is retained.
+
+## Inner-reach pelvis correction
+
+Joint traces show the remaining sprinter swing targets inside the leg’s minimum reachable distance: unequal loaded thigh/shin lengths cannot fold far enough. The pelvis solver now computes an inner-reach lower bound from the actual world-space segments, including flight when neither foot is locked. A supporting-foot upper bound still limits reach. This is shared contact behavior; no infected stats or corpse lifetime changed.
+
+Native HIGH L9, 9000 ticks: all 72 grounded groups pass, maximum 3.4 cm and highest per-group p95 2.8 cm. Actor 888 improves from 30.2 to 1.6 cm max; actor 918 from 22.5 to 1.8 cm. Ten no-contact groups still fail closed: knockdown/pounce exclusions or airborne attachments, including one-frame transitions. They are not reported as zero slide. See `inner-reach-high.json`.
+
+The complete twelve-row attributed contact fixture rerun passes (`final-contact-gate.json`). Full remote npm test passes on 46.225.66.90: 106 passed / 1 skipped, 202.0 seconds within 240 seconds, exit 0 (`/private/tmp/s83-unit-final2.log`). Full typecheck/lint pass before the gate integration edit. The ordinary unfiltered, unsharded `scene:gate` now also runs the attributed HIGH/LOW vehicle fixture gate; filtered or sharded catalog diagnostics remain scoped to their selection. The complete 87-row catalog has not been rerun with this change.
+
+Final L9 threat diagnostic again has zero L9 flags; its aggregate exit 1 is solely PARTIAL_LEVEL_SELECTION. Route regression is still running at the time of this entry. Native fixed-frame capture and LOW/L7/L4 observations are next.
+
+Opened `inner-reach-consecutive.jpg`: native HIGH, zoom 1.5, consecutive frames 8834–8839 after both the stampede and pelvis corrections. The damaged APC is beside a road structure, with zebras along its left/front hull and upright infected to the right/front; smoke partly obscures the grille. The relative crowd positions change continuously across the strip, with no visible large snap. Individual feet remain small, so the 72-group quantitative trace establishes the measured slide bound. This one small sheet reviews both visual corrections.
+
+The final L9 route regression completed exit 0 across all eighteen path/route/seed cases. Full typecheck/lint also pass after integrating the contact gate. Required per-epic E09 verification is now running remotely.
