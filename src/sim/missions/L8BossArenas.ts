@@ -1,4 +1,4 @@
-import { l8PathWalls, l8ConnectorGates, l8BossArenas, l8EncounterGates, l8GateClosed, l8PlazaGates, l8Route, l8YardGates, l8YardWalls, inRect, type L8BossId } from '../../data/l8Bosses';
+import { l8FlamingoLanding, l8PathWalls, l8ConnectorGates, l8BossArenas, l8EncounterGates, l8GateClosed, l8PlazaGates, l8Route, l8YardGates, l8YardWalls, inRect, type L8BossId } from '../../data/l8Bosses';
 import type { InfectedSpecialMove } from '../../data/infected';
 import { propFootprint } from '../interact/PropSystem';
 import { boxContact, type SolidBox } from '../world/SolidGeometry';
@@ -454,7 +454,8 @@ export class L8BossArenas {
     } else if (arena.id === 'elephant' && distance(e.transform, p.transform) < 4) {
       this.start(e, 'elephant.swipe', 42, 0, 5.5); boss.readyAt = w.tick + 420;
     } else if (arena.id === 'elephant') this.walk(e, this.predict(e, .8, arena), 5);
-    else this.orbit(e, arena, p.transform, arena.id === 'flamingo' ? 6 : 4);
+    else if (arena.id === 'flamingo') this.orbit(e, arena, def.centre, 6);
+    else this.orbit(e, arena, p.transform, 4);
     return true;
   }
   /** r42-arenas (r41-vqa: 'the gorilla is dead in ~7 s to the MG ... and never hits her'). Its HP is untouched; a gorilla that loses >= 90 HP in 1.5 s
@@ -680,14 +681,10 @@ export class L8BossArenas {
   }
   private orbit(e: EntitySnapshot, arena: L8ArenaState, at: { x: number; z: number }, speed: number): void {
     const def = l8BossArenas.find(a => a.id === arena.id)!;
-    // Reinforcements keep increasing slot IDs beyond the original flock size.
-    // Allocate the living flock around the ring so later flights never reuse
-    // the same modulo-eight targets as surviving birds from earlier flights.
-    const flock = arena.id === 'flamingo' ? arena.ids.filter(id => (this.w.entities.get(id)?.health.current ?? 0) > 0) : undefined;
-    const slot = flock ? flock.indexOf(e.id) : e.infected!.arenaBoss!.slot;
-    const angle = this.w.tick / 130 + slot * Math.PI * 2 / (flock?.length || def.count);
-    const r = arena.id === 'flamingo' ? 5 : arena.id === 'gorilla' || arena.id === 'elephant' ? 2 : 7;
-    const target = { x: at.x + Math.cos(angle) * r, z: at.z + Math.sin(angle) * r };
+    const slot = e.infected!.arenaBoss!.slot;
+    const angle = this.w.tick / 130 + slot * Math.PI * 2 / def.count;
+    const r = arena.id === 'gorilla' || arena.id === 'elephant' ? 2 : 7;
+    const target = arena.id === 'flamingo' ? l8FlamingoLanding(slot) : { x: at.x + Math.cos(angle) * r, z: at.z + Math.sin(angle) * r };
     this.walk(e, distance(e.transform, def.centre) > def.radius ? def.centre : target, speed);
   }
   private walk(e: EntitySnapshot, at: { x: number; z: number }, speed: number): void { this.w.npcs!.move(e, at, speed, e.infected!, .2, ['elephant', 'gorilla'].includes(e.infected!.arenaBoss!.arena) && e.infected!.arenaBoss!.engaged ? 48000 : 1600); }

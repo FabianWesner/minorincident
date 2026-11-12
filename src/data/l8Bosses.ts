@@ -94,3 +94,10 @@ export function l8GateClosed(key: string, ctx: L8GateContext): boolean {
   return arena.phase !== 3;
 }
 export const inRect = (p: { x: number; z: number }, r: { x0: number; z0: number; x1: number; z1: number }) => p.x >= r.x0 && p.x <= r.x1 && p.z >= r.z0 && p.z <= r.z1;
+
+/** Stable rim pads for the initial flock and three reinforcement flights. */
+export const l8FlamingoLandingCount = 26;
+export function l8FlamingoLanding(slot: number): { x: number; z: number } {
+  const angle = slot * Math.PI * 2 / l8FlamingoLandingCount;
+  return { x: Math.cos(angle) * 11, z: -32 + Math.sin(angle) * 11 };
+}
