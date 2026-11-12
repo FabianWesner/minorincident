@@ -9,18 +9,19 @@
     "durationSeconds": 11.08
   },
   "playtest": {
-    "result": "partial_L9_L8",
+    "result": "partial_L9_L8_L4",
     "headless": true,
     "quality": "low",
     "renderer": "WebGL2",
     "godMode": false,
     "realInput": true,
     "lockCommand": "E2E_UNITS=1 E2E_RESERVATION_SECONDS=600 E2E_PORT=4867 sh tools/e2e-lock.sh ...",
-    "exitCode": 130,
+    "exitCode": 124,
     "blocker": null,
     "captures": [
       "test-results/s66-b87qa/00-menu.png",
-      "test-results/s66-b87qa/l9/bus-telegraph-turn43.jpg"
+      "test-results/s66-b87qa/l9/bus-telegraph-turn43.jpg",
+      "test-results/s66-b87qa/l9-route/.frames/turn-000056-action.jpg"
     ],
     "verdicts": [
       {
@@ -71,11 +72,14 @@
       "test-results/s66-b87qa/l9/bus-telegraph-turn43.jpg",
       "docs/reports/s66-b87qa/l9-partial.jpg",
       "docs/reports/s66-b87qa/l8-partial.jpg",
-      "docs/reports/s66-b87qa/l4-partial.jpg"
-    ]
+      "docs/reports/s66-b87qa/l4-partial.jpg",
+      "test-results/s66-b87qa/l9-route/.frames/turn-000056-action.jpg"
+    ],
+    "zoom": "prior captures default, exact1/1.5 not yet instrumented",
+    "continuousMotionGate": false
   },
   "coverage": {
-    "L9": "normal start to rail stall, countdown and hatch tested; restarted and drove to HUD40m; bay/bridge/end not completed",
+    "L9": "normal start through rail restart and evacuation bay cover, 2/4 at trucks, tick10203 HP100 APC780; bridge/end not completed",
     "L8": "normal start through plaza breach and flamingo Phase2; two deaths in flamingo attempts; lion arena not reached",
     "L4_continuous_fire": "attempted at ticks2875\u20133303: seven seconds MG trigger toward butcher in mixed crowd; health90\u21920, one death; attacker attribution inconclusive",
     "armored_front_vs_rear": "incomplete: shield broke under MG fire, no directional shot counts",

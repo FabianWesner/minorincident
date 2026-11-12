@@ -1,89 +1,46 @@
-# s66-b87qa — batch 87 first-time-player QA
+# Batch 87 real-input QA — s66-b87qa
 
-**Status: incomplete; no gameplay verdicts issued.** This report records an environment stop, not a pass. The goal remains to run the real-input route and open captures.
+**Pre-deploy verdict: HOLD. Coverage is incomplete and two new failures need review.** Game code tested: `91199b68`. No game code or specs changed; no deploy, push or main movement.
 
-## Run setup
+Headless WebGL2/Metal, LOW, 1280×720, one browser through `tools/e2e-lock.sh` / browser pool, ports4867/4868. God OFF (`LUNA_MORTAL=1`). Normal menu and standard campaign level-start save only; no onward fixtures, teleport, bot or invulnerability. All movement, aiming, firing, hatch and driving actions used keyboard/mouse. Route decisions used screenshots, objective marker and HUD. A temporary driver also read the *rendered* marker DOM rectangle to send WASD; a later L9 retry replayed recorded real device inputs until contact divergence, then returned to manual views. The step harness pauses between actions, so this is **not a sufficient continuous-motion quality gate**. Exact camera zoom1/1.5 still needs verification. Raw evidence and numbered input/action frames stay in `test-results/s66-b87qa/`.
 
-- Worktree head: `91199b68` (`main`, `origin/main`), matching the requested batch head.
-- Worktree was clean at start.
-- QA preview build: `MI_BUILD_CACHE=off npm run build:qa` — passed (Vite production build, 11.08 s). Cache-off was needed because the default cache lock is under `/Users/wesner/Workspace/minorincident/.mi-worktree-cache`, outside this worktree's writable root.
-- Attempted a single headless browser through `E2E_UNITS=1 E2E_RESERVATION_SECONDS=600 E2E_PORT=4867 sh tools/e2e-lock.sh ...` with a fresh profile, WebGL2, low quality, normal menu flow, and no god mode.
-- **Stopped before navigation/gameplay:** the required browser-pool daemon failed to bind `127.0.0.1:4329` with `listen EPERM`. The independent preview listener could not be started in this restricted environment either. The attempt returned exit 75; no browser page or capture was produced.
-- Pool log: `/var/folders/0d/d1pz5009603g0jcd5r3j353c0000gn/T/mi-browser-pool.log` (ending error: `Error: listen EPERM: operation not permitted 127.0.0.1:4329`).
+QA build `MI_BUILD_CACHE=off npm run build:qa` passed (11.08s). Initial listener permissions were subsequently resolved. Browser idle release and595s reservation caps interrupted several attempts; these are harness limits, not game failures. Code checks were not rerun because this lane changes reports only.
 
-## Findings and verdicts
+## Evidence-backed findings
 
-No `FIXED`, `NOT FIXED`, `REGRESSION`, or `NEW` verdict is supportable: the game was not opened. There are no current-run captures to describe. Do not treat prior lane fixtures, simulated probes, or existing report images as first-time-player evidence.
+| Verdict | Finding and observed result | Position / tick | Opened capture |
+|---|---|---|---|
+| **NEW · P1** | Recoverable driving blockage: no meaningful onward progress for12.23 simulated seconds despite forward/steering input. APC spun/impacted near crowd and roadside props/wall; reverse and further steering eventually recovered. Another bus/roadside trap lasted>10s. Cause is not isolated to zombie impact. | L9 HUD632–639m; ticks8195–8929. Later121–122m trap. | [L9 sheet](l9-partial.jpg), upper-left and middle-left show crowd/obstruction and declining armor; upper-right shows the bay; middle-right shows bus/roadside trap. |
+| **NEW · P2** | Several dead flamingos remain suspended in a tall interpenetrating column beside/above the courier across successive views while live birds keep attacking. | L8 pond Phase2, HUD5m; tick9046 (also8801 and later). | [L8 sheet](l8-partial.jpg), lower-right: vertical pink corpse pile; lower-left: live flock approach at8616. |
+| **FIXED — limited scope** | Rail stall has an explicit countdown, hatch instructions and restart cue. Countdown18→15→10→6→2, then “Engine restarted — drive! (W)”; W reduced distance78→40m. | L9 rail, tick9278 countdown;10408 restart;10642 onward. | [L9 sheet](l9-partial.jpg), bottom-left: hatch defence HUD; bottom-right: restart instruction. |
+| **FIXED — limited scope** | Hatch shows upper torso and weapon. F closes it; health40 remained through the remainder of that defence. | L9 rail, HUD79m; tick9278. | Same L9 bottom-left: visible upper body above roof. |
+| **FIXED — warning only** | Bus attack receives a visible warning and red attack lane: “School bus lining up a ram · dodge now!1s”. Clean dodge/defeat remains unverified. | L9 HUD157m, action43 of first run; exact tick not retained. | Opened raw `l9/bus-telegraph-turn43.jpg`: warning HUD and red lane behind APC. |
 
-## Coverage
+Raw paths above are relative to `test-results/s66-b87qa/` unless linked into this report. NEW means a newly observed issue; no baseline evidence establishes a regression. Authored rail defence lasts20s and is explicitly announced; the separate unannounced driving blockages exceed the10s P1 threshold.
 
-| Scope | Status | What remains |
+## Required checks and honest limits
+
+| Requested check | Result |
+|---|---|
+| L9 start→bay→bridge→end | Reached rail, restart and evacuation bay naturally. At tick10203,4m from bay marker,2/4 survivors were at trucks, health100, APC780. Bridge/end not yet reached. |
+| L9 driver over soldier at start | Not verified sufficiently to issue FIXED. |
+| L9 hull flicker, flame through hull, wheels on ramp/fall | Wheels and hull present on flat-road views; brief glazing/flame overlap ambiguous. Ramp/fall and temporal flicker unverified. |
+| L9 keeps driving over zombies; ordinary rams cost no armor | Long stretches maintain onward movement with contacts. Armor losses near mixed props, attackers and boarders are confounded. No isolated armor-billing pass. Driving recovery issue above remains. |
+| L9 barriers fly and persist | Displacement seen; settled persistence not verified. |
+| L8 flamingo gait | Arena reached and combat played, including Phase2. Live foot-slide not resolved by these captures; corpse failure above is separate. |
+| L8 lion smoothness | Lion arena not reached. Brief animals behind bars during tour do not count as arena coverage. |
+| L4 brute/butcher while continuously firing automatic weapon | At tick2875 health90; aimed MG held4s, then re-aimed and held3s, ending tick3303 health0. **90 net HP lost during7s firing**, one death. Mixed butcher/armored/hazmat/firefighter crowd and army fire prevent exact hit count or attacker attribution. This does not establish the isolated stun-lock fix. |
+| Armored front vs rear shots-to-kill | Shield visibly broke during MG fire, tick3981 (“SHIELD BROKEN1.6s”). Army fire and mixed crowd prevent directional shot counts. Comparison incomplete. |
+| L2 market / L7 bus | Optional; not played. |
+
+Opened [L4 sheet](l4-partial.jpg): left shows butcher at the sandbag gap with health90 (2875), middle shows death after the MG burst (3303), right shows broken shield and butcher corpse (3981). It proves danger under continuous fire, not which enemy landed each hit.
+
+## Player impression
+
+| Level | Glitches / pacing / threat | Stunning |
 |---|---|---|
-| L9 start → bay → bridge → end | NOT PLAYED | Real-input route, drive-start occupant, flicker/FX/wheels, horde contacts, barriers, rail stall countdown, bus, hatch, end; captures at zoom 1 and 1.5 |
-| L8 start → flamingo arena → lion arena | NOT PLAYED | Marker-following route, animal motion/appearance, captures at zoom 1 and 1.5 |
-| L4 brute/butcher continuous-fire fight | NOT PLAYED | God OFF, automatic weapon continuous fire, whether enemy attacks complete, player hits taken |
-| Armored zombie front vs rear | NOT PLAYED | Real shots-to-kill by direction |
-| L2 market ambush | NOT PLAYED | Optional route not reached |
-| L7 to school bus | NOT PLAYED | Optional route not reached |
+| L9, partial | Driving is readable on clear stretches; repeated prop/crowd recovery feels like babysitting. Dangerous when blocked, not harmless. Rail wait now explains itself. Dark sparse roadside and steering recovery reduce spectacle. |5/10|
+| L8, partial | Flamingos are dangerous (two deaths). Repeated flights and Phase2 without a remaining-flock count felt prolonged; vertical corpse stack visibly undermines the scene. No confirmed>10s navigation stall. |5/10 overall; flamingos3/10|
+| L4, sampled fight | Dangerous, not boring or harmless. Large butcher and mixed crowd overlap; unable to isolate attack attribution. No babysitting seen in this short fight. |5/10|
 
-No level-level answers about glitches, boring/harmless/babysitting, or stunning score can be made without playing. No >10 s gameplay stall was observed because gameplay did not start.
-
-## Next action
-
-Resume on a runtime where the repo browser pool can bind its local endpoint and the locked preview can bind its unique local port. Then complete the required routes using only ordinary input and visible objective/HUD guidance, save raw captures under `test-results/s66-b87qa/`, open the cited captures, and replace this status with evidence-backed verdicts. No code or spec files were changed.
-
-## Runtime restored
-
-After sandbox removal, the locked headless session started successfully on port 4867. Opened `test-results/s66-b87qa/00-menu.png`: title art and Start game / Settings / Credits buttons render correctly. The previous EPERM blocker is resolved. Gameplay routes and all fix verdicts remain outstanding. The session closed normally.
-
-## Partial L9 real-input run
-
-Normal L9 start preset, LOW, WebGL2/Metal, god OFF, no teleports or onward fixtures. Used `tools/playtest/live.ts --level L9 --quality low --screen --step` with `LUNA_MORTAL=1`; only screenshots and visible HUD guided actions. The clock paused between actions. This limits motion judgement; no full motion pass is claimed. Raw input log: `test-results/s66-b87qa/l9/log.jsonl`.
-
-43 ordinary keyboard actions reached objective distance 157 m with zero deaths and 100/100 player health. APC armour went from 960 to 490. Boarder/leaper swerves cleared their prompts. Armour loss is confounded by boarder attacks and heavy contacts; it does not prove ordinary rams are incorrectly billed. Several stretches were visually sparse/dark. No proven >10 s game stall; steering recovery is not classified as a game defect.
-
-**FIXED (limited scope): school-bus ram telegraph appears.** Opened `test-results/s66-b87qa/l9/bus-telegraph-turn43.jpg`: red lane behind the upright APC and HUD `School bus lining up a ram · dodge now! 1 s · 157 m`. Position: visible HUD distance 157 m, action 43. Exact simulation tick was not read. The 595-second browser reservation expired before the dodge action completed (process exit 124), so dodgeability/beatability, bay/bridge/end, rail timer and hatch remain unverified. The session is terminal; this is an infrastructure cap, not a reported game crash.
-
-Other opened, transient frames showed near-side wheels and an intact hull, plus airborne barriers. Since those frames were overwritten by the live tool, they are observations only, not retained finding evidence. No full vehicle or per-level stunning verdict yet. L8, L4 and armored direction checks remain unplayed.
-
-## Second L9 attempt: P1 driving blockage
-
-**NEW / P1 — recoverable driving blockage beside the rail/roadside props.** Tick 8195 → 8929 (12.23 simulated seconds), HUD distance 632 → 639 m: forward/steering inputs did not produce meaningful onward objective progress while infected surrounded the APC and armour fell to “barely functional.” It moves/spins, so this is not a stationary softlock. Earlier reversing freed a similar roadside blockage. Cause is unresolved (infected, retained props, walls, and steering are confounded); this does not independently prove ordinary ram damage or a velocity reset. Severity follows the requested >10 s first-time-player stall rule.
-
-Opened [L9 sheet](l9-partial.jpg): top left shows APC facing roadside with heavies nearby, top right a crowd enclosing the hull and 270 armour, bottom left a concrete barrier at the nose, smoke and “barely functional.” Full-size raw frames and timing ledger: `test-results/s66-b87qa/l9-replay/`. Tick data is read-only instrumentation (`LUNA_TIMING_LEDGER=1`), never used for route decisions. The session was explicitly closed (exit 130) after the attempt; no check remains running.
-
-The recorded-input restart diverged physically, so replay was stopped at action 14 and all later decisions used opened screenshots/HUD again. A correction to the earlier note: the live driver did retain numbered input frames in `.frames`; those raw captures exist. The latest sheet is opened and retained. Full L9 completion remains unverified. The partial L9 look rates **5/10 stunning**: clear APC silhouette, but sparse dark stretches, conspicuous motes, awkward crowds and repeated steering recovery undermine the scene. Enemies are dangerous while blocked; not harmless. Driving recovery felt like babysitting the vehicle. No all-level verdict follows from this partial run.
-
-## Partial L8 run: start through plaza breach
-
-Same headless LOW WebGL2/Metal, normal L8 start preset, god OFF, screenshot/HUD-only decisions, paused between real-input actions. 53 actions reached tick **8994**, plaza breach, **48/100 health**, zero deaths. The 595-second browser cap ended this session (exit124). Flamingo and lion arenas were **not reached**, so no fix verdict is issued for either animal. Lions were briefly visible behind bars during Nadia's tour; those are not combat/motion acceptance evidence. Exact zoom has not been independently verified, and zoom1/1.5 coverage remains open.
-
-Opened [L8 sheet](l8-partial.jpg): left shows Nadia's objective ring on dark grass beside the lion enclosure, right shows the MG fight outside the plaza with dense overlapping civilians/infected/corpses. The tour is followable through the marker, though several input corrections were mine and are not game findings. The tour's ring leaves the paved path; this contradicts the PO's lit-path preference, but no navigation softlock was proven. Rest was an instructed wait and transitioned naturally into the breach. The breach is **not harmless**: courier health fell100→60, later to48 while firing; retreat and aiming corrections were needed. No brute continuous-fire acceptance claim follows from this mixed fight.
-
-Partial L8 stunning score **5/10**: heroine/corgi read clearly, but the opening feels lengthy and the fight becomes a pile of overlapping bodies, guns, bars and gore. Escorting the tour felt repetitive; no specific straggler babysitting was established. Glitches/motion: marker on grass and crowded body overlap observed; animal flicker/slide remains unverified. Raw inputs, numbered frames and read-only ticks are under `test-results/s66-b87qa/l8/`. No check remains running.
-
-## L4 continuous-fire attempt
-
-Played normal L4 arrival → quartermaster → MG pickup → army hold. God OFF, no onward fixture, real inputs, LOW WebGL2/Metal. Opened [L4 sheet](l4-partial.jpg): butcher and mixed armored/hazmat/firefighter crowd at the sandbag gap; death under continuous fire; later broken shield and butcher corpse. Tick2875 health90 → tick3119 health40 → tick3303 health0 during **seven seconds of held MG trigger**, with a re-aim between the four- and three-second holds. **One death; 90 net HP lost in the firing window. Exact hit count and butcher-specific attribution are unavailable**, so s54 is inconclusive for the named enemy. Other attackers overlapped the aim and attack lanes. Do not call the single-heavy stun-lock fix passed from this evidence.
-
-The game automatically returned the courier alive near the plaza without a fixture. A later four-second MG hold broke a shield (tick3981, `SHIELD BROKEN · 1.6s`). This demonstrates finite shield damage, but **front/rear shots-to-kill remain unmeasured**. Army fire and other attackers make this a poor directional-damage sample.
-
-Partial L4 assessment: enemies are dangerous, not harmless (one death); no babysitting encountered. Arrival cinematic is long but proceeds naturally, and the hold has a visible countdown. Stunning **5/10**: environment is coherent, but the close fight becomes a dense mass of overlapping figures/telegraphs and the chef/butcher silhouette looks exaggerated. No full motion/zoom-matrix verdict. Raw captures/log/timing: `test-results/s66-b87qa/l4/`. Session explicitly closed, exit130; no check running.
-
-## L8 continuation: flamingo Phase 2 reached
-
-A fresh normal start used a temporary marker-following input driver to cover Nadia's tour. It reads only the rendered objective marker's DOM rectangle and HUD text, sending real WASD and waits; no world/entity coordinates, bot, teleports, god or onward fixture. Opened intermediate frames confirmed the path following. Manual screenshot combat then cleared the plaza and reached the flamingo arena naturally. First entry had10HP and died immediately; normal automatic retry restored the pond entrance at100HP. The retry reached **Phase2** before dying again (tick10883). Session explicitly closed, exit130. Lions still unplayed.
-
-**NEW / P2: persistent vertical flamingo corpse pile.** Opened successive frames at ticks8801,9046 and later: several dead pink birds remain suspended in a tall, interpenetrating column beside/above the courier. This persists while live birds move, receive damage and spawn additional flights. Retained evidence: lower-right panel of the updated, opened [L8 sheet](l8-partial.jpg), tick9046, pond Phase2, HUD5m. Raw `test-results/s66-b87qa/l8-marker/.frames/turn-000278-action.jpg`. Lower-left panel (tick8616) shows live flock approach. This is concrete corpse/stacking evidence; **live foot-slide remains unverified**, not a FIXED or NOT FIXED claim for s64. No baseline comparison supports calling it a regression.
-
-Flamingo stunning **3/10**: the large overlapping flock and suspended dead birds undermine the scene. It is dangerous rather than harmless (two deaths; the longer retry lost100HP). The HUD gives useful sideways-dodge instructions but no remaining-flock count; repeated “Another flight comes down” and Phase2 felt prolonged. No >10s navigation stall was established in this arena. Close/normal zoom values still need explicit verification; those gaps remain.
-
-## Third L9 attempt: rail countdown and restart verified
-
-Normal start again, no onward fixture. Straight throttle and brief held Space cleared boarders/leapers and reached the gate approach without the earlier prolonged blockage. This is evidence against a universal stop-on-infected-contact failure; no exact contact-speed or ordinary-ram billing measurement is claimed. A bus/roadside trap then held the APC around121–122m for >10s while forward and reverse steering were attempted; further steering/reversing recovered it. **NEW/P1 recoverable bus/roadside blockage**, same practical driving concern as the prior P1, not an irreversible softlock. Retained raw capture `test-results/s66-b87qa/l9-final/bus-trap-turn35.jpg`; included in middle-right of L9 sheet. Bus telegraph seen; clean dodge/defeat still unproven.
-
-**FIXED — rail-stall explanation/restart:** tick9278 HUD says `Engine stalled — hold the hatch (0:18)` with progress blocks, shoot-boarders instructions, F hatch toggle and cannot-leave-APC text. Countdown observed18→15→10→6→2. Tick10408 gives `Engine restarted — drive! (W)` and subtitle `Engine's back! Drive, now!`. Actual W input reduced visible distance78→40m by tick10642. The announced20-second scripted defence is explicitly explained; it is recorded as an authored wait, separate from the unannounced >10s driving blockages.
-
-**FIXED — hatch presentation:** tick9278 shows upper torso and weapon above the roof rather than only a head. F closed it; courier health stayed40 through the remaining countdown. **Opened updated [L9 sheet](l9-partial.jpg)**, lower-left hatch and lower-right restart frames, with full raw frames in `test-results/s66-b87qa/l9-final/.frames/`. Brief flame/cab overlap at turn7 remains ambiguous through glazing, not a depth-failure verdict.
-
-This session ended at the browser's595s reservation cap (exit124), **40m from the current objective, no death**. Bay/bridge/end, ramp wheel motion and complete-vehicle fall remain unplayed. No check remains running. Approximate lane time remaining at04:05UTC:60minutes of the requested2h window.
+Scores are subjective and cover only played sections. **No full batch approval is supported.**
