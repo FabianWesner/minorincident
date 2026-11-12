@@ -110,3 +110,5 @@ Native direct-impact estimates below use `damageAmount()` with runtime HP and au
 | nail-gun | 3@0.33 | 3@0.33 | 30@4.83 | 23@3.67 | 24@3.83 | 12@1.83 |
 | machete | 2@0.4 | 2@0.4 | 8@2.8 | 12@4.4 | 12@4.4 | 6@2 |
 | assault-rifle | 3@0.27 | 2@0.13 | 24@3.07 | 18@2.27 | 19@2.4 | 10@1.2 |
+
+Final molotov correction validation: `/tmp/s86-threat-molotov28` completed all ten levels in 382.1 s. Every skilled/passive flag set matches the c9a9bbbd baseline; only the two pre-existing L4 criteria remain at top level. Remote units on 46.225.66.90 passed 106 tests with one skipped in 197.3 s / 240 s. This supersedes the pending-refresh note after the 28-DPS correction. The remaining open acceptance work is L10 continuous attack cadence and complete native firing TTK measurement.
