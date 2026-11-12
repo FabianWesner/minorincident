@@ -38,11 +38,8 @@ export async function checkL9BridgeMarker(): Promise<void> {
   } finally { world.dispose(); }
 }
 
-/**
- * r38-vqa P2-2 / r42-l9pin (r41-vqa P1-1): an APC pinned between barriers with the gas held gets free within 15 s, also while the
- * driver taps the handbrake as the shake-off hint says, and also when the hull cannot move at all (a held impact stall: the r41
- * APC sat frozen 330 s and never counted a recovery). The new pose never overlaps a wall.
- */
+/** S67: the legacy fixture is sealed on four sides. Held input must preserve
+ * collision and pose continuity; its former escape assertion required teleporting. */
 export async function checkL9ApcPocket(): Promise<void> {
   const decoded = decodeSave(JSON.stringify(readFixture('tests/fixtures/saves/qa/l9-at-bridge.json.br').campaign));
   if (decoded.status !== 'ok') throw new Error('fixture does not decode');
@@ -55,19 +52,26 @@ export async function checkL9ApcPocket(): Promise<void> {
         world.physics.world!.createCollider(RAPIER.ColliderDesc.cuboid(hx, 1.5, hz).setTranslation(bx, 1.5, bz));
         world.solids.setBarrier(`r39.${name}`, { x: bx, y: 1.5, z: bz, halfX: hx, halfY: 1.5, halfZ: hz } as never);
       }
-      let away = 0;
+      let away = 0, largestStep = 0;
       for (let i = 0; i < 900 && !away; i++) {
         if (variant === 'frozen') car().entity.vehicle!.impactStallUntil = world.tick + 600;
         const frame = emptyInput(); frame.drive = { throttle: 1, steer: 0 } as never; frame.brake = false;
         if (variant === 'gas+handbrake') frame.handbrake = i % 90 < 24;
+        const previous = { ...car().entity.transform };
         world.applyInput(frame, 'keyboard'); world.update();
         const t = car().entity.transform;
+        largestStep = Math.max(largestStep, Math.hypot(t.x - previous.x, t.z - previous.z));
         if (Math.abs(t.z - z) > 4 || t.x > x + 7 || t.x < x - 9) away = i;
       }
-      expect(away, `${variant}: the APC left the pocket within 15 s`).toBeGreaterThan(0);
-      const t = car().entity.transform, def = car().physics.def;
-      for (let d = -def.length / 2; d <= def.length / 2; d += 1)
-        expect(world.infected!.nav.clear(t.x + Math.cos(t.yaw) * d, t.z - Math.sin(t.yaw) * d, def.width / 2), `${variant}: hull clear of walls at ${d} m`).toBe(true);
+      expect(away, `${variant}: a sealed pocket cannot be escaped by relocating the APC`).toBe(0);
+      expect(largestStep, `${variant}: physical recovery never assigns a new pose`).toBeLessThan(1);
+      let penetration = 0;
+      world.physics.world!.contactPairsWith(car().physics.collider, other => {
+        world.physics.world!.contactPair(car().physics.collider, other, manifold => {
+          for (let i = 0; i < manifold.numContacts(); i++) penetration = Math.max(penetration, -manifold.contactDist(i));
+        });
+      });
+      expect(penetration, `${variant}: the retained hull does not penetrate its enclosure`).toBeLessThan(.1);
     } finally { world.dispose(); }
   }
 }

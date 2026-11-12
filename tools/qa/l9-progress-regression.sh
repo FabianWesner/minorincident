@@ -4,9 +4,11 @@
 set -u
 cd "$(dirname "$0")/../.." || exit 1
 status=0
-for route in road countryside dry-shortcut; do
-  for seed in 1 2 3; do
-    node --import tsx/esm tools/qa/l9-progress-probe.ts "$seed" "$route" --check || status=1
+for path in primary detour; do
+  for route in road countryside dry-shortcut; do
+    for seed in 1 2 3; do
+      L9_PROGRESS_PATH="$path" node --import tsx/esm tools/qa/l9-progress-probe.ts "$seed" "$route" --check || status=1
+    done
   done
 done
 exit "$status"

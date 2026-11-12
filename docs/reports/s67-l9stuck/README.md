@@ -83,3 +83,11 @@ At countryside seed-2 tick 6300, all four wheel-contact flags are false while th
 ## Beached recovery investigation
 
 Reusing a mass-scaled recovery lift plus held-steering yaw impulse improved countryside seed 2 from 9.42 s to 6.92 s; an earlier/stronger lift reached 5.58 s. Both still invoked the existing 6 m relocation and failed acceptance, so neither trial was retained. The current fallback also counts repeated physical recovery events toward relocation; any future physical recovery must be audited together with that legacy fallback rather than accepted from a shorter stall alone.
+
+## Primary-line coverage and corrected legacy test
+
+`abcf6f35` passes all nine **detour** route/seed runs: road 4.58 / 0.63 / 0.37 s, countryside 0.70 / 0.35 / 0.98 s, shortcut 0.33 / 0.75 / 4.55 s, all complete and without position discontinuities. This is insufficient for the primary jump/encounter lines. The regression now includes both primary and detour paths (18 runs). Primary road seeds 1–3 fail at 12.23 / 12.17 / 12.15 s; primary countryside seed 2 fails at 14.28 s. All primary runs complete, but acceptance remains red.
+
+The final local verifier and remote suite failed the old `checkL9ApcPocket` expectation that an APC held at W/zero steering escapes a sealed four-wall pocket by relocating. That assertion contradicts the explicit no-teleport requirement. All three input variants and their 900-tick budgets are retained; they now assert confinement, <1 m per-tick displacement, and <0.1 m physical contact penetration. Focused missions suite passes all 6 tests (49.59 s). This is a correction to a legacy test criterion, not a relaxed progress limit. Fresh full gates remain necessary after the primary-line failures are fixed.
+
+The refreshed threat audit on `abcf6f35` reports skilled complete, passive tick-budget, 0 L9 flags; its sole exit flag is partial-level selection. No completion claim is made.
