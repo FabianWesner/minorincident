@@ -187,6 +187,17 @@ export class ActionView extends Group {
   private circle(x: number, z: number, radius: number, from = 0, angle = Math.PI * 2): void {
     for (let i = 0; i < 48; i++) { const a = from + angle * i / 48, b = from + angle * (i + 1) / 48; this.segment(x + Math.cos(a) * radius, 0.04, z + Math.sin(a) * radius, x + Math.cos(b) * radius, 0.04, z + Math.sin(b) * radius); }
   }
+  private surfaceHeight(x: number, z: number): number {
+    return this.ground?.(x, z) ?? this.world.districts?.groundHeight(x, z) ?? this.world.districts?.pavingHeight(x, z) ?? 0;
+  }
+  private surfaceCircle(x: number, z: number, radius: number): void {
+    for (let i = 0; i < 48; i++) {
+      const a = i * Math.PI / 24, b = (i + 1) * Math.PI / 24;
+      const ax = x + Math.cos(a) * radius, az = z + Math.sin(a) * radius;
+      const bx = x + Math.cos(b) * radius, bz = z + Math.sin(b) * radius;
+      this.segment(ax, this.surfaceHeight(ax, az) + .035, az, bx, this.surfaceHeight(bx, bz) + .035, bz, .018);
+    }
+  }
   /** Rig node a non-selected weapon rides on: melee on the back, guns on the hip. */
   private holsterMount(category: string): Object3D | null {
     if (category !== 'melee' && category !== 'ranged') return null;
@@ -279,7 +290,7 @@ export class ActionView extends Group {
       held.holder.visible = (crawlAxe || !downed) && !gunner && inHand && !!mount && prop && !player.riding && this.character.rideWeight === 0 && !['weapon.fists', 'weapon.kick'].includes(def.id) && !(held.model.userData.placeholder === true && def.category === 'ability');
     }
     this.selected = loadout.state.selectedSide; const state = loadout.state[this.selected], def = action(loadout.current(this.selected).id), origin = player.transform;
-    this.cue = null; this.shape = def.aimIndicator; this.offset = 0; this.maxHeight = 0; this.material.color.set(this.selected === 'LEFT' ? '#ffd166' : '#44ffe0'); this.material.transparent = true; this.material.opacity = def.aimIndicator === 'line' ? .18 * Math.max(0, (this.gunUntil - this.world.tick) / 24) : 1;
+    this.cue = null; this.shape = def.aimIndicator; this.offset = 0; this.maxHeight = 0; this.material.color.set(def.category === 'throwable' ? '#ffd166' : this.selected === 'LEFT' ? '#ffd166' : '#44ffe0'); this.material.transparent = true; this.material.opacity = def.aimIndicator === 'line' ? .18 * Math.max(0, (this.gunUntil - this.world.tick) / 24) : 1;
     const aim = state.aim, angle = Math.atan2(aim.z, aim.x), halfArc = def.arc * Math.PI / 360;
     if (def.aimIndicator === 'line') {
       const muzzle = aiming ? this.muzzle(this.socketPosition) : null;
@@ -298,13 +309,28 @@ export class ActionView extends Group {
       if (this.showCone) this.circle(origin.x, origin.z, def.range, angle - halfArc, halfArc * 2);
       if (this.showCone) for (let sign = -1; sign <= 1; sign += 2) { const edge = halfArc * sign; this.segment(origin.x, 0.04, origin.z, origin.x + Math.cos(angle + edge) * def.range, 0.04, origin.z + Math.sin(angle + edge) * def.range); }
     } else if (def.aimIndicator === 'arc') {
-      const dx = state.aimPoint ? state.aimPoint.x - origin.x : aim.x * def.range, dz = state.aimPoint ? state.aimPoint.z - origin.z : aim.z * def.range;
-      const distance = Math.hypot(dx, dz), scale = distance > def.range ? def.range / distance : 1;
-      this.landing.x = origin.x + dx * scale; this.landing.z = origin.z + dz * scale;
-      const time = Math.hypot(this.landing.x - origin.x, this.landing.z - origin.z) / (def.projectile?.speed ?? 12);
-      const gravityHeight = 0.5 * (def.projectile?.gravity ?? 9.81) * time * time;
-      for (let i = 0; i < 32; i++) { const a = i / 32, b = (i + 1) / 32; this.segment(origin.x + dx * scale * a, (0.7 + gravityHeight * a) * (1 - a), origin.z + dz * scale * a, origin.x + dx * scale * b, (0.7 + gravityHeight * b) * (1 - b), origin.z + dz * scale * b); }
-      this.circle(this.landing.x, this.landing.z, def.splash?.radius ?? def.effect?.radius ?? 1);
+      const frame = this.world.inputFrame, fire = this.selected === 'LEFT' ? frame.left : frame.right;
+      const aimingThrow = !downed && !player.riding && player.health.current > 0 && !!frame.aim
+        && (!!frame.pointerTarget || frame.aimSource === 'keyboard' || frame.aimSource === 'touch' || fire.down || fire.held || frame.mouseAttack);
+      if (aimingThrow) {
+        const dx = state.aimPoint ? state.aimPoint.x - origin.x : aim.x * def.range, dz = state.aimPoint ? state.aimPoint.z - origin.z : aim.z * def.range;
+        const distance = Math.hypot(dx, dz), scale = distance > def.range ? def.range / distance : 1;
+        this.landing.x = origin.x + dx * scale; this.landing.z = origin.z + dz * scale;
+        const time = Math.hypot(this.landing.x - origin.x, this.landing.z - origin.z) / (def.projectile?.speed ?? 12);
+        const gravityHeight = 0.5 * (def.projectile?.gravity ?? 9.81) * time * time;
+        for (let i = 0; i < 32; i += 2) {
+          const a = i / 32, b = (i + 1) / 32;
+          const ax = origin.x + dx * scale * a, az = origin.z + dz * scale * a;
+          const bx = origin.x + dx * scale * b, bz = origin.z + dz * scale * b;
+          const ay = (origin.y + gravityHeight * a) * (1 - a), by = (origin.y + gravityHeight * b) * (1 - b);
+          const length = Math.hypot(bx - ax, bz - az), direction = { x: (bx - ax) / (length || 1), y: (by - ay) / (length || 1), z: (bz - az) / (length || 1) };
+          const clear = Math.min(combat.query.clearDistance({ x: ax, y: ay, z: az }, direction, length), this.world.destruction?.trace({ x: ax, y: ay, z: az }, direction, length)?.distance ?? length);
+          const f = length ? Math.min(1, clear / length) : 1;
+          if (f > 0) this.segment(ax, ay, az, ax + (bx - ax) * f, ay + (by - ay) * f, az + (bz - az) * f, .018);
+          if (clear < length - 1e-5) break;
+        }
+        this.surfaceCircle(this.landing.x, this.landing.z, def.splash?.radius ?? def.effect?.radius ?? 1);
+      }
     } else this.circle(origin.x, origin.z, def.range);
     // Persistent zone silhouettes; hot fire, smoke, lure and shield share their authored radius.
     for (const zone of combat.effects.zones) this.circle(zone.x, zone.z, zone.radius);

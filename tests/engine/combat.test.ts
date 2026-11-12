@@ -127,6 +127,20 @@ test('loadout: both sides keep independent aims, racks wrap both ways with a swi
   expect(h.entities.get(1)!.weapons!.selectedSide).toBe('RIGHT');
 });
 
+test('throwables stay selected while charges remain and return to the previously selected weapon on the last charge', async () => {
+  const w = await arena(); equip(w, ['weapon.fire-axe'], ['weapon.molotov']);
+  w.setInput({ selectorSide: 'RIGHT', aim: { x: 1, z: 0 }, right: { down: true, held: false, up: true } }); step(w, 1); w.clearInput();
+  const loadout = w.combat!.runner.loadout, molotov = loadout.state.RIGHT.rack[0];
+  expect(molotov.charges).toBe(1);
+  expect(loadout.current(loadout.state.selectedSide).id).toBe('weapon.molotov');
+  step(w, 20);
+  w.setInput({ aim: { x: 1, z: 0 }, right: { down: true, held: false, up: true } }); step(w, 1); w.clearInput();
+  expect(molotov.charges).toBe(0);
+  expect(loadout.current(loadout.state.selectedSide).id).toBe('weapon.fire-axe');
+  step(w, 15);
+  expect(w.events.events()).toContainEqual(expect.objectContaining({ type: 'loadout.switched', actionId: 'weapon.fire-axe' }));
+});
+
 test('melee: the swing hits inside its arc/range once per target and respects maxTargets', async () => {
   const bat = catalog['weapon.bat'] as ActionDef, sweep = bat.roundhouse; delete bat.roundhouse; // the crowd roundhouse would take over with seven in reach
   onTestFinished(() => { bat.roundhouse = sweep; });
