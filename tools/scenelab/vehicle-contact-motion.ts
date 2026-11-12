@@ -10,7 +10,7 @@ try {
     const session = new SceneSession({ tier });
     try {
       await session.open();
-      for (const name of ['ram', 'surrounded', 'clinging']) {
+      for (const name of ['ram', 'surrounded', 'clinging', 'push']) {
         await session.load(readSpec(`tests/scenes/l9-apc/${name}.json`));
         await session.ready();
         // Match the production vehicle AI path; Scene Lab's L1 search controller
@@ -18,9 +18,9 @@ try {
         await session.page.evaluate(() => {
           const w = (window.__SCENE__ as unknown as { game: Game }).game.world;
           for (const e of w.infected!.active) { delete e.infected!.l1; e.infected!.state = 'chase'; }
-          const probe = window as unknown as { __s83Shoves: { tick: number; id: number; distance: number }[] };
+          const probe = window as unknown as { __s83Knockback?: Game['world']['knockback']; __s83Shoves: { tick: number; id: number; distance: number }[] };
           probe.__s83Shoves = [];
-          const knockback = w.knockback.bind(w);
+          const knockback = probe.__s83Knockback ??= w.knockback.bind(w);
           w.knockback = (entity, direction, impulse, ticks) => {
             const x = entity.transform.x, z = entity.transform.z;
             knockback(entity, direction, impulse, ticks);
@@ -66,7 +66,7 @@ try {
         const checks = actors.map(([id, actor]) => ({ actor: id, contacts: actor.motion.contacts,
           p95Cm: actor.motion.slideP95Cm, maxCm: actor.motion.slideMaxCm,
           pass: actor.motion.contacts >= 5 && actor.motion.slideP95Cm !== null && actor.motion.slideP95Cm <= 5 && actor.motion.slideMaxCm <= 15 }));
-        const contactProven = name === 'clinging' ? events.some(e => e.type === 'vehicle.grabbed') : name === 'ram' ? events.filter(e => e.type === 'combat.hit').length >= 6 && shoves.some(shove => shove.distance > .001)
+        const contactProven = name === 'push' ? shoves.some(shove => shove.distance > .001) : name === 'clinging' ? events.some(e => e.type === 'vehicle.grabbed') : name === 'ram' ? events.filter(e => e.type === 'combat.hit').length >= 6 && shoves.some(shove => shove.distance > .001)
           : events.filter(e => e.type === 'vehicle.attack-windup').length >= 4 && events.some(e => e.type === 'vehicle.durability-hit');
         let vehicleTravelM = 0;
         for (let i = 1; i < attachmentTrack.length; i++) vehicleTravelM += Math.hypot(attachmentTrack[i].car.x - attachmentTrack[i - 1].car.x, attachmentTrack[i].car.z - attachmentTrack[i - 1].car.z);

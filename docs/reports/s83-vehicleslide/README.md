@@ -85,3 +85,7 @@ A diagnostic wrapper records actual resolved displacement for the vehicle overla
 ## Per-shove windows and executable entry point
 
 `npm run qa:vehicle-motion` runs the persistent contact diagnostic under the browser lock on a default unique 49xx port. HIGH/LOW six-row run completed exit 0. Per-shove windows now retain nine frames (tick-2 through tick+6) with clip labels and independently recomputed motion. All seven ram shove windows transition into knockdown/death and contain no planted contacts: they prove reaction coverage, not standing shove slide. Separate low-speed surviving push coverage is still needed. Typecheck and targeted lint pass. See `shove-windows.json`.
+
+## Standing reverse-push fixture
+
+A slow reverse drive exercises 493 unique resolved hull shoves per tier on ordinary infected without stat changes. All eight current fixture/tier rows pass: standing push worst p95/max HIGH 2.9/6.1 cm, LOW 2.3/5.5 cm. Typecheck and targeted lint pass. The diagnostic hook was found to wrap itself between scenes and duplicate records; the harness now retains the original knockback method. Reported shove counts are deduplicated by tick/entity from the captured run; a rerun after the hook fix remains due. See `standing-push.json`. Campaign contexts and prop pushing remain outstanding.
