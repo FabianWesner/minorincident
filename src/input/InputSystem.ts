@@ -144,7 +144,7 @@ export class InputSystem implements Lifecycle {
   interactOnce(): void { this.interact = true; }
   /** HUD weapon-slot click/tap: exactly the number-key path (same frame field, so replays and telemetry see the same event). */
   selectWeaponKey(key: number): boolean {
-    if (!Number.isInteger(key) || key < 1 || key > 9 || this.drivingContext || this.mountedGunContext) return false;
+    if (!Number.isInteger(key) || key < 1 || this.drivingContext || this.mountedGunContext) return false;
     this.selectedWeaponKey = key; return true;
   }
   private moving(): boolean { return this.active.has('moveUp') || this.active.has('moveDown') || this.active.has('moveLeft') || this.active.has('moveRight'); }
@@ -159,8 +159,8 @@ export class InputSystem implements Lifecycle {
   }
   private readonly key = (code: string, held: boolean): void => {
     if (code === 'ShiftLeft' || code === 'ShiftRight') return;
-    if (held && /^Digit[1-9]$/.test(code)) {
-      const key = Number(code.slice(-1));
+    if (held && /^Digit[0-9]$/.test(code)) {
+      const key = code === 'Digit0' ? 10 : Number(code.slice(-1));
       if (this.shift()) { if (key <= 3) this.selectedSlot = { side: 'RIGHT', index: key - 1 }; }
       else if (!this.drivingContext && !this.mountedGunContext) this.selectedWeaponKey = key;
       this.setScheme(this.pointer.valid ? 'mouse-keyboard' : 'keyboard'); return;
