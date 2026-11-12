@@ -119,8 +119,9 @@ export class LevelEightZoo {
       const anchor = this.mission.def.anchors[`animal-${speciesId}`], offset = offsets.get(speciesId) ?? 0; offsets.set(speciesId, offset + 1);
       const radius = speciesId === 'elephant' ? 1.3 : .9;
       // Keep the calm animals at their public-facing enclosure fences so the keeper's boulevard route passes them.
-      const gateSideZ = anchor.z < 0 ? 18 : -18;
-      const gateX = speciesId === 'flamingo' ? 0 : Math.sign(anchor.x) * 45;
+      const compact = speciesId === 'lion' || speciesId === 'gorilla' || speciesId === 'zebra';
+      const gateSideZ = compact ? (anchor.z < 0 ? 8 : -8) : anchor.z < 0 ? 18 : -18;
+      const gateX = speciesId === 'flamingo' ? 0 : Math.sign(anchor.x) * (compact ? 60 : 45);
       const at = this.point({ x: gateX + offset * 2, z: anchor.z + gateSideZ - (speciesId === 'flamingo' && offset === 0 ? 3 : 0) }, radius);
       const phase = offset + species.indexOf(speciesId);
       const waypoints = Array.from({ length: 4 }, (_, n) => ({ x: at.x + Math.cos((phase + n) * Math.PI / 2) * 1.4, z: at.z + Math.sin((phase + n) * Math.PI / 2) * 1.4 }));
