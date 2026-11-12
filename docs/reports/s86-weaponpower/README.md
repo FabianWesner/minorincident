@@ -129,3 +129,5 @@ Durable validation receipt: [validation.json](validation.json) preserves the fin
 Scope audit against c9a9bbbd: eight changed paths, limited to the global action catalog, L10 encounter data/controller, focused combat tests and this report directory. Infected definitions/AI, corpse residency/lifecycle, specs, threat-audit tools and all protected reference paths are unchanged. `validation.json` stores the checked path list.
 
 Native entity-budget receipt: {'peakLiving': 14, 'capViolations': 0, 'peakEntities': 89, 'peakCorpses': 1}. Living/cap checked every tick; resident entity/corpse peaks sampled each second. Saved in `validation.json`. These are resident counts, not a claim that sleeping corpses were removed.
+
+High-tier entity-budget receipt: {'peakLiving': 22, 'capViolations': 0, 'peakEntities': 131, 'peakCorpses': 1}; completion 1012.75 s. Same sampling method as low tier, saved in `validation.json`.
