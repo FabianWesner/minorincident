@@ -245,3 +245,9 @@ Temporarily forced living cashier selection to `lod1` after the ordinary LOD/her
 ## BBQ-dad calibrated-source mismatch
 
 A retained file at `trellis-highs/wave2-sources/inf.bbq-dad/calibrated.glb` exists, but SHA256 `f7d7ecbbfae21f81071ec5ffeb83cb1010fb464491987bc6010a17561b28c8f8` does not match wave1's calibrated-high provenance (`59d3f8f566ae6ea8e57a8c6a01b1445cbec87944f350f29d7cdf5bec1c12fc6f`). It is excluded from the wave1 stage series. A similarly named retained high is not sufficient lineage evidence. The durable raw high matches wave1, but its exact calibrated and pre-binding outputs still need recovery or regeneration from recorded settings.
+
+## BBQ-dad calibrated high reproduced exactly
+
+Regenerated the calibrated high from the provenance-matching raw with the recorded `wave1_calibrate.py` command, head-bottom Y 0.13321908707618715, target 0.3881857418205289 and retained landmarks. Output `/private/tmp/s71-bbq-calibrated.glb` has SHA256 **59d3f8f566ae6ea8e57a8c6a01b1445cbec87944f350f29d7cdf5bec1c12fc6f**, exactly matching the historical wave1 calibrated artifact. Reproduction measurements are in `bbq-calibration-reproduction.json`. This recovers one missing intermediate with stronger evidence than filename similarity.
+
+The historical calibration enlarged the head by **1.095296×**, changing measured head/height from .3668 to .3881857 before solidification/baking. This is a concrete pre-bake design change to evaluate visually. It reproduces the old pipeline for diagnosis only; current heroine-based shrink-only proportion guidance supersedes that historical target for new production work. Exact pre-binding bake recovery/regeneration and same-camera stage scoring remain open.
