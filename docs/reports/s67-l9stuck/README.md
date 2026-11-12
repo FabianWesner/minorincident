@@ -25,3 +25,9 @@ Use LOW, god off, held W with ordinary steering. Recheck original QA HUD 632–6
 ## Remaining acceptance
 
 Full-route native regression over seeds 1–3 with maximum active-driving no-progress window ≤5 s; verify retained props/corpses and no recovery teleport; L9 threat audit with 0 flags; typecheck/lint; exact remote npm test; final report receipts and baseline cleanup. No deployment, push or main movement performed.
+
+## Gate receipts after `73c36370`
+
+- Exact `sh tools/remote/run.sh "$PWD" -- npm test`: exit 0 on 94.130.181.173; 27 files, 106 passed / 1 skipped; Vitest 196.49 s, budget wrapper 199.1 s below 240 s. No test trimming.
+- `node --import tsx/esm tools/qa/threat-audit.ts --levels L9`: skilled complete, passive tick-budget, 0 L9 passive flags; exit 1 is the documented partial-selection diagnostic flag.
+- The road diagnostic remains red. Its latest waypoint-tracking policy completed seed 2 but recorded 10.05 s beside retained barriers. A lateral obstacle-launch experiment worsened the result and was reverted. These gates do not prove the requested driving invariant.
