@@ -116,3 +116,22 @@ Final molotov correction validation: `/tmp/s86-threat-molotov28` completed all t
 Actual native firing receipt: [native-ordinary.json](native-ordinary.json) records `SimWorld` held-fire runs against a stationary 60 HP dummy at 1.5 m, seed 1, assist off, including startup/travel. Hunting rifle: 1 shot / 0.133 s; nail gun: 3 shots / 0.483 s; machete: 2 attacks / 0.500 s; molotov: 1 throw / 2.150 s from input; assault rifle: 3 shots / 0.383 s versus handgun 3 / 0.783 s. The bat pushes the dummy out of reach, and the rocket launcher does not start with this LEFT input fixture; those measurements remain unresolved rather than being reported as valid TTK. Flashbang remains nonlethal.
 
 Ordinary firing-fixture correction: the rocket was previously aimed inside blast-safety distance. At 10 m it fires once and kills in 0.667 s including travel. Resetting the bat dummy to its fixed position each tick prevents knockback from ending the stationary-target measurement: three attacks kill in 0.767 s. `native-ordinary.json` now supersedes the earlier unresolved bat/rocket receipt and records these fixture conditions. All damaging weapons have a successful ordinary-target native firing measurement; Flashbang remains nonlethal.
+
+Actual firing matrix: [native-targets.json](native-targets.json) extends the receipt to all six native-health target profiles. It includes real startup, projectile travel, reload/recharge and repeated throwable taps. Dummies carry the relevant archetype and armored plate response, but stay fixed in place; this measures weapon execution without target movement. Front faces the source (yaw π), rear faces away (yaw 0). `attacks@seconds` below starts at initial input; `>30` is a bounded non-kill, not a TTK.
+
+| Weapon | Ordinary 60 | Sprinter 45 | Alpha 300 | Brute 450 | Armor front 240 | Armor rear 240 |
+| --- | --- | --- | --- | --- | --- | --- |
+| bat | 3@0.767 | 3@0.767 | 13@4.167 | 89@>30 | 20@6.517 | 10@3.15 |
+| fire-axe | 2@0.617 | 1@0.117 | 6@2.617 | 9@4.117 | 9@4.117 | 5@2.117 |
+| handgun | 3@0.783 | 3@0.783 | 30@9.783 | 23@7.45 | 24@7.783 | 12@3.783 |
+| army-mg | 5@0.533 | 4@0.433 | 43@4.333 | 33@3.333 | 35@3.533 | 18@1.833 |
+| shotgun | 1@0.117 | 1@0.117 | 2@0.617 | 2@0.617 | 2@0.617 | 1@0.117 |
+| rocket-launcher | 1@0.667 | 1@0.667 | 2@1.5 | 3@2.35 | 2@1.5 | 2@1.5 |
+| pipe-bomb | 2@2.017 | 2@2.017 | 2@2.267 | 3@14.017 | 2@2.267 | 2@2.267 |
+| hunting-rifle | 1@0.133 | 1@0.133 | 2@1.133 | 2@1.133 | 2@1.133 | 1@0.133 |
+| nail-gun | 3@0.483 | 3@0.483 | 30@6.417 | 23@3.817 | 24@3.983 | 12@1.983 |
+| machete | 2@0.5 | 2@0.5 | 8@2.9 | 12@4.483 | 12@4.483 | 6@2.083 |
+| molotov | 2@2.15 | 2@1.15 | 3@12.217 | 3@18.217 | 2@8.15 | 2@8.15 |
+| assault-rifle | 3@0.383 | 2@0.25 | 24@3.183 | 18@2.383 | 19@2.517 | 10@1.317 |
+| flashbang | 4@>30 | 4@>30 | 4@>30 | 4@>30 | 4@>30 | 4@>30 |
+| flamethrower | 3@0.783 | 3@0.783 | 18@5.783 | 17@5.45 | 15@4.783 | 10@3.117 |
