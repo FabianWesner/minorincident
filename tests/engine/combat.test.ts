@@ -56,6 +56,13 @@ test('molotov: its persistent fire drops an ordinary five-infected cluster withi
   expect(zone.expires - zone.created).toBeGreaterThanOrEqual(8 * 60);
 });
 
+test('flamethrower: its close cone burns a five-infected cluster within three seconds', async () => {
+  const w = await arena(); equip(w, ['weapon.flamethrower']);
+  const ids = [-0.3, -0.15, 0, 0.15, 0.3].map(z => dummy(w, 2, z, 40));
+  fire(w); step(w, 180);
+  expect(ids.map(id => health(w, id))).toEqual([0, 0, 0, 0, 0]);
+});
+
 test('pipe bomb and rocket: a centered blast clears five ordinary infected in a three-second window', async () => {
   for (const id of ['weapon.pipe-bomb', 'weapon.rocket-launcher']) {
     const w = await arena(); equip(w, ['weapon.fire-axe'], [id]);
