@@ -1,3 +1,5 @@
+import { cureVignetteDecals } from '../../src/levels/L10/vignettes';
+import { clearGroundCoverFromRoads } from '../../src/levels/groundCoverRoads';
 // Nightly content invariants (PO 10-13 "This isn't a bug that I should ever face"): baseline ratchets over ALL assets and
 // districts. Known backlog lives in the baseline files next to this test; any NEW offender fails. Not per-change: they
 // decode every GLB/layout and take minutes. Reports: test-results/{lod-fidelity,placement-offenders}.json.
@@ -14,6 +16,12 @@ import { levelTwoLayouts } from '../../src/levels/L2/layout';
 import { levelThreeLayouts } from '../../src/levels/L3/layout';
 import { levelFourLayouts } from '../../src/levels/L4/layout';
 import { levelFiveLayouts } from '../../src/levels/L5/layout';
+import { levelOneLayouts } from '../../src/levels/L1/layout';
+import { levelSevenLayouts } from '../../src/levels/L7/layout';
+import { levelEightLayouts } from '../../src/levels/L8/layout';
+import { levelTenLayouts } from '../../src/levels/L10/layout';
+import { districtDecor } from '../../src/levels/decor';
+import { cure } from '../../src/levels/L10/district';
 import { solidOverlaps } from '../../src/levels/placementClearance';
 import { stripStrayDecorations } from '../../src/render/decorationFilter';
 import { SimWorld } from '../../src/sim/world/SimWorld';
@@ -113,7 +121,7 @@ test('asset inventory: every production asset and LOD passes the validator', asy
 }, 900_000);
 
 // --- PO 10-13 "Flowers growing on stone": after the render filter every drawn daisy stands on soil, in every district and tier.
-test('decoration surfaces: drawn decorations stand only on soil in every district and world tier', async () => {
+test('decoration surfaces and road ground cover: L1-L10 ground stays off roads and on soil in every district and tier', async () => {
   const daisy = (o: Object3D) => { for (let n: Object3D | null = o; n; n = n.parent) if (n.name === 'daisy' || n.name.startsWith('daisy_')) return true; return false; };
   const bad: string[] = [];
   for (const file of layoutFiles) {
@@ -142,6 +150,7 @@ test('decoration surfaces: drawn decorations stand only on soil in every distric
     }
   }
   expect([...new Set(bad)].slice(0, 20)).toEqual([]);
+  assertGroundCoverRoads();
 }, 900_000);
 
 // --- PO 10-13 "Corgi sunken": no raised walkable top has a narrow seam that point-sampled actors drop into.
@@ -188,3 +197,94 @@ test('placement vs solids: no placed prop cuts into another solid, L1-L9, every 
   writeFileSync('test-results/placement-offenders.json', JSON.stringify({ count: unique.length, pairs: unique }, null, 1));
   expect(unique.filter(p => !baseline.has(p))).toEqual([]);
 }, 600_000);
+
+// PO UAT s87: ground cover must not paint over any road lane or paved surface. The
+// report is a coordinate-level ratchet; known historical findings are kept in the
+// baseline while new placement/surface intersections fail the deploy gate.
+function assertGroundCoverRoads(): void {
+  const baseline = new Set<string>((JSON.parse(readFileSync('tests/nightly/ground-cover-roads.baseline.json', 'utf8')) as { findings: string[] }).findings);
+  const groundCover = (p: Placement) => /^(veg\.|decal\.|debris\.rubble$|decay\.rubble-pile$)/.test(p.assetId)
+    || /(?:ground|grass|vegetation|rubble-field|parking-tile|plaza-tile)/i.test(p.assetId);
+  const pointSegmentDistance = (x: number, z: number, a: readonly number[], b: readonly number[]) => {
+    const dx = b[0] - a[0], dz = b[1] - a[1], t = Math.max(0, Math.min(1, ((x - a[0]) * dx + (z - a[1]) * dz) / (dx * dx + dz * dz || 1)));
+    return Math.hypot(x - a[0] - t * dx, z - a[1] - t * dz);
+  };
+  const segmentIntersects = (u: readonly number[], v: readonly number[], c: readonly number[], d: readonly number[]) => {
+    const orient = (a: readonly number[], b: readonly number[], q: readonly number[]) => (b[0]-a[0])*(q[1]-a[1])-(b[1]-a[1])*(q[0]-a[0]);
+    const onSegment = (a: readonly number[], b: readonly number[], q: readonly number[]) => q[0] >= Math.min(a[0],b[0])-1e-8 && q[0] <= Math.max(a[0],b[0])+1e-8 && q[1] >= Math.min(a[1],b[1])-1e-8 && q[1] <= Math.max(a[1],b[1])+1e-8;
+    const a=orient(u,v,c), b=orient(u,v,d), e=orient(c,d,u), f=orient(c,d,v);
+    return a*b < 0 && e*f < 0 || Math.abs(a)<1e-8 && onSegment(u,v,c) || Math.abs(b)<1e-8 && onSegment(u,v,d) || Math.abs(e)<1e-8 && onSegment(c,d,u) || Math.abs(f)<1e-8 && onSegment(c,d,v);
+  };
+  const segmentDistanceToBox = (a: readonly number[], b: readonly number[], p: Placement) => {
+    const x0 = p.visualAabb.min[0], x1 = p.visualAabb.max[0], z0 = p.visualAabb.min[2], z1 = p.visualAabb.max[2];
+    const inside = (q: readonly number[]) => q[0] >= x0 && q[0] <= x1 && q[1] >= z0 && q[1] <= z1;
+    const corners = [[x0,z0],[x1,z0],[x1,z1],[x0,z1]];
+    if (inside(a) || inside(b) || corners.some((c,i) => segmentIntersects(a,b,c,corners[(i+1)%4]))) return 0;
+    const boxDistance = (q: readonly number[]) => Math.hypot(Math.max(x0-q[0],0,q[0]-x1), Math.max(z0-q[1],0,q[1]-z1));
+    return Math.min(boxDistance(a), boxDistance(b), ...corners.map(q => pointSegmentDistance(q[0],q[1],a,b)));
+  };
+  const findings: string[] = [];
+  for (let n = 1; n <= 10; n++) {
+    const level = `L${n}`, composition = compositions[level]; if (!composition) continue;
+    const source = composition.districts.map(d => loadLayout(`${d.id}.layout.json`));
+    const prepare = ({ L1: levelOneLayouts, L2: levelTwoLayouts, L3: levelThreeLayouts, L4: levelFourLayouts,
+      L5: levelFiveLayouts, L7: levelSevenLayouts, L8: levelEightLayouts, L10: levelTenLayouts } as Record<string, (layouts: DistrictLayout[]) => DistrictLayout[]>)[level];
+    const layouts = prepare ? prepare(source) : source;
+    for (const layout of layouts) {
+      const placements = clearGroundCoverFromRoads({ ...layout, placements: [...layout.placements, ...districtDecor(layout.district, layout.placements)] }).placements.filter(groundCover);
+      // L10 atlas decals are emitted separately from static placements; observe
+      // their actual rotated ground footprint as well (roof/wall paint is not ground cover).
+      if (layout.district === 'D-CURE') for (const d of cureVignetteDecals([...layout.placements, ...districtDecor(layout.district, layout.placements)]).filter(d => d.ground && !d.roof)) {
+        const [x,y,z] = d.position, c = Math.abs(Math.cos(d.yaw)), s = Math.abs(Math.sin(d.yaw));
+        const hx = (d.size[0]*c+d.size[1]*s)/2, hz = (d.size[0]*s+d.size[1]*c)/2;
+        placements.push({ id:d.id, assetId:'decal.l10-stories', position:d.position, yaw:d.yaw, scale:[1,1,1], minTier:0, maxTier:6, allowRoad:false, lightGroup:'decor',
+          visualAabb:{min:[x-hx,y,z-hz],max:[x+hx,y+.01,z+hz]} });
+      }
+      for (const p of placements) {
+        for (const road of layout.roads.edges) for (let i = 1; i < road.points.length; i++) {
+          if (segmentDistanceToBox(road.points[i-1], road.points[i], p) < road.laneWidth / 2 - .01)
+            findings.push(`${level}/${layout.district} ${p.id} (${p.assetId}) road ${road.id} at (${p.position[0].toFixed(2)},${p.position[2].toFixed(2)})`);
+        }
+        for (const surface of layout.surfaces.filter(s => s.surface === 'asphalt' || s.surface === 'tile')) {
+          const x0=p.visualAabb.min[0],x1=p.visualAabb.max[0],z0=p.visualAabb.min[2],z1=p.visualAabb.max[2], polygon=surface.polygon;
+          const corners=[[x0,z0],[x1,z0],[x1,z1],[x0,z1]];
+          const inPolygon=(q:readonly number[])=>polygon.reduce((inside,a,i)=>{const b=polygon[(i+polygon.length-1)%polygon.length];return (a[1]>q[1]) !== (b[1]>q[1]) && q[0] < (b[0]-a[0])*(q[1]-a[1])/(b[1]-a[1])+a[0] ? !inside : inside;},false);
+          const edges=polygon.map((q,i)=>[q,polygon[(i+1)%polygon.length]] as const);
+          if (polygon.some(q=>q[0]>=x0&&q[0]<=x1&&q[1]>=z0&&q[1]<=z1) || corners.some(inPolygon)
+            || edges.some(([a,b])=>corners.some((c,i)=>segmentIntersects(a,b,c,corners[(i+1)%4]))))
+            findings.push(`${level}/${layout.district} ${p.id} (${p.assetId}) paved-surface at (${p.position[0].toFixed(2)},${p.position[2].toFixed(2)})`);
+        }
+      }
+    }
+  }
+  // D-CURE region seams are authored as a single driveable route. Adjacent
+  // regions must share the exact handoff point and their local road edges.
+  for (let i = 1; i < cure.regions.length; i++) {
+    const previous = cure.regions[i-1], next = cure.regions[i], a = previous.route.at(-1)!, b = next.route[0]!;
+    if (Math.hypot(a[0]-b[0], a[1]-b[1]) > .01) findings.push(`L10 D-CURE ${previous.id}-${next.id} road seam gap (${a[0].toFixed(2)},${a[1].toFixed(2)}) to (${b[0].toFixed(2)},${b[1].toFixed(2)})`);
+  }
+  // Sample both sides of each regional handoff across the complete 6 m lane.
+  // A shared centerline alone cannot detect missing or doubled paving polygons.
+  const paving = loadLayout('D-CURE.layout.json').surfaces.filter(s => s.surface === 'asphalt');
+  const contains = (x: number, z: number, polygon: readonly (readonly number[])[]) => polygon.reduce((inside, a, i) => {
+    const b = polygon[(i + polygon.length - 1) % polygon.length];
+    return (a[1] > z) !== (b[1] > z) && x < (b[0] - a[0]) * (z - a[1]) / (b[1] - a[1]) + a[0] ? !inside : inside;
+  }, false);
+  for (let i = 1; i < cure.regions.length; i++) {
+    const seam = cure.regions[i].route[0];
+    for (const [side, line] of [[-1, cure.regions[i - 1].route], [1, cure.regions[i].route]] as const) {
+      const other = side === -1 ? line.at(-2)! : line[1];
+      const dx = other[0] - seam[0], dz = other[1] - seam[1], length = Math.hypot(dx, dz);
+      for (const along of [.05, .5, 1]) for (const lateral of [-2.9, -1.5, 0, 1.5, 2.9]) {
+        const x = seam[0] + dx / length * along - dz / length * lateral;
+        const z = seam[1] + dz / length * along + dx / length * lateral;
+        const count = paving.filter(s => contains(x, z, s.polygon)).length;
+        if (count !== 1) findings.push(`L10 D-CURE r${i}-r${i+1} seam ${count === 0 ? 'gap' : 'overlap'} at (${x.toFixed(2)},${z.toFixed(2)}): ${count} asphalt polygons`);
+      }
+    }
+  }
+  const unique = [...new Set(findings)].sort();
+  mkdirSync('test-results', { recursive: true });
+  writeFileSync('test-results/ground-cover-roads.json', JSON.stringify({ count: unique.length, findings: unique }, null, 1));
+  expect(unique.filter(f => !baseline.has(f)), `${unique.length} current ground cover / road findings; see test-results/ground-cover-roads.json`).toEqual([]);
+}
