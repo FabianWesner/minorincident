@@ -542,7 +542,9 @@ export class LevelNineDriving {
       if (lateral > 4.5) {
         const side = Math.sign(p.z - (s.busRamZ ?? p.z)) || 1;
         w.vehicles!.damage(s.busId, 400);
-        bus.physics.body.setLinvel({ x: Math.max(5, bus.physics.forwardSpeed), y: 0, z: side * 4 }, true);
+        // A successful dodge sends the bus toward the opposite verge, away
+        // from the lane the player just chose.
+        bus.physics.body.setLinvel({ x: Math.max(5, bus.physics.forwardSpeed), y: 0, z: -side * 4 }, true);
         s.busStunUntil = w.tick + 180; this.signal('bus-ram-missed', bus.entity.id);
         if (bus.entity.health.current <= 0) { s.busStoppedAt = w.tick; w.vehicles!.autopilot.delete(s.busId); stopEngine(w, s.busId); this.signal('bus-wrecked', s.busId); }
       } else if (s.busRams <= busRamCap) { w.vehicles!.damage(car.entity.id, 40); this.signal('bus-ram', bus.entity.id); }
