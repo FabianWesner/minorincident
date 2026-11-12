@@ -2,7 +2,7 @@
 
 ## Outcome
 
-**Open.** The requested zero-flag goal is not met. The retained level-design change improves L4's first west breach approach while keeping the same three-arrival cohort and all existing archetype counts. The north cohort and both L4-06 population checks remain flagged; L3 and L7 kiting flags remain. No zombie stats or global audit rules were changed, and L8 was untouched.
+**Open.** The combined audit confirms L3 at zero flags, L4 at two, and L7 at two. Retained changes advance L3's second wave to +14 s, add one existing fast actor to L4's first west breach roster, and align L4's north approach mouths with its physical breach. L4's two population criteria and L7's two kiting criteria remain open. Zombie stats and audit rules are unchanged; L8 is untouched.
 
 ## Exact audit lines
 
@@ -14,20 +14,19 @@ Baseline was audited at `b06e3197391052367c9ade363608afd997ca1196` before edits:
 [qa:threat] L7: skilled complete, passive complete, 2 passive flags (129.3s)
 ```
 
-After the retained L4 change, the exact requested command reported:
+After the retained combined changes, the exact requested command reported:
 
 ```text
-[qa:threat] L3: skilled complete, passive tick-budget, 1 passive flags (84.3s)
-[qa:threat] L4: skilled complete, passive tick-budget, 3 passive flags (82.1s)
-[qa:threat] L7: skilled complete, passive complete, 2 passive flags (95.3s)
+[qa:threat] L3: skilled complete, passive tick-budget, 0 passive flags (83.6s)
+[qa:threat] L4: skilled complete, passive tick-budget, 2 passive flags (83.2s)
+[qa:threat] L7: skilled complete, passive complete, 2 passive flags (97.0s)
 ```
 
-The command summary was `[qa:threat] 96.7s; 7 fail flags; test-results/qa-threat/README.md` (the total includes the partial-selection diagnostic). Before had 8 fail flags by the same count, including that diagnostic.
+The command summary was `[qa:threat] 97.6s; 5 fail flags; test-results/qa-threat/README.md` (the total includes the partial-selection diagnostic). Before had 8 fail flags by the same count, including that diagnostic.
 
 Remaining acceptance flags:
 
-- L3: `KITING_LANDED_HITS_BELOW_2:0.00`
-- L4: `wave/breach-north:WAVE_FEWER_THAN_THREE_COHORT_MEMBERS`, `criterion/L4-06 first breach:FAIL`, `criterion/L4-06 sustained horde:FAIL`
+- L4: `criterion/L4-06 first breach:FAIL`, `criterion/L4-06 sustained horde:FAIL`
 - L7: `KITING_BELOW_ATTACKS_PER_MINUTE_2:0.00`, `KITING_LANDED_HITS_BELOW_2:0.00`
 
 ## Level-design change
