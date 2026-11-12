@@ -134,3 +134,7 @@ Full audit completed in 287.8 s and exited 1 for eight other-level/provenance fl
 ## Actual-gate shove coverage
 
 Added `tools/qa/l8-gate-shoves.ts`: loads real L8, arms its pens and seals the plaza, admits the courier on both sides of each actual entry/exit/plaza/connector/yard gate, and applies immediate six-metre knockback toward the barrier. All 42 cases remain on their starting side; exact before/after positions are in `gate-shoves.json`. Typecheck/lint/diff checks pass. This is controlled centre-of-gate shove coverage, not corner traversal, gate-closing timing, crowd squeeze or mortal input completion. Earlier generic collision-suite coverage remains additional evidence.
+
+## Gate-end and diagonal extension
+
+The actual-L8 shove diagnostic now passes 378 cases: both sides, centre and 0.8 m inset from each gate end, straight and ±0.35 tangential shove components. Adjacent gate/fence joins hold against these immediate six-metre attempts. The compact committed receipt preserves coverage and the SHA-256 of the full ignored raw receipt. Fifteen assertions over the five route transitions additionally confirm that a completed exit stays open while the next party enters, then closes when that next fight arms. This proves the gate predicate, not live follower closure timing. Typecheck/lint/diff checks pass. General junction/path-boundary traversal and boarding-area movement remain separate open coverage.
