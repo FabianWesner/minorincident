@@ -299,7 +299,7 @@ export class LevelNineDriving {
       if (straight && !reach(x, z)) continue;
       for (const yaw of yaws) {
         if (!fits(x, z, yaw, bodies)) continue;
-        this.pin = null; state.impactStallUntil = 0; car.physics.body.wakeUp();
+        this.pin = null; car.physics.body.wakeUp();
         this.placeCar(car, x, z, yaw);
         const player = w.entities.get(1)!; Object.assign(player.transform, { x, z, yaw });
         w.physics.playerBody!.setTranslation(player.transform, true); w.previousPlayer = { ...player.transform }; w.spatial.set(1, x, z);

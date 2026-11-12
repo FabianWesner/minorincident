@@ -18,7 +18,7 @@ export interface Hazard { kind: HazardKind; radius: number; fuseAt: number; expl
   fuelPatch?: boolean;
   /** E27 fires: remaining spread generations and the tick the fire spreads once (half its life). */
   spread?: number; spreadAt?: number }
-export interface Destructible { kind: DestructibleKind | 'fuel-trail'; flammable: boolean; exposure: number; burnTime: number; burningUntil: number; broken: boolean }
+export interface Destructible { kind: DestructibleKind | 'fuel-trail'; flammable: boolean; exposure: number; burnTime: number; burningUntil: number; broken: boolean; rammed?: { halfX: number; halfZ: number } }
 export interface HazardOptions { hp?: number; radius?: number; burnTime?: number; halfX?: number; halfZ?: number; duration?: number; spread?: number; playerDamageSource?: boolean }
 /** E11 hazard triggers/damage; E27 consumes arming/blast events for richer effects. */
 export class Hazards {

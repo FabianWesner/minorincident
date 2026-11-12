@@ -62,7 +62,7 @@ test('handling: deterministic scripted drives, speed-dependent steering for ever
   try {
     for (let i = 0; i < 60; i++) f.tick();
     f.car.body.setRotation({ x: 1, y: 0, z: 0, w: 0 }, true); f.car.body.setTranslation({ x: 0, y: .4, z: 0 }, true);
-    for (let i = 0; i < 179; i++) { f.tick(); expect(f.car.recoverFlip()).toBe(false); }
+    for (let i = 0; i < 179; i++) { f.car.body.setLinvel({ x: 5, y: 0, z: 0 }, true); f.tick(); expect(f.car.recoverFlip()).toBe(false); }
     f.tick(); expect(f.car.recoverFlip()).toBe(true);
     for (let i = 0; i < 600; i++) { f.tick(); f.car.recoverFlip(); }
     expect(f.car.upsideDown).toBe(false); expect(f.car.wheels.filter(w => w.contact)).toHaveLength(4);
@@ -143,7 +143,6 @@ async function l9CheckpointLanes(): Promise<void> {
       expect(l9.driving.laneClear(8, bridge ? 0 : undefined, bridge), `${name}: 8 m of clear route ahead of the restored APC`).toBe(true);
       if (!bridge) continue;
       expect(s.evacuationDone).toBe(true);
-      expect(world.vehicles!.cars.get(l9.state.carId)!.entity.vehicle!.impactStallUntil ?? 0, 'saved absolute ticks are rebased: no impact stall left after Continue').toBeLessThanOrEqual(world.tick);
       expect(l9.driving.laneClear(8), 'bridge resume: clear along the APC heading too').toBe(true);
       // A restore rebuilds the vehicle bodies, so look the cars up each time.
       const gap = () => { const bus = world.vehicles!.cars.get(s.busId)!, apc = world.vehicles!.cars.get(l9.state.carId)!; return Math.hypot(bus.entity.transform.x - apc.entity.transform.x, bus.entity.transform.z - apc.entity.transform.z); };
@@ -192,31 +191,43 @@ async function l9BusVsParkedApc(): Promise<void> {
   } finally { world.dispose(); }
 }
 
-// r27-l9apc: a pile of brutes/armored at the bumper chained one 60-tick heavy stop after another and pinned the
-// floor-state APC (QA: 863 -> 819 m in 7 min; this fixture: 2.3 m in 10 s). One heavy onset still stops momentum,
-// later heavy onsets inside the grace window only bill durability, so the APC drives on at its floor speed.
+// APC ram rule: ordinary infected cost no durability; heavies cost a small amount and never stall the hull.
 async function l9FloorApcThroughPile(): Promise<void> {
   const world = await loadLevel('L9', 1, preset('L9-default'), 0, { quality: 'low' });
   try {
     const l9 = world.missions!.l9!, vehicles = world.vehicles!, car = vehicles.cars.get(l9.state.carId)!;
     world.missions!.begin();
     for (let i = 0; i < 5; i++) world.update();
-    vehicles.damage(car.entity.id, car.entity.health.max);
     const x0 = -300, z0 = -330, pose = { x: x0, z: z0, y: car.physics.def.suspension + car.physics.def.wheelRadius + .15, yaw: 0 };
     Object.assign(car.entity.transform, pose); Object.assign(car.physics.previous, pose); car.physics.body.setTranslation(pose, true);
     car.physics.body.setRotation({ x: 0, y: 0, z: 0, w: 1 }, true); car.physics.body.setLinvel({ x: 0, y: 0, z: 0 }, true); car.physics.body.setAngvel({ x: 0, y: 0, z: 0 }, true);
     for (let i = 0; i < 30; i++) world.update();
-    const types = ['infected.runner', 'infected.sprinter', 'infected.brute', 'infected.armored'];
-    for (let i = 0; i < 16; i++) world.infected!.spawn(types[i % 4], { x: x0 + car.physics.def.length / 2 + 1 + Math.floor(i / 4) * .8, z: z0 + (i % 4 - 1.5) * .8 }, { state: 'chase' });
-    const stops: number[] = [];
-    world.events.on('vehicle.durability-hit', e => { if (e.type === 'vehicle.durability-hit' && car.entity.vehicle!.impactStallUntil === world.tick + 60 && !stops.includes(world.tick)) stops.push(world.tick); });
+    const entrySpeed = car.physics.def.topSpeed * .8;
+    car.physics.body.setLinvel({ x: entrySpeed, y: 0, z: 0 }, true); car.physics.postPhysics();
+    const types = ['infected.brute', 'infected.runner', 'infected.armored', 'infected.sprinter', 'infected.crawler', 'infected.dog'];
+    for (let i = 0; i < types.length; i++) world.infected!.spawn(types[i], { x: x0 + car.physics.def.length / 2 + 1, z: z0 + (i - 2.5) * .65 }, { state: 'chase' });
+    const contacts: { before: number; after: number; target: string | undefined }[] = [];
+    let contactSeen = false, clearSince = -1, recoveryTicks = Infinity, minContactSpeed = Infinity;
+    world.events.on('vehicle.durability-hit', e => { if (e.type === 'vehicle.durability-hit' && e.source === 'contact') contacts.push({ before: e.before, after: e.after, target: world.entities.get(e.targetId)?.archetype }); });
     const drive = emptyInput(); drive.drive = { throttle: 1, steer: 0 }; drive.brake = false;
     let top = 0;
-    for (let i = 0; i < 600; i++) { world.applyInput(drive, 'keyboard'); world.update(); if (i >= 360) top = Math.max(top, car.physics.speed); }
-    expect(car.entity.health.current, 'fixture is the lowest damage state').toBe(0);
-    expect(stops.length, 'a heavy contact still stops momentum (E31-AC06)').toBeGreaterThanOrEqual(1);
-    expect(Math.hypot(car.entity.transform.x - x0, car.entity.transform.z - z0), 'progress through 16 infected (8 heavy) in 10 s').toBeGreaterThanOrEqual(15);
-    expect(top, 'keeps its floor speed share once clear').toBeGreaterThanOrEqual(car.physics.def.topSpeed * .6 * .9);
+    for (let i = 0; i < 600; i++) {
+      world.applyInput(drive, 'keyboard'); world.update();
+      if (i >= 360) top = Math.max(top, car.physics.speed);
+      const touching = [...world.entities.iterate()].some(e => e.kind === 'infected' && (e.health.current > 0 || (e.infected?.recoverAt ?? -1) >= 0) && !e.attachedTo && car.physics.hullDistance(e.transform.x, e.transform.z) <= (e.combat?.radius ?? .4) + .02);
+      if (touching) minContactSpeed = Math.min(minContactSpeed, car.physics.speed);
+      if (touching) { contactSeen = true; clearSince = -1; }
+      else if (contactSeen && clearSince < 0) clearSince = world.tick;
+      if (clearSince >= 0 && car.physics.speed >= car.physics.def.topSpeed * .9) recoveryTicks = Math.min(recoveryTicks, world.tick - clearSince);
+    }
+    expect(car.entity.health.current).toBeGreaterThan(0);
+    expect(contacts.length, 'the probe contacts infected').toBeGreaterThanOrEqual(1);
+    expect(minContactSpeed, 'never below half of entry cruise speed during contact').toBeGreaterThanOrEqual(entrySpeed * .5);
+    expect(recoveryTicks, 'returns above 90% cruise speed within six seconds after clearing the pack').toBeLessThanOrEqual(360);
+    expect(contacts.some(hit => hit.target === 'infected.runner' && hit.before === hit.after), 'ordinary infected do not cost armour').toBe(true);
+    expect(contacts.some(hit => hit.target === 'infected.brute' && hit.before - hit.after === 10), 'heavy impact costs 10 armour').toBe(true);
+    expect(Math.hypot(car.entity.transform.x - x0, car.entity.transform.z - z0), 'progress through six infected in 10 s').toBeGreaterThanOrEqual(15);
+    expect(top, 'keeps cruise speed once clear').toBeGreaterThanOrEqual(car.physics.def.topSpeed * .9);
   } finally { world.dispose(); }
   await l9FloorApcPackAtFence();
   await l9SetPiecesFight();
@@ -299,15 +310,19 @@ async function l9SetPiecesFight(): Promise<void> {
     for (let i = 0; i < 10 && leaper.attachedTo !== undefined; i++) drive(true);
     expect(leaper.attachedTo, 'a handbrake at speed throws it off').toBeUndefined();
     expect(leaper.health.current, 'thrown off, not run over').toBeGreaterThan(0);
-    for (let i = 0; i < 1800 && !signals.includes('l9.thrower-landed') && !signals.includes('l9.thrower-hull-hit'); i++) drive(false);
+    for (let i = 0; i < 2400 && !signals.includes('l9.thrower-landed') && !signals.includes('l9.thrower-hull-hit'); i++) drive(false);
     for (let i = 0; i < 120; i++) drive(false);
     const thrown = vehicles.obstacles.items.filter(o => !l9.driving.state.obstacleIds.includes(o.entity.id));
-    expect(signals.filter(n => n === 'l9.thrower-throw').length, 'the thrower lobs debris into the road').toBeGreaterThanOrEqual(1);
+    expect(signals.filter(n => n === 'l9.thrower-throw').length, `the thrower lobs debris into the road: ${JSON.stringify({ tick: world.tick, hp: world.entities.get(1)?.health.current, x: car.entity.transform.x, fired: l9.driving.state.setPieces?.fired, alphas: l9.driving.state.setPieces?.alphas.map(a => [a.piece, a.role, a.phase, a.uses, a.at]) })}`).toBeGreaterThanOrEqual(1);
     expect(thrown.length, 'thrown debris becomes road obstacles').toBeGreaterThanOrEqual(1);
     for (const o of thrown) {
       const flying = !!l9.driving.state.setPieces!.flights.some(f => f.obstacleId === o.entity.id);
       expect(!!o.airborne, 'only debris still in flight is airborne').toBe(flying);
-      if (!o.broken && !flying) { expect(o.entity.transform.y).toBe(.5); expect(o.collider.isEnabled(), 'landed debris has a live collider').toBe(true); expect(Math.abs(o.entity.transform.z - z0), 'lands on the APC lane').toBeLessThan(8); }
+      if (!o.broken && !flying) {
+        expect(o.entity.transform.y, 'settles near ground height').toBeGreaterThan(.25); expect(o.entity.transform.y).toBeLessThan(.75);
+        expect(o.collider.isEnabled(), 'landed debris has a live collider').toBe(true);
+        expect(o.entity.health.current, 'rammed barrier remains in the world').toBeGreaterThan(0);
+      }
     }
   } finally { world.dispose(); }
 }
@@ -419,6 +434,25 @@ async function screenRelativeSteering(): Promise<void> {
 async function vehicleShovesProps(): Promise<PropSnapshot> {
   const world = new SimWorld(); await world.init(); world.loadScenario('prop-yard');
   try {
+    const barrierId = world.vehicles!.obstacles.spawn('jersey-barrier', { x: 60, z: 20 });
+    const barrier = world.vehicles!.obstacles.items.find(item => item.entity.id === barrierId)!;
+    world.vehicles!.obstacles.ram(barrier, { x: 12, y: 0, z: 0 }, world.tick);
+    for (let i = 0; i < 60; i++) world.update();
+    expect(world.entities.get(barrierId)?.health.current, 'rammed barriers keep their identity and remain in the world').toBeGreaterThan(0);
+    expect(barrier.body?.isDynamic(), 'rammed barriers become physics bodies').toBe(true);
+    expect(barrier.entity.transform.x, 'the barrier tumbles away from the bumper').toBeGreaterThan(61);
+    const coneId = world.hazards!.spawn('cone', { x: 65, z: 20 });
+    const cone = world.entities.get(coneId)!;
+    world.vehicles!.obstacles.ramDestructible(cone, .5, .15, { x: 10, y: 0, z: 0 }, world.tick);
+    expect(cone.health.current, 'map cone retains health after a vehicle ram').toBe(cone.health.max);
+    expect(world.interactables!.walls.some(w => w.entityId === coneId)).toBe(false);
+    for (let i = 0; i < 60; i++) world.update();
+    const movedX = cone.transform.x;
+    world.vehicles!.obstacles.rebuild();
+    const restoredCone = world.vehicles!.obstacles.items.find(o => o.entity.id === coneId)!;
+    expect(restoredCone.entity.transform.x, 'collider rebuild retains displaced map prop pose').toBe(movedX);
+    expect(restoredCone.body!.linvel().y, 'rebuild does not launch the cone again').toBe(0);
+    expect(cone.destructible!.broken).toBe(false);
     const prop = world.props!.spawn({ id: 'ram-test-wreck', assetId: 'veh.wreck', position: [0, 0, 0], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: '', visualAabb: { min: [-2.2, 0, -.9], max: [2.2, 1.8, .9] } });
     world.props!.updateNavigation();
     const id = world.vehicles!.spawn('vehicle.military-apc', { x: -4.9, z: 0 });

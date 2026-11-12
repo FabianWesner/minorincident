@@ -579,6 +579,43 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     const fixture = readFixture(fixturePath);
     if (fixture.level !== first) throw new Error(`PLAYTEST_FIXTURE is ${fixture.level}, session starts ${first}`);
     log({ fixture: fixture.label, state: await loadFixtureInPage(page, fixture) });
+    if (process.env.PLAYTEST_RAM_AUDIT === '1') {
+      await page.exposeFunction('ramContactReceipt', (receipt: unknown) => log({ ramContact: receipt }));
+      await page.evaluate(() => {
+        const w = (window.__SCENE__ as unknown as { game: Game }).game.world;
+        let sample: { carId: number; started: number; last: number; entry: number; min: number; contacts: number } | null = null;
+        const receipt = (r: unknown) => void (window as unknown as { ramContactReceipt: (r: unknown) => Promise<void> }).ramContactReceipt(r);
+        w.events.on('sim.tick', () => {
+          if (!sample) return;
+          const car = w.vehicles?.cars.get(sample.carId);
+          if (!car) { sample = null; return; }
+          const held = car.physics.intent.throttle > 0 && !car.physics.intent.brake;
+          if (held) sample.min = Math.min(sample.min, car.physics.speed);
+          if (!held || w.tick - sample.last >= 60) { receipt({ window: true, ...sample, ended: w.tick, endReason: held ? 'contact-cleared' : 'throttle-or-brake', ratio: sample.min / sample.entry }); sample = null; }
+        }, 999);
+        w.events.on('vehicle.durability-hit', event => {
+          if (event.type !== 'vehicle.durability-hit' || event.source !== 'contact') return;
+          const car = w.vehicles?.cars.get(event.sourceId);
+          if (!car) return;
+          if (car.physics.intent.throttle > 0 && !car.physics.intent.brake) {
+            sample ??= { carId: event.sourceId, started: w.tick, last: w.tick, entry: car.physics.speed, min: car.physics.speed, contacts: 0 };
+            sample.last = w.tick; sample.contacts++;
+          }
+          void (window as unknown as { ramContactReceipt: (r: unknown) => Promise<void> }).ramContactReceipt({ tick: w.tick, target: w.entities.get(event.targetId)?.archetype, speed: car.physics.speed, throttle: car.physics.intent.throttle, brake: car.physics.intent.brake, armorCost: event.before - event.after });
+        });
+      });
+    }
+    if (process.env.PLAYTEST_RAM_PACK === '1') {
+      log({ ramPack: await page.evaluate(() => {
+        const w = (window.__SCENE__ as unknown as { game: Game }).game.world;
+        const id = w.vehicles!.active!, car = w.vehicles!.cars.get(id)!, p = car.entity.transform;
+        const c = Math.cos(p.yaw), s = Math.sin(p.yaw);
+        return ['infected.brute', 'infected.armored', 'infected.runner', 'infected.sprinter', 'infected.crawler', 'infected.dog'].map((type, i) => {
+          const along = 12 + Math.floor(i / 3) * 1.2, side = (i % 3 - 1) * .7;
+          return w.infected!.spawn(type, { x: p.x + c * along + s * side, z: p.z - s * along + c * side }, { state: 'chase' });
+        });
+      }) });
+    }
     await page.evaluate(z => { window.__SS__!.camera.zoom(z); window.__SS__!.resume(); }, o.zoom);
   } else await page.getByTestId(`level-${first}`).click({ timeout: 60_000, force: o.entry === 'debug' });
   log({ session: o.tag, entry: o.entry, levels: o.levels, quality: o.quality, heroine: o.heroine });
