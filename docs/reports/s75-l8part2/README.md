@@ -254,3 +254,7 @@ Repeated with `--no-kite`, god on/no fire, current fixture. At tick 833 the obje
 ## Cover LOD geometry inspection
 
 Inspected source GLB nodes/accessor bounds and the static-bake headers for jersey barrier LOD0/1/2. All three baked tiers have nonempty geometry and matching bounds: x ±1.5, y approximately 0–0.95, z ±0.36, identity part transform. Thus an empty/underground LOD1 bake is not established as the cause. The remaining inspection must check the live selected InstancedGroup's resident prototype, instance count/matrices and draw bounds. No asset or renderer bypass was introduced.
+
+## Live cover batch inspection
+
+Current in-arena read-only sample (`--no-kite`, no fire, god on, HIGH/zoom 1) confirms the near batch is loaded and visible, contains three refs, and its static-body child is visible with count=3. Instance matrices have the expected pond translations and Y scale 1.4; its bounding sphere spans x≈±10/z≈-30 at y≈.665. `pond-cover-batch.json` preserves receipts. Thus empty instance count, missing resident near prototype and misplaced instance matrices are excluded. The geometry uses custom `_placement0..3` vertex attributes; their uploaded values/material/depth behavior remain the next unverified path. Browser/server are terminal. No renderer workaround was introduced.
