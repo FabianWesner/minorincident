@@ -225,3 +225,9 @@ Temporary instrumentation at active-batch submission confirmed the original HIGH
 ```
 
 Therefore the earlier 72×96 standalone-LOD2 bottleneck hypothesis is **not established for this fixture**: the active material binds the shared LOD0-size atlas. The LOD2-file atlas replacement did not test displayed texture resolution, and its unchanged score must not be counted as a valid resolution null result. A proper test must replace or resize the actual shared atlas binding. This probe also directly identifies active LOD2/LOD1, rather than merely prepared batches. Temporary instrumentation/driver removed and runtime source restored.
+
+## HIGH cashier shared-atlas nearest-filter experiment
+
+![Opened HIGH baseline versus nearest atlas filtering](cashier-nearest-high-runtime.jpg)
+
+Changed `baked.texture.minFilter` and `magFilter` to Three's `NearestFilter` (1003) immediately before cashier batch construction, setting `needsUpdate`; this targets the actual shared atlas instead of replacing a standalone unused image. All geometry, atlas bytes, lighting and camera stops stayed fixed. HIGH/WebGL2 fixture passed. Opened comparison yields **3 day / 2 night → 3 day / 2 night (+0/+0)**: no meaningful face/apron or overall readability improvement at either zoom. This tests nearest sampling without mip interpolation as one combined sampler choice; it does not isolate each filter parameter. Native captures and receipt remain at `test-results/s71-figurediag/cashier-nearest-high/`. Temporary sampler edit restored byte-for-byte; no change proposed for promotion.
