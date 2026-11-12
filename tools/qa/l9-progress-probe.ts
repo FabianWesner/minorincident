@@ -35,6 +35,7 @@ const projection = (x: number, z: number) => {
 try {
   const support = new LevelNineBot(world, routeId, true);
   const l9 = world.missions!.l9!, car = world.vehicles!.cars.get(l9.state.carId)!;
+  const positionJumps: { tick: number; metres: number; from: number[]; to: number[] }[] = [];
   let index = 1, peak = projection(car.entity.transform.x, car.entity.transform.z).along;
   let best = peak, stalled = 0, maxStalled = 0, maxAt = 0, maxWindow: Record<string, unknown> | null = null;
   let start = 0, startProgress = best, startPosition: [number, number] = [car.entity.transform.x, car.entity.transform.z];
@@ -59,7 +60,11 @@ try {
       if (l9.state.phase === 'driving' && l9.driving.holding(car.entity.id) && !l9.driving.state.hatchOpen) frame.interact = true;
       world.applyInput(frame, 'keyboard');
     }
+    const before = { x:p.x, z:p.z, driving:l9.state.phase === 'driving', held:l9.driving.holding(car.entity.id) };
     world.update();
+    const displacement = Math.hypot(p.x-before.x,p.z-before.z);
+    if (before.driving && l9.state.phase === 'driving' && displacement > 2)
+      positionJumps.push({ tick:world.tick, metres:displacement, from:[before.x,before.z], to:[p.x,p.z] });
     if (world.tick === Number(process.env.L9_CONTACT_TICK ?? -1)) {
       const contacts: unknown[] = [];
       world.physics.world!.contactPairsWith(car.physics.collider, other => {
@@ -93,9 +98,9 @@ try {
     const probes = targets.map(([x,z]) => { const path = { path: [] as number[], goal:-1, pathIndex:0 }, waypoint={x:0,z:0}; return { target:[x,z], clear:nav.clear(x,z,.5), physicalSweep: world.solids.sweep(e,{x:(x-e.transform.x)/Math.hypot(x-e.transform.x,z-e.transform.z),z:(z-e.transform.z)/Math.hypot(x-e.transform.x,z-e.transform.z)},1), reachable:nav.steer(e.transform,{x,z},path,.35,waypoint,100000), waypoint, length:path.path.length }; });
     console.log(JSON.stringify({ navDiagnostic:true, source:{...e.transform}, sourceClear:nav.clear(e.transform.x,e.transform.z,.35), bodyContacts, probes }));
   }
-  const result = { seed, routeId, evacuation: l9.driving.state.roster.map(id => { const e = world.entities.get(id); return { id, hp:e?.health.current, at:e?.transform, passengerOf:e?.passengerOf, phase:e?.civilian?.survivor?.mode, story:e?.civilian?.story, hidden:e?.hidden, pending:e?.pendingAdmission, route: e?.civilian ? { goal:e.civilian.goal, index:e.civilian.pathIndex, cells:e.civilian.path.slice(-6).map(cell => [world.infected!.nav.x(cell),world.infected!.nav.z(cell)]) } : null }; }), driving: { evacuationAt:l9.driving.state.evacuationAt, evacuated:l9.driving.state.evacuated, evacuating:l9.driving.state.evacuating, done:l9.driving.state.evacuationDone, spotFailures: Object.fromEntries((l9.driving as unknown as { spotFail: Map<number,number> }).spotFail), spotSkips: Object.fromEntries((l9.driving as unknown as { spotSkip: Map<number,number> }).spotSkip), truckEntering:l9.driving.state.truckEntering, hugDone:l9.driving.state.hugDone, hugSpot:l9.driving.state.hugSpot }, tick: world.tick, phase: l9.state.phase, playerHp: world.entities.get(1)!.health.current, maxNoProgressSeconds: +(maxStalled / 60).toFixed(2), maxAt, maxWindow, routeProgress: +projection(car.entity.transform.x, car.entity.transform.z).along.toFixed(4), finished: l9.state.finished };
+  const result = { seed, routeId, positionJumps, evacuation: l9.driving.state.roster.map(id => { const e = world.entities.get(id); return { id, hp:e?.health.current, at:e?.transform, passengerOf:e?.passengerOf, phase:e?.civilian?.survivor?.mode, story:e?.civilian?.story, hidden:e?.hidden, pending:e?.pendingAdmission, route: e?.civilian ? { goal:e.civilian.goal, index:e.civilian.pathIndex, cells:e.civilian.path.slice(-6).map(cell => [world.infected!.nav.x(cell),world.infected!.nav.z(cell)]) } : null }; }), driving: { evacuationAt:l9.driving.state.evacuationAt, evacuated:l9.driving.state.evacuated, evacuating:l9.driving.state.evacuating, done:l9.driving.state.evacuationDone, spotFailures: Object.fromEntries((l9.driving as unknown as { spotFail: Map<number,number> }).spotFail), spotSkips: Object.fromEntries((l9.driving as unknown as { spotSkip: Map<number,number> }).spotSkip), truckEntering:l9.driving.state.truckEntering, hugDone:l9.driving.state.hugDone, hugSpot:l9.driving.state.hugSpot }, tick: world.tick, phase: l9.state.phase, playerHp: world.entities.get(1)!.health.current, maxNoProgressSeconds: +(maxStalled / 60).toFixed(2), maxAt, maxWindow, routeProgress: +projection(car.entity.transform.x, car.entity.transform.z).along.toFixed(4), finished: l9.state.finished };
   mkdirSync('test-results/s67-l9stuck', { recursive: true });
   writeFileSync(`test-results/s67-l9stuck/${routeId}-seed-${seed}.json`, JSON.stringify(result, null, 2) + '\n');
   console.log(JSON.stringify(result, null, 2));
-  if (process.argv.includes('--check') && (!result.finished || maxStalled > 300)) process.exitCode = 1;
+  if (process.argv.includes('--check') && (!result.finished || maxStalled > 300 || positionJumps.length > 0)) process.exitCode = 1;
 } finally { world.dispose(); }
