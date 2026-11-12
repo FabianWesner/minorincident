@@ -23,9 +23,9 @@
 | Mission scenarios | 6/6 PASS against latest geometry, 153.40 s; gate fixture queues followers on narrow approaches |
 | L8 wave census | All L8 cohorts reach full counts, high and low, after north-route split |
 | Whole waves file | FAIL: high L2 market 24 admitted / 23 reached; reproduced using base source `73db6c05` |
-| Remote nightly | Latest run 6 passed / 3 failed: supermarket inventory, L2 high waves, L8 low north cohort. Subsequent local fix clears the L8 failure; remote rerun pending. Placement invariant PASS across all tiers |
+| Remote nightly | Latest run 7 passed / 2 failed: supermarket inventory (14 errors) and L2 high waves. All L8 cohorts high/low PASS; placement invariant PASS across all tiers, 620.13 s |
 | Threat audit | Earlier skilled native policy completed, zero gameplay flags; requested L8-only command retains automatic PARTIAL_LEVEL_SELECTION flag. Final-source rerun pending |
-| Remote npm test | Attempted, 150/150 registered cases; exceeded 240 s budget and reported multiple failures. Final green run absent |
+| Remote npm test | PASS: 27 files, 106 passed / 1 skipped, 212.5 s; 150/150 registered cases |
 
 ## Opened real-input captures
 
@@ -63,3 +63,7 @@ Damage-probe resolution: shoot() captured target goal before pin() relocated mon
 South/east probes: arrival junction south, zebra junction east, zebra spur side, and east crossroad directions all had12m open sweeps; zebra junction south already blocked2.425m. Added source south arrival lawn cap and zebra-spur verges. Crossroad caps need phase-aware gate handling because outbreak access uses them; no static cap added there. Rebuild pending, no checks running.
 
 Crossroad gates now close unused west-arrival, east-zebra and east-service branches at the plaza seal, sharing physics/render gate rules; they remain open for the initial tour/outbreak. Southern lawn cap and zebra-spur verges rebuilt. Smoke7/7 PASS226.8s, missions6/6 PASS153.40s. Remote census confirms every L8 cohort high+low reaches full count. Final threat/full-suite/nightly results pending.
+
+Latest-layout play-route-v7 failed: no sanctuary marker left marker-follow input at the entrance until the timed breach, followed by a stalled return outside the plaza. Added Follow Nadia marker at her live tour position; typecheck/lint PASS, rebuild/play verification pending. This run is not accepted as route proof. Extended passive audit L8 window150→210s to observe a full20s after the maximum180s tour, preserving attack thresholds; previous150s observation ended2s after breach.
+
+210s passive audit observes first attack3.42s after breach but fails reachability (17/25 reachable for30s; west/east remote cohorts plus two south-side actors). Skilled policy completes. PARTIAL_LEVEL_SELECTION also remains. Receipt refreshed in threat-audit.md. Nadia-marker source passes typecheck/lint and missions6/6(109.04s); fresh full-start play reaches plaza at breach, remaining arena traversal running.

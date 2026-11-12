@@ -417,7 +417,16 @@ export class LevelEightZoo {
     const seated=this.w.vehicles!.active===s.carId;
     this.mission.setState('player-boarded',seated);
     // r25-l8cues: while the group is under the opening shock the marker rings the plaza where they stand (it was blank for the first 30 s).
-    if(seated)this.mission.state.marker=null;
+    if (!this.breached) {
+      const guide = w.entities.get(s.keeperId);
+      if (guide) {
+        Object.assign(this.mission.def.anchors['l8-route'], { x: guide.transform.x, z: guide.transform.z });
+        const step = this.mission.def.steps.find(value => value.id === 'sanctuary');
+        if (step) { step.text = 'Follow Nadia'; step.anchor = 'l8-route'; step.waypoint = true; }
+        this.mission.state.marker = 'l8-route';
+      }
+    }
+    else if(seated)this.mission.state.marker=null;
     else if(this.protecting())this.mission.state.marker=this.mission.state.steps.escape.status==='active'?'central-plaza':null;
     else if(this.mission.state.steps.escape.status==='active'||this.mission.state.steps.depart.status==='active') {
       const next = s.arenas.find(a => a.phase !== 3);
