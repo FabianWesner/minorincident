@@ -28,3 +28,7 @@
 - Extended headless Chromium smoke case: PASS twice; final run explicitly captures 1280×720. All 14 hangar weapons selected by real clicks and Q cycling; 390×844 rack bounds passed.
 - Opened all four HIGH captures and the corrected desktop capture. Desktop rack is fully visible along the bottom; phone rack wraps within the viewport. The hunting-rifle icon contains HU (hunting rifle), with a Q shortcut badge and a full-name tooltip. Gold dashed Molotov trajectory and the ground ring are visible at zoom 1 and 1.5; the closer view clips the ring at the screen edge. [Review sheet](review.jpg).
 - These results supersede the earlier sandbox/runner blockers above. Remaining: matched before/after throwable captures and explicit empty-ammo presentation review.
+
+## Touch correction
+
+Real CDP touch events exposed overlap between Flashbang's slot and the touch attack controls. `2f21534d` positions the rack directly from the active input scheme, above the attack controls. The rebuilt headless smoke test passed all 14 real touch selections as well as clicks and Q cycling. Opened the 390×844 capture: every rack slot is within the viewport and the attack controls are below the rack with a clear gap. Focused ESLint passed. Matched throwable before/after captures and empty-ammo visual review remain open.
