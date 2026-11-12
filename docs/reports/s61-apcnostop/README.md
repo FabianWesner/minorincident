@@ -49,3 +49,5 @@ The thrower failure was diagnosed as late arrival: at test tick 2846 the thrower
 ## Refreshed native probe after barrier changes
 
 The probe still records 14.49 / 14.44 / 14.49 m/s minimum against 14.4 m/s entry for brute / six mixed / twenty ordinary, with 10 / 20 / 0 ram durability costs. Other damage during these runs was 50 / 120 / 100 respectively (total losses 60 / 140 / 100), superseding the earlier incidental attack totals. Recovery remained 0 ticks. The initial real-input capture `test-results/playtest/s61-apcnostop/captures/campaign-L9-t60.jpg` was opened and inspected: APC, bus, nearby infected and armour HUD are visible, but this still image does not establish continued movement through the horde.
+
+The apparent hatch timer reset is explained by the real-input receipt: `runs-campaign.json` records 33 player deaths in eight minutes, with no recorded attacks. Each death restores the mid-crossing checkpoint and resets its hold. This is a fixture bot survival failure, not evidence that the production countdown fails to advance. Preserve the authored hatch defence; gather the remaining driving evidence from the bridge fixture instead.
