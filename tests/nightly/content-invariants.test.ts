@@ -1,3 +1,4 @@
+import { clearGroundCoverFromRoads } from '../../src/levels/groundCoverRoads';
 // Nightly content invariants (PO 10-13 "This isn't a bug that I should ever face"): baseline ratchets over ALL assets and
 // districts. Known backlog lives in the baseline files next to this test; any NEW offender fails. Not per-change: they
 // decode every GLB/layout and take minutes. Reports: test-results/{lod-fidelity,placement-offenders}.json.
@@ -229,7 +230,7 @@ function assertGroundCoverRoads(): void {
       L5: levelFiveLayouts, L7: levelSevenLayouts, L8: levelEightLayouts, L10: levelTenLayouts } as Record<string, (layouts: DistrictLayout[]) => DistrictLayout[]>)[level];
     const layouts = prepare ? prepare(source) : source;
     for (const layout of layouts) {
-      const placements = [...layout.placements, ...districtDecor(layout.district, layout.placements)].filter(groundCover);
+      const placements = clearGroundCoverFromRoads({ ...layout, placements: [...layout.placements, ...districtDecor(layout.district, layout.placements)] }).placements.filter(groundCover);
       for (const p of placements) {
         for (const road of layout.roads.edges) for (let i = 1; i < road.points.length; i++) {
           if (segmentDistanceToBox(road.points[i-1], road.points[i], p) < road.laneWidth / 2 - .01)

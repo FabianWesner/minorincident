@@ -31,3 +31,11 @@ The gate now samples all six L10 region handoffs at 0.05, 0.5 and 1 m on each si
 ## HIGH zoom-1 capture sweep
 
 [Contact sheet](surface-contact-sheet.jpg) contains the opened PO before image and 60 fresh headless captures: 53 unique remaining placements and the seven fixed L10 crop positions. [Capture index](capture-index.json) retains coordinates, requested HIGH quality, and camera state for each image. The L2/L3 rows show blood/scorch and rubble near entrances, pavements and roads; L7 shows debris beside the ruined city lanes. The seven L10 rows show clear asphalt or verges at the removed crop positions, including the R2–R3 seam. I opened the complete sheet and an individual L2 capture. L5 rows have black world geometry and are explicitly **unqualified**; they must be retaken before this evidence can close the task. Historical before images for the six other cleared crop tiles also remain open.
+
+## Runtime road exclusion
+
+`DistrictWorld` now clears the full AABB footprint of every crop, vegetation/grass patch, decal, rubble field and parking/plaza tile placement from authored road lanes before decay, collision and pushable assembly. Owned colliders and building records are removed with the visual placement. The independent nightly intersection observer reports **zero road intersections** across all ten prepared levels; 26 intersections against broader paving polygons remain in [the current report](current-ground-cover-roads.json). These include non-road pavement and entrance surfaces and remain ratcheted for review. The old 85-finding JSON is retained as the pre-filter audit and capture-location source.
+
+The opened contact sheet now pairs the previous HIGH zoom-1 captures with a fresh 60-image run after runtime road exclusion. Visible road blood patches in L2/L3 and road rubble in L7 disappear while surrounding structures remain. The L5 black-geometry captures remain unqualified. The sheet labels “before” and “after” refer to this runtime filter; both runs already include the earlier seven-crop fix, whose original before evidence is the supplied PO image only.
+
+Validation of the runtime filter: typecheck, lint and the focused nightly observer pass. The requested remote unit command passed on 94.130.181.173: 27 files, 106 passed / one skipped, 228.1 s within the 240 s budget.

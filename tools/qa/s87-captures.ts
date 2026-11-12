@@ -1,8 +1,8 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { SceneSession, stopServer } from '../scenelab/session';
-const out = 'test-results/s87-surfaceqa/captures';
+const out = process.env.S87_CAPTURE_OUT ?? 'test-results/s87-surfaceqa/captures';
 mkdirSync(out, { recursive: true });
-const findings = (JSON.parse(readFileSync('tests/nightly/ground-cover-roads.baseline.json', 'utf8')) as { findings: string[] }).findings;
+const findings = (JSON.parse(readFileSync('docs/reports/s87-surfaceqa/ground-cover-roads.json', 'utf8')) as { findings: string[] }).findings;
 const rows = [...new Map(findings.map(f => {
   const m = f.match(/^(L\d+)\/\S+ (\S+).* at \(([-\d.]+),([-\d.]+)\)/)!;
   return [`${m[1]}/${m[2]}`, { level: m[1], id: m[2], x: Number(m[3]), z: Number(m[4]) }];
