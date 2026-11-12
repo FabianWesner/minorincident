@@ -1,0 +1,50 @@
+{
+  "job": "s66-b87qa",
+  "objective": "Real-input first-time-player QA of batch 87 fixes with opened captures and verdicts",
+  "head": "91199b68",
+  "status": "incomplete",
+  "build": {
+    "command": "MI_BUILD_CACHE=off npm run build:qa",
+    "result": "passed",
+    "durationSeconds": 11.08
+  },
+  "playtest": {
+    "result": "partial_L9",
+    "headless": true,
+    "quality": "low",
+    "renderer": "WebGL2",
+    "godMode": false,
+    "realInput": true,
+    "lockCommand": "E2E_UNITS=1 E2E_RESERVATION_SECONDS=600 E2E_PORT=4867 sh tools/e2e-lock.sh ...",
+    "exitCode": 124,
+    "blocker": "595-second browser reservation cap ended L9 at school-bus telegraph; no game failure established",
+    "captures": [
+      "test-results/s66-b87qa/00-menu.png",
+      "test-results/s66-b87qa/l9/bus-telegraph-turn43.jpg"
+    ],
+    "verdicts": [
+      {
+        "finding": "L9 school-bus ram telegraph",
+        "verdict": "FIXED",
+        "scope": "Warning presentation only; dodgeability and beatability unverified",
+        "position": "HUD objective distance 157 m, action 43",
+        "tick": null,
+        "capture": "test-results/s66-b87qa/l9/bus-telegraph-turn43.jpg"
+      }
+    ],
+    "openedCaptures": [
+      "test-results/s66-b87qa/00-menu.png",
+      "test-results/s66-b87qa/l9/bus-telegraph-turn43.jpg"
+    ]
+  },
+  "coverage": {
+    "L9": "partial: normal start to HUD 157m, 43 real-input actions, no deaths; bay/bridge/end not verified",
+    "L8": "not_played",
+    "L4_continuous_fire": "not_played",
+    "armored_front_vs_rear": "not_played",
+    "L2_market": "not_played",
+    "L7_school_bus": "not_played"
+  },
+  "codeChanged": false,
+  "specsChanged": false
+}
