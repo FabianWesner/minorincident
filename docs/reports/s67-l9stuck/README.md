@@ -55,3 +55,9 @@ The sole baseline checkout was checked for tracked changes and live probe proces
 On the implementation through `720f478b`, `npm run typecheck` and `npm run lint` pass. The refreshed L9 threat audit completes **both skilled and passive** routes with **0 L9 flags** (15.7 s total); exit 1 is solely `PARTIAL_LEVEL_SELECTION`, as expected for a selected-level diagnostic. This supersedes the earlier passive tick-budget result. The latest exact remote npm test and E31 verifier remain to be refreshed after the last production changes.
 
 The brief requests a **Browser QA needed** handoff section for the QA lane. The coordinates/ticks above remain that handoff; no visual presentation change is claimed by this lane and no browser capture is presented as proof. Native fixed-step input, physical prop retention assertions and the no-position-jump matrix provide this lane's movement evidence. The QA lane should still exercise the original real-input HUD/tick windows before release.
+
+## Final implementation gate refresh
+
+On committed implementation `e788f1aa`, `npm run verify -- E31` passes typecheck/lint and all 27 files / 107 tests (94.48 s Vitest, 95.7 s budget wrapper). Exact `sh tools/remote/run.sh "$PWD" -- npm test` also passes on 46.225.66.90: 27 files, 106 passed / 1 skipped, 187.37 s Vitest and 189.9 s against the unchanged 240 s budget. These supersede the older remote receipt.
+
+Completion audit still requires native coverage of the countryside and dry-shortcut branches before the road-only passing matrix can support a route-wide claim. The existing probe accepts those route IDs; the committed regression runner currently covers road only.
