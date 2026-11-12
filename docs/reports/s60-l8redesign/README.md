@@ -51,3 +51,5 @@ Deferred flamingo mechanic replacement, animal-model/motion lanes, signature-att
 [Detailed validation history](validation-history.md) contains earlier results and baseline comparison provenance. No servers or checks are running at this report update.
 
 Confinement probes on current generated layout: straight arrival/north/west/east verge sweeps stop2.425m from centre; north junction diagonals stop4.13m. Found open12m sweeps north of -24/pond junctions, west beyond lion turn, and sideways from unused -24 branch. Appended source caps/checkpoint barriers and north-spur verges to address these, preserving earlier allocation order. Python syntax PASS; rebuild/probes still required. No checks running.
+
+Northern caps rebuilt hash0c1c7ef446100cdb43f5cddcf0bc3860c1027db630ad85195fe1d4239e3b2eb9: layout errors0; all4 prior12m exit sweeps now stop2.4m. Solid scan found4 directed pairs at2 fence/barrier corners; trimmed source endpoints to barrier faces (sub-capsule gaps), rebuild pending. North service route now follows paved corner via(0,-64) before(0,-56), avoiding new verge. No checks running.

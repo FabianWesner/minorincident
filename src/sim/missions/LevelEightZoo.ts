@@ -153,7 +153,7 @@ export class LevelEightZoo {
       const serviceRoutes: [number, number][][] = [
         [[-96, 32]],
         [[96, 32]], // Clear the doorway onto the boulevard before normal pursuit takes over.
-        [[-24, -64], [0, -56]], // Ordinary reinforcements finish on the public north path.
+        [[-24, -64], [0, -64], [0, -56]], // Ordinary reinforcements finish on the public north path.
         [[24, 64]], // Leave onto the boulevard toward the plaza instead of walking south around the bunker.
       ];
       // Outlets 5 and 6 are the two hatches inside the plaza cell: they walk straight out at the group.
