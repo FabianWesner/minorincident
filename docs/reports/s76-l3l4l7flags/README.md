@@ -85,3 +85,7 @@ The moving probe recorded four attack starts and one landed hit in 20 seconds (3
 ## Further rejected L7 close-pack placements
 
 Moving the four close runners' lateral kerb offset from 5.5 m to 3.5 m retained zero kiting attacks/hits and introduced two departure follower flags (four passive flags total; passive tick-budget). Keeping the original lateral offset while moving only the first pair to x=280 retained zero attacks/hits and introduced stuck-chaser and follower flags (12 passive flags total; passive tick-budget). Both focused audits completed skilled routes. Both changes were reverted; they crowd the formation without supplying moving contact. The retained L7 implementation remains unchanged.
+
+## Rejected west Alpha timing extremes
+
+The first ordinary wave already begins at alarm +0 s. Trialed moving the existing west Alpha from +6 s to +14 s: breach at 58.08 s, only 24 alive; plaza minimum 20; three passive flags. Moving it to +0 s instead produced breach at 44.35 s with 55 alive, plaza minimum 13 and three passive flags. Both skilled routes completed. Reverted both: later opening loses population before entry, earlier opening comes closer to 60 alive but worsens sustained plaza pressure and adds a passive flag. Retained +6 s remains at two flags with the aligned north approaches.
