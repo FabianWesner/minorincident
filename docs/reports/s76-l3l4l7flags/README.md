@@ -42,4 +42,4 @@ No visual changes were made and no browser QA was run. Level composition/timing 
 
 ## Checks
 
-The exact threat audit above completed. `npm run typecheck` and `npm run lint` passed. The remote unit suite did not run: `tools/remote/run.sh` reported no healthy Hetzner runner and refused the Mac fallback for `npm test` (exit 69).
+The exact threat audit above completed. `npm run typecheck` and `npm run lint` passed. The initial remote attempt found no healthy runner. The unchanged retry passed on `46.225.66.90`: 27 test files passed, 106 tests passed and 1 skipped, with the required 150/150 inventory present; 208.7 s under the 240 s budget (exit 0).
