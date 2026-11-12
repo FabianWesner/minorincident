@@ -131,3 +131,5 @@ Scope audit against c9a9bbbd: eight changed paths, limited to the global action 
 Native entity-budget receipt: {'peakLiving': 14, 'capViolations': 0, 'peakEntities': 89, 'peakCorpses': 1}. Living/cap checked every tick; resident entity/corpse peaks sampled each second. Saved in `validation.json`. These are resident counts, not a claim that sleeping corpses were removed.
 
 High-tier entity-budget receipt: {'peakLiving': 22, 'capViolations': 0, 'peakEntities': 131, 'peakCorpses': 1}; completion 1012.75 s. Same sampling method as low tier, saved in `validation.json`.
+
+**2.5-hour limit reached.** All work is committed and the tree is clean. Remaining acceptance: the 30-second continuous attack-start bound still fails (350.77 s maximum), and protected-story scope clarification is unanswered. Further gameplay experiments require an extension of the supplied time box. The goal has not been marked complete.
