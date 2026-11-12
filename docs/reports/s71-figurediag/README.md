@@ -453,3 +453,9 @@ These complete same-regenerated-body HIGH stage observations: BBQ-dad **raw 6 �
 Captured regenerated BBQ-dad and cashier with their matching official bakes, plus selected S52 butcher with its authentic three GLBs/bakes, at LOW/WebGL2. All three fixtures passed; opened rows cover day zoom 1.5/1 and night zoom 1/1.5. Overall LOW judgments match the HIGH observations: **BBQ-dad 5/3, cashier 4/3, selected butcher 5/4**. HIGH remains primary. Native captures and override logs: `test-results/s71-figurediag/{bbq,cashier,butcher}-matched-candidate-low/`. Temporary driver removed, registry/mappings/assets unchanged.
 
 This closes the requested tier/zoom/time capture coverage for the stage candidates. The ordinary candidates intentionally use one regenerated body and matching bake at all requested LODs, with documented dimension fallbacks; their matrix is valid fixed-geometry diagnostic evidence, not authentic distance-LOD acceptance. Remaining task scope is the untested cheap levers, final concise recipe/expected-score synthesis and completion audit of the controlled-stage limitations.
+
+## HIGH cashier visual-scale lever
+
+![Opened baseline versus 1.2× rendered silhouette](cashier-scale-high.jpg)
+
+Temporarily multiplied posed crowd vertex positions by 1.2 before the instance transform in this single-figure HIGH/WebGL2 cashier fixture. Gameplay stats/collision and asset geometry were unchanged. Both zooms/day/night captured with passing fixture checks. Opened result: figure is visibly larger but expression/material finish remains weak; strict overall rating **3/2 → 3/2 (+0/+0)**. This tests a 20% whole-figure visual scale increase, not a redesigned silhouette or head/body correction. Native evidence: `test-results/s71-figurediag/cashier-scale12-high/`. Shader source restored byte-for-byte. No scale change proposed for promotion; stronger screen coverage alone did not close the quality gap.
