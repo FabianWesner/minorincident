@@ -67,3 +67,9 @@ The flock now walks back toward stable slots on an 11 m pond rim, shared with 26
 ## Flamingo return leg
 
 Authored dives now transition from their damaging outbound lane into a non-damaging return to the bird's assigned pad, then grounded recovery. Return travel retains the active flight presentation and uses collision-aware movement; a bounded timeout prevents a displaced or obstructed pad from locking the attack forever. Typecheck/lint pass, and the existing mission interaction regression passes (one selected case, five skipped; 68.19 s). A direct fight and opened capture are still required to accept this behavior visually.
+
+## First headless input sample
+
+Ran one pooled headless WebGL2/Metal browser on unique port 4975, HIGH requested and zoom 1, from `level:L8:sanctuary`, with marker-following keyboard input, E held, no firing and god off, for 45 s. The driver ended normally at tick 2641, player (60, 7.5), HP 100, checkpoint sanctuary; browser error list empty. Raw log and five frames are in ignored `test-results/s75-l8part2/start/`.
+
+Opened `s004-t2486.jpg`: the courier is visible among the group at a fenced path junction, the yellow route ring/arrow is readable, HUD says “Follow Nadia · 1 m”, the minimap has party dots and a direction arrow, and a warm gate lamp lights the lower-right pavement. This is a startup/input/capture sample only. It did not reach the pond or sanctuary hand-in and does not prove the no-stall requirement or any arena visual fix. Browser and temporary server stopped after the sample.
