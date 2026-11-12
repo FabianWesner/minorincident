@@ -179,6 +179,11 @@ function checkOrdinaryInfectedPresentation(): void {
   expect(vehicleTrackVerdict('ram-reaction', knocked)).toMatchObject({ pass: true, classification: 'matched-unplanted-action' });
   expect(vehicleTrackVerdict('unmatched-reaction', knocked.map(f => ({ ...f, reaction: null }))).pass).toBe(false);
   expect(vehicleTrackVerdict('stale-reaction', knocked.map(f => ({ ...f, reaction: { ...f.reaction, until: 0 } }))).pass).toBe(false);
+  expect(vehicleTrackVerdict('mixed-unplanted', [knocked[0], attached[1]])).toMatchObject({ pass: true, classification: 'mixed-unplanted-actions' });
+  const runningFlight = [vehicleFrame(1, 0, .016), vehicleFrame(2, .08, .05)].map((f, i) => ({ ...f, clip: 'infected-sprint', speed: 4.8, phase: .1 + i * .1, at: [i * .08, 0] }));
+  expect(vehicleTrackVerdict('short-running-flight', runningFlight)).toMatchObject({ pass: true, classification: 'running-flight-window' });
+  expect(vehicleTrackVerdict('frozen-running-flight', runningFlight.map(f => ({ ...f, phase: .1 }))).pass).toBe(false);
+  expect(vehicleTrackVerdict('hovering-run', runningFlight.map(f => ({ ...f, feet: f.feet.map(foot => ({ heel: [foot.heel[0], .5, 0], toe: [foot.toe[0], .5, 0] })) }))).pass).toBe(false);
   for (const action of ['pounce', 'charge']) {
     expect(vehicleTrackVerdict('special-slide', knocked.map(f => ({ ...f, clip: `alpha-${action}`, special: `alpha.${action}` }))).pass).toBe(false);
     expect(vehicleTrackVerdict('special-air', airborne.map(f => ({ ...f, clip: `alpha-${action}`, special: `alpha.${action}` }))).pass).toBe(true);

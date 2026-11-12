@@ -53,7 +53,7 @@ try {
         const cells: { frame: number; jpeg: Buffer }[] = [];
         const attachmentTrack = [];
         const cheapFrames: number[] = [];
-        const ramEvidence = [];
+        const ramEvidence: { tick: number; id: number; health: number; speed: number; clip: string | null; phase: number | null; reactionHeavy: boolean; slideActive: boolean }[] = [];
         for (let frame = 1; frame <= 300; frame++) {
           if (name === 'prop-momentum' && frame === 1) await session.page.evaluate(() => {
             const w = (window.__SCENE__ as unknown as { game: Game }).game.world;
@@ -86,7 +86,10 @@ try {
                 side: (e.transform.x - p.x) * s + (e.transform.z - p.z) * c,
                 height: e.transform.y - p.y, speed: e.motion?.speed ?? null })) };
           }));
-          if (tier === 'high' && (name === 'surrounded' && frame >= 140 && frame <= 145 || name === 'reach-recovery' && frame >= 146 && frame <= 151)) cells.push({ frame, jpeg: await session.snapshot() });
+          if (tier === 'high' && (name === 'surrounded' && frame >= 140 && frame <= 145 || name === 'reach-recovery' && frame >= 146 && frame <= 151)) {
+            await session.ready();
+            cells.push({ frame, jpeg: await session.page.screenshot({ type: 'jpeg', quality: 85, clip: { x: 400, y: 180, width: 480, height: 360 } }) });
+          }
         }
         if (cells.length) await session.makeSheet(cells, `${out}/${name === 'surrounded' ? 'apc' : 'reach-recovery'}-consecutive.jpg`, 480);
         const metrics = await session.metrics();
@@ -112,15 +115,20 @@ try {
           const proof = airborneFootTrack((actor.track ?? []).filter(f => f.frame >= 181 && f.frame <= 300), 120, 2);
           return { actor: id, ...proof, pass: proof.complete && proof.clearanceMinCm >= 1.2 && proof.travelMinM >= 2 };
         }) : [];
+        const boardingChecks = name === 'clinging' ? actors.map(([id, actor]) => ({ actor: id,
+          pass: actor.drawnFrames === 300 && actor.track?.length === 300 && actor.track.every(f => Number.isFinite(f.floor)
+            && f.feet.length === 2 && f.feet.every(foot => [foot.heel, foot.toe].every(point => point.length === 3 && point.every(Number.isFinite))))
+            && (actor.motion.slideP95Cm === null ? actor.motion.contacts === 0 : actor.motion.slideP95Cm <= 5 && actor.motion.slideMaxCm <= 15),
+        })) : [];
         const checks = actors.map(([id, actor]) => ({ actor: id, contacts: actor.motion.contacts,
           p95Cm: actor.motion.slideP95Cm, maxCm: actor.motion.slideMaxCm,
           pass: actor.motion.contacts >= 5 && actor.motion.slideP95Cm !== null && actor.motion.slideP95Cm <= 5 && actor.motion.slideMaxCm <= 15 }));
-        const contactProven = name === 'prop-momentum' ? events.some(e => e.type === 'combat.hit' && e.actionId === 'prop.momentum') : name === 'prop-push' ? propMotion.some(p => p.travelM >= .2) && propImpulses.some(p => p.nearbyInfected.length > 0) : name === 'push' || name === 'reach-recovery' ? shoves.some(shove => shove.distance > .001) : name === 'clinging' ? events.some(e => e.type === 'vehicle.grabbed') : name === 'ram-survivor' ? events.some(e => e.type === 'combat.hit' && e.actionId === 'vehicle.military-apc' && e.knockback > 0 && e.amount > 0) && shoves.some(shove => shove.distance > .001) : name === 'ram' ? events.filter(e => e.type === 'combat.hit').length >= 6 && shoves.some(shove => shove.distance > .001)
+        const contactProven = name === 'prop-momentum' ? events.some(e => e.type === 'combat.hit' && e.actionId === 'prop.momentum') : name === 'prop-push' ? propMotion.some(p => p.travelM >= .2) && propImpulses.some(p => p.nearbyInfected.length > 0) : name === 'push' || name === 'reach-recovery' ? shoves.some(shove => shove.distance > .001) : name === 'clinging' ? events.some(e => e.type === 'vehicle.grabbed') : name === 'ram-survivor' ? events.some(e => e.type === 'combat.hit' && e.actionId === 'vehicle.military-apc' && (e.knockback ?? 0) > 0 && e.amount > 0) && shoves.some(shove => shove.distance > .001) : name === 'ram' ? events.filter(e => e.type === 'combat.hit').length >= 6 && shoves.some(shove => shove.distance > .001)
           : events.filter(e => e.type === 'vehicle.attack-windup').length >= 4 && events.some(e => e.type === 'vehicle.durability-hit');
         let vehicleTravelM = 0;
         for (let i = 1; i < attachmentTrack.length; i++) vehicleTravelM += Math.hypot(attachmentTrack[i].car.x - attachmentTrack[i - 1].car.x, attachmentTrack[i].car.z - attachmentTrack[i - 1].car.z);
         const movingAttachmentProven = name !== 'clinging' || vehicleTravelM >= 2;
-        const motionProven = name === 'clinging' ? airborneChecks.length === 4 && airborneChecks.every(check => check.pass) : checks.every(check => check.pass);
+        const motionProven = name === 'clinging' ? airborneChecks.length === 4 && airborneChecks.every(check => check.pass) && boardingChecks.every(check => check.pass) : checks.every(check => check.pass);
         const cheapProven = name !== 'reach-recovery' || cheapFrames.filter(count => count === 6).length >= 120;
         const livingRamProven = name !== 'ram-survivor' || rams.some(r => {
           const follow = ramEvidence.filter(e => e.id === r.id && e.tick >= r.tick && e.tick < r.tick + 80 && e.reactionHeavy && e.clip && /^(knockdown|flung|get-up|stagger-|shamble|infected-)/.test(e.clip));
@@ -128,7 +136,7 @@ try {
         });
         const pass = contactProven && cheapProven && livingRamProven && movingAttachmentProven && motionProven && session.errors.length === 0;
         if (!pass) process.exitCode = 1;
-        writeJson(`${out}/${tier}-${name}.json`, { pass, contactProven, cheapProven, livingRamProven, ramEvidence, rams, cheapFrames, movingAttachmentProven, vehicleTravelM, checks, airborneChecks, metrics, events, attachmentTrack, shoves, shoveWindows, propMotion, propImpulses });
+        writeJson(`${out}/${tier}-${name}.json`, { pass, contactProven, cheapProven, livingRamProven, ramEvidence, rams, cheapFrames, movingAttachmentProven, vehicleTravelM, checks, airborneChecks, boardingChecks, metrics, events, attachmentTrack, shoves, shoveWindows, propMotion, propImpulses });
         console.log(JSON.stringify({ tier, name, events: events.length, actors: Object.fromEntries(Object.entries(metrics.actors).filter(([id]) => id.startsWith('infected')).map(([id, actor]) => [id, actor.motion])) }));
       }
     } finally { await session.close(); }

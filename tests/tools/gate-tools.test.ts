@@ -145,6 +145,7 @@ function gateFixture() {
   writeFileSync(join(root, 'tools/scenelab/catalog.ts'), '// fixture catalog');
   writeFileSync(join(root, 'package.json'), JSON.stringify({ scripts: {
     'qa:vehicle-motion': 'node -e "process.exit(Number(process.env.VEHICLE_CONTACT_EXIT || 0))"',
+    'qa:vehicle-campaign-motion': 'node -e "process.exit(Number(process.env.VEHICLE_CAMPAIGN_EXIT || 0))"',
   } }));
   for (const scene of ['alpha', 'beta', 'gamma', 'delta']) writeFileSync(join(root, `specs/scenes/catalog/${scene}.json`), '{}');
   const select = (scenes: string[], backends = scenes.map(() => 'webgl2'), known = {}) => writeFileSync(join(root, 'specs/scenes/gate-list.json'), JSON.stringify({ rows: scenes.map((scene, i) => ({ scene, backend: backends[i], tier: 'high', zoom: null })), known }));
@@ -198,6 +199,7 @@ test('scene gate rejects stale, failed, malformed and incomplete child results',
   }
   expect(f.run().status, 'fresh complete successful child').toBe(0);
   expect(f.run([], { VEHICLE_CONTACT_EXIT: '1' }).status, 'vehicle-contact failure fails the complete gate').toBe(1);
+  expect(f.run([], { VEHICLE_CAMPAIGN_EXIT: '1' }).status, 'native vehicle campaign failure fails the complete gate').toBe(1);
   expect(f.run(['--filter', 'alpha'], { VEHICLE_CONTACT_EXIT: '1' }).status, 'filtered catalog diagnostics do not run unrelated vehicle contacts').toBe(0);
   f.select(['alpha', 'beta'], undefined, { 'alpha@high': 'fixture', 'beta@high': 'fixture' });
   expect(f.run([], { CHILD_BEHAVIOR: 'known' }).status, 'fresh complete failures all explicitly triaged').toBe(0);
