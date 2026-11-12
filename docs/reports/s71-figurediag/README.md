@@ -235,3 +235,9 @@ Changed `baked.texture.minFilter` and `magFilter` to Three's `NearestFilter` (10
 ## Higher-scoring ordinary raw-source alternative
 
 BBQ-dad is an eligible higher-scoring ordinary representative (S53 5 day / 3 night). Its durable raw high exists at `/Users/wesner/Workspace/trellis-highs/inf.bbq-dad/tris300000_tex2048.glb`; its SHA256 exactly matches wave1 stage provenance: `81b253b8788c81027518f089773564d5b02b370a892b59b98ef7757857274c87`. This provides a stronger raw starting point than common-worker's missing high. However, the pre-binding bake has not yet been located: provenance names the historical `3dp-wave1/cache/wave1/inf.bbq-dad/body/lod0.glb`, and final delivery is retained. Do not substitute the final bound delivery as stage b. BBQ-dad remains a candidate replacement representative until that intermediate is recovered or faithfully regenerated. No new inference is required for the retained raw.
+
+## HIGH cashier retained-LOD1 experiment
+
+![Opened HIGH automatic LOD versus retained LOD1](cashier-lod1-high-runtime.jpg)
+
+Temporarily forced living cashier selection to `lod1` after the ordinary LOD/hero selection, leaving all other figures and corpse paths unchanged. HIGH/WebGL2 fixture passed at both zooms/day/night. Opened result: **3/2 → 3/2 (+0/+0)**, with no meaningful native-camera readability gain. This is consistent with the inventory finding that cashier LOD1/2 have the same triangle count, matching UV/skin data and the same shared runtime atlas. It does not establish that LOD retention is ineffective for other figures with genuinely different geometry. Captures/receipt: `test-results/s71-figurediag/cashier-force-lod1-high/`. Temporary override removed, source restored byte-for-byte; no production LOD change proposed.
