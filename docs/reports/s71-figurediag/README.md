@@ -459,3 +459,9 @@ This closes the requested tier/zoom/time capture coverage for the stage candidat
 ![Opened baseline versus 1.2× rendered silhouette](cashier-scale-high.jpg)
 
 Temporarily multiplied posed crowd vertex positions by 1.2 before the instance transform in this single-figure HIGH/WebGL2 cashier fixture. Gameplay stats/collision and asset geometry were unchanged. Both zooms/day/night captured with passing fixture checks. Opened result: figure is visibly larger but expression/material finish remains weak; strict overall rating **3/2 → 3/2 (+0/+0)**. This tests a 20% whole-figure visual scale increase, not a redesigned silhouette or head/body correction. Native evidence: `test-results/s71-figurediag/cashier-scale12-high/`. Shader source restored byte-for-byte. No scale change proposed for promotion; stronger screen coverage alone did not close the quality gap.
+
+## HIGH cashier normal-shading lever
+
+![Opened current interpolated normals versus flat face normals](cashier-flat-normals-high.jpg)
+
+Temporarily replaced the crowd material's interpolated skinned normal node with TSL `normalFlat` for this isolated cashier HIGH/WebGL2 capture. Atlas, positions, clips, lights and camera stops stayed fixed. Fixture checks passed; opened result remains **3/2 → 3/2 (+0/+0)**, without meaningful native-camera expression or material improvement. This tests geometry normal interpolation only; it is not an authored normal-map or AO bake test. Those maps are absent from the inspected current material inventory and would require additional asset/shader integration. Evidence: `test-results/s71-figurediag/cashier-flat-normals-high/`. Temporary import/normal-node edit restored byte-for-byte; no normal change proposed for promotion.
