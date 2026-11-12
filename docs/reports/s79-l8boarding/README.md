@@ -54,3 +54,7 @@ The unchanged remote command completed on runner `94.130.181.173`, job `/srv/mi/
 A headless HIGH zoom 1 physical-input session now ran through the browser pool on port 4981. It stopped at its 480-second cap on the elephant approach (`Enter the elephant yard · 61 m`), with zero deaths, three logged assists, no skips, and maximum no-progress 51.815 seconds. It cleared the earlier habitats but did not reach boarding. Raw evidence is in `test-results/playtest/s79-high-z1/`.
 
 Opened `captures/campaign-L8-t27148.jpg`: courier at full HP in the gorilla habitat, follower group visible behind her, defeated gorilla at the left, and a clear yellow objective ring. This proves rendered route coverage at that point, not completed boarding. The required run from a pre-elephant save through boarding remains open. No check is still running.
+
+## Post-correction checks
+
+Typecheck, lint, all 20 boarding matrix cases (maximum 35.49 s), and the 432-shove/16-edge confinement probe passed after the objective guidance change. The threat command completed in 98 seconds. Its console summary reports zero passive flags, but inspecting the raw level receipt reveals `step/escape:UNREACHABLE_SHARE_OVER_30_PERCENT_FOR_OVER_20_SECONDS` on the skilled route. Thus **zero L8 flags is not established**; the earlier summary-only claim is insufficient. This raw flag and fixed-build HIGH browser boarding completion remain open. The prior remote unit result predates the small guidance correction. No checks remain running.
