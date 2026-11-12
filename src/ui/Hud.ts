@@ -139,6 +139,7 @@ export class Hud {
     const north = node('span', 'minimap-north', 'N'); north.className = 'hud-map-n';
     this.cuePin.hidden = true; this.survivorText.hidden = this.cueText.hidden = true;
     this.routePin.style.background = '#64d9ee'; this.routePin.setAttribute('aria-label', 'Next turn on the cellar route');
+    this.arenaBoundary.className = 'minimap-arena-boundary';
     this.arenaBoundary.hidden = true;
     this.map.append(north, this.arenaBoundary, this.routePin, this.playerPin, this.objectivePin, this.homePin, this.cuePin);
     // Allocated once; no entity snapshots, DOM creation, or pin lists per frame.
