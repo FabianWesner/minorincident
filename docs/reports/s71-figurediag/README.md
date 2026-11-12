@@ -289,3 +289,9 @@ The historical wave1 rig command uses `wave1_rig.py` after a three-LOD shared-at
 ## Experimental binding CPU inspection rejected for scoring
 
 Rendered and opened `/private/tmp/s71-bbq-bound-cpu.png` (nine mesh parts, front +X). It shows detached red quads above the head and scattered red triangles around the body. This cannot be accepted as the neutral rig stage. The CPU static renderer does not evaluate glTF skinning or game hidden-stump visibility, so those marks may be inspection artifacts, converter placement problems, or both. A skin-aware Blender render with the game's hidden-part rules is required before attributing them to rigging. The intact body remains recognizable, but no numeric stage-c score is assigned from this invalid inspection. Candidate stays outside runtime assets.
+
+## Skin-aware neutral render confirms experimental eye defect
+
+![Opened neutral binding with hidden stump meshes removed](bbq-binding-eye-defect.jpg)
+
+Imported the candidate into Blender, which evaluates its skin. Seven stump meshes carry explicit `hidden: true` and `stumpFor` extras; removed those objects for rendering. The scattered CPU-view red triangles disappear, confirming they were hidden-part inspection artifacts. Two red quads remain above the hair/crown in the skin-aware neutral render, confirming a genuine eye-placement defect in this experimental converter invocation. Body continuity otherwise appears intact. The view is not yet aligned to the raw-stage camera, so no comparable overall rig score is assigned. This candidate must not enter runtime or be presented as accepted historical stage c. The diagnostic distinguishes a real binding risk (stale eye attachment placement) from an inspection artifact (hidden stumps), and gives a concrete requirement for the eventual neutral-rig comparison.
