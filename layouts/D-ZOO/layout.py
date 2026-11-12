@@ -608,6 +608,15 @@ _spur(60,52,60,46); _spur(60,18,60,12)
 _spur(60,-12,60,-18); _spur(74,-32,82,-32)
 _spur(-24,8,-24,20); _spur(-24,20,-20,20)
 
+# Fence the arrival boulevard's lawn edges; leave its public junctions open.
+# The boundary sits outside the 5 m road lane and preserves the existing IDs.
+for _edge_x in (20.9, 27.1):
+    _fence(_edge_x, 3.2, _edge_x, 60.8)
+# The plaza hold is a paved bounded gathering space, including its objective
+# centre and hatch approaches; no objective circle sits over dark lawn.
+l.box('plaza-floor', 'sidewalk', [28, .035, 24], [0, .0175, 0])
+l.data['surfaces'].append(dict(surface='tile', height=.035, polygon=[[-14,-12],[14,-12],[14,12],[-14,12],[-14,-12]]))
+
 l.data['placements'] = [p for p in l.data['placements'] if p is not None]
 # Clear dressing and obsolete panels under the new arena perimeter, after ID
 # allocation so every remaining placement retains its authored identifier.
