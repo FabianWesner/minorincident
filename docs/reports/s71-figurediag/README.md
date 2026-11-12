@@ -192,3 +192,15 @@ Changed only the ordinary crowd `figureRim` coefficient from .25 to .8, retainin
 ![Selected raw high versus retained pre-binding source](butcher-raw-prebind.jpg)
 
 Rendered selected run2 raw with the same unlit CPU renderer and `--forward +z`, then opened the front view beside retained cap-fit1 flattened pre-binding source. Raw finger separations and smoothly shaded sleeve folds become rounded fists and patchier broad colour regions before rigging. The cap widens too, but cap-fit is an intentional authored change, not pure decimation damage. Raw face and apron are already simple, so postprocessing cannot explain the entire quality gap. This comparison demonstrates pre-rig detail loss qualitatively; it bundles calibration/solidification/reduction/bake/flatten and cannot assign that loss to one operation. Both images are independently normalized to their full bounds by the existing renderer; shared display framing and neutral lighting remain needed for strict numeric stage scores. The raw has no retained cleaver because the prop is restored downstream.
+
+## Current HIGH delivery inventory: texture bottleneck candidate
+
+Read the current game GLBs through glTF Transform with meshopt decoding and inspected embedded KTX2 headers. Full material/map/triangle records are in `game-delivery-inventory.json`.
+
+| Figure | HIGH LOD0 triangles / atlas | HIGH LOD1 triangles / atlas | HIGH LOD2 triangles / atlas |
+|---|---|---|---|
+| Common-worker | 5,835 / 1024×1024 | 2,265 / 512×512 | 891 / 512×512 |
+| Cashier | 6,036 / 576×768 | 2,490 / 288×384 | 2,490 / **72×96** |
+| Existing butcher | 5,566 / 256×528 | 2,351 / 128×272 | 2,267 / 128×272 |
+
+All inspected atlases contain mip chains. Cashier's LOD2 keeps the same triangle count as LOD1 but cuts atlas area by 16×; this is a strong delivery-stage candidate for lost face/garment detail, pending a controlled runtime texture-retention test and confirmation of the drawn LOD. Butcher's distance atlas is also small relative to its large screen silhouette. Atlas dimensions include any class/swatch/eye regions and do not imply all texels cover body colour. These are the HIGH model files, not LOW overrides, and file inventory alone does not establish the displayed mip level or a score delta.
