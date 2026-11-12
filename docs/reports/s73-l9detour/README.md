@@ -1,14 +1,14 @@
-# S73 — L9 detour stalls and physical recovery
+# S73 — L9 detour stalls
 
 ## Result
 
-The native L9 matrix now passes **18/18**: every case completes with a maximum no-progress window of **0.32–3.27 simulated seconds** and **zero pose jumps**. The legacy `breakFree`/`placeCar` relocation was removed. If the held-input pin watchdog fires, it now requests a 90-tick reverse through the vehicle drivetrain and ordinary physics contacts.
+The native L9 matrix now passes **18/18**: every case completes with a maximum no-progress window of **0.32–3.27 simulated seconds** and **zero pose jumps**. The legacy `breakFree`/`placeCar` fallback remains, but does not fire in any matrix case. Its physical-reverse replacement was rejected because it failed the existing sealed-pocket escape test; the fallback was restored under the no-regression constraint.
 
 The detour thrower target now alternates 10 m to either side of the authored lane when the APC is closer to that route's detour than its primary line. The obstacles remain in the world and retain their normal collision and damage behavior. Primary route throw targeting is unchanged. Full per-case windows and jump receipts are in [native-current.json](native-current.json).
 
 ## Before / after matrix
 
-“Before” is the starting-main `43c79eb1` matrix recorded in [S67](../s67-l9stuck/README.md). “After” is this worktree after the physical-recovery change, from `sh tools/qa/l9-progress-regression.sh`. Values are maximum no-progress seconds / pose-jump count.
+“Before” is the starting-main `43c79eb1` matrix recorded in [S67](../s67-l9stuck/README.md). “After” is this worktree with the detour throw targeting change and original recovery fallback, from `sh tools/qa/l9-progress-regression.sh`. Values are maximum no-progress seconds / pose-jump count.
 
 | Path | Route | Seed | Before | After |
 |---|---|---:|---:|---:|
@@ -35,7 +35,7 @@ The detour thrower target now alternates 10 m to either side of the authored lan
 
 The initial contact traces showed a thrown jersey barrier and barricade centered on the road detour near `(-8, -305)`, and a thrown barricade/trash-can pair on the dry-shortcut detour near `(291, 8)`. The APC had held throttle and steering with near-zero physical displacement; the road cases ended with the old relocation jump. Moving the detour lines was tested and reverted because it worsened other route windows. Moving only the detour throw landings to alternating shoulders cleared all six former failures without degrading any other matrix case.
 
-No infected or prop/corpse removal, vehicle invulnerability, infected-stat changes, or player/actor pose writes were added. The old teleport recovery is deleted. On a prolonged pin, the remaining watchdog sets `recoveringUntil` for 90 ticks; `Vehicles` applies reverse throttle and steering while the chassis stays in the simulation.
+No infected or prop/corpse removal, vehicle invulnerability, infected-stat changes, or player/actor pose writes were added. The original recovery fallback remains unchanged. Zero jumps is verified for the complete route matrix; this does not claim that the fallback can never teleport in another enclosure.
 
 ## Validation
 
@@ -43,7 +43,7 @@ No infected or prop/corpse removal, vehicle invulnerability, infected-stat chang
 - `npm run typecheck`: pass.
 - `npm run lint`: pass.
 - `node --import tsx/esm tools/qa/threat-audit.ts --levels L9`: L9 skilled complete, **0 L9 flags**. The diagnostic selection exits nonzero only for `PARTIAL_LEVEL_SELECTION`; it is not the complete all-level gate.
-- Required remote unit command `sh tools/remote/run.sh "$PWD" -- npm test`: **FAIL**, runner `94.130.181.173`, 196.8 s within the unchanged 240 s budget. 27 files: 26 passed / 1 failed; 105 tests passed / 1 failed / 1 skipped. The existing `checkL9ApcPocket` gas variant fails `the APC left the pocket within 15 s` (`tests/helpers/r39Markers.ts:67`). The physical reverse replacement has not cleared that sealed-pocket fixture. This is an open recovery regression; the test and its budget remain unchanged. The earlier network-blocked attempt is superseded by this completed remote run.
+- Required remote unit command `sh tools/remote/run.sh "$PWD" -- npm test`: **pass**, runner `94.130.181.173`, 214.7 s within the unchanged 240 s budget. 27 files passed; 106 tests passed / 1 skipped. The 150-case inventory was unchanged. An earlier physical-reverse trial failed the existing sealed-pocket assertion; restoring the original fallback resolved it without changing the test.
 
 ## Browser QA needed
 
