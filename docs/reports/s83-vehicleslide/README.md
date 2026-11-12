@@ -69,3 +69,7 @@ Added a floor-policy driven APC fixture with infected at the actual boarding bou
 ## Attachment movement audit
 
 Per-tick hull-relative tracing shows the clinging fixture’s APC travels exactly 0 m on HIGH and LOW despite its throttle script. Moving-cling coverage is therefore absent; the diagnostic now separately requires >=2 m of vehicle travel. The trace also reveals coincident boarder pairs: IDs 4/5 share along -1.4225, side +1.595; IDs 6/7 share along -0.7725, side -1.595. Attachment clearance rises from 0.1 m to 0.8 m, while horizontal slots stay fixed. Both the ineffective drive fixture and duplicate-side slot assignment require follow-up.
+
+## Moving clinging fixture corrected
+
+The driven=true fixture installed an idle pilot that overwrote scripted drive input. Using ordinary courier interaction followed by the drive command now yields four attachments and 8.76148 m of APC travel on both HIGH and LOW. The moving-attachment evidence passes. Ground-contact assertions remain red (0–1 contacts per actor), requiring a separate explicit airborne/attachment-relative pose proof. See `moving-cling-baseline.json`.
