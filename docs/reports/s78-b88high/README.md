@@ -32,7 +32,7 @@ Measured coverage is summarized below. No PROD A/B was performed. All incomplete
 | L9 full | Incomplete: eight-minute cap at rail encounter | Open | Open |
 | L3 first 3 min | Sample complete | Sample complete | Open |
 | L4 first 3 min | Sample complete | Sample complete | Open |
-| L7 first 3 min | Sample complete | Open | Open |
+| L7 first 3 min | Sample complete | Full route finished in 149 s | Open |
 
 The LOW target is zoom 1 per the job prompt. The PO checklist also calls for zoom 1.5 coverage; that additional LOW coverage is not claimed here.
 
@@ -90,3 +90,7 @@ Read the current driver source after the repeated stalls. `tools/playtest/eyes.t
 ## L8 physical-input recovery attempt
 
 Fresh merged-build HIGH zoom 1 attempt retained its browser profile at `test-results/playtest/s78-b88high-l8-input-recovery/profile`. Reached 25/26 again; physical-input control commands then moved toward the visible target and held Space to fire normally. Opened `campaign-manual-far-flamingo.jpg` and `campaign-manual-fire.jpg`: courier movement changes camera framing and the final enemy remains in the arena, with its health bar reduced to roughly half in the firing capture. No teleport, god mode or objective skip was used. The driver still ended at 332 seconds after 90.7 seconds without objective-count progress; boarding was not reached. These captures support a damageable target plus an input/target-acquisition difficulty; they do not establish an unkillable enemy or a finishable route. Next continuation can retain this profile and pursue the remaining target rather than replay the opening.
+
+## L7 HIGH zoom 1.5 completion
+
+Merged-build real-input attempt finished L7 in 149 seconds with no skips, zero deaths, zero assists and zero driver findings. Maximum recorded no-progress interval: 5.68 seconds. Opened `test-results/playtest/s78-b88high-l7-high-z15/captures/campaign-L7-t8120.jpg`: boarding HUD says 23/23 aboard, everyone aboard; courier 100 HP, visible lit bus and persistent corpse field. Nearby figures remain outside the bus in that frame, so the relationship between the boarded counter and visible bodies needs separate interpretation rather than automatic closure. Opened `campaign-L7-result.jpg` shows L8 loading, supporting the driver-recorded handover. The summary simSeconds is zero despite live tick progression, so use wallSeconds and capture ticks as timing evidence. Route is finishable for this attempt; this does not establish the exact Alpha relocation effect or a matched PROD improvement. Raw evidence: `test-results/playtest/s78-b88high-l7-high-z15/`.
