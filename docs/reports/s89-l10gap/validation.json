@@ -1,0 +1,24 @@
+{
+  "fullAudit": {
+    "command": "node --import tsx/esm tools/qa/threat-audit.ts --out /private/tmp/s89-full-audit",
+    "seconds": 486.838593459,
+    "flags": [
+      "L4/criterion/L4-06 first breach:FAIL",
+      "L4/criterion/L4-06 sustained horde:FAIL"
+    ],
+    "exit": 1,
+    "receipt": "/private/tmp/s89-full-audit/audit.json"
+  },
+  "remoteUnits": {
+    "command": "sh tools/remote/run.sh \"$PWD\" -- npm test",
+    "runner": "94.130.181.173",
+    "passed": 106,
+    "skipped": 1,
+    "filesPassed": 27,
+    "testBudgetSeconds": 229.7,
+    "exit": 0,
+    "log": "/private/tmp/s89-remote-unit.log"
+  },
+  "goalComplete": false,
+  "gameplayChanged": false
+}

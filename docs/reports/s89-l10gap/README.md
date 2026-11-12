@@ -91,3 +91,9 @@ L1-brain `pursueTarget` uses `rush`, which routes toward the target position sam
 ## Bounded admission-headroom diagnostic
 
 E18 lists 200 HIGH / 100 LOW concurrent infected ceilings; current L10 journey pacing is much lower at 15/12. A temporary trial tripled journey headroom to at most 45/36, retaining authored group sizes, existing spawn safety and finale 22/14 caps. Native seed-1 LOW completed with 696 starts, 29.163/min, 109.57 s adjusted longest gap, 20 deaths and measured peak 26 resident infected. HIGH completed with 375 starts, 15.147/min, 143.08 s gap, 11 deaths and peak 40. Receipt `/private/tmp/s89-headroom.json`. No renderer performance claim. Reverted completely: more admission capacity alone substantially increases attack counts but does not satisfy cadence and causes many retries.
+
+## Full regression receipt
+
+Full audit completed in 486.8 s with exit 1 and exactly the existing `L4/criterion/L4-06 first breach:FAIL` and `L4/criterion/L4-06 sustained horde:FAIL` flags. L10 skilled completed; passive observation reached its configured tick budget with zero passive flags. No new top-level flags. Receipt `/private/tmp/s89-full-audit/audit.json`.
+
+Remote `sh tools/remote/run.sh "$PWD" -- npm test` passed on 94.130.181.173: 106 passed, one skipped, 27 files; budget duration 229.7/240 s, exit 0. No trimming or timeout override. [Validation summary](validation.json). These gates validate retained observer tooling against unchanged gameplay; the cadence objective remains incomplete.
