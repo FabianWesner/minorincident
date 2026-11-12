@@ -431,7 +431,10 @@ export class LevelEightZoo {
           const index = l8Route.indexOf(stage);
           if (inRect(p, stage.zone)) { at = { x: (stage.zone.x0 + stage.zone.x1) / 2, z: (stage.zone.z0 + stage.zone.z1) / 2 }; text = stage.text; }
           else {
-            if (s.routeStage !== index) { s.routeStage = index; s.routeNode = 0; }
+            if (s.routeStage !== index) {
+              s.routeStage = index; s.routeNode = 0;
+              for (let node = 1; node < stage.nodes.length; node++) if (distance(p, stage.nodes[node]) < distance(p, stage.nodes[s.routeNode])) s.routeNode = node;
+            }
             while (s.routeNode < stage.nodes.length - 1 && distance(p, stage.nodes[s.routeNode]) < 4) s.routeNode++;
             at = stage.nodes[s.routeNode]; text = stage.text;
             // An entry marker must lead through the opening: stopping at its
