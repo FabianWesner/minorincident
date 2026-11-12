@@ -165,3 +165,11 @@ Final L9 threat diagnostic again has zero L9 flags; its aggregate exit 1 is sole
 Opened `inner-reach-consecutive.jpg`: native HIGH, zoom 1.5, consecutive frames 8834–8839 after both the stampede and pelvis corrections. The damaged APC is beside a road structure, with zebras along its left/front hull and upright infected to the right/front; smoke partly obscures the grille. The relative crowd positions change continuously across the strip, with no visible large snap. Individual feet remain small, so the 72-group quantitative trace establishes the measured slide bound. This one small sheet reviews both visual corrections.
 
 The final L9 route regression completed exit 0 across all eighteen path/route/seed cases. Full typecheck/lint also pass after integrating the contact gate. Required per-epic E09 verification is now running remotely.
+
+## Extended LOW and neighboring level coverage
+
+The native LOW 9000-tick run fails: attached actor 852 p95/max 15.2/35.9 cm, attached 863 p95 10.1 cm, grounded 852 max 25.1 cm and grounded 681 max 18.8 cm. See `native-low-final.json`. These override any earlier LOW opening pass. Standing windup peaks show repeated foot travel while roots remain still; a budget-loss contact transfer is under test, not yet accepted.
+
+L7 HIGH/LOW and L4 HIGH/LOW 3600-tick native opening observations all have zero eligible contact samples. L7 has no registered cars; L4 has six but none overlaps the sampled infected. These runs exit 1 and establish no vehicle contact pass (`l4-l7-opening-observations.json`). The renderer changed during this diagnostic batch, so these are coverage observations only, not fixed-source validation. Later authored vehicle windows or explicit level-native fixtures remain required.
+
+Remote E09 verify failed its two scene-gate integration fixtures: fake repositories lacked the newly required qa:vehicle-motion script. The fixture now supplies a fake child and also asserts failure propagation and filtered scope, without changing the test count or production gate criteria. Focused tests and verification rerun remain due.
