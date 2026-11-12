@@ -121,3 +121,5 @@ The same native firing harness also measured the requested fixed profiles below,
 | flamethrower | 10@3.117 → 2@0.45 | 7@2.117 → 2@0.45 | 73@26.783 → 18@5.783 | 60@20.117 → 12@3.783 | 43@14.117 → 10@3.117 | 34@11.117 → 7@2.117 |
 
 Reproducibility: `native-targets.json` embeds the exact TypeScript harness sources for runtime HP, requested fixed HP, and cluster measurements, plus SHA-256 hashes of baseline/current weapon catalogs and execution instructions. These preserve the measurement method beyond the temporary `/tmp` files.
+
+Final consistency correction: machete source comment now states two hits against native ordinary infected; the role assertion derives its two-hit threshold from catalog HP times toughness. Focused combat and lint pass. This changes no gameplay values; catalog SHA receipts refer to the measured catalog before this comment-only correction.

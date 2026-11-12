@@ -31,7 +31,7 @@ const forehand = () => comboDefinition(rosterAction('weapon.bat'), 0);
 
 function checkArsenalRoles(): void {
   const handgun = rosterAction('weapon.handgun'), assault = rosterAction('weapon.assault-rifle');
-  expect(rosterAction('weapon.machete').damage).toBeGreaterThanOrEqual(40);
+  expect(rosterAction('weapon.machete').damage * 2).toBeGreaterThanOrEqual(infectedDef('infected.runner').hp * INFECTED_TOUGHNESS);
   expect(rosterAction('weapon.machete').cooldown).toBeLessThan(rosterAction('weapon.fire-axe').cooldown);
   expect(rosterAction('weapon.nail-gun').damage * 3).toBeGreaterThanOrEqual(infectedDef('infected.runner').hp * INFECTED_TOUGHNESS);
   expect(rosterAction('weapon.nail-gun').damage * rosterAction('weapon.nail-gun').fireRate).toBeGreaterThan(handgun.damage * handgun.fireRate);
