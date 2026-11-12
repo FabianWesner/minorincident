@@ -134,3 +134,5 @@ Shifted only the existing opening Alpha east by 8.5 m; all other Alpha anchors, 
 ```
 
 Both skilled/passive multi-seed follower pace pass; skilled flags empty. Retreat probe: four attack starts and two moving hits; skilled follower-wait upper bound 4.79%. Typecheck and lint pass. Nearby trials: +7 m had four passive flags; +9 m had only the landed-hit flag and 5.99% skilled waiting. The +8.5 m position is retained because it meets both moving-contact and follower criteria; the combined audit and final remote suite remain due. Browser QA is needed for the altered Alpha approach before visual acceptance.
+
+Shortening existing street-group intervals from 2–4 s to 1–2 s (unchanged scheduled wave sizes/roster) worsened high-hold minima: alive at breach 42, peak alive 62/plaza 59, minimum plaza 8. Focused audit 51.0 s, skilled complete, three passive flags. Reverted: front-loading admissions fills occupied capacity earlier and does not sustain living pressure. Later street reservations were left intact to preserve their authored encounters.
