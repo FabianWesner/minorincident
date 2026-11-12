@@ -120,3 +120,7 @@ Two standard infected dogs replacing two close runners retained both kiting flag
 ## L7 supported-policy comparison (diagnostic only)
 
 On unchanged runtime, `MI_THREAT_KITING_STYLE=circles ... --levels L7` reports zero passive flags (49.6 s total): 10 enemy attack starts, two landed moving hits, 6 hits/min, all 20 s moving, 89.75 m travelled, radius 4 m, zero stationary hits, skilled/passive complete and no multi-seed follower-pace flags. The required default retreat remains zero attacks/hits and follows the east/north apron escape traced above. This establishes moving-target contact exists under another supported policy and the remaining result is strongly route-dependent. It does not satisfy or replace the required retreat receipt, and is not yet sufficient proof that those flags are audit artifacts. Audit rules and thresholds remain unchanged. Scheduler notified of the comparison.
+
+## Opening Alpha position contact mechanism
+
+Shifting only the existing opening Alpha east by 16 m produced four kiting attack starts but zero hits, primary skilled tick-budget and a follower-wait flag (107.0 s); rejected. An 8 m east shift produced three attack starts and three moving hits, skilled/passive complete, empty skilled flags and passing multi-seed follower pace; only `FOLLOWER_WAIT_UPPER_BOUND_OVER_10_PERCENT` remained (35.9 s). A 6 m shift regressed to three passive flags and passive tick-budget (76.5 s). All are reverted for now: the 8 m case identifies a useful contact mechanism but still violates no-regression acceptance.
