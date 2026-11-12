@@ -72,7 +72,7 @@ try {
         contacts.push({ position: t, prop: world.props?.items.find(item => item.collider.handle === other.handle)?.assetId, obstacle: (() => { const o = world.vehicles!.obstacles.items.find(item => item.collider.handle === other.handle); return o ? { archetype:o.entity.archetype, airborne:o.airborne, dynamic:o.body?.isDynamic(), velocity:o.body?.linvel(), position:o.entity.transform } : null; })(),
           owners: world.districts?.districts.flatMap(d => d.decay.colliders.filter(c => { const a = c.aabb, f = a.navFootprint; return Math.hypot((f?.x ?? (a.min[0]+a.max[0])/2)+d.origin[0]-t.x,(f?.z ?? (a.min[2]+a.max[2])/2)+d.origin[1]-t.z)<.05; }).map(c => c.id)) });
       });
-      console.log(JSON.stringify({ contactTick: world.tick, position: [p.x,p.z], yaw:p.yaw, contacts }));
+      console.log(JSON.stringify({ contactTick: world.tick, position: [p.x,p.z], y:p.y, yaw:p.yaw, wheels:car.physics.wheels, velocity:car.physics.body.linvel(), intent:car.physics.intent, contacts }));
     }
     const held = l9.state.phase !== 'driving' || l9.driving.holding(car.entity.id), measured = projection(p.x, p.z);
     if (held) {

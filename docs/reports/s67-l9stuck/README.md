@@ -75,3 +75,7 @@ Removing the jersey barrier's initial upward velocity passed countryside seeds 1
 ## Physical pivot investigation
 
 Bounded yaw-impulse trials during measured low travel did not free the countryside seed-2 hedge/barrier/bus pocket: the maximum remained about 9.3–9.43 s and the old relocation still ran. Trials included both consecutive motion checks and the existing bounded travel history. They were reverted; no steering-torque change remains. The static pocket needs an effective physical escape before all-route acceptance can pass.
+
+## Wheel-contact evidence
+
+At countryside seed-2 tick 6300, all four wheel-contact flags are false while the chassis rests at y=1.234 on retained debris, throttle 1 and full steer. This explains why wheel engine/steering changes cannot move that pose. A limited suspension-droop experiment freed that case, but the full nine-run matrix regressed other routes (including a shortcut timeout), so it was reverted. The diagnostic can emit wheel state with `L9_CONTACT_TICK` for further investigation.
