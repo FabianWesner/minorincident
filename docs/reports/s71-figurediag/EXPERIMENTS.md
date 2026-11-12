@@ -487,3 +487,7 @@ Cashier now supplies a consistent-figure HIGH lever set for actual shared-atlas 
 ## Authored AO test prepared
 
 Baked a neutral-body AO image from the current decoded HIGH cashier LOD0 in Blender Cycles, 16 samples, 576×768 existing atlas UVs, margin 4, hidden stumps excluded. Opened `/private/tmp/s71-cashier-ao.png`: crevice shading exists across body UV islands; unused atlas space is black. Receipt/hash in `cashier-ao-bake.json`. This is preparation, not a runtime score result. Any application must preserve the class/eye atlas channels and avoid treating unused black atlas space as authored body occlusion. No production model changed; decoder worktree scratch removed.
+
+## Authored AO runtime comparison completed
+
+Opened `cashier-ao-high.jpg`: current cashier HIGH baseline versus its neutral-body baked AO, applied as `0.6 + 0.4*AO` albedo modulation on nonzero map samples. Zero/unused atlas samples remain neutral; base atlas bytes, alpha classification, geometry, lighting and pose stay fixed. This tests moderate baked contact darkening, not dynamic AO or a full tangent-space normal map. Both zooms/day/night captured with passing fixture checks. Overall strict score **3/2 → 3/2 (+0/+0)**, with no recovered expression or garment detail. Native evidence: `test-results/s71-figurediag/cashier-ao-high/`. Temporary TextureLoader/map sample and public PNG removed; runtime source restored byte-for-byte.

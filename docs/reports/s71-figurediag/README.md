@@ -1,6 +1,6 @@
 # S71 — TRELLIS figure quality diagnosis
 
-**Diagnosis evidence is substantial; completion remains open for authored AO/normal-map testing and a final evidence audit. HIGH is the PO acceptance view; LOW is secondary. No asset or rendering change is proposed for promotion.**
+**Diagnosis evidence is substantial; completion remains open for a final evidence audit. HIGH is the PO acceptance view; LOW is secondary. No asset or rendering change is proposed for promotion.**
 
 The current figures are not losing a hidden 8/10 model solely in the renderer. The three inspected raw highs score about **6/10** under strict S53 criteria. Historical proportion changes, reduction/bake processing and colour matching then lose another 1–2 points in some figures. Correct neutral binding adds no whole-point loss in the controlled comparisons. Night presentation costs another 1–2 points. None of the tested cheap runtime settings produces a whole-point improvement.
 
@@ -37,7 +37,8 @@ These use the current shipped cashier HIGH baseline **3 day / 2 night**, rather 
 |---|---:|---|
 | Actual shared atlas 576×768 → 144×192 | 0 / 0 | [Sheet](cashier-shared-atlas-size.jpg); accessors unchanged; active LOD1/2 draws verified at 144×192. Downsampling sensitivity, not proof that a better source bake cannot help. |
 | Nearest min/mag sampling instead of current filtering | 0 / 0 | [Sheet](cashier-nearest-high-runtime.jpg). No expression/readability gain. |
-| Flat face normals instead of interpolated skin normals | 0 / 0 | [Sheet](cashier-flat-normals-high.jpg). Geometry-normal test; authored normal/AO maps remain untested. |
+| Flat face normals instead of interpolated skin normals | 0 / 0 | [Sheet](cashier-flat-normals-high.jpg). Geometry-normal test; separate baked AO result below. |
+| Baked AO, 40% moderate albedo occlusion | 0 / 0 | [Sheet](cashier-ao-high.jpg). Existing UVs; unused atlas space neutralized; not a dynamic AO system. |
 | Figure fill .25 → .65 | 0 / 0 | [Sheet](cashier-light-levers-high.jpg). Existing fill graph, no new light system. |
 | Fresnel rim .25 → .8 | 0 / 0 | [Sheet](cashier-light-levers-high.jpg). Not a new outline algorithm. |
 | Retain LOD1 at both zooms | 0 / 0 | [Sheet](cashier-lod1-high-runtime.jpg). This figure's LOD1/2 have nearly matching geometry and share the runtime atlas. |
@@ -63,4 +64,4 @@ Standalone LOD image dimensions were misleading: active cashier LOD1/2 bind a sh
 - S71 HF use: **0/4**. Existing S52's two inferences are historical, not charged to S71. No secrets printed or committed.
 - Typecheck and lint passed; local `npm test` passed 27 files / 107 tests in 113.4 s. Required remote wrapper could not start because no healthy/provisioned runner was available. This is a local fallback result, not a remote pass.
 - Committed changes are report/evidence only. Production assets, shader source, stats, corpses and main are unchanged. No push/deploy.
-- Still unverified: authored AO/normal-map addition; a combined improved recipe's score; exact historical ordinary distance deliveries. The current ordinary stage matrices deliberately freeze geometry across requested LODs. These limitations prevent marking the full goal complete yet.
+- Still unverified: an authored normal-map addition beyond the tested normal interpolation; a combined improved recipe's score; exact historical ordinary distance deliveries. The current ordinary stage matrices deliberately freeze geometry across requested LODs. These limitations prevent marking the full goal complete yet.
