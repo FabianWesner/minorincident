@@ -145,3 +145,7 @@ Slower existing street-group cadence (4–6 s versus 2–4 s) also failed: first
 Coordinated earlier first-line pressure trial (line 1 push/earliest/deadline 8/16/24 s, nest push 24 s, south/north Alphas 16/24 s) raised first-breach population to 55 and peak alive 73, but minimum plaza only 18 and four passive flags remained (45.5 s; skilled complete). Reverted all pacing changes: it misses both census thresholds and worsens other criteria while changing the accepted phase sequence.
 
 Shifting the existing helicopter orbit centre west from (-14,4) to (-50,4), with unchanged orbit radius, weapon and firing cadence, did not improve census: first-breach alive 44, peak alive 59/plaza 57, minimum plaza 16. Skilled complete, two passive flags (69.3 s). Reverted the path change; air-support placement was not a useful lever in this trial. No visual claim or capture is made for it.
+
+## L4 damage-source trace
+
+Unchanged-runtime high passive replay counted damage events against infected during war. HMG soldier IDs 110/111 dealt 14,493.30/15,012.79 damage and caused 62/83 nonlethal downs (29,506.09 damage, 145 downs combined). Helicopter: 1,144 damage/seven downs; tank shell: 583 damage/no downs. Civilian IDs 35/45/88 dealt 9,748/9,377.4/8,151.4 damage, respectively. These are repeated damage/down events, not unique bodies. Ground crossfire dominates this trace; further placement work should inspect the two nest lanes and armed civilian positions rather than air-support paths. No runtime or audit behavior changed for this diagnostic.
