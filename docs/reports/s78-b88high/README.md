@@ -31,7 +31,7 @@ Measured coverage is summarized below. No PROD A/B was performed. All incomplete
 | L8 full | Incomplete: 24/26 flamingos, 90 s driver stall | Open | Open |
 | L9 full | Incomplete: eight-minute cap at rail encounter | Open | Open |
 | L3 first 3 min | Sample complete | Sample complete | Open |
-| L4 first 3 min | Sample complete | Open | Open |
+| L4 first 3 min | Sample complete | Sample complete | Open |
 | L7 first 3 min | Sample complete | Open | Open |
 
 The LOW target is zoom 1 per the job prompt. The PO checklist also calls for zoom 1.5 coverage; that additional LOW coverage is not claimed here.
@@ -72,3 +72,9 @@ Real-input run ended at the eight-minute cap (482 seconds), unfinished at the ra
 ## L3 HIGH zoom 1.5 opening (continuation)
 
 Completed 180 seconds of real input with 3 deaths, 0 logged assists and no objective skips. No P1/P2 driver finding; P0 is the expected time-cap label. Opened `campaign-L3-t5428.jpg`: courier at 35 HP in an active street fight, distinct nearby figures and health bars, readable arrow and objective. End distance was 355 m from checkpoint, so the attempt lost progress and did not reach the changed second wave. This is pressure rather than harmless combat, but death/replay and driver navigation prevent a reliable human difficulty judgment. Raw evidence: `test-results/playtest/s78-b88high-l3-high-z15/`.
+
+## L4 HIGH zoom 1.5 and L8 revision update
+
+L4 completed 180 seconds on the original bea2dc9d game revision, with 2 deaths and 0 logged assists, no skips. Reached south hold with 49 seconds remaining. The P2 no-marker interval matches the convoy introduction; the P0 is the sample cap. Opened `test-results/playtest/s78-b88high-l4-high-z15/captures/campaign-L4-t5423.jpg`: north-breach fight with many corpses, multiple visible live infected and soldiers, readable health bars and ring, courier at full HP in that frame. Combat is active; exact mouth alignment and west runner comparison remain unverified.
+
+After this sample, merged main (including 5c6b579f) as 4e6a3c94. `npm run build` passed with clean public-bundle assertion. Full L8 was not previously completed, so the next L8 start-to-boarding attempt must use this merged gate-closing build; the earlier bea2dc9d flamingo stall is historical evidence only. No code was edited by this QA lane.
