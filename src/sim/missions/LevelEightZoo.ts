@@ -487,7 +487,14 @@ export class LevelEightZoo {
         if (step) { step.text = text; step.anchor = 'l8-route'; step.waypoint = true; }
         this.mission.state.marker = 'l8-route';
       } else {
-        if (step) { const ids = this.passengers(), seats = w.entities.get(s.carId)!.vehicle!.passengers ?? []; const count = ids.filter(id => seats.some(seat => seat.id === id && seat.phase === 'seated')).length; step.text = `Cover the survivors while they board · ${count}/${ids.length} aboard`; step.anchor = 'exit'; step.waypoint = false; }
+        if (step) {
+          const ids = this.passengers(), seats = w.entities.get(s.carId)!.vehicle!.passengers ?? [];
+          const count = ids.filter(id => seats.some(seat => seat.id === id && seat.phase === 'seated')).length;
+          const boarding = this.boarding();
+          const allAboard = count === ids.length;
+          step.text = allAboard ? `Board the armored vehicle · ${count}/${ids.length} aboard` : boarding ? `Cover the survivors while they board · ${count}/${ids.length} aboard` : 'Lead the group to the armored vehicle';
+          step.anchor = 'exit'; step.waypoint = !boarding || allAboard;
+        }
         this.mission.state.marker = 'exit';
       }
     }
