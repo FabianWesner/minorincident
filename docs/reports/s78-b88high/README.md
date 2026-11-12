@@ -30,7 +30,7 @@ Measured coverage is summarized below. No PROD A/B was performed. All incomplete
 |---|---|---|---|
 | L8 full | Merged build incomplete: 25/26 flamingos, 90 s driver stall | Incomplete: same 25/26 stall | Open |
 | L9 full | Incomplete: eight-minute cap at rail encounter | Finished in 281 s, five deaths | Open |
-| L3 first 3 min | Sample complete | Sample complete | Open |
+| L3 first 3 min | Sample complete | Sample complete | Sample complete |
 | L4 first 3 min | Sample complete | Sample complete | Open |
 | L7 first 3 min | Sample complete | Full route finished in 149 s | Open |
 
@@ -106,3 +106,7 @@ Fresh merged-build run with requested zoom 1.5 stopped at 348 seconds after 90.3
 ## L9 HIGH zoom 1.5 completion
 
 Merged-build real-input route finished in 281 seconds, five deaths, zero logged assists, no skips. One normal F hatch-toggle input was sent through control.json. Opened `campaign-hatch-toggle-input.jpg`: courier 100 HP, APC armor 310/1000, clear countdown and hatch instructions, attackers beside hull, lit wheels/hull. Opened `campaign-L9-result.jpg` for handover evidence. Run summary records finished=true; max no-progress 8.449 s excludes death/retry delays and changing countdowns, so it is not total stopped wall time. Two five-second enemy-frozen flags remain unconfirmed; P1 ally-passive refers to vehicle#667 losing armor while stationary, not an escort character. The route is finishable in this attempt, with significant lethal pressure (five deaths); fun/fairness and every temporal UAT vehicle criterion remain unclosed. A single F input before eventual completion does not prove it caused recovery. Summary simSeconds=0 is not valid timing; use wallSeconds and logged ticks. Raw evidence: `test-results/playtest/s78-b88high-l9-high-z15/`.
+
+## L3 LOW zoom 1 opening
+
+Completed the requested 180-second sample on the merged build: 2 deaths, 0 logged assists, no skips, no P1/P2 driver findings. P0 is the expected time cap. End objective distance 214 m; changed checkpoint second wave remains unreached. Opened `test-results/playtest/s78-b88high-l3-low-z1/captures/campaign-L3-t5432.jpg` for LOW visual review: courier, nearby infected and health bars remain readable against the plaza; the shown bodies are scattered, so this capture does not establish dense-crowd readability. Raw evidence and summary are in the same run directory. This opening sample does not close second-wave timing or matched PROD comparison.
