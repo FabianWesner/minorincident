@@ -49,3 +49,5 @@ Trial ended L10 authored archetype pursuit when the courier was ahead beyond vis
 | 3 | high | 8.226 → 3.345 | 242.13 → 219.20 |
 
 Evidence: reducing indefinite distant chase improves encounter turnover, but simply retiring that pursuit also removes later attack pressure. This trial does not satisfy the original rate invariant or 45 s cadence goal.
+
+Narrow follow-up: retire only outpaced armored/firefighter hunters while retaining runners, dogs and Alphas. Seed 1 LOW completed with 38 starts, 2.059/min and 220.80 s longest adjusted gap; HIGH completed with 43 starts, 2.324/min and 216.05 s gap. HIGH rate is below its 6.520/min baseline, so this follow-up was also fully reverted. Receipt `/private/tmp/s89-slow-target.json`. The two trials disqualify pursuit retirement as the next production fix; retaining fast actors did not preserve the rate.
