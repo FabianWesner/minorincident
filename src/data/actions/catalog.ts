@@ -38,7 +38,7 @@ export const catalog: Readonly<Record<string, ActionDef>> = Object.fromEntries((
   // PO #37: a centred shell kills a 210 HP firefighter through 8 m; 300 HP Alphas take two close shells.
   { ...gun('shotgun', 240, 18, 2, 6, 2, 4), pellets: 8, distanceFalloff: { start: 8, end: 10, minimum: 0.1 }, maxTargets: 8, knockback: 1.8, stagger: 0.65 },
   // Close-mid precision tool: three nails drop a standard 40 HP infected.
-  { ...gun('nail-gun', 18, 18, 6, 24, 1.6, 1), projectile: { speed: 60, gravity: 0, pierce: 0 } },
+  { ...gun('nail-gun', 20, 18, 6, 24, 1.6, 1), projectile: { speed: 60, gravity: 0, pierce: 0 } },
   gun('smg', 18, 20, 8, 30, 1.5, 2),
   // Deliberate precision rifle: one ordinary infected; two landed shots remove a 300 HP Alpha.
   { ...gun('hunting-rifle', 300, 32, 1, 5, 2.4, 0), tier: 1, projectile: { speed: 110, gravity: 0, pierce: 1 }, maxTargets: 2 },

@@ -5,7 +5,7 @@ import { action as rosterAction, catalog } from '../../src/data/actions/catalog'
 import { action } from '../../src/data/actions/fixtures';
 import type { ActionDef, Side } from '../../src/data/actions/schema';
 import { comboDefinition } from '../../src/data/meleeCombos';
-import { riotShieldResponse } from '../../src/data/infected';
+import { infectedDef, INFECTED_TOUGHNESS, riotShieldResponse } from '../../src/data/infected';
 import { Status } from '../../src/sim/combat/Status';
 import { Explosions } from '../../src/sim/combat/Explosions';
 import type { CoverWall } from '../../src/sim/combat/HitQuery';
@@ -33,7 +33,7 @@ function checkArsenalRoles(): void {
   const handgun = rosterAction('weapon.handgun'), assault = rosterAction('weapon.assault-rifle');
   expect(rosterAction('weapon.machete').damage).toBeGreaterThanOrEqual(40);
   expect(rosterAction('weapon.machete').cooldown).toBeLessThan(rosterAction('weapon.fire-axe').cooldown);
-  expect(rosterAction('weapon.nail-gun').damage * 3).toBeGreaterThanOrEqual(40);
+  expect(rosterAction('weapon.nail-gun').damage * 3).toBeGreaterThanOrEqual(infectedDef('infected.runner').hp * INFECTED_TOUGHNESS);
   expect(rosterAction('weapon.nail-gun').damage * rosterAction('weapon.nail-gun').fireRate).toBeGreaterThan(handgun.damage * handgun.fireRate);
   expect(rosterAction('weapon.hunting-rifle').damage).toBeGreaterThanOrEqual(300);
   expect(rosterAction('weapon.hunting-rifle').projectile?.pierce).toBe(1);

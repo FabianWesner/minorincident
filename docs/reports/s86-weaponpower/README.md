@@ -14,7 +14,7 @@ PO UAT, PROD 2026-11-12: L10's new firearms and incendiaries felt underpowered. 
 | Rocket launcher | Long-range explosive crowd clear | 180, 1.2/s → unchanged |
 | Pipe bomb | Timed cluster clear | 150 damage, 4.5 m radius, 2 s fuse → unchanged |
 | Hunting rifle | Long-range precision, one target pierced | 90 damage, no pierce → 300 damage, pierce 1 |
-| Nail gun | Close-mid precision with strong sustained DPS | 14 × 6/s → 18 × 6/s (three nails drop a 40 HP ordinary infected) |
+| Nail gun | Close-mid precision with strong sustained DPS | 14 × 6/s → 20 × 6/s (three nails drop a native 60 HP ordinary infected) |
 | Machete | Fast, decisive melee blade | 32 damage, 0.45 s swing → 40 damage, 0.4 s swing |
 | Molotov | Fire patch for lane denial and cluster burn | 15 DPS, 6 s zone → 24 DPS, 8 s zone |
 | Assault rifle | Flexible automatic DPS above the handgun | 26 × 7.5/s → unchanged (195 vs handgun's 60 DPS) |
@@ -89,3 +89,5 @@ Static-reserve experiment: increasing the journey reservation from one slot to t
 Passed-anchor admission experiment: stopping unadmitted slots once the courier passed their anchor by 80 m produced 858 attack starts but timed out at 1,800 s and retained a 243.8 s gap (nine gaps over 30 s). It was reverted because it increased late pressure without resolving cadence or preserving completion. Receipt: `/tmp/s86-expirepassed.json`.
 
 Runtime actor trace (`/tmp/s86-actortrace.json`) confirms cap holders are living chase/attracted actors, often 40–110 m away, rather than corpses. It also confirms that the fixed-HP TTK table is not the runtime-health table: `InfectedSystem.spawn()` applies the pre-existing global `INFECTED_TOUGHNESS` multiplier. Native L10 runners in the trace have 60 HP and armored infected 240 HP. This scaling was not changed; actual runtime TTK/target compliance requires a separate native-health verification before completion.
+
+Native-health correction: nail damage is now 20 (120 raw DPS), so three nails cover the native ordinary infected's 60 HP. The assertion now reads `infectedDef().hp * INFECTED_TOUGHNESS`. Focused combat, typecheck and lint pass. The full threat audit and remote-unit receipt above predate this final 18→20 correction and require refresh before completion; the fixed-target nail TTK row above also predates this correction.
