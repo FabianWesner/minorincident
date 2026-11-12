@@ -30,3 +30,7 @@ Measurement tooling validation: `npm run typecheck` and `npm run lint` pass. Meg
 ## Mega diagnostic, seed 1 LOW
 
 A native observation through 300 simulation seconds found the Mega in detailed/close pursuit, configured cruise 5.4 m/s. Between ticks 12000 and 18001 it was staggered for 377 of 6002 sampled ticks (6.28%); the same 377 ticks were under special recovery. Thus the theoretical 25% interruption calculation does not describe this run and is insufficient as the root cause. No hit response was changed. Sampled distance over seconds 200–300 ranged from 10.80 to 31.03 m. Next diagnostic: distinguish navigation detours, special scheduling and non-courier proximity-notice pauses before selecting a fix. Temporary full diagnostic: `/private/tmp/s89mega-counter.json`.
+
+## Rejected movement experiment
+
+In seconds 200–300, Mega non-courier notice pauses and special attacks each occupied zero sampled ticks. Mean resolved movement was 4.61 m/s; 1197/6002 ticks had locomotion velocity below courier run speed. A temporary experiment restored the pre-hit velocity after the configured hit pause, avoiding extra re-acceleration without changing any tuning constants. Native seed-1 LOW completed with 76 starts, 4.107/min, but longest adjusted gap worsened to 390.62 s (baseline 295.05 s). Reverted in full. Receipt `/private/tmp/s89-resume-experiment.json`. No production gameplay change remains. This rules out that movement correction as a sufficient cadence fix.
