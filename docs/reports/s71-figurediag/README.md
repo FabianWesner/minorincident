@@ -1,6 +1,6 @@
 # S71 — TRELLIS figure quality diagnosis
 
-**Diagnosis evidence is substantial; completion remains open for a final evidence audit. HIGH is the PO acceptance view; LOW is secondary. No asset or rendering change is proposed for promotion.**
+**Diagnosis complete with the lineage limitations below. HIGH is the PO acceptance view; LOW is secondary. No asset or rendering change is proposed for promotion.**
 
 The current figures are not losing a hidden 8/10 model solely in the renderer. The three inspected raw highs score about **6/10** under strict S53 criteria. Historical proportion changes, reduction/bake processing and colour matching then lose another 1–2 points in some figures. Correct neutral binding adds no whole-point loss in the controlled comparisons. Night presentation costs another 1–2 points. None of the tested cheap runtime settings produces a whole-point improvement.
 
@@ -62,6 +62,6 @@ Standalone LOD image dimensions were misleading: active cashier LOD1/2 bind a sh
 ## Validation, scope and remaining work
 
 - S71 HF use: **0/4**. Existing S52's two inferences are historical, not charged to S71. No secrets printed or committed.
-- Typecheck and lint passed; local `npm test` passed 27 files / 107 tests in 113.4 s. Required remote wrapper could not start because no healthy/provisioned runner was available. This is a local fallback result, not a remote pass.
+- Typecheck and lint passed. Required `sh tools/remote/run.sh "$PWD" -- npm test` passed on runner 46.225.66.90: 27 files, 106 passed / 1 skipped, 197.0 s against the 240 s budget; exit 0. This supersedes the earlier unavailable-runner attempts. Local suite also passed.
 - Committed changes are report/evidence only. Production assets, shader source, stats, corpses and main are unchanged. No push/deploy.
-- Still unverified: an authored normal-map addition beyond the tested normal interpolation; a combined improved recipe's score; exact historical ordinary distance deliveries. The current ordinary stage matrices deliberately freeze geometry across requested LODs. These limitations prevent marking the full goal complete yet.
+- Still unverified: an authored normal-map addition beyond the tested normal interpolation; a combined improved recipe's score; exact historical ordinary distance deliveries. The current ordinary stage matrices deliberately freeze geometry across requested LODs. The fixed-geometry ordinary matrices isolate presentation; the separate shipped cashier LOD lever tests distance selection. These are diagnostic results, not certification of authentic historical ordinary LOD deliveries or a rebuilt 8/10 asset.
