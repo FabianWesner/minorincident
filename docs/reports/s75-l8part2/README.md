@@ -166,3 +166,9 @@ Added `l8-junction-probe.ts`, which admits the courier at (-60,0) with two clear
 The southern detour passed the outer primate approach fence at its z=32 end. Added a drawn/sim barrier across that end, joining x=-28.5 to the pen wall at x=-19.5 while keeping the marker route into the entry below it. Static reachable area after lion clear decreases from 14,141 to 5,161 m². The controlled 20 s west-exterior probe no longer reaches the exterior, though this bounded sample alone is not proof of total containment.
 
 All six native controlled route states pass after both junction barrier changes. The targeted audit reports `L8: skilled complete, passive tick-budget, 0 passive flags (149.6s)`; nonzero exit remains partial-selection/provenance only. Typecheck/lint/diff checks pass. Visual opening of this fence addition and broader post-monkey/post-zebra containment remain open. Raw route and audit receipts are in ignored `test-results/s75-l8part2/` and `test-results/qa-threat-s75-cap/`.
+
+## Southern zebra-approach junction arms
+
+The post-monkey flood route escaped south near (60,68), then traversed the field toward (-48,60). Added two seal-only connector gates across the unused southbound arms at (24,67.1) and (60,67.1), leaving the authored eastward turn and zebra entry route. Static post-monkey reachable area falls from 14,826 to 6,383 m²; arena-order checks still pass.
+
+The configurable runtime junction probe starts at (24,64), three pens cleared, target (-48,60). Native navigation reports the target disconnected, and the 20 s keyboard-input sample does not reach it. Typecheck/lint pass. Full native-route regression, opened gate capture, current full audit and remaining post-zebra opening are still required; this is not total path-confinement acceptance.
