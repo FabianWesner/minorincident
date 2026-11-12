@@ -97,3 +97,7 @@ E18 lists 200 HIGH / 100 LOW concurrent infected ceilings; current L10 journey p
 Full audit completed in 486.8 s with exit 1 and exactly the existing `L4/criterion/L4-06 first breach:FAIL` and `L4/criterion/L4-06 sustained horde:FAIL` flags. L10 skilled completed; passive observation reached its configured tick budget with zero passive flags. No new top-level flags. Receipt `/private/tmp/s89-full-audit/audit.json`.
 
 Remote `sh tools/remote/run.sh "$PWD" -- npm test` passed on 94.130.181.173: 106 passed, one skipped, 27 files; budget duration 229.7/240 s, exit 0. No trimming or timeout override. [Validation summary](validation.json). These gates validate retained observer tooling against unchanged gameplay; the cadence objective remains incomplete.
+
+## Combined headroom and focused-approach trials
+
+Headroom 36/45 plus updated, full-speed focused arrival: seed-1 LOW completed with 91 starts, 4.939/min, zero deaths, peak 23, 109.52 s adjusted gap; HIGH completed with 560 starts, 18.862/min, 20 deaths, peak 39, 145.05 s gap. Receipt `/private/tmp/s89-cap-directed.json`. Additional LOW trial resumed explicit focused approach when the L1 brain entered search: completed with 93 starts, 5.019/min, two deaths, peak 36, but 191.97 s gap (`/private/tmp/s89-cap-focused.json`). Both combinations fail cadence and were fully reverted. No production gameplay changes remain.
