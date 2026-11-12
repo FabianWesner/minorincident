@@ -6,6 +6,7 @@ import math
 import random
 import runpy
 from sslib.layout import Layout, empty
+from sslib.palette import mat
 
 l = Layout('D-ZOO', 'Sunset Grove Zoo', size=(300, 240))
 l.yaw_matches_collision = True
@@ -587,7 +588,14 @@ for _cx, _cz, _in, _out in [(0, -32, 'south', 'north'), (-60, -32, 'north', 'sou
                             (60, 32, 'north', 'south'), (60, -32, 'south', 'east'),
                             (-6, 20, 'west', 'east'), (96, 53, 'south', 'north')]:
     _arena_wall(_cx, _cz, 14, _in, _out, 5 if _cx == 96 else 3)
-for _cx, _cz, _sx, _sz in [(-6, 20, 24, 24), (96, 53, 28, 26)]:
+    # Continuous low ground strip makes the bounded combat floor readable at
+    # night. It is visual only and lies inside the fence, including gate gaps.
+    for _side in (-1, 1):
+        for _size, _at in [([27.4, .025, .14], [_cx, .14, _cz + _side * 13.7]),
+                           ([.14, .025, 27.4], [_cx + _side * 13.7, .14, _cz])]:
+            _strip = l.box('arena-edge-light', 'picketWhite', _size, _at)
+            _strip.data.materials.clear(); _strip.data.materials.append(mat('picketWhite', emissive=True))
+for _cx, _cz, _sx, _sz in [(-6, 20, 28, 28), (96, 53, 28, 28)]:
     l.box('arena-floor', 'sidewalk', [_sx, .035, _sz], [_cx, .0175, _cz])
 
 # The western service spur now ends at the sealed elephant pen wall.
