@@ -32,7 +32,7 @@ Measured coverage is summarized below. No PROD A/B was performed. All incomplete
 | L9 full | Incomplete: eight-minute cap at rail encounter | Finished in 281 s, five deaths | Open |
 | L3 first 3 min | Sample complete | Sample complete | Sample complete |
 | L4 first 3 min | Sample complete | Sample complete | Sample complete |
-| L7 first 3 min | Sample complete | Full route finished in 149 s | Open |
+| L7 first 3 min | Sample complete | Full route finished in 149 s | Full route finished in 152 s |
 
 The LOW target is zoom 1 per the job prompt. The PO checklist also calls for zoom 1.5 coverage; that additional LOW coverage is not claimed here.
 
@@ -114,3 +114,7 @@ Completed the requested 180-second sample on the merged build: 2 deaths, 0 logge
 ## L4 LOW zoom 1 opening
 
 Completed 181 seconds on the merged build: 5 deaths, 0 logged assists, no objective skips. P0 is the requested sample cap; the lone P2 is a convoy cinematic, confirmed by opened `campaign-L4-1242-stuck-navigating.jpg` (seated bus passengers, hidden HUD). Also opened `campaign-L4-t5423.jpg`: crowded west-breach fight, courier 90 HP, distinct health bars and readable ring amid corpses, soldiers and close brutes. Combat is active and dangerous; exact west runner and north-mouth alignment still need matched observation. Ended at north hold, 49 seconds remaining. Raw evidence: `test-results/playtest/s78-b88high-l4-low-z1/`.
+
+## L7 LOW zoom 1 completion
+
+Full real-input route finished in 152 seconds, zero deaths, zero assists, no skips and no driver findings. Max recorded no-progress 5.05 s. Opened `test-results/playtest/s78-b88high-l7-low-z1/captures/campaign-L7-t8134.jpg`: courier 100 HP, clear marker on ground, lit bus front, followers/health bars visible, HUD 18/24 aboard and waiting for a survivor 5 m away. This capture shows boarding in progress, not completion; opened `campaign-L7-result.jpg` shows subsequent L8 loading and summary records finished=true. Readable courier and followers at LOW; exact Alpha relocation effect, seated passengers and matched PROD comparison remain open. Summary simSeconds=0 is invalid timing; wallSeconds and logged ticks support duration.
