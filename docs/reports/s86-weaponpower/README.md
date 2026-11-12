@@ -156,3 +156,5 @@ Native before/after firing comparison (supersedes the earlier formula-based TTK 
 | flamethrower | 13@4.117 → 3@0.783 | 10@3.117 → 3@0.783 | 73@26.783 → 18@5.783 | 82@>30 → 17@5.45 | 60@22.117 → 15@4.783 | 49@16.117 → 10@3.117 |
 
 Nearest-group admission experiment: sorting authored groups by X distance from the courier completed in 1,016.0 s but produced only 54 attack starts and a 758.5 s longest gap. It was reverted. Receipt: `/tmp/s86-nearestgroups.json`. Prioritizing unadmitted groups alone cannot reclaim capacity held by distant living pursuers.
+
+Residency investigation: `ChunkResidency.sleepOutside()` already preserves actors as serialized sleeping records, releases live AI slots, and retains identity/timers for restoration. `wakeInside()` restores records in loaded-chunk iteration order, constrained by the director cap. A future local-pressure change must coordinate suspension and wake priority; changing admission alone leaves distant live holders in place, while suspending alone may immediately wake them again. Corpse persistence is handled independently by the existing saved-entity path. No residency behavior was changed in this investigation.
