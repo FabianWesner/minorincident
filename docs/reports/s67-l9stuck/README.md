@@ -95,3 +95,7 @@ The refreshed threat audit on `abcf6f35` reports skilled complete, passive tick-
 ## Primary-corner controller and tyre trials
 
 A two-second centerline lookahead plus curvature-based steering reduced primary-road corner gaps, but firmer APC lateral tyre response failed the full 18-run audit: road detour seeds 2/3 regressed to 13.43 / 121.93 s. All 18 completed without position jumps, yet the progress invariant failed on several routes. The tyre change and uncommitted controller revision were reverted, restoring the committed regression policy. The primary-road tree contact and primary-country gap remain open; no passing subset from these trials is accepted as completion evidence.
+
+## Static-contact momentum projection trial
+
+Projecting the ram velocity floor along static contact normals passed an initial primary-road seed, but failed the complete 18-run matrix once derived speed was reported accurately. Several cases developed prolonged wall-following stalls despite the focused vehicle suite passing. The entire projection change was reverted. The underlying interaction still needs attention: the infected-contact speed floor can keep prescribing velocity into a fixed obstacle and make reported speed differ sharply from actual displacement. A passing single seed is not accepted as evidence for this mechanism.
