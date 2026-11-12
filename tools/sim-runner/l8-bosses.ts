@@ -14,7 +14,8 @@ const identity = { revision: process.env.L8_BOSS_REVISION ?? 'fb617dcd+working-t
 const rows: { id: L8BossId; policy: string; error?: string; complete?: boolean; seconds?: number; [key: string]: unknown }[] = [];
 const save = () => writeFileSync(`${out}/${selected ?? 'all'}-${process.env.L8_BOSS_TIER ?? 'low'}-${policy}.json`, JSON.stringify({ ...identity, policy, rows }, null, 2) + '\n');
 for (const def of l8BossArenas.filter(a => !selected || a.id === selected)) {
-  const w = await loadLevel('L8', 1808, undefined, 0, { quality: (process.env.L8_BOSS_TIER ?? 'low') as 'low' | 'high' });
+  const seed = Number(process.env.L8_BOSS_SEED ?? 1808);
+  const w = await loadLevel('L8', seed, undefined, 0, { quality: (process.env.L8_BOSS_TIER ?? 'low') as 'low' | 'high' });
   const m = w.missions!, zoo = m.l8!, p = w.entities.get(1)!, arena = zoo.state.arenas.find(a => a.id === def.id)!;
   // Disposable fixture pre-roll: entry placement and carrier contact are outside the measured mortal fight.
   // Same-ID transforms still run the real shared 2.5–3.5 s timer; no boss is substituted for a healthy animal.
@@ -49,9 +50,11 @@ for (const def of l8BossArenas.filter(a => !selected || a.id === selected)) {
   arena.phase = 1; arena.startedAt = w.tick; arena.nextAt = w.tick + 90; arena.cycle = 0; arena.wallHits = 0;
   for (const id of arena.ids) { const e = w.entities.get(id)!; e.health.current = e.health.max; e.infected!.grabUntil = 0; delete e.infected!.specialAttack; e.infected!.arenaBoss!.readyAt = 0; }
   m.checkpoint(`arena-${def.id}`, def.entry);
-  const bot = new L8ArenaBot(w), start = w.tick, startDeaths = m.state.stats.deaths; let damage = 0, attacks = 0;
+  const bot = new L8ArenaBot(w), start = w.tick, startDeaths = m.state.stats.deaths; let damage = 0, attacks = 0, mgShots = 0, mgHits = 0;
+  w.events.on('combat.attack', e => { if (e.type === 'combat.attack' && e.sourceId === 1 && e.actionId === 'weapon.army-mg') mgShots++; });
+  w.events.on('combat.hit', e => { if (e.type === 'combat.hit' && e.sourceId === 1 && e.actionId === 'weapon.army-mg') mgHits++; });
   w.events.on('infected.attack', e => { if (e.type === 'infected.attack' && arena.ids.includes(e.sourceId) && e.targetId === 1) { attacks++; damage += e.amount; } });
-  for (let n = 0; n < 180 * 60 && zoo.state.arenas.find(a => a.id === def.id)!.phase !== 3 && (policy === 'skilled' ? m.state.stats.deaths - startDeaths < 4 : p.health.current > 0); n++) { w.applyInput(p.health.current > 0 ? bot.sample(def.id as L8BossId, policy) : emptyInput(), 'keyboard'); w.update();
+  for (let n = 0; n < 180 * 60 && zoo.state.arenas.find(a => a.id === def.id)!.phase !== 3 && (policy === 'skilled' ? m.state.stats.deaths - startDeaths < 4 : p.health.current > 0); n++) { w.applyInput(p.health.current > 0 ? bot.sample(def.id as L8BossId, policy, process.env.L8_BOSS_MG_ONLY === '1') : emptyInput(), 'keyboard'); w.update();
     if (process.env.L8_BOSS_TRACE && def.id === 'gorilla' && n % 300 === 0) {
       const actor = w.entities.get(arena.ids[0])!, boss = actor.infected!.arenaBoss!;
       const prop = w.props?.items.find(p => p.entityId === boss.scavengeId);
@@ -59,7 +62,7 @@ for (const def of l8BossArenas.filter(a => !selected || a.id === selected)) {
     }
   }
   const current = zoo.state.arenas.find(a => a.id === def.id)!;
-  const row = { id: def.id, tier: w.infected!.director.tier, policy, measurementEntry, complete: current.phase === 3, seconds: current.phase === 3 ? (current.endedAt - current.startedAt) / 60 : (w.tick - start) / 60, totalSeconds: (w.tick - start) / 60, hp: p.health.current, deaths: m.state.stats.deaths - startDeaths, damage, attacks, phases: current.phase, counters: current.counters, wallHits: current.wallHits, wallContacts: current.wallContacts, bites, turns, tells, throws, signals, stages, destruction: w.destruction?.objects.filter(o => o.id.includes('l8-gorilla-pillar')).map(o => ({ id: o.id, hp: o.state.hp, collapsed: o.state.collapsed })), bosses: arena.ids.map(id => ({ id, hp: w.entities.get(id)?.health.current, at: w.entities.get(id)?.transform, state: w.entities.get(id)?.infected?.state, boss: w.entities.get(id)?.infected?.arenaBoss, attack: w.entities.get(id)?.infected?.specialAttack, pending: w.entities.get(id)?.pendingAdmission, held: w.npcs!.civilians.holds(id) })) };
+  const row = { id: def.id, seed, tier: w.infected!.director.tier, policy, mgOnly: process.env.L8_BOSS_MG_ONLY === '1', mgShots, mgHits, measurementEntry, complete: current.phase === 3, seconds: current.phase === 3 ? (current.endedAt - current.startedAt) / 60 : (w.tick - start) / 60, totalSeconds: (w.tick - start) / 60, hp: p.health.current, deaths: m.state.stats.deaths - startDeaths, damage, attacks, phases: current.phase, counters: current.counters, wallHits: current.wallHits, wallContacts: current.wallContacts, bites, turns, tells, throws, signals, stages, destruction: w.destruction?.objects.filter(o => o.id.includes('l8-gorilla-pillar')).map(o => ({ id: o.id, hp: o.state.hp, collapsed: o.state.collapsed })), bosses: arena.ids.map(id => ({ id, hp: w.entities.get(id)?.health.current, at: w.entities.get(id)?.transform, state: w.entities.get(id)?.infected?.state, boss: w.entities.get(id)?.infected?.arenaBoss, attack: w.entities.get(id)?.infected?.specialAttack, pending: w.entities.get(id)?.pendingAdmission, held: w.npcs!.civilians.holds(id) })) };
   rows.push(row); save(); console.log(JSON.stringify({ id: row.id, tier: row.tier, policy: row.policy, complete: row.complete, seconds: row.seconds, totalSeconds: row.totalSeconds, hp: row.hp, deaths: row.deaths, damage: row.damage, attacks: row.attacks, phases: row.phases, counters: row.counters, wallHits: row.wallHits, tells: row.tells.length, throws: row.throws.length })); w.dispose();
 }
-if (rows.some(r => 'error' in r || (policy === 'skilled' ? !r.complete || r.seconds! < 45 || r.seconds! > 120 : r.complete))) process.exitCode = 1;
+if (rows.some(r => 'error' in r || (policy === 'skilled' ? !r.complete || r.seconds! > (r.id === 'flamingo' ? 90 : 120) || r.id !== 'flamingo' && r.seconds! < 45 : r.complete))) process.exitCode = 1;

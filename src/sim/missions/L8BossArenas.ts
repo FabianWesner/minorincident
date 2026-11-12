@@ -199,8 +199,9 @@ export class L8BossArenas {
         this.announce(`${def.name}: ${def.counter}`); this.signal(arena, 'engaged');
       }
       // The entry gate closes behind the group: once every living follower is inside, or after 20 s when none is still at the gate (never on a follower).
-      if (arena.phase > 0 && arena.phase < 3 && !arena.armed && stage.entry) {
-        const gate = stage.entry, safeZone = { x0: stage.zone.x0 + 1, z0: stage.zone.z0 + 1, x1: stage.zone.x1 - 1, z1: stage.zone.z1 - 1 };
+      const entryGate = stage.entry ?? (arena.id === 'elephant' ? l8EncounterGates.elephantEntry : undefined);
+      if (arena.phase > 0 && arena.phase < 3 && !arena.armed && entryGate) {
+        const gate = entryGate, safeZone = { x0: stage.zone.x0 + 1, z0: stage.zone.z0 + 1, x1: stage.zone.x1 - 1, z1: stage.zone.z1 - 1 };
         const near = (e: EntitySnapshot, pad: number) => Math.abs(e.transform.x - gate.x) < gate.halfX + pad && Math.abs(e.transform.z - gate.z) < gate.halfZ + pad;
         // A centre inside the zone can still overlap the closing gate's solid body.
         const pending = this.mission.l8!.followers().filter(e => !inRect(e.transform, safeZone) || near(e, 1.5));
