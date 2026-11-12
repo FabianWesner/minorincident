@@ -59,3 +59,9 @@ The refreshed L9 threat audit completes both skilled and passive routes with zer
 ## Moving rollover recovery
 
 The rollover investigation found a direct conflict: `VehicleBody.postPhysics` reset the rollover timer whenever speed was at least 3 m/s, while ram momentum can keep an inverted chassis above that speed. Removed that speed condition so the existing mass-scaled flip recovery can activate while moving. The existing rollover test now holds 5 m/s during the inversion delay and verifies recovery to four-wheel contact. Focused vehicle suite passes (2 tests, 62.74 s). Fresh browser verification remains required.
+
+## Rollover fixture verification
+
+After the moving-recovery fix, the same bridge fixture completes L9 in 25 seconds with no skips, deaths, assists or issues (`test-results/playtest/s61-bridge-recovery`). Opened both captures: upright APC at start, then L10 handover. This establishes the route regression is resolved, but the two captures do not independently measure speed during horde contact.
+
+A second exact remote `npm test` ran on 94.130.181.173 (initial load 1.22). L4 contact passed; world-systems explosions, navigation, and player movement exceeded their per-test timeouts, and the full suite was killed by its 240-second budget (240.5 s, exit 124). Remote green remains outstanding; do not claim completion from the local pass.
