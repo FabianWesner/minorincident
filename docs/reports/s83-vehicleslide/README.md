@@ -137,3 +137,7 @@ Added optional CAMPAIGN_CAPTURE_FROM to the native sampler. The 1800-tick HIGH r
 The HIGH L9 native completion bot was observed for 9000 ticks. It produces 14,120 contact samples across 82 actor/context groups, reaches rail stall at tick 6095, samples hatch combat, and restarts before tick 9000. Six grounded groups fail: four late-spawned zebras (two-foot fallback traces, maxima up to 459.8 cm) and two bathrobe-variant sprinters (maxima 30.2 and 22.5 cm). The native command exits 1. This contradicts full completion; next work must inspect the late zebra cast and the two sprinter contact intervals. See `native-l9-rail-failures.json`.
 
 Current-source full typecheck and lint pass. Remote complete npm test passes on 94.130.181.173: 27 files, 106 passed/1 skipped, test-budget 221.6/240 seconds, exit 0. Transcript `/private/tmp/s83-final-unit.log`. These code checks do not override the failing native motion evidence.
+
+## Late zebra cast baseline
+
+L9’s dry-shortcut controller spawns zebras after cast initialization, so their existing render role is now registered alongside the dogs. Native HIGH rerun has four hoof pairs, confirming the fallback is gone, but zebra motion still fails: p95/max up to 44.8/530.8 cm on actor 858 and 108.2/140.3 cm on actor 804. The two sprinter maximum failures remain 30.2 and 22.5 cm. Typecheck and targeted lint pass. Correct-species rendering is retained; these are failing hoof-contact traces requiring an actual locomotion fix, not a completed motion acceptance. See `zebra-cast-baseline.json`.

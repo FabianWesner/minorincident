@@ -184,7 +184,7 @@ export class CrowdView extends Group {
     const l1Roles = new Set<string>(regularCrowd || crossingCrowd || this.world.scenario === 'L6' || this.world.npcs?.civilians.outbreak || this.world.districts?.districts.some(d => isOutbreakDistrict(d.id)) ? ['infected.runner', ...actors] : ['infected.runner', ...actors, ...civilianRoles.map(role => role.variant), ...models]);
     // Crossing set pieces spawn dog packs after this render cast is assembled.
     // Register their existing rig/coats now, rather than galloping a runner fallback.
-    if (crossingCrowd) { l1Roles.add('infected.dog'); l1Roles.add('inf.dog'); }
+    if (crossingCrowd) { l1Roles.add('infected.dog'); l1Roles.add('inf.dog'); l1Roles.add('infected.zebra'); }
     if (regularCrowd) for (const model of regularInfectedModels) l1Roles.add(model);
     // L4 sprinters always wear a shared soldier/civilian/suit skin.
     // Their unused default batch need not delay the level's loading card.
