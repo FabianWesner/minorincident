@@ -1,0 +1,37 @@
+{
+  "name": "s69-barrier-settled",
+  "note": "Isolated visual companion for the retained, settled road barrier after an APC ram.",
+  "seed": 69,
+  "ground": "asphalt",
+  "size": 40,
+  "time": "L1",
+  "dof": false,
+  "props": [
+    {
+      "id": "barrier",
+      "asset": "prop.jersey-barrier",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 90
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0.6,
+      0
+    ],
+    "zoom": 1.5
+  },
+  "frames": 60,
+  "shots": [
+    0,
+    60
+  ],
+  "expect": {
+    "consoleErrors": 0
+  }
+}

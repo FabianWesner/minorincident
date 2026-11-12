@@ -1,0 +1,19 @@
+{
+  "name": "s69-armored-directions",
+  "note": "Isolated visual companion for the front, rear and side armored infected shots-to-kill probe.",
+  "seed": 69,
+  "ground": "sidewalk",
+  "size": 40,
+  "time": "L1",
+  "dof": false,
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [0, 0], "god": true },
+    { "id": "front", "kind": "infected", "archetype": "infected.armored", "at": [3, 0], "yaw": 0, "state": "idle" },
+    { "id": "rear", "kind": "infected", "archetype": "infected.armored", "at": [-3, 0], "yaw": 0, "state": "idle" },
+    { "id": "side", "kind": "infected", "archetype": "infected.armored", "at": [0, 3], "yaw": 0, "state": "idle" }
+  ],
+  "camera": { "mode": "follow", "actor": "courier", "zoom": 1.5 },
+  "frames": 60,
+  "shots": [0, 60],
+  "expect": { "consoleErrors": 0 }
+}

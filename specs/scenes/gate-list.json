@@ -2,6 +2,34 @@
  "comment": "Curated Scene Lab deploy-gate rows (npm run scene:gate). Add a row when a PO finding needs a visual check; one-line reason each. zoom null = scene has its own camera.",
  "rows": [
   {
+   "scene": "s69-brute-under-fire",
+   "tier": "low",
+   "zoom": 1.5,
+   "backend": "webgl2",
+   "reason": "isolated brute continues its windup during close automatic fire"
+  },
+  {
+   "scene": "s69-butcher-under-fire",
+   "tier": "low",
+   "zoom": 1.5,
+   "backend": "webgpu",
+   "reason": "isolated butcher continues attacking during close automatic fire"
+  },
+  {
+   "scene": "s69-armored-directions",
+   "tier": "low",
+   "zoom": 1.5,
+   "backend": "webgl2",
+   "reason": "isolated armored infected show plate orientation at close range"
+  },
+  {
+   "scene": "s69-barrier-settled",
+   "tier": "low",
+   "zoom": null,
+   "backend": "webgpu",
+   "reason": "retained road barrier rests on asphalt after an APC ram"
+  },
+  {
    "scene": "courier-gear-tier4-female",
    "tier": "low",
    "zoom": 1.5,
