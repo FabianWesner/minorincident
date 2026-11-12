@@ -2,7 +2,19 @@
 
 ## Status
 
-Incomplete overall; stopping at the requested timebox. The current full audit reports **L8 skilled complete, passive tick-budget, 0 passive flags** after the calm-tour wall fix. Required remote unit suite, focused mission test, typecheck and lint pass. Current geometry still needs a fresh marker-only real-input tour, final-position HIGH/zoom-1 captures and comprehensive live confinement/closure acceptance; flamingo part 2 and cover/lighting polish are implemented only to the extent documented below. Earlier captures and travel receipts precede final edits and are not final acceptance evidence.
+Incomplete overall. Stopped at the user's explicit final timebox instruction after finishing the active capture. Current full audit has **0 L8 passive flags**; remote unit suite, typecheck and lint pass. Current HIGH/zoom-1 marker-only calm tour reaches the plaza with maximum sampled progress gap 6.05 s; 432 actual gate-shove cases pass. Remaining acceptance is listed below; no further experiments were started.
+
+## Final timebox handoff (supersedes earlier status)
+
+Current full audit exact line: `[qa:threat] L8: skilled complete, passive tick-budget, 0 passive flags (229.8s)`. Full audit exits 1 for eight non-L8/provenance flags. Required remote suite passes 27 files / 106 tests, one skipped, 225.6 s; typecheck/lint pass.
+
+HIGH real input: 240-second current-source calm-tour run, zoom 1, no god/fire/relocation, marker following and E input. Launcher handover subtitle observed; tour reaches rest at plaza then breach. Maximum sampled interval until 1 m movement is 6.05 s, below 10 s. This is not uninterrupted six-arena escape/boarding acceptance. Current gate check passes 432 knockback cases; one-way predicate assertions pass, but live closure timing and all off-path/corner boundaries remain unproven.
+
+Final active check completed: 45-second protected/no-fire flamingo fixture run, HIGH/zoom 1. Opened `flamingo-final/s004-t1312.jpg` and `s008-t2535.jpg`: complete pen in frame, lit boundary/minimap rectangle, visible ring of gold pads, final lamp positions, dark cover silhouettes against lit pavement. Zero browser errors. These stills do not capture red lanes or prove continuous gait/return landing. The pond centre remains dark; no 8/10 score is claimed. Receipt: `flamingo-final-check.json`.
+
+Still open: strict route confinement at every junction/corner/boarding boundary; live one-way closure timing; uninterrupted real-input full escape; final six-arena visual acceptance and continuous telegraph/gait review; remaining deliberate cover/lighting/minimap/camera polish. Flamingo repeated reinforcement flights (`callFlight`, up to four flights) and Phase 2 remain: the prolonged-fight concern is unresolved by the landing/red-lane work. Nightly asset inventory remains failed as recorded below; final layout rebuild/smoke and wave acceptance are not fully established. Overall goal remains incomplete.
+
+All checks, browsers and temporary servers started by this lane are terminal. Stale untracked baseline/report outputs were moved under ignored `test-results/s75-l8part2/superseded-*`; current JSON receipts and this README are committed. No push/deploy/main movement. No further experiments after the user's stop instruction.
 
 ## Audit change
 
