@@ -54,7 +54,11 @@ try {
     const [tx, tz] = path[index], want = -Math.atan2(tz - p.z, tx - p.x);
     const steer = clamp(angleDelta(want, p.yaw) * 2, -1, 1);
     if (l9.state.phase === 'driving' && !l9.driving.holding(car.entity.id)) world.applyInput({ ...emptyInput(), drive: { throttle: 1, steer }, brake: false, handbrake: false }, 'keyboard');
-    else world.applyInput(support.sample(), 'keyboard');
+    else {
+      const frame = support.sample();
+      if (l9.state.phase === 'driving' && l9.driving.holding(car.entity.id) && !l9.driving.state.hatchOpen) frame.interact = true;
+      world.applyInput(frame, 'keyboard');
+    }
     world.update();
     if (world.tick === Number(process.env.L9_CONTACT_TICK ?? -1)) {
       const contacts: unknown[] = [];
@@ -81,7 +85,15 @@ try {
     }
     if (i % 600 === 599) console.log(JSON.stringify({ tick: world.tick, phase: l9.state.phase, position: [p.x, p.z], speed: car.physics.speed, routeProgress: +measured.along.toFixed(4), held, stalledSeconds: +(stalled / 60).toFixed(1) }));
   }
-  const result = { seed, routeId, evacuation: l9.driving.state.roster.map(id => { const e = world.entities.get(id); return { id, hp:e?.health.current, at:e?.transform, passengerOf:e?.passengerOf, phase:e?.civilian?.survivor?.mode, story:e?.civilian?.story, hidden:e?.hidden, pending:e?.pendingAdmission }; }), driving: { evacuationAt:l9.driving.state.evacuationAt, evacuated:l9.driving.state.evacuated, evacuating:l9.driving.state.evacuating, done:l9.driving.state.evacuationDone, spotFailures: Object.fromEntries((l9.driving as unknown as { spotFail: Map<number,number> }).spotFail), spotSkips: Object.fromEntries((l9.driving as unknown as { spotSkip: Map<number,number> }).spotSkip), truckEntering:l9.driving.state.truckEntering, hugDone:l9.driving.state.hugDone, hugSpot:l9.driving.state.hugSpot }, tick: world.tick, phase: l9.state.phase, playerHp: world.entities.get(1)!.health.current, maxNoProgressSeconds: +(maxStalled / 60).toFixed(2), maxAt, maxWindow, routeProgress: +projection(car.entity.transform.x, car.entity.transform.z).along.toFixed(4), finished: l9.state.finished };
+  if (!l9.state.finished && process.env.L9_NAV_DIAG) {
+    const e = world.entities.get(672)!, nav = world.infected!.nav;
+    const targets = [[461.5,-15],[456.5,-15],[461.5,-17.5],[456.5,-17.5],[470.5,-17.5],[465.5,-17.5],[479.5,-17.5],[474.5,-17.5]];
+    const bodyContacts: unknown[] = [];
+    world.solids.sweep(e,{x:0,z:-1},2,.35,false,true, other => bodyContacts.push({id:other.id,archetype:other.archetype,hp:other.health.current,recoverAt:other.infected?.recoverAt,at:other.transform}));
+    const probes = targets.map(([x,z]) => { const path = { path: [] as number[], goal:-1, pathIndex:0 }, waypoint={x:0,z:0}; return { target:[x,z], clear:nav.clear(x,z,.5), physicalSweep: world.solids.sweep(e,{x:(x-e.transform.x)/Math.hypot(x-e.transform.x,z-e.transform.z),z:(z-e.transform.z)/Math.hypot(x-e.transform.x,z-e.transform.z)},1), reachable:nav.steer(e.transform,{x,z},path,.35,waypoint,100000), waypoint, length:path.path.length }; });
+    console.log(JSON.stringify({ navDiagnostic:true, source:{...e.transform}, sourceClear:nav.clear(e.transform.x,e.transform.z,.35), bodyContacts, probes }));
+  }
+  const result = { seed, routeId, evacuation: l9.driving.state.roster.map(id => { const e = world.entities.get(id); return { id, hp:e?.health.current, at:e?.transform, passengerOf:e?.passengerOf, phase:e?.civilian?.survivor?.mode, story:e?.civilian?.story, hidden:e?.hidden, pending:e?.pendingAdmission, route: e?.civilian ? { goal:e.civilian.goal, index:e.civilian.pathIndex, cells:e.civilian.path.slice(-6).map(cell => [world.infected!.nav.x(cell),world.infected!.nav.z(cell)]) } : null }; }), driving: { evacuationAt:l9.driving.state.evacuationAt, evacuated:l9.driving.state.evacuated, evacuating:l9.driving.state.evacuating, done:l9.driving.state.evacuationDone, spotFailures: Object.fromEntries((l9.driving as unknown as { spotFail: Map<number,number> }).spotFail), spotSkips: Object.fromEntries((l9.driving as unknown as { spotSkip: Map<number,number> }).spotSkip), truckEntering:l9.driving.state.truckEntering, hugDone:l9.driving.state.hugDone, hugSpot:l9.driving.state.hugSpot }, tick: world.tick, phase: l9.state.phase, playerHp: world.entities.get(1)!.health.current, maxNoProgressSeconds: +(maxStalled / 60).toFixed(2), maxAt, maxWindow, routeProgress: +projection(car.entity.transform.x, car.entity.transform.z).along.toFixed(4), finished: l9.state.finished };
   mkdirSync('test-results/s67-l9stuck', { recursive: true });
   writeFileSync(`test-results/s67-l9stuck/${routeId}-seed-${seed}.json`, JSON.stringify(result, null, 2) + '\n');
   console.log(JSON.stringify(result, null, 2));
