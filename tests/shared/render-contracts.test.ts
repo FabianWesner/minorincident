@@ -791,9 +791,8 @@ test('corpse pages: bodies persist past the old cap, bounds stay conservative, c
     prepared.geometry.dispose(); received.geometry.dispose();
   }
 
-});
-
-test('L8 flamingo flight deaths settle on the ground and spread into non-overlapping footprints', () => {
+  // L8 flight deaths retain separate ground footprints across all four flights.
+  {
   const records = new Map<number, EntitySnapshot>();
   const world = { scenario: 'L8', entities: { revision: 0, get: (id: number) => records.get(id), *iterate() { yield* records.values(); } },
     districts: { districts: [], supportBelow: () => 0 },
@@ -807,6 +806,7 @@ test('L8 flamingo flight deaths settle on the ground and spread into non-overlap
   expect(layout.audit().heapPairs, 'no flamingo corpse footprints overlap or form vertical layers').toBe(0);
   for (let i = 0; i < placements.length; i++) for (let j = i + 1; j < placements.length; j++) {
     expect(Math.hypot(placements[i].x - placements[j].x, placements[i].z - placements[j].z), 'corpse centers remain separated').toBeGreaterThan(.6);
+  }
   }
 });
 
