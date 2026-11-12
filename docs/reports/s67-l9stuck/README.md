@@ -65,3 +65,7 @@ The canonical committed-source results remain `native-current.json`: all 18 comp
 ## Resumed preview-driver audit
 
 A measured three-second preview with speed-dependent understeer compensation passed primary-road and primary-country seeds, but failed the complete 18-run audit: it introduced 5.67 s first-turn gaps on all country detours, a shortcut-detour noncompletion near evacuation, and >12 s primary-shortcut gaps. The driver revision was reverted rather than selecting different controllers per route to retain only passing cases. The canonical regression policy and HOLD result remain unchanged.
+
+## Resumed steering audit
+
+Displacement-based APC steering lock worsened the focused primary-road seed-1 gap to 23.20 s and was reverted. Physical rear counter-steering reduced that corner gap: half rear lock gave 6.27 s; full opposite rear lock gave 3.08 s. Full opposite rear lock passed typecheck/lint, but the complete native matrix rejected it: primary-country seed 2 stalled 512.20 s and did not finish, primary-country seed 3 reached 24.43 s, and detour-shortcut seed 3 reached 5.33 s. All 18 receipts were allowed to finish before the production trial was reverted. These results point to steering/path interaction, but do not establish a safe production correction. The canonical committed-source acceptance remains HOLD with four failures.
