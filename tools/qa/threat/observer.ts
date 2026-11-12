@@ -9,6 +9,7 @@ import { WaveObserver } from './waves';
 import { l3 } from '../../../src/data/l3';
 import { infectedDef } from '../../../src/data/infected';
 import { apcDurability } from '../../../src/data/vehicles';
+import { l8GateClosed, l8Route, inRect, type L8GateContext } from '../../../src/data/l8Bosses';
 
 export const median = (values: readonly number[]): number | null => {
   const sorted = [...values].sort((a, b) => a - b), n = sorted.length;
@@ -40,6 +41,12 @@ export function observeBlocked(window: BlockedWindow, snapshot: Snapshot): void 
     const seconds = (snapshot.tick - window.streakStart) / 60;
     if (seconds > window.maxBlockedSeconds) { window.maxBlockedSeconds = seconds; window.blockedEvidence = snapshot; }
   } else window.streakStart = null;
+}
+/** An escape-step infected inside a pen is not a route threat while both pen doors are shut. */
+export function isConfinedInClosedL8Pen(position: { x: number; z: number }, context: L8GateContext): boolean {
+  return l8Route.some(stage => inRect(position, stage.zone)
+    && l8GateClosed(`${stage.id}.entry`, context)
+    && l8GateClosed(`${stage.id}.exit`, context));
 }
 /** Walking excludes a parked formation and physical incapacitation, but keeps a lagger's zero-speed samples. */
 export function isWalkingSample(speed: number, leaderSpeed: number, lagging: boolean, incapacitated: boolean): boolean {
@@ -486,6 +493,9 @@ export class ThreatObserver {
   private observePaths(): void {
     const w = this.world, player = w.entities.get(1)!, alive = this.living(), positions: Position[] = [];
     this.observeChasers(alive);
+    const l8GateContext = this.level === 'L8' && this.active.some(row => row.key === 'step/escape')
+      ? { arenas: w.missions!.l8!.state.arenas, sealed: !!w.missions!.l8!.state.sealedAt } : undefined;
+    const excluded = new Set<string>(l8GateContext ? alive.filter(e => isConfinedInClosedL8Pen(e.transform, l8GateContext)).map(e => this.identity(e)) : []);
     // L4-07: the intact camp perimeter is intentional. Its scheduling clock
     // is not an opening; wait for a recorded physical breach or removed gate.
     const camp = w.missions!.state.l4;
@@ -557,6 +567,10 @@ export class ThreatObserver {
     // Geometry is sampled after the sim tick. Charge it to the phases now
     // active, not a combat phase that ended when that tick closed a safe gate.
     for (const row of phases(w, this.level).map(phase => this.row(phase))) {
+      const escapeCensus = this.level === 'L8' && row.key === 'step/escape';
+      const rowAlive = escapeCensus ? alive.length - excluded.size : alive.length;
+      const rowReachable = escapeCensus ? new Set([...reachable].filter(token => !excluded.has(token))) : reachable;
+      const rowPositions = escapeCensus ? positions.filter(position => !excluded.has(position.identity)) : positions;
       if (this.level === 'L4' && alive.length) {
         const legal = row.legalPaths ??= { firstTick: w.tick, lastTick: w.tick, samples: 0, minimumPercent: 100, worstTick: w.tick, blockedIds: [] };
         legal.samples++; legal.lastTick = w.tick;
@@ -569,8 +583,8 @@ export class ThreatObserver {
         const percent = boundedReachable / nearby * 100;
         if (percent <= bounded.minimumPercent) Object.assign(bounded, { minimumPercent: percent, worstTick: w.tick, nearby, reachable: boundedReachable, blockedIds: boundedBlockedIds, blockedPositions: boundedBlockedPositions });
       }
-      for (const token of reachable) row.reachable.add(token);
-      const snapshot = { tick: w.tick, alive: alive.length, reachable: reachable.size, playerX: player.transform.x, playerZ: player.transform.z, positions };
+      for (const token of rowReachable) row.reachable.add(token);
+      const snapshot = { tick: w.tick, alive: rowAlive, reachable: rowReachable.size, playerX: player.transform.x, playerZ: player.transform.z, positions: rowPositions };
       row.last = snapshot;
       observeBlocked(row, snapshot);
     }
