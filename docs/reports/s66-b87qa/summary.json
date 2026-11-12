@@ -39,6 +39,15 @@
         "position": "HUD 632\u2013639m remaining, beside roadside wall/rail props",
         "evidence": "ticks8195\u20138929 (12.23 simulated seconds), no meaningful onward objective progress despite forward input; spinning and impacts, not stationary softlock; source unresolved",
         "capture": "docs/reports/s66-b87qa/l9-partial.jpg"
+      },
+      {
+        "finding": "Persistent vertical flamingo corpse pile",
+        "verdict": "NEW",
+        "severity": "P2",
+        "tick": 9046,
+        "position": "flamingo pond Phase2, HUD5m remaining",
+        "capture": "docs/reports/s66-b87qa/l8-partial.jpg",
+        "description": "Dead birds remain stacked vertically above the courier across successive opened frames; live-foot sliding remains unverified."
       }
     ],
     "openedCaptures": [
@@ -51,7 +60,7 @@
   },
   "coverage": {
     "L9": "partial: normal start to HUD 157m, 43 real-input actions, no deaths; bay/bridge/end not verified",
-    "L8": "partial: normal start through Nadia tour to plaza breach; tick8994 health48/100 deaths0; flamingo/lion arenas not reached",
+    "L8": "normal start through plaza breach and flamingo Phase2; two deaths in flamingo attempts; lion arena not reached",
     "L4_continuous_fire": "attempted at ticks2875\u20133303: seven seconds MG trigger toward butcher in mixed crowd; health90\u21920, one death; attacker attribution inconclusive",
     "armored_front_vs_rear": "incomplete: shield broke under MG fire, no directional shot counts",
     "L2_market": "not_played",
