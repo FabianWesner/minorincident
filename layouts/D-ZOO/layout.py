@@ -623,6 +623,22 @@ for _edge_x in (20.9, 27.1):
         _fence(_edge_x, 3.2, _edge_x, 16.8); _fence(_edge_x, 23.2, _edge_x, 60.8)
     else: _fence(_edge_x, 3.2, _edge_x, 60.8)
 _spur(8,20,24,20)
+# Visitor-route verges: append after the existing placement sequence. Public
+# road junctions and enclosure door approaches retain their clear openings.
+for _z in (-67.1, -60.9):
+    _fence(-60, _z, -27.2, _z); _fence(-20.8, _z, -3.2, _z)
+for _z in (60.9, 67.1): _fence(27.2, _z, 60, _z)
+for _z in (-3.1, 3.1): _fence(-56.8, _z, -27.2, _z)
+for _x in (-63.1, -56.9): _fence(_x, -17, _x, -3.2)
+for _x in (-27.1, -20.9):
+    _fence(_x, 3.2, _x, 16.8)
+for _z in (16.9, 23.1): _fence(8.3, _z, 20.8, _z)
+for _x in (56.9, 63.1):
+    _fence(_x, -17, _x, -3.2); _fence(_x, 3.2, _x, 17)
+for _x in (92.9, 99.1):
+    _fence(_x, -28.8, _x, -3.2); _fence(_x, 3.2, _x, 28.8)
+    _fence(_x, 35.2, _x, 38)
+
 # The plaza hold is a paved bounded gathering space, including its objective
 # centre and hatch approaches; no objective circle sits over dark lawn.
 l.box('plaza-floor', 'sidewalk', [28, .035, 24], [0, .0175, 0])
