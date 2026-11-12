@@ -2,20 +2,21 @@
 import { expect } from 'vitest';
 import * as RAPIER from '@dimforge/rapier3d-compat';
 import { emptyInput } from '../../src/input/InputFrame';
-import { l8Route, inRect } from '../../src/data/l8Bosses';
+import { l8Route, l8EncounterGates } from '../../src/data/l8Bosses';
 import { l9Course } from '../../src/data/l9';
 import { markerAnchor } from '../../src/sim/missions/markerAnchor';
 import { decodeSave } from '../../src/sim/progression/Save';
 import { loadLevel } from '../../tools/sim-runner/levels';
 import { readFixture } from '../../tools/qa/fixture-io';
 
-/** L8 route legs end inside their arena zone, where the fight starts (all six arenas). */
+/** L8 route legs end on the arena entry gate; once inside, gameplay moves the marker to the arena centre. */
 export async function checkL8RouteMarkers(): Promise<void> {
   expect(l8Route.length).toBe(6);
   for (const stage of l8Route) {
     const last = stage.nodes[stage.nodes.length - 1];
-    expect(inRect(last, stage.zone), `${stage.id}: last marker node inside its zone`).toBe(true);
-    if (stage.entry) expect(Math.hypot(last.x - stage.entry.x, last.z - stage.entry.z), `${stage.id}: node past the entry gate`).toBeLessThan(10);
+    const gate = stage.entry ?? (stage.id === 'elephant' ? l8EncounterGates.elephantEntry : undefined);
+    expect(gate, `${stage.id}: has an entry gate`).toBeDefined();
+    expect(Math.hypot(last.x - gate!.x, last.z - gate!.z), `${stage.id}: marker on the entry gate`).toBeLessThan(1);
   }
 }
 

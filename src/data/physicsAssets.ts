@@ -15,7 +15,7 @@ export default {
     "flammable": true,
     "boxes": [],
     "source": "public/assets/models/thr.molotov.glb",
-    "hash": "175a5b4469b230e295bed2de7d9db973d4c89a86b7a80f89775bb9e7a84a9190"
+    "hash": "4e84cfafe04bdf4d135ea415a7d541be2000124bf163193655a62d66cd4dcace"
   },
   "thr.pipe-bomb": {
     "class": "light",
@@ -37,7 +37,7 @@ export default {
     "sounds": "prop.metal-light",
     "boxes": [],
     "source": "public/assets/models/thr.pipe-bomb.glb",
-    "hash": "812f3795f6ad8320b20c0d0ab25a2805f0536e21b45f00b7f807b344600c4b7b"
+    "hash": "db32e8aa939a8caea75d83fe3121a68f3af99b0b6e51d4837bbb9d5ac9f23862"
   },
   "thr.firecracker-lure": {
     "class": "light",
@@ -54,7 +54,7 @@ export default {
     "flammable": true,
     "boxes": [],
     "source": "public/assets/models/thr.firecracker-lure.glb",
-    "hash": "6fc0f3a78372a1dd368cb5bb13d028d3543d24d43c5474e2a8d4bea45c7a2299"
+    "hash": "35678edead457d5970fbb901604125b813dd478671ce84fcd4588558e092260e"
   },
   "pick.medkit": {
     "class": "light",
@@ -153,7 +153,7 @@ export default {
       }
     ],
     "source": "public/assets/models/util.flashlight.glb",
-    "hash": "c9870e42cc5fee140d49fe7681497f04f5ccf63619de77c13e507cfe76401271"
+    "hash": "6e1fda3285b4e4c0fbef2b369baff6f7289cc7b45982aebf68222d1bc53990a9"
   },
   "util.radio": {
     "class": "light",
@@ -281,7 +281,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.sedan-red.glb",
-    "hash": "e0de63a3714004f013eb538f51301197804f66e23c0a8f35cd12bab31cbc9c6b"
+    "hash": "555d40d5981d1432ea58add70248e602351e43cadd1e6ae65d55e69fefb80107"
   },
   "veh.sedan-blue": {
     "class": "heavy",
@@ -311,7 +311,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.sedan-blue.glb",
-    "hash": "6624c0cab0758043abb08d334eedc9e98efd749afbac8cb1a7efe95b3afd9cbf"
+    "hash": "7ad99096957122b9c416661dec958dcc43387511cf5c7b993e1bc8e0b709867a"
   },
   "veh.sedan-white": {
     "class": "heavy",
@@ -343,7 +343,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.sedan-white.glb",
-    "hash": "768cf4bd65d3e99d2db8bc04c235bf125ae7b8c4cb0a8db2e5ec2619f3a4df04"
+    "hash": "d42998e35dbd02b034d3a47729b88228fab8252ad09d46bdbe5b5b8de1bc21bb"
   },
   "veh.school-bus": {
     "class": "heavy",
@@ -387,7 +387,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.school-bus.glb",
-    "hash": "4a964523ace868e520073d56027df3283a42cf61b391cb7a30185c4d8f2c5731"
+    "hash": "74635e303f7969cc98c80a8ba7857585bce08ba979de4edfd2a73f09ed0f740e"
   },
   "veh.suv-dark": {
     "class": "heavy",
@@ -417,7 +417,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.suv-dark.glb",
-    "hash": "1b21b21713becfc86423ffd813aaf3cfc1c63065701feac9519ea12e4b4238c3"
+    "hash": "a33f8b058c9d6e27fa7b32ff4067e5f254e3d17fcddef757de470709b580091f"
   },
   "veh.pickup-red": {
     "class": "heavy",
@@ -449,7 +449,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.pickup-red.glb",
-    "hash": "6303e6ea184eeb53e8c3e73522676de9f2dbd211d7ebd203b216022c8fddec3a"
+    "hash": "819df79deda0a526339a884037783d17fd9255cd37c3811cf654493cc93ff6f8"
   },
   "veh.pickup-white": {
     "class": "heavy",
@@ -479,7 +479,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.pickup-white.glb",
-    "hash": "cedef8650aaac86cf3cd2e4a947350109eb45a3f7596b5559d12d7678b6774fe"
+    "hash": "93bb1f8bf0f32efe5727378d780c35a481d50fae4ec805dfcfeea3f6f7011089"
   },
   "veh.sedan-green": {
     "class": "heavy",
@@ -509,7 +509,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.sedan-green.glb",
-    "hash": "64372914b11dd315cd653330cfad50f1f61cb9217a82de9c8b5daeeb87e8d7c1"
+    "hash": "aababf6d7edf5cc967cb419c90cd2cf24a69bd71a840a04ffb03ec76868621c8"
   },
   "veh.suv-green": {
     "class": "heavy",
@@ -539,7 +539,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.suv-green.glb",
-    "hash": "7aa8df85ee202ac12d5c472f4240b7ea2a6f1a5659541f6c18b1b4ba807b0a4f"
+    "hash": "0dbe0849a9b8483529f22e31ee0a5b1fa7e0b58916dd1997bf69973873f69006"
   },
   "veh.police-sedan": {
     "class": "heavy",
@@ -569,7 +569,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.police-sedan.glb",
-    "hash": "5a29fa4c3161c95239e9d335419fc8fc64e18a0281ad9b82221bf172a4834e63"
+    "hash": "f7cf8e33b82adcbc72aa77c45df9fa3046a6854ec13dfc67f8599a4365795687"
   },
   "veh.police-suv": {
     "class": "heavy",
@@ -599,7 +599,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.police-suv.glb",
-    "hash": "ec02474bc652fbc55f59975b42ef978c0ace8ad0a2e2cae81d9526e27c4a4b30"
+    "hash": "6950402d63ed1af93f3280a9ac4d346fba0a28c930e2f8adb747ea90fbf78592"
   },
   "veh.ambulance": {
     "class": "heavy",
@@ -642,7 +642,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.ambulance.glb",
-    "hash": "f57cb71098d6f217d5ec0265cbe3bd6004b782dc977d006132811170abe15072"
+    "hash": "9ec92a303ea5cc929277b36426de9aec1a480473ead1cb870f9509107c9272bd"
   },
   "veh.jeep-red": {
     "body": "dynamic",
@@ -670,7 +670,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.jeep-red.glb",
-    "hash": "6351929704a2a6044a4886d250c4aa3a77f9c98bf5297422209d2226226e254d"
+    "hash": "8c9e2c86065eeff3dbebe3bb0f6fb8a1558a00edbc5fd665fb34aeb3991f4a45"
   },
   "prop.stop-here-sign-trailer": {
     "class": "heavy",
@@ -709,7 +709,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.stop-here-sign-trailer.glb",
-    "hash": "9a48a393d3fc78e2c63c5f7a5295e03259d0d7a81857681acfab240ff09286b4"
+    "hash": "91973a14c8d84167a1d2cebb69a1ab6b27a0412f69b335906dbb03644becec37"
   },
   "bld.house-c": {
     "body": "fixed",
@@ -742,7 +742,7 @@ export default {
       }
     ],
     "source": "public/assets/models/bld.house-c.glb",
-    "hash": "a18227d1a35946962d1afb8d909b59ec0c4c0fdf2dc0f684e7a8ad3095301c2d"
+    "hash": "78b0c3ceee6a0616ef66eaa2ce55f8eeeab6afc714c13e3fd1ed7ed2722049db"
   },
   "bld.bus-stop": {
     "class": "fixed",
@@ -860,7 +860,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.courier-van.glb",
-    "hash": "7bcfdc8b56f6a12e06db5c6a4b5ca557da3f3fb7ffdd4cff81127060f175d088"
+    "hash": "d6a15c3f80e10df8efe0df19cea1de51ac56441ac418db44aa9ac1af0234ce85"
   },
   "wpn.machine-gun": {
     "class": "light",
@@ -1009,7 +1009,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.box-truck.glb",
-    "hash": "83b3dc5ed55d3c8a8f1206f12e3e26586af1aebdaf780aa3c398991a1f7e942e"
+    "hash": "c1d6939071bb092117f678ab14c8f8150f86129a389b0a2e51e01465d42faf28"
   },
   "veh.semi-trailer": {
     "class": "heavy",
@@ -1075,7 +1075,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.semi-trailer.glb",
-    "hash": "af338c67835a661dfb73e32913a92268d284669283843c6767bb74116f0a764a"
+    "hash": "f7546a6613c938bc956f74d6f1873b50f5e7be6f962af798c6539c74fd87a9d4"
   },
   "veh.helicopter": {
     "class": "heavy",
@@ -1117,7 +1117,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.helicopter.glb",
-    "hash": "17f256444ce251af2fbb044a0ad5b9f94d95f8050d33cca7e171e77d004247ac"
+    "hash": "70cef665f32cb1fb50b8285464cc32b9ae4223d2e364fb031987bd036dc81845"
   },
   "veh.train-freight": {
     "class": "heavy",
@@ -1154,7 +1154,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.train-freight.glb",
-    "hash": "b14241524bb4d7ec7c83215236f565f1160a10863ff6fc8f055c6977b07b396a"
+    "hash": "c8d0e10bb68d07295241d2821b5ae07d26c25d29fb77a56de3d55bcfccf301cc"
   },
   "decay.dropped-belongings": {
     "class": "light",
@@ -1597,7 +1597,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.light-tower-trailer.glb",
-    "hash": "08b2379485a64aa6d6df8dd970cf90f4ffcf431bf91a978a56d996f1c302b1e6"
+    "hash": "b7b8fa43819c9cfb5c21a9b669119d94c8c33f63a0ab73cfd427b295a4286215"
   },
   "prop.plank-stack": {
     "class": "medium",
@@ -1920,7 +1920,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.fuel-truck.glb",
-    "hash": "fffa0b5040333bad47a453560ea99b2596e5f5b12e7bc23c4821ef76584a99b4"
+    "hash": "15cdf6bc3dd473b42e7cdecbb253b1f520fae895a0722a4e3c6f45baad3e457f"
   },
   "prop.jukebox": {
     "class": "heavy",
@@ -1955,7 +1955,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.jukebox.glb",
-    "hash": "edb6463ddd9921854d462bffe3479fa8d3ace7a31c6de7612c71f20a101d3eba"
+    "hash": "a52beddf01d002c1920315d95887bedb65a4fe2a2de5f4ccf6af7bce36f189b1"
   },
   "prop.light-tower": {
     "class": "heavy",
@@ -2002,7 +2002,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.light-tower.glb",
-    "hash": "737cd8dbe59ca40ccc8de9ce5507053ef8d9c1c78bf9cdd00e4d50532b928622"
+    "hash": "477496fc3915b06fc7f79ff9be4144cd749fcf0f08880e9c649e4880b3a11f29"
   },
   "prop.porta-potty": {
     "class": "medium",
@@ -2061,7 +2061,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.vending-machine.glb",
-    "hash": "c5d4953e4cd785ba3eb41a6f75d1d6b399b49535fba6b688e31f62032d163227"
+    "hash": "a5a07e4a6a27d65cf0bcec1eab7e52d84752d428b86b299843e3ead0c5b493a9"
   },
   "prop.barricade": {
     "class": "medium",
@@ -2263,7 +2263,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.sedan-green.wrecked.glb",
-    "hash": "c60cb1ac6a975af62279d91b9e2cac41a06e800a5ca8af8ef5f6a09786743898"
+    "hash": "e892309328f4be35620cca6b147b1ed4091e3708036ccbdbe1c8012a4318fed4"
   },
   "bld.police": {
     "class": "fixed",
@@ -3535,7 +3535,7 @@ export default {
       }
     ],
     "source": "public/assets/models/house.garage.half.glb",
-    "hash": "2b75049234b89863deb3752421b79eedddbe5a76eeb07e42f7a40acec3d2c42d"
+    "hash": "482a91e316822e5ad2b43d8b82b16d613e0b28e2588612c91ac7d79e175970cf"
   },
   "house.garage.open": {
     "class": "fixed",
@@ -3619,7 +3619,7 @@ export default {
       }
     ],
     "source": "public/assets/models/house.garage.open.glb",
-    "hash": "adb8d51568571de47f28fcec85ae82c3c7fb22177c26f77d6dd1af9b53cf10ef"
+    "hash": "67674c9dc54b9f1fca581d348ff02739bb09980e48896eaa66220c189a6473cc"
   },
   "house.porch-a": {
     "class": "fixed",
@@ -3746,7 +3746,7 @@ export default {
       }
     ],
     "source": "public/assets/models/int.fire-station-bay.glb",
-    "hash": "72cc402c51658a51344084067f8ea8f4da966cfb231c919998588d11cf58262d"
+    "hash": "d8215e75136b7350ef61dab64e48c1b9dcd6febf4ec89a83f522f92d9912028e"
   },
   "prop.axe-rack": {
     "class": "fixed",
@@ -3820,7 +3820,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.checkpoint-gate.glb",
-    "hash": "43778fbffc08bbdd00371d0687d7d919059700556b139422c87d6a7eeff8e741"
+    "hash": "6f0db05a916f295368a68bb7245a06c7dec394117e903cc017922281e876840e"
   },
   "prop.jersey-barrier": {
     "class": "heavy",
@@ -3945,7 +3945,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.evac-bus.glb",
-    "hash": "086c981ee0c5b050e9023174ff14a1aa31007973a98e8bc7bca4797c0853743f"
+    "hash": "ff61f315f5ecbb9ef439b39d5cee671719899c8e6d5bbf5d93431b27c27dc2cf"
   },
   "kit.army-checkpoint": {
     "class": "fixed",
@@ -4168,7 +4168,7 @@ export default {
       }
     ],
     "source": "public/assets/models/kit.army-checkpoint.glb",
-    "hash": "1103720d1f823ceb378170152bc4955c6dbb2fd3cfb7f4e1f9eaa1fd0ad81e9d"
+    "hash": "be51d84840821c2b4ccbe3433b3c8ccef758968223df7cb32fa7f1aced34535a"
   },
   "decay.looted-store": {
     "class": "heavy",
@@ -4354,7 +4354,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.military-apc.glb",
-    "hash": "4276fd38dac06b807ea505a1ae412e8ada4c1831353c49bb92e673b2fa8a007e"
+    "hash": "52eeb3b88d6a94f2a817d2bac061b2ce8fe588b0ae68744fc722c0c7285c4246"
   },
   "decay.burned-facade.house": {
     "class": "fixed",
@@ -4543,7 +4543,7 @@ export default {
       }
     ],
     "source": "public/assets/models/bld.storefront-row.glb",
-    "hash": "d434ed4ed409386ebbdf38115ab69e6df7dd9d964924bef04610b2a737182b88"
+    "hash": "3baa1d0b607ae1dd59153a94c4ad3f60946beb438fbe076d18ca5333cd8877ef"
   },
   "bld.kessler-hardware": {
     "class": "fixed",
@@ -4574,7 +4574,7 @@ export default {
       }
     ],
     "source": "public/assets/models/bld.kessler-hardware.glb",
-    "hash": "6b78ab8c02ac38bccba54ee58c6f9fe6fc2d639454e34d5f6456ca8036cdf008"
+    "hash": "aa12d60c95cb85d500ecda43a5bf464b6516885a80a82d9c3fa76d901045f6cd"
   },
   "bld.metro-entrance": {
     "class": "fixed",
@@ -4665,7 +4665,7 @@ export default {
       }
     ],
     "source": "public/assets/models/bld.metro-entrance.glb",
-    "hash": "f3c16653ef8781dd33c7d0b63730140ee0def4eac4791b77dc8d2b867c9bfc18"
+    "hash": "7baaa6e509be7a4dd716e8f77ae47fd571239cd01511d750a8599622ba9b3806"
   },
   "int.basement-cellar": {
     "class": "fixed",
@@ -4924,7 +4924,7 @@ export default {
       }
     ],
     "source": "public/assets/models/int.basement-cellar.glb",
-    "hash": "e1124381da1e3b5453636ae2f169cf089e2e6faf55d00170ffe817de19fd31eb"
+    "hash": "6c0817cd2532318abdbedbc93fd8858218e084bb33639d6b01375b259cc09ce3"
   },
   "bld.apartment-block-a": {
     "class": "fixed",
@@ -5240,7 +5240,7 @@ export default {
       }
     ],
     "source": "public/assets/models/bld.church.glb",
-    "hash": "e1990a41ecb215411ceebb3b06f80da09fd5d132b6ea30fdd4409fb3b3ffd6a0"
+    "hash": "3a012c6a4ff4dcc3510c48b26326fd2a9a938978d064fe92df00d6c846cfaac6"
   },
   "veh.tank": {
     "class": "heavy",
@@ -5271,7 +5271,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.tank.glb",
-    "hash": "229c951bd48c1b4bb4a6c37f8f4a68f5b9d1f20bf4076912785d0cfd03f29256"
+    "hash": "fe152c3066b6f15c232d0326fa6583bec404d570b103ee59a99851ac02f2064a"
   },
   "veh.helicopter-military": {
     "class": "heavy",
@@ -5314,7 +5314,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.helicopter-military.glb",
-    "hash": "a73ce14e6166551bbc1c7ba1dfd96228a8d88cfa8318d1dce1677171ba52bfe0"
+    "hash": "d8560f98479e6f853775582a551e68c97c1325e2d938bf01aa6edc9a74ac1857"
   },
   "prop.hmg-nest": {
     "class": "fixed",
@@ -6897,7 +6897,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.fluorescent-strip.glb",
-    "hash": "d02a34dd1d1fc9fa1539a681b75bfd85df07a8ae140d16882c52123fe8989f42"
+    "hash": "b0265b3f00420fdd88b0349fff55756fc68b0ccc5e9fb708f5a251152f51a675"
   },
   "prop.emergency-light": {
     "class": "fixed",
@@ -6928,7 +6928,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.emergency-light.glb",
-    "hash": "b6f10bb76e55aed95d917996116daa8e120c5458d7df664d62d1c48d41eeefcf"
+    "hash": "461eb77b0316c2eea1c75e8f83920bedda5a415678e334c3e6fd795e95ad0759"
   },
   "int.metro-station": {
     "class": "fixed",
@@ -7415,7 +7415,7 @@ export default {
       }
     ],
     "source": "public/assets/models/int.metro-station.glb",
-    "hash": "139046a930a3ac01763d1c89f4bfe4b6183fbf71115e61bac4b98322b463ab24"
+    "hash": "c8288957097328b70d337a51c10ab4a67f5b047d2230ed427082c3ea6ae15292"
   },
   "kit.zoo-tunnel-mouth": {
     "class": "fixed",
@@ -7501,7 +7501,7 @@ export default {
       }
     ],
     "source": "public/assets/models/wpn.minigun-mounted.glb",
-    "hash": "07069fa2eff122f49a3222c9f1dd29a2408f93fd70f81329f0a8ade2f1f46e2b"
+    "hash": "46d8596149fe5818f4054456e7610c2781c3d7214c23b4f6a722e32dbbe97970"
   },
   "prop.cure-canister": {
     "class": "light",
@@ -7533,7 +7533,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.cure-canister.glb",
-    "hash": "c8500ddcd83c92ac85903fc6216d428937b41a6eabda3b93a11925e8f6a06068"
+    "hash": "d521bbbe5dbf34bfe711a79430711f68d1613b6091f794e3be4bd7fa3558effd"
   },
   "prop.cure-canister-pedestal": {
     "class": "fixed",
@@ -7564,7 +7564,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.cure-canister-pedestal.glb",
-    "hash": "0087190c1acfbda046e1c3d3724e3346aa6490df18ba517edd670c204ac7c758"
+    "hash": "30bfdad30ef98e2393dc0266fed9fb59af9724abe0498571e154c4aa7ae15134"
   },
   "kit.dispersal-pipe-straight": {
     "class": "fixed",
@@ -7779,7 +7779,7 @@ export default {
       }
     ],
     "source": "public/assets/models/kit.dispersal-turbine-hall.glb",
-    "hash": "b8ae400ec636cd4c120a4bfbbd8ea2cb991c7a14c54b3e0d62531e65c9f03b07"
+    "hash": "c0a048fc41e94246a9221080a64412c64c4175fa00e14d7a0c42afa35449c6c7"
   },
   "kit.dispersal-tank-sphere": {
     "class": "fixed",
@@ -7908,7 +7908,7 @@ export default {
       }
     ],
     "source": "public/assets/models/kit.dispersal-filtration-tower.glb",
-    "hash": "317170e9108e672251bc6f070db02f27d18e51dbca8e2f83561cd108c16082bf"
+    "hash": "ec9282a7dfb362aabf1e48620d79a47101785bb74b28b909f276c8a0d7bbad79"
   },
   "kit.dispersal-platform": {
     "class": "fixed",
@@ -7982,7 +7982,7 @@ export default {
       }
     ],
     "source": "public/assets/models/kit.dispersal-console.glb",
-    "hash": "4e3a5c3013244db4403d63474784c2d52eb8b30698b839ef9007a1dddc90a31f"
+    "hash": "b5ef23926e74ba3c65e8c834041b48dc802e6fca65c90081a0ece66a0d064efd"
   },
   "prop.cure-garden-wall": {
     "class": "fixed",
@@ -8212,5 +8212,110 @@ export default {
     ],
     "source": "public/assets/models/prop.cure-quarantine-fence.glb",
     "hash": "86f3af20893991e57cf76a3a17c9243c34ddc4472264cb35b39e832fcadfa405"
+  },
+  "prop.l10-abandoned-sedan-blue": {
+    "class": "heavy",
+    "mass": 1400,
+    "friction": 0.85,
+    "restitution": 0.02,
+    "centerOfMass": [
+      0,
+      0.6,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": true,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -2.175,
+          0.014999973773956343,
+          -0.875
+        ],
+        "max": [
+          2.175,
+          1.6649999737739563,
+          0.875
+        ]
+      }
+    ],
+    "source": "public/assets/models/prop.l10-abandoned-sedan-blue.glb",
+    "hash": "d5dc5737c49e3147603d3db42bca4ab34fc0fae64e7f397abf37239efbc15089"
+  },
+  "prop.l10-abandoned-sedan-white": {
+    "class": "heavy",
+    "mass": 1400,
+    "friction": 0.85,
+    "restitution": 0.02,
+    "centerOfMass": [
+      0,
+      0.6,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": true,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -2.35,
+          0.21499998092651362,
+          -0.915
+        ],
+        "max": [
+          2.35,
+          1.8249999809265138,
+          0.915
+        ]
+      }
+    ],
+    "source": "public/assets/models/prop.l10-abandoned-sedan-white.glb",
+    "hash": "f46061445d23c70b88df2e4651b73785567da41b0ce1e431b698ed96823e240c"
+  },
+  "prop.l10-crashed-helicopter": {
+    "class": "heavy",
+    "mass": 2400,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      1.8,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": true,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -2.069999986886978,
+          0.6799999475479126,
+          -1.15
+        ],
+        "max": [
+          2.7300000131130218,
+          2.6799999475479126,
+          1.15
+        ]
+      },
+      {
+        "min": [
+          -5.799999952316284,
+          2.1600000762939455,
+          -0.26
+        ],
+        "max": [
+          -1.7999999523162842,
+          2.680000076293945,
+          0.26
+        ]
+      }
+    ],
+    "source": "public/assets/models/prop.l10-crashed-helicopter.glb",
+    "hash": "005ef6878b9d4d89f354fbfe304b98deb684459aa69e23f0a782734cf6851bfc"
   }
 };

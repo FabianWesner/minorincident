@@ -388,7 +388,7 @@ for e in list(l.data['roads']['edges']):
     else:
         for xx in (x0 - h - 1.4, x0 + h): l.data['lawns'].append(dict(min=[xx, min(z0, z1)], max=[xx + 1.4, max(z0, z1)]))
 # 2) Habitat floors: one slab per enclosure, 3 cm proud (above the 2 cm mown stripes, below the 12 cm gate paving), visual only.
-HABITAT = {'lion': 'khaki', 'elephant': 'trouserSeam', 'zebra': 'gloveKhaki', 'gorilla': 'foliageDark', 'flamingo': 'apronOlive'}
+HABITAT = {name: 'sidewalk' for name in _encl}
 for k, (cx, cz, w, d) in _encl.items():
     l.box('habitat-floor', HABITAT[k], [w - 1.2, .03, d - 1.2], [cx, .015, cz])
 # Savanna tufts in the zebra paddock (grass blades, non-solid); the gate line (enclosure centre x) stays open.
@@ -559,6 +559,44 @@ for _hz in (8.6175, 10.8525): l.place('prop.hedge', [14.9, 0, _hz], yaw=math.pi 
 # Every enclosure panel is a cell wall: bolt them all (a pushable 22 kg panel is a door the herd or the player can open).
 for p in l.data['placements']:
     if p['assetId'] == 'prop.crowd-fence': p['fixed'] = True
+
+# Compact inner fighting pens are appended after the existing placement set,
+# preserving every generated placement ID. Dynamic L8 gate panels occupy gaps.
+def _arena_wall(cx, cz, half, entry_side, exit_side, gate_half=3):
+    def across_x(z, side):
+        if side in (entry_side, exit_side):
+            _fence(cx-half, z, cx-gate_half, z); _fence(cx+gate_half, z, cx+half, z)
+        else: _fence(cx-half, z, cx+half, z)
+    def across_z(x, side):
+        if side in (entry_side, exit_side):
+            _fence(x, cz-half, x, cz-3); _fence(x, cz+3, x, cz+half)
+        else: _fence(x, cz-half, x, cz+half)
+    across_x(cz-half, 'north'); across_x(cz+half, 'south')
+    across_z(cx-half, 'west'); across_z(cx+half, 'east')
+for _cx, _cz, _in, _out in [(0, -32, 'south', 'north'), (-60, -32, 'north', 'south'),
+                            (60, 32, 'north', 'south'), (60, -32, 'south', 'east'),
+                            (-6, 20, 'west', 'east'), (96, 53, 'south', 'north')]:
+    _arena_wall(_cx, _cz, 14, _in, _out, 5 if _cx == 96 else 3)
+for _cx, _cz, _sx, _sz in [(-6, 20, 24, 24), (96, 53, 28, 26)]:
+    l.box('arena-floor', 'sidewalk', [_sx, .035, _sz], [_cx, .0175, _cz])
+
+# The western service spur now ends at the sealed elephant pen wall.
+# Keep its paving but remove the obsolete through-road connection.
+l.data['roads']['edges'] = [e for e in l.data['roads']['edges'] if e['id'] != 'p60:64--p96:64']
+
+# Paved visitor spurs connect the existing public loop to the appended pen gates.
+def _spur(x0, z0, x1, z1, width=4):
+    if abs(x1-x0) > abs(z1-z0):
+        xlo, xhi = min(x0,x1), max(x0,x1); zlo, zhi = z0-width/2, z0+width/2
+    else:
+        xlo, xhi = x0-width/2, x0+width/2; zlo, zhi = min(z0,z1), max(z0,z1)
+    l.box('clean-path', 'asphalt', [xhi-xlo,.12,zhi-zlo], [(xlo+xhi)/2,.06,(zlo+zhi)/2])
+    l.data['surfaces'].append(dict(surface='tile',height=.12,polygon=[[xlo,zlo],[xhi,zlo],[xhi,zhi],[xlo,zhi],[xlo,zlo]]))
+_spur(0,-12,0,-18); _spur(0,-46,0,-52)
+_spur(-60,-52,-60,-46); _spur(-60,-18,-60,-12)
+_spur(60,52,60,46); _spur(60,18,60,12)
+_spur(60,-12,60,-18); _spur(74,-32,82,-32)
+_spur(-24,8,-24,20); _spur(-24,20,-20,20)
 
 # Static layout pieces with identical material/attribute layouts share a program.
 # PreRenderer still draws every piece, including its shadows, during warm-up.

@@ -365,7 +365,7 @@ export class LevelEightZoo {
     const w = this.w, s = this.state, ai = w.infected!, t = w.tick;
     this.bosses.update();
     const hale = w.entities.get(s.haleId);
-    if (this.breached && s.arenas.every(a => a.id === 'elephant' || a.phase === 3) && !this.mission.state.states['hale-keys'] && hale?.civilian && hale.health.current > 0 && distance(hale.transform, this.door()) > 1.8) {
+    if (this.breached && s.arenas.every(a => a.phase === 3) && !this.mission.state.states['hale-keys'] && hale?.civilian && hale.health.current > 0 && distance(hale.transform, this.door()) > 1.8) {
       // Hale's retreat remains physical while he fires. Repeated rifle windups
       // must not pin him hundreds of metres behind the final door staging.
       if (!this.approachBoardingSpot(hale, this.door(), 6)) w.npcs!.move(hale, this.door(), 6, hale.civilian, .2, 48000);
@@ -415,17 +415,23 @@ export class LevelEightZoo {
       if (next) {
         const def = l8BossArenas.find(value => value.id === next.id)!, stage = l8Route.find(value => value.id === next.id)!, p = w.entities.get(1)!.transform;
         let text: string, at: Point;
-        if (!s.sealedAt) { text = 'Back to the plaza. The doors shut once the whole group is inside'; at = this.mission.def.anchors['central-plaza']; }
-        else if (next.phase > 0) { text = `${next.id === 'elephant' ? 'Bring down the elephant!' : `Defeat ${def.name}`} — ${def.counter}`;
+        if (!s.sealedAt) { text = 'Return to the plaza'; at = this.mission.def.anchors['central-plaza']; }
+        else if (next.phase > 0) {
+          const alive = next.ids.filter(id => (w.entities.get(id)?.health.current ?? 0) > 0).length;
+          const label = next.id === 'flamingo' ? 'flamingos' : next.id === 'monkey' ? 'monkeys' : next.id === 'zebra' ? 'zebras' : next.id === 'lion' ? 'lions' : next.id;
+          text = `Kill ${label} ${next.ids.length - alive}/${next.ids.length}`;
           // r39-markers (r38-vqa P3 'the gorilla fight's distance readout is not the distance to the gorilla'): the marker follows the nearest live animal, not the arena centre.
           let focus: Point = def.centre, best = Infinity;
           for (const id of next.ids) { const a = w.entities.get(id); if (!a?.infected || a.health.current <= 0 || a.hidden) continue; const d = distance(a.transform, p); if (d < best) { best = d; focus = a.transform; } }
           at = focus; }
         else {
           const index = l8Route.indexOf(stage);
-          if (s.routeStage !== index) { s.routeStage = index; s.routeNode = 0; }
-          while (s.routeNode < stage.nodes.length - 1 && distance(p, stage.nodes[s.routeNode]) < 4) s.routeNode++;
-          at = stage.nodes[s.routeNode]; text = stage.text;
+          if (inRect(p, stage.zone)) { at = { x: (stage.zone.x0 + stage.zone.x1) / 2, z: (stage.zone.z0 + stage.zone.z1) / 2 }; text = stage.text; }
+          else {
+            if (s.routeStage !== index) { s.routeStage = index; s.routeNode = 0; }
+            while (s.routeNode < stage.nodes.length - 1 && distance(p, stage.nodes[s.routeNode]) < 4) s.routeNode++;
+            at = stage.nodes[s.routeNode]; text = stage.text;
+          }
         }
         Object.assign(this.mission.def.anchors['l8-route'], { x: at.x, z: at.z });
         if (step) { step.text = text; step.anchor = 'l8-route'; step.waypoint = true; }

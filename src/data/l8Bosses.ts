@@ -2,12 +2,12 @@
  * r31-flamingo (PO 11-10): HP is sized to the L8 weapons (handgun, axe, shotgun, MG; no rocket). Damage.ts applies x0.6 outside an exposed window (x1.8 inside) and x0.2 from allies,
  * so one hit is handgun 12, MG 8.4, axe ~34, shotgun ~110-145. Flamingo/monkey 36: handgun 3, MG 5, axe 2, shotgun 1. Zebra 150: shotgun 2. Lion 250 ~ 30 MG. Gorilla 500 ~ 60 MG. Elephant 1200 chips; the 3 wall impacts end it. Entries sit on connected public paths. */
 export const l8BossArenas = [
-  { id: 'flamingo', name: 'Flamingo flock', count: 8, hp: 36, centre: { x: -6, z: -27 }, entry: { x: 0, z: -9 }, radius: 17, counter: 'Step sideways out of the shadow lane; sweep the birds as they land.' },
-  { id: 'lion', name: 'Lion and lioness', count: 2, hp: 250, centre: { x: -60, z: -32 }, entry: { x: -60, z: -56 }, radius: 23, counter: 'Keep your back to the rocks. Dodge sideways at the glint and fire after the landing.' },
-  { id: 'monkey', name: 'Monkey pack', count: 7, hp: 36, centre: { x: -6, z: 20 }, entry: { x: -24, z: 4 }, radius: 12, counter: 'Use the doorway to stop the pack surrounding you. Melee shakes off a grab.' },
-  { id: 'zebra', name: 'Zebra herd', count: 4, hp: 150, centre: { x: 60, z: 32 }, entry: { x: 60, z: 56 }, radius: 23, counter: 'Leave the dust lane. The fence turns the herd; shoot the stragglers.' },
-  { id: 'gorilla', name: 'Gorilla', count: 1, hp: 500, centre: { x: 60, z: -32 }, entry: { x: 60, z: -8 }, radius: 23, counter: 'Hit the chest-beat to interrupt it. Put a pillar between you and a throw.' },
-  { id: 'elephant', name: 'Elephant', count: 1, hp: 1200, centre: { x: 96, z: 64 }, entry: { x: 96, z: 46 }, radius: 22, counter: 'Lure his charge into the truck or perimeter wall. Three impacts stop him.' },
+  { id: 'flamingo', name: 'Flamingo flock', count: 8, hp: 36, centre: { x: -6, z: -27 }, entry: { x: 0, z: -18 }, radius: 14, counter: 'Step sideways out of the shadow lane; sweep the birds as they land.' },
+  { id: 'lion', name: 'Lion and lioness', count: 2, hp: 250, centre: { x: -60, z: -32 }, entry: { x: -60, z: -46 }, radius: 14, counter: 'Keep your back to the rocks. Dodge sideways at the glint and fire after the landing.' },
+  { id: 'monkey', name: 'Monkey pack', count: 7, hp: 36, centre: { x: -6, z: 20 }, entry: { x: -20, z: 20 }, radius: 12, counter: 'Use the doorway to stop the pack surrounding you. Melee shakes off a grab.' },
+  { id: 'zebra', name: 'Zebra herd', count: 4, hp: 150, centre: { x: 60, z: 32 }, entry: { x: 60, z: 46 }, radius: 14, counter: 'Leave the dust lane. The fence turns the herd; shoot the stragglers.' },
+  { id: 'gorilla', name: 'Gorilla', count: 1, hp: 500, centre: { x: 60, z: -32 }, entry: { x: 60, z: -18 }, radius: 14, counter: 'Hit the chest-beat to interrupt it. Put a pillar between you and a throw.' },
+  { id: 'elephant', name: 'Elephant', count: 1, hp: 1200, centre: { x: 96, z: 64 }, entry: { x: 96, z: 39 }, radius: 14, counter: 'Lure his charge into the truck or perimeter wall. Three impacts stop him.' },
 ] as const;
 export type L8BossId = typeof l8BossArenas[number]['id'];
 export const l8ArenaKeys = l8BossArenas.map(a => `arena-${a.id}`);
@@ -28,6 +28,8 @@ export const l8YardGates = [
 /** The elephant's drive-out gate (the east wall opening); every other gate is part of the route below. */
 export const l8EncounterGates = {
   elephant: { x: 116, z: 80, halfX: .25, halfZ: 8 },
+  elephantEntry: { x: 96, z: 39, halfX: 5, halfZ: .25 },
+  elephantExit: { x: 96, z: 67, halfX: 5, halfZ: .25 },
 } as const;
 
 /** r33-l8route (PO UAT 11-10: "The L8 needs a clear path the user has to move"). The zoo is one line of six cells. Every enclosure is the only door between two cells:
@@ -43,18 +45,18 @@ export interface L8RouteStage {
   depth?: number;
 }
 export const l8Route: readonly L8RouteStage[] = [
-  { id: 'flamingo', zone: { x0: -13, z0: -51, x1: 13, z1: -13 }, entry: { x: 0, z: -12, halfX: 3, halfZ: .25 }, exit: { x: 0, z: -52, halfX: 3, halfZ: .25 },
-    nodes: [{ x: 0, z: -9 }, { x: 0, z: -16 }], text: 'Through the flamingo pond. The keepers have opened the gate', clearedLine: 'L8.route-flamingo' },
-  { id: 'lion', zone: { x0: -81, z0: -51, x1: -39, z1: -13 }, entry: { x: -60, z: -52, halfX: 3, halfZ: .25 }, exit: { x: -60, z: -12, halfX: 3, halfZ: .25 },
-    nodes: [{ x: 0, z: -52 }, { x: 0, z: -64 }, { x: -60, z: -64 }, { x: -60, z: -47 }], text: 'Take the service path to the lion rocks', clearedLine: 'L8.route-lion' },
-  { id: 'monkey', zone: { x0: -27, z0: 9, x1: 13, z1: 31 }, entry: { x: -24, z: 8, halfX: 2.5, halfZ: .25 }, exit: { x: -24, z: 32, halfX: 2.5, halfZ: .25 },
-    nodes: [{ x: -60, z: -12 }, { x: -60, z: 0 }, { x: -24, z: 0 }, { x: -24, z: 12 }], text: 'Take the west boulevard to the primate yard', clearedLine: 'L8.route-monkey' },
-  { id: 'zebra', zone: { x0: 39, z0: 13, x1: 81, z1: 51 }, entry: { x: 60, z: 52, halfX: 3, halfZ: .25 }, exit: { x: 60, z: 12, halfX: 3, halfZ: .25 },
-    nodes: [{ x: -24, z: 19 }, { x: -24, z: 32 }, { x: -24, z: 64 }, { x: 60, z: 64 }, { x: 60, z: 48 }], text: 'Cross the visitor field to the zebra paddock', clearedLine: 'L8.route-zebra' },
-  { id: 'gorilla', zone: { x0: 39, z0: -51, x1: 81, z1: -13 }, entry: { x: 60, z: -12, halfX: 3, halfZ: .25 }, exit: { x: 82, z: -31.77, halfX: .25, halfZ: 3.6 },
-    nodes: [{ x: 60, z: 12 }, { x: 60, z: 0 }, { x: 60, z: -21 }], text: 'Cross the east boulevard into the gorilla house', clearedLine: 'L8.route-gorilla', depth: 7 },
-  { id: 'elephant', zone: { x0: 86, z0: 54, x1: 118, z1: 86 }, entry: null, exit: null,
-    nodes: [{ x: 82, z: -32 }, { x: 96, z: -32 }, { x: 96, z: 40 }, { x: 96, z: 56 }], text: 'Down the service lane to the armored vehicle', clearedLine: 'L8.route-elephant' },
+  { id: 'flamingo', zone: { x0: -13, z0: -45, x1: 13, z1: -19 }, entry: { x: 0, z: -18, halfX: 3, halfZ: .25 }, exit: { x: 0, z: -46, halfX: 3, halfZ: .25 },
+    nodes: [{ x: 0, z: -9 }, { x: 0, z: -18 }], text: 'Enter the flamingo pond', clearedLine: 'L8.route-flamingo' },
+  { id: 'lion', zone: { x0: -73, z0: -45, x1: -47, z1: -19 }, entry: { x: -60, z: -46, halfX: 3, halfZ: .25 }, exit: { x: -60, z: -18, halfX: 3, halfZ: .25 },
+    nodes: [{ x: 0, z: -52 }, { x: 0, z: -64 }, { x: -60, z: -64 }, { x: -60, z: -46 }], text: 'Enter the lion habitat', clearedLine: 'L8.route-lion' },
+  { id: 'monkey', zone: { x0: -18, z0: 8, x1: 6, z1: 32 }, entry: { x: -20, z: 20, halfX: .25, halfZ: 3 }, exit: { x: 8, z: 20, halfX: .25, halfZ: 3 },
+    nodes: [{ x: -60, z: -12 }, { x: -60, z: 0 }, { x: -24, z: 0 }, { x: -24, z: 12 }, { x: -20, z: 20 }], text: 'Enter the primate yard', clearedLine: 'L8.route-monkey' },
+  { id: 'zebra', zone: { x0: 47, z0: 19, x1: 73, z1: 45 }, entry: { x: 60, z: 46, halfX: 3, halfZ: .25 }, exit: { x: 60, z: 18, halfX: 3, halfZ: .25 },
+    nodes: [{ x: -24, z: 19 }, { x: -24, z: 32 }, { x: -24, z: 64 }, { x: 60, z: 64 }, { x: 60, z: 46 }], text: 'Enter the zebra paddock', clearedLine: 'L8.route-zebra' },
+  { id: 'gorilla', zone: { x0: 47, z0: -45, x1: 73, z1: -19 }, entry: { x: 60, z: -18, halfX: 3, halfZ: .25 }, exit: { x: 74, z: -32, halfX: .25, halfZ: 3 },
+    nodes: [{ x: 60, z: 12 }, { x: 60, z: 0 }, { x: 60, z: -18 }], text: 'Enter the gorilla house', clearedLine: 'L8.route-gorilla', depth: 7 },
+  { id: 'elephant', zone: { x0: 82, z0: 40, x1: 110, z1: 66 }, entry: null, exit: null,
+    nodes: [{ x: 82, z: -32 }, { x: 96, z: -32 }, { x: 96, z: 40 }, { x: 96, z: 39 }], text: 'Enter the elephant yard', clearedLine: 'L8.route-elephant' },
 ];
 /** The plaza's three doors shut once the group stands inside the plaza cell after the breach hold. */
 export const l8PlazaGates = {
@@ -72,6 +74,8 @@ export function l8GateClosed(key: string, ctx: L8GateContext): boolean {
   if (!arena) return true;
   const fighting = arena.phase > 0 && arena.phase < 3;
   if (side === 'entry') return (index > 0 && ctx.arenas[index - 1].phase !== 3) || fighting && !!arena.armed;
+  // Keep the completed section's exit open until the whole party is through the next entry gate.
+  if (ctx.arenas[index + 1]?.phase && ctx.arenas[index + 1].phase > 0 && ctx.arenas[index + 1].armed) return true;
   // The pond's north door stays open while the tunnel runners need it (the opening alarm); it shuts with the plaza.
   if (id === 'flamingo') return ctx.sealed && arena.phase !== 3;
   return arena.phase !== 3;

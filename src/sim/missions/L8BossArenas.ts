@@ -93,6 +93,17 @@ export class L8BossArenas {
         this.gateStates.set('elephant', closed);
         this.barrier('l8.arena-gate.elephant', 900830 + l8BossArenas.findIndex(a => a.id === 'elephant'), { ...l8EncounterGates.elephant, y: 1, halfY: 1 }, closed);
       }
+      const yardClosed = this.state.some(a => a.id !== 'elephant' && a.phase !== 3);
+      const entryClosed = yardClosed || elephant.phase > 0 && elephant.armed === true;
+      if (this.gateStates.get('elephantEntry') !== entryClosed) {
+        this.gateStates.set('elephantEntry', entryClosed);
+        this.barrier('l8.arena-gate.elephant-entry', 900834, { ...l8EncounterGates.elephantEntry, y: 1.5, halfY: 1.5 }, entryClosed);
+      }
+      const exitClosed = elephant.phase !== 3;
+      if (this.gateStates.get('elephantExit') !== exitClosed) {
+        this.gateStates.set('elephantExit', exitClosed);
+        this.barrier('l8.arena-gate.elephant-exit', 900835, { ...l8EncounterGates.elephantExit, y: 1.5, halfY: 1.5 }, exitClosed);
+      }
     }
   }
   private barrier(id: string, navId: number, wall: SolidBox, closed: boolean): void {
@@ -160,11 +171,21 @@ export class L8BossArenas {
           // The old elephant breaks into the vehicle yard for the final stand;
           // preserve the turned animal's entity and health for the whole fight.
           const elephant = live[0]!;
+          // Hale stages at the vehicle door, outside the compact arena. Move
+          // him inside for the final charge so the encounter remains bounded.
+          const hale = w.entities.get(this.mission.l8!.state.haleId);
+          if (hale?.civilian && hale.health.current > 0) {
+            const at = { x: 96, z: 61 };
+            if (w.solids.relocate(hale, { ...at, y: hale.transform.y }, 'l8.hale-elephant-arena', 2)) {
+              const ally = hale.civilian.ally;
+              if (ally) { ally.post = at; ally.run = at; ally.hold = true; }
+            }
+          }
           const breached = w.solids.relocate(elephant, { x: 89, z: 42, y: .7 }, 'l8.elephant-wall-breach', 2);
           if (breached) {
             elephant.emerging = true; elephant.infected!.path.length = 0; elephant.infected!.goal = -1;
             elephant.transform.yaw = -Math.atan2(player.transform.z - elephant.transform.z, player.transform.x - elephant.transform.x);
-            const door = this.mission.l8!.door(), dx = door.x - elephant.transform.x, dz = door.z - elephant.transform.z, d = Math.hypot(dx, dz) || 1;
+            const target = hale?.transform ?? this.mission.l8!.door(), dx = target.x - elephant.transform.x, dz = target.z - elephant.transform.z, d = Math.hypot(dx, dz) || 1;
             this.start(elephant, 'elephant.charge', 60, d, 1.75, { x: dx / d, z: dz / d });
             arena.nextAt = w.tick + 360;
           }

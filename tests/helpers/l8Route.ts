@@ -57,7 +57,7 @@ export async function checkL8Route(): Promise<void> {
         const herd = arena.ids.map(id => w.entities.get(id)!).filter(e => e.infected?.arenaBoss?.arena === 'zebra' && e.health.current > 0);
         expect(arena.phase, 'zebra encounter stays dormant while the courier is beyond the entry fence').toBe(0);
         expect(herd.length, 'a zebra has turned before the courier enters').toBeGreaterThan(0);
-        expect(herd.every(e => Math.min(e.transform.z - 12, 52 - e.transform.z) > 8), `turned zebras hold away from both fences: ${herd.map(e => `${e.transform.x.toFixed(1)},${e.transform.z.toFixed(1)}`).join(' ')}`).toBe(true);
+        expect(herd.every(e => e.transform.z > 20 && e.transform.z < 44), `turned zebras stay inside the compact arena: ${herd.map(e => `${e.transform.x.toFixed(1)},${e.transform.z.toFixed(1)}`).join(' ')}`).toBe(true);
         const gaps = herd.flatMap((e, i) => herd.slice(i + 1).map(other => Math.hypot(e.transform.x - other.transform.x, e.transform.z - other.transform.z)));
         expect(gaps.every(gap => gap >= .75), `turned zebras do not overlap one another: gaps=${gaps.map(gap => gap.toFixed(1)).join(',')}`).toBe(true);
       }
