@@ -311,7 +311,7 @@ export class ActionView extends Group {
     } else if (def.aimIndicator === 'arc') {
       const frame = this.world.inputFrame, fire = this.selected === 'LEFT' ? frame.left : frame.right;
       const aimingThrow = !downed && !player.riding && player.health.current > 0 && !!frame.aim
-        && (!!frame.pointerTarget || frame.aimSource === 'keyboard' || frame.aimSource === 'touch' || fire.down || fire.held || frame.mouseAttack);
+        && (!!frame.pointerTarget || frame.aimSource === 'pointer' || frame.aimSource === 'keyboard' || frame.aimSource === 'touch' || fire.down || fire.held || frame.mouseAttack);
       if (aimingThrow) {
         const dx = state.aimPoint ? state.aimPoint.x - origin.x : aim.x * def.range, dz = state.aimPoint ? state.aimPoint.z - origin.z : aim.z * def.range;
         const distance = Math.hypot(dx, dz), scale = distance > def.range ? def.range / distance : 1;
