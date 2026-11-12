@@ -34,3 +34,18 @@ A native observation through 300 simulation seconds found the Mega in detailed/c
 ## Rejected movement experiment
 
 In seconds 200–300, Mega non-courier notice pauses and special attacks each occupied zero sampled ticks. Mean resolved movement was 4.61 m/s; 1197/6002 ticks had locomotion velocity below courier run speed. A temporary experiment restored the pre-hit velocity after the configured hit pause, avoiding extra re-acceleration without changing any tuning constants. Native seed-1 LOW completed with 76 starts, 4.107/min, but longest adjusted gap worsened to 390.62 s (baseline 295.05 s). Reverted in full. Receipt `/private/tmp/s89-resume-experiment.json`. No production gameplay change remains. This rules out that movement correction as a sufficient cadence fix.
+
+## Rejected lost-target trial
+
+Trial ended L10 authored archetype pursuit when the courier was ahead beyond visual range and no longer tracked, and prevented the encounter refresh from immediately reassigning those distant actors behind her. Existing streaming released the actors naturally at their actual positions. No stats/caps/teleports/corpse removal changed. All six runs completed, and gaps shortened, but attack rate fell in five cases. Reverted completely. Typecheck and lint passed for the trial. Receipt: `/private/tmp/s89-lost-target-matrix.json`.
+
+| Seed | Tier | Rate before → trial | Gap before → trial (s) |
+| --- | --- | --- | --- |
+| 1 | low | 1.896 → 2.437 | 295.05 → 143.88 |
+| 1 | high | 6.520 → 3.186 | 356.15 → 148.25 |
+| 2 | low | 3.376 → 2.381 | 298.70 → 143.90 |
+| 2 | high | 12.238 → 3.398 | 251.28 → 213.93 |
+| 3 | low | 6.612 → 2.654 | 242.80 → 143.70 |
+| 3 | high | 8.226 → 3.345 | 242.13 → 219.20 |
+
+Evidence: reducing indefinite distant chase improves encounter turnover, but simply retiring that pursuit also removes later attack pressure. This trial does not satisfy the original rate invariant or 45 s cadence goal.
