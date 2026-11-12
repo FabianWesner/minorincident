@@ -1,5 +1,25 @@
 # S54: heavy infected poise under continuous fire
 
+## Current acceptance summary
+
+Shared poise is implemented for all shooters and levels. Heavy/Alpha light-firearm stagger is capped at one per 1.5 s and cannot cancel an existing windup; ordinary infected use 0.8 s and commit their late windup. Zoo bosses share heavy poise, while pursuit Mega retains its authored cooldown. Heavy-hit paths remain excluded. HP and damage definitions are unchanged.
+
+Measured 600-tick, 15 m probe counts (before → after), with tiny damage to isolate AI:
+
+| Target | Hunting rifle (tier 1) | Assault rifle (tier 2) | Army MG | Rotary minigun |
+|---|---:|---:|---:|---:|
+| Brute | 4 → 4 | 4 → 4 | 4 → 4 | 0 → 3 |
+| Butcher | 9 → 9 | 9 → 9 | 9 → 9 | 0 → 7 |
+| Alpha | 2 → 2 | 2 → 2 | 2 → 2 | 0 → 1 signature hit |
+| Runner | 5 → 5 | 5 → 5 | 5 → 5 | 0 → 2 |
+
+Actual army-MG damage at contact: brute lands 2 attacks before death; butcher lands 14. The final expanded probe passed 5/5 existing AI cases; the pre-change comparison restored only Damage.ts and omitted the new poise assertions, then restored all working files via an exit trap.
+
+Validation: exact required remote `npm test` green (106 passed, 1 skipped; 150/150 case budget); typecheck/lint green; current nightly war-waves 2/2 green. Full current threat audit: **16 flags versus measured baseline 17**, per level **0,1,2,4,3,4,2,0,0,0**. New L3 squad-loss and L5 follower-pace flags are documented below; L7 clears four baseline follower flags. Receipt: `test-results/s54-acceptance-threat/README.md`.
+
+Real-input evidence: L4-contact (god OFF, MG, burst captures opened) records a butcher attacking during gunfire and killing the courier before dying. L9 hatch fixture (god OFF, MG, burst captures opened) exercises the authored exposed-hatch combat state; its captured attack trigger is a runner, so no separate L9-heavy-hit claim is made. Together these fulfill the requested L4/L9 fixture coverage and a captured heavy-under-fire exchange. Earlier attempts and failures below are diagnostic history, superseded by this summary where current receipts exist.
+
+
 ## Cause
 
 `Damage.apply` turns each positive `Hit.stagger` into `combat.staggerUntil` and clears `combat.attacking`. `InfectedSystem.update` sees the stun, changes the brain state to `stagger`, and returns before completing the attack. Repeated stagger-bearing hits can therefore repeatedly reset the attack cycle.

@@ -454,8 +454,8 @@ test('every human and animal role validates and spawns with its catalog health a
   }
   // Native 15 m firing matrix: three campaign gun tiers plus the authored
   // stagger-bearing light-firearm control. Hits use tiny damage to isolate AI.
-  const weapons = [{ id: 'weapon.handgun', every: 20, stagger: 0 }, { id: 'weapon.assault-rifle', every: 8, stagger: 0 }, { id: 'weapon.army-mg', every: 6, stagger: 0 }, { id: 'weapon.flamethrower', every: 20, stagger: .15 }, { id: 'weapon.rotary-minigun', every: 3, stagger: .1 }];
-  for (const role of ['brute', 'alpha', 'runner']) for (const weapon of weapons) {
+  const weapons = [{ id: 'weapon.handgun', every: 20, stagger: 0 }, { id: 'weapon.hunting-rifle', every: 60, stagger: 0 }, { id: 'weapon.assault-rifle', every: 8, stagger: 0 }, { id: 'weapon.army-mg', every: 6, stagger: 0 }, { id: 'weapon.flamethrower', every: 20, stagger: .15 }, { id: 'weapon.rotary-minigun', every: 3, stagger: .1 }];
+  for (const role of ['brute', 'butcher', 'alpha', 'runner']) for (const weapon of weapons) {
     const w = await arena(1, false), e = spawn(w, role, 15);
     if (role === 'alpha') e.infected!.alphaType = 'brute';
     for (let i = 0; i < 600 && e.health.current > 0; i++) {
