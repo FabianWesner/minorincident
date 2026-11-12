@@ -36,8 +36,10 @@ export interface VehicleState {
   apcBoarders?: Record<number, { startedAt: number; nextHit: number; side?: number }>;
   /** r33-l9polish: L9 stall hatch fairness. While `boardSpacing` > 0 the next infected may only climb aboard `boardSpacing` ticks after the previous one (`nextBoardAt`). */
   boardSpacing?: number; nextBoardAt?: number;
-  /** A heavy infected impact briefly kills momentum; this never permanently breaks the engine. */
+  /** Legacy serialized diagnostic field; player drive code no longer applies impact stalls. */
   impactStallUntil?: number;
+  /** Short momentum protection after a vehicle rams infected, while forward throttle stays held. */
+  ramImpactUntil?: number;
   /** L9 mission policy: durability clamps to 0 but the vehicle stays driveable at a capped speed, cannot be exited and is never destroyed by E09. Persisted with the entity. */
   floor?: boolean;
   scripted?: boolean;
@@ -190,13 +192,14 @@ export class Vehicles {
       } else car.doorTicks = 0;
       state.boosting = drive.boost;
       // The stuck-recovery reverse outranks a heavy stall: a pack hitting the reversing hull cancelled every recovery (r29-l9pin).
-      if (state.impactStallUntil && this.world.tick < state.impactStallUntil && !(state.recoveringUntil > this.world.tick) || this.world.missions?.l9?.driving.holding(car.entity.id)) {
+      if (this.world.missions?.l9?.driving.holding(car.entity.id)) {
         drive.throttle = drive.steer = 0; drive.brake = true;
       }
       car.physics.speedCap = this.speedShare(car);
       if (state.floor) this.floorContacts(car);
       this.impacts(car);
       car.physics.prePhysics();
+      this.keepRamMomentum(car);
       state.steer = car.physics.steeringAngle; state.braking = car.physics.braking;
     }
   }
@@ -319,7 +322,7 @@ export class Vehicles {
       const halfZ = Math.abs(s) * obstacle.halfX + Math.abs(c) * obstacle.halfZ;
       if (Math.abs(localX) > extent + halfX || Math.abs(localZ) > car.physics.def.width / 2 + halfZ) continue;
       if (obstacle.light && speed >= 5) {
-        this.obstacles.break(obstacle, velocity, this.world.tick);
+        this.obstacles.ram(obstacle, velocity, this.world.tick);
         this.crash(car, speed);
         car.physics.body.setLinvel({ x: velocity.x * .9, y: velocity.y, z: velocity.z * .9 }, true);
       } else if (!obstacle.light && speed >= 2 && this.world.tick >= (car.hits.get(obstacle.entity.id) ?? 0)) {
@@ -413,6 +416,7 @@ export class Vehicles {
         this.world.events.emit({ type: 'vehicle.grabbed', tick: this.world.tick, sourceId: car.entity.id, targetId: target.id }); continue;
       }
       const c = Math.cos(p.yaw), s = Math.sin(p.yaw), radius = target.combat?.radius ?? .4;
+      if (distance <= radius + .1 && car.entity.vehicle!.driver !== null && car.physics.intent.throttle > 0 && !car.physics.intent.brake) car.entity.vehicle!.ramImpactUntil = this.world.tick + 300;
       if (speed < 4 || Math.abs(dx * c - dz * s) > car.physics.def.length / 2 + radius + speed / 60 || Math.abs(dx * s + dz * c) > car.physics.def.width / 2 + radius || this.world.tick < (car.hits.get(target.id) ?? 0)) continue;
       car.hits.set(target.id, this.world.tick + 60);
       this.world.combat?.damage.apply({ attackId: this.world.tick, actionId: car.entity.archetype, sourceId: car.entity.id, targetId: target.id, origin: p, direction: { x: Math.cos(p.yaw), z: -Math.sin(p.yaw) }, base: speed * 30 * car.physics.def.ramStrength, multiplier: 1, type: 'vehicle', knockback: target.archetype === 'infected.brute' ? 3 : 1, stagger: .5 });
@@ -460,16 +464,27 @@ export class Vehicles {
       let contact = ledger.infected[id];
       // Shared hull admission leaves a millimetre of skin at an exact contact.
       if (distance <= radius + .002) {
+        if (car.entity.vehicle!.driver !== null && car.physics.intent.throttle > 0 && !car.physics.intent.brake) state.ramImpactUntil = tick + 300;
+        // Clear living bodies and persistent corpses sideways every overlap tick; damage knockback is one-shot and can be
+        // obstructed by a shoulder-to-shoulder horde, while this swept nudge lets the APC keep a lane through the pile.
+        const pushSide = dx * s + dz * c >= 0 ? 1 : -1;
+        this.world.knockback(target, { x: s * pushSide, z: c * pushSide }, .12);
         contact ??= ledger.infected[id] = { contactId: null, separatedAt: null, windupAt: null, attackId: null, cooldownUntil: 0 };
         contact.separatedAt = null;
         if (contact.contactId === null) {
           contact.contactId = ++ledger.sequence;
           this.apcHit(car, target, 'contact', contact.contactId, null);
         }
+        // A battering ram cannot be pinned by overlapping bodies. Keep a forward rolling floor while throttle is held;
+        // the ordinary drivetrain still controls acceleration, braking and steering outside contact.
+        if (car.physics.intent.throttle > 0 && !car.physics.intent.brake) {
+          const velocity = car.physics.body.linvel(), rollingFloor = Math.min(car.physics.def.topSpeed * .9, car.physics.def.topSpeed * car.physics.speedCap);
+          if (speed < rollingFloor) car.physics.body.setLinvel({ x: c * rollingFloor, y: velocity.y, z: -s * rollingFloor }, true);
+        }
         // E09 mass damage is independent of contact billing, so accelerating through an overlap still rams.
         if (speed >= 4 && this.operable(car) && tick >= (car.hits.get(id) ?? 0)) {
           car.hits.set(id, tick + 60);
-          this.world.combat?.damage.apply({ attackId: contact.contactId!, actionId: car.entity.archetype, sourceId: car.entity.id, targetId: id, origin: p, direction: { x: c, z: -s }, base: speed * 30 * car.physics.def.ramStrength, multiplier: 1, type: 'vehicle', knockback: target.archetype === 'infected.brute' ? 3 : 1, stagger: .5 });
+          this.world.combat?.damage.apply({ attackId: contact.contactId!, actionId: car.entity.archetype, sourceId: car.entity.id, targetId: id, origin: p, direction: { x: s * pushSide, z: c * pushSide }, base: speed * 30 * car.physics.def.ramStrength, multiplier: 1, type: 'vehicle', knockback: target.archetype === 'infected.brute' ? 5 : 3, stagger: .5 });
         }
       }
       const brain = target.infected;
@@ -584,17 +599,12 @@ export class Vehicles {
   }
   private apcHit(car: Car, target: Pick<EntitySnapshot, 'id'>, source: 'contact' | 'attack' | 'obstacle', contactId: number | null, attackId: number | null): void {
     const before = car.entity.health.current;
-    const actor = this.world.entities.get(target.id), special = this.world.scenario === 'L9' && source === 'contact';
-    const heavy = special && ['infected.brute', 'infected.armored', 'infected.riot', 'infected.elephant'].includes(actor?.archetype ?? '');
-    const bloated = special && actor?.archetype === 'infected.bloated';
-    const amount = source === 'attack' ? apcDurability.attackDamage : heavy ? actor?.archetype === 'infected.elephant' ? 80 : 40 : bloated ? 60 : apcDurability.contactDamage;
-    this.damage(car.entity.id, this.world.scenario === 'L9' && source !== 'obstacle' ? Math.round(amount * apcFloor.l9IntakeShare) : amount);
-    const state = car.entity.vehicle!;
+    const actor = this.world.entities.get(target.id), contact = source === 'contact';
+    const heavy = contact && ['infected.brute', 'infected.armored', 'infected.riot', 'infected.elephant'].includes(actor?.archetype ?? '');
+    const bloated = contact && actor?.archetype === 'infected.bloated';
+    const amount = source === 'attack' ? apcDurability.attackDamage : heavy ? actor?.archetype === 'infected.elephant' ? apcDurability.elephantImpactDamage : apcDurability.heavyImpactDamage : bloated ? apcDurability.heavyImpactDamage : contact ? 0 : apcDurability.contactDamage;
+    this.damage(car.entity.id, amount);
     // r36-l9l5: on the bridge run (evacuation done) heavies cost durability but never stop the hull, so the approach cannot become a stall wall.
-    if (heavy && actor!.health.current > 0 && !this.world.missions?.l9?.driving.bridgeRun(car.entity.id) && car.physics.speed >= apcDurability.heavyStallMinSpeed && this.world.tick >= (state.impactStallUntil ?? -Infinity) + apcDurability.heavyStallGraceTicks) {
-      const velocity = car.physics.body.linvel(); car.physics.body.setLinvel({ x: 0, y: velocity.y, z: 0 }, true);
-      state.impactStallUntil = this.world.tick + apcDurability.heavyStallTicks;
-    }
     if (bloated) {
       this.release(car);
       this.world.combat?.damage.apply({ attackId: this.world.tick, actionId: 'vehicle.military-apc', sourceId: car.entity.id, targetId: target.id, origin: car.entity.transform, direction: { x: 1, z: 0 }, base: actor!.health.max, multiplier: 1, type: 'vehicle', knockback: 0, stagger: 0 });
@@ -629,7 +639,7 @@ export class Vehicles {
         const player = this.world.entities.get(1)!; Object.assign(this.world.previousPlayer!, player.transform); Object.assign(player.transform, car.entity.transform);
         this.world.physics.playerBody!.setTranslation(player.transform, true); this.world.physics.playerBody!.setNextKinematicTranslation(player.transform); this.world.spatial.set(1, player.transform.x, player.transform.z);
       }
-      this.updatePassengers(car); this.infected(car); this.damageState(car);
+      this.updatePassengers(car); this.infected(car); this.keepRamMomentum(car); this.damageState(car);
       if (this.active === car.entity.id) this.world.missions?.l9?.driving.poseHatch();
       // The L9 mission APC keeps its staged engine/tyres until the authored impact stops it.
       // Reuse the convoy emitter's bounded cadence and persistent audio loops.
@@ -644,6 +654,17 @@ export class Vehicles {
       }
     }
     this.obstacles.update(this.world.tick);
+  }
+  /** Preserve forward roll through short infected contacts; braking or releasing throttle always wins. */
+  private keepRamMomentum(car: Car): void {
+    const state = car.entity.vehicle!, physics = car.physics;
+    if (state.ramImpactUntil === undefined || this.world.tick > state.ramImpactUntil || physics.intent.throttle <= 0 || physics.intent.brake) return;
+    const floor = Math.min(physics.def.topSpeed * .9, physics.def.topSpeed * physics.speedCap);
+    if (physics.speed >= floor) return;
+    const c = Math.cos(car.entity.transform.yaw), s = Math.sin(car.entity.transform.yaw), velocity = physics.body.linvel();
+    physics.body.setLinvel({ x: c * floor, y: velocity.y, z: -s * floor }, true);
+    physics.speed = physics.forwardSpeed = floor;
+    state.speed = state.forwardSpeed = floor;
   }
   /** Authored passenger entry, falling back to the driver's doorway on older transports. */
   passengerDoor(carId: number): { x: number; z: number } {
@@ -819,7 +840,7 @@ export class Vehicles {
       }
       for (const contact of Object.values(state.apcContacts?.obstacles ?? {})) if (contact.separatedAt !== null) contact.separatedAt += delta;
       for (const boarder of Object.values(state.apcBoarders ?? {})) { boarder.startedAt += delta; boarder.nextHit += delta; }
-      if (state.impactStallUntil) state.impactStallUntil += delta;
+      if (state.ramImpactUntil) state.ramImpactUntil += delta;
       if (state.nextBoardAt) state.nextBoardAt += delta;
       for (const passenger of state.passengers ?? []) { passenger.started += delta; passenger.pauseUntil += delta; if (passenger.story) passenger.story.start += delta; }
       const physics = new VehicleBody(vehicleDef(entity.archetype), this.world.physics.world!, entity.transform, entity.transform.yaw);

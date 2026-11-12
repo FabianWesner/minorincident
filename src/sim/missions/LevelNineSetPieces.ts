@@ -65,8 +65,9 @@ export class LevelNineSetPieces {
     const w = this.w, car = this.car, p = car.entity.transform;
     for (const piece of l9SetPieces) {
       if (s.fired.includes(piece.id) || p.x < piece.atX || holding) continue;
-      s.fired.push(piece.id);
-      if (this.stage(s, piece.kind, piece.id)) this.signal(`setpiece.${piece.id}`);
+      // A fast battering-ram pass can reach a trigger before its forward chunk is resident. Keep it pending and retry
+      // next tick; recording a failed stage as fired silently removed the thrower from the approach.
+      if (this.stage(s, piece.kind, piece.id)) { s.fired.push(piece.id); this.signal(`setpiece.${piece.id}`); }
     }
     if (stallAt !== null) this.stall(s, stallAt);
     if (w.tick % 10 === 0) for (const id of s.packs) pursueCrossingVehicle(w, id);
@@ -224,11 +225,11 @@ export class LevelNineSetPieces {
     // Thrower.
     const T = tune.thrower;
     if (a.phase === 'wait' && tick % 10 === 0) this.hold(a.id, a.post);
-    const passed = along < -10 && !a.piece.startsWith('stall');
-    if ((a.phase === 'wait' || a.phase === 'cool') && (a.uses >= T.throws || passed)) { a.phase = 'free'; a.at = tick; this.freeze(e, false); delete e.infected.scripted; w.infected!.pursueTarget(e.id, 1); pursueCrossingVehicle(w, e.id); return; }
+    const passed = along < -10 && hull >= T.startM && !a.piece.startsWith('stall');
+    if ((a.phase === 'wait' || a.phase === 'cool') && (a.uses >= T.throws || passed && a.uses > 0)) { a.phase = 'free'; a.at = tick; this.freeze(e, false); delete e.infected.scripted; w.infected!.pursueTarget(e.id, 1); pursueCrossingVehicle(w, e.id); return; }
     // The rail ambush thrower saves its load for the stalled hull (the hatch fight), not the approach.
-    const ready = (a.phase === 'wait' && hull < T.startM || a.phase === 'cool' && tick >= a.at) && (!a.piece.startsWith('stall') || car.physics.speed < 1.5);
-    if (ready && hull > T.stopM && e.attachedTo === undefined && !e.infected.specialAttack && w.combat!.query.visible(e.transform, p)) {
+    const ready = (a.phase === 'wait' && (hull < T.startM || passed && a.uses === 0) || a.phase === 'cool' && tick >= a.at) && (!a.piece.startsWith('stall') || car.physics.speed < 1.5);
+    if (ready && hull > T.stopM && e.attachedTo === undefined && !e.infected.specialAttack && (passed && a.uses === 0 || w.combat!.query.visible(e.transform, p))) {
       const target = this.throwTarget(T.windupTicks + T.flightTicks, a.uses);
       this.freeze(e, true); this.pose(e, 'alpha.grab-throw', 'telegraph', tick, tick + T.windupTicks, target);
       a.phase = 'throw'; a.at = tick + T.windupTicks; a.to = target; this.signal('thrower-windup', a.id); return;
@@ -251,6 +252,10 @@ export class LevelNineSetPieces {
   private throwTarget(ticks: number, uses = 0): { x: number; z: number } {
     const car = this.car, p = car.entity.transform, at = this.predict(ticks);
     if (car.physics.speed < 2) { const [a, l] = tune.thrower.stoppedOffsetsM[uses % tune.thrower.stoppedOffsetsM.length]; return { x: p.x + Math.cos(p.yaw) * a + Math.sin(p.yaw) * l, z: p.z - Math.sin(p.yaw) * a + Math.cos(p.yaw) * l }; }
+    // A fast turn can put the constant-velocity prediction far off the road. Keep thrown props on the authored route,
+    // preserving the same forward lead while using its lane tangent for the short flight.
+    const along = Math.hypot(at.x - p.x, at.z - p.z), lane = this.lane(along + tune.thrower.leadM);
+    if (lane) return { x: lane.x, z: lane.z };
     return { x: at.x + Math.cos(p.yaw) * tune.thrower.leadM, z: at.z - Math.sin(p.yaw) * tune.thrower.leadM };
   }
   private flights(s: L9SetPieceState): void {

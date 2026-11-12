@@ -4,7 +4,7 @@ import type { EntitySnapshot } from '../world/types';
 export const lightObstacles = ['fence', 'cone', 'barricade', 'trash-can', 'mailbox'] as const;
 export const heavyObstacles = ['jersey-barrier', 'wall', 'truck'] as const;
 export type ObstacleKind = typeof lightObstacles[number] | typeof heavyObstacles[number];
-interface Obstacle { entity: EntitySnapshot; collider: RAPIER.Collider; halfX: number; halfZ: number; light: boolean; broken: boolean; /** r32-l9fun: thrown by an L9 Thrower, no contact until it lands. */ airborne?: boolean }
+interface Obstacle { entity: EntitySnapshot; collider: RAPIER.Collider; body?: RAPIER.RigidBody; halfX: number; halfZ: number; light: boolean; broken: boolean; /** r32-l9fun: thrown by an L9 Thrower, no contact until it lands. */ airborne?: boolean }
 /** Light obstacles have a fixed 24-body debris pool; heavy blockers remain Rapier geometry. */
 export class Obstacles {
   readonly items: Obstacle[] = [];
@@ -41,6 +41,19 @@ export class Obstacles {
     }
     this.world.events.emit({ type: 'vehicle.obstacle-broken', tick, targetId: item.entity.id });
   }
+  /** Vehicle impacts throw a prop clear but keep its identity, model and collider for the rest of the level. */
+  ram(item: Obstacle, velocity: RAPIER.Vector, tick: number): void {
+    if (item.broken || item.body) return;
+    const p = item.entity.transform;
+    this.world.events.emit({ type: 'world.blocker.changed', tick, id: item.entity.id, blocked: false, wall: { ...p, halfX: item.halfX, halfY: .5, halfZ: item.halfZ } });
+    this.world.physics.world!.removeCollider(item.collider, false);
+    const world = this.world.physics.world!, body = world.createRigidBody(RAPIER.RigidBodyDesc.dynamic().setCcdEnabled(true).setTranslation(p.x, .5, p.z).setRotation({ x: 0, y: Math.sin(p.yaw / 2), z: 0, w: Math.cos(p.yaw / 2) }));
+    const mass = item.light ? 8 : 55;
+    const collider = world.createCollider(RAPIER.ColliderDesc.cuboid(item.halfX, .5, item.halfZ).setMass(mass), body);
+    body.setLinvel({ x: Math.max(-12, Math.min(12, velocity.x * .65)), y: 2.2, z: Math.max(-12, Math.min(12, velocity.z * .65)) }, true);
+    body.setAngvel({ x: velocity.z * .08, y: velocity.x * .04, z: -velocity.x * .08 }, true);
+    item.body = body; item.collider = collider; item.airborne = true;
+  }
   /** r32-l9fun: a thrown obstacle has no collider or contact until it lands. */
   launch(id: number, airborne: boolean): void {
     const item = this.items.find(o => o.entity.id === id); if (!item || item.broken) return;
@@ -51,7 +64,17 @@ export class Obstacles {
   smash(id: number, velocity: RAPIER.Vector, tick: number): void {
     const item = this.items.find(o => o.entity.id === id); if (item && !item.broken) this.break(item, velocity, tick);
   }
-  update(tick: number): void { for (const d of this.debris) if (d.expires && tick >= d.expires) { d.body.setEnabled(false); d.expires = 0; } }
+  update(tick: number): void {
+    for (const item of this.items) {
+      const body = item.body; if (!body?.isValid() || !body.isEnabled()) continue;
+      const p = body.translation(), r = body.rotation();
+      Object.assign(item.entity.transform, { x: p.x, y: p.y, z: p.z, yaw: 2 * Math.atan2(r.y, r.w) });
+      if (!item.airborne || Math.hypot(body.linvel().x, body.linvel().y, body.linvel().z) > .25 || Math.hypot(body.angvel().x, body.angvel().y, body.angvel().z) > .25 || p.y > .65) continue;
+      item.airborne = undefined; body.setLinvel({ x: 0, y: 0, z: 0 }, true); body.setAngvel({ x: 0, y: 0, z: 0 }, true);
+      this.world.events.emit({ type: 'world.blocker.changed', tick, id: item.entity.id, blocked: true, wall: { ...item.entity.transform, halfX: item.halfX, halfY: .5, halfZ: item.halfZ } });
+    }
+    for (const d of this.debris) if (d.expires && tick >= d.expires) { d.body.setEnabled(false); d.expires = 0; }
+  }
   /** Rebind E12-restored records/colliders; tier changes have already freed native handles. */
   rebuild(worldReset = false): void {
     if (!worldReset) this.dispose(); else this.items.length = this.debris.length = 0;
@@ -61,5 +84,5 @@ export class Obstacles {
       if ([...lightObstacles, ...heavyObstacles].includes(kind)) this.bind(entity, kind);
     }
   }
-  dispose(): void { for (const d of this.debris) this.world.physics.world!.removeRigidBody(d.body); for (const o of this.items) this.world.physics.world!.removeCollider(o.collider, false); this.items.length = this.debris.length = 0; }
+  dispose(): void { for (const d of this.debris) this.world.physics.world!.removeRigidBody(d.body); for (const o of this.items) { if (o.body) this.world.physics.world!.removeRigidBody(o.body); else this.world.physics.world!.removeCollider(o.collider, false); } this.items.length = this.debris.length = 0; }
 }
