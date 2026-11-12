@@ -25,7 +25,7 @@ Both checkpoint-yield captures were opened. The initial sample shows retreat HUD
 
 | Requested check | HIGH z1 | HIGH z1.5 | LOW z1 |
 | --- | --- | --- | --- |
-| L6 full; first hatch closed; every 30 s attack window | Incomplete: exit reached, first hatch not closed | Missing | Missing |
+| L6 full; first hatch closed; every 30 s attack window | Incomplete: exit reached, first hatch not closed | Missing | First hatch closed; only 1.45 s observed afterward |
 | L7 departure / soldiers | Complete route; P2 overlap reproduced | Complete route; nearby soldier/body overlap observed | Complete route; nearby soldiers/body overlap observed |
 | L8 14/14 timing / driver-door handoff | 29.48 s; post-count stall in checkpoint | Camera assertion failure; unverified | 28.23 s; post-count stall after E at marker |
 | L9 rail / final bay | Progressed with manual F, 19 deaths | Missing | Progressed, zero deaths |
@@ -99,3 +99,7 @@ Read-only source inspection provides a concrete hypothesis for the fixture-quali
 ## L9 LOW zoom 1 — rail through L10 loading
 
 Same pre-rail checkpoint; completed in 153 wall seconds with zero deaths, assists or skips. No manual hatch override was needed. Rail countdown completed and the opened `campaign-L9-t2770.jpg` shows “Engine’s back! Drive, now!” plus the moving-boarder instruction. Opened `campaign-L9-t5476.jpg` shows final-bay hatch defense 11 seconds, 4/4 at trucks, full courier HP. Sequence proceeded through crash/crawl to L10 loading. No progression block reproduced in this LOW checkpoint pass; first playable L10 pose and school-bus overlap remain unverified. The visible courier inside the windscreen still reads as a horizontal/reclined body; record as a visual observation requiring pose review rather than proof of the post-L9 folded pose. Summary simSeconds=-1 is invalid due to tick reset at handover. Receipt: `test-results/s88-b90high/low-z1-l9-rail/`. The hold and restart prompts explain the stopped vehicle; no boring wait beyond the announced countdown was established. No check is running.
+
+## L6 LOW zoom 1 — first-hatch checkpoint reached
+
+Eight-minute attempt: 480 wall / 478 simulation seconds, six deaths, one assist, no skips, 2798 army-MG attacks. First hatch x90 closed at tick 28593; sample ended at tick 28680, only **1.45 seconds later**, insufficient for the required 30-second window. Later gates remained open. Final state: retreat, checkpoint `gate-90`, leader x107.16, courier x97.23 at 4.8 HP, one following survivor and 28 turned. Final second observer counted three attacking infected. Opened checkpoint-yield capture shows low-health courier, persistent bodies and survivor-under-attack warning. This is combat pressure, not an observed boring post-hatch gap, but the full criterion remains unverified. Retained profile: `test-results/s88-b90high/low-z1-l6/profile`; resume this gate-90 save next rather than replay the approach. The only driver warning was the authored shelter rest (max no-progress 32.561 seconds). No check is running.
