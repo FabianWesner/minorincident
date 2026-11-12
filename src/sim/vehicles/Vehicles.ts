@@ -329,12 +329,7 @@ export class Vehicles {
         // horizontally rather than waiting for rest or restarting its upward launch.
         if (pushing) {
           const v = obstacle.body.linvel(), closing = (ramVelocity.x - v.x) * c - (ramVelocity.z - v.z) * s;
-          // A purely forward shove collects a sled of retained props against the
-          // bumper and locks steering. Let each contact slide toward its nearer
-          // side of the hull, with a bounded lateral speed and no upward relaunch.
-          const side = (localZ < 0 ? -1 : 1) * 3;
-          const sideways = (side - (v.x * s + v.z * c)) * .1;
-          obstacle.body.applyImpulse({ x: (c * Math.max(0, closing) + s * sideways) * obstacle.body.mass(), y: 0, z: (-s * Math.max(0, closing) + c * sideways) * obstacle.body.mass() }, true);
+          if (closing > 0) obstacle.body.applyImpulse({ x: c * closing * obstacle.body.mass(), y: 0, z: -s * closing * obstacle.body.mass() }, true);
         }
         continue;
       }
