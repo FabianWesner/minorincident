@@ -43,7 +43,12 @@ export async function checkL8Route(): Promise<void> {
       void len;
       const at = (d: number) => ({ x: gate.x + ux * d, z: gate.z + uz * d });
       const members = zoo.followers();
-      members.forEach((e, n) => { const p = at(-4 - (n % 4) * 1.2); w.solids.relocate(e, { x: p.x + (uz ? (n - 4) * .8 : 0), z: p.z + (ux ? (n - 4) * .8 : 0), y: e.transform.y }, 'fixture.l8-route', 20, false); });
+      members.forEach((e, n) => {
+        // Queue on the actual narrow approach, not a fan spread onto lawn.
+        const side = (n % 3 - 1) * 1.1, row = Math.floor(n / 3) * 1.2;
+        const p = stage.id === 'monkey' ? { x: -24 + side, z: 16 - row } : at(-4 - row);
+        w.solids.relocate(e, { x: p.x + (stage.id !== 'monkey' && uz ? side : 0), z: p.z + (stage.id !== 'monkey' && ux ? side : 0), y: e.transform.y }, 'fixture.l8-route', 1, false);
+      });
       if (stage.id === 'zebra') {
         // A zebra can turn while the courier is still outside its paddock.
         // That must leave the encounter dormant and the herd away from both

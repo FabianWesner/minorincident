@@ -16,11 +16,11 @@
 
 | Check | Latest result / limitation |
 |---|---|
-| D-ZOO rebuild | PASS, hash `193fe74c05fe4fbd66493e5b14c1100c5f5fa83ff821756050cf4d69353d5285` |
+| D-ZOO rebuild | PASS, hash `78150abd7ebc9231668d4b066c988732c696838be04ed0359f962c946ec27eee` |
 | Layout validation | Zero errors; zero new tier-5 placement overlaps after connector rebuild |
-| Post-rebuild smoke | PASS, 6 QA + 1 public tests, 159.6 s, ports 4965/4966, headless through e2e-lock |
+| Post-rebuild smoke | PASS, 6 QA + 1 public tests, 141.9 s, ports 4965/4966, headless through e2e-lock |
 | Typecheck / lint | PASS before latest layout-only connector edits |
-| Mission scenarios | 6/6 PASS after north-cohort story restoration; needs rerun against latest connector geometry |
+| Mission scenarios | 6/6 PASS against latest geometry, 69.53 s; gate fixture queues followers on narrow approaches |
 | L8 wave census | All L8 cohorts reach full counts, high and low, after north-route split |
 | Whole waves file | FAIL: high L2 market 24 admitted / 23 reached; reproduced using base source `73db6c05` |
 | Remote nightly | Latest run 6 passed / 3 failed: supermarket inventory, L2 high waves, L8 low north cohort. Subsequent local fix clears the L8 failure; remote rerun pending. Placement invariant PASS across all tiers |
@@ -53,3 +53,5 @@ Deferred flamingo mechanic replacement, animal-model/motion lanes, signature-att
 Confinement probes on current generated layout: straight arrival/north/west/east verge sweeps stop2.425m from centre; north junction diagonals stop4.13m. Found open12m sweeps north of -24/pond junctions, west beyond lion turn, and sideways from unused -24 branch. Appended source caps/checkpoint barriers and north-spur verges to address these, preserving earlier allocation order. Python syntax PASS; rebuild/probes still required. No checks running.
 
 Northern caps rebuilt hash0c1c7ef446100cdb43f5cddcf0bc3860c1027db630ad85195fe1d4239e3b2eb9: layout errors0; all4 prior12m exit sweeps now stop2.4m. Solid scan found4 directed pairs at2 fence/barrier corners; trimmed source endpoints to barrier faces (sub-capsule gaps), rebuild pending. North service route now follows paved corner via(0,-64) before(0,-56), avoiding new verge. No checks running.
+
+Northern cap rebuild validated: road errors0, tier5 new overlaps0, four prior open12m sweeps now stop2.4m. Smoke7/7 PASS141.9s. Mission gate fixture previously placed followers outside fences; now3-column queue stays on approaches, and all6 scenarios pass69.53s. No running checks.
