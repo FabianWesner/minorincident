@@ -13,8 +13,14 @@ const session = new SceneSession({ tier: 'high', backend: 'webgl2' });
 const receipts: unknown[] = [];
 try {
   await session.open(); let level = '';
-  for (const row of rows) {
-    if (row.level !== level) { await session.inspectLevel(row.level); level = row.level; }
+  for (const row of rows.filter(r => !process.env.S87_CAPTURE_LEVEL || r.level === process.env.S87_CAPTURE_LEVEL)) {
+    if (row.level !== level) {
+      await session.inspectLevel(row.level); level = row.level;
+      if (level === 'L5') await session.page.evaluate(async () => {
+        const a = window.__SS__!; a.missions.completeObjective('emerge'); a.resume();
+        await new Promise(r => setTimeout(r, 2500)); a.pause(); await a.screenshotReady();
+      });
+    }
     const state = await session.page.evaluate(async ({x,z}) => {
       const a = window.__SS__!;
       a.inspect.enable(false); a.teleport('player', {x,z}); a.camera.follow(); a.camera.zoom(1);
