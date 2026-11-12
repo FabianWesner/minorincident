@@ -250,3 +250,7 @@ Read-only renderer-instance probe (`cover-flags/log.jsonl`) samples all three po
 The synchronized diagnostic screenshot `cover-draw/s001-t460.jpg` was opened and shows the courier still outside the entry. Earlier camera probes omitted `--no-kite`, so automatic threat avoidance prevented arena entry. Comparing those receipts with different in-arena screenshots was invalid; no camera/frustum mismatch is established.
 
 Repeated with `--no-kite`, god on/no fire, current fixture. At tick 833 the objective is “Kill flamingos 0/8”, camera is widened (y≈50.26), and all three cover instances are selected at LOD1. Opened `cover-inside/s003-t833.jpg`: the arena is wide and pads/birds are visible, but the concrete covers remain visually absent. `pond-cover-inside.json` preserves the corrected receipt. This moves investigation to selected LOD1 asset/batching presentation, not frustum culling. No workaround was added. Browser/server are terminal.
+
+## Cover LOD geometry inspection
+
+Inspected source GLB nodes/accessor bounds and the static-bake headers for jersey barrier LOD0/1/2. All three baked tiers have nonempty geometry and matching bounds: x ±1.5, y approximately 0–0.95, z ±0.36, identity part transform. Thus an empty/underground LOD1 bake is not established as the cause. The remaining inspection must check the live selected InstancedGroup's resident prototype, instance count/matrices and draw bounds. No asset or renderer bypass was introduced.
