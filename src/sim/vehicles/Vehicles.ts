@@ -658,6 +658,16 @@ export class Vehicles {
   private keepRamMomentum(car: Car): void {
     const state = car.entity.vehicle!, physics = car.physics;
     if (state.ramImpactUntil === undefined || this.world.tick > state.ramImpactUntil || physics.intent.throttle <= 0 || physics.intent.brake) return;
+    // Infected momentum must not drive through fixed roadside objects. Keep
+    // the solver's stopped speed so normal steering/reverse recovery can work.
+    let fixedContact = false;
+    this.world.physics.world!.contactPairsWith(physics.collider, other => {
+      if (other.parent()?.isDynamic()) return;
+      this.world.physics.world!.contactPair(physics.collider, other, manifold => {
+        if (Math.abs(manifold.normal().y) < .7 && manifold.numContacts() > 0) fixedContact = true;
+      });
+    });
+    if (fixedContact) return;
     const floor = Math.min(physics.def.topSpeed * .9, physics.def.topSpeed * physics.speedCap);
     if (physics.speed >= floor) return;
     const c = Math.cos(car.entity.transform.yaw), s = Math.sin(car.entity.transform.yaw), velocity = physics.body.linvel();
