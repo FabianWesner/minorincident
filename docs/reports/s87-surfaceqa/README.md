@@ -27,3 +27,7 @@ Commit `4d0c65fb` preserves the validated code and coordinate report. Headless S
 ## Regional paving continuity
 
 The gate now samples all six L10 region handoffs at 0.05, 0.5 and 1 m on each side, with five lateral positions spanning the 6 m lane. Each of the 180 samples must belong to exactly one asphalt polygon, detecting paving gaps and overlaps independently of coincident route endpoints. The focused nightly decoration/ground-cover gate passes with these assertions.
+
+## HIGH zoom-1 capture sweep
+
+[Contact sheet](surface-contact-sheet.jpg) contains the opened PO before image and 60 fresh headless captures: 53 unique remaining placements and the seven fixed L10 crop positions. [Capture index](capture-index.json) retains coordinates, requested HIGH quality, and camera state for each image. The L2/L3 rows show blood/scorch and rubble near entrances, pavements and roads; L7 shows debris beside the ruined city lanes. The seven L10 rows show clear asphalt or verges at the removed crop positions, including the R2–R3 seam. I opened the complete sheet and an individual L2 capture. L5 rows have black world geometry and are explicitly **unqualified**; they must be retaken before this evidence can close the task. Historical before images for the six other cleared crop tiles also remain open.
