@@ -197,12 +197,15 @@ export function walkResidents(world: SimWorld, house: HouseEmergence, tick: numb
       // A scripted service route is baked on the bare layout. A body that props, fallen fence panels or another walker pin
       // for 1.5 s hands over to the AI, whose nav routes around the obstacle (L8: a flamingo-pen panel knocked onto the north
       // service route held the zebra carrier at (-11, -27) for the whole fight).
+      const [tx, tz] = route[w.leg];
       if (house.finishRoute) {
-        if (w.lastX !== undefined && Math.hypot(p.x - w.lastX, p.z - w.lastZ!) < step * .25) w.stall = (w.stall ?? 0) + 1; else w.stall = 0;
+        // Crowd separation can move a walker sideways without advancing the
+        // route. Measure progress toward this waypoint, not total movement.
+        if (w.lastX !== undefined && Math.hypot(tx - w.lastX, tz - w.lastZ!) - Math.hypot(tx - p.x, tz - p.z) < step * .25) w.stall = (w.stall ?? 0) + 1; else w.stall = 0;
         w.lastX = p.x; w.lastZ = p.z;
         if (w.stall >= 90) { w.leg = route.length; w.until++; continue; }
       }
-      const [tx, tz] = route[w.leg], dx = tx - p.x, dz = tz - p.z, d = Math.hypot(dx, dz), m = Math.min(step, d);
+      const dx = tx - p.x, dz = tz - p.z, d = Math.hypot(dx, dz), m = Math.min(step, d);
       if (d > 1e-6) { p.x += dx / d * m; p.z += dz / d * m; p.yaw = -deterministicAtan2(dz, dx); }
       p.y = .7 + (world.districts?.groundHeight(p.x, p.z) ?? 0); world.spatial.set(e.id, p.x, p.z);
       // A shared service turn must accept a body-sized arrival: separation can keep two walkers circling its exact centre.
