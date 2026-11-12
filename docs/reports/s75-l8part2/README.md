@@ -200,3 +200,9 @@ Top left: extended west-junction bars close the unused arm. Top right: primate c
 ## Opened red lanes and return phases
 
 Thirty-second current-code pond sample, HIGH requested/zoom 1, single pooled headless WebGL2/Metal browser, real marker input, no fire/no kite and explicitly god on so attacks can finish. Opened `flamingo-motion/s009-t671.jpg`, `s019-t1327-b4.jpg`, `s022-t1467.jpg`, plus [small contact sheet](flamingo-lanes.jpg). Three red outlined lanes converge near the courier; substantial far-side floor remains outside the fan. Later frames show birds airborne between centre and rim, then near the right-side pads. This confirms red warning visibility and samples return phases, not smooth continuous gait or complete landing quality. HUD stays 0/8 in this protected no-fire control; it supplies no combat-difficulty or mortal-clear claim. The previous 25.5 s clear is separate evidence. Browser and server are terminal.
+
+## Nightly content validation
+
+Ran `node node_modules/vitest/vitest.mjs run tests/nightly/content-invariants.test.ts --project nightly --configLoader runner --maxWorkers=4` on current source. Terminal result: four passed, one failed, 146.09 s. LOD fidelity, decoration surfaces, support seams and placement-vs-solids pass. Asset inventory fails on 14 errors for `int.supermarket`/`bld.supermarket`: +X-front orientation on LOD0–2, degenerate picket/UI triangles and LOD0 delivery size. This lane has not changed those assets; no baseline was relaxed. Therefore the full nightly gate is not green. This file does not cover runtime gate boxes or waves; those remain separate checks.
+
+Cover inspection confirms three authored lion cover pieces, four gorilla pillars plus throw furniture, monkey building/doorway choke pieces and yard truck/wall bait. A complete deliberate cover pass for every pen remains unproven; the inspected code does not by itself establish three/four usable pieces per arena.
