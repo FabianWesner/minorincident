@@ -83,3 +83,7 @@ Replaced the vehicle impact branch's lethal `hazards.hit` with adoption of the s
 ## Map prop rebuild regression
 
 Folded a cone persistence case into the existing vehicle/prop test: ram retains full health, removes its old authored blocker, preserves its displaced position through collider rebuild, and leaves it unbroken. Fixed rebuild replaying the launch impulse; restored retained props now start with zero linear/angular velocity at their saved pose. Focused vehicle suite passes (2 tests, 59.50 s).
+
+## Current full local gate
+
+`npm run verify -- E31` passes after the map-prop adoption/rebuild changes: typecheck and lint pass, 27 Vitest files / 107 tests pass in 110.35 s (111.8 s budget wrapper, below 240 s). Global counted case budget remains 150/150. This supersedes the older local gate result; remote green and direct real-input horde-contact evidence remain outstanding.
