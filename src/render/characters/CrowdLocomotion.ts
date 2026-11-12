@@ -355,9 +355,10 @@ export class CrowdLocomotion {
       }
       return;
     }
-    if (!layers && !this.animal && (!this.reach || !gaitShape[name])) return;
+    const standing = standingClips.has(name);
+    if (!layers && !this.animal && (!this.reach || !gaitShape[name] && !standing)) return;
     let contacts = this.contacts.get(id);
-    if (!contacts && !this.animal && gaitShape[name]) { this.toRest(); contacts = new GroundContacts(this.rig, name === 'crawl'); this.contacts.set(id, contacts); }
+    if (!contacts && !this.animal && (gaitShape[name] || standing)) { this.toRest(); contacts = new GroundContacts(this.rig, name === 'crawl'); this.contacts.set(id, contacts); }
     const previous = this.footwork.far.get(id);
     if (contacts && previous && previous.owner !== this && time !== undefined && time - previous.time <= .3) {
       const left = previous.contacts.contact(0), right = previous.contacts.contact(1);
@@ -379,7 +380,8 @@ export class CrowdLocomotion {
       if (speed > .06 && strides[name]) paws.update(contactPhase ?? phase, stride, animalGait, dt);
       else paws.hold(dt, this.groundedAnimal);
       if (this.animalSkin && time !== undefined) this.footwork.animalContacts.set(id, { contacts: paws, owner: this, time });
-    } else if (contacts && strides[name] && speed > .06) contacts.update(phase, stride, run, 1, style?.stance ?? this.stance(name, stride, this.scale.setFromMatrixScale(this.frame.matrixWorld).y), true, style);
+    } else if (contacts && standing) contacts.update(0, 0, 0, 1, 1, true, style);
+    else if (contacts && strides[name] && speed > .06) contacts.update(phase, stride, run, 1, style?.stance ?? this.stance(name, stride, this.scale.setFromMatrixScale(this.frame.matrixWorld).y), true, style);
     if (contacts && time !== undefined) this.footwork.far.set(id, { contacts, owner: this, time });
     // Humans always keep the sole correction; large authored quadrupeds retain it after paw/contact pose layers.
     if (!this.animal || this.pawSoles.length || this.groundedAnimal && (gaitStyles[name] || standingClips.has(name))) this.ground(style);
@@ -462,7 +464,7 @@ export class CrowdLocomotion {
     let state = this.footwork.states.get(id);
     if (state && (time < state.time || time - state.time > .3)) { this.footwork.states.delete(id); state = undefined; }
     const want = near && grounded && this.footwork.admit(id);
-    if (!near && state && gaitShape[clip]) {
+    if (!want && state && grounded) {
       // Fading the leg solve lets a planted shoe slide toward the baked stride. Transfer its world contacts to the
       // cheaper solver instead, retaining the footwork budget for figures that are still near the camera.
       let contacts = this.contacts.get(id);
@@ -506,7 +508,7 @@ export class CrowdLocomotion {
       }
       this.footwork.states.delete(id);
     }
-    if ((strides[clip] && speed > .06) || layers || this.animal && !this.preserveAnimalJoints && standingClips.has(clip)) {
+    if ((strides[clip] && speed > .06) || layers || standingClips.has(clip) && (!this.animal || !this.preserveAnimalJoints)) {
       const row = poses.correct(id, frame, blend[0], blend[1], pose => this.correct(id, pose, instance, phase, clip, scale, speed, layers, time, style, input.contactPhase));
       blend[1] = 1; return row;
     }

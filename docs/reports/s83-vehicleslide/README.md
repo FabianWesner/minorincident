@@ -173,3 +173,11 @@ The native LOW 9000-tick run fails: attached actor 852 p95/max 15.2/35.9 cm, att
 L7 HIGH/LOW and L4 HIGH/LOW 3600-tick native opening observations all have zero eligible contact samples. L7 has no registered cars; L4 has six but none overlaps the sampled infected. These runs exit 1 and establish no vehicle contact pass (`l4-l7-opening-observations.json`). The renderer changed during this diagnostic batch, so these are coverage observations only, not fixed-source validation. Later authored vehicle windows or explicit level-native fixtures remain required.
 
 Remote E09 verify failed its two scene-gate integration fixtures: fake repositories lacked the newly required qa:vehicle-motion script. The fixture now supplies a fake child and also asserts failure propagation and filtered scope, without changing the test count or production gate criteria. Focused tests and verification rerun remain due.
+
+## LOW standing-contact transfer
+
+When detailed admission is lost, transfer grounded standing contacts as well as walking contacts instead of fading them toward the baked pose. The cheap solver now holds both standing feet; transitions retain world anchors. Native LOW rerun reduces attached 852 from 15.2/35.9 cm p95/max to 0/0.2 cm, and attached 863 from 10.1/12.9 cm to 0.1/2.1 cm. Every finite-contact group now has p95 <=3.9 cm, but grounded maxima 25.1 and 18.8 cm remain failures. See `low-standing-transfer.json`.
+
+All twelve attributed fixture rows pass after this change. Typecheck/lint pass. Opened `low-standing-transfer.jpg`, consecutive native LOW frames 8426–8431 at zoom 1.5: APC beside the rail and yellow bus, infected at the hull and a large infected on the road. The visible attacker poses remain stable across the alternate-frame updates; the small feet require the numerical contact trace for measurement. No HIGH claim is inferred from this LOW strip.
+
+Focused gate-tools tests pass 8/8 after the integration fixture update. E09 verification rerun is still running remotely.
