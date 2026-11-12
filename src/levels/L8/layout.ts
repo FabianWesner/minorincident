@@ -53,6 +53,12 @@ export function levelEightLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     // Door-side furniture makes a real, body-width choke without closing either public escape path.
     add('l8-monkey-choke-0', 'prop.cure-garden-wall', -6, 12, [.6, 1, 1], Math.PI / 2);
     add('l8-monkey-choke-1', 'prop.cure-garden-wall', -6, 16, [.6, 1, 1], Math.PI / 2);
+    // Offset cover leaves the centre and both gates open. Pond pieces sit
+    // inside the landing ring; paddock pieces leave distinct charge sidesteps.
+    for (const [i, [x, z]] of [[-6, -28], [6, -28], [0, -38]].entries())
+      add(`l8-flamingo-cover-${i}`, 'prop.jersey-barrier', x, z, [.9, 1, 1], i === 2 ? 0 : Math.PI / 2);
+    for (const [i, [x, z]] of [[52, 28], [68, 28], [60, 39]].entries())
+      add(`l8-zebra-cover-${i}`, 'prop.jersey-barrier', x, z, [.9, 1, 1], i === 2 ? 0 : Math.PI / 2);
     return layout;
   });
 }

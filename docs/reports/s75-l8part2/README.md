@@ -206,3 +206,9 @@ Thirty-second current-code pond sample, HIGH requested/zoom 1, single pooled hea
 Ran `node node_modules/vitest/vitest.mjs run tests/nightly/content-invariants.test.ts --project nightly --configLoader runner --maxWorkers=4` on current source. Terminal result: four passed, one failed, 146.09 s. LOD fidelity, decoration surfaces, support seams and placement-vs-solids pass. Asset inventory fails on 14 errors for `int.supermarket`/`bld.supermarket`: +X-front orientation on LOD0–2, degenerate picket/UI triangles and LOD0 delivery size. This lane has not changed those assets; no baseline was relaxed. Therefore the full nightly gate is not green. This file does not cover runtime gate boxes or waves; those remain separate checks.
 
 Cover inspection confirms three authored lion cover pieces, four gorilla pillars plus throw furniture, monkey building/doorway choke pieces and yard truck/wall bait. A complete deliberate cover pass for every pen remains unproven; the inspected code does not by itself establish three/four usable pieces per arena.
+
+## Pond and paddock cover additions
+
+Added three stable-ID jersey-barrier cover pieces inside each of the flamingo and zebra pens. Pond pieces are inside the landing ring at (-6,-28), (6,-28), (0,-38); zebra pieces are offset at (52,28), (68,28), (60,39), leaving centre/gate access. Existing assets and normal solid/destruction assembly are reused; no animal stats change.
+
+Focused `solidOverlaps` against `levelEightLayouts` finds six pieces and zero overlaps across tiers 0–6. Typecheck/lint/diff checks pass. Inspection also found that the nightly placement test currently applies L2–L5 transforms but not L8's transform, so its earlier green placement result cannot validate runtime L8 additions. This focused result closes that coverage gap only for the six new pieces. Opened cover captures, actual fight/charge behavior and updated audit/unit receipts are required before accepting these additions.
