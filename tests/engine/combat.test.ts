@@ -56,6 +56,17 @@ test('molotov: its persistent fire drops an ordinary five-infected cluster withi
   expect(zone.expires - zone.created).toBeGreaterThanOrEqual(8 * 60);
 });
 
+test('pipe bomb and rocket: a centered blast clears five ordinary infected in a three-second window', async () => {
+  for (const id of ['weapon.pipe-bomb', 'weapon.rocket-launcher']) {
+    const w = await arena(); equip(w, ['weapon.fire-axe'], [id]);
+    const ids = [-1.2, -0.6, 0, 0.6, 1.2].map(z => dummy(w, 2, z, 40));
+    if (id === 'weapon.rocket-launcher') w.explosions!.blast('explosion.rocket', { x: 2, z: 0 }, { sourceId: 1, actionId: id, radius: 6 });
+    else fire(w, 'RIGHT', { x: 1, z: 0 }, { x: 2, z: 0 });
+    step(w, 180);
+    expect(ids.map(target => health(w, target)), id).toEqual([0, 0, 0, 0, 0]);
+  }
+});
+
 /** Broad-phase cover must agree with the exact wall tests, including rotated padding and mutable doors. */
 async function checkDynamicCover(): Promise<void> {
   const w = await arena(), q = w.combat!.query, devices = w.interactables!;
