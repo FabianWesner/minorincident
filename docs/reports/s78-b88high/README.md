@@ -29,7 +29,7 @@ Measured coverage is summarized below. No PROD A/B was performed. All incomplete
 | Level | HIGH zoom 1 | HIGH zoom 1.5 | LOW zoom 1 |
 |---|---|---|---|
 | L8 full | Merged build incomplete: 25/26 flamingos, 90 s driver stall | Incomplete: same 25/26 stall | Open |
-| L9 full | Incomplete: eight-minute cap at rail encounter | Finished in 281 s, five deaths | Open |
+| L9 full | Incomplete: eight-minute cap at rail encounter | Finished in 281 s, five deaths | Incomplete: 3/4 at trucks at cap |
 | L3 first 3 min | Sample complete | Sample complete | Sample complete |
 | L4 first 3 min | Sample complete | Sample complete | Sample complete |
 | L7 first 3 min | Sample complete | Full route finished in 149 s | Full route finished in 152 s |
@@ -118,3 +118,9 @@ Completed 181 seconds on the merged build: 5 deaths, 0 logged assists, no object
 ## L7 LOW zoom 1 completion
 
 Full real-input route finished in 152 seconds, zero deaths, zero assists, no skips and no driver findings. Max recorded no-progress 5.05 s. Opened `test-results/playtest/s78-b88high-l7-low-z1/captures/campaign-L7-t8134.jpg`: courier 100 HP, clear marker on ground, lit bus front, followers/health bars visible, HUD 18/24 aboard and waiting for a survivor 5 m away. This capture shows boarding in progress, not completion; opened `campaign-L7-result.jpg` shows subsequent L8 loading and summary records finished=true. Readable courier and followers at LOW; exact Alpha relocation effect, seated passengers and matched PROD comparison remain open. Summary simSeconds=0 is invalid timing; wallSeconds and logged ticks support duration.
+
+## L9 LOW zoom 1 and confirmed P2 visual finding
+
+Eight-minute real-input attempt ended at 480 seconds with 3/4 survivors at trucks, 9 m from the marker; 21 deaths, 0 logged assists, no skips. Rail phase recovered and evacuation phase was reached, but full completion remains open. Driver stationary-attack and vehicle-passivity flags remain unconfirmed; P0 is the sample cap.
+
+**P2: school bus/APC interpenetration.** Opened `test-results/playtest/s78-b88high-l9-low-z1/captures/campaign-L9-t10824.jpg`: school bus hull overlaps the APC roof/front and orange bus geometry fills the windscreen. Courier 90 HP, APC armor 490/1000, HUD cover survivors 2/4. Later progress to 3/4 at trucks shows this capture alone does not prove a permanent wedge. Telegraphed/dodgeable/beatable chase remains unverified. Included this opened capture in the single contact sheet. No code fix made.
