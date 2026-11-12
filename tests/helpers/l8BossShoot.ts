@@ -21,7 +21,8 @@ export function turnArena(w: SimWorld, id: string): EntitySnapshot[] {
 /** Shoot `target` from `range` along the first clear bearing; returns damage dealt by the real weapon pipeline. */
 export function shoot(w: SimWorld, target: EntitySnapshot, weapon: string, range: number, pin: () => void): { damage: number; fired: boolean; shots: number; noLine?: boolean } {
   const player = w.entities.get(1)!, q = w.combat!.query;
-    const goal = { x: target.transform.x, z: target.transform.z }, hp = target.health.current;
+  pin(); // Establish the fixture pose before choosing the firing bearing.
+  const goal = { x: target.transform.x, z: target.transform.z }, hp = target.health.current;
   let last: { damage: number; fired: boolean; shots: number } | undefined;
   for (let k = 0; k < 16; k++) {
     const a = k * Math.PI / 8, at = { x: goal.x + Math.cos(a) * range, z: goal.z + Math.sin(a) * range };
