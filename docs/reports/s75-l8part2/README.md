@@ -240,3 +240,7 @@ Corrected a diagnostic watch that initially omitted `return`, then captured read
 ## Cover visibility flags excluded
 
 Read-only renderer-instance probe (`cover-flags/log.jsonl`) samples all three pond refs at ticks 72/267/450. Each has the expected unchanged position and only `placementId` in userData: no `interiorHidden`, `destructed`, `highOnly`, prop/death flags or tier exclusion. Camera far plane is 600 m on this layout, so the widened arena is not beyond its far plane. These observations narrow the missing-cover path to frustum/bounds selection rather than hidden state. No rendering override was added. Browser/server are terminal; this is diagnostic evidence, not a visual acceptance pass.
+
+## Cover projection comparison
+
+`pond-cover-projection.json` records read-only camera position, projected cover centres and stored frustum distances. At sampled ticks the camera remains near the courier (roughly y=11 m), and cover centres project outside its clip rectangle, consistent with culling. This differs from the visibly widened arena screenshot, but probes run between browser frames and are not synchronized to its draw. Therefore a Scene Lab camera/order mismatch is a hypothesis, not an established cause. Need a draw-synchronized comparison before changing production culling. No renderer change was made; browser/server are terminal.
