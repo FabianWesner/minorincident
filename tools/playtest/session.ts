@@ -583,10 +583,24 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       await page.exposeFunction('ramContactReceipt', (receipt: unknown) => log({ ramContact: receipt }));
       await page.evaluate(() => {
         const w = (window.__SCENE__ as unknown as { game: Game }).game.world;
+        let sample: { carId: number; started: number; last: number; entry: number; min: number; contacts: number } | null = null;
+        const receipt = (r: unknown) => void (window as unknown as { ramContactReceipt: (r: unknown) => Promise<void> }).ramContactReceipt(r);
+        w.events.on('sim.tick', () => {
+          if (!sample) return;
+          const car = w.vehicles?.cars.get(sample.carId);
+          if (!car) { sample = null; return; }
+          const held = car.physics.intent.throttle > 0 && !car.physics.intent.brake;
+          if (held) sample.min = Math.min(sample.min, car.physics.speed);
+          if (!held || w.tick - sample.last >= 60) { receipt({ window: true, ...sample, ended: w.tick, endReason: held ? 'contact-cleared' : 'throttle-or-brake', ratio: sample.min / sample.entry }); sample = null; }
+        }, 999);
         w.events.on('vehicle.durability-hit', event => {
           if (event.type !== 'vehicle.durability-hit' || event.source !== 'contact') return;
           const car = w.vehicles?.cars.get(event.sourceId);
           if (!car) return;
+          if (car.physics.intent.throttle > 0 && !car.physics.intent.brake) {
+            sample ??= { carId: event.sourceId, started: w.tick, last: w.tick, entry: car.physics.speed, min: car.physics.speed, contacts: 0 };
+            sample.last = w.tick; sample.contacts++;
+          }
           void (window as unknown as { ramContactReceipt: (r: unknown) => Promise<void> }).ramContactReceipt({ tick: w.tick, target: w.entities.get(event.targetId)?.archetype, speed: car.physics.speed, throttle: car.physics.intent.throttle, brake: car.physics.intent.brake, armorCost: event.before - event.after });
         });
       });
