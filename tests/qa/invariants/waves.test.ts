@@ -270,7 +270,11 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly authored wave cens
     c.state.nextWave = Infinity;
     // The K9's new pond approach uses the whole authored service route, not the former short doorstep leg.
     const routeFrames = Math.ceil(Math.max(...c.state.outlets.map(o => { let from = [o.sx, o.sz], metres = 3; for (const at of o.route) { metres += Math.hypot(at[0]-from[0], at[1]-from[1]); from=at; } return metres/(o.speedMs ?? 1.6)+30; })) * 60);
-    const initialGoals = new Map(initial.map(a => [a.id, c.state.outlets[a.outlet]]));
+    const initialGoals = new Map(initial.map(a => {
+      const outlet = c.state.outlets[a.outlet], walk = outlet.walking?.find(walk => walk.id === a.id);
+      const end = walk?.route?.at(-1);
+      return [a.id, end ? { ox: end[0], oz: end[1] } : outlet] as const;
+    }));
     const firstMovement = reach(w, initial.map(a => a.id), (id, x, z) => { const door = initialGoals.get(id)!; return Math.hypot(x - door.ox, z - door.oz) < 12; }, routeFrames);
     for (let outlet = 0; outlet < c.state.outlets.length; outlet++) {
       const ids = initial.filter(a => a.outlet === outlet).map(a => a.id);

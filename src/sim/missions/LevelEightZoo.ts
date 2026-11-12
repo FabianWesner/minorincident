@@ -153,7 +153,7 @@ export class LevelEightZoo {
       const serviceRoutes: [number, number][][] = [
         [[-96, 32]],
         [[96, 32]], // Clear the doorway onto the boulevard before normal pursuit takes over.
-        [[-24, -64], [0, -56], [0, -44], [-11, -40], [-11, -24], [1, -19.2]], // Enter the north gate and walk the dry shore around the pond.
+        [[-24, -64], [0, -56]], // Ordinary reinforcements finish on the public north path.
         [[24, 64]], // Leave onto the boulevard toward the plaza instead of walking south around the bunker.
       ];
       // Outlets 5 and 6 are the two hatches inside the plaza cell: they walk straight out at the group.
@@ -205,6 +205,10 @@ export class LevelEightZoo {
     const id = emergeResident(w, outlet, w.tick, alpha ? { archetype: 'infected.alpha' } : { ...(index === 3 ? { archetype: spearhead ? 'infected.armored' : 'infected.sprinter' } : {}), look: { role: 'cashier' } });
     if (id) {
       this.state.arrivals.push({ id, outlet: index, tick: w.tick, alpha }); if (alpha) this.state.alphas++;
+      if (index === 2 && !this.state.sealedAt) {
+        const walk = outlet.walking?.find(walk => walk.id === id);
+        if (walk) walk.route = [...outlet.route, [0, -44], [-11, -40], [-11, -24], [1, -19.2]];
+      }
       // The K9 follows the same hidden vestibule/door walk as the human cohort.
       if (!alpha && index === 2 && !this.state.dogId) {
         const dog = emergeResident(w, outlet, w.tick, { archetype: 'infected.dog' });
@@ -212,6 +216,9 @@ export class LevelEightZoo {
         this.state.dogId = dog;
         this.state.arrivals.push({ id: dog, outlet: index, tick: w.tick, alpha: false });
         this.state.animalInterceptionId = id;
+        // Only the opening contact pair walks the pond shore. Later north
+        // reinforcements must not queue against the closed arena exit.
+        for (const walk of outlet.walking ?? []) if (walk.id === id || walk.id === dog) walk.route = [...outlet.route, [0, -44], [-11, -40], [-11, -24], [1, -19.2]];
       }
     }
   }
