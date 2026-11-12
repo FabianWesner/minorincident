@@ -43,3 +43,9 @@ Full-route native regression over seeds 1–3 with maximum active-driving no-pro
 After the probe was corrected to open the hatch through ordinary interact input during authored holds, `sh tools/qa/l9-progress-regression.sh` passes all three seeds on the current implementation. Seed 1 completes with a 0.37 s maximum, seed 2 with 4.42 s, and seed 3 with 3.00 s. The earlier seed-1 evacuation hang was a defence-policy failure: four live infected blocked the survivor while the hatch remained closed. No further production evacuation change was made to resolve that harness failure.
 
 The regression now also fails for any >2 m position step while L9 remains in its driving phase, including authored holds and their transitions. All three runs have zero such steps. This excludes the old 6–18 m pin relocation from these passing receipts. Scripted crash/fall phases are outside that audit. Current typecheck and lint pass. Final PROD comparison with this same driver, latest remote/threat receipts, baseline cleanup and browser QA remain pending; goal completion is not claimed.
+
+## Final same-policy PROD comparison
+
+The finalized regression ran unchanged on exact PROD `0b650749`: all seeds completed, but maximum stalls were 12.80 / 12.75 / 12.72 s. Fixed runs complete at 0.37 / 4.42 / 3.00 s with no position jumps. Full receipts are in `native-comparison.json`; they supersede earlier policy-specific diagnostic measurements. This blockage class predates current main and is not new relative to PROD.
+
+The sole baseline checkout was checked for tracked changes and live probe processes, its receipts preserved, and `/tmp/s67-l9stuck-prod-0b650749` removed. Baseline cleanup is complete.
