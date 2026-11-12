@@ -83,3 +83,5 @@ No browser runs were performed. Human visual QA should confirm the molotov visib
 Pacing investigation: `SpawnDirector.safe()` requires arrivals to be at least 18 m from the courier and offscreen or occluded. The rejected 5 m pressure-pulse experiment could never admit an actor; it was reverted. Future cadence work must use valid offscreen approach points.
 
 Native cap trace (`/tmp/s86-captrace.json`): during route travel, living infected usually occupy 11–12 of the 12 low-tier slots while only 0–2 are within 30 m of the courier. For example, at 450 s the director is 12/12 with zero nearby; at 750 s it is again 12/12 with zero nearby. This identifies distant living hunters starving later local arrivals as a remaining pacing constraint. Corpses were not removed and infected stats were not changed.
+
+Static-reserve experiment: increasing the journey reservation from one slot to three produced 39 attack starts, nine gaps over 30 s, and a 243.1 s longest gap (seed 1, low tier, completed in 1,012.5 s). It reduced pressure and was reverted; a static reservation alone does not solve local arrival starvation. Receipt: `/tmp/s86-reserve3.json`.
