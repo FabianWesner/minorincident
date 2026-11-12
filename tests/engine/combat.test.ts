@@ -45,6 +45,17 @@ test('L10 arsenal roles: precision, close-mid and area weapons meet their core d
   expect(rosterAction('weapon.flamethrower').status?.kind).toBe('burning');
 });
 
+test('molotov: its persistent fire drops an ordinary five-infected cluster within two seconds', async () => {
+  const w = await arena(); equip(w, ['weapon.fire-axe'], ['weapon.molotov']);
+  const ids = [-1.2, -0.6, 0, 0.6, 1.2].map(z => dummy(w, 2, z, 40));
+  fire(w, 'RIGHT', { x: 1, z: 0 }, { x: 2, z: 0 });
+  for (let i = 0; i < 60 && !w.combat!.effects.zones.some(z => z.kind === 'fire'); i++) step(w, 1);
+  const zone = w.combat!.effects.zones.find(z => z.kind === 'fire');
+  expect(zone).toBeDefined(); step(w, 120);
+  expect(ids.map(id => health(w, id))).toEqual([0, 0, 0, 0, 0]);
+  expect(zone?.expires! - zone?.created!).toBeGreaterThanOrEqual(8 * 60);
+});
+
 /** Broad-phase cover must agree with the exact wall tests, including rotated padding and mutable doors. */
 async function checkDynamicCover(): Promise<void> {
   const w = await arena(), q = w.combat!.query, devices = w.interactables!;
