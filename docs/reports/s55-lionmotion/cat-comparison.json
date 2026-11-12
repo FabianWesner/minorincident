@@ -1,0 +1,58 @@
+{
+  "before": {
+    "path": "test-results/s55-lionmotion/original-prewarmed/frames.json",
+    "frames": 900,
+    "actors": {
+      "397": {
+        "samples": 899,
+        "rootMaxM": 0.05333333333334167,
+        "yawMaxRad": 0,
+        "localPawMaxM": 0.568323997832343,
+        "pelvisMaxM": 0.9804758131504059,
+        "pelvisWorstFrame": 728,
+        "pawMaxM": 0.5683239978323429,
+        "worstFrame": 661,
+        "transition": "walk->walk (handL)"
+      },
+      "410": {
+        "samples": 899,
+        "rootMaxM": 0.05333333333334167,
+        "yawMaxRad": 0,
+        "localPawMaxM": 0.5686699602629454,
+        "pelvisMaxM": 0.980478048324585,
+        "pelvisWorstFrame": 644,
+        "pawMaxM": 0.5686699602629453,
+        "worstFrame": 688,
+        "transition": "walk->walk (handL)"
+      }
+    }
+  },
+  "after": {
+    "path": "test-results/s55-lionmotion/fixture-prewarmed-matrix/webgl2-high-z1/frames.json",
+    "frames": 900,
+    "actors": {
+      "397": {
+        "samples": 899,
+        "rootMaxM": 0.05333333333334167,
+        "yawMaxRad": 0,
+        "localPawMaxM": 0.05582651993529226,
+        "pelvisMaxM": 0,
+        "pelvisWorstFrame": 0,
+        "pawMaxM": 0.05582651993529226,
+        "worstFrame": 616,
+        "transition": "walk->walk (footR)"
+      },
+      "410": {
+        "samples": 899,
+        "rootMaxM": 0.05333333333334167,
+        "yawMaxRad": 0,
+        "localPawMaxM": 0.06119952049477355,
+        "pelvisMaxM": 0,
+        "pelvisWorstFrame": 0,
+        "pawMaxM": 0.06119952049477355,
+        "worstFrame": 600,
+        "transition": "walk->walk (footR)"
+      }
+    }
+  }
+}

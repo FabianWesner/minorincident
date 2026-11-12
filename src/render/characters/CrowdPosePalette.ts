@@ -77,10 +77,11 @@ export class CrowdPosePalette {
   reuse(id: number, frame: number): void { const state = this.states.get(id)!; state.frame = frame; state.weight = 1; }
   /** Per-instance contact correction in the same GPU draw. Settled poses keep
    * using the immutable atlas; only moving figures upload a corrected row. */
-  correct(id: number, frame: number, outgoing: number, weight: number, correct: (pose: Float32Array) => void): number {
+  correct(id: number, frame: number, outgoing: number, weight: number, correct: (pose: Float32Array) => void, blendAfter = false): number {
     const row = this.states.get(id)!.row + this.capacity;
     const pose = this.rows.subarray(row * this.width, (row + 1) * this.width);
     this.copyFrame(frame, row * this.width);
+    if (blendAfter) correct(pose);
     if (weight < 1) for (let i = 0; i < this.width; i += 16) {
       // Matrix lerp collapses a part at opposing rotations. Blend TRS so an
       // interrupted turn/fall never shrinks a figure to zero between clips.
@@ -89,7 +90,8 @@ export class CrowdPosePalette {
       this.position.lerp(this.previousPosition, 1 - weight); this.rotation.slerp(this.previousRotation, 1 - weight); this.scale.lerp(this.previousScale, 1 - weight);
       this.currentMatrix.compose(this.position, this.rotation, this.scale).toArray(pose, i);
     }
-    correct(pose); this.dirty(row);
+    if (!blendAfter) correct(pose);
+    this.dirty(row);
     this.states.get(id)!.frame = row; this.states.get(id)!.weight = 1;
     return row;
   }

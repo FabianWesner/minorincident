@@ -88,7 +88,7 @@ export class AnimalMoves {
       return speed > .06 ? p : undefined;
     }
     if (species === 'lion') {
-      if (dead || !b) return speed > .06 && speed < 2.6 ? this.stalk(p, gaitPhase, .4) : undefined;
+      if (dead || !b) return speed > .06 ? this.stalk(p, gaitPhase, .4) : undefined;
       if (a && (a.move === 'lion.pounce' || a.move === 'lion.flank')) {
         if (a.stage === 'telegraph') {
           // Crouch low, head down and forward, a short butt wiggle in the last half.

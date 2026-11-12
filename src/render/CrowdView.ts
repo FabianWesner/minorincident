@@ -823,7 +823,7 @@ export class CrowdView extends Group {
       if (specialAttack?.move === 'zebra.stampede' && specialAttack.stage === 'active') clip = 'zebra-stampede';
       if (specialAttack?.move === 'flamingo.dive' && specialAttack.stage === 'active') clip = 'run';
       // r32-animalmoves: species poses (lift/flight phase) are sampled once per figure and drive a few clip choices.
-      const species = e.infected && !e.corpse ? animalSpecies(e) : undefined;
+      const species = !e.corpse ? animalSpecies(e) : undefined;
       const animalPose = species ? this.animalMoves.sample(e, renderTick, motion.speed, this.gait.sample(e.id, gaitDistance, 'corgi-trot', batch.strideScale, motion.speed)) : undefined;
       const dogPhase = species === 'dog' && !heavy && !e.infectionRise ? this.animalMoves.dogPhase : -1;
       if (dogPhase >= 0) clip = 'dog-lunge-bite';
@@ -930,7 +930,7 @@ export class CrowdView extends Group {
         // inside the reserved contact space; distant windups retain their full coil and extension.
         const target = this.world.entities.get(e.infected?.heardTargetId || e.infected?.l1?.targetId || 1);
         if (target?.survivor && Math.hypot(x - target.transform.x, z - target.transform.z) < infectedContactDistance(e.combat!.radius) + .15) layers.lunge = Math.min(layers.lunge ?? 0, .04);
-        if (!heavy && !specialAttack && !alphaMove && b.state !== 'dead' && this.world.solids?.clear(e.transform, e.combat!.radius + .6, e.id) === false) {
+        if (!species && !heavy && !specialAttack && !alphaMove && b.state !== 'dead' && this.world.solids?.clear(e.transform, e.combat!.radius + .6, e.id) === false) {
           // Keep the baked attack hunch over its planted feet at a hull, wall or body.
           // Combat reach is unchanged; only the added forward body throw yields.
           layers.lunge = Math.min(layers.lunge ?? 0, 0); layers.lean = -.25; layers.lurch = 0;

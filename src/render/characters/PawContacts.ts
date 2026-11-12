@@ -18,14 +18,20 @@ export class PawContacts {
   private readonly forward = new Vector3();
   private readonly feet;
   private pelvisDrop = 0;
+  private supportOffset = 0;
+  private readonly pelvisHeight: number;
   private readonly liveSkin: boolean;
   private clip = '';
   constructor(private readonly root: Object3D, template = root) {
+    this.pelvisHeight = template.getObjectByName('hip')?.position.y ?? 0;
     template.updateWorldMatrix(true, true); template.getWorldPosition(this.origin);
     const body = template.getObjectByName('skin_body') as SkinnedMesh | undefined;
     const skeleton = template.getObjectByName('root');
     const continuous = body?.isSkinnedMesh === true && (skeleton?.userData.crowdQuadruped === true || !!skeleton?.userData.animalSoles);
-    this.liveSkin = continuous && root === template;
+    // Crowd pose skeletons solve the same continuous skin as live actors.
+    // Excluding them plants the baked moving paw, overextends support, and
+    // drops the pelvis until stance ends in a whole-body snap.
+    this.liveSkin = continuous;
     const weightedPoints = (owner: Object3D): Vector3[] => {
       if (!body?.isSkinnedMesh) return [];
       const geometry = body.geometry, joints = geometry.getAttribute('skinIndex'), weights = geometry.getAttribute('skinWeight'), points: Vector3[] = [];
@@ -99,6 +105,7 @@ export class PawContacts {
   /** A texture/model or LOD handoff keeps world-space support points. */
   inherit(previous: PawContacts): void {
     this.clip = previous.clip;
+    this.supportOffset = previous.supportOffset;
     for (const foot of this.feet) {
       const old = previous.feet.find(other => other.leg.name === foot.leg.name); if (!old) continue;
       foot.phase = old.phase; foot.held = old.held; foot.step = old.step; foot.fadeStart = old.fadeStart;
@@ -237,8 +244,15 @@ export class PawContacts {
       supportDrop = Math.max(supportDrop, hip.y - target.y - vertical);
     }
     const pelvis = this.root.getObjectByName('hip');
+    if (this.liveSkin) {
+      // Unreachable support becomes a catch-up step, not a body-length drop.
+      // Ease across stance boundaries rather than removing support in one frame.
+      const target = Math.max(0, Math.min(.08, supportDrop));
+      this.supportOffset += Math.max(-dt * .5, Math.min(dt * .5, target - this.supportOffset));
+      supportDrop = this.supportOffset;
+    }
     this.pelvisDrop = pelvis && supportDrop > 1e-4 ? supportDrop / pelvis.parent!.getWorldScale(new Vector3()).y : 0;
-    if (pelvis && this.pelvisDrop) { pelvis.position.y -= this.pelvisDrop; pelvis.updateWorldMatrix(false, true); }
+    if (pelvis && this.pelvisDrop) { const before = pelvis.position.y; pelvis.position.y = Math.min(before, this.pelvisHeight - this.pelvisDrop); this.pelvisDrop = before - pelvis.position.y; pelvis.updateWorldMatrix(false, true); }
     for (const [index, foot] of this.feet.entries()) {
       const p = (phase + offsets[index]) % 1, sole = this.origin.y + foot.sole;
       // A gait change (walk/trot/gallop use different foot offsets) or leaving a standing hold must not re-plant a
@@ -255,6 +269,11 @@ export class PawContacts {
         (this.liveSkin ? landing(foot, foot.planted) : foot.ankle ? this.pawWorld(foot, foot.planted) : foot.planted.copy(foot.paw).applyMatrix4(foot.leg.matrixWorld)).setY(sole); foot.fadeStart = stance; foot.step = -1;
         // Touchdown away from where a grounded paw is drawn (after a gait change): a short lifted catch-up step.
         if (foot.last && foot.last.y < sole + .015 && Math.hypot(foot.last.x - foot.planted.x, foot.last.z - foot.planted.z) > .03) { foot.from.copy(foot.last).setY(sole); foot.step = 0; }
+      }
+      if (this.liveSkin && foot.last && p > stance && foot.phase >= 0 && foot.phase <= stance) {
+        // A catch-up step may still be between its endpoints at lift-off.
+        // Begin swing at the last drawn paw rather than jumping to its target.
+        foot.planted.copy(foot.last); foot.fadeStart = stance;
       }
       if (foot.ankle) {
         // A welded body has independently posed knees and ankles. Use world
@@ -318,6 +337,12 @@ export class PawContacts {
    * Once its authored spot is more than 6 cm away it takes a short lifted step there, diagonal pairs at a time, so a
    * stop from a gait settles into the stance in steps rather than a one-frame jump. Authored lifts (bark) still lift. */
   hold(dt: number, grounded = false): void {
+    if (this.liveSkin && this.supportOffset > 0) {
+      this.supportOffset = Math.max(0, this.supportOffset - dt * .5);
+      const pelvis = this.root.getObjectByName('hip');
+      this.pelvisDrop = pelvis ? this.supportOffset / pelvis.parent!.getWorldScale(new Vector3()).y : 0;
+      if (pelvis) { const before = pelvis.position.y; pelvis.position.y = Math.min(before, this.pelvisHeight - this.pelvisDrop); this.pelvisDrop = before - pelvis.position.y; pelvis.updateWorldMatrix(false, true); }
+    }
     this.root.updateWorldMatrix(true, true); this.root.getWorldPosition(this.origin);
     const floor = this.origin.y, partner = [3, 2, 1, 0];
     for (const [index, foot] of this.feet.entries()) {

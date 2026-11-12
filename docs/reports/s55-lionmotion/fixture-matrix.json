@@ -1,0 +1,306 @@
+[
+  {
+    "name": "webgl2-high-z1",
+    "config": {
+      "requestedBackend": "webgl2",
+      "tier": "high",
+      "cameraDistanceScale": 1,
+      "actualBackend": "webgl",
+      "movement": "test-only route: 10 s at 1 m/s + 5 s at 3.2 m/s; gameplay stats unchanged"
+    },
+    "metrics": {
+      "path": "test-results/s55-lionmotion/fixture-prewarmed-matrix/webgl2-high-z1/frames.json",
+      "frames": 900,
+      "actors": {
+        "397": {
+          "samples": 899,
+          "rootMaxM": 0.05333333333334167,
+          "yawMaxRad": 0,
+          "localPawMaxM": 0.05582651993529226,
+          "pelvisMaxM": 0,
+          "pelvisWorstFrame": 0,
+          "pawMaxM": 0.05582651993529226,
+          "worstFrame": 616,
+          "transition": "walk->walk (footR)"
+        },
+        "410": {
+          "samples": 899,
+          "rootMaxM": 0.05333333333334167,
+          "yawMaxRad": 0,
+          "localPawMaxM": 0.06119952049477355,
+          "pelvisMaxM": 0,
+          "pelvisWorstFrame": 0,
+          "pawMaxM": 0.06119952049477355,
+          "worstFrame": 600,
+          "transition": "walk->walk (footR)"
+        }
+      }
+    }
+  },
+  {
+    "name": "webgl2-high-z1.5",
+    "config": {
+      "requestedBackend": "webgl2",
+      "tier": "high",
+      "cameraDistanceScale": 1.5,
+      "actualBackend": "webgl",
+      "movement": "test-only route: 10 s at 1 m/s + 5 s at 3.2 m/s; gameplay stats unchanged"
+    },
+    "metrics": {
+      "path": "test-results/s55-lionmotion/fixture-prewarmed-matrix/webgl2-high-z1.5/frames.json",
+      "frames": 900,
+      "actors": {
+        "397": {
+          "samples": 899,
+          "rootMaxM": 0.05333333333334167,
+          "yawMaxRad": 0,
+          "localPawMaxM": 0.05582651993529226,
+          "pelvisMaxM": 0,
+          "pelvisWorstFrame": 0,
+          "pawMaxM": 0.05582651993529226,
+          "worstFrame": 616,
+          "transition": "walk->walk (footR)"
+        },
+        "410": {
+          "samples": 899,
+          "rootMaxM": 0.05333333333334167,
+          "yawMaxRad": 0,
+          "localPawMaxM": 0.06119952049477355,
+          "pelvisMaxM": 0,
+          "pelvisWorstFrame": 0,
+          "pawMaxM": 0.06119952049477355,
+          "worstFrame": 600,
+          "transition": "walk->walk (footR)"
+        }
+      }
+    }
+  },
+  {
+    "name": "webgl2-low-z1",
+    "config": {
+      "requestedBackend": "webgl2",
+      "tier": "low",
+      "cameraDistanceScale": 1,
+      "actualBackend": "webgl",
+      "movement": "test-only route: 10 s at 1 m/s + 5 s at 3.2 m/s; gameplay stats unchanged"
+    },
+    "metrics": {
+      "path": "test-results/s55-lionmotion/fixture-prewarmed-matrix/webgl2-low-z1/frames.json",
+      "frames": 900,
+      "actors": {
+        "397": {
+          "samples": 899,
+          "rootMaxM": 0.05333333333334167,
+          "yawMaxRad": 0,
+          "localPawMaxM": 0.05582651993529226,
+          "pelvisMaxM": 0,
+          "pelvisWorstFrame": 0,
+          "pawMaxM": 0.05582651993529226,
+          "worstFrame": 616,
+          "transition": "walk->walk (footR)"
+        },
+        "410": {
+          "samples": 899,
+          "rootMaxM": 0.05333333333334167,
+          "yawMaxRad": 0,
+          "localPawMaxM": 0.06119952049477355,
+          "pelvisMaxM": 0,
+          "pelvisWorstFrame": 0,
+          "pawMaxM": 0.06119952049477355,
+          "worstFrame": 600,
+          "transition": "walk->walk (footR)"
+        }
+      }
+    }
+  },
+  {
+    "name": "webgl2-low-z1.5",
+    "config": {
+      "requestedBackend": "webgl2",
+      "tier": "low",
+      "cameraDistanceScale": 1.5,
+      "actualBackend": "webgl",
+      "movement": "test-only route: 10 s at 1 m/s + 5 s at 3.2 m/s; gameplay stats unchanged"
+    },
+    "metrics": {
+      "path": "test-results/s55-lionmotion/fixture-prewarmed-matrix/webgl2-low-z1.5/frames.json",
+      "frames": 900,
+      "actors": {
+        "397": {
+          "samples": 899,
+          "rootMaxM": 0.05333333333334167,
+          "yawMaxRad": 0,
+          "localPawMaxM": 0.05582651993529226,
+          "pelvisMaxM": 0,
+          "pelvisWorstFrame": 0,
+          "pawMaxM": 0.05582651993529226,
+          "worstFrame": 616,
+          "transition": "walk->walk (footR)"
+        },
+        "410": {
+          "samples": 899,
+          "rootMaxM": 0.05333333333334167,
+          "yawMaxRad": 0,
+          "localPawMaxM": 0.06119952049477355,
+          "pelvisMaxM": 0,
+          "pelvisWorstFrame": 0,
+          "pawMaxM": 0.06119952049477355,
+          "worstFrame": 600,
+          "transition": "walk->walk (footR)"
+        }
+      }
+    }
+  },
+  {
+    "name": "webgpu-high-z1",
+    "config": {
+      "requestedBackend": "webgpu",
+      "tier": "high",
+      "cameraDistanceScale": 1,
+      "actualBackend": "webgpu",
+      "movement": "test-only route: 10 s at 1 m/s + 5 s at 3.2 m/s; gameplay stats unchanged"
+    },
+    "metrics": {
+      "path": "test-results/s55-lionmotion/fixture-prewarmed-matrix/webgpu-high-z1/frames.json",
+      "frames": 900,
+      "actors": {
+        "397": {
+          "samples": 899,
+          "rootMaxM": 0.05333333333334167,
+          "yawMaxRad": 0,
+          "localPawMaxM": 0.05582651993529226,
+          "pelvisMaxM": 0,
+          "pelvisWorstFrame": 0,
+          "pawMaxM": 0.05582651993529226,
+          "worstFrame": 616,
+          "transition": "walk->walk (footR)"
+        },
+        "410": {
+          "samples": 899,
+          "rootMaxM": 0.05333333333334167,
+          "yawMaxRad": 0,
+          "localPawMaxM": 0.06119952049477355,
+          "pelvisMaxM": 0,
+          "pelvisWorstFrame": 0,
+          "pawMaxM": 0.06119952049477355,
+          "worstFrame": 600,
+          "transition": "walk->walk (footR)"
+        }
+      }
+    }
+  },
+  {
+    "name": "webgpu-high-z1.5",
+    "config": {
+      "requestedBackend": "webgpu",
+      "tier": "high",
+      "cameraDistanceScale": 1.5,
+      "actualBackend": "webgpu",
+      "movement": "test-only route: 10 s at 1 m/s + 5 s at 3.2 m/s; gameplay stats unchanged"
+    },
+    "metrics": {
+      "path": "test-results/s55-lionmotion/fixture-prewarmed-matrix/webgpu-high-z1.5/frames.json",
+      "frames": 900,
+      "actors": {
+        "397": {
+          "samples": 899,
+          "rootMaxM": 0.05333333333334167,
+          "yawMaxRad": 0,
+          "localPawMaxM": 0.05582651993529226,
+          "pelvisMaxM": 0,
+          "pelvisWorstFrame": 0,
+          "pawMaxM": 0.05582651993529226,
+          "worstFrame": 616,
+          "transition": "walk->walk (footR)"
+        },
+        "410": {
+          "samples": 899,
+          "rootMaxM": 0.05333333333334167,
+          "yawMaxRad": 0,
+          "localPawMaxM": 0.06119952049477355,
+          "pelvisMaxM": 0,
+          "pelvisWorstFrame": 0,
+          "pawMaxM": 0.06119952049477355,
+          "worstFrame": 600,
+          "transition": "walk->walk (footR)"
+        }
+      }
+    }
+  },
+  {
+    "name": "webgpu-low-z1",
+    "config": {
+      "requestedBackend": "webgpu",
+      "tier": "low",
+      "cameraDistanceScale": 1,
+      "actualBackend": "webgpu",
+      "movement": "test-only route: 10 s at 1 m/s + 5 s at 3.2 m/s; gameplay stats unchanged"
+    },
+    "metrics": {
+      "path": "test-results/s55-lionmotion/fixture-prewarmed-matrix/webgpu-low-z1/frames.json",
+      "frames": 900,
+      "actors": {
+        "397": {
+          "samples": 899,
+          "rootMaxM": 0.05333333333334167,
+          "yawMaxRad": 0,
+          "localPawMaxM": 0.05582651993529226,
+          "pelvisMaxM": 0,
+          "pelvisWorstFrame": 0,
+          "pawMaxM": 0.05582651993529226,
+          "worstFrame": 616,
+          "transition": "walk->walk (footR)"
+        },
+        "410": {
+          "samples": 899,
+          "rootMaxM": 0.05333333333334167,
+          "yawMaxRad": 0,
+          "localPawMaxM": 0.06119952049477355,
+          "pelvisMaxM": 0,
+          "pelvisWorstFrame": 0,
+          "pawMaxM": 0.06119952049477355,
+          "worstFrame": 600,
+          "transition": "walk->walk (footR)"
+        }
+      }
+    }
+  },
+  {
+    "name": "webgpu-low-z1.5",
+    "config": {
+      "requestedBackend": "webgpu",
+      "tier": "low",
+      "cameraDistanceScale": 1.5,
+      "actualBackend": "webgpu",
+      "movement": "test-only route: 10 s at 1 m/s + 5 s at 3.2 m/s; gameplay stats unchanged"
+    },
+    "metrics": {
+      "path": "test-results/s55-lionmotion/fixture-prewarmed-matrix/webgpu-low-z1.5/frames.json",
+      "frames": 900,
+      "actors": {
+        "397": {
+          "samples": 899,
+          "rootMaxM": 0.05333333333334167,
+          "yawMaxRad": 0,
+          "localPawMaxM": 0.05582651993529226,
+          "pelvisMaxM": 0,
+          "pelvisWorstFrame": 0,
+          "pawMaxM": 0.05582651993529226,
+          "worstFrame": 616,
+          "transition": "walk->walk (footR)"
+        },
+        "410": {
+          "samples": 899,
+          "rootMaxM": 0.05333333333334167,
+          "yawMaxRad": 0,
+          "localPawMaxM": 0.06119952049477355,
+          "pelvisMaxM": 0,
+          "pelvisWorstFrame": 0,
+          "pawMaxM": 0.06119952049477355,
+          "worstFrame": 600,
+          "transition": "walk->walk (footR)"
+        }
+      }
+    }
+  }
+]

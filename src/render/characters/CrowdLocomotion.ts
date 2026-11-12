@@ -120,7 +120,7 @@ export class CrowdLocomotion {
   private readonly pawSoles: { node: Object3D; points: Vector3[] }[];
   constructor(private readonly model: Object3D, clip: CrowdClip, readonly footwork = new CrowdFootwork()) {
     this.fourLegs = !!model.getObjectByName('legFL');
-    this.animalSkin = model.getObjectByName('root')?.userData.crowdQuadruped === true;
+    this.animalSkin = model.getObjectByName('root')?.userData.crowdQuadruped === true || !!model.getObjectByName('root')?.userData.animalSoles;
     this.animal = this.fourLegs || this.animalSkin;
     this.groundedAnimal = this.animal && (model.getObjectByName('root')?.userData.groundedAnimal === true || !!model.getObjectByName('root')?.userData.animalSoles);
     this.preserveAnimalJoints = model.getObjectByName('root')?.userData.ss_preserveAnimalJoints === true && !model.getObjectByName('root')?.userData.animalSoles;
@@ -371,8 +371,9 @@ export class CrowdLocomotion {
       if (!paws) { paws = new PawContacts(this.frame, this.model); this.paws.set(id, paws); }
       const previous = this.animalSkin ? this.footwork.animalContacts.get(id) : undefined;
       if (previous && previous.owner !== this && time !== undefined && time >= previous.time && time - previous.time <= .3) paws.inherit(previous.contacts);
-      if (speed > .06 && strides[name]) paws.update(phase, stride, animalGait);
-      else paws.hold(1 / 60, this.groundedAnimal);
+      const dt = previous && time !== undefined && time >= previous.time ? Math.min(.1, time - previous.time) : 1 / 60;
+      if (speed > .06 && strides[name]) paws.update(phase, stride, animalGait, dt);
+      else paws.hold(dt, this.groundedAnimal);
       if (this.animalSkin && time !== undefined) this.footwork.animalContacts.set(id, { contacts: paws, owner: this, time });
     } else if (contacts && strides[name] && speed > .06) contacts.update(phase, stride, run, 1, style?.stance ?? this.stance(name, stride, this.scale.setFromMatrixScale(this.frame.matrixWorld).y), true, style);
     if (contacts && time !== undefined) this.footwork.far.set(id, { contacts, owner: this, time });
@@ -502,7 +503,7 @@ export class CrowdLocomotion {
       this.footwork.states.delete(id);
     }
     if ((strides[clip] && speed > .06) || layers || this.animal && !this.preserveAnimalJoints && standingClips.has(clip)) {
-      const row = poses.correct(id, frame, blend[0], blend[1], pose => this.correct(id, pose, instance, phase, clip, scale, speed, layers, time, style));
+      const row = poses.correct(id, frame, blend[0], blend[1], pose => this.correct(id, pose, instance, phase, clip, scale, speed, layers, time, style), this.animal);
       blend[1] = 1; return row;
     }
     this.reset(id);
