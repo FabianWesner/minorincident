@@ -31,3 +31,9 @@ Full-route native regression over seeds 1–3 with maximum active-driving no-pro
 - Exact `sh tools/remote/run.sh "$PWD" -- npm test`: exit 0 on 94.130.181.173; 27 files, 106 passed / 1 skipped; Vitest 196.49 s, budget wrapper 199.1 s below 240 s. No test trimming.
 - `node --import tsx/esm tools/qa/threat-audit.ts --levels L9`: skilled complete, passive tick-budget, 0 L9 passive flags; exit 1 is the documented partial-selection diagnostic flag.
 - The road diagnostic remains red. Its latest waypoint-tracking policy completed seed 2 but recorded 10.05 s beside retained barriers. A lateral obstacle-launch experiment worsened the result and was reverted. These gates do not prove the requested driving invariant.
+
+## Native regression status
+
+`sh tools/qa/l9-progress-regression.sh` runs held-W road steering for seeds 1–3 and fails unless every child completes L9 and its active-driving no-progress window is at most 300 ticks. The probe uses intermediate route points and the APC's turn radius; authored holds use the existing combat bot. It never assigns actor positions, HP or mission progress. `--check` was proven red on seed 1's unresolved evacuation hold (exit 1, tick cap 20,000), despite a 0.37 s driving maximum. The final acceptance command must run without the diagnostic tick-cap environment variable.
+
+`b62d962d` avoids repeatedly lifting retained barriers into the chassis during subsequent pushes. `e77b7878` retries stationary truck approaches even when navigation reports a reachable nearby cell. With these changes, seed 2 completed with 4.42 s maximum and seed 3 completed with 3.00 s maximum. Seed 1 remains unfinished: survivor 672 leaves the APC but cycles truck approach targets without entering a truck. Target latching and deduplicating the update loop did not resolve it and were reverted. Current typecheck and lint pass. Full acceptance, fresh remote suite/threat audit after these last production changes, and browser QA remain outstanding.
