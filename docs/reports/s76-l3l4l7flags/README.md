@@ -88,3 +88,5 @@ Moving the four close runners' lateral kerb offset from 5.5 m to 3.5 m retained 
 ## Rejected west Alpha timing extremes
 
 The first ordinary wave already begins at alarm +0 s. Trialed moving the existing west Alpha from +6 s to +14 s: breach at 58.08 s, only 24 alive; plaza minimum 20; three passive flags. Moving it to +0 s instead produced breach at 44.35 s with 55 alive, plaza minimum 13 and three passive flags. Both skilled routes completed. Reverted both: later opening loses population before entry, earlier opening comes closer to 60 alive but worsens sustained plaza pressure and adds a passive flag. Retained +6 s remains at two flags with the aligned north approaches.
+
+Moving the four close opening runners six metres west toward the street ranks also failed: focused L7 audit completed in 57.3 s with four passive flags, skilled completion, passive tick-budget and a skilled follower-pace regression. Reverted; delaying contact by moving the close pack west did not produce an acceptable combined encounter.
