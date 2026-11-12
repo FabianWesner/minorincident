@@ -10,7 +10,7 @@ L10 now removes crop tiles when their full rendered footprint intersects any aut
 
 `tests/nightly/content-invariants.test.ts` now checks ground-cover placements in the prepared layouts of all ten levels against road lanes and asphalt/tile paving, and verifies each adjacent D-CURE region handoff has coincident route endpoints. The check writes `test-results/ground-cover-roads.json` and is part of the existing `npm run test:nightly:remote` placement and decoration gate. A checked-in baseline ratchets known findings; new findings fail. See [the deploy gate](../../qa/deploy-gate.md).
 
-The first sweep found 103 placement/surface pairs; removing the seven L10 corn placements reduced the current baseline to 86 findings. Most remaining items are older road blood decals and Fairhaven rubble placements. The baseline retains exact placement IDs, road/surface IDs, and coordinates; those existing items remain visible backlog rather than being silently accepted as clean.
+The first sweep found 103 placement/surface pairs; removing the seven L10 corn placements reduced the current baseline to 85 findings (one additional broad-phase false positive was removed by exact segment intersection). Most remaining items are older road blood decals and Fairhaven rubble placements. The baseline retains exact placement IDs, road/surface IDs, and coordinates; those existing items remain visible backlog rather than being silently accepted as clean.
 
 ## Visual evidence and validation
 
@@ -19,3 +19,7 @@ I opened the PO's original screenshot at `/private/tmp/claude-501/-Users-wesner-
 Checks: `npm run typecheck`, `npm run lint`, and the focused nightly ground-cover test pass. `npm test` passes all 27 files / 107 executed tests; its enforced inventory is exactly 150/150 and it completed in 170.5 s. The requested remote command (`sh tools/remote/run.sh "$PWD" -- npm test`) could not start because there is no healthy Hetzner runner; the wrapper also rejected the budget-wrapped test command for its Mac fallback. This local pass is recorded separately and is not a remote pass.
 
 The report and code are ready for commit. The required after image/contact sheet and remote unit result remain open because of the environment failures above.
+
+## Follow-up with unrestricted access
+
+Commit `4d0c65fb` preserves the validated code and coordinate report. Headless Scene Lab successfully captured `test-results/s87-surfaceqa/seam-after/anchor-0.png` at `D-CURE/r2-r3-seam`. I opened it: the asphalt, crosswalk and lane markings are clear of corn. This inspector framing is not yet the requested matched HIGH zoom-1 capture. The requested remote unit run passed on runner 46.225.66.90: 27 files, 106 tests passed / one skipped, 150/150 inventory, 203.9 s against the 240 s budget.
