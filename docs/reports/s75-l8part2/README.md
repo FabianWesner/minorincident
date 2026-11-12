@@ -274,3 +274,7 @@ A temporary built-in-instancing control (same geometry/transforms, custom positi
 ## Normal-depth material comparison
 
 Repeated the plain magenta material/built-in-instancing control with normal depth testing enabled. Opened `cover-depth-control/s002-t817.jpg`: all three pond covers remain visible. This excludes floor depth occlusion in that control and focuses investigation on the production material graph (including its discard/cutaway behavior). The previous built-in-instancing-only control retained that production graph and did not show covers. No basic material override is retained. Browser/server are terminal.
+
+## Cutaway control rejected
+
+Protected in-arena control cloned the production jersey PaletteMaterial and disabled its see-through wrapper while preserving the custom position node, normal shading and depth. Opened `cover-cutaway-control/s002-t812.jpg`: covers remain visually absent. No cutaway change was retained. The remaining production graph includes night surface lighting/palette output, so illumination/readability must also be inspected rather than assuming discarded geometry. Browser/server are terminal.
