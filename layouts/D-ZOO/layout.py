@@ -564,6 +564,7 @@ for p in l.data['placements']:
 # for IDs, so additions must start above every surviving original ID.
 _append_padding = [None] * (max(int(p['id'].rsplit(':', 1)[1]) for p in l.data['placements']) + 1 - len(l.data['placements']))
 l.data['placements'].extend(_append_padding)
+_arena_first_id = len(l.data['placements'])
 
 # Compact inner fighting pens are appended after the existing placement set,
 # preserving every generated placement ID. Dynamic L8 gate panels occupy gaps.
@@ -577,7 +578,11 @@ def _arena_wall(cx, cz, half, entry_side, exit_side, gate_half=3):
             _fence(x, cz-half, x, cz-3); _fence(x, cz+3, x, cz+half)
         else: _fence(x, cz-half, x, cz+half)
     across_x(cz-half, 'north'); across_x(cz+half, 'south')
-    across_z(cx-half, 'west'); across_z(cx+half, 'east')
+    # Flamingo sides already use the continuous outer enclosure fences.
+    if cx != 0:
+        if cx == 96: _fence(cx-half, 52.3, cx-half, cz+half)
+        else: across_z(cx-half, 'west')
+        across_z(cx+half, 'east')
 for _cx, _cz, _in, _out in [(0, -32, 'south', 'north'), (-60, -32, 'north', 'south'),
                             (60, 32, 'north', 'south'), (60, -32, 'south', 'east'),
                             (-6, 20, 'west', 'east'), (96, 53, 'south', 'north')]:
@@ -604,6 +609,25 @@ _spur(60,-12,60,-18); _spur(74,-32,82,-32)
 _spur(-24,8,-24,20); _spur(-24,20,-20,20)
 
 l.data['placements'] = [p for p in l.data['placements'] if p is not None]
+# Clear dressing and obsolete panels under the new arena perimeter, after ID
+# allocation so every remaining placement retains its authored identifier.
+_new_fences = [p for p in l.data['placements'] if p['assetId'] == 'prop.crowd-fence' and int(p['id'].rsplit(':', 1)[1]) >= _arena_first_id]
+_arena_drop = set()
+for p in l.data['placements']:
+    if p in _new_fences: continue
+    if p['assetId'] not in _DRESS | {'prop.picket-fence', 'prop.hedge', 'prop.crowd-fence'}: continue
+    a = p['visualAabb']
+    for fence in _new_fences:
+        b = fence['visualAabb']
+        if a['max'][0] > b['min'][0] - .15 and a['min'][0] < b['max'][0] + .15 and a['max'][2] > b['min'][2] - .15 and a['min'][2] < b['max'][2] + .15:
+            _arena_drop.add(p['id']); break
+for pid in _arena_drop:
+    p = next(p for p in l.data['placements'] if p['id'] == pid)
+    l.data['placements'].remove(p)
+    l.data['colliders'] = [c for c in l.data['colliders'] if c['id'] != pid]
+    idx = int(pid.rsplit(':', 1)[1]); name = f"inst:{p['assetId']}:{idx + 1}"
+    for obj in [obj for obj in l.empties if obj.name == name or obj.name.startswith(name + '.') or obj.name.startswith(f'crown:{pid}:')]:
+        l.empties.remove(obj); bpy.data.objects.remove(obj, do_unlink=True)
 
 # Static layout pieces with identical material/attribute layouts share a program.
 # PreRenderer still draws every piece, including its shadows, during warm-up.
