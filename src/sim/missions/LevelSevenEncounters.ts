@@ -168,7 +168,7 @@ export class LevelSevenEncounters {
     for (let i = 0; i < alphas; i++) {
       const at = group === l7Encounters.finalGroup
         ? i ? { x: -43, z: 41.7 } : { x: -64, z: 50 }
-        : { x: centre.x, z: centre.z + (i ? 3 : -3) };
+        : { x: centre.x + (group === l7Encounters.firstStreetGroup ? 8.5 : 0), z: centre.z + (i ? 3 : -3) };
       admit('infected.alpha', streetPoint(at, .55), { pack: group, state: 'idle', yaw: Math.PI,
         alphaType: this.alphaType(group, i) });
     }

@@ -124,3 +124,13 @@ On unchanged runtime, `MI_THREAT_KITING_STYLE=circles ... --levels L7` reports z
 ## Opening Alpha position contact mechanism
 
 Shifting only the existing opening Alpha east by 16 m produced four kiting attack starts but zero hits, primary skilled tick-budget and a follower-wait flag (107.0 s); rejected. An 8 m east shift produced three attack starts and three moving hits, skilled/passive complete, empty skilled flags and passing multi-seed follower pace; only `FOLLOWER_WAIT_UPPER_BOUND_OVER_10_PERCENT` remained (35.9 s). A 6 m shift regressed to three passive flags and passive tick-budget (76.5 s). All are reverted for now: the 8 m case identifies a useful contact mechanism but still violates no-regression acceptance.
+
+## Retained L7 opening Alpha approach
+
+Shifted only the existing opening Alpha east by 8.5 m; all other Alpha anchors, stats and counts remain unchanged. Focused audit:
+
+```text
+[qa:threat] L7: skilled complete, passive tick-budget, 0 passive flags (77.0s)
+```
+
+Both skilled/passive multi-seed follower pace pass; skilled flags empty. Retreat probe: four attack starts and two moving hits; skilled follower-wait upper bound 4.79%. Typecheck and lint pass. Nearby trials: +7 m had four passive flags; +9 m had only the landed-hit flag and 5.99% skilled waiting. The +8.5 m position is retained because it meets both moving-contact and follower criteria; the combined audit and final remote suite remain due. Browser QA is needed for the altered Alpha approach before visual acceptance.
