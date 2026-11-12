@@ -95,6 +95,13 @@ export class LevelNineBot {
     // that approach waypoint after the evacuation has already completed.
     if (driving.evacuationDone) this.index = this.path.length - 1;
     let target: Point = this.path[this.index];
+    let recoveringRoute = false;
+    if (!driving.evacuationDone) {
+      const a = this.path[this.index - 1], b = this.path[this.index], dx = b[0] - a[0], dz = b[1] - a[1], length2 = dx * dx + dz * dz;
+      const t = Math.max(0, Math.min(1, ((p.x - a[0]) * dx + (p.z - a[1]) * dz) / length2));
+      const nearest: Point = [a[0] + dx * t, a[1] + dz * t];
+      if (Math.hypot(p.x - nearest[0], p.z - nearest[1]) > 12) { target = nearest; recoveringRoute = true; this.avoid = null; }
+    }
     if (driving.evacuationDone) {
       // Leave straight for the bridge at full power. Waypoint dances and a
       // part-throttle turn-in-place leave the APC crawling next to the gate
@@ -108,7 +115,7 @@ export class LevelNineBot {
     // can reach the evac point without taking repeated stationary hull attacks.
     if (p.x > l9Course.gate.x - 55 && Math.abs(p.z) < 35 && !driving.evacuationDone) {
       if (driving.gateClosed && p.x < l9Course.gate.x + 4) target = [l9Course.gate.x + 6, l9Course.gate.sideZ];
-      else target = [l9Course.evacuation.x, l9Course.evacuation.z];
+      else target = [l9Course.evacuation.x, l9Course.evacuation.z + l9Course.evacuation.radius - 2];
       const distance = Math.hypot(target[0] - p.x, target[1] - p.z);
       // Ease in: at the old .6 x distance the floor-speed APC (11 m/s, bus ramming behind) orbited the bay at full lock and
       // slipped round the end of the bridge-gate wall (r32-l9fun seed 1). Arrive at <= 0.35 x distance m/s.
@@ -125,7 +132,7 @@ export class LevelNineBot {
     // completion policy for the revised stop-on-impact mechanic.
     if (this.avoid && (w.tick >= this.avoid.until || Math.hypot(this.avoid.x - p.x, this.avoid.z - p.z) < 4)) this.avoid = null;
     if (driving.evacuationDone) this.avoid = null;
-    if (!this.avoid && !driving.evacuationDone) {
+    if (!this.avoid && !driving.evacuationDone && !recoveringRoute) {
       const c = Math.cos(p.yaw), s = Math.sin(p.yaw);
       const heavy = p.x < 405 ? w.infected!.active.find(e => {
         const dx = e.transform.x - p.x, dz = e.transform.z - p.z, ahead = dx * c - dz * s;
@@ -153,7 +160,7 @@ export class LevelNineBot {
     const dx = target[0] - p.x, dz = target[1] - p.z, want = -Math.atan2(dz, dx);
     const delta = Math.atan2(Math.sin(want - p.yaw), Math.cos(want - p.yaw));
     const ramp = l9Course.ramps.some(r => Math.abs(p.z - r.z) < 4 && p.x > r.x - 45 && p.x < r.x + 20);
-    f.drive = { throttle: driving.evacuationDone || ramp ? 1 : this.throttle, steer: Math.max(-1, Math.min(1, delta * 2)) }; this.lastSteer = f.drive.steer;
+    f.drive = { throttle: driving.evacuationDone || ramp || recoveringRoute || this.profile === 'complete' ? 1 : this.throttle, steer: Math.max(-1, Math.min(1, delta * 2)) }; this.lastSteer = f.drive.steer;
     return f;
   }
 }
