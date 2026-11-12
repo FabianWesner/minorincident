@@ -220,3 +220,7 @@ Ran current-code 25 s pond/zebra samples from committed fixtures, HIGH requested
 ## Fresh-layout cover presence
 
 Fresh `level:L8:sanctuary` headless HIGH/zoom-1 camera control logs all six new pond/zebra cover IDs in the district layout. Opened `fresh-cover/s000-t66.jpg`: concrete barriers are visibly present on either side of the pond floor, with the landing rings beyond. This establishes fresh runtime rendering, not combat: the explicitly staged phase had no turned flock and immediately cleared, so the view is close and the objective is stale. The fixture samples that omitted the pieces remain invalid for new-cover acceptance; fixture regeneration and fresh-layout fights are still needed. Browser and server are terminal.
+
+## Native fixture regeneration
+
+Ran `make-checkpoint.ts --what qa --qa-parts l8 --seed 1` from current fresh layout. The unchanged complete policy generated all six pre-arena checkpoints and the engaged elephant checkpoint. Refreshed the seven L8 fixture saves; monkey compression changed from Brotli to gzip, so the old duplicate is removed. `check-fixtures.ts` on the generated directory passes all seven: decode without drops, resume, 300 native ticks, alive and playing. This establishes fresh-layout native route/checkpoint generation and basic resume health; browser cover/fight verification must now use these refreshed fixtures. Raw generation manifest remains in ignored `test-results/s75-l8part2/fresh-fixtures/`.
