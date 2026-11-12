@@ -4,7 +4,7 @@ import { l6 } from '../../data/l6';
 import { emptyInput, type InputFrame } from '../../input/InputFrame';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import { Walker } from './Walker';
-export type L6Profile='complete'|'newbie'|'evade-only'|'idle';
+export type L6Profile='complete'|'newbie'|'evade-only'|'idle'|'early-close';
 /** Ordinary inputs only: defend the rear, collect injured people, close clear gates, walk to Northgate. */
 export class LevelSixBot {
   finished=false;
@@ -25,6 +25,20 @@ export class LevelSixBot {
     // A visible bite on the group is an immediate rescue even beyond the newbie's normal 16 m threat scan.
     // The existing bite-priority ordering was ineffective there despite the machine gun reaching the victim.
     const enemies=w.infected!.active.filter(e=>e.health.current>0&&!e.infectionRise&&!e.hidden&&w.combat!.query.shotVisible(p,e.transform,e.id)&&Math.hypot(e.transform.x-p.x,e.transform.z-p.z)<(this.profile==='newbie'&&biteRisk(e)>0?16:22)).sort((a,b)=>biteRisk(a)-biteRisk(b)||Math.hypot(a.transform.x-p.x,a.transform.z-p.z)-Math.hypot(b.transform.x-p.x,b.transform.z-p.z));
+    // Close each reachable hatch while advancing. Keep the movement toward the
+    // switch active during ordinary combat so the adversarial route defends as
+    // it closes, instead of walking through incoming attacks without firing.
+    let closingHatch=false;
+    if(this.profile==='early-close'&&(s.phase==='retreat'||s.phase==='exit')){
+      const sw=[...w.entities.iterate()].filter(e=>e.archetype==='l6.entry-switch'&&e.interactable?.enabled)
+        .map(e=>({e,distance:Math.hypot(e.transform.x-p.x,e.transform.z-p.z)}))
+        .filter(row=>row.e.transform.x>=p.x-3)
+        .sort((a,b)=>a.e.transform.x-b.e.transform.x)[0];
+      if(sw&&sw.distance<=l6.hatch.promptM){
+        closingHatch=true;f.interact=true;
+        if(!enemies[0])return f;
+      }
+    }
     // Close a cleared gate from the valid interaction spot before pursuing another distant target.
     const closeGate=fights&&s.gates.find(g=>!g.closedAt&&p.x>g.x+1&&Math.hypot(p.x-LevelSixSubway.gateWait(g.x).x,p.z-LevelSixSubway.gateWait(g.x).z)<1.7&&friends.every(r=>w.entities.get(r.id)!.transform.x>g.x+2));
     if(closeGate&&(!enemies[0]||Math.hypot(enemies[0].transform.x-p.x,enemies[0].transform.z-p.z)>2.2)){f.interact=true;return f;}
@@ -45,6 +59,7 @@ export class LevelSixBot {
       // Keep covering the column while retreating; replenishing pursuers must not pin the courier in place.
       if(s.phase!=='retreat'&&s.phase!=='exit')return f;
     }
+    if(closingHatch)return f;
     if(s.phase==='shelter'||s.phase==='first'||s.phase==='fails'){go({x:0,z:4},.6,'shelter');return f;}
     if(fights){
       const lag=friends.filter(r=>r.straggler&&!r.rejoined).sort((a,b)=>w.entities.get(a.id)!.transform.x-w.entities.get(b.id)!.transform.x)[0];

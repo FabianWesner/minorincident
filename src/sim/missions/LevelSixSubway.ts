@@ -5,7 +5,7 @@ import { Outbreak } from '../outbreak/Outbreak';
 import { Rng } from '../../core/Rng';
 import { seatAnchor } from '../npc/seats';
 import { leaveSeat } from '../npc/MorningRoutines';
-import { l6, l6Entries, l6BreachModels, l6Doors, l6InjuryLines, l6HatchAlphas } from '../../data/l6';
+import { l6, l6Entries, l6BreachModels, l6Doors, l6InjuryLines, l6HatchAlphas, l6SpawnCandidates, l6PressureExitDoor } from '../../data/l6';
 import { l5Survivors } from '../../data/l5';
 import type { EntitySnapshot } from '../world/types';
 import type { Point } from '../npc/types';
@@ -67,7 +67,7 @@ export class LevelSixSubway {
     nav.setPlayerMask(playerMask);
     w.player!.locomotion.movementMask = playerMask;
     const breach1=start+ticks(30+rng.next()*10), breach2=breach1+ticks(20+rng.next()*10);
-    this.mission.state.l6={entries:l6Entries.map(e=>({door:e.door,warnedAt:0,remaining:e.count,nextAt:0})),phase:'shelter',startAt:start,breach1At:breach1,breach2At:breach2,abandonAt:0,nextWave:breach1,firstBang:false,secondBang:false,leaderX:6,leaderZ:-2,paused:false,survivors:[],gates:[],infectedIds:[],spawnLog:[],spawnRefusals:{cap:0,offscreen:0,snap:0},flashlight:false,mainPower:true,emergency:false,exitAt:0,gateAt:0,injuryLineAt:0,lastShot:0,mid:false,platform:false};
+    this.mission.state.l6={entries:l6Entries.map(e=>({door:e.door,warnedAt:0,remaining:e.count,nextAt:0})),phase:'shelter',startAt:start,breach1At:breach1,breach2At:breach2,abandonAt:0,nextWave:breach1,firstBang:false,secondBang:false,leaderX:6,leaderZ:-2,paused:false,survivors:[],gates:[],infectedIds:[],spawnLog:[],spawnRefusals:{cap:0,reserved:0,offscreen:0,snap:0},flashlight:false,mainPower:true,emergency:false,exitAt:0,gateAt:0,injuryLineAt:0,lastShot:0,mid:false,platform:false};
     w.npcs!.setAmbient(0);
     const o=w.npcs!.civilians.outbreak ?? new Outbreak(w,{refuges:[],tier:w.infected!.director.tier}); w.npcs!.civilians.outbreak=o;
     // Outbreak construction restores L1's cap, so apply L6's quality-scaled
@@ -145,22 +145,25 @@ export class LevelSixSubway {
   private holdWaveInterval():number {return ticks(2.5);}
   /** Announced L6 cohorts outrank distant, idle ambient fillers when the authored cap is full. */
   private retireIdleFillers(capacity:number):void {
-    const w=this.w,ai=w.infected!,player=w.entities.get(1)!.transform;
+    const w=this.w,ai=w.infected!,player=w.entities.get(1)!.transform,group=this.s.survivors.filter(r=>r.status==='shelter'||r.status==='following').map(r=>w.entities.get(r.id)!).filter(Boolean);
     for(const e of [...ai.active]) {
       if(ai.director.count+ai.director.pendingTurns<capacity)return;
       const b=e.infected;
-      // Authored cohorts and turned shelter survivors retain their identities.
-      if(this.s.spawnLog.some(q=>q.id===e.id&&q.wave!==3)||this.s.survivors.some(r=>r.id===e.id))continue;
+      // Keep authored and survivor identities while they can still pressure the column.
+      const passed=distance(e.transform,{x:this.s.leaderX,z:15})>30&&group.every(member=>distance(e.transform,member.transform)>25);
+      if(this.s.survivors.some(r=>r.id===e.id)||this.s.spawnLog.some(q=>q.id===e.id)&&!passed)continue;
       if(!b||e.health.current<=0||e.corpse||e.infectionRise||b.recoverAt>=0||b.state!=='idle'&&b.state!=='wander'||['chase','bite'].includes(b.l1?.mode??'')||e.combat?.attacking||b.specialAttack||
         distance(e.transform,player)<=25||!ai.director.offscreen(e.transform,e.transform.y-.7))continue;
       ai.release(e);
+      this.s.distantRecycled=(this.s.distantRecycled??0)+1;
       if(ai.director.count+ai.director.pendingTurns<capacity)return;
     }
   }
   private spawn(n:number,doors:number[],wave:number):number {
-    const w=this.w,ai=w.infected!,o=w.npcs!.civilians.outbreak!;let spawned=0;
+    const w=this.w,ai=w.infected!,o=w.npcs!.civilians.outbreak!,player=w.entities.get(1)!.transform;let spawned=0;
     // Saves from before the hold telemetry do not contain this optional ledger.
     this.s.spawnRefusals??={cap:0,offscreen:0,snap:0};
+    this.s.spawnRefusals.reserved??=0;
     for(let i=0;i<n;i++){
       let occupied=ai.director.count+ai.director.pendingTurns;
       // Reserve the authored side arrivals even while defending the shelter.
@@ -168,28 +171,40 @@ export class LevelSixSubway {
       // An announced maintenance cohort owns its own reserved slots. Count the
       // other announced cohorts here, but do not reserve this cohort against
       // itself or it can sit forever at the cap with zero members spawned.
-      const currentEntry=wave===4?(this.s.entries??[]).find(entry=>entry.door===doors[0]):undefined;
-      const reserveFutureEntries=(this.s.phase==='fails'&&!(this.s.arrivals?.remaining))||this.s.phase==='retreat'||this.s.phase==='exit';
-      // Future quotas suppress filler, but an announced breach or hatch has priority
-      // over those unannounced promises. Preserve other live announcements.
-      const reserved=(wave<=3?(this.s.entries??[]).reduce((total,e)=>total+(wave===3&&reserveFutureEntries||e.warnedAt?e.remaining:0),0):0)+(wave===4?(this.s.entries??[]).reduce((total,e)=>total+(e.warnedAt&&e!==currentEntry?e.remaining:0),0):0)+(wave!==2?(this.s.arrivals?.remaining??(this.s.phase==='first'?10:0)):0);
-      if(wave!==3&&occupied>=ai.director.cap-reserved) { this.retireIdleFillers(ai.director.cap-reserved); occupied=ai.director.count+ai.director.pendingTurns; }
-      if(occupied>=ai.director.cap-reserved){this.s.spawnRefusals.cap+=n-i;break;}
+      const currentEntry=wave===4||wave===5?(this.s.entries??[]).find(entry=>entry.door===doors[0]):undefined;
+      const liveEntries=(this.s.entries??[]).filter(e=>e.warnedAt&&e.remaining&&(!e.closedAt||e.brokenAt)&&
+        (this.s.phase!=='retreat'&&this.s.phase!=='exit'||l6Doors[e.door].x>=this.s.leaderX-20&&l6Doors[e.door].x<=this.s.leaderX+40));
+      const otherEntries=liveEntries.filter(entry=>entry!==currentEntry);
+      // Reserve only announced hatches. Unannounced doors have no imminent
+      // admission deadline, and passed hatches must not starve moving tunnel pressure.
+      // Preserve other live announcements.
+      const pressureReserve=wave===2||wave===3||wave===4||wave===5?0:l6.pressure.group;
+      const reserved=(wave<=3?liveEntries:otherEntries).reduce((total,e)=>total+e.remaining,0)+(wave!==2?(this.s.arrivals?.remaining??(this.s.phase==='first'?10:0)):0)+pressureReserve;
+      if(occupied>=ai.director.cap-reserved) { this.retireIdleFillers(ai.director.cap-reserved); occupied=ai.director.count+ai.director.pendingTurns; }
+      if(occupied>=ai.director.cap-reserved){
+        const refused=n-i;
+        if(occupied<ai.director.cap)this.s.spawnRefusals.reserved=(this.s.spawnRefusals.reserved??0)+refused;
+        else this.s.spawnRefusals.cap+=refused;
+        break;
+      }
       const requested=doors[i%doors.length];
       const courierApproach=wave===1||wave===4||wave===2&&requested%2===0;
       // A watched shelter doorway cannot pop an infected into view. Use a real
       // tunnel access instead, rotating the alternatives so breach two retains
       // at least two sources. Test the snapped pose, which is the actual spawn.
-      const candidates=(wave<=2?[requested,1-requested,...[2,3,4,5,6,7].map((_,j)=>2+(j+requested)%6)]:[requested]).filter(index=>!(this.s.entries??[]).some(e=>e.door===index&&e.closedAt&&!e.brokenAt));
+      // Tunnel pressure can route to another live service mouth when the
+      // selected hatch is closed. Only the hatch's own announced arrivals
+      // (wave 4) must wait for that particular door to break open.
+      const candidates=l6SpawnCandidates(requested,wave,(this.s.entries??[]).filter(e=>e.closedAt&&!e.brokenAt).map(e=>e.door));
       if(!candidates.length){this.s.spawnRefusals.hatch=(this.s.spawnRefusals.hatch??0)+1;continue;}
       // Both tunnel walls emit inward. The old fixed -Z offset put north-side arrivals in the unbuilt void.
-      const mouth=(index:number,breachOffset=20)=>{const base=l6Doors[index];
+      const mouth=(index:number,breachOffset=20)=>{const base=index===8?{x:Math.min(l6PressureExitDoor.x,player.x+18),z:l6PressureExitDoor.z}:l6Doors[index];
         const rank=wave===4?this.s.spawnLog.filter(entry=>entry.wave===4&&entry.door===requested).length%2:0;
         const inward=wave===4?1.4+rank*1.4:1.4;
         return {x:base.x+(wave===4?[-3,3][rank]:(i%2)*.8),z:base.z+(wave===1||wave===2?breachOffset:index>1&&base.z<l6.tunnel.z?inward:-inward)};};
       let door:number|undefined,at:Point|undefined,snapped=false;
       for(const index of candidates){
-        for(const offset of wave===1?[20,14,9]:wave===2?[14,9,20]:[20]){
+      for(const offset of wave===1?[20,14,9]:wave===2?[20,14,9,5]:[20]){
           let candidate:Point;
           try{candidate=this.snap(mouth(index,offset),wave===4?w.entities.get(1)!.transform:undefined);snapped=true;}catch{continue;}
           if(ai.director.offscreen(candidate,.6)){door=index;at=candidate;break;}
@@ -205,7 +220,9 @@ export class LevelSixSubway {
       // members are admitted. Keep reservations for every other announced
       // cohort and for the remaining authored arrivals.
       const held = ai.director.reserved;
-      if (currentEntry) ai.director.reserved = Math.max(0, held - currentEntry.remaining);
+      if (currentEntry||wave===2||wave===3) ai.director.reserved = Math.max(0, held -
+        (wave===2?(this.s.arrivals?.remaining??0)+l6.pressure.group:wave===3?liveEntries.reduce((n,e)=>n+e.remaining,0)+l6.pressure.group:
+          wave===4||wave===5?(currentEntry?.remaining??0)+l6.pressure.group:currentEntry?.remaining??0));
       // A catalog armored front member covers each hatch cohort against
       // the carried MG; its visible role and stats agree in every level.
       const hatchMembers = this.s.spawnLog.filter(entry=>entry.wave===4&&entry.door===requested).length;
@@ -220,27 +237,30 @@ export class LevelSixSubway {
         const alphaType=hatchFront?l6HatchAlphas[requested]:undefined;
         // Fast members lead the two announced breach cohorts so they stay with
         // the retreating courier instead of being absorbed into the shelter crowd.
-        const openingRunner = wave === 1 && i === 0;
-        const breachDog = wave === 2 && i === 0;
-        id=alphaType?ai.spawn('infected.alpha',at,{alphaType}):openingRunner?ai.spawn('infected.runner',at):breachDog?ai.spawn('infected.dog',at):front?ai.spawn(wave===1||hatchFront?'infected.armored':'infected.riot',at):o.spawnPedestrian(at,{model});
+      const breachMember = this.s.spawnLog.filter(entry=>entry.wave===2).length+i;
+      const openingRunner = wave === 1 && i === 0 || wave === 2 && breachMember % 3 === 1 || wave === 3 && i % l6.pressure.group === 0;
+        id=alphaType?ai.spawn('infected.alpha',at,{alphaType}):openingRunner?ai.spawn('infected.runner',at):front?ai.spawn(wave===1||hatchFront?'infected.armored':'infected.riot',at):o.spawnPedestrian(at,{model});
         const e=w.entities.get(id)!;
-        if(!front&&!openingRunner&&!breachDog)o.turnNow(e);
+        if(!front&&!openingRunner)o.turnNow(e);
       }
       finally { ai.director.reserved = held; }
       const e=w.entities.get(id)!;
       // Opening arrivals converge on the protector from both accesses; later
       // arrivals take a short approach, then use ordinary human perception.
-      const until=w.tick+ticks(wave===2||wave===4?20:courierApproach?12:2);
-      ai.press(id,1,until,4);
-      ai.rush(id,w.entities.get(1)!.transform,until,true);
+      const groupTarget=wave===3?this.s.survivors.filter(r=>r.status==='shelter'||r.status==='following').map(r=>w.entities.get(r.id)!).filter(Boolean)
+        .sort((a,b)=>distance(a.transform,e.transform)-distance(b.transform,e.transform))[0]:undefined;
+      const target=groupTarget??w.entities.get(1)!;
+      const until=w.tick+ticks(wave===2||wave===3||wave===4?20:courierApproach?12:2);
+      ai.press(id,target.id,until,4);
+      ai.rush(id,target.transform,until,true);
       spawned++;this.s.infectedIds.push(id);this.s.spawnLog.push({id,door,x:e.transform.x,z:e.transform.z,tick:w.tick,wave,offscreen:ai.director.offscreen(at,.6)});
     }
     return spawned;
   }
   private breach(second:boolean):void {
     const s=this.s,w=this.w;
-    if(second){s.phase='fails';s.mainPower=false;s.emergency=true;this.power();w.events.emit({type:'power.off',tick:w.tick,group:'metro-main'});s.arrivals={remaining:10,door:0,nextAt:w.tick};}
-    else {s.phase='first';this.spawn(8,[0,1],1);s.nextWave=this.w.tick+this.holdWaveInterval();this.mission.setState('breached',true);}
+    if(second){s.phase='fails';s.mainPower=false;s.emergency=true;this.power();w.events.emit({type:'power.off',tick:w.tick,group:'metro-main'});s.arrivals={remaining:l6.breach.secondCount,door:0,nextAt:w.tick};}
+    else {s.phase='first';this.spawn(l6.breach.firstCount,[0,1],1);s.nextWave=this.w.tick+this.holdWaveInterval();this.mission.setState('breached',true);}
     w.events.emit({type:second?'l6.breach2':'l6.breach1',tick:w.tick});
   }
   private abandon():void {
@@ -354,8 +374,9 @@ export class LevelSixSubway {
     s.flashlight=this.mission.state.items.includes('headlamp');
     // Bites use this same reservation as the authored spawns. Turning a
     // bystander must not steal a slot promised to the next breach or hatch.
-    const reserveFutureEntries=(s.phase==='fails'&&!(s.arrivals?.remaining))||s.phase==='retreat'||s.phase==='exit';
-    w.infected!.director.reserved=(s.entries??[]).reduce((n,e)=>n+((reserveFutureEntries||e.warnedAt)?e.remaining:0),0)+(s.arrivals?.remaining??(s.phase==='shelter'||s.phase==='first'?10:0));
+    w.infected!.director.reserved=(s.entries??[]).reduce((n,e)=>n+(e.warnedAt&&(!e.closedAt||e.brokenAt)&&
+      (s.phase!=='retreat'&&s.phase!=='exit'||l6Doors[e.door].x>=s.leaderX-20&&l6Doors[e.door].x<=s.leaderX+40)?e.remaining:0),0)+(s.arrivals?.remaining??(s.phase==='shelter'||s.phase==='first'?10:0));
+    if(s.phase==='retreat'||s.phase==='exit')w.infected!.director.reserved+=l6.pressure.group;
     let turning=0;for(const e of w.entities.iterate())if(e.infection&&!e.infected)turning++;
     w.infected!.director.pendingTurns=turning;
     // A retry can restore a checkpoint captured on the transition tick. Keep the
@@ -374,13 +395,13 @@ export class LevelSixSubway {
     // until its eight arrivals have reached a valid off-screen entrance.
     if((s.phase==='first'||s.phase==='fails')&&t>=s.nextWave){
       const door=Math.floor(t/ticks(1))%2;
-      if(s.spawnLog.filter(e=>e.wave===1).length>=8||this.spawn(1,[door],1))s.nextWave=t+this.holdWaveInterval();
+      if(s.spawnLog.filter(e=>e.wave===1).length>=l6.breach.firstCount||this.spawn(1,[door],1))s.nextWave=t+this.holdWaveInterval();
       else s.nextWave=t+15;
     }
     // A hatch closed before the retreat also shuts off fallback breach spawns.
     for(const entry of s.entries??[]){
       const door=l6Doors[entry.door],sw=entry.switchId===undefined?undefined:w.entities.get(entry.switchId);
-      if(sw?.interactable&&!entry.closedAt&&!entry.brokenAt&&sw.interactable.completed){entry.closedAt=t;entry.hits=l6.hatch.hits;w.events.emit({type:'barricade.sound',tick:t,sourceId:sw.id,position:{x:door.x,y:1.2,z:door.z},phase:'brace',hp:l6.hatch.hits,maxHp:l6.hatch.hits});}
+      if(sw?.interactable&&!entry.closedAt&&!entry.brokenAt&&sw.interactable.completed){entry.closedAt=t;entry.hits=l6.hatch.hits;entry.nextAt=t+ticks(l6.hatch.safeS);w.events.emit({type:'barricade.sound',tick:t,sourceId:sw.id,position:{x:door.x,y:1.2,z:door.z},phase:'brace',hp:l6.hatch.hits,maxHp:l6.hatch.hits});}
       if(sw?.interactable){sw.interactable.enabled=!entry.closedAt&&!entry.brokenAt;sw.interactable.label=entry.brokenAt?'Hatch broken':entry.closedAt?'Hatch closed':'Close the hatch';}
     }
     if(s.phase!=='retreat'&&s.phase!=='exit')return;
@@ -418,27 +439,29 @@ export class LevelSixSubway {
     // from one side/ahead; the opposite escape lane stays open.
     for(const entry of s.entries??[]){
       const door=l6Doors[entry.door];
-      if(!entry.warnedAt&&p.x>=door.x-44&&p.x<door.x+8){entry.warnedAt=t;entry.nextAt=t+120;w.events.emit({type:'l6.bang',tick:t,breach:entry.door+1,position:door});}
+      if(!entry.warnedAt&&p.x>=door.x-28&&p.x<door.x+8){entry.warnedAt=t;entry.nextAt=t+120;w.events.emit({type:'l6.bang',tick:t,breach:entry.door+1,position:door});}
       const sw=entry.switchId===undefined?undefined:w.entities.get(entry.switchId);
-      if(entry.warnedAt&&entry.remaining&&t>=entry.nextAt){
+      if(entry.warnedAt&&(entry.remaining||entry.closedAt&&!entry.brokenAt)&&t>=entry.nextAt){
         // Arrivals behind a closed hatch bash it once per second (telegraphed rattle and impact) and break through at zero.
         if(entry.closedAt&&!entry.brokenAt){
           entry.hits=(entry.hits??l6.hatch.hits)-1;entry.hitAt=t;entry.nextAt=t+ticks(l6.hatch.hitS);
           w.events.emit({type:'barricade.sound',tick:t,sourceId:sw?.id??0,position:{x:door.x,y:1.2,z:door.z},phase:entry.hits>0?'hit':'break',hp:Math.max(0,entry.hits),maxHp:l6.hatch.hits});
-          if(entry.hits<=0){entry.brokenAt=t;entry.nextAt=t;w.events.emit({type:'l6.hatch-broken',tick:t,door:entry.door});}
+          if(entry.hits<=0){entry.brokenAt=t;entry.reopenRemaining=entry.remaining===0?1:0;entry.remaining=Math.max(entry.remaining,1);entry.nextAt=t;w.events.emit({type:'l6.hatch-broken',tick:t,door:entry.door});}
         }
-        else { const spawned=this.spawn(entry.remaining,[entry.door],4); if(spawned){entry.remaining-=spawned;entry.nextAt=t+360;}else entry.nextAt=t+15; }
+        else { const wave=entry.reopenRemaining?5:4,spawned=this.spawn(entry.remaining,[entry.door],wave); if(spawned){entry.remaining-=spawned;if(wave===5)entry.reopenRemaining=Math.max(0,(entry.reopenRemaining??0)-spawned);entry.nextAt=t+360;}else entry.nextAt=t+15; }
       }
     }
     if(t>=s.nextWave){
-      const groupIndex=Math.floor(s.spawnLog.filter(entry=>entry.wave===3).length/l6.pressure.group);
       s.nextWave=t+ticks(l6.pressure.intervalS);
-      const ahead=l6Doors.map((d,i)=>({d,i})).filter(({d,i})=>i>1&&d.x>=s.leaderX+l6.pressure.aheadM).sort((a,b)=>a.d.x-b.d.x)[0];
-      const behind=l6Doors.map((d,i)=>({d,i})).filter(({d})=>d.x<=tail-l6.pressure.behindM).sort((a,b)=>b.d.x-a.d.x)[0];
-      const fallback=l6Doors.map((d,i)=>({d,i})).filter(({i})=>i>1).sort((a,b)=>Math.abs(a.d.x-s.leaderX)-Math.abs(b.d.x-s.leaderX))[0];
-      const source=(groupIndex%2===0?ahead:behind)??fallback;
+      const pressureDoors=[...l6Doors.map((d,i)=>({d,i})),{d:{x:Math.min(l6PressureExitDoor.x,p.x+18),z:l6PressureExitDoor.z},i:8}];
+      const ahead=pressureDoors.filter(({d,i})=>i>1&&d.x>=s.leaderX+l6.pressure.aheadM).sort((a,b)=>a.d.x-b.d.x)[0];
+      const fallback=pressureDoors.filter(({i})=>i>1).sort((a,b)=>Math.abs(a.d.x-s.leaderX)-Math.abs(b.d.x-s.leaderX))[0];
+      // Replenishing pressure comes from ahead when possible. Sending every
+      // other cohort behind a same-speed retreating group created safe gaps;
+      // the Northgate mouth becomes the ahead source at the final platform.
+      const source=ahead??fallback;
       const sources=source?Array.from({length:l6.pressure.group},()=>source.i):[];
-      if(sources.length)this.spawn(sources.length,sources,3);
+      if(sources.length){const admitted=this.spawn(sources.length,sources,3);if(admitted<sources.length)s.nextWave=t+ticks(5);}
     }
     if(s.phase==='exit'&&s.survivors.some(r=>r.status==='out')){
       // Keep the escape leg legible while the column passes the open gate one by one.

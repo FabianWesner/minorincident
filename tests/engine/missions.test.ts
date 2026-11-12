@@ -19,6 +19,7 @@ import { missionSandbox } from '../fixtures/scenarios/mission-sandbox';
 import { objectiveText } from '../../src/sim/missions/objectiveText';
 import { markerAnchor } from '../../src/sim/missions/markerAnchor';
 import { l8BossArenas } from '../../src/data/l8Bosses';
+import { l6, l6Entries, l6SpawnCandidates } from '../../src/data/l6';
 import { l10MegaResumeCheck } from '../helpers/l10MegaResume';
 import { l10MegaFightCheck } from '../helpers/l10MegaFight';
 import { checkL8Story } from '../helpers/l8Story';
@@ -324,6 +325,15 @@ test('interactions: ring, input and view predicates agree for every interact ste
 
 // N11: the L6 service gates have their own predicate (the group's waypoint, else the next open gate ahead of the leader).
 test('interactions: only the open L6 gate the group is heading for offers its prompt', async () => {
+  expect(l6.breach.firstCount).toBe(8);
+  expect(l6.breach.secondCount).toBeGreaterThanOrEqual(6);
+  expect(l6.breach.secondCount).toBeLessThanOrEqual(10);
+  expect(l6Entries.every(entry => entry.count === 2)).toBe(true);
+  expect(l6.pressure.group * 10 / l6.pressure.intervalS).toBeGreaterThanOrEqual(2);
+  expect(l6.pressure.group * 10 / l6.pressure.intervalS).toBeLessThanOrEqual(4);
+  expect(l6.hatch.safeS + l6.hatch.hits * l6.hatch.hitS).toBeLessThan(30);
+  expect(l6SpawnCandidates(2, 3, [2])).toContain(5);
+  expect(l6SpawnCandidates(2, 4, [2])).toEqual([]);
   const gates = [{ id: 1, x: 10, closedAt: 0 }, { id: 2, x: 30, closedAt: 0 }, { id: 3, x: 50, closedAt: 0 }];
   const state = (patch: Partial<NonNullable<Parameters<typeof isCurrentOpenL6Gate>[0]>> = {}) => ({ marker: 'l6-next', leaderX: 0, gates, ...patch });
   const current = (s: Parameters<typeof isCurrentOpenL6Gate>[0]) => gates.map(g => isCurrentOpenL6Gate(s, g.id));

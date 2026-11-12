@@ -21,6 +21,7 @@ export interface LevelReceipt {
   level: RunnerLevel; quality: string; definitions: ThreatObserver['definitions']; run: LevelReport | null;
   observation: ReturnType<ThreatObserver['finish']> | null; flags: string[]; wallSeconds: number; nativeStateHash: string | null;
   passiveRun: LevelReport | null; passiveObservation: ReturnType<ThreatObserver['finish']> | null; passiveFlags: string[];
+  l6EarlyClose?: { run: LevelReport | null; observation: ReturnType<ThreatObserver['finish']> | null };
   highHold?: ReturnType<L4HoldCensus['finish']>;
   /** L3-06 army line over seeds 1–3 (tools/qa/threat/l3ArmyLine.ts). */
   l3Army?: ArmyLineVerdict;
@@ -107,7 +108,17 @@ for (const level of selected) {
   for (const wave of observation?.waves ?? []) flags.push(...wave.flags.map(flag => `wave/${wave.key}:${flag}`));
   const passiveStage = stage(stageId(level, true));
   const passiveRun = passiveStage.native?.run ?? null, passiveObservation = passiveStage.native?.observation ?? null;
+  const earlyStage = level === 'L6' ? stage('L6/early-close/1') : undefined;
+  const l6EarlyClose = earlyStage ? { run: earlyStage.native?.run ?? null, observation: earlyStage.native?.observation ?? null } : undefined;
   const passiveFlags: string[] = passiveStage.error ? [`AUDIT_ERROR:${passiveStage.error}`] : [];
+  if (level === 'L6' && (earlyStage?.error || !l6EarlyClose?.run?.completed))
+    passiveFlags.push(`L6_EARLY_CLOSE_INCOMPLETE:${earlyStage?.error ?? l6EarlyClose?.run?.outcome ?? 'missing'}`);
+  if (level === 'L6') {
+    for (const row of l6EarlyClose?.observation?.phases ?? [])
+      passiveFlags.push(...row.flags.map(flag => `early-close/${row.key}:${flag}`));
+    for (const wave of l6EarlyClose?.observation?.waves ?? [])
+      passiveFlags.push(...wave.flags.map(flag => `early-close/wave/${wave.key}:${flag}`));
+  }
   // L9 has no bounded passive observation window: both its skilled and passive
   // driving routes must reach the evacuation. Other passive policies may end
   // at their documented observation cap with a tick-budget outcome.
@@ -153,7 +164,7 @@ for (const level of selected) {
   for (const wave of passiveObservation?.waves ?? []) passiveFlags.push(...wave.flags.map(flag => `wave/${wave.key}:${flag}`));
   if (!multiSeedPace) passiveFlags.push(...followerCoverageFlags(level, observation?.phases ?? []));
   if (followerPaceChecks[level]) passiveFlags.push(...followerWaitFlags(observation?.followerWait));
-  const receipt: LevelReceipt = { level, quality, definitions, run, observation, flags, passiveRun, passiveObservation, passiveFlags, kiting, wallSeconds, nativeStateHash: skilled?.nativeStateHash ?? null };
+  const receipt: LevelReceipt = { level, quality, definitions, run, observation, flags, passiveRun, passiveObservation, passiveFlags, ...(l6EarlyClose ? { l6EarlyClose } : {}), kiting, wallSeconds, nativeStateHash: skilled?.nativeStateHash ?? null };
   if (level === 'L4') {
     const hold = stage('L4/high-hold');
     if (hold.error || !hold.highHold) throw new Error(`Missing L4 high hold: ${hold.error ?? 'no census'}`);

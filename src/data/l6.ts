@@ -1,12 +1,12 @@
 import { l5Survivors } from './l5';
 /** E24 tuning in metres/seconds. The shelter falls on a seeded clock; losses never fail the mission. */
 export const l6 = {
-  shelter: { high: 24, low: 24 }, breach: { model: 'npc.civilian-man-a.aftermath', first: [30, 40], secondDelay: [20, 30], abandonS: 15, telegraphS: 2, streamS: 10 },
+  shelter: { high: 24, low: 24 }, breach: { model: 'npc.civilian-man-a.aftermath', first: [30, 40], firstCount: 8, secondCount: 10, secondDelay: [20, 30], abandonS: 15, telegraphS: 2, streamS: 10 },
   follow: { speed: 2.2, stragglerM: 15, collectM: 3, rejoinM: 5, strayM: 15, regroupM: 10, strayDwellS: 2, aheadM: 12, columnM: 25, gateGroupM: 8 },
-  infected: { high: 30, low: 30 }, pressure: { group: 3, intervalS: 40, aheadM: 18, behindM: 18 }, tunnel: { start: 30, end: 246, z: 15, width: 6.9 },
+  infected: { high: 66, low: 66 }, pressure: { group: 3, intervalS: 12, aheadM: 18, behindM: 18 }, tunnel: { start: 30, end: 246, z: 15, width: 6.9 },
   exit: { centerZ: 15.9, approachZ: 14.1 }, gates: [90, 150, 210],
   /** PO 10-20 #64: a closed entry hatch takes one bash per second from its waiting arrivals and breaks after `hits` (8 s). */
-  hatch: { hits: 8, hitS: 1, promptM: 1.8, standM: .9 }, checkpoints: ['shelter', 'abandon', 'gate-90', 'mid-tunnel', 'gate-150', 'gate-210', 'exit-platform'], caption: 'Night. Still alive.',
+  hatch: { hits: 8, hitS: 1, safeS: 15, promptM: 3.3, standM: .9 }, checkpoints: ['shelter', 'abandon', 'gate-90', 'mid-tunnel', 'gate-150', 'gate-210', 'exit-platform'], caption: 'Night. Still alive.',
 } as const;
 /** Benches for the shelter's sitting routine, including slots for carried L5 survivors. */
 export const l6ShelterSeats = Array.from({ length: Math.ceil((l6.shelter.high + l5Survivors.length - 1) / 5) }, (_, k) => {
@@ -34,5 +34,12 @@ export const l6InjuryLines = {
 
 /** Alternating sides leave the opposite half of the tunnel open. */
 export const l6Entries = [2, 5, 3, 6, 4, 7].map((door, i) => ({ door, count: 2, label: i % 2 ? 'Maintenance hatch' : 'Side passage' }));
+/** Tunnel cohorts can use any open service mouth; an announced hatch cohort stays bound to its own door. */
+export function l6SpawnCandidates(requested: number, wave: number, closedDoors: readonly number[]): number[] {
+  const route = wave === 4 || wave === 5 ? [requested] : [requested, 1 - requested, ...[2, 3, 4, 5, 6, 7].map((_, j) => 2 + (j + requested) % 6), 8];
+  return route.filter(index => !closedDoors.includes(index));
+}
+/** An open tunnel mouth above the Northgate platform sustains late retreat pressure. */
+export const l6PressureExitDoor = { x: 286, z: 11.2 };
 /** r42 Alpha mix (docs/design/boss-and-alpha-moves.md: L6 Screamer in the tunnels, Leaper): the front member of these entry doors. */
 export const l6HatchAlphas: Readonly<Record<number, 'screamer' | 'leaper'>> = { 3: 'screamer', 4: 'leaper' };
