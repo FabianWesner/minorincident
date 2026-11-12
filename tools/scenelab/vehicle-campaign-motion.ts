@@ -11,7 +11,12 @@ if (!Number.isSafeInteger(frameCount) || frameCount < 1) throw new Error('Invali
 const session = new SceneSession({ tier });
 try {
   await session.open();
-  const observation = await session.page.evaluate(async ({ level, frameCount }) => {
+  const cells: { frame: number; jpeg: Buffer }[] = [];
+  await session.page.exposeFunction('__s83Capture', async (frame: number) => {
+    cells.push({ frame, jpeg: await session.page.screenshot({ type: 'jpeg', quality: 80 }) });
+  });
+  const captureFrom = Number(process.env.CAMPAIGN_CAPTURE_FROM ?? 0);
+  const observation = await session.page.evaluate(async ({ level, frameCount, captureFrom }) => {
     const api = window.__SS__!;
     await api.loadLevel(level, { seed: 1, progression: `${level}-default` });
     api.missions.begin(); api.pause(); api.cheats.god(true); api.camera.zoom(1.5);
@@ -24,6 +29,7 @@ try {
       game.view.renderer.nextNodeFrame();
       game.view.frame(1 / 60);
       await api.step(1);
+      if (captureFrom > 0 && frame >= captureFrom && frame < captureFrom + 6) await (window as unknown as { __s83Capture(frame: number): Promise<void> }).__s83Capture(frame);
       const w = game.world;
       if (frame % 300 === 0) progress.push({ frame, tick: w.tick, scenario: w.scenario, phase: w.missions?.state.phase,
         l9Phase: w.missions?.l9?.state.phase, bot: api.bot.status(), figures: game.view.crowdFigures().length,
@@ -43,7 +49,8 @@ try {
     }
     api.input.clear();
     return { samples: result, progress };
-  }, { level, frameCount });
+  }, { level, frameCount, captureFrom });
+  if (cells.length) await session.makeSheet(cells, `test-results/s83-vehicleslide/campaign/${level}-${tier}-consecutive.jpg`, 480);
   const { samples, progress } = observation;
   const groups = new Map<string, typeof samples>();
   for (const sample of samples) { const key = `${sample.state}/${sample.id}`; const group = groups.get(key) ?? []; group.push(sample); groups.set(key, group); }

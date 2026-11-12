@@ -127,3 +127,7 @@ The sampler now records archetype and LOD. The failing actor is infected.dog at 
 ## Late-spawned L9 dog cast fix
 
 GLB inspection confirms all dog tiers include four paws and sole metadata; the failing actor is full-health infected.dog, variant inf.dog, with no severance. L9 initializes its render cast before that pack spawns, leaving the dog aliases absent and rendering a runner fallback with dog-gallop. Registering the existing dog rig and coats in the L9 planned cast fixes that mismatch without stat or LOD changes. Native 1800-tick HIGH/LOW observations now show four paw pairs and 0/0 cm dog p95/max. HIGH grounded rows max at 0.3 cm; LOW at 0.4 cm. LOW still fails the sampler because of one attached no-contact frame: no aerial proof is inferred. Typecheck and targeted lint pass. Capture review of the dog fix and later campaign contexts remain due. See `l9-dog-cast-fix.json`.
+
+## Native dog capture review
+
+Added optional CAMPAIGN_CAPTURE_FROM to the native sampler. The 1800-tick HIGH rerun with capture frames 1531–1536 completed exit 0; targeted lint passes. Opened `native-dog-consecutive.jpg`: native APC drives diagonally across a grassy verge beside a road, small brown dog beside the front corner, upright infected farther ahead in the headlight beam. Feet are too small to judge individual plants visually; four-paw quantitative traces carry that proof. The strip confirms native context and corrected quadruped appearance, not completion of every contact state. See `native-dog-capture-summary.json`.
