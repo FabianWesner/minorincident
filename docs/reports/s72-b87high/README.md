@@ -44,3 +44,7 @@ Opened [contact sheet](contact-sheet.jpg): top row rail hatch/countdown and rest
 Typecheck and lint passed after this QA. Remote full suite is running; its terminal result will be recorded before closing. No browser remains running.
 
 Remote full suite terminal receipt: first attempt timed out at 246.0 s; exact unchanged rerun **passed**, 27 files, 106 passed / 1 skipped, 150/150 registered cases, 208.03 s Vitest / 210.6 s budget wrapper (240 s limit), runner 46.225.66.90. No tests trimmed.
+
+### Saved-input audit
+
+[Input/tick receipt](input-audit.json) preserves every L9 action with its measured simulated duration. Requested `ms:8000` movement/wait actions are capped by the live driver to 4000 ms; actions combining movement and a hold execute them sequentially. Thus turn 11 includes a 1-second W+A interval followed by a separate 1-second handbrake hold with W released. The HUD did not beat 561 m between ticks 3682 and 4375 (11.55 simulated seconds; endpoints 561→564→566→561→566). This supports **NOT FIXED** for a sampled loss of onward objective progress, but does not prove continuous-held-W chassis blockage: no positions were recorded and a brief handbrake interval released W. s67's exact-PROD comparison establishes that the blockage class already exists on PROD; an exact-location regression remains unverified. The prior statement that no >10-second progress-loss interval was established is superseded by this ledger audit, with these measurement limits.
