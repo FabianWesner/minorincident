@@ -216,3 +216,7 @@ Focused `solidOverlaps` against `levelEightLayouts` finds six pieces and zero ov
 ## Cover fixture sample limitation
 
 Ran current-code 25 s pond/zebra samples from committed fixtures, HIGH requested/zoom 1, normal MG input, god off. Opened `cover-flamingo/s003-t980.jpg` and `cover-zebra/s002-t688.jpg`. Neither frame shows the six newly added cover pieces, so these prepared-layout fixture runs do not verify the additions. Zebra advances to `cleared-zebra`/gorilla entry and both browser error lists are empty, but no cover-acceptance claim relies on this sample. A fresh-layout load is required to distinguish stale prepared fixture state from missing runtime integration. Browser and server are terminal.
+
+## Fresh-layout cover presence
+
+Fresh `level:L8:sanctuary` headless HIGH/zoom-1 camera control logs all six new pond/zebra cover IDs in the district layout. Opened `fresh-cover/s000-t66.jpg`: concrete barriers are visibly present on either side of the pond floor, with the landing rings beyond. This establishes fresh runtime rendering, not combat: the explicitly staged phase had no turned flock and immediately cleared, so the view is close and the objective is stale. The fixture samples that omitted the pieces remain invalid for new-cover acceptance; fixture regeneration and fresh-layout fights are still needed. Browser and server are terminal.
