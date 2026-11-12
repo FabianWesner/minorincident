@@ -297,10 +297,27 @@ test('L1 handover + outbreak: no shader builds after warm-up and no frame over 2
   }
   const l10GunBuilds = await page.evaluate(async () => {
     const a = window.__SS__!;
+    a.cheats.infiniteCharges(false); a.input.clear(); a.cheats.killAll(); await a.step(180);
+    for (let i = 0; i < 2; i++) {
+      a.input.set({ left: { down: true, held: false, up: true }, aim: { x: 1, z: 0 } }); await a.step(1); a.input.clear(); await a.step(20);
+    }
+    const p = a.getState().player!;
+    return { after: { ...a.perf().nodeBuildMaterials }, slots: p.weapons!.LEFT.rack, input: a.getState().input, attacks: a.events(0).filter(e => e.type === 'combat.attack').slice(-4) };
+  });
+  test.info().annotations.push({ type: 'empty throwable fixture', description: JSON.stringify(l10GunBuilds) });
+  await page.locator('.hud-weapon-choice[data-weapon="weapon.molotov"]').click();
+  await page.evaluate(async () => { await window.__SS__!.step(16); });
+  await expect(page.locator('.hud-weapon-choice[data-weapon="weapon.molotov"]')).toHaveAttribute('data-selected', 'true');
+  await expect(page.locator('.hud-weapon-choice[data-weapon="weapon.molotov"]')).toHaveAttribute('data-empty', 'true');
+  await expect(page.locator('.hud-weapon-choice[data-weapon="weapon.molotov"]')).toHaveAttribute('aria-label', /Empty/);
+  await page.screenshot({ path: 'test-results/smoke/l10-rack/empty-molotov.png' });
+  const finalGunBuilds = await page.evaluate(async () => {
+    const a = window.__SS__!;
     for (const gun of ['weapon.handgun', 'weapon.shotgun', 'weapon.army-mg', 'weapon.rocket-launcher', 'weapon.flamethrower']) { a.setLoadout(['weapon.fire-axe'], [gun]); await a.step(1); await a.screenshotReady(); }
     return { after: { ...a.perf().nodeBuildMaterials } };
   });
-  expect(heldBuilds(l10.loaded, l10GunBuilds.after), 'L10 carried-weapon builds after level warm-up (all checkpoint pickups)').toEqual([]);
+  expect(heldBuilds(l10.loaded, l10GunBuilds.after), 'L10 throwable builds after warm-up').toEqual([]);
+  expect(heldBuilds(l10.loaded, finalGunBuilds.after), 'L10 carried-weapon builds after level warm-up (all checkpoint pickups)').toEqual([]);
 });
 
 // P0 guard (PROD "all other players are invisible"): each on-screen pedestrian's head/torso pixels must change when that
