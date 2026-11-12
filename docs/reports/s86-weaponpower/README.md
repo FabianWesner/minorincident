@@ -81,3 +81,5 @@ No browser runs were performed. Human visual QA should confirm the molotov visib
 - attack-start condition: rate exceeded baseline; 30 s gap condition remains open (seven gaps, longest 250.2 s)
 
 Pacing investigation: `SpawnDirector.safe()` requires arrivals to be at least 18 m from the courier and offscreen or occluded. The rejected 5 m pressure-pulse experiment could never admit an actor; it was reverted. Future cadence work must use valid offscreen approach points.
+
+Native cap trace (`/tmp/s86-captrace.json`): during route travel, living infected usually occupy 11–12 of the 12 low-tier slots while only 0–2 are within 30 m of the courier. For example, at 450 s the director is 12/12 with zero nearby; at 750 s it is again 12/12 with zero nearby. This identifies distant living hunters starving later local arrivals as a remaining pacing constraint. Corpses were not removed and infected stats were not changed.
