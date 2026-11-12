@@ -1,0 +1,214 @@
+[
+  {
+    "figure": "common-worker",
+    "tier": "low",
+    "backend": "webgl",
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "canvas.f1.varianceMin",
+          "pass": true,
+          "value": 399.4793129456011,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f1.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f3.varianceMin",
+          "pass": true,
+          "value": 40.1306287182897,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f3.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f5.varianceMin",
+          "pass": true,
+          "value": 234.51050452603488,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f5.variedTilesMin",
+          "pass": true,
+          "value": 41,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f7.varianceMin",
+          "pass": true,
+          "value": 106.80943891682273,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f7.variedTilesMin",
+          "pass": true,
+          "value": 56,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f8.varianceMin",
+          "pass": true,
+          "value": 106.7856560114949,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f8.variedTilesMin",
+          "pass": true,
+          "value": 56,
+          "limit": 8
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    "captures": [
+      {
+        "path": "test-results/s71-figurediag/ordinary-corrected-low/s71-common-worker-low/shot-0001.png",
+        "sha256": "4019a6dc59612b3c414002bd72aaad09d5d6bcce21b7aaeb77d1a69476ef5314"
+      },
+      {
+        "path": "test-results/s71-figurediag/ordinary-corrected-low/s71-common-worker-low/shot-0003.png",
+        "sha256": "23b8a6bfe645aa1021635a4b09d9dc5f5813867e373dcb6cf3afe71c530942fa"
+      },
+      {
+        "path": "test-results/s71-figurediag/ordinary-corrected-low/s71-common-worker-low/shot-0005.png",
+        "sha256": "2adafeaf8c8dc6e5abb92ded376f345c99eca587972be5721ffbe1c6da2cfde1"
+      },
+      {
+        "path": "test-results/s71-figurediag/ordinary-corrected-low/s71-common-worker-low/shot-0007.png",
+        "sha256": "90c4c6313d4c70e21d0be339ceb63e3db76d3cdca1d45c88934cbce33d646e43"
+      }
+    ]
+  },
+  {
+    "figure": "cashier",
+    "tier": "low",
+    "backend": "webgl",
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "canvas.f1.varianceMin",
+          "pass": true,
+          "value": 398.31202048719206,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f1.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f3.varianceMin",
+          "pass": true,
+          "value": 35.48001273907448,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f3.variedTilesMin",
+          "pass": true,
+          "value": 64,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f5.varianceMin",
+          "pass": true,
+          "value": 232.48288413406635,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f5.variedTilesMin",
+          "pass": true,
+          "value": 41,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f7.varianceMin",
+          "pass": true,
+          "value": 105.94952978175343,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f7.variedTilesMin",
+          "pass": true,
+          "value": 56,
+          "limit": 8
+        },
+        {
+          "name": "canvas.f8.varianceMin",
+          "pass": true,
+          "value": 105.98938504771593,
+          "limit": 1
+        },
+        {
+          "name": "canvas.f8.variedTilesMin",
+          "pass": true,
+          "value": 56,
+          "limit": 8
+        },
+        {
+          "name": "requestedBackend",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        },
+        {
+          "name": "requestedQuality",
+          "pass": true,
+          "value": 1,
+          "limit": 1
+        }
+      ]
+    },
+    "captures": [
+      {
+        "path": "test-results/s71-figurediag/ordinary-corrected-low/s71-cashier-low/shot-0001.png",
+        "sha256": "013b1f9620e7c0070ae899961681ea233d54c97016842215fdc6c6eba65394fd"
+      },
+      {
+        "path": "test-results/s71-figurediag/ordinary-corrected-low/s71-cashier-low/shot-0003.png",
+        "sha256": "5806aa209bdede73987b9cf4bacd809ed907e9f42e24a43b8bacd44e49cd0312"
+      },
+      {
+        "path": "test-results/s71-figurediag/ordinary-corrected-low/s71-cashier-low/shot-0005.png",
+        "sha256": "e35d4f252a130930e36dba7546a2101c5ab113784d347844878830f2b37d3205"
+      },
+      {
+        "path": "test-results/s71-figurediag/ordinary-corrected-low/s71-cashier-low/shot-0007.png",
+        "sha256": "80a79348cffa07c8d8fa98dbd305f5577769873994f83a22a2fc2a4457d2c16b"
+      }
+    ]
+  }
+]

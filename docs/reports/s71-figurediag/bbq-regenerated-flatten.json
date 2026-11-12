@@ -1,0 +1,21 @@
+{
+  "source": "/private/tmp/s71-bbq-stages/body/lod0.glb",
+  "reference": "/Users/wesner/Workspace/3dp-s52-trellis-heavies/cast/wave1/inf.bbq-dad/input.png",
+  "output": "/private/tmp/s71-bbq-stages/flat-lod0.glb",
+  "source_sha256": "0d9560f3791ebbc932043abd8d8dd74b3d4bc4398be3a1a37307174f9890e9ec",
+  "output_sha256": "5ed28cea511edff957bb4d006b6fe6cd076860910608450a49e320f27ecd6d01",
+  "method": "Region-aware base-colour flattening; preserve geometry, UVs and emission bytes.\nRegions = coarse SLIC texture segmentation intersected with UV coverage islands,\nbody-height bands and nearest input-image colour cluster. Palettes are fitted per\nregion in Lab. Bilateral filtering and local palette compression remove mottling.\nSmall high-contrast features retain their edges; emissive images are never edited.\nInput colour metric: CIE76 distance from each region mean to its assigned input\npalette centroid in the same body-height band. This is a palette comparison, not\npixel correspondence or a claim of semantic segmentation accuracy.\n",
+  "script_sha256": "a3051474124ef48f2d9d29d45b0a94ee10dee0a0e9f289ad0faff2869090065f",
+  "reference_sha256": "daaa0bdbef018dd6cf08960803a7c6a12dc4e30e17bf9b39887303b591ccc10e",
+  "rare_hues": "Green and blue families get independent input centroids and constrained assignment.",
+  "strength": 0.85,
+  "coverage_pixels": 583741,
+  "uv_islands": 719,
+  "regions": 2794,
+  "delta_e76_area_mean": 5.677241214256532,
+  "delta_e76_region_max": 7.528611891459903,
+  "colour_gate": true,
+  "protected_images": [],
+  "region_measurements_file": "flatten.regions.json.gz",
+  "region_measurements_sha256": "2f292cb64f448c6ab71f7d07f4beebe1fa014c55caf2cc65c2e93f8ec3a10dc1"
+}

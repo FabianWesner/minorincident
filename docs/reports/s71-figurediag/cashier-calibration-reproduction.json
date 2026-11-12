@@ -1,0 +1,36 @@
+{
+  "source": "/Users/wesner/Workspace/trellis-highs/inf.cashier/tris300000_tex2048.glb",
+  "output": "/private/tmp/s71-cashier-stages/calibrated.glb",
+  "definition": "Calibrate a reconstructed one-piece head to the measured old head/body ratio.\nAn authored horizontal head/hair-bottom plane is required because TRELLIS does\nnot supply semantic parts. Y scaling above the plane leaves body below it fixed.\nA continuous X/Z taper keeps the neck attached while scaling the upper head.\nThis is a documented post-reconstruction correction, not an imagegen accuracy claim.\n",
+  "authored_head_bottom_y": 0.10796815824508665,
+  "target_old_ratio": 0.47955976718924076,
+  "before_ratio": 0.392,
+  "head_scale": 1.4291880968299338,
+  "after_ratio": 0.47955976718924076,
+  "before_bounds": [
+    [
+      -0.2959466576576233,
+      -0.5005798935890198,
+      -0.19213330745697021
+    ],
+    [
+      0.29782843589782715,
+      0.5003215074539185,
+      0.18993869423866272
+    ]
+  ],
+  "after_bounds": [
+    [
+      -0.2959466576576233,
+      -0.5005798935890198,
+      -0.2741236850868462
+    ],
+    [
+      0.29782843589782715,
+      0.6687148946857073,
+      0.2719290718685387
+    ]
+  ],
+  "sha256": "8bbd165a9eaa1139590e4b57e9a0a9a0814da8e3bb86f50a78ec6275eb8cd3e8",
+  "byteIdenticalToRecorded": true
+}

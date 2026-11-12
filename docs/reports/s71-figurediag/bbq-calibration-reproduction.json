@@ -1,0 +1,37 @@
+{
+  "source": "/Users/wesner/Workspace/trellis-highs/inf.bbq-dad/tris300000_tex2048.glb",
+  "output": "/private/tmp/s71-bbq-calibrated.glb",
+  "definition": "Calibrate a reconstructed one-piece head to the measured old head/body ratio.\nAn authored horizontal head/hair-bottom plane is required because TRELLIS does\nnot supply semantic parts. Y scaling above the plane leaves body below it fixed.\nA continuous X/Z taper keeps the neck attached while scaling the upper head.\nThis is a documented post-reconstruction correction, not an imagegen accuracy claim.\n",
+  "authored_head_bottom_y": 0.13321908707618715,
+  "target_old_ratio": 0.3881857418205289,
+  "before_ratio": 0.3668,
+  "head_scale": 1.0952961594954018,
+  "after_ratio": 0.3881857418205289,
+  "before_bounds": [
+    [
+      -0.42780983448028564,
+      -0.500954270362854,
+      -0.31087446212768555
+    ],
+    [
+      0.42522239685058594,
+      0.5005829334259033,
+      0.31141746044158936
+    ]
+  ],
+  "after_bounds": [
+    [
+      -0.42780983448028564,
+      -0.500954270362854,
+      -0.31087446212768555
+    ],
+    [
+      0.42522239685058594,
+      0.5355912971204901,
+      0.3410684755945203
+    ]
+  ],
+  "sha256": "59d3f8f566ae6ea8e57a8c6a01b1445cbec87944f350f29d7cdf5bec1c12fc6f",
+  "recordedWave1Sha256": "59d3f8f566ae6ea8e57a8c6a01b1445cbec87944f350f29d7cdf5bec1c12fc6f",
+  "byteIdenticalToRecorded": true
+}
