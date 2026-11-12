@@ -91,3 +91,15 @@ The earlier missing-prompt concern was mistaken: `L8Gate.surrenderHeavyWeapons()
 Ran the committed `l8-before-flamingo` fixture for 60 s with real keyboard/mouse input, marker-following and normal MG firing, god off, one pooled headless WebGL2/Metal browser, HIGH requested and zoom 1, unique port 4975. First kill objective tick 302; first lion-entry objective tick 1832: 25.5 s from the sampled start of flamingo combat to clear. The run reached `arena-lion` at tick 3582 with 89 HP and no browser errors. This is fixture fight coverage, not full-start completion.
 
 Opened `test-results/s75-l8part2/flamingo/s001-t563.jpg` and `s003-t1534.jpg`. The 26 lit gold pads are visible around the pond rim; live pink birds occupy separated rim positions. HUD shows 7/14 (7 left), then 21/26 (5 left). Corpses are distributed flat across the pond floor, with no tall column in these two views. The party forms a dense group by the lower entry. The arena boundary and minimap box are readable. No red lane is captured clearly in these stills, and continuous return-flight motion remains unverified. The browser and temporary server are stopped.
+
+## Remaining arena capture batch
+
+Sequential single-browser headless WebGL2/Metal samples, HIGH requested/zoom 1, 12 s each, normal input and firing, god off, existing pre-arena fixtures. Opened these raw ignored files:
+
+- `lion/s002-t673.jpg`: two lions and their HP bars visible inside a lit rectangular boundary; a dark rock at the far rim and warm entry lamp; objective and minimap arena box readable.
+- `monkey/s002-t678.jpg`: rooftop monkeys, building/doorway cover, scattered bins and trees; courier visible in the centre and party gathered at the left entry. Objective 3/7 and minimap box readable.
+- `zebra/s002-t693.jpg`: herd with broad gold dust lanes across the floor; courier and allied group visible between lane strips; objective 1/4 and minimap enemy dots readable.
+- `gorilla/s002-t693.jpg`: gorilla near the party, four standing cover pillars and benches visible; objective 0/1 and arena box readable.
+- `elephant/s002-t467.jpg`: entry view only, with a large truck occupying much of the foreground and courier shown through its roof; objective still “Enter the elephant yard · 1 m”. This does not count as the active elephant arena capture. An engaged-yard sample is still required.
+
+Raw paths are under `test-results/s75-l8part2/`. Browser batch and temporary server exited. These stills do not prove continuous camera/lighting transitions, complete fights or telegraph timing.
