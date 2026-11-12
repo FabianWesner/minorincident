@@ -49,3 +49,9 @@ The regression now also fails for any >2 m position step while L9 remains in its
 The finalized regression ran unchanged on exact PROD `0b650749`: all seeds completed, but maximum stalls were 12.80 / 12.75 / 12.72 s. Fixed runs complete at 0.37 / 4.42 / 3.00 s with no position jumps. Full receipts are in `native-comparison.json`; they supersede earlier policy-specific diagnostic measurements. This blockage class predates current main and is not new relative to PROD.
 
 The sole baseline checkout was checked for tracked changes and live probe processes, its receipts preserved, and `/tmp/s67-l9stuck-prod-0b650749` removed. Baseline cleanup is complete.
+
+## Refreshed final static and threat checks
+
+On the implementation through `720f478b`, `npm run typecheck` and `npm run lint` pass. The refreshed L9 threat audit completes **both skilled and passive** routes with **0 L9 flags** (15.7 s total); exit 1 is solely `PARTIAL_LEVEL_SELECTION`, as expected for a selected-level diagnostic. This supersedes the earlier passive tick-budget result. The latest exact remote npm test and E31 verifier remain to be refreshed after the last production changes.
+
+The brief requests a **Browser QA needed** handoff section for the QA lane. The coordinates/ticks above remain that handoff; no visual presentation change is claimed by this lane and no browser capture is presented as proof. Native fixed-step input, physical prop retention assertions and the no-position-jump matrix provide this lane's movement evidence. The QA lane should still exercise the original real-input HUD/tick windows before release.
