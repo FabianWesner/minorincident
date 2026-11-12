@@ -54,7 +54,7 @@ Five 60-HP targets: molotov clears within 2 s after ignition and its patch lasts
 
 ## L10 pressure and remaining criterion
 
-Current seed-1 low-tier skilled run: 39 attack starts, 2.33/minute from first attack to completion, 1009.02 s completion. Baseline: 40 starts, about 2.4/minute, 1,010.45 s. Current run has 6 gaps over 30 s; longest 350.77 s. The per-minute target passes; continuous cadence fails. Receipt: `/tmp/s86-current-cadence.json`.
+Current seed-1 low-tier skilled run: 39 attack starts, 2.33/minute from first attack to completion, 1009.02 s completion. Baseline: 40 starts, about 2.4/minute, 1,010.45 s. Current run has 6 gaps over 30 s; longest 350.77 s. The refreshed per-minute target also fails (2.33/minute versus approximately 2.39 baseline); continuous cadence fails. Earlier higher-rate receipts predate the final weapon corrections and do not prove current completion. Receipt: `/tmp/s86-current-cadence.json`.
 
 Existing resident caps are retained: up to 15 regular/high and 22 finale/high, with lower low-tier limits. Native traces show 11–12 of 12 low-tier slots occupied while only 0–2 infected are within 30 m. Holders are living pursuers, not corpses. The protected hangar conversation lasts 56 s; clarification about excluding protected story periods is pending, and outdoor gaps remain independently unresolved.
 
@@ -94,3 +94,5 @@ Paired native group measurement (five 60-HP targets, three seconds): molotov **0
 Contact-only diagnostic: before cure release, outside the protected hangar, while at least one visible living infected stayed within 30 m, the longest uninterrupted attack-start lull was 128.5 s (680.4 s total qualifying contact). The counter resets when contact is absent or an attack starts. Thus the cadence failure persists under a narrower nearby-contact interpretation; it cannot be attributed only to travel/story pauses. Receipt: `/tmp/s86-contact-lull.json`. This is additional diagnostic evidence, not a replacement for the whole-run target.
 
 Longest contact-lull evidence: at tick 43,387 the courier was x3320/z94; nearby actors included an Alpha chasing at 24 m, armored chaser at 26 m, and an attracted sprinter with target 0 at 16 m (`/tmp/s86-lull-evidence.json`). Extending the L10 idle/wander pursuit refresh to attracted actors completed in 1,011.6 s but reduced starts to 34 and left a 309.6 s gap. The change was reverted (`/tmp/s86-refresh-attracted.json`).
+
+Finale count correction: increasing regular finale slots from 8/5 to 9/6 (high/low) yields 41 attack starts, 2.447/minute, and 1,010.02 s completion in the current native run. This restores the per-minute target above baseline (~2.386/minute), but the 350.77 s gap persists. Local L10 skilled/passive flags are both empty (`/tmp/s86-l10-finaleplus1`); typecheck, lint and seven focused combat cases pass. Full audit and remote units must refresh after this count change.

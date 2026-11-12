@@ -30,7 +30,7 @@ export const cureEncounters: readonly CureEncounter[] = [
   { id: 'corridor-line', region: 'destroyed-corridor', at: [3180, 95], regular: [8, 6], dogs: 2, alphas: 1, roles: ['infected.bloated', 'infected.riot'] },
   { id: 'corridor-exit', region: 'destroyed-corridor', at: [3510, 95], regular: [7, 5], dogs: 1, alphas: 1, roles: ['infected.sprinter', 'infected.firefighter'] },
   { id: 'complex-approach-0', region: 'dispersal-complex', at: [3820, -41], regular: [7, 5], dogs: 1, alphas: 0 },
-  { id: 'dispersal-assault', assault: true, region: 'dispersal-complex', at: cure.anchors['cure-console'], regular: [8, 5], dogs: 1, alphas: 0, roles: ['infected.runner', 'infected.runner', 'infected.firefighter'] },
+  { id: 'dispersal-assault', assault: true, region: 'dispersal-complex', at: cure.anchors['cure-console'], regular: [9, 6], dogs: 1, alphas: 0, roles: ['infected.runner', 'infected.runner', 'infected.firefighter'] },
 ];
 /** Route cadence groups intentionally stay outside the vignette exclusion map: they move to the courier's lane on admission. */
 export const curePaceEncounters: readonly CureEncounter[] = [
