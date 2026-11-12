@@ -422,6 +422,10 @@ async function vehicleShovesProps(): Promise<PropSnapshot> {
     expect(world.entities.get(barrierId)?.health.current, 'rammed barriers keep their identity and remain in the world').toBeGreaterThan(0);
     expect(barrier.body?.isDynamic(), 'rammed barriers become physics bodies').toBe(true);
     expect(barrier.entity.transform.x, 'the barrier tumbles away from the bumper').toBeGreaterThan(61);
+    barrier.body!.setLinvel({ x: 0, y: 0, z: 0 }, true);
+    world.vehicles!.obstacles.ram(barrier, { x: 5, y: 0, z: 0 }, world.tick);
+    expect(barrier.body!.linvel().y, 'pushing a retained barrier again does not lift it back into the chassis').toBe(0);
+    expect(barrier.body!.linvel().x).toBeGreaterThan(0);
     const restingId = world.vehicles!.obstacles.spawn('jersey-barrier', { x: 100, z: 20 });
     const pushingId = world.vehicles!.spawn('vehicle.military-apc', { x: 96, z: 20 });
     const pushingCar = world.vehicles!.cars.get(pushingId)!;

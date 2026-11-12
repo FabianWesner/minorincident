@@ -57,7 +57,7 @@ export class Obstacles {
     const p = item.entity.transform;
     this.world.events.emit({ type: 'world.blocker.changed', tick, id: item.entity.id, blocked: false, wall: { ...p, halfX: item.halfX, halfY: .5, halfZ: item.halfZ } });
     if (item.body) {
-      item.body.setLinvel({ x: velocity.x * .65, y: 2.2, z: velocity.z * .65 }, true);
+      item.body.setLinvel({ x: velocity.x * .65, y: item.body.linvel().y, z: velocity.z * .65 }, true);
       item.airborne = true; return;
     }
     this.world.physics.world!.removeCollider(item.collider, false);
