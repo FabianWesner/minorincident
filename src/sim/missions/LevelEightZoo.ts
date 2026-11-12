@@ -433,6 +433,13 @@ export class LevelEightZoo {
             if (s.routeStage !== index) { s.routeStage = index; s.routeNode = 0; }
             while (s.routeNode < stage.nodes.length - 1 && distance(p, stage.nodes[s.routeNode]) < 4) s.routeNode++;
             at = stage.nodes[s.routeNode]; text = stage.text;
+            // An entry marker must lead through the opening: stopping at its
+            // outer lip otherwise leaves the courier outside the arena trigger.
+            if (s.routeNode === stage.nodes.length - 1 && distance(p, at) < 4) {
+              const centre = { x: (stage.zone.x0 + stage.zone.x1) / 2, z: (stage.zone.z0 + stage.zone.z1) / 2 };
+              const d = distance(at, centre) || 1;
+              at = { x: at.x + (centre.x - at.x) / d * 3, z: at.z + (centre.z - at.z) / d * 3 };
+            }
           }
         }
         Object.assign(this.mission.def.anchors['l8-route'], { x: at.x, z: at.z });
