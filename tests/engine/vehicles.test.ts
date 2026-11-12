@@ -441,6 +441,18 @@ async function vehicleShovesProps(): Promise<PropSnapshot> {
     expect(world.entities.get(barrierId)?.health.current, 'rammed barriers keep their identity and remain in the world').toBeGreaterThan(0);
     expect(barrier.body?.isDynamic(), 'rammed barriers become physics bodies').toBe(true);
     expect(barrier.entity.transform.x, 'the barrier tumbles away from the bumper').toBeGreaterThan(61);
+    const coneId = world.hazards!.spawn('cone', { x: 65, z: 20 });
+    const cone = world.entities.get(coneId)!;
+    world.vehicles!.obstacles.ramDestructible(cone, .5, .15, { x: 10, y: 0, z: 0 }, world.tick);
+    expect(cone.health.current, 'map cone retains health after a vehicle ram').toBe(cone.health.max);
+    expect(world.interactables!.walls.some(w => w.entityId === coneId)).toBe(false);
+    for (let i = 0; i < 60; i++) world.update();
+    const movedX = cone.transform.x;
+    world.vehicles!.obstacles.rebuild();
+    const restoredCone = world.vehicles!.obstacles.items.find(o => o.entity.id === coneId)!;
+    expect(restoredCone.entity.transform.x, 'collider rebuild retains displaced map prop pose').toBe(movedX);
+    expect(restoredCone.body!.linvel().y, 'rebuild does not launch the cone again').toBe(0);
+    expect(cone.destructible!.broken).toBe(false);
     const prop = world.props!.spawn({ id: 'ram-test-wreck', assetId: 'veh.wreck', position: [0, 0, 0], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: '', visualAabb: { min: [-2.2, 0, -.9], max: [2.2, 1.8, .9] } });
     world.props!.updateNavigation();
     const id = world.vehicles!.spawn('vehicle.military-apc', { x: -4.9, z: 0 });

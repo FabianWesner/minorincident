@@ -79,3 +79,7 @@ Fixed a retained barrier's second launch leaving its settled navigation blocker 
 ## Map destructible retention
 
 Replaced the vehicle impact branch's lethal `hazards.hit` with adoption of the same entity by the obstacle physics owner. Fences, crates, cones, barricades, trash cans and mailboxes retain health/identity and are launched dynamically. Saved destructible dimensions identify adopted bodies during collider rebuilds; the interactable owner skips their original authored static blocker. Typecheck, lint and focused vehicle suite pass (2 tests, 94.14 s). A dedicated persistence/restore regression and fresh runtime verification of this path remain necessary.
+
+## Map prop rebuild regression
+
+Folded a cone persistence case into the existing vehicle/prop test: ram retains full health, removes its old authored blocker, preserves its displaced position through collider rebuild, and leaves it unbroken. Fixed rebuild replaying the launch impulse; restored retained props now start with zero linear/angular velocity at their saved pose. Focused vehicle suite passes (2 tests, 59.50 s).

@@ -42,12 +42,13 @@ export class Obstacles {
     this.world.events.emit({ type: 'vehicle.obstacle-broken', tick, targetId: item.entity.id });
   }
   /** Retain map-authored destructibles instead of destroying their entity on a vehicle impact. */
-  ramDestructible(entity: EntitySnapshot, halfX: number, halfZ: number, velocity: RAPIER.Vector, tick: number): void {
+  ramDestructible(entity: EntitySnapshot, halfX: number, halfZ: number, velocity: RAPIER.Vector, tick: number, restoring = false): void {
     this.world.interactables!.unblock(entity.id);
     entity.destructible!.rammed = { halfX, halfZ };
     const collider = this.world.physics.world!.createCollider(RAPIER.ColliderDesc.cuboid(halfX, .5, halfZ).setTranslation(entity.transform.x, .5, entity.transform.z));
     const item: Obstacle = { entity, collider, halfX, halfZ, light: true, broken: false };
     this.items.push(item); this.ram(item, velocity, tick);
+    if (restoring) { item.body!.setTranslation(entity.transform, true); item.body!.setLinvel({ x: 0, y: 0, z: 0 }, true); item.body!.setAngvel({ x: 0, y: 0, z: 0 }, true); }
   }
   /** Vehicle impacts throw a prop clear but keep its identity, model and collider for the rest of the level. */
   ram(item: Obstacle, velocity: RAPIER.Vector, tick: number): void {
@@ -99,7 +100,7 @@ export class Obstacles {
     if (!worldReset) this.dispose(); else this.items.length = this.debris.length = 0;
     this.nextDebris = 0;
     for (const entity of this.world.entities.iterate()) {
-      if (entity.destructible?.rammed && entity.health.current > 0) { const { halfX, halfZ } = entity.destructible.rammed; this.ramDestructible(entity, halfX, halfZ, { x: 0, y: 0, z: 0 }, this.world.tick); continue; }
+      if (entity.destructible?.rammed && entity.health.current > 0) { const { halfX, halfZ } = entity.destructible.rammed; this.ramDestructible(entity, halfX, halfZ, { x: 0, y: 0, z: 0 }, this.world.tick, true); continue; }
       if (entity.kind !== 'obstacle') continue;
       const kind = entity.archetype.replace(/^obstacle\./, '') as ObstacleKind;
       if ([...lightObstacles, ...heavyObstacles].includes(kind)) this.bind(entity, kind);
