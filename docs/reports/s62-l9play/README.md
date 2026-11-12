@@ -61,3 +61,7 @@ Missed bus rams now deal 600 bus damage: two misses wreck it, allowing the demon
 Moved the existing bay/checkpoint assertions intact into `tools/qa/l9-checkpoint-proof.ts`; standalone proof passes. Typecheck and lint pass. Headless encounter setup plus real W/D inputs recorded a stopped bus at tick 739, but the opened frame excluded the bus from the follow camera; this is not accepted as crash visual proof. Wider capture remains needed.
 
 The remote gate after moving checkpoint workload still timed out at 240.6 seconds. Further inspection of the remaining monolithic vehicle test is required; no budgets were raised.
+
+## Current-code vehicle and explosion evidence
+
+Focused vehicle integration on the current two-miss tuning passes (2 tests, 72.83 seconds locally). Temporary profiling instrumentation was removed after the run; it yielded no helper-level timing output. Headless real-input encounter with zoom 2.5 recorded bus health 0 and damage `exploded` at tick 876, still exploded at tick 1066. Opened `bus-wide/s017-t876.jpg`: bus remains outside follow framing, so this is runtime explosion evidence but not accepted visual crash proof. No source changes in this follow-up.
