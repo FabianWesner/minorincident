@@ -2,6 +2,7 @@
 import { mkdirSync } from 'node:fs';
 import { SceneSession, readSpec, stopServer, writeJson } from './session';
 import type { Game } from '../../src/Game';
+import { airborneFootTrack } from '../../src/debug/scenelab/motion';
 const out = 'test-results/s83-vehicleslide/native-contact';
 mkdirSync(out, { recursive: true });
 try {
@@ -41,6 +42,10 @@ try {
           return w.events.events().filter(e => e.type.startsWith('vehicle.') || e.type === 'combat.hit');
         });
         const actors = Object.entries(metrics.actors).filter(([id]) => id.startsWith('infected'));
+        const airborneChecks = name === 'clinging' ? actors.map(([id, actor]) => {
+          const proof = airborneFootTrack((actor.track ?? []).filter(f => f.frame >= 181 && f.frame <= 300), 120, 2);
+          return { actor: id, ...proof, pass: proof.complete && proof.clearanceMinCm >= 1.2 && proof.travelMinM >= 2 };
+        }) : [];
         const checks = actors.map(([id, actor]) => ({ actor: id, contacts: actor.motion.contacts,
           p95Cm: actor.motion.slideP95Cm, maxCm: actor.motion.slideMaxCm,
           pass: actor.motion.contacts >= 5 && actor.motion.slideP95Cm !== null && actor.motion.slideP95Cm <= 5 && actor.motion.slideMaxCm <= 15 }));
@@ -49,9 +54,10 @@ try {
         let vehicleTravelM = 0;
         for (let i = 1; i < attachmentTrack.length; i++) vehicleTravelM += Math.hypot(attachmentTrack[i].car.x - attachmentTrack[i - 1].car.x, attachmentTrack[i].car.z - attachmentTrack[i - 1].car.z);
         const movingAttachmentProven = name !== 'clinging' || vehicleTravelM >= 2;
-        const pass = contactProven && movingAttachmentProven && checks.every(check => check.pass) && session.errors.length === 0;
+        const motionProven = name === 'clinging' ? airborneChecks.length === 4 && airborneChecks.every(check => check.pass) : checks.every(check => check.pass);
+        const pass = contactProven && movingAttachmentProven && motionProven && session.errors.length === 0;
         if (!pass) process.exitCode = 1;
-        writeJson(`${out}/${tier}-${name}.json`, { pass, contactProven, movingAttachmentProven, vehicleTravelM, checks, metrics, events, attachmentTrack });
+        writeJson(`${out}/${tier}-${name}.json`, { pass, contactProven, movingAttachmentProven, vehicleTravelM, checks, airborneChecks, metrics, events, attachmentTrack });
         console.log(JSON.stringify({ tier, name, events: events.length, actors: Object.fromEntries(Object.entries(metrics.actors).filter(([id]) => id.startsWith('infected')).map(([id, actor]) => [id, actor.motion])) }));
       }
     } finally { await session.close(); }

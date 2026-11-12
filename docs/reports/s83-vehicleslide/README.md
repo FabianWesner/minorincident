@@ -73,3 +73,7 @@ Per-tick hull-relative tracing shows the clinging fixture’s APC travels exactl
 ## Moving clinging fixture corrected
 
 The driven=true fixture installed an idle pilot that overwrote scripted drive input. Using ordinary courier interaction followed by the drive command now yields four attachments and 8.76148 m of APC travel on both HIGH and LOW. The moving-attachment evidence passes. Ground-contact assertions remain red (0–1 contacts per actor), requiring a separate explicit airborne/attachment-relative pose proof. See `moving-cling-baseline.json`.
+
+## Explicit airborne clinging proof
+
+The settled cling window (frames 181–300) now requires all two-foot heel/toe samples on every frame, minimum ground clearance >=1.2 cm, and >=2 m travel for every foot. Four actual attachment events and >=2 m vehicle travel remain mandatory. Both tiers pass this explicit airborne proof; ground p95 stays undefined and is not represented as zero. All six current fixture/tier rows pass. See `clinging-airborne.json`. Targeted lint passes. This does not yet validate climb-transition contacts, hull-relative pose quality, duplicate slots, push states, or campaign coverage.
