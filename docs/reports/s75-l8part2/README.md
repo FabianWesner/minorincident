@@ -184,3 +184,9 @@ With five pens cleared, a controlled runtime probe from (96,-32) toward exterior
 ## Service-lane east fence join
 
 The full modeled route crosses the lane east side near (100.25,29.25). Extended a single drawn/sim side fence at x=99.1 from z=-35 to z=46, joining the actual yard boundary instead of stopping before it. With five pens cleared, native navigation now reports (108,-60) disconnected from (96,-32); the controlled runtime probe stays inside the lane. All six route-state checks pass, including final yard entry at approximately (93.79,46.06). Typecheck/lint/diff checks pass. This supersedes the earlier trial-wall result: those walls stopped at z=39 and did not join the yard boundary. Opened visual evidence and current final audit remain required.
+
+## Current approach captures
+
+Sequential single-browser six-second samples from current monkey/gorilla/elephant fixtures, HIGH requested/zoom 1, headless WebGL2/Metal, marker input, no fire and god off. Opened `final-fence-monkey/s000-t67.jpg`, `final-fence-gorilla/s000-t70.jpg`, `final-fence-elephant/s000-t64.jpg` under ignored `test-results/s75-l8part2/`.
+
+The primate approach has the courier on paved ground between fences, with a foreground building partly obscuring the entry marker. Gorilla approach clearly shows both fence sides, open entry ahead, courier and trailing group. Elephant approach shows both sides of the paved lane, a prominent warm lamp/foreground fence, and readable entry marker. These views do not expose every newly closed junction end; they must not be used to claim that all added joins were visually inspected. Positioned camera coverage of the off-screen joins remains open. All browser samples and the temporary server are terminal.
