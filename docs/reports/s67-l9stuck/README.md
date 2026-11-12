@@ -61,3 +61,9 @@ The brief requests a **Browser QA needed** handoff section for the QA lane. The 
 On committed implementation `e788f1aa`, `npm run verify -- E31` passes typecheck/lint and all 27 files / 107 tests (94.48 s Vitest, 95.7 s budget wrapper). Exact `sh tools/remote/run.sh "$PWD" -- npm test` also passes on 46.225.66.90: 27 files, 106 passed / 1 skipped, 187.37 s Vitest and 189.9 s against the unchanged 240 s budget. These supersede the older remote receipt.
 
 Completion audit still requires native coverage of the countryside and dry-shortcut branches before the road-only passing matrix can support a route-wide claim. The existing probe accepts those route IDs; the committed regression runner currently covers road only.
+
+## Expanded route audit — acceptance remains red
+
+The same driver was run over countryside and dry-shortcut seeds 1–3. All six runs completed, but countryside seeds 2/3 failed at 9.42 / 8.33 s, and dry-shortcut seed 3 failed at 5.05 s. Countryside seed 2 and shortcut seed 3 also exercised the existing 6 m pin relocation, violating this task's no-teleport condition. Country seed 1 and shortcut seeds 1/2 passed (0.37 / 0.32 / 0.32 s). Thus the road matrix must not be generalized to every L9 route. The committed regression runner now covers all three routes and all three seeds, preserving each failed receipt before returning failure.
+
+A bus backoff during active reverse recovery worsened country seed 2 to 16.27 s and was reverted. No production change from that experiment remains. The countryside bus/pocket recovery and shortcut pin cases remain open.
