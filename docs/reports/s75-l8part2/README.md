@@ -130,3 +130,7 @@ Exact full-audit line:
 > L8: skilled complete, passive tick-budget, 0 passive flags (253.4s)
 
 Full audit completed in 287.8 s and exited 1 for eight other-level/provenance flags, preserved in `final-checks.json`; no L8 passive flags remain. This supersedes the targeted-only audit limitation above. The unchanged required remote `npm test` passed on 46.225.66.90: 27 files, 106 passed/one platform skip, 150/150 registered-case collection guard, 206.2 s within the 240 s budget. Both processes are terminal.
+
+## Actual-gate shove coverage
+
+Added `tools/qa/l8-gate-shoves.ts`: loads real L8, arms its pens and seals the plaza, admits the courier on both sides of each actual entry/exit/plaza/connector/yard gate, and applies immediate six-metre knockback toward the barrier. All 42 cases remain on their starting side; exact before/after positions are in `gate-shoves.json`. Typecheck/lint/diff checks pass. This is controlled centre-of-gate shove coverage, not corner traversal, gate-closing timing, crowd squeeze or mortal input completion. Earlier generic collision-suite coverage remains additional evidence.
