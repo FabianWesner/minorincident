@@ -56,7 +56,8 @@ export class VehicleBody {
   enableTransportShell(): void {
     if (this.transportShell) return;
     this.transportShell = this.world.createCollider(RAPIER.ColliderDesc.cuboid(this.def.length / 2, 1.05, this.def.width / 2)
-      .setTranslation(0, .75, 0).setMass(0).setFriction(.3), this.body);
+      .setTranslation(0, .75, 0).setMass(0).setFriction(.3)
+      .setCollisionGroups(0x00020002).setActiveHooks(RAPIER.ActiveHooks.FILTER_CONTACT_PAIRS), this.body);
   }
   prePhysics(): void {
     Object.assign(this.previous, this.transform);

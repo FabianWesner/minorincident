@@ -20,3 +20,9 @@ L9 now adds massless native upper contact shells to the school bus and APC. The 
 ## Remaining work
 
 Resolve the passive rail restart/contact regression, then rerun the affected gates. The goal is not complete. No checks remain running.
+
+Diagnostic: restricting upper shells to dynamic/dynamic contact preserved the four overlap probe results but did not resolve the passive audit failure (skilled complete, passive mission-failed at 600 sim seconds). Reverted that unsuccessful change. Further diagnosis must examine bus pressure/rail restart state rather than assuming fixed rail geometry is responsible. No checks remain running.
+
+Passive-route observer (outside the threat harness) narrows the stall: rail stall starts at tick 6132, restarted=true and holding=false afterwards. At ticks 12600–15000 the APC remains x≈376.59/z≈-194.73 despite throttle/steering input. Bus is stopped at x≈387.48/z≈-209.53, roughly 18 m away, since tick 7423. Thus restart timer and direct bus pressure are not the blocker; inspect APC native contact pairs next. Temporary observer removed after its terminal run.
+
+Latest filter validation: upper transport shells now use Rapier contact hooks so they interact only with each other; existing chassis handles roadside fixtures. Typecheck, lint, focused vehicle tests (2/2), and the four-case overlap probe pass. Threat audit passive route now completes and all L9-specific flags are empty (only PARTIAL_LEVEL_SELECTION remains), but skilled route hits its 600 s budget and reports crowd collision-invariant failures. This is still an unresolved route regression; do not treat the empty flag list as completion. No checks remain running.

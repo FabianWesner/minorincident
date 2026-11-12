@@ -57,7 +57,17 @@ export class Physics implements Lifecycle {
     if (f) desc.setRotation({ x: 0, y: Math.sin(f.yaw / 2), z: 0, w: Math.cos(f.yaw / 2) });
     return this.world!.createCollider(desc.setTranslation((f?.x ?? (aabb.min[0]+aabb.max[0])/2)+origin[0],(aabb.min[1]+aabb.max[1])/2,(f?.z ?? (aabb.min[2]+aabb.max[2])/2)+origin[1])).handle;
   }
-  update(): void { if (this.world) { this.world.timestep = FIXED_DT; this.world.step(); } }
+  update(): void {
+    if (!this.world) return;
+    const world = this.world;
+    world.timestep = FIXED_DT;
+    world.step(undefined, {
+      // L9 upper transport shells supplement vehicle-to-vehicle contact only.
+      // Road furniture and support keep the ordinary chassis collision shape.
+      filterContactPair: (a, b) => world.getCollider(a).collisionGroups() === 0x00020002 && world.getCollider(b).collisionGroups() === 0x00020002 ? RAPIER.SolverFlags.COMPUTE_IMPULSE : null,
+      filterIntersectionPair: () => true,
+    });
+  }
   /** Exercise cold WASM solver/sweep paths during loading, without advancing the
    * playable world or emitting simulation events. The temporary world owns all allocations. */
   prepare(): void {
