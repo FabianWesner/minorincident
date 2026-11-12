@@ -341,7 +341,7 @@ export class LevelNineDriving {
       || e.id === this.state.samId && this.mission.l9!.state.phase !== 'driving';
   }
   /** The cab stays occupied; only the stopped, open hatch exposes the courier and her carried arsenal. */
-  get hatch(): boolean { return this.mission.l9?.state.phase === 'driving' && this.holding(this.car.entity.id) && !!this.state.hatchOpen; }
+  get hatch(): boolean { return this.mission.l9?.state.phase === 'driving' && this.w.vehicles!.active === this.car.entity.id && this.holding(this.car.entity.id) && !!this.state.hatchOpen; }
   canRepair(): boolean { return distance(this.car.entity.transform, cfg.repair) < cfg.repair.radius && this.car.physics.speed < 1 && this.state.restarted && this.state.evacuationAt === null && this.state.repairTicks < cfg.repair.ticks; }
   update(): void {
     const s = this.state, w = this.w, car = this.car, p = car.entity.transform, tick = w.tick;
@@ -406,7 +406,13 @@ export class LevelNineDriving {
   }
   poseHatch(): void {
     const player = this.w.entities.get(1)!;
-    if (!this.hatch) { if (this.w.vehicles!.active === this.car.entity.id) { player.hidden = true; if (player.passengerOf === this.car.entity.id) delete player.passengerOf; } return; }
+    if (!this.hatch) {
+      // Closing the hatch hides the courier inside the cab; it must not clear
+      // her seat ownership. Checkpoint restore and combat both consult this
+      // relation, while Vehicles.active remains the authoritative driver link.
+      if (this.w.vehicles!.active === this.car.entity.id) { player.hidden = true; player.passengerOf = this.car.entity.id; }
+      return;
+    }
     const p = this.car.entity.transform, aim = this.w.inputFrame.aim;
     // Lift the full character above the roof line so the hatch reads as a
     // deliberate firing position. Passengers remain seated and hidden inside.
@@ -741,12 +747,17 @@ export class LevelNineDriving {
     if ((s.busRamAt ?? 0) > tick) return `School bus lining up a ram · dodge now! ${Math.ceil(((s.busRamAt ?? tick) - tick) / 60)} s`;
     if (s.stallAt !== null && s.restarted && tick - s.stallAt < stallTicks + 180) return 'Engine restarted — drive! (W)';
     if (s.evacuationAt !== null && !s.evacuationDone) {
-      const count = `${s.evacuated.length}/${s.roster.filter(id => id !== s.samId && alive(this.w.entities.get(id))).length} at the trucks`;
+      const living = s.roster.filter(id => id !== s.samId && alive(this.w.entities.get(id))).length;
+      const count = `${s.evacuated.length}/${living} at the trucks`;
+      const defendRemaining = Math.max(0, cfg.evacuation.defendTicks - (tick - s.evacuationAt));
+      const defend = defendRemaining > 0
+        ? `Hatch defense ${Math.ceil(defendRemaining / 60)} s · ${count}`
+        : `Defense complete · ${count}`;
       // r42-l9pin (r41-vqa P2-4: survivors died with no word on the HUD): name the loss for 4 s, and say why they wait inside.
-      if (s.lost && tick - s.lost.at < 240) return `${s.lost.key === 'a survivor' ? 'A survivor' : s.lost.key[0].toUpperCase() + s.lost.key.slice(1)} was bitten · shoot from the hatch · ${count}`;
+      if (s.lost && tick - s.lost.at < 240) return `${s.lost.key === 'a survivor' ? 'A survivor' : s.lost.key[0].toUpperCase() + s.lost.key.slice(1)} was bitten · shoot from the hatch · ${defend}`;
       const threats = this.waiting() ? this.doorThreats() : 0;
-      if (threats) return `Clear the door · ${threats} infected at the APC · shoot from the hatch · ${count}`;
-      return `Cover the survivors · ${count}`;
+      if (threats) return `Clear the door · ${threats} infected at the APC · shoot from the hatch · ${defend}`;
+      return `Cover the survivors · ${defend}`;
     }
     const alphas = s.setPieces?.alphas ?? [];
     if (alphas.some(a => a.phase === 'hull') && !this.holding(this.car.entity.id)) return 'Leaper on the hull · swerve hard or handbrake (Space) to throw it off';
