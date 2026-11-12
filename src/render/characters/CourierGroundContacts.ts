@@ -358,7 +358,7 @@ export class CourierGroundContacts {
     const filtered = style?.pelvisHeight === undefined
       ? current + (height - current) * (1 - Math.exp(-dt / (height < current ? .03 : .05)))
       : this.origin.y + style.pelvisHeight;
-    height = Math.min(maximumHeight, Math.max(minimumHeight, filtered));
+    height = Math.max(minimumHeight, Math.min(maximumHeight, filtered));
     this.pelvisHeight = height - this.origin.y;
     this.joint.setFromMatrixPosition(rig.hip.matrixWorld);
     const parentScale = rig.hip.parent!.getWorldScale(this.delta).y;

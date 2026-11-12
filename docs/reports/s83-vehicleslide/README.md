@@ -2,7 +2,25 @@
 
 ## Status
 
-**In progress; acceptance is not yet met.** Shared contact fixes and twelve HIGH/LOW vehicle-contact fixture rows pass. Native HIGH L9 now passes all 72 grounded actor/context groups (maximum 3.4 cm, highest p95 2.8 cm). Native airborne/transition coverage, LOW late-route verification, and L7/L4 contexts remain open. No deployment or push.
+**Acceptance is not met.** Twelve HIGH/LOW attributed vehicle-contact fixtures pass. Native HIGH L9 passes all 72 grounded groups (max 3.3 cm, highest p95 2.8 cm), including the final reach-bound refinement. Extended LOW still has a 25.1 cm grounded maximum after the retained fixes. Native airborne transitions and L7/L4 later vehicle-contact windows are not proven. Final validation is recorded below. No deployment or push.
+
+## Current result and remaining work
+
+| Scope | Result |
+| --- | --- |
+| Attributed push, hull shove, ram, clinging, prop push and prop momentum fixtures | All twelve HIGH/LOW rows pass on retained final runtime source |
+| Native HIGH L9 driving/hatch contact groups | 72 grounded groups pass; max 3.3 cm / highest p95 2.8 cm |
+| Native LOW L9 driving/hatch contact groups | 80 measured groups; highest p95 3.9 cm, but actor 852 max 25.1 cm fails |
+| Native airborne and one-frame attachment transitions | Unproven; no-contact rows fail closed |
+| Rail stall and detour | Route progression observed, but no separately tagged grounded rail-stall row or explicit detour contact matrix |
+| L7/L4 HIGH/LOW opening windows | Zero eligible contact samples; not a pass |
+| Existing WebGL2 foot-slide catalog controls | 20/20 pass, no known failures or missing rows |
+| Typecheck, lint, full remote unit suite and E09 verify | Pass on retained source; 106 passed / 1 skipped, 202.6/240 seconds |
+| L9 route regression / threat | All eighteen route cases pass; zero L9 threat flags (diagnostic aggregate flags partial selection only) |
+
+Full acceptance still requires fixing the LOW cheap-solver reach failure, retaining it as an attributed persistent regression, and proving the missing campaign/transition windows. No stats, corpse persistence, threat audit implementation, or source specifications changed.
+
+Reproduce native LOW with `REVIEW_TIER=low CAMPAIGN_MOTION_FRAMES=9000 SCENE_PORT=4983 E2E_UNITS=1 sh tools/e2e-lock.sh node --import tsx tools/scenelab/vehicle-campaign-motion.ts`. Use `npm run qa:vehicle-motion` for the twelve attributed fixture rows. The complete unfiltered/unsharded `npm run scene:gate` now includes these fixtures; the 20-row control run used an explicit WebGL2 foot-slide filter and therefore ran fixtures separately. The full unfiltered catalog was not rerun.
 
 ## Finding and change
 
@@ -181,3 +199,25 @@ When detailed admission is lost, transfer grounded standing contacts as well as 
 All twelve attributed fixture rows pass after this change. Typecheck/lint pass. Opened `low-standing-transfer.jpg`, consecutive native LOW frames 8426–8431 at zoom 1.5: APC beside the rail and yellow bus, infected at the hull and a large infected on the road. The visible attacker poses remain stable across the alternate-frame updates; the small feet require the numerical contact trace for measurement. No HIGH claim is inferred from this LOW strip.
 
 Focused gate-tools tests pass 8/8 after the integration fixture update. E09 verification rerun is still running remotely.
+
+## Remaining LOW grounded peaks
+
+When inner/outer pelvis bounds conflict, prioritize the minimum reachable distance. The fixed-source LOW 9000-tick rerun removes actor 681’s 18.8 cm failure without new finite-contact failures. Actor 852 still fails at 25.1 cm max / 2.9 cm p95 (`reach-priority-low.json`). A separate cheap-solver travel-direction experiment worsened it to 28.3 cm and introduced three other maximum failures; that experiment was removed completely. No cheap travel-direction change is retained. HIGH validation, contact fixtures and catalog controls for the retained bound priority remain in progress.
+
+The corrected remote E09 verification passed on 94.130.181.173: full unit suite 106 passed / 1 skipped, test-budget 227.0/240 seconds, exit 0 (`/private/tmp/s83-verify-final2.log`). A final verification is running for the retained one-line reach-bound refinement.
+
+The remaining LOW actor 852 peak is in the cheap ground-contact solver: stored stance/swing targets extend beyond the loaded leg’s reach, while rendered IK clamps the shoe and it travels within the floor-contact band. At frame 8886 the right target is about 0.85 m from the upper joint versus approximately 0.80 m total segment length. Fixing admission fade does not fix this reach failure; it needs an early lifted release/replanning rule rather than longer allowed slide or a metric exemption. Native world trajectory and stats were not changed.
+
+## Final reach-bound HIGH validation
+
+Retained source passes all 72 finite-contact HIGH native L9 groups over 9000 ticks: max 3.3 cm, highest p95 2.8 cm. No-contact airborne groups remain fail-closed, so the native command still exits 1. See `reach-priority-high.json`. Reopened the updated `inner-reach-consecutive.jpg` after the final bound priority: same HIGH zoom-1.5 frames 8834–8839, damaged APC with zebras along its left/front hull and upright infected beside the grille. No large snap is visible; small/occluded feet still require the contact trace. This replaces the earlier sheet for this same fix.
+
+Final WebGL2 foot-slide catalog controls and per-epic verification are running.
+
+## Final validation receipt
+
+Retained runtime source plus the reach-bound priority passes remote `npm run verify -- E09` on 46.225.66.90: typecheck/lint pass; 27 test files pass, 106 passed / 1 skipped, test budget 202.6/240 seconds, exit 0. Transcript `/private/tmp/s83-verify-final3.log`. The explicitly requested remote plain `npm test` also passed earlier (`/private/tmp/s83-unit-final2.log`); E09 includes the same complete suite on final runtime source.
+
+`SCENE_PORT=4983 npm run scene:gate -- --backend webgl2 --jobs 1 --filter 'foot-slide-*'` passes 20/20 rows, zero known or missing rows, in 2.5 minutes (`final-motion-controls.json`). WebGPU was not automated. Final attributed vehicle fixture rerun is still pending at this entry.
+
+Final attributed fixture rerun completed exit 0: all twelve HIGH/LOW rows pass after the reach-bound priority (`final-contact-gate.json`). One final native LOW diagnostic is being retained to confirm actor 852’s remaining peak on this same source.
