@@ -57,3 +57,15 @@ Narrow follow-up: retire only outpaced armored/firefighter hunters while retaini
 Baseline rate includes retry pressure: seed-1 HIGH had five deaths and 113/127 starts after 800 s; seed-2 HIGH had six deaths and 220/240 starts after 800 s. The broad lost-target trial had zero deaths in all six cases, increased outdoor attack counts, and reduced finale retry counts. This explains much of its whole-run rate regression without satisfying the original rate invariant. Clarification was requested on whether the rate floor is per-case or the supplied s86 2.45/min reference; no relaxed interpretation has been applied.
 
 A separate seed-1 trial selected existing runners instead of default firefighter/armored hunters, retaining explicit specialists and all group sizes. LOW completed with 35 starts, 1.898/min and 241.38 s adjusted gap; HIGH with 68 starts, 3.674/min, one death and 313.98 s adjusted gap. Fully reverted: faster default archetype selection does not solve contact continuity. Receipt `/private/tmp/s89-mobile-hunters.json`. No gameplay change remains.
+
+## Release and road-offset diagnostics
+
+Three seed-1 paired trials, all completed and fully reverted:
+
+| Trial | LOW starts/min / gap s | HIGH starts/min / gap s |
+| --- | --- | --- |
+| Release at 45 m instead of 120 m; refresh at 45 m | 3.297 / 236.08 | 3.729 / 313.47 |
+| Lane offset relative to road at current X | 5.812 / 377.62 | 8.195 / 254.85 |
+| Road-relative offset plus lost-target retirement | 1.616 / 213.08 | 1.783 / 285.08 |
+
+The existing lane offset compares the courier’s current Z to a future group station’s Z, potentially treating normal road bends as off-road crossings. A road-relative calculation changed pressure and raised rate in the standalone trial, but failed cadence; its combination with retirement reduced rate below baseline. These results do not justify retaining either change for this objective. Receipts `/private/tmp/s89-local-release.json`, `/private/tmp/s89-road-offset.json`, `/private/tmp/s89-road-lost.json`. No gameplay change remains.
