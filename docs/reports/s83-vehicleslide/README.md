@@ -123,3 +123,7 @@ The empty observations were affected by missing renderer.nextNodeFrame() calls d
 ## Native gallop LOD investigation
 
 The sampler now records archetype and LOD. The failing actor is infected.dog at LOD2 with two sole pairs. An experimental global LOD1 override reduced p95/max to 20.2/26.8 cm but did not fix it and was removed. Probe initialization now also recognizes declared animalSoles, matching CrowdLocomotion; the native LOD2 result remains 27/66.2 cm, so this actor still lacks a four-paw declaration or uses a reduced rig. The measurement needs rig/asset inspection before claiming the true paws slide by that amount. No LOD behavior change is retained. Typecheck passed for added sampler metadata; targeted lint passes. See `native-dog-lod-trace.json`.
+
+## Late-spawned L9 dog cast fix
+
+GLB inspection confirms all dog tiers include four paws and sole metadata; the failing actor is full-health infected.dog, variant inf.dog, with no severance. L9 initializes its render cast before that pack spawns, leaving the dog aliases absent and rendering a runner fallback with dog-gallop. Registering the existing dog rig and coats in the L9 planned cast fixes that mismatch without stat or LOD changes. Native 1800-tick HIGH/LOW observations now show four paw pairs and 0/0 cm dog p95/max. HIGH grounded rows max at 0.3 cm; LOW at 0.4 cm. LOW still fails the sampler because of one attached no-contact frame: no aerial proof is inferred. Typecheck and targeted lint pass. Capture review of the dog fix and later campaign contexts remain due. See `l9-dog-cast-fix.json`.

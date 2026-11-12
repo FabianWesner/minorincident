@@ -177,11 +177,14 @@ export class CrowdView extends Group {
     // L1 v2: every infected is a pedestrian that keeps its look and is drawn by the civilian crowd (lane D); this view
     // only needs the plain runner fallback plus scripted infected actors. Without the outbreak layer keep the old set.
     const regularCrowd = this.world.scenario === 'L7' || this.world.scenario === 'L10' || this.world.scenario?.startsWith('perf-horde-');
-    // L9's future chunk encounters contain runners and Alphas (l9Groups),
-    // never the global zoo/finale cast. Keep every resident override too.
+    // L9 registers its future runner/Alpha encounters and scripted dog packs,
+    // without loading the unrelated zoo/finale cast. Keep resident overrides too.
     const crossingCrowd = this.world.scenario === 'L9';
     const actors = Object.values(this.world.missions?.def.actors ?? {}).map(actor => actor.archetype);
     const l1Roles = new Set<string>(regularCrowd || crossingCrowd || this.world.scenario === 'L6' || this.world.npcs?.civilians.outbreak || this.world.districts?.districts.some(d => isOutbreakDistrict(d.id)) ? ['infected.runner', ...actors] : ['infected.runner', ...actors, ...civilianRoles.map(role => role.variant), ...models]);
+    // Crossing set pieces spawn dog packs after this render cast is assembled.
+    // Register their existing rig/coats now, rather than galloping a runner fallback.
+    if (crossingCrowd) { l1Roles.add('infected.dog'); l1Roles.add('inf.dog'); }
     if (regularCrowd) for (const model of regularInfectedModels) l1Roles.add(model);
     // L4 sprinters always wear a shared soldier/civilian/suit skin.
     // Their unused default batch need not delay the level's loading card.
