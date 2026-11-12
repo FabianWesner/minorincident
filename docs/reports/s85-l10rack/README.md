@@ -37,3 +37,11 @@ Real CDP touch events exposed overlap between Flashbang's slot and the touch att
 
 - Corrected browser fixture reads the upgraded starting charge count (three in this campaign), spends all charges, reselects Molotov and verifies selected=true, empty=true and an Empty accessible label. Headless test passed; opened empty-molotov.png and saw the selected slot with its ! marker.
 - Built an isolated source archive with only ActionView.ts restored from af05750d. The same browser fixture passed against both builds. Opened before/after captures at HIGH zoom 1 and 1.5: the former thick continuous trajectory/ring is now thin and dashed with a thin ground ring. This LEFT-slot fixture was already gold before; the supplied PO screenshot documents the former RIGHT-slot cyan color. Camera/scene match; zoom 1 clips the ring at the edge, while zoom 1.5 shows the full circle. Updated review.jpg contains the four matched captures.
+
+## Final completion audit
+
+All remaining items above are closed. Final rebuilt Chromium smoke passed (1.2 min), including all 14 hangar weapons by click, Q cycling and real touch, 1280×720/390×844 rack bounds, and reselecting an empty upgraded Molotov. All carried catalog IDs have selection coverage; pistol/kick use their documented handgun/unarmed aliases. HU means hunting rifle; its full name is available on the slot tooltip/accessibility label, with Q shown as its cycling shortcut.
+
+The charge-return test now verifies axe, handgun and machete as the previous weapon; charges-left stays selected and last-charge returns with a loadout.switched event. Focused input/combat/save tests passed 18/18. Full typecheck and lint passed. The required remote suite passed 106 tests with one skipped in 224.1 s.
+
+Final audit found and fixed the preview using catalog rather than upgraded radius (9c20462a). Opened the final HIGH zoom-1 and zoom-1.5 captures: thin gold dashes and a larger ground-aligned ring match the upgraded combat definition; the nearer ring is edge-clipped and the wider view shows its circumference. The review sheet preserves the matched original-renderer captures on the left and final captures on the right. Earlier statements of pending work are superseded by this audit. No deploy, push or main movement.
