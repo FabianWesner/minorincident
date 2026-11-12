@@ -8,11 +8,43 @@
   "time": "L9-crossing",
   "dof": false,
   "vehicles": [
-    { "id": "apc", "asset": "vehicle.military-apc", "at": [0, 0], "yaw": 0, "health": 490, "driven": true },
-    { "id": "school-bus", "asset": "vehicle.school-bus", "at": [-12, 0], "yaw": 0 }
+    {
+      "id": "apc",
+      "asset": "vehicle.military-apc",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 0,
+      "health": 490,
+      "driven": true
+    },
+    {
+      "id": "school-bus",
+      "asset": "vehicle.school-bus",
+      "at": [
+        -6.85,
+        0
+      ],
+      "yaw": 0
+    }
   ],
-  "camera": { "mode": "game", "target": "apc", "zoom": 0.5 },
+  "camera": {
+    "mode": "game",
+    "target": [
+      -3,
+      1,
+      0
+    ],
+    "zoom": 1.5
+  },
   "frames": 120,
-  "shots": [1, 60, 120],
-  "expect": { "consoleErrors": 0 }
+  "shots": [
+    1,
+    60,
+    120
+  ],
+  "expect": {
+    "consoleErrors": 0
+  }
 }
