@@ -30,6 +30,14 @@ for x, z, hx, hz in yard_walls + [(-16, 70, 4.68, 1.48), (96, 74, 4.2, 1.6)]: bo
 
 def parse_box(txt):
     m = dict(re.findall(r'(x|z|halfX|halfZ): (-?[\d.]+)', txt)); return tuple(float(m[k]) for k in ('x', 'z', 'halfX', 'halfZ'))
+# Include the runtime branch walls and seal-only connector gates; arena-order
+# reachability alone did not cover these barriers in the original diagnostic.
+def boxes(name):
+    section = src.split(f'export const {name} = [', 1)[1].split('] as const;', 1)[0]
+    return [parse_box(box) for box in re.findall(r'\{[^}]*\}', section)]
+for x, z, hx, hz in boxes('l8PathWalls'):
+    box_mask(base, x - hx, z - hz, x + hx, z + hz)
+connectors = boxes('l8ConnectorGates')
 stages = []
 for m in re.finditer(r"\{ id: '(\w+)', zone: \{ x0: (-?\d+), z0: (-?\d+), x1: (-?\d+), z1: (-?\d+) \}, entry: (null|\{[^}]*\}), exit: (null|\{[^}]*\})", src):
     stages.append(dict(id=m[1], zone=tuple(map(float, m.groups()[1:5])), entry=None if m[6] == 'null' else parse_box(m[6]), exit=None if m[7] == 'null' else parse_box(m[7])))
@@ -42,6 +50,7 @@ assert order == ['flamingo', 'lion', 'monkey', 'zebra', 'gorilla', 'elephant'], 
 def reach(cleared, sealed, seed=(0, 0)):
     m = base.copy()
     if sealed:
+        for x, z, hx, hz in connectors: box_mask(m, x - hx, z - hz, x + hx, z + hz)
         for b in plaza.values(): box_mask(m, b[0] - b[2], b[1] - b[3], b[0] + b[2], b[1] + b[3])
     for i, s in enumerate(stages):
         if s['id'] == 'elephant': continue
@@ -67,7 +76,7 @@ for cleared in range(0, 6):
     allowed = order[:cleared + 1]
     bad = [a for a in hit if a not in allowed]
     new = float((free & ~prev).sum()) * RES * RES if prev is not None else area
-    report.append(dict(cleared=order[:cleared], reachable_m2=round(area), new_m2=round(new), arenas_reachable=hit, yard_reachable=yard, violation=bad or (yard and cleared < 5)))
+    report.append(dict(cleared=order[:cleared], reachable_m2=round(area), map_edge_reachable=bool(free[0, :].any() or free[-1, :].any() or free[:, 0].any() or free[:, -1].any()), new_m2=round(new), arenas_reachable=hit, yard_reachable=yard, violation=bad or (yard and cleared < 5)))
     if bad or (yard and cleared < 5): ok = False
     if order[min(cleared, 5)] not in hit and order[min(cleared, 5)] != 'elephant': ok = False; report[-1]['next_unreachable'] = True
     prev = free
