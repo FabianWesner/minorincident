@@ -5,7 +5,7 @@ import { action as rosterAction, catalog } from '../../src/data/actions/catalog'
 import { action } from '../../src/data/actions/fixtures';
 import type { ActionDef, Side } from '../../src/data/actions/schema';
 import { comboDefinition } from '../../src/data/meleeCombos';
-import { riotShieldResponse } from '../../src/data/infected';
+import { infectedDef, INFECTED_TOUGHNESS, riotShieldResponse } from '../../src/data/infected';
 import { Status } from '../../src/sim/combat/Status';
 import { Explosions } from '../../src/sim/combat/Explosions';
 import type { CoverWall } from '../../src/sim/combat/HitQuery';
@@ -28,6 +28,51 @@ const health = (w: SimWorld, id: number) => w.entities.get(id)!.health.current;
 const walls = (w: SimWorld) => w.combat!.query.walls as CoverWall[];
 const attacks = (w: SimWorld) => w.events.events().filter(e => e.type === 'combat.attack');
 const forehand = () => comboDefinition(rosterAction('weapon.bat'), 0);
+
+function checkArsenalRoles(): void {
+  const handgun = rosterAction('weapon.handgun'), assault = rosterAction('weapon.assault-rifle');
+  expect(rosterAction('weapon.machete').damage * 2).toBeGreaterThanOrEqual(infectedDef('infected.runner').hp * INFECTED_TOUGHNESS);
+  expect(rosterAction('weapon.machete').cooldown).toBeLessThan(rosterAction('weapon.fire-axe').cooldown);
+  expect(rosterAction('weapon.nail-gun').damage * 3).toBeGreaterThanOrEqual(infectedDef('infected.runner').hp * INFECTED_TOUGHNESS);
+  expect(rosterAction('weapon.nail-gun').damage * rosterAction('weapon.nail-gun').fireRate).toBeGreaterThan(handgun.damage * handgun.fireRate);
+  expect(rosterAction('weapon.hunting-rifle').damage).toBeGreaterThanOrEqual(300);
+  expect(rosterAction('weapon.hunting-rifle').projectile?.pierce).toBe(1);
+  expect(assault.damage * assault.fireRate).toBeGreaterThan(handgun.damage * handgun.fireRate);
+  expect(rosterAction('weapon.molotov').effect?.duration).toBeGreaterThanOrEqual(6);
+  expect(rosterAction('weapon.molotov').status?.dps).toBeGreaterThanOrEqual(20);
+  expect(rosterAction('weapon.pipe-bomb').damage).toBeGreaterThan(0);
+  expect(rosterAction('weapon.flashbang').status?.kind).toBe('stunned');
+  expect(rosterAction('weapon.flamethrower').status?.kind).toBe('burning');
+}
+
+async function checkMolotovCluster(): Promise<void> {
+  const w = await arena(); equip(w, ['weapon.fire-axe'], ['weapon.molotov']);
+  const ids = [-1.2, -0.6, 0, 0.6, 1.2].map(z => dummy(w, 2, z, infectedDef('infected.runner').hp * INFECTED_TOUGHNESS));
+  fire(w, 'RIGHT', { x: 1, z: 0 }, { x: 2, z: 0 });
+  for (let i = 0; i < 60 && !w.combat!.effects.zones.some(z => z.kind === 'fire'); i++) step(w, 1);
+  const zone = w.combat!.effects.zones.find(z => z.kind === 'fire');
+  expect(zone).toBeDefined(); if (!zone) throw new Error('Molotov fire patch did not land'); step(w, 120);
+  expect(ids.map(id => health(w, id))).toEqual([0, 0, 0, 0, 0]);
+  expect(zone.expires - zone.created).toBeGreaterThanOrEqual(8 * 60);
+}
+
+async function checkFlameCluster(): Promise<void> {
+  const w = await arena(); equip(w, ['weapon.flamethrower']);
+  const ids = [-0.3, -0.15, 0, 0.15, 0.3].map(z => dummy(w, 2, z, infectedDef('infected.runner').hp * INFECTED_TOUGHNESS));
+  fire(w); step(w, 180);
+  expect(ids.map(id => health(w, id))).toEqual([0, 0, 0, 0, 0]);
+}
+
+async function checkBlastClusters(): Promise<void> {
+  for (const id of ['weapon.pipe-bomb', 'weapon.rocket-launcher']) {
+    const w = await arena(); equip(w, ['weapon.fire-axe'], [id]);
+    const ids = [-1.2, -0.6, 0, 0.6, 1.2].map(z => dummy(w, 2, z, infectedDef('infected.runner').hp * INFECTED_TOUGHNESS));
+    if (id === 'weapon.rocket-launcher') w.explosions!.blast('explosion.rocket', { x: 2, z: 0 }, { sourceId: 1, actionId: id, radius: 6 });
+    else fire(w, 'RIGHT', { x: 1, z: 0 }, { x: 2, z: 0 });
+    step(w, 180);
+    expect(ids.map(target => health(w, target)), id).toEqual([0, 0, 0, 0, 0]);
+  }
+}
 
 /** Broad-phase cover must agree with the exact wall tests, including rotated padding and mutable doors. */
 async function checkDynamicCover(): Promise<void> {
@@ -100,6 +145,12 @@ async function checkRaisedMountedGun(): Promise<void> {
 }
 
 test('loadout: both sides keep independent aims, racks wrap both ways with a switch lock, a cooling gun does not steal selection', async () => {
+  checkArsenalRoles(); await checkMolotovCluster(); await checkFlameCluster(); await checkBlastClusters();
+  const rifle = await arena(); equip(rifle, ['weapon.hunting-rifle']);
+  const rifleHp = infectedDef('infected.runner').hp * INFECTED_TOUGHNESS;
+  const pierced = [dummy(rifle, 2, 0, rifleHp), dummy(rifle, 4, 0, rifleHp)];
+  fire(rifle); step(rifle, 60);
+  expect(pierced.map(id => health(rifle, id)), 'one rifle projectile pierces one infected and kills both ordinary targets').toEqual([0, 0]);
   const w = await arena(); equip(w, ['weapon.machine-gun']);
   fire(w); expect(w.getState().player!.weapons!.selectedSide).toBe('LEFT');
   w.setInput({ aim: { x: 0, z: 1 } }); step(w, 1);

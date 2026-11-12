@@ -1,0 +1,383 @@
+{
+  "baselineRevision": "c9a9bbbd",
+  "validatedGameplayRevision": "a1439ac6",
+  "currentHeadAtReceipt": "604f5bd2fbd0da59381ba928ea448700117bcddf",
+  "audit": {
+    "command": "QA_THREAT_MAIN_REVISION=c9a9bbbd node --import tsx/esm tools/qa/threat-audit.ts --out /tmp/s86-threat-final-count --maxWorkers 4",
+    "seconds": 415.5,
+    "exitCode": 1,
+    "topLevelFlags": [
+      "L4/criterion/L4-06 first breach:FAIL",
+      "L4/criterion/L4-06 sustained horde:FAIL"
+    ],
+    "levels": [
+      {
+        "level": "L1",
+        "baselineSkilledFlags": [],
+        "currentSkilledFlags": [],
+        "baselinePassiveFlags": [],
+        "currentPassiveFlags": [],
+        "flagsMatch": true
+      },
+      {
+        "level": "L2",
+        "baselineSkilledFlags": [],
+        "currentSkilledFlags": [],
+        "baselinePassiveFlags": [],
+        "currentPassiveFlags": [],
+        "flagsMatch": true
+      },
+      {
+        "level": "L3",
+        "baselineSkilledFlags": [],
+        "currentSkilledFlags": [],
+        "baselinePassiveFlags": [],
+        "currentPassiveFlags": [],
+        "flagsMatch": true
+      },
+      {
+        "level": "L4",
+        "baselineSkilledFlags": [
+          "wave/breach-west:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+          "wave/breach-north:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+        ],
+        "currentSkilledFlags": [
+          "wave/breach-west:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+          "wave/breach-north:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+        ],
+        "baselinePassiveFlags": [
+          "criterion/L4-06 first breach:FAIL",
+          "criterion/L4-06 sustained horde:FAIL"
+        ],
+        "currentPassiveFlags": [
+          "criterion/L4-06 first breach:FAIL",
+          "criterion/L4-06 sustained horde:FAIL"
+        ],
+        "flagsMatch": true
+      },
+      {
+        "level": "L5",
+        "baselineSkilledFlags": [],
+        "currentSkilledFlags": [],
+        "baselinePassiveFlags": [],
+        "currentPassiveFlags": [],
+        "flagsMatch": true
+      },
+      {
+        "level": "L6",
+        "baselineSkilledFlags": [
+          "wave/l6.breach2:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+        ],
+        "currentSkilledFlags": [
+          "wave/l6.breach2:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+        ],
+        "baselinePassiveFlags": [],
+        "currentPassiveFlags": [],
+        "flagsMatch": true
+      },
+      {
+        "level": "L7",
+        "baselineSkilledFlags": [],
+        "currentSkilledFlags": [],
+        "baselinePassiveFlags": [],
+        "currentPassiveFlags": [],
+        "flagsMatch": true
+      },
+      {
+        "level": "L8",
+        "baselineSkilledFlags": [
+          "step/escape:UNREACHABLE_SHARE_OVER_30_PERCENT_FOR_OVER_20_SECONDS"
+        ],
+        "currentSkilledFlags": [
+          "step/escape:UNREACHABLE_SHARE_OVER_30_PERCENT_FOR_OVER_20_SECONDS"
+        ],
+        "baselinePassiveFlags": [],
+        "currentPassiveFlags": [],
+        "flagsMatch": true
+      },
+      {
+        "level": "L9",
+        "baselineSkilledFlags": [],
+        "currentSkilledFlags": [],
+        "baselinePassiveFlags": [],
+        "currentPassiveFlags": [],
+        "flagsMatch": true
+      },
+      {
+        "level": "L10",
+        "baselineSkilledFlags": [],
+        "currentSkilledFlags": [],
+        "baselinePassiveFlags": [],
+        "currentPassiveFlags": [],
+        "flagsMatch": true
+      }
+    ]
+  },
+  "remoteUnits": {
+    "command": "sh tools/remote/run.sh \"$PWD\" -- npm test",
+    "runner": "46.225.66.90",
+    "exitCode": 0,
+    "passed": 106,
+    "skipped": 1,
+    "files": 27,
+    "seconds": 199,
+    "budgetSeconds": 240
+  },
+  "l10Cadence": {
+    "seed": 1,
+    "quality": "low",
+    "completionSeconds": 1010.0166666666667,
+    "attackStarts": [
+      {
+        "t": 4.616666666666666,
+        "x": 567,
+        "z": 0
+      },
+      {
+        "t": 7.65,
+        "x": 581,
+        "z": 0
+      },
+      {
+        "t": 11.483333333333333,
+        "x": 598,
+        "z": 0
+      },
+      {
+        "t": 11.5,
+        "x": 598,
+        "z": 0
+      },
+      {
+        "t": 12.483333333333333,
+        "x": 603,
+        "z": 0
+      },
+      {
+        "t": 12.533333333333333,
+        "x": 603,
+        "z": 0
+      },
+      {
+        "t": 64.18333333333334,
+        "x": 808,
+        "z": 21
+      },
+      {
+        "t": 65.58333333333333,
+        "x": 811,
+        "z": 21
+      },
+      {
+        "t": 65.76666666666667,
+        "x": 811,
+        "z": 21
+      },
+      {
+        "t": 65.9,
+        "x": 812,
+        "z": 21
+      },
+      {
+        "t": 66.73333333333333,
+        "x": 814,
+        "z": 21
+      },
+      {
+        "t": 67.11666666666666,
+        "x": 815,
+        "z": 21
+      },
+      {
+        "t": 136.98333333333332,
+        "x": 1113,
+        "z": -11
+      },
+      {
+        "t": 137.38333333333333,
+        "x": 1115,
+        "z": -11
+      },
+      {
+        "t": 137.46666666666667,
+        "x": 1116,
+        "z": -11
+      },
+      {
+        "t": 138.65,
+        "x": 1121,
+        "z": -11
+      },
+      {
+        "t": 230.18333333333334,
+        "x": 1511,
+        "z": -24
+      },
+      {
+        "t": 580.95,
+        "x": 2707,
+        "z": 53
+      },
+      {
+        "t": 587.1333333333333,
+        "x": 2733,
+        "z": 50
+      },
+      {
+        "t": 825.1166666666667,
+        "x": 3761,
+        "z": -28
+      },
+      {
+        "t": 825.4333333333333,
+        "x": 3763,
+        "z": -28
+      },
+      {
+        "t": 825.5833333333334,
+        "x": 3763,
+        "z": -28
+      },
+      {
+        "t": 883.1,
+        "x": 4000,
+        "z": -33
+      },
+      {
+        "t": 896.7333333333333,
+        "x": 3995,
+        "z": -32
+      },
+      {
+        "t": 901.0166666666667,
+        "x": 4003,
+        "z": -31
+      },
+      {
+        "t": 901.25,
+        "x": 4002,
+        "z": -31
+      },
+      {
+        "t": 901.2833333333333,
+        "x": 4002,
+        "z": -32
+      },
+      {
+        "t": 901.5666666666667,
+        "x": 4001,
+        "z": -32
+      },
+      {
+        "t": 901.75,
+        "x": 4001,
+        "z": -33
+      },
+      {
+        "t": 902.8166666666667,
+        "x": 4000,
+        "z": -33
+      },
+      {
+        "t": 903.75,
+        "x": 4000,
+        "z": -33
+      },
+      {
+        "t": 903.7833333333333,
+        "x": 4000,
+        "z": -33
+      },
+      {
+        "t": 903.9,
+        "x": 4000,
+        "z": -33
+      },
+      {
+        "t": 904.3666666666667,
+        "x": 4000,
+        "z": -33
+      },
+      {
+        "t": 929,
+        "x": 3991,
+        "z": -33
+      },
+      {
+        "t": 929.2,
+        "x": 3992,
+        "z": -33
+      },
+      {
+        "t": 930.4,
+        "x": 3997,
+        "z": -31
+      },
+      {
+        "t": 930.6333333333333,
+        "x": 3998,
+        "z": -31
+      },
+      {
+        "t": 930.7333333333333,
+        "x": 3998,
+        "z": -31
+      },
+      {
+        "t": 930.9,
+        "x": 3999,
+        "z": -31
+      },
+      {
+        "t": 931.8166666666667,
+        "x": 4000,
+        "z": -31
+      }
+    ],
+    "startsPerMinute": 2.4467873483190767,
+    "baselineStarts": 40,
+    "baselineStartsPerMinute": 2.3860811930405963,
+    "maxGapSeconds": 350.7666666666667,
+    "gapsOver30": 6,
+    "continuousCadencePass": false,
+    "attackStartCount": 41
+  },
+  "overallComplete": false,
+  "scopeAudit": {
+    "changedPaths": [
+      "docs/reports/s86-weaponpower/README.md",
+      "docs/reports/s86-weaponpower/native-ordinary.json",
+      "docs/reports/s86-weaponpower/native-targets.json",
+      "docs/reports/s86-weaponpower/validation.json",
+      "src/data/actions/catalog.ts",
+      "src/levels/L10/encounters.ts",
+      "src/sim/missions/LevelTenEncounters.ts",
+      "tests/engine/combat.test.ts"
+    ],
+    "infectedStatsAndAiUnchanged": true,
+    "protectedPathsUnchanged": true,
+    "corpseLifecycleUnchanged": true,
+    "noBrowserRun": true,
+    "noDeployOrPush": true
+  },
+  "entityBudget": {
+    "seed": 1,
+    "tier": "low",
+    "completionSeconds": 1010.0166666666667,
+    "peakLiving": 14,
+    "capViolations": 0,
+    "peakEntities": 89,
+    "peakCorpses": 1,
+    "sampleMethod": "living/cap each sim tick; resident entity/corpse peaks each 60 ticks"
+  },
+  "entityBudgetHigh": {
+    "seed": 1,
+    "tier": "high",
+    "completionSeconds": 1012.75,
+    "peakLiving": 22,
+    "capViolations": 0,
+    "peakEntities": 131,
+    "peakCorpses": 1,
+    "sampleMethod": "living/cap each tick; resident entities/corpses each 60 ticks"
+  }
+}

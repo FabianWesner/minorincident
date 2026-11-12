@@ -59,7 +59,7 @@ export class LevelTenEncounters {
         if (Math.abs(player.transform.x - group.at[0]) > 120) continue;
         released.push(group.id);
         // A field crossing meets the same once-only hunting group on its own lane. No group relocates after admission.
-        lanes[group.id] = Math.abs(player.transform.z - group.at[1]) > 40 ? player.transform.z - group.at[1] : 0;
+        lanes[group.id] = Math.abs(player.transform.z - group.at[1]) > 15 ? player.transform.z - group.at[1] : 0;
       }
       // A 30 s wave period, at most 5 s of admission, then 25 s with no new arrivals.
       // If a wave is still alive, postpone the next one until it has been cleared plus an 8 s breather.
