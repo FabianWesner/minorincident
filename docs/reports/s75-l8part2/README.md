@@ -2,7 +2,7 @@
 
 ## Status
 
-Incomplete. The closed pen census exclusion and its proof are implemented, but the required zero-flag audit, route confinement proof, real-input run, six opened arena captures, and full flamingo redesign have not passed. No claim of acceptance is made.
+Incomplete overall. The full threat audit now reports zero L8 passive flags, the six controlled route states pass, six arena views have been opened, and the real-input tour trace has no sampled travel gap over 10 s. Remaining acceptance work includes corner/shove confinement coverage, continuous flamingo return-flight/red-lane verification, the cover/telegraph pass and the boarding camera concern. The entries below retain earlier findings and explicitly supersede them as checks complete.
 
 ## Audit change
 
@@ -121,3 +121,12 @@ Exact targeted rerun line:
 > L8: skilled complete, passive tick-budget, 0 passive flags (101.7s)
 
 The command still exits nonzero for partial-level selection and baseline-main-source provenance; this is not the requested full-audit receipt. Threat proof, typecheck, lint and diff checks pass after the change. The full audit and final remote unit rerun remain required.
+
+
+## Full audit and final remote suite
+
+Exact full-audit line:
+
+> L8: skilled complete, passive tick-budget, 0 passive flags (253.4s)
+
+Full audit completed in 287.8 s and exited 1 for eight other-level/provenance flags, preserved in `final-checks.json`; no L8 passive flags remain. This supersedes the targeted-only audit limitation above. The unchanged required remote `npm test` passed on 46.225.66.90: 27 files, 106 passed/one platform skip, 150/150 registered-case collection guard, 206.2 s within the 240 s budget. Both processes are terminal.

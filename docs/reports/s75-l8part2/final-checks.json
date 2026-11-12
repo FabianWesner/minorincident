@@ -1,0 +1,31 @@
+{
+  "command": "node --import tsx/esm tools/qa/threat-audit.ts --out test-results/qa-threat-s75-full --report docs/reports/s75-l8part2/threat-audit.md",
+  "line": "L8: skilled complete, passive tick-budget, 0 passive flags (253.4s)",
+  "revision": "3a11089808020dc88fa074660ff477884c71f9af",
+  "mainRevision": "b06e3197391052367c9ade363608afd997ca1196",
+  "sourceMatchesMain": false,
+  "allAuditFlags": [
+    "L3/KITING_LANDED_HITS_BELOW_2:0.00",
+    "L4/wave/breach-west:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+    "L4/wave/breach-north:WAVE_FEWER_THAN_THREE_COHORT_MEMBERS",
+    "L4/criterion/L4-06 first breach:FAIL",
+    "L4/criterion/L4-06 sustained horde:FAIL",
+    "L7/KITING_BELOW_ATTACKS_PER_MINUTE_2:0.00",
+    "L7/KITING_LANDED_HITS_BELOW_2:0.00",
+    "BASELINE_MAIN_SOURCE_NOT_VERIFIED"
+  ],
+  "L8passiveFlags": [],
+  "L8skilledFlags": [
+    "step/escape:UNREACHABLE_SHARE_OVER_30_PERCENT_FOR_OVER_20_SECONDS"
+  ],
+  "remoteUnit": {
+    "runner": "46.225.66.90",
+    "exit": 0,
+    "filesPassed": 27,
+    "testsPassed": 106,
+    "testsSkipped": 1,
+    "registeredCases": 150,
+    "budgetSeconds": 240,
+    "elapsedSeconds": 206.2
+  }
+}
