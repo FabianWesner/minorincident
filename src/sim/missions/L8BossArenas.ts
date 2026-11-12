@@ -150,8 +150,6 @@ export class L8BossArenas {
         const elephant = w.entities.get(arena.ids[0]);
         if (elephant?.emerging && w.tick - arena.startedAt >= 60) elephant.emerging = false;
       }
-      const hale = w.entities.get(this.mission.l8!.state.haleId);
-      const finaleReady = arena.id !== 'elephant' || !hale || hale.health.current <= 0 || distance(hale.transform, this.mission.l8!.door()) < 2.5;
       if (arena.phase === 0 && arena.ids.every(id => (w.entities.get(id)?.health.current ?? 0) <= 0)) {
         arena.phase = 3; arena.endedAt = w.tick; this.signal(arena, 'cleared'); this.cleared(arena); continue;
       }
@@ -161,7 +159,7 @@ export class L8BossArenas {
         arena.zoneAt ??= w.tick;
         if (w.tick - arena.zoneAt >= 150) for (const e of healthy) w.npcs!.civilians.outbreak!.infect(e!, arena.carrier || 1);
       }
-      if (arena.phase === 0 && finaleReady && routeOpen && live.length && deep && !this.mission.l8!.protecting()) {
+      if (arena.phase === 0 && routeOpen && live.length && deep && !this.mission.l8!.protecting()) {
         // The restore point is taken in phase 0 with the entry gate still open (the courier stands just outside it).
         this.mission.checkpoint(`arena-${arena.id}`, def.entry);
         arena.phase = 1; arena.startedAt = w.tick; arena.nextAt = w.tick + 90; arena.armed = false;
