@@ -105,3 +105,9 @@ The harness records explicit horizontal applyImpulse calls and nearby living inf
 ## Fast-prop momentum fixture
 
 The fixture launches a production kickable folding chair via PropSystem.kick beside the APC, without changing actor stats. Both tiers record prop.momentum at tick 8, 1.2 m authored knockback, positive damage and a surviving infected. Grounded p95/max HIGH 0.2/0.4 cm, LOW 0.2/0.2 cm. The focused two-row run passes; typecheck and targeted lint pass. `VEHICLE_MOTION_SCENE=prop-momentum npm run qa:vehicle-motion` selects it; unknown scene filters fail. See `prop-momentum-evidence.json`. The full twelve-row rerun and campaign context coverage remain due.
+
+## Full twelve-row rerun
+
+`npm run qa:vehicle-motion` completed exit 0 with all twelve fixture/tier rows passing. Receipt: `full-contact-gate.json`. These are isolated production-system fixtures, not the requested campaign-context matrix. Native campaign rendered soles are available through GameView.crowdFigures(), enabling the next sampler without substituting isolated actors.
+
+Completion is still unproven: L9 driving/rail stall/hatch/detour and L7/L4 runtime contacts at HIGH/LOW need native motion traces; hull separation and crowd resolution need direct attribution; climb transitions and duplicate boarder slots need review. Final full validation must be rerun after the shared GroundContacts change (the recorded remote suite and L9 route/threat receipts predate it).
