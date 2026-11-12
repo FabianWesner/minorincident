@@ -131,3 +131,9 @@ GLB inspection confirms all dog tiers include four paws and sole metadata; the f
 ## Native dog capture review
 
 Added optional CAMPAIGN_CAPTURE_FROM to the native sampler. The 1800-tick HIGH rerun with capture frames 1531–1536 completed exit 0; targeted lint passes. Opened `native-dog-consecutive.jpg`: native APC drives diagonally across a grassy verge beside a road, small brown dog beside the front corner, upright infected farther ahead in the headlight beam. Feet are too small to judge individual plants visually; four-paw quantitative traces carry that proof. The strip confirms native context and corrected quadruped appearance, not completion of every contact state. See `native-dog-capture-summary.json`.
+
+## Extended native rail/hatch observation
+
+The HIGH L9 native completion bot was observed for 9000 ticks. It produces 14,120 contact samples across 82 actor/context groups, reaches rail stall at tick 6095, samples hatch combat, and restarts before tick 9000. Six grounded groups fail: four late-spawned zebras (two-foot fallback traces, maxima up to 459.8 cm) and two bathrobe-variant sprinters (maxima 30.2 and 22.5 cm). The native command exits 1. This contradicts full completion; next work must inspect the late zebra cast and the two sprinter contact intervals. See `native-l9-rail-failures.json`.
+
+Current-source full typecheck and lint pass. Remote complete npm test passes on 94.130.181.173: 27 files, 106 passed/1 skipped, test-budget 221.6/240 seconds, exit 0. Transcript `/private/tmp/s83-final-unit.log`. These code checks do not override the failing native motion evidence.

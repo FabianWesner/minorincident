@@ -32,7 +32,7 @@ try {
       if (captureFrom > 0 && frame >= captureFrom && frame < captureFrom + 6) await (window as unknown as { __s83Capture(frame: number): Promise<void> }).__s83Capture(frame);
       const w = game.world;
       if (frame % 300 === 0) progress.push({ frame, tick: w.tick, scenario: w.scenario, phase: w.missions?.state.phase,
-        l9Phase: w.missions?.l9?.state.phase, bot: api.bot.status(), figures: game.view.crowdFigures().length,
+        l9Phase: w.missions?.l9?.state.phase, stallAt: w.missions?.l9?.driving.state.stallAt, restarted: w.missions?.l9?.driving.state.restarted, hatch: w.missions?.l9?.driving.hatch, bot: api.bot.status(), figures: game.view.crowdFigures().length,
         drawn: game.view.crowdFigures().filter(f => f.drawn).length, livingInfected: w.infected!.active.filter(e => e.health.current > 0).length,
         cars: [...w.vehicles!.cars.values()].map(c => ({ id: c.entity.id, ...c.entity.transform, speed: c.physics.speed })) });
       for (const figure of game.view.crowdFigures()) {
@@ -41,7 +41,9 @@ try {
         const cars = [...w.vehicles!.cars.values()];
         const hull = cars.find(car => car.physics.hullDistance(e.transform.x, e.transform.z) <= 3);
         if (!hull) continue;
-        result.push({ id: e.id, archetype: e.archetype, lod: figure.lod, model: e.infected.model, variant: e.infected.variant, severance: figure.severance, health: e.health.current, instanceKey: figure.instanceKey, state: e.attachedTo !== undefined ? 'attached' : 'hull-ground', frame,
+        const driving = w.missions?.l9?.driving;
+        const context = driving ? driving.hatch ? 'hatch' : driving.state.stallAt !== null && !driving.state.restarted ? 'rail-stall' : driving.state.repairActive ? 'repair' : 'driving' : level;
+        result.push({ context, id: e.id, archetype: e.archetype, lod: figure.lod, model: e.infected.model, variant: e.infected.variant, severance: figure.severance, health: e.health.current, instanceKey: figure.instanceKey, state: e.attachedTo !== undefined ? 'attached' : 'hull-ground', frame,
           clip: figure.clip, speed: e.motion?.speed ?? 0, at: [e.transform.x, e.transform.z],
           floor: w.districts?.pavingHeight(e.transform.x, e.transform.z) ?? 0,
           feet: Array.from({ length: figure.soles.length / 2 }, (_, i) => ({ heel: figure.soles![2 * i], toe: figure.soles![2 * i + 1] })) });
@@ -53,7 +55,7 @@ try {
   if (cells.length) await session.makeSheet(cells, `test-results/s83-vehicleslide/campaign/${level}-${tier}-consecutive.jpg`, 480);
   const { samples, progress } = observation;
   const groups = new Map<string, typeof samples>();
-  for (const sample of samples) { const key = `${sample.state}/${sample.id}`; const group = groups.get(key) ?? []; group.push(sample); groups.set(key, group); }
+  for (const sample of samples) { const key = `${sample.context}/${sample.state}/${sample.id}`; const group = groups.get(key) ?? []; group.push(sample); groups.set(key, group); }
   const rows = [...groups].map(([key, frames]) => ({ key, motion: summarizeMotion(frames.map(f => ({ ...f, feet: f.feet.map(foot => ({ ...foot, yaw: footYaw(foot.heel, foot.toe) })) }))) }));
   const pass = rows.length > 0 && rows.every(row => row.motion.slideMaxCm <= 15 && (row.motion.slideP95Cm ?? Infinity) <= 5) && session.errors.length === 0;
   writeJson(`test-results/s83-vehicleslide/campaign/${level}-${tier}.json`, { level, tier, pass, samples, rows, progress, errors: session.errors });
