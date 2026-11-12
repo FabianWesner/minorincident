@@ -30,15 +30,15 @@ Both checkpoint-yield captures were opened. The initial sample shows retreat HUD
 | L8 14/14 timing / driver-door handoff | 29.48 s; post-count stall in checkpoint | Camera assertion failure; unverified | 28.23 s; post-count stall after E at marker |
 | L9 rail / final bay | Progressed with manual F, 19 deaths | Missing | Progressed, zero deaths |
 | L9 playable L10 handover pose / school bus | Missing; loading transition only | Missing | Missing; loading transition only |
-| L10 first 5 min / gun selection | Rifle key+click passed; incomplete broader scope | Missing | Missing |
+| L10 first 5 min / gun selection | Rifle key+click passed; incomplete broader scope | Missing | Five-minute sample; rifle click selected; broader scope incomplete |
 | L10 every hangar weapon key+click | Later fixture: all 14 by click; machete key unresolved | Missing | Missing |
 | L10 knife | Missing (not in returned-arsenal fixture) | Missing | Missing |
 | L10 all molotov charges / prior weapon | Later fixture initial three charges exhausted; rifle restored | Missing | Missing |
 | L10 molotov blue lines | Post-use stills only; full aiming view missing | Missing | Missing |
-| L10 early hunting Mega damage+recovery | Missing confirmed hit/recovery telemetry | Missing | Missing |
+| L10 early hunting Mega damage+recovery | Missing confirmed hit/recovery telemetry | Missing | Seven axe hits amount 0; P2 damage failure; recovery unverified |
 | L10 crops on roads | No systematic sweep | Missing | Missing |
 
-**Release verdict remains HOLD.** Confirmed P2: L7 bus/soldier overlap at HIGH z1. Candidate P1: L8 post-14/14 stall on checkpoint HIGH/LOW; source suggests Hale story gate, final runtime flags/fresh-route confirmation missing. No confirmed P1 is claimed yet. Unverified requirements independently prevent GO.
+**Release verdict remains HOLD.** Confirmed P2: L7 bus/soldier overlap at HIGH z1; L10 early Mega receives seven actual axe hits for zero damage on LOW. Candidate P1: L8 post-14/14 stall on checkpoint HIGH/LOW; source suggests Hale story gate, final runtime flags/fresh-route confirmation missing. No confirmed P1 is claimed yet. Unverified requirements independently prevent GO.
 
 Commands: production build, QA build, typecheck and lint passed; prescribed remote unit command passed (232.3 s). Contact sheet exists from opened captures. Target gameplay tree remains 832d3978; subsequent commits contain report artifacts only. No deploy, push or main movement was performed. Raw evidence is retained in `test-results/s88-b90high/` and is not committed.
 
@@ -107,3 +107,9 @@ Eight-minute attempt: 480 wall / 478 simulation seconds, six deaths, one assist,
 ## L6 LOW longer attempt / save correction
 
 Inspected retained browser storage: campaign save contains inventory/settings/survivors but no mission resume. Corrected the earlier claim that it preserved the gate-90 checkpoint. Fresh nine-minute attempt (`test-results/s88-b90high/low-z1-l6-long/`) stopped at its 540-second cap, nine deaths, one assist, no skips, first hatch closed at tick 30609. End tick 32280 gives **27.85 seconds after closure**; 1 Hz observer counted **36 attack starts** over that segment. Attacks continued after closure; no 30-second attack-free period exists inside this shorter observed segment. However the full 30-second-window/full-level criterion remains unverified. A death occurred in the segment; it is not an uninterrupted clean survival run. Second hatch was passed but not closed. Driver warned on shelter rest and a 20-second Rejoin Marcus delay, then reported cannot-finish at the time cap while offering E/click for the second gate; this is not proof of a game soft lock. No check is running.
+
+## L10 LOW zoom 1 — five-minute route and confirmed zero damage
+
+Resumed LOW L9 campaign profile; 300 seconds, two deaths, no assists/skips, 134 axe attacks, max no-progress 30.849 seconds (manual observation contributed). Opened rifle-selected capture shows Hunting Rifle selected by toolbar click. Subsequent fire attempt capture shows axe and a different nearby infected, so exclude that attempt from rifle/Mega conclusions.
+
+**P2 reproduced: early hunting Mega takes no melee damage.** `campaign-route-audit.json` records seven real `combat.hit` events from player 1 with `weapon.fire-axe` against Mega 678; all have amount 0 and victim HP 3000/3000. Example tick 3833, attackId 14. This confirms actual contact with zero damage, not merely a full HP bar after possible regeneration. It contradicts the PO request that the hunter be hurt and rapidly recover. Positive-damage recovery remains unverified. Driver also flagged the Mega stationary for about five seconds at 3.2 metres; candidate observation requiring independent review. Knife, molotov, systematic crops sweep and full arsenal LOW tests remain open. Receipt: `test-results/s88-b90high/low-z1-l10/`. No check is running.
