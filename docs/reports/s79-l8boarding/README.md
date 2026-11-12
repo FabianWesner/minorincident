@@ -35,6 +35,12 @@ The requested HIGH zoom 1 physical-input browser run through boarding did not st
 
 Therefore the native acceptance matrix and s77/threat-audit gates pass, but the original real-input 0/14 report is not closed. Re-run the HIGH zoom 1 browser session from an elephant-clear save when the browser pool can bind its local sockets, open the final capture, and confirm whether the full party boards within 60 seconds.
 
-## Commit status
+## Unrestricted continuation
 
-The local commit was attempted after the focused checks, but this managed worktree exposes the shared `.git` directory as read-only. Git could not create `.git/worktrees/s79-l8boarding/index.lock` (`Operation not permitted`), so these report/probe files are present in the worktree but are not committed. No remote or main branch was changed.
+The original evidence/probe was committed as `12e5afed`. The earlier sandbox restrictions no longer apply.
+
+The unchanged remote command completed on runner `94.130.181.173`, job `/srv/mi/jobs/s79-l8boarding-6f0b2d-73393-1794511367`: 27 files passed, 106 tests passed and one skipped, 214.9 seconds against the unchanged 240-second budget. This supersedes the unavailable-runner result above.
+
+A headless HIGH zoom 1 physical-input session now ran through the browser pool on port 4981. It stopped at its 480-second cap on the elephant approach (`Enter the elephant yard · 61 m`), with zero deaths, three logged assists, no skips, and maximum no-progress 51.815 seconds. It cleared the earlier habitats but did not reach boarding. Raw evidence is in `test-results/playtest/s79-high-z1/`.
+
+Opened `captures/campaign-L8-t27148.jpg`: courier at full HP in the gorilla habitat, follower group visible behind her, defeated gorilla at the left, and a clear yellow objective ring. This proves rendered route coverage at that point, not completed boarding. The required run from a pre-elephant save through boarding remains open. No check is still running.
