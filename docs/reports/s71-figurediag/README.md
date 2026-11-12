@@ -2,6 +2,27 @@
 
 **Status: diagnosis in progress. HIGH quality is the primary in-game acceptance view (PO correction); LOW is secondary.** This report separates measured game scores from source-pipeline observations. The raw → bake → rig → game stage score series and controlled cheap-lever sweep are not yet complete; cells marked **unmeasured** must not be read as inferred scores.
 
+## Current verified results
+
+| HIGH primary view | Day | Night | Opened evidence |
+|---|---:|---:|---|
+| Common-worker | 5 | 3 | `ordinary-high-runtime.jpg`, corrected explicit variant |
+| Cashier | 3 | 2 | `ordinary-high-runtime.jpg`, corrected explicit variant |
+| Existing butcher | 4 | 3 | `butcher-tier-runtime.jpg` |
+
+All three have fresh HIGH/WebGL2 day/night captures at zoom 1 and 1.5. No figure reaches 8/10. These game scores do not establish raw-to-game stage deltas: common-worker raw geometry is missing, cashier's retained delivery already includes binding, and the retained unique butcher pilot is a different lineage from this worktree's existing butcher.
+
+| Tested lever | Scope | Measured overall score movement |
+|---|---|---|
+| Butcher figure fill .55 → .15 | HIGH and LOW, both zooms, day/night | +0 day / +0 night |
+| Butcher authored-base multiplier .65 → 1 | LOW only | +0 / +0; HIGH untested |
+| Quality LOW → HIGH | Existing butcher | +0 / +0 |
+| Retained bake → flattened texture, identical mesh | Static unlit butcher source | No overall visual improvement; no runtime delta measured |
+
+**Completion gaps:** matched raw/bake/neutral-rig scores and biggest-stage-loss attribution; same-lineage butcher game capture; corrected LOW ordinary captures; texture-size/filter, normal/AO, rim/outline, LOD-distance and silhouette-scale experiments; expected recipe score supported by those results. No rendering fix is recommended for promotion on current evidence. The provisional recipe below remains a hypothesis, not a demonstrated route to 8/10.
+
+The source-hash manifest now pins all three current game LOD0/1/2 GLBs as well as retained raw inputs. Different hashes alone do not prove or disprove derivation; they prevent silently comparing changing artifacts across later captures.
+
 ## Evidence and rubric
 
 The strict rubric is the S53 rubric: silhouette, readable face/expression, material detail, colour, distinct identity, and pose readability; 10 is exceptional stylized-toy quality and 8 is the PO acceptance threshold. S53 scores are opened game-camera judgments, not raw-model ratings. Its all-figure summary is [S53 README](../s53-zombie-review/README.md) and [summary JSON](../s53-zombie-review/summary.json). The full opened sheets and captures live outside Git in `/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/s53-zombie-review/`.
