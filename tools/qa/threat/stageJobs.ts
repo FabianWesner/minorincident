@@ -11,7 +11,7 @@ import type { FollowerPaceSeed } from './followerPace';
 import { installKitingPolicy, finishKitingReceipt, type KitingReceipt, type KitingStyle } from './kiting';
 
 export interface StageJob {
-  id: string; level: RunnerLevel; kind: 'native' | 'follower' | 'l3' | 'high-hold'; seed: number; passive: boolean;
+  id: string; level: RunnerLevel; kind: 'native' | 'follower' | 'l3' | 'high-hold' | 'early-close'; seed: number; passive: boolean;
 }
 export interface NativeStage {
   run: LevelReport | null; observation: ReturnType<ThreatObserver['finish']> | null;
@@ -49,10 +49,11 @@ async function execute(job: StageJob): Promise<StageResult> {
       result.native = native;
       // Preserve every existing passive observation window, including L5's full 1,200 seconds.
       // L8's fenced tour can take 180 s; retain at least the full 20 s breach attack window.
-      const windows: Partial<Record<RunnerLevel, number>> = { L3: 70, L4: 250, L6: 110, L8: 210 };
+      const windows: Partial<Record<RunnerLevel, number>> = { L3: 70, L4: 250, L6: 300, L8: 210 };
       const runStarted = performance.now();
       native.run = await runLevel(job.level, 'complete', job.seed, job.passive ? windows[job.level] : undefined, 'auto', campaignFor(job.level, job.seed), undefined, 0, {
         quality: 'low', passive: job.passive,
+        ...(job.kind === 'early-close' ? { l6Profile: 'early-close' as const } : {}),
         beforeBegin: world => { observer = new ThreatObserver(world, job.level); native.definitions = observer.definitions; native.quality = observer.quality; },
         beforeDispose: world => { native.observation = observer?.finish() ?? null; if (!job.passive) native.nativeStateHash = stateHash(world.getState()); },
       });
@@ -60,7 +61,7 @@ async function execute(job: StageJob): Promise<StageResult> {
       if (!job.passive) {
         native.kiting = finishKitingReceipt(kiting);
       }
-      if (!job.passive && job.level !== 'L9') {
+      if (!job.passive && job.kind !== 'early-close' && job.level !== 'L9') {
         // L9 is a driving/crawl route, explicitly exempt from the on-foot
         // kiting sample. Replaying its whole drive cannot collect that sample.
         let kitingComplete = () => false;
@@ -87,6 +88,7 @@ export async function runStages(levels: readonly RunnerLevel[], maxWorkers: numb
   for (const level of levels) {
     jobs.push({ id: stageId(level, false), level, kind: level === 'L3' ? 'l3' : 'native', seed: 1, passive: false });
     jobs.push({ id: stageId(level, true), level, kind: 'native', seed: 1, passive: true });
+    if (level === 'L6') jobs.push({ id: 'L6/early-close/1', level, kind: 'early-close', seed: 1, passive: false });
     if (level === 'L4') jobs.push({ id: 'L4/high-hold', level, kind: 'high-hold', seed: 1, passive: true });
     if (level === 'L3') for (const seed of [2, 3]) jobs.push({ id: stageId(level, false, seed), level, kind: 'l3', seed, passive: false });
     if (level === 'L5' || level === 'L7') for (const passive of [false, true]) for (const seed of [2, 3])

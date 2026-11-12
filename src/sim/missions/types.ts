@@ -318,7 +318,7 @@ export interface L6State {
   /** `passed`: the walking column and a living majority went through, with no unrejoined straggler before this gate; its checkpoint was taken. */
   gates:{id:number;x:number;closedAt:number;hold:number;passed?:boolean;/** Q-305: the courier clicked the gate; she closes it on arrival without E. */requested?:boolean}[];
   /** Tunnel entries. PO 10-20 #64: `switchId` is the hatch prompt; a closed hatch (`closedAt`) holds its arrivals, who bash it (`hits` left) until it breaks (`brokenAt`). */
-  entries?: { door: number; warnedAt: number; remaining: number; nextAt: number; switchId?: number; closedAt?: number; hits?: number; hitAt?: number; brokenAt?: number }[];
+  entries?: { door: number; warnedAt: number; remaining: number; nextAt: number; switchId?: number; closedAt?: number; hits?: number; hitAt?: number; brokenAt?: number; reopenRemaining?: number }[];
   pushHintShown?: boolean;
   /** PO 10-20 #65: the courier drifted away from the walking group; the objective points back at it. */
   strayed?: boolean;
@@ -331,5 +331,5 @@ export interface L6State {
   tailX?: number;
   arrivals?: { remaining: number; door: number; nextAt: number };
   infectedIds:number[]; spawnLog:{id:number;door:number;x:number;z:number;tick:number;wave:number;offscreen:boolean}[];
-  spawnRefusals:{cap:number;offscreen:number;snap:number;hatch?:number};
+  spawnRefusals:{cap:number;reserved?:number;offscreen:number;snap:number;hatch?:number}; distantRecycled?:number;
 }

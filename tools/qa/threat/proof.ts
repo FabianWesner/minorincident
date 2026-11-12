@@ -8,7 +8,7 @@ import assert from 'node:assert/strict';
 import { NavGrid } from '../../../src/sim/ai/NavGrid';
 import type { EntitySnapshot, GameEvent } from '../../../src/sim/world/types';
 import { median, isWalkingSample, PathProbe, phaseFlags, isVehicleHullAttacker, isWithinChaserDetectionRange, followerCoverageFlags, followerWaitFlags, observeBlocked, isConfinedInClosedL8Pen, SpawnIdentities, type BlockedWindow } from './observer';
-import { WaveObserver, l6EntryFlags, waveFlags } from './waves';
+import { WaveObserver, l6EntryFlags, l6HatchReopenFlags, waveFlags } from './waves';
 import { EventBus } from '../../../src/core/EventBus';
 import type { SimWorld } from '../../../src/sim/world/SimWorld';
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
@@ -274,6 +274,8 @@ export async function proveThreatAudit(): Promise<void> {
   assert.deepEqual(l6EntryFlags({ expected: 2, spawned: 2 }), []);
   assert.deepEqual(l6EntryFlags({ expected: 2, spawned: 1 }), ['L6_ENTRY_COUNT_MISMATCH']);
   assert.deepEqual(l6EntryFlags({ expected: 3, spawned: 3 }), ['L6_ENTRY_COUNT_MISMATCH']);
+  assert.deepEqual(l6HatchReopenFlags({ expected: 1, spawned: 1 }), []);
+  assert.deepEqual(l6HatchReopenFlags({ expected: 1, spawned: 0 }), ['L6_HATCH_REOPEN_COUNT_MISMATCH']);
   {
   const member = { ...entityForWave(), id: 2 }, player = { ...member, id: 1, transform: { ...member.transform, x: 1 } };
   const events = new EventBus<{ tick: number; type: string; sourceId?: number; targetId?: number }>();

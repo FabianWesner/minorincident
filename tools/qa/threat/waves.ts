@@ -23,6 +23,10 @@ export function waveFlags(wave: Pick<WaveReceipt, 'firstAttackSeconds' | 'observ
 export function l6EntryFlags(wave: Pick<WaveReceipt, 'expected' | 'spawned'>): string[] {
   return wave.expected === 2 && wave.spawned === 2 ? [] : ['L6_ENTRY_COUNT_MISMATCH'];
 }
+/** A hatch that breaks after its original quota has arrived releases one explicitly separate replacement. */
+export function l6HatchReopenFlags(wave: Pick<WaveReceipt, 'expected' | 'spawned'>): string[] {
+  return wave.expected === 1 && wave.spawned === 1 ? [] : ['L6_HATCH_REOPEN_COUNT_MISMATCH'];
+}
 
 /** Starts come from native controller clocks/events, never the first successfully spawned/nearby identity.
  * Resident street populations in L5/L7/L9 are not announced waves. */
@@ -44,6 +48,11 @@ export class WaveObserver {
     world.events.on('l2.doorsOpen', e => { if (e.type === 'l2.doorsOpen') this.wave('market-ambush', e.tick, 'l2.doorsOpen'); });
     for (const type of ['l6.breach1', 'l6.breach2'] as const) world.events.on(type, e => {
       if (e.type === type) this.wave(type, e.tick, type, type === 'l6.breach1' ? 8 : 10);
+    });
+    world.events.on('l6.hatch-broken', e => {
+      if(e.type!=='l6.hatch-broken')return;
+      const entry=world.missions!.state.l6?.entries?.find(row=>row.door===e.door);
+      if(entry?.reopenRemaining)this.wave(`hatch-reopen-${e.door}@${e.tick}`,e.tick,'L6 hatch break after original arrivals',1);
     });
     world.events.on('l4.wave', event => {
       if (event.type !== 'l4.wave') return;
@@ -133,6 +142,10 @@ export class WaveObserver {
           const entry = subway.entries?.find(entry => entry.door === q.door && entry.warnedAt);
           if (entry) wave = this.waves.get(`entry-${q.door}@${entry.warnedAt}`);
         }
+        if (q.wave === 5) {
+          const entry = subway.entries?.find(entry => entry.door === q.door && entry.brokenAt);
+          if (entry) wave = this.waves.get(`hatch-reopen-${q.door}@${entry.brokenAt}`);
+        }
         if (wave) this.add(wave, q.id, `${this.l6Cursor}/${q.tick}`);
         this.l6Cursor++;
       }
@@ -185,7 +198,7 @@ export class WaveObserver {
         for (let i = 0; i < outlets.length; i++) for (let j = i + 1; j < outlets.length; j++)
           if (Math.hypot(outlets[i].x - outlets[j].x, outlets[i].z - outlets[j].z) < 20) breachFlags.push('BREACH_OUTLETS_LESS_THAN_20M_APART');
       }
-      receipt.flags = wave.key.startsWith('entry-') ? l6EntryFlags(receipt) : acceptanceWave ? [...waveFlags(receipt), ...breachFlags] : []; return receipt;
+      receipt.flags = wave.key.startsWith('entry-') ? l6EntryFlags(receipt) : wave.key.startsWith('hatch-reopen-') ? l6HatchReopenFlags(receipt) : acceptanceWave ? [...waveFlags(receipt), ...breachFlags] : []; return receipt;
     });
   }
 }

@@ -1,7 +1,7 @@
 import { strikeAt } from '../../src/debug/bot/helpers';
 import { LevelNineBot } from '../../src/debug/bot/LevelNineBot';
 import { LevelEightBot } from '../../src/debug/bot/LevelEightBot';
-import { LevelSixBot } from '../../src/debug/bot/LevelSixBot';
+import { LevelSixBot, type L6Profile } from '../../src/debug/bot/LevelSixBot';
 import { LevelThreeBot, type L3StreetChoice } from '../../src/debug/bot/LevelThreeBot';
 import { LevelFourBot } from '../../src/debug/bot/LevelFourBot';
 import { LevelFiveBot } from '../../src/debug/bot/LevelFiveBot';
@@ -54,6 +54,8 @@ export interface LevelRunHooks {
   /** Stop a disposable QA route after an observer has captured its required sample. */
   stopWhen?: (world: SimWorld) => boolean;
   beforeDispose?: (world: SimWorld) => void;
+  /** Native L6 adversarial QA policy; gameplay runs keep the ordinary policy. */
+  l6Profile?: L6Profile;
 }
 /** Internal signal used to end an intentionally partial observer route. */
 export class LevelRunStopped extends Error {
@@ -141,7 +143,7 @@ export async function runLevel(level: RunnerLevel, policy: CompletionPolicy, see
       const bot = new LevelEightBot(world, hooks?.passive ? 'threat-passive' : policy);
       for (let i=0;i<maxSeconds*60&&!bot.finished;i++){followFrustum(world);world.applyInput(bot.sample(),'keyboard');world.update();}
     } else if (level === 'L6') {
-      const bot = new LevelSixBot(world, policy);
+      const bot = new LevelSixBot(world, hooks?.l6Profile ?? policy);
       for (let i=0;i<maxSeconds*60&&!bot.finished;i++){followFrustum(world);world.applyInput(bot.sample(),'keyboard');world.update();}
     } else if (level === 'L5') {
       // E23: the shared L5 policy (ordinary inputs only), same as the browser bot.
