@@ -64,8 +64,9 @@ export class Obstacles {
     const world = this.world.physics.world!, body = world.createRigidBody(RAPIER.RigidBodyDesc.dynamic().setCcdEnabled(true).setTranslation(p.x, .5, p.z).setRotation({ x: 0, y: Math.sin(p.yaw / 2), z: 0, w: Math.cos(p.yaw / 2) }));
     const mass = item.light ? 8 : 55;
     const collider = world.createCollider(RAPIER.ColliderDesc.cuboid(item.halfX, .5, item.halfZ).setMass(mass), body);
-    body.setLinvel({ x: Math.max(-12, Math.min(12, velocity.x * .65)), y: 2.2, z: Math.max(-12, Math.min(12, velocity.z * .65)) }, true);
-    body.setAngvel({ x: velocity.z * .08, y: velocity.x * .04, z: -velocity.x * .08 }, true);
+    body.setLinvel({ x: Math.max(-12, Math.min(12, velocity.x * .65)), y: item.light ? 2.2 : 0, z: Math.max(-12, Math.min(12, velocity.z * .65)) }, true);
+    const roll = item.entity.archetype === 'obstacle.jersey-barrier';
+    body.setAngvel(roll ? { x: Math.cos(p.yaw) * 6, y: 0, z: -Math.sin(p.yaw) * 6 } : { x: velocity.z * .08, y: velocity.x * .04, z: -velocity.x * .08 }, true);
     item.body = body; item.collider = collider; item.airborne = true;
   }
   /** r32-l9fun: a thrown obstacle has no collider or contact until it lands. */

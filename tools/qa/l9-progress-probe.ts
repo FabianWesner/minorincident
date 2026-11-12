@@ -74,6 +74,8 @@ try {
       });
       console.log(JSON.stringify({ contactTick: world.tick, position: [p.x,p.z], y:p.y, yaw:p.yaw, wheels:car.physics.wheels, velocity:car.physics.body.linvel(), intent:car.physics.intent, contacts }));
     }
+    if (process.env.L9_BEACH_TRACE && world.tick >= 5950 && world.tick <= 6450 && world.tick % 15 === 0)
+      console.log(JSON.stringify({ beachTrace:true,tick:world.tick,at:[p.x,p.y,p.z],velocity:car.physics.body.linvel(),wheelContacts:car.physics.wheels.map(w=>w.contact),beachedTicks:(car.physics as unknown as {beachedTicks:number}).beachedTicks,recovering:car.entity.vehicle!.recoveringUntil,intent:car.physics.intent }));
     const held = l9.state.phase !== 'driving' || l9.driving.holding(car.entity.id), measured = projection(p.x, p.z);
     if (held) {
       stalled = 0; best = measured.along; start = world.tick; startProgress = best; startPosition = [p.x, p.z];

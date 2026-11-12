@@ -31,6 +31,7 @@ export class VehicleBody {
   speed = 0; forwardSpeed = 0; roll = 0; stuck = false;
   steeringAngle = 0; braking = true; upsideDown = false;
   private upsideDownTicks = 0;
+  private beachedTicks = 0;
   private readonly travel = new Float64Array(180);
   private travelIndex = 0; private travelCount = 0; private travelSum = 0;
   constructor(readonly def: VehicleDef, readonly world: RAPIER.World, position: { x: number; z: number }, yaw = 0) {
@@ -93,6 +94,7 @@ export class VehicleBody {
       w.suspension += ((this.controller.wheelSuspensionLength(i) ?? this.def.suspension) - w.suspension) * (1 - Math.exp(-this.def.handling.suspensionResponse * FIXED_DT));
       w.contact = this.controller.wheelIsInContact(i);
     }
+    this.beachedTicks = this.speed < 1 && this.wheels.every(w => !w.contact) && Math.abs(this.intent.throttle) > .5 && !this.braking && !this.upsideDown ? this.beachedTicks + 1 : 0;
     if (Math.abs(this.intent.throttle) > .5 && !this.braking && !this.upsideDown) {
       const distance = Math.hypot(p.x - this.previous.x, p.z - this.previous.z);
       this.travelSum += distance - this.travel[this.travelIndex]; this.travel[this.travelIndex] = distance;
@@ -118,6 +120,13 @@ export class VehicleBody {
   clearStuck(): void { this.travel.fill(0); this.travelCount = this.travelIndex = this.travelSum = 0; this.stuck = false; }
   /** Bruno's mass-scaled jump/roll recovery, retried in sim time while a driver is overturned. */
   recoverFlip(): boolean {
+    // Retained debris may support the belly above all wheel rays. Free it
+    // with the existing recovery impulse, never a position assignment.
+    if (this.def.id === 'vehicle.military-apc' && !this.upsideDown && this.beachedTicks >= 30) {
+      this.body.applyImpulse({ x: 0, y: this.def.mass * this.def.handling.flipLift, z: 0 }, true);
+      this.body.applyTorqueImpulse({ x: 0, y: this.intent.steer * Math.sign(this.intent.throttle) * this.def.mass, z: 0 }, true);
+      this.beachedTicks = 0; this.clearStuck(); return true;
+    }
     if (this.upsideDownTicks < Math.ceil(this.def.handling.flipDelay / FIXED_DT)) return false;
     const q = this.body.rotation(), up = { x: 2 * (q.x * q.y - q.w * q.z), z: 2 * (q.y * q.z + q.w * q.x) };
     const length = Math.hypot(up.x, up.z), force = this.def.mass * this.def.handling.flipTorque;
