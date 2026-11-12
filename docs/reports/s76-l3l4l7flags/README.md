@@ -53,3 +53,13 @@ The subsequent one-sprinter composition trial replaced only the first close runn
 ## Rejected L4 high-tier alarm staging trial
 
 Reversing the high-tier alarm's eligible street-mouth order (farther mouths first; unchanged count, roster, caps and low-tier behavior) worsened census results: first breach moved from 50.08 s to 87.33 s, alive at breach fell from 41 to 34, peak plaza population fell from 47 to 40, and first attack moved from 9.83 s to 25.70 s. Plaza minimum remained 15. Focused audit completed in 47.6 s with the same three passive flags and skilled completion. Reverted: the distant approach delays both breach and pressure and does not preserve enough living population.
+
+## Retained north breach alignment
+
+Aligned the three existing north approach mouths at x=-22/-18.6/-15 (unchanged z, counts and roster) with the authored breach. Focused audit:
+
+```text
+[qa:threat] L4: skilled complete, passive tick-budget, 2 passive flags (49.8s)
+```
+
+North now admits three and attacks after 8.13 s; west admits 22 and attacks after 5.50 s; south admits four and attacks after 8.57 s. Only the two L4-06 flags remain. High hold: 44 alive at first breach (50.08 s), peak alive 59, peak plaza 56, minimum plaza 17. Typecheck and lint passed for this change. Remote suite must be repeated for the final combined implementation; the prior passing receipt predates this alignment. A rejected wider north offset also admitted three but produced no attack within 20 s, so it was reverted before this aligned trial.

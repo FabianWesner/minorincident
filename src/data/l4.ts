@@ -350,7 +350,7 @@ export const l4Emergence: readonly { edge: number; at: P; door?: boolean }[] = [
  * the physical breaches. Reception tent flaps are never infected sources. */
 export const l4BreachApproaches = [
   ...[-12, -4, 8, 16].map(z => ({ side: 'west' as const, at: [l4.perimeter.x0 - 3, z] as P })),
-  ...[-32, -24, -16].map(x => ({ side: 'north' as const, at: [x, l4.perimeter.z0 - 3] as P })),
+  ...[-22, -18.6, -15].map(x => ({ side: 'north' as const, at: [x, l4.perimeter.z0 - 3] as P })),
   ...[-32, -24, -16].map(x => ({ side: 'south' as const, at: [x, l4.perimeter.z1 + 3] as P })),
 ];
 /** Tent flap geometry retained for level dressing and nav checks only; no infected emergence uses these points. */
