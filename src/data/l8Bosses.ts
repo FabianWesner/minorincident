@@ -21,6 +21,7 @@ export const l8PathWalls = [
   { x: -3.1, z: 64, halfX: .25, halfZ: 3.2 },
   { x: -63.1, z: 0, halfX: .25, halfZ: 12 },
   { x: 63.1, z: 0, halfX: .25, halfZ: 12 },
+  { x: 56.9, z: 0, halfX: .25, halfZ: 12 },
 ] as const;
 export const l8YardWalls = [
   { x: 84, z: 51, halfX: .25, halfZ: 5 },
