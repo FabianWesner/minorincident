@@ -1,12 +1,12 @@
 {
-  "method": "SimWorld combat-arena, seed 1, inert 60 HP target 1.5 m ahead, assist Off, held LEFT, 15 s bound; elapsed from initial input, includes startup/travel",
+  "method": "SimWorld combat-arena seed 1, 60 HP inert target, assist Off, held LEFT, 15 s bound. Range 1.5 m except rocket 10 m (blast safety). Bat target transform restored before each tick to measure a stationary target despite knockback. Time includes startup and travel.",
   "results": [
     {
       "weapon": "bat",
-      "seconds": 15,
-      "attacks": 45,
-      "hp": 16,
-      "killed": false
+      "seconds": 0.7666666666666667,
+      "attacks": 3,
+      "hp": 0,
+      "killed": true
     },
     {
       "weapon": "fire-axe",
@@ -38,10 +38,10 @@
     },
     {
       "weapon": "rocket-launcher",
-      "seconds": 15,
-      "attacks": 0,
-      "hp": 60,
-      "killed": false
+      "seconds": 0.6666666666666666,
+      "attacks": 1,
+      "hp": 0,
+      "killed": true
     },
     {
       "weapon": "pipe-bomb",
