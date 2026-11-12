@@ -5,6 +5,7 @@ import { Clock } from '../../src/core/Clock';
 import { defaultBindings, type Action } from '../../src/data/bindings';
 import { catalog, mountedActions } from '../../src/data/actions/catalog';
 import { weaponOrder } from '../../src/data/weaponOrder';
+import { weaponKey, weaponKeys } from '../../src/data/weaponKeys';
 import { Bindings, bindingStorageKey } from '../../src/input/Bindings';
 import { Buttons } from '../../src/input/Buttons';
 import { ClickPick } from '../../src/input/ClickPick';
@@ -186,8 +187,34 @@ test('weapon selection: one fixed order drives number keys, cycling and touch sl
   expect(viaClick.selectedWeaponKey).toBe(2); expect(viaClick.selectedWeaponKey).toBe(viaKey.selectedWeaponKey);
   expect(viaClick.left.down || viaClick.right.down || viaClick.moveTarget || viaClick.mouseAttack || viaClick.aimPoint).toBeFalsy();
   expect(c.sample().selectedWeaponKey).toBeUndefined();
-  expect(c.input.selectWeaponKey(0)).toBe(false); expect(c.input.selectWeaponKey(10)).toBe(false);
+  expect(c.input.selectWeaponKey(0)).toBe(false); expect(c.input.selectWeaponKey(10)).toBe(true);
+  c.input.clear(); c.key('Digit0', true); c.key('Digit0', false); expect(c.sample().selectedWeaponKey).toBe(10);
   c.input.setDriving(true); expect(c.input.selectWeaponKey(3)).toBe(false); expect(c.sample().selectedWeaponKey).toBeUndefined();
+
+  const ids = Object.keys(catalog).filter(id => id.startsWith('weapon.') && id !== 'weapon.kick' && id !== 'weapon.pistol');
+  expect(Object.keys(weaponKeys).sort()).toEqual(ids.sort());
+  expect(new Set(Object.values(weaponKeys)).size).toBe(ids.length);
+  const catalogLoadout = new Loadout(ids, ['weapon.bat'], undefined, ids.length);
+  ids.forEach((id, index) => {
+    const key = weaponKey(id)!;
+    expect(key).toBeGreaterThan(0);
+    catalogLoadout.input({ ...emptyInput(), selectedWeaponKey: key }, index * 30 + 30);
+    expect(catalogLoadout.current(catalogLoadout.state.selectedSide).id).toBe(id);
+  });
+  const cycle = new Loadout(ids.slice(0, 3), ids.slice(3, 6));
+  const entries = cycle.activeEntries();
+  const currentId = cycle.current(cycle.state.selectedSide).id;
+  let entryIndex = entries.findIndex(entry => entry.id === (currentId === 'weapon.kick' ? 'weapon.fists' : currentId));
+  let tick = 30;
+  for (let index = 0; index < entries.length; index++) {
+    cycle.input({ ...emptyInput(), selector: 1, selectorActive: true }, tick);
+    tick += 30;
+    entryIndex = (entryIndex + 1) % entries.length;
+    const selected = cycle.current(cycle.state.selectedSide).id;
+    expect(selected === 'weapon.kick' ? 'weapon.fists' : selected).toBe(entries[entryIndex].id);
+  }
+  expect(weaponKey('weapon.kick')).toBe(weaponKey('weapon.fists'));
+  expect(weaponKey('weapon.pistol')).toBe(weaponKey('weapon.handgun'));
 });
 
 test('click pick: head-to-feet body capsule picks the infected; downed stay pickable; corpses, hidden and civilians never', () => {

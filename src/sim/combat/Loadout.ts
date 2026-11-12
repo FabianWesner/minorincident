@@ -10,6 +10,7 @@ const slot = (id: string, resolve: (id:string)=>ActionDef): ActionSlot => { cons
 /** Rack timers belong to slots and survive cycling. Aim belongs to sides and survives cycling too. */
 export class Loadout {
   readonly state: LoadoutState;
+  private throwableReturn: { side: Side; index: number } | null = null;
   constructor(left: string[], right: string[], readonly definition: (id:string)=>ActionDef = action, readonly capacity = 3) {
     for (const rack of [left, right]) if (rack.length < 1 || rack.length > this.capacity) throw new RangeError(`Racks require 1–${this.capacity} actions`);
     const side = (rack: string[]): SideState => ({ rack: rack.map(id=>slot(id,this.definition)), index: 0, aim: { x: 1, z: 0 }, aimPoint: null, swapUntil: 0 });
@@ -41,6 +42,8 @@ export class Loadout {
     this.state.selectedSide = next.side; this.state[next.side].index = next.index; this.state[next.side].swapUntil = tick + 15;
   }
   input(frame: InputFrame, tick: number): void {
+    const beforeSide = this.state.selectedSide, beforeIndex = this.state[beforeSide].index;
+    const beforeId = this.current(beforeSide).id;
     if (frame.selectorSide) this.state.selectedSide = frame.selectorSide;
     if (frame.left.down) this.state.selectedSide = 'LEFT';
     if (frame.right.down) this.state.selectedSide = 'RIGHT';
@@ -64,6 +67,12 @@ export class Loadout {
       const cycling = this.state[this.state.selectedSide];
       const entries = this.orderedEntries(this.state.selectedSide), current = entries.findIndex(e => e.index === cycling.index);
       cycling.index = entries[(current + frame.selector + entries.length) % entries.length].index; cycling.swapUntil = tick + 15;
+    }
+    const selectedSide = this.state.selectedSide, selectedId = this.current(selectedSide).id;
+    if (selectedId !== beforeId) {
+      if (this.definition(selectedId).category === 'throwable') {
+        if (this.definition(beforeId).category !== 'throwable') this.throwableReturn = { side: beforeSide, index: beforeIndex };
+      } else this.throwableReturn = null;
     }
   }
   /** Adds to selected rack; retained campaign pickups expand it, other full racks replace the current slot. */
@@ -97,6 +106,12 @@ export class Loadout {
     const slot = this.current(side);
     slot.readyAt = tick + Math.max(ticks(def.cooldown), def.fireRate ? ticks(1 / def.fireRate) : 0, ticks(def.windup + def.active + def.recovery));
     if (def.magazine && --slot.magazine === 0) slot.reloadUntil = tick + ticks(def.reloadTime);
-    if (def.charges && !infiniteCharges) { slot.charges--; if (!slot.nextCharge) slot.nextCharge = tick + ticks(def.recharge); }
+    if (def.charges && !infiniteCharges) {
+      slot.charges--; if (!slot.nextCharge) slot.nextCharge = tick + ticks(def.recharge);
+      if (slot.charges === 0 && this.throwableReturn) {
+        const previous = this.throwableReturn; this.throwableReturn = null;
+        this.state.selectedSide = previous.side; this.state[previous.side].index = previous.index; this.state[previous.side].swapUntil = tick + 15;
+      }
+    }
   }
 }

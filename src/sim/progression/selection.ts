@@ -1,5 +1,5 @@
 import type { Side } from '../../data/actions/schema';
-import { weaponKey } from '../../data/weaponKeys';
+import { weaponFallbackPriority } from '../../data/weaponKeys';
 import { action } from '../../data/actions/catalog';
 import type { Loadout, LoadoutState } from '../combat/Loadout';
 import type { CampaignSave } from './Campaign';
@@ -31,7 +31,7 @@ export function restoreSelectedAction(loadout: Loadout, save: CampaignSave): str
     };
     entry = entries.filter(e => usable(e) && save.ownedActions.includes(e.id) && action(e.id).category !== 'ability')
       .sort((a, b) => priority(a.id) - priority(b.id)
-        || (weaponKey(b.id) ?? -1) - (weaponKey(a.id) ?? -1)
+        || (weaponFallbackPriority(b.id) ?? -1) - (weaponFallbackPriority(a.id) ?? -1)
         || action(b.id).tier - action(a.id).tier
         || a.id.localeCompare(b.id))[0]
       ?? { side: 'LEFT', index: -1, id: 'weapon.fists' };

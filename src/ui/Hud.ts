@@ -439,19 +439,29 @@ export class Hud {
         const item = node('button', `weapon-rack-${entry.id}`), icon = document.createElement('img'), key = weaponKey(entry.id);
         item.className = 'hud-weapon-choice'; item.dataset.weapon = entry.id;
         icon.src = actionIconUrl(action(entry.id).iconId); icon.alt = '';
-        item.title = `${label(entry.id)}${key === undefined ? '' : ` · ${key}`}`; item.setAttribute('aria-label', item.title);
+        const shortcut = key === undefined ? '' : key <= 9 ? String(key) : key === 10 ? '0' : 'Q';
+        item.title = `${label(entry.id)}${shortcut ? ` · ${shortcut}` : ''}`; item.setAttribute('aria-label', item.title);
         item.type = 'button'; item.tabIndex = -1; item.disabled = key === undefined;
         // Same input path as the number key. mousedown/pointerdown never reach the canvas (HUD is a sibling), so no shot, move or aim.
         item.addEventListener('mousedown', event => event.preventDefault()); // keep keyboard focus on the canvas so Space/Enter never re-click a slot
         item.addEventListener('click', event => { event.preventDefault(); event.stopPropagation(); if (key !== undefined) this.game.input.selectWeaponKey(key); });
         item.append(icon);
-        if (key !== undefined) { const badge = node('span', `weapon-key-${key}`, String(key)); badge.className = 'hud-weapon-key'; item.append(badge); }
+        if (key !== undefined) { const badge = node('span', `weapon-key-${key}`, shortcut); badge.className = 'hud-weapon-key'; item.append(badge); }
         this.weaponRackItems.set(entry.id, item); this.weaponRack.append(item);
       }
     }
     const selectedId = shown?.id === 'weapon.kick' ? 'weapon.fists' : shown?.id;
-    for (const [id, item] of this.weaponRackItems) attribute(item, 'data-selected', String(id === selectedId && !gun?.mounted));
-    setHidden(this.weaponRack, !entries.length || this.game.input.scheme === 'touch');
+    for (const [id, item] of this.weaponRackItems) {
+      attribute(item, 'data-selected', String(id === selectedId && !gun?.mounted));
+      const entry = entries.find(entry => entry.id === id)!;
+      const empty = entry.index >= 0 && !world.combat!.runner.loadout.hasAmmo(world.combat!.runner.loadout.state[entry.side].rack[entry.index]);
+      attribute(item, 'data-empty', String(empty));
+      const key = weaponKey(id), shortcut = key === undefined ? '' : key <= 9 ? String(key) : key === 10 ? '0' : 'Q (cycle)';
+      item.title = `${label(id)}${empty ? ' · Empty' : ''}${shortcut ? ` · ${shortcut}` : ''}`;
+      item.setAttribute('aria-label', item.title);
+    }
+    setHidden(this.weaponRack, !entries.length);
+    attribute(this.weaponRack, 'data-touch', String(this.game.input.scheme === 'touch'));
     // Manned minigun: the weapon icon shows the gun she holds, not the weapon she carries (rack and touch slots are untouched).
     if (gun?.mounted) shown = { id: 'weapon.rotary-minigun', name: 'Minigun', stats: gun.locked ? 'Overheated' : `Heat ${Math.round(gun.heat * 100)}%`, progress: 1, ammo: 0, charges: 0, state: gun.locked ? 'cooldown' : 'ready' };
     setHidden(this.weapon.root, !shown || (!player.weapons?.LEFT && !player.weapons?.RIGHT && !mission?.def.l1));

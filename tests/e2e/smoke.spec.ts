@@ -4,6 +4,8 @@ import { look } from '../../tools/playtest/eyes';
 import { canvasFrame, canvasFrameChecks } from './canvas-frame';
 import { boot, expect, test, testUrl } from './fixtures';
 
+const l10HangarWeapons = ['weapon.bat', 'weapon.fire-axe', 'weapon.handgun', 'weapon.army-mg', 'weapon.shotgun', 'weapon.rocket-launcher', 'weapon.pipe-bomb', 'weapon.hunting-rifle', 'weapon.nail-gun', 'weapon.machete', 'weapon.molotov', 'weapon.assault-rifle', 'weapon.flashbang', 'weapon.flamethrower'];
+
 // Minimal browser smoke (docs/qa/test-strategy.md): boot, L1 start with its figures actually drawn on both backends, no
 // console/pipeline errors (the fixtures' error guard fails every test on console errors and failed requests). Next to it:
 // webgpu-unflagged.spec.ts (real menu → L1 on players' WebGPU) and crowd-gpu-limits.spec.ts (compiled-program limits).
@@ -228,16 +230,95 @@ test('L1 handover + outbreak: no shader builds after warm-up and no frame over 2
     for (const step of ['crash', 'farmstead', 'restricted-zone', 'research-hangar', 'research', 'cure', 'research-exit', 'delivery-corridor']) {
       a.cheats.completeObjective(step); await a.step(1); await a.screenshotReady();
     }
-    for (const gun of ['weapon.handgun', 'weapon.shotgun', 'weapon.army-mg', 'weapon.rocket-launcher', 'weapon.flamethrower']) {
-      a.setLoadout(['weapon.fire-axe'], [gun]); await a.step(1); await a.screenshotReady();
-    }
-    return { loaded, warmedPages, disabledPages, restoredPages, after: { ...a.perf().nodeBuildMaterials }, pickups: a.events(0).filter(e => e.type === 'pickup.collected' && 'actionId' in e).map(e => 'actionId' in e ? e.actionId : '') };
+    return { loaded, warmedPages, disabledPages, restoredPages, pickups: a.events(0).filter(e => e.type === 'pickup.collected' && 'actionId' in e).map(e => 'actionId' in e ? e.actionId : '') };
   });
   expect(l10.warmedPages, 'L10 corpse pages were prepared during loading').toBeGreaterThan(0);
   expect(l10.disabledPages, 'disabling VFX retains warmed corpse pages').toBe(l10.warmedPages);
   expect(l10.restoredPages, 'enabling VFX retains warmed corpse pages').toBe(l10.warmedPages);
   expect(l10.pickups, 'L10 checkpoint weapons were collected').toEqual(expect.arrayContaining(['weapon.handgun', 'weapon.shotgun', 'weapon.army-mg', 'weapon.rocket-launcher', 'weapon.flamethrower']));
-  expect(heldBuilds(l10.loaded, l10.after), 'L10 carried-weapon builds after level warm-up (all checkpoint pickups)').toEqual([]);
+  const rackIds = await page.evaluate(() => {
+    const p = window.__SS__!.getState().player!;
+    return [...new Set([...p.weapons!.LEFT.rack, ...p.weapons!.RIGHT.rack].map(slot => slot.id))];
+  });
+  expect(rackIds).toEqual(expect.arrayContaining(l10HangarWeapons));
+  expect(await page.locator('.hud-weapon-rack .hud-weapon-choice').count()).toBeGreaterThanOrEqual(14);
+  mkdirSync('test-results/smoke/l10-rack', { recursive: true });
+  await page.setViewportSize({ width: 1280, height: 720 });
+  await page.evaluate(async () => { await window.__SS__!.screenshotReady(); });
+  await page.screenshot({ path: 'test-results/smoke/l10-rack/rack-high-1280x720.png' });
+  for (const id of l10HangarWeapons) {
+    await page.locator(`.hud-weapon-choice[data-weapon="${id}"]`).click();
+    await page.evaluate(async () => { await window.__SS__!.step(16); });
+    const selected = await page.evaluate(() => { const p = window.__SS__!.getState().player!, side = p.weapons!.selectedSide, rack = p.weapons![side]; const id = rack.index < 0 ? 'weapon.fists' : rack.rack[rack.index].id; return id === 'weapon.kick' ? 'weapon.fists' : id; });
+    expect(selected, `rack click for ${id}`).toBe(id);
+  }
+  const keyboardSeen = new Set<string>();
+  for (let i = 0; i < l10HangarWeapons.length * 3 && keyboardSeen.size < l10HangarWeapons.length; i++) {
+    await page.keyboard.press('q'); await page.evaluate(async () => { await window.__SS__!.step(16); });
+    const selected = await page.evaluate(() => { const p = window.__SS__!.getState().player!, side = p.weapons!.selectedSide, rack = p.weapons![side]; const id = rack.index < 0 ? 'weapon.fists' : rack.rack[rack.index].id; return id === 'weapon.kick' ? 'weapon.fists' : id; });
+    if (l10HangarWeapons.includes(selected)) keyboardSeen.add(selected);
+  }
+  expect([...keyboardSeen].sort()).toEqual([...l10HangarWeapons].sort());
+  await page.setViewportSize({ width: 390, height: 844 });
+  const touchSession = await page.context().newCDPSession(page);
+  await touchSession.send('Emulation.setTouchEmulationEnabled', { enabled: true });
+  const tap = async (x: number, y: number) => {
+    await touchSession.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x, y }] });
+    await touchSession.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+  };
+  await tap(195, 400);
+  await page.evaluate(async () => { await window.__SS__!.step(16); });
+  for (const id of l10HangarWeapons) {
+    const box = await page.locator(`.hud-weapon-choice[data-weapon="${id}"]`).boundingBox();
+    expect(box).not.toBeNull(); await tap(box!.x + box!.width / 2, box!.y + box!.height / 2);
+    await page.evaluate(async () => { await window.__SS__!.step(16); });
+    const selected = await page.evaluate(() => { const p = window.__SS__!.getState().player!, rack = p.weapons![p.weapons!.selectedSide]; return rack.index < 0 ? 'weapon.fists' : rack.rack[rack.index].id; });
+    if (selected !== id) await page.screenshot({ path: 'test-results/smoke/l10-rack/touch-failure.png' });
+    expect(selected, `touch rack selection for ${id}`).toBe(id);
+  }
+  expect(await page.evaluate(() => window.__SS__!.getState().input.scheme)).toBe('touch');
+  await touchSession.send('Emulation.setTouchEmulationEnabled', { enabled: false });
+  await touchSession.detach();
+  await page.evaluate(async () => { await window.__SS__!.screenshotReady(); });
+  const rack = await page.locator('.hud-weapon-rack').boundingBox();
+  expect(rack).not.toBeNull(); expect(rack!.x + rack!.width).toBeLessThanOrEqual(390); expect(rack!.y + rack!.height).toBeLessThanOrEqual(844);
+  await page.screenshot({ path: 'test-results/smoke/l10-rack/rack-high-phone-390x844.png' });
+
+  await page.setViewportSize({ width: 1280, height: 720 });
+  await page.evaluate(async () => {
+    const a = window.__SS__!; a.setLoadout(['weapon.molotov', 'weapon.fire-axe'], ['weapon.pipe-bomb']);
+    a.cheats.infiniteCharges(true); a.camera.follow();
+    const p = a.getState().player!.transform; a.input.set({ aim: { x: 1, z: 0 }, aimPoint: { x: p.x + 8, z: p.z }, aimSource: 'keyboard' });
+    await a.step(1); await a.screenshotReady();
+  });
+  for (const zoom of [1, 1.5]) {
+    await page.evaluate(async value => { const a = window.__SS__!; a.camera.zoom(value); await a.screenshotReady(); }, zoom);
+    await page.screenshot({ path: `test-results/smoke/l10-rack/molotov-high-z${zoom}.png` });
+  }
+  const l10GunBuilds = await page.evaluate(async () => {
+    const a = window.__SS__!;
+    a.cheats.infiniteCharges(false); a.input.clear(); a.cheats.killAll(); await a.step(180);
+    const charges = a.getState().player!.weapons!.LEFT.rack[0].charges;
+    for (let i = 0; i < charges; i++) {
+      a.input.set({ left: { down: true, held: false, up: true }, aim: { x: 1, z: 0 } }); await a.step(1); a.input.clear(); await a.step(20);
+    }
+    const p = a.getState().player!;
+    return { after: { ...a.perf().nodeBuildMaterials }, slots: p.weapons!.LEFT.rack, input: a.getState().input, attacks: a.events(0).filter(e => e.type === 'combat.attack').slice(-4) };
+  });
+  test.info().annotations.push({ type: 'empty throwable fixture', description: JSON.stringify(l10GunBuilds) });
+  await page.locator('.hud-weapon-choice[data-weapon="weapon.molotov"]').click();
+  await page.evaluate(async () => { await window.__SS__!.step(16); });
+  await expect(page.locator('.hud-weapon-choice[data-weapon="weapon.molotov"]')).toHaveAttribute('data-selected', 'true');
+  await expect(page.locator('.hud-weapon-choice[data-weapon="weapon.molotov"]')).toHaveAttribute('data-empty', 'true');
+  await expect(page.locator('.hud-weapon-choice[data-weapon="weapon.molotov"]')).toHaveAttribute('aria-label', /Empty/);
+  await page.screenshot({ path: 'test-results/smoke/l10-rack/empty-molotov.png' });
+  const finalGunBuilds = await page.evaluate(async () => {
+    const a = window.__SS__!;
+    for (const gun of ['weapon.handgun', 'weapon.shotgun', 'weapon.army-mg', 'weapon.rocket-launcher', 'weapon.flamethrower']) { a.setLoadout(['weapon.fire-axe'], [gun]); await a.step(1); await a.screenshotReady(); }
+    return { after: { ...a.perf().nodeBuildMaterials } };
+  });
+  expect(heldBuilds(l10.loaded, l10GunBuilds.after), 'L10 throwable builds after warm-up').toEqual([]);
+  expect(heldBuilds(l10.loaded, finalGunBuilds.after), 'L10 carried-weapon builds after level warm-up (all checkpoint pickups)').toEqual([]);
 });
 
 // P0 guard (PROD "all other players are invisible"): each on-screen pedestrian's head/torso pixels must change when that
