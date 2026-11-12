@@ -180,3 +180,7 @@ Traced the post-zebra exterior path from (60,0) west toward (28,0), around the g
 ## Service-lane detour evidence
 
 With five pens cleared, a controlled runtime probe from (96,-32) toward exterior target (108,-60) reports a connected native path. In the 20 s sample it walks south toward z=30, then turns outward near x=100.6/z=28.6, reaching x=107.35/z=7.30. Trial northern/eastern junction caps and continuous side-wall extensions did not eliminate the connection in the map model and were reverted. No service-lane geometry change was retained. The remaining investigation must include the open yard-side approaches after the five-clear unlock, rather than assuming the leak begins at the gorilla exit turn.
+
+## Service-lane east fence join
+
+The full modeled route crosses the lane east side near (100.25,29.25). Extended a single drawn/sim side fence at x=99.1 from z=-35 to z=46, joining the actual yard boundary instead of stopping before it. With five pens cleared, native navigation now reports (108,-60) disconnected from (96,-32); the controlled runtime probe stays inside the lane. All six route-state checks pass, including final yard entry at approximately (93.79,46.06). Typecheck/lint/diff checks pass. This supersedes the earlier trial-wall result: those walls stopped at z=39 and did not join the yard boundary. Opened visual evidence and current final audit remain required.

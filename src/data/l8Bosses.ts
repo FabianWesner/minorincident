@@ -16,6 +16,7 @@ export const l8ArenaKeys = l8BossArenas.map(a => `arena-${a.id}`);
  * vehicle route until the five enclosure fights are cleared. */
 /** Close unused public-road branches without interrupting Nadia's visitor route. */
 export const l8PathWalls = [
+  { x: 99.1, z: 5.5, halfX: .25, halfZ: 40.5 },
   // Cap the primate approach where its outer fence meets the pen wall.
   { x: -24, z: 32, halfX: 4.5, halfZ: .25 },
   { x: -3.1, z: 64, halfX: .25, halfZ: 3.2 },
