@@ -126,17 +126,19 @@ test('loadout: both sides keep independent aims, racks wrap both ways with a swi
   h.setInput({ aim: { x: 0, z: 1 }, right: { down: false, held: false, up: false } }); step(h, 1);
   expect(h.entities.get(1)!.weapons!.selectedSide).toBe('RIGHT');
 
-  const throwable = await arena(); equip(throwable, ['weapon.fire-axe'], ['weapon.molotov']);
-  throwable.setInput({ selectorSide: 'RIGHT', aim: { x: 1, z: 0 }, right: { down: true, held: false, up: true } }); step(throwable, 1); throwable.clearInput();
-  const loadout = throwable.combat!.runner.loadout, molotov = loadout.state.RIGHT.rack[0];
-  expect(molotov.charges).toBe(1);
-  expect(loadout.current(loadout.state.selectedSide).id).toBe('weapon.molotov');
-  step(throwable, 20);
-  throwable.setInput({ aim: { x: 1, z: 0 }, right: { down: true, held: false, up: true } }); step(throwable, 1); throwable.clearInput();
-  expect(molotov.charges).toBe(0);
-  expect(loadout.current(loadout.state.selectedSide).id).toBe('weapon.fire-axe');
-  step(throwable, 15);
-  expect(throwable.events.events()).toContainEqual(expect.objectContaining({ type: 'loadout.switched', actionId: 'weapon.fire-axe' }));
+  for (const previousWeapon of ['weapon.fire-axe', 'weapon.handgun', 'weapon.machete']) {
+    const throwable = await arena(); equip(throwable, [previousWeapon], ['weapon.molotov']);
+    throwable.setInput({ selectorSide: 'RIGHT', aim: { x: 1, z: 0 }, right: { down: true, held: false, up: true } }); step(throwable, 1); throwable.clearInput();
+    const loadout = throwable.combat!.runner.loadout, molotov = loadout.state.RIGHT.rack[0];
+    expect(molotov.charges).toBe(1);
+    expect(loadout.current(loadout.state.selectedSide).id).toBe('weapon.molotov');
+    step(throwable, 20);
+    throwable.setInput({ aim: { x: 1, z: 0 }, right: { down: true, held: false, up: true } }); step(throwable, 1); throwable.clearInput();
+    expect(molotov.charges).toBe(0);
+    expect(loadout.current(loadout.state.selectedSide).id).toBe(previousWeapon);
+    step(throwable, 15);
+    expect(throwable.events.events()).toContainEqual(expect.objectContaining({ type: 'loadout.switched', actionId: previousWeapon }));
+  }
 });
 
 test('melee: the swing hits inside its arc/range once per target and respects maxTargets', async () => {

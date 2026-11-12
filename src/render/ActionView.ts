@@ -289,7 +289,7 @@ export class ActionView extends Group {
       held.holder.scale.setScalar(inHand ? (longGunHolds[def.viewAssetId]?.scale ?? heldActionScale(def.id)) : 1);
       held.holder.visible = (crawlAxe || !downed) && !gunner && inHand && !!mount && prop && !player.riding && this.character.rideWeight === 0 && !['weapon.fists', 'weapon.kick'].includes(def.id) && !(held.model.userData.placeholder === true && def.category === 'ability');
     }
-    this.selected = loadout.state.selectedSide; const state = loadout.state[this.selected], def = action(loadout.current(this.selected).id), origin = player.transform;
+    this.selected = loadout.state.selectedSide; const state = loadout.state[this.selected], def = loadout.definition(loadout.current(this.selected).id), origin = player.transform;
     this.cue = null; this.shape = def.aimIndicator; this.offset = 0; this.maxHeight = 0; this.material.color.set(def.category === 'throwable' ? '#ffd166' : this.selected === 'LEFT' ? '#ffd166' : '#44ffe0'); this.material.transparent = true; this.material.opacity = def.aimIndicator === 'line' ? .18 * Math.max(0, (this.gunUntil - this.world.tick) / 24) : 1;
     const aim = state.aim, angle = Math.atan2(aim.z, aim.x), halfArc = def.arc * Math.PI / 360;
     if (def.aimIndicator === 'line') {
