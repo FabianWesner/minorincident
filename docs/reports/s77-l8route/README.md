@@ -38,11 +38,11 @@ The command is a partial-level diagnostic and exits nonzero for `PARTIAL_LEVEL_S
 - `npm run lint`: pass.
 - `git diff --check`: pass.
 - `tests/engine/missions.test.ts`: pass, 6 tests; includes live next-tick gate closure assertions for every route stage and the elephant yard.
-- `sh tools/remote/run.sh "$PWD" -- npm test`: attempted twice; both attempts exited 69 because no healthy Hetzner runner is running/provisioned and the wrapper does not allow this command in the local Mac slot. No tests were trimmed or run locally as a substitute.
+- `sh tools/remote/run.sh "$PWD" -- npm test`: pass on 46.225.66.90; 27 files, 106 passed and one skipped; 203.6 s against the 240 s budget. Collection guard: 150/150 cases. This supersedes the earlier unavailable-runner attempts.
 
-## Handoff
+## Commit
 
-All requested L8 measures are met in the current worktree, but the commit could not be created. `git add` was denied while trying to create `.git/worktrees/s77-l8route/index.lock`; the sandbox grants read-only access to the shared `.git` metadata. The source changes and this report remain uncommitted. Commit them from an environment that can write the worktree's shared Git metadata, and rerun the unchanged remote unit suite once a healthy runner is available.
+Implementation committed as `38ac7eec`. Git metadata permissions were restored, and the required unchanged remote suite passed. All checks are terminal.
 
 ## Browser QA needed
 
