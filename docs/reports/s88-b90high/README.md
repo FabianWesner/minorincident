@@ -2,38 +2,34 @@
 
 **Target:** `main` at `832d397886ede0042d3dc6867d4416238f48e507` (batch 89 / PROD 20984444), HIGH first at zoom 1 and 1.5, then LOW at zoom 1.
 
-## Resumed execution
-
-The sandbox was lifted. The pool is reachable and a fresh QA build passed. A bounded 60-second HIGH zoom-1 L6 real-input sample completed without deaths, assists, or objective skips (54 simulation seconds, 74 army-MG attacks); it reached retreat but did not complete L6 or measure post-hatch pressure. Receipt: `test-results/s88-b90high/high-z1-l6/summary.json`. The checkpoint-yield capture was opened: HUD shows the retreat objective, survivor-under-attack warning, a visible armed courier, and enemies on the minimap. The driver recorded 33 seconds without objective progress during the authored shelter rest; this needs review before classifying it as a defect. The automatic capture audit also changes quality/zoom for supplementary stills; these do not constitute the requested full HIGH/LOW passes. All remaining checks below remain open. No browser check is running.
-
 ## Verdict
 
-**HOLD — QA incomplete.** No gameplay behavior has been observed in this run, so none of the PO findings can be marked fixed or reproduced. This is an execution hold, not a finding that the game itself failed.
+**Provisional HOLD — QA incomplete.** The required HIGH/LOW coverage and exact first-hatch scenario remain open. No P1/P2 gameplay regression has yet been established by this run.
 
-## Evidence gathered
+## Current evidence
 
-- `npm run build`: PASS (production build completed).
-- `npm run typecheck`: PASS.
-- `npm run lint`: PASS.
-- `npm run browser:pool`: BLOCKED before startup; tsx could not create its IPC socket (`listen EPERM`). Retrying with `TMPDIR=/private/tmp` produced the same error.
-- Pool health at `127.0.0.1:4329`: unavailable (`EPERM`). No pool daemon was already running.
-- `sh tools/remote/run.sh "$PWD" -- npm test`: EXIT 69; scheduler reported no healthy Hetzner runner and that this command cannot use the local Mac fallback.
-- Worktree was clean before this report; current revision is also `main`'s revision.
+- Production build, QA build, typecheck and lint passed.
+- Remote command `sh tools/remote/run.sh "$PWD" -- npm test` passed on runner 94.130.181.173: 27 files, 106 tests passed, one skipped; 232.3 seconds against the 240-second budget. Earlier infrastructure failures were resolved.
+- Browser pool access is restored. Runs used one headless WebGPU session under the serial pool wrapper, port 4951, normal input, no objective skips.
+- Initial HIGH zoom-1 L6 sample: 60 wall seconds, 54 simulation seconds, no deaths or assists, reached retreat.
+- Extended HIGH zoom-1 L6 attempt: 480 wall seconds, 478 simulation seconds, 12 deaths, one logged assist, no objective skips; reached exit, did not finish. Army MG attacks: 2610; fire axe: 32. Receipt: `test-results/s88-b90high/high-z1-l6-full/summary.json`.
+- Final gate state: first hatch x90 passed but `closedAt=0`; x150 closed at tick 25327; x210 closed at tick 27058. This does **not** verify the requested first-hatch scenario.
+- At tick 28680, observer recorded seven attacking infected that second, including five attacking the player; player HP 30. One survivor remained following and 28 had turned. This attempt had substantial pressure; a complete post-first-hatch attack-gap analysis remains open.
+- The only driver issue was 20 seconds without objective progress during the authored shelter rest (maximum 32.542 seconds). Classification remains open; the rest objective itself is not proof of a stuck defect.
 
-## UAT coverage
+## Captures opened
 
-No browser session, real input, capture, or gameplay observation was made. HIGH zoom 1, HIGH zoom 1.5, and LOW zoom 1 remain unmeasured for every requested level and finding:
+Both checkpoint-yield captures were opened. The initial sample shows retreat HUD, survivor warning, armed courier and threats on the minimap. The extended attempt shows an exit objective at 0/1 and 24 metres, courier at 30 HP amid attacking infected and ground telegraphs. These illustrate a pressured attempt; they do not establish completion. [Contact sheet](contact-sheet.jpg) contains these inspected captures.
 
-- L6: attack cadence after first hatch closure, including the required 30-second windows.
-- L7: bus departure and collision with soldiers.
-- L8: 14/14 boarding timing and driver-door marker.
-- L9: rail-crossing hatch stall, final-bay controls, courier pose at handover, and school-bus/APC overlap.
-- L10: hangar weapon selection by click and key, molotov return-to-previous-weapon behavior, Mega hit/recovery, and crops on roads.
+## Remaining required coverage
 
-The verbatim PO reports remain open: L6 “After I closed the first door, no more Zombies attacked the group, which made the game boring from there on”; L7 “The bus is crashing to soldiers”; L8 boarding stalled at 0/14; and all listed L9/L10 reports in the job request. They are not counted as reproduced findings because this run did not observe them.
+All of the following remain open at HIGH zoom 1 and 1.5, followed by LOW zoom 1:
 
-## Open work
+- L6 full completion and every 30-second attack window after the first hatch actually closes.
+- L7 bus departure versus soldiers.
+- L8 boarding to 14/14, timing and driver-door marker.
+- L9 rail hatch, final bay, handover pose and school-bus/APC overlap.
+- L10 first five minutes: every hangar weapon by click and key, all molotov charges and previous-weapon restoration, Mega damage/recovery, crops on roads.
+- Per-level stuck moments over ten seconds and fun/boring/harmless assessment; final P1/P2 list and evidence-based GO/HOLD.
 
-Restore the approved browser-pool startup and remote runner availability, then rerun the requested one-browser, headless, real-input QA using `tools/playtest` and capture/open the relevant images. Record observations, stuck moments over 10 seconds, and fun/boring/harmless notes per pass; create the requested contact sheet from inspected captures; then replace this provisional verdict with the evidence-based GO/HOLD and P1/P2 list.
-
-No contact sheet is included: there are no captures from this run, and an empty or synthetic sheet would misrepresent visual QA evidence.
+No check is running at this report checkpoint. No gameplay code was changed. Full raw evidence is retained under `test-results/s88-b90high/` and is not committed.
