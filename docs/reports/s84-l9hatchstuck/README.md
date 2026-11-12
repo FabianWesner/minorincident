@@ -22,19 +22,19 @@ Read-only source archives of `main` (`86ad0a8`) and PROD `c0f98c70` both reprodu
 
 The 18-route L9 progress regression completed all primary/detour × road/countryside/dry-shortcut × seeds 1–3 cases with exit 0 and no position jumps. The full threat audit completed: L9 skilled and passive each have 0 flags; the full audit has two unrelated L4-06 flags (first breach and sustained horde). Typecheck and lint pass. Focused player/vehicle/handover unit cases pass: 3 files, 11 tests; the test budget remains 150/150.
 
-The local E31 verify wrapper did not pass: its normal tsx command could not create a temporary IPC socket under the sandbox, and direct node/tsx execution passed typecheck and lint but the full local unit stage exceeded its 240-second budget. The requested remote unit suite was attempted twice; both attempts found no healthy remote runner and exited before running tests.
+The PO screenshots were opened: the courier was folded beside an upright corgi, and the evacuation image showed her in the APC roof hatch amid the crowd and smoke.
 
-The PO screenshots were opened. The two pose images show the courier folded down and twisted beside the upright corgi, with the close view clearly isolating the bad courier pose. The final-bay image shows the stopped APC among the infected, with smoke and the burning pickup behind it; the courier is visible in the roof hatch. The new high-zoom exit-path capture harness is `tools/qa/s84-l9-pose-captures.ts`, but both headless runs were stopped by the browser pool failing to start. No post-fix screenshots were produced. The HIGH real-input rail death/retry run remains outstanding for the same browser-pool reason.
+## Rendered evidence
 
-The requested first separate commit was attempted after the pose regression passed, but the sandbox denied creating the Git worktree index lock (operation not permitted). Source edits and tests remain in this worktree; no commit was created.
+The HIGH/zoom-1.5 captures in `test-results/s84-l9hatchstuck/pose-exits/` were opened after 90 settling ticks. `01-vehicle-exit-high-z1.5.png` shows the courier upright beside the sedan; `02-checkpoint-restore-high-z1.5.png` shows her correctly inside the APC hatch ring with the active vehicle and passenger links both 667; `03-l9-to-l10-handover-high-z1.5.png` shows her upright beside the corgi on the L10 road. The L10 image uses the committed-handover preset; the actual handover and crawl-ending state resets are separately asserted by unit tests. Initial screenshots taken during transition blending were superseded by the settled frames.
 
-## Full-access continuation
+## Commits and gates
 
-The pose fix was committed separately as `11338ebb`. Browser-pool access now works. The three HIGH/zoom-1.5 captures in `test-results/s84-l9hatchstuck/pose-exits/` were opened: the L10 courier stands upright beside the corgi, but the checkpoint hatch capture still shows legs extended across the roof despite idle sim state. This is unresolved visual evidence, so completion is not claimed. The ordinary exit capture is taken during its dismount transition and needs a settled follow-up frame. The remote unit suite now runs on 46.225.66.90; its final result will be recorded after completion.
+- `11338ebb`: courier pose reset, committed first and separately.
+- `d6cf80da`: hatch ownership and defense objective progress.
+- `480ed155`: validation harness and report.
 
-The full remote suite on 46.225.66.90 ended at its unchanged 240-second watchdog (246 s observed, exit 124). No individual assertion failure was reported before timeout. The required unchanged rerun remains next, together with settled visual captures, the remaining rendered hatch-pose investigation, and the HIGH real-input stall death/retry run.
-
-Settled capture rerun: the harness now advances 90 ticks before photographing. Opened HIGH/zoom-1.5 frames show the courier upright beside the sedan after dismount and correctly inside the APC hatch ring after restore. The earlier extended-leg image was the transition blend rather than a persistent pose. The seat ownership and defense feedback fix is committed separately from the pose fix. The unchanged remote-suite rerun is in progress.
+Earlier sandbox-only commit/browser attempts and one remote timeout were resolved after full access became available. E31 verification PASS on remote runner 46.225.66.90: typecheck, lint, and full unit stage all exited 0; unit stage 210.7 s, 27 files, 106 passed / 1 skipped.
 
 Unchanged remote unit rerun PASS: 27 files, 106 passed / 1 skipped, 204.2 seconds within the 240-second budget; runner 46.225.66.90, exit 0. The repository budget remains 150/150. No cases or timeout were trimmed.
 
