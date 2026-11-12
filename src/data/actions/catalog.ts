@@ -19,7 +19,8 @@ export const catalog: Readonly<Record<string, ActionDef>> = Object.fromEntries((
   // the crowd battery: the PO's "fight a few, not all at once" - stand vs 4-6 wins, stand vs 10 loses (l1-crowd.test).
   { ...fixtures['weapon.bat'], damage: 22, knockback: .25, stagger: .2, roundhouse: { threshold: 3, radius: 2.2, maxTargets: 3, damage: 7, knockback: .45, stagger: .3, windup: .1, active: .17, recovery: .18, cooldown: .45, hitStopMs: 45 } },
   melee('crowbar', 'wpn.crowbar', 30, 1.8, 95, 0.6, 0),
-  melee('machete', 'wpn.machete', 32, 1.8, 110, 0.45, 0, 0.2),
+  // The compact blade should clear ordinary infected in one decisive hit and recover faster than the fire axe.
+  melee('machete', 'wpn.machete', 40, 1.8, 110, 0.4, 0, 0.2),
   melee('knife', 'wpn.knife', 18, 1.3, 60, 0.3, 0, 0.1),
   { ...melee('nail-bat', 'wpn.nail-bat', 38, 2, 100, 0.55, 1), upgradeHooks: ['damage', 'knockback', 'status'] },
   melee('shovel', 'wpn.shovel', 40, 2.2, 110, 0.75, 1, 0.4),
@@ -36,13 +37,15 @@ export const catalog: Readonly<Record<string, ActionDef>> = Object.fromEntries((
   { ...fixtures['weapon.pistol'], id: 'weapon.handgun', range: 22, fireRate: 3, magazine: 0, reloadTime: 0, upgradeHooks: ['damage', 'spread'] },
   // PO #37: a centred shell kills a 210 HP firefighter through 8 m; 300 HP Alphas take two close shells.
   { ...gun('shotgun', 240, 18, 2, 6, 2, 4), pellets: 8, distanceFalloff: { start: 8, end: 10, minimum: 0.1 }, maxTargets: 8, knockback: 1.8, stagger: 0.65 },
-  { ...gun('nail-gun', 14, 18, 6, 24, 1.6, 1), projectile: { speed: 60, gravity: 0, pierce: 0 } },
+  // Close-mid precision tool: three nails drop a standard 40 HP infected.
+  { ...gun('nail-gun', 18, 18, 6, 24, 1.6, 1), projectile: { speed: 60, gravity: 0, pierce: 0 } },
   gun('smg', 18, 20, 8, 30, 1.5, 2),
-  { ...gun('hunting-rifle', 90, 32, 1, 5, 2.4, 0), tier: 1 },
+  // Deliberate precision rifle: one ordinary infected; two landed shots remove a 300 HP Alpha.
+  { ...gun('hunting-rifle', 300, 32, 1, 5, 2.4, 0), tier: 1, projectile: { speed: 110, gravity: 0, pierce: 1 }, maxTargets: 2 },
   gun('assault-rifle', 26, 28, 7.5, 30, 2, 1, 2),
   // L10 signature issue from the safe hangar: a short-range, five-ray fire cone.
-  { ...gun('flamethrower', 4, 6, 3, 60, 3, 32, 3), pellets: 5, stagger: .15,
-    status: { kind: 'burning', duration: 3, maxStacks: 1, dps: 8, slow: 0 } },
+  { ...gun('flamethrower', 20, 6, 3, 60, 3, 20, 3), pellets: 7, stagger: .15,
+    status: { kind: 'burning', duration: 3, maxStacks: 1, dps: 24, slow: 0 } },
   fixtures['weapon.machine-gun'],
   // E22 §5.3 the army's issue machine gun (the L4-L6 main weapon): 14 per round, 10 rounds per second, 4 degrees of spread, 26 m, pierce 1
   // (a round passes through one infected and hits the next). No ammunition system (00 §6.1): no magazine, reload or overheat.
@@ -50,7 +53,7 @@ export const catalog: Readonly<Record<string, ActionDef>> = Object.fromEntries((
   { ...gun('army-mg', l4.machineGun.damage, l4.machineGun.rangeM, l4.machineGun.fireRate, 0, 0, l4.machineGun.spreadDeg, 0), viewAssetId: 'wpn.machine-gun', iconId: 'icon.machine-gun', maxTargets: l4.machineGun.pierce + 1, projectile: { speed: 95, gravity: 0, pierce: l4.machineGun.pierce }, upgradeHooks: ['damage', 'spread'] },
   { ...gun('rocket-launcher', 180, 35, 1.2, 0, 0, 0, 2), projectile: { speed: 18, gravity: 0, pierce: 0 }, splash: { radius: 6, falloff: 0.6 }, maxTargets: 1000, knockback: 1.2, stagger: 0.8, upgradeHooks: ['damage', 'spread'], noiseRadius: noiseForAction('weapon.rocket-launcher').radius },
   fixtures['weapon.grenade'],
-  { ...thrown('molotov', 10, 4, 0), effect: { kind: 'fire', radius: 4, duration: 6 }, status: { kind: 'burning', duration: 2, maxStacks: 1, dps: 15, slow: 0 } },
+  { ...thrown('molotov', 10, 4, 0), effect: { kind: 'fire', radius: 4, duration: 8 }, status: { kind: 'burning', duration: 2, maxStacks: 1, dps: 24, slow: 0 } },
   thrown('pipe-bomb', 150, 4.5, 2),
   { ...thrown('firecracker-lure', 0, 15, 0), splash: null, effect: { kind: 'lure', radius: 15, duration: 5 } },
   { ...thrown('smoke-grenade', 0, 6, 0), splash: null, effect: { kind: 'smoke', radius: 6, duration: 12 } },

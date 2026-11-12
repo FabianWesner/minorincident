@@ -29,6 +29,22 @@ const walls = (w: SimWorld) => w.combat!.query.walls as CoverWall[];
 const attacks = (w: SimWorld) => w.events.events().filter(e => e.type === 'combat.attack');
 const forehand = () => comboDefinition(rosterAction('weapon.bat'), 0);
 
+test('L10 arsenal roles: precision, close-mid and area weapons meet their core damage targets', () => {
+  const handgun = rosterAction('weapon.handgun'), assault = rosterAction('weapon.assault-rifle');
+  expect(rosterAction('weapon.machete').damage).toBeGreaterThanOrEqual(40);
+  expect(rosterAction('weapon.machete').cooldown).toBeLessThan(rosterAction('weapon.fire-axe').cooldown);
+  expect(rosterAction('weapon.nail-gun').damage * 3).toBeGreaterThanOrEqual(40);
+  expect(rosterAction('weapon.nail-gun').damage * rosterAction('weapon.nail-gun').fireRate).toBeGreaterThan(handgun.damage * handgun.fireRate);
+  expect(rosterAction('weapon.hunting-rifle').damage).toBeGreaterThanOrEqual(300);
+  expect(rosterAction('weapon.hunting-rifle').projectile?.pierce).toBe(1);
+  expect(assault.damage * assault.fireRate).toBeGreaterThan(handgun.damage * handgun.fireRate);
+  expect(rosterAction('weapon.molotov').effect?.duration).toBeGreaterThanOrEqual(6);
+  expect(rosterAction('weapon.molotov').status?.dps).toBeGreaterThanOrEqual(20);
+  expect(rosterAction('weapon.pipe-bomb').damage).toBeGreaterThan(0);
+  expect(rosterAction('weapon.flashbang').status?.kind).toBe('stunned');
+  expect(rosterAction('weapon.flamethrower').status?.kind).toBe('burning');
+});
+
 /** Broad-phase cover must agree with the exact wall tests, including rotated padding and mutable doors. */
 async function checkDynamicCover(): Promise<void> {
   const w = await arena(), q = w.combat!.query, devices = w.interactables!;
