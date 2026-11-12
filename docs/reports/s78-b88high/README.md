@@ -5,11 +5,15 @@ Worktree HEAD: `bea2dc9d`
 Scope: L8 (start to boarding), L9 (full level), and the first three minutes of L3, L4, and L7.  
 Target comparison: PROD batch 87 at <https://minor-incident.com>.
 
-## Verdict
+## Final verdict — HOLD
 
-**HOLD — partial real-input evidence; QA remains incomplete.** The IPC restriction cleared on continuation. A pooled headless GPU run of L8 HIGH zoom 1 reached the flamingo arena, then the driver stopped after 90 seconds without progress at 24/26 killed. This is not yet a confirmed gameplay soft-lock. Other passes and PROD comparisons remain open.
+Final decision after the orchestrator-requested last HIGH zoom 1 attempt on merged revision `bd0bccbb`, including main fix `564f2ed7`. Production and QA builds passed. **Flamingos cleared; boarding reached, not completed.** The 540-second attempt ended at “Cover the survivors while they board · 0/14 aboard · 22 m”, with zero deaths, three logged assists, no skips, and 61.993 seconds maximum recorded no-progress. This is a route-verification gap, not a proven game soft-lock.
 
-[Opened-capture contact sheet](contact-sheet.jpg) shows the opening route, Nadia-follow pause, and flamingo stall. Raw run: `test-results/playtest/s78-b88high-l8-high-z1/` (logs, captures, runs-campaign.json and issues-campaign.json). The first session ended after 333 seconds; an automatic continuation was stopped to avoid repeating the same attempt without diagnosis.
+- **Confirmed P2:** L9 school bus/APC hull overlap, with bus geometry in the windscreen (LOW capture, described below).
+- **P1 investigation / release gate:** L8 completed boarding remains unverified. Opened final capture shows courier/APC outside the pen while survivors cluster inside near the gate; determine whether physical input can complete boarding. No confirmed P1 gameplay defect is asserted from this driver failure.
+- Remaining evidence gaps: PROD A/B was not performed; temporal lion/APC flicker and flamingo settling were not verified; exact L3 wave timing, L4 alignment and L7 Alpha relocation effects remain open. HIGH zoom 1.5 and LOW L8 evidence predates the final marker fix. These gaps prevent GO.
+
+[Opened-capture contact sheet](contact-sheet.jpg) includes the final L8 boarding boundary and the P2 bus/APC overlap. Final run evidence: `test-results/playtest/s78-b88high-l8-markerfix-high-z1/`. Earlier provisional decisions and experiments below are historical; this section is authoritative.
 
 ## Evidence and checks
 
@@ -28,7 +32,7 @@ Measured coverage is summarized below. No PROD A/B was performed. All incomplete
 
 | Level | HIGH zoom 1 | HIGH zoom 1.5 | LOW zoom 1 |
 |---|---|---|---|
-| L8 full | Merged build incomplete: 25/26 flamingos, 90 s driver stall | Incomplete: same 25/26 stall | Open |
+| L8 full | Final fix: flamingos cleared; 0/14 at boarding cap | Pre-marker-fix: 25/26 stall | Pre-marker-fix: elephant yard at cap |
 | L9 full | Incomplete: eight-minute cap at rail encounter | Finished in 281 s, five deaths | Incomplete: 3/4 at trucks at cap |
 | L3 first 3 min | Sample complete | Sample complete | Sample complete |
 | L4 first 3 min | Sample complete | Sample complete | Sample complete |
@@ -124,3 +128,7 @@ Full real-input route finished in 152 seconds, zero deaths, zero assists, no ski
 Eight-minute real-input attempt ended at 480 seconds with 3/4 survivors at trucks, 9 m from the marker; 21 deaths, 0 logged assists, no skips. Rail phase recovered and evacuation phase was reached, but full completion remains open. Driver stationary-attack and vehicle-passivity flags remain unconfirmed; P0 is the sample cap.
 
 **P2: school bus/APC interpenetration.** Opened `test-results/playtest/s78-b88high-l9-low-z1/captures/campaign-L9-t10824.jpg`: school bus hull overlaps the APC roof/front and orange bus geometry fills the windscreen. Courier 90 HP, APC armor 490/1000, HUD cover survivors 2/4. Later progress to 3/4 at trucks shows this capture alone does not prove a permanent wedge. Telegraphed/dodgeable/beatable chase remains unverified. Included this opened capture in the single contact sheet. No code fix made.
+
+## Final-run captures and lower-quality endpoint
+
+Opened final-run `campaign-L8-29623-stuck-navigating.jpg`: lit APC and ground marker outside the pen; party clustered near the inside gate, boarding 0/14. Opened `campaign-L8-t16245.jpg`: courier and followers on the fenced, paved, lamp-lit approach to the lion habitat. These support route readability in those views, not temporal animal quality. Final HIGH attempt cleared the flamingos and progressed through later habitats to boarding. Earlier LOW attempt recovered past flamingos and ended at 480 seconds at “Enter the elephant yard · 7 m”; opened its `campaign-L8-15774-stuck-at-ring.jpg` shows lit arena, two live health bars and the corpse field. All checks have terminated. No game code was edited by this lane, deployed or pushed.
