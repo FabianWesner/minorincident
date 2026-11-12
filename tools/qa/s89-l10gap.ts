@@ -4,14 +4,14 @@ import { execFileSync } from 'node:child_process';
 import { runLevel } from '../sim-runner/levels';
 import { preset } from '../../src/sim/progression/Campaign';
 import { observeAttackStarts } from './threat/attackStarts';
-import { insideCureHangar } from '../../src/data/l10Story';
+import { cureHangarConversation } from '../../src/data/l10Story';
 
 const rows = [];
 const seeds = (process.env.S89_SEEDS ?? '1,2,3').split(',').map(Number);
 const tiers = (process.env.S89_TIERS ?? 'low,high').split(',') as ('low' | 'high')[];
 for (const seed of seeds) for (const quality of tiers) {
   const starts: number[] = [], protectedTicks: number[] = [];
-  let totalTicks = 0;
+  let totalTicks = 0, dialogueProgress = 0;
   const result = await runLevel('L10', 'complete', seed, 1800, 'auto', preset('L10-default'), undefined, 0, {
     quality,
     beforeBegin(world) {
@@ -19,8 +19,10 @@ for (const seed of seeds) for (const quality of tiers) {
       world.events.on('sim.tick', event => {
         if (event.type !== 'sim.tick') return;
         const state = world.missions!.state;
-        if (state.steps.research?.status === 'active' && !state.states['hangar-dialogue-done'] &&
-            insideCureHangar(world.entities.get(1)!.transform)) protectedTicks.push(event.tick);
+        const line = state.counters['hangar-line'] ?? 0;
+        const progress = cureHangarConversation.slice(0, line).reduce((sum, entry) => sum + entry[1], 0) + (state.counters['hangar-line-ticks'] ?? 0);
+        if (progress > dialogueProgress) protectedTicks.push(event.tick);
+        dialogueProgress = progress;
       });
     },
     beforeDispose(world) { totalTicks = world.tick; },

@@ -69,3 +69,9 @@ Three seed-1 paired trials, all completed and fully reverted:
 | Road-relative offset plus lost-target retirement | 1.616 / 213.08 | 1.783 / 285.08 |
 
 The existing lane offset compares the courier’s current Z to a future group station’s Z, potentially treating normal road bends as off-road crossings. A road-relative calculation changed pressure and raised rate in the standalone trial, but failed cadence; its combination with retirement reduced rate below baseline. These results do not justify retaining either change for this objective. Receipts `/private/tmp/s89-local-release.json`, `/private/tmp/s89-road-offset.json`, `/private/tmp/s89-road-lost.json`. No gameplay change remains.
+
+## Exact dialogue measurement and L10 audit
+
+Observer now excludes only ticks where the authored conversation counter advances, rather than the extra completion tick in the protected area. Fresh seed-1 LOW: exactly 56.00 s excluded, 295.0667 s longest adjusted gap, 35 starts and 1.89633/min. Earlier baseline JSON/table used 56.0167 s; the affected seed-1 gap was understated by one tick. The other matrix rows have not yet been refreshed with this observer. Receipt `/private/tmp/s89-exact-dialogue.json`. Typecheck and lint pass.
+
+`node --import tsx/esm tools/qa/threat-audit.ts --levels L10 --out /private/tmp/s89-l10-audit` completed in 42.5 s. L10 gameplay flags: zero. Top-level exit: 1, solely `PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate`; runtime source matches main. No QA flag/threshold changes were made. Full audit remains required for acceptance.
