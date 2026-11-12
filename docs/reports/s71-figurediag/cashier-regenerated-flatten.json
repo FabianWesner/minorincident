@@ -1,0 +1,21 @@
+{
+  "source": "/private/tmp/s71-cashier-stages/body/lod0.glb",
+  "reference": "/Users/wesner/Workspace/3dp-s52-trellis-heavies/cast/wave1/inf.cashier/input.png",
+  "output": "/private/tmp/s71-cashier-stages/flat-lod0.glb",
+  "source_sha256": "5561d5b8c44bcb28f7f9b1899a62be2fb3a14af779234483dc4c69b5a8d2ebd9",
+  "output_sha256": "02d4069f73a252a74a956c62bc367329c1ed5e0e2356d39088cfb9433da556c0",
+  "method": "Region-aware base-colour flattening; preserve geometry, UVs and emission bytes.\nRegions = coarse SLIC texture segmentation intersected with UV coverage islands,\nbody-height bands and nearest input-image colour cluster. Palettes are fitted per\nregion in Lab. Bilateral filtering and local palette compression remove mottling.\nSmall high-contrast features retain their edges; emissive images are never edited.\nInput colour metric: CIE76 distance from each region mean to its assigned input\npalette centroid in the same body-height band. This is a palette comparison, not\npixel correspondence or a claim of semantic segmentation accuracy.\n",
+  "script_sha256": "a3051474124ef48f2d9d29d45b0a94ee10dee0a0e9f289ad0faff2869090065f",
+  "reference_sha256": "a5ed57cb3af6a3efb1a3f6df55254679e7b98cd7da9a8c24ab106e7a0c9223d6",
+  "rare_hues": "Green and blue families get independent input centroids and constrained assignment.",
+  "strength": 0.85,
+  "coverage_pixels": 536799,
+  "uv_islands": 1155,
+  "regions": 4549,
+  "delta_e76_area_mean": 4.948550541249051,
+  "delta_e76_region_max": 7.655657701477635,
+  "colour_gate": true,
+  "protected_images": [],
+  "region_measurements_file": "flatten.regions.json.gz",
+  "region_measurements_sha256": "cd407bee58b714df267f8ab8200fea945b14874766be44044a4e4ee6089438f7"
+}
