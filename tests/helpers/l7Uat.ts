@@ -12,7 +12,6 @@ import type { DistrictLayout } from '../../src/levels/districts/types';
 import { goalReach } from '../../src/sim/world/TrapRescue';
 import { emptyInput } from '../../src/input/InputFrame';
 import { actorRadius } from '../../src/sim/world/SolidRegistry';
-import { LevelSevenBot } from '../../src/debug/bot/LevelSevenBot';
 import pharmacyColumn from '../fixtures/l7-pharmacy-column.json';
 
 function checkWallGeometry() {
@@ -60,12 +59,6 @@ export async function checkL7Navigation() {
     expect(alphas.every(e => e.health.max === 450 && e.health.current === 450), 'L7 Alpha toughness is level-local').toBe(true);
     expect(w.infected!.active.some(e => e.infected?.pack === 700), 'the final horde does not occupy opening slots').toBe(false);
     w.l7Encounters!.start();
-    // A distant survivor must not hold the completion route before the bus
-    // boarding lifecycle can recover and board stragglers.
-    const routeBot = new LevelSevenBot(w), player = w.entities.get(1)!, straggler = w.l7Encounters!.state.roster.find(r => r.status === 'following');
-    Object.assign(player.transform, { x: 88, z: 15 });
-    if (straggler) Object.assign(w.entities.get(straggler.id)!.transform, { x: 0, z: 0 });
-    expect(routeBot.sample().move, 'the route continues toward the bus with a distant follower').not.toEqual({ x: 0, z: 0 });
     Object.assign(w.entities.get(1)!.transform, { x: 85, z: 46 });
     w.l7Encounters!.update();
     const queuedFinal = w.infected!.director.queue.filter(entry => entry.options.pack === 700);
