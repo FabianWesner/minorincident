@@ -37,3 +37,7 @@ No check is running at this report checkpoint. No gameplay code was changed. Ful
 ## L7 HIGH zoom 1
 
 Completed in 284 wall seconds with no skipped objectives and zero driver issues. Departure carried 12 boarded identities. Opened captures `campaign-L7-departure-0-5.jpg`, `campaign-L7-departure-3.jpg`, and `campaign-L7-departure-8.jpg` under `test-results/s88-b90high/high-z1-l7/captures/`. Soldiers visibly overlap the front bumper in the first two frames; by 8.08 seconds the bus has moved clear. **P2, reproduced:** “The bus is crashing to soldiers.” The sequence completes, so no progression block was observed. The route has active combat and survivor losses; departure overlap is visually disruptive. Other quality/zoom passes remain open.
+
+## L8 HIGH zoom 1 — approach only
+
+Bounded eight-minute route ended before boarding, at “Enter the elephant yard · 60 m”. Receipt: `test-results/s88-b90high/high-z1-l8/summary.json`: 480 wall seconds, 477 simulation seconds, one death, three assists, no objective skips, 761 army-MG attacks. The Nadia-follow phase produced driver warnings at 20 and 31 seconds without objective progress (maximum 50.421 seconds); route later advanced, so these are recorded delays with defect classification open. The final checkpoint-yield capture was opened: courier and following group on a fenced bridge, elephant-yard objective visible, APC armour 1000/1000. Boarding timing, 14/14 completion and driver-door marker remain unmeasured. Next route must retain its profile across pool reservations rather than discard checkpoint progress.
