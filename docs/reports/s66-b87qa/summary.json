@@ -1,0 +1,210 @@
+{
+  "job": "s66-b87qa",
+  "objective": "Real-input first-time-player QA of batch 87 fixes with opened captures and verdicts",
+  "head": "91199b68",
+  "status": "timebox_complete_qa_incomplete_hold",
+  "build": {
+    "command": "MI_BUILD_CACHE=off npm run build:qa",
+    "result": "passed",
+    "durationSeconds": 11.08
+  },
+  "playtest": {
+    "result": "partial_L9_L8_L4",
+    "headless": true,
+    "quality": "low",
+    "renderer": "WebGL2",
+    "godMode": false,
+    "realInput": true,
+    "lockCommand": "E2E_UNITS=1 E2E_RESERVATION_SECONDS=600 E2E_PORT=4867 sh tools/e2e-lock.sh ...",
+    "exitCode": 130,
+    "blocker": null,
+    "captures": [
+      "test-results/s66-b87qa/00-menu.png",
+      "test-results/s66-b87qa/l9/bus-telegraph-turn43.jpg",
+      "test-results/s66-b87qa/l9-route/.frames/turn-000056-action.jpg"
+    ],
+    "verdicts": [
+      {
+        "finding": "L9 school-bus ram telegraph",
+        "verdict": "FIXED",
+        "scope": "Warning presentation only; dodgeability and beatability unverified",
+        "position": "HUD objective distance 157 m, action 43",
+        "tick": null,
+        "capture": "test-results/s66-b87qa/l9/bus-telegraph-turn43.jpg"
+      },
+      {
+        "finding": "Recoverable L9 driving blockage near rails",
+        "verdict": "NEW",
+        "severity": "P1",
+        "tick": 8929,
+        "position": "HUD 632\u2013639m remaining, beside roadside wall/rail props",
+        "evidence": "ticks8195\u20138929 (12.23 simulated seconds), no meaningful onward objective progress despite forward input; spinning and impacts, not stationary softlock; source unresolved",
+        "capture": "docs/reports/s66-b87qa/l9-partial.jpg"
+      },
+      {
+        "finding": "Persistent vertical flamingo corpse pile",
+        "verdict": "NEW",
+        "severity": "P2",
+        "tick": 9046,
+        "position": "flamingo pond Phase2, HUD5m remaining",
+        "capture": "docs/reports/s66-b87qa/l8-partial.jpg",
+        "description": "Dead birds remain stacked vertically above the courier across successive opened frames; live-foot sliding remains unverified."
+      },
+      {
+        "finding": "Rail-stall explanation and restart cue",
+        "verdict": "FIXED",
+        "tick": 10408,
+        "position": "rail crossing, HUD78m remaining",
+        "capture": "test-results/s66-b87qa/l9-final/.frames/turn-000050-action.jpg",
+        "evidence": "countdown18\u219215\u219210\u21926\u21922, Engine restarted \u2014 drive! (W), forward input then reduced distance78\u219240m",
+        "retainedSheet": "docs/reports/s66-b87qa/l9-partial.jpg"
+      },
+      {
+        "finding": "Hatch upper-body presentation",
+        "verdict": "FIXED",
+        "tick": 9278,
+        "position": "rail crossing, HUD79m remaining",
+        "capture": "test-results/s66-b87qa/l9-final/.frames/turn-000045-action.jpg",
+        "evidence": "courier upper torso and weapon above hatch; F closes hatch and preserves courier health",
+        "retainedSheet": "docs/reports/s66-b87qa/l9-partial.jpg"
+      }
+    ],
+    "openedCaptures": [
+      "test-results/s66-b87qa/00-menu.png",
+      "test-results/s66-b87qa/l9/bus-telegraph-turn43.jpg",
+      "docs/reports/s66-b87qa/l9-partial.jpg",
+      "docs/reports/s66-b87qa/l8-partial.jpg",
+      "docs/reports/s66-b87qa/l4-partial.jpg",
+      "test-results/s66-b87qa/l9-route/.frames/turn-000056-action.jpg",
+      "test-results/s66-b87qa/l9-last/.frames/turn-000012-action.jpg",
+      "test-results/s66-b87qa/l9-last/.frames/turn-000013-action.jpg",
+      "test-results/s66-b87qa/l9-last/.frames/turn-000017-action.jpg",
+      "test-results/s66-b87qa/l9-last/.frames/turn-000064-action.jpg",
+      "test-results/s66-b87qa/l9-last/.frames/turn-000071-action.jpg",
+      "test-results/s66-b87qa/l9-last/.frames/turn-000072-action.jpg",
+      "test-results/s66-b87qa/l9-last/.frames/turn-000073-action.jpg",
+      "test-results/s66-b87qa/l9-last/.frames/turn-000074-action.jpg",
+      "test-results/s66-b87qa/l9-last/.frames/turn-000075-action.jpg",
+      "test-results/s66-b87qa/l9-last/.frames/turn-000078-action.jpg",
+      "test-results/s66-b87qa/l9-last/.frames/turn-000079-action.jpg",
+      "test-results/s66-b87qa/l9-last/.frames/turn-000080-action.jpg",
+      "test-results/s66-b87qa/l9-last/.frames/turn-000081-action.jpg",
+      "test-results/s66-b87qa/l9-last/.frames/turn-000082-action.jpg",
+      "test-results/s66-b87qa/l8-last/.frames/turn-000268-action.jpg",
+      "test-results/s66-b87qa/l8-last/.frames/turn-000275-action.jpg",
+      "test-results/s66-b87qa/l8-last/.frames/turn-000293-action.jpg",
+      "test-results/s66-b87qa/l8-last/.frames/turn-000301-action.jpg",
+      "test-results/s66-b87qa/l8-last/.frames/turn-000309-action.jpg",
+      "docs/reports/s66-b87qa/l4-partial.jpg",
+      "test-results/s66-b87qa/l4-last/health-audit.jpg",
+      "test-results/s66-b87qa/l4-last/pose-audit.jpg",
+      "test-results/s66-b87qa/l4-armor/.frames/turn-000019-action.jpg",
+      "test-results/s66-b87qa/l9-final/.frames/turn-000045-action.jpg",
+      "test-results/s66-b87qa/l9-final/.frames/turn-000050-action.jpg"
+    ],
+    "zoom": "L9-last explicitly camera.zoom(1); API1.5 wider frame also opened; three real wheel-up notches give ~1.52x close magnification (turn17), opened. Earlier L8/L4 exact zoom unverified.; L4-armor three wheel-up notches ~1.52x close opened turn19",
+    "continuousMotionGate": false,
+    "L9FinalRun": {
+      "deaths": 0,
+      "survivorsEvacuated": 4,
+      "bayTick": 13006,
+      "bridgeTick": 14018,
+      "crawlEndTick": 14888,
+      "transitionTo": "L10",
+      "arrivalTick": 60,
+      "health": 100,
+      "exitCode": 130
+    },
+    "videoAttempt": "recordVideo requested for l8-video but no artifact exported by browser connection; not used as animation evidence",
+    "L4DamageEvents": {
+      "triggerHoldsSeconds": [
+        4,
+        4
+      ],
+      "tickRange": [
+        2598,
+        3100
+      ],
+      "healthStart": 100,
+      "healthEnd": 57,
+      "damageEvents": [
+        {
+          "tick": 2745,
+          "amount": 10
+        },
+        {
+          "tick": 2804,
+          "amount": 10
+        },
+        {
+          "tick": 2863,
+          "amount": 10
+        },
+        {
+          "tick": 2949,
+          "amount": 10
+        },
+        {
+          "tick": 2993,
+          "amount": 10
+        },
+        {
+          "tick": 3033,
+          "amount": 10
+        },
+        {
+          "tick": 3073,
+          "amount": 3
+        }
+      ],
+      "recovery": {
+        "tick": 2910,
+        "amount": 20
+      },
+      "grossDamage": 63,
+      "netDamage": 43,
+      "attribution": "mixed enemies; 3HP event may be damage-over-time, not claimed as distinct melee hit",
+      "rawConsecutiveCaptures": [
+        "test-results/s66-b87qa/l4-last/burst-15",
+        "test-results/s66-b87qa/l4-last/burst-16"
+      ]
+    },
+    "activeChecks": 0,
+    "automatedReleaseGate": "not run in this manual QA lane",
+    "baselineAB": false
+  },
+  "coverage": {
+    "L9": "COMPLETE normal start \u2192 rail restart \u2192 bay4/4 tick13006 \u2192 bridge \u2192 crawl0m tick14888 \u2192 automatic L10 arrival tick60; final run0deaths HP100",
+    "L8": "normal start \u2192 plaza cleared \u2192 flamingo arena defeated tick11207 HP92 after one death and normal retry in l8-last \u2192 service path tick12640; lion arena not yet reached; additional l8-video run repeated pond deaths, did not reach lions",
+    "L4_continuous_fire": "played mixed butcher/armored/hazmat fight: l4-last two4s MG holds ticks2598\u20133100, HP100\u219257, six10HP drops + one3HP drop,20HP recovery; 63gross/43netdamage; butcher-specific hit attribution inconclusive. Earlier7s MG exchange ended in death.",
+    "armored_front_vs_rear": "UNMEASURED after final L4 isolation attempt: wall, mixed attackers and allied fire confounded starting health and shots; no counts asserted",
+    "L2_market": "not_played",
+    "L7_school_bus": "not_played"
+  },
+  "codeChanged": false,
+  "specsChanged": false,
+  "unplayed": [
+    "L8 lion arena",
+    "L2 market (optional)",
+    "L7 bus (optional)"
+  ],
+  "completionAudit": {
+    "goalAchieved": false,
+    "timeboxDeadlineUTC": "2026-11-12T05:05:04Z",
+    "requiredChecks": {
+      "L9 full route": "verified through L10 arrival",
+      "L8 flamingo arena": "verified clear",
+      "L8 lion arena": "not played",
+      "continuous animal motion": "unverified",
+      "L4 continuous automatic fire": "played; consecutive damage captures retained; butcher-only attribution inconclusive",
+      "armored front versus rear shots-to-kill": "unmeasured",
+      "zoom1 and close1.5 across required levels": "incomplete",
+      "opened captures and verdicts": "retained for supported findings",
+      "README and JSON": "committed",
+      "at most3 small committed sheets": "verified3",
+      "raw captures under test-results": "verified referenced captures exist",
+      "no code changes or deploy/push/main movement": "report-only diff verified"
+    },
+    "decision": "HOLD; full goal remains unachieved. Further gameplay requires extending the original time box."
+  }
+}
