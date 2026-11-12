@@ -53,7 +53,6 @@ const dispose = (w: SimWorld) => w.dispose();
 export async function checkBossDamage(): Promise<void> {
   const w = await loadLevel('L8', 1);
   try {
-  const w = await loadLevel('L8', 1); 
   const zoo = w.missions!.l8!;
   zoo.state.nextWave = Number.MAX_SAFE_INTEGER;
   const failures: string[] = [];
@@ -97,7 +96,6 @@ export async function checkBossDamage(): Promise<void> {
 export async function checkOrdinaryDamage(): Promise<void> {
   const w = await loadLevel('L8', 1);
   try {
-  const w = await loadLevel('L8', 1); 
   w.combat!.damage.god = true;
   const failures: string[] = [];
   for (const weapon of WEAPONS) for (const range of [2, 8]) {
@@ -115,7 +113,6 @@ export async function checkOrdinaryDamage(): Promise<void> {
 export async function checkBossStates(): Promise<void> {
   const w = await loadLevel('L8', 1);
   try {
-  const w = await loadLevel('L8', 1); 
   const zoo = w.missions!.l8!;
   zoo.state.nextWave = Number.MAX_SAFE_INTEGER;
   const start = (zoo.bosses as unknown as { start: Start }).start.bind(zoo.bosses);
@@ -152,7 +149,6 @@ export async function checkBossStates(): Promise<void> {
 export async function checkL8Cues(): Promise<void> {
   const w = await loadLevel('L8', 1);
   try {
-  const w = await loadLevel('L8', 1); 
   const mission = w.missions!, zoo = mission.l8!, advance = (n: number) => { for (let i = 0; i < n; i++) w.update(); };
   const step = () => mission.def.steps.find(s => s.id === 'sanctuary')!;
   advance(2);

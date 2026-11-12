@@ -65,3 +65,13 @@ The remote gate after moving checkpoint workload still timed out at 240.6 second
 ## Current-code vehicle and explosion evidence
 
 Focused vehicle integration on the current two-miss tuning passes (2 tests, 72.83 seconds locally). Temporary profiling instrumentation was removed after the run; it yielded no helper-level timing output. Headless real-input encounter with zoom 2.5 recorded bus health 0 and damage `exploded` at tick 876, still exploded at tick 1066. Opened `bus-wide/s017-t876.jpg`: bus remains outside follow framing, so this is runtime explosion evidence but not accepted visual crash proof. No source changes in this follow-up.
+
+## Passive arrival, visible collision and test leak
+
+Passive road driver (`r42/l9-bay-probe.ts --route road --mode w --max 151`) reaches the bay at tick 9009; at tick 9060 APC durability is 535 with zero courier deaths. This directly verifies survival to the bay, superseding the earlier post-arrival hold ambiguity.
+
+Opened `test-results/s62-l9play/bus-camera/s025-t982.jpg`: bus front is visibly crumpled against a roadside obstacle. The real-input encounter's log reports stopped pursuit at tick 739. This collision screenshot complements the separately verified native two-miss zero-health wreck and the explosion state from the previous real-input run. God remained off; camera targeting changed presentation only.
+
+Found four duplicate world loads in `tests/helpers/l8BossShoot.ts`: each helper shadowed its outer world inside try and disposed only the unused outer world. Removed the four duplicate loads, so all assertions exercise the same world that finally disposes. This is a test-resource fix outside L9 gameplay scope, necessary to investigate the remote budget failures. No assertions, counts, or timeout limits changed. Typecheck and lint pass.
+
+After the duplicate-world fix, the remote gate still timed out at 241.3 seconds. No completion claim: the remaining L8 story/boss content dominates the monolithic vehicle test and requires relocation under the repository's test strategy, preserving it as QA coverage. Temporary timing instrumentation has been removed; only the four-world resource fix is retained.
