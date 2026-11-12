@@ -4,21 +4,22 @@
   "run": {
     "quality": "high",
     "viewport": "1280x720",
-    "zoomRequested": 1.5,
-    "backendRequested": "webgpu",
+    "zoomRequested": null,
+    "backendRequested": "webgl2 (live driver explicitly requests it)",
     "backendObserved": "webgl2-metal",
     "entry": "normal menu with standard level-start save for L9, L8 and L4",
-    "realInputDriver": "tools/playtest/play.ts",
+    "realInputDriver": "tools/playtest/live.ts",
     "status": "HIGH real-input samples completed; required coverage incomplete",
     "captures": [
       "contact-sheet.jpg"
-    ]
+    ],
+    "zoomEvidence": "explicit HIGH / zoom 1 verified in l8-verified, 50 actions; physical wheel -300 in earlier L8/L4 samples, exact close magnification unmeasured"
   },
   "checks": {
     "uncachedBuild": "passed",
     "defaultBuild": "failed: shared cache lock outside writable worktree",
-    "preview": "failed: listen EPERM on 127.0.0.1:4917",
-    "browserPoolPreview": "failed: pool listener listen EPERM on 127.0.0.1:4329",
+    "preview": "initial EPERM resolved; live preview ran on 4917",
+    "browserPoolPreview": "initial EPERM resolved; single pooled headless browser per reservation",
     "typecheck": "passed",
     "lint": "passed",
     "tests": "passed unchanged rerun: 27 files, 106 passed / 1 skipped, 210.6 s / 240 s on 46.225.66.90; first attempt timed out at 246 s"
@@ -28,30 +29,30 @@
       "id": "L9-route-and-vehicle",
       "verdict": "UNVERIFIED",
       "historicalProdComparison": "s67 reports the blockage class reproduced on PROD 0b650749",
-      "currentCapture": null
+      "currentCapture": "contact-sheet.jpg"
     },
     {
       "id": "L9-hatch-and-bus",
-      "verdict": "UNVERIFIED",
-      "historical": "s66 LOW limited-scope observations only",
-      "currentCapture": null
+      "verdict": "FIXED rail countdown/restart/hatch in sample; UNVERIFIED bus telegraph",
+      "historical": "current HIGH turns 30/35 opened; bus still unverified",
+      "currentCapture": "contact-sheet.jpg"
     },
     {
       "id": "L8-flamingos",
-      "verdict": "UNVERIFIED",
-      "historical": "s68 fixture assertions and LOW controlled capture only",
-      "currentCapture": null
+      "verdict": "FIXED remaining-count HUD and sampled corpse column; UNVERIFIED continuous gait",
+      "historical": "current HIGH Phase 2 counts and horizontal fallen birds opened",
+      "currentCapture": "contact-sheet.jpg"
     },
     {
       "id": "L4-armored-and-heavies",
       "verdict": "UNVERIFIED",
-      "historical": "s69/s70 native measurement evidence only",
-      "currentCapture": null
+      "historical": "current HIGH real-input mixed fight captured; directional landed-shot count and isolated heavy attribution remain unverified",
+      "currentCapture": "contact-sheet.jpg"
     },
     {
       "id": "new-glitches-and-pacing",
       "verdict": "UNVERIFIED",
-      "currentCapture": null
+      "currentCapture": "contact-sheet.jpg"
     }
   ],
   "releaseVerdict": null,
