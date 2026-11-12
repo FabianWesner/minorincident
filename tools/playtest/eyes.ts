@@ -20,7 +20,7 @@ export interface Eyes {
   panel: { visible: boolean; heading: string; button: string | null };
   menu: string | null; loading: boolean; prompt: string; subtitle: string;
   player: { x: number; y: number; z: number; hp: number; max: number; riding: boolean; weapons: string[]; emptyWeapons?: string[]; current: string | null } | null;
-  driving: { id: number; x: number; z: number; yaw: number } | null;
+  driving: { id: number; x: number; z: number; yaw: number; speed: number; forwardSpeed: number } | null;
   enemies: Body[]; allies: Body[];
   healthKits?: { x: number; z: number; d: number; screen: { x: number; y: number } }[];
   weaponPickups?: { action: string; screen: { x: number; y: number } }[];
@@ -151,7 +151,7 @@ export function look(): Eyes {
     subtitle: shown(q('mission-subtitle')) ? q('mission-subtitle')!.textContent ?? '' : '',
     megaBand: shown(q('mega-distance-label')) ? q('mega-distance-ring')?.dataset.band as Eyes['megaBand'] ?? null : null,
     player: p ? { x: p.transform.x, y: p.transform.y, z: p.transform.z, hp: p.health.current, max: p.health.max, riding: !!p.riding || !!p.passengerOf, weapons, emptyWeapons, current } : null,
-    driving: car ? { id: car.id, x: car.transform.x, z: car.transform.z, yaw: car.transform.yaw } : null,
+    driving: car ? { id: car.id, x: car.transform.x, z: car.transform.z, yaw: car.transform.yaw, speed: car.vehicle?.speed ?? 0, forwardSpeed: car.vehicle?.forwardSpeed ?? 0 } : null,
     healthKits: p ? a.query({ within: { x: p.transform.x, z: p.transform.z, r: 12 } }).filter(e => e.pickup && 'kind' in e.pickup && e.pickup.kind === 'medkit' && !e.pickup.collected && !e.hidden && a.input.visible(e.transform)).map(e => ({ x: e.transform.x, z: e.transform.z, d: Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z), screen: a.input.project(e.transform, 'player') })).filter(k => k.screen.x >= 0 && k.screen.x < view.w && k.screen.y >= 44 && k.screen.y < view.h && !document.elementFromPoint(k.screen.x, k.screen.y)?.closest('button, input, select, textarea, [role="button"], [role="dialog"]')) : [],
     weaponPickups: p ? a.query({ within: { x: p.transform.x, z: p.transform.z, r: 8 } }).filter(e => e.pickup && 'actionId' in e.pickup && !e.pickup.survivorOnly && !e.hidden && a.input.visible(e.transform)).map(e => ({ action: (e.pickup as { actionId: string }).actionId, screen: a.input.project(e.transform, 'player') })).filter(k => k.screen.x >= 0 && k.screen.x < view.w && k.screen.y >= 44 && k.screen.y < view.h) : [],
     enemies, allies, view,
