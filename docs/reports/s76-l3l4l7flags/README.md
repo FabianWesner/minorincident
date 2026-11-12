@@ -36,7 +36,7 @@ L4 high-hold evidence after the retained change: first breach at 50.08 seconds (
 
 ## Browser QA needed
 
-No browser QA has been run. Browser review remains needed for L3’s revised wave overlap, L4’s west spearhead and north approaches, and L7’s shifted opening Alpha. The headless simulation audit verifies contact and completion; it does not establish visual readability or preserve the PO-accepted feel by itself.
+A partial headless L7 browser sample has been run and its captures opened (see below). Full browser review remains needed for L3’s revised wave overlap, L4’s west spearhead and north approaches, and L7’s shifted opening Alpha. The headless simulation audit verifies contact and completion; it does not establish visual readability or preserve the PO-accepted feel by itself.
 
 ## Checks
 
@@ -171,3 +171,5 @@ West-mouth wall-offset trials were both rejected. At 1.5 m outside (from 3 m): f
 ## Partial browser sample of retained L7
 
 Ran the existing headless playtest through `tools/e2e-lock.sh`/browser pool, one browser, port 4976, 600 s reservation, low quality, zoom 1.5, two-minute sample. It ended at the deliberate 120 s sampling limit: not finished, no objective skips, zero driver-reported issues (command exit 1 because completion was not claimed). Opened pickup tick-6 and corridor tick-2708 captures: the pickup ring is visible beside the truck; the later frame shows the following survivor formation and UI reporting 24/24 nearby. [Two-frame sheet](l7-browser-sample.jpg). This is partial visual evidence only; it does not establish full L7 completion, full Alpha-contact readability, or visual acceptance of L3/L4.
+
+Spreading the nine existing first-fallback posts along the north edge (z=-14, x=-30..-10) instead of the central vertical line produced first-breach alive 44, peak plaza 44/minimum 21 and three passive flags (43.8 s; skilled complete). Reverted: the modest sustained improvement adds another flag and does not meet the 40 floor.
