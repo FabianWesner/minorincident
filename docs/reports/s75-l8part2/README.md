@@ -232,3 +232,7 @@ Current 35 s headless real-input runs, HIGH requested/zoom 1, god off, normal MG
 ## Functional cover height
 
 The new jersey pieces initially used asset height (~0.95 m), below the ordinary standing shot ray. Raised their Y scale to 1.4, matching the existing lion-cover scale. A focused production `shotVisible` check across each of the six pieces, using normal entity Y=.7 (the API adds .45 m for the shot), reports blocked for all six. An initial probe incorrectly passed Y=1.1 to that API and therefore tested 1.55 m; that result is not evidence for normal standing shots. Typecheck/lint pass. The pieces are static layout cover, absent from prop/destruction registries; no cause for their missing wide pond rendering has yet been established. Opened current-height cover views remain required.
+
+## Pond cover renderer selection receipt
+
+Corrected a diagnostic watch that initially omitted `return`, then captured read-only `DistrictView.lodState()` during a protected no-fire HIGH/zoom-1 pond sample. `pond-cover-lod.json` preserves only the three pond cover instances and their sampled bands. The instances exist in the renderer; a later sample selects one at LOD2 and marks two culled. This narrows the missing-wide-cover issue to renderer selection/culling, rather than absent layout IDs, but does not yet establish the faulty rule. No culling bypass was added. Browser and server exited.
