@@ -702,7 +702,16 @@ export class SceneLab {
       else if ('attack' in a) { b.state = 'chase'; }
       else if ('turn' in a) e.transform.yaw = rad(a.turn);
       else if ('hit' in a) this.hit(e, a.hit);
-      else if ('moveTo' in a || 'walk' in a || 'run' in a) { const p = toPoint('moveTo' in a ? a.moveTo : ('walk' in a ? a.walk : a.run).slice(-1)[0]); b.state = 'attracted' as typeof b.state; e.noiseTarget = undefined; world.infected!.noise(p, 30, true); }
+      else if ('walk' in a) {
+        // Use the production half-speed wander state for a real walking probe.
+        // A noise event may legitimately be ignored by an animal and cannot
+        // establish that the requested walk happened.
+        const p = toPoint(a.walk.at(-1)!), dx = p.x - e.transform.x, dz = p.z - e.transform.z, distance = Math.hypot(dx, dz);
+        b.state = 'wander'; b.dx = dx / (distance || 1); b.dz = dz / (distance || 1);
+        b.until = world.tick + Math.ceil(distance / Math.max(.01, b.speed / 2) * 60);
+        b.heardTargetId = 0; delete b.investigate; delete e.noiseTarget;
+      }
+      else if ('moveTo' in a || 'run' in a) { const p = toPoint('moveTo' in a ? a.moveTo : a.run.slice(-1)[0]); b.state = 'attracted' as typeof b.state; e.noiseTarget = undefined; world.infected!.noise(p, 30, true); }
       return;
     }
     // Corgi: it always follows the courier (Companion); turn/teleport are the only overrides.
@@ -1174,7 +1183,7 @@ export class SceneLab {
     }))) this.convoyOverlapFrames++;
     this.sampleMega(); this.sampleGun(); this.sampleCure();
     this.recordPropPenetration();
-    const probes = this.game.view.labProbes(), figures = new Map(this.game.view.crowdFigures().map(f => [f.id, f]));
+    const probes = this.game.view.labProbes(), submittedFigures = this.game.view.crowdFigures(), figures = new Map(submittedFigures.map(f => [f.id, f]));
     if (this.frame % 10 === 0 && this.spec?.actors?.some(a => a.kind === 'courier') && probes.character) {
       const loose = probes.character.looseAttachments(), c = this.courierAttachments; c.samples++; c.attachments = Math.max(c.attachments, loose.length);
       for (const a of loose) if (a.gapCm > c.gapMaxCm) Object.assign(c, { gapMaxCm: a.gapCm, frame: this.frame, worst: a.name, worstAt: a.at });
@@ -1271,6 +1280,10 @@ export class SceneLab {
         if (f) {
           visible = f.drawn; lod = f.lod ?? 'lod1'; clipName = f.clip; joints = f.joints ?? null; forward = f.forward ?? forward;
           if (f.soles && f.soles.length >= 4) feet = Array.from({ length: f.soles.length / 2 }, (_, i) => [f.soles![i * 2], f.soles![i * 2 + 1]]).map(([heel, toe]) => ({ heel, toe, yaw: footYaw(heel, toe) }));
+          if (e?.archetype === 'infected.crow') feet = submittedFigures.filter(member => member.id === actor.entity).flatMap(member => {
+            const soles = member.soles;
+            return soles?.length ? Array.from({ length: soles.length / 2 }, (_, i) => ({ heel: soles[i * 2], toe: soles[i * 2 + 1], yaw: footYaw(soles[i * 2], soles[i * 2 + 1]) })) : member.feet.map(point => ({ heel: point, toe: point, yaw: 0 }));
+          });
         }
       }
       if (e && !e.hidden && e.health.current > 0 && !e.corpse && !(e.civilian?.state === 'infected')) {

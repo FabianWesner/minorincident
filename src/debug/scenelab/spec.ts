@@ -289,8 +289,18 @@ export interface Expectations {
   /** Placement pairs whose LOD0 meshes cut through each other (`clipping.static` only; bone hits not counted). */
   staticOverlapMax?: number;
   footSlideMaxCm?: number;
+  /** Worst actor p95 grounded foot displacement per contact, in cm. */
+  footSlideP95MaxCm?: number;
+  /** Actors that must provide contact samples for the p95 gate; an absent actor or no contacts fails. */
+  footSlideActors?: string[];
+  /** Phase-specific motion proof: every frame must move at the requested speed and provide repeated contacts. */
+  footSlideWindows?: { actor: string; from: number; to: number; speedMinMs: number; speedMaxMs: number; contactsMin: number }[];
+  /** Explicit aerial actors: require all declared feet every frame and measured travel before accepting no contacts. */
+  airborneFootActors?: Record<string, { feet: number; travelMinM: number }>;
   /** Deepest sole point below the floor, in cm (feet through the ground). */
   footSinkMaxCm?: number;
+  /** Complete consecutive sole tracks; catches teleports across flight phase boundaries. */
+  footVerticalStepActors?: Record<string, { feet: number; maxCm: number }>;
   /** Longest run of consecutive frames in which a courier sole zig-zags vertically by >= 0.8 cm (a bobbing body or foot). */
   footJitterRunMax?: number;
   /** Deepest torso/neck/head interpenetration between two living, standing actors, in cm (`metrics.bodies`; 2 cm slack). */

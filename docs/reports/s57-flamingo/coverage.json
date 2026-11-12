@@ -1,0 +1,541 @@
+{
+  "definitions": 23,
+  "allCovered": true,
+  "rows": [
+    {
+      "archetype": "infected.runner",
+      "coverage": [
+        {
+          "file": "tests/scenes/catalog/foot-slide-runner.json",
+          "actor": "subject",
+          "backend": "webgl2",
+          "tier": "low",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "regular",
+          "backend": "webgl2",
+          "tier": "low",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "regular",
+          "backend": "webgpu",
+          "tier": "low",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "regular",
+          "backend": "webgl2",
+          "tier": "high",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "regular",
+          "backend": "webgpu",
+          "tier": "high",
+          "p95MaxCm": 3
+        }
+      ]
+    },
+    {
+      "archetype": "infected.crawler",
+      "coverage": [
+        {
+          "file": "tests/scenes/catalog/foot-slide-crawler.json",
+          "actor": "subject",
+          "backend": "webgl2",
+          "tier": "low",
+          "p95MaxCm": 3
+        }
+      ]
+    },
+    {
+      "archetype": "infected.brute",
+      "coverage": [
+        {
+          "file": "tests/scenes/catalog/foot-slide-brute.json",
+          "actor": "subject",
+          "backend": "webgl2",
+          "tier": "low",
+          "p95MaxCm": 3
+        }
+      ]
+    },
+    {
+      "archetype": "infected.screamer",
+      "coverage": [
+        {
+          "file": "tests/scenes/catalog/foot-slide-screamer.json",
+          "actor": "subject",
+          "backend": "webgl2",
+          "tier": "low",
+          "p95MaxCm": 3
+        }
+      ]
+    },
+    {
+      "archetype": "infected.sprinter",
+      "coverage": [
+        {
+          "file": "tests/scenes/catalog/foot-slide-sprinter.json",
+          "actor": "subject",
+          "backend": "webgl2",
+          "tier": "low",
+          "p95MaxCm": 3
+        }
+      ]
+    },
+    {
+      "archetype": "infected.riot",
+      "coverage": [
+        {
+          "file": "tests/scenes/catalog/foot-slide-riot.json",
+          "actor": "subject",
+          "backend": "webgl2",
+          "tier": "low",
+          "p95MaxCm": 3
+        }
+      ]
+    },
+    {
+      "archetype": "infected.bloated",
+      "coverage": [
+        {
+          "file": "tests/scenes/catalog/foot-slide-bloated.json",
+          "actor": "subject",
+          "backend": "webgl2",
+          "tier": "low",
+          "p95MaxCm": 3
+        }
+      ]
+    },
+    {
+      "archetype": "infected.firefighter",
+      "coverage": [
+        {
+          "file": "tests/scenes/catalog/foot-slide-firefighter.json",
+          "actor": "subject",
+          "backend": "webgl2",
+          "tier": "low",
+          "p95MaxCm": 3
+        }
+      ]
+    },
+    {
+      "archetype": "infected.hazmat",
+      "coverage": [
+        {
+          "file": "tests/scenes/catalog/foot-slide-hazmat.json",
+          "actor": "subject",
+          "backend": "webgl2",
+          "tier": "low",
+          "p95MaxCm": 3
+        }
+      ]
+    },
+    {
+      "archetype": "infected.armored",
+      "coverage": [
+        {
+          "file": "tests/scenes/catalog/foot-slide-armored.json",
+          "actor": "subject",
+          "backend": "webgl2",
+          "tier": "low",
+          "p95MaxCm": 3
+        }
+      ]
+    },
+    {
+      "archetype": "infected.butcher",
+      "coverage": [
+        {
+          "file": "tests/scenes/catalog/foot-slide-butcher.json",
+          "actor": "subject",
+          "backend": "webgl2",
+          "tier": "low",
+          "p95MaxCm": 3
+        }
+      ]
+    },
+    {
+      "archetype": "infected.nurse",
+      "coverage": [
+        {
+          "file": "tests/scenes/catalog/foot-slide-nurse.json",
+          "actor": "subject",
+          "backend": "webgl2",
+          "tier": "low",
+          "p95MaxCm": 3
+        }
+      ]
+    },
+    {
+      "archetype": "infected.alpha",
+      "coverage": [
+        {
+          "file": "tests/scenes/catalog/foot-slide-alpha.json",
+          "actor": "subject",
+          "backend": "webgl2",
+          "tier": "low",
+          "p95MaxCm": 3
+        }
+      ]
+    },
+    {
+      "archetype": "infected.dog",
+      "coverage": [
+        {
+          "file": "tests/scenes/catalog/foot-slide-dog.json",
+          "actor": "subject",
+          "backend": "webgl2",
+          "tier": "low",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "dog",
+          "backend": "webgl2",
+          "tier": "low",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "dog",
+          "backend": "webgpu",
+          "tier": "low",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "dog",
+          "backend": "webgl2",
+          "tier": "high",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "dog",
+          "backend": "webgpu",
+          "tier": "high",
+          "p95MaxCm": 3
+        }
+      ]
+    },
+    {
+      "archetype": "infected.cat",
+      "coverage": [
+        {
+          "file": "tests/scenes/catalog/foot-slide-cat.json",
+          "actor": "subject",
+          "backend": "webgl2",
+          "tier": "low",
+          "p95MaxCm": 3
+        }
+      ]
+    },
+    {
+      "archetype": "infected.crow",
+      "coverage": [
+        {
+          "file": "tests/scenes/catalog/foot-slide-crow.json",
+          "actor": "subject",
+          "backend": "webgl2",
+          "tier": "low",
+          "p95MaxCm": 3
+        }
+      ]
+    },
+    {
+      "archetype": "infected.lion",
+      "coverage": [
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "lion",
+          "backend": "webgl2",
+          "tier": "low",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "lion",
+          "backend": "webgpu",
+          "tier": "low",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "lion",
+          "backend": "webgl2",
+          "tier": "high",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "lion",
+          "backend": "webgpu",
+          "tier": "high",
+          "p95MaxCm": 3
+        }
+      ]
+    },
+    {
+      "archetype": "infected.lioness",
+      "coverage": [
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "lioness",
+          "backend": "webgl2",
+          "tier": "low",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "lioness",
+          "backend": "webgpu",
+          "tier": "low",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "lioness",
+          "backend": "webgl2",
+          "tier": "high",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "lioness",
+          "backend": "webgpu",
+          "tier": "high",
+          "p95MaxCm": 3
+        }
+      ]
+    },
+    {
+      "archetype": "infected.gorilla",
+      "coverage": [
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "gorilla",
+          "backend": "webgl2",
+          "tier": "low",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "gorilla",
+          "backend": "webgpu",
+          "tier": "low",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "gorilla",
+          "backend": "webgl2",
+          "tier": "high",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "gorilla",
+          "backend": "webgpu",
+          "tier": "high",
+          "p95MaxCm": 3
+        }
+      ]
+    },
+    {
+      "archetype": "infected.elephant",
+      "coverage": [
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "elephant",
+          "backend": "webgl2",
+          "tier": "low",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "elephant",
+          "backend": "webgpu",
+          "tier": "low",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "elephant",
+          "backend": "webgl2",
+          "tier": "high",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "elephant",
+          "backend": "webgpu",
+          "tier": "high",
+          "p95MaxCm": 3
+        }
+      ]
+    },
+    {
+      "archetype": "infected.zebra",
+      "coverage": [
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "zebra",
+          "backend": "webgl2",
+          "tier": "low",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "zebra",
+          "backend": "webgpu",
+          "tier": "low",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "zebra",
+          "backend": "webgl2",
+          "tier": "high",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "zebra",
+          "backend": "webgpu",
+          "tier": "high",
+          "p95MaxCm": 3
+        }
+      ]
+    },
+    {
+      "archetype": "infected.flamingo",
+      "coverage": [
+        {
+          "file": "tests/scenes/catalog/foot-slide-flamingo-day.json",
+          "actor": "bird",
+          "backend": "webgl2",
+          "tier": "low",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/foot-slide-flamingo-day.json",
+          "actor": "bird",
+          "backend": "webgl2",
+          "tier": "high",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/foot-slide-flamingo-day.json",
+          "actor": "bird",
+          "backend": "webgpu",
+          "tier": "low",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/foot-slide-flamingo-day.json",
+          "actor": "bird",
+          "backend": "webgpu",
+          "tier": "high",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/foot-slide-flamingo-night.json",
+          "actor": "bird",
+          "backend": "webgl2",
+          "tier": "low",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/foot-slide-flamingo-night.json",
+          "actor": "bird",
+          "backend": "webgl2",
+          "tier": "high",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/foot-slide-flamingo-night.json",
+          "actor": "bird",
+          "backend": "webgpu",
+          "tier": "low",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/foot-slide-flamingo-night.json",
+          "actor": "bird",
+          "backend": "webgpu",
+          "tier": "high",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "flamingo",
+          "backend": "webgl2",
+          "tier": "low",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "flamingo",
+          "backend": "webgpu",
+          "tier": "low",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "flamingo",
+          "backend": "webgl2",
+          "tier": "high",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "flamingo",
+          "backend": "webgpu",
+          "tier": "high",
+          "p95MaxCm": 3
+        }
+      ]
+    },
+    {
+      "archetype": "infected.monkey",
+      "coverage": [
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "monkey",
+          "backend": "webgl2",
+          "tier": "low",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "monkey",
+          "backend": "webgpu",
+          "tier": "low",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "monkey",
+          "backend": "webgl2",
+          "tier": "high",
+          "p95MaxCm": 3
+        },
+        {
+          "file": "tests/scenes/catalog/night-boss-zoo-lineup.json",
+          "actor": "monkey",
+          "backend": "webgpu",
+          "tier": "high",
+          "p95MaxCm": 3
+        }
+      ]
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+import { airborneFootTrack, footVerticalStepMaxCm, footYaw, summarizeMotion } from '../../src/debug/scenelab/motion';
 import { uncappedArgs } from '../perf/uncapped';
 import { spawn, execFileSync, type ChildProcess } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
@@ -223,8 +224,35 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   if (e.seeThroughOpenFramesMin !== undefined) checks.push({ name: 'seeThroughOpenFrames', pass: (metrics.seeThrough?.frames ?? 0) >= e.seeThroughOpenFramesMin, value: metrics.seeThrough?.frames ?? 0, limit: e.seeThroughOpenFramesMin });
   if (e.heldPropSamplesMin !== undefined) checks.push({ name: 'heldPropSamples', pass: metrics.heldProps.samples >= e.heldPropSamplesMin, value: metrics.heldProps.samples, limit: e.heldPropSamplesMin });
   add('staticOverlap', clipping.static.length, e.staticOverlapMax);
+  const airborne = new Set<string>();
+  for (const [actor, requirement] of Object.entries(e.airborneFootActors ?? {})) {
+    const proof = airborneFootTrack(metrics.actors[actor]?.track ?? [], spec.frames ?? Infinity, requirement.feet);
+    const pass = proof.complete && proof.clearanceMinCm >= 1.2 && proof.travelMinM >= requirement.travelMinM;
+    checks.push({ name: `airborneFeet.${actor}`, pass, value: proof.complete ? proof.travelMinM : -1, limit: requirement.travelMinM });
+    if (pass) airborne.add(actor);
+  }
   const motion = Object.values(metrics.actors).map(a => a.motion);
   add('footSlideMaxCm', Math.max(0, ...motion.map(m => m.slideMaxCm)), e.footSlideMaxCm);
+  if (e.footSlideP95MaxCm !== undefined) {
+    const p95 = motion.map(m => m.slideP95Cm).filter((value): value is number => value !== null && Number.isFinite(value));
+    add('footSlideP95MaxCm', p95.length ? Math.max(...p95) : airborne.size ? 0 : Infinity, e.footSlideP95MaxCm);
+  }
+  for (const actor of e.footSlideActors ?? []) {
+    const value = metrics.actors[actor]?.motion.slideP95Cm ?? (airborne.has(actor) ? 0 : Infinity);
+    checks.push({ name: `footSlideP95Cm.${actor}`, pass: value <= (e.footSlideP95MaxCm ?? 3), value, limit: e.footSlideP95MaxCm ?? 3 });
+  }
+  for (const window of e.footSlideWindows ?? []) {
+    const frames = (metrics.actors[window.actor]?.track ?? []).filter(f => f.frame >= window.from && f.frame <= window.to);
+    const samples = frames.map(f => ({ ...f, feet: f.feet.map(foot => ({ ...foot, yaw: footYaw(foot.heel, foot.toe) })) }));
+    const summary = summarizeMotion(samples), complete = frames.length === window.to - window.from + 1;
+    const speed = complete && frames.every(f => Number.isFinite(f.speed) && f.speed! >= window.speedMinMs && f.speed! <= window.speedMaxMs);
+    const name = `${window.actor}.${window.from}-${window.to}`;
+    checks.push({ name: `footWindowMotion.${name}`, pass: speed && summary.contacts >= window.contactsMin, value: complete ? summary.contacts : -1, limit: window.contactsMin });
+    add(`footWindowP95Cm.${name}`, summary.slideP95Cm ?? Infinity, e.footSlideP95MaxCm ?? 3);
+  }
+  for (const [actor, requirement] of Object.entries(e.footVerticalStepActors ?? {})) {
+    add(`footVerticalStepCm.${actor}`, footVerticalStepMaxCm(metrics.actors[actor]?.track ?? [], spec.frames ?? Infinity, requirement.feet), requirement.maxCm);
+  }
   add('footSinkMaxCm', Math.max(0, ...motion.map(m => m.sinkMaxCm)), e.footSinkMaxCm);
   add('footJitterRunMax', Math.max(0, ...Object.values(metrics.actors).filter(a => a.kind === 'courier').map(a => a.motion.jitterRunMax)), e.footJitterRunMax);
   add('attackBodyOverlapMaxCm', metrics.attackOverlap?.depthCm ?? Infinity, e.attackBodyOverlapMaxCm);

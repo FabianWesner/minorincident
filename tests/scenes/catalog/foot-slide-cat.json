@@ -1,0 +1,81 @@
+{
+  "name": "foot-slide-cat",
+  "note": "S57 production pursuit foot contacts; measured travel is mandatory.",
+  "seed": 57,
+  "ground": "sidewalk",
+  "size": 120,
+  "time": "L1",
+  "dof": false,
+  "trace": true,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        4,
+        0
+      ],
+      "god": true
+    },
+    {
+      "id": "subject",
+      "kind": "infected",
+      "archetype": "infected.cat",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 0,
+      "state": "idle",
+      "allowRigid": true
+    }
+  ],
+  "script": [
+    {
+      "frame": 0,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            25,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "frame": 10,
+      "actor": "subject",
+      "do": {
+        "chase": "courier"
+      }
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "subject",
+    "zoom": 1.5
+  },
+  "frames": 180,
+  "shots": [
+    30,
+    45,
+    60,
+    75,
+    90,
+    105
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "footSlideP95MaxCm": 3,
+    "footSlideActors": [
+      "subject"
+    ],
+    "actorTravel": {
+      "subject": [
+        2,
+        60
+      ]
+    }
+  }
+}

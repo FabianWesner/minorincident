@@ -1,0 +1,101 @@
+{
+  "name": "foot-slide-flamingo-night",
+  "note": "S57: repeated grounded walk/run contacts, no combat; 3 cm p95 per contact.",
+  "seed": 57,
+  "ground": "sidewalk",
+  "size": 100,
+  "time": "L8-zoo",
+  "dof": false,
+  "trace": true,
+  "actors": [
+    {
+      "id": "bird",
+      "kind": "infected",
+      "archetype": "infected.flamingo",
+      "at": [
+        -8,
+        0
+      ],
+      "yaw": 0,
+      "state": "idle"
+    },
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        45,
+        0
+      ],
+      "god": true
+    }
+  ],
+  "script": [
+    {
+      "frame": 10,
+      "actor": "bird",
+      "do": {
+        "walk": [
+          [
+            10,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "frame": 190,
+      "actor": "bird",
+      "do": {
+        "chase": "courier"
+      }
+    }
+  ],
+  "camera": {
+    "mode": "close",
+    "target": "bird",
+    "radius": 5.5,
+    "azimuth": 45
+  },
+  "frames": 360,
+  "shots": [
+    30,
+    45,
+    60,
+    75,
+    210,
+    225,
+    240,
+    255
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "footSlideP95MaxCm": 3,
+    "footSlideActors": [
+      "bird"
+    ],
+    "actorTravel": {
+      "bird": [
+        6,
+        100
+      ]
+    },
+    "footSlideWindows": [
+      {
+        "actor": "bird",
+        "from": 60,
+        "to": 180,
+        "speedMinMs": 2,
+        "speedMaxMs": 3,
+        "contactsMin": 6
+      },
+      {
+        "actor": "bird",
+        "from": 230,
+        "to": 350,
+        "speedMinMs": 4,
+        "speedMaxMs": 5.5,
+        "contactsMin": 6
+      }
+    ]
+  }
+}

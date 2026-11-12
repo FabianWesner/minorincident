@@ -65,3 +65,35 @@ export function torsoPitch(hip: number[], chest: number[], forward: number[]): n
 }
 /** Foot yaw from its heel→toe vector, in the game's yaw convention (forward = (cos yaw, -sin yaw)). */
 export const footYaw = (heel: number[], toe: number[]) => Math.atan2(-(toe[2] - heel[2]), toe[0] - heel[0]);
+
+/** Proof for actors that never contact the floor: every declared foot on every frame must be measured. */
+export function airborneFootTrack(frames: (Pick<MotionFrame, 'frame' | 'floor'> & { feet: Pick<FootSample, 'heel' | 'toe'>[] })[], expectedFrames: number, footCount: number): { complete: boolean; clearanceMinCm: number; travelMinM: number } {
+  const travel = Array.from({ length: footCount }, () => 0);
+  let clearance = Infinity;
+  if (expectedFrames < 2 || frames.length !== expectedFrames || footCount < 1) return { complete: false, clearanceMinCm: 0, travelMinM: 0 };
+  for (const [index, frame] of frames.entries()) {
+    if (!Number.isFinite(frame.floor) || frame.feet.length !== footCount || index > 0 && frame.frame !== frames[index - 1].frame + 1) return { complete: false, clearanceMinCm: 0, travelMinM: 0 };
+    for (const [i, foot] of frame.feet.entries()) {
+      if (![...foot.heel, ...foot.toe].every(Number.isFinite)) return { complete: false, clearanceMinCm: 0, travelMinM: 0 };
+      clearance = Math.min(clearance, Math.min(foot.heel[1], foot.toe[1]) - frame.floor!);
+      if (index) { const previous = frames[index - 1].feet[i]; travel[i] += Math.hypot(foot.heel[0] - previous.heel[0], foot.heel[2] - previous.heel[2]); }
+    }
+  }
+  return { complete: true, clearanceMinCm: clearance * 100, travelMinM: Math.min(...travel) };
+}
+
+/** Largest consecutive sole-height change; incomplete/nonfinite tracks fail closed. */
+export function footVerticalStepMaxCm(frames: MotionFrame[], expectedFrames: number, feet: number): number {
+  if (frames.length !== expectedFrames || expectedFrames < 2) return Infinity;
+  let max = 0;
+  for (let i = 0; i < frames.length; i++) {
+    const f = frames[i];
+    if (f.frame !== i + 1 || f.feet.length !== feet) return Infinity;
+    for (let foot = 0; foot < feet; foot++) for (const point of ['heel', 'toe'] as const) {
+      const y = f.feet[foot][point][1];
+      if (!Number.isFinite(y)) return Infinity;
+      if (i) max = Math.max(max, Math.abs(y - frames[i - 1].feet[foot][point][1]) * 100);
+    }
+  }
+  return max;
+}
