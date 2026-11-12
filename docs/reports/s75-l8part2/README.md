@@ -2,7 +2,7 @@
 
 ## Status
 
-Incomplete overall. The full threat audit now reports zero L8 passive flags, the six controlled route states pass, six arena views have been opened, and the real-input tour trace has no sampled travel gap over 10 s. Remaining acceptance work includes corner/shove confinement coverage, continuous flamingo return-flight/red-lane verification, the cover/telegraph pass and the boarding camera concern. The entries below retain earlier findings and explicitly supersede them as checks complete.
+Incomplete overall. The latest completed full audit reports L8 skilled complete, passive tick-budget, **2 passive flags**; the earlier zero-flag receipt is superseded by later geometry changes. The calm-tour regression is traced to the west gorilla-junction wall closing before the plaza seal; the current fix moves that wall into the seal-controlled connector gates. Current validation is recorded below. Existing captures and travel receipts precede the final geometry/lighting edits and are not final acceptance evidence.
 
 ## Audit change
 
@@ -284,3 +284,9 @@ Protected in-arena control cloned the production jersey PaletteMaterial and disa
 Added three street lamps around the pond rim to fill the previously dark west/north/east sectors. Opened `pond-lighting/s002-t831.jpg`, protected no-fire HIGH/zoom-1 in-arena sample: warm floor pools now reveal the dark concrete cover silhouettes and landing-pad ring. This establishes illumination/readability as a contributor to the earlier apparent absence; no GPU/culling workaround was needed. The faces remain dark, so this is not a stunning-score acceptance claim.
 
 After inspecting the frame, moved the west lamp from the exact landing-pad coordinate (-11,-32) to (-12.5,-32), outside the 11 m landing ring. Focused transformed-layout overlap checks across tiers 0–6 find no new-lamp overlaps; typecheck/lint/diff checks pass. The opened frame precedes that 1.5 m lamp adjustment, so a final-position capture remains required. Browser/server are terminal.
+
+## Calm-tour regression and seal-controlled junction fix
+
+The latest full audit before this fix printed `[qa:threat] L8: skilled complete, passive tick-budget, 2 passive flags (295.7s)`. Passive flags were `KITING_LANDED_HITS_BELOW_2:0.00` and `UNOBSERVED_PASSIVE_CRITERION_STEP:escape`. The required unchanged remote suite then failed the mission interaction test because Nadia never reached the lion (distance approximately 86 m). The authored calm tour crosses x=56.9 at z=0; the new permanent wall blocked that crossing. Moved that same wall to `l8ConnectorGates`, preserving post-seal confinement while allowing the calm tour. No actor stats, thresholds or test expectations changed.
+
+Focused mission interaction test passes (1 passed, 5 unselected); typecheck and lint pass. Targeted L8 audit prints `[qa:threat] L8: skilled complete, passive tick-budget, 0 passive flags (99.2s)`. Full audit and required remote suite are being refreshed before final reporting.

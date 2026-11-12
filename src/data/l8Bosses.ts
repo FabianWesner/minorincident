@@ -22,7 +22,6 @@ export const l8PathWalls = [
   { x: -3.1, z: 64, halfX: .25, halfZ: 3.2 },
   { x: -63.1, z: 0, halfX: .25, halfZ: 12 },
   { x: 63.1, z: 0, halfX: .25, halfZ: 12 },
-  { x: 56.9, z: 0, halfX: .25, halfZ: 12 },
 ] as const;
 export const l8YardWalls = [
   { x: 84, z: 51, halfX: .25, halfZ: 5 },
@@ -74,6 +73,8 @@ export const l8PlazaGates = {
 } as const;
 /** Unused road branches stay open for the tour and outbreak, then seal the visitor route. */
 export const l8ConnectorGates = [
+  // Nadia crosses this arm during the calm tour; close it only at the seal.
+  { x: 56.9, z: 0, halfX: .25, halfZ: 12 },
   // Close the unused southbound arms of the two zebra-approach junctions.
   { x: 24, z: 67.1, halfX: 4.5, halfZ: .25 },
   { x: 60, z: 67.1, halfX: 4.5, halfZ: .25 },
