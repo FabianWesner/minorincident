@@ -260,6 +260,25 @@ test('L1 handover + outbreak: no shader builds after warm-up and no frame over 2
   }
   expect([...keyboardSeen].sort()).toEqual([...l10HangarWeapons].sort());
   await page.setViewportSize({ width: 390, height: 844 });
+  const touchSession = await page.context().newCDPSession(page);
+  await touchSession.send('Emulation.setTouchEmulationEnabled', { enabled: true });
+  const tap = async (x: number, y: number) => {
+    await touchSession.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x, y }] });
+    await touchSession.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+  };
+  await tap(195, 400);
+  await page.evaluate(async () => { await window.__SS__!.step(16); });
+  for (const id of l10HangarWeapons) {
+    const box = await page.locator(`.hud-weapon-choice[data-weapon="${id}"]`).boundingBox();
+    expect(box).not.toBeNull(); await tap(box!.x + box!.width / 2, box!.y + box!.height / 2);
+    await page.evaluate(async () => { await window.__SS__!.step(16); });
+    const selected = await page.evaluate(() => { const p = window.__SS__!.getState().player!, rack = p.weapons![p.weapons!.selectedSide]; return rack.index < 0 ? 'weapon.fists' : rack.rack[rack.index].id; });
+    if (selected !== id) await page.screenshot({ path: 'test-results/smoke/l10-rack/touch-failure.png' });
+    expect(selected, `touch rack selection for ${id}`).toBe(id);
+  }
+  expect(await page.evaluate(() => window.__SS__!.getState().input.scheme)).toBe('touch');
+  await touchSession.send('Emulation.setTouchEmulationEnabled', { enabled: false });
+  await touchSession.detach();
   await page.evaluate(async () => { await window.__SS__!.screenshotReady(); });
   const rack = await page.locator('.hud-weapon-rack').boundingBox();
   expect(rack).not.toBeNull(); expect(rack!.x + rack!.width).toBeLessThanOrEqual(390); expect(rack!.y + rack!.height).toBeLessThanOrEqual(844);
