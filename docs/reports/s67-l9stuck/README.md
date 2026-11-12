@@ -79,3 +79,7 @@ Bounded yaw-impulse trials during measured low travel did not free the countrysi
 ## Wheel-contact evidence
 
 At countryside seed-2 tick 6300, all four wheel-contact flags are false while the chassis rests at y=1.234 on retained debris, throttle 1 and full steer. This explains why wheel engine/steering changes cannot move that pose. A limited suspension-droop experiment freed that case, but the full nine-run matrix regressed other routes (including a shortcut timeout), so it was reverted. The diagnostic can emit wheel state with `L9_CONTACT_TICK` for further investigation.
+
+## Beached recovery investigation
+
+Reusing a mass-scaled recovery lift plus held-steering yaw impulse improved countryside seed 2 from 9.42 s to 6.92 s; an earlier/stronger lift reached 5.58 s. Both still invoked the existing 6 m relocation and failed acceptance, so neither trial was retained. The current fallback also counts repeated physical recovery events toward relocation; any future physical recovery must be audited together with that legacy fallback rather than accepted from a shorter stall alone.
