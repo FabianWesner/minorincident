@@ -258,3 +258,7 @@ Inspected source GLB nodes/accessor bounds and the static-bake headers for jerse
 ## Live cover batch inspection
 
 Current in-arena read-only sample (`--no-kite`, no fire, god on, HIGH/zoom 1) confirms the near batch is loaded and visible, contains three refs, and its static-body child is visible with count=3. Instance matrices have the expected pond translations and Y scale 1.4; its bounding sphere spans x≈±10/z≈-30 at y≈.665. `pond-cover-batch.json` preserves receipts. Thus empty instance count, missing resident near prototype and misplaced instance matrices are excluded. The geometry uses custom `_placement0..3` vertex attributes; their uploaded values/material/depth behavior remain the next unverified path. Browser/server are terminal. No renderer workaround was introduced.
+
+## Redundant-cull control rejected
+
+A logged browser-only control disabled child mesh frustum culling for jersey batches after district partition, with all normal instance selection intact. Entered the pond using `--no-kite`, protected/no-fire HIGH/zoom 1. Opened `cover-cull-control/s002-t819.jpg`: covers still absent. Therefore disabling a possible second mesh-level cull does not solve the issue and no production culling change is justified by this test. The control is not retained in source. Browser/server are terminal; custom placement-attribute data/material behavior remains unverified.
