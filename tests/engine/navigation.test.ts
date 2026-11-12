@@ -141,13 +141,13 @@ test('A*: budgeted search resumes across ticks within its expansion budget; conn
     expect(nav.path(from, goal, path, Infinity), 'reviewed pickup footprint connects the island to the street').toBe(true);
   }
 
-  const w = await arena('maze'), nav = w.infected!.nav, result: number[] = [];
+  const nav = new NavGrid({ width: 44, depth: 12 }, [{ x: 0, z: 0, y: 1, halfX: .5, halfZ: 4.5, halfY: 1 }]), result: number[] = [];
   let complete = false;
-  for (let tick = 0; tick < 500 && !complete; tick++) { complete = nav.path(nav.cell(-20, 0), nav.cell(20, 0), result, 10); expect(nav.expansions).toBeLessThanOrEqual(10); }
+  for (let tick = 0; tick < 500 && !complete; tick++) { complete = nav.path(nav.cell(-18, 0), nav.cell(18, 0), result, 10); expect(nav.expansions).toBeLessThanOrEqual(10); }
   expect(complete).toBe(true); expect(result.length).toBeGreaterThan(80);
   for (const cell of result) expect(nav.blocked[cell]).toBe(0);
   const detour = new NavGrid({ width: 40, depth: 40 }, [{ x: 0, y: 1, z: 0, halfX: .5, halfY: 1, halfZ: 8 }]);
-  const actor = structuredClone(w.entities.get(1)!); Object.assign(actor.transform, { x: -2, z: 0 });
+  const actor = structuredClone(worlds[0].entities.get(1)!); Object.assign(actor.transform, { x: -2, z: 0 });
   const probe = new PathProbe(), probeGoal = { x: 2, z: 0 }, expansions = detour.expansions;
   expect(probe.query(detour, actor, probeGoal), 'connected long detour').toBe(true);
   expect(probe.query(detour, actor, probeGoal, 2.5), 'a long detour is not locally reachable').toBe(false);

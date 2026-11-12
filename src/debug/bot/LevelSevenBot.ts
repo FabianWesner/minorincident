@@ -54,12 +54,6 @@ export class LevelSevenBot {
         strikeAt(f, enemies[0], 'RIGHT', p.transform, false);
       }
     }
-    const followers = w.l7Encounters!.state.roster.filter(r => r.status === 'following' && !w.l7Departure!.state.boarded.includes(r.id));
-    // Deaths leave holes in the original slots; the surviving tail keeps its row.
-    const lastSlot = followers.reduce((slot, r) => Math.max(slot, w.entities.get(r.id)!.civilian!.survivor!.slot), -1);
-    const limit = Math.max(12, (Math.floor(lastSlot / 3) + 1) * 1.2 + 5);
-    // Reach the bus door before waiting for the last stragglers; the shipped boarding queue owns their recovery there.
-    if (!pickup && this.waypoint < this.route.length - 1 && distance(p.transform, goal) > 10 && followers.some(r => { const e = w.entities.get(r.id); return e && distance(e.transform, p.transform) > limit; })) f.move = { x: 0, z: 0 };
     return f;
   }
 }

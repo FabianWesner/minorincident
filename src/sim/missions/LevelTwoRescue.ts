@@ -509,10 +509,18 @@ export class LevelTwoRescue {
     // Once that opening has played, ordinary offscreen retirement can yield
     // their surplus slots to the prepared streets before the radio call.
     const collapseAttackers = new Set(this.s.ambushIds.slice(0, 10));
+    const marketAmbushers = new Set(this.s.ambushIds);
     const rescue = new Set([...this.s.ambushIds, ...this.s.trappedIds, ...this.s.crewIds]);
     for (const id of [...rescue, ...this.s.escapeIds]) {
       const e = world.entities.get(id), b = e?.infected, brain = b?.l1;
       if (!e || !b || e.health.current <= 0 || b.recoverAt >= 0 || brain?.mode === 'bite' || brain?.targetId === 1) continue;
+      // Every authored market ambusher must finish its approach and remain
+      // available through the rescue fight before it can be recycled for
+      // later street capacity. The first-ten opening grace below is not
+      // sufficient: later staggered arrivals can still be offscreen after
+      // that grace expires.
+      if (marketAmbushers.has(id) && ((e.transform.x < -64 || e.transform.x > -36 || e.transform.z < -52 || e.transform.z > -24)
+        || Math.hypot(p.x - e.transform.x, p.z - e.transform.z) <= 60)) continue;
       // Street preparation may begin during the collapse, but its quota must
       // not retire its opening attackers before their first approach completes.
       if (!this.s.radioAt && world.tick - this.s.doorsOpenAt < ticks(4) && collapseAttackers.has(id)) continue;
