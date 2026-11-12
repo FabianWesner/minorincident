@@ -61,3 +61,7 @@ The diagnostic now exits nonzero unless each infected supplies at least five con
 Temporary instrumentation confirmed the detailed foot solver hands contacts to the cheaper solver as movement starts. No invalid-pose fallback fired. The incoming phase could already be mid-swing, so the cheap solver moved the inherited foot toward a landing immediately. GroundContacts now starts that first swing at the inherited plant. The same diagnostic passes: HIGH ram p95/max 0.3/0.8 cm; HIGH surrounded 2.7/13.9 cm; LOW ram 0.3/0.6 cm; LOW surrounded 3.5/4.0 cm. Typecheck and targeted lint pass. See `contact-after-inheritance.json`.
 
 Reopened the updated consecutive HIGH zoom-1.5 strip: APC stationary, infected by the front corner and rear side, attack arc beside the hull. Foot detail remains small; numeric contact traces provide the measurable proof for these two fixtures. Missing push/clinging and campaign contexts prevent completion.
+
+## Clinging coverage
+
+Added a floor-policy driven APC fixture with infected at the actual boarding boundary (2 m lateral), followed by throttle input. Both HIGH and LOW record four vehicle.grabbed events. All four actors have zero ground contacts, so p95 is null and the gate deliberately fails; this is not a 0 cm slide pass. Attachment-relative foot motion, actual APC travel, and clearance need explicit proof before this state can pass. See `clinging-baseline.json`. Targeted lint passes.

@@ -9,7 +9,7 @@ try {
     const session = new SceneSession({ tier });
     try {
       await session.open();
-      for (const name of ['ram', 'surrounded']) {
+      for (const name of ['ram', 'surrounded', 'clinging']) {
         await session.load(readSpec(`tests/scenes/l9-apc/${name}.json`));
         await session.ready();
         // Match the production vehicle AI path; Scene Lab's L1 search controller
@@ -33,7 +33,7 @@ try {
         const checks = actors.map(([id, actor]) => ({ actor: id, contacts: actor.motion.contacts,
           p95Cm: actor.motion.slideP95Cm, maxCm: actor.motion.slideMaxCm,
           pass: actor.motion.contacts >= 5 && actor.motion.slideP95Cm !== null && actor.motion.slideP95Cm <= 5 && actor.motion.slideMaxCm <= 15 }));
-        const contactProven = name === 'ram' ? events.filter(e => e.type === 'combat.hit').length >= 6
+        const contactProven = name === 'clinging' ? events.some(e => e.type === 'vehicle.grabbed') : name === 'ram' ? events.filter(e => e.type === 'combat.hit').length >= 6
           : events.filter(e => e.type === 'vehicle.attack-windup').length >= 4 && events.some(e => e.type === 'vehicle.durability-hit');
         const pass = contactProven && checks.every(check => check.pass) && session.errors.length === 0;
         if (!pass) process.exitCode = 1;
