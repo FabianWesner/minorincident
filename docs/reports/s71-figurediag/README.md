@@ -241,3 +241,7 @@ BBQ-dad is an eligible higher-scoring ordinary representative (S53 5 day / 3 nig
 ![Opened HIGH automatic LOD versus retained LOD1](cashier-lod1-high-runtime.jpg)
 
 Temporarily forced living cashier selection to `lod1` after the ordinary LOD/hero selection, leaving all other figures and corpse paths unchanged. HIGH/WebGL2 fixture passed at both zooms/day/night. Opened result: **3/2 → 3/2 (+0/+0)**, with no meaningful native-camera readability gain. This is consistent with the inventory finding that cashier LOD1/2 have the same triangle count, matching UV/skin data and the same shared runtime atlas. It does not establish that LOD retention is ineffective for other figures with genuinely different geometry. Captures/receipt: `test-results/s71-figurediag/cashier-force-lod1-high/`. Temporary override removed, source restored byte-for-byte; no production LOD change proposed.
+
+## BBQ-dad calibrated-source mismatch
+
+A retained file at `trellis-highs/wave2-sources/inf.bbq-dad/calibrated.glb` exists, but SHA256 `f7d7ecbbfae21f81071ec5ffeb83cb1010fb464491987bc6010a17561b28c8f8` does not match wave1's calibrated-high provenance (`59d3f8f566ae6ea8e57a8c6a01b1445cbec87944f350f29d7cdf5bec1c12fc6f`). It is excluded from the wave1 stage series. A similarly named retained high is not sufficient lineage evidence. The durable raw high matches wave1, but its exact calibrated and pre-binding outputs still need recovery or regeneration from recorded settings.
