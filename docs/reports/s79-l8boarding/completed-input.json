@@ -1,0 +1,81 @@
+{
+  "mode": "campaign",
+  "quality": "high",
+  "heroine": "female",
+  "zoom": 1,
+  "levels": [
+    "L8"
+  ],
+  "runs": [
+    {
+      "level": "L8",
+      "entry": "debug",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 67,
+      "simSeconds": -1,
+      "maxNoProgressSeconds": 7.385,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.army-mg": 104
+      },
+      "weaponsStart": [
+        "weapon.bat",
+        "weapon.fire-axe",
+        "weapon.army-mg",
+        "weapon.shotgun",
+        "weapon.handgun"
+      ],
+      "weaponsEnd": [
+        "weapon.bat",
+        "weapon.fire-axe",
+        "weapon.army-mg",
+        "weapon.shotgun",
+        "weapon.handgun"
+      ],
+      "steps": [
+        {
+          "id": "escape",
+          "text": "Enter the elephant yard · 6 m",
+          "tick": 61,
+          "marker": {
+            "anchor": "l8-route",
+            "ring": {
+              "x": 96,
+              "y": 0,
+              "z": 40
+            },
+            "drawn": [
+              96,
+              0.12,
+              40
+            ],
+            "playerY": 0.8399999737739563,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "depart",
+          "text": "",
+          "tick": 3460,
+          "marker": {
+            "anchor": "exit",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.9954347610473633,
+            "pinVisible": false
+          }
+        }
+      ]
+    }
+  ],
+  "issues": 0,
+  "bySeverity": {
+    "P0": 0,
+    "P1": 0,
+    "P2": 0,
+    "P3": 0
+  }
+}
