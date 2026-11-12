@@ -455,15 +455,14 @@ export class Vfx extends Group {
     if (!position) return;
     const radius = throwing ? 1.5 : directional ? Math.max(.1, length / 2) : 'radius' in event ? event.radius : area?.radius ?? (kind === 'bloated' || kind === 'splash' ? 3 : source ? Math.max(this.world.missions?.def.l1 ? 1 : 2, infectedDef(source.archetype).range) : 2);
     const angle = area ? Math.atan2(area.dz, area.dx) : 'angle' in event ? event.angle : Math.atan2(source?.infected?.dz ?? 0, source?.infected?.dx ?? 1);
-    // r32-animalmoves: every animal has its own warning instead of the shared red lane: a dark shadow line under the
-    // diving flock, a dust lane for the zebra stampede and the elephant charge, an amber landing ring for the lion's
-    // pounce and the monkeys' leap (their bodies, eye glint and stamps carry the rest of the tell).
-    const animalShape = move === 'flamingo.dive' ? 11 : move === 'zebra.stampede' || move === 'elephant.charge' ? 12 : undefined;
+    // Flamingos use the red ground lane; zebra/elephant retain dust lanes,
+    // and lion/monkey leaps use amber landing rings.
+    const animalShape = move === 'zebra.stampede' || move === 'elephant.charge' ? 12 : undefined;
     // r34-l8qa: a lion's ordinary windup (special 'pin', no authored move: Scene Lab / free chase) used the shared red
     // charge lane; it gets the same amber landing ring as the authored pounce.
     const lionOrdinary = !move && (source?.archetype === 'infected.lion' || source?.archetype === 'infected.lioness');
     const animalRing = move === 'lion.pounce' || move === 'lion.flank' || move === 'monkey.grab' || lionOrdinary;
-    const animalColor = this.colorblind ? undefined : move === 'flamingo.dive' ? 0x12080c : move === 'zebra.stampede' ? 0xc9b07c : move === 'elephant.charge' ? 0x9c8463 : animalRing ? 0xffa53a : undefined;
+    const animalColor = this.colorblind ? undefined : move === 'flamingo.dive' ? 0xe32f3a : move === 'zebra.stampede' ? 0xc9b07c : move === 'elephant.charge' ? 0x9c8463 : animalRing ? 0xffa53a : undefined;
     if (animalRing && target && (area || lionOrdinary)) {
       const ring = move === 'monkey.grab' ? .9 : 1.3, at = destination && move !== 'lion.pounce' && !lionOrdinary ? destination : target;
       const ringGround = this.world.districts?.groundHeight(at.x, at.z) ?? 0, duration = 'duration' in event ? event.duration : .6;

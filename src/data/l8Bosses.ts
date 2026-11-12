@@ -2,7 +2,7 @@
  * r31-flamingo (PO 11-10): HP is sized to the L8 weapons (handgun, axe, shotgun, MG; no rocket). Damage.ts applies x0.6 outside an exposed window (x1.8 inside) and x0.2 from allies,
  * so one hit is handgun 12, MG 8.4, axe ~34, shotgun ~110-145. Flamingo/monkey 36: handgun 3, MG 5, axe 2, shotgun 1. Zebra 150: shotgun 2. Lion 250 ~ 30 MG. Gorilla 500 ~ 60 MG. Elephant 1200 chips; the 3 wall impacts end it. Entries sit on connected public paths. */
 export const l8BossArenas = [
-  { id: 'flamingo', name: 'Flamingo flock', count: 8, hp: 36, centre: { x: 0, z: -32 }, entry: { x: 0, z: -18 }, radius: 14, counter: 'Step sideways out of the shadow lane; sweep the birds as they land.' },
+  { id: 'flamingo', name: 'Flamingo flock', count: 8, hp: 36, centre: { x: 0, z: -32 }, entry: { x: 0, z: -18 }, radius: 14, counter: 'Step out of the red lanes. Use the barriers and fire as the birds land.' },
   { id: 'lion', name: 'Lion and lioness', count: 2, hp: 250, centre: { x: -60, z: -32 }, entry: { x: -60, z: -46 }, radius: 14, counter: 'Keep your back to the rocks. Dodge sideways at the glint and fire after the landing.' },
   { id: 'monkey', name: 'Monkey pack', count: 7, hp: 36, centre: { x: -6, z: 20 }, entry: { x: -20, z: 20 }, radius: 12, counter: 'Use the doorway to stop the pack surrounding you. Melee shakes off a grab.' },
   { id: 'zebra', name: 'Zebra herd', count: 4, hp: 150, centre: { x: 60, z: 32 }, entry: { x: 60, z: 46 }, radius: 14, counter: 'Leave the dust lane. The fence turns the herd; shoot the stragglers.' },
@@ -16,9 +16,12 @@ export const l8ArenaKeys = l8BossArenas.map(a => `arena-${a.id}`);
  * vehicle route until the five enclosure fights are cleared. */
 /** Close unused public-road branches without interrupting Nadia's visitor route. */
 export const l8PathWalls = [
+  { x: 99.1, z: 5.5, halfX: .25, halfZ: 40.5 },
+  // Cap the primate approach where its outer fence meets the pen wall.
+  { x: -24, z: 32, halfX: 4.5, halfZ: .25 },
   { x: -3.1, z: 64, halfX: .25, halfZ: 3.2 },
-  { x: -63.1, z: 0, halfX: .25, halfZ: 3.2 },
-  { x: 63.1, z: 0, halfX: .25, halfZ: 3.2 },
+  { x: -63.1, z: 0, halfX: .25, halfZ: 12 },
+  { x: 63.1, z: 0, halfX: .25, halfZ: 12 },
 ] as const;
 export const l8YardWalls = [
   { x: 84, z: 51, halfX: .25, halfZ: 5 },
@@ -70,6 +73,11 @@ export const l8PlazaGates = {
 } as const;
 /** Unused road branches stay open for the tour and outbreak, then seal the visitor route. */
 export const l8ConnectorGates = [
+  // Nadia crosses this arm during the calm tour; close it only at the seal.
+  { x: 56.9, z: 0, halfX: .25, halfZ: 12 },
+  // Close the unused southbound arms of the two zebra-approach junctions.
+  { x: 24, z: 67.1, halfX: 4.5, halfZ: .25 },
+  { x: 60, z: 67.1, halfX: 4.5, halfZ: .25 },
   { x: 20.9, z: 64, halfX: .25, halfZ: 3.2 },
   { x: 63.1, z: 64, halfX: .25, halfZ: 3.2 },
   { x: 92.9, z: 0, halfX: .25, halfZ: 3.2 },
@@ -94,3 +102,10 @@ export function l8GateClosed(key: string, ctx: L8GateContext): boolean {
   return arena.phase !== 3;
 }
 export const inRect = (p: { x: number; z: number }, r: { x0: number; z0: number; x1: number; z1: number }) => p.x >= r.x0 && p.x <= r.x1 && p.z >= r.z0 && p.z <= r.z1;
+
+/** Stable rim pads for the initial flock and three reinforcement flights. */
+export const l8FlamingoLandingCount = 26;
+export function l8FlamingoLanding(slot: number): { x: number; z: number } {
+  const angle = slot * Math.PI * 2 / l8FlamingoLandingCount;
+  return { x: Math.cos(angle) * 11, z: -32 + Math.sin(angle) * 11 };
+}

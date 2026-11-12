@@ -7,7 +7,7 @@ import { ThreatObserver } from './observer';
 import assert from 'node:assert/strict';
 import { NavGrid } from '../../../src/sim/ai/NavGrid';
 import type { EntitySnapshot, GameEvent } from '../../../src/sim/world/types';
-import { median, isWalkingSample, PathProbe, phaseFlags, isVehicleHullAttacker, isWithinChaserDetectionRange, followerCoverageFlags, followerWaitFlags, observeBlocked, SpawnIdentities, type BlockedWindow } from './observer';
+import { median, isWalkingSample, PathProbe, phaseFlags, isVehicleHullAttacker, isWithinChaserDetectionRange, followerCoverageFlags, followerWaitFlags, observeBlocked, isConfinedInClosedL8Pen, SpawnIdentities, type BlockedWindow } from './observer';
 import { WaveObserver, l6EntryFlags, waveFlags } from './waves';
 import { EventBus } from '../../../src/core/EventBus';
 import type { SimWorld } from '../../../src/sim/world/SimWorld';
@@ -202,6 +202,12 @@ export async function proveThreatAudit(): Promise<void> {
     } finally { world.dispose(); }
   }
   const good = { threat: true, attacks: 1, maxBlockedSeconds: 20, followerSpeeds: [{ id: 2, median: 2.2, samples: 10 }], followerMedian: 2.2 };
+  const arenaStates = (['flamingo', 'lion', 'monkey', 'zebra', 'gorilla', 'elephant'] as const).map(id => ({ id, phase: id === 'flamingo' || id === 'lion' ? 1 : 0, armed: id === 'flamingo' || id === 'lion' }));
+  const flamingoContext = { arenas: arenaStates.map(a => a.id === 'lion' ? { ...a, phase: 0, armed: false } : a), sealed: false };
+  assert(isConfinedInClosedL8Pen({ x: -60, z: -32 }, { arenas: arenaStates, sealed: false }), 'an infected inside the lion pen is excluded while both gates are closed');
+  assert(!isConfinedInClosedL8Pen({ x: -40, z: -32 }, { arenas: arenaStates, sealed: false }), 'path infected outside a pen remain in the census');
+  assert(!isConfinedInClosedL8Pen({ x: 0, z: -32 }, flamingoContext), 'the flamingo pen exit remains open until the plaza seals');
+  assert(isConfinedInClosedL8Pen({ x: 0, z: -32 }, { ...flamingoContext, sealed: true }), 'the flamingo pen is excluded only after its exit closes');
   assert.deepEqual(phaseFlags(good), []);
   assert.equal(isWalkingSample(1.5, 0, false, false), false, 'parked formation shuffling is not group walking');
   assert.equal(isWalkingSample(0, 4, true, false), true, 'a stalled follower must retain zero samples while the courier moves');

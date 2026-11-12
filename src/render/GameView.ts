@@ -31,6 +31,7 @@ import { VehicleView } from './VehicleView';
 import { L2Props } from './L2Props';
 import { L3Props } from './L3Props';
 import { L9Props } from './L9Props';
+import { L8FlamingoLandings } from './L8FlamingoLandings';
 import { L8Gates } from './L8Gates';
 import { L10Perimeter } from './L10Perimeter';
 import { BicycleView } from './BicycleView';
@@ -123,6 +124,7 @@ export class GameView implements Lifecycle {
   private l2Props: L2Props | null = null;
   private l3Props: L3Props | null = null;
   private l9Props: L9Props | null = null;
+  private l8Landings: L8FlamingoLandings | null = null;
   private l8Gates: L8Gates | null = null;
   private l10Perimeter: L10Perimeter | null = null;
   private bicycle: BicycleView | null = null;
@@ -328,7 +330,7 @@ export class GameView implements Lifecycle {
     if (this.bicycle) this.scene.add(this.bicycle);
     if (this.world.scenario === 'L2' && this.materials) { this.l2Props = new L2Props(this.world, this.materials); this.scene.add(this.l2Props); }
     if (this.world.scenario === 'L3' && this.materials) { this.l3Props = new L3Props(this.world, this.materials); await this.l3Props.load(); this.scene.add(this.l3Props); }
-    if (this.world.scenario === 'L8' && this.materials) { this.l8Gates = new L8Gates(this.world, this.materials); this.scene.add(this.l8Gates); }
+    if (this.world.scenario === 'L8' && this.materials) { this.l8Landings = new L8FlamingoLandings(this.world); this.scene.add(this.l8Landings); this.l8Gates = new L8Gates(this.world, this.materials); this.scene.add(this.l8Gates); }
     if (this.world.scenario === 'L10' && this.materials) { this.l10Perimeter = new L10Perimeter(this.world, this.materials); this.scene.add(this.l10Perimeter); }
     if (this.world.scenario === 'L9' && this.materials) { this.l9Props = new L9Props(this.world, this.materials); await this.l9Props.load(); this.scene.add(this.l9Props); }
     t = loadMeasure('view:actors', t);
@@ -835,7 +837,12 @@ export class GameView implements Lifecycle {
       // Brief l3-polish: the station attack pulls back (eased) so the streams at the gates are on screen while the courier holds the yard.
       this.l3AttackScale += ((rescue ? 3.3 : l3AttackView(this.world) ? l3.attack.viewScale : 1) - this.l3AttackScale) * (1 - Math.exp(-4 * seconds));
       const l8Arena = this.world.missions?.l8?.state.arenas.find(arena => arena.phase > 0 && arena.phase < 3);
-      const l8Zone = l8Arena && l8Route.find(stage => stage.id === l8Arena.id)!.zone;
+      const l8Boarding = this.world.scenario === 'L8' && this.world.vehicles?.active === null
+        && this.world.missions?.l8?.state.arenas.every(arena => arena.phase === 3)
+        && !this.world.missions.l8.departing() && player.transform.x >= 80 && player.transform.x <= 120
+        && player.transform.z >= 35 && player.transform.z <= 95;
+      const l8Zone = l8Arena ? l8Route.find(stage => stage.id === l8Arena.id)!.zone
+        : l8Boarding ? { x0: 82, z0: 39, x1: 110, z1: 89 } : undefined;
       // Frame the entire bounded pen at default zoom, including its near edge.
       const l8Scale = l8Zone ? 4.5 * Math.max(1, 1 / this.view.camera.aspect) : 1;
       this.view.encounterScale = this.world.scenario === 'L3' ? this.l3AttackScale : l8Scale;
@@ -1409,6 +1416,7 @@ export class GameView implements Lifecycle {
     if (this.vehicles) { this.scene.remove(this.vehicles); this.vehicles.dispose(); this.vehicles = null; }
     if (this.l2Props) { this.scene.remove(this.l2Props); this.l2Props.dispose(); this.l2Props = null; }
     if (this.l3Props) { this.scene.remove(this.l3Props); this.l3Props.dispose(); this.l3Props = null; }
+    if (this.l8Landings) { this.scene.remove(this.l8Landings); this.l8Landings.dispose(); this.l8Landings = null; }
     if (this.l8Gates) { this.scene.remove(this.l8Gates); this.l8Gates.dispose(); this.l8Gates = null; }
     if (this.l10Perimeter) { this.scene.remove(this.l10Perimeter); this.l10Perimeter.dispose(); this.l10Perimeter = null; }
     if (this.l9Props) { this.scene.remove(this.l9Props); this.l9Props.dispose(); this.l9Props = null; }
