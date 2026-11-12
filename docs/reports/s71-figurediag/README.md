@@ -475,3 +475,11 @@ Used the existing class-aware encoder to make a 144×192 atlas from cashier's 57
 ## Shared-atlas resolution test coverage verified at draw
 
 Active-draw instrumentation confirms both cashier LOD2 and LOD1 bind the same reduced **144×192** atlas UUID, with 147,436 RGBA-equivalent decoded bytes including mips. Receipt: `cashier-shared-small-draw-proof.json`. This closes the candidate texture-coverage limitation in the preceding downsampling experiment. Its native HIGH result **3/2 → 3/2** is now a valid overall-score sensitivity observation over 576×768 versus 144×192 for this fixture. It does not measure temporal shimmer, close-camera quality, or the benefit of an improved source bake. Temporary instrumentation/driver removed; runtime source restored byte-for-byte.
+
+## Consistent-figure HIGH cashier lighting levers
+
+![Opened cashier baseline, stronger figure fill, stronger rim](cashier-light-levers-high.jpg)
+
+Ran two independent changes from the same original source: ordinary infected figure fill **.25→.65**, and ordinary rim **.25→.8**. Each HIGH/WebGL2 fixture passed at both zooms/day/night, using one browser per sequential reservation. Opened strict judgments: baseline **3/2**, stronger fill **3/2 (+0/+0)**, stronger rim **3/2 (+0/+0)**. Neither recovers meaningful expression or material separation at native game scale. These are existing fill/Fresnel coefficients, not a new lighting or outline algorithm. Evidence: `test-results/s71-figurediag/cashier-{fill065,rim08}-high/`. Source restored byte-for-byte after each case, with no production change retained.
+
+Cashier now supplies a consistent-figure HIGH lever set for actual shared-atlas resolution, nearest filtering, normal interpolation, fill, rim, retained LOD1 and 1.2× visual scale. None yields a whole-point gain in the tested range. Authored AO/normal-map addition remains untested because the current crowd material route has no such map input; the normal experiment is explicitly a geometry-normal shading comparison.
