@@ -1212,6 +1212,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
           await hold(100);continue;
         }
         if(process.env.PLAYTEST_HANDOVER_AUDIT==='1')await page.waitForFunction('window.__playtestHandoverAudit?.some(s => !s.breached && !s.text.trim() && !s.pin && !s.marker)',null,{timeout:2500}).catch(()=>undefined);
+        if (lastLevel === 'L9' && e.level === 'L10') { await page.evaluate(async () => { const a = window.__SS__!; a.camera.follow(); a.camera.zoom(1.5); await a.screenshotReady(); }); await capture('L9-L10-actual-handover-high-z1.5'); }
         log({ handover: lastLevel, to: e.level, firstPlayableTick:e.tick,objective:e.objective }); break;
       }
       lastLevel = e.level; levelIndex = o.levels.indexOf(e.level);
