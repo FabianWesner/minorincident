@@ -61,3 +61,7 @@ Resolve all four primary-path progress failures without weakening the 5-second c
 The requested approximately 2.5-hour work period ended with the goal still **HOLD**. A final lateral-momentum-preservation trial passed its focused unit assertion but produced a prolonged primary-country stall. Its remaining native batch was stopped after that verified failure at the timebox; it is not a completed matrix receipt. Both the production trial and temporary assertion were reverted. Shorter ram-protection windows also failed and were reverted.
 
 The canonical committed-source results remain `native-current.json`: all 18 complete without position jumps, four primary-path windows fail. The final committed-source E31 verifier and exact remote suite pass as listed above. No trial process or temporary baseline checkout remains. Further work must resolve the primary-road bend recovery and primary-country case; the goal is not marked achieved or blocked.
+
+## Resumed preview-driver audit
+
+A measured three-second preview with speed-dependent understeer compensation passed primary-road and primary-country seeds, but failed the complete 18-run audit: it introduced 5.67 s first-turn gaps on all country detours, a shortcut-detour noncompletion near evacuation, and >12 s primary-shortcut gaps. The driver revision was reverted rather than selecting different controllers per route to retain only passing cases. The canonical regression policy and HOLD result remain unchanged.
