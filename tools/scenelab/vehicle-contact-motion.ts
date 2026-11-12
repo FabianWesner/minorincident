@@ -29,7 +29,15 @@ try {
           const w = (window.__SCENE__ as unknown as { game: Game }).game.world;
           return w.events.events().filter(e => e.type.startsWith('vehicle.') || e.type === 'combat.hit');
         });
-        writeJson(`${out}/${tier}-${name}.json`, { metrics, events });
+        const actors = Object.entries(metrics.actors).filter(([id]) => id.startsWith('infected'));
+        const checks = actors.map(([id, actor]) => ({ actor: id, contacts: actor.motion.contacts,
+          p95Cm: actor.motion.slideP95Cm, maxCm: actor.motion.slideMaxCm,
+          pass: actor.motion.contacts >= 5 && actor.motion.slideP95Cm !== null && actor.motion.slideP95Cm <= 5 && actor.motion.slideMaxCm <= 15 }));
+        const contactProven = name === 'ram' ? events.filter(e => e.type === 'combat.hit').length >= 6
+          : events.filter(e => e.type === 'vehicle.attack-windup').length >= 4 && events.some(e => e.type === 'vehicle.durability-hit');
+        const pass = contactProven && checks.every(check => check.pass) && session.errors.length === 0;
+        if (!pass) process.exitCode = 1;
+        writeJson(`${out}/${tier}-${name}.json`, { pass, contactProven, checks, metrics, events });
         console.log(JSON.stringify({ tier, name, events: events.length, actors: Object.fromEntries(Object.entries(metrics.actors).filter(([id]) => id.startsWith('infected')).map(([id, actor]) => [id, actor.motion])) }));
       }
     } finally { await session.close(); }

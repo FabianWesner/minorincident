@@ -46,4 +46,12 @@ The HIGH surrounded infected-3 left toe jumps from [-1.144, 0.002, -2.705] at fr
 
 ## Resolved travel direction
 
-CrowdView now passes the simulation motion velocity into CourierGroundContacts, whose existing travel argument plans sideways/backward steps while keeping body facing. Previously only speed reached this solver. This applies to actors with resolved simulation motion; render-sampled fallback actors retain the existing path. Typecheck and targeted lint pass. The isolated HIGH/LOW contact diagnostic remains unchanged, including its transition failure, and does not prove this change improves campaign contact slide. Campaign motion evidence is still required.
+CrowdView now passes the simulation motion velocity into CourierGroundContacts, whose existing travel argument plans sideways/backward steps while keeping body facing. Previously only speed reached this solver. This applies to actors with resolved simulation motion; render-sampled fallback actors retain the existing path. Typecheck and targeted lint pass. The isolated HIGH/LOW contact diagnostic remains unchanged, including its transition failure. InfectedSystem installs AgentMotion in this fixture as well; the prior inference that resolved motion was absent was unproven and is withdrawn. Actual campaign and per-state motion evidence is still required.
+
+## Executable contact checks
+
+The diagnostic now exits nonzero unless each infected supplies at least five contacts, p95 <= 5 cm and maximum <= 15 cm; vehicle events must prove at least six ram combat hits or four hull windups plus a durability hit. HIGH/LOW rerun completed with exit 1, retaining the surrounded failure. Targeted ESLint passed. This remains partial coverage, without clinging/boarding or all campaign contexts.
+
+## Remote unit suite
+
+`sh tools/remote/run.sh "$PWD" -- npm test` completed exit 0 on 46.225.66.90: 27 files passed, 106 tests passed and 1 skipped (107 collected), test-budget 204.3 s / 240 s. The complete command was run without test selection or trimming; this checkout’s count differs from the older 150-case job description. Local transcript: `/private/tmp/s83-unit.log`.
