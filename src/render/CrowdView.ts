@@ -961,6 +961,7 @@ export class CrowdView extends Group {
         pose.instance = this.transform;
         pose.scale = batch.strideScale;
         pose.speed = motion.speed;
+        pose.travel = e.motion?.velocity;
         pose.time = renderTick / 60;
         pose.near = detailedFeet;
         pose.layers = layered;

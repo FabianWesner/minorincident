@@ -83,6 +83,8 @@ export class CrowdFootwork {
 export interface CrowdPresentation {
   frame: number; blend: [number, number]; clip: string; phase: number; instance: Matrix4;
   scale: number; speed: number; time: number; near: boolean;
+  /** Resolved world travel, including sideways vehicle and crowd pushes. */
+  travel?: { x: number; z: number };
   layers?: CrowdLayers; style?: GaitStyle; procedural?: boolean; cadence?: number; holdDistanceM?: number;
 }
 /** One small off-scene skeleton per batch; figures retain only their contact
@@ -491,7 +493,7 @@ export class CrowdLocomotion {
           const stride = moving ? cadenceStride(clip, scale, speed, style?.stepRate) : 0;
           // load() and layer() have already refreshed the complete rig.
           // An optional style with cleared fields must retain the shared defaults.
-          footwork.contacts.update(moving ? phase : 0, stride, footwork.run, footwork.weight, moving ? speed : 0, dt, { ...style, stance: style?.stance ?? footwork.stance, knee: style?.knee ?? gait?.knee, maxSwing: style?.maxSwing ?? .4 }, true);
+          footwork.contacts.update(moving ? phase : 0, stride, footwork.run, footwork.weight, moving ? speed : 0, dt, { ...style, stance: style?.stance ?? footwork.stance, knee: style?.knee ?? gait?.knee, maxSwing: style?.maxSwing ?? .4 }, true, input.travel);
           this.ground(style);
           this.store(pose, instance);
         });

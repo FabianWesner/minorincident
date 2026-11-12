@@ -43,3 +43,7 @@ Opened `apc-consecutive.jpg`: HIGH zoom 1.5, consecutive frames 140–145, stati
 ## Largest production contact discontinuity
 
 The HIGH surrounded infected-3 left toe jumps from [-1.144, 0.002, -2.705] at frame 3 to [-0.816, 0.004, -2.621] at frame 4. The root advances only millimetres while the clip changes from infected-idle to infected-lurch. This is a pose transition discontinuity rather than a 34 cm vehicle root shove. See `transition-trace.json`; subsequent lurch stance positions remain nearly fixed. No acceptance claim is made from this diagnosis.
+
+## Resolved travel direction
+
+CrowdView now passes the simulation motion velocity into CourierGroundContacts, whose existing travel argument plans sideways/backward steps while keeping body facing. Previously only speed reached this solver. This applies to actors with resolved simulation motion; render-sampled fallback actors retain the existing path. Typecheck and targeted lint pass. The isolated HIGH/LOW contact diagnostic remains unchanged, including its transition failure, and does not prove this change improves campaign contact slide. Campaign motion evidence is still required.
