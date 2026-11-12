@@ -103,3 +103,11 @@ Sequential single-browser headless WebGL2/Metal samples, HIGH requested/zoom 1, 
 - `elephant/s002-t467.jpg`: entry view only, with a large truck occupying much of the foreground and courier shown through its roof; objective still “Enter the elephant yard · 1 m”. This does not count as the active elephant arena capture. An engaged-yard sample is still required.
 
 Raw paths are under `test-results/s75-l8part2/`. Browser batch and temporary server exited. These stills do not prove continuous camera/lighting transitions, complete fights or telegraph timing.
+
+## Opened active elephant yard
+
+Single pooled headless WebGL2/Metal sample from `l8-elephant-apc-yard-engaged`, 12 s real input/firing, god off, HIGH requested/zoom 1, port 4975. Opened `elephant-engaged/s000-t67.jpg`: active elephant/HP bar, truck, bounded yard, lit perimeter, party and APC armor meter visible; objective “Kill elephant 0/1 · 5 m” and minimap box readable. This supplies the sixth opened active arena view (alongside flamingo and the four prior arena samples).
+
+Also opened `s002-t669.jpg`: the objective has advanced to boarding, courier HP 30, and the camera is much closer; the elephant body is partly cropped at the lower right. This is an unresolved boarding camera-state concern, not an arena framing pass. Raw images/log remain ignored under `test-results/s75-l8part2/`. Browser and server stopped.
+
+Audit inspection confirms the current remaining passive flag is the separate retreat-kiting probe: 20 s moving, 39.45 m travelled, 101 player attack starts, one infected attack start, zero landed hits. The passive escape census no longer supplies the flag. No threshold or other-level rule was changed.
