@@ -43,3 +43,22 @@ test('L10 hangar rack exposes every issued weapon to click and keyboard', async 
   expect(rack!.y + rack!.height).toBeLessThanOrEqual(844);
   await page.screenshot({ path: 'test-results/l10-rack/rack-high-phone-390x844.png' });
 });
+
+test('L10 throwable preview captures at HIGH zoom 1 and 1.5', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 720 });
+  await boot(page);
+  await page.evaluate(async () => {
+    const api = window.__SS__!;
+    await api.loadLevel('L10', { seed: 1 }); api.pause(); api.missions.begin();
+    api.setLoadout(['weapon.molotov', 'weapon.fire-axe'], ['weapon.pipe-bomb']);
+    api.cheats.infiniteCharges(true); api.camera.follow();
+    const p = api.getState().player!.transform;
+    api.input.set({ aim: { x: 1, z: 0 }, aimPoint: { x: p.x + 8, z: p.z }, aimSource: 'keyboard' });
+    await api.step(1); await api.screenshotReady();
+  });
+  mkdirSync('test-results/l10-rack', { recursive: true });
+  for (const zoom of [1, 1.5]) {
+    await page.evaluate(async value => { const api = window.__SS__!; api.camera.zoom(value); await api.screenshotReady(); }, zoom);
+    await page.screenshot({ path: `test-results/l10-rack/molotov-high-z${zoom}.png` });
+  }
+});
