@@ -4,6 +4,16 @@ Date: 2026-11-12
 Baseline: `c9a9bbbd` (`main`)  
 Scope: L8 final boarding after the elephant is cleared.
 
+## Confirmed reproduction and correction
+
+The retained HIGH zoom 1 real-input run reproduced s78 at tick 28521: `0/14 aboard · 22 m`, courier `(95.4, 53.2)` still at the elephant kill position, and `no marker: true`. Opened [reproduction capture](boarding-repro.jpg): party and courier remain inside the yard beside the persistent elephant corpse; the yellow ring at the APC marks the destination. The prior interpretation that the courier was already at the APC was incorrect.
+
+Root cause: after the final kill, `LevelEightZoo` immediately changed the objective to “Cover the survivors” and set `waypoint = false`. Boarding itself only activates when the courier is within 12 m of the APC door. The marker-driven input route therefore stopped 22 m away before boarding was active. The native boarding fixture passed because it already placed the courier at the pickup.
+
+The correction keeps “Lead the group to the armored vehicle” and its waypoint until boarding activates, then changes to the cover/boarding counter. The corpse and follower collision/pathing rules are unchanged. This is an objective-route guidance fix. Fixed-build HIGH browser completion still needs verification; the retained profile exists at `test-results/playtest/s79-high-retained/profile` (the generic checkpoint continuation restarted at sanctuary, so it does not yet supply an elephant-clear save).
+
+Earlier investigation follows for provenance; the confirmed reproduction above supersedes its tentative interpretation.
+
 ## Finding
 
 The s78 HIGH capture was opened. It shows the APC and courier outside the elephant yard, all 14 passengers grouped inside by the yard gate, and the persistent elephant corpse lying across the inner approach. The HUD remains at `0/14 aboard · 22 m`. This is a credible pathing/jam report, not a vehicle capacity issue.
