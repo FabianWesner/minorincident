@@ -257,6 +257,14 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly authored wave cens
     // This fixture represents the guide-aborted branch: the production calm gate is 60 s there, but waits 120 s
     // while the guide is still unresolved. Keep the breach gate and real outlet admission in the census path.
     c.state.guideDone = 1;
+    // The redesigned gates can connect the east apron before the breach.
+    // Snapshot reachability before release, matching the production admission rule.
+    const nav = w.infected!.nav, courier = w.entities.get(1)!.transform;
+    const goal = nav.nearestCell(courier.x, courier.z);
+    const initiallyConnected = c.state.outlets.map((outlet, index) => {
+      const cell = nav.nearestCell(outlet.ox, outlet.oz);
+      return index >= 4 || cell >= 0 && goal >= 0 && nav.path(cell, goal, [], 400_000);
+    });
     w.tick = c.state.startedAt + 3600; c.update();
     const initial = c.state.arrivals.slice();
     c.state.nextWave = Infinity;
@@ -266,7 +274,7 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly authored wave cens
     const firstMovement = reach(w, initial.map(a => a.id), (id, x, z) => { const door = initialGoals.get(id)!; return Math.hypot(x - door.ox, z - door.oz) < 12; }, routeFrames);
     for (let outlet = 0; outlet < c.state.outlets.length; outlet++) {
       const ids = initial.filter(a => a.outlet === outlet).map(a => a.id);
-      const authored = outlet === 1 ? 0 : outlet >= 4 ? tier === 'low' ? 3 : 5 : (tier === 'low' ? 3 : 6) + (outlet === 2 ? 1 : 0);
+      const authored = !initiallyConnected[outlet] ? 0 : outlet >= 4 ? tier === 'low' ? 3 : 5 : (tier === 'low' ? 3 : 6) + (outlet === 2 ? 1 : 0);
       record(`L8/tunnel-breach-${outlet}`, authored, ids, w, { admitted: ids.filter(id => firstMovement.admittedIds.includes(id)).length, reached: ids.filter(id => firstMovement.reachedIds.includes(id)).length });
     }
     for (const e of [...w.infected!.active]) w.infected!.release(e);
