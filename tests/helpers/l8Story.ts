@@ -129,9 +129,9 @@ export async function checkL8Story(): Promise<void> {
     world.tick = Math.max(world.tick, zoo.state.breachedAt + 1800);
     const player = world.entities.get(1)!, carId = zoo.state.carId, car = world.entities.get(carId)!, ids = zoo.passengers();
     Object.assign(player.transform, zoo.door()); player.health.current = player.health.max;
-    // The following isolated controller fixture skips the actual retreat;
-    // story-probe.ts separately checks Hale reaches this post in ordinary play.
-    const hale = world.entities.get(zoo.state.haleId)!, halePost = { x: zoo.door().x - .7, z: zoo.door().z + 1.2 };
+    // The pen starts with Hale at its approach, away from the vehicle door.
+    // Engagement must stage him inside rather than wait for the locked exit.
+    const hale = world.entities.get(zoo.state.haleId)!, halePost = { x: 96, z: 36 };
     Object.assign(hale.transform, halePost); hale.civilian!.ally!.run = null; hale.civilian!.ally!.post = halePost;
     mission.state.phase = 'playing'; car.health.current = car.health.max; car.vehicle!.damage = 'normal'; car.vehicle!.driver = null;
     car.vehicle!.passengers = ids.map((id, seat) => ({ id, seat: seat % world.vehicles!.cars.get(carId)!.physics.def.transport!.seats.length, phase: 'seated' as const, started: world.tick, pauseUntil: 0, from: { ...world.entities.get(id)!.transform } }));
