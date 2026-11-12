@@ -189,3 +189,5 @@ Headless playtest, browser pool/lock, one browser, port 4977, high quality, zoom
 ## Criterion interpretation check
 
 `specs/epic-22-level-4-the-safe-city-falls.md` §6 replenishment explicitly keeps recoverable bodies' concurrency slots until they rise; its 2026-11-02 exclusion of downed/recoverable bodies is a low-tier cap override, with high-tier caps unchanged. Therefore the observed high-tier occupied-slot/living-count divergence is not evidence of an audit artifact. The two L4-06 failures remain genuine unmet acceptance criteria in this lane; no threshold, census rule, concurrency policy, recovery behavior or spec was changed to hide them.
+
+Aligning the three existing south mouths around x=-29/-25.9/-22 worsened first-breach alive to 39 and plaza minimum to 11, with three passive flags (53.4 s; skilled complete). Reverted; the north alignment's successful cohort-contact effect does not generalize to this south placement.
