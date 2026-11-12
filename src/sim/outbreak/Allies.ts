@@ -171,6 +171,11 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
       const fx = Math.cos(e.transform.yaw), fz = -Math.sin(e.transform.yaw);
       const compound = world.missions?.def.l3 && a.role === 'soldier';
       const alphaPriority = (candidate: EntitySnapshot | undefined) => {
+        // A committed strike on the party needs rescue fire before distant target priority.
+        const victimId = candidate?.infected?.targetId || candidate?.infected?.l1?.targetId;
+        const victim = victimId ? world.entities.get(victimId) : undefined;
+        if (candidate?.infected?.state === 'attack' && victim && victim.health.current > 0 &&
+            (victim.id === 1 || victim.civilian?.ally || victim.escort || victim.companion)) return 4;
         if (a.role !== 'soldier') return 0;
         // The evacuation detail rescues an active grab before returning to its Alpha target.
         if (world.scenario === 'L7' && candidate?.infected?.l1?.mode === 'bite' &&

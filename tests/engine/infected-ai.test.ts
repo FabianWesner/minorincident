@@ -1,6 +1,7 @@
 // Infected AI core: the shared state machine (idle → chase → attack → down/dead), perception, telegraphs and body
 // separation drive every enemy role in every level.
 import { afterEach, expect, test } from 'vitest';
+import { action } from '../../src/data/actions/catalog';
 import { animalInfected, humanInfected, infectedDefinitions, infectedRecovery, INFECTED_TOUGHNESS, validateInfected, infectedSpecialMoves } from '../../src/data/infected';
 import { infectedContactDistance, meleeRing } from '../../src/sim/ai/CharacterSeparation';
 import type { DamageEvent } from '../../src/sim/combat/Damage';
@@ -394,6 +395,77 @@ test('every human and animal role validates and spawns with its catalog health a
     }
     expect(movingHits, `${role}: a running circle cannot suppress every attack`).toBeGreaterThan(0);
     w.dispose(); worlds.pop();
+  }
+  // Light firearm hits keep a visible reaction while preserving heavy/Alpha windups.
+  const fire = (w: SimWorld, target: EntitySnapshot) => w.combat!.damage.apply({ attackId: w.tick + 1, actionId: 'weapon.flamethrower', sourceId: 1, targetId: target.id, origin: { x: 0, z: 0 }, direction: { x: 1, z: 0 }, base: 1, multiplier: 1, type: 'bullet', knockback: .1, stagger: .15 });
+  for (const role of ['brute', 'butcher', 'armored', 'bloated', 'screamer', 'alpha']) {
+    const w = await arena(), e = spawn(w, role, 2);
+    e.infected!.state = 'attack'; e.infected!.until = w.tick + 60; e.combat!.attacking = true;
+    for (let i = 0; i < 20; i++) { fire(w, e); step(w, 1); }
+    expect(e.infected!.state, `${role}: windup state survives automatic fire`).toBe('attack');
+    expect(e.combat!.attacking, `${role}: attack remains live`).toBe(true);
+    expect(e.combat!.staggerUntil, `${role}: bullets do not install a stagger`).toBe(0);
+  }
+  {
+    const w = await arena(), e = spawn(w, 'runner', 2);
+    fire(w, e); const first = e.combat!.staggerUntil;
+    expect(first).toBeGreaterThan(w.tick);
+    for (let i = 0; i < 20; i++) { fire(w, e); step(w, 1); }
+    expect(e.combat!.staggerUntil).toBe(first);
+    step(w, 31); fire(w, e);
+    expect(e.combat!.staggerUntil).toBe(w.tick + 9);
+  }
+  {
+    const w = await arena(), e = spawn(w, 'brute', 2);
+    fire(w, e); const first = e.combat!.staggerUntil;
+    expect(first).toBe(w.tick + 9);
+    step(w, 20); fire(w, e);
+    expect(e.combat!.staggerUntil).toBe(first);
+    step(w, 73); fire(w, e);
+    expect(e.combat!.staggerUntil).toBe(w.tick + 9);
+  }
+  {
+    const w = await arena(), e = spawn(w, 'runner', 2);
+    e.infected!.state = 'attack'; e.infected!.until = w.tick + 1; e.combat!.attacking = true;
+    fire(w, e);
+    expect(e.combat!.staggerUntil, 'ordinary final-half windup is committed').toBe(0);
+    expect(e.combat!.attacking).toBe(true);
+  }
+  {
+    const w = await arena(), e = spawn(w, 'elephant', 2);
+    e.infected!.arenaBoss = { arena: 'elephant', slot: 0, engaged: true, exposedUntil: 0, readyAt: 0 };
+    fire(w, e); const first = e.combat!.staggerUntil;
+    step(w, 20); fire(w, e);
+    expect(e.combat!.staggerUntil, 'zoo boss light-hit poise uses the heavy cooldown').toBe(first);
+    e.infected!.state = 'attack'; e.infected!.until = w.tick + 60; e.combat!.attacking = true;
+    fire(w, e);
+    expect(e.combat!.attacking, 'zoo boss windup survives light gunfire').toBe(true);
+  }
+  // Real catalog MG damage at contact: a heavy must finish an attack before dying.
+  for (const role of ['brute', 'butcher']) {
+    const w = await arena(1, false), e = spawn(w, role, 1.5), gun = action('weapon.army-mg');
+    for (let i = 0; i < 600 && e.health.current > 0; i++) {
+      if (i % Math.ceil(60 / gun.fireRate!) === 0) w.combat!.damage.apply({ attackId: i + 1, actionId: gun.id, sourceId: 1, targetId: e.id, origin: { x: 0, z: 0 }, direction: { x: 1, z: 0 }, base: gun.damage, multiplier: 1, type: 'bullet', knockback: gun.knockback, stagger: gun.stagger });
+      step(w, 1);
+    }
+    const hits = w.events.events().filter(event => event.type === 'combat.hit' && event.sourceId === e.id && event.targetId === 1);
+    if (process.env.S54_PROBE === '1') console.info(JSON.stringify({ scenario: 'catalog-mg-contact', role, ticks: w.tick, playerHitsLanded: hits.length, targetHp: e.health.current }));
+    expect(hits.length, `${role}: reaches contact and attacks before real MG damage kills it`).toBeGreaterThan(0);
+  }
+  // Native 15 m firing matrix: three campaign gun tiers plus the authored
+  // stagger-bearing light-firearm control. Hits use tiny damage to isolate AI.
+  const weapons = [{ id: 'weapon.handgun', every: 20, stagger: 0 }, { id: 'weapon.hunting-rifle', every: 60, stagger: 0 }, { id: 'weapon.assault-rifle', every: 8, stagger: 0 }, { id: 'weapon.army-mg', every: 6, stagger: 0 }, { id: 'weapon.flamethrower', every: 20, stagger: .15 }, { id: 'weapon.rotary-minigun', every: 3, stagger: .1 }];
+  for (const role of ['brute', 'butcher', 'alpha', 'runner']) for (const weapon of weapons) {
+    const w = await arena(1, false), e = spawn(w, role, 15);
+    if (role === 'alpha') e.infected!.alphaType = 'brute';
+    for (let i = 0; i < 600 && e.health.current > 0; i++) {
+      if (i % weapon.every === 0) w.combat!.damage.apply({ attackId: i + 1, actionId: weapon.id, sourceId: 1, targetId: e.id, origin: { x: 0, z: 0 }, direction: { x: 1, z: 0 }, base: .01, multiplier: 1, type: 'bullet', knockback: 0, stagger: weapon.stagger });
+      step(w, 1);
+    }
+    const hits = w.events.events().filter(event => event.type === 'combat.hit' && event.sourceId === e.id && event.targetId === 1);
+    if (process.env.S54_PROBE === '1') console.info(JSON.stringify({ scenario: 'horde-arena-15m', role, weapon: weapon.id, ticks: w.tick, playerHitsLanded: hits.length, targetHp: e.health.current }));
+    expect(hits.length, `${role}/${weapon.id}: attack connects through continuous fire (state=${e.infected!.state}, distance=${Math.hypot(e.transform.x, e.transform.z).toFixed(1)}, tick=${w.tick})`).toBeGreaterThan(0);
+    if (role === 'alpha') expect(hits.some(event => event.type === 'combat.hit' && event.actionId.startsWith('alpha.')), `${weapon.id}: Alpha uses a signature move`).toBe(true);
   }
 });
 

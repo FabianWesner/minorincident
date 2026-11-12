@@ -47,6 +47,8 @@ export interface InfectedState {
   proximityNotice?: { id: number; until: number };
   /** Mega hit bookkeeping is bounded, serializable and shared by every weapon/status. */
   megaStaggerReady?: number;
+  /** Shared poise timer for ordinary hit reactions; prevents automatic weapons from pinning a body in stagger. */
+  staggerReady?: number;
   megaRocketIds?: number[];
   /** L10 finale state travels with the one stalker through phase checkpoints. */
   megaPhase?: 1 | 2 | 3;
