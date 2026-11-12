@@ -70,7 +70,7 @@ export async function checkL8Story(): Promise<void> {
     const plaza = mission.def.anchors['central-plaza'];
     let plazaGroup = '';
     // r31-nadia: the calm now lasts until Nadia has led the group into the plaza (about 77 s), not a fixed 60 s.
-    for (let i = 0; i < 7200 && !mission.state.states.breached; i++) {
+    for (let i = 0; i < 10800 && !mission.state.states.breached; i++) {
       world.applyInput(bot.sample(), 'keyboard'); world.update();
       const nadia = world.entities.get(zoo.state.keeperId)!;
       if (!zoo.state.guideDone && !zoo.state.guideWaiting) leadGap = Math.max(leadGap, Math.hypot(nadia.transform.x - world.entities.get(1)!.transform.x, nadia.transform.z - world.entities.get(1)!.transform.z));
@@ -95,7 +95,7 @@ export async function checkL8Story(): Promise<void> {
     expect(calmHealthy, 'no animal turns or dies before the alarm').toBe(true);
     for (const [id, distance] of nearest) {
       if (world.entities.get(id)?.civilian?.zooAnimal === 'monkey') continue;
-      expect(distance, `tour animal ${id} near the real courier route`).toBeLessThan(18);
+      expect(distance, `tour animal ${id} ${world.entities.get(id)?.civilian?.zooAnimal} at ${JSON.stringify(world.entities.get(id)?.transform)} guide ${zoo.state.guideLeg} near the real courier route`).toBeLessThan(18);
     }
     expect(leadGap, 'Nadia never gets more than 12 m ahead of the courier while leading').toBeLessThan(12);
     expect(zoo.state.guideDone, 'Nadia reached the plaza').toBe(2);
