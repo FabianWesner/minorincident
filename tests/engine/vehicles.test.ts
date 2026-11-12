@@ -14,6 +14,7 @@ import { objectiveText } from '../../src/sim/missions/objectiveText';
 import type { PropSnapshot } from '../../src/sim/interact/PropSystem';
 import { decodeSave } from '../../src/sim/progression/Save';
 import { readFixture } from '../../tools/qa/fixture-io';
+import { l9Course } from '../../src/data/l9';
 
 async function car(id = 'vehicle.sedan') {
   const physics = new Physics(); await physics.init();
@@ -83,8 +84,11 @@ test('enter, drive and exit: door dwell, input ownership (no attacks while drivi
     const p = vehicle.entity.transform;
     world.physics.world!.createCollider(RAPIER.ColliderDesc.cuboid(1.6, 1, .3).setTranslation(p.x, 1, p.z + 1.45));
     world.physics.world!.step();
+    Object.assign(world.entities.get(1)!.survivor!, { scriptedClip: 'crawl', knockdown: { started: 0, until: 120 }, attack: { started: 0, endsAt: 120 } });
     expect(world.vehicles!.exit()).toBe(true);
     const exit = world.getEntity(1)!;
+    expect(exit.survivor!.scriptedClip, 'vehicle exit releases any scripted pose before on-foot movement').toBeUndefined();
+    expect(exit.survivor!.knockdown).toBeUndefined(); expect(exit.survivor!.attack).toBeUndefined(); expect(exit.survivor!.animation).toBe('idle');
     expect(exit.hidden).toBe(false); expect(exit.transform.z).toBeLessThan(p.z);
     expect(world.physics.world!.intersectionWithShape(exit.transform, { x: 0, y: 0, z: 0, w: 1 }, new RAPIER.Capsule(.35, .35), undefined, undefined, world.physics.playerCollider!)).toBeNull();
     world.loadScenario('empty'); expect(world.physics.bodyCount).toBe(2);
@@ -101,7 +105,80 @@ test('enter, drive and exit: door dwell, input ownership (no attacks while drivi
   await l9CompanionsBoardDiagonalApc();
   await l9CheckpointLanes();
   await l9BayAndHatch();
+  await l9HatchCheckpointAndEvacuation();
 }, 400_000);
+
+// PO rail retry/end UAT: active vehicle ownership, hatch pose, and the evacuation's
+// actionable objective must remain coherent through death, F toggles, impact and resume.
+async function l9HatchCheckpointAndEvacuation(): Promise<void> {
+  const world = await loadLevel('L9', 1, preset('L9-default'), 0, { quality: 'low' });
+  try {
+    const l9 = world.missions!.l9!; let s = l9.driving.state, car = world.vehicles!.cars.get(l9.state.carId)!;
+    world.missions!.begin();
+    Object.assign(car.entity.transform, { x: l9Course.railX - 2, z: 0 });
+    car.physics.body.setTranslation(car.entity.transform, true); car.physics.previous.x = car.entity.transform.x;
+    world.update();
+    expect(world.missions!.state.checkpoint, 'rail stall records the mid-crossing retry point').toBe('mid-crossing');
+    expect(l9.driving.hatch, 'stall opens the hatch while the courier remains the driver').toBe(true);
+    expect(world.entities.get(1)!.passengerOf, 'hatch pose retains APC ownership').toBe(car.entity.id);
+
+    world.player!.damage(1000, world.tick, true);
+    for (let i = 0; i < 360 && world.entities.get(1)!.survivor!.diedAt !== null; i++) world.update();
+    for (let i = 0; i < 3; i++) world.update();
+    expect(world.vehicles!.active, 'checkpoint retry restores driver seat').toBe(car.entity.id);
+    car = world.vehicles!.cars.get(l9.state.carId)!; s = l9.driving.state;
+    expect(l9.driving.hatch, 'checkpoint retry restores a visible hatch defense').toBe(true);
+    expect(world.entities.get(1)!.passengerOf, 'restored courier is never on foot in the hatch').toBe(car.entity.id);
+
+    const toggle = (interact: boolean) => world.applyInput({ ...emptyInput(), interact }, 'keyboard');
+    for (const age of [0, 600, 1180]) {
+      s.stallAt = world.tick - age; s.restarted = false; s.hatchOpen = true; s.hatchInteractHeld = false;
+      toggle(true); world.update(); toggle(false); world.update();
+      expect(l9.driving.hatch, `F closes the hatch at stall age ${age}`).toBe(false);
+      expect(world.vehicles!.active, 'closed hatch still owns driving controls').toBe(car.entity.id);
+      expect(world.entities.get(1)!.passengerOf, 'closed hatch keeps passenger/driver relation').toBe(car.entity.id);
+      toggle(true); world.update(); toggle(false); world.update();
+      expect(l9.driving.hatch, `F reopens the hatch at stall age ${age}`).toBe(true);
+    }
+
+    // Simulate a vehicle shove/knockback transform; the hatch controller owns
+    // the courier's position again on the next pose pass.
+    Object.assign(world.entities.get(1)!.transform, { x: car.entity.transform.x + 3, y: car.entity.transform.y + .1, z: car.entity.transform.z + 3 });
+    l9.driving.poseHatch();
+    expect(world.entities.get(1)!.transform.y).toBeCloseTo(car.entity.transform.y + 1.1, 4);
+    expect(world.entities.get(1)!.passengerOf).toBe(car.entity.id);
+
+    expect(s.hatchOpen, 'stall ends with hatch open').toBe(true);
+    s.stallAt = world.tick - 1200; s.restarted = false;
+    world.applyInput(emptyInput(), 'keyboard'); world.update();
+    expect(s.restarted, 'the stall has an authored end').toBe(true);
+    expect(l9.driving.text()).toContain('Engine restarted — drive!');
+    const drive = emptyInput(); drive.drive = { throttle: 1, steer: 0 };
+    world.applyInput(drive, 'keyboard');
+    for (let i = 0; i < 300; i++) world.update();
+    expect(car.physics.speed, 'APC accepts drive input after the stall').toBeGreaterThan(1);
+
+    s.evacuationAt = world.tick; s.evacuationDone = false;
+    expect(l9.driving.text()).toContain('Hatch defense 30 s');
+    world.tick += 60;
+    expect(l9.driving.text()).toContain('Hatch defense 29 s');
+    s.evacuated.push(s.roster.find(id => id !== s.samId)!);
+    expect(l9.driving.text()).toContain('1/');
+    world.tick -= 60;
+    s.evacuationAt -= l9Course.evacuation.defendTicks;
+    expect(l9.driving.text()).toContain('Defense complete');
+    s.evacuationDone = true;
+    expect(l9.driving.text()).toBe('Drive onto the bridge');
+
+    const courier = world.entities.get(1)!;
+    Object.assign(courier.survivor!, { scriptedClip: 'crawl', animation: 'knockdown', attack: { started: 0, endsAt: 120 }, knockdown: { started: 0, until: 120 } });
+    Object.assign(l9.state, { phase: 'crawl', startedAt: world.tick - 750, crawlProgress: 1, endingAt: undefined });
+    l9.update();
+    expect(courier.survivor!.scriptedClip, 'the L9 crawl ending exits into ordinary on-foot pose layers').toBeUndefined();
+    expect(courier.survivor!.knockdown).toBeUndefined(); expect(courier.survivor!.attack).toBeUndefined();
+    expect(courier.survivor!.animation).toBe('idle');
+  } finally { world.dispose(); }
+}
 
 // r33-l9polish: (a) the bridge-gate wall spans +-34 m, so an APC cannot slip round its open end (was 13 m); an APC that stops anywhere
 // in the bay box (here 30 m north of the lane) still starts the evacuation. (b) The rail-stall hatch: infected climb aboard at most

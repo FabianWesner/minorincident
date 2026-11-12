@@ -579,6 +579,25 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     const fixture = readFixture(fixturePath);
     if (fixture.level !== first) throw new Error(`PLAYTEST_FIXTURE is ${fixture.level}, session starts ${first}`);
     log({ fixture: fixture.label, state: await loadFixtureInPage(page, fixture) });
+    // Deterministic mortal retry coverage for the PO's rail-hatch soft lock. The
+    // APC is still driven only by real keyboard input; the controlled lethal
+    // hit fires on the first actual rail stall and the same driver continues.
+    if (process.env.PLAYTEST_L9_STALL_DEATH === '1' && first === 'L9') await page.evaluate(() => {
+      const game = (window.__SCENE__ as unknown as { game: Game }).game, w = game.world, log: unknown[] = [];
+      (window as unknown as { __qaL9StallDeath: unknown[] }).__qaL9StallDeath = log;
+      window.__SS__!.cheats.god(false);
+      let killed = false, checkpoint = w.missions?.state.checkpoint;
+      w.events.on('sim.tick', () => {
+        const next = w.missions?.state.checkpoint;
+        if (next !== checkpoint) { checkpoint = next; log.push({ type: 'checkpoint', tick: w.tick, checkpoint }); }
+        const l9 = w.missions?.l9;
+        if (!killed && l9 && l9.driving.state.stallAt !== null && !l9.driving.state.restarted && (w.entities.get(1)?.health.current ?? 0) > 0) {
+          killed = true; log.push({ type: 'rail-stall-death', tick: w.tick, checkpoint, player: { ...w.entities.get(1)!.transform } });
+          w.player!.damage(1000, w.tick, true);
+        }
+      });
+      w.events.on('player.respawned', () => log.push({ type: 'respawn', tick: w.tick, checkpoint: w.missions?.state.checkpoint, player: { ...w.entities.get(1)!.transform }, activeVehicle: w.vehicles?.active }));
+    });
     if (process.env.PLAYTEST_RAM_AUDIT === '1') {
       await page.exposeFunction('ramContactReceipt', (receipt: unknown) => log({ ramContact: receipt }));
       await page.evaluate(() => {
@@ -1193,6 +1212,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
           await hold(100);continue;
         }
         if(process.env.PLAYTEST_HANDOVER_AUDIT==='1')await page.waitForFunction('window.__playtestHandoverAudit?.some(s => !s.breached && !s.text.trim() && !s.pin && !s.marker)',null,{timeout:2500}).catch(()=>undefined);
+        if (lastLevel === 'L9' && e.level === 'L10') { await page.evaluate(async () => { const a = window.__SS__!; a.camera.follow(); a.camera.zoom(1.5); await a.screenshotReady(); }); await capture('L9-L10-actual-handover-high-z1.5'); }
         log({ handover: lastLevel, to: e.level, firstPlayableTick:e.tick,objective:e.objective }); break;
       }
       lastLevel = e.level; levelIndex = o.levels.indexOf(e.level);
@@ -1931,6 +1951,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     writeFileSync(join(o.out, `${o.tag}-escort-events.json`), JSON.stringify(await page.evaluate(() => (window as unknown as { __playtestEscortEvents?: unknown[] }).__playtestEscortEvents ?? []), null, 2));
   }
   writeFileSync(join(o.out, `issues-${o.tag}.json`), JSON.stringify(issues, null, 2));
+  if (process.env.PLAYTEST_L9_STALL_DEATH === '1') writeFileSync(join(o.out, `${o.tag}-l9-stall-death.json`), JSON.stringify(await page.evaluate('window.__qaL9StallDeath ?? []'), null, 2));
   if (process.env.PLAYTEST_SOFTLOCK_AUDIT === '1') writeFileSync(join(o.out, `${o.tag}-softlocks.json`), JSON.stringify(await page.evaluate('window.__softlockAudit ?? []')));
   if (process.env.PLAYTEST_METRO_AUDIT === '1') writeFileSync(join(o.out, `metro-ticks-${o.tag}.json`), JSON.stringify(await page.evaluate('window.__metroTicks ?? []')));
   let handoverReady=true;

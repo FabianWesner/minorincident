@@ -26,5 +26,12 @@ export function commitCrossingHandover(save: CampaignSave, world: SimWorld): voi
   if (world.combat) { world.combat.projectiles.length = 0; world.combat.setLoadout(save.racks.LEFT, save.racks.RIGHT); }
   for (const e of [...world.entities.iterate()]) if (e.pickup && 'actionId' in e.pickup) { world.entities.remove(e.id); world.spatial.delete(e.id); }
   if (world.progression) { world.progression.pickups = []; world.progression.campaign = structuredClone(save); }
+  // The L9 crawl clip is render-only state. Clear it with the other transient
+  // player pose layers before L10 starts on foot.
+  if (world.player) world.player.resetPose(world.tick);
+  else if (player.survivor) {
+    delete player.survivor.scriptedClip; delete player.survivor.knockdown; delete player.survivor.attack;
+    player.survivor.animation = 'idle'; player.survivor.animationTick = world.tick;
+  }
   player.health.current = player.health.max;
 }

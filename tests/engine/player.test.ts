@@ -13,7 +13,14 @@ const step = (w: SimWorld, ticks: number) => { for (let i = 0; i < ticks; i++) w
 afterEach(() => { for (const w of worlds) w.dispose(); worlds.length = 0; });
 
 test('movement: fast acceleration and stop, capped diagonal speed, 720°/s turning, one-tick aim snap, campaign ramps and stairs', async () => {
-  const w = await setup(); w.setInput({ move: { x: 1, z: 0 } }); step(w, 9);
+  const w = await setup(), restoredPlayer = w.entities.get(1)!;
+  Object.assign(restoredPlayer.survivor!, { scriptedClip: 'crawl', knockdown: { started: 0, until: 120 }, attack: { started: 0, endsAt: 120 } });
+  w.player!.restoreVitals(w.tick);
+  expect(restoredPlayer.survivor!.scriptedClip).toBeUndefined();
+  expect(restoredPlayer.survivor!.knockdown).toBeUndefined();
+  expect(restoredPlayer.survivor!.attack).toBeUndefined();
+  expect(restoredPlayer.survivor!.animation).toBe('idle');
+  w.setInput({ move: { x: 1, z: 0 } }); step(w, 9);
   expect(w.player!.locomotion.displacement.x * 60).toBeGreaterThanOrEqual(4.5 * 0.95);
   w.setInput({ move: { x: 0, z: 0 } }); step(w, 6);
   expect(Math.hypot(w.player!.locomotion.displacement.x, w.player!.locomotion.displacement.z)).toBeLessThan(1e-6);
