@@ -62,6 +62,7 @@ try {
       if (l9.state.phase === 'driving' && l9.driving.holding(car.entity.id) && !l9.driving.state.hatchOpen) frame.interact = true;
       world.applyInput(frame, 'keyboard');
     }
+    if (process.env.L9_DRIVER_TRACE && world.tick % 60 === 0) console.log(JSON.stringify({ driverTrace:true, tick:world.tick, index, target:[tx,tz], at:[p.x,p.z], yaw:p.yaw, want, steer, speed:car.physics.speed, contacts:car.physics.wheels.map(w => w.contact), recoveringUntil:car.entity.vehicle!.recoveringUntil }));
     const before = { x:p.x, z:p.z, driving:l9.state.phase === 'driving', held:l9.driving.holding(car.entity.id) };
     world.update();
     const displacement = Math.hypot(p.x-before.x,p.z-before.z);
