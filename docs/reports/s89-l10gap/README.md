@@ -237,3 +237,20 @@ A shared-bot trial preferred the existing flamethrower at its normal range throu
 ## Handoff state
 
 The full objective is **not achieved**. Production gameplay remains at the s86 merge. The native gate intentionally fails all six baseline cases; a portable rejected experiment demonstrates five passing cases but stalls seed-1 HIGH in the Mega objective. Reproduction and measurements are preserved in rejected-candidate.json and validation.json. The remaining failure is not a missing permission or external service blocker, and no blocked/complete goal status is claimed. No browser, deployment, push or main-branch movement was performed.
+
+## Final regional-ramp trial and time-box handoff
+
+HIGH journey headroom 60 through research then 70 in corridor/complex; LOW retains 70. All six completed and exceeded baseline rates, but seed-3 HIGH failed cadence. Exact patch and matrix are preserved as `regionalVariant` in rejected-candidate.json; source receipt `/private/tmp/s89-regional-matrix.json`.
+
+| Seed | Tier | Starts/min | Gap s | Deaths | Peak |
+| --- | --- | --- | --- | --- | --- |
+| 1 | low | 13.395 | 42.12 | 0 | 69 |
+| 1 | high | 12.715 | 44.70 | 0 | 62 |
+| 2 | low | 15.190 | 43.28 | 2 | 69 |
+| 2 | high | 14.429 | 34.53 | 0 | 69 |
+| 3 | low | 16.876 | 42.23 | 1 | 70 |
+| 3 | high | 16.050 | 212.42 | 3 | 62 |
+
+The approximately 2.5-hour job time box is reached. **No production gameplay fix is retained and the full goal is not achieved.** The uniform-70 and regional-ramp candidates each pass five cases, but fail different HIGH cases; neither is accepted. Do not combine their passing rows as proof. All temporary gameplay and bot changes are reverted. Retained deliverables are the native acceptance gate, exact baseline, regression receipts, rejected-candidate reproduction artifacts and this report.
+
+Continuation requires a genuinely successful production solution plus the unchanged six-case native gate and fresh regression checks. Existing regression results apply to unchanged gameplay/tooling, not to a hypothetical future fix. Browser QA remains manual; no visual or renderer-performance pass is claimed. No goal-complete, goal-blocked or goal-paused status has been asserted.
