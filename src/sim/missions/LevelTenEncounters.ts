@@ -42,7 +42,7 @@ export class LevelTenEncounters {
     const at = { x: player.transform.x + 40, z: player.transform.z };
     const room = () => ai.pool.length > 0 && ai.director.count < ai.director.cap - ai.director.reserved - ai.director.pendingTurns - 1;
     if (!room() || !chunks.resident(at.x, at.z)) return;
-    for (const offset of [-7, -5, -3, -1, 1, 3, 5, 7]) {
+    for (const offset of ai.director.tier === 'low' ? [-7, -5, -3, -1, 1, 3, 5, 7] : [-11, -9, -7, -5, -3, -1, 1, 3, 5, 7, 9, 11]) {
       if (!room()) break;
       const point = cureEncounterSpot(ai.nav, { x: at.x, z: at.z + offset, archetype: 'infected.sprinter' },
         (x, z) => !insideCureHangar({ x, z }) && chunks.resident(x, z) && ai.director.safe('infected.sprinter', { x, z }), 33);
