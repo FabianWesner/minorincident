@@ -107,12 +107,13 @@ test('enter, drive and exit: door dwell, input ownership (no attacks while drivi
   await l9CheckpointLanes();
   await l9BayAndHatch();
   await l9HatchCheckpointAndEvacuation();
+  await l9InterruptedBoarding();
 }, 400_000);
 
 // A pushed evacuee can leave the truck during the boarding animation.
 // The arrival dwell must be abandoned so native navigation can retry instead
 // of leaving the objective at 3/4 forever.
-test('L9 interrupted boarding retries the final survivor at HIGH and LOW tiers', async () => {
+async function l9InterruptedBoarding(): Promise<void> {
   for (const [seed, quality] of [[1, 'low'], [42, 'high']] as const) {
     const world = await loadLevel('L9', seed, preset('L9-default'), 0, { quality });
     try {
@@ -151,7 +152,7 @@ test('L9 interrupted boarding retries the final survivor at HIGH and LOW tiers',
       expect(world.tick - (s.evacuationAt! + l9Course.evacuation.defendTicks)).toBeLessThanOrEqual(1200);
     } finally { world.dispose(); }
   }
-}, 180_000);
+}
 
 // PO rail retry/end UAT: active vehicle ownership, hatch pose, and the evacuation's
 // actionable objective must remain coherent through death, F toggles, impact and resume.

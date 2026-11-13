@@ -10,12 +10,12 @@ When an evacuee with an active boarding timestamp is no longer within 1.2 m of t
 
 ## Native regression
 
-`tests/engine/vehicles.test.ts` adds a deterministic final-bay regression for seed 1 / LOW and seed 42 / HIGH. It stages three survivors already at the trucks and the fourth survivor displaced 1.5 m during the boarding dwell, after defense completion. The HIGH run also kills the courier at the evacuation checkpoint and verifies the checkpoint restore before staging the displaced evacuee. Both runs require the fourth survivor to board within 1,200 simulation ticks (20 seconds).
+`tests/engine/vehicles.test.ts` extends the existing vehicle test with a deterministic final-bay regression for seed 1 / LOW and seed 42 / HIGH. It stages three survivors already at the trucks and the fourth survivor displaced 1.5 m during the boarding dwell, after defense completion. The HIGH run also kills the courier at the evacuation checkpoint and verifies the checkpoint restore before staging the displaced evacuee. Both runs require the fourth survivor to board within 1,200 simulation ticks (20 seconds).
 
 Focused command:
 
 ```sh
-npx vitest run tests/engine/vehicles.test.ts --maxWorkers=1 --configLoader runner -t 'L9 interrupted boarding'
+npx vitest run tests/engine/vehicles.test.ts --maxWorkers=1 --configLoader runner -t 'enter, drive and exit'
 ```
 
 Result: **passed** (2 seed/tier cases; one includes a player death and evacuation checkpoint restore). The regression was also checked against the old behavior: removing the stale-timestamp reset fails at seed 1 / LOW with the survivor still at 3/4 after 1,200 ticks.
@@ -26,7 +26,7 @@ Result: **passed** (2 seed/tier cases; one includes a player death and evacuatio
 - `npm run typecheck`: **PASS**.
 - `npm run lint`: **PASS**.
 - `node --import tsx/esm tools/qa/threat-audit.ts --levels L9`: both L9 skilled and passive routes completed with zero passive flags. The command exits 1 for `PARTIAL_LEVEL_SELECTION` because this is the requested L9-only diagnostic, so it is not a clean global gate.
-- `sh tools/remote/run.sh "$PWD" -- npm test`: **NOT RUN**. Retried unchanged; both attempts exited 69 because no healthy Hetzner runner is provisioned and this aggregate command is not eligible for the Mac fallback. `sh tools/remote/status.sh` also could not resolve the Hetzner API hostname. The 150-case remote unit suite remains unverified.
+- `sh tools/remote/run.sh "$PWD" -- npm test`: **PASS** on unchanged retry, runner `46.225.66.90`: 27 files, 106 passed, one existing skip, 150/150 inventory cases, 226.3 s / 240 s. The preceding run on `94.130.181.173` timed out at 245.1 s; no tests were trimmed. The regression is folded into the existing vehicle case to preserve the inventory limit.
 
 ## Browser QA needed
 
