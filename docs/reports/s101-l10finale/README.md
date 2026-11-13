@@ -61,3 +61,7 @@ Comparing the retained native s93 traces against the exact baseline windows show
 ## Retained QA tooling validation
 
 After all gameplay experiments were reverted, `npm run typecheck` and `npm run lint` both passed. The required unchanged `sh tools/remote/run.sh "$PWD" -- npm test` passed on runner `46.225.66.90`, job `s101-l10finale-26d9bd-27513-1794591698`: manifest 150/150 cases (129 Vitest, 9 e2e, 12 invariants-browser), default project 27 files passed, 106 tests passed and one skipped. Vitest took 224.09 s; the budgeted command took 226.7 s against the unchanged 240 s budget. No suite trimming or retry was needed. These validate the retained observer/report work and unchanged runtime; they are not final verification of a gameplay fix, which is still absent. No check remains running.
+
+## Existing-hunter cadence comparison
+
+The uncommitted existing-hunter candidate was evaluated with one assignment per 6, 8, 12, and 15 seconds against HIGH seed 2 and LOW seed 1. [hunter-cadence-trials.json](hunter-cadence-trials.json) retains the eight exact receipts. All eight routes completed with baseline deaths (HIGH seed 2: three; LOW seed 1: zero), but all failed the 20 s gap. HIGH gaps were 42.45, 47.33, 47.17 and 47.33 s; LOW gaps were 46.07, 43.48, 43.48 and 43.48 s. The original 10 s working candidate was restored after the sequential comparison. Assignment cadence alone is insufficient; no gameplay change is accepted by this report.
