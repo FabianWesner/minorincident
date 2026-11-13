@@ -223,3 +223,9 @@ Final HIGH z1 L6 attempt:480 s,14 deaths,one assist,ended gate-150; no first-hat
 7. Full road-crop sweep, journey arrivals every≤45 s, visually reviewed pop-in/sprinter spawning, and real-input frame timing with60–70 active infected at HIGH and LOW. Current farms peak24/12 diagnostics do not qualify that load.
 
 The authorized~2.5 h execution window is exhausted. Further runs require an extended execution window; the original scope remains intact and the goal is not marked complete. Temporary QA observer copies were removed. Raw artifacts remain local under test-results/s94-b91high; only README,JSON evidence and the one small sheet were committed.
+
+## Extended execution — rifle-route attempts
+
+Continuation after the timebox closeout was treated as authorization to continue QA. Three HIGH z1 WebGPU120 s normal-input approach probes attempted the farmhouse rifle: backtrack from the real farms save, fresh L10 preset, and fresh preset with explicit visible Begin-button handling. No rifle ever appeared in the rack; no player Mega gun hit was recorded. Best backtrack distance89.54 m. These are **controller approach failures, not confirmed pickup defects**. Opened backtrack end-frame shows courier30 HP surrounded by infected beside crop rows. Source-map rifle location was used as a disclosed route assist; no item grants, teleport, god mode or stat changes occurred.
+
+The rifle/gun-damage requirement remains open. Repeating direct-line movement is not sufficient; the next route attempt needs visual waypoint navigation around the starting/farm geometry. Raw `high-z1-mega-rifle/`, `high-z1-rifle-fresh/`, `high-z1-rifle-begin/` under test-results/s94-b91high. Compact actual-quality and input outcomes are in evidence.json. No process remains running. The original goal remains incomplete; this extension does not alter the HOLD verdict.
