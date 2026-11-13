@@ -25,7 +25,8 @@ The merged native regression seats all 14 passengers, leaves Hale alive, enters 
 - `npm run typecheck`: passed.
 - `npm run lint`: passed.
 - `node --import tsx/esm tools/qa/threat-audit.ts --levels L8`: zero new L8 gameplay flags. The skilled route retains the same `step/escape:UNREACHABLE_SHARE_OVER_30_PERCENT_FOR_OVER_20_SECONDS` flag documented by the s79 baseline; passive has zero flags. The command exits 1 for the diagnostic partial-level selection and baseline skilled flag.
-- `sh tools/remote/run.sh "$PWD" -- npm test`: unable to start. No healthy/provisioned Hetzner runner is available; DNS/network access to the pool is blocked in this environment. No fallback or reduced test suite was substituted.
+- `sh tools/remote/run.sh "$PWD" -- npm test`: passed on runner `46.225.66.90`, exit 0, 27 files, 106 passed / one skipped; 150/150 case collection guard; 208.8 s against the unchanged 240 s budget. This supersedes the initial network-blocked attempt.
+- Remaining native coverage: load the actual elephant-yard checkpoint and exercise its handoff; the current regression constructs the completed-arena boarding state in a fresh world.
 
 ## Browser QA needed
 
