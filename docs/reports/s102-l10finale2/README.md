@@ -100,3 +100,31 @@ Current candidate `npm run typecheck` and `npm run lint` both passed after the t
 ## Remote unit suite on WIP checkpoint d121a6fe
 
 `sh tools/remote/run.sh "$PWD" -- npm test` passed unchanged on runner 46.225.66.90, job `s102-l10finale2-b1bfd2-18448-1794602852`. Manifest: 150/150 cases (129 Vitest, 9 e2e, 12 invariants-browser). Default suite: 27 files passed, 106 tests passed, one skipped; Vitest 225.58 s, budgeted command 228.2 s / 240 s. Exit 0; no retries or trimming. This validates the current shared residency candidate's covered contracts, not the still-failing finale gap requirement. No check remains running.
+
+## Routed leaper trial
+
+One leaper replacing one regular actor with a scripted stair approach yields LOW s1 22.63 s, zero deaths, complete. The result is identical to the thrower composition trial. Inspection finds gunfire cancels scripted approaches and replaces them with shot-position investigation. Current unmeasured revision preserves the installed-finale routed approach when the courier is the noise source. No attack-resource success or acceptance is claimed.
+
+## Preserved routed leaper matrix
+
+Preserving the scripted approach from courier gunfire passes LOW s1 at 17.52 s, zero deaths. Full matrix passes HIGH s1/s3 and LOW s1/s3; HIGH s2 remains 20.58 s and LOW s2 regresses to 33.17 s. All six complete; deaths 2/3/2 and 0/0/2. Exact receipts: preserved-route-six.json. Current unmeasured revision prioritizes the Alpha slot in admission order so its approach starts before regular actors consume protected capacity. This is not accepted.
+
+## Alpha admission order and three-credit rejection
+
+Alpha-first admission fails HIGH s2 at 45.93 s (three deaths) and LOW s2 at 33.18 s (zero deaths); order restored. Retaining the original regular count plus one leaper with three credits gives 33.13/36.68 s and deaths 3/0. All routes complete. Four credits are restored. Current unmeasured composition keeps all original regulars plus the routed leaper; prior matrix replaced one regular. Exact receipts: alpha-order-credit-trials.json.
+
+## Full-roster routed leaper and fixed waves
+
+Full original regular roster plus one leaper with four credits yields HIGH s2 20.58 s (three deaths), LOW s2 36.68 s (zero deaths). Fixed 20 s waves improve LOW s2 to 23.30 s; HIGH s2 stays unchanged. All complete. Current unmeasured revision holds one separate Alpha admission credit until the first authored Alpha enters. Exact receipts: full-roster-leaper-trials.json.
+
+## Separate Alpha credit
+
+Holding one extra reservation until Alpha admission passes HIGH s2: 17.05 s, four deaths (baseline three), route complete. LOW s2 stays 23.30 s with zero deaths. Periods 22/18 s regress LOW s2 to 34.40/34.02 s; restored 20 s. Exact receipts: alpha-credit-period-trials.json. Current candidate still needs LOW s2 and the full six-case matrix; total death budget unproven.
+
+## Full separate-credit candidate rejection
+
+The full six-case matrix rejects the routed extra leaper / separate Alpha credit / 20 s wave combination. HIGH gaps: 26.82/17.05 s, seed 3 timeout with 23 deaths. LOW gaps: 49.90/23.30 s, seed 3 timeout with one death. HIGH deaths 4/4/23, LOW 0/0/1. Exact receipts: alpha-credit-six.json. All gameplay edits since checkpoint d121a6fe were reverted to that earlier four-credit candidate, which has four known passing cases and HIGH s2/LOW s1 still failing. The single-case successes are not an accepted solution.
+
+## Journey cadence receipt on restored checkpoint
+
+`S89_OUT=/private/tmp/s102-current-cadence.json node --import tsx/esm tools/qa/s89-l10gap.ts` exits 0, passed=true, flags=[]. All six native routes complete, zero cap violations, and every adjusted adjacent-start gap is <=45 s. Exact receipt: current-cadence.json. This covers the requested journey gate; it does not replace the failing finale head/tail requirement.
