@@ -10158,5 +10158,255 @@
     },
     "probeError": "Temporary observer did not guard null missions during teardown; not a gameplay P1.",
     "sourceRemoved": true
+  },
+  "controlledDirectKeys": {
+    "high": {
+      "slots": [
+        "weapon-rack-weapon.fists",
+        "weapon-rack-weapon.bat",
+        "weapon-rack-weapon.fire-axe",
+        "weapon-rack-weapon.machete",
+        "weapon-rack-weapon.handgun",
+        "weapon-rack-weapon.army-mg",
+        "weapon-rack-weapon.shotgun",
+        "weapon-rack-weapon.hunting-rifle",
+        "weapon-rack-weapon.assault-rifle",
+        "weapon-rack-weapon.flamethrower",
+        "weapon-rack-weapon.rocket-launcher",
+        "weapon-rack-weapon.nail-gun",
+        "weapon-rack-weapon.molotov",
+        "weapon-rack-weapon.pipe-bomb",
+        "weapon-rack-weapon.flashbang"
+      ],
+      "receipt": [
+        {
+          "input": "1",
+          "expected": "weapon-rack-weapon.fists",
+          "selected": "weapon-rack-weapon.fists",
+          "playerHP": 100,
+          "tick": 151
+        },
+        {
+          "input": "2",
+          "expected": "weapon-rack-weapon.bat",
+          "selected": "weapon-rack-weapon.bat",
+          "playerHP": 100,
+          "tick": 175
+        },
+        {
+          "input": "3",
+          "expected": "weapon-rack-weapon.fire-axe",
+          "selected": "weapon-rack-weapon.fire-axe",
+          "playerHP": 100,
+          "tick": 200
+        },
+        {
+          "input": "4",
+          "expected": "weapon-rack-weapon.handgun",
+          "selected": "weapon-rack-weapon.handgun",
+          "playerHP": 100,
+          "tick": 224
+        },
+        {
+          "input": "5",
+          "expected": "weapon-rack-weapon.army-mg",
+          "selected": "weapon-rack-weapon.army-mg",
+          "playerHP": 100,
+          "tick": 248
+        },
+        {
+          "input": "6",
+          "expected": "weapon-rack-weapon.shotgun",
+          "selected": "weapon-rack-weapon.shotgun",
+          "playerHP": 100,
+          "tick": 273
+        },
+        {
+          "input": "7",
+          "expected": "weapon-rack-weapon.rocket-launcher",
+          "selected": "weapon-rack-weapon.rocket-launcher",
+          "playerHP": 100,
+          "tick": 297
+        },
+        {
+          "input": "8",
+          "expected": "weapon-rack-weapon.molotov",
+          "selected": "weapon-rack-weapon.molotov",
+          "playerHP": 100,
+          "tick": 322
+        },
+        {
+          "input": "9",
+          "expected": "weapon-rack-weapon.pipe-bomb",
+          "selected": "weapon-rack-weapon.pipe-bomb",
+          "playerHP": 100,
+          "tick": 346
+        },
+        {
+          "input": "0",
+          "expected": "weapon-rack-weapon.pipe-bomb",
+          "selected": "weapon-rack-weapon.pipe-bomb",
+          "reason": "crowbar absent from authored arsenal",
+          "playerHP": 100
+        }
+      ],
+      "render": {
+        "backend": "webgpu",
+        "quality": "high",
+        "camera": {
+          "zoom": 1,
+          "targetZoom": 1,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 19,
+          "regionScale": 1,
+          "focus": [
+            4004.59326171875,
+            0,
+            -38.91062927246094
+          ],
+          "target": [
+            4004.59326171875,
+            0,
+            -38.91062927246094
+          ],
+          "position": [
+            4015.462428372286,
+            11.16791979355699,
+            -28.041462618924932
+          ],
+          "spot": null
+        }
+      }
+    },
+    "low": {
+      "slots": [
+        "weapon-rack-weapon.fists",
+        "weapon-rack-weapon.bat",
+        "weapon-rack-weapon.fire-axe",
+        "weapon-rack-weapon.machete",
+        "weapon-rack-weapon.handgun",
+        "weapon-rack-weapon.army-mg",
+        "weapon-rack-weapon.shotgun",
+        "weapon-rack-weapon.hunting-rifle",
+        "weapon-rack-weapon.assault-rifle",
+        "weapon-rack-weapon.flamethrower",
+        "weapon-rack-weapon.rocket-launcher",
+        "weapon-rack-weapon.nail-gun",
+        "weapon-rack-weapon.molotov",
+        "weapon-rack-weapon.pipe-bomb",
+        "weapon-rack-weapon.flashbang"
+      ],
+      "receipt": [
+        {
+          "input": "1",
+          "expected": "weapon-rack-weapon.fists",
+          "selected": "weapon-rack-weapon.fists",
+          "playerHP": 100,
+          "tick": 145
+        },
+        {
+          "input": "2",
+          "expected": "weapon-rack-weapon.bat",
+          "selected": "weapon-rack-weapon.bat",
+          "playerHP": 100,
+          "tick": 169
+        },
+        {
+          "input": "3",
+          "expected": "weapon-rack-weapon.fire-axe",
+          "selected": "weapon-rack-weapon.fire-axe",
+          "playerHP": 100,
+          "tick": 194
+        },
+        {
+          "input": "4",
+          "expected": "weapon-rack-weapon.handgun",
+          "selected": "weapon-rack-weapon.handgun",
+          "playerHP": 100,
+          "tick": 218
+        },
+        {
+          "input": "5",
+          "expected": "weapon-rack-weapon.army-mg",
+          "selected": "weapon-rack-weapon.army-mg",
+          "playerHP": 100,
+          "tick": 242
+        },
+        {
+          "input": "6",
+          "expected": "weapon-rack-weapon.shotgun",
+          "selected": "weapon-rack-weapon.shotgun",
+          "playerHP": 100,
+          "tick": 267
+        },
+        {
+          "input": "7",
+          "expected": "weapon-rack-weapon.rocket-launcher",
+          "selected": "weapon-rack-weapon.rocket-launcher",
+          "playerHP": 100,
+          "tick": 291
+        },
+        {
+          "input": "8",
+          "expected": "weapon-rack-weapon.molotov",
+          "selected": "weapon-rack-weapon.molotov",
+          "playerHP": 100,
+          "tick": 315
+        },
+        {
+          "input": "9",
+          "expected": "weapon-rack-weapon.pipe-bomb",
+          "selected": "weapon-rack-weapon.pipe-bomb",
+          "playerHP": 100,
+          "tick": 340
+        },
+        {
+          "input": "0",
+          "expected": "weapon-rack-weapon.pipe-bomb",
+          "selected": "weapon-rack-weapon.pipe-bomb",
+          "reason": "crowbar absent from authored arsenal",
+          "playerHP": 100
+        }
+      ],
+      "render": {
+        "backend": "webgpu",
+        "quality": "low",
+        "camera": {
+          "zoom": 1,
+          "targetZoom": 1,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 19,
+          "regionScale": 1,
+          "focus": [
+            4004.59326171875,
+            0,
+            -38.91062927246094
+          ],
+          "target": [
+            4004.59326171875,
+            0,
+            -38.91062927246094
+          ],
+          "position": [
+            4015.462428372286,
+            11.16791979355699,
+            -28.041462618924932
+          ],
+          "spot": null
+        }
+      }
+    }
   }
 }
