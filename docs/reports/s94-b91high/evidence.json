@@ -9128,5 +9128,116 @@
       ],
       "limits": "Includes deaths and respawns; first-observed IDs do not prove spawn pop-in, distance or arrival cadence."
     }
+  },
+  "remoteValidationRetry": {
+    "runner": "46.225.66.90",
+    "command": "sh tools/remote/run.sh \"$PWD\" -- npm test",
+    "exit": 0,
+    "passed": 106,
+    "skipped": 1,
+    "filesPassed": 27,
+    "seconds": 222.5
+  },
+  "haleAliveAttempts": {
+    "high-z1-l8-hale": {
+      "last": {
+        "level": "L8",
+        "tick": 5491,
+        "phase": "playing",
+        "states": {
+          "breached": true,
+          "player-boarded": false,
+          "aboard": false,
+          "apc-destroyed": false,
+          "hale-fallen": false,
+          "hale-keys": false,
+          "elephant-fallen": true,
+          "elephant-turning": true,
+          "reyes-fallback": true,
+          "departed": false,
+          "arena-flamingo": false,
+          "arena-flamingo-cleared": false,
+          "arena-zebra": false,
+          "arena-zebra-cleared": false,
+          "arena-monkey": false,
+          "arena-monkey-cleared": false,
+          "arena-lion": false,
+          "arena-lion-cleared": false,
+          "arena-gorilla": false,
+          "arena-gorilla-cleared": false,
+          "arena-elephant": false,
+          "arena-elephant-cleared": false
+        },
+        "hale": {
+          "id": 422,
+          "hp": 100
+        },
+        "playerHP": 100,
+        "playerScreen": {
+          "x": 541.9753647948661,
+          "y": 412.88606785294814
+        },
+        "elephant": null,
+        "door": {
+          "d": 4.539255208631373,
+          "screen": {
+            "x": 452.44048897865804,
+            "y": 426.9028637819106
+          }
+        }
+      },
+      "minimumHaleHP": 100,
+      "limit": "Custom input controller did not reach driver marker; no soft-lock or handoff claim."
+    },
+    "high-z1-l8-hale-click": {
+      "last": {
+        "level": "L8",
+        "tick": 5478,
+        "phase": "playing",
+        "states": {
+          "breached": true,
+          "player-boarded": false,
+          "aboard": false,
+          "apc-destroyed": false,
+          "hale-fallen": false,
+          "hale-keys": false,
+          "elephant-fallen": true,
+          "elephant-turning": true,
+          "reyes-fallback": true,
+          "departed": false,
+          "arena-flamingo": false,
+          "arena-flamingo-cleared": false,
+          "arena-zebra": false,
+          "arena-zebra-cleared": false,
+          "arena-monkey": false,
+          "arena-monkey-cleared": false,
+          "arena-lion": false,
+          "arena-lion-cleared": false,
+          "arena-gorilla": false,
+          "arena-gorilla-cleared": false,
+          "arena-elephant": false,
+          "arena-elephant-cleared": false
+        },
+        "hale": {
+          "id": 422,
+          "hp": 100
+        },
+        "playerHP": 100,
+        "playerScreen": {
+          "x": 702.5613566815122,
+          "y": 321.247269530704
+        },
+        "elephant": null,
+        "door": {
+          "d": 15.721761257509481,
+          "screen": {
+            "x": 452.44048897865804,
+            "y": 426.9028637819106
+          }
+        }
+      },
+      "minimumHaleHP": 100,
+      "limit": "Custom input controller did not reach driver marker; no soft-lock or handoff claim."
+    }
   }
 }

@@ -160,3 +160,9 @@ Three-minute real-input targeted-contact routes from the verified farms save, on
 | LOW z1 | 12 | 16.690 ms | 59.916 | 16.800 ms | 33.4 ms | 0 |
 
 These are **not** the requested 60–70-infected performance pass, nor an equal-load quality comparison. No enemies were injected or stats tuned. First-observed entity IDs and projected visibility were logged, but deaths/respawns and visibility entry prevent those alone from proving spawn pop-in or ≤45 s arrivals. The full journey cadence, sprinter spawn presentation and requested load remain open. Raw `test-results/s94-b91high/high-z1-farms-perf/receipt.json` and `low-z1-farms-perf/receipt.json`; compact summaries are in evidence.json. No process remains running.
+
+## Validation rerun and Hale-alive qualification
+
+Unchanged prescribed remote suite passed on46.225.66.90:27 files,106 passed,1 skipped;222.5 s inside240 s. Earlier test-budget process-cleanup failure did not recur. No tests changed or trimmed.
+
+Two HIGH L8 targeted attempts establish Hale#422 alive at100 HP after elephant defeat and while HUD reaches14/14 aboard. Opened first attempt handoff.jpg shows14/14, driver marker5 m away, courier on far side of APC. The straight WASD approach stopped4.54 m away; click approach ended15.72 m away. Both retained hale-fallen=false, hale-keys=false, player-boarded=false. These custom controllers did **not** reach the valid driver marker, so they do not prove a Hale-alive handoff or a soft lock. The successful ordinary-driver handoffs above still lack Hale health at the exact transition. Raw `high-z1-l8-hale/` and `high-z1-l8-hale-click/`. No browser or remote check remains running.
