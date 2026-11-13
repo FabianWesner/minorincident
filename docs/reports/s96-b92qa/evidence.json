@@ -17,8 +17,8 @@
     "l10CheckpointRetryMegaPositionLow": "full-scope-open",
     "l6FullCompletionFirstHatchClosedHigh": "passed-with-five-deaths-one-assist",
     "l6GroupAttack30SecondWindowsHigh": "all-ten-full-postclosure-windows-positive-in-separate-noncompleting-run-deaths-disclosed",
-    "l6FullCompletionFirstHatchClosedLow": "exit-reached-but-not-complete-at480seconds",
-    "l6GroupAttack30SecondWindowsLow": "aggregate-attacks-proved-timestamp-observer-invalid-discarded"
+    "l6FullCompletionFirstHatchClosedLow": "open-exit-reached-not-completed-no-final-first-hatch-closure",
+    "l6GroupAttack30SecondWindowsLow": "open-final-observer-valid-but-first-hatch-not-closed"
   },
   "checks": {
     "build": "passed",
@@ -1811,5 +1811,176 @@
         "action": "weapon.hunting-rifle"
       }
     ]
+  },
+  "highFinalRoadline": {
+    "runs": [
+      {
+        "level": "L10",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 240,
+        "simSeconds": 238,
+        "maxNoProgressSeconds": 69.463,
+        "deaths": 14,
+        "assists": 0,
+        "attacks": {
+          "weapon.hunting-rifle": 96
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.fire-axe",
+          "weapon.hunting-rifle",
+          "weapon.machete",
+          "weapon.molotov"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.fire-axe",
+          "weapon.hunting-rifle",
+          "weapon.machete",
+          "weapon.molotov"
+        ],
+        "steps": [
+          {
+            "id": "farmstead",
+            "text": "Find a way through the farms \u00b7 163\u00a0m",
+            "tick": 0,
+            "marker": {
+              "anchor": "cure-military",
+              "ring": {
+                "x": 1397,
+                "y": 0.7049999833106995,
+                "z": 16
+              },
+              "drawn": [
+                1397,
+                0,
+                16
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "peakLive": 59,
+    "maxX": 1270.9912109375,
+    "limit": "Physical lateral/roadward approach failed; no new pickup or later region reached."
+  },
+  "l6LowShotgun": {
+    "runs": [
+      {
+        "level": "L6",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 480,
+        "simSeconds": 452,
+        "maxNoProgressSeconds": 32.14,
+        "deaths": 13,
+        "assists": 1,
+        "attacks": {
+          "weapon.shotgun": 99,
+          "weapon.army-mg": 1144,
+          "weapon.fire-axe": 34
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "steps": [
+          {
+            "id": "shelter",
+            "text": "Look around the shelter \u00b7 rest while you can",
+            "tick": 11,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "stop",
+            "text": "Stop the infected \u00b7 Retreat in 0:36",
+            "tick": 1995,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "retreat",
+            "text": "Cover the retreat through the tunnel \u00b7 244\u00a0m",
+            "tick": 3262,
+            "marker": {
+              "anchor": "l6-next",
+              "ring": {
+                "x": 242,
+                "y": 1.3200000524520874,
+                "z": 15
+              },
+              "drawn": [
+                242,
+                0.6,
+                15
+              ],
+              "playerY": 1.3200000524520874,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "exit",
+            "text": "Bring the survivors into the night \u00b7 0/1 out \u00b7 33\u00a0m",
+            "tick": 13187,
+            "marker": {
+              "anchor": "night-exit",
+              "ring": {
+                "x": 273,
+                "y": 1.2699999809265137,
+                "z": 15
+              },
+              "drawn": [
+                273,
+                3.9,
+                15
+              ],
+              "playerY": 1.2699999809265137,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "firstClosure": null,
+    "lastTick": 27120,
+    "groupAttackStarts": 290,
+    "postClosureWindows": []
+  },
+  "timeboxDisposition": {
+    "status": "HOLD",
+    "execution": "approximately 2.5-hour timebox concluded",
+    "goalComplete": false,
+    "remaining": "Late L10 regions/finale, 60\u201370 load, arrivals/pop-in, shotgun/nail gun, full road sweep, full retry scope and remaining LOW/L6 conditions."
   }
 }

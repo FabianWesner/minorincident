@@ -13,7 +13,7 @@ Target: **PROD `4f3dfdf9`**. Worktree `64594b3f` matches its `src/`, `public/`, 
 | Hunting Mega rifle/shotgun/nail gun damage; sustained ~35% floor and recovery after ~1 s | Rifle damage, floor and recovery proved | Rifle floor and recovery proved | **Partial.** Shotgun and nail gun not tested against Mega. |
 | Full farm-road crop/ground-cover sweep | Two opened roadside views show no crops on displayed asphalt | Farm combat view opened, no systematic road sweep | **Open.** No crop-on-asphalt finding confirmed. |
 | Mega does not jump far backward after death/checkpoint retry | Farm retry coordinates retained; lateral staging and some backward road movement observed | Retry samples retained locally | **Qualified/open.** No finale retry or full-route proof. |
-| L6 HIGH completion with first hatch closed; group attacked every 30 s | Full completion and closure in one run; all ten full post-closure 30 s windows had group attacks in a separate run | Exit reached; no full completion within 480 s; exact cadence observer failed in this run | **HIGH conditions evidenced separately.** No single uninterrupted completion/cadence claim. LOW completion remains open. |
+| L6 HIGH completion with first hatch closed; group attacked every 30 s | Full completion and closure in one run; all ten full post-closure 30 s windows had group attacks in a separate run | Exit reached; no full completion within 480 s; corrected repeat has attack timestamps but no first-hatch closure | **HIGH conditions evidenced separately.** No single uninterrupted completion/cadence claim. LOW completion remains open. |
 
 ## Hunting Mega
 
@@ -40,7 +40,7 @@ The opened HIGH result card confirms **349.57 simulation seconds**, five deaths,
 
 A separate HIGH shotgun run established first closure at tick 8996 and recorded 450 group attack starts. Successive full post-closure 30 s windows counted **13, 2, 22, 30, 37, 25, 35, 28, 32, 25**; the final 23.1 s counted 24. The first two full windows had no player deaths; later windows included deaths. That run reached the exit but did not complete within 480 s (14 deaths). These two runs are separate evidence and must not be merged into one uninterrupted completion.
 
-LOW reached the exit but did not finish in 480 s (16 deaths, one navigation assist). Its established ledger recorded 391 group windups in retreat and 133 at exit. The first timestamp observer had an empty event stream despite those ledger counts; its zero window counts were discarded. A mission-bound observer was subsequently validated in HIGH. The scripted shelter rest explains the automatic navigation warning.
+LOW reached the exit but did not finish in 480 s (16 deaths, one navigation assist). A final LOW shotgun repeat also reached the exit without completing in 480 s (13 deaths). Its corrected observer retained attack timestamps, but the first hatch never recorded closure, so no post-closure interval can be claimed. The earlier LOW run’s established ledger recorded 391 group windups in retreat and 133 at exit. The first timestamp observer had an empty event stream despite those ledger counts; its zero window counts were discarded. A mission-bound observer was subsequently validated in HIGH. The scripted shelter rest explains the automatic navigation warning.
 
 ## Retry observations and visual review
 
@@ -56,4 +56,4 @@ Temporary QA copies under `/private/tmp` corrected the driver's unsupported `Dig
 
 Production build, QA build, typecheck and lint passed. The unchanged prescribed remote `npm test` passed on **46.225.66.90**: 27 files, 106 tests passed, one skipped, **217.3 s within 240 s**, with 150/150 budget collection. Initial sandbox/listener and runner-startup failures were resolved before successful sessions. No deployment, push, main movement, or game fix was performed.
 
-Remaining gates: reach the later journey and finale normally; measure 60–70 live infected at both qualities; complete the ≤45 s arrival and opened spawn-visibility audit; test shotgun/nail gun against the hunting Mega; sweep every farm road; finish retry coverage; and complete any remaining LOW/L6 coverage. **The focused QA goal is not complete.**
+Remaining gates: reach the later journey and finale normally; measure 60–70 live infected at both qualities; complete the ≤45 s arrival and opened spawn-visibility audit; test shotgun/nail gun against the hunting Mega; sweep every farm road; finish retry coverage; and complete any remaining LOW/L6 coverage. The approximately 2.5-hour execution timebox ended with this HOLD report and the listed gates still open. **The focused QA goal is not complete.**
