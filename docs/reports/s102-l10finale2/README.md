@@ -1,215 +1,14 @@
-# s102 L10 finale investigation
+# s102 L10 finale — PASS
 
-Goal not achieved. Browser QA needed.
+**Goal achieved in native simulation. Browser QA needed.** No browser was run, as requested. Final runtime source: `bd81da83` (implementation `8167c51b`, reservation cleanup `bd81da83`).
 
-The reservation-aware wake candidate leaves all six exact native receipts at baseline gaps and deaths; see wake-trial.json. HIGH s2/s3 and LOW s1 still fail. A 15 s wave interval was tested on those three cases and reverted: gaps were 47.33, 46.48 and 47.32 s respectively, with baseline deaths.
+Authored service arrivals enter through a visible doorway and follow the platform stairs: one actor every eight seconds, two runners then one firefighter. All use ordinary global archetype stats. Director admission and chunk sleep/wake honor reserved slots and pending turns; downed bodies are excluded from capacity retirement. Service reservations reconcile on restore and release. A live Mega outside the arena can recover through the perimeter; its forced phase-three console return applies only within the authored leash, avoiding the stalled outside return.
 
-HIGH seed 3 occupancy evidence in occupancy.json shows director count 22/22 throughout the finale, reserved=0 and pendingTurns=0. Ten living pressure sprinters wander 80–188 m from the player; recoverable bodies retain the remaining capacity. Thus reservation-aware wake admission alone cannot free authored assault slots. No stats, policy, thresholds, duration or corpses changed. The next candidate must preserve distant actor identities while making capacity available for the authored finale.
+## Exact before/after
 
-Current source candidate: wake admission honors reserved slots and pending turns. It is uncommitted and not yet accepted. Final journey cadence, threat audit, typecheck, lint and remote unit suite remain open.
+Unchanged native complete policy, HIGH/LOW seeds 1–3. The unchanged `tools/qa/s101-finale.ts` observes installation through cure release, including head and tail. [Before](before.json) is the exact baseline from main; [after](after.json) is the final source receipt after reservation cleanup. All routes complete.
 
-## Distant hunter redirect trial
-
-Reassigning living, unauthored, distant idle/wandering/attracted sprinters toward the authored platform stair once per second improves HIGH seed 3 from 46.48 s to 31.17 s max gap, with two deaths and route completion unchanged. Tail is 1.25 s; the remaining 31.17 s gap is between ticks 59722 and 61592. Exact receipt: redirect-trial.json. This candidate is retained for further work and does not yet meet acceptance.
-
-## Six-case redirect rejection
-
-The full matrix rejects the redirect candidate. It was reverted, together with the wake-only candidate which did not improve any exact baseline receipt. No runtime change is retained.
-
-| Tier | Seed | Before max gap s | Redirect max gap s | Before deaths | Redirect deaths | Completes |
-| --- | ---: | ---: | ---: | ---: | ---: | --- |
-| HIGH | 1 | 16.72 | 37.92 | 3 | 3 | yes |
-| HIGH | 2 | 42.17 | 24.63 | 3 | 4 | yes |
-| HIGH | 3 | 46.48 | 31.17 | 2 | 2 | yes |
-| LOW | 1 | 42.12 | 40.58 | 0 | 0 | yes |
-| LOW | 2 | 16.80 | 23.68 | 2 | 0 | yes |
-| LOW | 3 | 18.60 | 18.60 | 2 | 2 | yes |
-
-Only LOW seed 3 passes the redirect matrix. Exact receipts: redirect-six.json. The candidate changes finale timing and contact enough to regress baseline passing cases. The goal remains unachieved. No browser, deployment, push or main movement occurred.
-
-After reverting gameplay trials, `npm run typecheck` and `npm run lint` passed. Journey cadence, final threat audit and remote unit suite are still open; no acceptable gameplay candidate exists.
-
-## Four reserved assault slots
-
-A persistent four-slot reservation with capacity-aware sleep/wake passes HIGH s2/s3 (18.87/15.50 s, deaths 3/3), but fails HIGH s1 (136.62 s, 11 deaths) and all LOW cases (38.32/34.37/40.72 s). Exact receipt: reserved-four-six.json. Capacity retirement in this trial selects living actors only; downed bodies are not retired for reservation space. The persistent reservation can repeatedly displace arrivals and is rejected. The current uncommitted revision consumes reservation credit as authored actors are admitted; that revision has not been measured yet.
-
-## Consumed reservation credit
-
-Four admission credits, consumed as authored assault slots are admitted, pass HIGH s1/s3 and LOW s2/s3. HIGH s2 narrowly fails at 20.58 s; LOW s1 remains 42.12 s. All six complete, deaths are 2/3/2 and 0/2/2 (all at or below baseline). Exact matrix: consumed-four-six.json. Raising the credits to six leaves LOW s1 identical at 42.12 s and zero deaths; four credits were restored. The current source remains an unaccepted candidate pending the two remaining cadence failures and full verification.
-
-## LOW s1 wave blocker
-
-A native occupancy trace shows authored actors admit successfully. After the main group falls, its surviving dog wanders 40–54 m west and postpones subsequent waves despite no attack contact. Direction-independent authored refresh alone leaves the receipt unchanged and was reverted. The next unmeasured candidate lets the wave breather finish when survivors are idle/wandering outside the authored hold disc, preserving the actors themselves.
-
-## Breather and combined cadence trials
-
-Ignoring idle/wandering survivors outside the hold disc does not change LOW s1 (42.12 s) or HIGH s2 (20.58 s). Adding a 15 s period worsens LOW s1 to 43.58 s and leaves HIGH s2 unchanged; deaths remain 0/3 and routes complete. The 30 s period is restored. Exact receipts: breather-trials.json. Current unmeasured revision renews four consumable admission credits per authored wave, rather than protecting only the first wave.
-
-## Renewed and periodic wave trials
-
-Renewed four-credit waves retain LOW s1's 42.12 s failure and produce 20.88 s on HIGH s2, with baseline deaths. Removing survivor-driven postponement and using 20 s waves improves LOW s1 to 26.55 s (tail), zero deaths, route complete. A 15 s period regresses it to 42.63 s. The 20 s candidate is restored for further investigation; it has not passed acceptance. Exact receipts: renew-periodic-trials.json.
-
-## Approach and extra capacity
-
-Closer radial approaches worsen LOW s1 to 40.55 s and were reverted. Four additional assault resident slots (LOW 18/HIGH 26) with 20 s waves yield LOW s1 25.27 s, zero deaths and completion. An 18 s period gives 25.65 s and was reverted. The 20 s/extra-capacity candidate remains unaccepted and has not been measured on the other five cases. Exact receipts: approach-cap-trials.json. No actor/weapon statistics changed.
-
-## Roster and third-wave capacity rejection
-
-Runner-only regular assault slots produce LOW s1 26.65 s, zero deaths, completion; original roster restored. Increasing assault capacity to LOW 26/HIGH 34 produces LOW s1 42.15 s, zero deaths, completion; LOW 18/HIGH 26 restored. These reject speed mix and raw capacity as sufficient fixes. Exact receipts: roster-cap-trials.json. Further work needs an admission trace of later waves before another scheduling change.
-
-## Later-wave contact trace and eastern approaches
-
-The later-wave trace proves wave 2 admits four actors. Two are down before tick 55800, the runner/firefighter survivors die before attack contact. The remaining cadence failure is not simply absent admission. Stair-side eastern approaches improve LOW s1 to a 22.35 s tail (zero deaths, complete). Moving the ring four metres closer gives 23.83 s and was reverted. The eastern 48 m approach candidate is retained unaccepted. Exact receipts: east-trials.json; native actor trace: later-wave-trace.json.
-
-## Full eastern candidate rejection
-
-The 20 s/eastern-entry/extra-capacity candidate fails all six cases: HIGH gaps 100.48/41.25/22.42 s, LOW gaps 22.35/41.25 s and seed 3 does not complete. Deaths 3/3/3 and 0/0/1. Exact receipts: east-six.json. This candidate was reverted to the earlier consumed-four candidate (four known passing cases, HIGH s2 and LOW s1 still failing). No accepted gameplay fix or final verification exists.
-
-## Stair-top gun and armored approach rejection
-
-Putting the gun at the existing stair-top coordinate yields LOW s1 46.97 s, zero deaths, completion; restored original gun anchor. Replacing the first three regular assault slots with globally unchanged armored actors yields 38.07 s, zero deaths, completion; restored original roster. Neither closes the quiet window. Exact receipts: stair-armored-trials.json. Current source remains the earlier four-credit candidate.
-
-## Extra credit and spaced admission rejection
-
-Five credits regress HIGH s2 to 41.80 s (three deaths). One-second assault admission spacing yields LOW s1 43.47 s (zero deaths), HIGH s2 39.23 s (three deaths). All complete. Both experiments were reverted to the four-credit candidate. Exact receipts: credit-spacing-trials.json.
-
-## Thrower diagnosis
-
-Replacing one regular with a thrower yields LOW s1 22.63 s, zero deaths, completion. Source trace proves no thrower attacks; the dog supplies the late start. The thrower remains idle/wandering. Inspection finds `InfectedSystem.press` excludes L10 from persistent non-pedestrian pressure targets. Current unmeasured candidate adds L10 to that existing mechanism. Trace: thrower-trace.json. No ranged-resource success is claimed.
-
-## Persistent-target measurement
-
-Adding L10 to non-pedestrian persistent pressure targets changes neither thrower LOW s1 (22.63 s) nor original-roster LOW s1 (42.12 s). Both complete with zero deaths. The targeting change and thrower composition are reverted; source remains the consumed-four candidate. Thus the omitted L10 assignment was not established as the causal defect. Exact receipts: persistent-target-trials.json.
-
-## Finale pursuit dropout rejection
-
-The native archetype brain explicitly drops an L10 authored hunter behind hearing range into wandering. Restricting that rule to pre-installation travel and refreshing finale actors from either direction regresses LOW s1 to 47.28 s, zero deaths, complete. Both changes reverted. This disproves pursuit dropout removal as a sufficient cadence fix. Exact receipt: dropout-trial.json.
-
-## Retained-candidate threat audit
-
-`node --import tsx/esm tools/qa/threat-audit.ts --levels L10 --maxWorkers 2 --out /private/tmp/s102-current-threat` produced:
-
-```
-[qa:threat] L10: skilled complete, passive tick-budget, 0 passive flags (34.6s)
-```
-
-The exit 1 is the diagnostic partial-level selection flag, not an L10 failure. Native retreat kiting records 3.00 landed hits/min and passes its floor. Raw receipt: current-threat.json. This does not prove the strict six-case finale cadence goal; HIGH s2 and LOW s1 still fail.
-
-Current candidate `npm run typecheck` and `npm run lint` both passed after the threat audit. The remote unit suite and journey cadence receipt remain open. This checkpoint is WIP, not acceptance.
-
-## Remote unit suite on WIP checkpoint d121a6fe
-
-`sh tools/remote/run.sh "$PWD" -- npm test` passed unchanged on runner 46.225.66.90, job `s102-l10finale2-b1bfd2-18448-1794602852`. Manifest: 150/150 cases (129 Vitest, 9 e2e, 12 invariants-browser). Default suite: 27 files passed, 106 tests passed, one skipped; Vitest 225.58 s, budgeted command 228.2 s / 240 s. Exit 0; no retries or trimming. This validates the current shared residency candidate's covered contracts, not the still-failing finale gap requirement. No check remains running.
-
-## Routed leaper trial
-
-One leaper replacing one regular actor with a scripted stair approach yields LOW s1 22.63 s, zero deaths, complete. The result is identical to the thrower composition trial. Inspection finds gunfire cancels scripted approaches and replaces them with shot-position investigation. Current unmeasured revision preserves the installed-finale routed approach when the courier is the noise source. No attack-resource success or acceptance is claimed.
-
-## Preserved routed leaper matrix
-
-Preserving the scripted approach from courier gunfire passes LOW s1 at 17.52 s, zero deaths. Full matrix passes HIGH s1/s3 and LOW s1/s3; HIGH s2 remains 20.58 s and LOW s2 regresses to 33.17 s. All six complete; deaths 2/3/2 and 0/0/2. Exact receipts: preserved-route-six.json. Current unmeasured revision prioritizes the Alpha slot in admission order so its approach starts before regular actors consume protected capacity. This is not accepted.
-
-## Alpha admission order and three-credit rejection
-
-Alpha-first admission fails HIGH s2 at 45.93 s (three deaths) and LOW s2 at 33.18 s (zero deaths); order restored. Retaining the original regular count plus one leaper with three credits gives 33.13/36.68 s and deaths 3/0. All routes complete. Four credits are restored. Current unmeasured composition keeps all original regulars plus the routed leaper; prior matrix replaced one regular. Exact receipts: alpha-order-credit-trials.json.
-
-## Full-roster routed leaper and fixed waves
-
-Full original regular roster plus one leaper with four credits yields HIGH s2 20.58 s (three deaths), LOW s2 36.68 s (zero deaths). Fixed 20 s waves improve LOW s2 to 23.30 s; HIGH s2 stays unchanged. All complete. Current unmeasured revision holds one separate Alpha admission credit until the first authored Alpha enters. Exact receipts: full-roster-leaper-trials.json.
-
-## Separate Alpha credit
-
-Holding one extra reservation until Alpha admission passes HIGH s2: 17.05 s, four deaths (baseline three), route complete. LOW s2 stays 23.30 s with zero deaths. Periods 22/18 s regress LOW s2 to 34.40/34.02 s; restored 20 s. Exact receipts: alpha-credit-period-trials.json. Current candidate still needs LOW s2 and the full six-case matrix; total death budget unproven.
-
-## Full separate-credit candidate rejection
-
-The full six-case matrix rejects the routed extra leaper / separate Alpha credit / 20 s wave combination. HIGH gaps: 26.82/17.05 s, seed 3 timeout with 23 deaths. LOW gaps: 49.90/23.30 s, seed 3 timeout with one death. HIGH deaths 4/4/23, LOW 0/0/1. Exact receipts: alpha-credit-six.json. All gameplay edits since checkpoint d121a6fe were reverted to that earlier four-credit candidate, which has four known passing cases and HIGH s2/LOW s1 still failing. The single-case successes are not an accepted solution.
-
-## Journey cadence receipt on restored checkpoint
-
-`S89_OUT=/private/tmp/s102-current-cadence.json node --import tsx/esm tools/qa/s89-l10gap.ts` exits 0, passed=true, flags=[]. All six native routes complete, zero cap violations, and every adjusted adjacent-start gap is <=45 s. Exact receipt: current-cadence.json. This covers the requested journey gate; it does not replace the failing finale head/tail requirement.
-
-## Single delayed Alpha rejection
-
-Keeping the original waves/roster and admitting one separately reserved routed leaper after 15 s gives LOW s1 42.42 s, LOW s2 37.15 s, both complete with zero deaths. This rejects delayed leaper timing as sufficient; reverted source to the four-credit checkpoint. Exact receipts: delayed-alpha-low.json.
-
-## Initial delay and far journey dormancy
-
-Delaying the first wave two seconds regresses HIGH s2 to 47.17 s (three deaths, complete); reverted. Suspending distant unauthored living hunters in serialized chunk state until cure release gives LOW s1 42.32 s (zero deaths, complete), not acceptance. The dormancy candidate is retained unaccepted for HIGH measurement; it preserves downed bodies and serialized hunter identity/health. Exact receipts: delay-dormancy-trials.json.
-
-## Dormancy HIGH rejection
-
-Far unauthored hunter dormancy passes HIGH s2/s3 (18.85/15.82 s, deaths 3/3), but HIGH s1 does not complete and its finale reaches 825 s with a 199.17 s gap. Narrowing dormancy to idle/wander/attracted hunters beyond two hold radii yields the identical seed-1 failure. Both are rejected; restored checkpoint source. Receipts: dormant-high.json and stale-high1.json.
-
-## Gun orientation rejection
-
-The gun has no limited traverse arc. Rotating the authored gun yaw 180 degrees leaves LOW s1 exactly at 42.12 s, zero deaths, complete. Original yaw restored. Exact receipt: gun-yaw-trial.json. At 2026-11-13 21:20 UTC the worktree was about 80 minutes old (created 20:00 UTC), still within the requested approximate three-hour time box.
-
-## Resource-backed ranged approach requirements
-
-Source audit of `AlphaSupportMoves.tryStart` establishes a 25 m thrower attack envelope with line of sight, object radius 2 m for direct grab-throw and 6 m for scavenging; barrage requires distance <=8 m and a light prop. `PropThrows.nearestObject` accepts enabled, unbraced, unfixed movable props below 1500 kg and retained corpses. A resource at the current 48 m entrance alone cannot establish attacks. A future resource-backed approach must stage the thrower and resource inside 25 m while preserving ordinary spawn safety and verify actual ranged starts. No such functioning ranged setup has been established by the rejected thrower trials.
-
-## Resource-backed thrower setup
-
-Current unaccepted trial authors an offscreen entry and inner-yard approach in l10Finale, four movable crates at the approach, one thrower replacing one regular, and a routed walk preserved from courier gunfire/early notice. LOW s1 completes with zero deaths but fails at 37.42 s. Receipt: resource-thrower-trial.json. A source trace must still establish whether the thrower reaches the resource and starts ranged attacks; no functioning ranged encounter is claimed yet.
-
-## Resource approach trace
-
-The thrower reaches the north-west staged resources by tick 53700, but produces only ordinary starts later near the operator and dies by 54600. Its staged position is behind tank B relative to the gun, so ranged LOS is not established. Moving the authored resource position to the eastern open lane improves LOW s1 to 25.28 s, zero deaths, complete; ranged starts still need source verification. Receipts: resource-actor-trace.json and resource-east-trial.json.
-
-## Eastern resource verification
-
-All four staged crates are enabled, unfixed movable bodies at the intended eastern position. The thrower nevertheless loses its scripted approach before reaching them and makes its first grab-throw only after recovering beside the Mega corpse at tick 55785. The western approach passes through gun contact before the resource; damage provocation cancels the script. Current unmeasured revision moves its authored entry east of the sphere tank, approaching the resource from that side. Exact actor/prop/attack trace: east-resource-trace.json.
-
-## Eastern-entry thrower actual starts
-
-The thrower reaches the resource by tick 53700 (nearestObject within 2 m verified), then leaves it and climbs the platform. Its grab-throw starts at 54521 and 56574 are observed; it is down by 54600 and spends the middle gap recovering. LOW s1 still fails at 22.35 s, zero deaths, complete. Exact native source/pose/resource trace: east-entry-actor-trace.json. Sustained contact after first down remains open.
-
-## Two throwers and deck resources rejected
-
-Two throwers replacing two regulars, with a 12 s entry stagger and extended admission window, give LOW s1 46.75 s, one death, completion. One thrower with crates at deck height at the stair top gives a 71.02 s head, zero deaths, completion. Both rejected. All resource-trial source changes were reverted to the earlier four-credit checkpoint. Exact receipts: two-deck-thrower-trials.json. The rejected source patch is preserved in /private/tmp/s102-resource-candidate.patch for local investigation only.
-
-## Eight-second service entry
-
-Adapted the preserved a9fb7339 service-entry concept using authored finale anchors (door, spawn, stair foot/top, gun). One ordinary runner every eight seconds enters through the native HouseEmergence path with a cap reservation; no stats changed. LOW s1 passes 17.42 s, zero deaths, complete. Exact receipt: service8-low1.json. Five other cases and final checks remain unverified; reservation cleanup/rebase on restore must be reviewed before acceptance.
-
-## Service-entry six-case matrix
-
-Eight-second service arrivals pass HIGH s2/s3 and LOW s1/s2 (17.02/15.58/17.42/19.82 s). HIGH s1 is incomplete; LOW s3 completes but has a 22.07 s tail. Deaths HIGH 3/3/3, LOW 0/0/0. Exact receipts: service8-six.json. Current unmeasured revision rebases serialized emergence walking deadlines on checkpoint restore; reservation ownership cleanup still requires inspection.
-
-## HIGH s1 incomplete root cause
-
-Deadline rebasing does not fix HIGH s1. Native terminal evidence proves charge complete, player healthy at console, live Mega at (3945.679,-40.75) with 966.8 HP, outside the latched west perimeter segment. The perimeter remains closed after a phase checkpoint restore puts the boss outside. Current unmeasured revision reopens the perimeter while the live boss is beyond the authored arm radius, allowing native return. Terminal receipt: service-high1-terminal.json. This is an encounter containment fix, not a stat or teleport change.
-
-## Perimeter recovery measurement
-
-Reopening the perimeter while the live Mega is outside the arm radius restores HIGH s1 completion, baseline three deaths, but max gap remains 70.85 s (209.38 s finale). Widening the fixed west gate to 20 m half-width also completes with three deaths but the identical 70.85 s gap. Gate width reverted; minimal dynamic perimeter recovery retained unaccepted. Exact receipts: perimeter-trials.json. Boss navigation/attack state through that remaining gap needs direct tracing.
-
-## Mega phase-three return branch
-
-Native trace proves long phase-three stalls west of the arena, with no active special or future stagger timer, while service actors still admit. `MegaPursuit.drive` phase-three return uses the ordinary infected seek and bypasses the dedicated Mega grid and stuck monitor. Current unmeasured revision uses the existing Mega steering/grid/progress monitor for that branch. Exact motion trace: mega-service-trace.json.
-
-## Native Mega pursuit fixes HIGH s1
-
-Dedicated-grid phase-three return trials (exact console and nearest-clear destination) remain incomplete. Removing the forced phase-three return branch and allowing existing standard Mega pursuit/arena leash restores HIGH s1: 14.83 s max gap, baseline three deaths, route complete, 67.02 s finale. This smaller branch removal is retained for full matrix verification. Exact receipts: mega-return-trials.json. No speed, HP, attack or weapon stats changed.
-
-## Scoped phase-three return
-
-Global phase-three branch removal fails death acceptance (HIGH s3 five deaths) and regresses LOW s1. Current revision keeps original phase-three return while inside the authored leash radius, using ordinary pursuit outside it. HIGH s1 passes 14.83 s, four deaths (baseline+1); HIGH s3 passes 15.58 s, three deaths (baseline+1). Exact receipts: leash-return-high.json; rejected global-removal matrix: standard-service-six.json. Full scoped matrix and LOW s3 tail remain open.
-
-## Service interval diagnostics on LOW s3
-
-With scoped Mega return, service intervals 6/10/12 s fail LOW s3 at 34.25/25.40/36.38 s respectively; all complete with zero deaths. Eight seconds previously gives 22.07 s. Current unmeasured interval is nine seconds; no passing six-case matrix exists. Exact receipts: service-interval-low3.json.
-
-## Service role trials LOW s3
-
-Nine-second runners fail at 22.25 s (one death). Eight-second sprinters fail 34.85 s (zero deaths). Eight-second firefighters fail 30.22 s (zero deaths), stretching the finale to 203.42 s. All complete. Current unmeasured service cohort is two runners followed by one firefighter, ordinary global archetype stats unchanged. Exact receipts: service-role-trials.json.
-
-## Passing six-case candidate
-
-`after-candidate.json` proves every exact finale gap <=20 s, all routes complete, deaths per case <= baseline+1 and total eight <= baseline twelve+2. Typecheck and lint pass. Current implementation: authored service doorway and staircase route, eight-second admissions with two runners then one firefighter, bounded director reservations and native emergence; Mega phase-three forced console return only inside the existing leash; perimeter reopens for a live outside boss. No stats, bot policy, thresholds, charge duration or corpses changed. Final reservation review, fresh journey cadence/threat audit and remote suite remain required before acceptance. Browser QA needed.
-
-| Tier | Seed | Before gap s | After gap s | Before deaths | After deaths |
+| Tier | Seed | Before max gap s | After max gap s | Before deaths | After deaths |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | HIGH | 1 | 16.72 | 14.83 | 3 | 3 |
 | HIGH | 2 | 42.17 | 17.02 | 3 | 3 |
@@ -218,6 +17,16 @@ Nine-second runners fail at 22.25 s (one death). Eight-second sprinters fail 34.
 | LOW | 2 | 16.80 | 18.43 | 2 | 0 |
 | LOW | 3 | 18.60 | 16.68 | 2 | 0 |
 
-## Reservation ownership cleanup and final-source matrix
+Worst finale gap **18.43 s <=20 s**. Total deaths **8 versus baseline 12** (limit 14); every case is at or below its baseline (individual limit baseline+1).
 
-Reconcile the service-owned reserved slot when restoring its serialized flag, release it at cure release, and exclude other reserved slots/pending turns from service admission. Rebased emergence walking timers remain in place. Exact final-source matrix in after.json is identical to the passing candidate: all six <=20 s, all complete, eight total deaths, no per-case increase. Typecheck and lint pass after cleanup. Fresh journey/threat/remote checks remain open.
+## Required verification
+
+- `npm run typecheck` and `npm run lint`: pass on final source.
+- [Final journey cadence](final-cadence.json): `s89-l10gap.ts`, six cases, exit 0, no flags, worst adjusted adjacent gap 43.28 s <=45 s, zero cap violations.
+- [Final L10 threat audit](final-threat.json): `node --import tsx/esm tools/qa/threat-audit.ts --levels L10 --maxWorkers 2 --out /private/tmp/s102-final-threat`. Exact line: `[qa:threat] L10: skilled complete, passive tick-budget, 0 passive flags (37.2s)`. Exit 1 is solely `PARTIAL_LEVEL_SELECTION`, the expected diagnostic-only selection flag.
+- [Unchanged remote suite](final-remote.json): `sh tools/remote/run.sh "$PWD" -- npm test`, runner 46.225.66.90, job `s102-l10finale2-b1bfd2-17605-1794607418`, exit 0. Manifest 150/150; 27 files pass, 106 tests pass, one skipped. Vitest 223.80 s, budgeted command 226.3/240 s. No trimming or retry.
+- Completion audit recomputed all finale gaps from tick endpoints/starts, checked all six route/death limits and journey flags, and inspected the seven-file runtime diff. No zombie/weapon stat changes, bot-policy or observer changes, shortened charge, corpse removal, forbidden-directory edits, deployment, push or main movement. No check remains running.
+
+All coordinates belong to authored finale anchors. The service-entry approach builds on the preserved rejected s101 `a9fb7339` experiment, replacing hard-coded world positions with authored anchors and completing its reservation/timer cleanup. No specs were edited.
+
+Historical rejected trials and diagnostics are retained as JSON. [Investigation chronology](investigation-history.json) includes intermediate failures; those statements describe earlier candidates and do not supersede this final result.
