@@ -1,0 +1,2799 @@
+{
+  "coveredNumericPass": true,
+  "acceptanceComplete": false,
+  "stoppedByUser": true,
+  "implementationRevision": "4b51bdd64cf59ae6e38ad63ca71b9859b03430b8",
+  "native": [
+    {
+      "pass": true,
+      "sourceHash": "dbbbba6f862b8ddfca9c0163b563d9964e20854a96243021fff7a6bed5df64ea",
+      "sourceStable": true,
+      "contextCoverage": [
+        {
+          "context": "driving",
+          "frames": 14120,
+          "actors": 61,
+          "contacts": 1287,
+          "maxCm": 3.3,
+          "p95Cm": 2.8
+        },
+        {
+          "context": "detour",
+          "frames": 14120,
+          "actors": 61,
+          "contacts": 1287,
+          "maxCm": 3.3,
+          "p95Cm": 2.8
+        },
+        {
+          "context": "hatch",
+          "frames": 48,
+          "actors": 3,
+          "contacts": 5,
+          "maxCm": 2.8,
+          "p95Cm": 2.8
+        },
+        {
+          "context": "rail-stall",
+          "frames": 48,
+          "actors": 3,
+          "contacts": 5,
+          "maxCm": 2.8,
+          "p95Cm": 2.8
+        }
+      ],
+      "contextsProven": true,
+      "correctionsProven": true,
+      "stagedMotionProven": true,
+      "stagedCoverage": [],
+      "captureCamera": [
+        {
+          "frame": 8885,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 38.779902978217976,
+          "regionScale": 1,
+          "focus": [
+            401.52335118082243,
+            4.368929776904706e-25,
+            -136.05152717449636
+          ],
+          "target": [
+            401.52335118082243,
+            4.368929776904706e-25,
+            -136.05152717449636
+          ],
+          "position": [
+            423.7078368796755,
+            22.794255055929483,
+            -113.86704147564329
+          ],
+          "spot": null
+        },
+        {
+          "frame": 8886,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 38.779902978217976,
+          "regionScale": 1,
+          "focus": [
+            401.5237111228343,
+            3.953171138914875e-25,
+            -136.0526143654816
+          ],
+          "target": [
+            401.5237111228343,
+            3.953171138914875e-25,
+            -136.0526143654816
+          ],
+          "position": [
+            423.70819682168735,
+            22.794255055929483,
+            -113.86812866662852
+          ],
+          "spot": null
+        },
+        {
+          "frame": 8887,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 38.779902978217976,
+          "regionScale": 1,
+          "focus": [
+            401.5240251771813,
+            3.576977166390009e-25,
+            -136.0536213253922
+          ],
+          "target": [
+            401.5240251771813,
+            3.576977166390009e-25,
+            -136.0536213253922
+          ],
+          "position": [
+            423.7085108760343,
+            22.794255055929483,
+            -113.86913562653915
+          ],
+          "spot": null
+        },
+        {
+          "frame": 8888,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 38.779902978217976,
+          "regionScale": 1,
+          "focus": [
+            401.5243425535121,
+            3.2365827836099185e-25,
+            -136.05459550870904
+          ],
+          "target": [
+            401.5243425535121,
+            3.2365827836099185e-25,
+            -136.05459550870904
+          ],
+          "position": [
+            423.70882825236515,
+            22.794255055929483,
+            -113.87010980985598
+          ],
+          "spot": null
+        },
+        {
+          "frame": 8889,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 38.779902978217976,
+          "regionScale": 1,
+          "focus": [
+            401.5246065217701,
+            2.9285812091812374e-25,
+            -136.05549275467573
+          ],
+          "target": [
+            401.5246065217701,
+            2.9285812091812374e-25,
+            -136.05549275467573
+          ],
+          "position": [
+            423.7090922206232,
+            22.794255055929483,
+            -113.87100705582266
+          ],
+          "spot": null
+        },
+        {
+          "frame": 8890,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 38.779902978217976,
+          "regionScale": 1,
+          "focus": [
+            401.5248908711539,
+            2.649889859824179e-25,
+            -136.05636001212622
+          ],
+          "target": [
+            401.5248908711539,
+            2.649889859824179e-25,
+            -136.05636001212622
+          ],
+          "position": [
+            423.70937657000695,
+            22.794255055929483,
+            -113.87187431327315
+          ],
+          "spot": null
+        }
+      ],
+      "errors": [],
+      "mode": "L9",
+      "tier": "high",
+      "samples": 14120,
+      "groups": 82,
+      "groundedGroups": 71,
+      "classifications": {
+        "grounded": 71,
+        "matched-unplanted-action": 2,
+        "airborne-attachment": 8,
+        "running-flight-window": 1
+      },
+      "p95Cm": 2.8,
+      "maxCm": 3.3,
+      "corrections": [
+        {
+          "kind": "separationM",
+          "groups": 38,
+          "pass": true,
+          "contacts": 1205,
+          "p95Cm": 1.4,
+          "maxCm": 3.3
+        },
+        {
+          "kind": "collisionM",
+          "groups": 25,
+          "pass": true,
+          "contacts": 745,
+          "p95Cm": 1.6,
+          "maxCm": 3.3
+        }
+      ],
+      "failures": []
+    },
+    {
+      "pass": true,
+      "sourceHash": "dbbbba6f862b8ddfca9c0163b563d9964e20854a96243021fff7a6bed5df64ea",
+      "sourceStable": true,
+      "contextCoverage": [
+        {
+          "context": "driving",
+          "frames": 26146,
+          "actors": 61,
+          "contacts": 1716,
+          "maxCm": 5.1,
+          "p95Cm": 1.3
+        },
+        {
+          "context": "detour",
+          "frames": 26146,
+          "actors": 61,
+          "contacts": 1716,
+          "maxCm": 5.1,
+          "p95Cm": 1.3
+        },
+        {
+          "context": "hatch",
+          "frames": 127,
+          "actors": 5,
+          "contacts": 11,
+          "maxCm": 0.2,
+          "p95Cm": 0.2
+        },
+        {
+          "context": "rail-stall",
+          "frames": 127,
+          "actors": 5,
+          "contacts": 11,
+          "maxCm": 0.2,
+          "p95Cm": 0.2
+        }
+      ],
+      "contextsProven": true,
+      "correctionsProven": true,
+      "stagedMotionProven": true,
+      "stagedCoverage": [],
+      "captureCamera": [
+        {
+          "frame": 8885,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 38.779902978217976,
+          "regionScale": 1,
+          "focus": [
+            382.72955074190884,
+            0.16569349989753854,
+            -187.89578027907507
+          ],
+          "target": [
+            382.72955074190884,
+            0.16569349989753854,
+            -187.89578027907507
+          ],
+          "position": [
+            404.9140364407619,
+            22.959948555827022,
+            -165.711294580222
+          ],
+          "spot": null
+        },
+        {
+          "frame": 8886,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 38.779902978217976,
+          "regionScale": 1,
+          "focus": [
+            382.7276911753851,
+            0.1660301797365659,
+            -187.89508489214583
+          ],
+          "target": [
+            382.7276911753851,
+            0.1660301797365659,
+            -187.89508489214583
+          ],
+          "position": [
+            404.9121768742381,
+            22.96028523566605,
+            -165.71059919329275
+          ],
+          "spot": null
+        },
+        {
+          "frame": 8887,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 38.779902978217976,
+          "regionScale": 1,
+          "focus": [
+            382.7259203160564,
+            0.16624734463474883,
+            -187.8944330122381
+          ],
+          "target": [
+            382.7259203160564,
+            0.16624734463474883,
+            -187.8944330122381
+          ],
+          "position": [
+            404.9104060149094,
+            22.96050240056423,
+            -165.70994731338502
+          ],
+          "spot": null
+        },
+        {
+          "frame": 8888,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 38.779902978217976,
+          "regionScale": 1,
+          "focus": [
+            382.72421986074124,
+            0.1663854886675845,
+            -187.89381561772603
+          ],
+          "target": [
+            382.72421986074124,
+            0.1663854886675845,
+            -187.89381561772603
+          ],
+          "position": [
+            404.9087055595943,
+            22.960640544597066,
+            -165.70932991887295
+          ],
+          "spot": null
+        },
+        {
+          "frame": 8889,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 38.779902978217976,
+          "regionScale": 1,
+          "focus": [
+            382.72259774116077,
+            0.16648795684969014,
+            -187.8932344419801
+          ],
+          "target": [
+            382.72259774116077,
+            0.16648795684969014,
+            -187.8932344419801
+          ],
+          "position": [
+            404.9070834400138,
+            22.960743012779172,
+            -165.70874874312702
+          ],
+          "spot": null
+        },
+        {
+          "frame": 8890,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 38.779902978217976,
+          "regionScale": 1,
+          "focus": [
+            382.7210653563779,
+            0.16659445717551957,
+            -187.8926839247578
+          ],
+          "target": [
+            382.7210653563779,
+            0.16659445717551957,
+            -187.8926839247578
+          ],
+          "position": [
+            404.90555105523094,
+            22.960849513105003,
+            -165.7081982259047
+          ],
+          "spot": null
+        }
+      ],
+      "errors": [],
+      "mode": "L9",
+      "tier": "low",
+      "samples": 26146,
+      "groups": 92,
+      "groundedGroups": 80,
+      "classifications": {
+        "grounded": 80,
+        "airborne-attachment": 10,
+        "matched-unplanted-action": 2
+      },
+      "p95Cm": 1.3,
+      "maxCm": 5.1,
+      "corrections": [
+        {
+          "kind": "separationM",
+          "groups": 39,
+          "pass": true,
+          "contacts": 1575,
+          "p95Cm": 1.3,
+          "maxCm": 5.1
+        },
+        {
+          "kind": "collisionM",
+          "groups": 29,
+          "pass": true,
+          "contacts": 852,
+          "p95Cm": 1.1,
+          "maxCm": 5.1
+        }
+      ],
+      "failures": []
+    },
+    {
+      "pass": true,
+      "sourceHash": "dbbbba6f862b8ddfca9c0163b563d9964e20854a96243021fff7a6bed5df64ea",
+      "sourceStable": true,
+      "contextCoverage": [
+        {
+          "context": "L7",
+          "frames": 466,
+          "actors": 6,
+          "contacts": 28,
+          "maxCm": 0.5,
+          "p95Cm": 0.4
+        }
+      ],
+      "contextsProven": true,
+      "correctionsProven": true,
+      "stagedMotionProven": true,
+      "stagedCoverage": [
+        {
+          "id": 108,
+          "frames": 224,
+          "travelM": 5.767949798483303,
+          "moving": true,
+          "outcome": {
+            "id": 108,
+            "exists": true,
+            "health": 0,
+            "deathFrame": 226,
+            "motion": {
+              "x": -79.52440094865743,
+              "z": 50.947944346536545,
+              "travelM": 5.768172020705528,
+              "movingFrames": 115,
+              "aliveFrames": 224
+            }
+          },
+          "stationary": false,
+          "covered": true
+        },
+        {
+          "id": 109,
+          "frames": 9,
+          "travelM": 0,
+          "moving": false,
+          "outcome": {
+            "id": 109,
+            "exists": true,
+            "health": 0,
+            "deathFrame": 918,
+            "motion": {
+              "x": -72.795,
+              "z": 47,
+              "travelM": 0,
+              "movingFrames": 0,
+              "aliveFrames": 9
+            }
+          },
+          "stationary": true,
+          "covered": true
+        },
+        {
+          "id": 110,
+          "frames": 68,
+          "travelM": 0,
+          "moving": false,
+          "outcome": {
+            "id": 110,
+            "exists": true,
+            "health": 0,
+            "deathFrame": 831,
+            "motion": {
+              "x": -78.5,
+              "z": 49.29,
+              "travelM": 0,
+              "movingFrames": 0,
+              "aliveFrames": 68
+            }
+          },
+          "stationary": true,
+          "covered": true
+        },
+        {
+          "id": 111,
+          "frames": 68,
+          "travelM": 0,
+          "moving": false,
+          "outcome": {
+            "id": 111,
+            "exists": true,
+            "health": 0,
+            "deathFrame": 989,
+            "motion": {
+              "x": -78.5,
+              "z": 44.71,
+              "travelM": 0,
+              "movingFrames": 0,
+              "aliveFrames": 68
+            }
+          },
+          "stationary": true,
+          "covered": true
+        },
+        {
+          "id": 112,
+          "frames": 82,
+          "travelM": 2.784216845743822,
+          "moving": true,
+          "outcome": {
+            "id": 112,
+            "exists": true,
+            "health": 0,
+            "deathFrame": 1187,
+            "motion": {
+              "x": -81.57877110912312,
+              "z": 50.21419527297694,
+              "travelM": 2.784216845743822,
+              "movingFrames": 61,
+              "aliveFrames": 82
+            }
+          },
+          "stationary": false,
+          "covered": true
+        },
+        {
+          "id": 113,
+          "frames": 15,
+          "travelM": 0,
+          "moving": false,
+          "outcome": {
+            "id": 113,
+            "exists": true,
+            "health": 0,
+            "deathFrame": 17,
+            "motion": {
+              "x": -72.795,
+              "z": 44.71,
+              "travelM": 0,
+              "movingFrames": 0,
+              "aliveFrames": 15
+            }
+          },
+          "stationary": true,
+          "covered": true
+        }
+      ],
+      "captureCamera": [
+        {
+          "frame": 120,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -78.5,
+            0.13000002384171144,
+            51.29000091552732
+          ],
+          "target": [
+            -78.5,
+            0.13000002384171144,
+            51.29000091552732
+          ],
+          "position": [
+            -62.196250019695995,
+            16.881879714177195,
+            67.59375089583133
+          ],
+          "spot": null
+        },
+        {
+          "frame": 121,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -78.5,
+            0.13000002384172538,
+            51.29000091552732
+          ],
+          "target": [
+            -78.5,
+            0.13000002384172538,
+            51.29000091552732
+          ],
+          "position": [
+            -62.196250019695995,
+            16.88187971417721,
+            67.59375089583133
+          ],
+          "spot": null
+        },
+        {
+          "frame": 122,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -78.5,
+            0.13000002384173798,
+            51.29000091552732
+          ],
+          "target": [
+            -78.5,
+            0.13000002384173798,
+            51.29000091552732
+          ],
+          "position": [
+            -62.196250019695995,
+            16.881879714177224,
+            67.59375089583133
+          ],
+          "spot": null
+        },
+        {
+          "frame": 123,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -78.5,
+            0.13000002384174938,
+            51.29000091552732
+          ],
+          "target": [
+            -78.5,
+            0.13000002384174938,
+            51.29000091552732
+          ],
+          "position": [
+            -62.196250019695995,
+            16.881879714177234,
+            67.59375089583133
+          ],
+          "spot": null
+        },
+        {
+          "frame": 124,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -78.5,
+            0.1300000238417597,
+            51.29000091552732
+          ],
+          "target": [
+            -78.5,
+            0.1300000238417597,
+            51.29000091552732
+          ],
+          "position": [
+            -62.196250019695995,
+            16.881879714177245,
+            67.59375089583133
+          ],
+          "spot": null
+        },
+        {
+          "frame": 125,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -78.5,
+            0.13000002384176906,
+            51.29000091552732
+          ],
+          "target": [
+            -78.5,
+            0.13000002384176906,
+            51.29000091552732
+          ],
+          "position": [
+            -62.196250019695995,
+            16.881879714177256,
+            67.59375089583133
+          ],
+          "spot": null
+        }
+      ],
+      "errors": [],
+      "mode": "l7-bus",
+      "tier": "high",
+      "samples": 466,
+      "groups": 6,
+      "groundedGroups": 6,
+      "classifications": {
+        "grounded": 6
+      },
+      "p95Cm": 0.4,
+      "maxCm": 0.5,
+      "corrections": [
+        {
+          "kind": "separationM",
+          "groups": 2,
+          "pass": true,
+          "contacts": 21,
+          "p95Cm": 0.4,
+          "maxCm": 0.5
+        },
+        {
+          "kind": "collisionM",
+          "groups": 0,
+          "pass": true,
+          "contacts": 0,
+          "p95Cm": null,
+          "maxCm": null
+        }
+      ],
+      "failures": []
+    },
+    {
+      "pass": true,
+      "sourceHash": "dbbbba6f862b8ddfca9c0163b563d9964e20854a96243021fff7a6bed5df64ea",
+      "sourceStable": true,
+      "contextCoverage": [
+        {
+          "context": "L7",
+          "frames": 466,
+          "actors": 6,
+          "contacts": 27,
+          "maxCm": 0.5,
+          "p95Cm": 0.3
+        }
+      ],
+      "contextsProven": true,
+      "correctionsProven": true,
+      "stagedMotionProven": true,
+      "stagedCoverage": [
+        {
+          "id": 108,
+          "frames": 224,
+          "travelM": 5.767949798483303,
+          "moving": true,
+          "outcome": {
+            "id": 108,
+            "exists": true,
+            "health": 0,
+            "deathFrame": 226,
+            "motion": {
+              "x": -79.52440094865743,
+              "z": 50.947944346536545,
+              "travelM": 5.768172020705528,
+              "movingFrames": 115,
+              "aliveFrames": 224
+            }
+          },
+          "stationary": false,
+          "covered": true
+        },
+        {
+          "id": 109,
+          "frames": 9,
+          "travelM": 0,
+          "moving": false,
+          "outcome": {
+            "id": 109,
+            "exists": true,
+            "health": 0,
+            "deathFrame": 918,
+            "motion": {
+              "x": -72.795,
+              "z": 47,
+              "travelM": 0,
+              "movingFrames": 0,
+              "aliveFrames": 9
+            }
+          },
+          "stationary": true,
+          "covered": true
+        },
+        {
+          "id": 110,
+          "frames": 68,
+          "travelM": 0,
+          "moving": false,
+          "outcome": {
+            "id": 110,
+            "exists": true,
+            "health": 0,
+            "deathFrame": 831,
+            "motion": {
+              "x": -78.5,
+              "z": 49.29,
+              "travelM": 0,
+              "movingFrames": 0,
+              "aliveFrames": 68
+            }
+          },
+          "stationary": true,
+          "covered": true
+        },
+        {
+          "id": 111,
+          "frames": 68,
+          "travelM": 0,
+          "moving": false,
+          "outcome": {
+            "id": 111,
+            "exists": true,
+            "health": 0,
+            "deathFrame": 989,
+            "motion": {
+              "x": -78.5,
+              "z": 44.71,
+              "travelM": 0,
+              "movingFrames": 0,
+              "aliveFrames": 68
+            }
+          },
+          "stationary": true,
+          "covered": true
+        },
+        {
+          "id": 112,
+          "frames": 82,
+          "travelM": 2.784216845743822,
+          "moving": true,
+          "outcome": {
+            "id": 112,
+            "exists": true,
+            "health": 0,
+            "deathFrame": 1187,
+            "motion": {
+              "x": -81.57877110912312,
+              "z": 50.21419527297694,
+              "travelM": 2.784216845743822,
+              "movingFrames": 61,
+              "aliveFrames": 82
+            }
+          },
+          "stationary": false,
+          "covered": true
+        },
+        {
+          "id": 113,
+          "frames": 15,
+          "travelM": 0,
+          "moving": false,
+          "outcome": {
+            "id": 113,
+            "exists": true,
+            "health": 0,
+            "deathFrame": 17,
+            "motion": {
+              "x": -72.795,
+              "z": 44.71,
+              "travelM": 0,
+              "movingFrames": 0,
+              "aliveFrames": 15
+            }
+          },
+          "stationary": true,
+          "covered": true
+        }
+      ],
+      "captureCamera": [
+        {
+          "frame": 120,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -78.5,
+            0.13000002384171144,
+            51.29000091552732
+          ],
+          "target": [
+            -78.5,
+            0.13000002384171144,
+            51.29000091552732
+          ],
+          "position": [
+            -62.196250019695995,
+            16.881879714177195,
+            67.59375089583133
+          ],
+          "spot": null
+        },
+        {
+          "frame": 121,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -78.5,
+            0.13000002384172538,
+            51.29000091552732
+          ],
+          "target": [
+            -78.5,
+            0.13000002384172538,
+            51.29000091552732
+          ],
+          "position": [
+            -62.196250019695995,
+            16.88187971417721,
+            67.59375089583133
+          ],
+          "spot": null
+        },
+        {
+          "frame": 122,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -78.5,
+            0.13000002384173798,
+            51.29000091552732
+          ],
+          "target": [
+            -78.5,
+            0.13000002384173798,
+            51.29000091552732
+          ],
+          "position": [
+            -62.196250019695995,
+            16.881879714177224,
+            67.59375089583133
+          ],
+          "spot": null
+        },
+        {
+          "frame": 123,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -78.5,
+            0.13000002384174938,
+            51.29000091552732
+          ],
+          "target": [
+            -78.5,
+            0.13000002384174938,
+            51.29000091552732
+          ],
+          "position": [
+            -62.196250019695995,
+            16.881879714177234,
+            67.59375089583133
+          ],
+          "spot": null
+        },
+        {
+          "frame": 124,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -78.5,
+            0.1300000238417597,
+            51.29000091552732
+          ],
+          "target": [
+            -78.5,
+            0.1300000238417597,
+            51.29000091552732
+          ],
+          "position": [
+            -62.196250019695995,
+            16.881879714177245,
+            67.59375089583133
+          ],
+          "spot": null
+        },
+        {
+          "frame": 125,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -78.5,
+            0.13000002384176906,
+            51.29000091552732
+          ],
+          "target": [
+            -78.5,
+            0.13000002384176906,
+            51.29000091552732
+          ],
+          "position": [
+            -62.196250019695995,
+            16.881879714177256,
+            67.59375089583133
+          ],
+          "spot": null
+        }
+      ],
+      "errors": [],
+      "mode": "l7-bus",
+      "tier": "low",
+      "samples": 466,
+      "groups": 6,
+      "groundedGroups": 6,
+      "classifications": {
+        "grounded": 6
+      },
+      "p95Cm": 0.3,
+      "maxCm": 0.5,
+      "corrections": [
+        {
+          "kind": "separationM",
+          "groups": 2,
+          "pass": true,
+          "contacts": 20,
+          "p95Cm": 0.3,
+          "maxCm": 0.5
+        },
+        {
+          "kind": "collisionM",
+          "groups": 0,
+          "pass": true,
+          "contacts": 0,
+          "p95Cm": null,
+          "maxCm": null
+        }
+      ],
+      "failures": []
+    },
+    {
+      "pass": true,
+      "sourceHash": "dbbbba6f862b8ddfca9c0163b563d9964e20854a96243021fff7a6bed5df64ea",
+      "sourceStable": true,
+      "contextCoverage": [
+        {
+          "context": "L4",
+          "frames": 4782,
+          "actors": 6,
+          "contacts": 123,
+          "maxCm": 1.7,
+          "p95Cm": 0.9
+        }
+      ],
+      "contextsProven": true,
+      "correctionsProven": true,
+      "stagedMotionProven": true,
+      "stagedCoverage": [
+        {
+          "id": 145,
+          "frames": 109,
+          "travelM": 4.756093124966606,
+          "moving": true,
+          "outcome": {
+            "id": 145,
+            "exists": true,
+            "health": 45,
+            "deathFrame": -1861,
+            "motion": {
+              "x": -5.407775374360514,
+              "z": -20.54856283551732,
+              "travelM": 8.163554967176779,
+              "movingFrames": 186,
+              "aliveFrames": 1200
+            }
+          },
+          "stationary": false,
+          "covered": true
+        },
+        {
+          "id": 146,
+          "frames": 1200,
+          "travelM": 2.386894778322335,
+          "moving": true,
+          "outcome": {
+            "id": 146,
+            "exists": true,
+            "health": 45,
+            "deathFrame": -1861,
+            "motion": {
+              "x": -7.104733293430808,
+              "z": -21.70457695090748,
+              "travelM": 2.586894778322335,
+              "movingFrames": 72,
+              "aliveFrames": 1200
+            }
+          },
+          "stationary": false,
+          "covered": true
+        },
+        {
+          "id": 147,
+          "frames": 1200,
+          "travelM": 0.7135155834371693,
+          "moving": true,
+          "outcome": {
+            "id": 147,
+            "exists": true,
+            "health": 45,
+            "deathFrame": -1861,
+            "motion": {
+              "x": -7.5249988261487335,
+              "z": -20.847797774486956,
+              "travelM": 0.7135155834371693,
+              "movingFrames": 24,
+              "aliveFrames": 1200
+            }
+          },
+          "stationary": false,
+          "covered": true
+        },
+        {
+          "id": 148,
+          "frames": 401,
+          "travelM": 4.113134030499985,
+          "moving": true,
+          "outcome": {
+            "id": 148,
+            "exists": true,
+            "health": 45,
+            "deathFrame": -1861,
+            "motion": {
+              "x": -14.273227592689766,
+              "z": -17.340900564188605,
+              "travelM": 5.511020056442383,
+              "movingFrames": 227,
+              "aliveFrames": 460
+            }
+          },
+          "stationary": false,
+          "covered": true
+        },
+        {
+          "id": 149,
+          "frames": 752,
+          "travelM": 9.968415919748715,
+          "moving": true,
+          "outcome": {
+            "id": 149,
+            "exists": true,
+            "health": 45,
+            "deathFrame": -1861,
+            "motion": {
+              "x": -7.205756978525503,
+              "z": 0.8712174850939499,
+              "travelM": 19.79240224187867,
+              "movingFrames": 770,
+              "aliveFrames": 1200
+            }
+          },
+          "stationary": false,
+          "covered": true
+        },
+        {
+          "id": 150,
+          "frames": 1120,
+          "travelM": 15.623543473029475,
+          "moving": true,
+          "outcome": {
+            "id": 150,
+            "exists": true,
+            "health": 1,
+            "deathFrame": -1861,
+            "motion": {
+              "x": -6.91536425472637,
+              "z": -19.87731038630045,
+              "travelM": 18.679210376552724,
+              "movingFrames": 473,
+              "aliveFrames": 1200
+            }
+          },
+          "stationary": false,
+          "covered": true
+        }
+      ],
+      "captureCamera": [
+        {
+          "frame": 120,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -6.445000171661374,
+            0,
+            -20.849502563476552
+          ],
+          "target": [
+            -6.445000171661374,
+            0,
+            -20.849502563476552
+          ],
+          "position": [
+            9.858749808642628,
+            16.751879690335485,
+            -4.545752583172547
+          ],
+          "spot": null
+        },
+        {
+          "frame": 121,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -6.445000171661374,
+            0,
+            -20.849502563476552
+          ],
+          "target": [
+            -6.445000171661374,
+            0,
+            -20.849502563476552
+          ],
+          "position": [
+            9.858749808642628,
+            16.751879690335485,
+            -4.545752583172547
+          ],
+          "spot": null
+        },
+        {
+          "frame": 122,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -6.445000171661374,
+            0,
+            -20.849502563476552
+          ],
+          "target": [
+            -6.445000171661374,
+            0,
+            -20.849502563476552
+          ],
+          "position": [
+            9.858749808642628,
+            16.751879690335485,
+            -4.545752583172547
+          ],
+          "spot": null
+        },
+        {
+          "frame": 123,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -6.445000171661374,
+            0,
+            -20.849502563476552
+          ],
+          "target": [
+            -6.445000171661374,
+            0,
+            -20.849502563476552
+          ],
+          "position": [
+            9.858749808642628,
+            16.751879690335485,
+            -4.545752583172547
+          ],
+          "spot": null
+        },
+        {
+          "frame": 124,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -6.445000171661374,
+            0,
+            -20.849502563476552
+          ],
+          "target": [
+            -6.445000171661374,
+            0,
+            -20.849502563476552
+          ],
+          "position": [
+            9.858749808642628,
+            16.751879690335485,
+            -4.545752583172547
+          ],
+          "spot": null
+        },
+        {
+          "frame": 125,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -6.445000171661374,
+            0,
+            -20.849502563476552
+          ],
+          "target": [
+            -6.445000171661374,
+            0,
+            -20.849502563476552
+          ],
+          "position": [
+            9.858749808642628,
+            16.751879690335485,
+            -4.545752583172547
+          ],
+          "spot": null
+        }
+      ],
+      "errors": [],
+      "mode": "l4-parked",
+      "tier": "high",
+      "samples": 4782,
+      "groups": 6,
+      "groundedGroups": 6,
+      "classifications": {
+        "grounded": 6
+      },
+      "p95Cm": 0.9,
+      "maxCm": 1.7,
+      "corrections": [
+        {
+          "kind": "separationM",
+          "groups": 6,
+          "pass": true,
+          "contacts": 61,
+          "p95Cm": 0.9,
+          "maxCm": 1.7
+        },
+        {
+          "kind": "collisionM",
+          "groups": 0,
+          "pass": true,
+          "contacts": 0,
+          "p95Cm": null,
+          "maxCm": null
+        }
+      ],
+      "failures": []
+    },
+    {
+      "pass": true,
+      "sourceHash": "dbbbba6f862b8ddfca9c0163b563d9964e20854a96243021fff7a6bed5df64ea",
+      "sourceStable": true,
+      "contextCoverage": [
+        {
+          "context": "L4",
+          "frames": 4490,
+          "actors": 6,
+          "contacts": 115,
+          "maxCm": 2.1,
+          "p95Cm": 1.6
+        }
+      ],
+      "contextsProven": true,
+      "correctionsProven": true,
+      "stagedMotionProven": true,
+      "stagedCoverage": [
+        {
+          "id": 102,
+          "frames": 108,
+          "travelM": 4.661703256018295,
+          "moving": true,
+          "outcome": {
+            "id": 102,
+            "exists": true,
+            "health": 45,
+            "deathFrame": -1861,
+            "motion": {
+              "x": -5.365021614942431,
+              "z": -20.85630822488912,
+              "travelM": 8.79941227632299,
+              "movingFrames": 210,
+              "aliveFrames": 1200
+            }
+          },
+          "stationary": false,
+          "covered": true
+        },
+        {
+          "id": 103,
+          "frames": 1200,
+          "travelM": 2.2239875954139463,
+          "moving": true,
+          "outcome": {
+            "id": 103,
+            "exists": true,
+            "health": 45,
+            "deathFrame": -1861,
+            "motion": {
+              "x": -7.087993193062236,
+              "z": -21.71723522647237,
+              "travelM": 2.2239875954139463,
+              "movingFrames": 62,
+              "aliveFrames": 1200
+            }
+          },
+          "stationary": false,
+          "covered": true
+        },
+        {
+          "id": 104,
+          "frames": 1200,
+          "travelM": 0.7109288839554609,
+          "moving": true,
+          "outcome": {
+            "id": 104,
+            "exists": true,
+            "health": 45,
+            "deathFrame": -1861,
+            "motion": {
+              "x": -7.525000171661289,
+              "z": -20.84950212698413,
+              "travelM": 0.7109288839554609,
+              "movingFrames": 23,
+              "aliveFrames": 1200
+            }
+          },
+          "stationary": false,
+          "covered": true
+        },
+        {
+          "id": 105,
+          "frames": 467,
+          "travelM": 13.468534017571741,
+          "moving": true,
+          "outcome": {
+            "id": 105,
+            "exists": true,
+            "health": 45,
+            "deathFrame": -1861,
+            "motion": {
+              "x": -5.7947446052509175,
+              "z": -19.987198847636133,
+              "travelM": 18.086816718155532,
+              "movingFrames": 544,
+              "aliveFrames": 1200
+            }
+          },
+          "stationary": false,
+          "covered": true
+        },
+        {
+          "id": 106,
+          "frames": 386,
+          "travelM": 6.17375942741832,
+          "moving": true,
+          "outcome": {
+            "id": 106,
+            "exists": true,
+            "health": 37,
+            "deathFrame": -1861,
+            "motion": {
+              "x": -8.347578665450781,
+              "z": -12.999806251631354,
+              "travelM": 6.196637596029723,
+              "movingFrames": 172,
+              "aliveFrames": 386
+            }
+          },
+          "stationary": false,
+          "covered": true
+        },
+        {
+          "id": 107,
+          "frames": 1129,
+          "travelM": 15.712906293192653,
+          "moving": true,
+          "outcome": {
+            "id": 107,
+            "exists": true,
+            "health": 45,
+            "deathFrame": -1861,
+            "motion": {
+              "x": -6.832048567315718,
+              "z": -19.841239929327404,
+              "travelM": 18.20818018103663,
+              "movingFrames": 449,
+              "aliveFrames": 1200
+            }
+          },
+          "stationary": false,
+          "covered": true
+        }
+      ],
+      "captureCamera": [
+        {
+          "frame": 120,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -6.445000171661374,
+            0,
+            -20.849502563476552
+          ],
+          "target": [
+            -6.445000171661374,
+            0,
+            -20.849502563476552
+          ],
+          "position": [
+            9.858749808642628,
+            16.751879690335485,
+            -4.545752583172547
+          ],
+          "spot": null
+        },
+        {
+          "frame": 121,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -6.445000171661374,
+            0,
+            -20.849502563476552
+          ],
+          "target": [
+            -6.445000171661374,
+            0,
+            -20.849502563476552
+          ],
+          "position": [
+            9.858749808642628,
+            16.751879690335485,
+            -4.545752583172547
+          ],
+          "spot": null
+        },
+        {
+          "frame": 122,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -6.445000171661374,
+            0,
+            -20.849502563476552
+          ],
+          "target": [
+            -6.445000171661374,
+            0,
+            -20.849502563476552
+          ],
+          "position": [
+            9.858749808642628,
+            16.751879690335485,
+            -4.545752583172547
+          ],
+          "spot": null
+        },
+        {
+          "frame": 123,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -6.445000171661374,
+            0,
+            -20.849502563476552
+          ],
+          "target": [
+            -6.445000171661374,
+            0,
+            -20.849502563476552
+          ],
+          "position": [
+            9.858749808642628,
+            16.751879690335485,
+            -4.545752583172547
+          ],
+          "spot": null
+        },
+        {
+          "frame": 124,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -6.445000171661374,
+            0,
+            -20.849502563476552
+          ],
+          "target": [
+            -6.445000171661374,
+            0,
+            -20.849502563476552
+          ],
+          "position": [
+            9.858749808642628,
+            16.751879690335485,
+            -4.545752583172547
+          ],
+          "spot": null
+        },
+        {
+          "frame": 125,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -6.445000171661374,
+            0,
+            -20.849502563476552
+          ],
+          "target": [
+            -6.445000171661374,
+            0,
+            -20.849502563476552
+          ],
+          "position": [
+            9.858749808642628,
+            16.751879690335485,
+            -4.545752583172547
+          ],
+          "spot": null
+        }
+      ],
+      "errors": [],
+      "mode": "l4-parked",
+      "tier": "low",
+      "samples": 4490,
+      "groups": 6,
+      "groundedGroups": 6,
+      "classifications": {
+        "grounded": 6
+      },
+      "p95Cm": 1.6,
+      "maxCm": 2.1,
+      "corrections": [
+        {
+          "kind": "separationM",
+          "groups": 6,
+          "pass": true,
+          "contacts": 67,
+          "p95Cm": 1.4,
+          "maxCm": 2.1
+        },
+        {
+          "kind": "collisionM",
+          "groups": 0,
+          "pass": true,
+          "contacts": 0,
+          "p95Cm": null,
+          "maxCm": null
+        }
+      ],
+      "failures": []
+    },
+    {
+      "pass": true,
+      "sourceHash": "dbbbba6f862b8ddfca9c0163b563d9964e20854a96243021fff7a6bed5df64ea",
+      "sourceStable": true,
+      "contextCoverage": [
+        {
+          "context": "L4",
+          "frames": 5883,
+          "actors": 27,
+          "contacts": 364,
+          "maxCm": 2.6,
+          "p95Cm": 1.8
+        }
+      ],
+      "contextsProven": true,
+      "correctionsProven": true,
+      "stagedMotionProven": true,
+      "stagedCoverage": [
+        {
+          "id": 319,
+          "frames": 379,
+          "travelM": 6.362960855656997,
+          "moving": true,
+          "outcome": {
+            "id": 319,
+            "exists": true,
+            "health": 0,
+            "deathFrame": 1163,
+            "motion": {
+              "x": -15.641863423209841,
+              "z": 28.362696672951436,
+              "travelM": 6.362960855656997,
+              "movingFrames": 126,
+              "aliveFrames": 379
+            }
+          },
+          "stationary": false,
+          "covered": true
+        },
+        {
+          "id": 320,
+          "frames": 249,
+          "travelM": 5.547124447634815,
+          "moving": true,
+          "outcome": {
+            "id": 320,
+            "exists": true,
+            "health": 0,
+            "deathFrame": 1051,
+            "motion": {
+              "x": -20.455912479521913,
+              "z": 21.381972521368354,
+              "travelM": 7.18099844006194,
+              "movingFrames": 100,
+              "aliveFrames": 386
+            }
+          },
+          "stationary": false,
+          "covered": true
+        },
+        {
+          "id": 321,
+          "frames": 267,
+          "travelM": 2.362031830170947,
+          "moving": true,
+          "outcome": {
+            "id": 321,
+            "exists": true,
+            "health": 0,
+            "deathFrame": 1070,
+            "motion": {
+              "x": -15.625291913966779,
+              "z": 28.367549922116673,
+              "travelM": 2.3723017207647725,
+              "movingFrames": 36,
+              "aliveFrames": 267
+            }
+          },
+          "stationary": false,
+          "covered": true
+        },
+        {
+          "id": 322,
+          "frames": 297,
+          "travelM": 6.367045627782937,
+          "moving": true,
+          "outcome": {
+            "id": 322,
+            "exists": true,
+            "health": 45,
+            "deathFrame": -4321,
+            "motion": {
+              "x": -22.748111523380537,
+              "z": 21.76444447437625,
+              "travelM": 6.367045627782937,
+              "movingFrames": 181,
+              "aliveFrames": 337
+            }
+          },
+          "stationary": false,
+          "covered": true
+        },
+        {
+          "id": 323,
+          "frames": 413,
+          "travelM": 6.651522363941822,
+          "moving": true,
+          "outcome": {
+            "id": 323,
+            "exists": true,
+            "health": 0,
+            "deathFrame": 415,
+            "motion": {
+              "x": -20.0258142144076,
+              "z": 32.8560801181666,
+              "travelM": 6.651522363941822,
+              "movingFrames": 271,
+              "aliveFrames": 413
+            }
+          },
+          "stationary": false,
+          "covered": true
+        },
+        {
+          "id": 324,
+          "frames": 1,
+          "travelM": 0,
+          "moving": false,
+          "outcome": {
+            "id": 324,
+            "exists": true,
+            "health": 0,
+            "deathFrame": 898,
+            "motion": {
+              "x": -22.84366674945401,
+              "z": 23.071038822117416,
+              "travelM": 0.0008888888888891564,
+              "movingFrames": 0,
+              "aliveFrames": 2
+            }
+          },
+          "stationary": true,
+          "covered": true
+        }
+      ],
+      "captureCamera": [
+        {
+          "frame": 120,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -15.330040931701665,
+            0,
+            27.328691482543935
+          ],
+          "target": [
+            -15.330040931701665,
+            0,
+            27.328691482543935
+          ],
+          "position": [
+            0.9738775230363307,
+            16.752174548834414,
+            43.632441462847936
+          ],
+          "spot": null
+        },
+        {
+          "frame": 121,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -15.330040931701665,
+            0,
+            27.328691482543935
+          ],
+          "target": [
+            -15.330040931701665,
+            0,
+            27.328691482543935
+          ],
+          "position": [
+            0.9739819144171874,
+            16.751995776252944,
+            43.632441462847936
+          ],
+          "spot": null
+        },
+        {
+          "frame": 122,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -15.330040931701665,
+            0,
+            27.328691482543935
+          ],
+          "target": [
+            -15.330040931701665,
+            0,
+            27.328691482543935
+          ],
+          "position": [
+            0.9737895272788862,
+            16.751671598863528,
+            43.632441462847936
+          ],
+          "spot": null
+        },
+        {
+          "frame": 123,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -15.330040931701665,
+            0,
+            27.328691482543935
+          ],
+          "target": [
+            -15.330040931701665,
+            0,
+            27.328691482543935
+          ],
+          "position": [
+            0.9735618479052333,
+            16.751758960603105,
+            43.632441462847936
+          ],
+          "spot": null
+        },
+        {
+          "frame": 124,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -15.330040931701665,
+            0,
+            27.328691482543935
+          ],
+          "target": [
+            -15.330040931701665,
+            0,
+            27.328691482543935
+          ],
+          "position": [
+            0.9735343807248796,
+            16.75202061446449,
+            43.632441462847936
+          ],
+          "spot": null
+        },
+        {
+          "frame": 125,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -15.330040931701665,
+            0,
+            27.328691482543935
+          ],
+          "target": [
+            -15.330040931701665,
+            0,
+            27.328691482543935
+          ],
+          "position": [
+            0.9736876763357178,
+            16.751993707316423,
+            43.632441462847936
+          ],
+          "spot": null
+        }
+      ],
+      "errors": [],
+      "mode": "l4-tank",
+      "tier": "high",
+      "samples": 5883,
+      "groups": 27,
+      "groundedGroups": 27,
+      "classifications": {
+        "grounded": 27
+      },
+      "p95Cm": 1.8,
+      "maxCm": 2.6,
+      "corrections": [
+        {
+          "kind": "separationM",
+          "groups": 19,
+          "pass": true,
+          "contacts": 242,
+          "p95Cm": 1.8,
+          "maxCm": 2.6
+        },
+        {
+          "kind": "collisionM",
+          "groups": 4,
+          "pass": true,
+          "contacts": 31,
+          "p95Cm": 0.8,
+          "maxCm": 1.2
+        }
+      ],
+      "failures": []
+    },
+    {
+      "pass": true,
+      "sourceHash": "dbbbba6f862b8ddfca9c0163b563d9964e20854a96243021fff7a6bed5df64ea",
+      "sourceStable": true,
+      "contextCoverage": [
+        {
+          "context": "L4",
+          "frames": 7469,
+          "actors": 28,
+          "contacts": 440,
+          "maxCm": 6.4,
+          "p95Cm": 2
+        }
+      ],
+      "contextsProven": true,
+      "correctionsProven": true,
+      "stagedMotionProven": true,
+      "stagedCoverage": [
+        {
+          "id": 248,
+          "frames": 272,
+          "travelM": 3.9895288497059562,
+          "moving": true,
+          "outcome": {
+            "id": 248,
+            "exists": true,
+            "health": 23,
+            "deathFrame": -4321,
+            "motion": {
+              "x": -26.715565696432026,
+              "z": 41.66057414031491,
+              "travelM": 21.2982412307136,
+              "movingFrames": 818,
+              "aliveFrames": 1200
+            }
+          },
+          "stationary": false,
+          "covered": true
+        },
+        {
+          "id": 249,
+          "frames": 283,
+          "travelM": 1.5617018658189055,
+          "moving": true,
+          "outcome": {
+            "id": 249,
+            "exists": true,
+            "health": 45,
+            "deathFrame": -4321,
+            "motion": {
+              "x": -21.43061920550475,
+              "z": 21.7981933923838,
+              "travelM": 1.679374421138111,
+              "movingFrames": 33,
+              "aliveFrames": 283
+            }
+          },
+          "stationary": false,
+          "covered": true
+        },
+        {
+          "id": 232,
+          "frames": 978,
+          "travelM": 15.00440487905761,
+          "moving": true,
+          "outcome": {
+            "id": 232,
+            "exists": true,
+            "health": 450,
+            "deathFrame": -4321,
+            "motion": {
+              "x": -33.64143130018283,
+              "z": 31.98470585146805,
+              "travelM": 26.10457404617433,
+              "movingFrames": 726,
+              "aliveFrames": 1200
+            }
+          },
+          "stationary": false,
+          "covered": true
+        },
+        {
+          "id": 171,
+          "frames": 386,
+          "travelM": 16.229182214327576,
+          "moving": true,
+          "outcome": {
+            "id": 171,
+            "exists": true,
+            "health": 203,
+            "deathFrame": -4321,
+            "motion": {
+              "x": -14.84063946750226,
+              "z": 26.983053701177983,
+              "travelM": 16.693414096985123,
+              "movingFrames": 418,
+              "aliveFrames": 1200
+            }
+          },
+          "stationary": false,
+          "covered": true
+        },
+        {
+          "id": 234,
+          "frames": 245,
+          "travelM": 11.82963861612465,
+          "moving": true,
+          "outcome": {
+            "id": 234,
+            "exists": true,
+            "health": 0,
+            "deathFrame": 276,
+            "motion": {
+              "x": -25.72906448434089,
+              "z": 31.901114239714342,
+              "travelM": 14.360118901701986,
+              "movingFrames": 257,
+              "aliveFrames": 274
+            }
+          },
+          "stationary": false,
+          "covered": true
+        },
+        {
+          "id": 224,
+          "frames": 271,
+          "travelM": 8.31652908594635,
+          "moving": true,
+          "outcome": {
+            "id": 224,
+            "exists": true,
+            "health": 0,
+            "deathFrame": 511,
+            "motion": {
+              "x": -13.680002217997274,
+              "z": 4.164098914601367,
+              "travelM": 23.195380090091533,
+              "movingFrames": 455,
+              "aliveFrames": 509
+            }
+          },
+          "stationary": false,
+          "covered": true
+        }
+      ],
+      "captureCamera": [
+        {
+          "frame": 120,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -15.52650928497315,
+            0,
+            26.14879798889159
+          ],
+          "target": [
+            -15.52650928497315,
+            0,
+            26.14879798889159
+          ],
+          "position": [
+            0.7774091697648463,
+            16.752174548834414,
+            42.45254796919559
+          ],
+          "spot": null
+        },
+        {
+          "frame": 121,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -15.52650928497315,
+            0,
+            26.14879798889159
+          ],
+          "target": [
+            -15.52650928497315,
+            0,
+            26.14879798889159
+          ],
+          "position": [
+            0.777513561145703,
+            16.751995776252944,
+            42.45254796919559
+          ],
+          "spot": null
+        },
+        {
+          "frame": 122,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -15.52650928497315,
+            0,
+            26.14879798889159
+          ],
+          "target": [
+            -15.52650928497315,
+            0,
+            26.14879798889159
+          ],
+          "position": [
+            0.7773211740074019,
+            16.751671598863528,
+            42.45254796919559
+          ],
+          "spot": null
+        },
+        {
+          "frame": 123,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -15.52650928497315,
+            0,
+            26.14879798889159
+          ],
+          "target": [
+            -15.52650928497315,
+            0,
+            26.14879798889159
+          ],
+          "position": [
+            0.7770934946337489,
+            16.751758960603105,
+            42.45254796919559
+          ],
+          "spot": null
+        },
+        {
+          "frame": 124,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -15.52650928497315,
+            0,
+            26.14879798889159
+          ],
+          "target": [
+            -15.52650928497315,
+            0,
+            26.14879798889159
+          ],
+          "position": [
+            0.7770660274533953,
+            16.75202061446449,
+            42.45254796919559
+          ],
+          "spot": null
+        },
+        {
+          "frame": 125,
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -15.52650928497315,
+            0,
+            26.14879798889159
+          ],
+          "target": [
+            -15.52650928497315,
+            0,
+            26.14879798889159
+          ],
+          "position": [
+            0.7772193230642335,
+            16.751993707316423,
+            42.45254796919559
+          ],
+          "spot": null
+        }
+      ],
+      "errors": [],
+      "mode": "l4-tank",
+      "tier": "low",
+      "samples": 7469,
+      "groups": 28,
+      "groundedGroups": 27,
+      "classifications": {
+        "grounded": 27,
+        "matched-unplanted-action": 1
+      },
+      "p95Cm": 2,
+      "maxCm": 6.4,
+      "corrections": [
+        {
+          "kind": "separationM",
+          "groups": 26,
+          "pass": true,
+          "contacts": 270,
+          "p95Cm": 2,
+          "maxCm": 6.4
+        },
+        {
+          "kind": "collisionM",
+          "groups": 9,
+          "pass": true,
+          "contacts": 40,
+          "p95Cm": 0.5,
+          "maxCm": 1.3
+        }
+      ],
+      "failures": []
+    }
+  ],
+  "batches": [
+    {
+      "pass": true,
+      "rows": [
+        {
+          "mode": "L9",
+          "tier": "high",
+          "code": 0,
+          "seconds": 117.289,
+          "file": "test-results/s83-vehicleslide/campaign/L9-high.json",
+          "sourceHash": "dbbbba6f862b8ddfca9c0163b563d9964e20854a96243021fff7a6bed5df64ea",
+          "pass": true
+        },
+        {
+          "mode": "L9",
+          "tier": "low",
+          "code": 0,
+          "seconds": 89.9,
+          "file": "test-results/s83-vehicleslide/campaign/L9-low.json",
+          "sourceHash": "dbbbba6f862b8ddfca9c0163b563d9964e20854a96243021fff7a6bed5df64ea",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "pass": true,
+      "rows": [
+        {
+          "mode": "l7-bus",
+          "tier": "high",
+          "code": 0,
+          "seconds": 14.536,
+          "file": "test-results/s83-vehicleslide/campaign/l7-bus-high.json",
+          "sourceHash": "dbbbba6f862b8ddfca9c0163b563d9964e20854a96243021fff7a6bed5df64ea",
+          "pass": true
+        },
+        {
+          "mode": "l7-bus",
+          "tier": "low",
+          "code": 0,
+          "seconds": 13.435,
+          "file": "test-results/s83-vehicleslide/campaign/l7-bus-low.json",
+          "sourceHash": "dbbbba6f862b8ddfca9c0163b563d9964e20854a96243021fff7a6bed5df64ea",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "pass": true,
+      "rows": [
+        {
+          "mode": "l4-parked",
+          "tier": "high",
+          "code": 0,
+          "seconds": 32.567,
+          "file": "test-results/s83-vehicleslide/campaign/l4-parked-high.json",
+          "sourceHash": "dbbbba6f862b8ddfca9c0163b563d9964e20854a96243021fff7a6bed5df64ea",
+          "pass": true
+        },
+        {
+          "mode": "l4-parked",
+          "tier": "low",
+          "code": 0,
+          "seconds": 16.717,
+          "file": "test-results/s83-vehicleslide/campaign/l4-parked-low.json",
+          "sourceHash": "dbbbba6f862b8ddfca9c0163b563d9964e20854a96243021fff7a6bed5df64ea",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "pass": true,
+      "rows": [
+        {
+          "mode": "l4-tank",
+          "tier": "high",
+          "code": 0,
+          "seconds": 47.863,
+          "file": "test-results/s83-vehicleslide/campaign/l4-tank-high.json",
+          "sourceHash": "dbbbba6f862b8ddfca9c0163b563d9964e20854a96243021fff7a6bed5df64ea",
+          "pass": true
+        },
+        {
+          "mode": "l4-tank",
+          "tier": "low",
+          "code": 0,
+          "seconds": 27.064,
+          "file": "test-results/s83-vehicleslide/campaign/l4-tank-low.json",
+          "sourceHash": "dbbbba6f862b8ddfca9c0163b563d9964e20854a96243021fff7a6bed5df64ea",
+          "pass": true
+        }
+      ]
+    }
+  ],
+  "threat": {
+    "aggregateFlags": [
+      "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+    ],
+    "levelFlags": [],
+    "passiveFlags": []
+  },
+  "routeRegression": {
+    "exit": 0,
+    "cases": 18
+  },
+  "remoteNpmTest": {
+    "exit": 0,
+    "passed": 106,
+    "skipped": 1,
+    "seconds": 200.2,
+    "budgetSeconds": 240
+  },
+  "remoteE09": {
+    "exit": 0,
+    "passed": 106,
+    "skipped": 1,
+    "unitSeconds": 201.5
+  },
+  "open": [
+    "Browser QA needed",
+    "Dedicated courier/Alpha grab beside hull not independently attributed",
+    "L7 departure and L4 moving vehicle windows not measured",
+    "Boarder slot overlap/climbing review",
+    "Twenty motion controls not rerun after latest cheap solver fix",
+    "Repeat typecheck/lint after final observer bookkeeping",
+    "Manual WebGPU review not performed"
+  ]
+}

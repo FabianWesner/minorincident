@@ -1,0 +1,246 @@
+[
+  {
+    "tier": "high",
+    "scene": "ram",
+    "resolvedShoves": 7,
+    "maxShoveM": 0.1200000000000001,
+    "slideChecks": [
+      {
+        "actor": "infected-0",
+        "contacts": 8,
+        "p95Cm": 0.2,
+        "maxCm": 0.3,
+        "pass": true
+      },
+      {
+        "actor": "infected-1",
+        "contacts": 10,
+        "p95Cm": 0.3,
+        "maxCm": 0.8,
+        "pass": true
+      },
+      {
+        "actor": "infected-2",
+        "contacts": 8,
+        "p95Cm": 0.1,
+        "maxCm": 0.4,
+        "pass": true
+      },
+      {
+        "actor": "infected-3",
+        "contacts": 11,
+        "p95Cm": 0.1,
+        "maxCm": 0.1,
+        "pass": true
+      },
+      {
+        "actor": "infected-4",
+        "contacts": 11,
+        "p95Cm": 0.1,
+        "maxCm": 0.1,
+        "pass": true
+      },
+      {
+        "actor": "infected-5",
+        "contacts": 9,
+        "p95Cm": 0.2,
+        "maxCm": 0.2,
+        "pass": true
+      }
+    ]
+  },
+  {
+    "tier": "high",
+    "scene": "surrounded",
+    "resolvedShoves": 0,
+    "maxShoveM": 0,
+    "slideChecks": [
+      {
+        "actor": "infected-0",
+        "contacts": 23,
+        "p95Cm": 0.3,
+        "maxCm": 13.9,
+        "pass": true
+      },
+      {
+        "actor": "infected-1",
+        "contacts": 29,
+        "p95Cm": 1.1,
+        "maxCm": 2.5,
+        "pass": true
+      },
+      {
+        "actor": "infected-2",
+        "contacts": 22,
+        "p95Cm": 2.7,
+        "maxCm": 4.3,
+        "pass": true
+      },
+      {
+        "actor": "infected-3",
+        "contacts": 17,
+        "p95Cm": 2,
+        "maxCm": 2.1,
+        "pass": true
+      }
+    ]
+  },
+  {
+    "tier": "high",
+    "scene": "clinging",
+    "resolvedShoves": 0,
+    "maxShoveM": 0,
+    "slideChecks": [
+      {
+        "actor": "infected-0",
+        "contacts": 0,
+        "p95Cm": null,
+        "maxCm": 0,
+        "pass": false
+      },
+      {
+        "actor": "infected-1",
+        "contacts": 1,
+        "p95Cm": 0,
+        "maxCm": 0,
+        "pass": false
+      },
+      {
+        "actor": "infected-2",
+        "contacts": 1,
+        "p95Cm": 0,
+        "maxCm": 0,
+        "pass": false
+      },
+      {
+        "actor": "infected-3",
+        "contacts": 1,
+        "p95Cm": 0,
+        "maxCm": 0,
+        "pass": false
+      }
+    ]
+  },
+  {
+    "tier": "low",
+    "scene": "ram",
+    "resolvedShoves": 7,
+    "maxShoveM": 0.1200000000000001,
+    "slideChecks": [
+      {
+        "actor": "infected-0",
+        "contacts": 8,
+        "p95Cm": 0.2,
+        "maxCm": 0.3,
+        "pass": true
+      },
+      {
+        "actor": "infected-1",
+        "contacts": 11,
+        "p95Cm": 0.3,
+        "maxCm": 0.6,
+        "pass": true
+      },
+      {
+        "actor": "infected-2",
+        "contacts": 10,
+        "p95Cm": 0.1,
+        "maxCm": 0.2,
+        "pass": true
+      },
+      {
+        "actor": "infected-3",
+        "contacts": 12,
+        "p95Cm": 0.1,
+        "maxCm": 0.1,
+        "pass": true
+      },
+      {
+        "actor": "infected-4",
+        "contacts": 10,
+        "p95Cm": 0.1,
+        "maxCm": 0.1,
+        "pass": true
+      },
+      {
+        "actor": "infected-5",
+        "contacts": 10,
+        "p95Cm": 0.2,
+        "maxCm": 0.2,
+        "pass": true
+      }
+    ]
+  },
+  {
+    "tier": "low",
+    "scene": "surrounded",
+    "resolvedShoves": 0,
+    "maxShoveM": 0,
+    "slideChecks": [
+      {
+        "actor": "infected-0",
+        "contacts": 25,
+        "p95Cm": 0.3,
+        "maxCm": 0.9,
+        "pass": true
+      },
+      {
+        "actor": "infected-1",
+        "contacts": 28,
+        "p95Cm": 0.9,
+        "maxCm": 2.5,
+        "pass": true
+      },
+      {
+        "actor": "infected-2",
+        "contacts": 22,
+        "p95Cm": 3.5,
+        "maxCm": 4,
+        "pass": true
+      },
+      {
+        "actor": "infected-3",
+        "contacts": 19,
+        "p95Cm": 1.5,
+        "maxCm": 1.9,
+        "pass": true
+      }
+    ]
+  },
+  {
+    "tier": "low",
+    "scene": "clinging",
+    "resolvedShoves": 0,
+    "maxShoveM": 0,
+    "slideChecks": [
+      {
+        "actor": "infected-0",
+        "contacts": 0,
+        "p95Cm": null,
+        "maxCm": 0,
+        "pass": false
+      },
+      {
+        "actor": "infected-1",
+        "contacts": 1,
+        "p95Cm": 0,
+        "maxCm": 0,
+        "pass": false
+      },
+      {
+        "actor": "infected-2",
+        "contacts": 1,
+        "p95Cm": 0,
+        "maxCm": 0,
+        "pass": false
+      },
+      {
+        "actor": "infected-3",
+        "contacts": 1,
+        "p95Cm": 0,
+        "maxCm": 0,
+        "pass": false
+      }
+    ]
+  }
+]

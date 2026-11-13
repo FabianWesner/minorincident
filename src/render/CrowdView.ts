@@ -177,11 +177,14 @@ export class CrowdView extends Group {
     // L1 v2: every infected is a pedestrian that keeps its look and is drawn by the civilian crowd (lane D); this view
     // only needs the plain runner fallback plus scripted infected actors. Without the outbreak layer keep the old set.
     const regularCrowd = this.world.scenario === 'L7' || this.world.scenario === 'L10' || this.world.scenario?.startsWith('perf-horde-');
-    // L9's future chunk encounters contain runners and Alphas (l9Groups),
-    // never the global zoo/finale cast. Keep every resident override too.
+    // L9 registers its future runner/Alpha encounters and scripted dog packs,
+    // without loading the unrelated zoo/finale cast. Keep resident overrides too.
     const crossingCrowd = this.world.scenario === 'L9';
     const actors = Object.values(this.world.missions?.def.actors ?? {}).map(actor => actor.archetype);
     const l1Roles = new Set<string>(regularCrowd || crossingCrowd || this.world.scenario === 'L6' || this.world.npcs?.civilians.outbreak || this.world.districts?.districts.some(d => isOutbreakDistrict(d.id)) ? ['infected.runner', ...actors] : ['infected.runner', ...actors, ...civilianRoles.map(role => role.variant), ...models]);
+    // Crossing set pieces spawn dog packs after this render cast is assembled.
+    // Register their existing rig/coats now, rather than galloping a runner fallback.
+    if (crossingCrowd) { l1Roles.add('infected.dog'); l1Roles.add('inf.dog'); l1Roles.add('infected.zebra'); }
     if (regularCrowd) for (const model of regularInfectedModels) l1Roles.add(model);
     // L4 sprinters always wear a shared soldier/civilian/suit skin.
     // Their unused default batch need not delay the level's loading card.
@@ -443,7 +446,7 @@ export class CrowdView extends Group {
       }
       baked.geometry.userData.crowdLod = lod;
       const locomotion = new CrowdLocomotion(model, baked.clip, this.footwork);
-      const probe = new CrowdFigureProbe(); probe.lod = lod; probe.sole = locomotion.sole; if (model.getObjectByName('legFL') || model.getObjectByName('root')?.userData.crowdQuadruped === true || alphaLooks['inf.mega-alpha'].includes(asset)) probe.animal(model);
+      const probe = new CrowdFigureProbe(); probe.lod = lod; probe.sole = locomotion.sole; if (model.getObjectByName('legFL') || model.getObjectByName('root')?.userData.crowdQuadruped === true || !!model.getObjectByName('root')?.userData.animalSoles || alphaLooks['inf.mega-alpha'].includes(asset)) probe.animal(model);
       if (!baked.clip.binds || !baked.geometry.hasAttribute('_skin')) throw new Error(`${asset} is missing the v2 skinned crowd contract`);
       this.accessories?.registerSkull(asset, baked.geometry);
       const poses = new CrowdPosePalette(baked.clip, capacity), texture = poses.texture;
@@ -958,9 +961,11 @@ export class CrowdView extends Group {
         pose.blend = blend;
         pose.clip = clip;
         pose.phase = phase;
+        pose.contactPhase = species === 'zebra' && clip === 'zebra-stampede' ? this.gait.sample(e.id, gaitDistance, 'corgi-gallop', batch.strideScale, motion.speed) : undefined;
         pose.instance = this.transform;
         pose.scale = batch.strideScale;
         pose.speed = motion.speed;
+        pose.travel = e.motion?.velocity;
         pose.time = renderTick / 60;
         pose.near = detailedFeet;
         pose.layers = layered;

@@ -1,0 +1,112 @@
+{
+  "name": "l9-apc-clinging",
+  "note": "L9-S1 isolated stopped hull attack fixture, game camera; unarmed APC and aware attackers.",
+  "seed": 31,
+  "ground": "asphalt",
+  "size": 70,
+  "dof": false,
+  "time": "L6",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0.71,
+        2.025
+      ],
+      "yaw": 90
+    },
+    {
+      "id": "infected-0",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        1,
+        2.0
+      ]
+    },
+    {
+      "id": "infected-1",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -1,
+        2.0
+      ]
+    },
+    {
+      "id": "infected-2",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        1,
+        -2.0
+      ]
+    },
+    {
+      "id": "infected-3",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -1,
+        -2.0
+      ]
+    }
+  ],
+  "vehicles": [
+    {
+      "id": "apc",
+      "asset": "vehicle.military-apc",
+      "at": [
+        0,
+        0
+      ],
+      "floor": true
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "apc",
+    "zoom": 1.5
+  },
+  "script": [
+    {
+      "frame": 1,
+      "actor": "courier",
+      "do": {
+        "interact": true
+      }
+    },
+    {
+      "frame": 100,
+      "actor": "courier",
+      "do": {
+        "drive": {
+          "throttle": 0.2,
+          "seconds": 3
+        }
+      }
+    }
+  ],
+  "frames": 300,
+  "shots": [
+    140,
+    141,
+    142,
+    143,
+    144,
+    145
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "footSlideP95MaxCm": 5,
+    "footSlideMaxCm": 15,
+    "footSlideActors": [
+      "infected-0",
+      "infected-1",
+      "infected-2",
+      "infected-3"
+    ]
+  },
+  "trace": true
+}

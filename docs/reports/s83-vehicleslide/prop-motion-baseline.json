@@ -1,0 +1,42 @@
+[
+  {
+    "tier": "high",
+    "pass": true,
+    "contactProven": true,
+    "propMotion": [
+      {
+        "id": "D-GROVE/chair",
+        "travelM": 0.2119176992203538
+      }
+    ],
+    "checks": [
+      {
+        "actor": "infected-0",
+        "contacts": 22,
+        "p95Cm": 0.5,
+        "maxCm": 0.6,
+        "pass": true
+      }
+    ]
+  },
+  {
+    "tier": "low",
+    "pass": true,
+    "contactProven": true,
+    "propMotion": [
+      {
+        "id": "D-GROVE/chair",
+        "travelM": 0.2119176992203538
+      }
+    ],
+    "checks": [
+      {
+        "actor": "infected-0",
+        "contacts": 22,
+        "p95Cm": 0.2,
+        "maxCm": 0.5,
+        "pass": true
+      }
+    ]
+  }
+]

@@ -64,6 +64,7 @@ import { prepareTransportModel } from '../../src/render/transportModel';
 import { vehicleDef } from '../../src/data/vehicles';
 import type { AssetRegistry } from '../../src/assets/registry';
 import { GroundContacts } from '../../src/render/characters/GroundContacts';
+import { vehicleTrackVerdict, type VehicleMotionFrame } from '../../tools/scenelab/vehicle-motion-verdict';
 import { resolveRig, disposeCharacter } from '../../src/render/characters/rig';
 import { heroineStandingHeight } from '../../src/render/npc/figureHeight';
 import { CorpseLayout } from '../../src/render/characters/CorpseLayout';
@@ -160,6 +161,36 @@ function checkOrdinaryInfectedPresentation(): void {
   expect(footVerticalStepMaxCm([contact(1, 0), flight[1]], 2, 1)).toBe(50);
   expect(footVerticalStepMaxCm(flight.slice(1), 2, 1)).toBe(Infinity);
   expect(footVerticalStepMaxCm(flight, 2, 2)).toBe(Infinity);
+  const vehicleFrame = (frame: number, x: number, y = 0): VehicleMotionFrame => ({ frame, tick: frame,
+    clip: 'shamble', archetype: 'infected.runner', state: 'hull-ground', floor: 0, reaction: null, special: null, rising: false,
+    feet: [0, .2].map(z => ({ heel: [x, y, z], toe: [x + .1, y, z] })),
+  });
+  expect(vehicleTrackVerdict('walk', [vehicleFrame(1, 0), vehicleFrame(2, .01)]).pass).toBe(true);
+  expect(vehicleTrackVerdict('max', [vehicleFrame(1, 0), vehicleFrame(2, .2)]).pass).toBe(false);
+  expect(vehicleTrackVerdict('p95', [vehicleFrame(1, 0), vehicleFrame(2, .06)]).pass).toBe(false);
+  const airborne = [vehicleFrame(1, 0, .5), vehicleFrame(2, 1, .5)];
+  expect(vehicleTrackVerdict('floating-walk', airborne).pass).toBe(false);
+  const attached = airborne.map(f => ({ ...f, state: 'attached' }));
+  expect(vehicleTrackVerdict('cling', attached)).toMatchObject({ pass: true, classification: 'airborne-attachment', motion: { slideP95Cm: null } });
+  expect(vehicleTrackVerdict('missing-foot', [attached[0], { ...attached[1], feet: [] }]).pass).toBe(false);
+  expect(vehicleTrackVerdict('wrong-dog-rig', attached.map(f => ({ ...f, archetype: 'infected.dog' }))).pass).toBe(false);
+  expect(vehicleTrackVerdict('empty', []).pass).toBe(false);
+  const knocked = [vehicleFrame(1, 0), vehicleFrame(2, 1)].map(f => ({ ...f, clip: 'knockdown', reaction: { heavy: true, started: 0, until: 4 } }));
+  expect(vehicleTrackVerdict('ram-reaction', knocked)).toMatchObject({ pass: true, classification: 'matched-unplanted-action' });
+  expect(vehicleTrackVerdict('unmatched-reaction', knocked.map(f => ({ ...f, reaction: null }))).pass).toBe(false);
+  expect(vehicleTrackVerdict('stale-reaction', knocked.map(f => ({ ...f, reaction: { ...f.reaction, until: 0 } }))).pass).toBe(false);
+  expect(vehicleTrackVerdict('mixed-unplanted', [knocked[0], attached[1]])).toMatchObject({ pass: true, classification: 'mixed-unplanted-actions' });
+  const runningFlight = [vehicleFrame(1, 0, .016), vehicleFrame(2, .08, .05)].map((f, i) => ({ ...f, clip: 'infected-sprint', speed: 4.8, phase: .1 + i * .1, at: [i * .08, 0] }));
+  expect(vehicleTrackVerdict('short-running-flight', runningFlight)).toMatchObject({ pass: true, classification: 'running-flight-window' });
+  expect(vehicleTrackVerdict('frozen-running-flight', runningFlight.map(f => ({ ...f, phase: .1 }))).pass).toBe(false);
+  expect(vehicleTrackVerdict('hovering-run', runningFlight.map(f => ({ ...f, feet: f.feet.map(foot => ({ heel: [foot.heel[0], .5, 0], toe: [foot.toe[0], .5, 0] })) }))).pass).toBe(false);
+  for (const action of ['pounce', 'charge']) {
+    expect(vehicleTrackVerdict('special-slide', knocked.map(f => ({ ...f, clip: `alpha-${action}`, special: `alpha.${action}` }))).pass).toBe(false);
+    expect(vehicleTrackVerdict('special-air', airborne.map(f => ({ ...f, clip: `alpha-${action}`, special: `alpha.${action}` }))).pass).toBe(true);
+  }
+  const crouch = [vehicleFrame(1, 0), vehicleFrame(2, 0)].map(f => ({ ...f, clip: 'alpha-pounce', alphaType: 'leaper', phase: .22, speed: 0 }));
+  expect(vehicleTrackVerdict('leaper-rest', crouch).pass).toBe(true);
+  expect(vehicleTrackVerdict('floating-leaper-rest', crouch.map(f => ({ ...f, feet: f.feet.map(foot => ({ heel: [foot.heel[0], .5, 0], toe: [foot.toe[0], .5, 0] })) }))).pass).toBe(false);
   const moves = new InfectedMoves();
   const entity = (state: string, reaction?: object) => ({
     id: 44, archetype: 'infected.runner', health: { current: 60 },
@@ -245,6 +276,13 @@ function checkChangingSupport(): void {
     const swing = contacts.contact(0)!.target;
     expect(Math.hypot(swing.x - plant.x, swing.z - plant.z)).toBeLessThan(1e-6);
     expect(swing.y).toBeGreaterThan(plant.y);
+    // A resolved shove can exceed stance reach in a single tick. The recovery
+    // must clear the floor and give IK a reachable target, rather than drag.
+    model.position.x += .5;
+    contacts.update(.65, .4, 0, 1, .55);
+    const recovery = contacts.contact(0)!.target, upper = rig.legL.getWorldPosition(new Vector3());
+    expect(recovery.y).toBeGreaterThan(plant.y + .012);
+    expect(upper.distanceTo(recovery)).toBeLessThan(rig.shinL.position.length() + rig.footL.position.length());
   } finally { disposeCharacter(model); }
 }
 

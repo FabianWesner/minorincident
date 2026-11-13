@@ -1,0 +1,78 @@
+[
+  {
+    "tier": "high",
+    "pass": true,
+    "contactProven": true,
+    "propMotion": [
+      {
+        "id": "D-GROVE/chair",
+        "travelM": 0.2119176992203538
+      }
+    ],
+    "propImpulses": [
+      {
+        "tick": 1,
+        "prop": "D-GROVE/chair",
+        "magnitude": 9.600000000000001,
+        "nearbyInfected": [
+          4
+        ]
+      },
+      {
+        "tick": 2,
+        "prop": "D-GROVE/chair",
+        "magnitude": 0.7302318200085116,
+        "nearbyInfected": [
+          4
+        ]
+      }
+    ],
+    "checks": [
+      {
+        "actor": "infected-0",
+        "contacts": 22,
+        "p95Cm": 0.5,
+        "maxCm": 0.6,
+        "pass": true
+      }
+    ]
+  },
+  {
+    "tier": "low",
+    "pass": true,
+    "contactProven": true,
+    "propMotion": [
+      {
+        "id": "D-GROVE/chair",
+        "travelM": 0.2119176992203538
+      }
+    ],
+    "propImpulses": [
+      {
+        "tick": 1,
+        "prop": "D-GROVE/chair",
+        "magnitude": 9.600000000000001,
+        "nearbyInfected": [
+          4
+        ]
+      },
+      {
+        "tick": 2,
+        "prop": "D-GROVE/chair",
+        "magnitude": 0.7302318200085116,
+        "nearbyInfected": [
+          4
+        ]
+      }
+    ],
+    "checks": [
+      {
+        "actor": "infected-0",
+        "contacts": 22,
+        "p95Cm": 0.2,
+        "maxCm": 0.5,
+        "pass": true
+      }
+    ]
+  }
+]

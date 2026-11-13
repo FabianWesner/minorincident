@@ -1,0 +1,308 @@
+[
+  {
+    "tier": "high",
+    "scene": "ram",
+    "events": {
+      "vehicle.entered": 1,
+      "vehicle.attack-windup": 1,
+      "vehicle.durability-hit": 6,
+      "combat.hit": 6
+    },
+    "actors": {
+      "infected-0": {
+        "frames": 300,
+        "torsoPitchMinDeg": -91.6,
+        "torsoPitchMaxDeg": 38.2,
+        "contacts": 8,
+        "slideMaxCm": 0.3,
+        "slideP95Cm": 0.2,
+        "yawDriftMaxDeg": 0.1,
+        "liftMaxCm": 16.2,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 3,
+        "worstSlideFrame": 78
+      },
+      "infected-1": {
+        "frames": 300,
+        "torsoPitchMinDeg": -92.2,
+        "torsoPitchMaxDeg": 39.3,
+        "contacts": 10,
+        "slideMaxCm": 0.8,
+        "slideP95Cm": 0.3,
+        "yawDriftMaxDeg": 0.1,
+        "liftMaxCm": 16.3,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 4,
+        "worstSlideFrame": 51
+      },
+      "infected-2": {
+        "frames": 300,
+        "torsoPitchMinDeg": -92.2,
+        "torsoPitchMaxDeg": 39.8,
+        "contacts": 8,
+        "slideMaxCm": 0.4,
+        "slideP95Cm": 0.1,
+        "yawDriftMaxDeg": 0.1,
+        "liftMaxCm": 16.4,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 2,
+        "worstSlideFrame": 15
+      },
+      "infected-3": {
+        "frames": 300,
+        "torsoPitchMinDeg": -93.3,
+        "torsoPitchMaxDeg": 35.3,
+        "contacts": 11,
+        "slideMaxCm": 0.1,
+        "slideP95Cm": 0.1,
+        "yawDriftMaxDeg": 0.1,
+        "liftMaxCm": 15.6,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 3,
+        "worstSlideFrame": 57
+      },
+      "infected-4": {
+        "frames": 300,
+        "torsoPitchMinDeg": -92,
+        "torsoPitchMaxDeg": 39.6,
+        "contacts": 11,
+        "slideMaxCm": 0.1,
+        "slideP95Cm": 0.1,
+        "yawDriftMaxDeg": 0.1,
+        "liftMaxCm": 17.1,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 2,
+        "worstSlideFrame": 88
+      },
+      "infected-5": {
+        "frames": 300,
+        "torsoPitchMinDeg": -91.6,
+        "torsoPitchMaxDeg": 38.6,
+        "contacts": 9,
+        "slideMaxCm": 0.2,
+        "slideP95Cm": 0.2,
+        "yawDriftMaxDeg": 0.1,
+        "liftMaxCm": 16.1,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 3,
+        "worstSlideFrame": 74
+      }
+    }
+  },
+  {
+    "tier": "high",
+    "scene": "surrounded",
+    "events": {
+      "vehicle.entered": 1,
+      "vehicle.attack-windup": 14,
+      "vehicle.durability-hit": 12
+    },
+    "actors": {
+      "infected-0": {
+        "frames": 300,
+        "torsoPitchMinDeg": -7.2,
+        "torsoPitchMaxDeg": 61.4,
+        "contacts": 22,
+        "slideMaxCm": 13.9,
+        "slideP95Cm": 0.5,
+        "yawDriftMaxDeg": 18,
+        "liftMaxCm": 18.8,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 2,
+        "worstSlideFrame": 72
+      },
+      "infected-1": {
+        "frames": 300,
+        "torsoPitchMinDeg": -3.6,
+        "torsoPitchMaxDeg": 88.9,
+        "contacts": 28,
+        "slideMaxCm": 2.4,
+        "slideP95Cm": 1.1,
+        "yawDriftMaxDeg": 17.3,
+        "liftMaxCm": 19.2,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 4,
+        "worstSlideFrame": 144
+      },
+      "infected-2": {
+        "frames": 300,
+        "torsoPitchMinDeg": -113.4,
+        "torsoPitchMaxDeg": 39.8,
+        "contacts": 18,
+        "slideMaxCm": 4.3,
+        "slideP95Cm": 3.3,
+        "yawDriftMaxDeg": 22.9,
+        "liftMaxCm": 16.8,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 3,
+        "worstSlideFrame": 139
+      },
+      "infected-3": {
+        "frames": 300,
+        "torsoPitchMinDeg": -32.7,
+        "torsoPitchMaxDeg": 35.2,
+        "contacts": 13,
+        "slideMaxCm": 34.5,
+        "slideP95Cm": 2.1,
+        "yawDriftMaxDeg": 15.8,
+        "liftMaxCm": 15.3,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 2,
+        "worstSlideFrame": 1
+      }
+    }
+  },
+  {
+    "tier": "low",
+    "scene": "ram",
+    "events": {
+      "vehicle.entered": 1,
+      "vehicle.attack-windup": 1,
+      "vehicle.durability-hit": 6,
+      "combat.hit": 6
+    },
+    "actors": {
+      "infected-0": {
+        "frames": 300,
+        "torsoPitchMinDeg": -91.6,
+        "torsoPitchMaxDeg": 38.2,
+        "contacts": 8,
+        "slideMaxCm": 0.3,
+        "slideP95Cm": 0.2,
+        "yawDriftMaxDeg": 0.1,
+        "liftMaxCm": 16.3,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 2,
+        "worstSlideFrame": 78
+      },
+      "infected-1": {
+        "frames": 300,
+        "torsoPitchMinDeg": -92.2,
+        "torsoPitchMaxDeg": 39.2,
+        "contacts": 11,
+        "slideMaxCm": 0.6,
+        "slideP95Cm": 0.3,
+        "yawDriftMaxDeg": 0.1,
+        "liftMaxCm": 16.3,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 2,
+        "worstSlideFrame": 51
+      },
+      "infected-2": {
+        "frames": 300,
+        "torsoPitchMinDeg": -92.2,
+        "torsoPitchMaxDeg": 39.8,
+        "contacts": 10,
+        "slideMaxCm": 0.2,
+        "slideP95Cm": 0.1,
+        "yawDriftMaxDeg": 0.1,
+        "liftMaxCm": 16.4,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 3,
+        "worstSlideFrame": 15
+      },
+      "infected-3": {
+        "frames": 300,
+        "torsoPitchMinDeg": -93.3,
+        "torsoPitchMaxDeg": 35.3,
+        "contacts": 12,
+        "slideMaxCm": 0.1,
+        "slideP95Cm": 0.1,
+        "yawDriftMaxDeg": 0.1,
+        "liftMaxCm": 15.5,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 3,
+        "worstSlideFrame": 57
+      },
+      "infected-4": {
+        "frames": 300,
+        "torsoPitchMinDeg": -92,
+        "torsoPitchMaxDeg": 39.6,
+        "contacts": 9,
+        "slideMaxCm": 3.5,
+        "slideP95Cm": 2.8,
+        "yawDriftMaxDeg": 8.7,
+        "liftMaxCm": 18.9,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 1,
+        "worstSlideFrame": 19
+      },
+      "infected-5": {
+        "frames": 300,
+        "torsoPitchMinDeg": -91.6,
+        "torsoPitchMaxDeg": 38.6,
+        "contacts": 10,
+        "slideMaxCm": 0.2,
+        "slideP95Cm": 0.2,
+        "yawDriftMaxDeg": 0.1,
+        "liftMaxCm": 16.1,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 2,
+        "worstSlideFrame": 74
+      }
+    }
+  },
+  {
+    "tier": "low",
+    "scene": "surrounded",
+    "events": {
+      "vehicle.entered": 1,
+      "vehicle.attack-windup": 14,
+      "vehicle.durability-hit": 12
+    },
+    "actors": {
+      "infected-0": {
+        "frames": 300,
+        "torsoPitchMinDeg": -7.2,
+        "torsoPitchMaxDeg": 63.9,
+        "contacts": 24,
+        "slideMaxCm": 0.9,
+        "slideP95Cm": 0.3,
+        "yawDriftMaxDeg": 3.3,
+        "liftMaxCm": 18.2,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 1,
+        "worstSlideFrame": 276
+      },
+      "infected-1": {
+        "frames": 300,
+        "torsoPitchMinDeg": -4.2,
+        "torsoPitchMaxDeg": 88.9,
+        "contacts": 26,
+        "slideMaxCm": 2.5,
+        "slideP95Cm": 0.9,
+        "yawDriftMaxDeg": 18.4,
+        "liftMaxCm": 18.8,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 2,
+        "worstSlideFrame": 144
+      },
+      "infected-2": {
+        "frames": 300,
+        "torsoPitchMinDeg": -112.8,
+        "torsoPitchMaxDeg": 39.8,
+        "contacts": 18,
+        "slideMaxCm": 4,
+        "slideP95Cm": 3.9,
+        "yawDriftMaxDeg": 23,
+        "liftMaxCm": 16.1,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 2,
+        "worstSlideFrame": 27
+      },
+      "infected-3": {
+        "frames": 300,
+        "torsoPitchMinDeg": -32.7,
+        "torsoPitchMaxDeg": 35.2,
+        "contacts": 15,
+        "slideMaxCm": 34.6,
+        "slideP95Cm": 1.9,
+        "yawDriftMaxDeg": 17.2,
+        "liftMaxCm": 16.9,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 1,
+        "worstSlideFrame": 1
+      }
+    }
+  }
+]

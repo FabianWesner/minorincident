@@ -109,12 +109,20 @@ const badChildren = batches.filter(b => {
   const child = state[b.id];
   return !!child && childFailedUnexpectedly(child.code, b.rows.map(r => r.name), child.rows, new Set(known.keys()));
 });
+// The ordinary catalog does not reproduce production vehicle pursuit. Keep
+// these attributed contact fixtures in the complete motion gate as well.
+const vehicleContact = mode === 'gate' && !flag('filter') && !shard
+  ? spawnSync('npm', ['run', 'qa:vehicle-motion'], { stdio: 'inherit', env: { ...process.env, VEHICLE_MOTION_SCENE: '' } }) : undefined;
+const vehicleCampaign = vehicleContact?.status === 0
+  ? spawnSync('npm', ['run', 'qa:vehicle-campaign-motion'], { stdio: 'inherit', env: { ...process.env, VEHICLE_CAMPAIGN_CASE: '' } }) : undefined;
 const lines = [`# scene-${mode}`, '', `${wanted.length - failed.length - missing.length}/${wanted.length} rows pass, ${knownFailed.length} known, ${missing.length} not run; ${((Date.now() - t0) / 60000).toFixed(1)} min this run (batch s: ${batches.map(b => `${b.id}=${(state[b.id]?.seconds ?? 0).toFixed(0)}`).join(' ')}).`, '',
   ...unexpected.map(r => `- **FAIL** ${r.name}: ${done.get(resultKey(r.name, r.backend))!.error ?? done.get(resultKey(r.name, r.backend))!.failed.join(', ')}`),
   ...knownFailed.map(r => `- known ${r.name}: ${known.get(r.name)} (${done.get(resultKey(r.name, r.backend))!.failed.join(', ')})`),
   ...missing.map(r => `- **NOT RUN** ${r.name} (batch timeout or crash; rerun with --resume)`)];
 lines.splice(3, 0, ...badChildren.map(b => `- **CHILD FAILED** ${b.id} (exit ${state[b.id]?.code ?? 'signal'})`));
+if (vehicleContact) lines.push(`Vehicle-contact HIGH/LOW fixtures: ${vehicleContact.status === 0 ? 'PASS' : 'FAIL'} (exit ${vehicleContact.status ?? 'signal'}).`);
+if (vehicleCampaign) lines.push(`Native L9/L7/L4 vehicle motion: ${vehicleCampaign.status === 0 ? 'PASS' : 'FAIL'} (exit ${vehicleCampaign.status ?? 'signal'}).`);
 writeFileSync(`${out}/summary.md`, lines.join('\n') + '\n');
 console.log(lines.join('\n'));
 console.log(`sheets: ${out}/<batch>/<row>/sheet.jpg`);
-process.exit(unexpected.length || missing.length || badChildren.length ? 1 : 0);
+process.exit(unexpected.length || missing.length || badChildren.length || vehicleContact && vehicleContact.status !== 0 || vehicleCampaign && vehicleCampaign.status !== 0 ? 1 : 0);

@@ -240,6 +240,10 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   for (const actor of e.footSlideActors ?? []) {
     const value = metrics.actors[actor]?.motion.slideP95Cm ?? (airborne.has(actor) ? 0 : Infinity);
     checks.push({ name: `footSlideP95Cm.${actor}`, pass: value <= (e.footSlideP95MaxCm ?? 3), value, limit: e.footSlideP95MaxCm ?? 3 });
+    if (e.footSlideMaxCm !== undefined) {
+      const maximum = metrics.actors[actor]?.motion.slideMaxCm ?? Infinity;
+      checks.push({ name: `footSlideMaxCm.${actor}`, pass: maximum <= e.footSlideMaxCm, value: maximum, limit: e.footSlideMaxCm });
+    }
   }
   for (const window of e.footSlideWindows ?? []) {
     const frames = (metrics.actors[window.actor]?.track ?? []).filter(f => f.frame >= window.from && f.frame <= window.to);

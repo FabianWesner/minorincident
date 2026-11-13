@@ -83,6 +83,10 @@ export class CrowdFootwork {
 export interface CrowdPresentation {
   frame: number; blend: [number, number]; clip: string; phase: number; instance: Matrix4;
   scale: number; speed: number; time: number; near: boolean;
+  /** Resolved world travel, including sideways vehicle and crowd pushes. */
+  travel?: { x: number; z: number };
+  /** Full locomotion cycle when an action uses only a slice of its body clip. */
+  contactPhase?: number;
   layers?: CrowdLayers; style?: GaitStyle; procedural?: boolean; cadence?: number; holdDistanceM?: number;
 }
 /** One small off-scene skeleton per batch; figures retain only their contact
@@ -341,7 +345,7 @@ export class CrowdLocomotion {
     }
   }
   /** Legacy stance plants (mid band): world-space stance heels, no yaw lock or turn steps. */
-  correct(id: number, pose: Float32Array, instance: Matrix4, phase: number, name: string, scale: number, speed: number, layers?: CrowdLayers, time?: number, style?: GaitStyle): void {
+  correct(id: number, pose: Float32Array, instance: Matrix4, phase: number, name: string, scale: number, speed: number, layers?: CrowdLayers, time?: number, style?: GaitStyle, contactPhase?: number): void {
     // Authored long articulated legs (zebra) stay attached at their shoulder/hip.
     // Their atlas grounds the complete pose; single-joint paw translation cannot preserve those pivots.
     if (this.animal && this.preserveAnimalJoints) {
@@ -351,16 +355,17 @@ export class CrowdLocomotion {
       }
       return;
     }
-    if (!layers && !this.animal && (!this.reach || !gaitShape[name])) return;
+    const standing = standingClips.has(name);
+    if (!layers && !this.animal && (!this.reach || !gaitShape[name] && !standing)) return;
     let contacts = this.contacts.get(id);
-    if (!contacts && !this.animal && gaitShape[name]) { this.toRest(); contacts = new GroundContacts(this.rig, name === 'crawl'); this.contacts.set(id, contacts); }
+    if (!contacts && !this.animal && (gaitShape[name] || standing)) { this.toRest(); contacts = new GroundContacts(this.rig, name === 'crawl'); this.contacts.set(id, contacts); }
     const previous = this.footwork.far.get(id);
     if (contacts && previous && previous.owner !== this && time !== undefined && time - previous.time <= .3) {
       const left = previous.contacts.contact(0), right = previous.contacts.contact(1);
       if (left && right) contacts.inherit(phase, [left, right]);
     }
     this.load(pose, instance, layers, phase, style);
-    const animalGait = this.fourLegs ? name === 'dog-gallop' ? 'corgi-gallop' : 'corgi-trot' : name;
+    const animalGait = this.fourLegs ? name === 'dog-gallop' || name === 'zebra-stampede' ? 'corgi-gallop' : 'corgi-trot' : name;
     const stride = cadenceStride(animalGait, scale, speed, style?.stepRate), run = /run|sprint|flee/.test(name) ? 1 : 0;
     if (this.animal && layers?.animal?.airborne) {
       // Leap, flight or cling: the paws follow the pose instead of staying planted on the floor below.
@@ -372,10 +377,11 @@ export class CrowdLocomotion {
       const previous = this.animalSkin ? this.footwork.animalContacts.get(id) : undefined;
       if (previous && previous.owner !== this && time !== undefined && time >= previous.time && time - previous.time <= .3) paws.inherit(previous.contacts);
       const dt = previous && time !== undefined && time >= previous.time ? Math.min(.1, time - previous.time) : 1 / 60;
-      if (speed > .06 && strides[name]) paws.update(phase, stride, animalGait, dt);
+      if (speed > .06 && strides[name]) paws.update(contactPhase ?? phase, stride, animalGait, dt);
       else paws.hold(dt, this.groundedAnimal);
       if (this.animalSkin && time !== undefined) this.footwork.animalContacts.set(id, { contacts: paws, owner: this, time });
-    } else if (contacts && strides[name] && speed > .06) contacts.update(phase, stride, run, 1, style?.stance ?? this.stance(name, stride, this.scale.setFromMatrixScale(this.frame.matrixWorld).y), true, style);
+    } else if (contacts && standing) contacts.update(0, 0, 0, 1, 1, true, style);
+    else if (contacts && strides[name] && speed > .06) contacts.update(phase, stride, run, 1, style?.stance ?? this.stance(name, stride, this.scale.setFromMatrixScale(this.frame.matrixWorld).y), true, style);
     if (contacts && time !== undefined) this.footwork.far.set(id, { contacts, owner: this, time });
     // Humans always keep the sole correction; large authored quadrupeds retain it after paw/contact pose layers.
     if (!this.animal || this.pawSoles.length || this.groundedAnimal && (gaitStyles[name] || standingClips.has(name))) this.ground(style);
@@ -458,7 +464,7 @@ export class CrowdLocomotion {
     let state = this.footwork.states.get(id);
     if (state && (time < state.time || time - state.time > .3)) { this.footwork.states.delete(id); state = undefined; }
     const want = near && grounded && this.footwork.admit(id);
-    if (!near && state && gaitShape[clip]) {
+    if (!want && state && grounded) {
       // Fading the leg solve lets a planted shoe slide toward the baked stride. Transfer its world contacts to the
       // cheaper solver instead, retaining the footwork budget for figures that are still near the camera.
       let contacts = this.contacts.get(id);
@@ -491,7 +497,7 @@ export class CrowdLocomotion {
           const stride = moving ? cadenceStride(clip, scale, speed, style?.stepRate) : 0;
           // load() and layer() have already refreshed the complete rig.
           // An optional style with cleared fields must retain the shared defaults.
-          footwork.contacts.update(moving ? phase : 0, stride, footwork.run, footwork.weight, moving ? speed : 0, dt, { ...style, stance: style?.stance ?? footwork.stance, knee: style?.knee ?? gait?.knee, maxSwing: style?.maxSwing ?? .4 }, true);
+          footwork.contacts.update(moving ? phase : 0, stride, footwork.run, footwork.weight, moving ? speed : 0, dt, { ...style, stance: style?.stance ?? footwork.stance, knee: style?.knee ?? gait?.knee, maxSwing: style?.maxSwing ?? .4 }, true, input.travel);
           this.ground(style);
           this.store(pose, instance);
         });
@@ -502,8 +508,8 @@ export class CrowdLocomotion {
       }
       this.footwork.states.delete(id);
     }
-    if ((strides[clip] && speed > .06) || layers || this.animal && !this.preserveAnimalJoints && standingClips.has(clip)) {
-      const row = poses.correct(id, frame, blend[0], blend[1], pose => this.correct(id, pose, instance, phase, clip, scale, speed, layers, time, style));
+    if ((strides[clip] && speed > .06) || layers || standingClips.has(clip) && (!this.animal || !this.preserveAnimalJoints)) {
+      const row = poses.correct(id, frame, blend[0], blend[1], pose => this.correct(id, pose, instance, phase, clip, scale, speed, layers, time, style, input.contactPhase));
       blend[1] = 1; return row;
     }
     this.reset(id);
