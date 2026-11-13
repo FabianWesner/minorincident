@@ -46,7 +46,7 @@ export class LevelSevenBot {
       // Use the carried crowd counter when surrounded. All attacks still use
       // ordinary input, weapon timing, cover and live collision.
       const surrounded = enemies.filter(e => distance(e.transform, p.transform) <= 2.5).length >= 3;
-      if (surrounded && axe >= 0) {
+      if (surrounded && axe >= 0 && this.profile !== 'typical') {
         f.selectedSlot = { side: 'LEFT', index: axe };
         strikeAt(f, enemies[0], 'LEFT', p.transform, false);
       } else {

@@ -29,9 +29,10 @@ for (const tier of (process.env.L6_TIERS ?? 'high,low').split(',') as ('high' | 
     let firstHatchClosed: number | null = null, exit: number | null = null;
     const initial = new Set(world.missions!.state.l6!.survivors.map(r => r.id));
     world.events.on('l6.exit', e => { if (e.type === 'l6.exit') exit = e.tick; });
+    let frame = undefined as ReturnType<typeof bot.sample> | undefined;
     for (let i = 0; i < 600 * 60 && !bot.finished; i++) {
-      followFrustum(world); const frame=bot.sample();
-      world.applyInput(policy==='passive'?{...frame,mouseAttack:false,activeAttack:false,attackInPlace:false,attackTarget:undefined,left:{down:false,held:false,up:false},right:{down:false,held:false,up:false}}:frame,'keyboard'); world.update();
+      followFrustum(world); if(policy!=='typical'||i%6===0)frame=bot.sample();
+      world.applyInput(policy==='passive'?{...frame!,mouseAttack:false,activeAttack:false,attackInPlace:false,attackTarget:undefined,left:{down:false,held:false,up:false},right:{down:false,held:false,up:false}}:frame!,'keyboard'); world.update();
       const s = world.missions!.state.l6!;
       if (firstHatchClosed === null && s.entries?.some(e => e.closedAt)) firstHatchClosed = Math.min(...s.entries.filter(e => e.closedAt).map(e => e.closedAt!));
     }
@@ -62,11 +63,12 @@ for (const tier of (process.env.L6_TIERS ?? 'high,low').split(',') as ('high' | 
 }
 const expectedRuns = (process.env.L6_TIERS ?? 'high,low').split(',').length * (process.env.L6_SEEDS ?? '1,2,3').split(',').length;
 const completeRows = rows.filter(row => row.policy === 'complete');
-const savedAverage = completeRows.length ? completeRows.reduce((sum, row) => sum + row.savedPercent, 0) / completeRows.length : 0;
+const measuredRows = completeRows.length ? completeRows : rows;
+const savedAverage = measuredRows.length ? measuredRows.reduce((sum, row) => sum + row.savedPercent, 0) / measuredRows.length : 0;
 const failures = rows.filter(row => row.policy === 'early-close' && (row.exit === null || row.maxAttackGapS === null || row.maxAttackGapS >= 30)
   || row.policy === 'complete' && (!row.completed || row.deaths > maxDeaths || row.savedPercent < minSavedPercent
     || row.windows.some(window => window.to - window.from === 1800 && window.attacks < 2))) ;
-if (completeRows.length !== expectedRuns || savedAverage < averageSavedPercent) failures.push(...completeRows);
+if (completeRows.length !== expectedRuns || completeRows.reduce((sum, row) => sum + row.savedPercent, 0) / (completeRows.length || 1) < averageSavedPercent) failures.push(...completeRows);
 const output = process.env.L6_PRESSURE_OUT ?? 'test-results/s97-l6balance/native.json';
 await mkdir(output.slice(0, output.lastIndexOf('/')), { recursive: true });
 await writeFile(output, JSON.stringify({ generatedAt: new Date().toISOString(), criteria: { maxDeaths, averageSavedPercent, minSavedPercent, fullPostClosureWindowAttacks: 2 }, savedAveragePercent: savedAverage, rows }, null, 2) + '\n');

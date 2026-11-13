@@ -4,7 +4,7 @@ import { l6 } from '../../data/l6';
 import { emptyInput, type InputFrame } from '../../input/InputFrame';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import { Walker } from './Walker';
-export type L6Profile='complete'|'newbie'|'evade-only'|'idle'|'early-close';
+export type L6Profile='complete'|'typical'|'newbie'|'evade-only'|'idle'|'early-close';
 /** Ordinary inputs only: defend the rear, collect injured people, close clear gates, walk to Northgate. */
 export class LevelSixBot {
   finished=false;
@@ -17,6 +17,7 @@ export class LevelSixBot {
     if(m.state.phase==='briefing')m.begin();if(m.state.phase==='cinematic'){f.interact=true;return f;}
     if(m.state.phase==='retry'){m.restore();this.walker.reset();this.shotgunTarget=0;return f;}
     if(this.profile==='idle'||w.entities.get(1)!.health.current<=0)return f;
+    const typical=this.profile==='typical';
     const go=(target:{x:number;z:number},stop:number,key:string)=>{const dir=this.walker.step(w,target,stop,key);if(dir)f.move=dir;return !dir;};
     const friends=s.survivors.filter(r=>r.status==='following');
     const fights=this.profile!=='evade-only';
@@ -24,7 +25,7 @@ export class LevelSixBot {
     const biteRisk=(e: (typeof exposed)[number])=>exposed.some(v=>Math.hypot(e.transform.x-v.transform.x,e.transform.z-v.transform.z)<1.6)?0:1;
     // A visible bite on the group is an immediate rescue even beyond the newbie's normal 16 m threat scan.
     // The existing bite-priority ordering was ineffective there despite the machine gun reaching the victim.
-    const enemies=w.infected!.active.filter(e=>e.health.current>0&&!e.infectionRise&&!e.hidden&&w.combat!.query.shotVisible(p,e.transform,e.id)&&Math.hypot(e.transform.x-p.x,e.transform.z-p.z)<(this.profile==='newbie'&&biteRisk(e)>0?16:22)).sort((a,b)=>biteRisk(a)-biteRisk(b)||Math.hypot(a.transform.x-p.x,a.transform.z-p.z)-Math.hypot(b.transform.x-p.x,b.transform.z-p.z));
+    const enemies=w.infected!.active.filter(e=>e.health.current>0&&!e.infectionRise&&!e.hidden&&w.combat!.query.shotVisible(p,e.transform,e.id)&&Math.hypot(e.transform.x-p.x,e.transform.z-p.z)<(this.profile==='newbie'&&biteRisk(e)>0?16:typical?21:22)).sort((a,b)=>biteRisk(a)-biteRisk(b)||Math.hypot(a.transform.x-p.x,a.transform.z-p.z)-Math.hypot(b.transform.x-p.x,b.transform.z-p.z));
     // Close each reachable hatch while advancing. Keep the movement toward the
     // switch active during ordinary combat so the adversarial route defends as
     // it closes, instead of walking through incoming attacks without firing.
@@ -41,11 +42,11 @@ export class LevelSixBot {
     }
     // Close a cleared gate from the valid interaction spot before pursuing another distant target.
     const closeGate=fights&&s.gates.find(g=>!g.closedAt&&p.x>g.x+1&&Math.hypot(p.x-LevelSixSubway.gateWait(g.x).x,p.z-LevelSixSubway.gateWait(g.x).z)<1.7&&friends.every(r=>w.entities.get(r.id)!.transform.x>g.x+2));
-    if(closeGate&&(!enemies[0]||Math.hypot(enemies[0].transform.x-p.x,enemies[0].transform.z-p.z)>2.2)){f.interact=true;return f;}
+    if(closeGate&&(!enemies[0]||Math.hypot(enemies[0].transform.x-p.x,enemies[0].transform.z-p.z)>2.2)){if(!typical||w.tick%180>=36)f.interact=true;return f;}
     // Cover a crossing from the authored waiting spot rather than planting in the opening until the last follower arrives.
     const crossing=fights&&s.phase==='retreat'&&s.gates.find(g=>!g.closedAt&&p.x>g.x-.5&&p.x<g.x+4&&!friends.every(r=>w.entities.get(r.id)!.transform.x>g.x+2));
     if(crossing&&Math.hypot(p.x-LevelSixSubway.gateWait(crossing.x).x,p.z-LevelSixSubway.gateWait(crossing.x).z)>1&&(!enemies[0]||Math.hypot(enemies[0].transform.x-p.x,enemies[0].transform.z-p.z)>2.2)){go(LevelSixSubway.gateWait(crossing.x),.8,`wait-${crossing.id}`);return f;}
-    if(fights&&enemies[0]&&(this.profile!=='newbie'||w.tick%60<45)){
+    if(fights&&enemies[0]&&(this.profile!=='newbie'||w.tick%60<45)&&( !typical || w.tick%60<45)){
       const e=enemies[0],d=Math.hypot(e.transform.x-p.x,e.transform.z-p.z);
       const rack=w.entities.get(1)!.weapons?.RIGHT.rack??[],shotgun=rack.findIndex(slot=>slot.id==='weapon.shotgun');
       // Counter armor or a riot shield with the carried shotgun, keeping that weapon
@@ -56,6 +57,7 @@ export class LevelSixBot {
       const mg=rack.findIndex(slot=>slot.id==='weapon.army-mg'),index=closeArmor?shotgun:mg;
       if(side==='RIGHT'&&index>=0)f.selectedSlot={side:'RIGHT',index};
       strikeAt(f,e,side,p);
+      if(typical && w.tick%180<30 && d>5) { const angle=.3, x=f.aim!.x, z=f.aim!.z; f.aim={x:x*Math.cos(angle)-z*Math.sin(angle),z:x*Math.sin(angle)+z*Math.cos(angle)}; f.aimPoint={x:e.transform.x+f.aim.x*2.6,z:e.transform.z+f.aim.z*2.6}; }
       // Keep covering the column while retreating; replenishing pursuers must not pin the courier in place.
       if(s.phase!=='retreat'&&s.phase!=='exit')return f;
     }
