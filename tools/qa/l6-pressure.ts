@@ -7,7 +7,7 @@ import { observeAttackStarts } from './threat/attackStarts';
 type QAPolicy = L6Profile | 'passive';
 type Start = { sourceId: number; targetId: number; tick: number };
 type Row = {
-  seed: number; policy: QAPolicy; outcome: string; firstHatchClosed: number | null; exit: number | null;
+  seed: number; tier: 'high' | 'low'; policy: QAPolicy; outcome: string; completed: boolean; initialSurvivors: number; survivorsSaved: number; savedPercent: number; firstHatchClosed: number | null; exit: number | null;
   windows: { from: number; to: number; attacks: number }[]; spawnRefusals: { cap: number; reserved: number; offscreen: number; snap: number; hatch: number };
   waveCounts: Record<number, number>; closed: number[]; broken: number[]; maxAttackGapS: number | null;
   distantRecycled: number;
@@ -17,8 +17,11 @@ type Row = {
   phase: string; entries: { door: number; warnedAt: number; remaining: number; closedAt?: number; brokenAt?: number }[];
 };
 const rows: Row[] = [];
-for (const seed of (process.env.L6_SEEDS ?? '1,2,3').split(',').map(Number)) for (const policy of (process.env.L6_POLICIES ?? 'early-close,complete,passive,evade-only').split(',') as QAPolicy[]) {
-  const world = await loadLevel('L6', seed, undefined, 0, { quality: 'low' });
+const minSavedPercent = Number(process.env.L6_MIN_SAVED_PERCENT ?? 25);
+const averageSavedPercent = Number(process.env.L6_AVG_SAVED_PERCENT ?? 40);
+const maxDeaths = Number(process.env.L6_MAX_DEATHS ?? 3);
+for (const tier of (process.env.L6_TIERS ?? 'high,low').split(',') as ('high' | 'low')[]) for (const seed of (process.env.L6_SEEDS ?? '1,2,3').split(',').map(Number)) for (const policy of (process.env.L6_POLICIES ?? 'complete').split(',') as QAPolicy[]) {
+  const world = await loadLevel('L6', seed, undefined, 0, { quality: tier });
   try {
     const bot = new LevelSixBot(world, policy==='passive'?'complete':policy), starts: Start[] = [];
     if(policy==='passive')world.player!.damage=()=>0;
@@ -45,7 +48,8 @@ for (const seed of (process.env.L6_SEEDS ?? '1,2,3').split(',').map(Number)) for
     for (const entry of s.spawnLog) waveCounts[entry.wave] = (waveCounts[entry.wave] ?? 0) + 1;
     const player=world.entities.get(1)!;
     const pressureIds=new Set(s.spawnLog.filter(entry=>entry.wave===3).map(entry=>entry.id));
-    rows.push({ seed, policy, outcome: world.missions!.state.phase, firstHatchClosed, exit, windows,
+    const survivorsSaved=s.survivors.filter(r=>r.status==='out').length;
+    rows.push({ seed, tier, policy, outcome: world.missions!.state.phase, completed: world.missions!.state.phase==='result'||world.missions!.state.phase==='progression', initialSurvivors: initial.size, survivorsSaved, savedPercent: 100*survivorsSaved/initial.size, firstHatchClosed, exit, windows,
       spawnRefusals: { cap: s.spawnRefusals.cap, reserved: s.spawnRefusals.reserved ?? 0, offscreen: s.spawnRefusals.offscreen, snap: s.spawnRefusals.snap, hatch: s.spawnRefusals.hatch ?? 0 }, waveCounts, maxAttackGapS,
       closed: (s.entries ?? []).filter(e => e.closedAt).map(e => e.door), broken: (s.entries ?? []).filter(e => e.brokenAt).map(e => e.door), distantRecycled:s.distantRecycled??0,
       pressureAdmissions:s.spawnLog.filter(entry=>entry.wave===3).map(({tick,door,x,z})=>({tick,door,x,z})),
@@ -54,11 +58,17 @@ for (const seed of (process.env.L6_SEEDS ?? '1,2,3').split(',').map(Number)) for
       player:{x:player.transform.x,z:player.transform.z,hp:player.health.current},leaderX:s.leaderX,deaths:world.missions!.state.stats.deaths,simSeconds:world.missions!.state.stats.time,
       phase:s.phase,entries:(s.entries??[]).map(e=>({door:e.door,warnedAt:e.warnedAt,remaining:e.remaining,closedAt:e.closedAt,brokenAt:e.brokenAt})) });
   } finally { world.dispose(); }
-  console.log(`[l6-pressure] ${policy} seed ${seed} complete`);
+  console.log(`[l6-pressure] ${tier} ${policy} seed ${seed} complete`);
 }
-await mkdir('docs/reports/s81-l6pressure', { recursive: true });
-await writeFile('docs/reports/s81-l6pressure/native.json', JSON.stringify({ generatedAt: new Date().toISOString(), rows }, null, 2) + '\n');
+const expectedRuns = (process.env.L6_TIERS ?? 'high,low').split(',').length * (process.env.L6_SEEDS ?? '1,2,3').split(',').length;
+const completeRows = rows.filter(row => row.policy === 'complete');
+const savedAverage = completeRows.length ? completeRows.reduce((sum, row) => sum + row.savedPercent, 0) / completeRows.length : 0;
 const failures = rows.filter(row => row.policy === 'early-close' && (row.exit === null || row.maxAttackGapS === null || row.maxAttackGapS >= 30)
-  || row.policy === 'complete' && row.exit === null);
-console.log(`[l6-pressure] ${rows.length} runs; ${failures.length} early-close pressure or skilled completion failures; receipt docs/reports/s81-l6pressure/native.json`);
+  || row.policy === 'complete' && (!row.completed || row.deaths > maxDeaths || row.savedPercent < minSavedPercent
+    || row.windows.some(window => window.to - window.from === 1800 && window.attacks < 2))) ;
+if (completeRows.length !== expectedRuns || savedAverage < averageSavedPercent) failures.push(...completeRows);
+const output = process.env.L6_PRESSURE_OUT ?? 'test-results/s97-l6balance/native.json';
+await mkdir(output.slice(0, output.lastIndexOf('/')), { recursive: true });
+await writeFile(output, JSON.stringify({ generatedAt: new Date().toISOString(), criteria: { maxDeaths, averageSavedPercent, minSavedPercent, fullPostClosureWindowAttacks: 2 }, savedAveragePercent: savedAverage, rows }, null, 2) + '\n');
+console.log(`[l6-pressure] ${rows.length} runs; ${failures.length} L6 balance failures; mean saved ${savedAverage.toFixed(1)}%; receipt ${output}`);
 if (failures.length) process.exitCode = 1;
