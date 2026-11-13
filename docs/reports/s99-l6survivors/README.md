@@ -80,11 +80,11 @@ Before the change, conversions began in the shelter at 33–47 s and losses cont
 
 ## Validation
 
-- `L6 typical + complete`, HIGH seeds 1–3: PASS; 6/6 runs complete; typical thresholds pass; complete full-window floor passes. Receipt: `/private/tmp/l6-group4-20.json`.
+- `L6 typical + complete`, HIGH seeds 1–3: PASS; 6/6 runs complete; typical thresholds pass; complete full-window floor passes. Receipt: [evidence.json](evidence.json).
 - `tests/engine/missions.test.ts`: PASS, 6/6 tests.
 - `npm test`: PASS, 27 files and 107 tests.
 - `npm run typecheck`: PASS.
 - `npm run lint`: PASS.
 - `node --import tsx/esm tools/qa/threat-audit.ts --levels L6`: skilled and passive routes complete. The audit reports `WAVE_NO_ATTACK_WITHIN_20_SECONDS` for breach two on the corridor-side route and two passive diagnostic flags; selected-level audit exits nonzero.
-- `sh tools/remote/run.sh "$PWD" -- npm test`: unavailable (exit 69; no remote runner is running or provisioned). Local `npm test` ran 107 tests and found one stale pressure-rate invariant at 3/16; after retaining the required pressure rate via 4/20, the focused mission suite passed. Remote verification remains open.
+- `sh tools/remote/run.sh "$PWD" -- npm test`: PASS on 46.225.66.90; 27 files, 106 passed / 1 skipped, unchanged 150/150 inventory; 220.4 s within the 240 s budget.
 - Browser QA needed; no browser run was requested.
