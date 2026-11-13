@@ -207,7 +207,7 @@ export class MegaPursuit {
     delete e.noiseTarget; delete b.investigate; b.heardTargetId = 0; b.speed = this.cruiseSpeed;
     if (b.specialAttack) { b.hidden = false; s.mode = 'close'; return false; }
     const mission = this.world.missions, arena = mission?.def.anchors['cure-console'];
-    if (b.megaPhase === 3 && arena && dist(e.transform, arena) > 3 && !Status.stunned(e, tick) && b.grabUntil <= tick && tick >= (b.specialRecoveryUntil ?? 0) && b.state !== 'attack') {
+    if (b.megaPhase === 3 && arena && dist(e.transform, arena) <= finale.leashRadius && dist(e.transform, arena) > 3 && !Status.stunned(e, tick) && b.grabUntil <= tick && tick >= (b.specialRecoveryUntil ?? 0) && b.state !== 'attack') {
       b.hidden = false; b.state = 'chase'; s.mode = 'detailed';
       this.world.infected!.seek(e, { ...arena, y: .7 + (this.world.districts?.groundHeight(arena.x, arena.z) ?? 0) });
       this.world.spatial.set(e.id, e.transform.x, e.transform.z); return true;

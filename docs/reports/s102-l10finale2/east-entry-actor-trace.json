@@ -1,0 +1,270 @@
+[
+  {
+    "type": "ACTOR",
+    "data": {
+      "tick": 53100,
+      "hp": 300,
+      "state": "alerted",
+      "script": {
+        "x": 4006,
+        "z": -15
+      },
+      "position": {
+        "x": 4042.8696195643065,
+        "y": 0.7,
+        "z": -10.240963411938196,
+        "yaw": 2.969730465262756
+      }
+    }
+  },
+  {
+    "type": "ACTOR",
+    "data": {
+      "tick": 53400,
+      "hp": 300,
+      "state": "alerted",
+      "script": {
+        "x": 4006,
+        "z": -15
+      },
+      "position": {
+        "x": 4024.149599874824,
+        "y": 0.7,
+        "z": -13.490256614569134,
+        "yaw": 2.969731788116567
+      }
+    }
+  },
+  {
+    "type": "ACTOR",
+    "data": {
+      "tick": 53700,
+      "hp": 300,
+      "state": "chase",
+      "resource": {
+        "id": 1432613003,
+        "corpse": false,
+        "living": false
+      },
+      "position": {
+        "x": 4005.9514619931997,
+        "y": 0.7,
+        "z": -16.293284982868197,
+        "yaw": 2.6551995529778307
+      }
+    }
+  },
+  {
+    "type": "ATTACK",
+    "data": {
+      "tick": 53802,
+      "source": 128,
+      "kind": "infected.alpha",
+      "move": "alpha.living-missile"
+    }
+  },
+  {
+    "type": "ATTACK",
+    "data": {
+      "tick": 53863,
+      "source": 128,
+      "kind": "infected.alpha",
+      "move": "alpha.grab-throw"
+    }
+  },
+  {
+    "type": "ACTOR",
+    "data": {
+      "tick": 54000,
+      "hp": 300,
+      "state": "chase",
+      "position": {
+        "x": 4000.110629798063,
+        "y": 0.7999999999999996,
+        "z": -32.85271781443348,
+        "yaw": 1.9337204151268543
+      }
+    }
+  },
+  {
+    "type": "ATTACK",
+    "data": {
+      "tick": 54268,
+      "source": 593,
+      "kind": "infected.dog"
+    }
+  },
+  {
+    "type": "ACTOR",
+    "data": {
+      "tick": 54300,
+      "hp": 300,
+      "state": "chase",
+      "position": {
+        "x": 3997.9023075895593,
+        "y": 2.3999999999999995,
+        "z": -32.990869685396525,
+        "yaw": 3.1344086592781566
+      }
+    }
+  },
+  {
+    "type": "ATTACK",
+    "data": {
+      "tick": 54521,
+      "source": 594,
+      "kind": "infected.alpha",
+      "move": "alpha.grab-throw"
+    }
+  },
+  {
+    "type": "ACTOR",
+    "data": {
+      "tick": 54600,
+      "hp": 0,
+      "state": "dead",
+      "resource": {
+        "id": 128,
+        "corpse": true,
+        "living": false
+      },
+      "position": {
+        "x": 3996.635385991267,
+        "y": 3.2,
+        "z": -33.00041694806066,
+        "yaw": 3.1416554988117236
+      }
+    }
+  },
+  {
+    "type": "ACTOR",
+    "data": {
+      "tick": 54900,
+      "hp": 0,
+      "state": "dead",
+      "resource": {
+        "id": 128,
+        "corpse": true,
+        "living": false
+      },
+      "position": {
+        "x": 3996.635385991267,
+        "y": 3.2,
+        "z": -33.00041694806066,
+        "yaw": 3.1416554988117236
+      }
+    }
+  },
+  {
+    "type": "ACTOR",
+    "data": {
+      "tick": 55200,
+      "hp": 0,
+      "state": "dead",
+      "resource": {
+        "id": 128,
+        "corpse": true,
+        "living": false
+      },
+      "position": {
+        "x": 3996.635385991267,
+        "y": 3.2,
+        "z": -33.00041694806066,
+        "yaw": 3.1416554988117236
+      }
+    }
+  },
+  {
+    "type": "ACTOR",
+    "data": {
+      "tick": 55500,
+      "hp": 0,
+      "state": "dead",
+      "resource": {
+        "id": 128,
+        "corpse": true,
+        "living": false
+      },
+      "position": {
+        "x": 3996.635385991267,
+        "y": 3.2,
+        "z": -33.00041694806066,
+        "yaw": 3.1416554988117236
+      }
+    }
+  },
+  {
+    "type": "ACTOR",
+    "data": {
+      "tick": 55800,
+      "hp": 108,
+      "state": "stagger",
+      "resource": {
+        "id": 585,
+        "corpse": true,
+        "living": false
+      },
+      "position": {
+        "x": 3994.475390718111,
+        "y": 3.7800000000000002,
+        "z": -33.0049357912651,
+        "yaw": 6.11464806639355
+      }
+    }
+  },
+  {
+    "type": "ATTACK",
+    "data": {
+      "tick": 55862,
+      "source": 589,
+      "kind": "infected.runner"
+    }
+  },
+  {
+    "type": "ACTOR",
+    "data": {
+      "tick": 56100,
+      "hp": 0,
+      "state": "dead",
+      "resource": {
+        "id": 585,
+        "corpse": true,
+        "living": false
+      },
+      "position": {
+        "x": 3992.315403627679,
+        "y": 3.7800000000000002,
+        "z": -33.0124036678385,
+        "yaw": 6.11464806639355
+      }
+    }
+  },
+  {
+    "type": "ACTOR",
+    "data": {
+      "tick": 56400,
+      "hp": 0,
+      "state": "dead",
+      "resource": {
+        "id": 585,
+        "corpse": true,
+        "living": false
+      },
+      "position": {
+        "x": 3992.315403627679,
+        "y": 3.7800000000000002,
+        "z": -33.0124036678385,
+        "yaw": 6.11464806639355
+      }
+    }
+  },
+  {
+    "type": "ATTACK",
+    "data": {
+      "tick": 56574,
+      "source": 594,
+      "kind": "infected.alpha",
+      "move": "alpha.grab-throw"
+    }
+  }
+]

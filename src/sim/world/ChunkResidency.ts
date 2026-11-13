@@ -105,11 +105,11 @@ export class ChunkResidency {
   private sleepOutside(): void {
     const batches = new Map<string, SleepingEntity[]>();
     const ai = this.world.infected, excess = new Set<number>();
-    if (ai && ai.director.count > ai.director.cap) {
+    if (ai && ai.director.count > ai.director.cap - ai.director.reserved - ai.director.pendingTurns) {
       let count = ai.director.count; const player = this.world.entities.get(1)!.transform;
-      const candidates = ai.active.filter(e => this.managed(e) && (e.health.current > 0 || ai.director.strict && e.infected!.recoverAt >= 0));
+      const candidates = ai.active.filter(e => this.managed(e) && e.health.current > 0);
       candidates.sort((a, b) => Math.hypot(b.transform.x - player.x, b.transform.z - player.z) - Math.hypot(a.transform.x - player.x, a.transform.z - player.z) || b.id - a.id);
-      for (const e of candidates) { if (count <= ai.director.cap) break; excess.add(e.id); count -= e.archetype === 'infected.crow' ? e.infected!.birds * .25 : 1; }
+      for (const e of candidates) { if (count <= ai.director.cap - ai.director.reserved - ai.director.pendingTurns) break; excess.add(e.id); count -= e.archetype === 'infected.crow' ? e.infected!.birds * .25 : 1; }
     }
     for (const e of this.world.entities.iterate()) if (this.managed(e) && (!this.resident(e.transform.x, e.transform.z) || excess.has(e.id))) {
       const c = this.chunk(e.transform.x, e.transform.z); if (!c) continue;
@@ -133,7 +133,7 @@ export class ChunkResidency {
       for (const record of JSON.parse(saved) as SleepingEntity[]) {
         const e = record.entity;
         const weight = e.archetype === 'infected.crow' ? (e.infected?.birds ?? 0) * .25 : 1;
-        if (e.infected && !e.corpse && (!ai || ai.director.count + weight > ai.director.cap || !ai.pool.length)) { waiting.push(record); continue; }
+        if (e.infected && !e.corpse && (!ai || ai.director.count + weight > ai.director.cap - ai.director.reserved - ai.director.pendingTurns || !ai.pool.length)) { waiting.push(record); continue; }
         this.shiftTimers(e, w.tick - record.tick);
         w.entities.replace(e); w.spatial.set(e.id, e.transform.x, e.transform.z);
         if (record.prop) w.props!.loadChunk(e.id, record.prop);

@@ -1,0 +1,300 @@
+[
+  {
+    "type": "PROPS",
+    "data": [
+      {
+        "id": "D-CURE/l10-thrower-crate-0",
+        "fixed": false,
+        "enabled": true,
+        "position": {
+          "x": 4005.999755859375,
+          "y": -4.652142524719238e-05,
+          "z": -14.995938301086426
+        }
+      },
+      {
+        "id": "D-CURE/l10-thrower-crate-1",
+        "fixed": false,
+        "enabled": true,
+        "position": {
+          "x": 4007.999755859375,
+          "y": -4.652142524719238e-05,
+          "z": -14.995938301086426
+        }
+      },
+      {
+        "id": "D-CURE/l10-thrower-crate-2",
+        "fixed": false,
+        "enabled": true,
+        "position": {
+          "x": 4005.999755859375,
+          "y": -4.652142524719238e-05,
+          "z": -12.995938301086426
+        }
+      },
+      {
+        "id": "D-CURE/l10-thrower-crate-3",
+        "fixed": false,
+        "enabled": true,
+        "position": {
+          "x": 4007.999755859375,
+          "y": -4.652142524719238e-05,
+          "z": -12.995938301086426
+        }
+      }
+    ]
+  },
+  {
+    "type": "THROWER",
+    "data": {
+      "tick": 53100,
+      "id": 594,
+      "hp": 300,
+      "state": "alerted",
+      "script": {
+        "x": 4006,
+        "z": -15
+      },
+      "d": 30.897034936120544,
+      "los": true
+    }
+  },
+  {
+    "type": "THROWER",
+    "data": {
+      "tick": 53400,
+      "id": 594,
+      "hp": 300,
+      "state": "alerted",
+      "script": {
+        "x": 4006,
+        "z": -15
+      },
+      "d": 16.63282388970226,
+      "los": true
+    }
+  },
+  {
+    "type": "THROWER",
+    "data": {
+      "tick": 53700,
+      "id": 594,
+      "hp": 300,
+      "state": "alerted",
+      "script": {
+        "x": 4006,
+        "z": -15
+      },
+      "d": 18.15562475878734,
+      "los": true
+    }
+  },
+  {
+    "type": "ATTACK",
+    "data": {
+      "tick": 53802,
+      "source": 128,
+      "kind": "infected.alpha",
+      "move": "alpha.living-missile"
+    }
+  },
+  {
+    "type": "ATTACK",
+    "data": {
+      "tick": 53863,
+      "source": 128,
+      "kind": "infected.alpha",
+      "move": "alpha.grab-throw"
+    }
+  },
+  {
+    "type": "THROWER",
+    "data": {
+      "tick": 54000,
+      "id": 594,
+      "hp": 300,
+      "state": "chase",
+      "d": 15.914878413933701,
+      "los": false
+    }
+  },
+  {
+    "type": "ATTACK",
+    "data": {
+      "tick": 54268,
+      "source": 593,
+      "kind": "infected.dog"
+    }
+  },
+  {
+    "type": "THROWER",
+    "data": {
+      "tick": 54300,
+      "id": 594,
+      "hp": 300,
+      "state": "chase",
+      "d": 9.395694762152953,
+      "los": true
+    }
+  },
+  {
+    "type": "THROWER",
+    "data": {
+      "tick": 54600,
+      "id": 594,
+      "hp": 0,
+      "state": "dead",
+      "d": 6.628789124954369,
+      "los": true,
+      "resource": {
+        "id": 128,
+        "corpse": true,
+        "living": false
+      }
+    }
+  },
+  {
+    "type": "THROWER",
+    "data": {
+      "tick": 54900,
+      "id": 594,
+      "hp": 0,
+      "state": "dead",
+      "d": 6.628789124954369,
+      "los": true,
+      "resource": {
+        "id": 128,
+        "corpse": true,
+        "living": false
+      }
+    }
+  },
+  {
+    "type": "THROWER",
+    "data": {
+      "tick": 55200,
+      "id": 594,
+      "hp": 0,
+      "state": "dead",
+      "d": 6.628789124954369,
+      "los": true,
+      "resource": {
+        "id": 128,
+        "corpse": true,
+        "living": false
+      }
+    }
+  },
+  {
+    "type": "THROWER",
+    "data": {
+      "tick": 55500,
+      "id": 594,
+      "hp": 0,
+      "state": "dead",
+      "d": 1.5902920738672024,
+      "los": true,
+      "resource": {
+        "id": 128,
+        "corpse": true,
+        "living": false
+      }
+    }
+  },
+  {
+    "type": "ATTACK",
+    "data": {
+      "tick": 55785,
+      "source": 594,
+      "kind": "infected.alpha",
+      "move": "alpha.grab-throw"
+    }
+  },
+  {
+    "type": "ATTACK",
+    "data": {
+      "tick": 55793,
+      "source": 590,
+      "kind": "infected.firefighter"
+    }
+  },
+  {
+    "type": "THROWER",
+    "data": {
+      "tick": 55800,
+      "id": 594,
+      "hp": 108,
+      "state": "chase",
+      "d": 1.428859010796884,
+      "los": true,
+      "resource": {
+        "id": 128,
+        "corpse": true,
+        "living": false
+      },
+      "move": "alpha.grab-throw"
+    }
+  },
+  {
+    "type": "ATTACK",
+    "data": {
+      "tick": 55893,
+      "source": 589,
+      "kind": "infected.runner"
+    }
+  },
+  {
+    "type": "ATTACK",
+    "data": {
+      "tick": 55901,
+      "source": 591,
+      "kind": "infected.runner"
+    }
+  },
+  {
+    "type": "ATTACK",
+    "data": {
+      "tick": 55991,
+      "source": 594,
+      "kind": "infected.alpha"
+    }
+  },
+  {
+    "type": "ATTACK",
+    "data": {
+      "tick": 55994,
+      "source": 588,
+      "kind": "infected.runner"
+    }
+  },
+  {
+    "type": "THROWER",
+    "data": {
+      "tick": 56100,
+      "id": 594,
+      "hp": 0,
+      "state": "dead",
+      "d": 8.522493786632015,
+      "los": true
+    }
+  },
+  {
+    "type": "ATTACK",
+    "data": {
+      "tick": 56235,
+      "source": 593,
+      "kind": "infected.dog"
+    }
+  },
+  {
+    "type": "THROWER",
+    "data": {
+      "tick": 56400,
+      "id": 594,
+      "hp": 0,
+      "state": "dead",
+      "d": 9.955786845370554,
+      "los": true
+    }
+  }
+]

@@ -48,7 +48,10 @@ export class LevelTenFinale {
       state.actors['arena-gate-switch'] = world.interactables!.spawn('switch', { x: console.x + 10, z: console.z + 28 }, { label: 'Electrify the gate', radius: 2 });
       state.states['arena-equipped'] = true;
     }
-    this.perimeter(!!state.states['perimeter-up'] || !!state.states['cure-installed'] && !!console && !!world.megaPursuit?.entity() && Math.hypot(world.megaPursuit.entity()!.transform.x - console.x, world.megaPursuit.entity()!.transform.z - console.z) <= finale.perimeterArm);
+    const perimeterBoss = world.megaPursuit?.entity();
+    this.perimeter(!!state.states['cure-installed'] && !!console && !!perimeterBoss &&
+      (perimeterBoss.health.current <= 0 ? !!state.states['perimeter-up'] :
+        Math.hypot(perimeterBoss.transform.x - console.x, perimeterBoss.transform.z - console.z) <= finale.perimeterArm));
     const pressed = world.inputFrame.interact && !state.states['console-held'];
     state.states['console-held'] = world.inputFrame.interact;
     const boss = world.megaPursuit;
