@@ -53,3 +53,7 @@ Ran `node --import tsx/esm tools/qa/threat-audit.ts --levels L10 --maxWorkers 2 
 ## Exact northern gun placement trials
 
 The observer accepts optional `S101_TIERS`/`S101_SEEDS` filters to run a subset without changing the native policy or measurement. Three ground-level placements were tested on HIGH seed 3; all completed with two deaths and all failed: local `[4,18]` max gap 40.80 s, `[8,16]` 46.33 s, `[12,14]` 51.08 s. [placement-trials.json](placement-trials.json) preserves exact installation/release and attack ticks. The source placement was restored after the sequential batch. The northern placement search provides no accepted gameplay change.
+
+## Passing HIGH seed 1 depends on a finale retry
+
+Comparing the retained native s93 traces against the exact baseline windows shows HIGH seed 1 restores `cure-disperse-ready` at tick 59845. Its finale attack sources include ten sprinters (IDs 621–631, excluding 624) producing repeated starts after that retry. HIGH seeds 2 and 3 have only journey restores and no finale restore; their finale sources are respectively the Mega plus three regular hunters, and the Mega plus one sprinter. Therefore seed 1's passing gap does not demonstrate sustained pressure on the uninterrupted installation path. The fix must establish that pressure without requiring an additional death.
