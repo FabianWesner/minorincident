@@ -986,6 +986,73 @@
           }
         ]
       }
+    ],
+    "high-z1-l10-sprint": [
+      {
+        "level": "L10",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 480,
+        "simSeconds": 480,
+        "maxNoProgressSeconds": 72.4,
+        "deaths": 8,
+        "assists": 0,
+        "attacks": {
+          "weapon.fire-axe": 364
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.fire-axe"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.fire-axe"
+        ],
+        "steps": [
+          {
+            "id": "crash",
+            "text": "Get away from the river \u00b7 101\u00a0m",
+            "tick": 2838,
+            "marker": {
+              "anchor": "river-exit",
+              "ring": {
+                "x": 647,
+                "y": 0,
+                "z": -12.5
+              },
+              "drawn": [
+                647,
+                0,
+                -12.5
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "farmstead",
+            "text": "Find a way through the farms \u00b7 64\u00a0m",
+            "tick": 12326,
+            "marker": {
+              "anchor": "cure-military",
+              "ring": {
+                "x": 1857,
+                "y": 0,
+                "z": 25
+              },
+              "drawn": [
+                698,
+                0,
+                25
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
     ]
   },
   "limits": [
@@ -6693,5 +6760,56 @@
       }
     },
     "finalSelection": "weapon-rack-weapon.hunting-rifle"
-  }
+  },
+  "l10SprintInputs": [
+    {
+      "t": "2026-11-13T04:58:36.367Z",
+      "manualInput": {
+        "manual": true,
+        "keys": [
+          "KeyD",
+          "KeyS"
+        ],
+        "ms": 10000,
+        "capture": "sprint-east-1"
+      },
+      "level": "L1",
+      "tick": 0
+    },
+    {
+      "t": "2026-11-13T04:59:18.831Z",
+      "manualInput": {
+        "manual": false
+      },
+      "level": "L10",
+      "tick": 2837
+    },
+    {
+      "t": "2026-11-13T05:00:24.495Z",
+      "manualInput": {
+        "manual": true,
+        "keys": [
+          "KeyD",
+          "KeyS"
+        ],
+        "ms": 10000,
+        "capture": "sprint-east-live"
+      },
+      "level": "L10",
+      "tick": 6174
+    },
+    {
+      "t": "2026-11-13T05:01:20.460Z",
+      "manualInput": {
+        "manual": false,
+        "keys": [
+          "KeyD"
+        ],
+        "ms": 4000,
+        "capture": "river-exit-approach"
+      },
+      "level": "L10",
+      "tick": 9890
+    }
+  ]
 }
