@@ -142,3 +142,11 @@ The 10-second feasibility candidate was measured on all six cases with exact dia
 | 3 | high | True | 23.394 | 70.65 | 8 | 45 |
 
 Receipt `/private/tmp/s89-bounded-matrix.json`; producer `/private/tmp/s89-bounded-matrix.mts`; compact measurements preserved in [validation.json](validation.json). The promising seed-1 LOW result did not generalize. The candidate must not be described as an accepted fix.
+
+## Adaptive lull-arrival diagnostics
+
+Request eight arrivals only after 15 s without a courier attack start, checked every 10 s, with the same headroom/retirement/safety setup: seed-1 LOW completed, zero deaths, peak 36, 188 starts, 10.214/min, 49.28 s adjusted maximum; seed-2 LOW completed, one death, peak 36, 212 starts, 11.494/min, **41.18 s** maximum (passing that row only). Receipt `/private/tmp/s89-lull-arrivals.json`; producer `/private/tmp/s89-lull-arrivals.mts`.
+
+A 10 s lull checked every 5 s regressed: seed-1 LOW completed with 74.27 s maximum; seed-1 HIGH failed completion at 1800 s with 26 deaths and 51.83 s gap. Remaining runs deliberately terminated after these decisive failures (process exit 143); partial receipt `/private/tmp/s89-lull-matrix.log`. No full-matrix pass is claimed. Source changes reverted.
+
+Harness lifecycle issue identified for further investigation: `charge-active` resets on retry to the pre-charge checkpoint, allowing nominal journey arrivals to resume around the installed-cure finale. A future trial must exclude installed-cure retries before judging finale deaths/pressure; neither current producer is suitable for production as written.
