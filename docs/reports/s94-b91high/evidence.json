@@ -1280,6 +1280,105 @@
           }
         ]
       }
+    ],
+    "high-z1-l6-explicit-gate": [
+      {
+        "level": "L6",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 540,
+        "simSeconds": 529,
+        "maxNoProgressSeconds": 32.565,
+        "deaths": 12,
+        "assists": 1,
+        "attacks": {
+          "weapon.army-mg": 3265
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "steps": [
+          {
+            "id": "shelter",
+            "text": "Look around the shelter \u00b7 rest while you can",
+            "tick": 11,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "stop",
+            "text": "Stop the infected \u00b7 Retreat in 0:36",
+            "tick": 1999,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "retreat",
+            "text": "The group waits: cover the rear from the infected \u00b7 253\u00a0m",
+            "tick": 3254,
+            "marker": {
+              "anchor": "l6-next",
+              "ring": {
+                "x": 242,
+                "y": 0.6,
+                "z": 15
+              },
+              "drawn": [
+                242,
+                0.6,
+                15
+              ],
+              "playerY": 1.440000057220459,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "exit",
+            "text": "Bring the survivors into the night \u00b7 0/1 out \u00b7 31\u00a0m",
+            "tick": 30822,
+            "marker": {
+              "anchor": "night-exit",
+              "ring": {
+                "x": 273,
+                "y": 3.9,
+                "z": 15
+              },
+              "drawn": [
+                273,
+                3.9,
+                15
+              ],
+              "playerY": 1.2699999809265137,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
     ]
   },
   "limits": [
@@ -10767,5 +10866,30 @@
         }
       ]
     }
+  },
+  "finalHighL6PostHatch": {
+    "firstClosureTick": 22258,
+    "seconds": 157.0333,
+    "attackStartsBy30SecondWindows": [
+      90,
+      57,
+      113,
+      134,
+      38,
+      11
+    ],
+    "lastWindowSeconds": 7.0333,
+    "normalGateEInputs": 10,
+    "limit": "Full level not finished; deaths/checkpoint resets; attacks not exclusively group-targeted."
+  },
+  "finalCloseout": {
+    "verdict": "HOLD",
+    "confirmedGameplayP1": [],
+    "confirmedGameplayP2": [],
+    "candidateP2": "Intermittent HIGH L9 139.13-second final-bay wait, absent on retries",
+    "fullScopeComplete": false,
+    "stoppedAtUserInstruction": true,
+    "checksRunning": false,
+    "browserReleased": true
   }
 }
