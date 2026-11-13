@@ -22,3 +22,18 @@ Other rejected trials included closer assault slots, more frequent waves, higher
 ## Open work
 
 Find a director/layout solution that sustains contact without the additional death. Validate exact finale head/inter-start/tail gaps for all six native routes, route completion and baseline death counts, and the journey adjacent-gap ≤45 s gate. Run the L10 threat audit, typecheck, lint and the unchanged remote unit suite. These final checks were not run because no acceptable gameplay candidate was established. No browser, deployment, push or main movement occurred.
+
+## Exact six-case baseline
+
+`tools/qa/s101-finale.ts` now captures the first observed native installed/released tick and uses the unchanged shared attack-start observer. [before.json](before.json) contains every attack-start tick in each exact finale window.
+
+| Tier | Seed | Max gap including head/tail s | Deaths | Completes |
+| --- | ---: | ---: | ---: | --- |
+| HIGH | 1 | 16.72 | 3 | yes |
+| HIGH | 2 | 42.17 | 3 | yes |
+| HIGH | 3 | 46.48 | 2 | yes |
+| LOW | 1 | 42.12 | 0 | yes |
+| LOW | 2 | 16.80 | 2 | yes |
+| LOW | 3 | 18.60 | 2 | yes |
+
+The failure scope is HIGH seeds 2/3 plus LOW seed 1. All six baseline routes complete. There is still no accepted gameplay change or after receipt.
