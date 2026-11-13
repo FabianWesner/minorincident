@@ -357,12 +357,12 @@ export class LevelEightZoo {
     if (!this.mission.state.states['elephant-fallen'] && elephantDefeated) {
       this.mission.setState('elephant-fallen', true); this.mission.radio('L8.courier-elephant');
     }
-    if (elephantDefeated && this.mission.state.states['hale-fallen'] &&
-        this.mission.state.steps.escape.status === 'active' && this.passengersSeated() &&
+    if (s.arenas.every(arena => arena.phase === 3) &&
+        (this.mission.state.steps.escape.status === 'active' || this.mission.state.steps.depart.status === 'active') && this.passengersSeated() &&
         w.vehicles!.active === s.carId && !s.departureFrom) {
       s.departureAt = t;
     }
-    if ((s.departureAt || s.departureFrom) && this.mission.state.states['hale-fallen'] && this.passengersSeated() &&
+    if ((s.departureAt || s.departureFrom) && this.passengersSeated() &&
         w.vehicles!.active === s.carId) {
       if (!s.departureFrom) {
         s.chaseAt = t; s.departureFrom = { ...w.entities.get(s.carId)!.transform };
@@ -594,7 +594,7 @@ export class LevelEightZoo {
   /** The unarmed cab would remove the courier's cover fire before the queue is safe. */
   canBoardDriver(): boolean {
     const car = this.w.entities.get(this.state.carId)?.vehicle;
-    return this.breached && this.state.arenas.every(a => a.phase === 3) && (this.mission.state.steps.escape.status === 'active' || this.mission.state.steps.depart.status === 'active') && this.passengers().every(id => car?.passengers?.some(p => p.id === id && p.phase === 'seated')) && !!this.mission.state.states['hale-fallen'];
+    return this.breached && this.state.arenas.every(a => a.phase === 3) && (this.mission.state.steps.escape.status === 'active' || this.mission.state.steps.depart.status === 'active') && this.passengers().every(id => car?.passengers?.some(p => p.id === id && p.phase === 'seated'));
   }
   /** E30 departure starts only after the breach and the complete group has boarded. */
   canDrive(): boolean { return this.breached && this.state.arenas.every(a => a.phase === 3) && this.mission.state.steps.sanctuary.status === 'completed' && this.w.vehicles!.groupBoarded(this.state.carId,this.passengers()); }

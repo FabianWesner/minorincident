@@ -668,15 +668,29 @@ async function zooParkedBoarding(): Promise<void> {
       missionControls(world).teleport(id, entry);
       expect(vehicles.boardPassenger(car.entity.id, id)).toBe(true);
     }
+    for (let i = 0; i < 24 * 60 && zoo.passengers().some(id => !car.entity.vehicle!.passengers?.some(passenger => passenger.id === id && passenger.phase === 'seated')); i++) advance(1);
+    expect(zoo.passengers()).toHaveLength(14);
+    expect(zoo.passengers().every(id => car.entity.vehicle!.passengers?.some(passenger => passenger.id === id && passenger.phase === 'seated')), 'all fourteen passengers have completed the boarding animation').toBe(true);
+    // The failed ordering: the elephant is already down and the Hale charge
+    // never happened, so Hale remains alive without the story flag.
+    mission.setState('elephant-fallen', true);
+    const haleActor = world.entities.get(zoo.state.haleId)!;
+    haleActor.health.current = haleActor.health.max; haleActor.civilian!.state = 'calm';
+    mission.setState('hale-keys', false);
+    mission.setState('hale-fallen', false);
+    expect(zoo.canBoardDriver(), '14/14 seated with Hale alive still unlocks the driver door').toBe(true);
+    mission.setState('hale-fallen', true);
+    expect(zoo.canBoardDriver(), '14/14 seated also unlocks when Hale has fallen').toBe(true);
+    mission.setState('hale-fallen', false);
+    expect(mission.state.marker, '14/14 keeps the driver-door marker active').toBe('exit');
+    expect(mission.def.steps.find(step => step.id === 'escape')!.text).toBe('Board the armored vehicle · 14/14 aboard');
+    expect(Math.hypot(mission.def.anchors.exit.x - zoo.door().x, mission.def.anchors.exit.z - zoo.door().z)).toBeLessThan(.3);
     advance(60);
     missionControls(world).teleport(1, zoo.door());
     world.applyInput({ ...emptyInput(), interact: true }, 'keyboard'); advance(1);
-    world.applyInput(emptyInput(), 'keyboard');
-    for (let i = 0; i < 24 * 60 && !zoo.canBoardDriver(); i++) advance(1);
-    expect(mission.state.states['hale-fallen'], 'the commander beat completes before the cab unlocks').toBe(true);
-    missionControls(world).teleport(1, zoo.door());
-    world.applyInput({ ...emptyInput(), interact: true }, 'keyboard'); advance(1);
-    world.applyInput(emptyInput(), 'keyboard'); advance(60);
+    expect(vehicles.active, 'E at the driver door enters with the complete group and Hale alive').toBe(car.entity.id);
+    world.applyInput(emptyInput(), 'keyboard'); advance(480);
+    expect(mission.state.states.departed, 'the APC handoff completes within eight seconds without Hale falling').toBe(true);
     expect(zoo.canDrive(), 'complete living group boards at the fixed destination').toBe(true);
     expect(car.entity.vehicle!.scripted, 'the zoo departure owns the vehicle before handover').toBe(true);
     const save = preset('L9-default'); save.transport = vehicles.transfer(car.entity.id);
