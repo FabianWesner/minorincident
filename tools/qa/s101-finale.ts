@@ -4,7 +4,10 @@ import { runLevel } from '../sim-runner/levels';
 import { preset } from '../../src/sim/progression/Campaign';
 import { observeAttackStarts } from './threat/attackStarts';
 const receipts = [];
-for (const quality of ['high', 'low'] as const) for (const seed of [1, 2, 3]) {
+const tiers = (process.env.S101_TIERS ?? 'high,low').split(',') as ('high' | 'low')[];
+const seeds = (process.env.S101_SEEDS ?? '1,2,3').split(',').map(Number);
+if (tiers.some(t => !['high', 'low'].includes(t)) || seeds.some(s => ![1, 2, 3].includes(s))) throw new Error('Expected HIGH/LOW tiers and seeds 1–3');
+for (const quality of tiers) for (const seed of seeds) {
   const attacks: number[] = [];
   let installed: number | undefined, released: number | undefined;
   const result = await runLevel('L10', 'complete', seed, 1800, 'auto', preset('L10-default'), undefined, 0, {
