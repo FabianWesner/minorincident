@@ -41,11 +41,11 @@ L9 HIGH z1 WebGPU retry from the same rail fixture completed in 214 s. The manua
 
 L10 HIGH z1 WebGPU opening sample: 300 s, ten deaths, zero assists, 409 fire-axe attacks, no skipped objectives. It did not reach the requested Mega hunting encounter. No Mega damage/recovery, ≥60-infected performance, arrivals, rack, knife, molotov or road-crop pass is inferred. The two retained frame entries are loading frames; they cannot substantiate gameplay fps. Raw receipts: `test-results/s94-b91high/high-z1-l10-hunt-webgpu/` including route audit. All processes ended before this update.
 
-[Evidence index](evidence.json) preserves compact run receipts. The coverage ledger below retains the full original scope; cells marked Not run also include incomplete attempts detailed above and must not be read as passed.
+[Evidence index](evidence.json) preserves compact run receipts. The coverage ledger below retains the full original scope and records the current evidence limits.
 
 ## Verdict
 
-**HOLD — no gameplay verdict is possible.** No batch-91 gameplay P1/P2 is confirmed yet; the L9 final-bay stall is a candidate requiring manual confirmation. The prior s88 P1/P2 dispositions describe earlier revisions and are not carried forward as current findings.
+**HOLD — required gameplay coverage remains incomplete.** No batch-91 gameplay P1/P2 is confirmed yet; the L9 final-bay stall is a candidate requiring manual confirmation. The prior s88 P1/P2 dispositions describe earlier revisions and are not carried forward as current findings.
 
 ### P1 / P2 list
 
@@ -68,15 +68,18 @@ L10 HIGH z1 WebGPU opening sample: 300 s, ten deaths, zero assists, 409 fire-axe
 
 | Requirement | HIGH | LOW | Disposition |
 | --- | --- | --- | --- |
-| L6 full cadence after first hatch; attack windows and experience | Not run | Not run | Open |
-| L7 bus departure vs soldiers; inspect captures | Not run | Not run | Open |
-| L8 boarding through driver handoff with Hale alive | Not run | Not run | Open |
-| L9 rail crossing, final bay, handover to L10; bus/courier observations | Not run | Not run | Open |
-| L10 every rack weapon by click and key (0/Q cycling, all 14), knife, molotov aiming arc and previous-weapon return | Not run | Not run | Open |
-| L10 road crops | Not run | Not run | Open |
-| L10 Mega melee/gun damage to ~35%, recovery after ~1 s without hits | Not run | Not run | Open |
-| L10 arrival interval, visible sprinter spawns, and 60–70 infected frame time/fps | Not run | Not run | Open |
-| Per-level glitches/captures, >10 s stalls, fun/boring/harmless observations | Not run | Not run | Open |
+| L6 full cadence after first hatch | z1 incomplete; z1.5 reached exit-platform, closure unproved | Missing | Open |
+| L7 departure vs soldiers | z1 route passed, timed frames missing; z1.5 three opened frames show no live-soldier intersection | z1 route passed; three opened departure frames show no intersection | Sampled clearance; HIGH z1 capture still open |
+| L8 boarding through driver handoff, Hale alive | z1 14/14 and handoff passed; Hale health at handoff unproved; z1.5 camera assertion failed | LOW-configured z1 handoff passed; Hale state/actual quality receipt incomplete | Open Hale-alive and z1.5 conditions |
+| L9 rail/final bay | z1 one139 s 3/4 wait, later retry passed; z1.5 passed | Five-minute attempt ended after15 deaths at hatch | LOW final bay open |
+| L9 bus/APC and upright playable L10 handover | Loading captures only | Missing | Open |
+| L10 all14 returned weapons click/key | Click passed; Q reached all14 at z1.5; direct shortcuts combat-qualified | Actual LOW click and Q reached all14; direct key1 qualified | Original hangar/knife identity open |
+| L10 molotov aim/restoration | Gold dashed marks and circle inspected at z1; prior rifle restored | Same at actual LOW z1 | Sampled pass; partly occluded trajectory |
+| L10 hunting Mega |52 axe hits, positive damage; recovery begins~1.17 s after hits stop |46 axe hits, recovery~1.15 s | Gun damage and~35% floor open |
+| L10 road crops | Farms views only | Missing systematic sweep | Open |
+| L10 arrivals/pop-in/sprinters | First-observed IDs logged; no spawn proof | Same | Full journey cadence open |
+| L10 frame time with60–70 infected |59.90 FPS at peak24, no60–70 frames |59.92 FPS at peak12, no60–70 frames | Required load unverified |
+| Per-level glitches, >10 s waits, experience | Partial observations documented below/above | Partial L7–L9/arsenal | Full requested scope incomplete |
 
 The environment blockers are resolved. Continue executing the specified HIGH zoom 1 and 1.5 passes followed by LOW zoom 1, with the real-input playtest driver and approved checkpoint saves. Record captures only after opening them; then produce the contact sheet and replace this blocked-attempt ledger with measured findings.
 
