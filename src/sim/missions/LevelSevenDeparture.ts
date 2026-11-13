@@ -62,7 +62,7 @@ export class LevelSevenDeparture {
     w.events.emit({ type: 'world.blocker.changed', tick: w.tick, id: NAV_BUS, blocked: true, wall: this.wall });
     // Character separation runs in cleanup after the mission phase and can
     // push a zombie back into the bus lane. Reassert the swept-hull clearance
-    // after separation and before SolidRegistry commits the final tick pose.
+    // after separation and the SolidRegistry commit of the tick pose.
     w.events.on('sim.tick', () => {
       if (this.state.phase === 'departing') this.clearGuards(this.bus.transform.x);
     }, SimPhase.cleanup + 1);

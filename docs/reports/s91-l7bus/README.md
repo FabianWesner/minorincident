@@ -16,7 +16,7 @@ All six seed/profile combinations passed on HIGH and LOW: skilled and passive pr
 
 The requested rendered HIGH zoom-1 captures at 0.7 s and 3.4 s could not be produced. `tools/e2e-lock.sh` failed before acquiring a browser: the managed pool daemon could not bind its loopback port (`listen EPERM`, `/var/folders/.../mi-browser-pool.log`). No unpooled browser was launched.
 
-The L7-only threat diagnostic completed but is not a clean gate: it reports `FOLLOWER_WAIT_UPPER_BOUND_OVER_10_PERCENT` (30.16% in the passive route) and labels the run partial because only L7 was selected. This remains unresolved. The prescribed remote unit suite was retried and could not start because no healthy remote runner is provisioned; the remote runner reports that it cannot execute this suite in the local Mac slot.
+The L7-only threat diagnostic completed but is not a clean gate: it reports `FOLLOWER_WAIT_UPPER_BOUND_OVER_10_PERCENT` (30.16% in the skilled route; passive is 3.45%) and labels the run partial because only L7 was selected. This remains unresolved. The prescribed remote unit suite was retried and could not start because no healthy remote runner is provisioned; the remote runner reports that it cannot execute this suite in the local Mac slot.
 
 Accordingly, the native clearance fix is verified, but the full requested acceptance set is not yet complete. The source change should not be treated as fully closed until the rendered captures, a zero-flag L7 threat result, and remote unit suite are obtained.
 
@@ -25,3 +25,5 @@ Accordingly, the native clearance fix is verified, but the full requested accept
 Committed the fix as `9a17b175`. The prescribed remote `npm test` now passed unchanged on runner `46.225.66.90`: 27 files, 106 passed / 1 skipped, 209.4 seconds within the 240-second budget.
 
 The single permitted browser was acquired through the pool with SCENE_PORT=4981 / E2E_PORT=4982. Scene loading failed before either capture with `No clear L7 encounter point at 267.5,12` from `LevelSevenEncounters.prepare` via `setupL7Group`. No second browser was launched. Rendered capture verification therefore remains incomplete for a scene-fixture reason rather than the former sandbox restriction. The threat follower-wait flag also remains open.
+
+The failed capture fixture loads a narrow bus-area district bbox but calls the full L7 encounter preparation at the distant start (267.5,12). A replacement browser attempt requires authorization because the single allowed browser has been consumed. No captures were opened, so rendered acceptance remains unproven.
