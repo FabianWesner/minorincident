@@ -771,6 +771,121 @@
           }
         ]
       }
+    ],
+    "high-z1-5-l9-rail-webgpu": [
+      {
+        "level": "L9",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 130,
+        "simSeconds": -1,
+        "maxNoProgressSeconds": 6.1,
+        "deaths": 0,
+        "assists": 0,
+        "attacks": {},
+        "weaponsStart": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.fire-axe"
+        ],
+        "steps": [
+          {
+            "id": "approach",
+            "text": "Reach the evacuation gate \u00b7 46 s \u00b7 335\u00a0m",
+            "tick": 61,
+            "marker": {
+              "anchor": "crash-approach",
+              "ring": {
+                "x": 470,
+                "y": 0,
+                "z": 0
+              },
+              "drawn": [
+                457,
+                0,
+                0
+              ],
+              "playerY": 0.9887921810150146,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "reach-outskirts",
+            "text": "",
+            "tick": 6823,
+            "marker": {
+              "anchor": "crawl-end",
+              "ring": {
+                "x": 547,
+                "y": 0,
+                "z": 0
+              },
+              "drawn": null,
+              "playerY": 0.7200000286102295,
+              "pinVisible": false
+            }
+          }
+        ]
+      }
+    ],
+    "low-z1-l9-rail-webgpu": [
+      {
+        "level": "L9",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 300,
+        "simSeconds": 299,
+        "maxNoProgressSeconds": 3.003,
+        "deaths": 15,
+        "assists": 0,
+        "attacks": {},
+        "weaponsStart": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "weaponsEnd": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "steps": [
+          {
+            "id": "approach",
+            "text": "Reach the evacuation gate \u00b7 46 s \u00b7 335\u00a0m",
+            "tick": 61,
+            "marker": {
+              "anchor": "crash-approach",
+              "ring": {
+                "x": 470,
+                "y": 0,
+                "z": 0
+              },
+              "drawn": [
+                457,
+                0,
+                0
+              ],
+              "playerY": 0.9888054132461548,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
     ]
   },
   "limits": [
