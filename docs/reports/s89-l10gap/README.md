@@ -6,12 +6,12 @@ Fresh native baseline at 023991a5. All six runs completed. Dialogue ticks are su
 
 | Seed | Tier | Starts | Starts/min | Longest adjusted gap (s) | Dialogue (s) | After |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | low | 35 | 1.896 | 295.05 | 56.02 | Pending |
-| 1 | high | 127 | 6.520 | 356.15 | 56.02 | Pending |
-| 2 | low | 63 | 3.376 | 298.70 | 56.02 | Pending |
-| 2 | high | 240 | 12.238 | 251.28 | 56.02 | Pending |
-| 3 | low | 127 | 6.612 | 242.80 | 56.02 | Pending |
-| 3 | high | 163 | 8.226 | 242.13 | 56.02 | Pending |
+| 1 | low | 35 | 1.896 | 295.07 | 56.00 | Pending |
+| 1 | high | 127 | 6.520 | 356.17 | 56.00 | Pending |
+| 2 | low | 63 | 3.376 | 298.70 | 56.00 | Pending |
+| 2 | high | 240 | 12.238 | 251.28 | 56.00 | Pending |
+| 3 | low | 127 | 6.612 | 242.80 | 56.00 | Pending |
+| 3 | high | 163 | 8.226 | 242.13 | 56.00 | Pending |
 
 Receipt: [baseline.json](baseline.json). Reproduce with `S89_OUT=/private/tmp/s89-cadence.json node --import tsx/esm tools/qa/s89-l10gap.ts`. Observer uses native complete inputs and the unchanged attack-start observer. This corrects the initial report, whose denominator mistakenly used gameplay time excluding credits.
 
@@ -105,3 +105,7 @@ Headroom 36/45 plus updated, full-speed focused arrival: seed-1 LOW completed wi
 ## Authored-station interception trial
 
 Temporary trial retained initial idle state at journey stations and restricted mission pursuit refresh to the existing perception range instead of 160 m. Finale pursuit unchanged; actors were never relocated. Seed-1 LOW completed with 21 starts, 1.141/min, zero deaths and 191.45 s adjusted gap; HIGH with 61 starts, 3.303/min, one death and 274.00 s gap. Both regress rate and fail cadence. Fully reverted. Receipt `/private/tmp/s89-stations.json`. This disqualifies station waiting as a sufficient substitute for long-range pressure.
+
+## Executable acceptance gate
+
+Native observer now exits 1 for an incomplete run, fewer than two starts, an adjusted gap over 45 s, or any per-seed/tier rate below baseline. A subset matrix is explicitly partial and cannot pass the full goal. Fresh full matrix reproduced every baseline attack count/rate, excluded exactly 56 s of dialogue in each case, and failed exactly six `GAP_OVER_45` flags. Baseline receipt and top table refreshed with exact dialogue counting. No gameplay changed. Typecheck and lint pass. The gate intentionally remains red until a real gameplay fix satisfies all six cases.

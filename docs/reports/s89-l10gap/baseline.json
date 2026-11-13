@@ -1,6 +1,15 @@
 {
-  "revision": "023991a592aa1ec80c96ebac59e678d1c6dd4057",
+  "revision": "5ac43e8b0ca1386ece41977014225268fae5e672",
   "method": "Native complete policy; adjacent courier attack starts; subtract only observed protected research dialogue ticks. Rate uses first attack to final world tick, matching s86. No end-tail criterion is inferred.",
+  "passed": false,
+  "flags": [
+    "1/low:GAP_OVER_45",
+    "1/high:GAP_OVER_45",
+    "2/low:GAP_OVER_45",
+    "2/high:GAP_OVER_45",
+    "3/low:GAP_OVER_45",
+    "3/high:GAP_OVER_45"
+  ],
   "rows": [
     {
       "seed": 1,
@@ -10,8 +19,8 @@
       "totalTicks": 66721,
       "attackStarts": 35,
       "startsPerMinute": 1.8963337547408343,
-      "longestGapSeconds": 295.05,
-      "protectedSeconds": 56.016666666666666,
+      "longestGapSeconds": 295.06666666666666,
+      "protectedSeconds": 56,
       "peakInfected": 14,
       "starts": [
         4.616666666666666,
@@ -146,8 +155,8 @@
           "from": 230.15,
           "to": 581.2166666666667,
           "rawSeconds": 351.06666666666666,
-          "hangarSeconds": 56.016666666666666,
-          "seconds": 295.05
+          "hangarSeconds": 56,
+          "seconds": 295.06666666666666
         },
         {
           "from": 581.2166666666667,
@@ -299,8 +308,8 @@
       "totalTicks": 70402,
       "attackStarts": 127,
       "startsPerMinute": 6.519786096256684,
-      "longestGapSeconds": 356.15,
-      "protectedSeconds": 56.016666666666666,
+      "longestGapSeconds": 356.1666666666667,
+      "protectedSeconds": 56,
       "peakInfected": 22,
       "starts": [
         4.616666666666666,
@@ -527,8 +536,8 @@
           "from": 427.85,
           "to": 840.0166666666667,
           "rawSeconds": 412.1666666666667,
-          "hangarSeconds": 56.016666666666666,
-          "seconds": 356.15
+          "hangarSeconds": 56,
+          "seconds": 356.1666666666667
         },
         {
           "from": 840.0166666666667,
@@ -1325,7 +1334,7 @@
       "attackStarts": 63,
       "startsPerMinute": 3.376105272559469,
       "longestGapSeconds": 298.7,
-      "protectedSeconds": 56.016666666666666,
+      "protectedSeconds": 56,
       "peakInfected": 14,
       "starts": [
         4.583333333333333,
@@ -1502,8 +1511,8 @@
           "from": 379.8,
           "to": 581.6333333333333,
           "rawSeconds": 201.83333333333334,
-          "hangarSeconds": 56.016666666666666,
-          "seconds": 145.81666666666666
+          "hangarSeconds": 56,
+          "seconds": 145.83333333333334
         },
         {
           "from": 581.6333333333333,
@@ -1838,7 +1847,7 @@
       "attackStarts": 240,
       "startsPerMinute": 12.237787000184133,
       "longestGapSeconds": 251.28333333333333,
-      "protectedSeconds": 56.016666666666666,
+      "protectedSeconds": 56,
       "peakInfected": 22,
       "starts": [
         4.583333333333333,
@@ -2199,8 +2208,8 @@
           "from": 428.3333333333333,
           "to": 585.6166666666667,
           "rawSeconds": 157.28333333333333,
-          "hangarSeconds": 56.016666666666666,
-          "seconds": 101.26666666666667
+          "hangarSeconds": 56,
+          "seconds": 101.28333333333333
         },
         {
           "from": 585.6166666666667,
@@ -3767,7 +3776,7 @@
       "attackStarts": 127,
       "startsPerMinute": 6.612383032266463,
       "longestGapSeconds": 242.8,
-      "protectedSeconds": 56.016666666666666,
+      "protectedSeconds": 56,
       "peakInfected": 14,
       "starts": [
         4.766666666666667,
@@ -4036,8 +4045,8 @@
           "from": 378.8666666666667,
           "to": 582.15,
           "rawSeconds": 203.28333333333333,
-          "hangarSeconds": 56.016666666666666,
-          "seconds": 147.26666666666668
+          "hangarSeconds": 56,
+          "seconds": 147.28333333333333
         },
         {
           "from": 582.15,
@@ -4792,7 +4801,7 @@
       "attackStarts": 163,
       "startsPerMinute": 8.226206664517123,
       "longestGapSeconds": 242.13333333333333,
-      "protectedSeconds": 56.016666666666666,
+      "protectedSeconds": 56,
       "peakInfected": 22,
       "starts": [
         4.766666666666667,
@@ -5076,8 +5085,8 @@
           "from": 427.6166666666667,
           "to": 585.55,
           "rawSeconds": 157.93333333333334,
-          "hangarSeconds": 56.016666666666666,
-          "seconds": 101.91666666666667
+          "hangarSeconds": 56,
+          "seconds": 101.93333333333334
         },
         {
           "from": 585.55,
