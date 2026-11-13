@@ -207,3 +207,9 @@ Ordinary-runner-only arrivals completed seed-2 LOW with 239 starts, 12.984/min, 
 | 3 | high | 11.669 | 54.38 |
 
 All six completed; only seed-2 LOW passed cadence. Receipt `/private/tmp/s89-mixed-matrix.json`. Wider 16-sprinter burst at unchanged 36/45 caps completed seed-1 LOW/HIGH with zero/one deaths, rates 22.025/15.706, peaks 36/45, but gaps 47.70/101.83 s (`/private/tmp/s89-wide-burst.json`). Rejected. All temporary source changes reverted; no archetype catalog values changed. Formation size or a tougher centre pair does not establish a reliable fix.
+
+## Front/rear and escape-gap navigation controls
+
+Splitting the eight existing sprinter arrivals between safe +24 m and −24 m anchors completed seed-1/2 LOW, but produced adjusted gaps 97.02/94.62 s and rates 9.807/6.566 per minute: rejected (`/private/tmp/s89-front-rear.json`).
+
+Read-only native streamed-nav fixtures checked all five authored escape gaps with endpoints 3 m either side. Existing clearance .5 and comparison .35 both returned direct visibility and successful identical 12-cell routes in every case. Openings are 2 m wide in layout.ts; ordinary bodies can route through them. Thus baked clearance at these gaps is not the cause of long approach detours; no grid change was made. Receipt `/private/tmp/s89-gap-nav.json`, producer `/private/tmp/s89-gap-nav.mts`. Temporary source changes from the arrival trial were fully reverted.
