@@ -221,3 +221,9 @@ At 60 residents, seed-1 LOW/HIGH and seed-2 LOW/HIGH passed cadence/rate; seed-3
 Finale trials rejected: removing the surviving-wave gate failed seed-1 HIGH completion at 70 (294.92 s) and seed-3 HIGH at 60 (157.95 s); smaller 6/4 finale waves left the seed-3 HIGH 84.25 s gaps unchanged; retaining distant non-finale actors as sleeping snapshots completed but caused 20 deaths and 128.45 s gap; stopping journey requests at complex entry still failed seed-1 HIGH completion with 224.93 s gap. Receipts `/private/tmp/s89-wave-gate.json`, `/private/tmp/s89-wave-sixty.json`, `/private/tmp/s89-smaller-finale.json`, `/private/tmp/s89-finale-residency.json`, `/private/tmp/s89-complex-cutoff.json`. All reverted.
 
 Captured blocker (`/private/tmp/s89-finale-blocker.json`): `Kill the Mega Alpha`, charge ready, courier alive, boss HP 1833.4 and nearby. A bot swap-deadline trial failed completion (198.50 s); a phase-2 flamethrower selection/approach trial also failed (294.85 s). Both bot changes reverted. Correction to initial hypothesis: Damage.ts multiplies ordinary phase-2 damage by .35; it does not fully reject those hits. No QA policy or bot change is retained.
+
+## Portable rejected-candidate artifact
+
+[rejected-candidate.json](rejected-candidate.json) preserves the exact 70-resident source patch, portable native producer, SHA-256 hashes, reproduction steps and six-case receipts. It is explicitly rejected because seed-1 HIGH fails completion and cadence; it does not implement production arrivals. This avoids depending on temporary scratch files for the strongest five-case lead.
+
+Intermediate 65-resident seed-1 HIGH trial also failed completion: peak 64, 12 deaths, 631 starts, 21.087/min and 189.73 s adjusted gap (`/private/tmp/s89-sixtyfive-first.json`). No full matrix was warranted after that decisive failure. All gameplay source edits reverted after artifact capture.
