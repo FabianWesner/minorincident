@@ -32,7 +32,9 @@ export class LevelTenEncounters {
   }
   snapshot(): CureEncounterState { return structuredClone({ ...this.state, pressureTick: this.world.tick }); }
   restore(value: unknown): void {
+    const heldEntrySlot = this.state.finaleEntrySlot ? 1 : 0;
     this.state = structuredClone(value as CureEncounterState); this.state.weapons ??= {};
+    if (this.world.infected) this.world.infected.director.reserved += (this.state.finaleEntrySlot ? 1 : 0) - heldEntrySlot;
     const delta = this.world.tick - (this.state.pressureTick ?? this.world.tick);
     if (this.state.pressureAttackAt !== undefined) this.state.pressureAttackAt += delta;
     for (const walker of this.state.finaleEntry?.walking ?? []) {
@@ -68,7 +70,10 @@ export class LevelTenEncounters {
     const wantedReservation = mission.state.states['cure-installed'] && !mission.state.states['cure-released'] ? Math.max(0, 4 - admitted) : 0;
     ai.director.reserved += wantedReservation - this.assaultReservation;
     this.assaultReservation = wantedReservation;
-    if (mission.state.states['cure-released']) return;
+    if (mission.state.states['cure-released']) {
+      if (this.state.finaleEntrySlot) { ai.director.reserved--; this.state.finaleEntrySlot = false; }
+      return;
+    }
     const assaultActive = !!mission.state.states['charge-active'];
     if (assaultActive) this.state.assaultTicks = (this.state.assaultTicks ?? 0) + 1;
     if (assaultActive) {
@@ -88,7 +93,7 @@ export class LevelTenEncounters {
         }
         if (clock >= (this.state.finaleEntryNext ?? 300)) {
           if (!this.state.finaleEntrySlot) { ai.director.reserved++; this.state.finaleEntrySlot = true; }
-          else if (ai.director.count < ai.director.cap && ai.pool.length) {
+          else if (ai.director.count + ai.director.pendingTurns < ai.director.cap - Math.max(0, ai.director.reserved - 1) && ai.pool.length) {
             ai.director.reserved--; this.state.finaleEntrySlot = false;
             const id = emergeResident(w, entry, w.tick, { archetype: entry.ids.length % 3 === 2 ? 'infected.firefighter' : 'infected.runner' });
             entry.ids.push(id); this.state.finaleEntryNext = clock + 480;

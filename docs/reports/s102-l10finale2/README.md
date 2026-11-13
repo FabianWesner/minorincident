@@ -217,3 +217,7 @@ Nine-second runners fail at 22.25 s (one death). Eight-second sprinters fail 34.
 | LOW | 1 | 42.12 | 17.42 | 0 | 0 |
 | LOW | 2 | 16.80 | 18.43 | 2 | 0 |
 | LOW | 3 | 18.60 | 16.68 | 2 | 0 |
+
+## Reservation ownership cleanup and final-source matrix
+
+Reconcile the service-owned reserved slot when restoring its serialized flag, release it at cure release, and exclude other reserved slots/pending turns from service admission. Rebased emergence walking timers remain in place. Exact final-source matrix in after.json is identical to the passing candidate: all six <=20 s, all complete, eight total deaths, no per-case increase. Typecheck and lint pass after cleanup. Fresh journey/threat/remote checks remain open.
