@@ -626,6 +626,14 @@ export class LevelNineDriving {
       // The far truck sits beyond the bridge-gate wall end: from an APC parked north of the bay the walk
       // around it exceeds the default 1600-node search (r27-l9apc, --zero run: Okafor stood forever).
       const before = { x: e.transform.x, z: e.transform.z };
+      // Boarding is only valid while the survivor remains beside the truck.
+      // Combat knockdowns and body pushes can interrupt the 45-tick sit-down
+      // animation; retaining the timestamp in that case strands the survivor
+      // because the movement code below treats them as already arrived.
+      if (s.truckEntering[id] !== undefined && distance(e.transform, target) >= 1.2) {
+        delete s.truckEntering[id];
+        if (e.civilian!.story?.clip === 'npc-sit-down') e.civilian!.story = null;
+      }
       const approaching = s.truckEntering[id] === undefined;
       const moved = approaching && w.npcs!.move(e, target, 3, e.civilian!, .6, 8000);
       // A reachable nearby cell can still leave an evacuee stationary short of the truck.
