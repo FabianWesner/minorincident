@@ -98,6 +98,7 @@ test('enter, drive and exit: door dwell, input ownership (no attacks while drivi
   expect(await vehicleShovesProps(), 'vehicle-to-prop simulation repeats exactly').toEqual(shoved);
   await bikeMountIntent();
   await zooParkedBoarding();
+  await zooCheckpointHandoff();
   await apcBoarders();
   await l9BusVsParkedApc();
   await l9BusTelegraphAndWreck();
@@ -668,15 +669,29 @@ async function zooParkedBoarding(): Promise<void> {
       missionControls(world).teleport(id, entry);
       expect(vehicles.boardPassenger(car.entity.id, id)).toBe(true);
     }
+    for (let i = 0; i < 24 * 60 && zoo.passengers().some(id => !car.entity.vehicle!.passengers?.some(passenger => passenger.id === id && passenger.phase === 'seated')); i++) advance(1);
+    expect(zoo.passengers()).toHaveLength(14);
+    expect(zoo.passengers().every(id => car.entity.vehicle!.passengers?.some(passenger => passenger.id === id && passenger.phase === 'seated')), 'all fourteen passengers have completed the boarding animation').toBe(true);
+    // The failed ordering: the elephant is already down and the Hale charge
+    // never happened, so Hale remains alive without the story flag.
+    mission.setState('elephant-fallen', true);
+    const haleActor = world.entities.get(zoo.state.haleId)!;
+    haleActor.health.current = haleActor.health.max; haleActor.civilian!.state = 'calm';
+    mission.setState('hale-keys', false);
+    mission.setState('hale-fallen', false);
+    expect(zoo.canBoardDriver(), '14/14 seated with Hale alive still unlocks the driver door').toBe(true);
+    mission.setState('hale-fallen', true);
+    expect(zoo.canBoardDriver(), '14/14 seated also unlocks when Hale has fallen').toBe(true);
+    mission.setState('hale-fallen', false);
+    expect(mission.state.marker, '14/14 keeps the driver-door marker active').toBe('exit');
+    expect(mission.def.steps.find(step => step.id === 'escape')!.text).toBe('Board the armored vehicle · 14/14 aboard');
+    expect(Math.hypot(mission.def.anchors.exit.x - zoo.door().x, mission.def.anchors.exit.z - zoo.door().z)).toBeLessThan(.3);
     advance(60);
     missionControls(world).teleport(1, zoo.door());
     world.applyInput({ ...emptyInput(), interact: true }, 'keyboard'); advance(1);
-    world.applyInput(emptyInput(), 'keyboard');
-    for (let i = 0; i < 24 * 60 && !zoo.canBoardDriver(); i++) advance(1);
-    expect(mission.state.states['hale-fallen'], 'the commander beat completes before the cab unlocks').toBe(true);
-    missionControls(world).teleport(1, zoo.door());
-    world.applyInput({ ...emptyInput(), interact: true }, 'keyboard'); advance(1);
-    world.applyInput(emptyInput(), 'keyboard'); advance(60);
+    expect(vehicles.active, 'E at the driver door enters with the complete group and Hale alive').toBe(car.entity.id);
+    world.applyInput(emptyInput(), 'keyboard'); advance(480);
+    expect(mission.state.states.departed, 'the APC handoff completes within eight seconds without Hale falling').toBe(true);
     expect(zoo.canDrive(), 'complete living group boards at the fixed destination').toBe(true);
     expect(car.entity.vehicle!.scripted, 'the zoo departure owns the vehicle before handover').toBe(true);
     const save = preset('L9-default'); save.transport = vehicles.transfer(car.entity.id);
@@ -690,6 +705,48 @@ async function zooParkedBoarding(): Promise<void> {
       expect(Math.hypot(arrived.entity.transform.x - start.x, arrived.entity.transform.z - start.z), 'same APC drives after handover').toBeGreaterThan(.5);
     } finally { next.dispose(); }
   } finally { world.dispose(); }
+}
+
+// Restore the QA route that exposed the handoff lock, then isolate its completed
+// combat outcome. Boarding animations and driver interaction remain native.
+async function zooCheckpointHandoff(): Promise<void> {
+  const fixture = readFixture('tests/fixtures/saves/qa/l8-elephant-apc-yard-engaged.json.gz');
+  for (const quality of ['high', 'low'] as const) for (const fallen of [false, true]) {
+    const world = await loadLevel('L8', 1, fixture.campaign, 0, { quality });
+    try {
+      const mission = world.missions!;
+      mission.loadResume(fixture.resume as Parameters<typeof mission.loadResume>[0]);
+      const zoo = mission.l8!, vehicles = world.vehicles!, car = world.entities.get(zoo.state.carId)!;
+      world.combat!.damage.god = true;
+      for (const arena of zoo.state.arenas) arena.phase = 3;
+      zoo.bosses.updateGates();
+      const elephant = zoo.state.arenas.find(arena => arena.id === 'elephant')!;
+      for (const id of elephant.ids) { const actor = world.entities.get(id); if (actor) { actor.health.current = 0; actor.corpse = true; if (actor.infected) actor.infected.recoverAt = -1; } }
+      mission.setState('elephant-fallen', true);
+      mission.setState('hale-keys', fallen); mission.setState('hale-fallen', fallen);
+      zoo.state.haleFallAt = 0;
+      const hale = world.entities.get(zoo.state.haleId)!;
+      hale.health.current = fallen ? 0 : hale.health.max; hale.civilian!.state = fallen ? 'finished' : 'calm';
+      const group = zoo.passengers(); expect(group).toHaveLength(14);
+      missionControls(world).teleport(1, { x: zoo.door().x - 4, z: zoo.door().z + 2 });
+      for (const id of group) {
+        if (world.entities.get(id)!.passengerOf !== undefined) continue;
+        missionControls(world).teleport(id, vehicles.passengerDoor(car.id));
+        expect(vehicles.boardPassenger(car.id, id)).toBe(true);
+      }
+      world.applyInput(emptyInput(), 'keyboard');
+      for (let tick = 0; tick < 61; tick++) world.update();
+      expect(zoo.canBoardDriver(), `${quality}, Hale fallen=${fallen}`).toBe(true);
+      expect(objectiveText(mission, mission.def.steps.find(step => step.id === 'escape')!.text)).toBe('Board the armored vehicle · 14/14 aboard');
+      expect(mission.state.marker).toBe('exit');
+      missionControls(world).teleport(1, zoo.door());
+      world.applyInput({ ...emptyInput(), interact: true }, 'keyboard'); world.update();
+      expect(vehicles.active).toBe(car.id);
+      world.applyInput(emptyInput(), 'keyboard');
+      for (let tick = 0; tick < 900 && !mission.state.states.departed; tick++) world.update();
+      expect(mission.state.states.departed, `${quality}, Hale fallen=${fallen}: departure within 15 s`).toBe(true);
+    } finally { world.dispose(); }
+  }
 }
 
 // r2-bike (L1 depot): standing still where a story beat left her beside the parked cargo bike never mounts it; walking up
