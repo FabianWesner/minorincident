@@ -128,3 +128,92 @@ The full six-case matrix rejects the routed extra leaper / separate Alpha credit
 ## Journey cadence receipt on restored checkpoint
 
 `S89_OUT=/private/tmp/s102-current-cadence.json node --import tsx/esm tools/qa/s89-l10gap.ts` exits 0, passed=true, flags=[]. All six native routes complete, zero cap violations, and every adjusted adjacent-start gap is <=45 s. Exact receipt: current-cadence.json. This covers the requested journey gate; it does not replace the failing finale head/tail requirement.
+
+## Single delayed Alpha rejection
+
+Keeping the original waves/roster and admitting one separately reserved routed leaper after 15 s gives LOW s1 42.42 s, LOW s2 37.15 s, both complete with zero deaths. This rejects delayed leaper timing as sufficient; reverted source to the four-credit checkpoint. Exact receipts: delayed-alpha-low.json.
+
+## Initial delay and far journey dormancy
+
+Delaying the first wave two seconds regresses HIGH s2 to 47.17 s (three deaths, complete); reverted. Suspending distant unauthored living hunters in serialized chunk state until cure release gives LOW s1 42.32 s (zero deaths, complete), not acceptance. The dormancy candidate is retained unaccepted for HIGH measurement; it preserves downed bodies and serialized hunter identity/health. Exact receipts: delay-dormancy-trials.json.
+
+## Dormancy HIGH rejection
+
+Far unauthored hunter dormancy passes HIGH s2/s3 (18.85/15.82 s, deaths 3/3), but HIGH s1 does not complete and its finale reaches 825 s with a 199.17 s gap. Narrowing dormancy to idle/wander/attracted hunters beyond two hold radii yields the identical seed-1 failure. Both are rejected; restored checkpoint source. Receipts: dormant-high.json and stale-high1.json.
+
+## Gun orientation rejection
+
+The gun has no limited traverse arc. Rotating the authored gun yaw 180 degrees leaves LOW s1 exactly at 42.12 s, zero deaths, complete. Original yaw restored. Exact receipt: gun-yaw-trial.json. At 2026-11-13 21:20 UTC the worktree was about 80 minutes old (created 20:00 UTC), still within the requested approximate three-hour time box.
+
+## Resource-backed ranged approach requirements
+
+Source audit of `AlphaSupportMoves.tryStart` establishes a 25 m thrower attack envelope with line of sight, object radius 2 m for direct grab-throw and 6 m for scavenging; barrage requires distance <=8 m and a light prop. `PropThrows.nearestObject` accepts enabled, unbraced, unfixed movable props below 1500 kg and retained corpses. A resource at the current 48 m entrance alone cannot establish attacks. A future resource-backed approach must stage the thrower and resource inside 25 m while preserving ordinary spawn safety and verify actual ranged starts. No such functioning ranged setup has been established by the rejected thrower trials.
+
+## Resource-backed thrower setup
+
+Current unaccepted trial authors an offscreen entry and inner-yard approach in l10Finale, four movable crates at the approach, one thrower replacing one regular, and a routed walk preserved from courier gunfire/early notice. LOW s1 completes with zero deaths but fails at 37.42 s. Receipt: resource-thrower-trial.json. A source trace must still establish whether the thrower reaches the resource and starts ranged attacks; no functioning ranged encounter is claimed yet.
+
+## Resource approach trace
+
+The thrower reaches the north-west staged resources by tick 53700, but produces only ordinary starts later near the operator and dies by 54600. Its staged position is behind tank B relative to the gun, so ranged LOS is not established. Moving the authored resource position to the eastern open lane improves LOW s1 to 25.28 s, zero deaths, complete; ranged starts still need source verification. Receipts: resource-actor-trace.json and resource-east-trial.json.
+
+## Eastern resource verification
+
+All four staged crates are enabled, unfixed movable bodies at the intended eastern position. The thrower nevertheless loses its scripted approach before reaching them and makes its first grab-throw only after recovering beside the Mega corpse at tick 55785. The western approach passes through gun contact before the resource; damage provocation cancels the script. Current unmeasured revision moves its authored entry east of the sphere tank, approaching the resource from that side. Exact actor/prop/attack trace: east-resource-trace.json.
+
+## Eastern-entry thrower actual starts
+
+The thrower reaches the resource by tick 53700 (nearestObject within 2 m verified), then leaves it and climbs the platform. Its grab-throw starts at 54521 and 56574 are observed; it is down by 54600 and spends the middle gap recovering. LOW s1 still fails at 22.35 s, zero deaths, complete. Exact native source/pose/resource trace: east-entry-actor-trace.json. Sustained contact after first down remains open.
+
+## Two throwers and deck resources rejected
+
+Two throwers replacing two regulars, with a 12 s entry stagger and extended admission window, give LOW s1 46.75 s, one death, completion. One thrower with crates at deck height at the stair top gives a 71.02 s head, zero deaths, completion. Both rejected. All resource-trial source changes were reverted to the earlier four-credit checkpoint. Exact receipts: two-deck-thrower-trials.json. The rejected source patch is preserved in /private/tmp/s102-resource-candidate.patch for local investigation only.
+
+## Eight-second service entry
+
+Adapted the preserved a9fb7339 service-entry concept using authored finale anchors (door, spawn, stair foot/top, gun). One ordinary runner every eight seconds enters through the native HouseEmergence path with a cap reservation; no stats changed. LOW s1 passes 17.42 s, zero deaths, complete. Exact receipt: service8-low1.json. Five other cases and final checks remain unverified; reservation cleanup/rebase on restore must be reviewed before acceptance.
+
+## Service-entry six-case matrix
+
+Eight-second service arrivals pass HIGH s2/s3 and LOW s1/s2 (17.02/15.58/17.42/19.82 s). HIGH s1 is incomplete; LOW s3 completes but has a 22.07 s tail. Deaths HIGH 3/3/3, LOW 0/0/0. Exact receipts: service8-six.json. Current unmeasured revision rebases serialized emergence walking deadlines on checkpoint restore; reservation ownership cleanup still requires inspection.
+
+## HIGH s1 incomplete root cause
+
+Deadline rebasing does not fix HIGH s1. Native terminal evidence proves charge complete, player healthy at console, live Mega at (3945.679,-40.75) with 966.8 HP, outside the latched west perimeter segment. The perimeter remains closed after a phase checkpoint restore puts the boss outside. Current unmeasured revision reopens the perimeter while the live boss is beyond the authored arm radius, allowing native return. Terminal receipt: service-high1-terminal.json. This is an encounter containment fix, not a stat or teleport change.
+
+## Perimeter recovery measurement
+
+Reopening the perimeter while the live Mega is outside the arm radius restores HIGH s1 completion, baseline three deaths, but max gap remains 70.85 s (209.38 s finale). Widening the fixed west gate to 20 m half-width also completes with three deaths but the identical 70.85 s gap. Gate width reverted; minimal dynamic perimeter recovery retained unaccepted. Exact receipts: perimeter-trials.json. Boss navigation/attack state through that remaining gap needs direct tracing.
+
+## Mega phase-three return branch
+
+Native trace proves long phase-three stalls west of the arena, with no active special or future stagger timer, while service actors still admit. `MegaPursuit.drive` phase-three return uses the ordinary infected seek and bypasses the dedicated Mega grid and stuck monitor. Current unmeasured revision uses the existing Mega steering/grid/progress monitor for that branch. Exact motion trace: mega-service-trace.json.
+
+## Native Mega pursuit fixes HIGH s1
+
+Dedicated-grid phase-three return trials (exact console and nearest-clear destination) remain incomplete. Removing the forced phase-three return branch and allowing existing standard Mega pursuit/arena leash restores HIGH s1: 14.83 s max gap, baseline three deaths, route complete, 67.02 s finale. This smaller branch removal is retained for full matrix verification. Exact receipts: mega-return-trials.json. No speed, HP, attack or weapon stats changed.
+
+## Scoped phase-three return
+
+Global phase-three branch removal fails death acceptance (HIGH s3 five deaths) and regresses LOW s1. Current revision keeps original phase-three return while inside the authored leash radius, using ordinary pursuit outside it. HIGH s1 passes 14.83 s, four deaths (baseline+1); HIGH s3 passes 15.58 s, three deaths (baseline+1). Exact receipts: leash-return-high.json; rejected global-removal matrix: standard-service-six.json. Full scoped matrix and LOW s3 tail remain open.
+
+## Service interval diagnostics on LOW s3
+
+With scoped Mega return, service intervals 6/10/12 s fail LOW s3 at 34.25/25.40/36.38 s respectively; all complete with zero deaths. Eight seconds previously gives 22.07 s. Current unmeasured interval is nine seconds; no passing six-case matrix exists. Exact receipts: service-interval-low3.json.
+
+## Service role trials LOW s3
+
+Nine-second runners fail at 22.25 s (one death). Eight-second sprinters fail 34.85 s (zero deaths). Eight-second firefighters fail 30.22 s (zero deaths), stretching the finale to 203.42 s. All complete. Current unmeasured service cohort is two runners followed by one firefighter, ordinary global archetype stats unchanged. Exact receipts: service-role-trials.json.
+
+## Passing six-case candidate
+
+`after-candidate.json` proves every exact finale gap <=20 s, all routes complete, deaths per case <= baseline+1 and total eight <= baseline twelve+2. Typecheck and lint pass. Current implementation: authored service doorway and staircase route, eight-second admissions with two runners then one firefighter, bounded director reservations and native emergence; Mega phase-three forced console return only inside the existing leash; perimeter reopens for a live outside boss. No stats, bot policy, thresholds, charge duration or corpses changed. Final reservation review, fresh journey cadence/threat audit and remote suite remain required before acceptance. Browser QA needed.
+
+| Tier | Seed | Before gap s | After gap s | Before deaths | After deaths |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| HIGH | 1 | 16.72 | 14.83 | 3 | 3 |
+| HIGH | 2 | 42.17 | 17.02 | 3 | 3 |
+| HIGH | 3 | 46.48 | 15.58 | 2 | 2 |
+| LOW | 1 | 42.12 | 17.42 | 0 | 0 |
+| LOW | 2 | 16.80 | 18.43 | 2 | 0 |
+| LOW | 3 | 18.60 | 16.68 | 2 | 0 |

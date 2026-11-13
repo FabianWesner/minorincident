@@ -15,6 +15,7 @@ export interface Box { min: [number, number]; max: [number, number] }
 export const finale = {
   /** E32 §5.7: charge only advances while the player is within this planar distance of the console. */
   holdRadius: 40,
+  serviceEntry: { at: [10, -6] as [number, number], spawn: [4, -6] as [number, number] },
   /** r31-megafight: once the charge has started and the Mega has entered the yard, it stays within this distance of the console
    * (the arena disc with the machinery, tanks and gate). A courier who runs further out does not drag it away: it waits at the edge
    * and goes back in with her. Spec: "leash/return when it drifts beyond ~25 m from the console". */

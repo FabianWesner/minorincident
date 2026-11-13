@@ -1,3 +1,4 @@
+import { finale } from '../../data/l10Finale';
 import { cureEscapeGaps, cureHangar } from '../../data/l10Story';
 import { cure } from './district';
 import type { DistrictLayout, Placement } from '../districts/types';
@@ -29,6 +30,8 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
       const p: Placement = { id, assetId, position: [x, 0, z], yaw, scale, decor, minTier: 0, maxTier: 6, allowRoad: false, lightGroup: 'research', visualAabb: { min: [x - half[0], 0, z - half[2]], max: [x + half[0], half[1] * 2, z + half[2]] } };
       layout.placements.push(p); return p;
     };
+    const service = finale.serviceEntry.at, console = cure.anchors['cure-console'];
+    place('kit.zoo-tunnel-mouth:l10-service', 'kit.zoo-tunnel-mouth', console[0] + service[0], console[1] + service[1], [4.5, 3, 3], Math.PI);
     // Existing open vehicle-bay shell provides a roof and steel posts. Reviewed wall boxes leave the interior enterable.
     const shell = place('l10-hangar-shell', 'bld.cure-motor-shelter', h.centre.x, h.centre.z, [17.85, 3.65, 13.1], Math.PI / 2, [3, 1.6, 3], true);
     shell.position[1] = -.256; // The scaled shelter pad ends at the existing ground floor, under the cast's feet.

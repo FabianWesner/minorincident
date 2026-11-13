@@ -1,3 +1,5 @@
+import { emergeResident, walkResidents, layoutHouseDoors, type HouseEmergence } from '../outbreak/HouseEmergence';
+import { finale } from '../../data/l10Finale';
 import { updateFarmScares, type FarmScareState } from './FarmScares';
 import { cure } from '../../levels/L10/district';
 import { cureEncounters, curePaceEncounters, cureEncounterSlots, cureEncounterSpot, cureMedkits, cureWeaponPickups } from '../../levels/L10/encounters';
@@ -6,6 +8,7 @@ import { cureCorgiToy, insideCureHangar } from '../../data/l10Story';
 import type { SimWorld } from '../world/SimWorld';
 
 export interface CureEncounterState {
+  finaleEntry?: HouseEmergence; finaleEntryNext?: number; finaleEntrySlot?: boolean;
   farmScares?: FarmScareState; toy?: number;
   pressureAttackAt?: number; pressureTick?: number;
   spawned: Record<string, number>; medkits: Record<string, number>; weapons?: Record<string, number>;
@@ -30,7 +33,13 @@ export class LevelTenEncounters {
   snapshot(): CureEncounterState { return structuredClone({ ...this.state, pressureTick: this.world.tick }); }
   restore(value: unknown): void {
     this.state = structuredClone(value as CureEncounterState); this.state.weapons ??= {};
-    if (this.state.pressureTick !== undefined && this.state.pressureAttackAt !== undefined) this.state.pressureAttackAt += this.world.tick - this.state.pressureTick;
+    const delta = this.world.tick - (this.state.pressureTick ?? this.world.tick);
+    if (this.state.pressureAttackAt !== undefined) this.state.pressureAttackAt += delta;
+    for (const walker of this.state.finaleEntry?.walking ?? []) {
+      walker.until += delta;
+      if (walker.startAt !== undefined) walker.startAt += delta;
+      if (walker.branchAt !== undefined) walker.branchAt += delta;
+    }
     for (const [id, scare] of Object.entries(this.state.farmScares ?? {})) if (scare.actor === undefined) delete this.state.farmScares![id];
   }
   /** Ordinary off-camera arrivals replace pressure lost to outpaced hunters; installed-cure retries belong to the finale. */
@@ -62,6 +71,31 @@ export class LevelTenEncounters {
     if (mission.state.states['cure-released']) return;
     const assaultActive = !!mission.state.states['charge-active'];
     if (assaultActive) this.state.assaultTicks = (this.state.assaultTicks ?? 0) + 1;
+    if (assaultActive) {
+      if (!this.state.finaleEntry) {
+        const district = w.districts!.districts.find(d => d.id === 'D-CURE')!;
+        const door = layoutHouseDoors(district.layout, district.origin).find(d => d.house === 'kit.zoo-tunnel-mouth:l10-service');
+        const c = mission.def.anchors['cure-console'];
+        const route = [finale.platformStair.at, finale.platformStair.top, finale.gun.at].map(([x,z]) => [c.x+x,c.z+z] as [number,number]);
+        if (door) this.state.finaleEntry = { ...door, sx: c.x+finale.serviceEntry.spawn[0], sz: c.z+finale.serviceEntry.spawn[1], route, ox: route[2][0], oz: route[2][1], next: 0, ids: [], finishRoute: true };
+      }
+      const entry = this.state.finaleEntry, clock = this.state.assaultTicks ?? 0;
+      if (entry) {
+        for (const id of walkResidents(w, entry, w.tick)) {
+          ai.pursueTarget(id, 1);
+          const b = w.entities.get(id)!.infected!;
+          if (b.l1) { b.l1.mode = 'chase'; b.l1.targetId = 1; b.state = 'chase'; b.heardTargetId = 1; }
+        }
+        if (clock >= (this.state.finaleEntryNext ?? 300)) {
+          if (!this.state.finaleEntrySlot) { ai.director.reserved++; this.state.finaleEntrySlot = true; }
+          else if (ai.director.count < ai.director.cap && ai.pool.length) {
+            ai.director.reserved--; this.state.finaleEntrySlot = false;
+            const id = emergeResident(w, entry, w.tick, { archetype: entry.ids.length % 3 === 2 ? 'infected.firefighter' : 'infected.runner' });
+            entry.ids.push(id); this.state.finaleEntryNext = clock + 480;
+          }
+        }
+      }
+    }
     if (w.tick % 10 !== 0) return;
     const player = w.entities.get(1)!;
     const current = cure.regions.find(r => player.transform.x >= r.envelope[0][0] && player.transform.x <= r.envelope[1][0]) ?? cure.regions.at(-1)!;
