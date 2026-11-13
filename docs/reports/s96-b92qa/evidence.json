@@ -1,0 +1,1815 @@
+{
+  "target": "PROD 4f3dfdf9",
+  "worktreeHead": "64594b3f5cee984c0def6a6dee3beeb93ea34689",
+  "verdict": "HOLD",
+  "confirmedP1": [],
+  "confirmedP2": [],
+  "coverage": {
+    "l10TimingHigh60to70": "unmet-peak59-farms-later-regions-unreached",
+    "l10TimingLow60to70": "unmet-peak46-farms-later-regions-unreached",
+    "l10ArrivalsAndPopInHigh": "not-run",
+    "l10ArrivalsAndPopInLow": "not-run",
+    "l10MegaGunsAndRecoveryHigh": "rifle-damage-floor-and1.017s-recovery-proved-shotgun-nailgun-open",
+    "l10MegaGunsAndRecoveryLow": "rifle-floor-and1.017s-recovery-proved-shotgun-nailgun-open",
+    "l10FarmRoadCropSweepHigh": "partial-two-opened-road-views-full-sweep-open",
+    "l10FarmRoadCropSweepLow": "not-systematically-swept",
+    "l10CheckpointRetryMegaPositionHigh": "farm-coordinate-samples-qualified-full-scope-open",
+    "l10CheckpointRetryMegaPositionLow": "full-scope-open",
+    "l6FullCompletionFirstHatchClosedHigh": "passed-with-five-deaths-one-assist",
+    "l6GroupAttack30SecondWindowsHigh": "all-ten-full-postclosure-windows-positive-in-separate-noncompleting-run-deaths-disclosed",
+    "l6FullCompletionFirstHatchClosedLow": "exit-reached-but-not-complete-at480seconds",
+    "l6GroupAttack30SecondWindowsLow": "aggregate-attacks-proved-timestamp-observer-invalid-discarded"
+  },
+  "checks": {
+    "build": "passed",
+    "qaBuild": "passed",
+    "typecheck": "passed",
+    "lint": "passed",
+    "remoteNpmTest": {
+      "status": "passed",
+      "runner": "46.225.66.90",
+      "filesPassed": 27,
+      "testsPassed": 106,
+      "testsSkipped": 1,
+      "seconds": 217.3,
+      "budgetSeconds": 240,
+      "budgetCollection": "150/150"
+    },
+    "headlessBrowser": "passed-startup-and-60-second-high-route-sample",
+    "actualLowQuality": "passed-runtime-receipt-tick9-after-pause-settings-change"
+  },
+  "browserBlocker": [],
+  "captures": [
+    "test-results/playtest/s96-b92qa-l10-high-journey2/captures/journey2-farm-route-west.jpg",
+    "test-results/playtest/s96-b92qa-l10-low-actual/captures/low-actual-L10-t5489.jpg",
+    "test-results/playtest/s96-b92qa-l6-high/captures/l6-high-L6-result.jpg",
+    "test-results/playtest/s96-b92qa-l10-high-journey2/captures/journey2-follow-visible-arrow2.jpg"
+  ],
+  "contactSheet": "contact-sheet.jpg",
+  "notes": "Browser startup restriction resolved on resumed execution. HIGH WebGPU z1.5 60-second sample reached farmstead; all focused acceptance checks remain open.",
+  "highJourneyContinuation": {
+    "seconds": 120,
+    "deaths": 4,
+    "assists": 0,
+    "axeAttacks": 125,
+    "savedCheckpoint": "cure-residential",
+    "savedTick": 6999,
+    "openedCapture": "test-results/playtest/s96-b92qa-l10-high-journey/captures/journey-L10-t5414.jpg",
+    "automaticWarning": "enemy-unhittable; unconfirmed"
+  },
+  "highJourney2": [
+    {
+      "level": "L10",
+      "entry": "continue",
+      "heroine": "female",
+      "finished": false,
+      "skipped": [],
+      "wallSeconds": 352,
+      "simSeconds": 349,
+      "maxNoProgressSeconds": 163.25,
+      "deaths": 6,
+      "assists": 0,
+      "attacks": {},
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.fire-axe"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.fire-axe"
+      ],
+      "steps": [
+        {
+          "id": "farmstead",
+          "text": "Find a way through the farms \u00b7 58\u00a0m",
+          "tick": 9,
+          "marker": {
+            "anchor": "cure-military",
+            "ring": {
+              "x": 1857,
+              "y": 0,
+              "z": 25
+            },
+            "drawn": [
+              698,
+              0,
+              25
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        }
+      ]
+    }
+  ],
+  "visibleMarkerHigh": [
+    {
+      "level": "L10",
+      "entry": "continue",
+      "heroine": "female",
+      "finished": false,
+      "skipped": [],
+      "wallSeconds": 121,
+      "simSeconds": 118,
+      "maxNoProgressSeconds": 4.433333333333334,
+      "deaths": 4,
+      "assists": 0,
+      "attacks": {
+        "weapon.fire-axe": 68
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.fire-axe"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.fire-axe"
+      ],
+      "steps": [
+        {
+          "id": "farmstead",
+          "text": "Find a way through the farms \u00b7 57\u00a0m",
+          "tick": 9,
+          "marker": {
+            "anchor": "cure-military",
+            "ring": {
+              "x": 698,
+              "y": 0.7049999833106995,
+              "z": 25
+            },
+            "drawn": [
+              698,
+              0,
+              25
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        }
+      ]
+    }
+  ],
+  "requestedCarriedRifleHigh": [
+    {
+      "level": "L10",
+      "entry": "continue",
+      "heroine": "female",
+      "finished": false,
+      "skipped": [],
+      "wallSeconds": 120,
+      "simSeconds": 117,
+      "maxNoProgressSeconds": 5.033333333333333,
+      "deaths": 5,
+      "assists": 0,
+      "attacks": {
+        "weapon.fire-axe": 76
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.fire-axe"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.fire-axe"
+      ],
+      "steps": [
+        {
+          "id": "farmstead",
+          "text": "Find a way through the farms \u00b7 40\u00a0m",
+          "tick": 0,
+          "marker": {
+            "anchor": "cure-military",
+            "ring": {
+              "x": 698,
+              "y": 0.7049999833106995,
+              "z": 25
+            },
+            "drawn": [
+              698,
+              0,
+              25
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        }
+      ]
+    }
+  ],
+  "riflePickupObservation": {
+    "tick": 1694,
+    "position": [
+      706.2886962890625,
+      22.08928680419922
+    ],
+    "weapons": [
+      "weapon.fire-axe",
+      "weapon.fire-axe",
+      "weapon.hunting-rifle"
+    ],
+    "nextHudDistance": 236,
+    "lostOnDeath": true
+  },
+  "l6High": {
+    "run": [
+      {
+        "level": "L6",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 370,
+        "simSeconds": 350,
+        "maxNoProgressSeconds": 32.425,
+        "deaths": 5,
+        "assists": 1,
+        "attacks": {
+          "weapon.army-mg": 2027,
+          "weapon.fire-axe": 18
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "steps": [
+          {
+            "id": "shelter",
+            "text": "Look around the shelter \u00b7 rest while you can",
+            "tick": 11,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "stop",
+            "text": "Stop the infected \u00b7 Retreat in 0:36",
+            "tick": 1994,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "retreat",
+            "text": "The group waits: cover the rear from the infected \u00b7 260\u00a0m",
+            "tick": 3254,
+            "marker": {
+              "anchor": "l6-next",
+              "ring": {
+                "x": 242,
+                "y": 1.3200000524520874,
+                "z": 15
+              },
+              "drawn": [
+                242,
+                0.6,
+                15
+              ],
+              "playerY": 1.3200000524520874,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "exit",
+            "text": "Bring the survivors into the night \u00b7 0/1 out \u00b7 33\u00a0m",
+            "tick": 19551,
+            "marker": {
+              "anchor": "night-exit",
+              "ring": {
+                "x": 273,
+                "y": 1.2699999809265137,
+                "z": 15
+              },
+              "drawn": [
+                273,
+                3.9,
+                15
+              ],
+              "playerY": 1.2699999809265137,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "firstHatchClosedAt": 15376,
+    "secondHatchClosedAt": 17457,
+    "thirdHatchClosedAt": 18990,
+    "steps": {
+      "shelter": {
+        "ticks": 1991,
+        "playerWindups": 0,
+        "groupWindups": 0,
+        "playerDamage": 0,
+        "peakAlive": 0
+      },
+      "stop": {
+        "ticks": 1261,
+        "playerWindups": 0,
+        "groupWindups": 63,
+        "playerDamage": 0,
+        "peakAlive": 31
+      },
+      "retreat": {
+        "ticks": 16295,
+        "playerWindups": 254,
+        "groupWindups": 490,
+        "playerDamage": 663.0999999999955,
+        "peakAlive": 62
+      },
+      "exit": {
+        "ticks": 1126,
+        "playerWindups": 15,
+        "groupWindups": 13,
+        "playerDamage": 60,
+        "peakAlive": 65
+      }
+    },
+    "postClosureFollowerAttackAlarmCounts": [
+      0,
+      3,
+      1
+    ],
+    "cadenceQualification": "Alarm events do not enumerate every attack start; every-30-second group cadence remains unverified."
+  },
+  "highRoute3": {
+    "ended": "driver error: Unknown key Digit19",
+    "lastObservedTick": 5609,
+    "lastPosition": [
+      936.2635498046875,
+      -13.508079528808594
+    ],
+    "carried": [
+      "weapon.fire-axe",
+      "weapon.hunting-rifle",
+      "weapon.machete"
+    ],
+    "rifleAttacks": 46,
+    "rifleHitEvents": 50,
+    "pursuitRifleHitDamage": 300,
+    "minimumObservedPursuitHp": 2100,
+    "pursuitMaxHp": 3000,
+    "savedCheckpointTick": 5178,
+    "scopeLimit": "No floor, shotgun, nail gun, exact recovery, or finale load proof"
+  },
+  "manualAttempt": [
+    {
+      "level": "L10",
+      "entry": "continue",
+      "heroine": "female",
+      "finished": false,
+      "skipped": [],
+      "wallSeconds": 180,
+      "simSeconds": 180,
+      "maxNoProgressSeconds": 64.55,
+      "deaths": 2,
+      "assists": 0,
+      "attacks": {
+        "weapon.fire-axe": 149,
+        "weapon.hunting-rifle": 6,
+        "weapon.machete": 1
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.fire-axe",
+        "weapon.hunting-rifle"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.fire-axe",
+        "weapon.hunting-rifle"
+      ],
+      "steps": [
+        {
+          "id": "farmstead",
+          "text": "Find a way through the farms \u00b7 29\u00a0m",
+          "tick": 4787,
+          "marker": {
+            "anchor": "cure-military",
+            "ring": {
+              "x": 940,
+              "y": 0.7049999833106995,
+              "z": -12
+            },
+            "drawn": [
+              940,
+              0,
+              -12
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        }
+      ]
+    }
+  ],
+  "temporaryQaWrapper": {
+    "path": "/private/tmp/s96-session.ts",
+    "change": "Executed: requested indices above 9 use physical Q cycling and read-only carried selection checks."
+  },
+  "highCycle": {
+    "runs": [
+      {
+        "level": "L10",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 300,
+        "simSeconds": 297,
+        "maxNoProgressSeconds": 28.055,
+        "deaths": 7,
+        "assists": 0,
+        "attacks": {
+          "weapon.hunting-rifle": 148,
+          "weapon.machete": 1
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.fire-axe",
+          "weapon.hunting-rifle"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.fire-axe",
+          "weapon.hunting-rifle",
+          "weapon.machete"
+        ],
+        "steps": [
+          {
+            "id": "farmstead",
+            "text": "Find a way through the farms \u00b7 16\u00a0m",
+            "tick": 9,
+            "marker": {
+              "anchor": "cure-military",
+              "ring": {
+                "x": 940,
+                "y": 0.7049999833106995,
+                "z": -12
+              },
+              "drawn": [
+                940,
+                0,
+                -12
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "peakLiveInfected": 58,
+    "maxPlayerX": 1108.5234375,
+    "minPursuitHpFromRifle": 1050,
+    "wrapper": "Physical Q cycling used successfully; no repository source changes",
+    "floorHits": [
+      {
+        "tick": 3412,
+        "damage": 282,
+        "hp": 1050
+      },
+      {
+        "tick": 3472,
+        "damage": 0,
+        "hp": 1050
+      },
+      {
+        "tick": 3715,
+        "damage": 138,
+        "hp": 1050
+      },
+      {
+        "tick": 3774,
+        "damage": 0,
+        "hp": 1050
+      },
+      {
+        "tick": 3894,
+        "damage": 60,
+        "hp": 1050
+      },
+      {
+        "tick": 3953,
+        "damage": 0,
+        "hp": 1050
+      },
+      {
+        "tick": 4194,
+        "damage": 120,
+        "hp": 1050
+      }
+    ]
+  },
+  "highMeasured": {
+    "runs": [
+      {
+        "level": "L10",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 182,
+        "simSeconds": 178,
+        "maxNoProgressSeconds": 10.306,
+        "deaths": 7,
+        "assists": 0,
+        "attacks": {
+          "weapon.hunting-rifle": 102
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.fire-axe",
+          "weapon.hunting-rifle",
+          "weapon.machete"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.fire-axe",
+          "weapon.hunting-rifle",
+          "weapon.machete",
+          "weapon.molotov"
+        ],
+        "steps": [
+          {
+            "id": "farmstead",
+            "text": "Find a way through the farms \u00b7 79\u00a0m",
+            "tick": 0,
+            "marker": {
+              "anchor": "cure-military",
+              "ring": {
+                "x": 1165,
+                "y": 0.7049999833106995,
+                "z": -12
+              },
+              "drawn": [
+                1165,
+                0,
+                -12
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "frames": 9822,
+    "peakLive": 59,
+    "recoveryFirstObservedSinceHitTicks": 61,
+    "recoveryExamples": [
+      {
+        "tick": 830,
+        "hp": 2406,
+        "max": 3000,
+        "sinceHit": 61,
+        "x": 1099.5372979021702,
+        "z": -23.348954432622833,
+        "playerX": 1100.9573974609375,
+        "playerZ": -25.234447479248047
+      },
+      {
+        "tick": 831,
+        "hp": 2412,
+        "max": 3000,
+        "sinceHit": 62,
+        "x": 1099.5372979021702,
+        "z": -23.348954432622833,
+        "playerX": 1100.8936767578125,
+        "playerZ": -25.234447479248047
+      },
+      {
+        "tick": 832,
+        "hp": 2418,
+        "max": 3000,
+        "sinceHit": 63,
+        "x": 1099.5372979021702,
+        "z": -23.348954432622833,
+        "playerX": 1100.8299560546875,
+        "playerZ": -25.234447479248047
+      },
+      {
+        "tick": 833,
+        "hp": 2424,
+        "max": 3000,
+        "sinceHit": 64,
+        "x": 1099.5372979021702,
+        "z": -23.348954432622833,
+        "playerX": 1100.7662353515625,
+        "playerZ": -25.234447479248047
+      }
+    ],
+    "retryEvents": [
+      {
+        "kind": "player.died",
+        "tick": 1406,
+        "mega": {
+          "x": 1089.9257880520267,
+          "z": -24.775353445023086,
+          "hp": 2100
+        }
+      },
+      {
+        "kind": "player.respawned",
+        "tick": 1526,
+        "mega": {
+          "x": 1057,
+          "z": 80,
+          "hp": 2748
+        }
+      },
+      {
+        "kind": "player.died",
+        "tick": 6114,
+        "mega": {
+          "x": 1238.4257210779474,
+          "z": -22.413908598033338,
+          "hp": 2400
+        }
+      },
+      {
+        "kind": "player.respawned",
+        "tick": 6234,
+        "mega": {
+          "x": 1297,
+          "z": 25,
+          "hp": 3000
+        }
+      },
+      {
+        "kind": "player.died",
+        "tick": 6965,
+        "mega": {
+          "x": 1248.3854952385268,
+          "z": 12.618098080107066,
+          "hp": 3000
+        }
+      },
+      {
+        "kind": "player.respawned",
+        "tick": 7085,
+        "mega": {
+          "x": 1297,
+          "z": 25,
+          "hp": 3000
+        }
+      },
+      {
+        "kind": "player.died",
+        "tick": 7721,
+        "mega": {
+          "x": 1263.8956564348525,
+          "z": -0.27297548811989414,
+          "hp": 3000
+        }
+      },
+      {
+        "kind": "player.respawned",
+        "tick": 7841,
+        "mega": {
+          "x": 1297,
+          "z": 25,
+          "hp": 3000
+        }
+      },
+      {
+        "kind": "player.died",
+        "tick": 8509,
+        "mega": {
+          "x": 1259.3642802489128,
+          "z": -1.7098045077516233,
+          "hp": 3000
+        }
+      },
+      {
+        "kind": "player.respawned",
+        "tick": 8629,
+        "mega": {
+          "x": 1297,
+          "z": 25,
+          "hp": 3000
+        }
+      },
+      {
+        "kind": "player.died",
+        "tick": 9279,
+        "mega": {
+          "x": 1263.450393634564,
+          "z": -2.515155498476591,
+          "hp": 3000
+        }
+      },
+      {
+        "kind": "player.respawned",
+        "tick": 9399,
+        "mega": {
+          "x": 1297,
+          "z": 25,
+          "hp": 3000
+        }
+      },
+      {
+        "kind": "player.died",
+        "tick": 10144,
+        "mega": {
+          "x": 1257.9651475580397,
+          "z": -8.926428496756085,
+          "hp": 3000
+        }
+      },
+      {
+        "kind": "player.respawned",
+        "tick": 10264,
+        "mega": {
+          "x": 1297,
+          "z": 25,
+          "hp": 3000
+        }
+      }
+    ],
+    "telemetryPath": "test-results/playtest/s96-b92qa-l10-high-measured/measured-s96-telemetry.json"
+  },
+  "highRoad4": {
+    "runs": [
+      {
+        "level": "L10",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 181,
+        "simSeconds": 179,
+        "maxNoProgressSeconds": 13.632,
+        "deaths": 10,
+        "assists": 0,
+        "attacks": {
+          "weapon.hunting-rifle": 82
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.fire-axe",
+          "weapon.hunting-rifle",
+          "weapon.machete",
+          "weapon.molotov"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.fire-axe",
+          "weapon.hunting-rifle",
+          "weapon.machete",
+          "weapon.molotov"
+        ],
+        "steps": [
+          {
+            "id": "farmstead",
+            "text": "Find a way through the farms \u00b7 138\u00a0m",
+            "tick": 0,
+            "marker": {
+              "anchor": "cure-military",
+              "ring": {
+                "x": 1397,
+                "y": 0.7049999833106995,
+                "z": 16
+              },
+              "drawn": [
+                1397,
+                0,
+                16
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "peakLive": 57,
+    "warningLimit": "11 automatic unhittable warnings under forced rifle preference; unconfirmed gameplay defects"
+  },
+  "highMixed": {
+    "runs": [
+      {
+        "level": "L10",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 180,
+        "simSeconds": 177,
+        "maxNoProgressSeconds": 2.7,
+        "deaths": 10,
+        "assists": 0,
+        "attacks": {
+          "weapon.fire-axe": 160,
+          "weapon.hunting-rifle": 34
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.fire-axe",
+          "weapon.hunting-rifle",
+          "weapon.machete",
+          "weapon.molotov"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.fire-axe",
+          "weapon.hunting-rifle",
+          "weapon.machete",
+          "weapon.molotov"
+        ],
+        "steps": [
+          {
+            "id": "farmstead",
+            "text": "Find a way through the farms \u00b7 149\u00a0m",
+            "tick": 0,
+            "marker": {
+              "anchor": "cure-military",
+              "ring": {
+                "x": 1397,
+                "y": 0.7049999833106995,
+                "z": 16
+              },
+              "drawn": [
+                1397,
+                0,
+                16
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "peakLive": 58,
+    "automaticIssues": 0,
+    "routeLimit": "Farm approach not passed; LOW begins after these HIGH attempts, with HIGH gaps explicit."
+  },
+  "supplementalFrameComparison": {
+    "high": {
+      "peakLive": 58,
+      "frames60to70": 0,
+      "band55to58": {
+        "n": 2251,
+        "mean": 16.688138605064463,
+        "p95": 16.70000000001164,
+        "max": 33.399999999999636
+      }
+    },
+    "low": {
+      "peakLive": 40,
+      "frames60to70": 0,
+      "band55to58": {
+        "n": 0,
+        "mean": null,
+        "p95": null,
+        "max": null
+      }
+    }
+  },
+  "lowL10": [
+    {
+      "level": "L10",
+      "entry": "continue",
+      "heroine": "female",
+      "finished": false,
+      "skipped": [],
+      "wallSeconds": 181,
+      "simSeconds": 178,
+      "maxNoProgressSeconds": 4.372,
+      "deaths": 10,
+      "assists": 0,
+      "attacks": {
+        "weapon.hunting-rifle": 30,
+        "weapon.fire-axe": 166
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.fire-axe",
+        "weapon.hunting-rifle",
+        "weapon.machete",
+        "weapon.molotov"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.fire-axe",
+        "weapon.hunting-rifle",
+        "weapon.machete",
+        "weapon.molotov"
+      ],
+      "steps": [
+        {
+          "id": "farmstead",
+          "text": "Find a way through the farms \u00b7 151\u00a0m",
+          "tick": 9,
+          "marker": {
+            "anchor": "cure-military",
+            "ring": {
+              "x": 1397,
+              "y": 0.7049999833106995,
+              "z": 16
+            },
+            "drawn": [
+              1397,
+              0,
+              16
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        }
+      ]
+    }
+  ],
+  "supplementalExact40Comparison": {
+    "high": {
+      "peak": 58,
+      "count": 88,
+      "mean": 16.665909090909324,
+      "p95": 16.70000000001164,
+      "max": 16.799999999995634
+    },
+    "low": {
+      "peak": 40,
+      "count": 351,
+      "mean": 16.713675213675153,
+      "p95": 16.79999999998836,
+      "max": 33.400000000001455
+    }
+  },
+  "l6Low": {
+    "runs": [
+      {
+        "level": "L6",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 480,
+        "simSeconds": 469,
+        "maxNoProgressSeconds": 32.438,
+        "deaths": 16,
+        "assists": 1,
+        "attacks": {
+          "weapon.army-mg": 2225,
+          "weapon.fire-axe": 33
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "steps": [
+          {
+            "id": "shelter",
+            "text": "Look around the shelter \u00b7 rest while you can",
+            "tick": 11,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "stop",
+            "text": "Stop the infected \u00b7 Retreat in 0:36",
+            "tick": 1996,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "retreat",
+            "text": "The group waits: cover the rear from the infected \u00b7 262\u00a0m",
+            "tick": 3257,
+            "marker": {
+              "anchor": "l6-next",
+              "ring": {
+                "x": 242,
+                "y": 1.3200000524520874,
+                "z": 15
+              },
+              "drawn": [
+                242,
+                0.6,
+                15
+              ],
+              "playerY": 1.3200000524520874,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "exit",
+            "text": "Bring the survivors into the night \u00b7 0/1 out \u00b7 32\u00a0m",
+            "tick": 18574,
+            "marker": {
+              "anchor": "night-exit",
+              "ring": {
+                "x": 273,
+                "y": 1.2699999809265137,
+                "z": 15
+              },
+              "drawn": [
+                273,
+                3.9,
+                15
+              ],
+              "playerY": 1.2699999809265137,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "firstClosure": 13471,
+    "lastObservedTick": 28170,
+    "groupAttackStarts": null,
+    "postClosureWindows": null,
+    "scope": "Death/checkpoint resets included; not uninterrupted completion.",
+    "observerInvalid": "New observer event stream empty despite established ledger groupWindups 391 retreat /133 exit. Zero windows discarded; observer rebinding changed from world to mission."
+  },
+  "l6HighCadenceRepeat": {
+    "runs": [
+      {
+        "level": "L6",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 480,
+        "simSeconds": 467,
+        "maxNoProgressSeconds": 32.391,
+        "deaths": 10,
+        "assists": 1,
+        "attacks": {
+          "weapon.army-mg": 3382
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "steps": [
+          {
+            "id": "shelter",
+            "text": "Look around the shelter \u00b7 rest while you can",
+            "tick": 11,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "stop",
+            "text": "Stop the infected \u00b7 Retreat in 0:36",
+            "tick": 1993,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "retreat",
+            "text": "The group waits: cover the rear from the infected \u00b7 262\u00a0m",
+            "tick": 3254,
+            "marker": {
+              "anchor": "l6-next",
+              "ring": {
+                "x": 242,
+                "y": 1.3200000524520874,
+                "z": 15
+              },
+              "drawn": [
+                242,
+                0.6,
+                15
+              ],
+              "playerY": 1.3200000524520874,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "groupAttackStarts": 913,
+    "eventKinds": {
+      "attack-start": 1398,
+      "player.died": 10,
+      "player.respawned": 10
+    },
+    "firstClosure": null,
+    "limit": "No completion; prior full HIGH run remains separate. No post-first-closure interval established."
+  },
+  "l6HighShotgun": {
+    "runs": [
+      {
+        "level": "L6",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 480,
+        "simSeconds": 472,
+        "maxNoProgressSeconds": 32.09,
+        "deaths": 14,
+        "assists": 1,
+        "attacks": {
+          "weapon.shotgun": 20,
+          "weapon.army-mg": 1740,
+          "weapon.fire-axe": 42
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "steps": [
+          {
+            "id": "shelter",
+            "text": "Look around the shelter \u00b7 rest while you can",
+            "tick": 10,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "stop",
+            "text": "Stop the infected \u00b7 Retreat in 0:37",
+            "tick": 1992,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "retreat",
+            "text": "Cover the retreat through the tunnel \u00b7 243\u00a0m",
+            "tick": 3259,
+            "marker": {
+              "anchor": "l6-next",
+              "ring": {
+                "x": 242,
+                "y": 1.3200000524520874,
+                "z": 15
+              },
+              "drawn": [
+                242,
+                0.6,
+                15
+              ],
+              "playerY": 1.3200000524520874,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "exit",
+            "text": "Bring the survivors into the night \u00b7 0/1 out \u00b7 33\u00a0m",
+            "tick": 12997,
+            "marker": {
+              "anchor": "night-exit",
+              "ring": {
+                "x": 273,
+                "y": 1.590000033378601,
+                "z": 15
+              },
+              "drawn": [
+                273,
+                3.9,
+                15
+              ],
+              "playerY": 1.590000033378601,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "firstClosure": 8996,
+    "lastTick": 28380,
+    "groupAttackStarts": 450,
+    "postClosureWindows": [
+      {
+        "from": 8996,
+        "to": 10796,
+        "groupAttacks": 13,
+        "deaths": 0
+      },
+      {
+        "from": 10796,
+        "to": 12596,
+        "groupAttacks": 2,
+        "deaths": 0
+      },
+      {
+        "from": 12596,
+        "to": 14396,
+        "groupAttacks": 22,
+        "deaths": 1
+      },
+      {
+        "from": 14396,
+        "to": 16196,
+        "groupAttacks": 30,
+        "deaths": 1
+      },
+      {
+        "from": 16196,
+        "to": 17996,
+        "groupAttacks": 37,
+        "deaths": 2
+      },
+      {
+        "from": 17996,
+        "to": 19796,
+        "groupAttacks": 25,
+        "deaths": 1
+      },
+      {
+        "from": 19796,
+        "to": 21596,
+        "groupAttacks": 35,
+        "deaths": 2
+      },
+      {
+        "from": 21596,
+        "to": 23396,
+        "groupAttacks": 28,
+        "deaths": 1
+      },
+      {
+        "from": 23396,
+        "to": 25196,
+        "groupAttacks": 32,
+        "deaths": 2
+      },
+      {
+        "from": 25196,
+        "to": 26996,
+        "groupAttacks": 25,
+        "deaths": 1
+      },
+      {
+        "from": 26996,
+        "to": 28380,
+        "groupAttacks": 24,
+        "deaths": 1
+      }
+    ],
+    "scope": "Follow-mode group targets; deaths remain in windows; run did not finish."
+  },
+  "highMolotovPolicy": {
+    "runs": [
+      {
+        "level": "L10",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 180,
+        "simSeconds": 177,
+        "maxNoProgressSeconds": 4.383333333333334,
+        "deaths": 10,
+        "assists": 0,
+        "attacks": {
+          "weapon.fire-axe": 149,
+          "weapon.hunting-rifle": 33
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.fire-axe",
+          "weapon.hunting-rifle",
+          "weapon.machete",
+          "weapon.molotov"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.fire-axe",
+          "weapon.hunting-rifle",
+          "weapon.machete",
+          "weapon.molotov"
+        ],
+        "steps": [
+          {
+            "id": "farmstead",
+            "text": "Find a way through the farms \u00b7 151\u00a0m",
+            "tick": 12,
+            "marker": {
+              "anchor": "cure-military",
+              "ring": {
+                "x": 1397,
+                "y": 0.7049999833106995,
+                "z": 16
+              },
+              "drawn": [
+                1397,
+                0,
+                16
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "peakLive": 59,
+    "maxX": 1263.6746826171875,
+    "inputs": "Physical Digit8, mouse aim/down/up, normal automatic loadout return; only carried molotov used."
+  },
+  "throwControlChecks": {
+    "throwcheck": [
+      {
+        "level": "L10",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 61,
+        "simSeconds": 58,
+        "maxNoProgressSeconds": 1.7666666666666666,
+        "deaths": 4,
+        "assists": 0,
+        "attacks": {
+          "weapon.fists": 15,
+          "weapon.fire-axe": 43,
+          "weapon.hunting-rifle": 7
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.fire-axe",
+          "weapon.hunting-rifle",
+          "weapon.machete",
+          "weapon.molotov"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.fire-axe",
+          "weapon.hunting-rifle",
+          "weapon.machete",
+          "weapon.molotov"
+        ],
+        "steps": [
+          {
+            "id": "farmstead",
+            "text": "Find a way through the farms \u00b7 150\u00a0m",
+            "tick": 3,
+            "marker": {
+              "anchor": "cure-military",
+              "ring": {
+                "x": 1397,
+                "y": 0.7049999833106995,
+                "z": 16
+              },
+              "drawn": [
+                1397,
+                0,
+                16
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "throwcheck2": [
+      {
+        "level": "L10",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 60,
+        "simSeconds": 57,
+        "maxNoProgressSeconds": 2.181,
+        "deaths": 3,
+        "assists": 0,
+        "attacks": {
+          "weapon.fire-axe": 47,
+          "weapon.hunting-rifle": 11
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.fire-axe",
+          "weapon.hunting-rifle",
+          "weapon.machete",
+          "weapon.molotov"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.fire-axe",
+          "weapon.hunting-rifle",
+          "weapon.machete",
+          "weapon.molotov"
+        ],
+        "steps": [
+          {
+            "id": "farmstead",
+            "text": "Find a way through the farms \u00b7 152\u00a0m",
+            "tick": 9,
+            "marker": {
+              "anchor": "cure-military",
+              "ring": {
+                "x": 1397,
+                "y": 0.7049999833106995,
+                "z": 16
+              },
+              "drawn": [
+                1397,
+                0,
+                16
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "throwControlLimit": "Both runs had zero molotov attacks. RMB was identified as selector and removed; next policy waits for previous attack to finish before a fresh LMB down.",
+  "actualThrowAttempt": {
+    "runs": [
+      {
+        "level": "L10",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 120,
+        "simSeconds": 117,
+        "maxNoProgressSeconds": 26.583333333333332,
+        "deaths": 4,
+        "assists": 0,
+        "attacks": {
+          "weapon.fire-axe": 62,
+          "weapon.hunting-rifle": 18,
+          "weapon.molotov": 8
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.fire-axe",
+          "weapon.hunting-rifle",
+          "weapon.machete",
+          "weapon.molotov"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.fire-axe",
+          "weapon.hunting-rifle",
+          "weapon.machete",
+          "weapon.molotov"
+        ],
+        "steps": [
+          {
+            "id": "farmstead",
+            "text": "Find a way through the farms \u00b7 153\u00a0m",
+            "tick": 8,
+            "marker": {
+              "anchor": "cure-military",
+              "ring": {
+                "x": 1397,
+                "y": 0.7049999833106995,
+                "z": 16
+              },
+              "drawn": [
+                1397,
+                0,
+                16
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "peakLive": 57,
+    "maxX": 1303.942626953125
+  },
+  "highFreshWideRoute": {
+    "runs": [
+      {
+        "level": "L10",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 480,
+        "simSeconds": 477,
+        "maxNoProgressSeconds": 52.56666666666667,
+        "deaths": 11,
+        "assists": 0,
+        "attacks": {
+          "weapon.fire-axe": 203,
+          "weapon.hunting-rifle": 52
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.fire-axe"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.fire-axe",
+          "weapon.hunting-rifle",
+          "weapon.machete"
+        ],
+        "steps": [
+          {
+            "id": "crash",
+            "text": "Get away from the river \u00b7 101\u00a0m",
+            "tick": 9,
+            "marker": {
+              "anchor": "river-exit",
+              "ring": {
+                "x": 647,
+                "y": 0.7049999833106995,
+                "z": -12.5
+              },
+              "drawn": [
+                647,
+                0,
+                -12.5
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "farmstead",
+            "text": "Find a way through the farms \u00b7 12\u00a0m",
+            "tick": 3203,
+            "marker": {
+              "anchor": "cure-military",
+              "ring": {
+                "x": 698,
+                "y": 0.7049999833106995,
+                "z": 25
+              },
+              "drawn": [
+                698,
+                0,
+                25
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "peakLive": 59,
+    "maxX": 1077.9637451171875,
+    "setup": "Fresh debug level entry; no checkpoint reconstruction. Logged physical WASD wide route reached machete checkpoint."
+  },
+  "highWide4": {
+    "runs": [
+      {
+        "level": "L10",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 185,
+        "simSeconds": 183,
+        "maxNoProgressSeconds": 1.744,
+        "deaths": 1,
+        "assists": 0,
+        "attacks": {
+          "weapon.hunting-rifle": 1
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.fire-axe",
+          "weapon.hunting-rifle",
+          "weapon.machete",
+          "weapon.molotov"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.fire-axe",
+          "weapon.hunting-rifle",
+          "weapon.machete",
+          "weapon.molotov"
+        ],
+        "steps": [
+          {
+            "id": "farmstead",
+            "text": "Find a way through the farms \u00b7 152\u00a0m",
+            "tick": 2,
+            "marker": {
+              "anchor": "cure-military",
+              "ring": {
+                "x": 1397,
+                "y": 0.7049999833106995,
+                "z": 16
+              },
+              "drawn": [
+                1397,
+                0,
+                16
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "peakLive": 60,
+    "xRange": [
+      1179.01513671875,
+      1283.7647705078125
+    ],
+    "zRange": [
+      -72.94788360595703,
+      12.521080017089844
+    ]
+  },
+  "lowRifleOnly": {
+    "runs": [
+      {
+        "level": "L10",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 180,
+        "simSeconds": 177,
+        "maxNoProgressSeconds": 5.11,
+        "deaths": 4,
+        "assists": 0,
+        "attacks": {
+          "weapon.hunting-rifle": 114
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.fire-axe",
+          "weapon.hunting-rifle",
+          "weapon.machete"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.fire-axe",
+          "weapon.hunting-rifle",
+          "weapon.machete"
+        ],
+        "steps": [
+          {
+            "id": "farmstead",
+            "text": "Find a way through the farms \u00b7 181\u00a0m",
+            "tick": 10,
+            "marker": {
+              "anchor": "cure-military",
+              "ring": {
+                "x": 1165,
+                "y": 0.6850000023841858,
+                "z": -12
+              },
+              "drawn": [
+                1165,
+                0,
+                -12
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "minPursuitHp": 1050,
+    "maxPursuitHp": 3000,
+    "firstRecoveryExamples": [
+      {
+        "tick": 1863,
+        "hp": 2706,
+        "max": 3000,
+        "sinceHit": 61,
+        "x": 1027.8962845420915,
+        "z": -15.530175409927322,
+        "playerX": 1044.411865234375,
+        "playerZ": -20.690929412841797
+      },
+      {
+        "tick": 1864,
+        "hp": 2712,
+        "max": 3000,
+        "sinceHit": 62,
+        "x": 1027.9429732275926,
+        "z": -15.546759991169841,
+        "playerX": 1044.48681640625,
+        "playerZ": -20.690929412841797
+      },
+      {
+        "tick": 1865,
+        "hp": 2718,
+        "max": 3000,
+        "sinceHit": 63,
+        "x": 1027.9912410940842,
+        "z": -15.563877456242999,
+        "playerX": 1044.561767578125,
+        "playerZ": -20.690929412841797
+      },
+      {
+        "tick": 1866,
+        "hp": 2724,
+        "max": 3000,
+        "sinceHit": 64,
+        "x": 1028.0410881706518,
+        "z": -15.58152771894534,
+        "playerX": 1044.63671875,
+        "playerZ": -20.690929412841797
+      }
+    ],
+    "peakLive": 46,
+    "qualityReceiptTick": 10,
+    "floorHitExamples": [
+      {
+        "kind": "mega-hit",
+        "tick": 5744,
+        "amount": 156,
+        "hp": 1050,
+        "action": "weapon.hunting-rifle"
+      },
+      {
+        "kind": "mega-hit",
+        "tick": 5805,
+        "amount": 6,
+        "hp": 1050,
+        "action": "weapon.hunting-rifle"
+      }
+    ]
+  }
+}
