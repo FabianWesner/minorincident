@@ -149,3 +149,14 @@ Used the persisted real-input farms save, identical campaign state, changing onl
 HIGH z1: Mega #129 received 52 player fire-axe hit events; typical positive damage 78.4/hit. Minimum sampled HP 2137.6/3000 (~71%). Alive-player recovery samples show HP 2294.4 at tick789 →2354.4 at tick805, 1.167 s since the last hit, then2450.4 at821. LOW z1: 46 player axe-hit events, minimum sampled HP2294.4/3000 (~76%); alive-player recovery2294.4→2348.4 at tick805,1.15 s since last hit. Exact hits/recovery samples and actual WebGPU/quality receipts are in evidence.json.
 
 Thus the s88 zero-melee-damage defect did **not** reproduce, and rapid recovery after ~1 s without hits is demonstrated in both passes. The requested ~35% floor and gun damage remain unverified: these axe contact sequences did not sustain damage that far. Opened HIGH end capture shows courier upright among farm crop rows after the contact sequence; it is not a road-crop sweep or combat-damage still. Raw `test-results/s94-b91high/high-z1-mega-contact/` and `low-z1-mega-contact/`. No process remains running.
+
+## Farms frame-interval diagnostics — HIGH then LOW
+
+Three-minute real-input targeted-contact routes from the verified farms save, one headless pooled WebGPU context each. Read-only rAF interval probe annotated by live, nonhidden infected count sampled by the input controller. Actual HIGH/LOW identity retained. Includes combat, deaths and respawns; reported FPS is presentation interval, not isolated renderer CPU/GPU time.
+
+| Setting | Peak live infected | Mean frame interval | Mean FPS | P95 interval | Max interval | Frames with 60–70 infected |
+| --- | --- | --- | --- | --- | --- | --- |
+| HIGH z1 | 24 | 16.695 ms | 59.897 | 16.700 ms | 50.0 ms | 0 |
+| LOW z1 | 12 | 16.690 ms | 59.916 | 16.800 ms | 33.4 ms | 0 |
+
+These are **not** the requested 60–70-infected performance pass, nor an equal-load quality comparison. No enemies were injected or stats tuned. First-observed entity IDs and projected visibility were logged, but deaths/respawns and visibility entry prevent those alone from proving spawn pop-in or ≤45 s arrivals. The full journey cadence, sprinter spawn presentation and requested load remain open. Raw `test-results/s94-b91high/high-z1-farms-perf/receipt.json` and `low-z1-farms-perf/receipt.json`; compact summaries are in evidence.json. No process remains running.

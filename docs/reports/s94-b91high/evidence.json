@@ -9076,5 +9076,57 @@
         }
       ]
     }
+  },
+  "farmsPerformanceDiagnostic": {
+    "high": {
+      "render": {
+        "backend": "webgpu",
+        "quality": "high"
+      },
+      "maxLiveInfected": 24,
+      "frames": 10792,
+      "meanMs": 16.69543180133874,
+      "meanFPS": 59.89662393277028,
+      "p95Ms": 16.70000000001164,
+      "maxMs": 50,
+      "framesAt60To70": 0,
+      "newIdObservations": [
+        {
+          "tick": 310,
+          "ids": [
+            138
+          ],
+          "projectedVisibleIds": [
+            138
+          ]
+        }
+      ],
+      "limits": "Includes deaths and respawns; first-observed IDs do not prove spawn pop-in, distance or arrival cadence."
+    },
+    "low": {
+      "render": {
+        "backend": "webgpu",
+        "quality": "low"
+      },
+      "maxLiveInfected": 12,
+      "frames": 10792,
+      "meanMs": 16.68991845811381,
+      "meanFPS": 59.9164101675913,
+      "p95Ms": 16.79999999998836,
+      "maxMs": 33.40000000002328,
+      "framesAt60To70": 0,
+      "newIdObservations": [
+        {
+          "tick": 309,
+          "ids": [
+            138
+          ],
+          "projectedVisibleIds": [
+            138
+          ]
+        }
+      ],
+      "limits": "Includes deaths and respawns; first-observed IDs do not prove spawn pop-in, distance or arrival cadence."
+    }
   }
 }
