@@ -1053,6 +1053,54 @@
           }
         ]
       }
+    ],
+    "high-z1-l10-farms-continue": [
+      {
+        "level": "L10",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 480,
+        "simSeconds": 477,
+        "maxNoProgressSeconds": 28.245,
+        "deaths": 12,
+        "assists": 0,
+        "attacks": {
+          "weapon.fire-axe": 437,
+          "weapon.machete": 1
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.fire-axe"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.fire-axe"
+        ],
+        "steps": [
+          {
+            "id": "farmstead",
+            "text": "Find a way through the farms \u00b7 163\u00a0m",
+            "tick": 9,
+            "marker": {
+              "anchor": "cure-military",
+              "ring": {
+                "x": 1857,
+                "y": 0,
+                "z": 25
+              },
+              "drawn": [
+                698,
+                0,
+                25
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
     ]
   },
   "limits": [
@@ -6811,5 +6859,12 @@
       "level": "L10",
       "tick": 9890
     }
-  ]
+  ],
+  "farmsContinuationAudit": {
+    "persistedSourceCheckpoint": "cure-pace-2",
+    "persistedSourceTick": 30189,
+    "combatHitEvents": 760,
+    "playerMegaHits": 0,
+    "limits": "No targeted Mega contact; no damage/recovery pass."
+  }
 }
