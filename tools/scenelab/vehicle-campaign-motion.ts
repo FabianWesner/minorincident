@@ -135,6 +135,38 @@ try {
       }
     }, 6.76);
     const startTick = game.world.tick;
+    // The native route can avoid final-commit penetration entirely. Exercise its
+    // recovery path explicitly after the original leaper window, without stats
+    // changes or removing any native witness. All resulting samples still gate.
+    const collisionFixture: { id: number; at: { x: number; y: number; z: number }; dx: number; dz: number; tick: number }[] = [];
+    game.world.events.on('sim.tick', () => {
+      const w = game.world;
+      if (level !== 'L9' || frameCount < 9000) return;
+      if (w.tick === startTick + 8970) {
+        const car = w.vehicles!.cars.get(w.vehicles!.active!)!, p = car.entity.transform;
+        for (const turn of [0, Math.PI]) {
+          const angle = p.yaw + turn, dx = Math.cos(angle), dz = -Math.sin(angle);
+          const point = (distance: number) => ({ x: p.x + dx * distance, y: .7, z: p.z + dz * distance });
+          if (!w.solids.clear(point(7), .35)) continue;
+          let lo = 0, hi = 7;
+          for (let j = 0; j < 24; j++) { const mid = (lo + hi) / 2; if (w.solids.clear(point(mid), .35, undefined, false)) hi = mid; else lo = mid; }
+          const at = point(hi + .05);
+          if (!w.solids.clear(at, .35)) continue;
+          const id = api.spawn('infected.sprinter', at, { state: 'chase' });
+          const e = w.entities.get(id)!;
+          if (e.combat!.radius !== .35) throw new Error('Collision fixture radius differs from the prepared boundary');
+          collisionFixture.push({ id, at, dx, dz, tick: w.tick + 1 });
+          break;
+        }
+      }
+      for (const fixture of collisionFixture) if (w.tick === fixture.tick) {
+        const e = w.entities.get(fixture.id)!;
+        Object.assign(e.transform, { ...fixture.at, x: fixture.at.x - fixture.dx * .08, z: fixture.at.z - fixture.dz * .08 });
+        w.spatial.set(e.id, e.transform.x, e.transform.z);
+        w.solids.wrote(e, 'qa.collision-recovery-proposal');
+      }
+    }, 6.73);
+
     const stagedMotion = new Map(stagedActors.map(id => { const p = game.world.entities.get(id)!.transform; return [id, { x: p.x, z: p.z, travelM: 0, movingFrames: 0, aliveFrames: 0 }]; }));
     const result = [];
     const progress = [];
@@ -193,11 +225,11 @@ try {
     }
     api.input.clear();
     const stagedOutcomes = stagedActors.map(id => { const e = game.world.entities.get(id); return { id, exists: !!e, health: e?.health.current ?? null, deathFrame: e?.infected?.deadAt ? e.infected.deadAt - startTick : null, motion: stagedMotion.get(id)! }; });
-    return { samples: result, progress, stagedActors, stagedOutcomes, captureCamera };
+    return { samples: result, progress, stagedActors, stagedOutcomes, captureCamera, collisionFixture };
   }, { level, fixture, frameCount, captureFrom, contactIds });
   const name = fixture ?? level;
   if (cells.length) await session.makeSheet(cells, `test-results/s83-vehicleslide/campaign/${name}-${tier}-consecutive.jpg`, 480);
-  const { samples, progress, stagedActors, stagedOutcomes, captureCamera } = observation;
+  const { samples, progress, stagedActors, stagedOutcomes, captureCamera, collisionFixture } = observation;
   const groups = new Map<string, typeof samples>();
   for (const sample of samples) { const key = `${sample.context}/${sample.state}/${sample.id}`; const group = groups.get(key) ?? []; group.push(sample); groups.set(key, group); }
   const checkTrack = vehicleTrackVerdict;
@@ -239,7 +271,7 @@ try {
   const stagedMotionProven = !stagedActors.length || stagedCoverage.filter(c => c.moving && c.covered).length >= 2;
   const correctionsProven = level !== 'L9' || ['separationM/', 'collisionM/'].every(kind => correctionRows.some(row => row.key.startsWith(kind) && row.motion.contacts > 0));
   const pass = sourceStable && stagedMotionProven && contextsProven && correctionsProven && contextRows.every(row => row.pass) && correctionRows.every(row => row.pass) && stagedCoverage.every(c => c.outcome.exists) && rows.some(row => row.classification === 'grounded') && rows.every(row => row.pass) && session.errors.length === 0;
-  writeJson(`test-results/s83-vehicleslide/campaign/${name}-${tier}.json`, { level, fixture, tier, sourceHash, sourceStable, pass, captureCamera, samples, rows, correctionRows, contextRows, contextCoverage, contextsProven, correctionsProven, progress, stagedActors, stagedCoverage, stagedMotionProven, errors: session.errors });
+  writeJson(`test-results/s83-vehicleslide/campaign/${name}-${tier}.json`, { level, fixture, tier, sourceHash, sourceStable, pass, captureCamera, collisionFixture, samples, rows, correctionRows, contextRows, contextCoverage, contextsProven, correctionsProven, progress, stagedActors, stagedCoverage, stagedMotionProven, errors: session.errors });
   const grounded = rows.filter(row => row.classification === 'grounded');
   console.log(JSON.stringify({ level, fixture, tier, pass, sourceStable, samples: samples.length, groundedRows: grounded.length,
     maxCm: Math.max(0, ...grounded.map(row => row.motion.slideMaxCm)), p95Cm: Math.max(0, ...grounded.map(row => row.motion.slideP95Cm!)),

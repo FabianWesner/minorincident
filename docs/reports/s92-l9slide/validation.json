@@ -1,0 +1,35 @@
+{
+  "runtimeCommit": "281265e7",
+  "fixtureCommit": "7a71f8af",
+  "typecheck": {
+    "exit": 0
+  },
+  "lint": {
+    "exit": 0
+  },
+  "campaignMotion": {
+    "exit": 0,
+    "cases": 8,
+    "log": "/private/tmp/s92-complete-matrix.log"
+  },
+  "remoteUnit": {
+    "exit": 0,
+    "passed": 106,
+    "skipped": 1,
+    "seconds": 211.7,
+    "log": "/private/tmp/s92-complete-unit.log"
+  },
+  "threat": {
+    "commandExit": 1,
+    "globalFlags": [
+      "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+    ],
+    "levels": [
+      {
+        "level": "L9",
+        "flags": [],
+        "passiveFlags": []
+      }
+    ]
+  }
+}
