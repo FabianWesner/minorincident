@@ -19,7 +19,9 @@ Seed-1 traces show living actors in chase/search tens to hundreds of metres behi
 
 The fresh seed-1 baseline differs from the s86 reported count. The current receipt is authoritative for these runs; the discrepancy remains to be explained before claiming a rate improvement.
 
-Outstanding: root-cause fix, hangar-adjusted whole-run gap measurement, after matrix, L10 audit with zero flags, full audit with no new flags, typecheck, lint, remote units, and focused commit. No stats, caps, corpses, QA thresholds or protected reference files changed.
+Completed: reproducible six-case native acceptance gate and exact 56-second dialogue exclusion; baseline matrix; typecheck and lint; L10 gameplay audit with zero flags; full audit with only the two existing L4 failures; remote units (106 passed, one skipped). Committed artifacts are measurement tooling and reports only.
+
+Outstanding: a production gameplay fix that passes all six cases, followed by fresh checks against that retained fix. No gameplay, bot, stat catalog, corpse lifecycle, QA threat threshold or protected reference change is retained. The rejected five-case candidate is diagnostic evidence, not a production implementation.
 
 ## Browser QA needed
 
@@ -227,3 +229,11 @@ Captured blocker (`/private/tmp/s89-finale-blocker.json`): `Kill the Mega Alpha`
 [rejected-candidate.json](rejected-candidate.json) preserves the exact 70-resident source patch, portable native producer, SHA-256 hashes, reproduction steps and six-case receipts. It is explicitly rejected because seed-1 HIGH fails completion and cadence; it does not implement production arrivals. This avoids depending on temporary scratch files for the strongest five-case lead.
 
 Intermediate 65-resident seed-1 HIGH trial also failed completion: peak 64, 12 deaths, 631 starts, 21.087/min and 189.73 s adjusted gap (`/private/tmp/s89-sixtyfive-first.json`). No full matrix was warranted after that decisive failure. All gameplay source edits reverted after artifact capture.
+
+## Final tested bot-selection control
+
+A shared-bot trial preferred the existing flamethrower at its normal range throughout the Mega finale, rather than only while armour was intact. Seed-1 HIGH still failed completion: 12 deaths, 608 starts, 20.319/min, peak 69 and 294.28 s adjusted maximum (`/private/tmp/s89-flame-boss.json`). Reverted. No native policy change is retained to force a pass.
+
+## Handoff state
+
+The full objective is **not achieved**. Production gameplay remains at the s86 merge. The native gate intentionally fails all six baseline cases; a portable rejected experiment demonstrates five passing cases but stalls seed-1 HIGH in the Mega objective. Reproduction and measurements are preserved in rejected-candidate.json and validation.json. The remaining failure is not a missing permission or external service blocker, and no blocked/complete goal status is claimed. No browser, deployment, push or main-branch movement was performed.

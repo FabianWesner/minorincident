@@ -536,5 +536,35 @@
         "gaps": []
       }
     ]
+  },
+  "nativeAcceptance": {
+    "command": "node --import tsx/esm tools/qa/s89-l10gap.ts",
+    "exit": 1,
+    "passed": false,
+    "flags": [
+      "1/low:GAP_OVER_45",
+      "1/high:GAP_OVER_45",
+      "2/low:GAP_OVER_45",
+      "2/high:GAP_OVER_45",
+      "3/low:GAP_OVER_45",
+      "3/high:GAP_OVER_45"
+    ],
+    "dialogueSeconds": [
+      56,
+      56,
+      56,
+      56,
+      56,
+      56
+    ],
+    "receipt": "baseline.json"
+  },
+  "finalScope": {
+    "runtimeDiffFromS86": [],
+    "gameplayFixRetained": false,
+    "botChangesRetained": false,
+    "deployed": false,
+    "pushed": false,
+    "browserRun": false
   }
 }
