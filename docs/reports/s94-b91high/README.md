@@ -20,14 +20,29 @@ The initial infrastructure diagnosis below is retained as attempt history; its b
 
 Next L7 pass must set `PLAYTEST_L7_DEPARTURE_CAPTURES=1` to retain moving departure frames, which the normal 45 s capture interval missed. HIGH zoom 1.5 and all LOW coverage remain open. No browser/check remains running after these samples.
 
+## Latest passes
+
+| Pass | Evidence | Disposition |
+| --- | --- | --- |
+| L7 HIGH z1.5 WebGPU | 157 s, zero deaths/assists, completed. Opened timed departure captures at 1.52, 3.07, 8.23 s. Actual quality high, actual/target zoom 1.5 in capture receipts. | No live-soldier/bus intersection visible in these samples. Does not cover every intervening instant. The “wide-z0.8” filename is misleading: receipt reports actual zoom 1.5; excluded as a wide view. |
+| L8 HIGH z1 WebGPU, elephant-yard fixture | 54 s, zero deaths/assists, reached 14/14 aboard, approached driver marker from 6 m to 1 m, then departed. Opened tick-2763 14/14 frame and L9 loading result. | Previous 14/14 stall did not reproduce. Hale-alive predicate still requires runtime proof. `simSeconds: -1` invalid across handover, excluded. |
+| L8 HIGH z1.5 WebGPU, same fixture | Driver terminated with assertion: requested zoom 1.5, observed target 1. | Unqualified attempt; no zoom-1.5 pass claimed. No code changed. |
+| L9 HIGH z1 WebGPU, before-rail fixture | 480 s, zero deaths/assists, rail progressed to evac-point. Ended at “Defense complete · 3/4 at the trucks · 12 m”. Maximum no-progress 139.13 s; active APC stationary at x468.49,z−1.23. | Candidate final-bay stall; needs manual exit/interaction and survivor-state investigation before calling a soft lock. No L10 handover reached. |
+
+Opened L9 tick-27116 frame shows the courier inside the APC at the barrier, crowd outside, 3/4 objective. Driver reports 21 stationary-enemy warnings plus one no-progress warning; these are not 22 distinct confirmed defects. The vehicle barrier/crowd may explain enemy movement; reachability and manual input remain unverified. Per-level experience: L8 boarding moved promptly; L9's final wait was prolonged and confusing under this driver.
+
+[Contact sheet](contact-sheet.jpg) contains four opened source captures: two HIGH z1.5 L7 departure frames, HIGH z1 L8 14/14, HIGH z1 L9 final bay. The generated sheet was also opened.
+
+Raw new evidence resides in `test-results/s94-b91high/high-z1-5-l7-webgpu/`, `high-z1-l8-yard-webgpu/`, `high-z1-5-l8-yard-webgpu/`, and `high-z1-l9-rail-webgpu/`. These are local artifacts. No process/check remains running at this report boundary.
+
 ## Verdict
 
-**HOLD — no gameplay verdict is possible.** No batch-91 gameplay finding was confirmed or cleared in this turn. The prior s88 P1/P2 dispositions describe earlier revisions and are not carried forward as current findings.
+**HOLD — no gameplay verdict is possible.** No batch-91 gameplay P1/P2 is confirmed yet; the L9 final-bay stall is a candidate requiring manual confirmation. The prior s88 P1/P2 dispositions describe earlier revisions and are not carried forward as current findings.
 
 ### P1 / P2 list
 
-- **Confirmed P1:** none assessed on batch 91.
-- **Confirmed P2:** none assessed on batch 91.
+- **Confirmed P1:** none confirmed; no soft-lock claim is made from a bounded driver run.
+- **Confirmed P2:** none confirmed; candidate L9 final-bay no-progress (139.13 s) remains under investigation.
 - **Open:** all requested QA checks below. In particular, the prior s88 reports of L7 bus/soldier overlap and the L10 Mega damage behavior need fresh batch-91 real-input verification before disposition.
 
 ## Attempt and evidence
@@ -39,7 +54,7 @@ Next L7 pass must set `PLAYTEST_L7_DEPARTURE_CAPTURES=1` to retain moving depart
 - `npm run lint` passed.
 - `sh tools/remote/run.sh "$PWD" -- npm test` did not run: no healthy Hetzner runner was available, and the remote runner rejected local fallback for this command (exit 69). It was not shortened or replaced with a local run.
 - `npm run browser:pool` could not start. With both the default temp path and `TMPDIR=/tmp`, the `tsx` launcher failed to create its IPC socket (`EPERM`). Launching the daemon without the `tsx` CLI avoided that socket but the sandbox denied TCP listen on `127.0.0.1:4329` (`EPERM`). `tools/browser-status.sh` confirmed the pool was unavailable. No browser session or playtest driver was started.
-- No gameplay screenshots/captures were produced or opened, so no contact sheet is included. No code or game-content changes were made.
+- No captures were produced in the initial sandbox-blocked attempt; later opened captures and sheet are documented above. No code or game-content changes were made.
 
 ## Coverage ledger
 
@@ -55,4 +70,4 @@ Next L7 pass must set `PLAYTEST_L7_DEPARTURE_CAPTURES=1` to retain moving depart
 | L10 arrival interval, visible sprinter spawns, and 60–70 infected frame time/fps | Not run | Not run | Open |
 | Per-level glitches/captures, >10 s stalls, fun/boring/harmless observations | Not run | Not run | Open |
 
-The next run needs an environment where the browser-pool daemon can bind its configured localhost port and where the configured remote test runner is healthy. Then execute the specified HIGH zoom 1 and 1.5 passes followed by LOW zoom 1, with the real-input playtest driver and approved checkpoint saves. Record captures only after opening them; then produce the contact sheet and replace this blocked-attempt ledger with measured findings.
+The environment blockers are resolved. Continue executing the specified HIGH zoom 1 and 1.5 passes followed by LOW zoom 1, with the real-input playtest driver and approved checkpoint saves. Record captures only after opening them; then produce the contact sheet and replace this blocked-attempt ledger with measured findings.
