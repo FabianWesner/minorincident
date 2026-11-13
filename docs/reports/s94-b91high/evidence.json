@@ -10408,5 +10408,182 @@
         }
       }
     }
+  },
+  "l9BusProximity": {
+    "high": {
+      "run": [
+        {
+          "level": "L9",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 214,
+          "simSeconds": -1,
+          "maxNoProgressSeconds": 8.416666666666666,
+          "deaths": 0,
+          "assists": 0,
+          "attacks": {},
+          "weaponsStart": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "steps": [
+            {
+              "id": "approach",
+              "text": "Reach the evacuation gate \u00b7 46 s \u00b7 335\u00a0m",
+              "tick": 61,
+              "marker": {
+                "anchor": "crash-approach",
+                "ring": {
+                  "x": 470,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": [
+                  457,
+                  0,
+                  0
+                ],
+                "playerY": 0.9887921810150146,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "reach-outskirts",
+              "text": "",
+              "tick": 11873,
+              "marker": {
+                "anchor": "crawl-end",
+                "ring": {
+                  "x": 547,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": null,
+                "playerY": 0.7200000286102295,
+                "pinVisible": false
+              }
+            }
+          ]
+        }
+      ],
+      "minimumCenterDistance": 6.890461047499721,
+      "closest": {
+        "tick": 62,
+        "bus": {
+          "id": 675,
+          "hidden": false,
+          "at": {
+            "x": 317.79071044921875,
+            "z": -305.46002197265625,
+            "y": 0.7402051687240601,
+            "yaw": 0.16616364443675438
+          }
+        },
+        "apc": {
+          "id": 667,
+          "at": {
+            "x": 324.4283447265625,
+            "y": 0.9890587329864502,
+            "z": -307.3094177246094,
+            "yaw": 0.1662676648266366
+          }
+        },
+        "distance": 6.890461047499721,
+        "lineAt": -1676,
+        "rams": 1
+      },
+      "maxRams": 3,
+      "limits": "Center distance is not hull-intersection proof; frame samples show rear close contact and later separation."
+    },
+    "low": {
+      "run": [
+        {
+          "level": "L9",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 240,
+          "simSeconds": 240,
+          "maxNoProgressSeconds": 0.9666666666666667,
+          "deaths": 15,
+          "assists": 0,
+          "attacks": {},
+          "weaponsStart": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "weaponsEnd": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "steps": [
+            {
+              "id": "approach",
+              "text": "Reach the evacuation gate \u00b7 46 s \u00b7 335\u00a0m",
+              "tick": 61,
+              "marker": {
+                "anchor": "crash-approach",
+                "ring": {
+                  "x": 470,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": [
+                  457,
+                  0,
+                  0
+                ],
+                "playerY": 0.9888054132461548,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "minimumCenterDistance": 6.890981610700588,
+      "closest": {
+        "tick": 62,
+        "bus": {
+          "id": 675,
+          "hidden": false,
+          "at": {
+            "x": 317.7916259765625,
+            "z": -305.4590148925781,
+            "y": 0.7402933239936829,
+            "yaw": 0.1654537155674377
+          }
+        },
+        "apc": {
+          "id": 667,
+          "at": {
+            "x": 324.4299621582031,
+            "y": 0.9890494346618652,
+            "z": -307.3078308105469,
+            "yaw": 0.16558482576400008
+          }
+        },
+        "distance": 6.890981610700588,
+        "lineAt": -1676,
+        "rams": 1
+      },
+      "maxRams": 3,
+      "limits": "Center distance is not hull-intersection proof; frame samples show rear close contact and later separation."
+    }
   }
 }
