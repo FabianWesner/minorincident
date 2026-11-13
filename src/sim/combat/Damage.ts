@@ -39,8 +39,9 @@ export function damageAmount(hit: DamageEvent, target: EntitySnapshot, shieldOpe
     if (dot >= shieldFaceDot - 1e-8) return 0;
   }
   if (target.infected?.pursuit) {
-    if (hit.actionId === 'weapon.rocket-launcher' && hit.type === 'explosive') return target.health.max * (hit.direct ? megaAlpha.directRocketFraction : megaAlpha.splashRocketFraction);
+    if (hit.actionId === 'weapon.rocket-launcher' && hit.type === 'explosive') amount = target.health.max * (hit.direct ? megaAlpha.directRocketFraction : megaAlpha.splashRocketFraction);
     if (megaVulnerable) return Math.max(0, amount);
+    // PO 2026-11-12: before the cure every hit hurts, down to the floor; MegaPursuit regenerates it.
     return Math.min(Math.max(0, amount), Math.max(0, target.health.current - target.health.max * megaAlpha.conventionalFloor));
   }
   if (target.archetype === 'infected.alpha') {
@@ -77,7 +78,6 @@ export class Damage {
       (glance || Status.stunned(target, this.world.tick) || this.world.tick < (target.combat.shieldBrokenUntil ?? 0) || Math.hypot(origin.x - target.transform.x, origin.z - target.transform.z) <= target.combat.radius + .8);
     const faceDot = target.archetype === 'infected.riot' ? Math.cos(riotShieldResponse.faceHalfAngleDeg * Math.PI / 180) : 0.5;
     const directionalHit = target.combat?.shield && hit.shotOrigin ? { ...hit, origin } : hit;
-    if (target.infected?.pursuit && this.world.scenario === 'L10' && !this.world.missions?.state.states['cure-installed']) return 0;
     let amount = damageAmount(directionalHit, target, open, faceDot, this.world.scenario === 'L10' && !!this.world.missions?.state.states['cure-installed']);
     if (this.world.scenario === 'L10' && target.infected?.pursuit && target.infected.megaPhase === 2 && !target.infected.megaArmourBroken && !hit.actionId.includes('flamethrower') && !hit.actionId.startsWith('environment.')) {
       const dx = origin.x - target.transform.x, dz = origin.z - target.transform.z, d = Math.hypot(dx, dz) || 1;
