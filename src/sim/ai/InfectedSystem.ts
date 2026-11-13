@@ -645,6 +645,11 @@ export class InfectedSystem {
   private updateArchetype(e: EntitySnapshot, b: InfectedState): void {
     if (b.heardTargetId && !this.hearing.humans.get(b.heardTargetId)) { b.heardTargetId = 0; b.grabUntil = 0; b.state = 'idle'; e.combat!.attacking = false; }
     const player = this.victim(e);
+    if (this.world.scenario === 'L10' && b.cureRegion && !b.pursuit && b.state === 'chase' && player.id === 1 &&
+        player.transform.x - e.transform.x > this.hearing.rangeM && !this.hearing.tracks(e, player.transform, 1)) {
+      b.heardTargetId = 0; delete b.pressureTarget; delete b.investigate;
+      b.state = 'wander'; b.until = this.world.tick + 120; this.wanderDirection(b); e.combat!.attacking = false;
+    }
     // Smoke also cancels a windup or hearing reaction already in progress.
     const smoked = !b.pursuit && this.world.combat!.effects.smokeBlocks(e.transform, player.transform);
     if (smoked && (b.state === 'chase' || b.state === 'attack' || b.state === 'alerted')) {

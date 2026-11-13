@@ -1,0 +1,217 @@
+{
+  "status": "rejected: seed-1 HIGH fails completion and cadence",
+  "goalComplete": false,
+  "sourceRevisionBeforePatch": "023991a592aa1ec80c96ebac59e678d1c6dd4057",
+  "notes": [
+    "Disposable native feasibility experiment only; no stat catalog edits, player damage overrides, input-policy changes or actor teleports.",
+    "Additional arrivals are injected by the producer, not implemented in production.",
+    "Native peak counts do not establish renderer performance.",
+    "The producer reports observations; it is not the authoritative passing acceptance gate."
+  ],
+  "reproduce": [
+    "Use a clean isolated worktree with current dependencies and assets.",
+    "Write sourcePatch to a temporary patch and apply it explicitly.",
+    "Write producer to tools/qa/s89-l10gap-feasibility.ts.",
+    "Run node --import tsx/esm tools/qa/s89-l10gap-feasibility.ts and capture stdout JSON / stderr row progress.",
+    "Compare all six rows to the unchanged baseline rates and 45-second threshold. This stored candidate is expected to fail seed-1 HIGH."
+  ],
+  "sourcePatchSha256": "c17b9e2e40ec4bcdfe58a4b3315daa375971a4c4d8e92af94a0b2d3bed854d06",
+  "producerSha256": "a5dfb4859fa9cb85235e90b518f4536786ec392d947c1ae21cda5a8aa1de2627",
+  "sourcePatch": "diff --git a/src/sim/ai/InfectedSystem.ts b/src/sim/ai/InfectedSystem.ts\nindex b0d6781b..9211c5d2 100644\n--- a/src/sim/ai/InfectedSystem.ts\n+++ b/src/sim/ai/InfectedSystem.ts\n@@ -645,6 +645,11 @@ export class InfectedSystem {\n   private updateArchetype(e: EntitySnapshot, b: InfectedState): void {\n     if (b.heardTargetId && !this.hearing.humans.get(b.heardTargetId)) { b.heardTargetId = 0; b.grabUntil = 0; b.state = 'idle'; e.combat!.attacking = false; }\n     const player = this.victim(e);\n+    if (this.world.scenario === 'L10' && b.cureRegion && !b.pursuit && b.state === 'chase' && player.id === 1 &&\n+        player.transform.x - e.transform.x > this.hearing.rangeM && !this.hearing.tracks(e, player.transform, 1)) {\n+      b.heardTargetId = 0; delete b.pressureTarget; delete b.investigate;\n+      b.state = 'wander'; b.until = this.world.tick + 120; this.wanderDirection(b); e.combat!.attacking = false;\n+    }\n     // Smoke also cancels a windup or hearing reaction already in progress.\n     const smoked = !b.pursuit && this.world.combat!.effects.smokeBlocks(e.transform, player.transform);\n     if (smoked && (b.state === 'chase' || b.state === 'attack' || b.state === 'alerted')) {\ndiff --git a/src/sim/missions/LevelTenEncounters.ts b/src/sim/missions/LevelTenEncounters.ts\nindex f9aed1c2..c6f4d919 100644\n--- a/src/sim/missions/LevelTenEncounters.ts\n+++ b/src/sim/missions/LevelTenEncounters.ts\n@@ -28,7 +28,7 @@ export class LevelTenEncounters {\n     const player = w.entities.get(1)!;\n     const current = cure.regions.find(r => player.transform.x >= r.envelope[0][0] && player.transform.x <= r.envelope[1][0]) ?? cure.regions.at(-1)!;\n     const low = ai.director.tier === 'low', depth = cure.threatDepth.find(r => r.region === current.id)!;\n-    const cap = assaultActive ? low ? 14 : 22 : Math.min(low ? 12 : 15, depth.resident[low ? 'low' : 'high'][1]);\n+    const cap = assaultActive ? low ? 14 : 22 : Math.min(70, depth.resident[low ? 'low' : 'high'][1] * (low ? 6 : 5));\n     ai.director.levelCap = low ? cap * 2 : cap;\n     if (!this.state.toy && !mission.state.items.includes('corgi-toy') && chunks.resident(cureCorgiToy.x, cureCorgiToy.z)) this.state.toy = w.pickups!.spawn('item', cureCorgiToy, 'corgi-toy');\n     const weapons = this.state.weapons ??= {};\n@@ -48,6 +48,7 @@ export class LevelTenEncounters {\n     }\n     // Authored groups retain ordinary attacks, but never lapse into an idle line ahead of an approaching courier.\n     for (const e of ai.active) if (e.health.current > 0 && e.infected?.cureRegion && !e.infected.pursuit &&\n+      e.transform.x >= player.transform.x - ai.hearing.rangeM &&\n       ['idle', 'wander'].includes(e.infected.state) && (e.infected.pressureTarget?.until ?? 0) <= w.tick &&\n       Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) < 160) ai.pursueTarget(e.id, 1);\n     const released = this.state.released ??= [], lanes = this.state.laneOffsets ??= {};\n",
+  "producer": "import {cureHangarConversation} from '../../src/data/l10Story';\nimport { cureEncounterSpot } from '../../src/levels/L10/encounters';\nimport {insideCureHangar} from '../../src/data/l10Story';\nimport { runLevel } from '../sim-runner/levels';\nimport { preset } from '../../src/sim/progression/Campaign';\nimport { observeAttackStarts } from './threat/attackStarts';\nconst receipts=[];for(const seed of [1,2,3])for(const quality of ['low','high'] as const){\nlet lastStart=0;let totalTicks=0,peak=0,previousDialogue=0;const protectedTicks:number[]=[];let pulseAdmissions=0;const starts:Array<{t:number,x:number,z:number}>=[]; const marks:Array<{t:number,x:number,z:number}>=[];\nconst result=await runLevel('L10','complete',seed,1800,'auto',preset('L10-default'),undefined,0,{quality,beforeBegin(world){observeAttackStarts(world,(_id,target,tick)=>{if(target===1){lastStart=tick;const p=world.entities.get(1)!.transform;starts.push({t:tick/60,x:+p.x.toFixed(0),z:+p.z.toFixed(0)});}});world.events.on('sim.tick',e=>{if(e.type==='sim.tick'){totalTicks=e.tick;peak=Math.max(peak,world.infected!.director.count);const c=world.missions!.state.counters;const progress=cureHangarConversation.slice(0,c['hangar-line']??0).reduce((n,l)=>n+l[1],0)+(c['hangar-line-ticks']??0);if(progress>previousDialogue)protectedTicks.push(e.tick);previousDialogue=progress;}if(e.type==='sim.tick'&&e.tick%300===0&&e.tick-lastStart>=900&&!world.missions!.state.states['cure-installed']&&!world.storyLock){const ai=world.infected!,p=world.entities.get(1)!.transform;const at={x:p.x+40,z:p.z};if(ai.pool.length&&ai.director.count<ai.director.cap-ai.director.reserved-ai.director.pendingTurns-1&&world.chunks!.resident(at.x,at.z)){for(const offset of [-7,-5,-3,-1,1,3,5,7]){const point=cureEncounterSpot(ai.nav,{x:at.x,z:at.z+offset,archetype:'infected.sprinter'},(x,z)=>!insideCureHangar({x,z})&&world.chunks!.resident(x,z)&&ai.director.safe('infected.sprinter',{x,z}),33);if(!point)continue;if(ai.director.safe('infected.sprinter',point))if(ai.director.count<ai.director.cap-ai.director.reserved-ai.director.pendingTurns-1&&ai.pool.length&&ai.nav.clear(point.x,point.z,.35)){const id=ai.spawn('infected.sprinter',point,{state:'chase'});ai.pursueTarget(id,1);pulseAdmissions++;}}}} if(e.type==='sim.tick'&&e.tick%600===0){const p=world.entities.get(1)!.transform;marks.push({t:e.tick/60,x:+p.x.toFixed(0),z:+p.z.toFixed(0)});}});}});\nconst gaps=starts.slice(1).map((s,i)=>({from:starts[i].t,to:s.t,seconds:s.t-starts[i].t-protectedTicks.filter(t=>t>starts[i].t*60&&t<=s.t*60).length/60}));receipts.push({seed,quality,completed:result.completed,deaths:result.deaths,pulseAdmissions,peak,totalTicks,protectedSeconds:protectedTicks.length/60,n:starts.length,rate:starts.length/((totalTicks/60-starts[0].t)/60),maxGap:Math.max(...gaps.map(g=>g.seconds)),gaps:gaps.filter(g=>g.seconds>45)});console.error(JSON.stringify(receipts.at(-1)));}\nconsole.log(JSON.stringify(receipts,null,2));\n",
+  "rows": [
+    {
+      "seed": 1,
+      "quality": "low",
+      "completed": true,
+      "deaths": 0,
+      "pulseAdmissions": 316,
+      "peak": 69,
+      "totalTicks": 66661,
+      "protectedSeconds": 56,
+      "n": 247,
+      "rate": 13.394793926247287,
+      "maxGap": 42.116666666666674,
+      "gaps": []
+    },
+    {
+      "seed": 1,
+      "quality": "high",
+      "completed": false,
+      "deaths": 23,
+      "pulseAdmissions": 393,
+      "peak": 69,
+      "totalTicks": 108000,
+      "protectedSeconds": 56,
+      "n": 936,
+      "rate": 31.280227992165088,
+      "maxGap": 294.85000000000014,
+      "gaps": [
+        {
+          "from": 1310.2833333333333,
+          "to": 1605.1333333333334,
+          "seconds": 294.85000000000014
+        }
+      ]
+    },
+    {
+      "seed": 2,
+      "quality": "low",
+      "completed": true,
+      "deaths": 2,
+      "pulseAdmissions": 342,
+      "peak": 69,
+      "totalTicks": 66873,
+      "protectedSeconds": 56,
+      "n": 281,
+      "rate": 15.189645334694735,
+      "maxGap": 43.2833333333333,
+      "gaps": []
+    },
+    {
+      "seed": 2,
+      "quality": "high",
+      "completed": true,
+      "deaths": 0,
+      "pulseAdmissions": 288,
+      "peak": 69,
+      "totalTicks": 67268,
+      "protectedSeconds": 56,
+      "n": 307,
+      "rate": 16.497245980923378,
+      "maxGap": 32.5333333333333,
+      "gaps": []
+    },
+    {
+      "seed": 3,
+      "quality": "low",
+      "completed": true,
+      "deaths": 1,
+      "pulseAdmissions": 339,
+      "peak": 70,
+      "totalTicks": 66841,
+      "protectedSeconds": 56,
+      "n": 312,
+      "rate": 16.8762677484787,
+      "maxGap": 42.23333333333329,
+      "gaps": []
+    },
+    {
+      "seed": 3,
+      "quality": "high",
+      "completed": true,
+      "deaths": 0,
+      "pulseAdmissions": 256,
+      "peak": 70,
+      "totalTicks": 67474,
+      "protectedSeconds": 56,
+      "n": 283,
+      "rate": 15.163422039649937,
+      "maxGap": 40.64999999999998,
+      "gaps": []
+    }
+  ],
+  "regionalVariant": {
+    "status": "rejected: seed-3 HIGH exceeds 45 seconds",
+    "sourcePatch": "diff --git a/src/sim/ai/InfectedSystem.ts b/src/sim/ai/InfectedSystem.ts\nindex b0d6781b..9211c5d2 100644\n--- a/src/sim/ai/InfectedSystem.ts\n+++ b/src/sim/ai/InfectedSystem.ts\n@@ -645,6 +645,11 @@ export class InfectedSystem {\n   private updateArchetype(e: EntitySnapshot, b: InfectedState): void {\n     if (b.heardTargetId && !this.hearing.humans.get(b.heardTargetId)) { b.heardTargetId = 0; b.grabUntil = 0; b.state = 'idle'; e.combat!.attacking = false; }\n     const player = this.victim(e);\n+    if (this.world.scenario === 'L10' && b.cureRegion && !b.pursuit && b.state === 'chase' && player.id === 1 &&\n+        player.transform.x - e.transform.x > this.hearing.rangeM && !this.hearing.tracks(e, player.transform, 1)) {\n+      b.heardTargetId = 0; delete b.pressureTarget; delete b.investigate;\n+      b.state = 'wander'; b.until = this.world.tick + 120; this.wanderDirection(b); e.combat!.attacking = false;\n+    }\n     // Smoke also cancels a windup or hearing reaction already in progress.\n     const smoked = !b.pursuit && this.world.combat!.effects.smokeBlocks(e.transform, player.transform);\n     if (smoked && (b.state === 'chase' || b.state === 'attack' || b.state === 'alerted')) {\ndiff --git a/src/sim/missions/LevelTenEncounters.ts b/src/sim/missions/LevelTenEncounters.ts\nindex f9aed1c2..4ef9357b 100644\n--- a/src/sim/missions/LevelTenEncounters.ts\n+++ b/src/sim/missions/LevelTenEncounters.ts\n@@ -28,7 +28,7 @@ export class LevelTenEncounters {\n     const player = w.entities.get(1)!;\n     const current = cure.regions.find(r => player.transform.x >= r.envelope[0][0] && player.transform.x <= r.envelope[1][0]) ?? cure.regions.at(-1)!;\n     const low = ai.director.tier === 'low', depth = cure.threatDepth.find(r => r.region === current.id)!;\n-    const cap = assaultActive ? low ? 14 : 22 : Math.min(low ? 12 : 15, depth.resident[low ? 'low' : 'high'][1]);\n+    const cap = assaultActive ? low ? 14 : 22 : Math.min(low || current.id === 'destroyed-corridor' || current.id === 'dispersal-complex' ? 70 : 60, depth.resident[low ? 'low' : 'high'][1] * (low ? 6 : current.id === 'destroyed-corridor' || current.id === 'dispersal-complex' ? 5 : 4));\n     ai.director.levelCap = low ? cap * 2 : cap;\n     if (!this.state.toy && !mission.state.items.includes('corgi-toy') && chunks.resident(cureCorgiToy.x, cureCorgiToy.z)) this.state.toy = w.pickups!.spawn('item', cureCorgiToy, 'corgi-toy');\n     const weapons = this.state.weapons ??= {};\n@@ -48,6 +48,7 @@ export class LevelTenEncounters {\n     }\n     // Authored groups retain ordinary attacks, but never lapse into an idle line ahead of an approaching courier.\n     for (const e of ai.active) if (e.health.current > 0 && e.infected?.cureRegion && !e.infected.pursuit &&\n+      e.transform.x >= player.transform.x - ai.hearing.rangeM &&\n       ['idle', 'wander'].includes(e.infected.state) && (e.infected.pressureTarget?.until ?? 0) <= w.tick &&\n       Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) < 160) ai.pursueTarget(e.id, 1);\n     const released = this.state.released ??= [], lanes = this.state.laneOffsets ??= {};\n",
+    "sourcePatchSha256": "8ae07294060129915f2c1f160715f4955edc4c58af07591a0dfd0bdf38ad2aef",
+    "producer": "same portable producer as the primary rejected candidate",
+    "rows": [
+      {
+        "seed": 1,
+        "quality": "low",
+        "completed": true,
+        "deaths": 0,
+        "pulseAdmissions": 316,
+        "peak": 69,
+        "totalTicks": 66661,
+        "protectedSeconds": 56,
+        "n": 247,
+        "rate": 13.394793926247287,
+        "maxGap": 42.116666666666674,
+        "gaps": []
+      },
+      {
+        "seed": 1,
+        "quality": "high",
+        "completed": true,
+        "deaths": 0,
+        "pulseAdmissions": 272,
+        "peak": 62,
+        "totalTicks": 67381,
+        "protectedSeconds": 56,
+        "n": 237,
+        "rate": 12.714592274678111,
+        "maxGap": 44.69999999999999,
+        "gaps": []
+      },
+      {
+        "seed": 2,
+        "quality": "low",
+        "completed": true,
+        "deaths": 2,
+        "pulseAdmissions": 342,
+        "peak": 69,
+        "totalTicks": 66873,
+        "protectedSeconds": 56,
+        "n": 281,
+        "rate": 15.189645334694735,
+        "maxGap": 43.2833333333333,
+        "gaps": []
+      },
+      {
+        "seed": 2,
+        "quality": "high",
+        "completed": true,
+        "deaths": 0,
+        "pulseAdmissions": 253,
+        "peak": 69,
+        "totalTicks": 67141,
+        "protectedSeconds": 56,
+        "n": 268,
+        "rate": 14.42885771543086,
+        "maxGap": 34.5333333333333,
+        "gaps": []
+      },
+      {
+        "seed": 3,
+        "quality": "low",
+        "completed": true,
+        "deaths": 1,
+        "pulseAdmissions": 339,
+        "peak": 70,
+        "totalTicks": 66841,
+        "protectedSeconds": 56,
+        "n": 312,
+        "rate": 16.8762677484787,
+        "maxGap": 42.23333333333329,
+        "gaps": []
+      },
+      {
+        "seed": 3,
+        "quality": "high",
+        "completed": true,
+        "deaths": 3,
+        "pulseAdmissions": 270,
+        "peak": 62,
+        "totalTicks": 86641,
+        "protectedSeconds": 56,
+        "n": 385,
+        "rate": 16.0500260552371,
+        "maxGap": 212.41666666666674,
+        "gaps": [
+          {
+            "from": 935.25,
+            "to": 1014.7833333333333,
+            "seconds": 79.5333333333333
+          },
+          {
+            "from": 1014.7833333333333,
+            "to": 1227.2,
+            "seconds": 212.41666666666674
+          }
+        ]
+      }
+    ]
+  }
+}

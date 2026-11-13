@@ -1,0 +1,721 @@
+{
+  "fullAudit": {
+    "command": "node --import tsx/esm tools/qa/threat-audit.ts --out /private/tmp/s89-full-audit",
+    "seconds": 486.838593459,
+    "flags": [
+      "L4/criterion/L4-06 first breach:FAIL",
+      "L4/criterion/L4-06 sustained horde:FAIL"
+    ],
+    "exit": 1,
+    "receipt": "/private/tmp/s89-full-audit/audit.json"
+  },
+  "remoteUnits": {
+    "command": "sh tools/remote/run.sh \"$PWD\" -- npm test",
+    "runner": "94.130.181.173",
+    "passed": 106,
+    "skipped": 1,
+    "filesPassed": 27,
+    "testBudgetSeconds": 229.7,
+    "exit": 0,
+    "log": "/private/tmp/s89-remote-unit.log"
+  },
+  "goalComplete": false,
+  "gameplayChanged": true,
+  "boundedArrivalTrial": {
+    "accepted": false,
+    "receipt": "/private/tmp/s89-bounded-matrix.json",
+    "producer": "/private/tmp/s89-bounded-matrix.mts",
+    "rows": [
+      {
+        "seed": 1,
+        "quality": "low",
+        "completed": true,
+        "deaths": 1,
+        "pulseAdmissions": 371,
+        "peak": 36,
+        "totalTicks": 67054,
+        "protectedSeconds": 56,
+        "n": 358,
+        "rate": 19.300058403342465,
+        "maxGap": 48.23333333333335,
+        "gaps": [
+          {
+            "from": 385.2,
+            "to": 433.43333333333334,
+            "seconds": 48.23333333333335
+          }
+        ]
+      },
+      {
+        "seed": 1,
+        "quality": "high",
+        "completed": true,
+        "deaths": 3,
+        "pulseAdmissions": 312,
+        "peak": 45,
+        "totalTicks": 69144,
+        "protectedSeconds": 56,
+        "n": 370,
+        "rate": 19.341629517766126,
+        "maxGap": 60.983333333333334,
+        "gaps": [
+          {
+            "from": 76.55,
+            "to": 137.53333333333333,
+            "seconds": 60.983333333333334
+          },
+          {
+            "from": 384.4,
+            "to": 444.48333333333335,
+            "seconds": 60.08333333333337
+          },
+          {
+            "from": 466.2,
+            "to": 514.55,
+            "seconds": 48.349999999999966
+          }
+        ]
+      },
+      {
+        "seed": 2,
+        "quality": "low",
+        "completed": false,
+        "deaths": 26,
+        "pulseAdmissions": 889,
+        "peak": 36,
+        "totalTicks": 108000,
+        "protectedSeconds": 0,
+        "n": 1538,
+        "rate": 51.397540032490134,
+        "maxGap": 25.816666666666663,
+        "gaps": []
+      },
+      {
+        "seed": 2,
+        "quality": "high",
+        "completed": true,
+        "deaths": 25,
+        "pulseAdmissions": 325,
+        "peak": 45,
+        "totalTicks": 104827,
+        "protectedSeconds": 56,
+        "n": 1330,
+        "rate": 45.795393679700055,
+        "maxGap": 106.5333333333333,
+        "gaps": [
+          {
+            "from": 76.55,
+            "to": 138.08333333333334,
+            "seconds": 61.533333333333346
+          },
+          {
+            "from": 364.7,
+            "to": 424.1666666666667,
+            "seconds": 59.4666666666667
+          },
+          {
+            "from": 495.51666666666665,
+            "to": 544.4666666666667,
+            "seconds": 48.950000000000045
+          },
+          {
+            "from": 944.5,
+            "to": 1013.0333333333333,
+            "seconds": 68.5333333333333
+          },
+          {
+            "from": 1013.9333333333333,
+            "to": 1064.2,
+            "seconds": 50.266666666666765
+          },
+          {
+            "from": 1064.4166666666667,
+            "to": 1170.95,
+            "seconds": 106.5333333333333
+          },
+          {
+            "from": 1170.95,
+            "to": 1239.0833333333333,
+            "seconds": 68.13333333333321
+          }
+        ]
+      },
+      {
+        "seed": 3,
+        "quality": "low",
+        "completed": true,
+        "deaths": 4,
+        "pulseAdmissions": 418,
+        "peak": 36,
+        "totalTicks": 70861,
+        "protectedSeconds": 56,
+        "n": 450,
+        "rate": 22.954303931987248,
+        "maxGap": 59.60000000000002,
+        "gaps": [
+          {
+            "from": 414.68333333333334,
+            "to": 474.28333333333336,
+            "seconds": 59.60000000000002
+          }
+        ]
+      },
+      {
+        "seed": 3,
+        "quality": "high",
+        "completed": true,
+        "deaths": 8,
+        "pulseAdmissions": 335,
+        "peak": 45,
+        "totalTicks": 75844,
+        "protectedSeconds": 56,
+        "n": 491,
+        "rate": 23.393949019296436,
+        "maxGap": 70.65000000000003,
+        "gaps": [
+          {
+            "from": 76.05,
+            "to": 138.08333333333334,
+            "seconds": 62.033333333333346
+          },
+          {
+            "from": 483.71666666666664,
+            "to": 554.3666666666667,
+            "seconds": 70.65000000000003
+          },
+          {
+            "from": 577.4333333333333,
+            "to": 633.95,
+            "seconds": 56.516666666666765
+          },
+          {
+            "from": 765.4,
+            "to": 814,
+            "seconds": 48.60000000000002
+          }
+        ]
+      }
+    ]
+  },
+  "adaptiveLifecycleTrial": {
+    "accepted": false,
+    "receipt": "/private/tmp/s89-lull-lifecycle-matrix.json",
+    "producer": "/private/tmp/s89-lull-lifecycle-matrix.mts",
+    "rows": [
+      {
+        "seed": 1,
+        "quality": "low",
+        "completed": true,
+        "deaths": 0,
+        "pulseAdmissions": 257,
+        "peak": 36,
+        "totalTicks": 66633,
+        "protectedSeconds": 56,
+        "n": 240,
+        "rate": 13.020676351799384,
+        "maxGap": 44.18333333333334,
+        "gaps": []
+      },
+      {
+        "seed": 1,
+        "quality": "high",
+        "completed": true,
+        "deaths": 1,
+        "pulseAdmissions": 229,
+        "peak": 45,
+        "totalTicks": 68865,
+        "protectedSeconds": 56,
+        "n": 312,
+        "rate": 16.376042456406367,
+        "maxGap": 44.9666666666667,
+        "gaps": []
+      },
+      {
+        "seed": 2,
+        "quality": "low",
+        "completed": true,
+        "deaths": 0,
+        "pulseAdmissions": 283,
+        "peak": 36,
+        "totalTicks": 66610,
+        "protectedSeconds": 56,
+        "n": 230,
+        "rate": 12.482098439737694,
+        "maxGap": 71.43333333333334,
+        "gaps": [
+          {
+            "from": 354.6,
+            "to": 426.03333333333336,
+            "seconds": 71.43333333333334
+          }
+        ]
+      },
+      {
+        "seed": 2,
+        "quality": "high",
+        "completed": true,
+        "deaths": 0,
+        "pulseAdmissions": 233,
+        "peak": 45,
+        "totalTicks": 67233,
+        "protectedSeconds": 56,
+        "n": 215,
+        "rate": 11.559485050330059,
+        "maxGap": 53.69999999999999,
+        "gaps": [
+          {
+            "from": 484.4166666666667,
+            "to": 594.1166666666667,
+            "seconds": 53.69999999999999
+          }
+        ]
+      },
+      {
+        "seed": 3,
+        "quality": "low",
+        "completed": true,
+        "deaths": 0,
+        "pulseAdmissions": 276,
+        "peak": 36,
+        "totalTicks": 66628,
+        "protectedSeconds": 56,
+        "n": 228,
+        "rate": 12.372252871484127,
+        "maxGap": 72.43333333333334,
+        "gaps": [
+          {
+            "from": 354.6,
+            "to": 427.03333333333336,
+            "seconds": 72.43333333333334
+          },
+          {
+            "from": 430.28333333333336,
+            "to": 484.5,
+            "seconds": 54.21666666666664
+          }
+        ]
+      },
+      {
+        "seed": 3,
+        "quality": "high",
+        "completed": true,
+        "deaths": 5,
+        "pulseAdmissions": 264,
+        "peak": 45,
+        "totalTicks": 77071,
+        "protectedSeconds": 56,
+        "n": 418,
+        "rate": 19.597577651885135,
+        "maxGap": 44,
+        "gaps": []
+      }
+    ]
+  },
+  "closerSafeArrivalTrial": {
+    "accepted": false,
+    "receipt": "/private/tmp/s89-close-arrival-matrix.json",
+    "rows": [
+      {
+        "seed": 1,
+        "quality": "low",
+        "completed": true,
+        "deaths": 2,
+        "pulseAdmissions": 281,
+        "peak": 36,
+        "totalTicks": 68744,
+        "protectedSeconds": 56,
+        "n": 307,
+        "rate": 16.14208304730746,
+        "maxGap": 73.61666666666662,
+        "gaps": [
+          {
+            "from": 367.85,
+            "to": 441.46666666666664,
+            "seconds": 73.61666666666662
+          },
+          {
+            "from": 883.95,
+            "to": 940.4166666666666,
+            "seconds": 56.46666666666658
+          }
+        ]
+      },
+      {
+        "seed": 1,
+        "quality": "high",
+        "completed": true,
+        "deaths": 3,
+        "pulseAdmissions": 239,
+        "peak": 45,
+        "totalTicks": 68041,
+        "protectedSeconds": 56,
+        "n": 359,
+        "rate": 19.072073667434037,
+        "maxGap": 54.666666666666686,
+        "gaps": [
+          {
+            "from": 357.71666666666664,
+            "to": 412.3833333333333,
+            "seconds": 54.666666666666686
+          },
+          {
+            "from": 482.51666666666665,
+            "to": 590.4166666666666,
+            "seconds": 51.89999999999998
+          }
+        ]
+      },
+      {
+        "seed": 2,
+        "quality": "low",
+        "completed": true,
+        "deaths": 0,
+        "pulseAdmissions": 273,
+        "peak": 36,
+        "totalTicks": 66672,
+        "protectedSeconds": 56,
+        "n": 296,
+        "rate": 16.048917872795457,
+        "maxGap": 29.900000000000034,
+        "gaps": []
+      },
+      {
+        "seed": 2,
+        "quality": "high",
+        "completed": true,
+        "deaths": 15,
+        "pulseAdmissions": 245,
+        "peak": 45,
+        "totalTicks": 106478,
+        "protectedSeconds": 56,
+        "n": 740,
+        "rate": 25.084037174091126,
+        "maxGap": 300.65,
+        "gaps": [
+          {
+            "from": 1003.6833333333333,
+            "to": 1304.3333333333333,
+            "seconds": 300.65
+          }
+        ]
+      },
+      {
+        "seed": 3,
+        "quality": "low",
+        "completed": true,
+        "deaths": 1,
+        "pulseAdmissions": 272,
+        "peak": 36,
+        "totalTicks": 66781,
+        "protectedSeconds": 56,
+        "n": 302,
+        "rate": 16.350101511391834,
+        "maxGap": 74.63333333333333,
+        "gaps": [
+          {
+            "from": 352.6666666666667,
+            "to": 427.3,
+            "seconds": 74.63333333333333
+          }
+        ]
+      },
+      {
+        "seed": 3,
+        "quality": "high",
+        "completed": true,
+        "deaths": 0,
+        "pulseAdmissions": 236,
+        "peak": 45,
+        "totalTicks": 67261,
+        "protectedSeconds": 56,
+        "n": 299,
+        "rate": 16.071668533034714,
+        "maxGap": 49.900000000000034,
+        "gaps": [
+          {
+            "from": 362.6333333333333,
+            "to": 412.53333333333336,
+            "seconds": 49.900000000000034
+          }
+        ]
+      }
+    ]
+  },
+  "seventyResidentTrial": {
+    "accepted": false,
+    "receipt": "/private/tmp/s89-seventy-matrix.json",
+    "rows": [
+      {
+        "seed": 1,
+        "quality": "low",
+        "completed": true,
+        "deaths": 0,
+        "pulseAdmissions": 316,
+        "peak": 69,
+        "totalTicks": 66661,
+        "protectedSeconds": 56,
+        "n": 247,
+        "rate": 13.394793926247287,
+        "maxGap": 42.116666666666674,
+        "gaps": []
+      },
+      {
+        "seed": 1,
+        "quality": "high",
+        "completed": false,
+        "deaths": 23,
+        "pulseAdmissions": 393,
+        "peak": 69,
+        "totalTicks": 108000,
+        "protectedSeconds": 56,
+        "n": 936,
+        "rate": 31.280227992165088,
+        "maxGap": 294.85000000000014,
+        "gaps": [
+          {
+            "from": 1310.2833333333333,
+            "to": 1605.1333333333334,
+            "seconds": 294.85000000000014
+          }
+        ]
+      },
+      {
+        "seed": 2,
+        "quality": "low",
+        "completed": true,
+        "deaths": 2,
+        "pulseAdmissions": 342,
+        "peak": 69,
+        "totalTicks": 66873,
+        "protectedSeconds": 56,
+        "n": 281,
+        "rate": 15.189645334694735,
+        "maxGap": 43.2833333333333,
+        "gaps": []
+      },
+      {
+        "seed": 2,
+        "quality": "high",
+        "completed": true,
+        "deaths": 0,
+        "pulseAdmissions": 288,
+        "peak": 69,
+        "totalTicks": 67268,
+        "protectedSeconds": 56,
+        "n": 307,
+        "rate": 16.497245980923378,
+        "maxGap": 32.5333333333333,
+        "gaps": []
+      },
+      {
+        "seed": 3,
+        "quality": "low",
+        "completed": true,
+        "deaths": 1,
+        "pulseAdmissions": 339,
+        "peak": 70,
+        "totalTicks": 66841,
+        "protectedSeconds": 56,
+        "n": 312,
+        "rate": 16.8762677484787,
+        "maxGap": 42.23333333333329,
+        "gaps": []
+      },
+      {
+        "seed": 3,
+        "quality": "high",
+        "completed": true,
+        "deaths": 0,
+        "pulseAdmissions": 256,
+        "peak": 70,
+        "totalTicks": 67474,
+        "protectedSeconds": 56,
+        "n": 283,
+        "rate": 15.163422039649937,
+        "maxGap": 40.64999999999998,
+        "gaps": []
+      }
+    ]
+  },
+  "nativeAcceptance": {
+    "command": "node --import tsx/esm tools/qa/s89-l10gap.ts",
+    "exit": 1,
+    "passed": false,
+    "flags": [
+      "1/low:GAP_OVER_45",
+      "1/high:GAP_OVER_45",
+      "2/low:GAP_OVER_45",
+      "2/high:GAP_OVER_45",
+      "3/low:GAP_OVER_45",
+      "3/high:GAP_OVER_45"
+    ],
+    "dialogueSeconds": [
+      56,
+      56,
+      56,
+      56,
+      56,
+      56
+    ],
+    "receipt": "baseline.json"
+  },
+  "historicalScopeAt9c9f79a5": {
+    "runtimeDiffFromS86": [],
+    "gameplayFixRetained": false,
+    "botChangesRetained": false,
+    "deployed": false,
+    "pushed": false,
+    "browserRun": false
+  },
+  "retainedChange": {
+    "goalComplete": false,
+    "runtimePatchSha256": "edaa073a79db139d768476c2be1512ea69e556fa4069bd724a8e0bd6ac874dc4",
+    "native": {
+      "exit": 1,
+      "flags": [
+        "3/high:GAP_OVER_45"
+      ],
+      "rows": [
+        {
+          "seed": 1,
+          "quality": "low",
+          "completed": true,
+          "deaths": 0,
+          "totalTicks": 66661,
+          "attackStarts": 247,
+          "startsPerMinute": 13.394793926247287,
+          "longestGapSeconds": 42.11666666666667,
+          "protectedSeconds": 56,
+          "peakInfected": 69,
+          "peakEntities": 140,
+          "peakCorpses": 9,
+          "capViolations": 0
+        },
+        {
+          "seed": 1,
+          "quality": "high",
+          "completed": true,
+          "deaths": 0,
+          "totalTicks": 67381,
+          "attackStarts": 237,
+          "startsPerMinute": 12.714592274678111,
+          "longestGapSeconds": 44.7,
+          "protectedSeconds": 56,
+          "peakInfected": 62,
+          "peakEntities": 162,
+          "peakCorpses": 8,
+          "capViolations": 0
+        },
+        {
+          "seed": 2,
+          "quality": "low",
+          "completed": true,
+          "deaths": 2,
+          "totalTicks": 66873,
+          "attackStarts": 281,
+          "startsPerMinute": 15.189645334694735,
+          "longestGapSeconds": 43.28333333333333,
+          "protectedSeconds": 56,
+          "peakInfected": 69,
+          "peakEntities": 140,
+          "peakCorpses": 9,
+          "capViolations": 0
+        },
+        {
+          "seed": 2,
+          "quality": "high",
+          "completed": true,
+          "deaths": 0,
+          "totalTicks": 67141,
+          "attackStarts": 268,
+          "startsPerMinute": 14.428857715430862,
+          "longestGapSeconds": 34.53333333333333,
+          "protectedSeconds": 56,
+          "peakInfected": 69,
+          "peakEntities": 162,
+          "peakCorpses": 1,
+          "capViolations": 0
+        },
+        {
+          "seed": 3,
+          "quality": "low",
+          "completed": true,
+          "deaths": 1,
+          "totalTicks": 66841,
+          "attackStarts": 312,
+          "startsPerMinute": 16.8762677484787,
+          "longestGapSeconds": 42.233333333333334,
+          "protectedSeconds": 56,
+          "peakInfected": 70,
+          "peakEntities": 140,
+          "peakCorpses": 1,
+          "capViolations": 0
+        },
+        {
+          "seed": 3,
+          "quality": "high",
+          "completed": true,
+          "deaths": 6,
+          "totalTicks": 90802,
+          "attackStarts": 445,
+          "startsPerMinute": 17.69852843696142,
+          "longestGapSeconds": 170.61666666666667,
+          "protectedSeconds": 56,
+          "peakInfected": 60,
+          "peakEntities": 160,
+          "peakCorpses": 1,
+          "capViolations": 0
+        }
+      ]
+    },
+    "audit": {
+      "seconds": 477.59192170800003,
+      "exit": 1,
+      "flags": [
+        "L4/criterion/L4-06 first breach:FAIL",
+        "L4/criterion/L4-06 sustained horde:FAIL"
+      ],
+      "receipt": "/private/tmp/s89-draft-audit/audit.json"
+    },
+    "typecheck": 0,
+    "lint": 0,
+    "remoteUnits": {
+      "exit": 0,
+      "passed": 106,
+      "skipped": 1,
+      "files": 27,
+      "budgetSeconds": 203.1,
+      "runner": "46.225.66.90",
+      "log": "/private/tmp/s89-draft-remote.log"
+    },
+    "acceptedForFiveOfSixHandoff": true,
+    "acceptedAsFullGoal": false,
+    "finalChecks": {
+      "typecheck": {
+        "exit": 0,
+        "log": "/private/tmp/s89-final-typecheck.log"
+      },
+      "lint": {
+        "exit": 0,
+        "log": "/private/tmp/s89-final-lint.log"
+      },
+      "l10ThreatAudit": {
+        "exit": 1,
+        "seconds": 57.316290708000004,
+        "gameplayFlags": [],
+        "topLevelFlags": [
+          "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+        ],
+        "receipt": "/private/tmp/s89-final-l10/audit.json"
+      },
+      "statCatalogChanges": [],
+      "botChanges": [],
+      "qaThreatChanges": [],
+      "fullAuditNewFlags": [],
+      "fullAuditClearedWarnings": [
+        "L10/wave/dispersal-assault:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+      ]
+    }
+  },
+  "userHandoff": "Retain the five-of-six improvement as a clean commit; document HIGH seed 3; no further experiments."
+}
