@@ -23,3 +23,7 @@ The baseline six-case run is documented in [s89-l10gap](../s89-l10gap/README.md)
 ## Browser QA needed
 
 No browser QA was run. After a passing encounter-flow change exists, inspect finale arrival timing, visible pop-in, sustained attacks, corpse persistence, and LOW/HIGH resident peaks in the browser. No visual or frame-time pass is claimed.
+
+## Recovery census follow-up
+
+A fresh native trace includes recoverable downed actors, which were missing from the earlier living-only samples. The director is strict: downed actors retain their admission slots until recovery. At 1000 s, 13 of 22 slots are downed; at 1200 s, 15 are downed, all within about 5–12 m of the courier. The same IDs repeatedly fall and recover while the distant Mega approaches. This explains the full cap despite few standing enemies and rejects the earlier assumption that all occupied slots represented distant living hunters. See `recoveryCensus` in trace.json. A compliant fix must account for recovery without changing infected stats, dropping downed reservations, removing corpses, or raising the finale cap.

@@ -55,6 +55,10 @@ const result = await runLevel('L10', 'complete', seed, 1800, 'auto', preset('L10
           distance: Math.hypot(boss.transform.x - player.transform.x, boss.transform.z - player.transform.z),
           state: boss.infected?.state, special: boss.infected?.specialAttack?.move },
         director: { count: world.infected!.director.count, cap: world.infected!.director.cap,
+          strict: world.infected!.director.strict,
+          downed: world.infected!.active.filter(e => e.health.current <= 0 && (e.infected?.recoverAt ?? -1) >= 0).map(e => ({
+            id: e.id, type: e.archetype, recoverAt: e.infected?.recoverAt, region: e.infected?.cureRegion,
+            distance: Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) })),
           reserved: world.infected!.director.reserved, pending: world.infected!.director.pendingTurns,
           pool: world.infected!.pool.length },
         assault: { ticks: world.l10Encounters?.state.assaultTicks, wave: world.l10Encounters?.state.assaultWave,
