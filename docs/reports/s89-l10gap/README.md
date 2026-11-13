@@ -182,3 +182,9 @@ A 24 m forward anchor through the same bounded safe placement gates passed seed-
 | 3 | high | 16.072 | 49.90 | 0 |
 
 Receipt `/private/tmp/s89-close-arrival-matrix.json`; producer `/private/tmp/s89-close-arrival-matrix.mts`; compact results in validation.json. Temporary source edits reverted. Next useful diagnostic is actor state/route behavior during the recurring military-bend gap, not additional global timing changes.
+
+## Military-gap actor trace and cover preference
+
+Seed-2 LOW adaptive lifecycle trace reproduces 71.43 s gap (`/private/tmp/s89-military-trace.json`, producer `/private/tmp/s89-military-trace.mts`). At 390 s multiple sprinters are 14–19 m away, still in attracted approach with existing nav paths; at 400 s those IDs are absent from the nearest eight living actors, and at 410 s new arrivals are again ~34 m away. This narrows the relevant sequence but does not alone distinguish every kill from streaming release.
+
+Trial preferred legal, offscreen, nav-clear candidate points behind real combat LOS cover using 65 bounded attempts, falling back to existing 33-attempt legal placement. Seed-2 LOW completed: 253 starts, 13.287/min, two deaths, peak 36, exactly 56 s dialogue excluded, 72.87 s adjusted maximum. Failed cadence; all temporary source edits reverted. Receipt `/private/tmp/s89-cover-arrivals.json`.
