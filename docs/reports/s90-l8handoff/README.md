@@ -26,7 +26,7 @@ The merged native regression seats all 14 passengers, leaves Hale alive, enters 
 - `npm run lint`: passed.
 - `node --import tsx/esm tools/qa/threat-audit.ts --levels L8`: zero new L8 gameplay flags. The skilled route retains the same `step/escape:UNREACHABLE_SHARE_OVER_30_PERCENT_FOR_OVER_20_SECONDS` flag documented by the s79 baseline; passive has zero flags. The command exits 1 for the diagnostic partial-level selection and baseline skilled flag.
 - `sh tools/remote/run.sh "$PWD" -- npm test`: passed on runner `46.225.66.90`, exit 0, 27 files, 106 passed / one skipped; 150/150 case collection guard; 208.8 s against the unchanged 240 s budget. This supersedes the initial network-blocked attempt.
-- Remaining native coverage: load the actual elephant-yard checkpoint and exercise its handoff; the current regression constructs the completed-arena boarding state in a fresh world.
+- Actual elephant-yard checkpoint regression: all four HIGH/LOW × Hale alive/fallen variants pass. The regression restores `l8-elephant-apc-yard-engaged.json.gz`, isolates completed combat with the elephant down, runs native passenger boarding, checks the 14/14 objective/marker, and enters with E; departure must finish within 15 seconds. This is merged into the existing vehicle test, preserving 150/150 cases. The fresh-world regression separately retains the real Hale charge story check and eight-second departure assertion.
 
 ## Browser QA needed
 
