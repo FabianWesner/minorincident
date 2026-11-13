@@ -96,3 +96,7 @@ The native archetype brain explicitly drops an L10 authored hunter behind hearin
 The exit 1 is the diagnostic partial-level selection flag, not an L10 failure. Native retreat kiting records 3.00 landed hits/min and passes its floor. Raw receipt: current-threat.json. This does not prove the strict six-case finale cadence goal; HIGH s2 and LOW s1 still fail.
 
 Current candidate `npm run typecheck` and `npm run lint` both passed after the threat audit. The remote unit suite and journey cadence receipt remain open. This checkpoint is WIP, not acceptance.
+
+## Remote unit suite on WIP checkpoint d121a6fe
+
+`sh tools/remote/run.sh "$PWD" -- npm test` passed unchanged on runner 46.225.66.90, job `s102-l10finale2-b1bfd2-18448-1794602852`. Manifest: 150/150 cases (129 Vitest, 9 e2e, 12 invariants-browser). Default suite: 27 files passed, 106 tests passed, one skipped; Vitest 225.58 s, budgeted command 228.2 s / 240 s. Exit 0; no retries or trimming. This validates the current shared residency candidate's covered contracts, not the still-failing finale gap requirement. No check remains running.
