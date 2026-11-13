@@ -208,7 +208,7 @@ export class LevelSixSubway {
       // The former 20 m offset placed it among the shelter crowd, turning
       // residents before the retreat objective could begin. Both shelter
       // breaches emerge on the corridor side of their service doors.
-      const offsets=wave===1||wave===2?[5,9,14,20]:[20];
+      const offsets=wave===1?[5,9,14,20]:wave===2?[9,14,20]:[20];
       for(const offset of offsets){
           let candidate:Point;
           try{candidate=this.snap(mouth(index,offset),wave===4?w.entities.get(1)!.transform:undefined);snapped=true;}catch{continue;}
