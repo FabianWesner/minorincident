@@ -150,3 +150,18 @@ Request eight arrivals only after 15 s without a courier attack start, checked e
 A 10 s lull checked every 5 s regressed: seed-1 LOW completed with 74.27 s maximum; seed-1 HIGH failed completion at 1800 s with 26 deaths and 51.83 s gap. Remaining runs deliberately terminated after these decisive failures (process exit 143); partial receipt `/private/tmp/s89-lull-matrix.log`. No full-matrix pass is claimed. Source changes reverted.
 
 Harness lifecycle issue identified for further investigation: `charge-active` resets on retry to the pre-charge checkpoint, allowing nominal journey arrivals to resume around the installed-cure finale. A future trial must exclude installed-cure retries before judging finale deaths/pressure; neither current producer is suitable for production as written.
+
+## Corrected adaptive lifecycle matrix
+
+15 s quiet threshold, check every 5 s, requests stop permanently once cure is installed (including finale retries). Existing headroom/retirement/safe-placement setup. All six completed; seed-1 LOW/HIGH and seed-3 HIGH pass cadence and rate. Other three fail cadence; seed-2 HIGH additionally regresses rate against 12.238/min baseline. Exactly 56 s excluded in each case; peaks 36/45. No full pass claimed, temporary source changes reverted.
+
+| Seed | Tier | Starts/min | Gap s | Deaths |
+| --- | --- | --- | --- | --- |
+| 1 | low | 13.021 | 44.18 | 0 |
+| 1 | high | 16.376 | 44.97 | 1 |
+| 2 | low | 12.482 | 71.43 | 0 |
+| 2 | high | 11.559 | 53.70 | 0 |
+| 3 | low | 12.372 | 72.43 | 0 |
+| 3 | high | 19.598 | 44.00 | 5 |
+
+Receipt `/private/tmp/s89-lull-lifecycle-matrix.json`, producer `/private/tmp/s89-lull-lifecycle-matrix.mts`; measurements also preserved in validation.json. Fixed x+40 placement around military road turns remains a placement hypothesis to test, not a proven explanation.

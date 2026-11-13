@@ -196,5 +196,119 @@
         ]
       }
     ]
+  },
+  "adaptiveLifecycleTrial": {
+    "accepted": false,
+    "receipt": "/private/tmp/s89-lull-lifecycle-matrix.json",
+    "producer": "/private/tmp/s89-lull-lifecycle-matrix.mts",
+    "rows": [
+      {
+        "seed": 1,
+        "quality": "low",
+        "completed": true,
+        "deaths": 0,
+        "pulseAdmissions": 257,
+        "peak": 36,
+        "totalTicks": 66633,
+        "protectedSeconds": 56,
+        "n": 240,
+        "rate": 13.020676351799384,
+        "maxGap": 44.18333333333334,
+        "gaps": []
+      },
+      {
+        "seed": 1,
+        "quality": "high",
+        "completed": true,
+        "deaths": 1,
+        "pulseAdmissions": 229,
+        "peak": 45,
+        "totalTicks": 68865,
+        "protectedSeconds": 56,
+        "n": 312,
+        "rate": 16.376042456406367,
+        "maxGap": 44.9666666666667,
+        "gaps": []
+      },
+      {
+        "seed": 2,
+        "quality": "low",
+        "completed": true,
+        "deaths": 0,
+        "pulseAdmissions": 283,
+        "peak": 36,
+        "totalTicks": 66610,
+        "protectedSeconds": 56,
+        "n": 230,
+        "rate": 12.482098439737694,
+        "maxGap": 71.43333333333334,
+        "gaps": [
+          {
+            "from": 354.6,
+            "to": 426.03333333333336,
+            "seconds": 71.43333333333334
+          }
+        ]
+      },
+      {
+        "seed": 2,
+        "quality": "high",
+        "completed": true,
+        "deaths": 0,
+        "pulseAdmissions": 233,
+        "peak": 45,
+        "totalTicks": 67233,
+        "protectedSeconds": 56,
+        "n": 215,
+        "rate": 11.559485050330059,
+        "maxGap": 53.69999999999999,
+        "gaps": [
+          {
+            "from": 484.4166666666667,
+            "to": 594.1166666666667,
+            "seconds": 53.69999999999999
+          }
+        ]
+      },
+      {
+        "seed": 3,
+        "quality": "low",
+        "completed": true,
+        "deaths": 0,
+        "pulseAdmissions": 276,
+        "peak": 36,
+        "totalTicks": 66628,
+        "protectedSeconds": 56,
+        "n": 228,
+        "rate": 12.372252871484127,
+        "maxGap": 72.43333333333334,
+        "gaps": [
+          {
+            "from": 354.6,
+            "to": 427.03333333333336,
+            "seconds": 72.43333333333334
+          },
+          {
+            "from": 430.28333333333336,
+            "to": 484.5,
+            "seconds": 54.21666666666664
+          }
+        ]
+      },
+      {
+        "seed": 3,
+        "quality": "high",
+        "completed": true,
+        "deaths": 5,
+        "pulseAdmissions": 264,
+        "peak": 45,
+        "totalTicks": 77071,
+        "protectedSeconds": 56,
+        "n": 418,
+        "rate": 19.597577651885135,
+        "maxGap": 44,
+        "gaps": []
+      }
+    ]
   }
 }
