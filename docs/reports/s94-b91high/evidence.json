@@ -6866,5 +6866,2215 @@
     "combatHitEvents": 760,
     "playerMegaHits": 0,
     "limits": "No targeted Mega contact; no damage/recovery pass."
+  },
+  "targetedMegaContact": {
+    "high": {
+      "render": {
+        "backend": "webgpu",
+        "quality": "high"
+      },
+      "megaIds": [
+        129
+      ],
+      "meleeHits": 52,
+      "amounts": [
+        22.4,
+        78.39999999999999
+      ],
+      "minimumHP": 2137.599999999999,
+      "recoverySamples": [
+        {
+          "fromTick": 789,
+          "toTick": 805,
+          "hpFrom": 2294.399999999999,
+          "hpTo": 2354.399999999999,
+          "secondsSinceHit": 1.1666666666666667
+        },
+        {
+          "fromTick": 805,
+          "toTick": 821,
+          "hpFrom": 2354.399999999999,
+          "hpTo": 2450.399999999999,
+          "secondsSinceHit": 1.4333333333333333
+        },
+        {
+          "fromTick": 821,
+          "toTick": 837,
+          "hpFrom": 2450.399999999999,
+          "hpTo": 2546.399999999999,
+          "secondsSinceHit": 1.7
+        },
+        {
+          "fromTick": 837,
+          "toTick": 853,
+          "hpFrom": 2546.399999999999,
+          "hpTo": 2642.399999999999,
+          "secondsSinceHit": 1.9666666666666666
+        },
+        {
+          "fromTick": 853,
+          "toTick": 869,
+          "hpFrom": 2642.399999999999,
+          "hpTo": 2738.399999999999,
+          "secondsSinceHit": 2.2333333333333334
+        },
+        {
+          "fromTick": 869,
+          "toTick": 885,
+          "hpFrom": 2738.399999999999,
+          "hpTo": 2834.399999999999,
+          "secondsSinceHit": 2.5
+        },
+        {
+          "fromTick": 885,
+          "toTick": 901,
+          "hpFrom": 2834.399999999999,
+          "hpTo": 2930.399999999999,
+          "secondsSinceHit": 2.7666666666666666
+        },
+        {
+          "fromTick": 901,
+          "toTick": 917,
+          "hpFrom": 2930.399999999999,
+          "hpTo": 3000,
+          "secondsSinceHit": 3.033333333333333
+        }
+      ],
+      "hits": [
+        {
+          "tick": 495,
+          "attackId": 788,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 838.0078606870636,
+            "y": 0.7,
+            "z": 5.743340386643645,
+            "yaw": 0.8128705857183289
+          },
+          "direction": {
+            "x": -0.5513312652178755,
+            "z": 0.834286423234405
+          },
+          "knockback": 0.4,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 525,
+          "attackId": 789,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 837.7873281809764,
+            "y": 0.7,
+            "z": 6.077054955937408,
+            "yaw": 0.986837235439824
+          },
+          "direction": {
+            "x": -0.5513312652179092,
+            "z": 0.8342864232343825
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 555,
+          "attackId": 790,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 837.7873281809764,
+            "y": 0.7,
+            "z": 6.077054955937408,
+            "yaw": 0.986837235439824
+          },
+          "direction": {
+            "x": -0.5513312652179092,
+            "z": 0.8342864232343825
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 585,
+          "attackId": 791,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 837.7873281809764,
+            "y": 0.7,
+            "z": 6.077054955937408,
+            "yaw": 0.986837235439824
+          },
+          "direction": {
+            "x": -0.5513312652179092,
+            "z": 0.8342864232343825
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 615,
+          "attackId": 792,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 837.7873281809764,
+            "y": 0.7,
+            "z": 6.077054955937408,
+            "yaw": 0.986837235439824
+          },
+          "direction": {
+            "x": -0.5513312652179092,
+            "z": 0.8342864232343825
+          },
+          "knockback": 0.4,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 645,
+          "attackId": 793,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 837.5667956748891,
+            "y": 0.7,
+            "z": 6.41076952523116,
+            "yaw": 0.8311824255013177
+          },
+          "direction": {
+            "x": -0.6740027396211765,
+            "z": 0.7387288453709848
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 675,
+          "attackId": 794,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 837.5667956748891,
+            "y": 0.7,
+            "z": 6.41076952523116,
+            "yaw": 0.8311824255013177
+          },
+          "direction": {
+            "x": -0.6740027396211765,
+            "z": 0.7387288453709848
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 705,
+          "attackId": 795,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 837.5805485609742,
+            "y": 0.7,
+            "z": 6.395695916385002,
+            "yaw": 0.8311824255012306
+          },
+          "direction": {
+            "x": -0.674002739621241,
+            "z": 0.7387288453709262
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 735,
+          "attackId": 796,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 837.5805485609742,
+            "y": 0.7,
+            "z": 6.3956959163850255,
+            "yaw": 0.8311824255012306
+          },
+          "direction": {
+            "x": -0.6740027396212344,
+            "z": 0.7387288453709323
+          },
+          "knockback": 0.4,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 1512,
+          "attackId": 801,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.8434062925958,
+            "y": 0.7,
+            "z": 5.4151778172855725,
+            "yaw": 0.8273058498310425
+          },
+          "direction": {
+            "x": -0.6268930984251859,
+            "z": 0.7791052837369736
+          },
+          "knockback": 0.4,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 1542,
+          "attackId": 802,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.5926490532256,
+            "y": 0.7,
+            "z": 5.726819930780362,
+            "yaw": 0.8932373257000382
+          },
+          "direction": {
+            "x": -0.6268930984252146,
+            "z": 0.7791052837369505
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 1572,
+          "attackId": 803,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.5926490532256,
+            "y": 0.7,
+            "z": 5.726819930780362,
+            "yaw": 0.8932373257000382
+          },
+          "direction": {
+            "x": -0.6268930984252146,
+            "z": 0.7791052837369505
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 1602,
+          "attackId": 804,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.5926490532256,
+            "y": 0.7,
+            "z": 5.726819930780362,
+            "yaw": 0.8932373257000382
+          },
+          "direction": {
+            "x": -0.6268930984252146,
+            "z": 0.7791052837369505
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 1632,
+          "attackId": 805,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.5926490532256,
+            "y": 0.7,
+            "z": 5.726819930780362,
+            "yaw": 0.8932373257000382
+          },
+          "direction": {
+            "x": -0.6268930984252146,
+            "z": 0.7791052837369505
+          },
+          "knockback": 0.4,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 1662,
+          "attackId": 806,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.292731572943,
+            "y": 0.7,
+            "z": 6.1034380698884645,
+            "yaw": 0.9252459676292832
+          },
+          "direction": {
+            "x": -0.6016381393227541,
+            "z": 0.7987687708669226
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 1692,
+          "attackId": 807,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.292731572943,
+            "y": 0.7,
+            "z": 6.1034380698884645,
+            "yaw": 0.9252459676292832
+          },
+          "direction": {
+            "x": -0.6016381393227541,
+            "z": 0.7987687708669226
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 1722,
+          "attackId": 808,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.2927315729429,
+            "y": 0.7,
+            "z": 6.103438069888425,
+            "yaw": 0.925245967629219
+          },
+          "direction": {
+            "x": -0.6016381393228055,
+            "z": 0.798768770866884
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 1752,
+          "attackId": 809,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.2927315729429,
+            "y": 0.7,
+            "z": 6.10343806988841,
+            "yaw": 0.925245967629219
+          },
+          "direction": {
+            "x": -0.6016381393228095,
+            "z": 0.7987687708668809
+          },
+          "knockback": 0.4,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 1980,
+          "attackId": 815,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.2620234947858,
+            "y": 0.7,
+            "z": 6.144207848667081,
+            "yaw": 0.9252459676291671
+          },
+          "direction": {
+            "x": -0.6016381393229059,
+            "z": 0.7987687708668082
+          },
+          "knockback": 0.4,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 2599,
+          "attackId": 817,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 835.160190093501,
+            "y": 0.7,
+            "z": 5.111176697093569,
+            "yaw": 0.824520254953892
+          },
+          "direction": {
+            "x": -0.589636239685522,
+            "z": 0.8076689327004708
+          },
+          "knockback": 0.4,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 2629,
+          "attackId": 818,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.9243355976266,
+            "y": 0.7,
+            "z": 5.434244270173757,
+            "yaw": 0.9401879430469612
+          },
+          "direction": {
+            "x": -0.5896362396855834,
+            "z": 0.807668932700426
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 2659,
+          "attackId": 819,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.9243355976266,
+            "y": 0.7,
+            "z": 5.434244270173757,
+            "yaw": 0.9401879430469612
+          },
+          "direction": {
+            "x": -0.5896362396855834,
+            "z": 0.807668932700426
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 2689,
+          "attackId": 820,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.9243355976266,
+            "y": 0.7,
+            "z": 5.434244270173757,
+            "yaw": 0.9401879430469612
+          },
+          "direction": {
+            "x": -0.5896362396855834,
+            "z": 0.807668932700426
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 2719,
+          "attackId": 821,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.9243355976266,
+            "y": 0.7,
+            "z": 5.434244270173757,
+            "yaw": 0.9401879430469612
+          },
+          "direction": {
+            "x": -0.5896362396855834,
+            "z": 0.807668932700426
+          },
+          "knockback": 0.4,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 2749,
+          "attackId": 822,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.6884811017524,
+            "y": 0.7,
+            "z": 5.757311843253927,
+            "yaw": 0.7751380980682648
+          },
+          "direction": {
+            "x": -0.7143243978055102,
+            "z": 0.6998147288388514
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 2779,
+          "attackId": 823,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.6884811017524,
+            "y": 0.7,
+            "z": 5.757311843253927,
+            "yaw": 0.7751380980682648
+          },
+          "direction": {
+            "x": -0.7143243978055102,
+            "z": 0.6998147288388514
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 2809,
+          "attackId": 824,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.71476966175,
+            "y": 0.7,
+            "z": 5.731557267961889,
+            "yaw": 0.7751380980683096
+          },
+          "direction": {
+            "x": -0.7143243978054789,
+            "z": 0.6998147288388834
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 2839,
+          "attackId": 825,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.71476966175,
+            "y": 0.7,
+            "z": 5.731557267961829,
+            "yaw": 0.7751380980683096
+          },
+          "direction": {
+            "x": -0.7143243978054956,
+            "z": 0.6998147288388664
+          },
+          "knockback": 0.4,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 3048,
+          "attackId": 830,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.4972616517477,
+            "y": 0.7,
+            "z": 5.944647160323742,
+            "yaw": 0.7751380980695891
+          },
+          "direction": {
+            "x": -0.7143243978055406,
+            "z": 0.6998147288388205
+          },
+          "knockback": 0.4,
+          "amount": 22.4,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 3067,
+          "attackId": 831,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.2115318926255,
+            "y": 0.7,
+            "z": 6.22457305185927,
+            "yaw": 0.7751380980695891
+          },
+          "direction": {
+            "x": -0.716144896491945,
+            "z": 0.6979516367403557
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 3097,
+          "attackId": 832,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.2115318926255,
+            "y": 0.7,
+            "z": 6.22457305185927,
+            "yaw": 0.7725332311865385
+          },
+          "direction": {
+            "x": -0.716144896491945,
+            "z": 0.6979516367403557
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 3702,
+          "attackId": 833,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 835.7899944400347,
+            "y": 0.7,
+            "z": 4.981850439165026,
+            "yaw": 0.7471470627836001
+          },
+          "direction": {
+            "x": -0.7902719398922727,
+            "z": 0.6127562819089692
+          },
+          "knockback": 0.4,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 3732,
+          "attackId": 834,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 835.4738856640777,
+            "y": 0.7,
+            "z": 5.226952951928614,
+            "yaw": 0.6595436585037399
+          },
+          "direction": {
+            "x": -0.7902719398922897,
+            "z": 0.6127562819089474
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 3762,
+          "attackId": 835,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 835.4738856640777,
+            "y": 0.7,
+            "z": 5.226952951928614,
+            "yaw": 0.6595436585037399
+          },
+          "direction": {
+            "x": -0.7902719398922897,
+            "z": 0.6127562819089474
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 3792,
+          "attackId": 836,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 835.4738856640777,
+            "y": 0.7,
+            "z": 5.226952951928614,
+            "yaw": 0.6595436585037399
+          },
+          "direction": {
+            "x": -0.7902719398922897,
+            "z": 0.6127562819089474
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 3822,
+          "attackId": 837,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 835.4738856640777,
+            "y": 0.7,
+            "z": 5.226952951928614,
+            "yaw": 0.6595436585037399
+          },
+          "direction": {
+            "x": -0.7902719398922897,
+            "z": 0.6127562819089474
+          },
+          "knockback": 0.4,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 3852,
+          "attackId": 838,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 835.0927938677387,
+            "y": 0.7,
+            "z": 5.518919833136856,
+            "yaw": 0.6222917092226005
+          },
+          "direction": {
+            "x": -0.8125447569761435,
+            "z": 0.5828988058922235
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 3882,
+          "attackId": 839,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 835.0927938677387,
+            "y": 0.7,
+            "z": 5.518919833136856,
+            "yaw": 0.6222917092226005
+          },
+          "direction": {
+            "x": -0.8125447569761435,
+            "z": 0.5828988058922235
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 3912,
+          "attackId": 840,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 835.0927938677387,
+            "y": 0.7,
+            "z": 5.51891983313684,
+            "yaw": 0.6222917092225931
+          },
+          "direction": {
+            "x": -0.8125447569761477,
+            "z": 0.5828988058922177
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 3942,
+          "attackId": 841,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 835.0838927662796,
+            "y": 0.7,
+            "z": 5.60308085643686,
+            "yaw": 0.6222917092225931
+          },
+          "direction": {
+            "x": -0.7920153252963182,
+            "z": 0.6105012076120467
+          },
+          "knockback": 0.4,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 3982,
+          "attackId": 842,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.767086636161,
+            "y": 0.7,
+            "z": 5.847281339481679,
+            "yaw": -2.199375117889298
+          },
+          "direction": {
+            "x": -0.8142929678949653,
+            "z": 0.58045410019812
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 4012,
+          "attackId": 843,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.767086636161,
+            "y": 0.7,
+            "z": 5.847281339481679,
+            "yaw": -2.199375117889298
+          },
+          "direction": {
+            "x": -0.8142929678949653,
+            "z": 0.58045410019812
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 4110,
+          "attackId": 844,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.7316498257408,
+            "y": 0.7,
+            "z": 5.8725418325933765,
+            "yaw": 0.6192862418468319
+          },
+          "direction": {
+            "x": -0.8142929678949561,
+            "z": 0.5804541001981329
+          },
+          "knockback": 0.4,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 4729,
+          "attackId": 846,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 835.160190093501,
+            "y": 0.7,
+            "z": 5.111176697093569,
+            "yaw": 0.824520254953892
+          },
+          "direction": {
+            "x": -0.589636239685522,
+            "z": 0.8076689327004708
+          },
+          "knockback": 0.4,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 4759,
+          "attackId": 847,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.9243355976266,
+            "y": 0.7,
+            "z": 5.434244270173757,
+            "yaw": 0.9401879430469612
+          },
+          "direction": {
+            "x": -0.5896362396855834,
+            "z": 0.807668932700426
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 4789,
+          "attackId": 848,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.9243355976266,
+            "y": 0.7,
+            "z": 5.434244270173757,
+            "yaw": 0.9401879430469612
+          },
+          "direction": {
+            "x": -0.5896362396855834,
+            "z": 0.807668932700426
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 4819,
+          "attackId": 849,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.9243355976266,
+            "y": 0.7,
+            "z": 5.434244270173757,
+            "yaw": 0.9401879430469612
+          },
+          "direction": {
+            "x": -0.5896362396855834,
+            "z": 0.807668932700426
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 4849,
+          "attackId": 850,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.9243355976266,
+            "y": 0.7,
+            "z": 5.434244270173757,
+            "yaw": 0.9401879430469612
+          },
+          "direction": {
+            "x": -0.5896362396855834,
+            "z": 0.807668932700426
+          },
+          "knockback": 0.4,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 4879,
+          "attackId": 851,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.6884811017524,
+            "y": 0.7,
+            "z": 5.757311843253927,
+            "yaw": 0.7751380980682648
+          },
+          "direction": {
+            "x": -0.7143243978055102,
+            "z": 0.6998147288388514
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 4909,
+          "attackId": 852,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.6884811017524,
+            "y": 0.7,
+            "z": 5.757311843253927,
+            "yaw": 0.7751380980682648
+          },
+          "direction": {
+            "x": -0.7143243978055102,
+            "z": 0.6998147288388514
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 4939,
+          "attackId": 853,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.71476966175,
+            "y": 0.7,
+            "z": 5.731557267961889,
+            "yaw": 0.7751380980683096
+          },
+          "direction": {
+            "x": -0.7143243978054789,
+            "z": 0.6998147288388834
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 4969,
+          "attackId": 854,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.71476966175,
+            "y": 0.7,
+            "z": 5.731557267961829,
+            "yaw": 0.7751380980683096
+          },
+          "direction": {
+            "x": -0.7143243978054956,
+            "z": 0.6998147288388664
+          },
+          "knockback": 0.4,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        }
+      ]
+    },
+    "low": {
+      "render": {
+        "backend": "webgpu",
+        "quality": "low"
+      },
+      "megaIds": [
+        129
+      ],
+      "meleeHits": 46,
+      "amounts": [
+        22.4,
+        78.39999999999999
+      ],
+      "minimumHP": 2294.399999999999,
+      "recoverySamples": [
+        {
+          "fromTick": 789,
+          "toTick": 805,
+          "hpFrom": 2294.399999999999,
+          "hpTo": 2348.399999999999,
+          "secondsSinceHit": 1.15
+        },
+        {
+          "fromTick": 805,
+          "toTick": 821,
+          "hpFrom": 2348.399999999999,
+          "hpTo": 2444.399999999999,
+          "secondsSinceHit": 1.4166666666666667
+        },
+        {
+          "fromTick": 821,
+          "toTick": 837,
+          "hpFrom": 2444.399999999999,
+          "hpTo": 2540.399999999999,
+          "secondsSinceHit": 1.6833333333333333
+        },
+        {
+          "fromTick": 837,
+          "toTick": 853,
+          "hpFrom": 2540.399999999999,
+          "hpTo": 2636.399999999999,
+          "secondsSinceHit": 1.95
+        },
+        {
+          "fromTick": 853,
+          "toTick": 869,
+          "hpFrom": 2636.399999999999,
+          "hpTo": 2732.399999999999,
+          "secondsSinceHit": 2.216666666666667
+        },
+        {
+          "fromTick": 869,
+          "toTick": 885,
+          "hpFrom": 2732.399999999999,
+          "hpTo": 2828.399999999999,
+          "secondsSinceHit": 2.4833333333333334
+        },
+        {
+          "fromTick": 885,
+          "toTick": 901,
+          "hpFrom": 2828.399999999999,
+          "hpTo": 2924.399999999999,
+          "secondsSinceHit": 2.75
+        },
+        {
+          "fromTick": 901,
+          "toTick": 917,
+          "hpFrom": 2924.399999999999,
+          "hpTo": 3000,
+          "secondsSinceHit": 3.0166666666666666
+        }
+      ],
+      "hits": [
+        {
+          "tick": 496,
+          "attackId": 788,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 838.1179393351829,
+            "y": 0.7,
+            "z": 5.810431818818301,
+            "yaw": 0.7987115458521962
+          },
+          "direction": {
+            "x": -0.6926775147461501,
+            "z": 0.721247433662746
+          },
+          "knockback": 0.4,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 526,
+          "attackId": 789,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 837.8408683292844,
+            "y": 0.7,
+            "z": 6.098930792283398,
+            "yaw": 0.8056015211930925
+          },
+          "direction": {
+            "x": -0.6926775147461636,
+            "z": 0.721247433662733
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 556,
+          "attackId": 790,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 837.8408683292844,
+            "y": 0.7,
+            "z": 6.098930792283398,
+            "yaw": 0.8056015211930925
+          },
+          "direction": {
+            "x": -0.6926775147461636,
+            "z": 0.721247433662733
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 586,
+          "attackId": 791,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 837.8408683292844,
+            "y": 0.7,
+            "z": 6.098930792283398,
+            "yaw": 0.8056015211930925
+          },
+          "direction": {
+            "x": -0.6926775147461636,
+            "z": 0.721247433662733
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 616,
+          "attackId": 792,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 837.8408683292844,
+            "y": 0.7,
+            "z": 6.098930792283398,
+            "yaw": 0.8056015211930925
+          },
+          "direction": {
+            "x": -0.6926775147461636,
+            "z": 0.721247433662733
+          },
+          "knockback": 0.4,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 646,
+          "attackId": 793,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 837.5051559175815,
+            "y": 0.7,
+            "z": 6.449182089964867,
+            "yaw": 0.8116403561640502
+          },
+          "direction": {
+            "x": -0.6883094169134678,
+            "z": 0.7254172224232355
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 676,
+          "attackId": 794,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 837.5051559175815,
+            "y": 0.7,
+            "z": 6.449182089964867,
+            "yaw": 0.8116403561640502
+          },
+          "direction": {
+            "x": -0.6883094169134678,
+            "z": 0.7254172224232355
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 706,
+          "attackId": 795,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 837.5051559175815,
+            "y": 0.7,
+            "z": 6.449182089964886,
+            "yaw": 0.8116403561640574
+          },
+          "direction": {
+            "x": -0.6883094169134626,
+            "z": 0.7254172224232405
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 736,
+          "attackId": 796,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 837.5051559175815,
+            "y": 0.7,
+            "z": 6.449182089964885,
+            "yaw": 0.8116403561640574
+          },
+          "direction": {
+            "x": -0.6883094169134628,
+            "z": 0.7254172224232402
+          },
+          "knockback": 0.4,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 1512,
+          "attackId": 801,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.768699529517,
+            "y": 0.7,
+            "z": 5.475684932523105,
+            "yaw": 0.8219200799181118
+          },
+          "direction": {
+            "x": -0.6432288459130279,
+            "z": 0.7656739853131973
+          },
+          "knockback": 0.4,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 1542,
+          "attackId": 802,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.5114079911518,
+            "y": 0.7,
+            "z": 5.781954526648383,
+            "yaw": 0.8720884937184394
+          },
+          "direction": {
+            "x": -0.6432288459130133,
+            "z": 0.7656739853132094
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 1572,
+          "attackId": 803,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.5114079911518,
+            "y": 0.7,
+            "z": 5.781954526648383,
+            "yaw": 0.8720884937184394
+          },
+          "direction": {
+            "x": -0.6432288459130133,
+            "z": 0.7656739853132094
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 1602,
+          "attackId": 804,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.5114079911518,
+            "y": 0.7,
+            "z": 5.781954526648383,
+            "yaw": 0.8720884937184394
+          },
+          "direction": {
+            "x": -0.6432288459130133,
+            "z": 0.7656739853132094
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 1632,
+          "attackId": 805,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.5114079911518,
+            "y": 0.7,
+            "z": 5.781954526648383,
+            "yaw": 0.8720884937184394
+          },
+          "direction": {
+            "x": -0.6432288459130133,
+            "z": 0.7656739853132094
+          },
+          "knockback": 0.4,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 1662,
+          "attackId": 806,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.2023797185383,
+            "y": 0.7,
+            "z": 6.1529014022411,
+            "yaw": 0.8978586793932178
+          },
+          "direction": {
+            "x": -0.6232858959230142,
+            "z": 0.7819940485345432
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 1692,
+          "attackId": 807,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.2023797185383,
+            "y": 0.7,
+            "z": 6.1529014022411,
+            "yaw": 0.8978586793932178
+          },
+          "direction": {
+            "x": -0.6232858959230142,
+            "z": 0.7819940485345432
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 1722,
+          "attackId": 808,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.2023797185383,
+            "y": 0.7,
+            "z": 6.152901402241111,
+            "yaw": 0.8978586793932215
+          },
+          "direction": {
+            "x": -0.6232858959230112,
+            "z": 0.7819940485345455
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 1752,
+          "attackId": 809,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.2024266059468,
+            "y": 0.7,
+            "z": 6.15284147462355,
+            "yaw": 0.8978586793932215
+          },
+          "direction": {
+            "x": -0.6233281335095276,
+            "z": 0.7819603813336892
+          },
+          "knockback": 0.4,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 1922,
+          "attackId": 813,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 833.9475882668152,
+            "y": 0.7,
+            "z": 6.510360087566494,
+            "yaw": 0.8977435645989018
+          },
+          "direction": {
+            "x": -0.6150299521874917,
+            "z": 0.7885037462892944
+          },
+          "knockback": 0.4,
+          "amount": 22.4,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 2539,
+          "attackId": 814,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 835.0023789138045,
+            "y": 0.7,
+            "z": 5.248242941389517,
+            "yaw": 0.823451256518518
+          },
+          "direction": {
+            "x": -0.621152900189179,
+            "z": 0.7836893993072587
+          },
+          "knockback": 0.4,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 2569,
+          "attackId": 815,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.7539177537288,
+            "y": 0.7,
+            "z": 5.561718701112421,
+            "yaw": 0.9005833609592063
+          },
+          "direction": {
+            "x": -0.6211529001891662,
+            "z": 0.7836893993072686
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 2599,
+          "attackId": 816,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.7539177537288,
+            "y": 0.7,
+            "z": 5.561718701112421,
+            "yaw": 0.9005833609592063
+          },
+          "direction": {
+            "x": -0.6211529001891662,
+            "z": 0.7836893993072686
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 2629,
+          "attackId": 817,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.7539177537288,
+            "y": 0.7,
+            "z": 5.561718701112421,
+            "yaw": 0.9005833609592063
+          },
+          "direction": {
+            "x": -0.6211529001891662,
+            "z": 0.7836893993072686
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 2659,
+          "attackId": 818,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.7539177537288,
+            "y": 0.7,
+            "z": 5.561718701112421,
+            "yaw": 0.9005833609592063
+          },
+          "direction": {
+            "x": -0.6211529001891662,
+            "z": 0.7836893993072686
+          },
+          "knockback": 0.4,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 2689,
+          "attackId": 819,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.4572361751265,
+            "y": 0.7,
+            "z": 5.940185439440563,
+            "yaw": 0.9347525038235055
+          },
+          "direction": {
+            "x": -0.5940175433804916,
+            "z": 0.8044520856808104
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 2719,
+          "attackId": 820,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.4572361751265,
+            "y": 0.7,
+            "z": 5.940185439440563,
+            "yaw": 0.9347525038235055
+          },
+          "direction": {
+            "x": -0.5940175433804916,
+            "z": 0.8044520856808104
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 2749,
+          "attackId": 821,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.4572361751265,
+            "y": 0.7,
+            "z": 5.9401854394405404,
+            "yaw": 0.9347525038234982
+          },
+          "direction": {
+            "x": -0.5940175433804976,
+            "z": 0.8044520856808058
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 2779,
+          "attackId": 822,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.4572361751265,
+            "y": 0.7,
+            "z": 5.940185439440535,
+            "yaw": 0.9347525038234982
+          },
+          "direction": {
+            "x": -0.5940175433804991,
+            "z": 0.804452085680805
+          },
+          "knockback": 0.4,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 3552,
+          "attackId": 827,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.5272466688449,
+            "y": 0.7,
+            "z": 5.73127298875985,
+            "yaw": 0.8227714967301571
+          },
+          "direction": {
+            "x": -0.6529375749753775,
+            "z": 0.7574117263320349
+          },
+          "knockback": 0.4,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 3582,
+          "attackId": 828,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.2660716388547,
+            "y": 0.7,
+            "z": 6.034237679292664,
+            "yaw": 0.8593399038079007
+          },
+          "direction": {
+            "x": -0.6529375749754016,
+            "z": 0.7574117263320141
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 3612,
+          "attackId": 829,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.2660716388547,
+            "y": 0.7,
+            "z": 6.034237679292664,
+            "yaw": 0.8593399038079007
+          },
+          "direction": {
+            "x": -0.6529375749754016,
+            "z": 0.7574117263320141
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 3642,
+          "attackId": 830,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.2660716388547,
+            "y": 0.7,
+            "z": 6.034237679292664,
+            "yaw": 0.8593399038079007
+          },
+          "direction": {
+            "x": -0.6529375749754016,
+            "z": 0.7574117263320141
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 3672,
+          "attackId": 831,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.2660716388547,
+            "y": 0.7,
+            "z": 6.034237679292664,
+            "yaw": 0.8593399038079007
+          },
+          "direction": {
+            "x": -0.6529375749754016,
+            "z": 0.7574117263320141
+          },
+          "knockback": 0.4,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 3702,
+          "attackId": 832,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 833.9516925265013,
+            "y": 0.7,
+            "z": 6.401539537989203,
+            "yaw": 0.8813384011814387
+          },
+          "direction": {
+            "x": -0.6361190160104726,
+            "z": 0.771590952169521
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 3732,
+          "attackId": 833,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 833.9516925265013,
+            "y": 0.7,
+            "z": 6.401539537989203,
+            "yaw": 0.8813384011814387
+          },
+          "direction": {
+            "x": -0.6361190160104726,
+            "z": 0.771590952169521
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 3762,
+          "attackId": 834,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 833.9516925265013,
+            "y": 0.7,
+            "z": 6.401539537989146,
+            "yaw": 0.8813384011814184
+          },
+          "direction": {
+            "x": -0.6361190160104883,
+            "z": 0.771590952169508
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 3792,
+          "attackId": 835,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 833.9516925265013,
+            "y": 0.7,
+            "z": 6.401539537989152,
+            "yaw": 0.8813384011814184
+          },
+          "direction": {
+            "x": -0.6361190160104866,
+            "z": 0.7715909521695096
+          },
+          "knockback": 0.4,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 4565,
+          "attackId": 840,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.5272466688449,
+            "y": 0.7,
+            "z": 5.73127298875985,
+            "yaw": 0.8227714967301571
+          },
+          "direction": {
+            "x": -0.6529375749753775,
+            "z": 0.7574117263320349
+          },
+          "knockback": 0.4,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 4595,
+          "attackId": 841,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.2660716388547,
+            "y": 0.7,
+            "z": 6.034237679292664,
+            "yaw": 0.8593399038079007
+          },
+          "direction": {
+            "x": -0.6529375749754016,
+            "z": 0.7574117263320141
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 4625,
+          "attackId": 842,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.2660716388547,
+            "y": 0.7,
+            "z": 6.034237679292664,
+            "yaw": 0.8593399038079007
+          },
+          "direction": {
+            "x": -0.6529375749754016,
+            "z": 0.7574117263320141
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 4655,
+          "attackId": 843,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.2660716388547,
+            "y": 0.7,
+            "z": 6.034237679292664,
+            "yaw": 0.8593399038079007
+          },
+          "direction": {
+            "x": -0.6529375749754016,
+            "z": 0.7574117263320141
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 4685,
+          "attackId": 844,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 834.2660716388547,
+            "y": 0.7,
+            "z": 6.034237679292664,
+            "yaw": 0.8593399038079007
+          },
+          "direction": {
+            "x": -0.6529375749754016,
+            "z": 0.7574117263320141
+          },
+          "knockback": 0.4,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 4715,
+          "attackId": 845,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 833.9516925265013,
+            "y": 0.7,
+            "z": 6.401539537989203,
+            "yaw": 0.8813384011814387
+          },
+          "direction": {
+            "x": -0.6361190160104726,
+            "z": 0.771590952169521
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 4745,
+          "attackId": 846,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 833.9516925265013,
+            "y": 0.7,
+            "z": 6.401539537989203,
+            "yaw": 0.8813384011814387
+          },
+          "direction": {
+            "x": -0.6361190160104726,
+            "z": 0.771590952169521
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 4775,
+          "attackId": 847,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 833.9516925265013,
+            "y": 0.7,
+            "z": 6.401539537989146,
+            "yaw": 0.8813384011814184
+          },
+          "direction": {
+            "x": -0.6361190160104883,
+            "z": 0.771590952169508
+          },
+          "knockback": 0,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 4805,
+          "attackId": 848,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 129,
+          "position": {
+            "x": 833.9516925265013,
+            "y": 0.7,
+            "z": 6.401539537989152,
+            "yaw": 0.8813384011814184
+          },
+          "direction": {
+            "x": -0.6361190160104866,
+            "z": 0.7715909521695096
+          },
+          "knockback": 0.4,
+          "amount": 78.39999999999999,
+          "damageType": "melee",
+          "type": "combat.hit"
+        }
+      ]
+    }
   }
 }
