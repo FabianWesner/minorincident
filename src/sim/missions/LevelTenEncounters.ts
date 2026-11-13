@@ -42,7 +42,7 @@ export class LevelTenEncounters {
     const at = { x: player.transform.x + 40, z: player.transform.z };
     const room = () => ai.pool.length > 0 && ai.director.count < ai.director.cap - ai.director.reserved - ai.director.pendingTurns - 1;
     if (!room() || !chunks.resident(at.x, at.z)) return;
-    for (const offset of [-7, -5, -3, -1, 1, 3, 5, 7]) {
+    for (const offset of ai.director.tier === 'low' ? [-7, -5, -3, -1, 1, 3, 5, 7] : [-11, -9, -7, -5, -3, -1, 1, 3, 5, 7, 9, 11]) {
       if (!room()) break;
       const point = cureEncounterSpot(ai.nav, { x: at.x, z: at.z + offset, archetype: 'infected.sprinter' },
         (x, z) => !insideCureHangar({ x, z }) && chunks.resident(x, z) && ai.director.safe('infected.sprinter', { x, z }), 33);
@@ -54,7 +54,7 @@ export class LevelTenEncounters {
   update(): void {
     const w = this.world, ai = w.infected, chunks = w.chunks, mission = w.missions;
     if (!ai || !chunks || mission?.state.phase !== 'playing' || mission.state.states['cure-released']) return;
-    const assaultActive = !!mission.state.states['charge-active'] && !(mission.state.states['charge-ready'] && mission.state.states['mega-dead']);
+    const assaultActive = !!mission.state.states['charge-active'];
     if (assaultActive) this.state.assaultTicks = (this.state.assaultTicks ?? 0) + 1;
     if (w.tick % 10 !== 0) return;
     const player = w.entities.get(1)!;
