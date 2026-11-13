@@ -1,0 +1,723 @@
+[
+  {
+    "tick": 52800,
+    "count": 9,
+    "cap": 70,
+    "reserved": 4,
+    "clock": 0,
+    "actors": []
+  },
+  {
+    "tick": 53400,
+    "count": 16,
+    "cap": 18,
+    "reserved": 0,
+    "wave": 0,
+    "clock": 508,
+    "next": 1209,
+    "actors": [
+      {
+        "key": "dispersal-assault:infected.runner:0:0",
+        "id": 588,
+        "hp": 0,
+        "state": "dead",
+        "dx": -9,
+        "dz": 3
+      },
+      {
+        "key": "dispersal-assault:infected.runner:1:0",
+        "id": 589,
+        "hp": 60,
+        "state": "search",
+        "dx": 6,
+        "dz": -8
+      },
+      {
+        "key": "dispersal-assault:infected.firefighter:0:0",
+        "id": 590,
+        "hp": 210,
+        "state": "chase",
+        "dx": 19,
+        "dz": 28
+      },
+      {
+        "key": "dispersal-assault:infected.runner:2:0",
+        "id": 591,
+        "hp": 24,
+        "state": "chase",
+        "dx": -9,
+        "dz": 2
+      },
+      {
+        "key": "dispersal-assault:infected.sprinter:0:0",
+        "id": 592,
+        "hp": 45,
+        "state": "attracted",
+        "dx": 5,
+        "dz": -16
+      },
+      {
+        "key": "dispersal-assault:infected.firefighter:1:0",
+        "id": 593,
+        "hp": 210,
+        "state": "chase",
+        "dx": 20,
+        "dz": 33
+      },
+      {
+        "key": "dispersal-assault:infected.dog:0:0",
+        "id": 594,
+        "hp": 45,
+        "state": "wander",
+        "dx": -37,
+        "dz": 0
+      }
+    ]
+  },
+  {
+    "tick": 54000,
+    "count": 16,
+    "cap": 18,
+    "reserved": 0,
+    "wave": 0,
+    "clock": 1108,
+    "next": 1209,
+    "actors": [
+      {
+        "key": "dispersal-assault:infected.runner:0:0",
+        "id": 588,
+        "hp": 0,
+        "state": "dead",
+        "dx": -14,
+        "dz": 2
+      },
+      {
+        "key": "dispersal-assault:infected.runner:1:0",
+        "id": 589,
+        "hp": 0,
+        "state": "dead",
+        "dx": 1,
+        "dz": -7
+      },
+      {
+        "key": "dispersal-assault:infected.firefighter:0:0",
+        "id": 590,
+        "hp": 210,
+        "state": "alerted",
+        "dx": 7,
+        "dz": 6
+      },
+      {
+        "key": "dispersal-assault:infected.runner:2:0",
+        "id": 591,
+        "hp": 0,
+        "state": "dead",
+        "dx": -13,
+        "dz": 1
+      },
+      {
+        "key": "dispersal-assault:infected.sprinter:0:0",
+        "id": 592,
+        "hp": 0,
+        "state": "dead",
+        "dx": 0,
+        "dz": -2
+      },
+      {
+        "key": "dispersal-assault:infected.firefighter:1:0",
+        "id": 593,
+        "hp": 210,
+        "state": "chase",
+        "dx": 2,
+        "dz": -1
+      },
+      {
+        "key": "dispersal-assault:infected.dog:0:0",
+        "id": 594,
+        "hp": 45,
+        "state": "wander",
+        "dx": -42,
+        "dz": -3
+      }
+    ]
+  },
+  {
+    "tick": 54600,
+    "count": 18,
+    "cap": 18,
+    "reserved": 0,
+    "wave": 1,
+    "clock": 1708,
+    "next": 2409,
+    "actors": [
+      {
+        "key": "dispersal-assault:infected.runner:0:0",
+        "id": 588,
+        "hp": 0,
+        "state": "dead",
+        "dx": -9,
+        "dz": 2
+      },
+      {
+        "key": "dispersal-assault:infected.runner:1:0",
+        "id": 589,
+        "hp": 0,
+        "state": "dead",
+        "dx": 6,
+        "dz": -7
+      },
+      {
+        "key": "dispersal-assault:infected.firefighter:0:0",
+        "id": 590,
+        "hp": 0,
+        "state": "dead",
+        "dx": 13,
+        "dz": 5
+      },
+      {
+        "key": "dispersal-assault:infected.runner:2:0",
+        "id": 591,
+        "hp": 0,
+        "state": "dead",
+        "dx": -6,
+        "dz": 1
+      },
+      {
+        "key": "dispersal-assault:infected.sprinter:0:0",
+        "id": 592,
+        "hp": 0,
+        "state": "dead",
+        "dx": 4,
+        "dz": -2
+      },
+      {
+        "key": "dispersal-assault:infected.firefighter:1:0",
+        "id": 593,
+        "hp": 0,
+        "state": "dead",
+        "dx": 6,
+        "dz": -1
+      },
+      {
+        "key": "dispersal-assault:infected.dog:0:0",
+        "id": 594,
+        "hp": 45,
+        "state": "chase",
+        "dx": -38,
+        "dz": -3
+      },
+      {
+        "key": "dispersal-assault:infected.runner:0:1",
+        "id": 595,
+        "hp": 0,
+        "state": "dead",
+        "dx": -7,
+        "dz": 3
+      },
+      {
+        "key": "dispersal-assault:infected.runner:1:1",
+        "id": 596,
+        "hp": 0,
+        "state": "dead",
+        "dx": 6,
+        "dz": -12
+      },
+      {
+        "key": "dispersal-assault:infected.firefighter:0:1",
+        "id": 597,
+        "hp": 210,
+        "state": "chase",
+        "dx": 18,
+        "dz": 27
+      },
+      {
+        "key": "dispersal-assault:infected.runner:2:1",
+        "id": 598,
+        "hp": 0,
+        "state": "dead",
+        "dx": -10,
+        "dz": 3
+      },
+      {
+        "key": "dispersal-assault:infected.sprinter:0:1",
+        "id": 599,
+        "hp": 0,
+        "state": "attracted",
+        "dx": 6,
+        "dz": -14
+      },
+      {
+        "key": "dispersal-assault:infected.firefighter:1:1",
+        "id": 600,
+        "hp": 210,
+        "state": "chase",
+        "dx": 19,
+        "dz": 32
+      },
+      {
+        "key": "dispersal-assault:infected.dog:0:1",
+        "id": 601,
+        "hp": 45,
+        "state": "idle",
+        "dx": -42,
+        "dz": 7
+      }
+    ]
+  },
+  {
+    "tick": 55200,
+    "count": 14,
+    "cap": 18,
+    "reserved": 0,
+    "wave": 1,
+    "clock": 2308,
+    "next": 2409,
+    "actors": [
+      {
+        "key": "dispersal-assault:infected.runner:0:0",
+        "id": 588,
+        "hp": 0,
+        "state": "dead",
+        "dx": -22,
+        "dz": -2
+      },
+      {
+        "key": "dispersal-assault:infected.runner:1:0",
+        "id": 589,
+        "hp": 0,
+        "state": "dead",
+        "dx": -6,
+        "dz": -11
+      },
+      {
+        "key": "dispersal-assault:infected.firefighter:0:0",
+        "id": 590,
+        "hp": 0,
+        "state": "dead",
+        "dx": -2,
+        "dz": -5
+      },
+      {
+        "key": "dispersal-assault:infected.runner:2:0",
+        "id": 591,
+        "hp": 0,
+        "state": "dead",
+        "dx": -19,
+        "dz": -4
+      },
+      {
+        "key": "dispersal-assault:infected.sprinter:0:0",
+        "id": 592,
+        "hp": 0,
+        "state": "dead",
+        "dx": -7,
+        "dz": -8
+      },
+      {
+        "key": "dispersal-assault:infected.firefighter:1:0",
+        "id": 593,
+        "hp": 0,
+        "state": "dead",
+        "dx": -9,
+        "dz": -6
+      },
+      {
+        "key": "dispersal-assault:infected.dog:0:0",
+        "id": 594,
+        "hp": 45,
+        "state": "idle",
+        "dx": -54,
+        "dz": -11
+      },
+      {
+        "key": "dispersal-assault:infected.runner:0:1",
+        "id": 595,
+        "hp": 0,
+        "state": "dead",
+        "dx": -19,
+        "dz": -2
+      },
+      {
+        "key": "dispersal-assault:infected.runner:1:1",
+        "id": 596,
+        "hp": 0,
+        "state": "dead",
+        "dx": -7,
+        "dz": -16
+      },
+      {
+        "key": "dispersal-assault:infected.firefighter:0:1",
+        "id": 597,
+        "hp": 0,
+        "state": "dead",
+        "dx": -4,
+        "dz": -7
+      },
+      {
+        "key": "dispersal-assault:infected.runner:2:1",
+        "id": 598,
+        "hp": 0,
+        "state": "dead",
+        "dx": -23,
+        "dz": -1
+      },
+      {
+        "key": "dispersal-assault:infected.sprinter:0:1",
+        "id": 599,
+        "hp": 0,
+        "state": "dead",
+        "dx": -6,
+        "dz": -19
+      },
+      {
+        "key": "dispersal-assault:infected.firefighter:1:1",
+        "id": 600,
+        "hp": 0,
+        "state": "dead",
+        "dx": 0,
+        "dz": -1
+      },
+      {
+        "key": "dispersal-assault:infected.dog:0:1",
+        "id": 601,
+        "hp": 45,
+        "state": "wander",
+        "dx": -51,
+        "dz": 10
+      }
+    ]
+  },
+  {
+    "tick": 55800,
+    "count": 18,
+    "cap": 18,
+    "reserved": 0,
+    "wave": 2,
+    "clock": 2908,
+    "next": 3609,
+    "actors": [
+      {
+        "key": "dispersal-assault:infected.runner:0:0",
+        "id": 588,
+        "hp": 0,
+        "state": "dead",
+        "dx": -9,
+        "dz": 2
+      },
+      {
+        "key": "dispersal-assault:infected.runner:1:0",
+        "id": 589,
+        "hp": 0,
+        "state": "dead",
+        "dx": 6,
+        "dz": -7
+      },
+      {
+        "key": "dispersal-assault:infected.firefighter:0:0",
+        "id": 590,
+        "hp": 0,
+        "state": "dead",
+        "dx": 11,
+        "dz": 0
+      },
+      {
+        "key": "dispersal-assault:infected.runner:2:0",
+        "id": 591,
+        "hp": 0,
+        "state": "dead",
+        "dx": -6,
+        "dz": 1
+      },
+      {
+        "key": "dispersal-assault:infected.sprinter:0:0",
+        "id": 592,
+        "hp": 0,
+        "state": "dead",
+        "dx": 5,
+        "dz": -3
+      },
+      {
+        "key": "dispersal-assault:infected.firefighter:1:0",
+        "id": 593,
+        "hp": 0,
+        "state": "dead",
+        "dx": 4,
+        "dz": -2
+      },
+      {
+        "key": "dispersal-assault:infected.dog:0:0",
+        "id": 594,
+        "hp": 45,
+        "state": "wander",
+        "dx": -42,
+        "dz": 4
+      },
+      {
+        "key": "dispersal-assault:infected.runner:0:1",
+        "id": 595,
+        "hp": 0,
+        "state": "dead",
+        "dx": -7,
+        "dz": 3
+      },
+      {
+        "key": "dispersal-assault:infected.runner:1:1",
+        "id": 596,
+        "hp": 0,
+        "state": "dead",
+        "dx": 6,
+        "dz": -12
+      },
+      {
+        "key": "dispersal-assault:infected.firefighter:0:1",
+        "id": 597,
+        "hp": 0,
+        "state": "dead",
+        "dx": 9,
+        "dz": -2
+      },
+      {
+        "key": "dispersal-assault:infected.runner:2:1",
+        "id": 598,
+        "hp": 0,
+        "state": "dead",
+        "dx": -10,
+        "dz": 3
+      },
+      {
+        "key": "dispersal-assault:infected.sprinter:0:1",
+        "id": 599,
+        "hp": 0,
+        "state": "dead",
+        "dx": 6,
+        "dz": -14
+      },
+      {
+        "key": "dispersal-assault:infected.firefighter:1:1",
+        "id": 600,
+        "hp": 0,
+        "state": "dead",
+        "dx": 13,
+        "dz": 3
+      },
+      {
+        "key": "dispersal-assault:infected.dog:0:1",
+        "id": 601,
+        "hp": 45,
+        "state": "idle",
+        "dx": -42,
+        "dz": 8
+      },
+      {
+        "key": "dispersal-assault:infected.runner:0:2",
+        "id": 602,
+        "hp": 0,
+        "state": "dead",
+        "dx": -16,
+        "dz": 3
+      },
+      {
+        "key": "dispersal-assault:infected.runner:1:2",
+        "id": 603,
+        "hp": 60,
+        "state": "attracted",
+        "dx": 5,
+        "dz": -15
+      },
+      {
+        "key": "dispersal-assault:infected.firefighter:0:2",
+        "id": 604,
+        "hp": 210,
+        "state": "chase",
+        "dx": 18,
+        "dz": 28
+      },
+      {
+        "key": "dispersal-assault:infected.runner:2:2",
+        "id": 605,
+        "hp": 0,
+        "state": "dead",
+        "dx": -19,
+        "dz": 3
+      }
+    ]
+  },
+  {
+    "tick": 56400,
+    "count": 18,
+    "cap": 18,
+    "reserved": 0,
+    "wave": 2,
+    "clock": 3508,
+    "next": 3609,
+    "actors": [
+      {
+        "key": "dispersal-assault:infected.runner:0:0",
+        "id": 588,
+        "hp": 0,
+        "state": "dead",
+        "dx": -9,
+        "dz": 3
+      },
+      {
+        "key": "dispersal-assault:infected.runner:1:0",
+        "id": 589,
+        "hp": 0,
+        "state": "dead",
+        "dx": 6,
+        "dz": -6
+      },
+      {
+        "key": "dispersal-assault:infected.firefighter:0:0",
+        "id": 590,
+        "hp": 0,
+        "state": "dead",
+        "dx": 10,
+        "dz": 0
+      },
+      {
+        "key": "dispersal-assault:infected.runner:2:0",
+        "id": 591,
+        "hp": 0,
+        "state": "dead",
+        "dx": -6,
+        "dz": 1
+      },
+      {
+        "key": "dispersal-assault:infected.sprinter:0:0",
+        "id": 592,
+        "hp": 9,
+        "state": "chase",
+        "dx": 6,
+        "dz": -3
+      },
+      {
+        "key": "dispersal-assault:infected.firefighter:1:0",
+        "id": 593,
+        "hp": 0,
+        "state": "dead",
+        "dx": 4,
+        "dz": -1
+      },
+      {
+        "key": "dispersal-assault:infected.dog:0:0",
+        "id": 594,
+        "hp": 45,
+        "state": "idle",
+        "dx": -49,
+        "dz": 4
+      },
+      {
+        "key": "dispersal-assault:infected.runner:0:1",
+        "id": 595,
+        "hp": 0,
+        "state": "dead",
+        "dx": -6,
+        "dz": 3
+      },
+      {
+        "key": "dispersal-assault:infected.runner:1:1",
+        "id": 596,
+        "hp": 0,
+        "state": "dead",
+        "dx": 6,
+        "dz": -11
+      },
+      {
+        "key": "dispersal-assault:infected.firefighter:0:1",
+        "id": 597,
+        "hp": 0,
+        "state": "dead",
+        "dx": 9,
+        "dz": -2
+      },
+      {
+        "key": "dispersal-assault:infected.runner:2:1",
+        "id": 598,
+        "hp": 0,
+        "state": "dead",
+        "dx": -10,
+        "dz": 4
+      },
+      {
+        "key": "dispersal-assault:infected.sprinter:0:1",
+        "id": 599,
+        "hp": 0,
+        "state": "dead",
+        "dx": 7,
+        "dz": -14
+      },
+      {
+        "key": "dispersal-assault:infected.firefighter:1:1",
+        "id": 600,
+        "hp": 0,
+        "state": "dead",
+        "dx": 11,
+        "dz": 0
+      },
+      {
+        "key": "dispersal-assault:infected.dog:0:1",
+        "id": 601,
+        "hp": 45,
+        "state": "wander",
+        "dx": -52,
+        "dz": 5
+      },
+      {
+        "key": "dispersal-assault:infected.runner:0:2",
+        "id": 602,
+        "hp": 0,
+        "state": "dead",
+        "dx": -15,
+        "dz": 3
+      },
+      {
+        "key": "dispersal-assault:infected.runner:1:2",
+        "id": 603,
+        "hp": 0,
+        "state": "dead",
+        "dx": 5,
+        "dz": -12
+      },
+      {
+        "key": "dispersal-assault:infected.firefighter:0:2",
+        "id": 604,
+        "hp": 0,
+        "state": "dead",
+        "dx": 11,
+        "dz": 0
+      },
+      {
+        "key": "dispersal-assault:infected.runner:2:2",
+        "id": 605,
+        "hp": 0,
+        "state": "dead",
+        "dx": -18,
+        "dz": 3
+      }
+    ]
+  },
+  {
+    "quality": "low",
+    "seed": 1,
+    "completed": true,
+    "deaths": 0,
+    "installed": 52748,
+    "released": 56702,
+    "durationS": 65.9,
+    "starts": [
+      53836,
+      53942,
+      53978,
+      54050,
+      54087,
+      55092,
+      55109,
+      56625
+    ],
+    "headS": 18.133333333333333,
+    "tailS": 1.2833333333333334,
+    "maxGapS": 25.266666666666666,
+    "pass": false
+  }
+]

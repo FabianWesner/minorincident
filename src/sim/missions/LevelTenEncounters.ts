@@ -13,6 +13,7 @@ export interface CureEncounterState {
 }
 /** Once-only moving hunters; bounded finale waves leave time to clear stairs and cool the gun. */
 export class LevelTenEncounters {
+  private assaultReservation = 0;
   state: CureEncounterState = { spawned: {}, medkits: {}, weapons: {}, assaultTicks: 0 };
   constructor(private readonly world: SimWorld) {
     world.events.on('telegraph', event => {
@@ -53,7 +54,12 @@ export class LevelTenEncounters {
   }
   update(): void {
     const w = this.world, ai = w.infected, chunks = w.chunks, mission = w.missions;
-    if (!ai || !chunks || mission?.state.phase !== 'playing' || mission.state.states['cure-released']) return;
+    if (!ai || !chunks || mission?.state.phase !== 'playing') return;
+    const admitted = Object.keys(this.state.spawned).filter(key => key.startsWith('dispersal-assault:')).length;
+    const wantedReservation = mission.state.states['cure-installed'] && !mission.state.states['cure-released'] ? Math.max(0, 4 - admitted) : 0;
+    ai.director.reserved += wantedReservation - this.assaultReservation;
+    this.assaultReservation = wantedReservation;
+    if (mission.state.states['cure-released']) return;
     const assaultActive = !!mission.state.states['charge-active'];
     if (assaultActive) this.state.assaultTicks = (this.state.assaultTicks ?? 0) + 1;
     if (w.tick % 10 !== 0) return;
@@ -112,7 +118,7 @@ export class LevelTenEncounters {
         // Keep one journey slot available before the next warning, otherwise
         // old hunters fill the cap and every later authored ambush is starved.
         const scareReserve = assault ? pendingScares : Math.max(1, pendingScares);
-        if (this.state.spawned[key] || !ai.pool.length || ai.director.count >= ai.director.cap - ai.director.reserved - ai.director.pendingTurns - scareReserve) continue;
+        if (this.state.spawned[key] || !ai.pool.length || ai.director.count >= ai.director.cap - ai.director.reserved + (assault ? this.assaultReservation : 0) - ai.director.pendingTurns - scareReserve) continue;
         if (slot.archetype === 'infected.dog' && ai.active.filter(e => e.archetype === slot.archetype && (e.health.current > 0 || (e.infected?.recoverAt ?? -1) >= 0)).length >= (assault ? 4 : 2)) continue;
         if (slot.archetype === 'infected.alpha' && ai.active.filter(e => e.archetype === slot.archetype && !e.infected?.pursuit && (e.health.current > 0 || (e.infected?.recoverAt ?? -1) >= 0)).length >= cureAlphaCap(group.region, ai.director.tier)) continue;
         const at = cureEncounterSpot(ai.nav, slot, (x, z) => !insideCureHangar({ x, z }) && chunks.resident(x, z) && ai.director.safe(slot.archetype, { x, z }), assault ? 129 : 33);
