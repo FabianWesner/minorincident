@@ -33,3 +33,5 @@ A subsequent composition experiment replaced one assault regular with an Alpha a
 Prioritizing only the existing dog slot, with no composition/count change, also failed: HIGH seed 3 completed with four deaths but a 222.42 s finale gap and 15.481 starts/min (below s89's 17.699). This experiment was reverted.
 
 A four-direction assault entry (adding east to the existing west/north/south ring) was also rejected: HIGH seed 3 completed with 20 deaths and a 292.25 s finale gap. It was reverted; the absent east entry is not a sufficient explanation for the cadence failure.
+
+An explicitly authored thrower Alpha, replacing one regular and admitted first within the same group count/cap, also failed. Native HIGH seed 3 completed with 22 deaths and a 222.23 s finale gap. The catalog-type experiment was reverted.
