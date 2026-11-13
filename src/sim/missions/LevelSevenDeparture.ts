@@ -9,6 +9,7 @@ import { l7Departure as cfg } from '../../data/l7';
 import { l7Bus, l7CorridorAnchors } from '../../levels/L7/corridor';
 import { spawnSetPiece } from './L4Spectacle';
 import { emitEngine, stopEngine } from '../vehicles/ConvoySound';
+import { SimPhase } from '../../core/EventBus';
 
 export interface L7DepartureState {
   phase: 'waiting' | 'boarding' | 'departing' | 'done';
@@ -47,8 +48,10 @@ export class LevelSevenDeparture {
   private readonly evacuatedGuards = new Set<number>();
   private readonly boarding = l7CorridorAnchors['l7-bus-boarding'].position;
   private readonly wall: CoverWall = { x: l7Bus.x, y: 1.5, z: l7Bus.z, halfX: 4.68, halfY: 1.5, halfZ: 1.48 };
-  private readonly busHalfLength = 4.6;
-  private readonly busHalfWidth = 1.525;
+  // Bounds from the delivered veh.evac-bus GLB collision bake. Keep these
+  // aligned with staticCollision.json: the front body reaches +4.705 m.
+  private readonly busHalfLength = 4.705;
+  private readonly busHalfWidth = 1.29;
   constructor(private readonly world: SimWorld) {}
   install(): void {
     const w = this.world;
@@ -57,49 +60,68 @@ export class LevelSevenDeparture {
     w.solids.aliasBlocker(NAV_BUS, bus.id);
     this.blocker = w.physics.addBlocker(this.wall);
     w.events.emit({ type: 'world.blocker.changed', tick: w.tick, id: NAV_BUS, blocked: true, wall: this.wall });
+    // Character separation runs in cleanup after the mission phase and can
+    // push a zombie back into the bus lane. Reassert the swept-hull clearance
+    // after separation and before SolidRegistry commits the final tick pose.
+    w.events.on('sim.tick', () => {
+      if (this.state.phase === 'departing') this.clearGuards(this.bus.transform.x);
+    }, SimPhase.cleanup + 1);
   }
   private get bus(): EntitySnapshot { return this.world.entities.get(this.state.busId)!; }
   private get door() { return { x: cfg.door.x, z: cfg.door.z }; }
   private clearance(e: EntitySnapshot, x: number): number {
     const dx = Math.max(0, Math.abs(e.transform.x - x) - this.busHalfLength);
     const dz = Math.max(0, Math.abs(e.transform.z - cfg.lane.z) - this.busHalfWidth);
-    return Math.hypot(dx, dz) - actorRadius(e);
+    // Rendered character rigs extend beyond their locomotion circle (helmets,
+    // backpacks and prone limbs in particular); retain a visible-mesh margin.
+    return Math.hypot(dx, dz) - actorRadius(e) - .8;
   }
   /** Guards are not passengers; make a continuous lateral step clear of the parked or moving hull. */
   private clearGuards(currentX: number, nextX = currentX, proactive = false): boolean {
     const w = this.world, s = this.state;
-    const guards = [...w.entities.iterate()].filter(e => e.civilian?.ally?.role === 'soldier' && !e.hidden && e.passengerOf !== s.busId && e.health.current > 0);
+    const guards = [...w.entities.iterate()].filter(e => !e.hidden && e.passengerOf !== s.busId &&
+      (e.civilian?.ally?.role === 'soldier' || (s.phase === 'departing' || proactive) &&
+        (e.civilian?.survivor || e.infected || e.infection || e.corpse)));
     let held = false;
     for (const e of guards) {
-      if (this.evacuatedGuards.has(e.id)) continue;
+      const shoulderSide = Math.sign(e.transform.z - cfg.lane.z) || 1;
+      const shoulderZ = cfg.lane.z + shoulderSide * (this.busHalfWidth + actorRadius(e) + 1.4);
+      if (this.evacuatedGuards.has(e.id) && Math.abs(e.transform.z - cfg.lane.z) >= this.busHalfWidth + actorRadius(e) + 1.35) continue;
       const clearance = this.clearance(e, currentX), nextClearance = this.clearance(e, nextX);
       if (clearance < .5 || nextClearance < .5) this.clearingGuards.add(e.id);
-      if (proactive && e.transform.x >= cfg.lane.fromX && e.transform.x <= cfg.lane.toX && Math.abs(e.transform.z - cfg.lane.z) < this.busHalfWidth + actorRadius(e) + 1.25) this.clearingGuards.add(e.id);
+      if (proactive && e.transform.x >= cfg.lane.fromX - this.busHalfLength && e.transform.x <= cfg.lane.toX + this.busHalfLength && Math.abs(e.transform.z - cfg.lane.z) < this.busHalfWidth + actorRadius(e) + 2.5) this.clearingGuards.add(e.id);
       if (!this.clearingGuards.has(e.id)) continue;
-      const ally = e.civilian!.ally!;
-      if (ally.follow) delete ally.follow;
-      ally.engaged = false; ally.targetId = 0; ally.run = null; ally.hold = true;
-      const side = 1;
-      const targetZ = cfg.lane.z + 5.2 + (e.id % 4) * .7;
-      // Route around the nearest bus end before reaching the road shoulder;
-      // a direct lateral step is blocked while the guard is beside a bumper.
-      const dx = e.transform.x - currentX, end = Math.sign(dx) || (e.id % 2 ? -1 : 1);
-      const clearOfBumper = Math.abs(dx) >= this.busHalfLength + actorRadius(e) + .65;
-      const target = { x: proactive && clearOfBumper ? e.transform.x : currentX + end * (this.busHalfLength + actorRadius(e) + 1.25), z: targetZ };
-      ally.post = target;
-      e.civilian!.state = 'calm'; e.civilian!.vehicleYield = { target, until: Number.MAX_SAFE_INTEGER };
-      const step = 5.2 / 60;
-      const routed = w.npcs!.move(e, target, 5.2, e.civilian!, .15, 4800);
-      if (!proactive && Math.abs(dx) < this.busHalfLength + actorRadius(e) + .65) {
-        const moved = w.solids.sweep(e, { x: end, z: 0 }, step, actorRadius(e), false, true);
-        e.transform.x += end * moved;
-      } else if (!routed) {
-        const moved = w.solids.sweep(e, { x: 0, z: side }, Math.min(step, Math.abs(targetZ - e.transform.z)), actorRadius(e), false, true);
-        e.transform.z += side * moved;
+      const ally = e.civilian?.ally;
+      if (ally) {
+        if (ally.follow) delete ally.follow;
+        ally.engaged = false; ally.targetId = 0; ally.run = null; ally.hold = true;
       }
-      w.spatial.set(e.id, e.transform.x, e.transform.z);
-      if (e.transform.z >= targetZ - .25) { this.clearingGuards.delete(e.id); this.evacuatedGuards.add(e.id); }
-      else held = true;
+      // Step laterally off the open roadway. Chasing a moving longitudinal
+      // target let the bus keep pace with a guard at its front bumper.
+      const step = 240 / 60;
+      const target = { x: e.transform.x, z: e.transform.z + shoulderSide * Math.min(step, Math.abs(shoulderZ - e.transform.z)) };
+      if (ally) ally.post = target;
+      if (e.civilian) { e.civilian.state = 'calm'; e.civilian.vehicleYield = { target, until: Number.MAX_SAFE_INTEGER }; }
+      // Do not route through the bumper's longitudinal axis. The shoulder is
+      // clear and this bounded side-step also preserves persistent corpses.
+      const moved = w.solids.relocate(e, { ...target, y: e.transform.y }, 'l7.bus-clearance', 12, false);
+      if (!moved) {
+        // Dense infected packs can leave no legal intermediate body slot. Put
+        // that body just outside the swept hull, retaining its entity and HP.
+        // The next sim commit starts from this explicit shoulder pose.
+        Object.assign(e.transform, { x: e.transform.x, z: shoulderZ });
+        w.spatial.set(e.id, e.transform.x, e.transform.z);
+        w.solids.remember(e, 'l7.bus-clearance');
+      }
+      if (this.clearance(e, currentX) < .5 || this.clearance(e, nextX) < .5) {
+        // A legal crowd slot may still be inside the bus's projected envelope.
+        // Keep the body, but finish this push outside the rendered hull margin.
+        Object.assign(e.transform, { x: e.transform.x, z: shoulderZ });
+        w.spatial.set(e.id, e.transform.x, e.transform.z);
+        w.solids.remember(e, 'l7.bus-clearance');
+      }
+      if (Math.abs(e.transform.z - cfg.lane.z) >= this.busHalfWidth + actorRadius(e) + 1.35) { this.clearingGuards.delete(e.id); this.evacuatedGuards.add(e.id); }
+      else if (ally?.role === 'soldier' || e.civilian?.survivor && e.health.current > 0) held = true;
     }
     return held;
   }
