@@ -31,9 +31,9 @@ Both checkpoint-yield captures were opened. The initial sample shows retreat HUD
 | L9 rail / final bay | Progressed with manual F, 19 deaths | Progressed, zero deaths | Progressed, zero deaths |
 | L9 playable L10 handover pose / school bus | Missing; loading transition only | Bridge-save live handover upright; bus overlap unverified | Missing; loading transition only |
 | L10 first 5 min / gun selection | Rifle key+click passed; incomplete broader scope | Five-minute sample; hangar not reached | Five-minute sample; rifle click selected; broader scope incomplete |
-| L10 every hangar weapon key+click | Later fixture: all 14 by click; machete key unresolved | Missing | Missing |
+| L10 every hangar weapon key+click | Later fixture: all 14 by click; machete key unresolved | Missing | Later fixture: all 14 by click; keys incomplete |
 | L10 knife | Missing (not in returned-arsenal fixture) | Missing | Missing |
-| L10 all molotov charges / prior weapon | Later fixture initial three charges exhausted; rifle restored | Missing | Missing |
+| L10 all molotov charges / prior weapon | Later fixture initial charges exhausted; rifle restored | Missing | Later fixture exhausted; MG selected; prior-weapon sequence not controlled |
 | L10 molotov blue lines | Post-use stills only; full aiming view missing | Missing | Missing |
 | L10 early hunting Mega damage+recovery | Four axe hits amount 0; P2 damage failure | Four axe hits amount 0; P2 damage failure | Seven axe hits amount 0; P2 damage failure; recovery unverified |
 | L10 crops on roads | No systematic sweep | Missing | Missing |
@@ -135,3 +135,7 @@ First dedicated pre-rail attempt stopped at a four-minute cap near the bridge; u
 ## LOW returned-arsenal attempt — partial only
 
 Existing dispersal-console fixture, 120-second bounded session. Ten toolbar commands through machete were acknowledged in the manual-input log before closure. The fast selection sampler produced stale selected-weapon observations for several entries (e.g. bat→launcher and machete→nail gun); these mismatches do not prove selection failure and are excluded from pass/fail conclusions. Last four commands arrived after closure and are excluded. The raw `selection-receipt.json` therefore must not be read as a 14-weapon pass. No LOW molotov exhaustion test was completed. Receipt directory: `test-results/s88-b90high/l10-arsenal-low/`. No check or controller remains running.
+
+## LOW returned arsenal — completed click sequence
+
+Second LOW dispersal-checkpoint input sequence started immediately after run initialization. `test-results/s88-b90high/l10-low-input-final/input-receipt.json` confirms selected state for all 14 requested toolbar clicks. This supersedes the earlier stale/partial click sample. The initial three rapid molotov attack inputs did not empty charges; a later spaced sequence did. At tick 2400 molotov is in emptyWeapons and selection is army MG. Normal driver combat resumed between the two throw sequences, so this does not qualify as an uninterrupted rifle-return test. Opened `campaign-molotov-spaced-2.jpg`: Machine Gun selected and molotov empty; no automatic axe return in that frame. LOW key coverage and exact preceding-weapon tracking remain incomplete. Bounded session ended after 120 seconds without driver issues or skips. No check or controller is running.
