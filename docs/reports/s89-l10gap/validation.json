@@ -20,7 +20,7 @@
     "log": "/private/tmp/s89-remote-unit.log"
   },
   "goalComplete": false,
-  "gameplayChanged": false,
+  "gameplayChanged": true,
   "boundedArrivalTrial": {
     "accepted": false,
     "receipt": "/private/tmp/s89-bounded-matrix.json",
@@ -559,12 +559,163 @@
     ],
     "receipt": "baseline.json"
   },
-  "finalScope": {
+  "historicalScopeAt9c9f79a5": {
     "runtimeDiffFromS86": [],
     "gameplayFixRetained": false,
     "botChangesRetained": false,
     "deployed": false,
     "pushed": false,
     "browserRun": false
-  }
+  },
+  "retainedChange": {
+    "goalComplete": false,
+    "runtimePatchSha256": "edaa073a79db139d768476c2be1512ea69e556fa4069bd724a8e0bd6ac874dc4",
+    "native": {
+      "exit": 1,
+      "flags": [
+        "3/high:GAP_OVER_45"
+      ],
+      "rows": [
+        {
+          "seed": 1,
+          "quality": "low",
+          "completed": true,
+          "deaths": 0,
+          "totalTicks": 66661,
+          "attackStarts": 247,
+          "startsPerMinute": 13.394793926247287,
+          "longestGapSeconds": 42.11666666666667,
+          "protectedSeconds": 56,
+          "peakInfected": 69,
+          "peakEntities": 140,
+          "peakCorpses": 9,
+          "capViolations": 0
+        },
+        {
+          "seed": 1,
+          "quality": "high",
+          "completed": true,
+          "deaths": 0,
+          "totalTicks": 67381,
+          "attackStarts": 237,
+          "startsPerMinute": 12.714592274678111,
+          "longestGapSeconds": 44.7,
+          "protectedSeconds": 56,
+          "peakInfected": 62,
+          "peakEntities": 162,
+          "peakCorpses": 8,
+          "capViolations": 0
+        },
+        {
+          "seed": 2,
+          "quality": "low",
+          "completed": true,
+          "deaths": 2,
+          "totalTicks": 66873,
+          "attackStarts": 281,
+          "startsPerMinute": 15.189645334694735,
+          "longestGapSeconds": 43.28333333333333,
+          "protectedSeconds": 56,
+          "peakInfected": 69,
+          "peakEntities": 140,
+          "peakCorpses": 9,
+          "capViolations": 0
+        },
+        {
+          "seed": 2,
+          "quality": "high",
+          "completed": true,
+          "deaths": 0,
+          "totalTicks": 67141,
+          "attackStarts": 268,
+          "startsPerMinute": 14.428857715430862,
+          "longestGapSeconds": 34.53333333333333,
+          "protectedSeconds": 56,
+          "peakInfected": 69,
+          "peakEntities": 162,
+          "peakCorpses": 1,
+          "capViolations": 0
+        },
+        {
+          "seed": 3,
+          "quality": "low",
+          "completed": true,
+          "deaths": 1,
+          "totalTicks": 66841,
+          "attackStarts": 312,
+          "startsPerMinute": 16.8762677484787,
+          "longestGapSeconds": 42.233333333333334,
+          "protectedSeconds": 56,
+          "peakInfected": 70,
+          "peakEntities": 140,
+          "peakCorpses": 1,
+          "capViolations": 0
+        },
+        {
+          "seed": 3,
+          "quality": "high",
+          "completed": true,
+          "deaths": 6,
+          "totalTicks": 90802,
+          "attackStarts": 445,
+          "startsPerMinute": 17.69852843696142,
+          "longestGapSeconds": 170.61666666666667,
+          "protectedSeconds": 56,
+          "peakInfected": 60,
+          "peakEntities": 160,
+          "peakCorpses": 1,
+          "capViolations": 0
+        }
+      ]
+    },
+    "audit": {
+      "seconds": 477.59192170800003,
+      "exit": 1,
+      "flags": [
+        "L4/criterion/L4-06 first breach:FAIL",
+        "L4/criterion/L4-06 sustained horde:FAIL"
+      ],
+      "receipt": "/private/tmp/s89-draft-audit/audit.json"
+    },
+    "typecheck": 0,
+    "lint": 0,
+    "remoteUnits": {
+      "exit": 0,
+      "passed": 106,
+      "skipped": 1,
+      "files": 27,
+      "budgetSeconds": 203.1,
+      "runner": "46.225.66.90",
+      "log": "/private/tmp/s89-draft-remote.log"
+    },
+    "acceptedForFiveOfSixHandoff": true,
+    "acceptedAsFullGoal": false,
+    "finalChecks": {
+      "typecheck": {
+        "exit": 0,
+        "log": "/private/tmp/s89-final-typecheck.log"
+      },
+      "lint": {
+        "exit": 0,
+        "log": "/private/tmp/s89-final-lint.log"
+      },
+      "l10ThreatAudit": {
+        "exit": 1,
+        "seconds": 57.316290708000004,
+        "gameplayFlags": [],
+        "topLevelFlags": [
+          "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+        ],
+        "receipt": "/private/tmp/s89-final-l10/audit.json"
+      },
+      "statCatalogChanges": [],
+      "botChanges": [],
+      "qaThreatChanges": [],
+      "fullAuditNewFlags": [],
+      "fullAuditClearedWarnings": [
+        "L10/wave/dispersal-assault:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+      ]
+    }
+  },
+  "userHandoff": "Retain the five-of-six improvement as a clean commit; document HIGH seed 3; no further experiments."
 }

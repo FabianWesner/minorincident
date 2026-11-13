@@ -7,17 +7,49 @@ import type { SimWorld } from '../world/SimWorld';
 
 export interface CureEncounterState {
   farmScares?: FarmScareState; toy?: number;
+  pressureAttackAt?: number; pressureTick?: number;
   spawned: Record<string, number>; medkits: Record<string, number>; weapons?: Record<string, number>;
   released?: string[]; laneOffsets?: Record<string, number>; assaultTicks?: number; assaultWave?: number; nextAssaultAt?: number; lastAssaultAdmission?: number;
 }
 /** Once-only moving hunters; bounded finale waves leave time to clear stairs and cool the gun. */
 export class LevelTenEncounters {
   state: CureEncounterState = { spawned: {}, medkits: {}, weapons: {}, assaultTicks: 0 };
-  constructor(private readonly world: SimWorld) {}
-  snapshot(): CureEncounterState { return structuredClone(this.state); }
+  constructor(private readonly world: SimWorld) {
+    world.events.on('telegraph', event => {
+      if (event.type === 'telegraph' && event.sourceId && event.target?.id === 1 && !['alpha.roar', 'scream', 'revive'].includes(event.special)) this.state.pressureAttackAt = event.tick;
+    });
+    world.events.on('civilian.grabbed', event => {
+      if (event.type === 'civilian.grabbed' && event.targetId === 1) this.state.pressureAttackAt = event.tick;
+    });
+    world.events.on('infected.attack', event => {
+      if (event.type === 'infected.attack' && event.special === 'escort-hit' && event.targetId === 1) this.state.pressureAttackAt = event.tick;
+    });
+    world.events.on('sim.tick', event => { if (event.type === 'sim.tick') this.pressure(event.tick); });
+  }
+  snapshot(): CureEncounterState { return structuredClone({ ...this.state, pressureTick: this.world.tick }); }
   restore(value: unknown): void {
     this.state = structuredClone(value as CureEncounterState); this.state.weapons ??= {};
+    if (this.state.pressureTick !== undefined && this.state.pressureAttackAt !== undefined) this.state.pressureAttackAt += this.world.tick - this.state.pressureTick;
     for (const [id, scare] of Object.entries(this.state.farmScares ?? {})) if (scare.actor === undefined) delete this.state.farmScares![id];
+  }
+  /** Ordinary off-camera arrivals replace pressure lost to outpaced hunters; installed-cure retries belong to the finale. */
+  private pressure(tick: number): void {
+    const w = this.world, ai = w.infected, chunks = w.chunks, mission = w.missions;
+    if (tick % 300 !== 0 || tick - (this.state.pressureAttackAt ?? 0) < 900 || !ai || !chunks ||
+        mission?.state.phase !== 'playing' || mission.state.states['cure-installed'] || w.storyLock) return;
+    const player = w.entities.get(1)!;
+    if (player.health.current <= 0) return;
+    const at = { x: player.transform.x + 40, z: player.transform.z };
+    const room = () => ai.pool.length > 0 && ai.director.count < ai.director.cap - ai.director.reserved - ai.director.pendingTurns - 1;
+    if (!room() || !chunks.resident(at.x, at.z)) return;
+    for (const offset of [-7, -5, -3, -1, 1, 3, 5, 7]) {
+      if (!room()) break;
+      const point = cureEncounterSpot(ai.nav, { x: at.x, z: at.z + offset, archetype: 'infected.sprinter' },
+        (x, z) => !insideCureHangar({ x, z }) && chunks.resident(x, z) && ai.director.safe('infected.sprinter', { x, z }), 33);
+      if (!point) continue;
+      const id = ai.spawn('infected.sprinter', point, { state: 'chase' });
+      ai.pursueTarget(id, 1);
+    }
   }
   update(): void {
     const w = this.world, ai = w.infected, chunks = w.chunks, mission = w.missions;
@@ -28,7 +60,7 @@ export class LevelTenEncounters {
     const player = w.entities.get(1)!;
     const current = cure.regions.find(r => player.transform.x >= r.envelope[0][0] && player.transform.x <= r.envelope[1][0]) ?? cure.regions.at(-1)!;
     const low = ai.director.tier === 'low', depth = cure.threatDepth.find(r => r.region === current.id)!;
-    const cap = assaultActive ? low ? 14 : 22 : Math.min(low ? 12 : 15, depth.resident[low ? 'low' : 'high'][1]);
+    const cap = assaultActive ? low ? 14 : 22 : Math.min(low || current.id === 'destroyed-corridor' || current.id === 'dispersal-complex' ? 70 : 60, depth.resident[low ? 'low' : 'high'][1] * (low ? 6 : current.id === 'destroyed-corridor' || current.id === 'dispersal-complex' ? 5 : 4));
     ai.director.levelCap = low ? cap * 2 : cap;
     if (!this.state.toy && !mission.state.items.includes('corgi-toy') && chunks.resident(cureCorgiToy.x, cureCorgiToy.z)) this.state.toy = w.pickups!.spawn('item', cureCorgiToy, 'corgi-toy');
     const weapons = this.state.weapons ??= {};
@@ -48,6 +80,7 @@ export class LevelTenEncounters {
     }
     // Authored groups retain ordinary attacks, but never lapse into an idle line ahead of an approaching courier.
     for (const e of ai.active) if (e.health.current > 0 && e.infected?.cureRegion && !e.infected.pursuit &&
+      e.transform.x >= player.transform.x - ai.hearing.rangeM &&
       ['idle', 'wander'].includes(e.infected.state) && (e.infected.pressureTarget?.until ?? 0) <= w.tick &&
       Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) < 160) ai.pursueTarget(e.id, 1);
     const released = this.state.released ??= [], lanes = this.state.laneOffsets ??= {};

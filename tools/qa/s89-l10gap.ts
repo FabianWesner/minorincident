@@ -18,13 +18,20 @@ const flags: string[] = [];
 if (seeds.length !== 3 || tiers.length !== 2) flags.push('PARTIAL_MATRIX');
 for (const seed of seeds) for (const quality of tiers) {
   const starts: number[] = [], protectedTicks: number[] = [];
-  let totalTicks = 0, dialogueProgress = 0;
+  let totalTicks = 0, dialogueProgress = 0, peakEntities = 0, peakCorpses = 0, capViolations = 0;
   const result = await runLevel('L10', 'complete', seed, 1800, 'auto', preset('L10-default'), undefined, 0, {
     quality,
     beforeBegin(world) {
       observeAttackStarts(world, (_source, target, tick) => { if (target === 1) starts.push(tick); });
       world.events.on('sim.tick', event => {
         if (event.type !== 'sim.tick') return;
+        const ai = world.infected!;
+        if (ai.director.count > ai.director.cap) capViolations++;
+        if (event.tick % 60 === 0) {
+          let entities = 0, corpses = 0;
+          for (const entity of world.entities.iterate()) { entities++; if (entity.corpse) corpses++; }
+          peakEntities = Math.max(peakEntities, entities); peakCorpses = Math.max(peakCorpses, corpses);
+        }
         const state = world.missions!.state;
         const line = state.counters['hangar-line'] ?? 0;
         const progress = cureHangarConversation.slice(0, line).reduce((sum, entry) => sum + entry[1], 0) + (state.counters['hangar-line-ticks'] ?? 0);
@@ -42,9 +49,10 @@ for (const seed of seeds) for (const quality of tiers) {
   const row = { seed, quality, completed: result.completed, deaths: result.deaths, totalTicks, attackStarts: starts.length,
     startsPerMinute: starts.length / ((totalTicks - (starts[0] ?? 0)) / 3600),
     longestGapSeconds: Math.max(0, ...gaps.map(g => g.seconds)), protectedSeconds: protectedTicks.length / 60,
-    peakInfected: result.maxConcurrentInfected, starts: starts.map(t => t / 60), gaps };
+    peakInfected: result.maxConcurrentInfected, peakEntities, peakCorpses, capViolations, starts: starts.map(t => t / 60), gaps };
   const reference = baseline.rows.find(entry => entry.seed === seed && entry.quality === quality);
   const prefix = `${seed}/${quality}`;
+  if (capViolations) flags.push(`${prefix}:CAP_VIOLATION`);
   if (!row.completed) flags.push(`${prefix}:INCOMPLETE`);
   if (starts.length < 2) flags.push(`${prefix}:INSUFFICIENT_ATTACK_STARTS`);
   if (row.longestGapSeconds > 45) flags.push(`${prefix}:GAP_OVER_45`);
