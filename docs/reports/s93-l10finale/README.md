@@ -35,3 +35,7 @@ Prioritizing only the existing dog slot, with no composition/count change, also 
 A four-direction assault entry (adding east to the existing west/north/south ring) was also rejected: HIGH seed 3 completed with 20 deaths and a 292.25 s finale gap. It was reverted; the absent east entry is not a sufficient explanation for the cadence failure.
 
 An explicitly authored thrower Alpha, replacing one regular and admitted first within the same group count/cap, also failed. Native HIGH seed 3 completed with 22 deaths and a 222.23 s finale gap. The catalog-type experiment was reverted.
+
+## Checkpoint pursuit rewind
+
+Wrapping the native mission restore confirms that the journey death rewinds the living Mega: at tick 26281 (438.02 s), `cure-pace-9` restores its position from x=2292.408 to x=1897 (about 395 m backwards). This is direct evidence of pursuit progress discarded on the journey retry, separate from final-wave recovery saturation. See `checkpointRestores` in trace.json. Preserving live pursuit progress across death remains an untested candidate, requiring care around checkpoint identity, HP/cooldowns and the existing fairness gap.

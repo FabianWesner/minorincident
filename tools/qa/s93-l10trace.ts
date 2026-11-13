@@ -4,13 +4,22 @@ import { runLevel } from '../sim-runner/levels';
 import { preset } from '../../src/sim/progression/Campaign';
 import { observeAttackStarts } from './threat/attackStarts';
 
-const samples: unknown[] = [], attacks: unknown[] = [], transitions: unknown[] = [], noises: unknown[] = [];
+const samples: unknown[] = [], attacks: unknown[] = [], transitions: unknown[] = [], noises: unknown[] = [], restores: unknown[] = [];
 const previousModes = new Map<number, string>();
 let totalTicks = 0;
 const seed = Number(process.env.S93_TRACE_SEED ?? 3), quality = (process.env.S93_TRACE_TIER ?? 'high') as 'low' | 'high';
 const result = await runLevel('L10', 'complete', seed, 1800, 'auto', preset('L10-default'), undefined, 0, {
   quality,
   beforeBegin(world) {
+    const mission = world.missions!, originalRestore = mission.restore.bind(mission);
+    mission.restore = (id, resume) => {
+      const before = world.megaPursuit?.entity();
+      const position = before && { x: before.transform.x, z: before.transform.z };
+      originalRestore(id, resume);
+      const after = world.megaPursuit?.entity();
+      restores.push({ tick: world.tick, id, resume, before: position,
+        after: after && { x: after.transform.x, z: after.transform.z }, distance: world.megaPursuit?.distance() });
+    };
     const ai = world.infected!, originalNoise = ai.noise.bind(ai);
     ai.noise = (position, radius, loud, sourceId) => {
       if (sourceId === 1 && world.tick >= 54_000 && world.tick <= 74_100) noises.push({ tick: world.tick,
@@ -85,7 +94,7 @@ const result = await runLevel('L10', 'complete', seed, 1800, 'auto', preset('L10
   beforeDispose(world) { totalTicks = world.tick; },
 });
 const receipt = { seed, tier: quality, completed: result.completed, deaths: result.deaths,
-  totalTicks, samples, attacks, transitions, noises };
+  totalTicks, samples, attacks, transitions, noises, restores };
 writeFileSync(process.env.S93_TRACE_OUT ?? '/private/tmp/s93-l10trace.json', JSON.stringify(receipt, null, 2) + '\n');
 console.log(JSON.stringify({ completed: result.completed, deaths: result.deaths, totalTicks,
   samples: samples.length, attacks: attacks.length, transitions: transitions.length, noises: noises.length,
