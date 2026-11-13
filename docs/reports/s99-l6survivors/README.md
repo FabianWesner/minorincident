@@ -82,6 +82,7 @@ Before the change, conversions began in the shelter at 33–47 s and losses cont
 
 - `L6 typical + complete`, HIGH seeds 1–3: PASS; 6/6 runs complete; typical thresholds pass; complete full-window floor passes. Receipt: `/private/tmp/l6-group4-20.json`.
 - `tests/engine/missions.test.ts`: PASS, 6/6 tests.
+- `npm test`: PASS, 27 files and 107 tests.
 - `npm run typecheck`: PASS.
 - `npm run lint`: PASS.
 - `node --import tsx/esm tools/qa/threat-audit.ts --levels L6`: skilled and passive routes complete. The audit reports `WAVE_NO_ATTACK_WITHIN_20_SECONDS` for breach two on the corridor-side route and two passive diagnostic flags; selected-level audit exits nonzero.
