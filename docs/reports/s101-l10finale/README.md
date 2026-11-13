@@ -45,3 +45,7 @@ A HIGH seed 3 trial moved only the mounted gun from its 3 m platform position to
 ## Ranged encounter resource requirement
 
 Inspection of `AlphaSupportMoves.tryStart` and `PropThrows.nearestObject` explains a weakness in the subsequent thrower diagnostics: a standard thrower cannot launch its ranged specials without a nearby throwable corpse/movable prop (`alpha.grab-throw`), light prop (`alpha.barrage`), or living victim (`alpha.living-missile`). The search radius is 2 m for direct use and 6 m for scavenging. Admitting a thrower without checking those resources does not establish a functioning ranged encounter. A future trial must provide/verify native throwable resources at its authored entry rather than infer attack capability from subtype alone. These are existing move requirements; no stat change is proposed.
+
+## Baseline L10 threat audit
+
+Ran `node --import tsx/esm tools/qa/threat-audit.ts --levels L10 --maxWorkers 2 --out /private/tmp/s101-baseline-threat` on the unchanged runtime. [baseline-threat.json](baseline-threat.json) retains the full receipt. The L10 skilled route completed, its passive window reached the hold tick budget, and both L10 flag lists are empty. The command exits 1 solely for `PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate`; there is no L10-specific acceptance failure. This is baseline evidence, not final candidate verification. The audit does not replace the stricter six-case ≤20 s head/tail receipt.
