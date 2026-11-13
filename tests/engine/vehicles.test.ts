@@ -107,7 +107,52 @@ test('enter, drive and exit: door dwell, input ownership (no attacks while drivi
   await l9CheckpointLanes();
   await l9BayAndHatch();
   await l9HatchCheckpointAndEvacuation();
+  await l9InterruptedBoarding();
 }, 400_000);
+
+// A pushed evacuee can leave the truck during the boarding animation.
+// The arrival dwell must be abandoned so native navigation can retry instead
+// of leaving the objective at 3/4 forever.
+async function l9InterruptedBoarding(): Promise<void> {
+  for (const [seed, quality] of [[1, 'low'], [42, 'high']] as const) {
+    const world = await loadLevel('L9', seed, preset('L9-default'), 0, { quality });
+    try {
+      const l9 = world.missions!.l9!, car = world.vehicles!.cars.get(l9.state.carId)!; let s = l9.driving.state;
+      expect(world.missions!.state.phase).toBe('playing');
+      Object.assign(car.entity.transform, { x: l9Course.evacuation.x, z: 0 });
+      car.physics.body.setTranslation(car.entity.transform, true); car.physics.previous.x = car.entity.transform.x;
+      world.update();
+      s = l9.driving.state;
+      expect(s.evacuationAt, 'stopped APC starts the native evacuation and checkpoint').not.toBeNull();
+      const evacuees = s.roster.filter(id => id !== s.samId);
+      expect(evacuees).toHaveLength(4);
+      const last = evacuees[3]!, slot = 3, target = { x: l9Course.evacuation.truckX + slot % 3 * 9 + 2.5, z: l9Course.evacuation.truckZ + 1 + Math.floor(slot / 3) * 1.1 };
+      if (seed === 42) {
+        world.player!.damage(1000, world.tick, true);
+        for (let i = 0; i < 360 && world.entities.get(1)!.health.current <= 0; i++) world.update();
+        for (let i = 0; i < 3; i++) world.update();
+        s = l9.driving.state;
+        expect(world.entities.get(1)!.health.current, 'evac-point checkpoint restores the courier').toBeGreaterThan(0);
+        expect(s.evacuationAt, 'evacuation remains active after the checkpoint restore').not.toBeNull();
+      }
+      for (const [i, id] of evacuees.slice(0, 3).entries()) {
+        const actor = world.entities.get(id)!; actor.hidden = true; actor.passengerOf = s.trucks[i % 3];
+        world.vehicles!.cars.get(car.entity.id)!.entity.vehicle!.passengers = car.entity.vehicle!.passengers!.filter(p => p.id !== id);
+        world.spatial.delete(id); s.evacuated.push(id);
+      }
+      const actor = world.entities.get(last)!;
+      car.entity.vehicle!.passengers = car.entity.vehicle!.passengers!.filter(p => p.id !== last);
+      actor.hidden = false; delete actor.passengerOf; actor.transform.x = target.x + 1.5; actor.transform.z = target.z;
+      world.spatial.set(last, actor.transform.x, actor.transform.z); s.evacuating.push(last);
+      s.evacuationAt = world.tick - l9Course.evacuation.defendTicks;
+      s.truckEntering[last] = world.tick - 46;
+      actor.civilian!.story = { clip: 'npc-sit-down', start: s.truckEntering[last] };
+      for (let i = 0; i < 1200 && !s.evacuated.includes(last); i++) world.update();
+      expect(s.evacuated, `seed ${seed} ${quality}: fourth survivor reaches a truck within 20 s`).toContain(last);
+      expect(world.tick - (s.evacuationAt! + l9Course.evacuation.defendTicks)).toBeLessThanOrEqual(1200);
+    } finally { world.dispose(); }
+  }
+}
 
 // PO rail retry/end UAT: active vehicle ownership, hatch pose, and the evacuation's
 // actionable objective must remain coherent through death, F toggles, impact and resume.
