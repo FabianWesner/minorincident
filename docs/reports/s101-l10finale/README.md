@@ -37,3 +37,7 @@ Find a director/layout solution that sustains contact without the additional dea
 | LOW | 3 | 18.60 | 2 | yes |
 
 The failure scope is HIGH seeds 2/3 plus LOW seed 1. All six baseline routes complete. There is still no accepted gameplay change or after receipt.
+
+## Additional geometry diagnostic
+
+A HIGH seed 3 trial moved only the mounted gun from its 3 m platform position to the ground beside the stair (local `[6,-6]`, height 0). The native route still completed with two deaths, but its finale attacks clustered at ticks 58239, 58584, 58658, 58769 and 58806, followed by another long tail. This rejects platform elevation as a sufficient explanation; that trial was reverted. The platform's protection is documented by the threat-audit report, but lowering the gun alone does not establish sustained contact.
