@@ -57,3 +57,7 @@ The observer accepts optional `S101_TIERS`/`S101_SEEDS` filters to run a subset 
 ## Passing HIGH seed 1 depends on a finale retry
 
 Comparing the retained native s93 traces against the exact baseline windows shows HIGH seed 1 restores `cure-disperse-ready` at tick 59845. Its finale attack sources include ten sprinters (IDs 621–631, excluding 624) producing repeated starts after that retry. HIGH seeds 2 and 3 have only journey restores and no finale restore; their finale sources are respectively the Mega plus three regular hunters, and the Mega plus one sprinter. Therefore seed 1's passing gap does not demonstrate sustained pressure on the uninterrupted installation path. The fix must establish that pressure without requiring an additional death.
+
+## Retained QA tooling validation
+
+After all gameplay experiments were reverted, `npm run typecheck` and `npm run lint` both passed. The required unchanged `sh tools/remote/run.sh "$PWD" -- npm test` passed on runner `46.225.66.90`, job `s101-l10finale-26d9bd-27513-1794591698`: manifest 150/150 cases (129 Vitest, 9 e2e, 12 invariants-browser), default project 27 files passed, 106 tests passed and one skipped. Vitest took 224.09 s; the budgeted command took 226.7 s against the unchanged 240 s budget. No suite trimming or retry was needed. These validate the retained observer/report work and unchanged runtime; they are not final verification of a gameplay fix, which is still absent. No check remains running.
