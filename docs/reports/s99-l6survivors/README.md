@@ -92,3 +92,5 @@ Before the change, conversions began in the shelter at 33–47 s and losses cont
 ## Follow-up experiment
 
 A single inner-approach lead for breach two was tested while the remaining cohort kept the corridor route. It failed: typical saved counts were 10, 10, 6; complete seed 2 had a full window with one attack start; the audit still flagged breach-two attack timing. The experiment was reverted. The committed 4/20 corridor baseline remains the passing survival/window configuration.
+
+The full breach-two cohort was also measured at 9 m and 12 m approach offsets. At 9 m, typical saved 17/16/19 with deaths 0/0/1; at 12 m, it saved 15/17/9 with zero deaths. Both retained the complete-policy full-window attack floor, but both still failed the breach-two first-attack audit. Both experiments were reverted, retaining the already verified corridor baseline.
