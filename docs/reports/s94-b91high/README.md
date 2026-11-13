@@ -83,3 +83,11 @@ The environment blockers are resolved. Continue executing the specified HIGH zoo
 ## HIGH z1 departure retry
 
 `high-z1-l7-departure`: 300 s, seven deaths, one driver assist, no skipped objectives, incomplete at corridor checkpoint (tick 17811); no timed departure captures were produced. Max no-progress interval 10.801 s. This attempt neither clears nor reproduces the bus/soldier overlap. The previous HIGH z1 completed route remains valid for its narrower route-completion scope. No process remains running.
+
+## HIGH z1 arsenal input sample
+
+Used one pooled headless WebGPU context, ports 4941/4942, approved `l10-dispersal-console` save, no cheats or state changes after fixture setup except quality/camera. Actual render receipt: WebGPU, high, zoom/target 1. The sampler sends real toolbar clicks and keyboard input while simulation runs; it does not attack or relocate the player.
+
+All 14 returned weapons plus fists selected successfully by toolbar click with 800 ms observation spacing. All tested number shortcuts 2–9 and 0 matched expected selection. Key 1's receipt retained army MG rather than fists, and Q cycling observed 13 distinct selections in this combat-exposed sample; full key coverage is **not passed**. The earlier 150 ms sampler observed stale prior selections and is superseded. The first exploratory sampler included the disabled corgi ability and timed out; it is excluded from weapon results. The selected-state receipt is embedded in evidence.json. This later-arsenal save does not qualify the original hangar presentation, literal knife, molotov arc/restoration or early-hunt Mega recovery.
+
+Opened the initial arsenal frame: heroine alive at 65 HP beside the Mega, all rack icons visible, molotov selected. The later input receipt supersedes that initial sampler; no visual pass is inferred from its overwritten image. No sampler remains running. No game code was modified.
