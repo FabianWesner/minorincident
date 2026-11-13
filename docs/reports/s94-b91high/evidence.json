@@ -886,6 +886,106 @@
           }
         ]
       }
+    ],
+    "high-z1-5-l6-shotgun": [
+      {
+        "level": "L6",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 480,
+        "simSeconds": 478,
+        "maxNoProgressSeconds": 32.176,
+        "deaths": 10,
+        "assists": 1,
+        "attacks": {
+          "weapon.shotgun": 15,
+          "weapon.army-mg": 3222
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "steps": [
+          {
+            "id": "shelter",
+            "text": "Look around the shelter \u00b7 rest while you can",
+            "tick": 11,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "stop",
+            "text": "Stop the infected \u00b7 Retreat in 0:36",
+            "tick": 1996,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "retreat",
+            "text": "Cover the retreat through the tunnel \u00b7 241\u00a0m",
+            "tick": 3257,
+            "marker": {
+              "anchor": "l6-next",
+              "ring": {
+                "x": 242,
+                "y": 0.6,
+                "z": 15
+              },
+              "drawn": [
+                242,
+                0.6,
+                15
+              ],
+              "playerY": 1.3200000524520874,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "exit",
+            "text": "Bring the survivors into the night \u00b7 0/10 out \u00b7 33\u00a0m",
+            "tick": 28210,
+            "marker": {
+              "anchor": "night-exit",
+              "ring": {
+                "x": 273,
+                "y": 3.9,
+                "z": 15
+              },
+              "drawn": [
+                273,
+                3.9,
+                15
+              ],
+              "playerY": 1.2699999809265137,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
     ]
   },
   "limits": [
@@ -1913,5 +2013,49 @@
       },
       "followedActors": []
     }
-  ]
+  ],
+  "highZ15L6AuditSummary": {
+    "lastSample": {
+      "tick": 28620,
+      "phase": "exit",
+      "seconds": 161.06666666666666,
+      "leaderX": 261.0166666666455,
+      "leaderZ": 15,
+      "paused": true,
+      "checkpoint": "exit-platform",
+      "spawned": 70,
+      "alive": 54,
+      "shelterAlive": 0,
+      "near15": 10,
+      "attacking": 0,
+      "attackingPlayer": 0,
+      "attackingInSecond": 2,
+      "attackingPlayerInSecond": 2,
+      "playerStrikesInSecond": 0,
+      "playerHitsInSecond": 0,
+      "playerDamageInSecond": 0,
+      "reached15": 106,
+      "reached3": 86,
+      "shelterArrivals": 16,
+      "player": {
+        "x": 249.39935302734375,
+        "z": 11.892810821533203,
+        "hp": 51.53333333333097
+      },
+      "deaths": 10,
+      "survivors": {
+        "following": 10,
+        "turned": 17,
+        "dead": 2
+      },
+      "refusals": {
+        "cap": 0,
+        "reserved": 0,
+        "offscreen": 0,
+        "snap": 0
+      }
+    },
+    "attemptCount": 148,
+    "limits": "No first-hatch closure receipt; not a post-closure cadence pass."
+  }
 }
