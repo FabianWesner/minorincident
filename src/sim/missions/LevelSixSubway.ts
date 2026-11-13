@@ -204,7 +204,12 @@ export class LevelSixSubway {
         return {x:base.x+(wave===4?[-3,3][rank]:(i%2)*.8),z:base.z+(wave===1||wave===2?breachOffset:index>1&&base.z<l6.tunnel.z?inward:-inward)};};
       let door:number|undefined,at:Point|undefined,snapped=false;
       for(const index of candidates){
-      for(const offset of wave===1?[20,14,9]:wave===2?[20,14,9,5]:[20]){
+      // The first breach emerges on the corridor side of its service doors.
+      // The former 20 m offset placed it among the shelter crowd, turning
+      // residents before the retreat objective could begin. Both shelter
+      // breaches emerge on the corridor side of their service doors.
+      const offsets=wave===1||wave===2?[5,9,14,20]:[20];
+      for(const offset of offsets){
           let candidate:Point;
           try{candidate=this.snap(mouth(index,offset),wave===4?w.entities.get(1)!.transform:undefined);snapped=true;}catch{continue;}
           if(ai.director.offscreen(candidate,.6)){door=index;at=candidate;break;}
