@@ -2057,5 +2057,4491 @@
     },
     "attemptCount": 148,
     "limits": "No first-hatch closure receipt; not a post-closure cadence pass."
+  },
+  "highMolotovInput": {
+    "receipt": [
+      {
+        "stage": "previous",
+        "selected": "weapon-rack-weapon.hunting-rifle"
+      },
+      {
+        "stage": "aim",
+        "selected": "weapon-rack-weapon.molotov",
+        "state": {
+          "tick": 255,
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": 4004.59326171875,
+              "y": 0.7049999833106995,
+              "z": -38.91062927246094,
+              "yaw": -6.236348435768065
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": 255
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 4,
+              "animation": "idle",
+              "animationTick": 0,
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "grounded": true,
+              "invulnerableUntil": 0,
+              "checkpoint": {
+                "x": 4004.59326171875,
+                "y": 0.7049999833106995,
+                "z": -38.91062927246094,
+                "yaw": -6.236348435768065
+              },
+              "diedAt": null
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.fists",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.machete",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.hunting-rifle",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.machete",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.molotov",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 3,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.nail-gun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.assault-rifle",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.flashbang",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 3,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.army-mg",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": -121
+                  },
+                  {
+                    "id": "weapon.rocket-launcher",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.pipe-bomb",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 3,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.shotgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "ability.corgi-lure",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.flamethrower",
+                    "magazine": 66,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 3,
+                "aim": {
+                  "x": 0.9989033542354825,
+                  "z": -0.04681974900725328
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              }
+            },
+            "hidden": false
+          },
+          "events": []
+        }
+      },
+      {
+        "stage": "throw",
+        "n": 0,
+        "selected": "weapon-rack-weapon.molotov",
+        "state": {
+          "tick": 346,
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": 4004.220703125,
+              "y": 0.7049999833106995,
+              "z": -38.79412078857422,
+              "yaw": 0.3031455045686661
+            },
+            "health": {
+              "current": 98.04860037956729,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": 346
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 4,
+              "animation": "idle",
+              "animationTick": 297,
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "grounded": true,
+              "invulnerableUntil": 315,
+              "checkpoint": {
+                "x": 4004.59326171875,
+                "y": 0.7049999833106995,
+                "z": -38.91062927246094,
+                "yaw": -6.236348435768065
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.molotov",
+                "combo": 0,
+                "started": 262,
+                "activeAt": 262,
+                "recoveryAt": 263,
+                "endsAt": 275
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 309,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.fists",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.machete",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.hunting-rifle",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.machete",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.molotov",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 2,
+                    "nextCharge": 982,
+                    "reloadUntil": 0,
+                    "readyAt": 277
+                  },
+                  {
+                    "id": "weapon.nail-gun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.assault-rifle",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.flashbang",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 3,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.army-mg",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": -121
+                  },
+                  {
+                    "id": "weapon.rocket-launcher",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.pipe-bomb",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 3,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.shotgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "ability.corgi-lure",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.flamethrower",
+                    "magazine": 66,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 3,
+                "aim": {
+                  "x": 0.9544022043575277,
+                  "z": -0.2985237550304703
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              }
+            },
+            "hidden": false
+          },
+          "events": [
+            {
+              "type": "combat.attack",
+              "tick": 262,
+              "attackId": 1702,
+              "actionId": "weapon.molotov",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4004.59326171875,
+                "y": 0.7049999833106995,
+                "z": -38.91062927246094,
+                "yaw": 0.3031455045686661
+              },
+              "direction": {
+                "x": 0.9544022043575277,
+                "z": -0.2985237550304703
+              }
+            }
+          ]
+        }
+      },
+      {
+        "stage": "throw",
+        "n": 1,
+        "selected": "weapon-rack-weapon.molotov",
+        "state": {
+          "tick": 434,
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": 4003.84375,
+              "y": 0.6937034130096436,
+              "z": -38.69032287597656,
+              "yaw": 0.268721853220719
+            },
+            "health": {
+              "current": 61.09385199403607,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": 434
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 4,
+              "animation": "knockdown",
+              "animationTick": 422,
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "grounded": true,
+              "invulnerableUntil": 458,
+              "checkpoint": {
+                "x": 4004.59326171875,
+                "y": 0.7049999833106995,
+                "z": -38.91062927246094,
+                "yaw": -6.236348435768065
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.molotov",
+                "combo": 0,
+                "started": 348,
+                "activeAt": 348,
+                "recoveryAt": 349,
+                "endsAt": 361
+              },
+              "knockdown": {
+                "started": 422,
+                "until": 494
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 494,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.fists",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.machete",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.hunting-rifle",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.machete",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.molotov",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 1,
+                    "nextCharge": 982,
+                    "reloadUntil": 0,
+                    "readyAt": 363
+                  },
+                  {
+                    "id": "weapon.nail-gun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.assault-rifle",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.flashbang",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 3,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.army-mg",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": -121
+                  },
+                  {
+                    "id": "weapon.rocket-launcher",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.pipe-bomb",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 3,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.shotgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "ability.corgi-lure",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.flamethrower",
+                    "magazine": 66,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 3,
+                "aim": {
+                  "x": 0.9641110309633188,
+                  "z": -0.26549937848297595
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              }
+            },
+            "hidden": false
+          },
+          "events": [
+            {
+              "type": "combat.attack",
+              "tick": 262,
+              "attackId": 1702,
+              "actionId": "weapon.molotov",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4004.59326171875,
+                "y": 0.7049999833106995,
+                "z": -38.91062927246094,
+                "yaw": 0.3031455045686661
+              },
+              "direction": {
+                "x": 0.9544022043575277,
+                "z": -0.2985237550304703
+              }
+            },
+            {
+              "type": "combat.attack",
+              "tick": 348,
+              "attackId": 1703,
+              "actionId": "weapon.molotov",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4004.220703125,
+                "y": 0.7049999833106995,
+                "z": -38.79412078857422,
+                "yaw": 0.268721853220719
+              },
+              "direction": {
+                "x": 0.9641110309633188,
+                "z": -0.26549937848297595
+              }
+            }
+          ]
+        }
+      },
+      {
+        "stage": "throw",
+        "n": 2,
+        "selected": "weapon-rack-weapon.molotov",
+        "state": {
+          "tick": 519,
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": 4003.84375,
+              "y": 0.7049999833106995,
+              "z": -38.69032287597656,
+              "yaw": 0.268721853220719
+            },
+            "health": {
+              "current": 61.09385199403607,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": 519
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 4,
+              "animation": "idle",
+              "animationTick": 494,
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "grounded": true,
+              "invulnerableUntil": 458,
+              "checkpoint": {
+                "x": 4004.59326171875,
+                "y": 0.7049999833106995,
+                "z": -38.91062927246094,
+                "yaw": -6.236348435768065
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.molotov",
+                "combo": 0,
+                "started": 348,
+                "activeAt": 348,
+                "recoveryAt": 349,
+                "endsAt": 361
+              },
+              "knockdown": {
+                "started": 422,
+                "until": 494
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 494,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.fists",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.machete",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.hunting-rifle",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.machete",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.molotov",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 1,
+                    "nextCharge": 982,
+                    "reloadUntil": 0,
+                    "readyAt": 363
+                  },
+                  {
+                    "id": "weapon.nail-gun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.assault-rifle",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.flashbang",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 3,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.army-mg",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": -121
+                  },
+                  {
+                    "id": "weapon.rocket-launcher",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.pipe-bomb",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 3,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.shotgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "ability.corgi-lure",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.flamethrower",
+                    "magazine": 66,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 3,
+                "aim": {
+                  "x": 0.9641110309633188,
+                  "z": -0.26549937848297595
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              }
+            },
+            "hidden": false
+          },
+          "events": [
+            {
+              "type": "combat.attack",
+              "tick": 262,
+              "attackId": 1702,
+              "actionId": "weapon.molotov",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4004.59326171875,
+                "y": 0.7049999833106995,
+                "z": -38.91062927246094,
+                "yaw": 0.3031455045686661
+              },
+              "direction": {
+                "x": 0.9544022043575277,
+                "z": -0.2985237550304703
+              }
+            },
+            {
+              "type": "combat.attack",
+              "tick": 348,
+              "attackId": 1703,
+              "actionId": "weapon.molotov",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4004.220703125,
+                "y": 0.7049999833106995,
+                "z": -38.79412078857422,
+                "yaw": 0.268721853220719
+              },
+              "direction": {
+                "x": 0.9641110309633188,
+                "z": -0.26549937848297595
+              }
+            }
+          ]
+        }
+      },
+      {
+        "stage": "throw",
+        "n": 3,
+        "selected": "weapon-rack-weapon.hunting-rifle",
+        "state": {
+          "tick": 604,
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": 4003.84375,
+              "y": 0.7049999833106995,
+              "z": -38.69032287597656,
+              "yaw": 0.3031445303636584
+            },
+            "health": {
+              "current": 36.09385199403607,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": 604
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 4,
+              "animation": "idle",
+              "animationTick": 542,
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "grounded": true,
+              "invulnerableUntil": 560,
+              "checkpoint": {
+                "x": 4004.59326171875,
+                "y": 0.7049999833106995,
+                "z": -38.91062927246094,
+                "yaw": -6.236348435768065
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.molotov",
+                "combo": 0,
+                "started": 521,
+                "activeAt": 521,
+                "recoveryAt": 522,
+                "endsAt": 534
+              },
+              "knockdown": {
+                "started": 422,
+                "until": 494
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 494,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.fists",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.machete",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.hunting-rifle",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.machete",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.molotov",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 982,
+                    "reloadUntil": 0,
+                    "readyAt": 536
+                  },
+                  {
+                    "id": "weapon.nail-gun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.assault-rifle",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.flashbang",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 3,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.army-mg",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": -121
+                  },
+                  {
+                    "id": "weapon.rocket-launcher",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.pipe-bomb",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 3,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.shotgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "ability.corgi-lure",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.flamethrower",
+                    "magazine": 66,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 1,
+                "aim": {
+                  "x": 0.9544024951804118,
+                  "z": -0.29852282524692175
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              }
+            },
+            "hidden": false
+          },
+          "events": [
+            {
+              "type": "combat.attack",
+              "tick": 262,
+              "attackId": 1702,
+              "actionId": "weapon.molotov",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4004.59326171875,
+                "y": 0.7049999833106995,
+                "z": -38.91062927246094,
+                "yaw": 0.3031455045686661
+              },
+              "direction": {
+                "x": 0.9544022043575277,
+                "z": -0.2985237550304703
+              }
+            },
+            {
+              "type": "combat.attack",
+              "tick": 348,
+              "attackId": 1703,
+              "actionId": "weapon.molotov",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4004.220703125,
+                "y": 0.7049999833106995,
+                "z": -38.79412078857422,
+                "yaw": 0.268721853220719
+              },
+              "direction": {
+                "x": 0.9641110309633188,
+                "z": -0.26549937848297595
+              }
+            },
+            {
+              "type": "combat.attack",
+              "tick": 521,
+              "attackId": 1704,
+              "actionId": "weapon.molotov",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4003.84375,
+                "y": 0.7049999833106995,
+                "z": -38.69032287597656,
+                "yaw": 0.3031445303636584
+              },
+              "direction": {
+                "x": 0.9544024951804116,
+                "z": -0.29852282524692175
+              }
+            }
+          ]
+        }
+      },
+      {
+        "stage": "throw",
+        "n": 4,
+        "selected": "weapon-rack-weapon.hunting-rifle",
+        "state": {
+          "tick": 689,
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": 4003.84375,
+              "y": 0.7049999833106995,
+              "z": -38.69032287597656,
+              "yaw": 0.30314259994163917
+            },
+            "health": {
+              "current": 26.093851994036072,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": 689
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 4,
+              "animation": "idle",
+              "animationTick": 678,
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "grounded": true,
+              "invulnerableUntil": 696,
+              "checkpoint": {
+                "x": 4004.59326171875,
+                "y": 0.7049999833106995,
+                "z": -38.91062927246094,
+                "yaw": -6.236348435768065
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.hunting-rifle",
+                "combo": 0,
+                "started": 606,
+                "activeAt": 612,
+                "recoveryAt": 613,
+                "endsAt": 613
+              },
+              "knockdown": {
+                "started": 422,
+                "until": 494
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 494,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.fists",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.machete",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.hunting-rifle",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 672
+                  },
+                  {
+                    "id": "weapon.machete",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.molotov",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 982,
+                    "reloadUntil": 0,
+                    "readyAt": 536
+                  },
+                  {
+                    "id": "weapon.nail-gun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.assault-rifle",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.flashbang",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 3,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.army-mg",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": -121
+                  },
+                  {
+                    "id": "weapon.rocket-launcher",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.pipe-bomb",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 3,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.shotgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "ability.corgi-lure",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.flamethrower",
+                    "magazine": 66,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 1,
+                "aim": {
+                  "x": 0.9544030714536685,
+                  "z": -0.2985209828467736
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              }
+            },
+            "hidden": false
+          },
+          "events": [
+            {
+              "type": "combat.attack",
+              "tick": 262,
+              "attackId": 1702,
+              "actionId": "weapon.molotov",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4004.59326171875,
+                "y": 0.7049999833106995,
+                "z": -38.91062927246094,
+                "yaw": 0.3031455045686661
+              },
+              "direction": {
+                "x": 0.9544022043575277,
+                "z": -0.2985237550304703
+              }
+            },
+            {
+              "type": "combat.attack",
+              "tick": 348,
+              "attackId": 1703,
+              "actionId": "weapon.molotov",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4004.220703125,
+                "y": 0.7049999833106995,
+                "z": -38.79412078857422,
+                "yaw": 0.268721853220719
+              },
+              "direction": {
+                "x": 0.9641110309633188,
+                "z": -0.26549937848297595
+              }
+            },
+            {
+              "type": "combat.attack",
+              "tick": 521,
+              "attackId": 1704,
+              "actionId": "weapon.molotov",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4003.84375,
+                "y": 0.7049999833106995,
+                "z": -38.69032287597656,
+                "yaw": 0.3031445303636584
+              },
+              "direction": {
+                "x": 0.9544024951804116,
+                "z": -0.29852282524692175
+              }
+            },
+            {
+              "type": "combat.attack",
+              "tick": 612,
+              "attackId": 1705,
+              "actionId": "weapon.hunting-rifle",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4003.84375,
+                "y": 0.7049999833106995,
+                "z": -38.69032287597656,
+                "yaw": 0.30314259994163917
+              },
+              "direction": {
+                "x": 0.9544030714536685,
+                "z": -0.29852098284677364
+              }
+            }
+          ]
+        }
+      },
+      {
+        "stage": "throw",
+        "n": 5,
+        "selected": "weapon-rack-weapon.hunting-rifle",
+        "state": {
+          "tick": 775,
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": 4003.84375,
+              "y": 0.7049999833106995,
+              "z": -38.69032287597656,
+              "yaw": 0.3031455045550036
+            },
+            "health": {
+              "current": 1.093851994036072,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": 775
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 4,
+              "animation": "idle",
+              "animationTick": 738,
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "grounded": true,
+              "invulnerableUntil": 756,
+              "checkpoint": {
+                "x": 4004.59326171875,
+                "y": 0.7049999833106995,
+                "z": -38.91062927246094,
+                "yaw": -6.236348435768065
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.hunting-rifle",
+                "combo": 0,
+                "started": 691,
+                "activeAt": 697,
+                "recoveryAt": 698,
+                "endsAt": 698
+              },
+              "knockdown": {
+                "started": 422,
+                "until": 494
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 494,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.fists",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.machete",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.hunting-rifle",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 757
+                  },
+                  {
+                    "id": "weapon.machete",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.molotov",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 982,
+                    "reloadUntil": 0,
+                    "readyAt": 536
+                  },
+                  {
+                    "id": "weapon.nail-gun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.assault-rifle",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.flashbang",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 3,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.army-mg",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": -121
+                  },
+                  {
+                    "id": "weapon.rocket-launcher",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.pipe-bomb",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 3,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.shotgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "ability.corgi-lure",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.flamethrower",
+                    "magazine": 66,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 1,
+                "aim": {
+                  "x": 0.9544022043616062,
+                  "z": -0.2985237550174307
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              }
+            },
+            "hidden": false
+          },
+          "events": [
+            {
+              "type": "combat.attack",
+              "tick": 262,
+              "attackId": 1702,
+              "actionId": "weapon.molotov",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4004.59326171875,
+                "y": 0.7049999833106995,
+                "z": -38.91062927246094,
+                "yaw": 0.3031455045686661
+              },
+              "direction": {
+                "x": 0.9544022043575277,
+                "z": -0.2985237550304703
+              }
+            },
+            {
+              "type": "combat.attack",
+              "tick": 348,
+              "attackId": 1703,
+              "actionId": "weapon.molotov",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4004.220703125,
+                "y": 0.7049999833106995,
+                "z": -38.79412078857422,
+                "yaw": 0.268721853220719
+              },
+              "direction": {
+                "x": 0.9641110309633188,
+                "z": -0.26549937848297595
+              }
+            },
+            {
+              "type": "combat.attack",
+              "tick": 521,
+              "attackId": 1704,
+              "actionId": "weapon.molotov",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4003.84375,
+                "y": 0.7049999833106995,
+                "z": -38.69032287597656,
+                "yaw": 0.3031445303636584
+              },
+              "direction": {
+                "x": 0.9544024951804116,
+                "z": -0.29852282524692175
+              }
+            },
+            {
+              "type": "combat.attack",
+              "tick": 612,
+              "attackId": 1705,
+              "actionId": "weapon.hunting-rifle",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4003.84375,
+                "y": 0.7049999833106995,
+                "z": -38.69032287597656,
+                "yaw": 0.30314259994163917
+              },
+              "direction": {
+                "x": 0.9544030714536685,
+                "z": -0.29852098284677364
+              }
+            },
+            {
+              "type": "combat.attack",
+              "tick": 697,
+              "attackId": 1706,
+              "actionId": "weapon.hunting-rifle",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4003.84375,
+                "y": 0.7049999833106995,
+                "z": -38.69032287597656,
+                "yaw": 0.3031455045550036
+              },
+              "direction": {
+                "x": 0.9544022043616062,
+                "z": -0.2985237550174307
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "render": {
+      "backend": "webgpu",
+      "quality": "high",
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          4003.8437500000014,
+          0,
+          -38.690322875976584
+        ],
+        "target": [
+          4003.8437500000014,
+          0,
+          -38.690322875976584
+        ],
+        "position": [
+          4014.7129166535374,
+          11.16791979355699,
+          -27.821156222440578
+        ],
+        "spot": null
+      }
+    }
+  },
+  "lowMolotovInput": {
+    "receipt": [
+      {
+        "stage": "previous",
+        "selected": "weapon-rack-weapon.hunting-rifle"
+      },
+      {
+        "stage": "aim",
+        "selected": "weapon-rack-weapon.molotov",
+        "state": {
+          "tick": 251,
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": 4004.59326171875,
+              "y": 0.7049999833106995,
+              "z": -38.91062927246094,
+              "yaw": -6.236348435768065
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": 251
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 4,
+              "animation": "idle",
+              "animationTick": 0,
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "grounded": true,
+              "invulnerableUntil": 0,
+              "checkpoint": {
+                "x": 4004.59326171875,
+                "y": 0.7049999833106995,
+                "z": -38.91062927246094,
+                "yaw": -6.236348435768065
+              },
+              "diedAt": null
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 0,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.fists",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.machete",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.hunting-rifle",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.machete",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.molotov",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 3,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.nail-gun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.assault-rifle",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.flashbang",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 3,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.army-mg",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": -121
+                  },
+                  {
+                    "id": "weapon.rocket-launcher",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.pipe-bomb",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 3,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.shotgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "ability.corgi-lure",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.flamethrower",
+                    "magazine": 66,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 3,
+                "aim": {
+                  "x": 0.9989033542354825,
+                  "z": -0.04681974900725328
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              }
+            },
+            "hidden": false
+          },
+          "events": []
+        }
+      },
+      {
+        "stage": "throw",
+        "n": 0,
+        "selected": "weapon-rack-weapon.molotov",
+        "state": {
+          "tick": 342,
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": 4004.220703125,
+              "y": 0.7049999833106995,
+              "z": -38.79412078857422,
+              "yaw": 0.3031455045686661
+            },
+            "health": {
+              "current": 98.04860037956729,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": 342
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 4,
+              "animation": "idle",
+              "animationTick": 293,
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "grounded": true,
+              "invulnerableUntil": 311,
+              "checkpoint": {
+                "x": 4004.59326171875,
+                "y": 0.7049999833106995,
+                "z": -38.91062927246094,
+                "yaw": -6.236348435768065
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.molotov",
+                "combo": 0,
+                "started": 258,
+                "activeAt": 258,
+                "recoveryAt": 259,
+                "endsAt": 271
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 305,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.fists",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.machete",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.hunting-rifle",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.machete",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.molotov",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 2,
+                    "nextCharge": 978,
+                    "reloadUntil": 0,
+                    "readyAt": 273
+                  },
+                  {
+                    "id": "weapon.nail-gun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.assault-rifle",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.flashbang",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 3,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.army-mg",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": -121
+                  },
+                  {
+                    "id": "weapon.rocket-launcher",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.pipe-bomb",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 3,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.shotgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "ability.corgi-lure",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.flamethrower",
+                    "magazine": 66,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 3,
+                "aim": {
+                  "x": 0.9544022043575277,
+                  "z": -0.2985237550304703
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              }
+            },
+            "hidden": false
+          },
+          "events": [
+            {
+              "type": "combat.attack",
+              "tick": 258,
+              "attackId": 1702,
+              "actionId": "weapon.molotov",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4004.59326171875,
+                "y": 0.7049999833106995,
+                "z": -38.91062927246094,
+                "yaw": 0.3031455045686661
+              },
+              "direction": {
+                "x": 0.9544022043575277,
+                "z": -0.2985237550304703
+              }
+            }
+          ]
+        }
+      },
+      {
+        "stage": "throw",
+        "n": 1,
+        "selected": "weapon-rack-weapon.molotov",
+        "state": {
+          "tick": 430,
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": 4003.8505859375,
+              "y": 0.6850010752677917,
+              "z": -38.66640853881836,
+              "yaw": 0.33197910925150476
+            },
+            "health": {
+              "current": 61.08931173019191,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": 430
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 4,
+              "animation": "knockdown",
+              "animationTick": 422,
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "grounded": true,
+              "invulnerableUntil": 458,
+              "checkpoint": {
+                "x": 4004.59326171875,
+                "y": 0.7049999833106995,
+                "z": -38.91062927246094,
+                "yaw": -6.236348435768065
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.molotov",
+                "combo": 0,
+                "started": 344,
+                "activeAt": 344,
+                "recoveryAt": 345,
+                "endsAt": 357
+              },
+              "knockdown": {
+                "started": 422,
+                "until": 494
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 494,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.fists",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.machete",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.hunting-rifle",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.machete",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.molotov",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 1,
+                    "nextCharge": 978,
+                    "reloadUntil": 0,
+                    "readyAt": 359
+                  },
+                  {
+                    "id": "weapon.nail-gun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.assault-rifle",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.flashbang",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 3,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.army-mg",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": -121
+                  },
+                  {
+                    "id": "weapon.rocket-launcher",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.pipe-bomb",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 3,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.shotgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "ability.corgi-lure",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.flamethrower",
+                    "magazine": 66,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 3,
+                "aim": {
+                  "x": 0.9453991746282098,
+                  "z": -0.32591471370942987
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              }
+            },
+            "hidden": false
+          },
+          "events": [
+            {
+              "type": "combat.attack",
+              "tick": 258,
+              "attackId": 1702,
+              "actionId": "weapon.molotov",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4004.59326171875,
+                "y": 0.7049999833106995,
+                "z": -38.91062927246094,
+                "yaw": 0.3031455045686661
+              },
+              "direction": {
+                "x": 0.9544022043575277,
+                "z": -0.2985237550304703
+              }
+            },
+            {
+              "type": "combat.attack",
+              "tick": 344,
+              "attackId": 1703,
+              "actionId": "weapon.molotov",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4004.220703125,
+                "y": 0.7049999833106995,
+                "z": -38.79412078857422,
+                "yaw": 0.33197910925150476
+              },
+              "direction": {
+                "x": 0.9453991746282098,
+                "z": -0.32591471370942987
+              }
+            }
+          ]
+        }
+      },
+      {
+        "stage": "throw",
+        "n": 2,
+        "selected": "weapon-rack-weapon.molotov",
+        "state": {
+          "tick": 517,
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": 4003.8505859375,
+              "y": 0.7049999833106995,
+              "z": -38.66640853881836,
+              "yaw": 0.33197910925150476
+            },
+            "health": {
+              "current": 61.08931173019191,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": 517
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 4,
+              "animation": "idle",
+              "animationTick": 494,
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "grounded": true,
+              "invulnerableUntil": 458,
+              "checkpoint": {
+                "x": 4004.59326171875,
+                "y": 0.7049999833106995,
+                "z": -38.91062927246094,
+                "yaw": -6.236348435768065
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.molotov",
+                "combo": 0,
+                "started": 344,
+                "activeAt": 344,
+                "recoveryAt": 345,
+                "endsAt": 357
+              },
+              "knockdown": {
+                "started": 422,
+                "until": 494
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 494,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.fists",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.machete",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.hunting-rifle",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.machete",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.molotov",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 1,
+                    "nextCharge": 978,
+                    "reloadUntil": 0,
+                    "readyAt": 359
+                  },
+                  {
+                    "id": "weapon.nail-gun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.assault-rifle",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.flashbang",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 3,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.army-mg",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": -121
+                  },
+                  {
+                    "id": "weapon.rocket-launcher",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.pipe-bomb",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 3,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.shotgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "ability.corgi-lure",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.flamethrower",
+                    "magazine": 66,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 3,
+                "aim": {
+                  "x": 0.9453991746282098,
+                  "z": -0.32591471370942987
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              }
+            },
+            "hidden": false
+          },
+          "events": [
+            {
+              "type": "combat.attack",
+              "tick": 258,
+              "attackId": 1702,
+              "actionId": "weapon.molotov",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4004.59326171875,
+                "y": 0.7049999833106995,
+                "z": -38.91062927246094,
+                "yaw": 0.3031455045686661
+              },
+              "direction": {
+                "x": 0.9544022043575277,
+                "z": -0.2985237550304703
+              }
+            },
+            {
+              "type": "combat.attack",
+              "tick": 344,
+              "attackId": 1703,
+              "actionId": "weapon.molotov",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4004.220703125,
+                "y": 0.7049999833106995,
+                "z": -38.79412078857422,
+                "yaw": 0.33197910925150476
+              },
+              "direction": {
+                "x": 0.9453991746282098,
+                "z": -0.32591471370942987
+              }
+            }
+          ]
+        }
+      },
+      {
+        "stage": "throw",
+        "n": 3,
+        "selected": "weapon-rack-weapon.hunting-rifle",
+        "state": {
+          "tick": 603,
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": 4003.8505859375,
+              "y": 0.7049999833106995,
+              "z": -38.66640853881836,
+              "yaw": 0.3031465363737047
+            },
+            "health": {
+              "current": 26.08931173019191,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": 603
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 4,
+              "animation": "hurt",
+              "animationTick": 600,
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "grounded": true,
+              "invulnerableUntil": 636,
+              "checkpoint": {
+                "x": 4004.59326171875,
+                "y": 0.7049999833106995,
+                "z": -38.91062927246094,
+                "yaw": -6.236348435768065
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.molotov",
+                "combo": 0,
+                "started": 519,
+                "activeAt": 519,
+                "recoveryAt": 520,
+                "endsAt": 532
+              },
+              "knockdown": {
+                "started": 422,
+                "until": 494
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 494,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.fists",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.machete",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.hunting-rifle",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.machete",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.molotov",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 978,
+                    "reloadUntil": 0,
+                    "readyAt": 534
+                  },
+                  {
+                    "id": "weapon.nail-gun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.assault-rifle",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.flashbang",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 3,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.army-mg",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": -121
+                  },
+                  {
+                    "id": "weapon.rocket-launcher",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.pipe-bomb",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 3,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.shotgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "ability.corgi-lure",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.flamethrower",
+                    "magazine": 66,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 1,
+                "aim": {
+                  "x": 0.954401896338705,
+                  "z": -0.29852473978731464
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              }
+            },
+            "hidden": false
+          },
+          "events": [
+            {
+              "type": "combat.attack",
+              "tick": 258,
+              "attackId": 1702,
+              "actionId": "weapon.molotov",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4004.59326171875,
+                "y": 0.7049999833106995,
+                "z": -38.91062927246094,
+                "yaw": 0.3031455045686661
+              },
+              "direction": {
+                "x": 0.9544022043575277,
+                "z": -0.2985237550304703
+              }
+            },
+            {
+              "type": "combat.attack",
+              "tick": 344,
+              "attackId": 1703,
+              "actionId": "weapon.molotov",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4004.220703125,
+                "y": 0.7049999833106995,
+                "z": -38.79412078857422,
+                "yaw": 0.33197910925150476
+              },
+              "direction": {
+                "x": 0.9453991746282098,
+                "z": -0.32591471370942987
+              }
+            },
+            {
+              "type": "combat.attack",
+              "tick": 519,
+              "attackId": 1704,
+              "actionId": "weapon.molotov",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4003.8505859375,
+                "y": 0.7049999833106995,
+                "z": -38.66640853881836,
+                "yaw": 0.3031465363737047
+              },
+              "direction": {
+                "x": 0.954401896338705,
+                "z": -0.29852473978731464
+              }
+            }
+          ]
+        }
+      },
+      {
+        "stage": "throw",
+        "n": 4,
+        "selected": "weapon-rack-weapon.hunting-rifle",
+        "state": {
+          "tick": 688,
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": 4003.8505859375,
+              "y": 0.7049999833106995,
+              "z": -38.66640853881836,
+              "yaw": 0.30314337103404204
+            },
+            "health": {
+              "current": 1.089311730191909,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": 688
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 4,
+              "animation": "idle",
+              "animationTick": 678,
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "grounded": true,
+              "invulnerableUntil": 696,
+              "checkpoint": {
+                "x": 4004.59326171875,
+                "y": 0.7049999833106995,
+                "z": -38.91062927246094,
+                "yaw": -6.236348435768065
+              },
+              "diedAt": null,
+              "attack": {
+                "actionId": "weapon.hunting-rifle",
+                "combo": 0,
+                "started": 605,
+                "activeAt": 611,
+                "recoveryAt": 612,
+                "endsAt": 612
+              },
+              "knockdown": {
+                "started": 422,
+                "until": 494
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 494,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.fists",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.machete",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.hunting-rifle",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 671
+                  },
+                  {
+                    "id": "weapon.machete",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.molotov",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 978,
+                    "reloadUntil": 0,
+                    "readyAt": 534
+                  },
+                  {
+                    "id": "weapon.nail-gun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.assault-rifle",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.flashbang",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 3,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.army-mg",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": -121
+                  },
+                  {
+                    "id": "weapon.rocket-launcher",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.pipe-bomb",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 3,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.shotgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "ability.corgi-lure",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.flamethrower",
+                    "magazine": 66,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 1,
+                "aim": {
+                  "x": 0.9544028412661228,
+                  "z": -0.2985217187796425
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              }
+            },
+            "hidden": false
+          },
+          "events": [
+            {
+              "type": "combat.attack",
+              "tick": 258,
+              "attackId": 1702,
+              "actionId": "weapon.molotov",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4004.59326171875,
+                "y": 0.7049999833106995,
+                "z": -38.91062927246094,
+                "yaw": 0.3031455045686661
+              },
+              "direction": {
+                "x": 0.9544022043575277,
+                "z": -0.2985237550304703
+              }
+            },
+            {
+              "type": "combat.attack",
+              "tick": 344,
+              "attackId": 1703,
+              "actionId": "weapon.molotov",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4004.220703125,
+                "y": 0.7049999833106995,
+                "z": -38.79412078857422,
+                "yaw": 0.33197910925150476
+              },
+              "direction": {
+                "x": 0.9453991746282098,
+                "z": -0.32591471370942987
+              }
+            },
+            {
+              "type": "combat.attack",
+              "tick": 519,
+              "attackId": 1704,
+              "actionId": "weapon.molotov",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4003.8505859375,
+                "y": 0.7049999833106995,
+                "z": -38.66640853881836,
+                "yaw": 0.3031465363737047
+              },
+              "direction": {
+                "x": 0.954401896338705,
+                "z": -0.29852473978731464
+              }
+            },
+            {
+              "type": "combat.attack",
+              "tick": 611,
+              "attackId": 1705,
+              "actionId": "weapon.hunting-rifle",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4003.8505859375,
+                "y": 0.7049999833106995,
+                "z": -38.66640853881836,
+                "yaw": 0.30314337103404204
+              },
+              "direction": {
+                "x": 0.9544028412661227,
+                "z": -0.2985217187796425
+              }
+            }
+          ]
+        }
+      },
+      {
+        "stage": "throw",
+        "n": 5,
+        "selected": "weapon-rack-weapon.hunting-rifle",
+        "state": {
+          "tick": 773,
+          "player": {
+            "kind": "player",
+            "archetype": "player.survivor",
+            "transform": {
+              "x": 4003.8505859375,
+              "y": 0.6850000023841858,
+              "z": -38.66640853881836,
+              "yaw": 0.30314550455399586
+            },
+            "health": {
+              "current": 0,
+              "max": 100
+            },
+            "faction": "survivor",
+            "id": 1,
+            "locomotion": {
+              "vx": 0,
+              "vz": 0,
+              "ax": 0,
+              "az": 0,
+              "omega": 0,
+              "updatedAt": 773
+            },
+            "survivor": {
+              "variant": "female",
+              "gearTier": 4,
+              "animation": "die",
+              "animationTick": 720,
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "grounded": true,
+              "invulnerableUntil": 756,
+              "checkpoint": {
+                "x": 4004.59326171875,
+                "y": 0.7049999833106995,
+                "z": -38.91062927246094,
+                "yaw": -6.236348435768065
+              },
+              "diedAt": 720,
+              "attack": {
+                "actionId": "weapon.hunting-rifle",
+                "combo": 0,
+                "started": 690,
+                "activeAt": 696,
+                "recoveryAt": 697,
+                "endsAt": 697
+              },
+              "knockdown": {
+                "started": 422,
+                "until": 494
+              }
+            },
+            "combat": {
+              "radius": 0.3,
+              "armor": 0,
+              "shield": false,
+              "staggerUntil": 494,
+              "attacking": false,
+              "damageMultiplier": 1,
+              "statuses": []
+            },
+            "weapons": {
+              "selectedSide": "RIGHT",
+              "LEFT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.fists",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.kick",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.bat",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.machete",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 0,
+                "aim": {
+                  "x": 1,
+                  "z": 0
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              },
+              "RIGHT": {
+                "rack": [
+                  {
+                    "id": "weapon.fire-axe",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.hunting-rifle",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 756
+                  },
+                  {
+                    "id": "weapon.machete",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.molotov",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 978,
+                    "reloadUntil": 0,
+                    "readyAt": 534
+                  },
+                  {
+                    "id": "weapon.nail-gun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.assault-rifle",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.flashbang",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 3,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.handgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.army-mg",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": -121
+                  },
+                  {
+                    "id": "weapon.rocket-launcher",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.pipe-bomb",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 3,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.shotgun",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "ability.corgi-lure",
+                    "magazine": 0,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  },
+                  {
+                    "id": "weapon.flamethrower",
+                    "magazine": 66,
+                    "reserve": "infinite",
+                    "charges": 0,
+                    "nextCharge": 0,
+                    "reloadUntil": 0,
+                    "readyAt": 0
+                  }
+                ],
+                "index": 1,
+                "aim": {
+                  "x": 0.9544022043619069,
+                  "z": -0.29852375501646894
+                },
+                "aimPoint": null,
+                "swapUntil": 0
+              }
+            },
+            "hidden": false
+          },
+          "events": [
+            {
+              "type": "combat.attack",
+              "tick": 258,
+              "attackId": 1702,
+              "actionId": "weapon.molotov",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4004.59326171875,
+                "y": 0.7049999833106995,
+                "z": -38.91062927246094,
+                "yaw": 0.3031455045686661
+              },
+              "direction": {
+                "x": 0.9544022043575277,
+                "z": -0.2985237550304703
+              }
+            },
+            {
+              "type": "combat.attack",
+              "tick": 344,
+              "attackId": 1703,
+              "actionId": "weapon.molotov",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4004.220703125,
+                "y": 0.7049999833106995,
+                "z": -38.79412078857422,
+                "yaw": 0.33197910925150476
+              },
+              "direction": {
+                "x": 0.9453991746282098,
+                "z": -0.32591471370942987
+              }
+            },
+            {
+              "type": "combat.attack",
+              "tick": 519,
+              "attackId": 1704,
+              "actionId": "weapon.molotov",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4003.8505859375,
+                "y": 0.7049999833106995,
+                "z": -38.66640853881836,
+                "yaw": 0.3031465363737047
+              },
+              "direction": {
+                "x": 0.954401896338705,
+                "z": -0.29852473978731464
+              }
+            },
+            {
+              "type": "combat.attack",
+              "tick": 611,
+              "attackId": 1705,
+              "actionId": "weapon.hunting-rifle",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4003.8505859375,
+                "y": 0.7049999833106995,
+                "z": -38.66640853881836,
+                "yaw": 0.30314337103404204
+              },
+              "direction": {
+                "x": 0.9544028412661227,
+                "z": -0.2985217187796425
+              }
+            },
+            {
+              "type": "combat.attack",
+              "tick": 696,
+              "attackId": 1706,
+              "actionId": "weapon.hunting-rifle",
+              "combo": 0,
+              "sourceId": 1,
+              "side": "RIGHT",
+              "position": {
+                "x": 4003.8505859375,
+                "y": 0.7049999833106995,
+                "z": -38.66640853881836,
+                "yaw": 0.30314550455399586
+              },
+              "direction": {
+                "x": 0.9544022043619069,
+                "z": -0.29852375501646894
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "render": {
+      "backend": "webgpu",
+      "quality": "low",
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          4003.8505859374986,
+          0,
+          -38.66640853881838
+        ],
+        "target": [
+          4003.8505859374986,
+          0,
+          -38.66640853881838
+        ],
+        "position": [
+          4014.7197525910346,
+          11.16791979355699,
+          -27.797241885282375
+        ],
+        "spot": null
+      }
+    }
   }
 }
