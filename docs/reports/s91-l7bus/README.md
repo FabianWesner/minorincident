@@ -31,3 +31,5 @@ The failed capture fixture loads a narrow bus-area district bbox but calls the f
 ## Boarding regression resolved
 
 The proactive clearance pass had applied permanent vehicle-yield targets to survivors immediately before boarding. Survivor clearance now applies only during departure, preserving their normal queue approach. All 12 native clearance runs pass again; typecheck and lint pass. The L7 threat diagnostic now has zero L7 flags: skilled follower wait is 5.249%, below 10%. Its sole aggregate flag is `PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate`, expected from selecting L7 only. This supersedes the earlier unresolved follower-wait finding. Remote units have not yet been repeated after this correction.
+
+The prescribed remote unit suite was repeated unchanged after `8136408b` and passed on `46.225.66.90`: 27 files, 106 passed / 1 skipped, 208.6 seconds within the 240-second budget. Remote job: `/srv/mi/jobs/s91-l7bus-a8d842-13288-1794535948`. All source checks are now current; opened rendered captures remain missing pending authorization for a replacement browser attempt.
