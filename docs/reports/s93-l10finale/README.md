@@ -39,3 +39,19 @@ An explicitly authored thrower Alpha, replacing one regular and admitted first w
 ## Checkpoint pursuit rewind
 
 Wrapping the native mission restore confirms that the journey death rewinds the living Mega: at tick 26281 (438.02 s), `cure-pace-9` restores its position from x=2292.408 to x=1897 (about 395 m backwards). This is direct evidence of pursuit progress discarded on the journey retry, separate from final-wave recovery saturation. See `checkpointRestores` in trace.json. Preserving live pursuit progress across death remains an untested candidate, requiring care around checkpoint identity, HP/cooldowns and the existing fairness gap.
+
+## Active candidate: retain walked pursuit position
+
+An uncommitted Mission.restore candidate retains the same living Mega entity's pre-retry transform when that ID exists in the checkpoint. Checkpoint HP/timers and existing fairness processing remain. All six native cases complete. Gaps: 1 LOW 42.12, 1 HIGH 44.70, 2 LOW 43.28, 2 HIGH 45.0167, 3 LOW 42.23, 3 HIGH 36.22 s. HIGH seed 3 rate is 14.503/min, below s89's 17.699/min; this candidate is not a pass. Full matrix receipt: `/private/tmp/s93-retain-matrix.json`. Remaining work includes the seed 2 HIGH marginal gap, HIGH seed 3 attack-rate floor, final required checks, and checkpoint continuity review.
+
+Combining retained pursuit position with a 15 s assault wave period produced identical results in all six cases (`/private/tmp/s93-retain-fast.json`). The timing change was reverted; only position retention remains as an uncommitted candidate.
+
+## Seed 2 HIGH remaining gap
+
+A native trace on the retained-position candidate confirms Mega death by 920 s while charge remains incomplete. At 950 s charge-ready becomes true; `assaultActive` then becomes false, the director cap rises from 22 to 70, and ordinary road admission resumes before cure release. The next attack at 954.10 s ends the 45.0167 s gap. See `seed2FinaleTransition` in trace.json. A final fix must preserve the 22 HIGH finale budget through release and provide real pressure during the hold; merely suppressing the later attack would hide the gap from an adjacent-start observer and is not a valid solution.
+
+Testing assault mode through release keeps HIGH cap at 22 at 950–965 s, while native seed 2 HIGH still completes with the same 45.0167 s gap and identical attack count. This disproves the inferred causal link between resumed road spawns and the 954.10 s attack. The one-line assault-mode correction remains an uncommitted candidate alongside position retention. Typecheck and lint pass on these current candidates; full matrix/audit/unit validation still remains. Receipt: `/private/tmp/s93-release-cap.json`.
+
+A mixed assault (one regular replaced by an Alpha, Alpha admitted first) combined with retained position and cap-through-release completes all six, but introduces seed 2 LOW gap 46.58 s. Seed 2 HIGH improves to 34.53 s, yet rates regress versus s89 in multiple rows (including HIGH seed 3 14.402/min). Composition was reverted. Receipt: `/private/tmp/s93-retain-mixed.json`.
+
+Current position-retention and cap-through-release candidates pass typecheck/lint. L10 threat audit: 42.2 s, no gameplay flags, only standard PARTIAL_LEVEL_SELECTION. Required remote `sh tools/remote/run.sh "$PWD" -- npm test` passed on 46.225.66.90: 106 passed, one skipped, 27 files, 220.4/240 s. These changes are saved as partial progress; the native cadence/rate failures remain open.

@@ -54,7 +54,7 @@ export class LevelTenEncounters {
   update(): void {
     const w = this.world, ai = w.infected, chunks = w.chunks, mission = w.missions;
     if (!ai || !chunks || mission?.state.phase !== 'playing' || mission.state.states['cure-released']) return;
-    const assaultActive = !!mission.state.states['charge-active'] && !(mission.state.states['charge-ready'] && mission.state.states['mega-dead']);
+    const assaultActive = !!mission.state.states['charge-active'];
     if (assaultActive) this.state.assaultTicks = (this.state.assaultTicks ?? 0) + 1;
     if (w.tick % 10 !== 0) return;
     const player = w.entities.get(1)!;

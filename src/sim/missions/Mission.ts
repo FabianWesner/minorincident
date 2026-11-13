@@ -463,6 +463,8 @@ export class Mission {
     if (!resume && this.state.cureFront) { this.l10?.cure.apply(); return; }
     this.world.controls.reset();
     const checkpoint = this.checkpoints.get(id); if (!checkpoint) throw new Error(`Unknown checkpoint: ${id}`);
+    const liveMega = !resume && this.def.id === 'L10' && this.world.megaPursuit?.alive() ? this.world.megaPursuit.entity() : null;
+    const retainedMegaPosition = liveMega && { id: liveMega.id, transform: { ...liveMega.transform } };
     const retainedCharge = !resume && this.def.id === 'L10' && this.state.states['cure-installed'] ? this.state.counters['charge-ticks'] : null;
     const retainedCharging = !!this.state.states['charge-active'];
     const timeout = this.state.failure === 'timeout';
@@ -478,6 +480,12 @@ export class Mission {
     for (const step of Object.values(this.state.steps)) if (step.status === 'active') step.started += delta;
     if (checkpoint.arsenal && this.world.progression?.campaign) Object.assign(this.world.progression.campaign, structuredClone(checkpoint.arsenal));
     const entities = structuredClone(checkpoint.entities);
+    // The persistent pursuer keeps distance already walked on a failed attempt.
+    // HP/timers still use the checkpoint; restoreSeams retains the usual fairness gap.
+    if (retainedMegaPosition) {
+      const mega = entities.find(e => e.id === retainedMegaPosition.id && e.infected?.pursuit);
+      if (mega) Object.assign(mega.transform, retainedMegaPosition.transform);
+    }
     // Combat timers are absolute ticks. A live-save resume restarts the clock, so a Mega staggered at capture (tick ~50000) stayed stunned
     // for minutes after loading (r29-l10mega). Keep the remaining time instead (the player's own vitals are reset separately).
     for (const e of entities) if (e.id !== 1 && e.combat) {
