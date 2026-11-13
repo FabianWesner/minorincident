@@ -50,3 +50,9 @@ Layout inspection weakens the missing-scenery hypothesis: the opened capture cou
 ## Validated road presentation
 
 The opened HIGH zoom-1.5 road capture shows road surfacing, crops, a house, poles and roadside clutter. This confirms district rendering in the restored fixture; the earlier blank patch is not proof of missing scenery. The staged road run restored the native peak snapshot, positioned the courier at authored route point (3577,95), then used ordinary bot inputs at normal speed for 15 s. It observed 59–69 live infected. Exact 60–70-live frame statistics and district counters are in [road-high-proof.json](road-high-proof.json); the [contact sheet](contact-sheet.jpg) contains the opened road capture. Other required regions/tiers, five-minute browser arrival sampling, spawn visibility and finale lull review remain open.
+
+## Completed actual-load browser matrix
+
+All twelve 15-second WebGPU samples finished, HIGH before LOW, at zoom 1 and 1.5; requested and actual tier agree. [Frame summaries](browser-matrix.json) retain actual live-count ranges and separately summarize 60–70-live frames. HIGH corridor reaches 67 live; HIGH complex 52, finale 45. LOW corridor reaches 41, complex 24, finale 22. These lower-count samples cannot establish the requested 60–70 performance gate. HIGH complex and finale captures were opened and show authored scenery and active enemies. The contact sheet now includes both tiers at all three locations. Five-minute browser arrival and spawn-event review remain pending.
+
+The opened six-cell sheet confirms LOW finale has already reached cure release/epilogue by its final capture; its all-frame timing includes that transition and zero-infected frames. It is not a sustained combat measurement. LOW complex final capture likewise shows no nearby pressing enemies. These scope limits must remain visible in the final verdict.
