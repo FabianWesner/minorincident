@@ -29,7 +29,7 @@ Both checkpoint-yield captures were opened. The initial sample shows retreat HUD
 | L7 departure / soldiers | Complete route; P2 overlap reproduced | Complete route; nearby soldier/body overlap observed | Complete route; nearby soldiers/body overlap observed |
 | L8 14/14 timing / driver-door handoff | 29.48 s; post-count stall in checkpoint | Camera assertion failure; unverified | 28.23 s; post-count stall after E at marker |
 | L9 rail / final bay | Progressed with manual F, 19 deaths | Progressed, zero deaths | Progressed, zero deaths |
-| L9 playable L10 handover pose / school bus | Missing; loading transition only | Missing | Missing; loading transition only |
+| L9 playable L10 handover pose / school bus | Missing; loading transition only | Bridge-save live handover upright; bus overlap unverified | Missing; loading transition only |
 | L10 first 5 min / gun selection | Rifle key+click passed; incomplete broader scope | Five-minute sample; hangar not reached | Five-minute sample; rifle click selected; broader scope incomplete |
 | L10 every hangar weapon key+click | Later fixture: all 14 by click; machete key unresolved | Missing | Missing |
 | L10 knife | Missing (not in returned-arsenal fixture) | Missing | Missing |
@@ -127,3 +127,7 @@ The route ledger records **four more actual axe hits for amount 0** on the 3000-
 ## L9 HIGH zoom 1.5
 
 Same pre-rail checkpoint, HIGH and camera zoom/targetZoom 1.5 verified. Completed through L10 loading in 158 wall seconds, zero deaths, assists or skips; no manual hatch override. Opened `campaign-L9-t2764.jpg` (post-rail driving / boarder instruction) and `campaign-L9-t5465.jpg` (final bay, 4/4 at trucks, hatch defense 5 seconds). No crossing/final-bay block reproduced. Playable L10 pose and school-bus overlap remain unverified; the session exits at level change. Summary simSeconds=-1 is invalid due to handover tick reset. Receipt: `test-results/s88-b90high/high-z1-5-l9-rail/`. No check is running.
+
+## Uninterrupted L9-to-playable-L10 handover
+
+First dedicated pre-rail attempt stopped at a four-minute cap near the bridge; unrelated opt-in L8 calm-audit assertion also failed, so that attempt did not verify pose. Then loaded existing `l9-at-bridge` save (evacuation already done) and used real-input continue mode without restarting L10. L9 completed in 25 seconds, zero driver issues/skips. Handover log records first playable L10 objective “Get away from the river · 101 m”. Opened `test-results/s88-b90high/high-z1-5-bridge-handover/captures/continue-L9-L9-L10-actual-handover-high-z1-5.jpg`: upright courier holding axe, corgi alongside, normal objective/radio HUD. **Folded pose did not reproduce in this HIGH zoom-1.5 bridge-save handover.** Earlier rail traversal was separately qualified; this does not claim a single continuous full L9 run from its start. LOW zoom-1 handover and school-bus overlap remain open. No check is running.
