@@ -79,3 +79,7 @@ L10 HIGH z1 WebGPU opening sample: 300 s, ten deaths, zero assists, 409 fire-axe
 | Per-level glitches/captures, >10 s stalls, fun/boring/harmless observations | Not run | Not run | Open |
 
 The environment blockers are resolved. Continue executing the specified HIGH zoom 1 and 1.5 passes followed by LOW zoom 1, with the real-input playtest driver and approved checkpoint saves. Record captures only after opening them; then produce the contact sheet and replace this blocked-attempt ledger with measured findings.
+
+## HIGH z1 departure retry
+
+`high-z1-l7-departure`: 300 s, seven deaths, one driver assist, no skipped objectives, incomplete at corridor checkpoint (tick 17811); no timed departure captures were produced. Max no-progress interval 10.801 s. This attempt neither clears nor reproduces the bus/soldier overlap. The previous HIGH z1 completed route remains valid for its narrower route-completion scope. No process remains running.
