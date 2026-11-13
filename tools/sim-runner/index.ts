@@ -17,7 +17,7 @@ const ticks = Number(values.ticks ?? '600'), seed = Number(values.seed);
 if (!Number.isSafeInteger(ticks) || ticks < 0 || !Number.isSafeInteger(seed)) throw new RangeError('Ticks must be nonnegative and seed an integer');
 if (values.level) {
   if (values.level !== 'all' && !runnerLevels.includes(values.level as RunnerLevel)) throw new RangeError('Level must be a registered campaign level or all');
-  if (!['complete', 'newbie'].includes(values.policy!)) throw new RangeError('Policy must be complete or newbie');
+  if (!['complete', 'typical', 'newbie'].includes(values.policy!)) throw new RangeError('Policy must be complete, typical or newbie');
   const seeds = Number(values.seeds);
   if (!Number.isSafeInteger(seeds) || seeds <= 0 || !Number.isSafeInteger(seed + seeds - 1)) throw new RangeError('Seeds must be a positive integer');
   if (values.route && !['auto', 'blvd', 'commerce', 'oak'].includes(values.route)) throw new RangeError('Route (L3 street) must be auto, blvd, commerce or oak');

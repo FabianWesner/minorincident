@@ -26,7 +26,7 @@ import { propVariant } from './propVariants';
 export type RunnerLevel = MissionId;
 /** Playable campaign order; L7 now participates in the ordinary mission graph. */
 export const runnerLevels: readonly RunnerLevel[] = missionIds;
-export type CompletionPolicy = 'complete' | 'newbie';
+export type CompletionPolicy = 'complete' | 'typical' | 'newbie';
 /** Same contract for individual levels and the fast completion battery. Times are simulation seconds. */
 export interface LevelReport {
   collision?: ReturnType<SimWorld['solids']['snapshot']>;
@@ -36,6 +36,7 @@ export interface LevelReport {
   /** Whole-run count: the bounded event log can evict release before credits finish. */
   cureReleases?: number;
   time: number; deaths: number; kills: number; damageTaken: number;
+  survivorsSaved?: number; survivorsTotal?: number;
   failures: Record<string, number>; objectiveTimeline: { id: string; t: number }[];
   furthestObjective: string | null; activeObjectives: string[];
   outcome: 'complete' | 'stalled' | 'tick-budget' | 'load-error' | 'mission-failed';
@@ -106,6 +107,7 @@ function findDrive(t: Trigger): Extract<Trigger, { kind: 'drive' }> | undefined 
 }
 /** Inputs and ordinary Begin/Retry/Skip menu actions only; no teleport, loadout injection or cheats. */
 export async function runLevel(level: RunnerLevel, policy: CompletionPolicy, seed: number, maxSeconds = level === 'L10' ? 1800 : level === 'L9' ? 600 : 1200, street: L3StreetChoice = 'auto', campaign?: CampaignSave, onComplete?: (world: SimWorld, result: MissionResult) => void, props: -4 | 0 | 4 = 0, hooks?: LevelRunHooks): Promise<LevelReport> {
+  if (policy === 'typical' && !['L6', 'L7', 'L9'].includes(level)) throw new RangeError(`Typical policy is calibrated only for L6, L7 and L9 (received ${level})`);
   const report: LevelReport = { level, policy, seed, completed: false, time: 0, deaths: 0, kills: 0, damageTaken: 0, failures: {}, objectiveTimeline: [], furthestObjective: null, activeObjectives: [], outcome: 'tick-budget', blocker: null };
   let world: SimWorld;
   try { world = await loadLevel(level, seed, campaign, props, hooks); }
@@ -120,6 +122,7 @@ export async function runLevel(level: RunnerLevel, policy: CompletionPolicy, see
     }
     if (level === 'L7') return runSeven(world, report, maxSeconds, onComplete);
     const mission = world.missions!, walker = new Walker(), rng = new Rng(seed, `campaign-${policy}`);
+    const generalPolicy = policy === 'typical' ? 'complete' : policy;
     const stops = [world.events.on('mission.failed', e => { if (e.type === 'mission.failed') report.failures[e.reason] = (report.failures[e.reason] ?? 0) + 1; }), world.events.on('player.died', () => { report.failures['player-died'] = (report.failures['player-died'] ?? 0) + 1; }), world.events.on('objective.completed', e => { if (e.type === 'objective.completed') report.objectiveTimeline.push({ id: e.id, t: world.tick / 60 }); })];
     if (level === 'L10') {
       report.cureReleases = 0;
@@ -128,34 +131,39 @@ export async function runLevel(level: RunnerLevel, policy: CompletionPolicy, see
       }));
     }
     if (level === 'L1') {
-      const l1 = runL1(world, mission, policy, { seed, maxSeconds });
+      const l1 = runL1(world, mission, generalPolicy, { seed, maxSeconds });
       report.outcome = l1.outcome === 'complete' ? 'complete' : 'tick-budget';
     } else if (level === 'L10') {
       const result = runTen(world, policy, maxSeconds, hooks?.passive ? hooks.passiveHoldSeconds ?? 60 : undefined);
       report.regions = result.regions; report.maxConcurrentInfected = result.maxConcurrentInfected;
     } else if (level === 'L2') {
       // E20: the shared L2 policy (ordinary inputs only), same as the browser bot.
-      runL2(world, mission, policy, { seed, maxSeconds });
+      runL2(world, mission, generalPolicy, { seed, maxSeconds });
     } else if (level === 'L9') {
-      const bot = new LevelNineBot(world, hooks?.l9Route ?? 'road', hooks?.l9Detour ?? true);
-      for (let i = 0; i < maxSeconds * 60 && mission.state.phase !== 'result' && mission.state.phase !== 'progression'; i++) { world.applyInput(bot.sample(), 'keyboard'); world.update(); }
+      const bot = new LevelNineBot(world, hooks?.l9Route ?? 'road', hooks?.l9Detour ?? true, policy === 'typical' ? .7 : 1, policy);
+      let frame: InputFrame = emptyInput();
+      for (let i = 0; i < maxSeconds * 60 && mission.state.phase !== 'result' && mission.state.phase !== 'progression'; i++) { if(policy!=='typical'||i%6===0)frame=bot.sample(); world.applyInput(frame, 'keyboard'); world.update(); }
+      const evacuation = world.missions!.l9!.driving.state;
+      report.survivorsTotal = evacuation.roster.length;
+      report.survivorsSaved = evacuation.evacuated.length;
     } else if (level === 'L8') {
       const bot = new LevelEightBot(world, hooks?.passive ? 'threat-passive' : policy);
       for (let i=0;i<maxSeconds*60&&!bot.finished;i++){followFrustum(world);world.applyInput(bot.sample(),'keyboard');world.update();}
     } else if (level === 'L6') {
       const bot = new LevelSixBot(world, hooks?.l6Profile ?? policy);
-      for (let i=0;i<maxSeconds*60&&!bot.finished;i++){followFrustum(world);world.applyInput(bot.sample(),'keyboard');world.update();}
+      let frame: InputFrame = emptyInput();
+      for (let i=0;i<maxSeconds*60&&!bot.finished;i++){followFrustum(world);if(policy!=='typical'||i%6===0)frame=bot.sample();world.applyInput(frame,'keyboard');world.update();}
     } else if (level === 'L5') {
       // E23: the shared L5 policy (ordinary inputs only), same as the browser bot.
-      const bot = new LevelFiveBot(world, hooks?.passive ? 'evade-only' : policy);
+      const bot = new LevelFiveBot(world, hooks?.passive ? 'evade-only' : generalPolicy);
       for (let tick = 0; tick < maxSeconds * 60 && !bot.finished; tick++) { world.applyInput(bot.sample(), 'keyboard'); world.update(); }
     } else if (level === 'L4') {
       // E22: the shared L4 policy (ordinary inputs only), same as the browser bot.
-      const bot = new LevelFourBot(world, policy);
+      const bot = new LevelFourBot(world, generalPolicy);
       for (let tick = 0; tick < maxSeconds * 60 && !bot.finished; tick++) { followFrustum(world); world.applyInput(bot.sample(), 'keyboard'); world.update(); }
     } else if (level === 'L3') {
       // E21: the shared L3 policy (ordinary inputs only), same as the browser bot.
-      const bot = new LevelThreeBot(world, policy, street);
+      const bot = new LevelThreeBot(world, generalPolicy, street);
       for (let tick = 0; tick < maxSeconds * 60 && !bot.finished; tick++) { followFrustum(world); world.applyInput(bot.sample(), 'keyboard'); world.update(); }
     } else {
       let lastProgress = 0, bestDistance = Infinity, progress = '', frame: InputFrame = emptyInput();
@@ -265,19 +273,23 @@ export async function runLevel(level: RunnerLevel, policy: CompletionPolicy, see
 /** Drive the real pickup, encounter group and bus while the mission records checkpoints. */
 function runSeven(world: SimWorld, report: LevelReport, maxSeconds: number, onComplete?: (world: SimWorld, result: MissionResult) => void): LevelReport {
   const bot = new LevelSevenBot(world, report.policy);
+  let lastFrame: InputFrame = emptyInput();
   const stop = world.events.on('level.completed', e => {
     if (e.type !== 'level.completed' || e.id !== 'L7') return;
-    report.completed = true; report.outcome = 'complete'; report.time = e.result.time;
-    report.deaths = e.result.deaths; report.damageTaken = e.result.damage;
+    report.completed = true; report.outcome = 'complete'; report.time = world.tick / 60;
+    report.damageTaken = e.result.damage;
+    report.survivorsSaved = e.result.rescued; report.survivorsTotal = world.l7Encounters!.state.roster.length;
     onComplete?.(world, e.result);
   });
+  const deathStop = world.events.on('player.died', () => { report.deaths++; });
   try {
     for (let tick = 0; tick < maxSeconds * 60 && !report.completed; tick++) {
       followFrustum(world);
       const p = world.entities.get(1)!;
-      if (p.health.current <= 0) { report.deaths++; report.outcome = 'mission-failed'; break; }
+      if (p.health.current <= 0) { world.applyInput(emptyInput(), 'keyboard'); world.update(); continue; }
       report.furthestObjective = world.l7Encounters!.state.started ? 'bus-departure' : 'rocket-pickup';
-      const f = bot.sample();
+      const f = report.policy === 'typical' && tick % 6 !== 0 ? lastFrame : bot.sample();
+      if(report.policy === 'typical' && tick % 6 === 0) lastFrame = f;
       world.applyInput(f, 'keyboard'); world.update();
     }
     if (!report.completed) {
@@ -285,5 +297,5 @@ function runSeven(world: SimWorld, report: LevelReport, maxSeconds: number, onCo
       report.blocker = { objective: report.furthestObjective, detail: JSON.stringify({ phase: world.l7Departure!.state.phase, hp: world.entities.get(1)!.health.current, roster: world.l7Encounters!.state.roster.map(r => ({ ...r, at: world.entities.get(r.id)?.transform })) }), player: { ...world.entities.get(1)!.transform } };
     }
     return report;
-  } finally { stop(); }
+  } finally { stop(); deathStop(); }
 }
