@@ -192,3 +192,18 @@ Trial preferred legal, offscreen, nav-clear candidate points behind real combat 
 ## Clock and existing occlusion contract audit
 
 `Mission.restore` preserves the live world tick and computes a checkpoint delta for restored timers; retries do not rewind the measurement clock. The native receipt final-tick denominator therefore remains valid. `SpawnDirector.safe` already requires ≥18 m distance plus either whole-silhouette offscreen placement **or** whole-silhouette solid-cover occlusion, followed by nav clearance. `occluded` uses the actual simulation camera position and all silhouette rays. The hypothesis that covered in-frame arrivals are categorically blocked by the camera gate is contradicted by current source; no safety changes are warranted. These reads eliminate two potential measurement/admission explanations without changing gameplay.
+
+## Existing-archetype formation trials
+
+Ordinary-runner-only arrivals completed seed-2 LOW with 239 starts, 12.984/min, zero deaths and 71.48 s gap (`/private/tmp/s89-ordinary-arrivals.json`). Mixed formations of two existing firefighters and six runners then passed seed-2 LOW alone, but failed generalization:
+
+| Seed | Tier | Starts/min | Gap s |
+| --- | --- | --- | --- |
+| 1 | low | 13.937 | 49.37 |
+| 1 | high | 12.845 | 64.45 |
+| 2 | low | 12.538 | 44.53 |
+| 2 | high | 23.775 | 54.47 |
+| 3 | low | 13.484 | 72.17 |
+| 3 | high | 11.669 | 54.38 |
+
+All six completed; only seed-2 LOW passed cadence. Receipt `/private/tmp/s89-mixed-matrix.json`. Wider 16-sprinter burst at unchanged 36/45 caps completed seed-1 LOW/HIGH with zero/one deaths, rates 22.025/15.706, peaks 36/45, but gaps 47.70/101.83 s (`/private/tmp/s89-wide-burst.json`). Rejected. All temporary source changes reverted; no archetype catalog values changed. Formation size or a tougher centre pair does not establish a reliable fix.
