@@ -109,3 +109,7 @@ Temporary trial retained initial idle state at journey stations and restricted m
 ## Executable acceptance gate
 
 Native observer now exits 1 for an incomplete run, fewer than two starts, an adjusted gap over 45 s, or any per-seed/tier rate below baseline. A subset matrix is explicitly partial and cannot pass the full goal. Fresh full matrix reproduced every baseline attack count/rate, excluded exactly 56 s of dialogue in each case, and failed exactly six `GAP_OVER_45` flags. Baseline receipt and top table refreshed with exact dialogue counting. No gameplay changed. Typecheck and lint pass. The gate intentionally remains red until a real gameplay fix satisfies all six cases.
+
+## Focused target retention trial
+
+Temporary L10 L1 perception trial retained the explicitly assigned courier target during the existing focus interval, using normal chase movement/attack reach. Seed-1 LOW completed with 40 starts, 2.169/min, zero deaths, 450.03 s adjusted gap; HIGH with 93 starts, 4.995/min, two deaths, 775.25 s gap. Native acceptance gate rejected the subset for cadence and HIGH rate regression. Fully reverted. Receipt `/private/tmp/s89-focus-track.json`. Persistent target knowledge alone worsens contact continuity and is not a solution.
