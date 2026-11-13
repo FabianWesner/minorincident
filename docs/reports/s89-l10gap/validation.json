@@ -20,5 +20,181 @@
     "log": "/private/tmp/s89-remote-unit.log"
   },
   "goalComplete": false,
-  "gameplayChanged": false
+  "gameplayChanged": false,
+  "boundedArrivalTrial": {
+    "accepted": false,
+    "receipt": "/private/tmp/s89-bounded-matrix.json",
+    "producer": "/private/tmp/s89-bounded-matrix.mts",
+    "rows": [
+      {
+        "seed": 1,
+        "quality": "low",
+        "completed": true,
+        "deaths": 1,
+        "pulseAdmissions": 371,
+        "peak": 36,
+        "totalTicks": 67054,
+        "protectedSeconds": 56,
+        "n": 358,
+        "rate": 19.300058403342465,
+        "maxGap": 48.23333333333335,
+        "gaps": [
+          {
+            "from": 385.2,
+            "to": 433.43333333333334,
+            "seconds": 48.23333333333335
+          }
+        ]
+      },
+      {
+        "seed": 1,
+        "quality": "high",
+        "completed": true,
+        "deaths": 3,
+        "pulseAdmissions": 312,
+        "peak": 45,
+        "totalTicks": 69144,
+        "protectedSeconds": 56,
+        "n": 370,
+        "rate": 19.341629517766126,
+        "maxGap": 60.983333333333334,
+        "gaps": [
+          {
+            "from": 76.55,
+            "to": 137.53333333333333,
+            "seconds": 60.983333333333334
+          },
+          {
+            "from": 384.4,
+            "to": 444.48333333333335,
+            "seconds": 60.08333333333337
+          },
+          {
+            "from": 466.2,
+            "to": 514.55,
+            "seconds": 48.349999999999966
+          }
+        ]
+      },
+      {
+        "seed": 2,
+        "quality": "low",
+        "completed": false,
+        "deaths": 26,
+        "pulseAdmissions": 889,
+        "peak": 36,
+        "totalTicks": 108000,
+        "protectedSeconds": 0,
+        "n": 1538,
+        "rate": 51.397540032490134,
+        "maxGap": 25.816666666666663,
+        "gaps": []
+      },
+      {
+        "seed": 2,
+        "quality": "high",
+        "completed": true,
+        "deaths": 25,
+        "pulseAdmissions": 325,
+        "peak": 45,
+        "totalTicks": 104827,
+        "protectedSeconds": 56,
+        "n": 1330,
+        "rate": 45.795393679700055,
+        "maxGap": 106.5333333333333,
+        "gaps": [
+          {
+            "from": 76.55,
+            "to": 138.08333333333334,
+            "seconds": 61.533333333333346
+          },
+          {
+            "from": 364.7,
+            "to": 424.1666666666667,
+            "seconds": 59.4666666666667
+          },
+          {
+            "from": 495.51666666666665,
+            "to": 544.4666666666667,
+            "seconds": 48.950000000000045
+          },
+          {
+            "from": 944.5,
+            "to": 1013.0333333333333,
+            "seconds": 68.5333333333333
+          },
+          {
+            "from": 1013.9333333333333,
+            "to": 1064.2,
+            "seconds": 50.266666666666765
+          },
+          {
+            "from": 1064.4166666666667,
+            "to": 1170.95,
+            "seconds": 106.5333333333333
+          },
+          {
+            "from": 1170.95,
+            "to": 1239.0833333333333,
+            "seconds": 68.13333333333321
+          }
+        ]
+      },
+      {
+        "seed": 3,
+        "quality": "low",
+        "completed": true,
+        "deaths": 4,
+        "pulseAdmissions": 418,
+        "peak": 36,
+        "totalTicks": 70861,
+        "protectedSeconds": 56,
+        "n": 450,
+        "rate": 22.954303931987248,
+        "maxGap": 59.60000000000002,
+        "gaps": [
+          {
+            "from": 414.68333333333334,
+            "to": 474.28333333333336,
+            "seconds": 59.60000000000002
+          }
+        ]
+      },
+      {
+        "seed": 3,
+        "quality": "high",
+        "completed": true,
+        "deaths": 8,
+        "pulseAdmissions": 335,
+        "peak": 45,
+        "totalTicks": 75844,
+        "protectedSeconds": 56,
+        "n": 491,
+        "rate": 23.393949019296436,
+        "maxGap": 70.65000000000003,
+        "gaps": [
+          {
+            "from": 76.05,
+            "to": 138.08333333333334,
+            "seconds": 62.033333333333346
+          },
+          {
+            "from": 483.71666666666664,
+            "to": 554.3666666666667,
+            "seconds": 70.65000000000003
+          },
+          {
+            "from": 577.4333333333333,
+            "to": 633.95,
+            "seconds": 56.516666666666765
+          },
+          {
+            "from": 765.4,
+            "to": 814,
+            "seconds": 48.60000000000002
+          }
+        ]
+      }
+    ]
+  }
 }

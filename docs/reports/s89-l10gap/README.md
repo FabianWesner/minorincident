@@ -127,3 +127,18 @@ Two-sided arrival formation worsened the outcome: 299 admissions, 54 starts, 181
 Headroom/retirement source trial plus eight pursuing existing sprinters requested every 10 s through bounded safety checks: seed-1 LOW completed, one death, resident infected peak **36**, 371 admitted arrivals, **358 attack starts**, **19.300/min** using final world tick 67054, exactly **56.00 s** dialogue excluded. Exactly one adjusted failure remains: **385.20–433.43 s = 48.23 s**. Receipt `/private/tmp/s89-bounded-ten.json`; producer `/private/tmp/s89-bounded-ten.mts`; source trial applicator `/private/tmp/s89-apply-candidate.py`. This is the strongest current lead, still failing and only seed-1 LOW measured.
 
 Increasing bounded placement attempts from 33 to 65 reproduced identical results (`/private/tmp/s89-bounded-wide.json`). Increasing request frequency to 8 s failed completion at the 1800 s budget, six deaths, peak 36 and 488.93 s adjusted gap (`/private/tmp/s89-bounded-eight.json`): rejected. All temporary source edits reverted. No stat constants or production arrival mechanism changed.
+
+## Full bounded-arrival matrix: rejected
+
+The 10-second feasibility candidate was measured on all six cases with exact dialogue counting. Rates exceeded baseline throughout and peaks stayed at 36 LOW / 45 HIGH, but seed-2 LOW failed completion and all five completed cases failed cadence. All temporary source edits reverted.
+
+| Seed | Tier | Completed | Starts/min | Gap s | Deaths | Peak |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | low | True | 19.300 | 48.23 | 1 | 36 |
+| 1 | high | True | 19.342 | 60.98 | 3 | 45 |
+| 2 | low | False | 51.398 | 25.82 | 26 | 36 |
+| 2 | high | True | 45.795 | 106.53 | 25 | 45 |
+| 3 | low | True | 22.954 | 59.60 | 4 | 36 |
+| 3 | high | True | 23.394 | 70.65 | 8 | 45 |
+
+Receipt `/private/tmp/s89-bounded-matrix.json`; producer `/private/tmp/s89-bounded-matrix.mts`; compact measurements preserved in [validation.json](validation.json). The promising seed-1 LOW result did not generalize. The candidate must not be described as an accepted fix.
