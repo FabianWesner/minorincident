@@ -113,3 +113,11 @@ Native observer now exits 1 for an incomplete run, fewer than two starts, an adj
 ## Focused target retention trial
 
 Temporary L10 L1 perception trial retained the explicitly assigned courier target during the existing focus interval, using normal chase movement/attack reach. Seed-1 LOW completed with 40 starts, 2.169/min, zero deaths, 450.03 s adjusted gap; HIGH with 93 starts, 4.995/min, two deaths, 775.25 s gap. Native acceptance gate rejected the subset for cadence and HIGH rate regression. Fully reverted. Receipt `/private/tmp/s89-focus-track.json`. Persistent target knowledge alone worsens contact continuity and is not a solution.
+
+## Headroom, retirement and engaged-arrival feasibility
+
+Harness-only combination: journey cap 36/45, lost-target archetype retirement, eight existing sprinter arrivals every 20 s, production reservation/safety/nav checks and actual `pursueTarget`. Seed-1 LOW admitted 277 actors, recorded 274 starts and a 99.70 s raw maximum (including dialogue); outdoor failures 53.98 s and 54.33 s. Receipt `/private/tmp/s89-headroom-engaged.json`.
+
+Using the existing bounded encounter placement search (33 attempts), excluding the hangar and ending arrival requests at actual charge activation instead of tick 52000 admitted 305 actors and recorded 306 starts. Two raw gaps exceed 45 s: 451.38–524.55 = 73.17 s outdoors; 524.55–606.23 = 81.68 s spanning the hangar. The outdoor gap remains a definite failure. Receipt `/private/tmp/s89-bounded-engaged.json`, producer `/private/tmp/s89-bounded-engaged.mts`. This is not yet a complete acceptance receipt: exact dialogue accounting, final-tick rate, deaths, entity peaks and all six seed/tier cases are still required if this approach advances.
+
+Two-sided arrival formation worsened the outcome: 299 admissions, 54 starts, 181.42 s raw maximum (`/private/tmp/s89-flank-engaged.json`). All source changes reverted; no arrival mechanism retained in production. The bounded forward-arrival combination is the strongest diagnostic lead, but is not a verified solution.
