@@ -1,5 +1,10 @@
 # Batch 91 real-input QA — HOLD (in progress)
 
+**Timebox closeout, 2026-11-13 06:01 UTC: HOLD. The full QA objective is not achieved.** Report, evidence index and one inspected contact sheet are retained. No confirmed gameplay P1/P2 is assigned; the intermittent L9 final-bay wait remains a candidate. Missing coverage independently prevents GO. All checks/browsers owned by this job have ended. No game fixes, push, deployment or main movement occurred.
+
+Final validation: fresh production and QA builds passed; typecheck and lint passed; unchanged prescribed remote suite rerun passed106 tests, one skipped,27 files in222.5 s. Initial infrastructure failures and one transient suite failure are attempt history below, not the final validation status.
+
+
 Target PROD revision: `d9db5d49` (worktree HEAD). This report records an infrastructure-blocked QA attempt; it does **not** claim the requested HIGH then LOW real-input coverage was completed.
 
 ## Resumed execution — 2026-11-13
@@ -185,3 +190,36 @@ LOW used a temporary copy of the capture helper changing only its forced zoom1.5
 ## LOW L6 completed with first-hatch closure
 
 LOW z1 WebGPU driver completed L6 in399 s, five deaths. Gate observation confirms first hatch x90 closedAt17437; a later checkpoint reset updates closedAt17875. Attack audit samples after first closure span92.38 s through tick22980:30 s windows contain86,37,97 attack starts, followed by3 in the final2.38 s. This measures ongoing attack activity, not exclusively attacks targeting the group. A death/reset occurred in that interval (death count4→5), so uninterrupted alive cadence is qualified. Full route completion and post-first-closure combat are demonstrated for this LOW sample; HIGH remains open. Automatic shelter-rest warning is scripted; nearby-infected-unhittable warning remains unconfirmed. Raw `test-results/s94-b91high/low-z1-l6-cadence/` includes gate observations, hold audit and completed run. No game code changed.
+
+## Timebox closeout and remaining work
+
+Final HIGH z1 L6 attempt:480 s,14 deaths,one assist,ended gate-150; no first-hatch closedAt receipt. Last audit sample has52 alive infected and5 attack starts in the preceding second, but that does not establish post-closure cadence. LOW completed with the closure/cadence qualifications recorded above. Opened LOW gate90-prompt frame at17286 shows “Everyone through · E or click the gate to close it”, ring at the gate, player100 HP; later telemetry proves closure.
+
+### PO wording and current disposition
+
+| PO finding, verbatim | Current evidence and limit |
+| --- | --- |
+| L6: “After I closed the first door, no more Zombies attacked the group, which made the game boring from there on” | LOW closure and92.4 s attack-start samples contradict no further attacks in that run, but include a death/reset and are not group-target-exclusive. HIGH full post-closure condition unverified. |
+| L7: “The bus is crashing to soldiers” | No live-soldier intersection in three opened HIGH z1.5 and three LOW z1 departure samples. HIGH z1 timed departure frames still missing. |
+| L9: “L9; I am stuck here” (rail crossing hatch) | HIGH z1/z1.5 rail progressed. LOW five-minute attempt had15 deaths and did not clear hatch. |
+| L9: “Also the end is strange, bc I cannot walk away but also not drive anymore” | Countdown/restart prompts inspected; HIGH final bay passed on retries, one139 s3/4 wait remains intermittent candidate. Full moment-by-moment input availability unverified. |
+| L9: “It somehow proceeded, but now I am this... super strange” | Opened live HIGH z1.5 and LOW z1 L10 handovers show upright axe-holding courier. |
+| L9: school bus overlapping the APC | Not verified. |
+
+### P1/P2 list
+
+- Confirmed gameplay P1: none. This is not a clean-bill-of-health claim.
+- Confirmed gameplay P2: none. Automatic driver warnings were reviewed or retained as qualified candidates rather than counted as defects.
+- Candidate requiring reproduction: L9 HIGH z1 final-bay3/4 wait,139.13 s. Subsequent HIGH z1/z1.5 passes progressed; manual exit/roster-state confirmation remains missing.
+
+### Coverage still required before GO
+
+1. L6 HIGH full route with first hatch closed and full post-closure cadence; LOW uninterrupted alive/group-target cadence qualification.
+2. L7 HIGH z1 timed departure clearance captures; existing HIGH z1.5/LOW samples do not cover the entire motion continuously.
+3. L8 HIGH z1.5 requested framing; exact LOW departure-health/actual-quality receipt. HIGH z1 Hale-alive handoff is proved.
+4. L9 school-bus/APC clearance, LOW rail through final bay, final-bay input availability, and intermittent3/4 wait investigation. HIGH z1 playable-pose capture remains absent; HIGH z1.5/LOW z1 pose samples passed.
+5. L10 original hangar presentation and all direct weapon shortcuts under live controlled conditions, literal knife identity, HIGH z1.5 broader weapon/throwable presentation, unobstructed molotov trajectory sweep. Later arsenal clicks/Q and sampled molotov restoration/aim results are narrower evidence.
+6. L10 gun damage and sustained damage to~35% hunting-Mega floor. Positive axe damage and~1 s recovery are proved at HIGH/LOW; floor/gun check is not.
+7. Full road-crop sweep, journey arrivals every≤45 s, visually reviewed pop-in/sprinter spawning, and real-input frame timing with60–70 active infected at HIGH and LOW. Current farms peak24/12 diagnostics do not qualify that load.
+
+The authorized~2.5 h execution window is exhausted. Further runs require an extended execution window; the original scope remains intact and the goal is not marked complete. Temporary QA observer copies were removed. Raw artifacts remain local under test-results/s94-b91high; only README,JSON evidence and the one small sheet were committed.

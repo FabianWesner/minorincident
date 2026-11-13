@@ -1201,6 +1201,85 @@
           }
         ]
       }
+    ],
+    "high-z1-l6-final-cadence": [
+      {
+        "level": "L6",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 480,
+        "simSeconds": 469,
+        "maxNoProgressSeconds": 32.573,
+        "deaths": 14,
+        "assists": 1,
+        "attacks": {
+          "weapon.army-mg": 3151
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "steps": [
+          {
+            "id": "shelter",
+            "text": "Look around the shelter \u00b7 rest while you can",
+            "tick": 11,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "stop",
+            "text": "Stop the infected \u00b7 Retreat in 0:36",
+            "tick": 2002,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "retreat",
+            "text": "The group waits: cover the rear from the infected \u00b7 254\u00a0m",
+            "tick": 3255,
+            "marker": {
+              "anchor": "l6-next",
+              "ring": {
+                "x": 242,
+                "y": 0.6,
+                "z": 15
+              },
+              "drawn": [
+                242,
+                0.6,
+                15
+              ],
+              "playerY": 1.3200000524520874,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
     ]
   },
   "limits": [
@@ -9798,5 +9877,14 @@
       5
     ],
     "qualification": "Checkpoint reset during post-closure window; later closedAt17875. Counts are all attack starts, not exclusively group-targeted attacks."
+  },
+  "timeboxCloseout": {
+    "utc": "2026-11-13 06:01",
+    "verdict": "HOLD",
+    "goalAchieved": false,
+    "confirmedGameplayP1": [],
+    "confirmedGameplayP2": [],
+    "candidate": "Intermittent L9 3/4 final-bay wait, 139.13 s, absent on retries",
+    "checksRunning": false
   }
 }
