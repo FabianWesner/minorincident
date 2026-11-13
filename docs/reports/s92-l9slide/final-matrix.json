@@ -1,0 +1,1898 @@
+[
+  {
+    "case": "L9",
+    "tier": "high",
+    "pass_": true,
+    "sourceHash": "14db457a5529f12f0335f3b857419ee1dbb0199399d17d94afa5f8ff369cf427",
+    "sourceStable": true,
+    "maxCm": 1.8,
+    "p95Cm": 1.3,
+    "correctionsProven": true,
+    "errors": [],
+    "correctionRows": [
+      {
+        "key": "separationM/760",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 9,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0.1,
+          "liftMaxCm": 15.1,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1537
+        }
+      },
+      {
+        "key": "separationM/759",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 10,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 1,
+          "slideMaxCm": 0.1,
+          "slideP95Cm": 0.1,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 18.6,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 1537
+        }
+      },
+      {
+        "key": "separationM/775",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 10,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 1,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 17.2,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 3365
+        }
+      },
+      {
+        "key": "separationM/818",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 11,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 2,
+          "slideMaxCm": 0.1,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0.1,
+          "liftMaxCm": 17,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 4526
+        }
+      },
+      {
+        "key": "separationM/873",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 54,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 5,
+          "slideMaxCm": 0.3,
+          "slideP95Cm": 0.2,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 18.3,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 5368
+        }
+      },
+      {
+        "key": "separationM/867",
+        "classification": "mixed-unplanted-actions",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 32,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 304.3,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      {
+        "key": "separationM/882",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 128,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 7,
+          "slideMaxCm": 0.2,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0.1,
+          "liftMaxCm": 14,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 7526
+        }
+      },
+      {
+        "key": "separationM/969",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 31,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 3,
+          "slideMaxCm": 0.7,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 16.7,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 8983
+        }
+      },
+      {
+        "key": "collisionM/969",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 31,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 3,
+          "slideMaxCm": 0.7,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 16.7,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 8983
+        }
+      }
+    ],
+    "collisionFixture": [
+      {
+        "id": 969,
+        "at": {
+          "x": 453.59081293625565,
+          "y": 0.7,
+          "z": 3.3951223382781124
+        },
+        "dx": 0.4142616188957193,
+        "dz": 0.9101578495568216,
+        "tick": 8971
+      }
+    ]
+  },
+  {
+    "case": "L9",
+    "tier": "low",
+    "pass_": true,
+    "sourceHash": "14db457a5529f12f0335f3b857419ee1dbb0199399d17d94afa5f8ff369cf427",
+    "sourceStable": true,
+    "maxCm": 1.2,
+    "p95Cm": 1,
+    "correctionsProven": true,
+    "errors": [],
+    "correctionRows": [
+      {
+        "key": "separationM/738",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 10,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 18.2,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1537
+        }
+      },
+      {
+        "key": "separationM/761",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 9,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 16.8,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 3545
+        }
+      },
+      {
+        "key": "separationM/760",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 9,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 1,
+          "slideMaxCm": 0.2,
+          "slideP95Cm": 0.2,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 18.9,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 3545
+        }
+      },
+      {
+        "key": "separationM/921",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 31,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 3,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 20.2,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 8989
+        }
+      },
+      {
+        "key": "collisionM/921",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 31,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 3,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 20.2,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 8989
+        }
+      }
+    ],
+    "collisionFixture": [
+      {
+        "id": 921,
+        "at": {
+          "x": 453.99451673694335,
+          "y": 0.7,
+          "z": 4.9502499340028585
+        },
+        "dx": 0.3862329180936454,
+        "dz": 0.9224012863070321,
+        "tick": 8971
+      }
+    ]
+  },
+  {
+    "case": "l7-bus",
+    "tier": "high",
+    "pass_": true,
+    "sourceHash": "14db457a5529f12f0335f3b857419ee1dbb0199399d17d94afa5f8ff369cf427",
+    "sourceStable": true,
+    "maxCm": 0.5,
+    "p95Cm": 0.4,
+    "correctionsProven": true,
+    "errors": [],
+    "correctionRows": [
+      {
+        "key": "separationM/108",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 222,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 13,
+          "slideMaxCm": 0.5,
+          "slideP95Cm": 0.4,
+          "yawDriftMaxDeg": 0.1,
+          "liftMaxCm": 34.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 62
+        }
+      },
+      {
+        "key": "separationM/112",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 71,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 8,
+          "slideMaxCm": 0.4,
+          "slideP95Cm": 0.3,
+          "yawDriftMaxDeg": 0.4,
+          "liftMaxCm": 40.8,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 3,
+          "worstSlideFrame": 37
+        }
+      }
+    ],
+    "collisionFixture": []
+  },
+  {
+    "case": "l7-bus",
+    "tier": "low",
+    "pass_": true,
+    "sourceHash": "14db457a5529f12f0335f3b857419ee1dbb0199399d17d94afa5f8ff369cf427",
+    "sourceStable": true,
+    "maxCm": 0.5,
+    "p95Cm": 0.3,
+    "correctionsProven": true,
+    "errors": [],
+    "correctionRows": [
+      {
+        "key": "separationM/108",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 222,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 13,
+          "slideMaxCm": 0.5,
+          "slideP95Cm": 0.3,
+          "yawDriftMaxDeg": 0.1,
+          "liftMaxCm": 34.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 62
+        }
+      },
+      {
+        "key": "separationM/112",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 71,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 7,
+          "slideMaxCm": 0.3,
+          "slideP95Cm": 0.1,
+          "yawDriftMaxDeg": 0.4,
+          "liftMaxCm": 40.8,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 52
+        }
+      }
+    ],
+    "collisionFixture": []
+  },
+  {
+    "case": "l4-parked",
+    "tier": "high",
+    "pass_": true,
+    "sourceHash": "14db457a5529f12f0335f3b857419ee1dbb0199399d17d94afa5f8ff369cf427",
+    "sourceStable": true,
+    "maxCm": 1.7,
+    "p95Cm": 0.9,
+    "correctionsProven": true,
+    "errors": [],
+    "correctionRows": [
+      {
+        "key": "separationM/147",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 1200,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 5,
+          "slideMaxCm": 1,
+          "slideP95Cm": 0.6,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 8.4,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 23
+        }
+      },
+      {
+        "key": "separationM/145",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 89,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 7,
+          "slideMaxCm": 0.2,
+          "slideP95Cm": 0.2,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 20.7,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 102
+        }
+      },
+      {
+        "key": "separationM/149",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 103,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 7,
+          "slideMaxCm": 0.5,
+          "slideP95Cm": 0.1,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 14,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 89
+        }
+      },
+      {
+        "key": "separationM/148",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 99,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 9,
+          "slideMaxCm": 0.1,
+          "slideP95Cm": 0.1,
+          "yawDriftMaxDeg": 0.1,
+          "liftMaxCm": 17,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 177
+        }
+      },
+      {
+        "key": "separationM/150",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 928,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 26,
+          "slideMaxCm": 0.3,
+          "slideP95Cm": 0.2,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 19,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 491
+        }
+      },
+      {
+        "key": "separationM/146",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 955,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 7,
+          "slideMaxCm": 1.7,
+          "slideP95Cm": 0.9,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 19,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 277
+        }
+      }
+    ],
+    "collisionFixture": []
+  },
+  {
+    "case": "l4-parked",
+    "tier": "low",
+    "pass_": true,
+    "sourceHash": "14db457a5529f12f0335f3b857419ee1dbb0199399d17d94afa5f8ff369cf427",
+    "sourceStable": true,
+    "maxCm": 2.1,
+    "p95Cm": 1.6,
+    "correctionsProven": true,
+    "errors": [],
+    "correctionRows": [
+      {
+        "key": "separationM/104",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 1200,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 6,
+          "slideMaxCm": 0.1,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 10.2,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 36
+        }
+      },
+      {
+        "key": "separationM/102",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 93,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 7,
+          "slideMaxCm": 0.5,
+          "slideP95Cm": 0.5,
+          "yawDriftMaxDeg": 2.5,
+          "liftMaxCm": 12,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 90
+        }
+      },
+      {
+        "key": "separationM/106",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 139,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 10,
+          "slideMaxCm": 0.6,
+          "slideP95Cm": 0.2,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 14.1,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 16
+        }
+      },
+      {
+        "key": "separationM/105",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 162,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 11,
+          "slideMaxCm": 1.6,
+          "slideP95Cm": 1.4,
+          "yawDriftMaxDeg": 10.7,
+          "liftMaxCm": 16.9,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 241
+        }
+      },
+      {
+        "key": "separationM/107",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 1007,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 27,
+          "slideMaxCm": 2.1,
+          "slideP95Cm": 0.5,
+          "yawDriftMaxDeg": 13.8,
+          "liftMaxCm": 14.1,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 129
+        }
+      },
+      {
+        "key": "separationM/103",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 1005,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 6,
+          "slideMaxCm": 0.3,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 14.1,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 229
+        }
+      }
+    ],
+    "collisionFixture": []
+  },
+  {
+    "case": "l4-tank",
+    "tier": "high",
+    "pass_": true,
+    "sourceHash": "14db457a5529f12f0335f3b857419ee1dbb0199399d17d94afa5f8ff369cf427",
+    "sourceStable": true,
+    "maxCm": 2.6,
+    "p95Cm": 1.8,
+    "correctionsProven": true,
+    "errors": [],
+    "correctionRows": [
+      {
+        "key": "separationM/257",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 390,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 33,
+          "slideMaxCm": 1.3,
+          "slideP95Cm": 0.5,
+          "yawDriftMaxDeg": 7.5,
+          "liftMaxCm": 23.7,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 4,
+          "worstSlideFrame": 23
+        }
+      },
+      {
+        "key": "separationM/266",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 125,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 12,
+          "slideMaxCm": 0.5,
+          "slideP95Cm": 0.1,
+          "yawDriftMaxDeg": 2.8,
+          "liftMaxCm": 15.6,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 57
+        }
+      },
+      {
+        "key": "separationM/321",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 246,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 13,
+          "slideMaxCm": 0.3,
+          "slideP95Cm": 0.2,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 18.2,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 1046
+        }
+      },
+      {
+        "key": "separationM/242",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 2,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 1,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 6.1,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 50
+        }
+      },
+      {
+        "key": "separationM/319",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 302,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 16,
+          "slideMaxCm": 0.3,
+          "slideP95Cm": 0.3,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 14.2,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 143
+        }
+      },
+      {
+        "key": "separationM/323",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 83,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 5,
+          "slideMaxCm": 0.3,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 14,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 70
+        }
+      },
+      {
+        "key": "separationM/94",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 84,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 3,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 10,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 189
+        }
+      },
+      {
+        "key": "separationM/322",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 83,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 8,
+          "slideMaxCm": 0.5,
+          "slideP95Cm": 0.5,
+          "yawDriftMaxDeg": 0.1,
+          "liftMaxCm": 31.2,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 3,
+          "worstSlideFrame": 109
+        }
+      },
+      {
+        "key": "separationM/267",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 17,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 3,
+          "slideMaxCm": 1.9,
+          "slideP95Cm": 1.8,
+          "yawDriftMaxDeg": 11.5,
+          "liftMaxCm": 62.1,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 140
+        }
+      },
+      {
+        "key": "separationM/213",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 110,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 3,
+          "slideMaxCm": 2.6,
+          "slideP95Cm": 0.2,
+          "yawDriftMaxDeg": 12.1,
+          "liftMaxCm": 6.2,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 374
+        }
+      },
+      {
+        "key": "separationM/263",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 496,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 34,
+          "slideMaxCm": 0.6,
+          "slideP95Cm": 0.4,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 20.3,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 3,
+          "worstSlideFrame": 861
+        }
+      },
+      {
+        "key": "separationM/297",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 126,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 4,
+          "slideMaxCm": 0.4,
+          "slideP95Cm": 0.1,
+          "yawDriftMaxDeg": 2.2,
+          "liftMaxCm": 10.8,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 789
+        }
+      },
+      {
+        "key": "separationM/268",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 351,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 22,
+          "slideMaxCm": 0.6,
+          "slideP95Cm": 0.4,
+          "yawDriftMaxDeg": 0.1,
+          "liftMaxCm": 19.1,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 1089
+        }
+      },
+      {
+        "key": "separationM/212",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 275,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 17,
+          "slideMaxCm": 1.4,
+          "slideP95Cm": 1.3,
+          "yawDriftMaxDeg": 8.6,
+          "liftMaxCm": 14.1,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 978
+        }
+      },
+      {
+        "key": "separationM/215",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 199,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 17,
+          "slideMaxCm": 0.3,
+          "slideP95Cm": 0.1,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 20.4,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 912
+        }
+      },
+      {
+        "key": "separationM/282",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 339,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 29,
+          "slideMaxCm": 0.2,
+          "slideP95Cm": 0.1,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 15,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 949
+        }
+      },
+      {
+        "key": "separationM/58",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 41,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 5,
+          "slideMaxCm": 1.1,
+          "slideP95Cm": 0.2,
+          "yawDriftMaxDeg": 5.3,
+          "liftMaxCm": 16.9,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 893
+        }
+      },
+      {
+        "key": "separationM/258",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 231,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 14,
+          "slideMaxCm": 1.1,
+          "slideP95Cm": 0.4,
+          "yawDriftMaxDeg": 6.6,
+          "liftMaxCm": 16.2,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 1031
+        }
+      },
+      {
+        "key": "separationM/320",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 35,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 3,
+          "slideMaxCm": 0.1,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 6.7,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 989
+        }
+      },
+      {
+        "key": "collisionM/320",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 197,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 16,
+          "slideMaxCm": 1,
+          "slideP95Cm": 0.8,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 20.6,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 158
+        }
+      },
+      {
+        "key": "collisionM/322",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 71,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 5,
+          "slideMaxCm": 1.2,
+          "slideP95Cm": 0.5,
+          "yawDriftMaxDeg": 0.1,
+          "liftMaxCm": 31.2,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 3,
+          "worstSlideFrame": 83
+        }
+      },
+      {
+        "key": "collisionM/263",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 92,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 5,
+          "slideMaxCm": 0.4,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 14.2,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 922
+        }
+      },
+      {
+        "key": "collisionM/58",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 38,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 5,
+          "slideMaxCm": 1.1,
+          "slideP95Cm": 0.2,
+          "yawDriftMaxDeg": 5.3,
+          "liftMaxCm": 16.9,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 893
+        }
+      }
+    ],
+    "collisionFixture": []
+  },
+  {
+    "case": "l4-tank",
+    "tier": "low",
+    "pass_": true,
+    "sourceHash": "14db457a5529f12f0335f3b857419ee1dbb0199399d17d94afa5f8ff369cf427",
+    "sourceStable": true,
+    "maxCm": 6.4,
+    "p95Cm": 2,
+    "correctionsProven": true,
+    "errors": [],
+    "correctionRows": [
+      {
+        "key": "separationM/166",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 52,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 3,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 4.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 46
+        }
+      },
+      {
+        "key": "separationM/198",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 54,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 5,
+          "slideMaxCm": 2.2,
+          "slideP95Cm": 1.1,
+          "yawDriftMaxDeg": 12.9,
+          "liftMaxCm": 6.3,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 44
+        }
+      },
+      {
+        "key": "separationM/191",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 52,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 5,
+          "slideMaxCm": 1.4,
+          "slideP95Cm": 0.8,
+          "yawDriftMaxDeg": 8.6,
+          "liftMaxCm": 134.2,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 40
+        }
+      },
+      {
+        "key": "separationM/199",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 84,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 10,
+          "slideMaxCm": 2.1,
+          "slideP95Cm": 2,
+          "yawDriftMaxDeg": 13,
+          "liftMaxCm": 78.8,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 44
+        }
+      },
+      {
+        "key": "separationM/218",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 81,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 3,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 4,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 79
+        }
+      },
+      {
+        "key": "separationM/178",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 52,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 3,
+          "slideMaxCm": 0.4,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 12.6,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 46
+        }
+      },
+      {
+        "key": "separationM/219",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 70,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 7,
+          "slideMaxCm": 1.2,
+          "slideP95Cm": 0.8,
+          "yawDriftMaxDeg": 7.1,
+          "liftMaxCm": 6.2,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 29
+        }
+      },
+      {
+        "key": "separationM/232",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 394,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 32,
+          "slideMaxCm": 1.4,
+          "slideP95Cm": 0.6,
+          "yawDriftMaxDeg": 0.1,
+          "liftMaxCm": 21.8,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 3,
+          "worstSlideFrame": 13
+        }
+      },
+      {
+        "key": "separationM/167",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 132,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 7,
+          "slideMaxCm": 0.7,
+          "slideP95Cm": 0.6,
+          "yawDriftMaxDeg": 0.9,
+          "liftMaxCm": 11.7,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 236
+        }
+      },
+      {
+        "key": "separationM/164",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 55,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 8,
+          "slideMaxCm": 1.2,
+          "slideP95Cm": 0.4,
+          "yawDriftMaxDeg": 7.5,
+          "liftMaxCm": 6.3,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 36
+        }
+      },
+      {
+        "key": "separationM/169",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 374,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 22,
+          "slideMaxCm": 6.4,
+          "slideP95Cm": 0.6,
+          "yawDriftMaxDeg": 40,
+          "liftMaxCm": 14.3,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 282
+        }
+      },
+      {
+        "key": "separationM/234",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 66,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 7,
+          "slideMaxCm": 0.1,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 18.4,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 194
+        }
+      },
+      {
+        "key": "separationM/171",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 131,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 11,
+          "slideMaxCm": 0.3,
+          "slideP95Cm": 0.2,
+          "yawDriftMaxDeg": 0.1,
+          "liftMaxCm": 20.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 380
+        }
+      },
+      {
+        "key": "separationM/172",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 59,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 6,
+          "slideMaxCm": 0.2,
+          "slideP95Cm": 0.1,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 17.4,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 271
+        }
+      },
+      {
+        "key": "separationM/233",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 212,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 19,
+          "slideMaxCm": 1.4,
+          "slideP95Cm": 1.4,
+          "yawDriftMaxDeg": 8.4,
+          "liftMaxCm": 6.2,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 520
+        }
+      },
+      {
+        "key": "separationM/224",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 226,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 18,
+          "slideMaxCm": 2.1,
+          "slideP95Cm": 0.3,
+          "yawDriftMaxDeg": 11,
+          "liftMaxCm": 17.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 445
+        }
+      },
+      {
+        "key": "separationM/190",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 58,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 7,
+          "slideMaxCm": 1.5,
+          "slideP95Cm": 0.6,
+          "yawDriftMaxDeg": 6.5,
+          "liftMaxCm": 6.2,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 297
+        }
+      },
+      {
+        "key": "separationM/175",
+        "classification": "matched-unplanted-action",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 2,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      {
+        "key": "separationM/207",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 332,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 15,
+          "slideMaxCm": 1,
+          "slideP95Cm": 0.6,
+          "yawDriftMaxDeg": 6.7,
+          "liftMaxCm": 18.1,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 692
+        }
+      },
+      {
+        "key": "separationM/206",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 275,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 19,
+          "slideMaxCm": 1.4,
+          "slideP95Cm": 1.3,
+          "yawDriftMaxDeg": 8,
+          "liftMaxCm": 6.2,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 965
+        }
+      },
+      {
+        "key": "separationM/203",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 114,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 3,
+          "slideMaxCm": 1.3,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 8.6,
+          "liftMaxCm": 11.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 776
+        }
+      },
+      {
+        "key": "separationM/165",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 211,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 11,
+          "slideMaxCm": 1.1,
+          "slideP95Cm": 0.7,
+          "yawDriftMaxDeg": 5.8,
+          "liftMaxCm": 17.1,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 769
+        }
+      },
+      {
+        "key": "separationM/205",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 208,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 10,
+          "slideMaxCm": 0.2,
+          "slideP95Cm": 0.2,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 14.2,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 784
+        }
+      },
+      {
+        "key": "separationM/226",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 345,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 34,
+          "slideMaxCm": 3.1,
+          "slideP95Cm": 1.2,
+          "yawDriftMaxDeg": 17.2,
+          "liftMaxCm": 22.6,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 3,
+          "worstSlideFrame": 988
+        }
+      },
+      {
+        "key": "separationM/244",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 92,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 3,
+          "slideMaxCm": 1.4,
+          "slideP95Cm": 1.2,
+          "yawDriftMaxDeg": 6.3,
+          "liftMaxCm": 11.6,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1041
+        }
+      },
+      {
+        "key": "separationM/249",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 99,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 7.6,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1180
+        }
+      },
+      {
+        "key": "collisionM/167",
+        "classification": "matched-unplanted-action",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 49,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      {
+        "key": "collisionM/249",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 73,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 5,
+          "slideMaxCm": 0.3,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 17.4,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 62
+        }
+      },
+      {
+        "key": "collisionM/224",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 45,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 3,
+          "slideMaxCm": 0.5,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0.4,
+          "liftMaxCm": 17.6,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 1
+        }
+      },
+      {
+        "key": "collisionM/234",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 123,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 13,
+          "slideMaxCm": 0.3,
+          "slideP95Cm": 0.1,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 18.3,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 75
+        }
+      },
+      {
+        "key": "collisionM/207",
+        "classification": "matched-unplanted-action",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 31,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      {
+        "key": "collisionM/205",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 86,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 1,
+          "slideMaxCm": 0.2,
+          "slideP95Cm": 0.2,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 7.2,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 784
+        }
+      },
+      {
+        "key": "collisionM/226",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 71,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 7,
+          "slideMaxCm": 0.2,
+          "slideP95Cm": 0.2,
+          "yawDriftMaxDeg": 0.3,
+          "liftMaxCm": 22.6,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 783
+        }
+      },
+      {
+        "key": "collisionM/203",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 95,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 6,
+          "slideMaxCm": 1.3,
+          "slideP95Cm": 0.5,
+          "yawDriftMaxDeg": 8.6,
+          "liftMaxCm": 11.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 776
+        }
+      },
+      {
+        "key": "collisionM/232",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": true,
+        "motion": {
+          "frames": 61,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 5,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 18.8,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 765
+        }
+      }
+    ],
+    "collisionFixture": []
+  }
+]
