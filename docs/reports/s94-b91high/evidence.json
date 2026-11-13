@@ -10585,5 +10585,187 @@
       "maxRams": 3,
       "limits": "Center distance is not hull-intersection proof; frame samples show rear close contact and later separation."
     }
+  },
+  "lowL9HatchRetries": {
+    "low-z1-l9-hatch-control": {
+      "runs": [
+        {
+          "level": "L9",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 240,
+          "simSeconds": 240,
+          "maxNoProgressSeconds": 17.233333333333334,
+          "deaths": 0,
+          "assists": 0,
+          "attacks": {},
+          "weaponsStart": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "weaponsEnd": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "steps": [
+            {
+              "id": "approach",
+              "text": "Reach the evacuation gate \u00b7 46 s \u00b7 335\u00a0m",
+              "tick": 60,
+              "marker": {
+                "anchor": "crash-approach",
+                "ring": {
+                  "x": 470,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": [
+                  457,
+                  0,
+                  0
+                ],
+                "playerY": 0.9886177182197571,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "hatchInputs": [
+        {
+          "t": "2026-11-13T06:45:18.977Z",
+          "normalHatchInput": {
+            "key": "f",
+            "before": {
+              "open": true,
+              "stallAt": 935
+            },
+            "tick": 942
+          }
+        },
+        {
+          "t": "2026-11-13T06:45:19.351Z",
+          "normalHatchInput": {
+            "key": "f",
+            "before": {
+              "open": true,
+              "stallAt": 935
+            },
+            "tick": 965
+          }
+        }
+      ]
+    },
+    "low-z1-l9-final-cover": {
+      "runs": [
+        {
+          "level": "L9",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 168,
+          "simSeconds": -1,
+          "maxNoProgressSeconds": 9,
+          "deaths": 0,
+          "assists": 0,
+          "attacks": {
+            "weapon.shotgun": 4
+          },
+          "weaponsStart": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "steps": [
+            {
+              "id": "approach",
+              "text": "Reach the evacuation gate \u00b7 46 s \u00b7 335\u00a0m",
+              "tick": 61,
+              "marker": {
+                "anchor": "crash-approach",
+                "ring": {
+                  "x": 470,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": [
+                  457,
+                  0,
+                  0
+                ],
+                "playerY": 0.9888054132461548,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "reach-outskirts",
+              "text": "",
+              "tick": 9151,
+              "marker": {
+                "anchor": "crawl-end",
+                "ring": {
+                  "x": 547,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            }
+          ]
+        }
+      ],
+      "hatchInputs": [
+        {
+          "t": "2026-11-13T06:50:45.085Z",
+          "normalHatchInput": {
+            "key": "f",
+            "finalBay": false,
+            "before": {
+              "open": true
+            },
+            "tick": 938
+          }
+        },
+        {
+          "t": "2026-11-13T06:50:45.734Z",
+          "normalHatchInput": {
+            "key": "f",
+            "finalBay": false,
+            "before": {
+              "open": true
+            },
+            "tick": 977
+          }
+        },
+        {
+          "t": "2026-11-13T06:52:06.328Z",
+          "normalHatchInput": {
+            "key": "f",
+            "finalBay": true,
+            "before": {
+              "open": false
+            },
+            "tick": 5813
+          }
+        }
+      ]
+    }
   }
 }
