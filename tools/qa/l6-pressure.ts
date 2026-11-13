@@ -15,6 +15,7 @@ type Row = {
   attackTicks: number[];
   player: { x: number; z: number; hp: number }; leaderX: number; deaths: number; simSeconds: number;
   phase: string; entries: { door: number; warnedAt: number; remaining: number; closedAt?: number; brokenAt?: number }[];
+  survivorLosses: { id: number; key: string; tick: number; seconds: number; phase: string; status: string; x: number; z: number; attacks: { tick: number; sourceId: number; special: string }[] }[];
 };
 const rows: Row[] = [];
 const minSavedPercent = Number(process.env.L6_MIN_SAVED_PERCENT ?? 25);
@@ -28,12 +29,22 @@ for (const tier of (process.env.L6_TIERS ?? 'high,low').split(',') as ('high' | 
     observeAttackStarts(world, (sourceId, targetId, tick) => starts.push({ sourceId, targetId, tick }));
     let firstHatchClosed: number | null = null, exit: number | null = null;
     const initial = new Set(world.missions!.state.l6!.survivors.map(r => r.id));
+    const attackLedger = new Map<number, { tick: number; sourceId: number; special: string }[]>();
+    const survivorLosses: Row['survivorLosses'] = [], seenLosses = new Set<number>();
+    world.events.on('infected.attack', e => { if (e.type === 'infected.attack' && initial.has(e.targetId)) {
+      const history = attackLedger.get(e.targetId) ?? []; history.push({ tick: e.tick, sourceId: e.sourceId, special: e.special }); attackLedger.set(e.targetId, history);
+    }});
     world.events.on('l6.exit', e => { if (e.type === 'l6.exit') exit = e.tick; });
     let frame = undefined as ReturnType<typeof bot.sample> | undefined;
     for (let i = 0; i < 600 * 60 && !bot.finished; i++) {
       followFrustum(world); if(policy!=='typical'||i%6===0)frame=bot.sample();
       world.applyInput(policy==='passive'?{...frame!,mouseAttack:false,activeAttack:false,attackInPlace:false,attackTarget:undefined,left:{down:false,held:false,up:false},right:{down:false,held:false,up:false}}:frame!,'keyboard'); world.update();
       const s = world.missions!.state.l6!;
+      for (const survivor of s.survivors) if (!seenLosses.has(survivor.id) && (survivor.status === 'dead' || survivor.status === 'turned')) {
+        seenLosses.add(survivor.id); const e = world.entities.get(survivor.id);
+        survivorLosses.push({ id: survivor.id, key: survivor.key, tick: world.tick, seconds: world.tick / 60, phase: s.phase,
+          status: survivor.status, x: e?.transform.x ?? NaN, z: e?.transform.z ?? NaN, attacks: attackLedger.get(survivor.id) ?? [] });
+      }
       if (firstHatchClosed === null && s.entries?.some(e => e.closedAt)) firstHatchClosed = Math.min(...s.entries.filter(e => e.closedAt).map(e => e.closedAt!));
     }
     const s = world.missions!.state.l6!, end = exit ?? world.tick;
@@ -57,7 +68,7 @@ for (const tier of (process.env.L6_TIERS ?? 'high,low').split(',') as ('high' | 
       pressureLive:[...world.infected!.active].filter(e=>pressureIds.has(e.id)&&e.health.current>0).map(e=>({id:e.id,x:e.transform.x,z:e.transform.z,state:e.infected!.state,mode:e.infected!.l1?.mode})),
       attackTicks: relevant.map(x=>x.tick),
       player:{x:player.transform.x,z:player.transform.z,hp:player.health.current},leaderX:s.leaderX,deaths:world.missions!.state.stats.deaths,simSeconds:world.missions!.state.stats.time,
-      phase:s.phase,entries:(s.entries??[]).map(e=>({door:e.door,warnedAt:e.warnedAt,remaining:e.remaining,closedAt:e.closedAt,brokenAt:e.brokenAt})) });
+      phase:s.phase,entries:(s.entries??[]).map(e=>({door:e.door,warnedAt:e.warnedAt,remaining:e.remaining,closedAt:e.closedAt,brokenAt:e.brokenAt})), survivorLosses });
   } finally { world.dispose(); }
   console.log(`[l6-pressure] ${tier} ${policy} seed ${seed} complete`);
 }
