@@ -12,6 +12,14 @@ The prescribed remote unit suite ran on 46.225.66.90: 105 passed, one skipped, o
 
 The initial infrastructure diagnosis below is retained as attempt history; its browser/runner blockers are resolved. Remaining gameplay coverage is still open.
 
+## Additional measured evidence
+
+- Opened L6 `campaign-L6-t27060.jpg`: courier at 6 HP under active pressure, objective 189 m away. The run had eight deaths and one driver assist. This first run used default WebGL, so it does not qualify the requested WebGPU pass.
+- L7 HIGH zoom 1, explicit WebGPU, completed in 302 s, six deaths, zero assists, no skipped objectives. The driver's `simSeconds: 0` is invalid across handover and is not used. Opened `campaign-L7-t16262.jpg`: crowded combat around vehicles before boarding, HUD Aboard 0/18. Opened `campaign-L7-result.jpg`: L8 loading. Neither frame captures the moving departure, so bus/soldier collision remains unverified. Raw receipts: `test-results/s94-b91high/high-z1-l7-webgpu/`.
+- Per-level experience: L6 observed segment was dangerous and repeatedly lethal; post-hatch experience unknown. L7 had sustained fighting and completed without a measured >10 s no-progress interval (maximum 4.82 s); six deaths make it demanding. No confirmed visual defect is assigned from these frames.
+
+Next L7 pass must set `PLAYTEST_L7_DEPARTURE_CAPTURES=1` to retain moving departure frames, which the normal 45 s capture interval missed. HIGH zoom 1.5 and all LOW coverage remain open. No browser/check remains running after these samples.
+
 ## Verdict
 
 **HOLD — no gameplay verdict is possible.** No batch-91 gameplay finding was confirmed or cleared in this turn. The prior s88 P1/P2 dispositions describe earlier revisions and are not carried forward as current findings.
