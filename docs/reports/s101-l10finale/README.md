@@ -41,3 +41,7 @@ The failure scope is HIGH seeds 2/3 plus LOW seed 1. All six baseline routes com
 ## Additional geometry diagnostic
 
 A HIGH seed 3 trial moved only the mounted gun from its 3 m platform position to the ground beside the stair (local `[6,-6]`, height 0). The native route still completed with two deaths, but its finale attacks clustered at ticks 58239, 58584, 58658, 58769 and 58806, followed by another long tail. This rejects platform elevation as a sufficient explanation; that trial was reverted. The platform's protection is documented by the threat-audit report, but lowering the gun alone does not establish sustained contact.
+
+## Ranged encounter resource requirement
+
+Inspection of `AlphaSupportMoves.tryStart` and `PropThrows.nearestObject` explains a weakness in the subsequent thrower diagnostics: a standard thrower cannot launch its ranged specials without a nearby throwable corpse/movable prop (`alpha.grab-throw`), light prop (`alpha.barrage`), or living victim (`alpha.living-missile`). The search radius is 2 m for direct use and 6 m for scavenging. Admitting a thrower without checking those resources does not establish a functioning ranged encounter. A future trial must provide/verify native throwable resources at its authored entry rather than infer attack capability from subtype alone. These are existing move requirements; no stat change is proposed.
