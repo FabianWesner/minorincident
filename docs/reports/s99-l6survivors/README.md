@@ -88,3 +88,7 @@ Before the change, conversions began in the shelter at 33–47 s and losses cont
 - `node --import tsx/esm tools/qa/threat-audit.ts --levels L6`: skilled and passive routes complete. The audit reports `WAVE_NO_ATTACK_WITHIN_20_SECONDS` for breach two on the corridor-side route and two passive diagnostic flags; selected-level audit exits nonzero.
 - `sh tools/remote/run.sh "$PWD" -- npm test`: PASS on 46.225.66.90; 27 files, 106 passed / 1 skipped, unchanged 150/150 inventory; 220.4 s within the 240 s budget.
 - Browser QA needed; no browser run was requested.
+
+## Follow-up experiment
+
+A single inner-approach lead for breach two was tested while the remaining cohort kept the corridor route. It failed: typical saved counts were 10, 10, 6; complete seed 2 had a full window with one attack start; the audit still flagged breach-two attack timing. The experiment was reverted. The committed 4/20 corridor baseline remains the passing survival/window configuration.
