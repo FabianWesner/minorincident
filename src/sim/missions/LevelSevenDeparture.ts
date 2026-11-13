@@ -80,8 +80,8 @@ export class LevelSevenDeparture {
   private clearGuards(currentX: number, nextX = currentX, proactive = false): boolean {
     const w = this.world, s = this.state;
     const guards = [...w.entities.iterate()].filter(e => !e.hidden && e.passengerOf !== s.busId &&
-      (e.civilian?.ally?.role === 'soldier' || (s.phase === 'departing' || proactive) &&
-        (e.civilian?.survivor || e.infected || e.infection || e.corpse)));
+      (e.civilian?.ally?.role === 'soldier' || s.phase === 'departing' && e.civilian?.survivor ||
+        (s.phase === 'departing' || proactive) && (e.infected || e.infection || e.corpse)));
     let held = false;
     for (const e of guards) {
       const shoulderSide = Math.sign(e.transform.z - cfg.lane.z) || 1;

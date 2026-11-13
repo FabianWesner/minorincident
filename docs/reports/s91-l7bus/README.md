@@ -27,3 +27,7 @@ Committed the fix as `9a17b175`. The prescribed remote `npm test` now passed unc
 The single permitted browser was acquired through the pool with SCENE_PORT=4981 / E2E_PORT=4982. Scene loading failed before either capture with `No clear L7 encounter point at 267.5,12` from `LevelSevenEncounters.prepare` via `setupL7Group`. No second browser was launched. Rendered capture verification therefore remains incomplete for a scene-fixture reason rather than the former sandbox restriction. The threat follower-wait flag also remains open.
 
 The failed capture fixture loads a narrow bus-area district bbox but calls the full L7 encounter preparation at the distant start (267.5,12). A replacement browser attempt requires authorization because the single allowed browser has been consumed. No captures were opened, so rendered acceptance remains unproven.
+
+## Boarding regression resolved
+
+The proactive clearance pass had applied permanent vehicle-yield targets to survivors immediately before boarding. Survivor clearance now applies only during departure, preserving their normal queue approach. All 12 native clearance runs pass again; typecheck and lint pass. The L7 threat diagnostic now has zero L7 flags: skilled follower wait is 5.249%, below 10%. Its sole aggregate flag is `PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate`, expected from selecting L7 only. This supersedes the earlier unresolved follower-wait finding. Remote units have not yet been repeated after this correction.
