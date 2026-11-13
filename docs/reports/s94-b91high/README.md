@@ -72,7 +72,7 @@ L10 HIGH z1 WebGPU opening sample: 300 s, ten deaths, zero assists, 409 fire-axe
 | L7 departure vs soldiers | z1 route passed, timed frames missing; z1.5 three opened frames show no live-soldier intersection | z1 route passed; three opened departure frames show no intersection | Sampled clearance; HIGH z1 capture still open |
 | L8 boarding through driver handoff, Hale alive | z1 handoff with Hale100 HP confirmed; z1.5 camera assertion failed | LOW-configured z1 route passed; Hale100 HP at boarding; exact departure sample/actual quality receipt incomplete | HIGH z1 Hale-alive passed; other stated conditions open |
 | L9 rail/final bay | z1 one139 s 3/4 wait, later retry passed; z1.5 passed | Five-minute attempt ended after15 deaths at hatch | LOW final bay open |
-| L9 bus/APC and upright playable L10 handover | Loading captures only | Missing | Open |
+| L9 bus/APC and upright playable L10 handover | z1.5 live capture upright | z1 live capture upright | Pose sampled pass; school-bus clearance open |
 | L10 all14 returned weapons click/key | Click passed; Q reached all14 at z1.5; direct shortcuts combat-qualified | Actual LOW click and Q reached all14; direct key1 qualified | Original hangar/knife identity open |
 | L10 molotov aim/restoration | Gold dashed marks and circle inspected at z1; prior rifle restored | Same at actual LOW z1 | Sampled pass; partly occluded trajectory |
 | L10 hunting Mega |52 axe hits, positive damage; recovery begins~1.17 s after hits stop |46 axe hits, recovery~1.15 s | Gun damage and~35% floor open |
@@ -175,3 +175,9 @@ Two HIGH L8 targeted attempts establish Hale#422 alive at100 HP after elephant d
 A temporary copy of the ordinary playtest controller added only a read-only100 ms Hale/state observer. Same approved elephant-yard save, normal input policy. HIGH z1 and LOW-configured z1 both completed in54 s with zero deaths/assists/skips and no issues. Hale#422 remained100 HP throughout observed L8.
 
 HIGH: player-boarded true at tick2755; departed true at3233, phase progression, Hale100 HP, hale-fallen false. This confirms the requested Hale-alive handoff for HIGH z1. LOW: player-boarded true and Hale100 HP; last observer sample tick3231, departed still false, followed by successful ordinary-driver completion. LOW exact departure health transition was not sampled and is qualified accordingly. Raw `high-z1-l8-hale-driver/` and `low-z1-l8-hale-driver/` contain runs-hale-driver.json and hale-audit.json. HIGH z1.5 camera assertion remains open. Temporary observer source removed; no game source changes remain. No process remains running.
+
+## Actual playable L9→L10 handover captures
+
+Approved l9-at-bridge checkpoint, real-input driver. HIGH z1.5 reached live L10 in25 s, LOW-configured z1 in24 s; no deaths/assists/skips/issues. Opened both actual-handover frames: courier upright with axe, corgi beside her, “Get away from the river ·101 m” objective and Sam radio caption. The PO folded-pose finding did not reproduce in these samples. Invalid negative simSeconds across handover excluded.
+
+LOW used a temporary copy of the capture helper changing only its forced zoom1.5 to requested zoom1; ordinary input behavior was identical, temporary source removed. Raw directories `high-z1-5-l9-live-handover/` and `low-z1-l9-live-handover/`. These bridge-only passes do not settle school-bus/APC clearance or LOW final-bay progression. Both opened handover frames were added to the single contact sheet. No process remains running.

@@ -9545,5 +9545,141 @@
         }
       ]
     }
+  },
+  "liveHandover": {
+    "highZ15": {
+      "run": [
+        {
+          "level": "L9",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 25,
+          "simSeconds": -1,
+          "maxNoProgressSeconds": 3,
+          "deaths": 0,
+          "assists": 0,
+          "attacks": {},
+          "weaponsStart": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "steps": [
+            {
+              "id": "approach",
+              "text": "Drive onto the bridge \u00b7 43\u00a0m",
+              "tick": 60,
+              "marker": {
+                "anchor": "crash-approach",
+                "ring": {
+                  "x": 470,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": [
+                  495,
+                  0,
+                  0
+                ],
+                "playerY": 0.9954338669776917,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "reach-outskirts",
+              "text": "",
+              "tick": 519,
+              "marker": {
+                "anchor": "crawl-end",
+                "ring": {
+                  "x": 547,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            }
+          ]
+        }
+      ],
+      "openedCapture": "high-z1-5-l9-live-handover/captures/continue-L9-L9-L10-actual-handover-high-z1-5.jpg"
+    },
+    "lowZ1": {
+      "run": [
+        {
+          "level": "L9",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 24,
+          "simSeconds": -1,
+          "maxNoProgressSeconds": 3.033333333333333,
+          "deaths": 0,
+          "assists": 0,
+          "attacks": {},
+          "weaponsStart": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "steps": [
+            {
+              "id": "approach",
+              "text": "Drive onto the bridge \u00b7 43\u00a0m",
+              "tick": 61,
+              "marker": {
+                "anchor": "crash-approach",
+                "ring": {
+                  "x": 470,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": [
+                  495,
+                  0,
+                  0
+                ],
+                "playerY": 0.9954336881637573,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "reach-outskirts",
+              "text": "",
+              "tick": 506,
+              "marker": {
+                "anchor": "crawl-end",
+                "ring": {
+                  "x": 547,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": null,
+                "playerY": 0.7200000286102295,
+                "pinVisible": false
+              }
+            }
+          ]
+        }
+      ],
+      "openedCapture": "low-z1-l9-live-handover/captures/hale-driver-L9-L10-actual-handover-low-z1.jpg"
+    }
   }
 }
