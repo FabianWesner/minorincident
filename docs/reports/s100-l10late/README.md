@@ -56,3 +56,9 @@ The opened HIGH zoom-1.5 road capture shows road surfacing, crops, a house, pole
 All twelve 15-second WebGPU samples finished, HIGH before LOW, at zoom 1 and 1.5; requested and actual tier agree. [Frame summaries](browser-matrix.json) retain actual live-count ranges and separately summarize 60–70-live frames. HIGH corridor reaches 67 live; HIGH complex 52, finale 45. LOW corridor reaches 41, complex 24, finale 22. These lower-count samples cannot establish the requested 60–70 performance gate. HIGH complex and finale captures were opened and show authored scenery and active enemies. The contact sheet now includes both tiers at all three locations. Five-minute browser arrival and spawn-event review remain pending.
 
 The opened six-cell sheet confirms LOW finale has already reached cure release/epilogue by its final capture; its all-frame timing includes that transition and zero-infected frames. It is not a sustained combat measurement. LOW complex final capture likewise shows no nearby pressing enemies. These scope limits must remain visible in the final verdict.
+
+## Fresh current-revision cadence and required unit suite
+
+[Current cadence receipt](current-cadence.json) passes all six seed/tier routes on revision 1c05fbd5. Routes run 1111.02–1195.23 simulated seconds; maximum adjusted attack-start gaps: LOW seeds 1/2/3 = 42.12 / 43.28 / 42.23 s; HIGH = 33.65 / 28.63 / 26.52 s. Protected hangar dialogue is separately recorded as 56 s. No cap violations; all routes complete. This refreshes the native arrival PASS and supersedes reliance solely on s93.
+
+Required remote `sh tools/remote/run.sh "$PWD" -- npm test` now PASS on 46.225.66.90: 27 files, 106 tests passed, one skipped; 223.17 s Vitest / 225.7 s budgeted command (240 s budget). This supersedes the earlier unavailable-runner entry. Browser pop-in and the outstanding 60–70-load coverage remain unfinished.
