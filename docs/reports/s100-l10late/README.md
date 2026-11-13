@@ -1,86 +1,83 @@
-# s100-l10late — L10 corridor, complex and finale
+# s100-l10late — L10 late-region QA
 
-**Status: incomplete; original sandbox blocker resolved on continuation.** The production build passed. The requested WebGPU frame-time and visual review could not be run: the browser-pool daemon failed to bind `127.0.0.1:4329` (`EPERM`); the documented legacy GPU guard could not inspect processes (`ps` permission denied); a single headless Metal Chromium launch then failed at macOS Mach rendezvous (`Permission denied (1100)`). No browser screenshot or contact sheet was produced, and no gameplay source was changed.
+**Overall FAIL: HIGH seed 3 has a 46.48 s finale tail without an attack start, 1.48 s over the 45 s criterion.** Report only; gameplay remains PROD batch 94 / `0bb6a649`. All branch changes are evidence under this directory.
 
 ## Verdicts
 
-| Requirement | Verdict | Evidence / missing evidence |
+| Item | Verdict | Measured result |
 | --- | --- | --- |
-| Frame interval at 60–70 live infected, corridor / complex / finale, HIGH and LOW at zoom 1 and 1.5 | **FAIL — unmeasured** | No GPU browser samples. The report cannot determine whether HIGH p95 exceeds 33 ms. WebGPU backend and actual render quality were therefore not verified. |
-| Attack-start gaps over at least five minutes of journey | **PASS (native simulation evidence)** | The current main ancestry contains [s93 native validation](../s93-l10finale/native-validation.json): six seed/tier complete routes, each with attack-start gaps ≤43.28 s (HIGH 26.52–33.65 s; LOW 42.12–43.28 s), against the 45 s threshold. Infected peaks were 62–70. This is native simulation evidence, not a browser observation. |
-| Sprinter spawn pop-in / camera visibility | **FAIL — unreviewed** | No captures could be opened because browser startup failed. |
-| Mega approach after cure installation and finale lulls | **FAIL — unmeasured** | No browser route or approach-time measurement. |
+| Frame intervals at 60–70 live infected | PASS for staged stress; native density differs | All 12 tier/region/zoom cases: mean 16.65–16.66 ms, p95 16.70–16.80 ms, max 16.80 ms. **No observed HIGH p95 >33 ms.** |
+| Journey attack-start intervals ≥5 min | PASS, native simulation | Six complete routes, 1111.02–1195.23 simulated seconds; largest adjusted adjacent-start gap 43.28 s. |
+| Sprinter births in camera view | PASS in observed corridor arrivals | HIGH 0/8; LOW 0/16; both zooms, actual camera projection at creation, captures opened. |
+| Mega approach after installation | PASS in seed-3 native routes | Enters 25 m after 0.20 s HIGH / 0.67 s LOW; starts at 25.76 / 25.35 m. |
+| Finale lulls, including head and tail | **FAIL HIGH; PASS LOW** | HIGH 46.48 s final tail; LOW maximum 18.60 s including ends. |
 
-## Findings and priority
+## Frame intervals
 
-- **P1:** Obtain the required HIGH WebGPU frame samples at 60–70 live infected. The >33 ms p95 condition is unknown; no performance pass is claimed.
-- **P1:** Measure Mega arrival after cure installation and inspect finale activity for lulls.
-- **P2:** Capture and open corridor / complex sprinter-arrival frames at both tiers and zooms to assess in-view spawning.
-- Existing arrival cadence evidence passes: longest gap is 43.28 s (seed 2 LOW), 1.72 s below the threshold. The source receipt records a 56 s protected dialogue interval separately.
+Headless pooled Chromium, ANGLE Metal, backend verified `webgpu`, 1280×720, DPR 1. HIGH ran before LOW. Actual render tier and camera zoom were recorded. Exactly one browser context was used at a time through `tools/e2e-lock.sh` / browser pool, reservations under ten minutes, private ports 4901/4902; port 3300 was not used. Source served by Vite dev; production build was also checked. RAF cadence is refresh capped at approximately 60 Hz: these are observed frame intervals, not uncapped GPU execution times or GPU headroom estimates. No CPU profiler ran during samples.
 
-## Run record
+Native peak-state seed-3 mission resumes preserve actors, bodies, mission and Mega state. A **synthetic stress fixture** adds unchanged catalog runners around the courier to reach 65 live, retains all existing bodies, enables courier god mode, then runs simulation at normal speed for 15 seconds. Corridor/complex repeat the restored current InputFrame, which may include combat. Finale uses fresh empty InputFrames and a runtime-only director-cap override that includes recoverable downed reservations. The cap override prevents production chunk residency from sleeping the extra actors. This changes test population headroom, not production code or infected stats.
 
-- `npm run build`: PASS, production build complete.
-- `npm run typecheck`: PASS.
-- `npm run lint`: PASS.
-- `sh tools/remote/run.sh "$PWD" -- npm test`: NOT RUN; runner reported no healthy provisioned Hetzner worker and refused local Mac fallback (exit 69).
-- Browser policy: headless, one intended GPU browser; browser pool attempted first. Pool bind, process inspection and Chromium bootstrap failures are environment restrictions, not game results.
-- No source or spec files changed. No contact sheet was fabricated from unrelated captures.
+Native installed finale caps are **22 HIGH / 14 LOW**, so a sustained 60–70 finale is not a native encounter. These synthetic results establish this explicitly staged load envelope, not natural encounter population, navigation fairness or mortal playability. Native actual-load results are retained in [browser-matrix.json](browser-matrix.json): HIGH corridor 55–67, complex 35–52, finale 10–45; LOW corridor 37–41, complex 2–24, finale 0–22. LOW actual-load finale includes cure release/epilogue. Its worst whole-window frame is 50.00 ms.
 
-**Next required action:** rerun this lane in an environment where the local browser pool / headless Metal Chromium can start, then replace the unmeasured verdicts and add the opened-capture contact sheet.
+| Actual tier | Region | Zoom | Live range | Frames at 60–70 | Mean ms | p95 ms | Max ms | ≤33 ms p95 |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| HIGH | destroyed-corridor | 1 | 64–70 | 900 | 16.66 | 16.70 | 16.80 | PASS |
+| HIGH | destroyed-corridor | 1.5 | 64–70 | 900 | 16.66 | 16.70 | 16.80 | PASS |
+| HIGH | dispersal-complex | 1 | 65–66 | 900 | 16.66 | 16.70 | 16.80 | PASS |
+| HIGH | dispersal-complex | 1.5 | 65–66 | 901 | 16.66 | 16.70 | 16.80 | PASS |
+| HIGH | finale | 1 | 65–67 | 901 | 16.66 | 16.70 | 16.80 | PASS |
+| HIGH | finale | 1.5 | 65–67 | 901 | 16.66 | 16.70 | 16.80 | PASS |
+| LOW | destroyed-corridor | 1 | 65–67 | 901 | 16.66 | 16.80 | 16.80 | PASS |
+| LOW | destroyed-corridor | 1.5 | 65–67 | 901 | 16.66 | 16.70 | 16.80 | PASS |
+| LOW | dispersal-complex | 1 | 65–70 | 900 | 16.66 | 16.70 | 16.80 | PASS |
+| LOW | dispersal-complex | 1.5 | 65–70 | 900 | 16.66 | 16.70 | 16.80 | PASS |
+| LOW | finale | 1 | 65–65 | 900 | 16.66 | 16.70 | 16.80 | PASS |
+| LOW | finale | 1.5 | 65–65 | 901 | 16.65 | 16.70 | 16.80 | PASS |
 
-## Full-access continuation
+[Per-frame intervals, ticks and live counts](frame-samples.json), [HIGH staged summaries](stress-high.json), [LOW staged summaries](stress-low.json), [sustained finale summaries](finale-envelope.json). Only 60–70-live frames enter the table. First-frame RAF intervals may be partial. The earlier 10–11-frame native-cap finale stress attempts are excluded.
 
-The pooled headless Metal browser now starts and reports `webgpu`, with requested HIGH and LOW quality and zoom 1 / 1.5. The initial checkpoint probe completed, but all twelve samples held only seven live infected and paused simulation; these samples are excluded from acceptance. Raw diagnostics are under `test-results/s100-l10late/probe.json`. Source inspection identified `Mission.restore()` retaining `cureFront` for an already loaded L10 world, so repeated checkpoint requests do not establish independent late-region fixtures. Next: restore authoritative mission-resume fixtures in fresh worlds and record normal-speed gameplay with per-frame live counts. No performance or visual pass is inferred from the diagnostic probe.
+## Arrival cadence and finale
 
-## Native fixture-generation probe
+[Fresh native cadence receipt](current-cadence.json), source revision `1c05fbd5` (documentation-only descendant of PROD). Existing native complete policy supplies ordinary InputFrames; no actor/stat/timer modifications. The observer counts attacks starting against player 1, including interrupted windups. Exactly 56 s of protected hangar conversation are excluded from adjusted gaps and retained separately in the receipt. All six routes complete, with zero cap violations. This is simulation evidence, not a five-minute browser playthrough.
 
-A fresh seed-3 native route completed at each tier. HIGH: Mega distance at cure installation 25.76 m, time to enter 25 m radius 0.20 s. LOW: 25.35 m and 0.67 s. These are simulation approach measurements. The live population probe found no 60–70-live interval in its provisional later coordinate bands: HIGH peaks 59 / 48 / 19; LOW 37 / 24 / 14 (corridor band / complex band / installed finale). These bands still require alignment with authored region envelopes; see [raw summary](native-probe.json). Finale mission-resume fixtures were saved under test-results for subsequent browser restoration. This does not satisfy GPU timing, lulls or visual review.
+| Seed | Tier | Route seconds | Largest adjusted adjacent-start gap s | Peak infected |
+| --- | --- | ---: | ---: | ---: |
+| 1 | low | 1111.02 | 42.12 | 69 |
+| 1 | high | 1195.23 | 33.65 | 62 |
+| 2 | low | 1114.55 | 43.28 | 69 |
+| 2 | high | 1184.63 | 28.63 | 62 |
+| 3 | low | 1160.55 | 42.23 | 70 |
+| 3 | high | 1194.25 | 26.52 | 65 |
 
-Authored-envelope rerun confirms seed-3 live peaks: destroyed-corridor HIGH 59 / LOW 37; dispersal-complex HIGH 52 / LOW 24; installed finale HIGH 19 / LOW 14. Peak-state mission-resume fixtures now exist for all six tier/region combinations under test-results/s100-l10late. The earlier provisional complex HIGH value 48 is superseded by 52. Browser normal-speed fixture runner is prepared in /private/tmp/s100-browser.mts; GPU acceptance sampling remains pending.
+[Finale head/tail receipt](finale-lulls.json) adds installation-to-first-start and last-start-to-cure-release intervals; the adjacent-only journey metric does not cover those tails.
 
-## Browser resume diagnostic
+| Seed 3 | HIGH | LOW |
+| --- | ---: | ---: |
+| Installation to release s | 65.70 | 113.28 |
+| Attack starts during finale | 3 | 108 |
+| Installation to first attack s | 15.68 | 16.88 |
+| Largest adjacent gap s | 2.35 | 18.60 |
+| Last attack to release s | **46.48** | 0.60 |
+| Mega distance at installation m | 25.76 | 25.35 |
+| Mega time to ≤25 m s | 0.20 | 0.67 |
 
-Direct `mission.loadResume()` restores the native infected population: HIGH corridor reached 67 live at both zooms (800 / 761 RAF samples at 60–70 live). However, the opened `live-high-destroyed-corridor-z1.5.jpg` shows the courier and corgi over largely blank ground, without the authored corridor environment. Therefore **all six HIGH resume measurements are excluded from performance acceptance** until region rendering is restored and visually verified. The diagnostic frame summaries are in [high-browser.json](high-browser.json); their ~16.7 ms cadence is not a valid populated-scene performance result. Complex live range was 35–52; finale 10–45. Next: repair fixture setup/streamed presentation, then rerun HIGH before LOW. No game source changed.
+Mega approach therefore has no long travel wait in these seed-3 routes; HIGH still has a finale pressure lull. No all-seed approach claim is made.
 
-The pre-view-load campaign-resume experiment also restored 55–67 live infected but the opened corridor capture still lacked authored scenery. Moving restoration earlier alone does not repair this fixture. Acceptance timings remain excluded; next inspect chunk/district residency and view visibility at the restored player position. The temporary runner now uses `loadLevel` setup to install the native campaign resume before view preparation.
+## Visible spawning and captures
 
-Layout inspection weakens the missing-scenery hypothesis: the opened capture courier position (3530.87, 6.02) has zero authored placements within 20 m, five within 40 m and 34 within 80 m. A blank close camera can therefore be consistent with authored open ground. Existing timings remain excluded until district/terrain draw state and an authored-road capture establish presentation validity. This is a fixture-validation issue, not yet a demonstrated rendering defect.
+The spawn observer wraps ordinary infected creation without changing its arguments or behavior, then projects the spawn point at body height into the actual gameplay camera. In-view means NDC x/y/z within −1…1. A restored corridor checkpoint plus continuous ordinary westward movement triggers arrival creation; god mode preserves the observer. HIGH produces four births per zoom; LOW produces eight per zoom. LOW uses the matched HIGH-origin checkpoint with actual director tier and renderer quality verified LOW. [HIGH events](spawn-high.json), [LOW matched events](spawn-low-matched.json): **0/24 births in view**. This limited observed-event pass does not prove every authored spawn across the full map is invisible. Earlier LOW-origin windows with zero births are retained in spawn-low.json and do not count toward the verdict.
 
-## Validated road presentation
+The immediate birth captures at both tiers/zooms were opened: pre-existing nearby enemies remain visible; the new sprinters are outside the frame, consistent with projection. All six stress-region endpoint captures at zoom 1.5 were also opened: dense crowds surround the courier over authored crops, complex paving and the finale platform. The initial apparently blank corridor frame is authored open ground, not a demonstrated renderer defect. [Contact sheet](contact-sheet.jpg) shows the six stress views plus one birth-event view per tier; captions identify the fixture. Synthetic crowded placement is not assessed as native spawn pop-in.
 
-The opened HIGH zoom-1.5 road capture shows road surfacing, crops, a house, poles and roadside clutter. This confirms district rendering in the restored fixture; the earlier blank patch is not proof of missing scenery. The staged road run restored the native peak snapshot, positioned the courier at authored route point (3577,95), then used ordinary bot inputs at normal speed for 15 s. It observed 59–69 live infected. Exact 60–70-live frame statistics and district counters are in [road-high-proof.json](road-high-proof.json); the [contact sheet](contact-sheet.jpg) contains the opened road capture. Other required regions/tiers, five-minute browser arrival sampling, spawn visibility and finale lull review remain open.
+## P1 / P2 findings
 
-## Completed actual-load browser matrix
+- **P1: none established.** No measured HIGH stress p95 exceeds 33 ms; native worst observed whole-window frame is 50 ms, below the checklist's 200 ms hitch threshold. This is bounded by the sampled windows.
+- **P2: HIGH finale pressure lull.** Seed 3: 46.48 s without an attack start immediately before cure release, exceeding 45 s by 1.48 s. The adjacent-start cadence gate alone misses this tail. Reproducer: unchanged native complete-policy seed 3 HIGH, observe installation through cure release including interval endpoints.
+- **Coverage limitation:** native finale cannot hold 60–70 living infected under its 22/14 caps. The 65-live finale measurement requires the declared synthetic runtime-cap override; do not present it as native density.
 
-All twelve 15-second WebGPU samples finished, HIGH before LOW, at zoom 1 and 1.5; requested and actual tier agree. [Frame summaries](browser-matrix.json) retain actual live-count ranges and separately summarize 60–70-live frames. HIGH corridor reaches 67 live; HIGH complex 52, finale 45. LOW corridor reaches 41, complex 24, finale 22. These lower-count samples cannot establish the requested 60–70 performance gate. HIGH complex and finale captures were opened and show authored scenery and active enemies. The contact sheet now includes both tiers at all three locations. Five-minute browser arrival and spawn-event review remain pending.
+## Checks and provenance
 
-The opened six-cell sheet confirms LOW finale has already reached cure release/epilogue by its final capture; its all-frame timing includes that transition and zero-infected frames. It is not a sustained combat measurement. LOW complex final capture likewise shows no nearby pressing enemies. These scope limits must remain visible in the final verdict.
+Read `docs/qa/po-checklist.md`. `npm run build`, `npm run typecheck`, and `npm run lint` PASS. Required remote `sh tools/remote/run.sh "$PWD" -- npm test` PASS on 46.225.66.90: 27 files, 106 tests passed, one skipped, 223.17 s Vitest / 225.7 s budgeted command (240 s budget). No check is still running. Source has not changed since these checks.
 
-## Fresh current-revision cadence and required unit suite
-
-[Current cadence receipt](current-cadence.json) passes all six seed/tier routes on revision 1c05fbd5. Routes run 1111.02–1195.23 simulated seconds; maximum adjusted attack-start gaps: LOW seeds 1/2/3 = 42.12 / 43.28 / 42.23 s; HIGH = 33.65 / 28.63 / 26.52 s. Protected hangar dialogue is separately recorded as 56 s. No cap violations; all routes complete. This refreshes the native arrival PASS and supersedes reliance solely on s93.
-
-Required remote `sh tools/remote/run.sh "$PWD" -- npm test` now PASS on 46.225.66.90: 27 files, 106 tests passed, one skipped; 223.17 s Vitest / 225.7 s budgeted command (240 s budget). This supersedes the earlier unavailable-runner entry. Browser pop-in and the outstanding 60–70-load coverage remain unfinished.
-
-## First observed sprinter creation event
-
-HIGH WebGPU zoom 1.5, corridor native resume: ordinary continuous westward movement caused four sprinters to be created at tick 300 (5.02 s wall observation). Actual gameplay-camera projection at creation placed all four outside view: NDC x 7.77–9.70, y −4.34 to −7.51; **0/4 on-screen births**. [Event receipt](spawn-high.json). The immediate capture was opened: courier/corgi and nearby ground/props are visible, and the newly created sprinters are absent from the image as predicted. God mode was enabled solely to keep this observation alive; no infected stats, creation positions or timers were changed. This is a narrow event pass; remaining tier/zoom events still require observation.
-
-The corridor event check now covers HIGH zoom 1 and 1.5: four observed births each, **0/8 inside actual gameplay camera view**, and both immediate captures opened. LOW zoom 1 and 1.5 each ran 40 s of the same westward input but produced **zero births**, so LOW has no event coverage and no pop-in pass is claimed. Both LOW endpoint captures were opened. [HIGH events](spawn-high.json), [LOW empty-event windows](spawn-low.json).
-
-## Staged catalog-population HIGH stress
-
-Native peak resumes were topped up to 65 living standard catalog runners (unchanged HP/speed/attacks), then run at normal speed for 15 s repeating the restored current input frame and courier god mode. This is an explicit synthetic load fixture, separate from native journey density. [Results](stress-high.json): corridor holds 64–70 live at both zooms, complex 65–66; all four have 900–901 target-count frames, mean 16.66 ms, p95 16.70 ms, max 16.80 ms. HIGH p95 does not exceed 33 ms in these staged corridor/complex cases. Finale retains 60–70 live for only 11 frames before falling to 22; its reported target-count percentiles are **too short for acceptance**, and sustained finale coverage remains open. All three zoom-1.5 endpoint captures were opened: crowded courier surrounded by standard enemies over authored crops/complex paving/finale platform. No source, actor stats or corpse lifecycle changed.
-
-LOW staged stress [receipt](stress-low.json): corridor holds 65–67 live and complex 65–70 at both zooms, 900–901 target-count samples each, mean 16.66 ms, p95 16.70–16.80 ms, max 16.80 ms. All three zoom-1.5 captures were opened and show authored scenery; corridor/complex contain a dense nearby crowd. Finale has only 10–11 target-count frames, then falls to its 14 cap, so sustained finale performance remains unverified. Source inspection confirms `ChunkResidency.sleepOutside()` sleeps excess actors above director cap; installed finale uses 22 HIGH / 14 LOW. The fixture input feed copies the restored current input frame rather than constructing empty input; therefore it must not be described as guaranteed neutral. No infected stats or source changed.
-
-## Sustained synthetic finale envelope
-
-A separate runtime-only diagnostic fixes director headroom to include the 65 live actors plus existing recoverable downed reservations, preventing native excess-actor sleeping. This **overrides production finale population caps**; it is a GPU/simulation load envelope, not a native encounter. No source or infected stats changed, no body removed. The feed uses freshly constructed empty InputFrames; courier god mode prevents death. [Results](finale-envelope.json) provide full 15-second 60–70-live windows at HIGH and LOW, zoom 1 / 1.5. HIGH holds 65–67 live; LOW exactly 65. Both zoom-1.5 captures were opened and show the authored platform and enemies. Native finale cap and behavior remain represented separately by the actual-load matrix.
-
-## Native finale lull finding
-
-Fresh seed-3 complete-policy observation includes installation-to-first-start and last-start-to-release, unlike the journey adjacent-start metric. [Finale receipt](finale-lulls.json): HIGH installation-to-release 65.70 s, three attack starts, head 15.68 s, maximum adjacent gap 2.35 s, **tail 46.48 s — FAIL**, 1.48 s above 45 s. LOW finale 113.28 s, 108 starts, head 16.88 s, tail 0.60 s, maximum gap including ends 18.60 s — PASS. Mega enters the 25 m radius after 0.20 s HIGH / 0.67 s LOW. This is a P2 finale pressure finding; no behavior is changed.
-
-LOW matched-checkpoint event check verifies actual render quality and director tier low; eight births at each zoom, **0/16 inside camera**. Both captures were opened. Together with HIGH, observed arrival births are 0/24 on-screen. [LOW matched receipt](spawn-low-matched.json). This supersedes the earlier empty-event LOW windows.
+No deployment, push, main movement, zombie stat tuning or corpse removal. Initial sandbox startup failures were superseded by successful pooled full-access runs. Earlier diagnostic artifacts (high-browser.json, native-probe.json, road-high-proof.json) retain the investigation history; the final verdict uses the receipts linked above. Raw local screenshots and fixture resumes remain in `test-results/s100-l10late/`.
