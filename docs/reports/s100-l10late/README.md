@@ -32,3 +32,7 @@
 ## Full-access continuation
 
 The pooled headless Metal browser now starts and reports `webgpu`, with requested HIGH and LOW quality and zoom 1 / 1.5. The initial checkpoint probe completed, but all twelve samples held only seven live infected and paused simulation; these samples are excluded from acceptance. Raw diagnostics are under `test-results/s100-l10late/probe.json`. Source inspection identified `Mission.restore()` retaining `cureFront` for an already loaded L10 world, so repeated checkpoint requests do not establish independent late-region fixtures. Next: restore authoritative mission-resume fixtures in fresh worlds and record normal-speed gameplay with per-frame live counts. No performance or visual pass is inferred from the diagnostic probe.
+
+## Native fixture-generation probe
+
+A fresh seed-3 native route completed at each tier. HIGH: Mega distance at cure installation 25.76 m, time to enter 25 m radius 0.20 s. LOW: 25.35 m and 0.67 s. These are simulation approach measurements. The live population probe found no 60–70-live interval in its provisional later coordinate bands: HIGH peaks 59 / 48 / 19; LOW 37 / 24 / 14 (corridor band / complex band / installed finale). These bands still require alignment with authored region envelopes; see [raw summary](native-probe.json). Finale mission-resume fixtures were saved under test-results for subsequent browser restoration. This does not satisfy GPU timing, lulls or visual review.
