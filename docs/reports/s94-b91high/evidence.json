@@ -9239,5 +9239,311 @@
       "minimumHaleHP": 100,
       "limit": "Custom input controller did not reach driver marker; no soft-lock or handoff claim."
     }
+  },
+  "haleAliveDriverProof": {
+    "high": {
+      "samples": 559,
+      "minimumHaleHP": 100,
+      "playerBoarded": {
+        "tick": 2755,
+        "level": "L8",
+        "hale": {
+          "id": 422,
+          "hp": 100
+        },
+        "states": {
+          "breached": true,
+          "player-boarded": true,
+          "aboard": false,
+          "apc-destroyed": false,
+          "hale-fallen": false,
+          "hale-keys": false,
+          "elephant-fallen": true,
+          "elephant-turning": true,
+          "reyes-fallback": true,
+          "departed": false,
+          "arena-flamingo": false,
+          "arena-flamingo-cleared": false,
+          "arena-zebra": false,
+          "arena-zebra-cleared": false,
+          "arena-monkey": false,
+          "arena-monkey-cleared": false,
+          "arena-lion": false,
+          "arena-lion-cleared": false,
+          "arena-gorilla": false,
+          "arena-gorilla-cleared": false,
+          "arena-elephant": false,
+          "arena-elephant-cleared": false
+        },
+        "phase": "playing"
+      },
+      "departed": {
+        "tick": 3233,
+        "level": "L8",
+        "hale": {
+          "id": 422,
+          "hp": 100
+        },
+        "states": {
+          "breached": true,
+          "player-boarded": true,
+          "aboard": false,
+          "apc-destroyed": false,
+          "hale-fallen": false,
+          "hale-keys": false,
+          "elephant-fallen": true,
+          "elephant-turning": true,
+          "reyes-fallback": true,
+          "departed": true,
+          "arena-flamingo": false,
+          "arena-flamingo-cleared": false,
+          "arena-zebra": false,
+          "arena-zebra-cleared": false,
+          "arena-monkey": false,
+          "arena-monkey-cleared": false,
+          "arena-lion": false,
+          "arena-lion-cleared": false,
+          "arena-gorilla": false,
+          "arena-gorilla-cleared": false,
+          "arena-elephant": false,
+          "arena-elephant-cleared": false
+        },
+        "phase": "progression"
+      },
+      "last": {
+        "tick": 3233,
+        "level": "L8",
+        "hale": {
+          "id": 422,
+          "hp": 100
+        },
+        "states": {
+          "breached": true,
+          "player-boarded": true,
+          "aboard": false,
+          "apc-destroyed": false,
+          "hale-fallen": false,
+          "hale-keys": false,
+          "elephant-fallen": true,
+          "elephant-turning": true,
+          "reyes-fallback": true,
+          "departed": true,
+          "arena-flamingo": false,
+          "arena-flamingo-cleared": false,
+          "arena-zebra": false,
+          "arena-zebra-cleared": false,
+          "arena-monkey": false,
+          "arena-monkey-cleared": false,
+          "arena-lion": false,
+          "arena-lion-cleared": false,
+          "arena-gorilla": false,
+          "arena-gorilla-cleared": false,
+          "arena-elephant": false,
+          "arena-elephant-cleared": false
+        },
+        "phase": "progression"
+      },
+      "run": [
+        {
+          "level": "L8",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 54,
+          "simSeconds": -1,
+          "maxNoProgressSeconds": 7.594,
+          "deaths": 0,
+          "assists": 0,
+          "attacks": {
+            "weapon.army-mg": 62
+          },
+          "weaponsStart": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "weaponsEnd": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "steps": [
+            {
+              "id": "escape",
+              "text": "Kill elephant 0/1 \u00b7 6\u00a0m",
+              "tick": 65,
+              "marker": {
+                "anchor": "l8-route",
+                "ring": {
+                  "x": 96,
+                  "y": 0,
+                  "z": 53
+                },
+                "drawn": [
+                  96,
+                  0.12,
+                  53
+                ],
+                "playerY": 0.8399999737739563,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "depart",
+              "text": "",
+              "tick": 2755,
+              "marker": {
+                "anchor": "exit",
+                "ring": null,
+                "drawn": null,
+                "playerY": 0.995434582233429,
+                "pinVisible": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "low": {
+      "samples": 559,
+      "minimumHaleHP": 100,
+      "playerBoarded": {
+        "tick": 2757,
+        "level": "L8",
+        "hale": {
+          "id": 422,
+          "hp": 100
+        },
+        "states": {
+          "breached": true,
+          "player-boarded": true,
+          "aboard": false,
+          "apc-destroyed": false,
+          "hale-fallen": false,
+          "hale-keys": false,
+          "elephant-fallen": true,
+          "elephant-turning": true,
+          "reyes-fallback": true,
+          "departed": false,
+          "arena-flamingo": false,
+          "arena-flamingo-cleared": false,
+          "arena-zebra": false,
+          "arena-zebra-cleared": false,
+          "arena-monkey": false,
+          "arena-monkey-cleared": false,
+          "arena-lion": false,
+          "arena-lion-cleared": false,
+          "arena-gorilla": false,
+          "arena-gorilla-cleared": false,
+          "arena-elephant": false,
+          "arena-elephant-cleared": false
+        },
+        "phase": "playing"
+      },
+      "departed": null,
+      "last": {
+        "tick": 3231,
+        "level": "L8",
+        "hale": {
+          "id": 422,
+          "hp": 100
+        },
+        "states": {
+          "breached": true,
+          "player-boarded": true,
+          "aboard": false,
+          "apc-destroyed": false,
+          "hale-fallen": false,
+          "hale-keys": false,
+          "elephant-fallen": true,
+          "elephant-turning": true,
+          "reyes-fallback": true,
+          "departed": false,
+          "arena-flamingo": false,
+          "arena-flamingo-cleared": false,
+          "arena-zebra": false,
+          "arena-zebra-cleared": false,
+          "arena-monkey": false,
+          "arena-monkey-cleared": false,
+          "arena-lion": false,
+          "arena-lion-cleared": false,
+          "arena-gorilla": false,
+          "arena-gorilla-cleared": false,
+          "arena-elephant": false,
+          "arena-elephant-cleared": false
+        },
+        "phase": "playing"
+      },
+      "run": [
+        {
+          "level": "L8",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 54,
+          "simSeconds": -1,
+          "maxNoProgressSeconds": 7.548,
+          "deaths": 0,
+          "assists": 0,
+          "attacks": {
+            "weapon.army-mg": 63
+          },
+          "weaponsStart": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "weaponsEnd": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "steps": [
+            {
+              "id": "escape",
+              "text": "Kill elephant 0/1 \u00b7 6\u00a0m",
+              "tick": 65,
+              "marker": {
+                "anchor": "l8-route",
+                "ring": {
+                  "x": 96,
+                  "y": 0,
+                  "z": 53
+                },
+                "drawn": [
+                  96,
+                  0.12,
+                  53
+                ],
+                "playerY": 0.8399999737739563,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "depart",
+              "text": "",
+              "tick": 2756,
+              "marker": {
+                "anchor": "exit",
+                "ring": null,
+                "drawn": null,
+                "playerY": 0.995434582233429,
+                "pinVisible": false
+              }
+            }
+          ]
+        }
+      ]
+    }
   }
 }

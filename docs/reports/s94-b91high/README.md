@@ -70,7 +70,7 @@ L10 HIGH z1 WebGPU opening sample: 300 s, ten deaths, zero assists, 409 fire-axe
 | --- | --- | --- | --- |
 | L6 full cadence after first hatch | z1 incomplete; z1.5 reached exit-platform, closure unproved | Missing | Open |
 | L7 departure vs soldiers | z1 route passed, timed frames missing; z1.5 three opened frames show no live-soldier intersection | z1 route passed; three opened departure frames show no intersection | Sampled clearance; HIGH z1 capture still open |
-| L8 boarding through driver handoff, Hale alive | z1 14/14 and handoff passed; Hale health at handoff unproved; z1.5 camera assertion failed | LOW-configured z1 handoff passed; Hale state/actual quality receipt incomplete | Open Hale-alive and z1.5 conditions |
+| L8 boarding through driver handoff, Hale alive | z1 handoff with Hale100 HP confirmed; z1.5 camera assertion failed | LOW-configured z1 route passed; Hale100 HP at boarding; exact departure sample/actual quality receipt incomplete | HIGH z1 Hale-alive passed; other stated conditions open |
 | L9 rail/final bay | z1 one139 s 3/4 wait, later retry passed; z1.5 passed | Five-minute attempt ended after15 deaths at hatch | LOW final bay open |
 | L9 bus/APC and upright playable L10 handover | Loading captures only | Missing | Open |
 | L10 all14 returned weapons click/key | Click passed; Q reached all14 at z1.5; direct shortcuts combat-qualified | Actual LOW click and Q reached all14; direct key1 qualified | Original hangar/knife identity open |
@@ -169,3 +169,9 @@ These are **not** the requested 60–70-infected performance pass, nor an equal-
 Unchanged prescribed remote suite passed on46.225.66.90:27 files,106 passed,1 skipped;222.5 s inside240 s. Earlier test-budget process-cleanup failure did not recur. No tests changed or trimmed.
 
 Two HIGH L8 targeted attempts establish Hale#422 alive at100 HP after elephant defeat and while HUD reaches14/14 aboard. Opened first attempt handoff.jpg shows14/14, driver marker5 m away, courier on far side of APC. The straight WASD approach stopped4.54 m away; click approach ended15.72 m away. Both retained hale-fallen=false, hale-keys=false, player-boarded=false. These custom controllers did **not** reach the valid driver marker, so they do not prove a Hale-alive handoff or a soft lock. The successful ordinary-driver handoffs above still lack Hale health at the exact transition. Raw `high-z1-l8-hale/` and `high-z1-l8-hale-click/`. No browser or remote check remains running.
+
+## Ordinary-driver Hale health proof
+
+A temporary copy of the ordinary playtest controller added only a read-only100 ms Hale/state observer. Same approved elephant-yard save, normal input policy. HIGH z1 and LOW-configured z1 both completed in54 s with zero deaths/assists/skips and no issues. Hale#422 remained100 HP throughout observed L8.
+
+HIGH: player-boarded true at tick2755; departed true at3233, phase progression, Hale100 HP, hale-fallen false. This confirms the requested Hale-alive handoff for HIGH z1. LOW: player-boarded true and Hale100 HP; last observer sample tick3231, departed still false, followed by successful ordinary-driver completion. LOW exact departure health transition was not sampled and is qualified accordingly. Raw `high-z1-l8-hale-driver/` and `low-z1-l8-hale-driver/` contain runs-hale-driver.json and hale-audit.json. HIGH z1.5 camera assertion remains open. Temporary observer source removed; no game source changes remain. No process remains running.
