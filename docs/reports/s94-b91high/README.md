@@ -35,6 +35,14 @@ Opened L9 tick-27116 frame shows the courier inside the APC at the barrier, crow
 
 Raw new evidence resides in `test-results/s94-b91high/high-z1-5-l7-webgpu/`, `high-z1-l8-yard-webgpu/`, `high-z1-5-l8-yard-webgpu/`, and `high-z1-l9-rail-webgpu/`. These are local artifacts. No process/check remains running at this report boundary.
 
+## L9 retry and L10 opening sample
+
+L9 HIGH z1 WebGPU retry from the same rail fixture completed in 214 s. The manual-input watcher submitted **no F input**: the driver advanced without it, so this retry did not reproduce the prior final-bay wait. The automatic P1 `ally-passive` warning names vehicle #667 at 0/1000 HP; the authored L9 vehicle zero-HP floor makes that insufficient evidence of an injured survivor or P1 gameplay failure. The prior 139 s wait remains an intermittent candidate, not a proven soft lock. Raw receipts: `test-results/s94-b91high/high-z1-l9-manual-exit/`. Actual upright L10 pose still needs a live post-load capture.
+
+L10 HIGH z1 WebGPU opening sample: 300 s, ten deaths, zero assists, 409 fire-axe attacks, no skipped objectives. It did not reach the requested Mega hunting encounter. No Mega damage/recovery, ≥60-infected performance, arrivals, rack, knife, molotov or road-crop pass is inferred. The two retained frame entries are loading frames; they cannot substantiate gameplay fps. Raw receipts: `test-results/s94-b91high/high-z1-l10-hunt-webgpu/` including route audit. All processes ended before this update.
+
+[Evidence index](evidence.json) preserves compact run receipts. The coverage ledger below retains the full original scope; cells marked Not run also include incomplete attempts detailed above and must not be read as passed.
+
 ## Verdict
 
 **HOLD — no gameplay verdict is possible.** No batch-91 gameplay P1/P2 is confirmed yet; the L9 final-bay stall is a candidate requiring manual confirmation. The prior s88 P1/P2 dispositions describe earlier revisions and are not carried forward as current findings.
