@@ -78,3 +78,9 @@ LOW staged stress [receipt](stress-low.json): corridor holds 65–67 live and co
 ## Sustained synthetic finale envelope
 
 A separate runtime-only diagnostic fixes director headroom to include the 65 live actors plus existing recoverable downed reservations, preventing native excess-actor sleeping. This **overrides production finale population caps**; it is a GPU/simulation load envelope, not a native encounter. No source or infected stats changed, no body removed. The feed uses freshly constructed empty InputFrames; courier god mode prevents death. [Results](finale-envelope.json) provide full 15-second 60–70-live windows at HIGH and LOW, zoom 1 / 1.5. HIGH holds 65–67 live; LOW exactly 65. Both zoom-1.5 captures were opened and show the authored platform and enemies. Native finale cap and behavior remain represented separately by the actual-load matrix.
+
+## Native finale lull finding
+
+Fresh seed-3 complete-policy observation includes installation-to-first-start and last-start-to-release, unlike the journey adjacent-start metric. [Finale receipt](finale-lulls.json): HIGH installation-to-release 65.70 s, three attack starts, head 15.68 s, maximum adjacent gap 2.35 s, **tail 46.48 s — FAIL**, 1.48 s above 45 s. LOW finale 113.28 s, 108 starts, head 16.88 s, tail 0.60 s, maximum gap including ends 18.60 s — PASS. Mega enters the 25 m radius after 0.20 s HIGH / 0.67 s LOW. This is a P2 finale pressure finding; no behavior is changed.
+
+LOW matched-checkpoint event check verifies actual render quality and director tier low; eight births at each zoom, **0/16 inside camera**. Both captures were opened. Together with HIGH, observed arrival births are 0/24 on-screen. [LOW matched receipt](spawn-low-matched.json). This supersedes the earlier empty-event LOW windows.
