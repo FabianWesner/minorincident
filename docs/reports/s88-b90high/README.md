@@ -1,10 +1,36 @@
-# PO UAT 11–12 real-input QA — provisional HOLD
+# PO UAT 11–12 real-input QA — HOLD
 
 **Target:** `main` at `832d397886ede0042d3dc6867d4416238f48e507` (batch 89 / PROD 20984444), HIGH first at zoom 1 and 1.5, then LOW at zoom 1.
 
 ## Verdict
 
-**Provisional HOLD — QA incomplete.** Candidate P1: L8 post-14/14 checkpoint stall on HIGH/LOW. Confirmed P2: L7 departure visibly overlaps soldiers at the front bumper on HIGH zoom 1; reproduced in opened captures at 0.7 and 3.43 seconds.
+**HOLD — QA incomplete at the time-box closeout.** Candidate P1: L8 post-14/14 checkpoint stall on HIGH/LOW. Confirmed P2: L7 departure visibly overlaps soldiers at the front bumper on HIGH zoom 1; reproduced in opened captures at 0.7 and 3.43 seconds.
+
+## PO findings, verbatim disposition
+
+| PO finding | Disposition against target main |
+| --- | --- |
+| L6: “After I closed the first door, no more Zombies attacked the group, which made the game boring from there on” | LOW longer retry: 36 attack starts in 27.85 s after closure; full level and every 30 s window remain unverified. HIGH first hatch was not closed. |
+| L7: “The bus is crashing to soldiers” | P2 reproduced in opened HIGH z1 departure frames; route completes. Other passes show close soldiers/body overlap. |
+| L8: boarding stalled 0/14 with survivors inside the elephant yard | 14/14 reached in 29.48 s HIGH and 28.23 s LOW checkpoint passes; later 14/14 handoff stalls. Candidate P1, fixture-qualified. Driver-door handoff not passed. |
+| L9: “L9; I am stuck here” (rail crossing hatch) | Rail and bay progressed in all three requested settings, using checkpoint setup; HIGH z1 needed manual F after repeated deaths. |
+| L9: “Also the end is strange, bc I cannot walk away but also not drive anymore” | Countdowns and restart/defense prompts observed; bay progressed. Exact full input availability at every final-bay moment was not exhaustively tested. |
+| L9: “It somehow proceeded, but now I am this... super strange” | Upright courier in opened live HIGH z1.5 bridge-save handover. Other requested handover settings unverified. |
+| L9: school bus overlapping the APC | Unverified. |
+| L10: “I cannot select the gun. Not by clicking and not by number” | Hunting rifle key Q and click passed HIGH; LOW click passed. Later arsenal: all 14 clicks passed HIGH/LOW. Full hangar key coverage remains open. |
+| L10: “also the new knife is not selectable” | Later arsenal machete click passed HIGH/LOW. Literal knife absent from fixture; knife identity/key coverage unverified. |
+| L10: “Molotoc cocktail shows this strange blue lines.” | Post-use stills inspected; full aiming trajectory remains unverified. |
+| L10: “also after using it, it swichess back to the axe for no reasin” | HIGH initial exhaustion restored rifle. LOW exhaustion selected MG after intervening normal combat; exact previous-weapon sequence qualified. |
+| L10: “Corn field on the street” | No systematic road-crop sweep completed; unverified. |
+| L10: “I really like the mega hunting me. I don't like that I cannot hurt it. Make it so I can hurt it, but it recovers very fast, so I cannot kill it.” | P2: actual axe contacts amount 0 in HIGH z1 (4), HIGH z1.5 (4), LOW z1 (7). Positive damage and rapid recovery not demonstrated. |
+
+## Closeout and remaining work
+
+**Confirmed P2:** L7 bus/soldier overlap; early L10 hunting Mega zero-damage melee contacts across all three settings. **Candidate P1:** L8 post-14/14 progression stall on HIGH/LOW elephant-yard fixture, with a source-supported Hale story-gate hypothesis. No confirmed P1 is claimed.
+
+Full scope remains incomplete: L6 completion/cadence at all settings, L8 HIGH z1.5 and fresh-route handoff, remaining handover/bus-overlap observations, full hangar keys/knife, molotov aiming/controlled LOW restoration, road crops, and positive Mega damage/recovery. These are explicit open checks, not passes. This time-box report is not a claim that the active QA objective is achieved. Additional execution time is needed to close them.
+
+[Evidence index](evidence.json) retains run outcomes and exact zero-damage event receipts; harness `finished` flags only describe their stated run scope. Negative L9 simulation durations are invalid at the tick-reset handover. Raw captures/logs remain local under `test-results/s88-b90high/`. Only README, JSON and one small contact sheet are committed. Build/typecheck/lint and prescribed remote test command passed. No gameplay code was changed, no main movement/push/deploy occurred, and no s88 browser check or controller remains running at closeout.
 
 ## Current evidence
 

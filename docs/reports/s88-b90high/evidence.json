@@ -1,0 +1,726 @@
+{
+  "target": "832d397886ede0042d3dc6867d4416238f48e507",
+  "verdict": "HOLD",
+  "qa_complete": false,
+  "scope": "Original L6-L10 HIGH z1, HIGH z1.5, LOW z1 requirements retained; see README coverage audit",
+  "runs": [
+    {
+      "directory": "test-results/s88-b90high/high-z1-5-bridge-handover",
+      "quality": "high",
+      "zoom": 1.5,
+      "levels": [
+        "L9"
+      ],
+      "runs": [
+        {
+          "level": "L9",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 25,
+          "simSeconds": -1,
+          "deaths": 0,
+          "assists": 0,
+          "maxNoProgressSeconds": 3.054
+        }
+      ],
+      "issues": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      }
+    },
+    {
+      "directory": "test-results/s88-b90high/high-z1-5-l10",
+      "quality": "high",
+      "zoom": 1.5,
+      "levels": [
+        "L10"
+      ],
+      "runs": [
+        {
+          "level": "L10",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 300,
+          "simSeconds": 297,
+          "deaths": 2,
+          "assists": 0,
+          "maxNoProgressSeconds": 44.166666666666664
+        }
+      ],
+      "issues": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 3,
+        "P3": 0
+      }
+    },
+    {
+      "directory": "test-results/s88-b90high/high-z1-5-l7",
+      "quality": "high",
+      "zoom": 1.5,
+      "levels": [
+        "L7"
+      ],
+      "runs": [
+        {
+          "level": "L7",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 201,
+          "simSeconds": 0,
+          "deaths": 1,
+          "assists": 0,
+          "maxNoProgressSeconds": 5.085
+        }
+      ],
+      "issues": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      }
+    },
+    {
+      "directory": "test-results/s88-b90high/high-z1-5-l8-boarding",
+      "quality": "high",
+      "zoom": 1.5,
+      "levels": [
+        "L8"
+      ],
+      "runs": [],
+      "issues": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      }
+    },
+    {
+      "directory": "test-results/s88-b90high/high-z1-5-l9-live-handover",
+      "quality": "high",
+      "zoom": 1.5,
+      "levels": [
+        "L9"
+      ],
+      "runs": [
+        {
+          "level": "L9",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 240,
+          "simSeconds": 240,
+          "deaths": 9,
+          "assists": 0,
+          "maxNoProgressSeconds": 2.77
+        }
+      ],
+      "issues": {
+        "P0": 1,
+        "P1": 0,
+        "P2": 1,
+        "P3": 0
+      }
+    },
+    {
+      "directory": "test-results/s88-b90high/high-z1-5-l9-rail",
+      "quality": "high",
+      "zoom": 1.5,
+      "levels": [
+        "L9"
+      ],
+      "runs": [
+        {
+          "level": "L9",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 158,
+          "simSeconds": -1,
+          "deaths": 0,
+          "assists": 0,
+          "maxNoProgressSeconds": 6.677
+        }
+      ],
+      "issues": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      }
+    },
+    {
+      "directory": "test-results/s88-b90high/high-z1-l10",
+      "quality": "high",
+      "zoom": 1,
+      "levels": [
+        "L10"
+      ],
+      "runs": [
+        {
+          "level": "L10",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 300,
+          "simSeconds": 298,
+          "deaths": 3,
+          "assists": 0,
+          "maxNoProgressSeconds": 8.433333333333334
+        }
+      ],
+      "issues": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 1,
+        "P3": 0
+      }
+    },
+    {
+      "directory": "test-results/s88-b90high/high-z1-l6",
+      "quality": "high",
+      "zoom": 1,
+      "levels": [
+        "L6"
+      ],
+      "runs": [
+        {
+          "level": "L6",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 60,
+          "simSeconds": 54,
+          "deaths": 0,
+          "assists": 0,
+          "maxNoProgressSeconds": 33
+        }
+      ],
+      "issues": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 1,
+        "P3": 0
+      }
+    },
+    {
+      "directory": "test-results/s88-b90high/high-z1-l6-full",
+      "quality": "high",
+      "zoom": 1,
+      "levels": [
+        "L6"
+      ],
+      "runs": [
+        {
+          "level": "L6",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 480,
+          "simSeconds": 478,
+          "deaths": 12,
+          "assists": 1,
+          "maxNoProgressSeconds": 32.542
+        }
+      ],
+      "issues": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 1,
+        "P3": 0
+      }
+    },
+    {
+      "directory": "test-results/s88-b90high/high-z1-l7",
+      "quality": "high",
+      "zoom": 1,
+      "levels": [
+        "L7"
+      ],
+      "runs": [
+        {
+          "level": "L7",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 284,
+          "simSeconds": 0,
+          "deaths": 2,
+          "assists": 1,
+          "maxNoProgressSeconds": 12.866666666666667
+        }
+      ],
+      "issues": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      }
+    },
+    {
+      "directory": "test-results/s88-b90high/high-z1-l8",
+      "quality": "high",
+      "zoom": 1,
+      "levels": [
+        "L8"
+      ],
+      "runs": [
+        {
+          "level": "L8",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 480,
+          "simSeconds": 477,
+          "deaths": 1,
+          "assists": 3,
+          "maxNoProgressSeconds": 50.421
+        }
+      ],
+      "issues": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 2,
+        "P3": 0
+      }
+    },
+    {
+      "directory": "test-results/s88-b90high/high-z1-l8-boarding",
+      "quality": "high",
+      "zoom": 1,
+      "levels": [
+        "L8"
+      ],
+      "runs": [
+        {
+          "level": "L8",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 135,
+          "simSeconds": 135,
+          "deaths": 0,
+          "assists": 0,
+          "maxNoProgressSeconds": 90.25
+        }
+      ],
+      "issues": {
+        "P0": 1,
+        "P1": 0,
+        "P2": 1,
+        "P3": 0
+      }
+    },
+    {
+      "directory": "test-results/s88-b90high/high-z1-l9-rail",
+      "quality": "high",
+      "zoom": 1,
+      "levels": [
+        "L9"
+      ],
+      "runs": [
+        {
+          "level": "L9",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 445,
+          "simSeconds": -1,
+          "deaths": 19,
+          "assists": 0,
+          "maxNoProgressSeconds": 6.904
+        }
+      ],
+      "issues": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      }
+    },
+    {
+      "directory": "test-results/s88-b90high/l10-arsenal-high",
+      "quality": "high",
+      "zoom": 1,
+      "levels": [
+        "L10"
+      ],
+      "runs": [
+        {
+          "level": "L10",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 180,
+          "simSeconds": 180,
+          "deaths": 6,
+          "assists": 0,
+          "maxNoProgressSeconds": 1.967
+        }
+      ],
+      "issues": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      }
+    },
+    {
+      "directory": "test-results/s88-b90high/l10-arsenal-low",
+      "quality": "low",
+      "zoom": 1,
+      "levels": [
+        "L10"
+      ],
+      "runs": [
+        {
+          "level": "L10",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 120,
+          "simSeconds": 120,
+          "deaths": 4,
+          "assists": 0,
+          "maxNoProgressSeconds": 2.001
+        }
+      ],
+      "issues": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      }
+    },
+    {
+      "directory": "test-results/s88-b90high/l10-low-input-final",
+      "quality": "low",
+      "zoom": 1,
+      "levels": [
+        "L10"
+      ],
+      "runs": [
+        {
+          "level": "L10",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 120,
+          "simSeconds": 120,
+          "deaths": 4,
+          "assists": 0,
+          "maxNoProgressSeconds": 15.109
+        }
+      ],
+      "issues": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      }
+    },
+    {
+      "directory": "test-results/s88-b90high/l8-manual-board",
+      "quality": "high",
+      "zoom": 1,
+      "levels": [
+        "L8"
+      ],
+      "runs": [
+        {
+          "level": "L8",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 120,
+          "simSeconds": 121,
+          "deaths": 0,
+          "assists": 0,
+          "maxNoProgressSeconds": 33.11666666666667
+        }
+      ],
+      "issues": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 2,
+        "P3": 0
+      }
+    },
+    {
+      "directory": "test-results/s88-b90high/low-z1-l10",
+      "quality": "low",
+      "zoom": 1,
+      "levels": [
+        "L10"
+      ],
+      "runs": [
+        {
+          "level": "L10",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 300,
+          "simSeconds": 298,
+          "deaths": 2,
+          "assists": 0,
+          "maxNoProgressSeconds": 30.849
+        }
+      ],
+      "issues": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 3,
+        "P3": 0
+      }
+    },
+    {
+      "directory": "test-results/s88-b90high/low-z1-l6",
+      "quality": "low",
+      "zoom": 1,
+      "levels": [
+        "L6"
+      ],
+      "runs": [
+        {
+          "level": "L6",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 480,
+          "simSeconds": 478,
+          "deaths": 6,
+          "assists": 1,
+          "maxNoProgressSeconds": 32.561
+        }
+      ],
+      "issues": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 1,
+        "P3": 0
+      }
+    },
+    {
+      "directory": "test-results/s88-b90high/low-z1-l6-long",
+      "quality": "low",
+      "zoom": 1,
+      "levels": [
+        "L6"
+      ],
+      "runs": [
+        {
+          "level": "L6",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 540,
+          "simSeconds": 538,
+          "deaths": 9,
+          "assists": 1,
+          "maxNoProgressSeconds": 32.461
+        }
+      ],
+      "issues": {
+        "P0": 1,
+        "P1": 0,
+        "P2": 2,
+        "P3": 0
+      }
+    },
+    {
+      "directory": "test-results/s88-b90high/low-z1-l7",
+      "quality": "low",
+      "zoom": 1,
+      "levels": [
+        "L7"
+      ],
+      "runs": [
+        {
+          "level": "L7",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 166,
+          "simSeconds": 0,
+          "deaths": 0,
+          "assists": 1,
+          "maxNoProgressSeconds": 26.695
+        }
+      ],
+      "issues": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 2,
+        "P3": 0
+      }
+    },
+    {
+      "directory": "test-results/s88-b90high/low-z1-l8-boarding",
+      "quality": "low",
+      "zoom": 1,
+      "levels": [
+        "L8"
+      ],
+      "runs": [
+        {
+          "level": "L8",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 121,
+          "simSeconds": 121,
+          "deaths": 0,
+          "assists": 0,
+          "maxNoProgressSeconds": 76.46666666666667
+        }
+      ],
+      "issues": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 1,
+        "P3": 0
+      }
+    },
+    {
+      "directory": "test-results/s88-b90high/low-z1-l9-rail",
+      "quality": "low",
+      "zoom": 1,
+      "levels": [
+        "L9"
+      ],
+      "runs": [
+        {
+          "level": "L9",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 153,
+          "simSeconds": -1,
+          "deaths": 0,
+          "assists": 0,
+          "maxNoProgressSeconds": 6.098
+        }
+      ],
+      "issues": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      }
+    }
+  ],
+  "mega_hit_receipts": [
+    {
+      "run": "high-z1-l10",
+      "events": [
+        {
+          "tick": 3967,
+          "attackId": 17,
+          "actionId": "weapon.fire-axe",
+          "amount": 0,
+          "victimHp": 3000
+        },
+        {
+          "tick": 4027,
+          "attackId": 19,
+          "actionId": "weapon.fire-axe",
+          "amount": 0,
+          "victimHp": 3000
+        },
+        {
+          "tick": 4057,
+          "attackId": 20,
+          "actionId": "weapon.fire-axe",
+          "amount": 0,
+          "victimHp": 3000
+        },
+        {
+          "tick": 4087,
+          "attackId": 21,
+          "actionId": "weapon.fire-axe",
+          "amount": 0,
+          "victimHp": 3000
+        }
+      ],
+      "source_sha256": "2c4cc4882a1fcdf859340d8d02da423d36f7fc1fa671663a01bfb4f097feed0a"
+    },
+    {
+      "run": "high-z1-5-l10",
+      "events": [
+        {
+          "tick": 5129,
+          "attackId": 36,
+          "actionId": "weapon.fire-axe",
+          "amount": 0,
+          "victimHp": 3000
+        },
+        {
+          "tick": 5189,
+          "attackId": 38,
+          "actionId": "weapon.fire-axe",
+          "amount": 0,
+          "victimHp": 3000
+        },
+        {
+          "tick": 5219,
+          "attackId": 39,
+          "actionId": "weapon.fire-axe",
+          "amount": 0,
+          "victimHp": 3000
+        },
+        {
+          "tick": 17152,
+          "attackId": 98,
+          "actionId": "weapon.fire-axe",
+          "amount": 0,
+          "victimHp": 3000
+        }
+      ],
+      "source_sha256": "18b6a084f48c39027138f8b143bf639a3ccafb48699b845e85fe3218682b0921"
+    },
+    {
+      "run": "low-z1-l10",
+      "events": [
+        {
+          "tick": 3833,
+          "attackId": 14,
+          "actionId": "weapon.fire-axe",
+          "amount": 0,
+          "victimHp": 3000
+        },
+        {
+          "tick": 3893,
+          "attackId": 16,
+          "actionId": "weapon.fire-axe",
+          "amount": 0,
+          "victimHp": 3000
+        },
+        {
+          "tick": 3923,
+          "attackId": 17,
+          "actionId": "weapon.fire-axe",
+          "amount": 0,
+          "victimHp": 3000
+        },
+        {
+          "tick": 3953,
+          "attackId": 18,
+          "actionId": "weapon.fire-axe",
+          "amount": 0,
+          "victimHp": 3000
+        },
+        {
+          "tick": 4043,
+          "attackId": 21,
+          "actionId": "weapon.fire-axe",
+          "amount": 0,
+          "victimHp": 3000
+        },
+        {
+          "tick": 4103,
+          "attackId": 23,
+          "actionId": "weapon.fire-axe",
+          "amount": 0,
+          "victimHp": 3000
+        },
+        {
+          "tick": 16297,
+          "attackId": 116,
+          "actionId": "weapon.fire-axe",
+          "amount": 0,
+          "victimHp": 3000
+        }
+      ],
+      "source_sha256": "93d7819b8105178c0a158b6b3c5381a5569a779a73db06ac0db8edde9a99905f"
+    }
+  ],
+  "artifacts": {
+    "contact-sheet.jpg": {
+      "sha256": "d9ebf256880fc3fb6ed95bb32b60050ee8f41f7cd3ded47802c4de1849817769",
+      "opened": true
+    }
+  }
+}
