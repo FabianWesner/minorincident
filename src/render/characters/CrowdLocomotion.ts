@@ -87,6 +87,8 @@ export interface CrowdPresentation {
   travel?: { x: number; z: number };
   /** Full locomotion cycle when an action uses only a slice of its body clip. */
   contactPhase?: number;
+  /** Contact policy for a grounded stance that shares an airborne action's pose atlas. */
+  contactClip?: string;
   layers?: CrowdLayers; style?: GaitStyle; procedural?: boolean; cadence?: number; holdDistanceM?: number;
 }
 /** One small off-scene skeleton per batch; figures retain only their contact
@@ -453,7 +455,8 @@ export class CrowdLocomotion {
     return result;
   }
   private solve(id: number, poses: CrowdPosePalette, input: CrowdPresentation): number {
-    const { frame, blend, clip, phase, instance, scale, speed, time, near, layers, style, procedural = true } = input;
+    const { frame, blend, phase, instance, scale, speed, time, near, layers, style, procedural = true } = input;
+    const clip = input.contactClip ?? input.clip;
     if (!procedural) {
       this.footwork.states.delete(id); this.footwork.far.delete(id); this.reset(id);
       // The caller tags the pose mode so entering/leaving the baked band uses the usual TRS transition.

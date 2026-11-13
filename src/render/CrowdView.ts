@@ -960,6 +960,8 @@ export class CrowdView extends Group {
         pose.frame = frame;
         pose.blend = blend;
         pose.clip = clip;
+        // Idle leaper crouches share the flight atlas but retain standing sole anchors.
+        pose.contactClip = clip === 'alpha-pounce' && !specialAttack && !heavy && e.infected?.alphaType === 'leaper' && motion.speed <= .06 ? 'idle' : undefined;
         pose.phase = phase;
         pose.contactPhase = species === 'zebra' && clip === 'zebra-stampede' ? this.gait.sample(e.id, gaitDistance, 'corgi-gallop', batch.strideScale, motion.speed) : undefined;
         pose.instance = this.transform;
