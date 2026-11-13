@@ -6543,5 +6543,155 @@
         "spot": null
       }
     }
+  },
+  "highMolotovHeldAim": {
+    "render": {
+      "backend": "webgpu",
+      "quality": "high",
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          4003.8481445312514,
+          0,
+          -38.67822265625002
+        ],
+        "target": [
+          4003.8481445312514,
+          0,
+          -38.67822265625002
+        ],
+        "position": [
+          4014.7173111847874,
+          11.16791979355699,
+          -27.809056002714016
+        ],
+        "spot": null
+      }
+    },
+    "aim": {
+      "selected": "weapon-rack-weapon.molotov",
+      "inputFrame": {
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "aim": {
+          "x": 0.9560106753929948,
+          "z": -0.2933318743925215
+        },
+        "aimSource": "pointer",
+        "left": {
+          "down": false,
+          "held": false,
+          "up": false
+        },
+        "right": {
+          "down": false,
+          "held": true,
+          "up": false
+        },
+        "selector": 0,
+        "interact": false,
+        "pause": false,
+        "cancelMove": false,
+        "brake": false,
+        "drive": {
+          "throttle": 0,
+          "steer": 0
+        },
+        "strafe": true,
+        "aimPoint": {
+          "x": 4007.3474114479004,
+          "z": -39.7534858214574
+        },
+        "mouseAttack": true
+      }
+    },
+    "finalSelection": "weapon-rack-weapon.hunting-rifle"
+  },
+  "lowMolotovHeldAim": {
+    "render": {
+      "backend": "webgpu",
+      "quality": "low",
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          4003.8483886718764,
+          0,
+          -38.67713546752932
+        ],
+        "target": [
+          4003.8483886718764,
+          0,
+          -38.67713546752932
+        ],
+        "position": [
+          4014.7175553254124,
+          11.16791979355699,
+          -27.807968813993313
+        ],
+        "spot": null
+      }
+    },
+    "aim": {
+      "selected": "weapon-rack-weapon.molotov",
+      "inputFrame": {
+        "move": {
+          "x": 0,
+          "z": 0
+        },
+        "aim": {
+          "x": 0.953873918806061,
+          "z": -0.30020750660429546
+        },
+        "aimSource": "pointer",
+        "left": {
+          "down": false,
+          "held": false,
+          "up": false
+        },
+        "right": {
+          "down": false,
+          "held": true,
+          "up": false
+        },
+        "selector": 0,
+        "interact": false,
+        "pause": false,
+        "cancelMove": false,
+        "brake": false,
+        "drive": {
+          "throttle": 0,
+          "steer": 0
+        },
+        "strafe": true,
+        "aimPoint": {
+          "x": 4007.3242780694577,
+          "z": -39.770891908180275
+        },
+        "mouseAttack": true
+      }
+    },
+    "finalSelection": "weapon-rack-weapon.hunting-rifle"
   }
 }
