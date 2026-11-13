@@ -1,0 +1,45 @@
+{
+  "method": "Seed 3 native complete policy, live = infected.active with health.current > 0; provisional coordinate bands: earlier x<3000, corridor 3000<=x<3800, complex x>=3800 before cure installation, finale after installation. Region bounds must be refined against authored envelopes before final regional claims.",
+  "rows": [
+    {
+      "quality": "high",
+      "peaks": {
+        "earlier": 60,
+        "corridor": 59,
+        "complex": 48,
+        "finale": 19
+      },
+      "installed": {
+        "tick": 57754,
+        "distance": 25.759611348827754
+      },
+      "arrival": {
+        "tick": 57766,
+        "seconds": 0.2
+      },
+      "saved": [
+        "finale"
+      ]
+    },
+    {
+      "quality": "low",
+      "peaks": {
+        "earlier": 69,
+        "corridor": 37,
+        "complex": 24,
+        "finale": 14
+      },
+      "installed": {
+        "tick": 52877,
+        "distance": 25.352641785425178
+      },
+      "arrival": {
+        "tick": 52917,
+        "seconds": 0.6666666666666666
+      },
+      "saved": [
+        "finale"
+      ]
+    }
+  ]
+}
