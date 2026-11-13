@@ -30,12 +30,12 @@ Both checkpoint-yield captures were opened. The initial sample shows retreat HUD
 | L8 14/14 timing / driver-door handoff | 29.48 s; post-count stall in checkpoint | Camera assertion failure; unverified | 28.23 s; post-count stall after E at marker |
 | L9 rail / final bay | Progressed with manual F, 19 deaths | Missing | Progressed, zero deaths |
 | L9 playable L10 handover pose / school bus | Missing; loading transition only | Missing | Missing; loading transition only |
-| L10 first 5 min / gun selection | Rifle key+click passed; incomplete broader scope | Missing | Five-minute sample; rifle click selected; broader scope incomplete |
+| L10 first 5 min / gun selection | Rifle key+click passed; incomplete broader scope | Five-minute sample; hangar not reached | Five-minute sample; rifle click selected; broader scope incomplete |
 | L10 every hangar weapon key+click | Later fixture: all 14 by click; machete key unresolved | Missing | Missing |
 | L10 knife | Missing (not in returned-arsenal fixture) | Missing | Missing |
 | L10 all molotov charges / prior weapon | Later fixture initial three charges exhausted; rifle restored | Missing | Missing |
 | L10 molotov blue lines | Post-use stills only; full aiming view missing | Missing | Missing |
-| L10 early hunting Mega damage+recovery | Missing confirmed hit/recovery telemetry | Missing | Seven axe hits amount 0; P2 damage failure; recovery unverified |
+| L10 early hunting Mega damage+recovery | Four axe hits amount 0; P2 damage failure | Four axe hits amount 0; P2 damage failure | Seven axe hits amount 0; P2 damage failure; recovery unverified |
 | L10 crops on roads | No systematic sweep | Missing | Missing |
 
 **Release verdict remains HOLD.** Confirmed P2: L7 bus/soldier overlap at HIGH z1; L10 early Mega receives seven actual axe hits for zero damage on LOW. Candidate P1: L8 post-14/14 stall on checkpoint HIGH/LOW; source suggests Hale story gate, final runtime flags/fresh-route confirmation missing. No confirmed P1 is claimed yet. Unverified requirements independently prevent GO.
@@ -113,3 +113,13 @@ Inspected retained browser storage: campaign save contains inventory/settings/su
 Resumed LOW L9 campaign profile; 300 seconds, two deaths, no assists/skips, 134 axe attacks, max no-progress 30.849 seconds (manual observation contributed). Opened rifle-selected capture shows Hunting Rifle selected by toolbar click. Subsequent fire attempt capture shows axe and a different nearby infected, so exclude that attempt from rifle/Mega conclusions.
 
 **P2 reproduced: early hunting Mega takes no melee damage.** `campaign-route-audit.json` records seven real `combat.hit` events from player 1 with `weapon.fire-axe` against Mega 678; all have amount 0 and victim HP 3000/3000. Example tick 3833, attackId 14. This confirms actual contact with zero damage, not merely a full HP bar after possible regeneration. It contradicts the PO request that the hunter be hurt and rapidly recover. Positive-damage recovery remains unverified. Driver also flagged the Mega stationary for about five seconds at 3.2 metres; candidate observation requiring independent review. Knife, molotov, systematic crops sweep and full arsenal LOW tests remain open. Receipt: `test-results/s88-b90high/low-z1-l10/`. No check is running.
+
+## HIGH combat ledger cross-check
+
+Existing HIGH z1 early-route ledger also confirms four `weapon.fire-axe` combat.hit events against the 3000-HP hunting Mega, at ticks 3967, 4027, 4057 and 4087; all amount 0. Combined with seven LOW zero-damage contact events, the P2 damage failure is reproduced at both tiers. This is actual hit evidence; positive-damage regeneration remains unverified. Contact sheet refreshed to six previously opened frames covering L7 overlap, L8 post-count stall, L9 restart, HIGH/LOW rifle selection and molotov exhaustion restoration.
+
+## L10 HIGH zoom 1.5 — five-minute route
+
+Normal continue path; camera telemetry explicitly reports zoom 1.5 and targetZoom 1.5 with quality HIGH. Completed bounded 300-second sample, two deaths, zero assists/skips, 115 axe attacks. Three no-progress warnings occurred while moving through the farm route (maximum 44.17 seconds), so they require marker/navigation review rather than automatic adoption as P2 game defects. Opened final checkpoint-yield capture shows full-health courier, nearby infected, axe selected, machete and molotov present in toolbar, objective 768 m away. Hangar was not reached. No systematic road-crop inspection completed.
+
+The route ledger records **four more actual axe hits for amount 0** on the 3000-HP early Mega. Thus zero-damage axe contacts reproduce at HIGH z1, HIGH z1.5 and LOW z1. Positive damage/rapid recovery still fails to be demonstrated. Contact sheet refreshed and opened as a single six-panel artifact using previously inspected source frames. No check is running.
