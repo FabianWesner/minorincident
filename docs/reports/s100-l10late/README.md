@@ -62,3 +62,7 @@ The opened six-cell sheet confirms LOW finale has already reached cure release/e
 [Current cadence receipt](current-cadence.json) passes all six seed/tier routes on revision 1c05fbd5. Routes run 1111.02–1195.23 simulated seconds; maximum adjusted attack-start gaps: LOW seeds 1/2/3 = 42.12 / 43.28 / 42.23 s; HIGH = 33.65 / 28.63 / 26.52 s. Protected hangar dialogue is separately recorded as 56 s. No cap violations; all routes complete. This refreshes the native arrival PASS and supersedes reliance solely on s93.
 
 Required remote `sh tools/remote/run.sh "$PWD" -- npm test` now PASS on 46.225.66.90: 27 files, 106 tests passed, one skipped; 223.17 s Vitest / 225.7 s budgeted command (240 s budget). This supersedes the earlier unavailable-runner entry. Browser pop-in and the outstanding 60–70-load coverage remain unfinished.
+
+## First observed sprinter creation event
+
+HIGH WebGPU zoom 1.5, corridor native resume: ordinary continuous westward movement caused four sprinters to be created at tick 300 (5.02 s wall observation). Actual gameplay-camera projection at creation placed all four outside view: NDC x 7.77–9.70, y −4.34 to −7.51; **0/4 on-screen births**. [Event receipt](spawn-high.json). The immediate capture was opened: courier/corgi and nearby ground/props are visible, and the newly created sprinters are absent from the image as predicted. God mode was enabled solely to keep this observation alive; no infected stats, creation positions or timers were changed. This is a narrow event pass; remaining tier/zoom events still require observation.
