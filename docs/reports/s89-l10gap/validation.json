@@ -310,5 +310,135 @@
         "gaps": []
       }
     ]
+  },
+  "closerSafeArrivalTrial": {
+    "accepted": false,
+    "receipt": "/private/tmp/s89-close-arrival-matrix.json",
+    "rows": [
+      {
+        "seed": 1,
+        "quality": "low",
+        "completed": true,
+        "deaths": 2,
+        "pulseAdmissions": 281,
+        "peak": 36,
+        "totalTicks": 68744,
+        "protectedSeconds": 56,
+        "n": 307,
+        "rate": 16.14208304730746,
+        "maxGap": 73.61666666666662,
+        "gaps": [
+          {
+            "from": 367.85,
+            "to": 441.46666666666664,
+            "seconds": 73.61666666666662
+          },
+          {
+            "from": 883.95,
+            "to": 940.4166666666666,
+            "seconds": 56.46666666666658
+          }
+        ]
+      },
+      {
+        "seed": 1,
+        "quality": "high",
+        "completed": true,
+        "deaths": 3,
+        "pulseAdmissions": 239,
+        "peak": 45,
+        "totalTicks": 68041,
+        "protectedSeconds": 56,
+        "n": 359,
+        "rate": 19.072073667434037,
+        "maxGap": 54.666666666666686,
+        "gaps": [
+          {
+            "from": 357.71666666666664,
+            "to": 412.3833333333333,
+            "seconds": 54.666666666666686
+          },
+          {
+            "from": 482.51666666666665,
+            "to": 590.4166666666666,
+            "seconds": 51.89999999999998
+          }
+        ]
+      },
+      {
+        "seed": 2,
+        "quality": "low",
+        "completed": true,
+        "deaths": 0,
+        "pulseAdmissions": 273,
+        "peak": 36,
+        "totalTicks": 66672,
+        "protectedSeconds": 56,
+        "n": 296,
+        "rate": 16.048917872795457,
+        "maxGap": 29.900000000000034,
+        "gaps": []
+      },
+      {
+        "seed": 2,
+        "quality": "high",
+        "completed": true,
+        "deaths": 15,
+        "pulseAdmissions": 245,
+        "peak": 45,
+        "totalTicks": 106478,
+        "protectedSeconds": 56,
+        "n": 740,
+        "rate": 25.084037174091126,
+        "maxGap": 300.65,
+        "gaps": [
+          {
+            "from": 1003.6833333333333,
+            "to": 1304.3333333333333,
+            "seconds": 300.65
+          }
+        ]
+      },
+      {
+        "seed": 3,
+        "quality": "low",
+        "completed": true,
+        "deaths": 1,
+        "pulseAdmissions": 272,
+        "peak": 36,
+        "totalTicks": 66781,
+        "protectedSeconds": 56,
+        "n": 302,
+        "rate": 16.350101511391834,
+        "maxGap": 74.63333333333333,
+        "gaps": [
+          {
+            "from": 352.6666666666667,
+            "to": 427.3,
+            "seconds": 74.63333333333333
+          }
+        ]
+      },
+      {
+        "seed": 3,
+        "quality": "high",
+        "completed": true,
+        "deaths": 0,
+        "pulseAdmissions": 236,
+        "peak": 45,
+        "totalTicks": 67261,
+        "protectedSeconds": 56,
+        "n": 299,
+        "rate": 16.071668533034714,
+        "maxGap": 49.900000000000034,
+        "gaps": [
+          {
+            "from": 362.6333333333333,
+            "to": 412.53333333333336,
+            "seconds": 49.900000000000034
+          }
+        ]
+      }
+    ]
   }
 }

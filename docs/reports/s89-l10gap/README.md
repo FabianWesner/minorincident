@@ -165,3 +165,20 @@ Harness lifecycle issue identified for further investigation: `charge-active` re
 | 3 | high | 19.598 | 44.00 | 5 |
 
 Receipt `/private/tmp/s89-lull-lifecycle-matrix.json`, producer `/private/tmp/s89-lull-lifecycle-matrix.mts`; measurements also preserved in validation.json. Fixed x+40 placement around military road turns remains a placement hypothesis to test, not a proven explanation.
+
+## Road-aware and closer-anchor placement diagnostics
+
+Road-arc placement 40 m ahead, using closest authored road segment and unchanged nav/offscreen checks, completed seed-2 LOW with 248 starts, 13.454/min, zero deaths and 70.95 s maximum: failed (`/private/tmp/s89-road-arrivals.json`).
+
+A 24 m forward anchor through the same bounded safe placement gates passed seed-2 LOW at 29.90 s, then failed generalization across the full matrix. All six completed and exceeded baseline rate; only seed-2 LOW passed cadence. Peaks remained 36/45.
+
+| Seed | Tier | Starts/min | Gap s | Deaths |
+| --- | --- | --- | --- | --- |
+| 1 | low | 16.142 | 73.62 | 2 |
+| 1 | high | 19.072 | 54.67 | 3 |
+| 2 | low | 16.049 | 29.90 | 0 |
+| 2 | high | 25.084 | 300.65 | 15 |
+| 3 | low | 16.350 | 74.63 | 1 |
+| 3 | high | 16.072 | 49.90 | 0 |
+
+Receipt `/private/tmp/s89-close-arrival-matrix.json`; producer `/private/tmp/s89-close-arrival-matrix.mts`; compact results in validation.json. Temporary source edits reverted. Next useful diagnostic is actor state/route behavior during the recurring military-bend gap, not additional global timing changes.
