@@ -28,7 +28,7 @@ Both checkpoint-yield captures were opened. The initial sample shows retreat HUD
 | L6 full; first hatch closed; every 30 s attack window | Incomplete: exit reached, first hatch not closed | Missing | First hatch closed; longer retry observed 27.85 s and 36 attack starts, incomplete |
 | L7 departure / soldiers | Complete route; P2 overlap reproduced | Complete route; nearby soldier/body overlap observed | Complete route; nearby soldiers/body overlap observed |
 | L8 14/14 timing / driver-door handoff | 29.48 s; post-count stall in checkpoint | Camera assertion failure; unverified | 28.23 s; post-count stall after E at marker |
-| L9 rail / final bay | Progressed with manual F, 19 deaths | Missing | Progressed, zero deaths |
+| L9 rail / final bay | Progressed with manual F, 19 deaths | Progressed, zero deaths | Progressed, zero deaths |
 | L9 playable L10 handover pose / school bus | Missing; loading transition only | Missing | Missing; loading transition only |
 | L10 first 5 min / gun selection | Rifle key+click passed; incomplete broader scope | Five-minute sample; hangar not reached | Five-minute sample; rifle click selected; broader scope incomplete |
 | L10 every hangar weapon key+click | Later fixture: all 14 by click; machete key unresolved | Missing | Missing |
@@ -123,3 +123,7 @@ Existing HIGH z1 early-route ledger also confirms four `weapon.fire-axe` combat.
 Normal continue path; camera telemetry explicitly reports zoom 1.5 and targetZoom 1.5 with quality HIGH. Completed bounded 300-second sample, two deaths, zero assists/skips, 115 axe attacks. Three no-progress warnings occurred while moving through the farm route (maximum 44.17 seconds), so they require marker/navigation review rather than automatic adoption as P2 game defects. Opened final checkpoint-yield capture shows full-health courier, nearby infected, axe selected, machete and molotov present in toolbar, objective 768 m away. Hangar was not reached. No systematic road-crop inspection completed.
 
 The route ledger records **four more actual axe hits for amount 0** on the 3000-HP early Mega. Thus zero-damage axe contacts reproduce at HIGH z1, HIGH z1.5 and LOW z1. Positive damage/rapid recovery still fails to be demonstrated. Contact sheet refreshed and opened as a single six-panel artifact using previously inspected source frames. No check is running.
+
+## L9 HIGH zoom 1.5
+
+Same pre-rail checkpoint, HIGH and camera zoom/targetZoom 1.5 verified. Completed through L10 loading in 158 wall seconds, zero deaths, assists or skips; no manual hatch override. Opened `campaign-L9-t2764.jpg` (post-rail driving / boarder instruction) and `campaign-L9-t5465.jpg` (final bay, 4/4 at trucks, hatch defense 5 seconds). No crossing/final-bay block reproduced. Playable L10 pose and school-bus overlap remain unverified; the session exits at level change. Summary simSeconds=-1 is invalid due to handover tick reset. Receipt: `test-results/s88-b90high/high-z1-5-l9-rail/`. No check is running.
