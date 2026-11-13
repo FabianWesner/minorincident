@@ -1101,6 +1101,106 @@
           }
         ]
       }
+    ],
+    "low-z1-l6-cadence": [
+      {
+        "level": "L6",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 399,
+        "simSeconds": 383,
+        "maxNoProgressSeconds": 32.499,
+        "deaths": 5,
+        "assists": 1,
+        "attacks": {
+          "weapon.army-mg": 2083,
+          "weapon.fire-axe": 14
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "steps": [
+          {
+            "id": "shelter",
+            "text": "Look around the shelter \u00b7 rest while you can",
+            "tick": 11,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "stop",
+            "text": "Stop the infected \u00b7 Retreat in 0:36",
+            "tick": 1997,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "retreat",
+            "text": "The group waits: cover the rear from the infected \u00b7 257\u00a0m",
+            "tick": 3257,
+            "marker": {
+              "anchor": "l6-next",
+              "ring": {
+                "x": 242,
+                "y": 0.6,
+                "z": 15
+              },
+              "drawn": [
+                242,
+                0.6,
+                15
+              ],
+              "playerY": 1.3200000524520874,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "exit",
+            "text": "Bring the survivors into the night \u00b7 0/1 out \u00b7 29\u00a0m",
+            "tick": 22032,
+            "marker": {
+              "anchor": "night-exit",
+              "ring": {
+                "x": 273,
+                "y": 3.9,
+                "z": 15
+              },
+              "drawn": [
+                273,
+                3.9,
+                15
+              ],
+              "playerY": 1.2699999809265137,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
     ]
   },
   "limits": [
@@ -9681,5 +9781,22 @@
       ],
       "openedCapture": "low-z1-l9-live-handover/captures/hale-driver-L9-L10-actual-handover-low-z1.jpg"
     }
+  },
+  "lowL6PostHatch": {
+    "firstClosureTick": 17437,
+    "lastAttackSampleTick": 22980,
+    "seconds": 92.3833,
+    "attackStartsBy30SecondWindows": [
+      86,
+      37,
+      97,
+      3
+    ],
+    "lastWindowSeconds": 2.3833,
+    "deathCounts": [
+      4,
+      5
+    ],
+    "qualification": "Checkpoint reset during post-closure window; later closedAt17875. Counts are all attack starts, not exclusively group-targeted attacks."
   }
 }

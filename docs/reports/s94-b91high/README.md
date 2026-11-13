@@ -68,7 +68,7 @@ L10 HIGH z1 WebGPU opening sample: 300 s, ten deaths, zero assists, 409 fire-axe
 
 | Requirement | HIGH | LOW | Disposition |
 | --- | --- | --- | --- |
-| L6 full cadence after first hatch | z1 incomplete; z1.5 reached exit-platform, closure unproved | Missing | Open |
+| L6 full cadence after first hatch | z1 incomplete; z1.5 reached exit-platform, closure unproved | Completed399 s; closure confirmed,92.4 s post-close attack samples, death/reset-qualified | HIGH and uninterrupted alive cadence open |
 | L7 departure vs soldiers | z1 route passed, timed frames missing; z1.5 three opened frames show no live-soldier intersection | z1 route passed; three opened departure frames show no intersection | Sampled clearance; HIGH z1 capture still open |
 | L8 boarding through driver handoff, Hale alive | z1 handoff with Hale100 HP confirmed; z1.5 camera assertion failed | LOW-configured z1 route passed; Hale100 HP at boarding; exact departure sample/actual quality receipt incomplete | HIGH z1 Hale-alive passed; other stated conditions open |
 | L9 rail/final bay | z1 one139 s 3/4 wait, later retry passed; z1.5 passed | Five-minute attempt ended after15 deaths at hatch | LOW final bay open |
@@ -181,3 +181,7 @@ HIGH: player-boarded true at tick2755; departed true at3233, phase progression, 
 Approved l9-at-bridge checkpoint, real-input driver. HIGH z1.5 reached live L10 in25 s, LOW-configured z1 in24 s; no deaths/assists/skips/issues. Opened both actual-handover frames: courier upright with axe, corgi beside her, “Get away from the river ·101 m” objective and Sam radio caption. The PO folded-pose finding did not reproduce in these samples. Invalid negative simSeconds across handover excluded.
 
 LOW used a temporary copy of the capture helper changing only its forced zoom1.5 to requested zoom1; ordinary input behavior was identical, temporary source removed. Raw directories `high-z1-5-l9-live-handover/` and `low-z1-l9-live-handover/`. These bridge-only passes do not settle school-bus/APC clearance or LOW final-bay progression. Both opened handover frames were added to the single contact sheet. No process remains running.
+
+## LOW L6 completed with first-hatch closure
+
+LOW z1 WebGPU driver completed L6 in399 s, five deaths. Gate observation confirms first hatch x90 closedAt17437; a later checkpoint reset updates closedAt17875. Attack audit samples after first closure span92.38 s through tick22980:30 s windows contain86,37,97 attack starts, followed by3 in the final2.38 s. This measures ongoing attack activity, not exclusively attacks targeting the group. A death/reset occurred in that interval (death count4→5), so uninterrupted alive cadence is qualified. Full route completion and post-first-closure combat are demonstrated for this LOW sample; HIGH remains open. Automatic shelter-rest warning is scripted; nearby-infected-unhittable warning remains unconfirmed. Raw `test-results/s94-b91high/low-z1-l6-cadence/` includes gate observations, hold audit and completed run. No game code changed.
