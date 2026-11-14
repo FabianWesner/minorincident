@@ -1874,5 +1874,263 @@
       "firstAttackSeconds": 8.55,
       "lineBreakAfterTurnSeconds": 190
     }
-  ]
+  ],
+  "finalRoutingValidation": {
+    "revision": "0e1a5d2513c04301da81a4c1696e866cec4c2237",
+    "flags": [
+      "L6/early-close/wave/l6.breach2:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+    ],
+    "high": {
+      "tier": "high",
+      "holdComplete": true,
+      "firstBreachLevelSeconds": 50.083333333333336,
+      "firstBreachAfterTurnSeconds": 17.266666666666666,
+      "aliveAtFirstBreach": 72,
+      "peakAlive": 95,
+      "peakPlazaAlive": 94,
+      "stranded": [
+        {
+          "x": 4.67339740998763,
+          "z": 2.627663040263356,
+          "state": "idle",
+          "scripted": {
+            "x": -20.02307692307693,
+            "z": -19
+          },
+          "approach": "outside"
+        },
+        {
+          "x": -53.39011901529036,
+          "z": -18.924326216705555,
+          "state": "chase",
+          "scripted": {
+            "x": -32.1,
+            "z": 6.105882352941178
+          }
+        },
+        {
+          "x": -53.67608405854579,
+          "z": 41.50558560519307,
+          "state": "idle",
+          "scripted": {
+            "x": -37.2,
+            "z": 6.105882352941178
+          },
+          "approach": "outside"
+        },
+        {
+          "x": -19.873597228599902,
+          "z": -27.647066544046826,
+          "state": "attracted",
+          "scripted": {
+            "x": -20.02307692307693,
+            "z": -24.4
+          }
+        }
+      ],
+      "directorCountAtEnd": 154,
+      "recoverableDownedAtEnd": 41,
+      "alarmPendingAtEnd": 0,
+      "alarmCursorAtEnd": 36,
+      "aliveAtMinimumPlaza": 44,
+      "minimumInsideRing": 39,
+      "playerAtMinimumPlaza": {
+        "x": -22.871883392333984,
+        "z": 0.6911589503288269
+      },
+      "minPlazaAliveAfter45Seconds": 40,
+      "samplesAfter45Seconds": 8700,
+      "peakStationaryOutsidePlazaAfter30Seconds": 2,
+      "stationaryOutsidePlazaAtPeak": [
+        {
+          "id": 298,
+          "x": -36.25316887340822,
+          "z": -18.26168921611568,
+          "samples": 30,
+          "state": "alerted",
+          "scripted": {
+            "x": -37.2,
+            "z": 6.105882352941178
+          },
+          "approach": "outside"
+        },
+        {
+          "id": 325,
+          "x": -24.257950539418633,
+          "z": 40.73673314711851,
+          "samples": 30,
+          "state": "alerted",
+          "scripted": {
+            "x": -37.2,
+            "z": 6.105882352941178
+          },
+          "approach": "outside"
+        }
+      ],
+      "arrivalEdges": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "threeDirectionsAtLeast60Degrees": true,
+      "maxGroupAtOneSourcePerTick": 5,
+      "firstAttackSeconds": 9.65,
+      "lineBreakAfterTurnSeconds": 190
+    },
+    "low": {
+      "tier": "low",
+      "holdComplete": true,
+      "firstBreachLevelSeconds": 50.083333333333336,
+      "firstBreachAfterTurnSeconds": 17.266666666666666,
+      "aliveAtFirstBreach": 47,
+      "peakAlive": 57,
+      "peakPlazaAlive": 56,
+      "stranded": [
+        {
+          "x": -36.73347543829347,
+          "z": 4.255184667096517,
+          "state": "chase",
+          "scripted": {
+            "x": -32.1,
+            "z": 6.105882352941178
+          }
+        }
+      ],
+      "directorCountAtEnd": 78,
+      "recoverableDownedAtEnd": 22,
+      "alarmPendingAtEnd": 0,
+      "alarmCursorAtEnd": 36,
+      "aliveAtMinimumPlaza": 17,
+      "minimumInsideRing": 16,
+      "playerAtMinimumPlaza": {
+        "x": -22.852705001831055,
+        "z": 0.7364528179168701
+      },
+      "minPlazaAliveAfter45Seconds": 16,
+      "samplesAfter45Seconds": 8700,
+      "peakStationaryOutsidePlazaAfter30Seconds": 1,
+      "stationaryOutsidePlazaAtPeak": [
+        {
+          "id": 228,
+          "x": -36.73347543829347,
+          "z": 4.255184667096517,
+          "samples": 30,
+          "state": "chase",
+          "scripted": {
+            "x": -32.1,
+            "z": 6.105882352941178
+          }
+        }
+      ],
+      "arrivalEdges": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "threeDirectionsAtLeast60Degrees": true,
+      "maxGroupAtOneSourcePerTick": 5,
+      "firstAttackSeconds": 8.55,
+      "lineBreakAfterTurnSeconds": 190
+    },
+    "vehicle": [
+      {
+        "pass": true,
+        "rows": [
+          {
+            "mode": "l4-tank",
+            "tier": "high",
+            "code": 0,
+            "seconds": 56.073,
+            "file": "test-results/s83-vehicleslide/campaign/l4-tank-high.json",
+            "sourceHash": "f74582bb0a12b362de121f4771e4e4283e6f521feb396b1e6188ebab76712100",
+            "pass": true
+          },
+          {
+            "mode": "l4-tank",
+            "tier": "low",
+            "code": 0,
+            "seconds": 35.637,
+            "file": "test-results/s83-vehicleslide/campaign/l4-tank-low.json",
+            "sourceHash": "f74582bb0a12b362de121f4771e4e4283e6f521feb396b1e6188ebab76712100",
+            "pass": true
+          }
+        ]
+      },
+      {
+        "pass": true,
+        "rows": [
+          {
+            "mode": "l4-parked",
+            "tier": "high",
+            "code": 0,
+            "seconds": 36.25,
+            "file": "test-results/s83-vehicleslide/campaign/l4-parked-high.json",
+            "sourceHash": "f74582bb0a12b362de121f4771e4e4283e6f521feb396b1e6188ebab76712100",
+            "pass": true
+          },
+          {
+            "mode": "l4-parked",
+            "tier": "low",
+            "code": 0,
+            "seconds": 19.328,
+            "file": "test-results/s83-vehicleslide/campaign/l4-parked-low.json",
+            "sourceHash": "f74582bb0a12b362de121f4771e4e4283e6f521feb396b1e6188ebab76712100",
+            "pass": true
+          }
+        ]
+      },
+      {
+        "pass": true,
+        "rows": [
+          {
+            "mode": "l7-bus",
+            "tier": "high",
+            "code": 0,
+            "seconds": 16.928,
+            "file": "test-results/s83-vehicleslide/campaign/l7-bus-high.json",
+            "sourceHash": "f74582bb0a12b362de121f4771e4e4283e6f521feb396b1e6188ebab76712100",
+            "pass": true
+          },
+          {
+            "mode": "l7-bus",
+            "tier": "low",
+            "code": 0,
+            "seconds": 14.397,
+            "file": "test-results/s83-vehicleslide/campaign/l7-bus-low.json",
+            "sourceHash": "f74582bb0a12b362de121f4771e4e4283e6f521feb396b1e6188ebab76712100",
+            "pass": true
+          }
+        ]
+      },
+      {
+        "pass": true,
+        "rows": [
+          {
+            "mode": "L9",
+            "tier": "high",
+            "code": 0,
+            "seconds": 125.323,
+            "file": "test-results/s83-vehicleslide/campaign/L9-high.json",
+            "sourceHash": "f74582bb0a12b362de121f4771e4e4283e6f521feb396b1e6188ebab76712100",
+            "pass": true
+          },
+          {
+            "mode": "L9",
+            "tier": "low",
+            "code": 0,
+            "seconds": 87.873,
+            "file": "test-results/s83-vehicleslide/campaign/L9-low.json",
+            "sourceHash": "f74582bb0a12b362de121f4771e4e4283e6f521feb396b1e6188ebab76712100",
+            "pass": true
+          }
+        ]
+      }
+    ]
+  }
 }

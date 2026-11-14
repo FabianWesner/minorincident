@@ -15,7 +15,7 @@ The stationary metric samples living, visible, admitted infected once per simula
 
 The stranded-state evidence points to long single-waypoint A* searches around the perimeter. Multiple outside infected retain the west breach target `(-37.2, 6.1)` while far north or south of it; `seek()` retries unsuccessful army-approach paths at 15-tick intervals. That leaves a small number moving too slowly or remaining stationary outside, even though the current full-hold peak is within the requested ceiling.
 
-A corner-waypoint prototype was evaluated and removed. It did not reliably clear the residual outside actors and one HIGH run reduced the L4-06 plaza minimum to 38, below its required 40. The accepted work therefore adds native visibility into the metric without retaining a routing change that breaks the L4-06 gate. A safe route correction remains open; the current measured state meets the numeric goal.
+A corner-waypoint prototype was evaluated and removed. It did not reliably clear the residual outside actors and one HIGH run reduced the L4-06 plaza minimum to 38, below its required 40. The accepted work therefore adds native visibility into the metric without retaining a routing change that breaks the L4-06 gate. The final correction below replaces this rejected prototype.
 
 ## Validation
 
@@ -40,3 +40,5 @@ Routing candidate: courier-bound outside breach approaches now share the existin
 Candidate rejected: LOW stationary peak increased to 5 (limit 3). Reverted the exterior flow gameplay change; retained its evidence. Current gameplay returns to the validated 2 HIGH / 1 LOW baseline.
 
 Current routing candidate: outside actors switch to an open breach at least 3 m closer than their assigned waypoint, clearing the obsolete cached path. Native HIGH/LOW holds complete with stationary peaks 2 / 1 and HIGH plaza minimum 40 (72 alive at first breach). Typecheck/lint pass. Full threat and vehicle motion regression checks remain required on this gameplay revision.
+
+Final validation of 0e1a5d25: full all-level threat audit completed in 470.2 s with only the existing L6 early-close breach2 flag. HIGH/LOW stationary peaks remain 2 / 1; HIGH first breach has 72 alive and sustained plaza minimum 40. All eight serial headless vehicle campaign cases pass on both tiers (ports 4951/4952). Routing now refreshes a stale outside waypoint when a nearer breach opens, preserving the existing navigation budgets. Browser QA needed. Earlier statements that routing remains unfinished describe intermediate revisions and are superseded by this final result.
