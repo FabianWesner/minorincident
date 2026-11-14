@@ -9,7 +9,7 @@ The full native alarm-hold census in the current `e7aab4aa` worktree passes the 
 | HIGH | 2 | **2** | 42 | 72 |
 | LOW | 3 | **1** | 16 | 47 |
 
-The stationary metric samples living, visible, admitted infected once per simulation second from the L4 war/alarm start through line break. A person counts outside when outside the authored `l4.map.plaza` bounds. Their position must remain within 0.5 m of the first position in the uninterrupted window for at least 30 consecutive samples. The maximum concurrent count is reported with IDs, positions and approach state in the native receipt. The HIGH hold completed at +190 s; its sustained plaza minimum remained above the L4-06 floor of 40.
+The stationary metric samples living, visible, admitted infected once per simulation second from the L4 war/alarm start through line break. A person counts outside when outside the authored `l4.map.plaza` bounds. Their position must remain within 0.5 m of the first position in the uninterrupted window for at least 30 consecutive samples. Every consecutive 30-sample window is checked, including windows starting during a longer stationary run. The maximum concurrent count is reported with IDs, positions and approach state in the native receipt. The HIGH hold completed at +190 s; its sustained plaza minimum remained above the L4-06 floor of 40.
 
 ## Routing finding
 
@@ -28,3 +28,5 @@ A corner-waypoint prototype was evaluated and removed. It did not reliably clear
 - **Browser QA needed.**
 
 No zombie/weapon stats, caps, cohorts, living actors, audit thresholds, or corpse behavior were changed. No deployment or push.
+
+Follow-up measurement audit: corrected the observer to inspect every sliding 30-sample window. Fresh native HIGH/LOW holds confirm peaks 2 / 1. Typecheck and lint pass. The routing correction remains unfinished; this report does not claim that the requested route fix has shipped.

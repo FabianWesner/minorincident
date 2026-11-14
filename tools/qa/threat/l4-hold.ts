@@ -17,7 +17,7 @@ export class L4HoldCensus {
   private stranded: unknown[] = [];
   private samples = 0;
   private stationarySecond = -1;
-  private stationary = new Map<number, { x: number; z: number; seconds: number }>();
+  private stationary = new Map<number, { x: number; z: number }[]>();
   private stationaryOutsidePeak = 0;
   private stationaryOutsideAtPeak: unknown[] = [];
   private groupMax = 0;
@@ -59,15 +59,16 @@ export class L4HoldCensus {
           const inPlaza = e.transform.x > p.x0 && e.transform.x < p.x1 && e.transform.z > p.z0 && e.transform.z < p.z1;
           if (inPlaza) continue;
           liveIds.add(e.id);
-          const prev = this.stationary.get(e.id);
-          if (prev && Math.hypot(e.transform.x - prev.x, e.transform.z - prev.z) <= .5) {
-            prev.seconds++;
-            if (prev.seconds >= 30) {
-              outsideStill++;
-              still.push({ id: e.id, x: e.transform.x, z: e.transform.z, seconds: prev.seconds, state: e.infected?.state,
-                scripted: e.infected?.scripted, approach: e.infected?.breachApproach });
-            }
-          } else this.stationary.set(e.id, { x: e.transform.x, z: e.transform.z, seconds: 1 });
+          const window = this.stationary.get(e.id) ?? [];
+          window.push({ x: e.transform.x, z: e.transform.z });
+          if (window.length > 30) window.shift();
+          this.stationary.set(e.id, window);
+          const origin = window[0];
+          if (window.length === 30 && window.every(at => Math.hypot(at.x - origin.x, at.z - origin.z) <= .5)) {
+            outsideStill++;
+            still.push({ id: e.id, x: e.transform.x, z: e.transform.z, samples: 30, state: e.infected?.state,
+              scripted: e.infected?.scripted, approach: e.infected?.breachApproach });
+          }
         }
         for (const id of this.stationary.keys()) if (!liveIds.has(id)) this.stationary.delete(id);
         if (outsideStill > this.stationaryOutsidePeak) {
