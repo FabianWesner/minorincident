@@ -475,6 +475,39 @@
         "L10/step/hold:STUCK_CHASER_OVER_30_SECONDS",
         "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
       ]
+    },
+    "rejectedDirectedOnlyDiagnostic": {
+      "sourceHash": "a56896b9a6caecdec2caa358e719027b3417dea2bf3e789812a9a221d44422a9",
+      "seconds": 42.402653042,
+      "flags": [
+        "L3/criterion/L3-06 squad counts/losses:FAIL",
+        "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+      ],
+      "l3Army": {
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "army": 0,
+            "attacksPerMinute": 20.009925558312656
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "army": 0,
+            "attacksPerMinute": 14.686384497705252
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "army": 1,
+            "attacksPerMinute": 56.75552170601676
+          }
+        ],
+        "measured": 3,
+        "within": 0,
+        "pass": false
+      }
     }
   },
   "directProbePreliminary": [
