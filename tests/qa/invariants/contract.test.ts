@@ -23,6 +23,24 @@ import { findDoorway } from '../../../src/sim/missions/doorRoute';
 
 const layouts = new Map(readdirSync('public/assets/layouts').filter(x => x.endsWith('.layout.json')).map(x => [x.slice(0, -12), JSON.parse(readFileSync(`public/assets/layouts/${x}`, 'utf8')) as DistrictLayout]));
 
+function l7BusStaticHits(world: Awaited<ReturnType<typeof loadLevel>>): string[] {
+  const bus = physicsAssets['veh.evac-bus'].boxes[0]!, hits = new Set<string>();
+  for (const district of world.districts!.districts) for (const p of district.decay.placements) {
+    if (p.decor) continue;
+    const boxes = physicsAssets[(p.collisionId ?? p.assetId) as keyof typeof physicsAssets]?.boxes;
+    const aabbs = boxes?.length ? boxes.map(box => {
+      const corners = [[box.min[0], box.min[2]], [box.min[0], box.max[2]], [box.max[0], box.min[2]], [box.max[0], box.max[2]]]
+        .map(([x, z]) => [p.position[0] + (Math.cos(p.yaw) * x + Math.sin(p.yaw) * z) * p.scale[0] + district.origin[0], p.position[2] + (-Math.sin(p.yaw) * x + Math.cos(p.yaw) * z) * p.scale[2] + district.origin[1]]);
+      const xs = corners.map(point => point[0]), zs = corners.map(point => point[1]);
+      return { min: [Math.min(...xs), p.position[1] + box.min[1] * p.scale[1], Math.min(...zs)], max: [Math.max(...xs), p.position[1] + box.max[1] * p.scale[1], Math.max(...zs)] };
+    }) : [{ min: [p.visualAabb.min[0] + district.origin[0], p.visualAabb.min[1], p.visualAabb.min[2] + district.origin[1]], max: [p.visualAabb.max[0] + district.origin[0], p.visualAabb.max[1], p.visualAabb.max[2] + district.origin[1]] }];
+    for (const box of aabbs) for (let x = l7Departure.lane.fromX; x <= l7Departure.lane.toX; x += .1) {
+      if (obbHitsAabb(x, l7Departure.lane.z, 0, (bus.max[0] - bus.min[0]) / 2, (bus.max[2] - bus.min[2]) / 2, bus.min[1] + .7, bus.max[1] + .7, box)) { hits.add(`${p.id} (${p.assetId})`); break; }
+    }
+  }
+  return [...hits];
+}
+
 describe('automatic regression invariants', () => {
   test('3 @nightly scripted actors: all initial cast, depot clerk and lab technician persist until their scripted exits', async () => {
     // Keep the low-tier sweep in this existing actor fixture; the high tier runs in its own worker file.
@@ -154,6 +172,10 @@ describe('automatic regression invariants', () => {
         const aabb = { min: [solid.aabb.min[0] + district.origin[0], solid.aabb.min[1], solid.aabb.min[2] + district.origin[1]], max: [solid.aabb.max[0] + district.origin[0], solid.aabb.max[1], solid.aabb.max[2] + district.origin[1]] };
         for (let x = l7Departure.lane.fromX; x <= l7Departure.lane.toX; x += .25) if (obbHitsAabb(x, l7Departure.lane.z, 0, (box.max[0] - box.min[0]) / 2, (box.max[2] - box.min[2]) / 2, box.min[1] + .7, box.max[1] + .7, aabb)) { conflicts.add(`L7 bus route overlaps ${solid.id}`); break; }
       }
+      expect(l7BusStaticHits(l7world), 'L7 HIGH: the complete bus sweep clears every resolved static placement').toEqual([]);
+      const l7low = await loadLevel('L7', 1, 'low');
+      try { expect(l7BusStaticHits(l7low), 'L7 LOW: the complete bus sweep clears every resolved static placement').toEqual([]); }
+      finally { l7low.dispose(); }
     } finally { l7world.dispose(); }
     const l2world = await loadLevel('L2', 1);
     try {
