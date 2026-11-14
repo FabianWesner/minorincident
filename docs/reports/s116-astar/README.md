@@ -54,3 +54,7 @@ The observer now records superseded destinations, exhausted searches and actors 
 Per-second native traces show both previously overdue actors reset their cached route goal to -1 before ten seconds. LOW actor 242 also switches from the west breach to the inside courier goal while walking. The observer now records cached-goal invalidation each tick; fresh HIGH/LOW native holds report zero requests still required and uncompleted at the ten-second deadline. These are explicit cancellations, not successful path completions; the earlier raw overdue results remain in the evidence history. The all-level audit regressions remain unresolved, and this measurement does not make the candidate mergeable.
 
 A retention variant that saves only requests which have already accumulated at least 2000 expansions still fails L3/L10 (three aggregate diagnostic flags including partial-selection). It was discarded. This rules out saving only short partial requests as the sole regression mechanism; no arbitrary retention threshold is retained.
+
+## Restored route correctness
+
+The existing A* regression now compares interrupted routes against uninterrupted A* on twelve deterministic obstacle layouts, with a competing reverse request between each eight-expansion slice. Every resumed route exactly matches the uninterrupted route and respects the supplied expansion budget. The focused A* test passes. This strengthens evidence for correct restoration on those layouts; it does not explain the native L3/L10 behavior changes or clear the audit failures.
