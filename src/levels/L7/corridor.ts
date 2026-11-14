@@ -1,5 +1,8 @@
 import type { PlacementTransform, Point } from '../districts/types';
 
+/** Authored bus centreline, shared with the departure controller and static dressing exclusion. */
+export const l7DepartureLane = { z: 47, fromX: -78.5, toX: 40 } as const;
+
 /**
  * L7-D2 final evacuation corridor at Fairhaven's north-west edge. The game camera looks from +x/+z, so a
  * strip with nothing tall on its +x/+z side stays readable: the Lakeshore Drive and its promenade (z 43..56; the

@@ -6,6 +6,8 @@ import type { DistrictLayout, Placement, PlacementTransform, Point } from '../di
 import { levelFiveLayouts, l5ShellAssets } from '../L5/layout';
 import { l7CorridorAnchors, l7CorridorItems } from './corridor';
 import northgateGround from '../../../public/assets/layouts/D-FAIR.w6.ground.json' with { type: 'json' };
+import physicsAssets from '../../data/physicsAssets';
+import { l7DepartureLane } from './corridor';
 
 /** The authored city and Northgate strip; fast mask matches the stepped bounds exactly. */
 export const l7Areas = [{ min: [-85, -65], max: [94, 65] }, { min: [94, -15], max: [290, 45] }] as const;
@@ -91,6 +93,26 @@ export function levelSevenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     // D2: west evacuation corridor, working bus and two-sided approach.
     for (const [id, anchor] of Object.entries(l7CorridorAnchors)) layout.anchors[id] = structuredClone(anchor);
     for (const [id, assetId, x, z, yaw, scale, decay] of l7CorridorItems) add(`l7-corridor-${id}`, assetId, x, z, yaw, scale, decay);
+    // Exclude every authored static whose baked collision hull intersects the
+    // bus's full swept rectangle. L5 keeps its aftermath dressing unchanged.
+    const busHalfLength = 4.6, busHalfWidth = 1.525;
+    const swept = { minX: l7DepartureLane.fromX - busHalfLength, maxX: l7DepartureLane.toX + busHalfLength,
+      minZ: l7DepartureLane.z - busHalfWidth, maxZ: l7DepartureLane.z + busHalfWidth };
+    const exclusions = new Set(layout.placements.filter(p => {
+      const boxes = physicsAssets[(p.collisionId ?? p.assetId) as keyof typeof physicsAssets]?.boxes;
+      if (boxes?.length) return boxes.some(box => {
+        const points = [[box.min[0], box.min[2]], [box.min[0], box.max[2]], [box.max[0], box.min[2]], [box.max[0], box.max[2]]]
+          .map(([x, z]) => [p.position[0] + (Math.cos(p.yaw) * x + Math.sin(p.yaw) * z) * p.scale[0], p.position[2] + (-Math.sin(p.yaw) * x + Math.cos(p.yaw) * z) * p.scale[2]]);
+        const xs = points.map(point => point[0]), zs = points.map(point => point[1]);
+        return Math.min(...xs) <= swept.maxX && Math.max(...xs) >= swept.minX && Math.min(...zs) <= swept.maxZ && Math.max(...zs) >= swept.minZ;
+      });
+      const aabb = p.visualAabb;
+      return aabb.min[0] <= swept.maxX && aabb.max[0] >= swept.minX && aabb.min[2] <= swept.maxZ && aabb.max[2] >= swept.minZ;
+    }).map(p => p.id));
+    if (exclusions.size) {
+      for (const id of exclusions) layout.placements = layout.placements.filter(p => p.id !== id);
+      layout.colliders = layout.colliders.filter(c => ![...exclusions].some(id => c.id === id || c.id.startsWith(`${id}/`)));
+    }
     // The working bus is a set piece spawned by LevelSevenDeparture (it has to drive away), not a static placement.
     return layout;
   });

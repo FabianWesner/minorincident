@@ -1,3 +1,5 @@
+import { l7DepartureLane } from '../levels/L7/corridor';
+
 /** L7-S2 hook: the district lane resolves its shared Northgate exit, then applies this offset. */
 export const l7Rocket = {
   action: 'weapon.rocket-launcher', asset: 'wpn.rocket-launcher', icon: 'icon.rocket-launcher',
@@ -37,7 +39,7 @@ export const l7Departure = {
   /** Recover a living follower after 20 s without 0.5 m net approach progress; never leave anyone behind. */
   stallTicks: 20 * 60,
   /** Bus lane: straight east along Lakeshore Drive. */
-  lane: { z: 47, fromX: -78.5, toX: 40 }, seconds: 9, fadeAtSeconds: 8,
+  lane: l7DepartureLane, seconds: 9, fadeAtSeconds: 8,
   /** Camera relative to the bus: ahead of it, high, looking back past the bus at the city behind. */
   camera: { position: [22, 12, 14], target: [-4, 2, -1] },
 } as const;
