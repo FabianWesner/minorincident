@@ -41,7 +41,7 @@ Mean saved share was 67.8% in both tiers; all runs completed and stayed above th
 - `npm run typecheck`: passed.
 - `npm run lint`: passed.
 - `npm test`: passed locally, 107 passed / 1 skipped, 27 files, 216.9 s (240 s budget).
-- Required remote `sh tools/remote/run.sh "$PWD" -- npm test`: could not start. The runner reported no healthy/provisioned Hetzner runner, and this wrapped command is not eligible for the Mac fallback. No remote unit result is claimed.
+- Required remote `sh tools/remote/run.sh "$PWD" -- npm test`: passed unchanged on runner 46.225.66.90, exit 0; 106 passed / 1 skipped across 27 files, 225.5 s against the 240 s budget. Earlier attempts could not start because the pool had no healthy runner.
 
 ## Browser QA needed
 
