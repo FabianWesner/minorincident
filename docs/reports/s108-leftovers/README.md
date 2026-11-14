@@ -56,3 +56,5 @@ The unchanged prescribed remote `npm test` now PASS on 46.225.66.90; full termin
 Further original review: HIGH corridor z1 frame40 and z1.5 frame35 show supported dark roadside ground beside intact gray road slab. LOW forward z1 frame5 shows ground under a combat telegraph; z1.5 frame10 is almost fully fogged. No void is established, but LOW fog and temporal z-fighting coverage remain insufficient for a complete visual PASS.
 
 LOW clear-weather diagnostic was attempted through the existing weather override and originals opened. Gray haze remains, so weather override does not solve ground visibility; these additional captures do not close the road clause. The likely remaining presentation source is authored distance fog, which needs direct inspection before further capture. No game source was edited.
+
+Accepted look diagnostic (`hazeAmount=0`, `fogNear=300`, `fogFar=600`) also leaves the LOW gray wash unchanged in opened originals. Fog-only attribution is therefore unproven; further sweep repetition should first inspect independent presentation/flash state. The road visual clause remains open.
