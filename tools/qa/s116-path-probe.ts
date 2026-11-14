@@ -1,0 +1,36 @@
+import { writeFileSync } from 'node:fs';
+import { NavGrid } from '../../src/sim/ai/NavGrid';
+import { runLevel } from '../sim-runner/levels';
+import { L4HoldCensus } from './threat/l4-hold';
+import type { SimWorld } from '../../src/sim/world/SimWorld';
+const original = NavGrid.prototype.path;
+const receipts = [];
+for (const quality of ['high', 'low'] as const) {
+  let world: SimWorld;
+  let census: L4HoldCensus;
+  type Request = { actor: number; from: number; to: number; first: number; last: number; calls: number; expansions: number; completed?: number };
+  const requests: Request[] = [], active = new WeakMap<number[], Request>();
+  NavGrid.prototype.path = function(from, to, result, budget) {
+    const found = original.call(this, from, to, result, budget);
+    const actor = world?.infected?.active.find(e => e.infected?.path === result);
+    if (!actor || world.missions?.state.l4?.phase !== 'war') return found;
+    let request = active.get(result);
+    if (request && (request.to !== to || request.completed !== undefined)) { active.delete(result); request = undefined; }
+    if (!request && this.pending(from, to)) {
+      request = { actor: actor.id, from, to, first: world.tick, last: world.tick, calls: 0, expansions: 0 };
+      requests.push(request); active.set(result, request);
+    }
+    if (request) { request.last = world.tick; request.calls++; request.expansions += this.expansions; if (found) request.completed = world.tick; }
+    return found;
+  };
+  await runLevel('L4', 'complete', 1, 250, 'auto', undefined, undefined, 0, { quality, passive: true, l4Profile: 'idle',
+    beforeBegin: w => { world = w; census = new L4HoldCensus(w); },
+    beforeDispose: () => {
+      const mature = requests.filter(r => world.tick - r.first >= 600);
+      receipts.push({ quality, census: census.finish(), pendingRequests: requests.length,
+        notCompletedWithin10Seconds: mature.filter(r => r.completed === undefined || r.completed - r.first > 600),
+        actor298: requests.filter(r => r.actor === 298), requests });
+    } });
+}
+NavGrid.prototype.path = original;
+writeFileSync('test-results/s116-path-probe.json', JSON.stringify(receipts, null, 2));
