@@ -102,3 +102,7 @@ A matched base/current-candidate seed-2 trace records identical first 218 path-c
 ## Rescue-priority correction
 
 Allied committed-attack priority now recognizes L1 brain bite holds against the player or party, alongside the existing attack-state recognition. Previously those actual holds received only a distance-score preference, so ordinary targets could outrank a rescue. Range, visibility, friendly-fire clearance, damage and cadence remain unchanged. Native L3 seeds now bring 0/2/3 officers to the army line, satisfying the existing two-of-three rule and clearing both L3 aggregate flags; the diagnostic has only PARTIAL_LEVEL_SELECTION. Typecheck and lint pass. Full all-level audit, final HIGH/LOW measurements, remote unit suite and vehicle gates must now be renewed on this gameplay revision before completion.
+
+## Officer-specific rescue priority
+
+The full audit at 09244275 clears L3/L10 but introduces three L4 failures, with HIGH plaza minimum 30. Extending the new grab priority to soldiers and armed civilians was broader than the diagnosed officer issue. The correction now applies only to role=officer. A fresh L3/L4 diagnostic passes both levels (only partial-selection marker), with HIGH/LOW plaza minima 42/17. The remote full unit suite at 09244275 passed 27 files, 106 tests / 1 skipped, 231.7 s within 240 s. Final full gates are still required for the officer-specific correction.

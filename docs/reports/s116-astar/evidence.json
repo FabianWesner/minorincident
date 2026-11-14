@@ -5412,5 +5412,54 @@
     },
     "typecheck": "pass",
     "lint": "pass"
+  },
+  "rejectedAllRoleRescueFullAudit": {
+    "sourceHash": "2c3828a256c3e0e304d28fdb902e6588c0fd3d06d43367f52c27b8f5a2e3bbd7",
+    "seconds": 312.042079875,
+    "flags": [
+      "L4/wave/breach-west:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+      "L4/wave/breach-south:WAVE_NO_ATTACK_WITHIN_20_SECONDS",
+      "L4/criterion/L4-06 sustained horde:FAIL"
+    ]
+  },
+  "officerRescueDiagnostic": {
+    "sourceHash": "d19bb9f68121698c414839aa51fe075c436928711f783cbaa889ab2feb0d7a52",
+    "seconds": 95.57075520800001,
+    "flags": [
+      "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+    ],
+    "l3Army": {
+      "seeds": [
+        {
+          "seed": 1,
+          "valid": true,
+          "army": 0,
+          "attacksPerMinute": 60.18605905352568
+        },
+        {
+          "seed": 2,
+          "valid": true,
+          "army": 2,
+          "attacksPerMinute": 16.892396288791723
+        },
+        {
+          "seed": 3,
+          "valid": true,
+          "army": 3,
+          "attacksPerMinute": 19.19096895578551
+        }
+      ],
+      "measured": 3,
+      "within": 2,
+      "pass": true
+    }
+  },
+  "finalUnitAttempt": {
+    "revision": "09244275",
+    "files": 27,
+    "passed": 106,
+    "skipped": 1,
+    "seconds": 231.7,
+    "result": "pass"
   }
 }
